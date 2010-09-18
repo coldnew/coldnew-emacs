@@ -21,6 +21,13 @@
       (setq load-path (cons my-lisp-dir load-path))
       (normal-top-level-add-subdirs-to-load-path)))
 
+
+
+
+(require 'pos-tip)
+
+
+
 ;;;;;; load package initial setting
 ;; emacs package manager
 (require 'init-elpa)
@@ -30,7 +37,7 @@
 (require 'init-vim)
 (require 'init-undo-tree)
 (require 'init-session)
-
+(require 'init-auto-complete)
 
 ;;;;;;;; load user default config
 (require 'rc-base)
@@ -40,3 +47,4 @@
 
 
 
+(require 'lang-emacs-lisp)
