@@ -38,6 +38,8 @@
 (require 'init-undo-tree)
 (require 'init-session)
 (require 'init-auto-complete)
+(require 'init-slime)
+
 
 ;;;;;;;; load user default config
 (require 'rc-base)
@@ -48,3 +50,5 @@
 
 
 (require 'lang-emacs-lisp)
+
+
