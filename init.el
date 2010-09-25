@@ -30,11 +30,11 @@
 
 ;;;;;; load package initial setting
 ;; emacs package manager
-(require 'init-elpa)
-(require 'init-el-get)
+;;(require 'init-elpa)
+;;(require 'init-el-get)
 ;; other packages
-(require 'init-color-theme)
 (require 'init-vim)
+(require 'init-color-theme)
 (require 'init-undo-tree)
 (require 'init-session)
 (require 'init-auto-complete)

@@ -12,6 +12,7 @@
   (require 'vimpulse nil 'noerror)
   (defalias 'vim:nmap 'vimpulse-map)
   (defalias 'vim:omap 'vimpulse-omap)
+  (defalias 'vim:imap 'vimpulse-imap)
   (defalias 'vim:vmap 'vimpulse-vmap)
   ;;FIXME: how to add vim:emap in here ?
   )
