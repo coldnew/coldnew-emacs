@@ -12,4 +12,5 @@ cmake_install.cmake
 Makefile
 system/
 *.dat$
+auto-save-list/
 .saves*
