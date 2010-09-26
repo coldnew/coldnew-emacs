@@ -1,0 +1,8 @@
+;;; Bugs:
+
+;; (We would appreciate it very much if you report bugs.)
+;;
+;; Known bugs:
+;;
+;; - Undo has problems in XEmacs.
+

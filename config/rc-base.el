@@ -102,9 +102,9 @@
      (or (file-exists-p  (file-name-directory buffer-file-name))
        (make-directory (file-name-directory buffer-file-name) t))))
 
-;; Save place in files between sessions
-(when (require 'saveplace nil 'noerror)
-  (setq-default save-place t))
+;; ;; Save place in files between sessions
+;; (when (require 'saveplace nil 'noerror)
+;;   (setq-default save-place t))
 
 
 ;;; rc-base.el ends here

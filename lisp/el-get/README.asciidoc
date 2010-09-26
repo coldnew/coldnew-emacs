@@ -1,0 +1,240 @@
+= el-get
+
+Short Story: el-get allows you to install and manage +elisp+ code for
+Emacs. It supports lots of differents types of sources and is able to
+'install' them, 'update' them and 'remove' them, but more importantly it
+will 'init' them for you.
+
+That means it will care about +require+ ing the 'features' you need, +load+
+ing the files, setting the 'Info' paths so that +C-h i+ shows the new
+documentation you now depend on, and finally call your own +:after+ function
+for you to setup the extension. Or call it a package.
+
+== How to Install it?
+
+Here's the 'lazy installer' for everyone to use, except for the early
+adopters, who will have to adapt their +el-get-sources+ to use +github+
+instead.
+
+--------------------------------------
+;; So the idea is that you copy/paste this code into your *scratch* buffer,
+;; hit C-j, and you have a working el-get.
+
+(let* ((el-get-dir        (expand-file-name "~/.emacs.d/el-get/"))
+       (dummy             (unless (file-directory-p el-get-dir)
+			    (make-directory el-get-dir t)))
+       (package           "el-get")
+       (bname             "*el-get bootstrap*") ; both process and buffer name
+       (pdir              (concat (file-name-as-directory el-get-dir) package))
+       (git               (executable-find "git"))
+       (url               "git://github.com/dimitri/el-get.git")
+       (el-get-sources    `((:name ,package :type "git" :url ,url :features el-get)))
+       (default-directory el-get-dir)
+       (process-connection-type nil) ; pipe, no pty (--no-progress)
+       (clone             (start-process bname bname git "--no-pager" "clone" "-v" url package)))
+  (set-window-buffer (selected-window) (process-buffer clone))
+  (set-process-sentinel 
+   clone
+   `(lambda (proc change)
+      (when (eq (process-status proc) 'exit)
+	(setq default-directory (file-name-as-directory ,pdir))
+	(setq el-get-sources ',el-get-sources)
+	(load (concat (file-name-as-directory ,pdir) ,package ".el"))
+	(el-get-init "el-get")
+	(with-current-buffer (process-buffer proc)
+	  (goto-char (point-max))
+	  (insert "\nCongrats, el-get is installed and ready to serve!"))))))
+--------------------------------------
+
+You have to type +C-j+ with the cursor at the end of the last line, but
+still on the line. 'C-j runs the command eval-print-last-sexp', so it will
+evaluate the code you're looking at, and that will +git clone el-get+ at the
+'right place'.
+
+If you disagree with what the right place is, please feel free to edit the
++el-get-dir+ line above, but remember that you will have to +setq+ the
+variable before to use +el-get+.
+
+== What is this?
+
+Of course, my emacs setup is managed in a private git repository. Some
+people on +#emacs+ are using +git submodules+ (or was it straight import)
+for managing external repositories in there, but all I can say is that I
+frown on this idea. I want an easy canonical list of packages I depend on to
+run emacs, and I want this documentation to be usable as-is. Enters el-get!
+
+--------------------------------------
+(setq el-get-sources
+      '(cssh el-get switch-window vkill google-maps nxhtml xcscope yasnippet
+
+	(:name magit 
+	       :after (lambda () (global-set-key (kbd "C-x C-z") 'magit-status)))
+
+	(:name asciidoc        
+	       :type elpa
+	       :after (lambda ()
+			(autoload 'doc-mode "doc-mode" nil t)
+			(add-to-list 'auto-mode-alist '("\\.adoc$" . doc-mode))
+			(add-hook 'doc-mode-hook '(lambda ()
+						    (turn-on-auto-fill)
+						    (require 'asciidoc)))))
+
+	(:name lisppaste        :type elpa)
+        (:name dictionary-el    :type apt-get)
+        (:name emacs-goodies-el :type apt-get)))
+
+(el-get)
+--------------------------------------
+
+So now you have a pretty good documentation of the packages you want
+installed, where to get them, and how to install them. For the advanced
+methods (such as elpa or apt-get), you basically just need the package
+name. When relying on a bare git repository, you need to give some more
+information, such as the URL to clone and the build steps if any. Then also
+what features to require and maybe where to find the texinfo documentation
+of the package, for automatic inclusion into your local Info menu.
+
+The good news is that not only you now have a solid readable description of
+all that in a central place, but this very description is all (el-get) needs
+to do its magic. This command will check that each and every package is
+installed on your system (in el-get-dir) and if that's not the case, it will
+actually install it. Then, it will init the packages: that means caring
+about the load-path, the Info-directory-list (and dir texinfo menu building)
+the loading of the emacs-lisp files, and finally it will require the
+features.
+
+== How to use it?
+
+You see that +el-get-sources+ exemple up there? It finishes with a single
++(el-get)+ call. That's it. It will 'install' new +sources+ on the list and
+only 'init' already installed ones.
+
+Tracking if a +source+ is not by checking for the existance of a directory
+or symlink in +el-get-dir+, defaulting to +~/.emacs.d/el-get+.
+
+=== Sync or async?
+
+Most often you want +el-get-install+ and +el-get-build+ to stay out of the
+way and be 'asynchronous', so that you can continue using Emacs while your
+new package is getting ready. But imagine you're starting up Emacs after a
++git pull+ on the other computer (after a commute, say), and there's some
+newer packages for this instance to consider installing. 
+
+Now you want a synchronous install, right?
+
+So, by default +(el-get)+ is asynchronous, but you can ask for it to be sync
+this way:
+
+  (el-get 'sync)
+
+You even get a progress report!
+
+=== Sources
+
+See the documentation of the +el-get-sources+ variable for details.
+
+=== Recipes
+
+Some sources are contributed to +el-get+ directly, so that you only have to
+put in the +el-get-sources+ the name of the package you want to
+install. 
+
+Should you need some local specific setup, you can do that by providing a
+partial sources missing the +:type+ property: your local properties will get
+merged into the recipes one.
+
+Also, the variable +el-get-recipe-path+ allows you to maintain local recipes
+in case you either dislike the default one or are crafting some new one not
+commited to the main repository yet. But please do consider sending them
+over!
+
+We do not intend to provide recipes for advanced types such as +apt-get+ and
++elpa+ because there's so little to win here, and maintaining a package list
+would take too much time.
+
+=== Build Commands
+
+Avoid +make install+ that will move files into a proper destination place,
+that's for distributors to care, like +debian+ for example. In our case, you
+probably just want your package +foo+ to be all installed into
++~/.emacs.d/el-get/foo+, right? So, no +make install+.
+
+=== Byte Compiling
+
++el-get+ will 'byte compile' the elisp for the package when its source
+definition includes a +:compile+ property set to the list of files to byte
+compile (or to a single file), or all the +.el+ files found in the package
+when there's no +:build+ command.
+
+=== Some more commands?
+
+Yes, ok.
+
+M-x el-get-cd::
+
+    Will prompt for a package name, with completion, then open its directory
+    with dired.
+
+M-x el-get-install::
+
+    Will prompt for a package name, with completion, then install it
+    following the +source+ you've already setup. Depending on the +type+ of
+    the +package+, this will fail for an already installed package.
+
+    When using C-u, +el-get-install+ will allow for installing any package
+    you have a recipe for, instead of only proposing packages from
+    +el-get-sources+.
+
+
+M-x el-get-update::
+
+    Will prompt for a package name, with completion, then update it. This
+    will run the +build+ commands and +init+ the package again.
+
+M-x el-get-remove::
+
+    Will prompt for a package name, with completion, then remove
+    it. Depending on the +type+ of the package, this often means simply
+    deleting the directory where the source package lies. Sometime we have
+    to use external tools instead (+apt-get+, e.g.). No effort is made to
+    unload the features.
+
+    When using C-u, +el-get-remove+ will allow for installing any package
+    you have a recipe for, instead of only proposing packages from
+    +el-get-sources+.
+
+The +C-u+ alternatives are not provided for the +el-get-update+ and
++el-get-init+ command, on the grounds that if you want to use them you
+probably should now have the package into your +el-get-sources+ proper.
+
+== Internals
+
+TODO: explain the symlinks in +~/.emacs.d/el-get+. For now, read the source
+and try it out.
+
+== Extending it
+
+Please see the documentation for the +el-get-methods+ and provide a patch!
+
+Adding +bzr+ support for example was only about writing 2 functions, mostly
+using copy paste. Here's the patch: http://github.com/dimitri/el-get/commit/494551a9e75ebeb9ad043da175e6b2140d0d87d3
+
+== Gotchas
+
+=== Package Status
+
++el-get+ will now save some package status information into the file
++el-get-status-file+, it's a property list of the package symbol and its
+status. The status is set to "required" when you enter +el-get-install+ and
+is changed to +installed+ upon successful completion of the installation,
+including the build.
+
+Now, if you +el-get-install+ an already installed package, this is an
+error. If the status is "required", a previous install failed, you have to
++el-get-remove+ the package before continuing. If the status is "installed",
+well, the package is known installed.
+
+To reinit the status file you might need to execute the following code:
+
+  (mapc (lambda (p) (el-get-save-package-status p "installed")) 
+	(el-get-package-name-list))

@@ -48,7 +48,7 @@
 (setq-default delete-auto-save-files      t )   ; 成功儲存後移除自動儲存的檔案
 
 ;;;; 檔案備份設定
-(defvar emacs-backup-directory "~/.emacs.d/system/backups/") ; 設定備份用資料夾位置
+(defvar emacs-backup-directory "~/.emacs.d/var/backups/") ; 設定備份用資料夾位置
 ;; 如果備份用的資料夾不存在就建立他
 (if (not (file-exists-p emacs-backup-directory))
   (make-directory emacs-backup-directory t))

@@ -2,8 +2,8 @@
 ;;;; initial el-get
 (provide 'init-el-get)
 
-(setq el-get-dir "~/.emacs.d/plugins/")
-(setq el-get-recipe-path '("~/.emacs.d/templates/el-get/recipes"))
+(setq el-get-dir "~/.emacs.d/lisp/")
+(setq el-get-recipe-path '("~/.emacs.d/etc/el-get/recipes"))
 
 (when (require 'el-get nil 'noerror)
   (defalias 'install 'el-get-install)
@@ -11,6 +11,8 @@
   (setq el-get-sources 
 	'(
 	  el-get 
+	  redo
+	  redo+
 	  yasnippet
 	  auto-complete
 	  auto-complete-etags

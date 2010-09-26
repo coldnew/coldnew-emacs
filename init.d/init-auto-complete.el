@@ -14,7 +14,7 @@
   (setq ac-auto-start     nil )		; 關閉自動補全
   (setq ac-ignore-case 'smart )		; 使用智能補全
   (setq ac-use-comphist     t )
-  (setq ac-comphist-file "~/.emacs.d/system/auto-complete.data")
+  (setq ac-comphist-file "~/.emacs.d/var/cache/auto-complete.cache")
 
   (setq ac-use-menu-map     t )		; 啟用補全選單
 

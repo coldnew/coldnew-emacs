@@ -2,8 +2,8 @@
 (provide 'init-vim)
 
 ;;;; because vim-mode has many bugs , use viper and vimpulse instead
-;; (when (require 'vim nil 'noerror)
-;;  (vim-mode))
+ ;;(when (require 'vim nil 'noerror)
+  ;;(vim-mode))
 
 ;;;;; Following are viper and vimpulse setting
 (setq viper-mode t)

@@ -1,0 +1,9 @@
+*.log
+Makefile
+auto
+auto.el
+autom4te.cache
+config.cache
+config.status
+configure
+preview-latex.el

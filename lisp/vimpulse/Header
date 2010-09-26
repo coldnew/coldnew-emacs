@@ -1,0 +1,48 @@
+;;; vimpulse.el --- emulates Vim's most useful features -*- coding: utf-8 -*-
+
+;; Copyright (C) 2007 Brad Beveridge
+;; Copyright (C) 2007, 2009 Alessandro Piras
+;; Copyright (C) 2008 Frank Fischer
+;; Copyright (C) 2009 Jason Spiro <http://www.jspiro.com/>
+;; Copyright (C) 2010 Vegard Øye
+;; Copyright (C) 2010 Štěpán Němec
+;;
+;; Author: Brad Beveridge et al.
+;; Maintainer: Vegard Øye <vegard_oye at hotmail.com>
+;;      Please send bug reports to the mailing list (see below).
+;; Created: 23 Aug 2007
+;; Version: 0.5+git
+;; Keywords: emulations, viper
+;; Human-Keywords: vim, visual-mode, rsi, ergonomics, emacs pinky
+;; URL: http://www.emacswiki.org/emacs/vimpulse.el
+;; Gitorious project: http://gitorious.org/vimpulse
+;;      For the latest development version, clone the repo with:
+;;      git clone git://gitorious.org/vimpulse/vimpulse.git
+;; Mailing list: <implementations-list at lists.ourproject.org>
+;;      Subscribe: http://tinyurl.com/implementations-list
+;;      Newsgroup: nntp://news.gmane.org/gmane.emacs.vim-emulation
+;;      Archives: http://dir.gmane.org/gmane.emacs.vim-emulation
+;;      You don't have to subscribe. We usually reply within a few
+;;      days and CC our replies back to you.
+;; Related: viper.el, viper-in-more-modes.el
+;;
+;; Thanks to our old maintainers:
+;;      Alessandro Piras
+;;      Jason Spiro
+;; We'll miss you as maintainers :)
+;;
+;; This file is not part of GNU Emacs.
+
+;;; Commentary:
+
+;; Vimpulse emulates Vim's most popular features, like Visual mode
+;; and text objects. Vimpulse is a set of modifications to Viper, the
+;; standard library that emulates vi. Vimpulse is not a minor mode;
+;; as soon as it is loaded, Viper will start working in a more
+;; Vim-like way.
+;;
+;; Vimpulse is under active development. It works quite well with
+;; GNU Emacs 22.3 and 23.2, as well as XEmacs 21.4.22. Patches and
+;; feature requests are welcome (see also the file CONTRIBUTE in the
+;; repository).
+

@@ -1,0 +1,41 @@
+;;; Usage:
+
+;; To use Visual mode, press "v" in vi (command) mode. Then use the
+;; motion commands to expand the selection. Press "d" to delete, "c"
+;; to change, "r" to replace, or "y" to copy. You can use "p" to
+;; paste. For Line selection, press "V" instead of "v"; then you can
+;; copy and paste whole lines. For Block selection, press "C-v"; now
+;; you can copy and paste the selected rectangle. In Block selection,
+;; you may use "I" or "A" to insert or append text before or after the
+;; selection on each line.
+;;
+;; Other features:
+;;
+;; Vimpulse supports text objects: "daw", "daW", "das", "dap", "dab",
+;; "daB", "da(", "da[", "da{", "da<", "da"", "da'", as well as "diw",
+;; "diW", "dis", etc. To change an object: "caw", "cas", etc. To yank
+;; it: "yaw", "yas", etc. To select it: "vaw", "vas", etc.
+;;
+;; The extended documentation is still in its early stages, but you
+;; can view drafts at: http://gitorious.org/vimpulse/pages/Home
+;;
+;; The documentation that comes with Vim -- which is online at
+;; http://vimdoc.sf.net/ -- may also be helpful.
+;;
+;; Tips:
+;;
+;; - Vimpulse makes "C-r" run Redo in command mode, but you can
+;;   still get reverse isearch by pressing "C-s" and then "C-r".
+;;
+;; - To change the color of search, add something like the following
+;;   to .emacs:
+;;
+;;       (set-face-foreground isearch nil)
+;;       (set-face-background isearch "lightgoldenrod2")
+;;
+;; - To change the color of Visual mode (`zmacs-region' in XEmacs):
+;;
+;;       (set-face-background 'region "blue")
+;;
+;; For more tips, see: http://gitorious.org/vimpulse/pages/Tips
+

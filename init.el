@@ -9,9 +9,13 @@
 
 ;;;;;;; start server for emacsclient
 (message "* --[ start the emacs server ]-- *")
-(if (or (daemonp) (file-exists-p "/tmp/emacs1000/server"))
-    (server-force-delete))
-(server-start)
+(when (require 'server nil 'noerror)
+  (unless (server-running-p) 
+    (server-start)))
+;; (if (or (daemonp) (file-exists-p "/tmp/emacs1000/server"))
+;;     (server-force-delete))
+;; (server-start)
+
 
 ;;;;;;;; 將指定目錄裡的東西全部加入清單
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
@@ -39,7 +43,7 @@
 (require 'init-session)
 (require 'init-auto-complete)
 (require 'init-slime)
-
+(require 'init-woman)
 
 ;;;;;;;; load user default config
 (require 'rc-base)
