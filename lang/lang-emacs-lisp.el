@@ -4,7 +4,7 @@
   (require 'cl))
 
 (require 'eldoc)
-;;(require 'eldoc-extension)
+(require 'eldoc-extension)
 (require 'highlight-parentheses)
 ;;(require 'pretty-lambdada)
 
@@ -14,27 +14,26 @@
 
 (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 
-(defun coldnew/emacs-lisp-mode-hook()
-  "emacs lisp mode hook for cemacs"
+(defun local/emacs-lisp-mode-hook()
+  "local emacs lisp mode hook"
   (highlight-parentheses-mode)
   (turn-on-eldoc-mode)
 ;;  (eldoc-add-command 'paredit-backward-delete 'paredit-close-round)
+  (when (require 'init-auto-complete nil 'noerror)
+    (add-to-list 'ac-sources 'ac-source-company-elisp))
 
   ;;;; other keybinding
   (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)
   ;;   (define-key emacs-lisp-mode-map (kbd "RET") 'electrify-return-if-match)
   )
-;; (ac-company-define-source ac-source-company-elisp company-elisp
-;;                           (symbol . "s"))
-;; (add-hook 'emacs-lisp-mode-hook
-;;        (lambda () 
-;;          (add-to-list 'ac-sources 'ac-source-company-elisp)))
 
 ;; All hooks
 ;;(add-hook 'emacs-lisp-mode-hook 'byte-compile-when-save)
 ;;(add-hook 'emacs-lisp-mode-hook 'remove-elc-when-visit)
-(add-hook 'emacs-lisp-mode-hook 'coldnew/emacs-lisp-mode-hook)
-;;(add-hook 'emacs-lisp-mode-hook 'pretty-lambda)
+(add-hook 'emacs-lisp-mode-hook 'local/emacs-lisp-mode-hook)
+
+(when (require 'pretty-lambdada nil 'noerror)
+  (add-hook 'emacs-lisp-mode-hook 'pretty-lambda))
 
 
 ;; ;; 該資料夾內沒有 Tags 檔案時自動建立,若有時則更新 Tags 檔

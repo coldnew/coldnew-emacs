@@ -14,6 +14,7 @@
 	  redo
 	  redo+
 	  yasnippet
+	  pretty-lambdada
 	  auto-complete
 	  auto-complete-etags
 	  auto-complete-clang
@@ -37,4 +38,5 @@
 	  session
 	  popup-kill-ring  
 	  company
+	  eldoc-extension
 )))
