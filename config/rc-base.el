@@ -64,6 +64,7 @@
 (show-paren-mode           t )   ; 顯示括號匹配
 (global-auto-revert-mode   t )   ; 自動重讀修改過的檔案
 (auto-image-file-mode      t )   ; 圖片顯示功能
+;; (desktop-save-mode         t )
 (mouse-avoidance-mode 'animate ) ; 鼠標自動避開游標
 
 ;;;; 編輯環境
@@ -105,6 +106,5 @@
 ;; ;; Save place in files between sessions
 ;; (when (require 'saveplace nil 'noerror)
 ;;   (setq-default save-place t))
-
 
 ;;; rc-base.el ends here

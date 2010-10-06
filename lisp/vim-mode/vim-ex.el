@@ -253,7 +253,7 @@ cancel ex-mode."
                         (funcall cmd :count beg :argument arg)
                       (funcall cmd :argument arg))
                   (if (vim:cmd-count-p cmd)
-                      (funcall cmd :count count)
+                      (funcall cmd :count (or count (and arg (string-to-number arg))))
                     (funcall cmd))))
                 (t (error "Unexpected command-type bound to %s" vim:ex-cmd))))
          (beg (vim:motion-go-to-first-non-blank-beg :count (or end beg)))

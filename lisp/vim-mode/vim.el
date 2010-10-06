@@ -194,9 +194,13 @@ given major-mode is created."
 
   (if vim-local-mode
       (progn
+        (ad-enable-advice 'show-paren-function 'around 'vim:show-paren-function)
+        (ad-activate 'show-paren-function)
         (make-local-variable 'vim:emulation-mode-alist)
         (vim:initialize-keymaps t))
     (progn
+      (ad-disable-advice 'show-paren-function 'around 'vim:show-paren-function)
+      (ad-activate 'show-paren-function)
       (vim:initialize-keymaps nil)
       (setq global-mode-string
             (delq 'vim:mode-string global-mode-string ))
@@ -216,6 +220,32 @@ given major-mode is created."
         (unless (memq 'vim:mode-string global-mode-string)
           (setq global-mode-string
                 (append '("" vim:mode-string) (cdr global-mode-string))))))))
+
+
+(defcustom vim:show-paren-range
+  0
+  "The minimal distance between point and a parenthesis which
+causes the parenthesis to be highlighted."
+  :type 'integer
+  :group 'vim-mode)
+
+
+(defadvice show-paren-function (around vim:show-paren-function)
+  "Advices show-paren-function so also parentheses near point are matched."
+  (save-excursion
+    (goto-char
+     (or (catch 'end
+           (save-excursion
+             (dotimes (d (1+ (* 2 vim:show-paren-range)))
+               (forward-char (if (evenp d) d (- d)))
+               (let ((sc (syntax-class (syntax-after (point)))))
+                 (case sc
+                   (4 (throw 'end (point)))
+                   (5 (throw 'end (1+ (point)))))))
+             nil))
+         (point)))
+    ad-do-it))
+
 
 
 (provide 'vim)

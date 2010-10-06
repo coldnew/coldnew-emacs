@@ -168,7 +168,7 @@
                   ;; this one is more difficult, we have to do the
                   ;; highlighting and questioning on our own
                   (overlay-put overlay 'face
-                               (if (internal-find-face 'isearch nil)
+                               (if (facep 'isearch)
                                    'isearch 'region))
                   (map-y-or-n-p #'(lambda (x)
                                     (set-match-data x)

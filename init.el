@@ -3,7 +3,7 @@
 (eval-when-compile (require 'cl))
 
 (require 'site-gentoo nil 'noerror)        ; 讀取 Gentoo 安裝的外掛資訊
-(setq-default inhibit-default-init t )             ; 關閉全域初始化
+(setq-default inhibit-default-init t )	   ; 關閉全域初始化
 (setq-default debug-on-error     nil )             
 
 
@@ -12,9 +12,6 @@
 (when (require 'server nil 'noerror)
   (unless (server-running-p) 
     (server-start)))
-;; (if (or (daemonp) (file-exists-p "/tmp/emacs1000/server"))
-;;     (server-force-delete))
-;; (server-start)
 
 
 ;;;;;;;; 將指定目錄裡的東西全部加入清單
@@ -31,7 +28,7 @@
 ;;;;;; load package initial setting
 ;; emacs package manager
 ;;(require 'init-elpa)
-;;(require 'init-el-get)
+;; (require 'init-el-get)
 ;; other packages
 (require 'init-vim)
 (require 'init-color-theme)
@@ -40,6 +37,12 @@
 (require 'init-auto-complete)
 (require 'init-slime)
 (require 'init-woman)
+(require 'init-org-mode)
+
+;; Session management
+(require 'midnight nil 'noerror) ; Clear up unimportant buffers
+;; (require 'savehist-20+) (savehist-mode 1)
+
 
 ;;;;;;;; load user default config
 (require 'rc-base)

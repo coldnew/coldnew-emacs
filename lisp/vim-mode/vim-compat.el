@@ -75,12 +75,9 @@
     (if (not (fboundp 'called-interactively-p))
         '(interactive-p)
       ;; Else, it is defined, but perhaps too old?
-      (condition-case nil
-          (progn
-            (called-interactively-p nil)
-            '(called-interactively-p 'interactive))
-        (error
-         '(called-interactively-p)))))
+      (case (car-safe (subr-arity (symbol-function 'called-interactively-p)))
+        (0 '(called-interactively-p))
+        (1 '(called-interactively-p 'interactive)))))
    (vim:xemacs-p '(let (executing-macro) (interactive-p)))))
 
 (vim:emacsen
@@ -118,7 +115,7 @@
  (vim:emacs-p
   (defconst vim:down-mouse-1 'down-mouse-1)
   (defconst vim:down-mouse-1 'down-mouse-1)
-  (defsubst vim:mouse-event-window (ev) (posn-window (event-start event)))
+  (defsubst vim:mouse-event-window (ev) (posn-window (event-start ev)))
   (defsubst vim:mouse-event-point (ev) (posn-point (event-start ev)))
   (defalias 'vim:mouse-movement-p 'mouse-movement-p)
   (defsubst vim:mouse-event-p (ev)

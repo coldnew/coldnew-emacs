@@ -341,17 +341,17 @@ return the correct end-position of emacs-ranges, i.e.
 (vim:defmotion vim:motion-up (linewise count)
   "Move the cursor count lines up."
   (vim:use-last-column)
-  (forward-line (- (or count 1))))
+  (forward-visible-line (- (or count 1))))
 
 (vim:defmotion vim:motion-down (linewise count)
   "Move the cursor count lines down."
   (vim:use-last-column)
-  (forward-line (or count 1)))
+  (forward-visible-line (or count 1)))
 
 (vim:defmotion vim:motion-lines (linewise count)
   "Moves count - 1 lines down."
   (vim:use-last-column)
-  (forward-line (1- (or count 1))))
+  (forward-visible-line (1- (or count 1))))
 
 
 (defun vim:motion-beginning-of-line-or-digit-argument ()
@@ -600,7 +600,7 @@ contained in the first text-object before or at point."
     (when (> n 0)
       (let ((start (point)))
         ;; can't move further if already at the end of buffer
-        (when (>= start (1- (point-max))) (signal 'end-of-buffer))
+        (when (>= start (1- (point-max))) (signal 'end-of-buffer nil))
         ;; go to the end of the (possibly) current object
         (let ((pos (funcall boundary 'fwd)))
           (if pos (goto-char pos)
@@ -630,7 +630,7 @@ contained in the first text-object after or at point. If the
 parameter is 'bwd the function should return the first position
 contained in the first text-object before or at point."
   (when (> n 0)
-    (when (>= (point) (1- (point-max))) (signal 'end-of-buffer)))
+    (when (>= (point) (1- (point-max))) (signal 'end-of-buffer nil)))
     (dotimes (i n)
       (if linewise (forward-line) (forward-char))
       (goto-char (or (funcall boundary 'fwd) (point-max)))))
@@ -645,7 +645,7 @@ contained in the first text-object after or at point. If the
 parameter is 'bwd the function should return the first position
 contained in the first text-object before or at point."
   (when (> n 0)
-    (when (bobp) (signal 'beginning-of-buffer))
+    (when (bobp) (signal 'beginning-of-buffer nil))
     (dotimes (i n)
       (if linewise (forward-line -1) (backward-char))
       (goto-char (or (funcall boundary 'bwd) (point-min))))))
@@ -663,7 +663,7 @@ contained in the first text-object before or at point."
     (when (> n 0)
       (let ((start (point)))
         ;; can't move further if already at the beginning of buffer
-        (when (eobp) (signal 'beginning-of-buffer))
+        (when (eobp) (signal 'beginning-of-buffer nil))
         ;; go to the beginning of the (possibly) current object
         (let ((pos (funcall boundary 'bwd)))
           (if pos (goto-char pos)
@@ -723,7 +723,7 @@ text-object before or at point."
           (goto-char (or e (1- (point-max))))
           (funcall forward +1)
           (multiple-value-bind (nb ne) (funcall sel 'fwd)
-            (setq e (or ne (1- point-max)))))
+            (setq e (or ne (1- (point-max))))))
         (setq beg b
               end e
               pnt e)))
@@ -790,7 +790,7 @@ text-object before or at point."
       ;; select current ...
       (save-excursion
         (multiple-value-bind (b e) (funcall sel 'fwd)
-          (unless b (signal 'no-such-object '("No such text object")))
+          (unless b (signal 'no-such-object nil))
           (dotimes (i (1- n))
             (goto-char e)
             (funcall forward +1)
@@ -970,9 +970,9 @@ text-object before or at point."
   (when (and (vim:operator-pending-mode-p)
              (vim:looking-back "^[ \t]*")
              (not (save-excursion
-                    (forward-line -1)
+                    (forward-visible-line -1)
                     (and (bolp) (eolp)))))
-    (forward-line -1)
+    (forward-visible-line -1)
     (end-of-line)))
 
 
@@ -1010,9 +1010,9 @@ text-object before or at point."
   (when (and (vim:operator-pending-mode-p)
              (vim:looking-back "^[ \t]*")
              (not (save-excursion
-                    (forward-line -1)
+                    (forward-visible-line -1)
                     (and (bolp) (eolp)))))
-    (forward-line -1)
+    (forward-visible-line -1)
     (end-of-line)))
 
 
@@ -1074,7 +1074,7 @@ text-object before or at point."
 
 (vim:defmotion vim:motion-fwd-paragraph (exclusive count)
   "Move the cursor `count' paragraphs forward."
-  (if (eobp) (signal 'end-of-buffer)
+  (if (eobp) (signal 'end-of-buffer nil)
     (dotimes (i (or count 1))
       (goto-char (or (vim:boundary-paragraph 'fwd) (point-max)))
       (forward-line))))
@@ -1082,7 +1082,7 @@ text-object before or at point."
 
 (vim:defmotion vim:motion-bwd-paragraph (exclusive count)
   "Move the cursor `count' paragraphs backward."
-  (if (bobp) (signal 'beginning-of-buffer)
+  (if (bobp) (signal 'beginning-of-buffer nil)
     (dotimes (i (or count 1))
       (goto-char (or (vim:boundary-paragraph 'bwd) (point-min)))
       (forward-line -1))))

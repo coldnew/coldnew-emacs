@@ -60,6 +60,9 @@
          (_Blue-2         "#7f6bff")
          (_Blue-1         "#64a8d8")
          (_Blue           "#8ac6f2")
+         (_Blue+1         "#4871F2")
+         (_Blue+2         "#4064f2")
+         (_Blue+6         "#4D85FF")
          (_Skyblue-1      "#b1c3d4")
          (_Magenta        "#cc99cc")
          (_Orange-1       "#f57900")
@@ -158,7 +161,7 @@
 
 
 ;;;; Org-mode
-	 (org-date ((t (:foreground "Cyan" :underline t))))
+	 (org-date ((t (:foreground ,_Blue+6 :bold t))))
 	 (org-agenda-date ((t (:foreground ,_Blue))))
 	 (org-agenda-date-weekend ((t (:bold t :foreground ,_Orange :weight bold))))
 	 (org-hide ((t (:foreground ,_Bg))))
@@ -179,8 +182,6 @@
 	 (show-paren-mismatch-face ((t (:background ,_Purple-1 :foreground ,_Blue-2))))
 
 	 ;; Auto Complete
-        ;; (ac-completion-face
-        ;;    ((t (:foreground ,_Green :underline t))))
          (ac-candidate-face
            ((t (:background ,_Gray :foreground "white"))))
          (ac-selection-face
