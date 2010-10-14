@@ -52,5 +52,17 @@
 
 
 (require 'lang-emacs-lisp)
+(require 'lang-cpp)
+
+
+(ecb-layout-define "left19" left nil
+		   (ecb-set-sources-buffer)
+		   (ecb-split-ver 0.3 t)
+		   (other-window 1)
+		   (ecb-set-methods-buffer)
+		   (ecb-split-ver 0.7 t)
+		   (other-window 1)
+		   (ecb-set-analyse-buffer)
+		   (select-window (next-window)))
 
 
