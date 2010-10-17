@@ -1,5 +1,5 @@
 ;; init woman
-(provide 'init-woman)
+(provide 'rc-woman)
 
 (when (require 'woman nil 'noerror)
   (setq woman-cache-filename 

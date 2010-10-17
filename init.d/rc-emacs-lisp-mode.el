@@ -1,12 +1,9 @@
 
-(provide 'lang-emacs-lisp)
+(provide 'rc-emacs-lisp-mode)
 (eval-when-compile
   (require 'cl))
 
-(require 'eldoc)
 (require 'eldoc-extension)
-(require 'highlight-parentheses)
-;;(require 'pretty-lambdada)
 
 ;;;;##########################################################################
 ;;;;  User Options, Variables
@@ -14,23 +11,36 @@
 
 (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 
-(defun local/emacs-lisp-mode-hook()
-  "local emacs lisp mode hook"
-  (highlight-parentheses-mode)
-  (turn-on-eldoc-mode)
-;;  (eldoc-add-command 'paredit-backward-delete 'paredit-close-round)
-  (when (require 'init-auto-complete nil 'noerror)
-    (add-to-list 'ac-sources 'ac-source-company-elisp))
+;;(defun local/emacs-lisp-mode-hook()
+  ;;"local emacs lisp mode hook"
+  ;;(highlight-parentheses-mode)
+  ;;(turn-on-eldoc-mode)
+  ;;  (eldoc-add-command 'paredit-backward-delete 'paredit-close-round)
 
   ;;;; other keybinding
-  (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)
+  ;;(define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)
   ;;   (define-key emacs-lisp-mode-map (kbd "RET") 'electrify-return-if-match)
-  )
+  ;;)
+
+(defun ac-emacs-lisp-mode-setup ()
+  (setq ac-sources '(ac-source-symbols ac-source-company-elisp 
+				       ac-source-words-in-same-mode-buffers)))
+(add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
+
+(add-hook 'emacs-lisp-mode-hook
+	  '(lambda ()
+	     (when (require 'highlight-parentheses nil 'noerror)
+	       (highlight-parentheses-mode))
+	     (when (require 'eldoc nil 'noerror)
+	       (turn-on-eldoc-mode))
+	     (linum-mode)
+	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)))
+
 
 ;; All hooks
 ;;(add-hook 'emacs-lisp-mode-hook 'byte-compile-when-save)
 ;;(add-hook 'emacs-lisp-mode-hook 'remove-elc-when-visit)
-(add-hook 'emacs-lisp-mode-hook 'local/emacs-lisp-mode-hook)
+;;(add-hook 'emacs-lisp-mode-hook 'local/emacs-lisp-mode-hook)
 
 (when (require 'pretty-lambdada nil 'noerror)
   (add-hook 'emacs-lisp-mode-hook 'pretty-lambda))

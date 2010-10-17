@@ -18,7 +18,7 @@
 
 
 
-(provide 'init-org-mode)
+(provide 'rc-org-mode)
 
 
 ;; )

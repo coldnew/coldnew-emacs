@@ -1,9 +1,17 @@
+;;;; This file contains anything about complete
+;;; Include:
+;;;	auto-complete.el
+;;;	auto-complete-config.el
+;;;     ac-company.el
+;;;     yasnippet.el
+;;;     template-simple.el
 ;;; Code:
 
-(provide 'init-auto-complete)
+(provide 'rc-complete)
 (eval-when-compile
   (require 'cl))
 
+;;;; auto-complete.el
 (when (require 'auto-complete nil 'noerror)
   (global-auto-complete-mode t)		; 全域啟動自動補全
 
@@ -19,18 +27,20 @@
   (setq ac-comphist-file "~/.emacs.d/var/cache/auto-complete.cache")
 
   (setq-default ac-sources
-		'(ac-source-abbrev     ac-source-semantic  ac-source-symbols
-		  ac-source-filename   ac-source-functions ac-source-variables
-		  ac-source-dictionary ac-source-files-in-current-dir
-		  ac-source-words-in-same-mode-buffers))
+		'(ac-source-abbrev     ac-source-semantic   ac-source-symbols
+				       ac-source-filename   ac-source-functions 
+				       ac-source-variables  ac-source-dictionary
+				       ac-source-files-in-current-dir
+				       ac-source-words-in-same-mode-buffers))
 
   (define-key ac-menu-map (kbd "C-n") 'ac-next)
   (define-key ac-menu-map (kbd "C-p") 'ac-previous)
   (define-key ac-completing-map "\t" 'ac-complete)
 
-  (when (require 'init-vim nil 'noerror)
+  (when (require 'rc-vim-mode nil 'noerror)
     (vim:imap (kbd "C-p") 'auto-complete)
     (vim:imap (kbd "C-n") 'auto-complete))
+
   (when (require 'ac-company nil 'noerror)
     (ac-company-define-source ac-source-company-abbrev    company-abbrev   (symbol . "s"))
     (ac-company-define-source ac-source-company-clang     company-clang    (symbol . "s"))
@@ -44,7 +54,28 @@
     (ac-company-define-source ac-source-company-ispell    comapny-ispell   (symbol . "s"))
     (ac-company-define-source ac-source-company-keywords  company-keywords (symbol . "s"))
     (ac-company-define-source ac-source-company-nxml      company-nxml     (symbol . "s"))
-    (ac-company-define-source ac-source-company-semantic  comapny-semactic (symbol . "s")))
-  )
+    (ac-company-define-source ac-source-company-semantic  comapny-semactic (symbol . "s"))))
 
-;;; init-auto-complete.el ends here
+
+;;;; yasnippet.el
+(setq yasnippet-dir "~/.emacs.d/etc/yasnippet/snippets")
+(when (require 'yasnippet nil 'noerror)
+  (yas/initialize)
+  (yas/load-directory yasnippet-dir)
+  (when (require 'dropdown-list nil 'noerror)
+    (setq yas/prompt-functions '(yas/dropdown-prompt
+				 yas/ido-prompt
+				 yas/completing-prompt)))
+  ;; hook for automatic reloading of changed snippets
+  (defun local/update-yasnippets-on-save ()
+    (when (string-match "/yasnippet/snippets" buffer-file-name)
+      (yas/load-directory yasnippet-dir)))
+  (add-hook 'after-save-hook 'local/update-yasnippets-on-save))
+
+;;;; temlate-simple.el
+
+
+
+
+
+;;; rc-complete.el ends here

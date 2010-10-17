@@ -1,5 +1,5 @@
 ;;;; initial color theme
-(provide 'init-color-theme)
+(provide 'rc-color-theme)
 
 
 (when (require 'color-theme nil 'noerror)

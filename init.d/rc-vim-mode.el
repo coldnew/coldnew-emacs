@@ -1,21 +1,33 @@
 ;;;; initial vim-mode
-(provide 'init-vim)
+(provide 'rc-vim-mode)
 
 ;; because vim-mode has many bugs , use viper and vimpulse instead
 (when (require 'vim nil 'noerror)
   (vim-mode)
 
-;; keymapping
-(when (require 'undo-tree nil 'noerror)
-     (vim:nmap (kbd "u") 'undo-tree-undo)
-     (vim:nmap (kbd "C-r") 'undo-tree-redo))
+  ;; keymapping
+  (when (require 'undo-tree nil 'noerror)
+    (vim:nmap (kbd "u") 'undo-tree-undo)
+    (vim:nmap (kbd "C-r") 'undo-tree-redo))
 
-;; tmp usage setting
-(vim:defcmd vim:visual-toggle-comment (motion)
+  ;; tmp usage setting
+  (vim:defcmd vim:visual-toggle-comment (motion)
     "Toggles comments in the region."
     (comment-or-uncomment-region (vim:motion-begin-pos motion)
                                  (vim:motion-end-pos motion)))
-(vim:vmap (kbd "M-;") 'vim:visual-toggle-comment)
+  (vim:vmap (kbd "M-;") 'vim:visual-toggle-comment)
+  
+  (vim:defcmd vim:window-fullscreen (nonrepeatable)
+    "Make the window full-screen."
+    (let ((current-value (frame-parameter nil 'fullscreen)))
+      (set-frame-parameter nil 'fullscreen
+			   (if (equal 'fullboth current-value)
+			       (if (boundp 'old-fullscreen) old-fullscreen nil)
+			     (progn (setq old-fullscreen current-value)
+				    'fullboth)))))
+
+  (vim:wmap (kbd "C-w f") 'vim:window-fullscreen)
+
   )
 
 ;;;;; Following are viper and vimpulse setting

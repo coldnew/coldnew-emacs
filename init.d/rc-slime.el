@@ -9,4 +9,4 @@
   )
 
 
-(provide 'init-slime)
+(provide 'rc-slime)
