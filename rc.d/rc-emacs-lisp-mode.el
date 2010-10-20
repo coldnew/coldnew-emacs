@@ -11,21 +11,10 @@
 
 (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 
-;;(defun local/emacs-lisp-mode-hook()
-  ;;"local emacs lisp mode hook"
-  ;;(highlight-parentheses-mode)
-  ;;(turn-on-eldoc-mode)
-  ;;  (eldoc-add-command 'paredit-backward-delete 'paredit-close-round)
-
-  ;;;; other keybinding
-  ;;(define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)
-  ;;   (define-key emacs-lisp-mode-map (kbd "RET") 'electrify-return-if-match)
-  ;;)
-
-(defun ac-emacs-lisp-mode-setup ()
-  (setq ac-sources '(ac-source-symbols ac-source-company-elisp 
-				       ac-source-words-in-same-mode-buffers)))
-(add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
+;; (defun ac-emacs-lisp-mode-setup ()
+;;   (setq ac-sources '(ac-source-symbols ac-source-company-elisp
+;; 				       ac-source-words-in-same-mode-buffers)))
+;; (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
 
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
@@ -33,14 +22,16 @@
 	       (highlight-parentheses-mode))
 	     (when (require 'eldoc nil 'noerror)
 	       (turn-on-eldoc-mode))
-	     (linum-mode)
+	     (when (require 'rc-complete nil 'noerror)
+	       (setq ac-sources '(ac-source-symbols ac-source-company-elisp
+						    ac-source-words-in-same-mode-buffers)))
+	     (programming-common-hook)
 	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)))
 
 
 ;; All hooks
 ;;(add-hook 'emacs-lisp-mode-hook 'byte-compile-when-save)
 ;;(add-hook 'emacs-lisp-mode-hook 'remove-elc-when-visit)
-;;(add-hook 'emacs-lisp-mode-hook 'local/emacs-lisp-mode-hook)
 
 (when (require 'pretty-lambdada nil 'noerror)
   (add-hook 'emacs-lisp-mode-hook 'pretty-lambda))
@@ -87,4 +78,3 @@
 
 
 ;;; emacs-lisp.el ends here
-

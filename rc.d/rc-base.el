@@ -64,6 +64,7 @@
 (show-paren-mode           t )   ; 顯示括號匹配
 (global-auto-revert-mode   t )   ; 自動重讀修改過的檔案
 (auto-image-file-mode      t )   ; 圖片顯示功能
+(iimage-mode               t )
 ;; (desktop-save-mode         t )
 (mouse-avoidance-mode 'animate ) ; 鼠標自動避開游標
 
