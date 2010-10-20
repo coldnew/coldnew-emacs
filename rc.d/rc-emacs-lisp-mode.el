@@ -10,11 +10,6 @@
 
 (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 
-;; (defun ac-emacs-lisp-mode-setup ()
-;;   (setq ac-sources '(ac-source-symbols ac-source-company-elisp
-;; 				       ac-source-words-in-same-mode-buffers)))
-;; (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
-
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
 	     (when (require 'highlight-parentheses nil 'noerror)
@@ -53,6 +48,10 @@
 
 
 
+;; (defun ac-emacs-lisp-mode-setup ()
+;;   (setq ac-sources '(ac-source-symbols ac-source-company-elisp
+;; 				       ac-source-words-in-same-mode-buffers)))
+;; (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
 
 
 
