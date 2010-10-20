@@ -26,9 +26,9 @@ instead.
        (package           "el-get")
        (bname             "*el-get bootstrap*") ; both process and buffer name
        (pdir              (concat (file-name-as-directory el-get-dir) package))
-       (git               (executable-find "git"))
+       (git               (or (executable-find "git") (error "Unable to find `git'")))
        (url               "git://github.com/dimitri/el-get.git")
-       (el-get-sources    `((:name ,package :type "git" :url ,url :features el-get)))
+       (el-get-sources    `((:name ,package :type "git" :url ,url :features el-get :compile "el-get.el")))
        (default-directory el-get-dir)
        (process-connection-type nil) ; pipe, no pty (--no-progress)
        (clone             (start-process bname bname git "--no-pager" "clone" "-v" url package)))
@@ -109,8 +109,8 @@ You see that +el-get-sources+ exemple up there? It finishes with a single
 +(el-get)+ call. That's it. It will 'install' new +sources+ on the list and
 only 'init' already installed ones.
 
-Tracking if a +source+ is not by checking for the existance of a directory
-or symlink in +el-get-dir+, defaulting to +~/.emacs.d/el-get+.
+The status of each package is tracked into +~/.emacs.d/el-get/.status.el+
+(by default) and can get the values +required+, +installed+ or +removed+.
 
 === Sync or async?
 
@@ -165,6 +165,12 @@ probably just want your package +foo+ to be all installed into
 definition includes a +:compile+ property set to the list of files to byte
 compile (or to a single file), or all the +.el+ files found in the package
 when there's no +:build+ command.
+
+=== Hooks
+
++el-get+ offers a variety of specific hooks (read the source), and two
+general purposes hooks facilities: +el-get-post-install-hooks+ and
++el-get-post-update-hooks+, called with the package name as argument.
 
 === Some more commands?
 
