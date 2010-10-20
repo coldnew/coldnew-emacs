@@ -3,7 +3,6 @@
 (eval-when-compile
   (require 'cl))
 
-(require 'eldoc-extension)
 
 ;;;;##########################################################################
 ;;;;  User Options, Variables
@@ -21,20 +20,48 @@
 	     (when (require 'highlight-parentheses nil 'noerror)
 	       (highlight-parentheses-mode))
 	     (when (require 'eldoc nil 'noerror)
+	       (require 'eldoc-extension nil 'noerror)
 	       (turn-on-eldoc-mode))
 	     (when (require 'rc-complete nil 'noerror)
 	       (setq ac-sources '(ac-source-symbols ac-source-company-elisp
 						    ac-source-words-in-same-mode-buffers)))
+	     (byte-compile-when-save)
+	     (remove-elc-when-visit)
 	     (programming-common-hook)
 	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)))
 
 
-;; All hooks
-;;(add-hook 'emacs-lisp-mode-hook 'byte-compile-when-save)
-;;(add-hook 'emacs-lisp-mode-hook 'remove-elc-when-visit)
-
+;;;;;; Functions
 (when (require 'pretty-lambdada nil 'noerror)
   (add-hook 'emacs-lisp-mode-hook 'pretty-lambda))
+
+(defun remove-elc-when-visit ()
+  "When visit, remove <filename>.elc"
+  (make-local-variable 'find-file-hook)
+  (add-hook 'find-file-hook
+	    (lambda ()
+	      (if (file-exists-p (concat buffer-file-name "c"))
+		  (delete-file (concat buffer-file-name "c"))))))
+
+(defun byte-compile-when-save()
+  "When save, recompile it"
+  (make-local-variable 'after-save-hook)
+  (add-hook 'after-save-hook
+	    (lambda ()
+	      (if (buffer-file-name)
+		  (byte-compile-file buffer-file-name)))))
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ;; ;; 該資料夾內沒有 Tags 檔案時自動建立,若有時則更新 Tags 檔

@@ -69,6 +69,7 @@
 (mouse-avoidance-mode 'animate ) ; 鼠標自動避開游標
 
 ;;;; 編輯環境
+(setq-default initial-scratch-message       nil )
 (setq-default major-mode    'text-mode ) ; 預設使用 text-mode
 (setq-default line-spacing                    4 ) ; 設定行間距為4格
 (setq-default fill-column                   100 ) ; 顯示默認的文檔的寬度為100列
@@ -92,6 +93,7 @@
 (setq-default scroll-preserve-screen-position t ) ;
 (setq-default minibuffer-electric-default-mode t ) ; 啟用部份補全
 
+(setq-default view-read-only  t )	; 開啟惟讀檔時啟用 view-mode
 (cua-mode                   t )         ; 啟用 cua-mode
 (setq-default cua-enable-cua-keys nil )	; 不使用 cua-mode 裡的按鍵
 (delete-selection-mode      t )         ; 啟用 delsel-mode
@@ -104,8 +106,5 @@
      (or (file-exists-p  (file-name-directory buffer-file-name))
        (make-directory (file-name-directory buffer-file-name) t))))
 
-;; ;; Save place in files between sessions
-;; (when (require 'saveplace nil 'noerror)
-;;   (setq-default save-place t))
 
 ;;; rc-base.el ends here
