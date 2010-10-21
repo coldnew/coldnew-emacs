@@ -21,16 +21,15 @@
 
 
 ;;;;;; load package initial setting
-
 (require 'rc-backup)
 (require 'rc-base)
 (require 'rc-c-mode)
+(require 'rc-cedet)
 (require 'rc-color-theme)
 (require 'rc-common-hook)
 (require 'rc-complete)
 (require 'rc-cpp-mode)
 (require 'rc-ecb)
-(require 'rc-cedet)
 (require 'rc-emacs-lisp-mode)
 (require 'rc-fonts)
 (require 'rc-locale)
@@ -40,3 +39,6 @@
 (require 'rc-slime)
 (require 'rc-vim-mode)
 (require 'rc-woman)
+
+
+;; add test
