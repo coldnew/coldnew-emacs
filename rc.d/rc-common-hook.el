@@ -19,7 +19,6 @@
 		(highlight-changes-remove-highlight (point-min) (point-max)))))
 
 
-
 (defun programming-common-hook ()
   "the meta functions for programmer use."
   (linum-mode)					; 顯示行號
@@ -27,9 +26,8 @@
   (coldnew/show-prog-keywords)			; 高亮特殊字
   (coldnew/show-too-long-lines)			; 高亮過長行
   (coldnew/highlight-changes-remove-after-save) ; 存檔後移除之前修改的顯示
- )
+  )
 
-;(add-hook 'write-file-hooks 'coldnew/highlight-changes-remove-after-save)
 
 
 ;; nuke whitespaces when writing to a file

@@ -17,6 +17,13 @@
 
   (when (require 'auto-complete-config nil 'noerror)
     (ac-config-default))
+  ;; Fix popup-tip's bug
+  (when (require 'pos-tip nil 'noerror)
+    (defadvice popup-tip
+      (around popup-pos-tip-wrapper (string &rest args) activate)
+      (if (eq window-system 'x)
+	  (apply 'popup-pos-tip string args)
+	ad-do-it)))
 
   (setq ac-use-fuzzy      nil )		; 關閉模糊補全
   (setq ac-auto-start     nil )		; 關閉自動補全
@@ -28,7 +35,7 @@
 
   (setq-default ac-sources
 		'(ac-source-abbrev     ac-source-semantic   ac-source-symbols
-				       ac-source-filename   ac-source-functions 
+				       ac-source-filename   ac-source-functions
 				       ac-source-variables  ac-source-dictionary
 				       ac-source-files-in-current-dir
 				       ac-source-words-in-same-mode-buffers))

@@ -6,13 +6,11 @@
 (setq-default inhibit-default-init t )	   ; 關閉全域初始化
 (setq-default debug-on-error     nil )
 
-
 ;;;;;;; start server for emacsclient
 (message "* --[ start the emacs server ]-- *")
 (when (require 'server nil 'noerror)
   (unless (server-running-p)
     (server-start)))
-
 
 ;;;;;;;; 將指定目錄裡的東西全部加入清單
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
@@ -22,34 +20,22 @@
       (normal-top-level-add-subdirs-to-load-path)))
 
 
-(require 'pos-tip)
-
-
 ;;;;;; load package initial setting
-;; emacs package manager
-;;(require 'init-elpa)
-;; (require 'init-el-get)
-;; other packages
-(require 'rc-vim-mode)
-(require 'rc-color-theme)
-(require 'rc-undo-tree)
-(require 'rc-session)
-(require 'rc-slime)
-(require 'rc-woman)
-(require 'rc-org-mode)
-(require 'rc-complete)
-(require 'rc-ecb)
-(require 'rc-common-hook)
-
-(require 'rc-package-manager)
-
-;;;;;;; load user default config
-(require 'rc-base)
 (require 'rc-backup)
+(require 'rc-base)
+(require 'rc-c-mode)
+(require 'rc-color-theme)
+(require 'rc-common-hook)
+(require 'rc-complete)
+(require 'rc-cpp-mode)
+(require 'rc-ecb)
+(require 'rc-cedet)
+(require 'rc-emacs-lisp-mode)
 (require 'rc-fonts)
 (require 'rc-locale)
-
-
-
-(require 'rc-emacs-lisp-mode)
-(require 'rc-cpp-mode)
+(require 'rc-org-mode)
+(require 'rc-package-manager)
+(require 'rc-session)
+(require 'rc-slime)
+(require 'rc-vim-mode)
+(require 'rc-woman)
