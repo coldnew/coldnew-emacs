@@ -12,3 +12,7 @@
 ;;  (global-set-key (kbd "<f3>") 'shell-pop)
   (when (require 'rc-vim-mode nil 'noerror)
     (vim:nmap (kbd "<f3>") 'shell-pop)))
+
+
+(when (require 'cedet nil 'noerror)
+  )

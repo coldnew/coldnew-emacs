@@ -11,6 +11,8 @@
     (vim:nmap (kbd "u") 'undo-tree-undo)
     (vim:nmap (kbd "C-r") 'undo-tree-redo))
 
+;;  (vim:imap (kbd "RET") 'newline-and-indent)
+
 
   ;; tmp usage setting
   (vim:defcmd vim:visual-toggle-comment (motion)

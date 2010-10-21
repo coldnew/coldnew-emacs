@@ -1,6 +1,6 @@
 ;;; init.el ---
 
-(eval-when-compile (require 'cl))
+(setq custom-file "~/.emacs.d/custom.el")
 
 (require 'site-gentoo nil 'noerror)        ; 讀取 Gentoo 安裝的外掛資訊
 (setq-default inhibit-default-init t )	   ; 關閉全域初始化
@@ -21,6 +21,7 @@
 
 
 ;;;;;; load package initial setting
+
 (require 'rc-backup)
 (require 'rc-base)
 (require 'rc-c-mode)
