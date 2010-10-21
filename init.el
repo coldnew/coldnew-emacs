@@ -39,6 +39,3 @@
 (require 'rc-slime)
 (require 'rc-vim-mode)
 (require 'rc-woman)
-
-
-;; add test
