@@ -11,13 +11,13 @@
   (show-too-long-lines)			; 高亮過長行
   (highlight-changes-remove-after-save) ; 存檔後移除之前修改的顯示
   (set-newline-and-indent)		; 行尾按ENTER自動縮排
+  (indent-file-when-save)		; 儲存檔案時自動縮排
+  (use-hungry-delete)			; 啟用 hungry-delete mode
   )
 
 
 ;; nuke whitespaces when writing to a file
 (add-hook 'before-save-hook 'whitespace-cleanup)
-
-
 
 ;;;; Functions
 
@@ -35,8 +35,21 @@
   (make-local-variable 'after-save-hook)
   (add-hook 'after-save-hook
 	    (lambda ()
-		(highlight-changes-remove-highlight (point-min) (point-max)))))
+	      (highlight-changes-remove-highlight (point-min) (point-max)))))
 
 (defun set-newline-and-indent ()
   (when (require 'rc-vim-mode nil 'noerror)
     (vim:imap (kbd "RET") 'newline-and-indent)))
+
+(defun indent-file-when-save ()
+  "When save, indent whole file."
+  (make-local-variable 'after-save-hook)
+  (add-hook 'after-save-hook
+	    (lambda ()
+	      (indent-region (point-min) (point-max) nil)
+	      (save-buffer))))
+
+(defun use-hungry-delete ()
+  "Use hungry delete mode"
+  (when (require 'hungry-delete nil 'noerroy)
+    (turn-on-hungry-delete-mode)))

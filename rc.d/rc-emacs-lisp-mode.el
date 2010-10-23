@@ -10,6 +10,7 @@
 
 (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 
+
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
 	     (when (require 'highlight-parentheses nil 'noerror)
@@ -20,6 +21,7 @@
 	     (when (require 'rc-complete nil 'noerror)
 	       (setq ac-sources '(ac-source-symbols ac-source-company-elisp
 						    ac-source-words-in-same-mode-buffers)))
+
 	     (byte-compile-when-save)
 	     (remove-elc-when-visit)
 	     (programming-common-hook)
@@ -48,14 +50,11 @@
 
 
 
-;; (defun ac-emacs-lisp-mode-setup ()
-;;   (setq ac-sources '(ac-source-symbols ac-source-company-elisp
-;; 				       ac-source-words-in-same-mode-buffers)))
-;; (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
-
-
-
-
+;; FIXME: remove one day
+(defun ac-emacs-lisp-mode-setup ()
+  (setq ac-sources '(ac-source-symbols ac-source-company-elisp
+				       ac-source-words-in-same-mode-buffers)))
+(add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
 
 
 

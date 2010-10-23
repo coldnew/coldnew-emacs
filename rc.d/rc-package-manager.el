@@ -28,5 +28,6 @@
 	  fic-mode
 	  ;;	  session
 	  ;;	  popup-kill-ring
+	  hungury-delete
 	  company
 	  )))
