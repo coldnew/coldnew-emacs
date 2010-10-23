@@ -197,6 +197,9 @@
 	  ((t (:background ,_RedGray-6 :foreground nil))))
 
 
+	;; ecb
+
+
 ;;;; Woman
 
 	 (woman-italic-face ((t (:slant italic :weight bold))))

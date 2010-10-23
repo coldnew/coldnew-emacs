@@ -19,10 +19,16 @@
       (setq load-path (cons my-lisp-dir load-path))
       (normal-top-level-add-subdirs-to-load-path)))
 
+;;;;;;;;; 設定預設emacs窗口大小
+(setq default-frame-alist '(
+		(width . 170)
+		(height . 50) ))
+
 
 ;;;;;; load package initial setting
 (require 'rc-backup)
 (require 'rc-base)
+(require 'rc-buffer)
 (require 'rc-c-mode)
 (require 'rc-cedet)
 (require 'rc-color-theme)
