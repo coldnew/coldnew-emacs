@@ -7,13 +7,13 @@
   (setq matlab-shell-command "/opt/matlab/bin/matlab")
   (setq matlab-shell-command-switches '("-nosplash" "-nodesktop"))
 
-  ;; customize matlab-shell-mode
+  ;; Matlab Shell Mode
   (add-hook 'matlab-shell-mode-hook
 	    '(lambda ()
 	       (when (featurep 'vim)
 		 (vim:imap (kbd "RET") 'comint-send-input))
 	       ))
-
+  ;; Matlab Mode
   (add-hook 'matlab-mode-hook
 	    '(lambda ()
 	       ))
