@@ -1,4 +1,3 @@
-
 (provide 'rc-emacs-lisp-mode)
 (eval-when-compile
   (require 'cl))
@@ -26,6 +25,7 @@
 	     (remove-elc-when-visit)
 	     (programming-common-hook)
 	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)))
+
 
 
 ;;;;;; Functions

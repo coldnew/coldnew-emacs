@@ -1,7 +1,6 @@
 ;;; init.el ---
 
 (setq custom-file "~/.emacs.d/custom.el")
-
 (require 'site-gentoo nil 'noerror)        ; 讀取 Gentoo 安裝的外掛資訊
 (setq-default inhibit-default-init t )	   ; 關閉全域初始化
 (setq-default debug-on-error     nil )
@@ -20,10 +19,7 @@
       (normal-top-level-add-subdirs-to-load-path)))
 
 ;;;;;;;;; 設定預設emacs窗口大小
-(setq default-frame-alist '(
-			    (width . 170)
-			    (height . 50) ))
-
+(setq default-frame-alist '((width . 170) (height . 50)))
 
 
 ;;;;;; load package initial setting
@@ -40,6 +36,7 @@
 (require 'rc-emacs-lisp-mode)
 (require 'rc-fonts)
 (require 'rc-locale)
+(require 'rc-matlab-mode)
 (require 'rc-org-mode)
 (require 'rc-package-manager)
 (require 'rc-session)

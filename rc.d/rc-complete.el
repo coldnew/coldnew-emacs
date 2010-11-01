@@ -45,9 +45,9 @@
   (define-key ac-menu-map (kbd "C-p") 'ac-previous)
   (define-key ac-completing-map "\t" 'ac-complete)
 
-  (when (require 'rc-vim-mode nil 'noerror)
-    (vim:imap (kbd "C-p") 'auto-complete)
-    (vim:imap (kbd "C-n") 'auto-complete))
+  (when (featurep 'vim)
+		  (vim:imap (kbd "C-p") 'auto-complete)
+		  (vim:imap (kbd "C-n") 'auto-complete))
 
   (when (require 'ac-company nil 'noerror)
     (ac-company-define-source ac-source-company-abbrev    company-abbrev   (symbol . "s"))
