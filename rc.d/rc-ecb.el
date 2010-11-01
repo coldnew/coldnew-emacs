@@ -21,8 +21,6 @@
   ;;TODO:??
   (setq ecb-directories-buffer-name " *ECB Directories*")
 
-
-
   (ecb-layout-define "ecb-default-layout"    left nil
 		     (ecb-split-ver 0.7 t)
 		     (ecb-set-directories-buffer)
