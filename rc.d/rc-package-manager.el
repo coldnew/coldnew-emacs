@@ -4,6 +4,8 @@
 (setq el-get-dir "~/.emacs.d/lisp/")
 (setq el-get-recipe-path '("~/.emacs.d/etc/el-get/recipes"))
 (when (require 'el-get nil 'noerror)
+  (defalias 'install 'el-get-install)
+  (defalias 'remove  'el-get-remove)
   (setq el-get-sources
 	'(
 	  el-get
@@ -30,4 +32,6 @@
 	  ;;	  popup-kill-ring
 	  hungury-delete
 	  company
+	  pylookup
+	  pymacs
 	  )))

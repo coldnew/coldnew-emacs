@@ -1,7 +1,10 @@
 (provide 'rc-emacs-lisp-mode)
+
 (eval-when-compile
   (require 'cl))
-
+(require 'eldoc nil 'noerror)
+(require 'eldoc-extension nil 'noerror)
+(require 'highlight-parentheses nil 'noerror)
 
 ;;;;##########################################################################
 ;;;;  User Options, Variables
@@ -12,25 +15,24 @@
 
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
-	     (when (require 'highlight-parentheses nil 'noerror)
-	       (highlight-parentheses-mode))
-	     (when (require 'eldoc nil 'noerror)
-	       (require 'eldoc-extension nil 'noerror)
-	       (turn-on-eldoc-mode))
-	     (when (require 'rc-complete nil 'noerror)
-	       (setq ac-sources '(ac-source-symbols ac-source-company-elisp
-						    ac-source-words-in-same-mode-buffers)))
+	     ;; Highlight the parentheses
+	     (if (featurep 'highlight-parentheses) (highlight-parentheses-mode))
+	     ;; Enable eldoc
+	     (if (featurep 'eldoc) (turn-on-eldoc-mode))
+	     ;; Remodify auto-complete setting in auto-complete-config.el
+	     (if (featurep 'auto-complete)
+		 (setq ac-sources
+		       '(ac-source-symbols ac-source-company-elisp ac-source-words-in-same-mode-buffers)))
+	     ;; Enable pretty-lambda
+	     (if (featurep 'pretty-lambda) (turn-on-pretty-lambda-mode))
 
+	     ;; Hooks for emacs-lisp-mode
 	     (byte-compile-when-save)
 	     (remove-elc-when-visit)
 	     (programming-common-hook)
 	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)))
 
-
-
 ;;;;;; Functions
-(when (require 'pretty-lambdada nil 'noerror)
-  (add-hook 'emacs-lisp-mode-hook 'pretty-lambda))
 
 (defun remove-elc-when-visit ()
   "When visit, remove <filename>.elc"
