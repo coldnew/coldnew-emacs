@@ -16,15 +16,15 @@
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
 	     ;; Highlight the parentheses
-	     (if (featurep 'highlight-parentheses) (highlight-parentheses-mode))
+	     (when (featurep 'highlight-parentheses) (highlight-parentheses-mode))
 	     ;; Enable eldoc
-	     (if (featurep 'eldoc) (turn-on-eldoc-mode))
+	     (when (featurep 'eldoc) (turn-on-eldoc-mode))
 	     ;; Remodify auto-complete setting in auto-complete-config.el
-	     (if (featurep 'auto-complete)
-		 (setq ac-sources
-		       '(ac-source-symbols ac-source-company-elisp ac-source-words-in-same-mode-buffers)))
+	     (when (featurep 'auto-complete)
+	       (setq ac-sources
+		     '(ac-source-symbols ac-source-company-elisp ac-source-words-in-same-mode-buffers)))
 	     ;; Enable pretty-lambda
-	     (if (featurep 'pretty-lambda) (turn-on-pretty-lambda-mode))
+	     (when (featurep 'pretty-lambda) (turn-on-pretty-lambda-mode))
 
 	     ;; Hooks for emacs-lisp-mode
 	     (byte-compile-when-save)
