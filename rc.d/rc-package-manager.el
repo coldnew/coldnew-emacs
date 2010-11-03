@@ -34,4 +34,5 @@
 	  company
 	  pylookup
 	  pymacs
+	  smartchr
 	  )))

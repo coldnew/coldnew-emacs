@@ -53,3 +53,38 @@
   "Use hungry delete mode"
   (when (require 'hungry-delete nil 'noerroy)
     (turn-on-hungry-delete-mode)))
+
+
+;;;; extension for smartchr
+(require 'smartchr nil 'noerror)
+
+(defun smartchr-insert-eol (s)
+  (lexical-let ((s s))
+    (smartchr-make-struct
+     :insert-fn (lambda ()
+		  (save-excursion
+		    (goto-char (point-at-eol))
+		    (when (not (string= (char-to-string (preceding-char)) s))
+		      (insert s))))
+     :cleanup-fn (lambda ()
+		   (save-excursion
+		     (goto-char (point-at-eol))
+		     (delete-char (- 0 (length s))))))))
+
+
+(defun smartchr-insert-semicolon-eol ()
+  (smartchr-insert-eol ";"))
+
+(defun insert-char-smart ()
+  "insert character more smart."
+  (when (featurep 'smartchr)
+    (vim:imap (kbd "(")  (smartchr '("(`!!')" "(")))
+    (vim:imap (kbd "[")  (smartchr '("[`!!']" "[ [`!!'] ]" "[")))
+    (vim:imap (kbd "{")  (smartchr '("{\n`!!'\n}" "{`!!'}" "{")))
+    (vim:imap (kbd "`")  (smartchr '("\``!!''" "\`")))
+    (vim:imap (kbd "\"") (smartchr '("\"`!!'\"" "\"")))
+    (vim:imap (kbd ">")  (smartchr '(">" " => " " => '`!!''" " => \"`!!'\"")))
+    (vim:imap (kbd "F")  (smartchr '("F" "$" "$_" "$_->" "@$")))
+    (vim:imap (kbd "=")  (smartchr '(" = " " == "  "=")))
+    (vim:imap (kbd ";")  (smartchr '(";" smartchr-insert-semicolon-eol)))))
+

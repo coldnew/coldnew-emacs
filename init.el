@@ -38,8 +38,10 @@
 (require 'rc-locale)
 (require 'rc-matlab-mode)
 (require 'rc-org-mode)
-(require 'rc-package-manager)
 (require 'rc-session)
 (require 'rc-slime)
 (require 'rc-vim-mode)
 (require 'rc-woman)
+
+;; FIXME: bug?
+;;(require 'rc-package-manager)

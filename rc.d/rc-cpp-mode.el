@@ -4,6 +4,8 @@
 (eval-when-compile
   (require 'cl))
 
+(require 'find-file nil 'noerror)
+(require 'smartchr  nil 'noerror)
 
 
 (add-hook 'c++-mode-hook
@@ -23,6 +25,18 @@
 
 (defun find-source-or-header ()
   "find source or header file."
-  (when (featurep 'vim)
+  (when (and (featurep 'vim)
+	     (featurep 'find-file))
+    (add-to-list ff-other-file-alist '((("\\.cpp$"   (".h" ".hpp")))))
     (vim:nmap (kbd ",o") 'ff-find-other-file)
     (vim:nmap (kbd ",h") 'ff-find-related-file)))
+
+
+
+
+
+;; (defun insert-char-smart ()
+;;   "insert character more smart."
+;;   (when (featurep 'smartchr)
+;;     (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
+;;     (vim:imap (kbd ";") (smartchr '(";" ik:insert-eol)))))

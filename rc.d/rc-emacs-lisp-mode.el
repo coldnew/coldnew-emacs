@@ -27,10 +27,11 @@
 	     (when (featurep 'pretty-lambda) (turn-on-pretty-lambda-mode))
 
 	     ;; Hooks for emacs-lisp-mode
-	     (byte-compile-when-save)
-	     (remove-elc-when-visit)
-	     (programming-common-hook)
-	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)))
+	     (byte-compile-when-save)	; bytecompile the elisp file after save
+	     (remove-elc-when-visit)	; when visit elisp file, remove .elc extensioon
+	     (programming-common-hook)	; programming common hook
+	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)
+	     ))
 
 ;;;;;; Functions
 
@@ -51,16 +52,11 @@
 		  (byte-compile-file buffer-file-name)))))
 
 
-
 ;; FIXME: remove one day
 (defun ac-emacs-lisp-mode-setup ()
   (setq ac-sources '(ac-source-symbols ac-source-company-elisp
 				       ac-source-words-in-same-mode-buffers)))
 (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
-
-
-
-
 
 
 
