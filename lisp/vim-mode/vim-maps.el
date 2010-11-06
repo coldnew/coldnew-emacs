@@ -185,6 +185,8 @@
 (vim:nmap "Y" "yy")
 (vim:nmap "p" 'vim:cmd-paste-behind)
 (vim:nmap "P" 'vim:cmd-paste-before)
+(vim:nmap (kbd "C-p") 'vim:cmd-paste-pop)
+(vim:nmap (kbd "C-n") 'vim:cmd-paste-pop-next)
 
 (vim:nmap "J" 'vim:cmd-join-lines)
 

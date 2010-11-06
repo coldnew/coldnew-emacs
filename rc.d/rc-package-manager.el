@@ -35,4 +35,5 @@
 	  pylookup
 	  pymacs
 	  smartchr
+	  ipython
 	  )))

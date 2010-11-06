@@ -13,6 +13,7 @@
   (set-newline-and-indent)		; 行尾按ENTER自動縮排
   (indent-file-when-save)		; 儲存檔案時自動縮排
   (use-hungry-delete)			; 啟用 hungry-delete mode
+  (insert-char-smart-common-type)
   )
 
 
@@ -75,16 +76,16 @@
 (defun smartchr-insert-semicolon-eol ()
   (smartchr-insert-eol ";"))
 
-(defun insert-char-smart ()
+(defun insert-char-smart-common-type ()
   "insert character more smart."
   (when (featurep 'smartchr)
     (vim:imap (kbd "(")  (smartchr '("(`!!')" "(")))
-    (vim:imap (kbd "[")  (smartchr '("[`!!']" "[ [`!!'] ]" "[")))
-    (vim:imap (kbd "{")  (smartchr '("{\n`!!'\n}" "{`!!'}" "{")))
-    (vim:imap (kbd "`")  (smartchr '("\``!!''" "\`")))
+    ;; (vim:imap (kbd "[")  (smartchr '("[`!!']" "[ [`!!'] ]" "[")))
+    ;; (vim:imap (kbd "{")  (smartchr '("{\n`!!'\n}" "{`!!'}" "{")))
+    ;; (vim:imap (kbd "`")  (smartchr '("\``!!''" "\`")))
     (vim:imap (kbd "\"") (smartchr '("\"`!!'\"" "\"")))
-    (vim:imap (kbd ">")  (smartchr '(">" " => " " => '`!!''" " => \"`!!'\"")))
-    (vim:imap (kbd "F")  (smartchr '("F" "$" "$_" "$_->" "@$")))
-    (vim:imap (kbd "=")  (smartchr '(" = " " == "  "=")))
-    (vim:imap (kbd ";")  (smartchr '(";" smartchr-insert-semicolon-eol)))))
-
+    ;; (vim:imap (kbd ">")  (smartchr '(">" " => " " => '`!!''" " => \"`!!'\"")))
+    ;; (vim:imap (kbd "F")  (smartchr '("F" "$" "$_" "$_->" "@$"))) ;
+    ;; (vim:imap (kbd "=")  (smartchr '(" = " " == "  "="))) ;
+    ;; (vim:imap (kbd ";")  (smartchr '(";" smartchr-insert-semicolon-eol)))
+    ))

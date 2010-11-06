@@ -391,13 +391,14 @@ and switches to insert-mode."
         (incf linenr)
         (when (> linenr (line-number-at-pos (point)))
           (setq count 0))))
-    (if register
-        (let ((txt (make-string 1 ? )))
-          (put-text-property 0 1 'yank-handler
-                             (list 'vim:yank-line-handler (reverse lines))
-                             txt)
-          (set-register register txt))
-      (kill-new " " nil (list 'vim:yank-line-handler (reverse lines))))))
+    (let ((txt (make-string 1 ? )))
+      (if register
+          (progn
+            (put-text-property 0 1 'yank-handler
+                               (list #'vim:yank-line-handler (reverse lines))
+                               txt)
+            (set-register register txt))
+        (kill-new txt nil (list #'vim:yank-line-handler (reverse lines)))))))
 
 
 (vim:defcmd vim:cmd-yank-rectangle (motion register nonrepeatable)
@@ -419,33 +420,45 @@ and switches to insert-mode."
                     (buffer-substring beg end))
               parts)
         (forward-line -1)))
-    (if register
-        (let ((txt (make-string 1 ? )))
-          (put-text-property 0 1
-                             'yank-handler
-                             (list 'vim:yank-block-handler
-                                   (cons (- endcol begcol -1) parts)) 
-                             txt)
-          (set-register register txt))
-      (kill-new " " nil (list 'vim:yank-block-handler
-                              (cons (- endcol begcol -1) parts))))
+    (let ((txt (make-string 1 ? )))
+      (if register
+          (progn
+            (put-text-property 0 1
+                               'yank-handler
+                               (list #'vim:yank-block-handler
+                                     (cons (- endcol begcol -1) parts)
+                                     nil
+                                     #'delete-rectangle) 
+                               txt)
+            (set-register register txt))
+        (kill-new txt nil (list #'vim:yank-block-handler
+                                (cons (- endcol begcol -1) parts)
+                                nil
+                                #'delete-rectangle))))
     (goto-line begrow)
     (move-to-column begcol)))
 
 (defun vim:yank-line-handler (text)
   "Inserts the current text linewise."
   (beginning-of-line)
+  (set-mark (point))
   (dolist (line text)
     (insert line)
     (newline)))
 
+
 (defun vim:yank-block-handler (text)
   "Inserts the current text as block."
+  ;; TODO: yank-pop with count will not work for blocks, because
+  ;; it's difficult to place (point) (or (mark)) at the correct
+  ;; position since they may no exist.
   (let ((ncols (car text))
         (parts (cdr text))
         (col (current-column))
-	(current-line (line-number-at-pos (point))))
+	(current-line (line-number-at-pos (point)))
+        (last-pos (point)))
     
+    (set-mark (point))
     (dolist (part parts)
       
       (let* ((offset (car part))
@@ -466,19 +479,53 @@ and switches to insert-mode."
           (unless (eolp)
             ;; text follows, so we have to insert spaces
             (insert (make-string (- ncols len) ? ))))
-	(forward-line 1)))))
+        (setq last-pos (point))
+	(forward-line 1)))
+    (goto-char last-pos)
+    (exchange-point-and-mark)))
 
 
+(defvar vim:last-paste nil
+  "Information (beg end count) of the latest paste.")
+
+
+(vim:defcmd vim:cmd-paste-pop (count)
+  "Cycles through the kill-ring like yank-pop."
+  (unless (and (member last-command '(vim:cmd-paste-pop
+                                      vim:cmd-paste-pop-next
+                                      vim:cmd-paste-before
+                                      vim:cmd-paste-behind))
+               vim:last-paste)
+    (error "Previous command was not a vim-mode paste"))
+  (when vim:last-paste
+    (save-excursion
+      (funcall (or yank-undo-function #'delete-region)
+               (car vim:last-paste)
+               (cadr vim:last-paste))
+      (goto-char (car vim:last-paste))
+      (current-kill (or count 1))
+      (vim:cmd-paste-before :count (caddr vim:last-paste)))))
+
+
+(vim:defcmd vim:cmd-paste-pop-next (count)
+  "Cycles through the kill-ring like yank-pop."
+  (vim:cmd-paste-pop :count (- (or count 1))))
+  
 (vim:defcmd vim:cmd-paste-before (count register)
   "Pastes the latest yanked text before the cursor position."
   (unless (or kill-ring-yank-pointer register)
     (error "kill-ring empty"))
 
-  (dotimes (i (or count 1))
+  (let (beg end)
     (save-excursion
-      (if register
-          (insert-for-yank (vim:get-register register))
-        (yank)))))
+      (dotimes (i (or count 1))
+        (if register
+            (insert-for-yank (vim:get-register register))
+          (set-mark (point))
+          (insert-for-yank (car kill-ring-yank-pointer))
+          (setq beg (min (point) (mark t) (or beg (point)))
+                end (max (point) (mark t) (or end (point)))))))
+    (setq vim:last-paste (list beg end (or count 1)))))
 
 
 (vim:defcmd vim:cmd-paste-behind (count register)
@@ -510,10 +557,12 @@ and switches to insert-mode."
       
       (t
         (forward-char)
+        (set-mark (point))
         (dotimes (i (or count 1))
           (if register
               (insert-for-yank (vim:get-register register))
-            (yank)))
+            (insert-for-yank (car kill-ring-yank-pointer))))
+        (setq vim:last-paste (list (mark t) (point) (or count 1)))
         (backward-char)))))
 
 

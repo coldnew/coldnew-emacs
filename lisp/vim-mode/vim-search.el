@@ -222,21 +222,30 @@
 (defun vim:parse-substitute (text)
   (when (string-match "\\`\\s-*/\\(\\(?:[^/]\\|\\\\.\\)+\\)/\\(\\(?:[^/]\\|\\\\.\\)*\\)\\(?:/\\([giIc]*\\)\\)?\\s-*\\'"
                       text)
-    (let ((pattern (match-string 1 text))
-          (replacement (match-string 2 text))
-          (flags (match-string 3 text)))
-      (values pattern
-              ;; handle some special escapes, especially \\ and \/
-              (replace-regexp-in-string "\\\\."
-                                        (lambda (x)
-                                          (cond ((string= x "\\n") "\n")
-                                                ((string= x "\\t") "\t")
-                                                ((string= x "\\r") "\r")
-                                                ((string= x "\\/") "/")
-                                                ((string= x "\\\\") "\\\\\\\\")
-                                                (t x)))
-                                        replacement)
-              flags))))
+    (let* ((pattern (match-string 1 text))
+           (replacement (match-string 2 text))
+           (flags (match-string 3 text))
+           newrepl
+           (idx 0) (n (length replacement)))
+
+      ;; handle escaped chars
+      (while (< idx n)
+        (if (and (= (aref replacement idx) ?\\)
+                 (< (1+ idx) n))
+            (let ((c (aref replacement (1+ idx))))
+              (case c
+                (?n (push ?\n newrepl))
+                (?t (push ?\t newrepl))
+                (?r (push ?\r newrepl))
+                ((?0 ?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?\\)
+                 (push ?\\ newrepl)
+                 (push c newrepl))
+                (t (push c newrepl)))
+              (incf idx 2))
+          (push (aref replacement idx) newrepl)
+          (incf idx)))
+      
+      (values pattern (apply #'string (reverse newrepl)) flags))))
 
 (provide 'vim-search)
 
