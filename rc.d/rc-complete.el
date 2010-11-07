@@ -46,8 +46,8 @@
   (define-key ac-completing-map "\t" 'ac-complete)
 
   (when (featurep 'vim)
-		  (vim:imap (kbd "C-p") 'auto-complete)
-		  (vim:imap (kbd "C-n") 'auto-complete))
+    (vim:imap (kbd "C-p") 'auto-complete)
+    (vim:imap (kbd "C-n") 'auto-complete))
 
   (when (require 'ac-company nil 'noerror)
     (ac-company-define-source ac-source-company-abbrev    company-abbrev   (symbol . "s"))
@@ -79,6 +79,14 @@
     (when (string-match "/yasnippet/snippets" buffer-file-name)
       (yas/load-directory yasnippet-dir)))
   (add-hook 'after-save-hook 'local/update-yasnippets-on-save))
+
+
+
+
+
+
+
+
 
 ;;;; temlate-simple.el
 

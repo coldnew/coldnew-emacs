@@ -18,7 +18,6 @@
 (defvar windows-p (eq system-type 'windows-nt))
 
 
-
 ;;;;;;;; 將指定目錄裡的東西全部加入清單
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
     (let* ((my-lisp-dir "~/.emacs.d/")
