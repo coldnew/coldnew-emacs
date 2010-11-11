@@ -52,7 +52,7 @@
 
 (defun use-hungry-delete ()
   "Use hungry delete mode"
-  (when (require 'hungry-delete nil 'noerroy)
+  (when (require 'hungry-delete nil 'noerro)
     (turn-on-hungry-delete-mode)))
 
 

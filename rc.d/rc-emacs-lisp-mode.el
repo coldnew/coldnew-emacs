@@ -37,6 +37,13 @@
 	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)
 	     ))
 
+;;;;;; Keybindings
+(add-hook 'emacs-lisp-mode-hook
+	  '(lambda ()
+	     (when (featurep 'vim)
+	       (vim:imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
+	       )))
+
 ;;;;;; Functions
 
 (defun remove-elc-when-visit ()
@@ -62,8 +69,6 @@
 				       ac-source-words-in-same-mode-buffers)))
 (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
 
-
-(vim:imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
 
 
 
