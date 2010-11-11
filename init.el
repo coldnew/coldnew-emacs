@@ -7,16 +7,13 @@
 
 ;;;;;;; start server for emacsclient
 (message "* --[ start the emacs server ]-- *")
-(when (require 'server nil 'noerror)
-  (unless (server-running-p)
-    (server-start)))
+(unless (server-running-p) (server-start))
 
 ;;;;;;; 運行環境辨別
 (defvar mac-p     (eq window-system 'mac))
 (defvar linux-p   (eq system-type 'gnu/linux))
 (defvar cygwin-p  (eq system-type 'cygwin))
 (defvar windows-p (eq system-type 'windows-nt))
-
 
 ;;;;;;;; 將指定目錄裡的東西全部加入清單
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
@@ -50,5 +47,6 @@
 (require 'rc-vim-mode)
 (require 'rc-woman)
 
-;; FIXME: bug?
+
+;;FIXME: bug?
 ;;(require 'rc-package-manager)

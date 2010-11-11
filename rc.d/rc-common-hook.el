@@ -39,7 +39,7 @@
 	      (highlight-changes-remove-highlight (point-min) (point-max)))))
 
 (defun set-newline-and-indent ()
-  (when (require 'rc-vim-mode nil 'noerror)
+  (when (featurep'vim)
     (vim:imap (kbd "RET") 'newline-and-indent)))
 
 (defun indent-file-when-save ()
