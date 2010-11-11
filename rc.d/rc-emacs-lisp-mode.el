@@ -8,6 +8,7 @@
 (require 'eldoc-extension nil 'noerror)
 (require 'highlight-parentheses nil 'noerror)
 (require 'auto-complete nil 'noerror)
+(require 'pretty-lambda nil 'noerror)
 
 ;;;;##########################################################################
 ;;;;  User Options, Variables
