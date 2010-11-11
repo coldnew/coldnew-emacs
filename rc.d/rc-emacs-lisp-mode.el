@@ -2,9 +2,12 @@
 
 (eval-when-compile
   (require 'cl))
+
+(require 'vim nil 'noerror)
 (require 'eldoc nil 'noerror)
 (require 'eldoc-extension nil 'noerror)
 (require 'highlight-parentheses nil 'noerror)
+(require 'auto-complete nil 'noerror)
 
 ;;;;##########################################################################
 ;;;;  User Options, Variables
@@ -58,6 +61,10 @@
 				       ac-source-words-in-same-mode-buffers)))
 (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
 
+
+
+
+(vim:imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
 
 
 ;; ;; 該資料夾內沒有 Tags 檔案時自動建立,若有時則更新 Tags 檔

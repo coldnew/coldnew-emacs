@@ -11,6 +11,8 @@
 (eval-when-compile
   (require 'cl))
 
+(require 'vim nil 'noerror)
+
 ;;;; auto-complete.el
 (when (require 'auto-complete nil 'noerror)
   (global-auto-complete-mode t)		; 全域啟動自動補全
