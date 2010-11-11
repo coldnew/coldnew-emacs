@@ -17,3 +17,5 @@ auto-save-list/
 var/
 *.hg/
 *.git/
+*.py
+*.pl
