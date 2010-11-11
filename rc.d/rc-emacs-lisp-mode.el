@@ -63,9 +63,7 @@
 (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
 
 
-
-
-(vim:imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
+(vim:imap (kbd "M-i") (lambda () (interactive) (insert "else") (yas/expand)))
 
 
 ;; ;; 該資料夾內沒有 Tags 檔案時自動建立,若有時則更新 Tags 檔
