@@ -49,9 +49,6 @@
 (set-fontset-font "fontset-coldnew"     ; 中文字體
     'han (font-spec :family "LiHei Pro" :size 16))
 
-;;(set-fontset-font "fontset-coldnew"     ; 符號
-  ;;  'symbol (font-spec :family "LiHei Pro" :size 16))
-
 (set-fontset-font "fontset-coldnew"     ; 符號
     'symbol (font-spec :family "Monaco" :size 20 ))
 

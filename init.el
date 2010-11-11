@@ -7,7 +7,9 @@
 
 ;;;;;;; start server for emacsclient
 (message "* --[ start the emacs server ]-- *")
-(unless (server-running-p) (server-start))
+(when (require 'server nil 'noerror)
+  (unless (server-running-p)
+    (server-start)))
 
 ;;;;;;; 運行環境辨別
 (defvar mac-p     (eq window-system 'mac))

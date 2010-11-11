@@ -89,3 +89,8 @@
     ;; (vim:imap (kbd "=")  (smartchr '(" = " " == "  "="))) ;
     ;; (vim:imap (kbd ";")  (smartchr '(";" smartchr-insert-semicolon-eol)))
     ))
+
+(defun insert-equal-char-smart ()
+  "insert character more smart."
+  (when (and (featurep 'smartchr) (featurep 'vim))
+    (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))))

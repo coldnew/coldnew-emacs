@@ -9,8 +9,7 @@
   (shell-pop-set-internal-mode-shell "/bin/bash")
   (shell-pop-set-window-height 20)
   (shell-pop-set-window-position "bottom")
-  ;;  (global-set-key (kbd "<f3>") 'shell-pop)
-  (when (require 'rc-vim-mode nil 'noerror)
+  (when (featurep 'vim)
     (vim:nmap (kbd "<f3>") 'shell-pop)))
 
 

@@ -16,6 +16,7 @@
 	     (setq c-max-one-liner-length   100 ) ; 最大格數為 100 格
 	     (setq compilation-window-height 10 ) ; 編譯結果視窗高度
 	     (c-set-style "linux")                ; C++ 語言風格為 linux
+
 	     ;; hook for cpp-mode
 	     (programming-common-hook)	; programming common hook
 	     (find-source-or-header)	; switch between sorece and header
@@ -39,4 +40,4 @@
 ;;   "insert character more smart."
 ;;   (when (featurep 'smartchr)
 ;;     (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
-;;     (vim:imap (kbd ";") (smartchr '(";" ik:insert-eol)))))
+;;     (vim:imap (kbd ";") (smartchr '(";" ik:insert-eol))))) 

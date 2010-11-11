@@ -10,6 +10,12 @@
 	     (setq compilation-window-height 10 ) ; 編譯結果視窗高度
 	     (c-set-style "linux")                ; C 語言風格為 linux
 
+	     ;; keybindings for vim-mode
+	     (when (featurep 'vim)
+	       (vim:nmap (kbd ",o") 'ff-find-other-file)
+	       (vim:nmap (kbd ",h") 'ff-find-related-file)
+	       )
+
 	     ;; hook for c-mode
 	     (programming-common-hook)	; programming common hook
 	     (find-source-or-header)	; switch between sorece and header
@@ -18,8 +24,3 @@
 
 ;;;; Functions
 
-(defun find-source-or-header ()
-  "find source or header file."
-  (when (featurep 'vim)
-    (vim:nmap (kbd ",o") 'ff-find-other-file)
-    (vim:nmap (kbd ",h") 'ff-find-related-file)))
