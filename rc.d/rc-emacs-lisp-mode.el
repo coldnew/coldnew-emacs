@@ -42,7 +42,9 @@
 	  '(lambda ()
 	     (when (featurep 'vim)
 	       (vim:imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
+	       (vim:imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
 	       )))
+
 
 ;;;;;; Functions
 

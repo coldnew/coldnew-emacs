@@ -52,3 +52,4 @@
 
 ;;FIXME: bug?
 ;;(require 'rc-package-manager)
+
