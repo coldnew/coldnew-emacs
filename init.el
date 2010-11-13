@@ -27,7 +27,6 @@
 ;;;;;;;;; 設定預設emacs窗口大小
 (setq default-frame-alist '((width . 170) (height . 50)))
 
-
 ;;;;;; load package initial setting
 (require 'rc-backup)
 (require 'rc-base)
