@@ -49,6 +49,18 @@
 	   (insert "]\n"))))
      require-result))
 
+;; (defvar tes-font-lock
+;;   (eval-when-compile
+;;     `(
+;;       ,(concat "(require-maybe)\\>"
+;; 	       "[ \t']*\\(\\sw+\\)?")
+;;       (1 font-lock-keyword-face)
+;;       (2 font-lock-constant-face nil t)
+;;       )
+;;     )
+;;   )
+
+
 
 
 ;;;;;;;;; 設定預設emacs窗口大小
