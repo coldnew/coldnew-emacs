@@ -59,7 +59,11 @@
 ;;       )
 ;;     )
 ;;   )
-
+;; (font-lock-add-keywords 'emacs-lisp-mode
+;; 			'(("(require-maybe\\>[ \t']*\\(\\sw+\\)?\\>"
+;; 			   (1 font-lock-keyword-face)
+;; 			   (2 font-lock-constant-face nil t)
+;; )))
 
 
 
@@ -86,7 +90,7 @@
 (require 'rc-slime)
 (require 'rc-vim-mode)
 (require 'rc-woman)
-
+(require 'rc-function)
 
 ;;FIXME: bug?
 ;;(require 'rc-package-manager)
