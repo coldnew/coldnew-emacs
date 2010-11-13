@@ -9,9 +9,9 @@
 
 (provide 'rc-complete)
 (eval-when-compile
-  (require 'cl))
+  (require 'cl)
 
-(require 'vim nil 'noerror)
+  (require 'vim nil 'noerror))
 
 ;;;; auto-complete.el
 (when (require 'auto-complete nil 'noerror)
@@ -47,7 +47,7 @@
   (define-key ac-menu-map (kbd "C-p") 'ac-previous)
   (define-key ac-completing-map "\t" 'ac-complete)
 
-  (when (featurep 'vim)
+  (when (require 'vim nil 'noerror)
     (vim:imap (kbd "C-p") 'auto-complete)
     (vim:imap (kbd "C-n") 'auto-complete))
 
