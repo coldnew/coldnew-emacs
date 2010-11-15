@@ -83,7 +83,7 @@
 (require 'rc-slime)
 (require 'rc-vim-mode)
 (require 'rc-woman)
-
+(require 'rc-function)
 
 ;;FIXME: bug?
 ;;(require 'rc-package-manager)
