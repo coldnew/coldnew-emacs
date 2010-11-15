@@ -1,32 +1,31 @@
 (provide 'rc-emacs-lisp-mode)
 
-(eval-when-compile
-  (require 'cl))
-(require 'vim nil 'noerror)
-(require 'eldoc nil 'noerror)
-(require 'eldoc-extension nil 'noerror)
-(require 'highlight-parentheses nil 'noerror)
-(require 'auto-complete nil 'noerror)
-(require 'pretty-lambdada nil 'noerror)
+(eval-when-compile (require 'cl))
+
 ;;;;##########################################################################
 ;;;;  User Options, Variables
 ;;;;##########################################################################
 
+;;;;;; Auto-mode alist
 (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 
+;;;;;; Hook
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
 	     ;; Highlight the parentheses
-	     (when (require-maybe 'highlight-parentheses) (highlight-parentheses-mode))
+	     (when (require 'highlight-parentheses)
+	       (highlight-parentheses-mode))
 	     ;; Enable eldoc
-	     (when (featurep 'eldoc) (turn-on-eldoc-mode))
+	     (when (require 'eldoc nil 'noerror)
+	       (require 'eldoc-extension nil 'noerror)
+	       (turn-on-eldoc-mode))
 	     ;; Remodify auto-complete setting in auto-complete-config.el
-	     (when (featurep 'auto-complete)
+	     (when (require 'auto-complete nil 'noerror)
 	       (setq ac-sources
 		     '(ac-source-symbols ac-source-company-elisp ac-source-words-in-same-mode-buffers)))
 	     ;; Enable pretty-lambda
-	     (when (require 'pretty-lambdada) (turn-on-pretty-lambda-mode))
-
+	     (when (require 'pretty-lambdada nil 'noerror)
+	       (turn-on-pretty-lambda-mode))
 
 	     ;; Hooks for emacs-lisp-mode
 	     (byte-compile-when-save)	; bytecompile the elisp file after save
@@ -34,7 +33,6 @@
 	     (programming-common-hook)	; programming common hook
 	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)
 	     ))
-
 
 ;;;;;; Keybindings
 (add-hook 'emacs-lisp-mode-hook
@@ -66,15 +64,11 @@
 
 
 ;; FIXME: remove one day
-(defun ac-emacs-lisp-mode-setup ()
-  (setq ac-sources '(ac-source-symbols ac-source-company-elisp
-				       ac-source-words-in-same-mode-buffers)))
-(add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
-
-
-
-
-
+(when (require 'auto-complete nil 'noerror)
+  (defun ac-emacs-lisp-mode-setup ()
+    (setq ac-sources '(ac-source-symbols ac-source-company-elisp
+					 ac-source-words-in-same-mode-buffers)))
+  (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup))
 
 
 ;; ;; 該資料夾內沒有 Tags 檔案時自動建立,若有時則更新 Tags 檔
