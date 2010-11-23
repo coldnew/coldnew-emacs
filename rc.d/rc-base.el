@@ -50,6 +50,12 @@
 (setq-default gnus-inhibit-startup-message  t ) ; 去掉 GNU 引導介面
 (setq-default ring-bell-function (lambda () t)) ; 關閉 console 下的螢幕閃爍
 
+(setq-default confirm-nonexistent-file-or-buffer nil)
+(setq ido-create-new-buffer 'always)
+(setq kill-buffer-query-functions
+      (remq 'process-kill-buffer-query-function
+	    kill-buffer-query-functions))
+
 ;;;; 基本外觀設置
 (menu-bar-mode         -1 ) ; 移除菜單欄
 (blink-cursor-mode     -1 ) ; 關閉游標閃爍
@@ -102,9 +108,9 @@
 
 ;;  當 emacs 建立新檔案至不存在的資料夾時，於儲存前自動建立該資料夾
 (add-hook 'before-save-hook
-  '(lambda ()
-     (or (file-exists-p  (file-name-directory buffer-file-name))
-       (make-directory (file-name-directory buffer-file-name) t))))
+	  '(lambda ()
+	     (or (file-exists-p  (file-name-directory buffer-file-name))
+		 (make-directory (file-name-directory buffer-file-name) t))))
 
 
 ;;; rc-base.el ends here

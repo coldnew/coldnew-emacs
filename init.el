@@ -66,7 +66,8 @@
 ;;;;;; load package initial setting
 (require 'rc-backup)
 (require 'rc-base)
-(require 'rc-buffer)
+(require 'rc-ibuffer)
+(require 'rc-minibuffer)
 (require 'rc-c-mode)
 (require 'rc-cedet)
 (require 'rc-color-theme)
@@ -84,6 +85,5 @@
 (require 'rc-vim-mode)
 (require 'rc-woman)
 (require 'rc-function)
-
 ;;FIXME: bug?
 ;;(require 'rc-package-manager)

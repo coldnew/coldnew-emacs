@@ -1,5 +1,5 @@
 ;;
-(provide 'rc-buffer)
+(provide 'rc-minibuffer)
 
 ;;;; Minibuffer
 (add-hook 'minibuffer-setup-hook
