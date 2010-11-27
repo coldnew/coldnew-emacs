@@ -1,0 +1,4 @@
+#name : performFetch
+#group : NSFetchedResultsController
+# --
+performFetch:${1:(NSError **)error}

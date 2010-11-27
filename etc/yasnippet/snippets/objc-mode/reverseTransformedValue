@@ -1,0 +1,4 @@
+#name : reverseTransformedValue
+#group : NSValueTransformer
+# --
+reverseTransformedValue:${1:(id)value}

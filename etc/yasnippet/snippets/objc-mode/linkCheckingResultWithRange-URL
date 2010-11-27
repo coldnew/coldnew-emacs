@@ -1,0 +1,4 @@
+#name : linkCheckingResultWithRange:URL
+#group : NSTextCheckingResult
+# --
+linkCheckingResultWithRange:${1:(NSRange)range} URL:${2:(NSURL *)url}

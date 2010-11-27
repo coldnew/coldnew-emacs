@@ -1,0 +1,4 @@
+#name : colorWithCGColor
+#group : UIColor
+# --
+colorWithCGColor:${1:(CGColorRef)cgColor}

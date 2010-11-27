@@ -1,0 +1,4 @@
+#name : containsIndexes
+#group : NSIndexSet
+# --
+containsIndexes:${1:(NSIndexSet *)indexSet}

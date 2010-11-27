@@ -1,0 +1,4 @@
+#name : setTotalCostLimit
+#group : NSCache
+# --
+setTotalCostLimit:${1:(NSUInteger)lim}

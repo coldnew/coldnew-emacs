@@ -1,0 +1,4 @@
+#name : decodeCGSizeForKey
+#group : UIGeometry
+# --
+decodeCGSizeForKey:${1:(NSString *)key}

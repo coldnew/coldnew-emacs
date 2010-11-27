@@ -1,0 +1,4 @@
+#name : setSecond
+#group : NSCalendar
+# --
+setSecond:${1:(NSInteger)v}

@@ -1,0 +1,4 @@
+#name : stringWithCString:length
+#group : NSString
+# --
+stringWithCString:${1:(const char *)bytes} length:${2:(NSUInteger)length}

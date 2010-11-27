@@ -1,0 +1,4 @@
+#name : setContentOffset:forSegmentAtIndex
+#group : UISegmentedControl
+# --
+setContentOffset:${1:(CGSize)offset} forSegmentAtIndex:${2:(NSUInteger)segment}

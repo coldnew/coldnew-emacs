@@ -1,0 +1,4 @@
+#name : availableMediaTypesForSourceType
+#group : UIImagePickerController
+# --
+availableMediaTypesForSourceType:${1:(UIImagePickerControllerSourceType)sourceType}

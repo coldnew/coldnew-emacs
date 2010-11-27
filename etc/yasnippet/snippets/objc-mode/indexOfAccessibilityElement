@@ -1,0 +1,4 @@
+#name : indexOfAccessibilityElement
+#group : UIAccessibility
+# --
+indexOfAccessibilityElement:${1:(id)element}

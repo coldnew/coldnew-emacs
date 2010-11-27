@@ -1,0 +1,4 @@
+#name : minimumRangeOfUnit
+#group : NSCalendar
+# --
+minimumRangeOfUnit:${1:(NSCalendarUnit)unit}

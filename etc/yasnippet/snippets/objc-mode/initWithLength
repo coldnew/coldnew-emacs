@@ -1,0 +1,4 @@
+#name : initWithLength
+#group : NSData
+# --
+initWithLength:${1:(NSUInteger)length}

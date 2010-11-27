@@ -1,0 +1,4 @@
+#name : setMainDocumentURL
+#group : NSURLRequest
+# --
+setMainDocumentURL:${1:(NSURL *)URL}

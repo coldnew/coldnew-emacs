@@ -1,0 +1,4 @@
+#name : setGeneratesDecimalNumbers
+#group : NSNumberFormatter
+# --
+setGeneratesDecimalNumbers:${1:(BOOL)b}

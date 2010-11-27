@@ -1,0 +1,4 @@
+#name : setValueTransformerName
+#group : NSAttributeDescription
+# --
+setValueTransformerName:${1:(NSString *)string}

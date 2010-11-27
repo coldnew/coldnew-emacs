@@ -1,0 +1,4 @@
+#name : textField:shouldChangeCharactersInRange:replacementString
+#group : UITextField
+# --
+textField:${1:(UITextField *)textField} shouldChangeCharactersInRange:${2:(NSRange)range} replacementString:${3:(NSString *)string}

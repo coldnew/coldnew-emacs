@@ -1,0 +1,4 @@
+#name : setStackSize
+#group : NSThread
+# --
+setStackSize:${1:(NSUInteger)s}

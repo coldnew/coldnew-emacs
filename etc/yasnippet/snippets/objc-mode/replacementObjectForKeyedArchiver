@@ -1,0 +1,4 @@
+#name : replacementObjectForKeyedArchiver
+#group : NSKeyedArchiver
+# --
+replacementObjectForKeyedArchiver:${1:(NSKeyedArchiver *)archiver}

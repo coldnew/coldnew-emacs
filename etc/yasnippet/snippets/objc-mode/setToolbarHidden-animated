@@ -1,0 +1,4 @@
+#name : setToolbarHidden:animated
+#group : UINavigationController
+# --
+setToolbarHidden:${1:(BOOL)hidden} animated:${2:(BOOL)animated}

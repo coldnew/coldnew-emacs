@@ -1,0 +1,4 @@
+#name : numberOfComponentsInPickerView
+#group : UIPickerView
+# --
+numberOfComponentsInPickerView:${1:(UIPickerView *)pickerView}

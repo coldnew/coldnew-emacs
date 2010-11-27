@@ -1,0 +1,4 @@
+#name : read:maxLength
+#group : NSStream
+# --
+read:${1:(uint8_t *)buffer} maxLength:${2:(NSUInteger)len}

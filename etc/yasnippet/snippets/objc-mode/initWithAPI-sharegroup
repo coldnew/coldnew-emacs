@@ -1,0 +1,4 @@
+#name : initWithAPI:sharegroup
+#group : EAGL
+# --
+initWithAPI:${1:(EAGLRenderingAPI)api} sharegroup:${2:(EAGLSharegroup*)sharegroup}

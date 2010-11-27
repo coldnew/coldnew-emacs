@@ -1,0 +1,4 @@
+#name : addObjectsFromArray
+#group : NSSet
+# --
+addObjectsFromArray:${1:(NSArray *)array}

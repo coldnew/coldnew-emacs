@@ -1,0 +1,4 @@
+#name : escapedTemplateForString
+#group : NSRegularExpression
+# --
+escapedTemplateForString:${1:(NSString *)string}

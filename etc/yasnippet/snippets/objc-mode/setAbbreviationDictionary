@@ -1,0 +1,4 @@
+#name : setAbbreviationDictionary
+#group : NSTimeZone
+# --
+setAbbreviationDictionary:${1:(NSDictionary *)dict}

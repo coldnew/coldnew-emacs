@@ -1,0 +1,4 @@
+#name : setMetadata:forPersistentStore
+#group : NSPersistentStoreCoordinator
+# --
+setMetadata:${1:(NSDictionary *)metadata} forPersistentStore:${2:(NSPersistentStore *)store}

@@ -1,0 +1,4 @@
+#name : initWithChar
+#group : NSValue
+# --
+initWithChar:${1:(char)value}

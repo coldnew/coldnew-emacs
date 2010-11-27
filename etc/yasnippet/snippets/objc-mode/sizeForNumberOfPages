@@ -1,0 +1,4 @@
+#name : sizeForNumberOfPages
+#group : UIPageControl
+# --
+sizeForNumberOfPages:${1:(NSInteger)pageCount}

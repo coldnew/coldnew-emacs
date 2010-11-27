@@ -1,0 +1,4 @@
+#name : match:connectionWithPlayerFailed:withError
+#group : GKMatch
+# --
+match:${1:(GKMatch *)match} connectionWithPlayerFailed:${2:(NSString *)playerID} withError:${3:(NSError *)error}

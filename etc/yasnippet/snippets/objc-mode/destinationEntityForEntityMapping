@@ -1,0 +1,4 @@
+#name : destinationEntityForEntityMapping
+#group : NSMigrationManager
+# --
+destinationEntityForEntityMapping:${1:(NSEntityMapping *)mEntity}

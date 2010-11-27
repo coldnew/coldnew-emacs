@@ -1,0 +1,4 @@
+#name : setInverseRelationship
+#group : NSRelationshipDescription
+# --
+setInverseRelationship:${1:(NSRelationshipDescription *)relationship}

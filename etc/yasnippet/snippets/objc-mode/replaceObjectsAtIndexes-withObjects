@@ -1,0 +1,4 @@
+#name : replaceObjectsAtIndexes:withObjects
+#group : NSArray
+# --
+replaceObjectsAtIndexes:${1:(NSIndexSet *)indexes} withObjects:${2:(NSArray *)objects}

@@ -1,0 +1,4 @@
+#name : initWithFireDate:interval:target:selector:userInfo:repeats
+#group : NSTimer
+# --
+initWithFireDate:${1:(NSDate *)date} interval:${2:(NSTimeInterval)ti} target:${3:(id)t} selector:${4:(SEL)s} userInfo:${5:(id)ui} repeats:${6:(BOOL)rep}

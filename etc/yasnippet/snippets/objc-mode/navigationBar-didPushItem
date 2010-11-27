@@ -1,0 +1,4 @@
+#name : navigationBar:didPushItem
+#group : UINavigationBar
+# --
+navigationBar:${1:(UINavigationBar *)navigationBar} didPushItem:${2:(UINavigationItem *)item}

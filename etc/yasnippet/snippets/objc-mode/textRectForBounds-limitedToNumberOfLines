@@ -1,0 +1,4 @@
+#name : textRectForBounds:limitedToNumberOfLines
+#group : UILabel
+# --
+textRectForBounds:${1:(CGRect)bounds} limitedToNumberOfLines:${2:(NSInteger)numberOfLines}

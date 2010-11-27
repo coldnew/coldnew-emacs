@@ -1,0 +1,4 @@
+#name : setQueueWithQuery
+#group : MPMusicPlayerController
+# --
+setQueueWithQuery:${1:(MPMediaQuery *)query}

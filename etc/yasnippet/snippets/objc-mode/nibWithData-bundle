@@ -1,0 +1,4 @@
+#name : nibWithData:bundle
+#group : UINib
+# --
+nibWithData:${1:(NSData *)data} bundle:${2:(NSBundle *)bundleOrNil}

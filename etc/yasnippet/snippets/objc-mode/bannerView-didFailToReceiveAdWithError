@@ -1,0 +1,4 @@
+#name : bannerView:didFailToReceiveAdWithError
+#group : ADBannerView
+# --
+bannerView:${1:(ADBannerView *)banner} didFailToReceiveAdWithError:${2:(NSError *)error}

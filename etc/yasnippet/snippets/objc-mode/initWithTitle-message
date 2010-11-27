@@ -1,0 +1,4 @@
+#name : initWithTitle:message
+#group : UIAlertView
+# --
+initWithTitle:${1:(NSString *)title} message:${2:(NSString *)message}

@@ -1,0 +1,4 @@
+#name : connection:didReceiveAuthenticationChallenge
+#group : NSURLConnection
+# --
+connection:${1:(NSURLConnection *)connection} didReceiveAuthenticationChallenge:${2:(NSURLAuthenticationChallenge *)challenge}

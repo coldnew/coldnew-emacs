@@ -1,0 +1,4 @@
+#name : initWithUnsignedChar
+#group : NSValue
+# --
+initWithUnsignedChar:${1:(unsigned char)value}

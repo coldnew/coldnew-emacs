@@ -1,0 +1,4 @@
+#name : imagePickerControllerDidCancel
+#group : UIImagePickerController
+# --
+imagePickerControllerDidCancel:${1:(UIImagePickerController *)picker}

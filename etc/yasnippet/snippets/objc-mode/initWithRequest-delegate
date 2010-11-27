@@ -1,0 +1,4 @@
+#name : initWithRequest:delegate
+#group : NSURLConnection
+# --
+initWithRequest:${1:(NSURLRequest *)request} delegate:${2:(id)delegate}

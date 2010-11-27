@@ -1,0 +1,4 @@
+#name : velocityInView
+#group : UIPanGestureRecognizer
+# --
+velocityInView:${1:(UIView *)view}

@@ -1,0 +1,4 @@
+#name : rightViewRectForBounds
+#group : UITextField
+# --
+rightViewRectForBounds:${1:(CGRect)bounds}

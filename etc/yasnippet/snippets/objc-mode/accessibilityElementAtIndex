@@ -1,0 +1,4 @@
+#name : accessibilityElementAtIndex
+#group : UIAccessibility
+# --
+accessibilityElementAtIndex:${1:(NSInteger)index}

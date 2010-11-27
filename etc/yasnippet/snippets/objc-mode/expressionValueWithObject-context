@@ -1,0 +1,4 @@
+#name : expressionValueWithObject:context
+#group : NSExpression
+# --
+expressionValueWithObject:${1:(id)object} context:${2:(NSMutableDictionary *)context}

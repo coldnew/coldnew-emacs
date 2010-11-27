@@ -1,0 +1,4 @@
+#name : isPosition:atBoundary:inDirection
+#group : UITextInput
+# --
+isPosition:${1:(UITextPosition *)position} atBoundary:${2:(UITextGranularity)granularity} inDirection:${3:(UITextDirection)direction}

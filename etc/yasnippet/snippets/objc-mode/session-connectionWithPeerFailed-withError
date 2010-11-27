@@ -1,0 +1,4 @@
+#name : session:connectionWithPeerFailed:withError
+#group : GKPublicProtocols
+# --
+session:${1:(GKSession *)session} connectionWithPeerFailed:${2:(NSString *)peerID} withError:${3:(NSError *)error}

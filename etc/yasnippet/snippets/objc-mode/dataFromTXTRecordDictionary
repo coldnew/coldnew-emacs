@@ -1,0 +1,4 @@
+#name : dataFromTXTRecordDictionary
+#group : NSNetServices
+# --
+dataFromTXTRecordDictionary:${1:(NSDictionary *)txtDictionary}

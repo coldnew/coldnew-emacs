@@ -1,0 +1,4 @@
+#name : descriptionWithLocale:indent
+#group : NSDictionary
+# --
+descriptionWithLocale:${1:(id)locale} indent:${2:(NSUInteger)level}

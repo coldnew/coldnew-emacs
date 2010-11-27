@@ -1,0 +1,4 @@
+#name : setActionName
+#group : NSUndoManager
+# --
+setActionName:${1:(NSString *)actionName}

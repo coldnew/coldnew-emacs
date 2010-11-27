@@ -1,0 +1,4 @@
+#name : setDefaultDate
+#group : NSDateFormatter
+# --
+setDefaultDate:${1:(NSDate *)date}

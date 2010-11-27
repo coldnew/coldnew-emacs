@@ -1,0 +1,4 @@
+#name : removeAlarm
+#group : EKEvent
+# --
+removeAlarm:${1:(EKAlarm *)alarm}

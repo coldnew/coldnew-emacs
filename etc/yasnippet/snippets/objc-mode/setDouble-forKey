@@ -1,0 +1,4 @@
+#name : setDouble:forKey
+#group : NSUserDefaults
+# --
+setDouble:${1:(double)value} forKey:${2:(NSString *)defaultName}

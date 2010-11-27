@@ -1,0 +1,4 @@
+#name : initWithStorageLocation
+#group : NSHTTPCookieStorage
+# --
+initWithStorageLocation:${1:(NSURL*)storageFileURL}

@@ -1,0 +1,4 @@
+#name : startRecordingToOutputFileURL
+#group : AVCaptureOutput
+# --
+startRecordingToOutputFileURL:${1:(NSURL*)outputFileURL}

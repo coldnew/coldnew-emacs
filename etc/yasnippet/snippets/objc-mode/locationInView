@@ -1,0 +1,4 @@
+#name : locationInView
+#group : UITouch
+# --
+locationInView:${1:(UIView *)view}

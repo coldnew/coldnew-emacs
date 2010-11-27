@@ -1,0 +1,4 @@
+#name : sleepForTimeInterval
+#group : NSThread
+# --
+sleepForTimeInterval:${1:(NSTimeInterval)ti}

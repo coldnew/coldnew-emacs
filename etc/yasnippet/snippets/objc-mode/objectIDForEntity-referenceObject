@@ -1,0 +1,4 @@
+#name : objectIDForEntity:referenceObject
+#group : NSAtomicStore
+# --
+objectIDForEntity:${1:(NSEntityDescription *)entity} referenceObject:${2:(id)data}

@@ -1,0 +1,4 @@
+#name : canInsertItem:afterItem
+#group : AVPlayer
+# --
+canInsertItem:${1:(AVPlayerItem *)item} afterItem:${2:(AVPlayerItem *)afterItem}

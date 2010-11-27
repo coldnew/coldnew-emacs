@@ -1,0 +1,4 @@
+#name : ABRecordWithAddressBook
+#group : EKParticipant
+# --
+ABRecordWithAddressBook:${1:(ABAddressBookRef)addressBook}

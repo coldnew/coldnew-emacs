@@ -1,0 +1,4 @@
+#name : appendBytes:length
+#group : NSData
+# --
+appendBytes:${1:(const void *)bytes} length:${2:(NSUInteger)length}

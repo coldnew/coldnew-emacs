@@ -1,0 +1,4 @@
+#name : peoplePickerNavigationControllerDidCancel
+#group : ABPeoplePickerNavigationController
+# --
+peoplePickerNavigationControllerDidCancel:${1:(ABPeoplePickerNavigationController *)peoplePicker}

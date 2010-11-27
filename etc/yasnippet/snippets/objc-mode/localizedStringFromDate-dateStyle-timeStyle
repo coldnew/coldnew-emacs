@@ -1,0 +1,4 @@
+#name : localizedStringFromDate:dateStyle:timeStyle
+#group : NSDateFormatter
+# --
+localizedStringFromDate:${1:(NSDate *)date} dateStyle:${2:(NSDateFormatterStyle)dstyle} timeStyle:${3:(NSDateFormatterStyle)tstyle}

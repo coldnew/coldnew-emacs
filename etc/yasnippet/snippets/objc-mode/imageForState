@@ -1,0 +1,4 @@
+#name : imageForState
+#group : UIButton
+# --
+imageForState:${1:(UIControlState)state}

@@ -1,0 +1,4 @@
+#name : setAnimationWillStartSelector
+#group : UIView
+# --
+setAnimationWillStartSelector:${1:(SEL)selector}

@@ -1,0 +1,4 @@
+#name : application:didReceiveLocalNotification
+#group : UIApplication
+# --
+application:${1:(UIApplication *)application} didReceiveLocalNotification:${2:(UILocalNotification *)notification}

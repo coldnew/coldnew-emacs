@@ -1,0 +1,4 @@
+#name : setValue:forUndefinedKey
+#group : NSKeyValueCoding
+# --
+setValue:${1:(id)value} forUndefinedKey:${2:(NSString *)key}

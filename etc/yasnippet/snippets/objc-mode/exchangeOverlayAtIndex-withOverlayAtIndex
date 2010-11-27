@@ -1,0 +1,4 @@
+#name : exchangeOverlayAtIndex:withOverlayAtIndex
+#group : MKMapView
+# --
+exchangeOverlayAtIndex:${1:(NSUInteger)index1} withOverlayAtIndex:${2:(NSUInteger)index2}

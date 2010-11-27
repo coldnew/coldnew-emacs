@@ -1,0 +1,4 @@
+#name : initWithInteger
+#group : NSValue
+# --
+initWithInteger:${1:(NSInteger)value}

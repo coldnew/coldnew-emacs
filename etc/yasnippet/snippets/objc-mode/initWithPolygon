@@ -1,0 +1,4 @@
+#name : initWithPolygon
+#group : MKPolygonView
+# --
+initWithPolygon:${1:(MKPolygon *)polygon}

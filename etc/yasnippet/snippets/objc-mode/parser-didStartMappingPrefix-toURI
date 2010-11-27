@@ -1,0 +1,4 @@
+#name : parser:didStartMappingPrefix:toURI
+#group : NSXMLParser
+# --
+parser:${1:(NSXMLParser *)parser} didStartMappingPrefix:${2:(NSString *)prefix} toURI:${3:(NSString *)namespaceURI}

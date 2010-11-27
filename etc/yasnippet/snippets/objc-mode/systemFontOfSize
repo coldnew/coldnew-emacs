@@ -1,0 +1,4 @@
+#name : systemFontOfSize
+#group : UIFont
+# --
+systemFontOfSize:${1:(CGFloat)fontSize}

@@ -1,0 +1,4 @@
+#name : resolveWithTimeout
+#group : NSNetServices
+# --
+resolveWithTimeout:${1:(NSTimeInterval)timeout}

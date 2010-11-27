@@ -1,0 +1,4 @@
+#name : parser:foundUnparsedEntityDeclarationWithName:publicID:systemID:notationName
+#group : NSXMLParser
+# --
+parser:${1:(NSXMLParser *)parser} foundUnparsedEntityDeclarationWithName:${2:(NSString *)name} publicID:${3:(NSString *)publicID} systemID:${4:(NSString *)systemID} notationName:${5:(NSString *)notationName}

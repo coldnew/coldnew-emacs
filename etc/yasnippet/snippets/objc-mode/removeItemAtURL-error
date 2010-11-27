@@ -1,0 +1,4 @@
+#name : removeItemAtURL:error
+#group : NSFileManager
+# --
+removeItemAtURL:${1:(NSURL *)URL} error:${2:(NSError **)error}

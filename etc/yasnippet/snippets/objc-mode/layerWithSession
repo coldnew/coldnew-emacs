@@ -1,0 +1,4 @@
+#name : layerWithSession
+#group : AVCaptureVideoPreviewLayer
+# --
+layerWithSession:${1:(AVCaptureSession *)session}

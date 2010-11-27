@@ -1,0 +1,4 @@
+#name : rangeOfUnit:startDate:interval:forDate
+#group : NSCalendar
+# --
+rangeOfUnit:${1:(NSCalendarUnit)unit} startDate:${2:(NSDate **)datep} interval:${3:(NSTimeInterval *)tip} forDate:${4:(NSDate *)date}

@@ -1,0 +1,4 @@
+#name : numberWithUnsignedShort
+#group : NSValue
+# --
+numberWithUnsignedShort:${1:(unsigned short)value}

@@ -1,0 +1,4 @@
+#name : bezierPathWithCGPath
+#group : UIBezierPath
+# --
+bezierPathWithCGPath:${1:(CGPathRef)CGPath}

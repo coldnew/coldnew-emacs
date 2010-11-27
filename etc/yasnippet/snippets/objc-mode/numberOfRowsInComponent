@@ -1,0 +1,4 @@
+#name : numberOfRowsInComponent
+#group : UIPickerView
+# --
+numberOfRowsInComponent:${1:(NSInteger)component}

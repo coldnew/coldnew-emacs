@@ -1,0 +1,4 @@
+#name : subdataWithRange
+#group : NSData
+# --
+subdataWithRange:${1:(NSRange)range}

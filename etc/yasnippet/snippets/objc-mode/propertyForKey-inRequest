@@ -1,0 +1,4 @@
+#name : propertyForKey:inRequest
+#group : NSURLProtocol
+# --
+propertyForKey:${1:(NSString *)key} inRequest:${2:(NSURLRequest *)request}

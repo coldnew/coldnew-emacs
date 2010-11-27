@@ -1,0 +1,4 @@
+#name : performSelector:withObject:withObject
+#group : NSObject
+# --
+performSelector:${1:(SEL)aSelector} withObject:${2:(id)object1} withObject:${3:(id)object2}

@@ -1,0 +1,4 @@
+#name : setValueTransformer:forName
+#group : NSValueTransformer
+# --
+setValueTransformer:${1:(NSValueTransformer *)transformer} forName:${2:(NSString *)name}

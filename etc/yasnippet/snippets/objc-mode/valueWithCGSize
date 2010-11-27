@@ -1,0 +1,4 @@
+#name : valueWithCGSize
+#group : UIGeometry
+# --
+valueWithCGSize:${1:(CGSize)size}

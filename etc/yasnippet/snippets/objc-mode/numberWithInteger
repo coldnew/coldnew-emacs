@@ -1,0 +1,4 @@
+#name : numberWithInteger
+#group : NSValue
+# --
+numberWithInteger:${1:(NSInteger)value}

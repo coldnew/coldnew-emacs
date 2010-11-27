@@ -1,0 +1,4 @@
+#name : valueForProperty
+#group : MPMediaPlaylist
+# --
+valueForProperty:${1:(NSString *)property}

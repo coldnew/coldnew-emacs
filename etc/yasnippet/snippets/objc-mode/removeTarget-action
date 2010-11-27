@@ -1,0 +1,4 @@
+#name : removeTarget:action
+#group : UIGestureRecognizer
+# --
+removeTarget:${1:(id)target} action:${2:(SEL)action}

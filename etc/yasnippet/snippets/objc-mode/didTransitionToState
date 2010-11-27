@@ -1,0 +1,4 @@
+#name : didTransitionToState
+#group : UITableViewCell
+# --
+didTransitionToState:${1:(UITableViewCellStateMask)state}

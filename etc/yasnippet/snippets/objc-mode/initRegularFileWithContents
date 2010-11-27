@@ -1,0 +1,4 @@
+#name : initRegularFileWithContents
+#group : NSFileWrapper
+# --
+initRegularFileWithContents:${1:(NSData *)contents}

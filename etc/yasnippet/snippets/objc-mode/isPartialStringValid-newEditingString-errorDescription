@@ -1,0 +1,4 @@
+#name : isPartialStringValid:newEditingString:errorDescription
+#group : NSFormatter
+# --
+isPartialStringValid:${1:(NSString *)partialString} newEditingString:${2:(NSString **)newString} errorDescription:${3:(NSString **)error}

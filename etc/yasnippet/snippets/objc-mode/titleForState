@@ -1,0 +1,4 @@
+#name : titleForState
+#group : UIButton
+# --
+titleForState:${1:(UIControlState)state}

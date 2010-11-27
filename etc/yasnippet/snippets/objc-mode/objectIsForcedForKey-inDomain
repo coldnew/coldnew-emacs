@@ -1,0 +1,4 @@
+#name : objectIsForcedForKey:inDomain
+#group : NSUserDefaults
+# --
+objectIsForcedForKey:${1:(NSString *)key} inDomain:${2:(NSString *)domain}

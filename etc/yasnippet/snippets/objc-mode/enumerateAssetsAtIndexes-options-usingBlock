@@ -1,0 +1,4 @@
+#name : enumerateAssetsAtIndexes:options:usingBlock
+#group : ALAssetsGroup
+# --
+enumerateAssetsAtIndexes:${1:(NSIndexSet *)indexSet} options:${2:(NSEnumerationOptions)options} usingBlock:${3:(ALAssetsGroupEnumerationResultsBlock)enumerationBlock}

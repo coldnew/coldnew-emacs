@@ -1,0 +1,4 @@
+#name : containsObject
+#group : NSSet
+# --
+containsObject:${1:(id)anObject}

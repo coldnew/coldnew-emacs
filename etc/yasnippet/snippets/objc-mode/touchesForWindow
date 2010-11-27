@@ -1,0 +1,4 @@
+#name : touchesForWindow
+#group : UIEvent
+# --
+touchesForWindow:${1:(UIWindow *)window}

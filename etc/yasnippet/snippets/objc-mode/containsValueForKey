@@ -1,0 +1,4 @@
+#name : containsValueForKey
+#group : NSKeyedArchiver
+# --
+containsValueForKey:${1:(NSString *)key}

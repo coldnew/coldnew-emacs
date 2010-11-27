@@ -1,0 +1,4 @@
+#name : scheduledTimerWithTimeInterval:target:selector:userInfo:repeats
+#group : NSTimer
+# --
+scheduledTimerWithTimeInterval:${1:(NSTimeInterval)ti} target:${2:(id)aTarget} selector:${3:(SEL)aSelector} userInfo:${4:(id)userInfo} repeats:${5:(BOOL)yesOrNo}

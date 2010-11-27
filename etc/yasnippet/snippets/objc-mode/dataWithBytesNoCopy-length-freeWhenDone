@@ -1,0 +1,4 @@
+#name : dataWithBytesNoCopy:length:freeWhenDone
+#group : NSData
+# --
+dataWithBytesNoCopy:${1:(void *)bytes} length:${2:(NSUInteger)length} freeWhenDone:${3:(BOOL)b}

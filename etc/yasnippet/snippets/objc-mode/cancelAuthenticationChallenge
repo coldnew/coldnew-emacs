@@ -1,0 +1,4 @@
+#name : cancelAuthenticationChallenge
+#group : NSURLAuthenticationChallenge
+# --
+cancelAuthenticationChallenge:${1:(NSURLAuthenticationChallenge *)challenge}

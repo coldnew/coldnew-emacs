@@ -1,0 +1,4 @@
+#name : touchesMoved:withEvent
+#group : UIResponder
+# --
+touchesMoved:${1:(NSSet *)touches} withEvent:${2:(UIEvent *)event}

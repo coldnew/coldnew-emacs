@@ -1,0 +1,4 @@
+#name : performSelector:target:argument:order:modes
+#group : NSRunLoop
+# --
+performSelector:${1:(SEL)aSelector} target:${2:(id)target} argument:${3:(id)arg} order:${4:(NSUInteger)order} modes:${5:(NSArray *)modes}

@@ -1,0 +1,4 @@
+#name : finishTransaction
+#group : SKPaymentQueue
+# --
+finishTransaction:${1:(SKPaymentTransaction *)transaction}

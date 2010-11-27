@@ -1,0 +1,4 @@
+#name : application:handleOpenURL
+#group : UIApplication
+# --
+application:${1:(UIApplication *)application} handleOpenURL:${2:(NSURL *)url}

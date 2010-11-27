@@ -1,0 +1,4 @@
+#name : insertObject
+#group : NSManagedObjectContext
+# --
+insertObject:${1:(NSManagedObject *)object}

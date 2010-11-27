@@ -1,0 +1,4 @@
+#name : scanFloat
+#group : NSScanner
+# --
+scanFloat:${1:(float *)value}

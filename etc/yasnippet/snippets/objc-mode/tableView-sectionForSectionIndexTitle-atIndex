@@ -1,0 +1,4 @@
+#name : tableView:sectionForSectionIndexTitle:atIndex
+#group : UITableView
+# --
+tableView:${1:(UITableView *)tableView} sectionForSectionIndexTitle:${2:(NSString *)title} atIndex:${3:(NSInteger)index}

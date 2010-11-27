@@ -1,0 +1,4 @@
+#name : selectAll
+#group : UIResponder
+# --
+selectAll:${1:(id)sender}

@@ -1,0 +1,4 @@
+#name : setPersistentDomain:forName
+#group : NSUserDefaults
+# --
+setPersistentDomain:${1:(NSDictionary *)domain} forName:${2:(NSString *)domainName}

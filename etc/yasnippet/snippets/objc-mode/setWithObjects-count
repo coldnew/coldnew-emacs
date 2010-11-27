@@ -1,0 +1,4 @@
+#name : setWithObjects:count
+#group : NSSet
+# --
+setWithObjects:${1:(id *)objects} count:${2:(NSUInteger)cnt}

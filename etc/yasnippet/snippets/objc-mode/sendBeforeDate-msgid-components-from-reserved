@@ -1,0 +1,4 @@
+#name : sendBeforeDate:msgid:components:from:reserved
+#group : NSPort
+# --
+sendBeforeDate:${1:(NSDate *)limitDate} msgid:${2:(NSUInteger)msgID} components:${3:(NSMutableArray *)components} from:${4:(NSPort *)receivePort} reserved:${5:(NSUInteger)headerSpaceReserved}

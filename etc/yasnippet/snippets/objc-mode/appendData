@@ -1,0 +1,4 @@
+#name : appendData
+#group : NSData
+# --
+appendData:${1:(NSData *)other}

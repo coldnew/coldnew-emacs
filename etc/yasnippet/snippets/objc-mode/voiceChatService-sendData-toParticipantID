@@ -1,0 +1,4 @@
+#name : voiceChatService:sendData:toParticipantID
+#group : GKPublicProtocols
+# --
+voiceChatService:${1:(GKVoiceChatService *)voiceChatService} sendData:${2:(NSData *)data} toParticipantID:${3:(NSString *)participantID}

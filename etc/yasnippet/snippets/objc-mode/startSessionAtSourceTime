@@ -1,0 +1,4 @@
+#name : startSessionAtSourceTime
+#group : AVAssetWriter
+# --
+startSessionAtSourceTime:${1:(CMTime)startTime}

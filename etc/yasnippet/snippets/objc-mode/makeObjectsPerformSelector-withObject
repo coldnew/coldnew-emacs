@@ -1,0 +1,4 @@
+#name : makeObjectsPerformSelector:withObject
+#group : NSSet
+# --
+makeObjectsPerformSelector:${1:(SEL)aSelector} withObject:${2:(id)argument}

@@ -1,0 +1,4 @@
+#name : matchesContentsOfURL
+#group : NSFileWrapper
+# --
+matchesContentsOfURL:${1:(NSURL *)url}

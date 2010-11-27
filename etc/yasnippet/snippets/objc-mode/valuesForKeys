@@ -1,0 +1,4 @@
+#name : valuesForKeys
+#group : NSKeyValueCoding
+# --
+valuesForKeys:${1:(NSArray *)keys}

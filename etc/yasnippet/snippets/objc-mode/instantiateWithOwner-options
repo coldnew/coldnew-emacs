@@ -1,0 +1,4 @@
+#name : instantiateWithOwner:options
+#group : UINib
+# --
+instantiateWithOwner:${1:(id)ownerOrNil} options:${2:(NSDictionary *)optionsOrNil}

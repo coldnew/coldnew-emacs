@@ -1,0 +1,4 @@
+#name : compare:options:range
+#group : NSString
+# --
+compare:${1:(NSString *)string} options:${2:(NSStringCompareOptions)mask} range:${3:(NSRange)compareRange}

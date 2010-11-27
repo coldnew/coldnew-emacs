@@ -1,0 +1,4 @@
+#name : setWithObject
+#group : NSSet
+# --
+setWithObject:${1:(id)object}

@@ -1,0 +1,4 @@
+#name : hasFaultForRelationshipNamed
+#group : NSManagedObject
+# --
+hasFaultForRelationshipNamed:${1:(NSString *)key}

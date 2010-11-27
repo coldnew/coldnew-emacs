@@ -1,0 +1,4 @@
+#name : reloadComponent
+#group : UIPickerView
+# --
+reloadComponent:${1:(NSInteger)component}

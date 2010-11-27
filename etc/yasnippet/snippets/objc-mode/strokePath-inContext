@@ -1,0 +1,4 @@
+#name : strokePath:inContext
+#group : MKOverlayPathView
+# --
+strokePath:${1:(CGPathRef)path} inContext:${2:(CGContextRef)context}

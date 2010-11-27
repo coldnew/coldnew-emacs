@@ -1,0 +1,4 @@
+#name : evaluateWithObject
+#group : NSPredicate
+# --
+evaluateWithObject:${1:(id)object}

@@ -1,0 +1,4 @@
+#name : rangeOfFirstMatchInString:options:range
+#group : NSRegularExpression
+# --
+rangeOfFirstMatchInString:${1:(NSString *)string} options:${2:(NSMatchingOptions)options} range:${3:(NSRange)range}

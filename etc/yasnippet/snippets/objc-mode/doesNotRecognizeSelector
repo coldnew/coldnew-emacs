@@ -1,0 +1,4 @@
+#name : doesNotRecognizeSelector
+#group : NSObject
+# --
+doesNotRecognizeSelector:${1:(SEL)aSelector}

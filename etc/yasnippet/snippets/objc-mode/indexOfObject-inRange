@@ -1,0 +1,4 @@
+#name : indexOfObject:inRange
+#group : NSArray
+# --
+indexOfObject:${1:(id)anObject} inRange:${2:(NSRange)range}

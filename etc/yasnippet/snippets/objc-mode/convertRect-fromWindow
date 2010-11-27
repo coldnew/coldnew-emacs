@@ -1,0 +1,4 @@
+#name : convertRect:fromWindow
+#group : UIWindow
+# --
+convertRect:${1:(CGRect)rect} fromWindow:${2:(UIWindow *)window}

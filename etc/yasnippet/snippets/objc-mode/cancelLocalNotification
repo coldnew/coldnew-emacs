@@ -1,0 +1,4 @@
+#name : cancelLocalNotification
+#group : UIApplication
+# --
+cancelLocalNotification:${1:(UILocalNotification *)notification}

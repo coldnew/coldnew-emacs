@@ -1,0 +1,4 @@
+#name : getArgument:atIndex
+#group : NSInvocation
+# --
+getArgument:${1:(void *)argumentLocation} atIndex:${2:(NSInteger)idx}

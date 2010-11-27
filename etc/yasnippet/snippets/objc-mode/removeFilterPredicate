@@ -1,0 +1,4 @@
+#name : removeFilterPredicate
+#group : MPMediaQuery
+# --
+removeFilterPredicate:${1:(MPMediaPredicate *)predicate}

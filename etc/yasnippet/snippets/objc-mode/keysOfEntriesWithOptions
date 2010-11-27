@@ -1,0 +1,4 @@
+#name : keysOfEntriesWithOptions
+#group : NSDictionary
+# --
+keysOfEntriesWithOptions:${1:(NSEnumerationOptions)opts}

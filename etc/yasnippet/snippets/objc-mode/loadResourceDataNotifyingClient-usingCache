@@ -1,0 +1,4 @@
+#name : loadResourceDataNotifyingClient:usingCache
+#group : NSURL
+# --
+loadResourceDataNotifyingClient:${1:(id)client} usingCache:${2:(BOOL)shouldUseCache}

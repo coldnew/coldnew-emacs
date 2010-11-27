@@ -1,0 +1,4 @@
+#name : resourceValuesForKeys:fromBookmarkData
+#group : NSURL
+# --
+resourceValuesForKeys:${1:(NSArray *)keys} fromBookmarkData:${2:(NSData *)bookmarkData}

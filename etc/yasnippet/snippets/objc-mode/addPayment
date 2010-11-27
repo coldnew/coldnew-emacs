@@ -1,0 +1,4 @@
+#name : addPayment
+#group : SKPaymentQueue
+# --
+addPayment:${1:(SKPayment *)payment}

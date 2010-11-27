@@ -1,0 +1,4 @@
+#name : session:didFailWithError
+#group : GKPublicProtocols
+# --
+session:${1:(GKSession *)session} didFailWithError:${2:(NSError *)error}

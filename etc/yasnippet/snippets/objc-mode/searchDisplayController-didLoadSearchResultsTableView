@@ -1,0 +1,4 @@
+#name : searchDisplayController:didLoadSearchResultsTableView
+#group : UISearchDisplayController
+# --
+searchDisplayController:${1:(UISearchDisplayController *)controller} didLoadSearchResultsTableView:${2:(UITableView *)tableView}

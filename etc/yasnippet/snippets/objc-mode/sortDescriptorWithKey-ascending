@@ -1,0 +1,4 @@
+#name : sortDescriptorWithKey:ascending
+#group : NSSortDescriptor
+# --
+sortDescriptorWithKey:${1:(NSString *)key} ascending:${2:(BOOL)ascending}

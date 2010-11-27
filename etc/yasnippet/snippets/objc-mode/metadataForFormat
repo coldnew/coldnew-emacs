@@ -1,0 +1,4 @@
+#name : metadataForFormat
+#group : AVAssetTrack
+# --
+metadataForFormat:${1:(NSString *)format}

@@ -1,0 +1,4 @@
+#name : indexOfObjectIdenticalTo
+#group : NSArray
+# --
+indexOfObjectIdenticalTo:${1:(id)anObject}

@@ -1,0 +1,4 @@
+#name : unknownPersonViewController:shouldPerformDefaultActionForPerson:property:identifier
+#group : ABUnknownPersonViewController
+# --
+unknownPersonViewController:${1:(ABUnknownPersonViewController *)personViewController} shouldPerformDefaultActionForPerson:${2:(ABRecordRef)person} property:${3:(ABPropertyID)property} identifier:${4:(ABMultiValueIdentifier)identifier}

@@ -1,0 +1,4 @@
+#name : arrayWithObjects:count
+#group : NSArray
+# --
+arrayWithObjects:${1:(const id *)objects} count:${2:(NSUInteger)cnt}

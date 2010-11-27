@@ -1,0 +1,4 @@
+#name : setExpression
+#group : NSExpressionDescription
+# --
+setExpression:${1:(NSExpression *)expression}

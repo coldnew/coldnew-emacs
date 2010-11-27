@@ -1,0 +1,4 @@
+#name : URLHandleUsingCache
+#group : NSURL
+# --
+URLHandleUsingCache:${1:(BOOL)shouldUseCache}

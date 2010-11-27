@@ -1,0 +1,4 @@
+#name : setOn:animated
+#group : UISwitch
+# --
+setOn:${1:(BOOL)on} animated:${2:(BOOL)animated}

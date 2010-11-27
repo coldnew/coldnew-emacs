@@ -1,0 +1,4 @@
+#name : predicateWithFormat:arguments
+#group : NSPredicate
+# --
+predicateWithFormat:${1:(NSString *)predicateFormat} arguments:${2:(va_list)argList}

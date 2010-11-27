@@ -1,0 +1,4 @@
+#name : convertTime:fromLayer
+#group : CALayer
+# --
+convertTime:${1:(CFTimeInterval)t} fromLayer:${2:(CALayer *)l}

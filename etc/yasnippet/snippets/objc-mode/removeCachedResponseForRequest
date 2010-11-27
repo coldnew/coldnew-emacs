@@ -1,0 +1,4 @@
+#name : removeCachedResponseForRequest
+#group : NSURLCache
+# --
+removeCachedResponseForRequest:${1:(NSURLRequest *)request}

@@ -1,0 +1,4 @@
+#name : versionForClassName
+#group : NSCoder
+# --
+versionForClassName:${1:(NSString *)className}

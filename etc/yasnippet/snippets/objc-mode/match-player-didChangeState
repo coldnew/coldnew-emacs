@@ -1,0 +1,4 @@
+#name : match:player:didChangeState
+#group : GKMatch
+# --
+match:${1:(GKMatch *)match} player:${2:(NSString *)playerID} didChangeState:${3:(GKPlayerConnectionState)state}

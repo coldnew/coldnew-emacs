@@ -1,0 +1,4 @@
+#name : queryPlayerGroupActivity
+#group : GKMatchmaker
+# --
+queryPlayerGroupActivity:${1:(NSUInteger)playerGroup}

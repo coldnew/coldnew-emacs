@@ -1,0 +1,4 @@
+#name : actionsForTarget:forControlEvent
+#group : UIControl
+# --
+actionsForTarget:${1:(id)target} forControlEvent:${2:(UIControlEvents)controlEvent}

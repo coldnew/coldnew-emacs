@@ -1,0 +1,4 @@
+#name : fileHandleForUpdatingAtPath
+#group : NSFileHandle
+# --
+fileHandleForUpdatingAtPath:${1:(NSString *)path}

@@ -1,0 +1,4 @@
+#name : bannerViewDidLoadAd
+#group : ADBannerView
+# --
+bannerViewDidLoadAd:${1:(ADBannerView *)banner}

@@ -1,0 +1,4 @@
+#name : localizedStringForKey:value:table
+#group : NSBundle
+# --
+localizedStringForKey:${1:(NSString *)key} value:${2:(NSString *)value} table:${3:(NSString *)tableName}

@@ -1,0 +1,4 @@
+#name : searchDisplayController:didHideSearchResultsTableView
+#group : UISearchDisplayController
+# --
+searchDisplayController:${1:(UISearchDisplayController *)controller} didHideSearchResultsTableView:${2:(UITableView *)tableView}

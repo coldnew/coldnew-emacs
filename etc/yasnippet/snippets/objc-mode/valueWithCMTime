@@ -1,0 +1,4 @@
+#name : valueWithCMTime
+#group : AVTime
+# --
+valueWithCMTime:${1:(CMTime)time}

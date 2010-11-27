@@ -1,0 +1,4 @@
+#name : addressCheckingResultWithRange:components
+#group : NSTextCheckingResult
+# --
+addressCheckingResultWithRange:${1:(NSRange)range} components:${2:(NSDictionary *)components}

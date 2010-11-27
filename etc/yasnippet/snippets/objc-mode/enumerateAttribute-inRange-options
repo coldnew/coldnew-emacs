@@ -1,0 +1,4 @@
+#name : enumerateAttribute:inRange:options
+#group : NSAttributedString
+# --
+enumerateAttribute:${1:(NSString *)attrName} inRange:${2:(NSRange)enumerationRange} options:${3:(NSAttributedStringEnumerationOptions)opts}

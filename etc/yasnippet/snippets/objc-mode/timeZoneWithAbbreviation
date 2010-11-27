@@ -1,0 +1,4 @@
+#name : timeZoneWithAbbreviation
+#group : NSTimeZone
+# --
+timeZoneWithAbbreviation:${1:(NSString *)abbreviation}

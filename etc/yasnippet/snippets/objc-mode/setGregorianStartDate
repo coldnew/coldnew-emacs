@@ -1,0 +1,4 @@
+#name : setGregorianStartDate
+#group : NSDateFormatter
+# --
+setGregorianStartDate:${1:(NSDate *)date}

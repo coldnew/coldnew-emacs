@@ -1,0 +1,4 @@
+#name : initWithLayer
+#group : CALayer
+# --
+initWithLayer:${1:(id)layer}

@@ -1,0 +1,4 @@
+#name : replacementStringForResult:inString:offset:template
+#group : NSRegularExpression
+# --
+replacementStringForResult:${1:(NSTextCheckingResult *)result} inString:${2:(NSString *)string} offset:${3:(NSInteger)offset} template:${4:(NSString *)templ}

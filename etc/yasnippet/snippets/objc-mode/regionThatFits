@@ -1,0 +1,4 @@
+#name : regionThatFits
+#group : MKMapView
+# --
+regionThatFits:${1:(MKCoordinateRegion)region}

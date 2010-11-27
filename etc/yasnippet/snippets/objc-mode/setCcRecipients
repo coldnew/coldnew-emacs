@@ -1,0 +1,4 @@
+#name : setCcRecipients
+#group : MFMailComposeViewController
+# --
+setCcRecipients:${1:(NSArray *)ccRecipients}

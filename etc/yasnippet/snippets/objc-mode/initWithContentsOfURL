@@ -1,0 +1,4 @@
+#name : initWithContentsOfURL
+#group : NSXMLParser
+# --
+initWithContentsOfURL:${1:(NSURL *)url}

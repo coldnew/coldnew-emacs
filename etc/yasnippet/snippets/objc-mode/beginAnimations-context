@@ -1,0 +1,4 @@
+#name : beginAnimations:context
+#group : UIView
+# --
+beginAnimations:${1:(NSString *)animationID} context:${2:(void *)context}

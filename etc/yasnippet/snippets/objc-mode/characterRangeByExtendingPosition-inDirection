@@ -1,0 +1,4 @@
+#name : characterRangeByExtendingPosition:inDirection
+#group : UITextInput
+# --
+characterRangeByExtendingPosition:${1:(UITextPosition *)position} inDirection:${2:(UITextLayoutDirection)direction}

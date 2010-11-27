@@ -1,0 +1,4 @@
+#name : setZoomScale:animated
+#group : UIScrollView
+# --
+setZoomScale:${1:(float)scale} animated:${2:(BOOL)animated}

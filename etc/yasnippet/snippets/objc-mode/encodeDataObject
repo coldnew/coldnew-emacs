@@ -1,0 +1,4 @@
+#name : encodeDataObject
+#group : NSCoder
+# --
+encodeDataObject:${1:(NSData *)data}

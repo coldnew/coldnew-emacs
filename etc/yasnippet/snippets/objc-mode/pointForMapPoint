@@ -1,0 +1,4 @@
+#name : pointForMapPoint
+#group : MKOverlayView
+# --
+pointForMapPoint:${1:(MKMapPoint)mapPoint}

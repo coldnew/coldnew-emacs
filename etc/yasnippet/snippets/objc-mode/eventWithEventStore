@@ -1,0 +1,4 @@
+#name : eventWithEventStore
+#group : EKEvent
+# --
+eventWithEventStore:${1:(EKEventStore *)eventStore}

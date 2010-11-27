@@ -1,0 +1,4 @@
+#name : scrollViewWillBeginDragging
+#group : UIScrollView
+# --
+scrollViewWillBeginDragging:${1:(UIScrollView *)scrollView}

@@ -1,0 +1,4 @@
+#name : tabBar:didBeginCustomizingItems
+#group : UITabBar
+# --
+tabBar:${1:(UITabBar *)tabBar} didBeginCustomizingItems:${2:(NSArray *)items}

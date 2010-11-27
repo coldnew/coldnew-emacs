@@ -1,0 +1,4 @@
+#name : setOutputFormat
+#group : NSKeyedArchiver
+# --
+setOutputFormat:${1:(NSPropertyListFormat)format}

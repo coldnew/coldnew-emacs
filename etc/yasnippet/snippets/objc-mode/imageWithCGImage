@@ -1,0 +1,4 @@
+#name : imageWithCGImage
+#group : UIImage
+# --
+imageWithCGImage:${1:(CGImageRef)imageRef}

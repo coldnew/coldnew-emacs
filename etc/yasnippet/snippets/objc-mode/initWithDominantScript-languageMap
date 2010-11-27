@@ -1,0 +1,4 @@
+#name : initWithDominantScript:languageMap
+#group : NSOrthography
+# --
+initWithDominantScript:${1:(NSString *)script} languageMap:${2:(NSDictionary *)map}

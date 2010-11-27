@@ -1,0 +1,4 @@
+#name : searchBarResultsListButtonClicked
+#group : UISearchBar
+# --
+searchBarResultsListButtonClicked:${1:(UISearchBar *)searchBar}

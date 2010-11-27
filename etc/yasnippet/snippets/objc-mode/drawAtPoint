@@ -1,0 +1,4 @@
+#name : drawAtPoint
+#group : UIImage
+# --
+drawAtPoint:${1:(CGPoint)point}

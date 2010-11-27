@@ -1,0 +1,4 @@
+#name : containsCoordinate
+#group : CLRegion
+# --
+containsCoordinate:${1:(CLLocationCoordinate2D)coordinate}

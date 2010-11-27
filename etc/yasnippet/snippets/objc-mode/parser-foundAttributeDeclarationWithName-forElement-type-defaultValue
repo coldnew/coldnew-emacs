@@ -1,0 +1,4 @@
+#name : parser:foundAttributeDeclarationWithName:forElement:type:defaultValue
+#group : NSXMLParser
+# --
+parser:${1:(NSXMLParser *)parser} foundAttributeDeclarationWithName:${2:(NSString *)attributeName} forElement:${3:(NSString *)elementName} type:${4:(NSString *)type} defaultValue:${5:(NSString *)defaultValue}

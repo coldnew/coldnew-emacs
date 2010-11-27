@@ -1,0 +1,4 @@
+#name : setHTTPShouldHandleCookies
+#group : NSURLRequest
+# --
+setHTTPShouldHandleCookies:${1:(BOOL)should}

@@ -1,0 +1,4 @@
+#name : handlePortMessage
+#group : NSPort
+# --
+handlePortMessage:${1:(NSPortMessage *)message}

@@ -1,0 +1,4 @@
+#name : setSortDescriptors
+#group : NSFetchRequest
+# --
+setSortDescriptors:${1:(NSArray *)sortDescriptors}

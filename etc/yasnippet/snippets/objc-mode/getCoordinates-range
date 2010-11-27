@@ -1,0 +1,4 @@
+#name : getCoordinates:range
+#group : MKMultiPoint
+# --
+getCoordinates:${1:(CLLocationCoordinate2D *)coords} range:${2:(NSRange)range}

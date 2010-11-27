@@ -1,0 +1,4 @@
+#name : zoomToRect:animated
+#group : UIScrollView
+# --
+zoomToRect:${1:(CGRect)rect} animated:${2:(BOOL)animated}

@@ -1,0 +1,4 @@
+#name : canonicalLanguageIdentifierFromString
+#group : NSLocale
+# --
+canonicalLanguageIdentifierFromString:${1:(NSString *)string}

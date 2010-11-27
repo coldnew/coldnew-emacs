@@ -1,0 +1,4 @@
+#name : addObserverForName:object:queue
+#group : NSNotification
+# --
+addObserverForName:${1:(NSString *)name} object:${2:(id)obj} queue:${3:(NSOperationQueue *)queue}

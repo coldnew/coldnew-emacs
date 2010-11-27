@@ -1,0 +1,4 @@
+#name : isSubsetOfSet
+#group : NSSet
+# --
+isSubsetOfSet:${1:(NSSet *)otherSet}

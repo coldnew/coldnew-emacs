@@ -1,0 +1,4 @@
+#name : addSubview
+#group : UIView
+# --
+addSubview:${1:(UIView *)view}

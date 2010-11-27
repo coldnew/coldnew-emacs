@@ -1,0 +1,4 @@
+#name : selectedRowInComponent
+#group : UIPickerView
+# --
+selectedRowInComponent:${1:(NSInteger)component}

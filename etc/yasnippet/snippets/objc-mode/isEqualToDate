@@ -1,0 +1,4 @@
+#name : isEqualToDate
+#group : NSDate
+# --
+isEqualToDate:${1:(NSDate *)otherDate}

@@ -1,0 +1,4 @@
+#name : initWithFilterPredicates
+#group : MPMediaQuery
+# --
+initWithFilterPredicates:${1:(NSSet *)filterPredicates}

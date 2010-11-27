@@ -1,0 +1,4 @@
+#name : audioRecorderBeginInterruption
+#group : AVAudioRecorder
+# --
+audioRecorderBeginInterruption:${1:(AVAudioRecorder *)recorder}

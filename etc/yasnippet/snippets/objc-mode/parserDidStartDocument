@@ -1,0 +1,4 @@
+#name : parserDidStartDocument
+#group : NSXMLParser
+# --
+parserDidStartDocument:${1:(NSXMLParser *)parser}

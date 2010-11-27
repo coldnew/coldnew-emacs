@@ -1,0 +1,4 @@
+#name : alarmWithAbsoluteDate
+#group : EKAlarm
+# --
+alarmWithAbsoluteDate:${1:(NSDate *)date}

@@ -1,0 +1,4 @@
+#name : enumerateSubstringsInRange:options
+#group : NSString
+# --
+enumerateSubstringsInRange:${1:(NSRange)range} options:${2:(NSStringEnumerationOptions)opts}

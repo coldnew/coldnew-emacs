@@ -1,0 +1,4 @@
+#name : initWithNibName:bundle
+#group : UIViewController
+# --
+initWithNibName:${1:(NSString *)nibNameOrNil} bundle:${2:(NSBundle *)nibBundleOrNil}

@@ -1,0 +1,4 @@
+#name : stringByEvaluatingJavaScriptFromString
+#group : UIWebView
+# --
+stringByEvaluatingJavaScriptFromString:${1:(NSString *)script}

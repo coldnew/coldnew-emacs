@@ -1,0 +1,4 @@
+#name : initWithHue:saturation:brightness:alpha
+#group : UIColor
+# --
+initWithHue:${1:(CGFloat)hue} saturation:${2:(CGFloat)saturation} brightness:${3:(CGFloat)brightness} alpha:${4:(CGFloat)alpha}
