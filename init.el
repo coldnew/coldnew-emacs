@@ -12,7 +12,7 @@
     (server-start)))
 
 ;;;;;;; 運行環境辨別
-(defvar mac-p     (eq window-system 'mac))
+(defvar mac-p     (eq system-type 'darwin))
 (defvar linux-p   (eq system-type 'gnu/linux))
 (defvar cygwin-p  (eq system-type 'cygwin))
 (defvar windows-p (eq system-type 'windows-nt))
