@@ -22,24 +22,24 @@
   (setq ac-modes (append ac-modes '(objc-mode)))
   ;; hook
   (add-hook 'objc-mode-hook
-	    (lambda ()
-	      (setq-default tab-width 8)
-	      (setq-default indent-tabs-mode nil)
-	      ;;  (define-key objc-mode-map (kbd "\t") 'ac-complete)
-	      ;; XCode を利用した補完を有効にする
-	      (push 'ac-source-company-xcode ac-sources)
-	      ;; C++ のキーワード補完をする Objective-C++ を利用する人だけ設定してください
-	      ;; (push 'ac-source-c++-keywords ac-sources)
-	      ))
+	    '(lambda ()
+	       (setq-default tab-width 8)
+	       (setq-default indent-tabs-mode nil)
+	       ;;  (define-key objc-mode-map (kbd "\t") 'ac-complete)
+	       ;; XCode を利用した補完を有効にする
+	       (push 'ac-source-company-xcode ac-sources)
+	       ;; C++ のキーワード補完をする Objective-C++ を利用する人だけ設定してください
+	       ;; (push 'ac-source-c++-keywords ac-sources)
+	       ))
   ;; Keybinding
   (add-hook 'objc-mode-hook
-	    (lambda ()
-	      (when (require 'vim nil 'noerror)
-		(vim:nmap (kbd "<f9>") 'xcode:build-and-run)
-		(vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
-		)
-	      ;;	      (define-key objc-mode-map (kbd "C-c w") 'xcdoc:ask-search)
-	      ))
+	    '(lambda ()
+	       (when (require 'vim nil 'noerror)
+		 (vim:nmap (kbd "<f9>") 'xcode:build-and-run)
+		 (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
+		 )
+	       ;;	      (define-key objc-mode-map (kbd "C-c w") 'xcdoc:ask-search)
+	       ))
 
 
 

@@ -1,4 +1,3 @@
-;;; init.el ---
 
 (setq custom-file "~/.emacs.d/custom.el")
 (require 'site-gentoo nil 'noerror)        ; 讀取 Gentoo 安裝的外掛資訊
@@ -81,10 +80,14 @@
 (require 'rc-matlab-mode)
 (require 'rc-org-mode)
 (require 'rc-session)
-(require 'rc-slime)
 (require 'rc-vim-mode)
 (require 'rc-woman)
 (require 'rc-function)
 (require 'rc-smartchr)
-;;FIXME: bug?
+
+
+
+;; FIXME: bug?
 ;;(require 'rc-package-manager)
+;; BUG: where is the fucking symbol function?
+;;(require 'rc-slime)
