@@ -36,4 +36,6 @@
 	  pymacs
 	  smartchr
 	  ipython
+	  xcode-document-viewer
+	  ;;emacs-w3m
 	  )))

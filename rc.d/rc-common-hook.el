@@ -13,7 +13,6 @@
   (set-newline-and-indent)		; 行尾按ENTER自動縮排
   (indent-file-when-save)		; 儲存檔案時自動縮排
   (use-hungry-delete)			; 啟用 hungry-delete mode
-  (insert-char-smart-common-type)
   )
 
 
@@ -61,43 +60,3 @@
   "Use hungry delete mode"
   (when (require 'hungry-delete nil 'noerro)
     (turn-on-hungry-delete-mode)))
-
-
-;;;; extension for smartchr
-(require 'smartchr nil 'noerror)
-
-(defun smartchr-insert-eol (s)
-  (lexical-let ((s s))
-    (smartchr-make-struct
-     :insert-fn (lambda ()
-		  (save-excursion
-		    (goto-char (point-at-eol))
-		    (when (not (string= (char-to-string (preceding-char)) s))
-		      (insert s))))
-     :cleanup-fn (lambda ()
-		   (save-excursion
-		     (goto-char (point-at-eol))
-		     (delete-char (- 0 (length s))))))))
-
-
-(defun smartchr-insert-semicolon-eol ()
-  (smartchr-insert-eol ";"))
-
-(defun insert-char-smart-common-type ()
-  "insert character more smart."
-  (when (featurep 'smartchr)
-    (vim:imap (kbd "(")  (smartchr '("(`!!')" "(")))
-    ;; (vim:imap (kbd "[")  (smartchr '("[`!!']" "[ [`!!'] ]" "[")))
-    ;; (vim:imap (kbd "{")  (smartchr '("{\n`!!'\n}" "{`!!'}" "{")))
-    ;; (vim:imap (kbd "`")  (smartchr '("\``!!''" "\`")))
-    (vim:imap (kbd "\"") (smartchr '("\"`!!'\"" "\"")))
-    ;; (vim:imap (kbd ">")  (smartchr '(">" " => " " => '`!!''" " => \"`!!'\"")))
-    ;; (vim:imap (kbd "F")  (smartchr '("F" "$" "$_" "$_->" "@$"))) ;
-    ;; (vim:imap (kbd "=")  (smartchr '(" = " " == "  "="))) ;
-    ;; (vim:imap (kbd ";")  (smartchr '(";" smartchr-insert-semicolon-eol)))
-    ))
-
-(defun insert-equal-char-smart ()
-  "insert character more smart."
-  (when (and (featurep 'smartchr) (featurep 'vim))
-    (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))))

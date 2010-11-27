@@ -85,5 +85,6 @@
 (require 'rc-vim-mode)
 (require 'rc-woman)
 (require 'rc-function)
+(require 'rc-smartchr)
 ;;FIXME: bug?
 ;;(require 'rc-package-manager)

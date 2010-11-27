@@ -3,20 +3,59 @@
 (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@interface"      . objc-mode))
 (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@protocol"       . objc-mode))
 (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@implementation" . objc-mode))
-;; ac-company で company-xcode を有効にする
-(ac-company-define-source ac-source-company-xcode company-xcode)
 
-;; objc-mode で補完候補を設定
-(setq ac-modes (append ac-modes '(objc-mode)))
-;; hook
-(add-hook 'objc-mode-hook
-	  (lambda ()
-	    ;;  (define-key objc-mode-map (kbd "\t") 'ac-complete)
-	    ;; XCode を利用した補完を有効にする
-	    (push 'ac-source-company-xcode ac-sources)
-	    ;; C++ のキーワード補完をする Objective-C++ を利用する人だけ設定してください
-	    ;; (push 'ac-source-c++-keywords ac-sources)
-	    ))
+;;;; When Run on MacOS X
+(when mac-p
+  (require 'xcode nil 'noerror)
+  (require 'w3m nil 'noerror)
+  (require 'xcode-document-viewer nil 'noerror)
+
+  ;; Document Viewer
+  (setq
+   xcdoc:document-path "/Developer/Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/com.apple.adc.documentation.AppleiPhone3_1.iPhoneLibrary.docset")
+  (setq xcdoc:open-w3m-other-buffer t)
 
 
-;;http://github.com/kurain/kurain-dotfiles/blob/162ba05b04e14ff232c54f23e0f96300a9215922/.emacs.d/conf/init-objc.el
+  ;; ac-company で company-xcode を有効にする
+  (ac-company-define-source ac-source-company-xcode company-xcode)
+  ;; objc-mode で補完候補を設定
+  (setq ac-modes (append ac-modes '(objc-mode)))
+  ;; hook
+  (add-hook 'objc-mode-hook
+	    (lambda ()
+	      (setq-default tab-width 8)
+	      (setq-default indent-tabs-mode nil)
+	      ;;  (define-key objc-mode-map (kbd "\t") 'ac-complete)
+	      ;; XCode を利用した補完を有効にする
+	      (push 'ac-source-company-xcode ac-sources)
+	      ;; C++ のキーワード補完をする Objective-C++ を利用する人だけ設定してください
+	      ;; (push 'ac-source-c++-keywords ac-sources)
+	      ))
+  ;; Keybinding
+  (add-hook 'objc-mode-hook
+	    (lambda ()
+	      (when (require 'vim nil 'noerror)
+		(vim:nmap (kbd "<f9>") 'xcode:build-and-run)
+		(vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
+		)
+	      ;;	      (define-key objc-mode-map (kbd "C-c w") 'xcdoc:ask-search)
+	      ))
+
+
+
+
+
+;;;; Functions
+  (defun xcode:build-and-run ()
+    (interactive)
+    (do-applescript
+     (format (concat "tell application \"Xcode\" to activate \r"
+		     "tell application \"System Events\" \r"
+		     "     tell process \"Xcode\" \r"
+		     "		key code 36 using {command down} \r"
+		     "      end tell \r"
+		     "end tell \r"
+		     ))))
+
+  ;;http://github.com/kurain/kurain-dotfiles/blob/162ba05b04e14ff232c54f23e0f96300a9215922/.emacs.d/conf/init-objc.el
+  )

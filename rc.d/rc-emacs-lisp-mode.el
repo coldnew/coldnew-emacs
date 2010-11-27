@@ -28,7 +28,7 @@
 	       (turn-on-pretty-lambda-mode))
 
 	     ;; Hooks for emacs-lisp-mode
-	     (byte-compile-when-save)	; bytecompile the elisp file after save
+;;;;	     (byte-compile-when-save)	; bytecompile the elisp file after save
 	     (remove-elc-when-visit)	; when visit elisp file, remove .elc extensioon
 	     (programming-common-hook)	; programming common hook
 	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)

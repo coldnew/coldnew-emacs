@@ -14,6 +14,7 @@
 	     (when (featurep 'vim)
 	       (vim:nmap (kbd ",o") 'ff-find-other-file)
 	       (vim:nmap (kbd ",h") 'ff-find-related-file)
+	       (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
 	       )
 
 	     ;; hook for c-mode
@@ -23,4 +24,3 @@
 
 
 ;;;; Functions
-

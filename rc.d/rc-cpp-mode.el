@@ -22,6 +22,15 @@
 	     (find-source-or-header)	; switch between sorece and header
 	     ))
 
+;;;; Keybinding
+(add-hook 'c++-mode-hook
+	  '(lambda ()
+	     (when (require 'vim nil 'noerror)
+	       (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
+	       )))
+
+
+
 ;;;; Functions
 
 (defun find-source-or-header ()
@@ -40,4 +49,4 @@
 ;;   "insert character more smart."
 ;;   (when (featurep 'smartchr)
 ;;     (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
-;;     (vim:imap (kbd ";") (smartchr '(";" ik:insert-eol))))) 
+;;     (vim:imap (kbd ";") (smartchr '(";" ik:insert-eol)))))
