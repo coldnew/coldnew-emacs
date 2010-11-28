@@ -15,7 +15,6 @@
 ;; default theme use night.
 (color-theme-coldnew-night)
 
-
 ;;;; Specified special color-theme according different modes
 ;;(add-hook 'after-change-major-mode-hook;;
 (add-hook 'post-command-hook
@@ -29,6 +28,8 @@
 	       )))
 
 ;;;;;; Functions
+
+;; Switch between color-theme-day and color-theme-night
 (defvar *color-mode* 'night
   "Color mode for ``switch-day-and-night''.Can be 'day or 'night.")
 (defun switch-day-and-night ()
