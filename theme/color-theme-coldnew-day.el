@@ -92,7 +92,7 @@
        ( (background-color . "#f8f8f7")
 	 (background-mode  . light)
 	 (border-color     . "#f8f8f7")
-	 (cursor-color     . "black")
+	 (cursor-color     . "#A1A1A1")
 	 (foreground-color . "#000000"))
        ;; Font Lock
        (font-lock-builtin-face        ; 內建的顏色
@@ -187,15 +187,15 @@
 
        ;; Auto Complete
        (ac-candidate-face
-	((t (:background ,_Gray :foreground "white"))))
+	((t (:background "white" :foreground "black"))))
        (ac-selection-face
-	((t (:background ,_Green+1 :foreground ,_Black-1 :weight bold))))
+	((t (:background ,_Green+1 :foreground "white" :weight bold))))
 
-       ;; Highlight-change-mode
-       (highlight-changes
-	((t (:background ,_Gray-5))))
-       (highlight-changes-delete
-	((t (:background ,_RedGray-6 :foreground nil))))
+       ;; ;; Highlight-change-mode
+       ;; (highlight-changes
+       ;; 	((t (:background ,_Gray-5))))
+       ;; (highlight-changes-delete
+       ;; 	((t (:background ,_RedGray-6 :foreground nil))))
 
 
        ;; ecb
