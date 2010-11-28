@@ -203,16 +203,33 @@
 	((t (:background ,_Green+1 :foreground ,_Black-1 :weight bold))))
 
 
+       ;; w3m
+       (w3m-underline
+	((t (:foreground ,_Blue))))
+       (w3m-history-current-url
+	((t (:foreground ,_Purple+2))))
+       (w3m-anchor			; 未訪問的標題
+	((t (:foreground ,_Blue :underline t))))
+       (w3m-arrived-anchor		; 已訪問過的標題
+	((t ((:foreground ,_Purple+2 :underline t)))))
+       (w3m-current-anchor		; 當前標題
+	((t ((:box (:line-width -1 :color ,_Gray-2) :weight bold)))))
+       (w3m-form
+	((t (:foreground ,_Gray+1
+			 :underline "gray")))
+
+	;;;; TODO: read `http://www.emacswiki.org/emacs/LazyCatTheme.el' to add more
+
 ;;;; Woman
 
-       (woman-italic-face ((t (:slant italic :weight bold))))
-       (woman-unknown ((t (:foreground ,_Red+3 :weight bold))))
+	(woman-italic-face ((t (:slant italic :weight bold))))
+	(woman-unknown ((t (:foreground ,_Red+3 :weight bold))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-       (woman-addition ((t (:foreground "cadet blue"))))
-       (woman-bold ((t (:inherit bold :foreground "CadetBlue3"))))
+	(woman-addition ((t (:foreground "cadet blue"))))
+	(woman-bold ((t (:inherit bold :foreground "CadetBlue3"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -234,85 +251,85 @@
 
 
 ;;;; WhiteSpace Mode
-       (whitespace-space              ; 顯示 Space
-	((((class color) (background dark))
-	  (:background "gray83" :foreground "black"))))
-       (whitespace-tab                ; 顯示 TAB
-	((((class color) (background dark))
-	  (:background "gray57" :foreground "gray77"))))
+	(whitespace-space              ; 顯示 Space
+	 ((((class color) (background dark))
+	   (:background "gray83" :foreground "black"))))
+	(whitespace-tab                ; 顯示 TAB
+	 ((((class color) (background dark))
+	   (:background "gray57" :foreground "gray77"))))
 
 ;;;; Eshell
-       (eshell-ls-directory ((((class color) (background dark))
-			      (:foreground "blue2" :weight bold))))
-       (eshell-ls-readonly ((((class color) (background dark))
-			     (:foreground "white"))))
+	(eshell-ls-directory ((((class color) (background dark))
+			       (:foreground "blue2" :weight bold))))
+	(eshell-ls-readonly ((((class color) (background dark))
+			      (:foreground "white"))))
 ;;;; ElScreen
-       (elscreen-tab-background-face
-	((t (:background "#272729" ))))
-       (elscreen-tab-control-face
-	((t (:foreground "white" :background "black" :weight extra-bold))))
-       (elscreen-tab-current-screen-face
-	((t (:background "#250628" :foreground "Gray90" :weight bold))))
-       (elscreen-tab-other-screen-face
-	((t (:background "#1D1D1F" :foreground "Gray85" :weight bold))))
+	(elscreen-tab-background-face
+	 ((t (:background "#272729" ))))
+	(elscreen-tab-control-face
+	 ((t (:foreground "white" :background "black" :weight extra-bold))))
+	(elscreen-tab-current-screen-face
+	 ((t (:background "#250628" :foreground "Gray90" :weight bold))))
+	(elscreen-tab-other-screen-face
+	 ((t (:background "#1D1D1F" :foreground "Gray85" :weight bold))))
 
 ;;;; Dired
-       (diredp-date-time              ; 修改時間
-	((t (:foreground "Grey60"))))
-       (diredp-deletion               ; 刪除標記
-	((t (:background "Black" :foreground "red"))))
-       (diredp-deletion-file-name     ; 刪除文件
-	((t (:foreground "red"))))
-       (diredp-dir-heading            ; 目錄
-	((t (:background "Black" :foreground "Gold"))))
-       (diredp-dir-priv               ; 目錄掩碼
-	((t (:background "Black" :foreground "DodgerBlue"))))
-       (diredp-display-msg            ; 路徑
-	((t (:foreground "Gold"))))
-       (diredp-exec-priv              ; 可執行掩碼
-	((t (:background "Black" :foreground "DeepSkyBlue3"))))
-       (diredp-file-name              ; 文件
-	((t (:foreground "Green3"))))
-       (diredp-file-suffix            ; 文件擴展名
-	((t (:foreground "Green4"))))
-       (diredp-flag-mark              ; 選中標記
-	((t (:background "Black" :foreground "Cyan"))))
-       (diredp-flag-mark-line         ; 選中文件
-	((t (:background "Black" :foreground "Cyan"))))
-       (diredp-ignored-file-name      ; 忽略的文件
-	((t (:foreground "grey40"))))
-       (diredp-no-priv                ; 無掩碼
-	((t (:background "Black" :foreground "Green"))))
-       (diredp-other-priv             ; 其他掩碼
-	((t (:background "Black" :foreground "khaki"))))
-       (diredp-rare-priv              ; 稀有的掩碼
-	((t (:background "Black" :foreground "Red"))))
-       (diredp-read-priv              ; 讀取掩碼
-	((t (:background "Black" :foreground "IndianRed"))))
-       (diredp-write-priv             ; 寫入掩碼
-	((t (:background "Black" :foreground "Gold3"))))
+	(diredp-date-time              ; 修改時間
+	 ((t (:foreground "Grey60"))))
+	(diredp-deletion               ; 刪除標記
+	 ((t (:background "Black" :foreground "red"))))
+	(diredp-deletion-file-name     ; 刪除文件
+	 ((t (:foreground "red"))))
+	(diredp-dir-heading            ; 目錄
+	 ((t (:background "Black" :foreground "Gold"))))
+	(diredp-dir-priv               ; 目錄掩碼
+	 ((t (:background "Black" :foreground "DodgerBlue"))))
+	(diredp-display-msg            ; 路徑
+	 ((t (:foreground "Gold"))))
+	(diredp-exec-priv              ; 可執行掩碼
+	 ((t (:background "Black" :foreground "DeepSkyBlue3"))))
+	(diredp-file-name              ; 文件
+	 ((t (:foreground "Green3"))))
+	(diredp-file-suffix            ; 文件擴展名
+	 ((t (:foreground "Green4"))))
+	(diredp-flag-mark              ; 選中標記
+	 ((t (:background "Black" :foreground "Cyan"))))
+	(diredp-flag-mark-line         ; 選中文件
+	 ((t (:background "Black" :foreground "Cyan"))))
+	(diredp-ignored-file-name      ; 忽略的文件
+	 ((t (:foreground "grey40"))))
+	(diredp-no-priv                ; 無掩碼
+	 ((t (:background "Black" :foreground "Green"))))
+	(diredp-other-priv             ; 其他掩碼
+	 ((t (:background "Black" :foreground "khaki"))))
+	(diredp-rare-priv              ; 稀有的掩碼
+	 ((t (:background "Black" :foreground "Red"))))
+	(diredp-read-priv              ; 讀取掩碼
+	 ((t (:background "Black" :foreground "IndianRed"))))
+	(diredp-write-priv             ; 寫入掩碼
+	 ((t (:background "Black" :foreground "Gold3"))))
 
 ;;;; ibuffer
-       (ibuffer-deletion ((t (:foreground "#dfaf8f" :weight bold))))
-       (ibuffer-help-buffer ((t (:inherit font-lock-comment))))
-       (ibuffer-marked ((t (:foreground "#f0dfaf" :weight bold))))
-       (ibuffer-special-buffer ((t (:inherit font-lock-doc))))
+	(ibuffer-deletion ((t (:foreground "#dfaf8f" :weight bold))))
+	(ibuffer-help-buffer ((t (:inherit font-lock-comment))))
+	(ibuffer-marked ((t (:foreground "#f0dfaf" :weight bold))))
+	(ibuffer-special-buffer ((t (:inherit font-lock-doc))))
 
 ;;;; rcirc
-       (rcirc-other-nick
-	((((class color) (min-colors 88) (background dark)) nil)))
-       (rcirc-prompt
-	((((min-colors 88) (background dark)) (:foreground "gold2"))))
-       (rcirc-server
-	((((class color) (min-colors 88) (background dark)) (:foreground "purple2"))))
-       (rcirc-server-prefix
-	((default (:foreground "seagreen")) (((class color) (min-colors 16)) nil)))
-       (rcirc-timestamp
-	((t (:foreground "green3" :weight bold))))
+	(rcirc-other-nick
+	 ((((class color) (min-colors 88) (background dark)) nil)))
+	(rcirc-prompt
+	 ((((min-colors 88) (background dark)) (:foreground "gold2"))))
+	(rcirc-server
+	 ((((class color) (min-colors 88) (background dark)) (:foreground "purple2"))))
+	(rcirc-server-prefix
+	 ((default (:foreground "seagreen")) (((class color) (min-colors 16)) nil)))
+	(rcirc-timestamp
+	 ((t (:foreground "green3" :weight bold))))
 
 
 
-       ))))
+	))))
 
 
 ;;; color-theme-coldnew-night.el ends here
