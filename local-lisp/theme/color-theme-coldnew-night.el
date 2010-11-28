@@ -216,7 +216,7 @@
 	((t ((:box (:line-width -1 :color ,_Gray-2) :weight bold)))))
        (w3m-form
 	((t (:foreground ,_Gray+1
-			 :underline "gray")))
+			 :underline "gray"))))
 
 	;;;; TODO: read `http://www.emacswiki.org/emacs/LazyCatTheme.el' to add more
 
