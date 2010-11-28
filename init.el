@@ -60,7 +60,7 @@
 
 ;;;;;;;;; 設定預設emacs窗口大小
 (cond
- (mac-p   (setq default-frame-alist '((width . 20) (height . 10))))
+ (mac-p   (setq default-frame-alist '((width . 100) (height . 50))))
  (linux-p (setq default-frame-alist '((width . 170) (height . 50)))))
 
 ;;;;;; load package initial setting
@@ -93,5 +93,3 @@
 ;;(require 'rc-package-manager)
 ;; BUG: where is the fucking symbol function?
 ;;(require 'rc-slime)
-
-
