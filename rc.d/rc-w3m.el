@@ -19,7 +19,6 @@
 	w3m-output-coding-system 'utf-8
 	w3m-terminal-coding-system 'utf-8)
   (setq w3m-search-default-engine "google-tw")
-  (cond (mac-p (add-to-list 'w3m-command-environment '("GC_NPROCS" . "I"))))
   (eval-after-load "w3m-search"
     '(progn
        (add-to-list 'w3m-search-engine-alist
