@@ -15,6 +15,7 @@
 		       (mode . help-mode)))
 	   ("IRC"   (or (mode . erc-mode)
 			(mode . rcirc-mode)))
+	   ("w3m"   (mode . w3m-mode))
 	   ("Shell Script" (or (mode . shell-mode)
 			       (mode . python-mode)
 			       (mode . perl-mode)

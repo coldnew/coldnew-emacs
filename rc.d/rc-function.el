@@ -1,6 +1,34 @@
 ;; other functions
 (provide 'rc-function)
 
+
+;; lookup Wikipedia
+;; ----------------
+(defun lookup-wikipedia ()
+  "Look up the word under cursor in Wikipedia.
+This command generates a url for Wikipedia.com and switches you
+to browser. If a region is active (a phrase), lookup that phrase."
+  (interactive)
+  (let (myword myurl)
+    (setq myword
+	  (if (and transient-mark-mode mark-active)
+	      (buffer-substring-no-properties (region-beginning) (region-end))
+	    (thing-at-point 'symbol)))
+
+    (setq myword (replace-regexp-in-string " " "_" myword))
+    (setq myurl (concat "http://en.wikipedia.org/wiki/" myword))
+    ;;(browse-url myurl)
+    (if (featurep 'w3m)
+	(w3m-browse-url myurl)
+      (browse-url myurl))
+    ))
+
+
+
+
+
+
+
 ;; goto-longest-line
 ;; -----------------
 ;; Sometimes for code is nice to find lines that are pushed out too far.

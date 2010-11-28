@@ -84,6 +84,7 @@
 (require 'rc-woman)
 (require 'rc-function)
 (require 'rc-smartchr)
+(require 'rc-w3m)
 
 
 
