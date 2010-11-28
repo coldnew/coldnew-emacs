@@ -11,7 +11,7 @@
 
 ;;;;;;; 運行環境辨別
 (defvar mac-p     (eq system-type 'darwin))
-(defvar linux-p   (eq system-type 'gnu/linux))
+(defvar linux-p   (and (eq system-type 'gnu/linux) (not mac-p)))
 (defvar cygwin-p  (eq system-type 'cygwin))
 (defvar windows-p (eq system-type 'windows-nt))
 
