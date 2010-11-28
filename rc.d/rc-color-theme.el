@@ -13,7 +13,13 @@
 (require 'color-theme-coldnew-night nil 'noerror)
 
 ;; default theme use night.
-(color-theme-coldnew-night)
+(cond (mac-p   (progn
+		 (color-theme-coldnew-day)
+		 (setq *color-mode* 'day)))
+      (linux-p (progn
+		 (color-theme-coldnew-night)
+		 (setq *color-mode* 'night))))
+
 
 ;;;; Specified special color-theme according different modes
 ;;(add-hook 'after-change-major-mode-hook;;
