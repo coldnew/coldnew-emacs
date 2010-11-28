@@ -33,10 +33,9 @@
 		 (if (derived-mode-p 'w3m-mode)
 		     (color-theme-coldnew-day)
 		   (if (not (minibufferp))
-		       ;; (case *color-mode*
-		       ;;   ('night (color-theme-coldnew-night))
-		       ;;   ('day   (color-theme-coldnew-day)))
-		       (switch-day-and-night)
+		       (case *color-mode*
+			 ('night (color-theme-coldnew-night))
+			 ('day   (color-theme-coldnew-day)))
 		     )))))
 
 ;; (if (derived-mode-p 'w3m-mode)
