@@ -5,24 +5,29 @@
 (when (require 'color-theme nil 'noerror)
 
   (color-theme-initialize)
-  (setq color-theme-is-global t)
+  (setq color-theme-is-global nil)
   (setq color-theme-is-cumulative t)
   (setq color-theme-load-all-themes nil))
 
-(require 'color-theme-coldnew-day nil 'noerror)
 (require 'color-theme-coldnew-night nil 'noerror)
+(require 'color-theme-coldnew-day nil 'noerror)
 
 ;; Default theme use night.
 (cond
  (mac-p   (progn
-	    (color-theme-coldnew-day)
-	    (setq *color-mode* 'day)))
+	    (setq *color-mode* 'day)
+	    (color-theme-coldnew-day)))
  (linux-p (progn
-	    (color-theme-coldnew-night)
-	    (setq *color-mode* 'night)))
+	    (setq *color-mode* 'night)
+	    (color-theme-coldnew-night)))
+ (t (message "nothing to do"))
  )
 
-
+(if
+    mac-p   (progn
+	       (setq *color-mode* 'day)
+	       (color-theme-coldnew-day)))
+    
 ;;;; Specified special color-theme according different modes
 ;;(add-hook 'after-change-major-mode-hook;;
 ;;(if (and (not mac-p) linux-p)
@@ -40,7 +45,7 @@
 ;;;;;; Functions
 
 ;; Switch between color-theme-day and color-theme-night
-(defvar *color-mode* 'night
+(defvar *color-mode* 'day
   "Color mode for ``switch-day-and-night''.Can be 'day or 'night.")
 (defun switch-day-and-night ()
   "Switch between day and nigh color-themes."

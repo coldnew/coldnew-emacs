@@ -26,7 +26,7 @@
 ;;
 
 ;; Put this file into your load-path and the following into your ~/.emacs:
-;;   (require 'color-theme-coldnew-night)
+;;   (require 'color-theme-coldnew-day)
 
 ;;; Code:
 
@@ -332,4 +332,4 @@
        ))))
 
 
-;;; color-theme-coldnew-night.el ends here
+;;; color-theme-coldnew-day.el ends here
