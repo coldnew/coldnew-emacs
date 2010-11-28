@@ -1,4 +1,3 @@
-
 (setq custom-file "~/.emacs.d/custom.el")
 (require 'site-gentoo nil 'noerror)        ; 讀取 Gentoo 安裝的外掛資訊
 (setq-default inhibit-default-init t )	   ; 關閉全域初始化
@@ -60,7 +59,9 @@
 ;;   )
 
 ;;;;;;;;; 設定預設emacs窗口大小
-(setq default-frame-alist '((width . 170) (height . 50)))
+(cond
+ (mac-p   (setq default-frame-alist '((width . 20) (height . 10))))
+ (linux-p (setq default-frame-alist '((width . 170) (height . 50)))))
 
 ;;;;;; load package initial setting
 (require 'rc-backup)
@@ -85,7 +86,7 @@
 (require 'rc-function)
 (require 'rc-smartchr)
 (require 'rc-w3m)
-
+(require 'rc-macro)
 
 
 ;; FIXME: bug?

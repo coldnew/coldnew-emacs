@@ -7,8 +7,8 @@
 ;;;; When Run on MacOS X
 (when mac-p
   (require 'xcode nil 'noerror)
-  ;;  (require 'w3m nil 'noerror)
-  ;; (require 'xcode-document-viewer nil 'noerror)
+  (require 'w3m nil 'noerror)
+  (require 'xcode-document-viewer nil 'noerror)
 
   ;; Document Viewer
   (setq xcdoc:document-path "/Developer/Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/com.apple.adc.documentation.AppleiPhone3_1.iPhoneLibrary.docset")
