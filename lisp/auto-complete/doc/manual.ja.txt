@@ -69,8 +69,8 @@ GNU Makeがない場合は次のようにします。
     Add the following code to your .emacs:
     
     (add-to-list 'load-path "~/.emacs.d")    ; load-pathにすでに設定されている場合は表れません
-    (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
     (require 'auto-complete-config)
+    (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
     (ac-config-default)
 
 ### 手動によるインストール ###
@@ -91,8 +91,8 @@ GNU Makeがない場合は次のようにします。
 
 最後に`.emacs`に次のような設定を記述します。
 
-    (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
     (require 'auto-complete-config)
+    (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
     (ac-config-default)
 
 `load-path`の設定が行われていない場合は次のコードも記述する必要があります。
@@ -373,6 +373,10 @@ CSSプロパティのための情報源です。
 
 Emacs Lispの関数を補完するための情報源です。`(`の直後で有効です。
 
+#### `ac-source-ghc-mod` ####
+
+[ghc-mod](http://www.mew.org/~kazu/proj/ghc-mod/en/)のための情報源です。
+
 #### `ac-source-gtags` ####
 
 [Global](http://www.tamacom.com/global.html)のタグを補完するための情報源です。
@@ -388,6 +392,10 @@ Emacs Lispの関数を補完するための情報源です。`(`の直後で有�
 #### `ac-source-semantic-raw` ####
 
 `ac-source-semantic`と違って、この情報源は生の名前空間でシンボルを補完するのに使います。
+
+#### `ac-source-slime` ####
+
+[SLIME](http://common-lisp.net/project/slime/)のための情報源です。
 
 #### `ac-source-symbols` ####
 

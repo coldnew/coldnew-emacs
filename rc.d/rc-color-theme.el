@@ -28,16 +28,17 @@
 ;;(add-hook 'after-change-major-mode-hook;;
 ;;(if (and (not mac-p) linux-p)
 (if linux-p
-    ;;    (defvar w3m-mode-on nil)
     (add-hook 'post-command-hook
 	      '(lambda ()
 		 (if (derived-mode-p 'w3m-mode)
 		     (color-theme-coldnew-day)
 		   (if (not (minibufferp))
-		       (case *color-mode*
-			 ('night (color-theme-coldnew-night))
-			 ('day   (color-theme-coldnew-day))))
-		   ))))
+		       ;; (case *color-mode*
+		       ;;   ('night (color-theme-coldnew-night))
+		       ;;   ('day   (color-theme-coldnew-day)))
+		       (switch-day-and-night)
+		     )))))
+
 ;; (if (derived-mode-p 'w3m-mode)
 ;; 	   (progn
 ;; 	     (color-theme-coldnew-day)
