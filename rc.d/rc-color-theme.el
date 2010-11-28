@@ -17,15 +17,15 @@
 
 ;;;; Specified special color-theme according different modes
 ;;(add-hook 'after-change-major-mode-hook;;
-(add-hook 'post-command-hook
-	  '(lambda ()
-	     (if (derived-mode-p 'w3m-mode)
-		 (color-theme-coldnew-day)
-	       (if (not (minibufferp))
-		   (case *color-mode*
-		     ('night (color-theme-coldnew-night))
-		     ('day   (color-theme-coldnew-day))))
-	       )))
+;; (add-hook 'post-command-hook
+;; 	  '(lambda ()
+;; 	     (if (derived-mode-p 'w3m-mode)
+;; 		 (color-theme-coldnew-day)
+;; 	       (if (not (minibufferp))
+;; 		   (case *color-mode*
+;; 		     ('night (color-theme-coldnew-night))
+;; 		     ('day   (color-theme-coldnew-day))))
+;; 	       )))
 
 ;;;;;; Functions
 
