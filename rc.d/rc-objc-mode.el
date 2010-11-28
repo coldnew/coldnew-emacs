@@ -7,12 +7,11 @@
 ;;;; When Run on MacOS X
 (when mac-p
   (require 'xcode nil 'noerror)
-  (require 'w3m nil 'noerror)
-  (require 'xcode-document-viewer nil 'noerror)
+  ;;  (require 'w3m nil 'noerror)
+  ;; (require 'xcode-document-viewer nil 'noerror)
 
   ;; Document Viewer
-  (setq
-   xcdoc:document-path "/Developer/Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/com.apple.adc.documentation.AppleiPhone3_1.iPhoneLibrary.docset")
+  (setq xcdoc:document-path "/Developer/Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/com.apple.adc.documentation.AppleiPhone3_1.iPhoneLibrary.docset")
   (setq xcdoc:open-w3m-other-buffer t)
 
 
@@ -23,13 +22,23 @@
   ;; hook
   (add-hook 'objc-mode-hook
 	    '(lambda ()
-	       (setq-default tab-width 8)
-	       (setq-default indent-tabs-mode nil)
 	       ;;  (define-key objc-mode-map (kbd "\t") 'ac-complete)
 	       ;; XCode を利用した補完を有効にする
 	       (push 'ac-source-company-xcode ac-sources)
 	       ;; C++ のキーワード補完をする Objective-C++ を利用する人だけ設定してください
 	       ;; (push 'ac-source-c++-keywords ac-sources)
+	       (setq c-basic-offset             8 ) ; 縮排設定
+	       (setq tab-width                  8 ) ; TAB 寬度為4個空格
+	       (setq indent-tabs-mode         nil ) ; 禁止在縮排中插入制表符
+	       (setq c-max-one-liner-length   100 ) ; 最大格數為 100 格
+	       (setq compilation-window-height 10 ) ; 編譯結果視窗高度
+	       (c-set-style "linux")                ; C++ 語言風格為 linux
+	       (programming-common-hook)
+
+	       ;; hook for cpp-mode
+	       (programming-common-hook)	; programming common hook
+	       (find-source-or-header)	; switch between sorece and header
+
 	       ))
   ;; Keybinding
   (add-hook 'objc-mode-hook
