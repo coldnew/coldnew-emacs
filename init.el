@@ -1,7 +1,7 @@
-(setq custom-file "~/.emacs.d/custom.el")
 (require 'site-gentoo nil 'noerror)        ; 讀取 Gentoo 安裝的外掛資訊
 (setq-default inhibit-default-init t )	   ; 關閉全域初始化
 (setq-default debug-on-error     nil )
+(setq-default custom-file "~/.emacs.d/custom.el")
 
 ;;;;;;; start server for emacsclient
 (message "* --[ start the emacs server ]-- *")
