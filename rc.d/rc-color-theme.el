@@ -23,11 +23,7 @@
  (t (message "nothing to do"))
  )
 
-(if
-    mac-p   (progn
-	       (setq *color-mode* 'day)
-	       (color-theme-coldnew-day)))
-    
+
 ;;;; Specified special color-theme according different modes
 ;;(add-hook 'after-change-major-mode-hook;;
 ;;(if (and (not mac-p) linux-p)

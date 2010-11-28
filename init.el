@@ -1,3 +1,5 @@
+;;;; init file
+
 (require 'site-gentoo nil 'noerror)        ; 讀取 Gentoo 安裝的外掛資訊
 (setq-default inhibit-default-init t )	   ; 關閉全域初始化
 (setq-default debug-on-error     nil )
@@ -22,41 +24,6 @@
       (setq load-path (cons my-lisp-dir load-path))
       (normal-top-level-add-subdirs-to-load-path)))
 
-;;;;;; Macro
-;; (defmacro require-maybe (feature &optional file)
-;;   "*Try to require FEATURE, but don't signal an error if `require' fails."
-;;   `(require ,feature ,file 'noerror))
-
-(defmacro when-available (func foo)
-  "*Do something if FUNCTION is available."
-  `(when (fboundp ,func) ,foo))
-
-(defmacro require-maybe (feature &optional file)
-  "*Try to require FEATURE, but don't signal an error if `require' fails."
-  `(let ((require-result (require ,feature ,file 'noerror)))
-     (with-current-buffer (get-buffer-create "*Startup Log*")
-       (let* ((startup-log-format-string-prefix "%-20s--------[")
-	      (startup-log-format-string-postfix "%s")
-	      (startup-status (if require-result "LOADED" "FAILED"))
-	      (startup-status-face `(face (:foreground
-					   ,(if require-result "green" "red")))))
-	 (insert (format startup-log-format-string-prefix ,feature))
-	 (let ((start-pos (point)))
-	   (insert (format startup-log-format-string-postfix startup-status))
-	   (add-text-properties start-pos (point) startup-status-face)
-	   (insert "]\n"))))
-     require-result))
-
-;; (defvar tes-font-lock
-;;   (eval-when-compile
-;;     `(
-;;       ,(concat "(require-maybe)\\>"
-;; 	       "[ \t']*\\(\\sw+\\)?")
-;;       (1 font-lock-keyword-face)
-;;       (2 font-lock-constant-face nil t)
-;;       )
-;;     )
-;;   )
 
 ;;;;;;;;; 設定預設emacs窗口大小
 (cond
@@ -65,10 +32,9 @@
 
 
 ;;;;; binary path
-(cond
- (mac-p
-  (add-to-list 'exec-path "~/Gentoo/bin")
-  (add-to-list 'exec-path "/usr/local/bin/")))
+(cond (mac-p
+       (add-to-list 'exec-path "~/Gentoo/bin")
+       (add-to-list 'exec-path "/usr/local/bin/")))
 
 ;;;;;; load package initial setting
 (require 'rc-backup)
