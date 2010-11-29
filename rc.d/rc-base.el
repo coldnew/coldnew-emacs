@@ -57,11 +57,12 @@
 	    kill-buffer-query-functions))
 
 ;;;; 基本外觀設置
-(menu-bar-mode         -1 ) ; 移除菜單欄
-(blink-cursor-mode     -1 ) ; 關閉游標閃爍
-(scroll-bar-mode       -1 ) ; 去掉滾動條，使用鼠標滾輪
-(tool-bar-mode         -1 ) ; 去掉工具欄
-(transient-mark-mode    t ) ; 高亮顯示要拷貝的區域
+(cond linux-p
+      (menu-bar-mode         -1 )) ; 移除菜單欄
+(blink-cursor-mode     -1 )	   ; 關閉游標閃爍
+(scroll-bar-mode       -1 )	   ; 去掉滾動條，使用鼠標滾輪
+(tool-bar-mode         -1 )	   ; 去掉工具欄
+(transient-mark-mode    t )	   ; 高亮顯示要拷貝的區域
 
 ;;;; 其他基礎設置
 (fset 'yes-or-no-p 'y-or-n-p )   ; 所有問題使用 y/n 回答

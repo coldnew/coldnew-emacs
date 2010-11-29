@@ -19,8 +19,7 @@
 	    (color-theme-coldnew-day)))
  (linux-p (progn
 	    (setq *color-mode* 'night)
-	    (color-theme-coldnew-night)))
- )
+	    (color-theme-coldnew-night))))
 
 
 ;;;; Specified special color-theme according different modes
