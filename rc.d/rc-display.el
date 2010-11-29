@@ -11,7 +11,7 @@
 		 '(width  . 114)
 		 '(height . 40)
 		 '(top    . 90)
-		 '(left   . 500))
+		 '(left   . 300))
 		default-frame-alist)))
  ;; 1280 * 1024
  ((and (= (display-pixel-width) 1280) (= (display-pixel-height) 1024))
@@ -20,7 +20,7 @@
 		 '(width  . 114)
 		 '(height . 40)
 		 '(top    . 90)
-		 '(left   . 500))
+		 '(left   . 300))
 		default-frame-alist)))
  ;; 1920 * 1080
  ((and (= (display-pixel-width) 1920) (= (display-pixel-height) 1080))
