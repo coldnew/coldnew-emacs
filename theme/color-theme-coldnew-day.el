@@ -209,7 +209,7 @@
        (w3m-history-current-url
 	((t (:foreground ,_Purple+2))))
        (w3m-anchor			; 未訪問的標題
-	((t (:foreground ,_Blue :underline t))))
+	((t (:foreground "blue" :underline t))))
        (w3m-arrived-anchor		; 已訪問過的標題
 	((t ((:foreground ,_Purple+2 :underline t)))))
        (w3m-current-anchor		; 當前標題
@@ -217,6 +217,7 @@
        (w3m-form
 	((t (:foreground ,_Gray+1
 			 :underline "gray"))))
+
 
 	;;;; TODO: read `http://www.emacswiki.org/emacs/LazyCatTheme.el' to add more
 

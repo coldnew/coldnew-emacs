@@ -35,20 +35,7 @@
 		   (if (not (minibufferp))
 		       (case *color-mode*
 			 ('night (color-theme-coldnew-night))
-			 ('day   (color-theme-coldnew-day)))
-		     )))))
-
-;; (if (derived-mode-p 'w3m-mode)
-;; 	   (progn
-;; 	     (color-theme-coldnew-day)
-;; 	     (setq w3m-mode-on t))
-;; 	 (if (and (not (minibufferp)) (w3m-mode-on)
-;; 		  (progn
-;; 		    (case *color-mode*
-;; 		      ('night (color-theme-coldnew-night))
-;; 		      ('day   (color-theme-coldnew-day)))
-;; 		    (setq w3m-mode-on nil))))
-;; 	 ))))
+			 ('day   (color-theme-coldnew-day))))))))
 
 ;;;;;; Functions
 
