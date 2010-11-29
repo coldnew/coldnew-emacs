@@ -26,13 +26,6 @@
       (setq load-path (cons my-lisp-dir load-path))
       (normal-top-level-add-subdirs-to-load-path)))
 
-
-;;;;;;;;; 設定預設emacs窗口大小
-;; (cond
-;;  (mac-p   (setq default-frame-alist '((width . 100) (height . 40))))
-;;  (linux-p (setq default-frame-alist '((width . 170) (height . 50)))))
-
-
 ;;;;; binary path
 (cond (mac-p
        (add-to-list 'exec-path "~/Gentoo/bin")

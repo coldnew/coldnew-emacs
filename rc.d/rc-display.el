@@ -41,9 +41,3 @@
 		 '(left   . 100))
 		default-frame-alist)))
  )
-
-
-
-
-;; (mac-p   (setq default-frame-alist '((width . 100) (height . 40))))
-;; (linux-p (setq default-frame-alist '((width . 170) (height . 50)))))

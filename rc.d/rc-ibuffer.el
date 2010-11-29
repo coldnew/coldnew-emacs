@@ -8,20 +8,20 @@
 
   (setq ibuffer-saved-filter-groups
 	'(("default"
-	   ("*Buffer*" (or (name . "^\\*scratch\\*$")
-			   (name . "^\\*Messages\\*$")
-			   (name . "^TAGS\\(<[0-9]+>\\)?$")
-			   (name . "^\\*Occur\\*$")
-			   (name . "^\\*grep\\*$")
-			   (name . "^\\*Compile-Log\\*$")
-			   (name . "^\\*Backtrace\\*$")
-			   (name . "^\\*Process List\\*$")
-			   (name . "^\\*gud\\*$")
-			   (name . "^\\*Kill Ring\\*$")
-			   (name . "^\\*Completions\\*$")
-			   (name . "^\\*tramp")
-			   (name . "^\\*shell\\*$")
-			   (name . "^\\*compilation\\*$")))
+	   ("*Buffer*" (or ;(name . "^\\*scratch\\*$")
+			(name . "^\\*Messages\\*$")
+			(name . "^TAGS\\(<[0-9]+>\\)?$")
+			(name . "^\\*Occur\\*$")
+			(name . "^\\*grep\\*$")
+			(name . "^\\*Compile-Log\\*$")
+			(name . "^\\*Backtrace\\*$")
+			(name . "^\\*Process List\\*$")
+			(name . "^\\*gud\\*$")
+			(name . "^\\*Kill Ring\\*$")
+			(name . "^\\*Completions\\*$")
+			(name . "^\\*tramp")
+			(name . "^\\*shell\\*$")
+			(name . "^\\*compilation\\*$")))
 	   ("Help" (or (mode . woman-mode)
 		       (mode . man-mode)
 		       (mode . info-mode)
@@ -36,7 +36,7 @@
 				  (name . "^\\*git-")
 				  (name . "^\\*vc-")))
 	   ("w3m"   (or (mode . w3m-mode)
-			(name . "\\*w3m*")))
+			(name . "^\\*w3m*")))
 	   ("Shell Script" (or (mode . shell-mode)
 			       (mode . python-mode)
 			       (mode . perl-mode)
@@ -51,7 +51,8 @@
   ;; Keybinding
   (when (require 'vim nil 'noerror)
     ;; BUG: (require 'vim-ibuffer nil 'noerror)
-    (vim:nmap (kbd "C-x C-b") 'ibuffer))
+    (vim:nmap (kbd "C-x C-b") 'ibuffer)
+    (vim:imap (kbd "C-x C-b") 'ibuffer))
 
 
   ;; Reverse group list
