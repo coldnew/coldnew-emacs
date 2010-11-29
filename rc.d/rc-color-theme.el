@@ -27,7 +27,7 @@
 ;;;; Specified special color-theme according different modes
 ;;(add-hook 'after-change-major-mode-hook;;
 ;;(if (and (not mac-p) linux-p)
-(if linux-p
+(if emacs24-p
     (add-hook 'post-command-hook
 	      '(lambda ()
 		 (if (derived-mode-p 'w3m-mode)

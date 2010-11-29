@@ -16,6 +16,8 @@
 (defvar linux-p   (and (eq system-type 'gnu/linux) (not mac-p)))
 (defvar cygwin-p  (eq system-type 'cygwin))
 (defvar windows-p (eq system-type 'windows-nt))
+(defvar emacs23-p (equal emacs-major-version 23))
+(defvar emacs24-p (equal emacs-major-version 24))
 
 ;;;;;;;; 將指定目錄裡的東西全部加入清單
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
