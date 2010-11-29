@@ -57,8 +57,8 @@
 	    kill-buffer-query-functions))
 
 ;;;; 基本外觀設置
-(cond linux-p
-      (menu-bar-mode         -1 )) ; 移除菜單欄
+(cond (linux-p
+       (menu-bar-mode         -1 ))) ; 移除菜單欄
 (blink-cursor-mode     -1 )	   ; 關閉游標閃爍
 (scroll-bar-mode       -1 )	   ; 去掉滾動條，使用鼠標滾輪
 (tool-bar-mode         -1 )	   ; 去掉工具欄
