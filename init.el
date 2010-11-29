@@ -1,7 +1,7 @@
 ;;;; init file
 
 (require 'site-gentoo nil 'noerror)        ; 讀取 Gentoo 安裝的外掛資訊
-(setq-default inhibit-default-init t )	   ; 關閉全域初始化
+(setq-default inhibit-default-init t )     ; 關閉全域初始化
 (setq-default debug-on-error     nil )
 (setq-default custom-file "~/.emacs.d/custom.el")
 
@@ -22,12 +22,17 @@
 ;;;;;;;; 將指定目錄裡的東西全部加入清單
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
     (let* ((my-lisp-dir "~/.emacs.d/")
-	   (default-directory my-lisp-dir))
+       (default-directory my-lisp-dir))
       (setq load-path (cons my-lisp-dir load-path))
       (normal-top-level-add-subdirs-to-load-path)))
 
 ;;;;; binary path
 (cond (mac-p (require 'rc-mac)))
+
+
+
+(setq term-default-bg-color "#211E1E")
+(setq term-default-fg-color "#AAAAAA")
 
 ;;;;;; load package initial setting
 (require 'rc-backup)

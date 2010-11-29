@@ -296,7 +296,7 @@ Can also be a list of strings."
            (if (fboundp 'yas/init-yas-in-snippet-keymap)
                (yas/init-yas-in-snippet-keymap))))
 
-(defcustom yas/skip-and-clear-key "C-d"
+(defcustom yas/skip-and-clear-key '("C-d" "<delete>" "<deletechar>")
   "The key to clear the currently active field.
 
 Value is a string that is converted to the internal Emacs key
@@ -455,17 +455,18 @@ the trigger key itself."
 
 (defvar yas/key-syntaxes (list "w" "w_" "w_." "w_.()" "^ ")
   "List of character syntaxes used to find a trigger key before point.
-Scanning backwards for a key, this list is tried in the
-order. For example, if the list is '(\"w\" \"w_\") first look
-trigger keys which are composed exclusively of \"word\"-syntax
-characters, and then, if that fails, look for keys which are
-either of \"word\" or \"symbol\" syntax. So triggering after
-triggering after:
+The list is tried in the order while scanning characters
+backwards from point. For example, if the list is '(\"w\" \"w_\")
+first look for trigger keys which are composed exclusively of
+\"word\"-syntax characters, and then, if that fails, look for
+keys which are either of \"word\" or \"symbol\"
+syntax. Triggering after
 
 foo-bar
 
-will first try \"bar\", if that trigger key isn't found found,
-\"foo-bar\" is tried.")
+will, according to the \"w\" element first try \"bar\". If that
+isn't a trigger key, \"foo-bar\" is tried, respecting a second
+\"w_\" element.")
 
 (defvar yas/after-exit-snippet-hook
   '()
@@ -549,10 +550,6 @@ snippet itself contains a condition that returns the symbol
 
 (defvar yas/menu-table (make-hash-table)
   "A hash table of MAJOR-MODE symbols to menu keymaps.")
-
-(defun teste ()
-  (interactive)
-  (message "AHAHA!"))
 
 (defvar yas/known-modes
   '(ruby-mode rst-mode markdown-mode)
@@ -1570,8 +1567,7 @@ TEMPLATES is a list of `yas/template'."
         (keyboard-quit))))
 
 (defun yas/ido-prompt (prompt choices &optional display-fn)
-  (when (and (featurep 'ido)
-             ido-mode)
+  (when (featurep 'ido)
     (yas/completing-prompt prompt choices display-fn #'ido-completing-read)))
 
 (eval-when-compile (require 'dropdown-list nil t))
@@ -1639,6 +1635,7 @@ TEMPLATES is a list of `yas/template'."
                                        (cons mode-sym parents)
                                      (yas/compute-major-mode-and-parents (concat directory
                                                                                  "/dummy"))))
+           (default-directory directory)
            (yas/ignore-filenames-as-triggers
             (or yas/ignore-filenames-as-triggers
                 (file-exists-p (concat directory "/"
@@ -1652,7 +1649,8 @@ TEMPLATES is a list of `yas/template'."
             (insert-file-contents file nil nil nil t)
             (push (yas/parse-template file)
                   snippet-defs))))
-      (when snippet-defs
+      (when (or snippet-defs
+                (cdr major-mode-and-parents))
         (yas/define-snippets (car major-mode-and-parents)
                              snippet-defs
                              (cdr major-mode-and-parents)))
@@ -1806,7 +1804,7 @@ Here's the default value for all the parameters:
               "  \"Initialize YASnippet and load snippets in the bundle.\"")
       (flet ((yas/define-snippets
               (mode snippets &optional parent-or-parents)
-              (insert ";;; snippets for " (symbol-name mode) "\n")
+              (insert ";;; snippets for " (symbol-name mode) ", subdir " (file-name-nondirectory (replace-regexp-in-string "/$" "" default-directory)) "\n")
               (let ((literal-snippets (list)))
                 (dolist (snippet snippets)
                   (let ((key                    (first   snippet))
@@ -1834,9 +1832,13 @@ Here's the default value for all the parameters:
           (dolist (subdir (yas/subdirs dir))
             (let ((file (concat subdir "/.yas-setup.el")))
               (when (file-readable-p file)
-                (insert ";; Supporting elisp for subdir " (file-name-nondirectory subdir) "\n\n")
-                (goto-char (+ (point)
-                              (second (insert-file-contents file))))))
+                (insert "\n;; Supporting elisp for subdir " (file-name-nondirectory subdir) "\n\n")
+                (with-temp-buffer
+                  (insert-file-contents file)
+                  (replace-regexp "^;;.*$" "" nil (point-min) (point-max))
+                  (replace-regexp "^[\s\t]*\n\\([\s\t]*\n\\)+" "\n" nil (point-min) (point-max))
+                  (kill-region (point-min) (point-max)))
+                (yank)))
             (yas/load-directory-1 subdir nil))))
 
       (insert (pp-to-string `(yas/global-mode 1)))
@@ -3208,6 +3210,7 @@ holds the keymap."
                                nil
                                t)))
     (overlay-put overlay 'keymap yas/keymap)
+    (overlay-put overlay 'priority 100)
     (overlay-put overlay 'yas/snippet snippet)
     overlay))
 
