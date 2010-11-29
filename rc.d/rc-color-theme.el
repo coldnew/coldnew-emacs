@@ -20,22 +20,23 @@
  (linux-p (progn
 	    (setq *color-mode* 'night)
 	    (color-theme-coldnew-night)))
- (t (message "nothing to do"))
  )
 
 
 ;;;; Specified special color-theme according different modes
-;;(add-hook 'after-change-major-mode-hook;;
-;;(if (and (not mac-p) linux-p)
 (if emacs24-p
     (add-hook 'post-command-hook
 	      '(lambda ()
-		 (if (derived-mode-p 'w3m-mode)
-		     (color-theme-coldnew-day)
-		   (if (not (minibufferp))
-		       (case *color-mode*
-			 ('night (color-theme-coldnew-night))
-			 ('day   (color-theme-coldnew-day))))))))
+		 (cond
+		  ;; When enter w3m, chang color to color-thme-day.
+		  ((derived-mode-p 'w3m-mode) (color-theme-coldnew-day))
+		  ;; We don't want to change color iwhen enter minibuffer.
+		  ;; This is the default option and might set in the end.
+		  ((not (minibufferp))
+		   (case *color-mode*
+		     ('night (color-theme-coldnew-night))
+		     ('day   (color-theme-coldnew-day))))))))
+
 
 ;;;;;; Functions
 
