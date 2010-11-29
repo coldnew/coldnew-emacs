@@ -27,9 +27,7 @@
       (normal-top-level-add-subdirs-to-load-path)))
 
 ;;;;; binary path
-(cond (mac-p
-       (add-to-list 'exec-path "~/Gentoo/bin")
-       (add-to-list 'exec-path "/usr/local/bin/")))
+(cond (mac-p (require 'rc-mac)))
 
 ;;;;;; load package initial setting
 (require 'rc-backup)
