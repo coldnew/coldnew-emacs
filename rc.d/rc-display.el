@@ -2,11 +2,17 @@
 
 (provide 'rc-display)
 
-;;;;;;;;; 設定預設emacs窗口大小
+;;;; Setting the window width and height
 (cond
  ;; 1280 * 800
- ;; ((and (= (display-pixel-width) 1280) (= (display-pixel-height) 800))
- ;;  (setq default-frame-alist '((width . 100) (hight . 40))))
+ ((and (= (display-pixel-width) 1280) (= (display-pixel-height) 800))
+  (setq default-frame-alist
+	(append (list
+		 '(width  . 114)
+		 '(height . 40)
+		 '(top    . 90)
+		 '(left   . 500))
+		default-frame-alist)))
  ;; 1280 * 1024
  ((and (= (display-pixel-width) 1280) (= (display-pixel-height) 1024))
   (setq default-frame-alist
@@ -35,7 +41,6 @@
 		 '(left   . 100))
 		default-frame-alist)))
  )
-
 
 
 
