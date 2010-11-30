@@ -10,17 +10,29 @@
 	     (setq compilation-window-height 10 ) ; 編譯結果視窗高度
 	     (c-set-style "linux")                ; C 語言風格為 linux
 
-	     ;; keybindings for vim-mode
-	     (when (featurep 'vim)
-	       (vim:nmap (kbd ",o") 'ff-find-other-file)
-	       (vim:nmap (kbd ",h") 'ff-find-related-file)
-	       (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
-	       )
 
 	     ;; hook for c-mode
 	     (programming-common-hook)	; programming common hook
 	     (find-source-or-header)	; switch between sorece and header
 	     ))
 
+;;;; Keybindings
+(add-hook 'c-mode-hook
+	  '(lambda ()
+	     (when (featurep 'vim)
+	       (vim:nmap (kbd ",o") 'ff-find-other-file)
+	       (vim:nmap (kbd ",h") 'ff-find-related-file)
+	       (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
+	       (vim:imap (kbd "M-i") (lambda () (interactive) (insert-inc-or-if))))))
 
 ;;;; Functions
+
+(defun insert-inc-or-if ()
+  "If at the start of line. add `inc' and expand it,
+else add `if' and expand it."
+  (let* ((current (point))
+	 (begin (line-beginning-position)))
+    (if (eq current begin)
+	(insert "inc")
+      (insert "if"))
+    (yas/expand)))

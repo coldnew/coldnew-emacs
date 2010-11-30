@@ -31,20 +31,6 @@
 	     ))
 
 
-;;;; FIXME: no use
-
-(defun insert-inc-or-if ()
-  "If at the start of line. add `inc' and expand it,
-else add `if' and expand it."
-  (let ((current (point))
-	(begin (line-beginning-position)))
-    ;; (beginning-of-line)
-    ;;(goto-char current)
-    (if (equal current begin)
-	(insert "inc")
-      (insert "if"))
-    (yas/expand)))
-
 
 ;;;; Functions
 
@@ -57,6 +43,15 @@ else add `if' and expand it."
     (vim:nmap (kbd ",h") 'ff-find-related-file)))
 
 
+(defun insert-inc-or-if ()
+  "If at the start of line. add `inc' and expand it,
+else add `if' and expand it."
+  (let* ((current (point))
+	 (begin (line-beginning-position)))
+    (if (eq current begin)
+	(insert "inc")
+      (insert "if"))
+    (yas/expand)))
 
 
 
