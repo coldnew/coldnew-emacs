@@ -31,6 +31,9 @@
 
 
 ;;;;;; load package initial setting
+
+
+(require 'rc-macro)
 (require 'rc-backup)
 (require 'rc-base)
 (require 'rc-ibuffer)
@@ -48,13 +51,12 @@
 (require 'rc-matlab-mode)
 (require 'rc-org-mode)
 (require 'rc-session)
-(require 'rc-vim-mode)
 (require 'rc-woman)
 (require 'rc-function)
 (require 'rc-smartchr)
 (require 'rc-w3m)
-(require 'rc-macro)
 (require 'rc-display)
+(require 'rc-vim-mode)
 
 ;; FIXME: bug?
 ;;(require 'rc-package-manager)

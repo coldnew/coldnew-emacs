@@ -1,7 +1,31 @@
 ;;;
 (provide 'rc-macro)
+(eval-when-compile (require 'cl))
 
 ;;;;;; Macro
+
+(defmacro* defcmd (name &rest body)
+  "Define a new command in macro."
+  (if (and (consp body)
+	   (cdr body)
+	   (stringp (car body)))
+      (setq doc (car body)
+	    body (cdr body))
+    (setq doc (format "Command (%s)" name)))
+  `(progn
+     (put ',name 'function
+	  (function* (lambda  ,@body)))
+     (defun* ,name (&rest args)
+       ,doc
+       (interactive)
+       (apply (get ',name 'function) args))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
 ;; (defmacro require-maybe (feature &optional file)
 ;;   "*Try to require FEATURE, but don't signal an error if `require' fails."
 ;;   `(require ,feature ,file 'noerror))
