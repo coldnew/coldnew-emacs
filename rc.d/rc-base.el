@@ -99,6 +99,7 @@
 (setq-default completion-ignore-case          t ) ; 自動補全忽略大小寫
 (setq-default scroll-preserve-screen-position t ) ;
 (setq-default minibuffer-electric-default-mode t ) ; 啟用部份補全
+(setq-default max-specpdl-size 32000)
 
 (setq-default view-read-only  t )	; 開啟惟讀檔時啟用 view-mode
 (cua-mode                   t )         ; 啟用 cua-mode
