@@ -57,6 +57,9 @@
 (require 'rc-w3m)
 (require 'rc-display)
 (require 'rc-vim-mode)
+(require 'rc-ielm-mode)
+
+
 
 ;; FIXME: bug?
 ;;(require 'rc-package-manager)
