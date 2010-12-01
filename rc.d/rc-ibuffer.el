@@ -21,7 +21,7 @@
 			   (name . "^\\*tramp")
 			   (name . "^\\*shell\\*$")
 			   (name . "^\\*compilation\\*$")
-			   (name . "^\\*Buffer List\\*$"))
+			   (name . "^\\*Buffer List\\*$")))
 	    ("Version Control" (or (mode . svn-status-mode)
 				   (mode . svn-log-edit-mode)
 				   (name . "^\\*svn-")
