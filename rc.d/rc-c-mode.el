@@ -21,7 +21,9 @@
 	       (vim:nmap (kbd ",o") 'ff-find-other-file)
 	       (vim:nmap (kbd ",h") 'ff-find-related-file)
 	       (vim:imap (kbd "=")   'c-mode:insert-equal)
-	       (vim:imap (kbd "M-i") 'c-mode:insert-inc-or-if))))
+	       (vim:imap (kbd "M-i") 'c-mode:insert-inc-or-if)
+	       (vim:imap (kbd "M-d") 'c-mode:insert-do-while)
+	       )))
 
 ;;;; Functions
 
@@ -40,3 +42,8 @@ else add `if' and expand it."
   (if (featurep 'smartchr)
       (smartchr '(" = " " == "  "="))
     (self-insert-command)))
+
+(defcmd c-mode:insert-do-while ()
+  "insert do{...} while()."
+  (insert "do")
+  (yas/expand))

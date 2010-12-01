@@ -29,9 +29,9 @@
 	  '(lambda ()
 	     (when (require 'vim nil 'noerror)
 	       (vim:imap (kbd "=")   'cpp-mode:insert-equal)
-	       (vim:imap (kbd "M-i") 'cpp-mode:insert-inc-or-if))
-	     ))
-
+	       (vim:imap (kbd "M-i") 'cpp-mode:insert-inc-or-if)
+	       (vim:imap (kbd "M-d") 'cpp-mode:insert-do-while)
+	       )))
 
 
 ;;;; Functions
@@ -43,6 +43,8 @@
     (add-to-list ff-other-file-alist '((("\\.cpp$"   (".h" ".hpp")))))
     (vim:nmap (kbd ",o") 'ff-find-other-file)
     (vim:nmap (kbd ",h") 'ff-find-related-file)))
+
+;;;;; Keybinding Functions
 
 (defcmd cpp-mode:insert-inc-or-if ()
   "If at the start of line. add `inc' and expand it,
@@ -59,5 +61,11 @@ else add `if' and expand it."
   (if (featurep 'smartchr)
       (smartchr '(" = " " == "  "="))
     (self-insert-command)))
+
+(defcmd cpp-mode:insert-do-while ()
+  "insert do{...} while()."
+  (insert "do")
+  (yas/expand))
+
 
 ;; (vim:imap (kbd ";") (smartchr '(";" ik:insert-eol)))))
