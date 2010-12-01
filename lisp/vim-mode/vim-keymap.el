@@ -19,10 +19,15 @@
                      ,events)
           ,events)))))
 
-
 (defun* vim:map (keys command &key (keymap nil))
   "Maps the sequence of events `keys' to a `command' in a certain
-`keymap.'"
+keymap. `keymap' may be the keymap itself or a symbol denoting
+the variable where the keymap is stored. If the variable contains
+`nil' a new keymap is created."
+  (when (and (symbolp keymap))
+    (unless (symbol-value keymap)
+      (setf (symbol-value keymap) (vim:make-keymap)))
+    (setq keymap (symbol-value keymap)))
   (if (or (stringp command)
           (vectorp command))
       (lexical-let ((kbdevents command))
@@ -47,19 +52,19 @@ and vim:local-`map-command'."
     `(progn
        (defconst ,(intern glbkeym) (vim:make-keymap)
          ,(concat "VIM global keymap: " doc))
-       (defconst ,(intern lockeym) (vim:make-keymap)
+       (vim:deflocalvar ,(intern lockeym) nil
          ,(concat "VIM buffer local keymap: " doc))
        ,@(when map-command
           `((defsubst ,(intern (concat "vim:" (symbol-name map-command)))
               (keys command)
               ,(concat "Maps the sequence of events `keys' to a `command' in keymap "
                        glbkeym)
-              (vim:map keys command :keymap ,(intern glbkeym)))
+              (vim:map keys command :keymap ',(intern glbkeym)))
             (defsubst ,(intern (concat "vim:local-" (symbol-name map-command)))
                (keys command)
                ,(concat "Maps the sequence of events `keys' to a `command' in keymap "
                         lockeym)
-               (vim:map keys command :keymap ,(intern lockeym))))))))
+               (vim:map keys command :keymap ',(intern lockeym))))))))
 (font-lock-add-keywords 'emacs-lisp-mode '("vim:define-keymap"))
              
     
