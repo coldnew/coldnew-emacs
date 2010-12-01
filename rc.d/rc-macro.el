@@ -21,6 +21,13 @@
        (apply (get ',name 'function) args))))
 
 
+(add-hook 'emacs-lisp-mode-hook
+	  (lambda ()
+	    (font-lock-add-keywords nil
+				    '(("(\\(\\defcmd\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
+				       (1 font-lock-keyword-face)
+				       (2 font-lock-type-face))))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
