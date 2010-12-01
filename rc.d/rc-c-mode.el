@@ -23,11 +23,11 @@
 	       (vim:nmap (kbd ",o") 'ff-find-other-file)
 	       (vim:nmap (kbd ",h") 'ff-find-related-file)
 	       (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
-	       (vim:imap (kbd "M-i") 'insert-inc-or-if))))
+	       (vim:imap (kbd "M-i") 'c-mode:insert-inc-or-if))))
 
 ;;;; Functions
 
-(defcmd insert-inc-or-if ()
+(defcmd c-mode:insert-inc-or-if ()
   "If at the start of line. add `inc' and expand it,
 else add `if' and expand it."
   (let* ((current (point))
