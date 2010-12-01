@@ -15,6 +15,8 @@
 			   (2 font-lock-function-name-face))));))
 ;;;;;; Macro
 
+
+;; FIXME: not good enough
 (defmacro* defcmd (name &rest body)
   "Define a new command in macro."
   (if (and (consp body)

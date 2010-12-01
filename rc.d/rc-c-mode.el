@@ -1,6 +1,10 @@
 ;;
 (provide 'rc-c-mode)
 
+(eval-when-compile (require 'cl))
+(require 'thingatpt)
+(require 'smartchr)
+
 ;; Coding-Style Setting
 (add-hook 'c-mode-hook
 	  '(lambda ()
@@ -17,10 +21,15 @@
 	  '(lambda ()
 	     (vim:nmap (kbd ",o") 'ff-find-other-file)
 	     (vim:nmap (kbd ",h") 'ff-find-related-file)
-	     (vim:imap (kbd "=")   'c-mode:insert-equal)
 	     (vim:imap (kbd "M-i") 'c-mode:insert-inc-or-if)
 	     (vim:imap (kbd "M-d") 'c-mode:insert-do-while)
+	     ;; FIXME:
+	     ;; (vim:imap (kbd "=")   'c-mode:insert-equal)
+	     ;; (vim:imap (kbd ".")   'c-mode:insert-pointer)
+	     ;; (vim:imap (kbd ">")   'c-mode:insert-greater-or-shift)
+	     ;; (vim:imap (kbd "<")   'c-mode:insert-lesser-or-shift)
 	     ))
+
 ;;;; Hooks
 (add-hook 'c-mode-hook
 	  '(lambda ()
@@ -41,13 +50,39 @@ else add `if' and expand it."
       (insert "if"))
     (yas/expand)))
 
-(defcmd c-mode:insert-equal ()
-  "insert equal for easy."
-  (if (featurep 'smartchr)
-      (smartchr '(" = " " == "  "="))
-    (self-insert-command)))
-
 (defcmd c-mode:insert-do-while ()
   "insert do{...} while()."
   (insert "do")
   (yas/expand))
+
+
+;; FIXME:
+;; (defcmd c-mode:insert-equal ()
+;;   "insert equal for easy."
+;;   (if (and (featurep 'smartchr)
+;; 	   (not (in-string-p)))
+;;       (smartchr '(" = " " == "  "="))
+;;     (self-insert-command 1)))
+
+;; (defcmd c-mode:insert-pointer ()
+;;   "insert . or -> for easy."
+;;   (if (and (featurep 'smartchr)
+;;   	   (not (in-string-p)))
+;;       (smartchr '("." "->"))
+;;     (self-insert-command 1)
+;;     ))
+
+
+;; (defcmd c-mode:insert-greater-or-shift ()
+;;   "insert > or >> for easy."
+;;   (if (and (featurep 'smartchr)
+;; 	   (not (in-string-p)))
+;;       (smartchr '(">" ">>"))
+;;     (self-insert-command)))
+
+;; (defcmd c-mode:insert-lesser-or-shift ()
+;;   "insert < or << for easy."
+;;   (if (and (featurep 'smartchr)
+;; 	   (not (in-string-p)))
+;;       (smartchr '("<" "<<"))
+;;     (self-insert-command)))

@@ -26,9 +26,14 @@
 	  '(lambda ()
 	     (vim:nmap (kbd ",o") 'ff-find-other-file)
 	     (vim:nmap (kbd ",h") 'ff-find-related-file)
-	     (vim:imap (kbd "=")   'cpp-mode:insert-equal)
 	     (vim:imap (kbd "M-i") 'cpp-mode:insert-inc-or-if)
 	     (vim:imap (kbd "M-d") 'cpp-mode:insert-do-while)
+	     ;; FIXME:
+	     ;; (vim:imap (kbd "=")   'cpp-mode:insert-equal)
+	     ;; (vim:imap (kbd ".")   'c-mode:insert-pointer)
+	     ;; (vim:imap (kbd ">")   'c-mode:insert-greater-or-shift)
+	     ;; (vim:imap (kbd "<")   'c-mode:insert-lesser-or-shift)
+
 	     ))
 
 ;;;; Hooks
@@ -56,16 +61,39 @@ else add `if' and expand it."
       (insert "if"))
     (yas/expand)))
 
-(defcmd cpp-mode:insert-equal ()
-  "insert equal for easy."
-  (if (featurep 'smartchr)
-      (smartchr '(" = " " == "  "="))
-    (self-insert-command)))
-
 (defcmd cpp-mode:insert-do-while ()
   "insert do{...} while()."
   (insert "do")
   (yas/expand))
+
+;; FIXME:
+;; (defcmd cpp-mode:insert-equal ()
+;;   "insert equal for easy."
+;;   (if (and (featurep 'smartchr)
+;; 	   (not (in-string-p)))
+;;       (smartchr '(" = " " == "  "="))
+;;     (self-insert-command)))
+
+;; (defcmd cpp-mode:insert-pointer ()
+;;   "insert . or -> for easy."
+;;   (if (and (featurep 'smartchr)
+;; 	   (not (in-string-p)))
+;;       (smartchr '("." "->"))
+;;     (self-insert-command)))
+
+;; (defcmd cpp-mode:insert-greater-or-shift ()
+;;   "insert > or >> for easy."
+;;   (if (and (featurep 'smartchr)
+;; 	   (not (in-string-p)))
+;;       (smartchr '(">" ">>"))
+;;     (self-insert-command)))
+
+;; (defcmd cpp-mode:insert-lesser-or-shift ()
+;;   "insert < or << for easy."
+;;   (if (and (featurep 'smartchr)
+;; 	   (not (in-string-p)))
+;;       (smartchr '("<" "<<"))
+;;     (self-insert-command)))
 
 
 ;; (vim:imap (kbd ";") (smartchr '(";" ik:insert-eol)))))

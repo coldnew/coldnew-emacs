@@ -17,6 +17,19 @@
 		     (delete-char (- 0 (length s))))))))
 
 
+(defun smartchr:insert-if-not-in-string (s)
+  (interactive)
+  (lexical-let ((s s))
+    (smartchr-make-struct
+     :insert-fn (lambda ()
+		  (save-excursion
+		    (when (not (string= (char-to-string (preceding-char)) s))
+		      (insert s))))
+     :cleanup-fn (lambda ()
+		   (save-excursion
+		     (delete-char (- 0 (length s))))))))
+
+
 (defun smartchr-insert-semicolon-eol ()
   (smartchr-insert-eol ";"))
 
