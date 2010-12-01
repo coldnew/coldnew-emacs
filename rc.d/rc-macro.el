@@ -7,12 +7,12 @@
 
 ;;;;; Extra font-lock face for userdefine macro.
 
-(add-hook 'emacs-lisp-mode-hook
-	  (lambda ()
-	    (font-lock-add-keywords nil
-				    '(("(\\(\\defcmd\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
-				       (1 font-lock-keyword-face)
-				       (2 font-lock-function-name-face))))))
+;; (add-hook 'emacs-lisp-mode-hook
+;; 	  (lambda ()
+(font-lock-add-keywords 'emacs-lisp-mode
+			'(("(\\(\\defcmd\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
+			   (1 font-lock-keyword-face)
+			   (2 font-lock-function-name-face))));))
 ;;;;;; Macro
 
 (defmacro* defcmd (name &rest body)
