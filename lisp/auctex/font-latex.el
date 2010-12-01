@@ -1,7 +1,7 @@
 ;;; font-latex.el --- LaTeX fontification for Font Lock mode.
 
-;; Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004,
-;;   2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
+;; Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003,
+;;   2004, 2005, 2006, 2007, 2008 Free Software Foundation.
 
 ;; Authors:    Peter S. Galbraith <psg@debian.org>
 ;;             Simon Marshall <Simon.Marshall@esrin.esa.it>
@@ -513,10 +513,7 @@ use."
 	   (7 (font-latex-matched-face 7) append t)))
 	((eq type 'noarg)
 	 `(,(intern (concat prefix name))
-	   ;; Quote a list of face properties but do not to quote a face symbol.
-	   (0 ,(if (and (listp face) (not (fboundp (car face))))
-		   `',face
-		 face))))
+	   (0 ,face)))
 	((eq type 'declaration)
 	 `(,(intern (concat prefix name))
 	   (0 'font-latex-warning-face t t)

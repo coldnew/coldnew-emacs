@@ -88,12 +88,6 @@
     "voet" "voetnootdefinitie" "voetnoten" "voetteksten" "witruimte")
   "List of the names of ConTeXt nl interface macro's that setup things.")
 
-;; referencing in ConTeXt
-(defvar ConTeXt-referencing-list-nl
-  '("in" "op" "over" "paginareferentie" "tekstreferentie" "referentie")
-  "List of ConTeXt en macro's that are used for referencing."
-)
-
 (defvar ConTeXt-other-macro-list-nl
   '("regellinks" "regelmidden" "regelrechts" "toonexternefiguren")
   "List of ConTeXt nl interface macro's that are not an environment nor a setup.")

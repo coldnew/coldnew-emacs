@@ -1114,7 +1114,7 @@ command."
 	;; Remove line breaks at column 79
 	(while (> (point) pt)
 	  (end-of-line 0)
-	  (when (and (= (- (point) (line-beginning-position)) 79)
+	  (when (and (= (current-column) 79)
 		     ;; Heuristic: Don't delete the linebreak if the
 		     ;; next line is empty or starts with an opening
 		     ;; parenthesis or if point is located after a period.
@@ -1491,7 +1491,7 @@ You might want to examine and modify the free variables `file',
 	 
 	 ;; End of file -- Pop from stack
 	 ((match-beginning 4)
-	  (when (> (length TeX-error-file) 0)
+	  (when (> (length TeX-error-file) 1)
 	    (pop TeX-error-file)
 	    (pop TeX-error-offset))
 	  (goto-char (match-end 4))
@@ -1633,9 +1633,6 @@ You might want to examine and modify the free variables `file',
     ;; This is where we start next time.
     (goto-char error-point)
     (setq TeX-error-point (point))
-
-    (unless file
-      (error "Could not determine file for warning"))
 
     ;; Go back to TeX-buffer
     (let ((runbuf (current-buffer))

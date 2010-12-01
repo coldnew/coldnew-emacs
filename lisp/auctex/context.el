@@ -51,8 +51,8 @@
 
 (require 'tex-buf)
 (require 'tex)
-(require 'latex) ; for functions like `TeX-look-at' and `LaTeX-split-long-menu'
-(require 'plain-tex) ; for `plain-TeX-common-initialization'
+;; need functions like TeX-look-at and LaTeX-split-long-menu
+(require 'latex)
 
 (defgroup ConTeXt-macro nil
   "Special support for ConTeXt macros in AUCTeX."
@@ -1065,7 +1065,7 @@ An optional fourth (or sixth) element means always replace if t."
 (defvar ConTeXt-indent-arg 2)
 (defvar ConTeXt-indent-basic 2)
 (defvar ConTeXt-indent-item ConTeXt-indent-basic)
-(defvar ConTeXt-indent-item-re "\\\\\\(item\\|sym\\)\\>")
+(defvar ConTeXt-indent-item-re "\\\\\item\\>")
 
 (defvar ConTeXt-indent-syntax-table (make-syntax-table TeX-mode-syntax-table)
   "Syntax table used while computing indentation.")
@@ -1550,8 +1550,6 @@ i.e. you do _not_ have to cater for this yourself by adding \\\\' or $."
     (set symbol (symbol-value (intern (concat (symbol-name symbol) "-"
 					      ConTeXt-current-interface)))))
 
-  ;; Create certain regular expressions based on language
-  (setq ConTeXt-indent-item-re (concat "\\\\\\(" (mapconcat 'identity ConTeXt-item-list "\\|") "\\)\\>"))
 
   ;; What's the deepest level at we can collapse a document?
   ;; set only if user has not set it. Need to be set before menu is created.
