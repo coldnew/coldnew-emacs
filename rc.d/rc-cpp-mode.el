@@ -6,6 +6,8 @@
 
 (require 'find-file nil 'noerror)
 (require 'smartchr  nil 'noerror)
+(require 'yasnippet nil 'noerror)
+
 
 
 (add-hook 'c++-mode-hook
@@ -26,7 +28,7 @@
 (add-hook 'c++-mode-hook
 	  '(lambda ()
 	     (when (require 'vim nil 'noerror)
-	       (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
+	       (vim:imap (kbd "=")   'cpp-mode:insert-equal)
 	       (vim:imap (kbd "M-i") 'cpp-mode:insert-inc-or-if))
 	     ))
 
@@ -42,7 +44,6 @@
     (vim:nmap (kbd ",o") 'ff-find-other-file)
     (vim:nmap (kbd ",h") 'ff-find-related-file)))
 
-
 (defcmd cpp-mode:insert-inc-or-if ()
   "If at the start of line. add `inc' and expand it,
 else add `if' and expand it."
@@ -53,11 +54,10 @@ else add `if' and expand it."
       (insert "if"))
     (yas/expand)))
 
+(defcmd cpp-mode:insert-equal ()
+  "insert equal for easy."
+  (if (featurep 'smartchr)
+      (smartchr '(" = " " == "  "="))
+    (self-insert-command)))
 
-
-
-;; (defun insert-char-smart ()
-;;   "insert character more smart."
-;;   (when (featurep 'smartchr)
-;;     (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
-;;     (vim:imap (kbd ";") (smartchr '(";" ik:insert-eol)))))
+;; (vim:imap (kbd ";") (smartchr '(";" ik:insert-eol)))))

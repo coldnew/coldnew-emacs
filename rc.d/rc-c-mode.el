@@ -9,8 +9,6 @@
 	     (setq c-max-one-liner-length   100 ) ; 最大格數為 100 格
 	     (setq compilation-window-height 10 ) ; 編譯結果視窗高度
 	     (c-set-style "linux")                ; C 語言風格為 linux
-
-
 	     ;; hook for c-mode
 	     (programming-common-hook)	; programming common hook
 	     (find-source-or-header)	; switch between sorece and header
@@ -22,7 +20,7 @@
 	     (when (featurep 'vim)
 	       (vim:nmap (kbd ",o") 'ff-find-other-file)
 	       (vim:nmap (kbd ",h") 'ff-find-related-file)
-	       (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
+	       (vim:imap (kbd "=")   'c-mode:insert-equal)
 	       (vim:imap (kbd "M-i") 'c-mode:insert-inc-or-if))))
 
 ;;;; Functions
@@ -36,3 +34,9 @@ else add `if' and expand it."
 	(insert "inc")
       (insert "if"))
     (yas/expand)))
+
+(defcmd c-mode:insert-equal ()
+  "insert equal for easy."
+  (if (featurep 'smartchr)
+      (smartchr '(" = " " == "  "="))
+    (self-insert-command)))
