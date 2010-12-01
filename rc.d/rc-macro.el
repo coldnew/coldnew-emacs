@@ -26,7 +26,7 @@
 	    (font-lock-add-keywords nil
 				    '(("(\\(\\defcmd\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
 				       (1 font-lock-keyword-face)
-				       (2 font-lock-type-face))))))
+				       (2 font-lock-function-name-face))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
