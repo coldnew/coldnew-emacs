@@ -71,7 +71,34 @@
 		     ))))
   )
 
+;;;; alian regexp
+;; M-x align twice
+;; make following :
+;;   NSTimer *timer =
+;;        [NSTimer timerWithTimeInterval:1.0
+;;                 target:self
+;;                 selector:@selector(callback:)
+;;                 userInfo:nil
+;;                 repeats:YES];
+;; look like :
+;;     NSTimer *timer =
+;;        [NSTimer timerWithTimeInterval:1.0
+;;                                target:self
+;;                              selector:@selector(callback:)
+;;                              userInfo:nil
+;;                               repeats:YES];
+;;
+(obj-c-colons
+ (regexp . "^\\(\\s-*[^:]+\\):")
+ (justify . t)
+ (repeat . t)
+ (modes obj-c-mode))
 
-
+(add-to-list 'align-rules-list
+	     '(obj-c-colons
+	       (regexp . "^\\(\\s-*[^:]+\\):")
+	       (justify . t)
+	       (repeat . t)
+	       (modes obj-c-mode)))
 
 ;;http://github.com/kurain/kurain-dotfiles/blob/162ba05b04e14ff232c54f23e0f96300a9215922/.emacs.d/conf/init-objc.el

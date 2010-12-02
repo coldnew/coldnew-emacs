@@ -40,10 +40,15 @@
 (add-hook 'c++-mode-hook
 	  '(lambda ()
 	     ;;
-	     (add-to-list ff-other-file-alist '((("\\.cpp$"   (".h" ".hpp")))))
 	     ;; hook for cpp-mode
 	     (programming-common-hook)	; programming common hook
 	     ))
+
+;;;; Auto-Mode
+(add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cc\\'"  . c++-mode))
+
 
 ;;;; Functions
 

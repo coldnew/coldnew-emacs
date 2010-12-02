@@ -58,7 +58,7 @@
 (require 'rc-display)
 (require 'rc-vim-mode)
 (require 'rc-ielm-mode)
-
+(require 'rc-find-file)
 
 
 ;; FIXME: bug?

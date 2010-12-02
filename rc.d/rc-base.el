@@ -108,6 +108,13 @@
 (visual-line-mode           t )         ; 折行時不拆開一個 "字"
 
 
+;; uniquify changes conflicting buffer names from file<2> etc
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'reverse)
+(setq uniquify-separator "/")
+(setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
+(setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
+
 ;;  當 emacs 建立新檔案至不存在的資料夾時，於儲存前自動建立該資料夾
 (add-hook 'before-save-hook
 	  '(lambda ()
