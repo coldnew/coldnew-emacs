@@ -1,13 +1,13 @@
 ;;
 
 (when (require 'find-file nil 'noerror)
-
-;;;; hooks
-  (add-hook 'find-file-hook
-	    '(lambda ()
-	       (
-		(find-file:find-proper-mode)
-		)))
+  ;; FIXME:
+  ;; ;;;; hooks
+  ;;   (add-hook 'find-file-hook
+  ;; 	    '(lambda ()
+  ;; 	       (
+  ;; 		(find-file:find-proper-mode)
+  ;; 		)))
 ;;;; modes
   (push ".m" (cadr (assoc "\\.h\\'" cc-other-file-alist)))
   (add-to-list ff-other-file-alist '((("\\.c$"   (".h")))))

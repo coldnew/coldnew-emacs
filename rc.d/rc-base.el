@@ -56,13 +56,19 @@
       (remq 'process-kill-buffer-query-function
 	    kill-buffer-query-functions))
 
+;;;; Debugging emacs
+(setq-default max-specpdl-size    32000 )
+(setq-default max-lisp-eval-depth 20000 )
+(setq debug-on-error t)
+(setq debug-on-quit  t)
+
 ;;;; 基本外觀設置
 (cond (linux-p
        (menu-bar-mode         -1 ))) ; 移除菜單欄
-(blink-cursor-mode     -1 )	   ; 關閉游標閃爍
-(scroll-bar-mode       -1 )	   ; 去掉滾動條，使用鼠標滾輪
-(tool-bar-mode         -1 )	   ; 去掉工具欄
-(transient-mark-mode    t )	   ; 高亮顯示要拷貝的區域
+(blink-cursor-mode     -1 )    ; 關閉游標閃爍
+(scroll-bar-mode       -1 )    ; 去掉滾動條，使用鼠標滾輪
+(tool-bar-mode         -1 )    ; 去掉工具欄
+(transient-mark-mode    t )    ; 高亮顯示要拷貝的區域
 
 ;;;; 其他基礎設置
 (fset 'yes-or-no-p 'y-or-n-p )   ; 所有問題使用 y/n 回答
@@ -99,14 +105,12 @@
 (setq-default completion-ignore-case          t ) ; 自動補全忽略大小寫
 (setq-default scroll-preserve-screen-position t ) ;
 (setq-default minibuffer-electric-default-mode t ) ; 啟用部份補全
-(setq-default max-specpdl-size 32000)
+(setq-default view-read-only t ) ; 開啟惟讀檔時啟用 view-mode
 
-(setq-default view-read-only  t )	; 開啟惟讀檔時啟用 view-mode
 (cua-mode                   t )         ; 啟用 cua-mode
 (setq-default cua-enable-cua-keys nil )	; 不使用 cua-mode 裡的按鍵
 (delete-selection-mode      t )         ; 啟用 delsel-mode
 (visual-line-mode           t )         ; 折行時不拆開一個 "字"
-
 
 ;; uniquify changes conflicting buffer names from file<2> etc
 (require 'uniquify)
