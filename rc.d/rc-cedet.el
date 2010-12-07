@@ -30,7 +30,7 @@
   (require 'semantic/db-typecache nil 'noerror)
   (global-semanticdb-minor-mode 1)
   (setq semanticdb-default-save-directory
-	(expand-file-name "~/.emacs.d/var/semantic/semanticdb.el"))
+    (expand-file-name "~/.emacs.d/var/semanticdb"))
 
   ;; Support for GNU Global
   (semanticdb-enable-gnu-global-databases 'c-mode)
@@ -39,7 +39,7 @@
   ;; BUG:?
   ;; enable ctags for some languages:
   ;;  Unix Shell, Perl, Pascal, Tcl, Fortran, Asm
-					;(semantic-load-enable-primary-exuberent-ctags-support)
+                    ;(semantic-load-enable-primary-exuberent-ctags-support)
 
   (require 'semantic/bovine nil 'noerror)
   (require 'semantic/bovine/c nil 'noerror)
