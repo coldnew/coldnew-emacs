@@ -33,8 +33,9 @@
     (expand-file-name "~/.emacs.d/var/semanticdb"))
 
   ;; Support for GNU Global
-  (semanticdb-enable-gnu-global-databases 'c-mode)
-  (semanticdb-enable-gnu-global-databases 'c++-mode)
+  (cond (emacs24-p
+	(semanticdb-enable-gnu-global-databases 'c-mode)
+	(semanticdb-enable-gnu-global-databases 'c++-mode)))
 
   ;; BUG:?
   ;; enable ctags for some languages:
@@ -48,7 +49,8 @@
   (setq qt4-base-dir "/usr/include/qt4")
   (semantic-add-system-include qt4-base-dir 'c++-mode)
   (add-to-list 'auto-mode-alist (cons qt4-base-dir 'c++-mode))
+  (cond (emacs24-p
   (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig.h"))
   (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-dist.h"))
   (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))
-  )
+  )))

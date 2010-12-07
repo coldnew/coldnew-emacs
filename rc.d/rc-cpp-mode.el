@@ -43,6 +43,7 @@
 	     ;;
 	     ;; hook for cpp-mode
 	     (programming-common-hook)	; programming common hook
+
 	     ))
 
 ;;;; Support for Qt4

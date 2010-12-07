@@ -24,7 +24,7 @@
 	     (vim:imap (kbd "M-i") 'c-mode:insert-inc-or-if)
 	     (vim:imap (kbd "M-d") 'c-mode:insert-do-while)
 	     ;; FIXME:
-	     ;; (vim:imap (kbd "=")   'c-mode:insert-equal)
+	     (vim:imap (kbd "=")   'c-mode:insert-equal)
 	     ;; (vim:imap (kbd ".")   'c-mode:insert-pointer)
 	     ;; (vim:imap (kbd ">")   'c-mode:insert-greater-or-shift)
 	     ;; (vim:imap (kbd "<")   'c-mode:insert-lesser-or-shift)
@@ -33,7 +33,12 @@
 ;;;; Hooks
 (add-hook 'c-mode-hook
 	  '(lambda ()
-	     (programming-common-hook)	; programming common hook
+	     ;; Use my define programming-common environment
+	     (programming-common-hook)
+
+	     ;; Enable C-Eldoc
+	     (when (require 'c-eldoc nil 'noerror)
+	       (c-turn-on-eldoc-mode))
 	     ))
 
 ;;;; Auto-Mode
@@ -61,10 +66,9 @@ else add `if' and expand it."
 ;; FIXME:
 ;; (defcmd c-mode:insert-equal ()
 ;;   "insert equal for easy."
-;;   (if (and (featurep 'smartchr)
-;; 	   (not (in-string-p)))
-;;       (smartchr '(" = " " == "  "="))
-;;     (self-insert-command 1)))
+;;   (if (not (in-string-p))
+;;       ;;(funcall (smartchr '(" = " " == "  "=")))))
+;;       (funcall (smartchr '(" = " " == " "=")))))
 
 ;; (defcmd c-mode:insert-pointer ()
 ;;   "insert . or -> for easy."
