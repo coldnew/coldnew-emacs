@@ -21,8 +21,9 @@
 	  '(lambda ()
 	     (vim:nmap (kbd ",o") 'ff-find-other-file)
 	     (vim:nmap (kbd ",h") 'ff-find-related-file)
-	     (vim:imap (kbd "M-i") 'c-mode:insert-inc-or-if)
-	     (vim:imap (kbd "M-d") 'c-mode:insert-do-while)
+	     (vim:imap (kbd "M-i") 'c-mode:insert-inc-or-if) ; insert "#include <>" or "if () {...}"
+	     (vim:imap (kbd "M-d") 'c-mode:insert-do-while)  ; insert "do {...} while()"
+	     (vim:imap (kbd "M-m") 'c-mode:insert-main-function) ; insert "int main () {...}"
 	     ;; FIXME:
 	     (vim:imap (kbd "=")   'c-mode:insert-equal)
 	     ;; (vim:imap (kbd ".")   'c-mode:insert-pointer)
@@ -62,8 +63,24 @@ else add `if' and expand it."
   (insert "do")
   (yas/expand))
 
+(defcmd c-mode:insert-main-function ()
+  "insert main()."
+  (let* ((current (point))
+	 (begin (line-beginning-position)))
+    (if (equal current begin)
+	(insert "main"))
+    (yas/expand)))
 
 ;; FIXME:
+(defun c-mode:insert-equal ()
+  ""
+  (interactive)
+  (lexical-let ((count 0))
+    (lambda ()
+      (if (eq this-command real-last-command)
+	  (incf count)
+	(setq count 0))
+      (funcall (message "%d" count)))))
 ;; (defcmd c-mode:insert-equal ()
 ;;   "insert equal for easy."
 ;;   (if (not (in-string-p))
