@@ -14,7 +14,22 @@
 	     (setq indent-tabs-mode         nil ) ; 禁止在縮排中插入制表符
 	     (setq c-max-one-liner-length   100 ) ; 最大格數為 100 格
 	     (setq compilation-window-height 10 ) ; 編譯結果視窗高度
+	     ;;(substatement-open   .   0)
 	     ))
+
+;;;; Extra Coding Style setting
+(c-add-style
+ "enlightenment"
+ '("gnu"
+   (indent-tabs-mode . nil)
+   (tab-width . 8)
+   (c-offsets-alist.
+    ((defun-block-intro . 3)
+     (statement-block-intro . 3)
+     (case-label . 1)
+     (statement-case-intro . 3)
+     (inclass . 3)
+     ))))
 
 ;;;; Keybindings
 (add-hook 'c-mode-hook
@@ -25,7 +40,8 @@
 	     (vim:imap (kbd "M-d") 'c-mode:insert-do-while)  ; insert "do {...} while()"
 	     (vim:imap (kbd "M-m") 'c-mode:insert-main-function) ; insert "int main () {...}"
 	     ;; FIXME:
-	     (vim:imap (kbd "=")   'c-mode:insert-equal)
+	     ;;	     (vim:imap (kbd "=")   'c-mode:insert-equal)
+	     ;;     (vim:imap (kbd "=")   (my-char '(" = " " == ")))
 	     ;; (vim:imap (kbd ".")   'c-mode:insert-pointer)
 	     ;; (vim:imap (kbd ">")   'c-mode:insert-greater-or-shift)
 	     ;; (vim:imap (kbd "<")   'c-mode:insert-lesser-or-shift)
@@ -45,6 +61,8 @@
 ;;;; Auto-Mode
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c-mode))
+
+
 
 ;;;; Functions
 
@@ -72,15 +90,45 @@ else add `if' and expand it."
     (yas/expand)))
 
 ;; FIXME:
-(defun c-mode:insert-equal ()
-  ""
-  (interactive)
-  (lexical-let ((count 0))
-    (lambda ()
-      (if (eq this-command real-last-command)
-	  (incf count)
-	(setq count 0))
-      (funcall (message "%d" count)))))
+;; (defun c-mode:insert-equal ()
+;;   ""
+;;   (interactive)
+;;   (lexical-let ((count 0))
+;;     (lambda ()
+;;       (interactive)
+;;       (if (eq this-command real-last-command)
+;; 	  (incf count)
+;; 	(setq count 0))
+;;       (message "%d" count)
+;;       (insert count))))
+
+;; (defun c-mode:insert-equal ()
+;;   (interactive)
+;;   (if (not (in-string-p))
+;;       (backward-char 1)
+;;     (if (looking-at ">")
+;; 	(message "adasd"))))
+
+
+;; (let* ((first "->")
+;; 	     (second "."))
+;; 	(cond
+;; 	 ((search-backward first   (line-beginning-position) t)
+;; 	  (save-excursion
+;; 	    (goto-char (point))
+;; 	    (backward-delete-char (length first))
+;; 	    (message "%d " (length first))
+;; 	    ;;(insert second))
+;; 	    )   )
+;; 	 ((search-backward second  (line-beginning-position) t)
+;; 	  (goto-char (point))
+;; 	  ;;(delete-backward-char (length second))
+;; 	  ;;(insert first))
+;; 	  )
+;; 	 )))
+;; (self-insert-command 1)))
+
+
 ;; (defcmd c-mode:insert-equal ()
 ;;   "insert equal for easy."
 ;;   (if (not (in-string-p))
