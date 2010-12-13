@@ -18,6 +18,7 @@
 	     ))
 
 ;;;; Extra Coding Style setting
+;; Enlightenment(EFL 、) Coding Style
 (c-add-style
  "enlightenment"
  '("gnu"
