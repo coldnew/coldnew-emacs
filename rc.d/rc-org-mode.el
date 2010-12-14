@@ -1,27 +1,36 @@
 ;; init org mode
-(provide 'rc-org-mode)
-
 
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
 
-;;  add a hook so we can display images on load
-(add-hook 'org-mode-hook 
-	  '(lambda () 
+;;  Hooks
+(add-hook 'org-mode-hook
+	  '(lambda ()
 	     (setq org-hide-leading-stars t)
-	     (setq org-log-done 'time)
+	     (setq org-log-done t)
+	     (setq org-log-done 'time)	; 對已完成事項加上時間
 	     (setq org-tag-alist '(
 				   ("Programming" . ?p)
 				   ("Lab"         . ?l)
 				   ("Home"        . ?h)
 				   ))
-
-	     (when (require 'rc-vim nil 'noerror)
-	       (vim:imap (kbd "M-t") 'org-insert-todo-heading)
-	       (vim:imap (kbd "C-t") 'org-insert-todo-heading-respect-content))
-	     
-	     (org-turn-on-iimage-in-org)
+	     (setq org-todo-keywords
+		   '("TODO(T)" "STARTED(S)" "WAITING(W)" "|" "CANCELED(C)" "DONE(D)"))
+	     (org-turn-on-iimage-in-org) ; display image on load
 	     ))
+
+;;;;; Keybinding
+(add-hook 'org-mode-hook
+	  '(lambda ()
+	     (when (require 'rc-vim nil 'noerror)
+	       (vim:nmap "\C-l" 'org-store-link) ;
+	       (vim:nmap "\C-a" 'org-agenda)	 ; 進入日程表
+	       (vim:nmap "\C-b" 'org-iswitchb)
+
+	       (vim:imap (kbd "M-t") 'org-insert-todo-heading)
+	       (vim:imap (kbd "C-t") 'org-insert-todo-heading-respect-content)
+	       )))
+
 
 
 
@@ -33,3 +42,13 @@
   (interactive)
   (turn-on-iimage-mode)
   (set-face-underline-p 'org-link nil))
+
+
+
+
+
+
+
+
+(provide 'rc-org-mode)
+;; rc-org-mode.el ends here
