@@ -25,6 +25,15 @@
   (when (require 'hungry-delete nil 'noerror)
     (define-key viper-insert-global-user-map (kbd "<backspace>") 'hungry-delete-backward))
 
+  ;; Use paredit in viper
+  ;; current we don't have paredit run under vim-mode
+  ;; so only use paredit in viper-mode
+  (eval-after-load 'paredit
+		   '(progn
+		      (require 'paredit-viper-compat)
+		      (paredit-viper-compat)))
+
+
   ;; Fix ibuffer-mode
   (add-hook 'ibuffer-mode-hook
 	    '(lambda ()
@@ -39,13 +48,13 @@
   )
 
 (defcmd window-fullscreen ()
-  "Make the window full-screen."
-  (let ((current-value (frame-parameter nil 'fullscreen)))
-    (set-frame-parameter nil 'fullscreen
-			 (if (equal 'fullboth current-value)
-			     (if (boundp 'old-fullscreen) old-fullscreen nil)
-			   (progn (setq old-fullscreen current-value)
-				  'fullboth)))))
+	"Make the window full-screen."
+	(let ((current-value (frame-parameter nil 'fullscreen)))
+	  (set-frame-parameter nil 'fullscreen
+			       (if (equal 'fullboth current-value)
+				 (if (boundp 'old-fullscreen) old-fullscreen nil)
+				 (progn (setq old-fullscreen current-value)
+					'fullboth)))))
 ;;FIXME:in vim-mode , we use vim:wmap
 (vim:nmap (kbd "C-w f") 'window-fullscreen)
 
