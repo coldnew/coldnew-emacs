@@ -38,5 +38,7 @@
 	  smartchr
 	  ipython
 	  xcode-document-viewer
+	  paredit
+	  paredit-viper-compat
 	  ;;emacs-w3m
 	  )))
