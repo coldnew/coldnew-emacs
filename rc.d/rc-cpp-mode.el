@@ -24,11 +24,11 @@
 ;;;; Keybinding
 (add-hook 'c++-mode-hook
 	  '(lambda ()
-	     (vim:nmap (kbd ",o") 'ff-find-other-file)
-	     (vim:nmap (kbd ",h") 'ff-find-related-file)
-	     (vim:imap (kbd "M-i") 'cpp-mode:insert-inc-or-if)
-	     (vim:imap (kbd "M-d") 'cpp-mode:insert-do-while)
-	     (vim:imap (kbd "M-m") 'cpp-mode:insert-main-function)
+	     (vim:local-nmap (kbd ",o") 'ff-find-other-file)
+	     (vim:local-nmap (kbd ",h") 'ff-find-related-file)
+	     (vim:local-imap (kbd "M-i") 'cpp-mode:insert-inc-or-if)
+	     (vim:local-imap (kbd "M-d") 'cpp-mode:insert-do-while)
+	     (vim:local-imap (kbd "M-m") 'cpp-mode:insert-main-function)
 	     ;; FIXME:
 	     ;; (vim:imap (kbd "=")   'cpp-mode:insert-equal)
 	     ;; (vim:imap (kbd ".")   'c-mode:insert-pointer)

@@ -21,6 +21,7 @@
 
 ;;;; Functions
 
+
 (defun show-too-long-lines ()
   "highlight too long lines."
   (font-lock-add-keywords nil '(("^[^\n]\\{100\\}\\(.*\\)$" 1 font-lock-warning-face t))))
@@ -45,8 +46,9 @@
 	      (highlight-changes-remove-highlight (point-min) (point-max)))))
 
 (defun set-newline-and-indent ()
-  (when (featurep'vim)
+  (when (require 'rc-vim-mode nil 'noerror)
     (vim:imap (kbd "RET") 'newline-and-indent)))
+
 
 (defun indent-file-when-save ()
   "When save, indent whole file."
@@ -58,5 +60,5 @@
 
 (defun use-hungry-delete ()
   "Use hungry delete mode"
-  (when (require 'hungry-delete nil 'noerro)
+  (when (require 'hungry-delete nil 'noerror)
     (turn-on-hungry-delete-mode)))

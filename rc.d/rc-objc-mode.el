@@ -49,7 +49,7 @@
 ;; Keybinding
 (add-hook 'objc-mode-hook
 	  '(lambda ()
-	     (when (require 'vim nil 'noerror)
+	     (when (require 'rc-vim-mode nil 'noerror)
 	       (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
 	       )
 	     ;;         (define-key objc-mode-map (kbd "C-c w") 'xcdoc:ask-search)

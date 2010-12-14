@@ -6,9 +6,14 @@
 ;;  Hooks
 (add-hook 'org-mode-hook
 	  '(lambda ()
-	     (setq org-hide-leading-stars t)
+	     (setq org-hide-leading-stars nil)
 	     (setq org-log-done t)
 	     (setq org-log-done 'time)	; 對已完成事項加上時間
+	     (setq org-agenda-files '("~/.emacs.d/var/org/work.org"
+				      "~/.emacs.d/var/org/home.org"
+				      "~/.emacs.d/var/org/school.org"
+				      "~/.emacs.d/var/org/gnu.org"
+				      "~/.emacs.d/var/org/iphone.org"))
 	     (setq org-tag-alist '(
 				   ("Programming" . ?p)
 				   ("Lab"         . ?l)
@@ -22,14 +27,19 @@
 ;;;;; Keybinding
 (add-hook 'org-mode-hook
 	  '(lambda ()
-	     (when (require 'rc-vim nil 'noerror)
-	       (vim:nmap "\C-l" 'org-store-link) ;
-	       (vim:nmap "\C-a" 'org-agenda)	 ; 進入日程表
-	       (vim:nmap "\C-b" 'org-iswitchb)
-
-	       (vim:imap (kbd "M-t") 'org-insert-todo-heading)
-	       (vim:imap (kbd "C-t") 'org-insert-todo-heading-respect-content)
+	     (when (require 'rc-vim-mode nil 'noerror)
+	       (vim:local-nmap "\C-l" 'org-store-link) ;
+	       (vim:local-nmap "\C-a" 'org-agenda)	 ; 進入日程表
+	       (vim:local-nmap "\C-b" 'org-iswitchb)
+	       (vim:local-imap (kbd "RET") 'org-return)
+	       (vim:local-imap (kbd "M-t") 'org-insert-todo-heading-respect-content)
+	       (vim:local-imap (kbd "C-t") 'org-todo)
+	       (vim:local-imap (kbd "C-s") 'org-sparse-tree)
+	       (vim:local-imap (kbd "M-s") 'org-schedule)
+	       (vim:local-nmap (kbd "M-t") 'org-todo-list)
+	       (vim:local-imap (kbd "M-l") 'org-mode:insert-link)  ; insert "do {...} while()"
 	       )))
+
 
 
 ;;;; Extra Settings
@@ -43,8 +53,8 @@
 	     '("beamer"
 	       "\\documentclass[11pt]{beamer}\n
 		\\mode<{{{beamermode}}}>\n
-      		\\usetheme{{{{beamertheme}}}}\n
-  		\\usecolortheme{{{{beamercolortheme}}}}\n
+		\\usetheme{{{{beamertheme}}}}\n
+		\\usecolortheme{{{{beamercolortheme}}}}\n
 		\\beamertemplateballitem\n
 		\\setbeameroption{show notes}
 		\\usepackage[utf8]{inputenc}\n
@@ -88,6 +98,21 @@
 	       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
 
+;;;;;; Fix Conflits
+;; Fix comflits with yasnippet
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (org-set-local 'yas/trigger-key [tab])
+	    (define-key yas/keymap [tab] 'yas/next-field-group)))
+
+;; Fix conflits with windmove.el
+(add-hook 'org-shiftup-final-hook 'windmove-up)
+(add-hook 'org-shiftleft-final-hook 'windmove-left)
+(add-hook 'org-shiftdown-final-hook 'windmove-down)
+(add-hook 'org-shiftright-final-hook 'windmove-right)
+;; Fix conflits with viper
+(define-key viper-vi-global-user-map "C-c /" 'org-sparse-tree)
+
 ;;;;;; Functions
 
 ;; function to setup images for display on load
@@ -98,6 +123,10 @@
   (set-face-underline-p 'org-link nil))
 
 
+(defcmd org-mode:insert-link ()
+  "insert link"
+  (insert "insert-link")
+  (yas/expand))
 
 
 

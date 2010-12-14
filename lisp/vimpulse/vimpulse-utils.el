@@ -491,25 +491,19 @@ Undo boundaries until `vimpulse-undo-list-pointer' are removed
 to make the entries undoable as a single action.
 See `vimpulse-start-undo-step'."
   (setq buffer-undo-list
-        (vimpulse-filter-undo-boundaries buffer-undo-list
-                                         vimpulse-undo-list-pointer)))
+        (vimpulse-filter-list buffer-undo-list 'null
+                              vimpulse-undo-list-pointer)))
 
-(defun vimpulse-filter-undo-boundaries (undo-list &optional pointer)
-  "Filter undo boundaries from beginning of UNDO-LIST, until POINTER.
-A boundary is a nil element, typically inserted by `undo-boundary'.
-Return the filtered list."
-  (cond
-   ((null undo-list)
-    nil)
-   ((not (listp undo-list))
-    undo-list)
-   ((eq undo-list pointer)
-    undo-list)
-   ((null (car undo-list))
-    (vimpulse-filter-undo-boundaries (cdr undo-list) pointer))
-   (t
-    (cons (car undo-list)
-          (vimpulse-filter-undo-boundaries (cdr undo-list) pointer)))))
+(defun vimpulse-filter-list (list predicate &optional pointer)
+  "Filter LIST for entries matching PREDICATE until POINTER.
+Returns a new list."
+  (let ((rest list) elt result)
+    (while (and rest (not (eq rest pointer)))
+      (setq elt  (car rest)
+            rest (cdr rest))
+      (unless (funcall predicate elt)
+        (setq result (append result (list elt)))))
+    (append result rest)))
 
 (defun vimpulse-start-undo-step ()
   "Start a single undo step.
@@ -535,6 +529,8 @@ single action."
     (undo-boundary)
     (remove-hook 'post-command-hook 'vimpulse-refresh-undo-step t)))
 
+(add-hook 'viper-vi-state-hook 'vimpulse-end-undo-step)
+
 (defmacro vimpulse-single-undo (&rest body)
   "Execute BODY as a single undo step."
   (declare (indent 0)
@@ -544,6 +540,11 @@ single action."
          (vimpulse-start-single-undo)
          ,@body)
      (vimpulse-end-single-undo)))
+
+(defun vimpulse-repeat-p ()
+  "Return non-nil if the current command is being repeated."
+  (or (eq viper-intermediate-command 'viper-repeat)
+      (eq this-command 'viper-repeat)))
 
 ;;; Motion type system
 
@@ -698,6 +699,8 @@ the last column is included."
           (if (eolp)
               (vimpulse-make-motion-range beg end 'block)
             (vimpulse-make-motion-range (1+ beg) end 'block)))
+         ((eq vimpulse-block-orientation 'right)
+          (vimpulse-make-motion-range (1+ beg) end 'block))
          (t
           (vimpulse-make-motion-range beg (1+ end) 'block))))
        ((< beg-col end-col)

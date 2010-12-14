@@ -35,11 +35,11 @@
 ;;;; Keybindings
 (add-hook 'c-mode-hook
 	  '(lambda ()
-	     (vim:nmap (kbd ",o") 'ff-find-other-file)
-	     (vim:nmap (kbd ",h") 'ff-find-related-file)
-	     (vim:imap (kbd "M-i") 'c-mode:insert-inc-or-if) ; insert "#include <>" or "if () {...}"
-	     (vim:imap (kbd "M-d") 'c-mode:insert-do-while)  ; insert "do {...} while()"
-	     (vim:imap (kbd "M-m") 'c-mode:insert-main-function) ; insert "int main () {...}"
+	     (vim:local-nmap (kbd ",o") 'ff-find-other-file)
+	     (vim:local-nmap (kbd ",h") 'ff-find-related-file)
+	     (vim:local-imap (kbd "M-i") 'c-mode:insert-inc-or-if) ; insert "#include <>" or "if () {...}"
+	     (vim:local-imap (kbd "M-d") 'c-mode:insert-do-while)  ; insert "do {...} while()"
+	     (vim:local-imap (kbd "M-m") 'c-mode:insert-main-function) ; insert "int main () {...}"
 	     ;; FIXME:
 	     ;;	     (vim:imap (kbd "=")   'c-mode:insert-equal)
 	     ;;     (vim:imap (kbd "=")   (my-char '(" = " " == ")))

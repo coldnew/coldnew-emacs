@@ -33,6 +33,7 @@
 (define-key viper-vi-basic-map "g~" 'vimpulse-invert-case)
 (define-key viper-vi-basic-map "g0" 'vimpulse-beginning-of-visual-line)
 (define-key viper-vi-basic-map "g$" 'vimpulse-end-of-visual-line)
+(define-key viper-vi-basic-map "gJ" 'vimpulse-Join)
 (define-key viper-vi-basic-map "J" 'vimpulse-join)
 (define-key viper-vi-basic-map "K" 'woman)
 (define-key viper-vi-basic-map "m" 'vimpulse-mark-point)
@@ -355,8 +356,6 @@ is highlighted rather than skipped past."
   "Auto Indentation, Vim-style."
   (interactive)
   (let ((col (current-indentation)))
-    (when abbrev-mode
-      (expand-abbrev))
     (if viper-preserve-indent
         (setq viper-preserve-indent nil)
       (setq viper-current-indent col))
@@ -415,7 +414,8 @@ Doesn't indent with a prefix argument."
 
 (defun vimpulse-jump-backward (arg)
   "Go to older position in jump list.
-To go the other way, press \\[vimpulse-jump-forward]."
+\\<viper-vi-basic-map>To go the other way, \
+press \\[vimpulse-jump-forward]."
   (interactive "p")
   (let ((current-pos (make-marker)) i)
     (unless vimpulse-mark-list
@@ -439,7 +439,8 @@ To go the other way, press \\[vimpulse-jump-forward]."
 
 (defun vimpulse-jump-forward (arg)
   "Go to newer position in jump list.
-To go the other way, press \\[vimpulse-jump-backward]."
+\\<viper-vi-basic-map>To go the other way, \
+press \\[vimpulse-jump-backward]."
   (interactive "p")
   (let (current-pos next-pos)
     (dotimes (arg arg)

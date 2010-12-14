@@ -27,6 +27,7 @@
 	  popup-pos-tip
 	  undo-tree
 	  vimpulse
+	  vimpulse-surround
 	  fic-mode
 	  ;;	  session
 	  ;;	  popup-kill-ring

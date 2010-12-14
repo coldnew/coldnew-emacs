@@ -8,8 +8,9 @@
   (shell-pop-set-internal-mode-shell "/bin/bash")
   (shell-pop-set-window-height 20)
   (shell-pop-set-window-position "bottom")
-  (when (featurep 'vim)
+  (when (require 'rc-vim-mode nil 'noerror)
     (vim:nmap (kbd "<f3>") 'shell-pop)))
+
 
 (require 'cedet)
 (global-ede-mode t)
@@ -30,17 +31,17 @@
   (require 'semantic/db-typecache nil 'noerror)
   (global-semanticdb-minor-mode 1)
   (setq semanticdb-default-save-directory
-    (expand-file-name "~/.emacs.d/var/semanticdb"))
+	(expand-file-name "~/.emacs.d/var/semanticdb"))
 
   ;; Support for GNU Global
   (cond (emacs24-p
-	(semanticdb-enable-gnu-global-databases 'c-mode)
-	(semanticdb-enable-gnu-global-databases 'c++-mode)))
+	 (semanticdb-enable-gnu-global-databases 'c-mode)
+	 (semanticdb-enable-gnu-global-databases 'c++-mode)))
 
   ;; BUG:?
   ;; enable ctags for some languages:
   ;;  Unix Shell, Perl, Pascal, Tcl, Fortran, Asm
-                    ;(semantic-load-enable-primary-exuberent-ctags-support)
+					;(semantic-load-enable-primary-exuberent-ctags-support)
 
   (require 'semantic/bovine nil 'noerror)
   (require 'semantic/bovine/c nil 'noerror)
@@ -50,7 +51,7 @@
   (semantic-add-system-include qt4-base-dir 'c++-mode)
   (add-to-list 'auto-mode-alist (cons qt4-base-dir 'c++-mode))
   (cond (emacs24-p
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig.h"))
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-dist.h"))
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))
-  )))
+	 (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig.h"))
+	 (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-dist.h"))
+	 (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))
+	 )))

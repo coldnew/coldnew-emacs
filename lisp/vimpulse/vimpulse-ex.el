@@ -30,4 +30,8 @@
         (delete (assoc (car entry) ex-token-alist) ex-token-alist))
   (push entry ex-token-alist))
 
+;; `ex-cmd-read-exit', bound by Viper to SPC, is buggy: e.g.,
+;; ":s/foo/set bar" exits the minibuffer before "bar" is typed.
+(define-key viper-ex-cmd-map " " nil)
+
 (provide 'vimpulse-ex)

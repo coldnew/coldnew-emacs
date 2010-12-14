@@ -23,11 +23,11 @@
 
 
 ;;;; Specified special color-theme according different modes
-(if emacs24-p
+(if linux-p
     (add-hook 'post-command-hook
 	      '(lambda ()
 		 (cond
-		  ;; When enter w3m, chang color to color-thme-day.
+		  ;; When enter w3m, change color to color-thme-day.
 		  ((derived-mode-p 'w3m-mode) (color-theme-coldnew-day))
 		  ;; We don't want to change color iwhen enter minibuffer.
 		  ;; This is the default option and might set in the end.

@@ -15,5 +15,5 @@
   ;; Emacs Kyebinding
   (global-set-key (kbd "<f3>") 'shell-pop)
   ;; Keybinding for vim-mode or Viper
-  (when (require 'rc-vim nil 'noerror)
+  (when (require 'rc-vim-mode nil 'noerror)
     (vim:nmap (kbd "<f3>") 'shell-pop)))

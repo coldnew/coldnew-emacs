@@ -10,13 +10,13 @@
   ;; Matlab Shell Mode
   (add-hook 'matlab-shell-mode-hook
 	    '(lambda ()
-	       (when (require 'vim nil 'noerror)
+	       (when (require 'rc-vim-mode nil 'noerror)
 		 (vim:imap (kbd "RET") 'comint-send-input))
 	       ))
   ;; Matlab Mode
   (add-hook 'matlab-mode-hook
 	    '(lambda ()
 	       ))
-  
+
 
   )

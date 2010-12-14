@@ -49,5 +49,5 @@
 
 (defun insert-equal-char-smart ()
   "insert character more smart."
-  (when (and (featurep 'smartchr) (featurep 'vim))
+  (when (featurep 'smartchr)
     (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))))

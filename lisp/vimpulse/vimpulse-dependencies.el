@@ -2,9 +2,11 @@
 
 ;;; Compatibility
 (defmacro vimpulse-called-interactively-p ()
-  (if (version< emacs-version "23")
-      '(called-interactively-p)
-    '(called-interactively-p 'any)))
+  (if (condition-case nil
+          (progn (called-interactively-p 'any) t)
+        (error nil))
+      '(called-interactively-p 'any)
+    '(called-interactively-p)))
 
 ;;; Version
 (defconst vimpulse-version "0.5+git"
@@ -277,6 +279,13 @@ Used by `vimpulse-operator-repeat'.")
   "Last repeated motion.
 Used by `vimpulse-operator-repeat'.")
 
+(defvar vimpulse-block-orientation 'left
+  "Orientation of single-column blocks.
+`left' if beg-col < end-col; `right' if beg-col > end-col.")
+
+(defvar vimpulse-block-func nil
+  "Function to use for repeated block insertion.")
+
 (defvar vimpulse-movement-cmds
   '(backward-char backward-list backward-paragraph backward-sentence
     backward-sexp backward-up-list backward-word beginning-of-buffer
@@ -291,9 +300,10 @@ Used by `vimpulse-operator-repeat'.")
     vimpulse-end-of-previous-word vimpulse-goto-definition
     vimpulse-goto-first-line vimpulse-goto-line
     vimpulse-visual-block-rotate vimpulse-visual-exchange-corners
+    vimpulse-visual-forward-char vimpulse-visual-goto-eol
     vimpulse-visual-reselect vimpulse-visual-restore
-    vimpulse-visual-toggle-block vimpulse-visual-toggle-line
-    vimpulse-visual-toggle-char viper-backward-Word
+    vimpulse-visual-toggle-block vimpulse-visual-toggle-char
+    vimpulse-visual-toggle-line viper-backward-Word
     viper-backward-char viper-backward-paragraph
     viper-backward-sentence viper-backward-word
     viper-beginning-of-line viper-digit-argument viper-end-of-Word
@@ -304,9 +314,10 @@ Used by `vimpulse-operator-repeat'.")
     viper-goto-char-forward viper-goto-eol viper-goto-line
     viper-insert viper-intercept-ESC-key viper-line-to-bottom
     viper-line-to-middle viper-line-to-top viper-next-line
-    viper-paren-match viper-previous-line viper-search-Next
-    viper-search-backward viper-search-forward viper-search-next
-    viper-window-bottom viper-window-middle viper-window-top)
+    viper-paren-match viper-previous-line viper-scroll-screen
+    viper-scroll-screen-back viper-search-Next viper-search-backward
+    viper-search-forward viper-search-next viper-window-bottom
+    viper-window-middle viper-window-top)
   "List of commands that move point.
 If listed here, the region is not expanded to the
 Visual selection before the command is executed.")

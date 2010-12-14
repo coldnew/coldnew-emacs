@@ -37,6 +37,10 @@
     (goto-char beg)
     (viper-change-state-to-insert))))
 
+(defadvice viper-exit-insert-state (before vimpulse activate)
+  "Refresh `vimpulse-exit-point'."
+  (viper-move-marker-locally 'vimpulse-exit-point (point)))
+
 (defun vimpulse-set-replace-cursor-type ()
   "Display a horizontal bar cursor."
   (unless (featurep 'xemacs)
@@ -909,7 +913,7 @@ mode-specific modifications to %s.\n\n%s" state-name doc) t))
 (when (fboundp 'font-lock-add-keywords)
   (font-lock-add-keywords
    'emacs-lisp-mode
-   '(("(\\(vimpulse-define-state\\)\\>[ \f\t\n\r\v]*\\(\\sw+\\)?"
+   '(("(\\(vimpulse-define-[-[:word:]]+\\)\\>[ \f\t\n\r\v]*\\(\\sw+\\)?"
       (1 font-lock-keyword-face)
       (2 font-lock-function-name-face nil t)))))
 

@@ -37,9 +37,9 @@
 ;;;;;; Keybindings
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
-	     (when (require 'vim nil 'noerror)
-	       (vim:imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
-	       (vim:imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
+	     (when (require 'rc-vim-mode nil 'noerror)
+	       (vim:local-imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
+	       (vim:local-imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
 	       )))
 
 

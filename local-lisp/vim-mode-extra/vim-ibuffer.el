@@ -43,14 +43,12 @@
 
 (add-hook 'ibuffer-mode-hook
 	  (lambda ()
-	    ;;BUG:
-	    ;; (vim:local-nmap (kbd "h") nil)
-	    ;; (vim:local-nmap (kbd "l") 'nil)
-	    ;; (vim:local-nmap (kbd "q") 'quit-window)
-
-
-	    (define-key ibuffer-mode-map (kbd "q") 'quit-window)
-
+	    (vim:local-imap (kbd "i") nil) ; it's no need to got to insert-mode in ibuffer
+	    (vim:local-nmap (kbd "l") 'nil)
+	    (vim:local-nmap (kbd "h") nil)
+	    (vim:local-nmap (kbd "j") 'next-line)
+	    (vim:local-nmap (kbd "p") 'previous-line)
+	    (vim:local-nmap (kbd "q") 'quit-window)
 	    ))
 
 
