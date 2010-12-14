@@ -60,6 +60,8 @@
 (require 'rc-ielm-mode)
 (require 'rc-find-file)
 
+
+
 (require 'circuit-mode)
 
 ;; FIXME: bug?
