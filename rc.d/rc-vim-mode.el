@@ -28,11 +28,15 @@
   ;; Use paredit in viper
   ;; current we don't have paredit run under vim-mode
   ;; so only use paredit in viper-mode
-  (eval-after-load 'paredit
-		   '(progn
-		      (require 'paredit-viper-compat)
-		      (paredit-viper-compat)))
-
+  ;; (eval-after-load 'paredit
+  ;;   '(progn
+  ;;      (require 'paredit-viper-compat)
+  ;;      (paredit-viper-compat)))
+  ;; Make paredit work with eldoc
+  (when (require 'eldoc nil 'noerror)
+    (eldoc-add-command
+     'paredit-backward-delete
+     'paredit-close-round))
 
   ;; Fix ibuffer-mode
   (add-hook 'ibuffer-mode-hook
@@ -48,13 +52,13 @@
   )
 
 (defcmd window-fullscreen ()
-	"Make the window full-screen."
-	(let ((current-value (frame-parameter nil 'fullscreen)))
-	  (set-frame-parameter nil 'fullscreen
-			       (if (equal 'fullboth current-value)
-				 (if (boundp 'old-fullscreen) old-fullscreen nil)
-				 (progn (setq old-fullscreen current-value)
-					'fullboth)))))
+  "Make the window full-screen."
+  (let ((current-value (frame-parameter nil 'fullscreen)))
+    (set-frame-parameter nil 'fullscreen
+			 (if (equal 'fullboth current-value)
+			     (if (boundp 'old-fullscreen) old-fullscreen nil)
+			   (progn (setq old-fullscreen current-value)
+				  'fullboth)))))
 ;;FIXME:in vim-mode , we use vim:wmap
 (vim:nmap (kbd "C-w f") 'window-fullscreen)
 

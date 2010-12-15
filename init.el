@@ -32,8 +32,11 @@
 
 ;;;;;; load package initial setting
 
-
+;; Macor must read first
 (require 'rc-macro)
+
+(require 'rc-vim-mode)
+
 (require 'rc-backup)
 (require 'rc-base)
 (require 'rc-ibuffer)
@@ -56,7 +59,6 @@
 (require 'rc-smartchr)
 (require 'rc-w3m)
 (require 'rc-display)
-(require 'rc-vim-mode)
 (require 'rc-ielm-mode)
 (require 'rc-find-file)
 

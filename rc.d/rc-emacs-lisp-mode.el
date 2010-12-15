@@ -34,6 +34,7 @@
 	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)
 	     ))
 
+
 ;;;;;; Keybindings
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
@@ -78,11 +79,11 @@
 ;;   ;; tagfile doesn't exist?
 ;;   (if (not (= 0 (call-process "global" nil nil nil " -p")))
 ;;       (let ((olddir default-directory)
-;; 	    (topdir (read-directory-name
-;; 		     "gtags: top of source tree:" default-directory)))
-;; 	(cd topdir)
-;; 	(shell-command "gtags && echo 'created tagfile'")
-;; 	(cd olddir)) ; restore
+;;	    (topdir (read-directory-name
+;;		     "gtags: top of source tree:" default-directory)))
+;;	(cd topdir)
+;;	(shell-command "gtags && echo 'created tagfile'")
+;;	(cd olddir)) ; restore
 ;;     ;;  tagfile already exists; update it
 ;;     (shell-command "global -u && echo 'updated tagfile'")))
 

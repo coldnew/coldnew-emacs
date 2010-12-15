@@ -61,6 +61,7 @@
 
 ;;;; Functions
 
+;; Insert char smart
 (defcmd objc-mode:insert-equal ()
   "insert eaual with extra space."
   (cond ((in-string-p) (insert "="))
@@ -78,14 +79,14 @@
 (defcmd objc-mode:insert-greater-or-shift ()
   "insert > or >> if not in string."
   (cond ((in-string-p) (insert ">"))
-	((search-backward ">" nil t) (delete-char 1) (insert ">>"))
+	((search-backward ">"   nil t) (delete-char 1) (insert ">>"))
 	((search-backward ">>"  nil t) (delete-char 2) (insert ">"))
 	(t (insert ">"))))
 
 (defcmd objc-mode:insert-lesser-or-shift ()
   "insert < or << if not in string."
   (cond ((in-string-p) (insert "<"))
-	((search-backward "<" nil t) (delete-char 1) (insert "<<"))
+	((search-backward "<"   nil t) (delete-char 1) (insert "<<"))
 	((search-backward "<<"  nil t) (delete-char 2) (insert "<"))
 	(t (insert "<"))))
 

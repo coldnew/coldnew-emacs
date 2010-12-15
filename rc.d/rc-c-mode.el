@@ -65,6 +65,7 @@
 
 ;;;; Functions
 
+;; insert yasnippet
 (defcmd c-mode:insert-inc-or-if ()
   "If at the start of line. add `inc' and expand it,
 else add `if' and expand it."
@@ -88,6 +89,7 @@ else add `if' and expand it."
 	(insert "main"))
     (yas/expand)))
 
+;; Insert char smart
 (defcmd c-mode:insert-equal ()
   "insert eaual with extra space."
   (cond ((in-string-p) (insert "="))
@@ -105,13 +107,13 @@ else add `if' and expand it."
 (defcmd c-mode:insert-greater-or-shift ()
   "insert > or >> if not in string."
   (cond ((in-string-p) (insert ">"))
-	((search-backward ">" nil t) (delete-char 1) (insert ">>"))
+	((search-backward ">"   nil t) (delete-char 1) (insert ">>"))
 	((search-backward ">>"  nil t) (delete-char 2) (insert ">"))
 	(t (insert ">"))))
 
 (defcmd c-mode:insert-lesser-or-shift ()
   "insert < or << if not in string."
   (cond ((in-string-p) (insert "<"))
-	((search-backward "<" nil t) (delete-char 1) (insert "<<"))
+	((search-backward "<"   nil t) (delete-char 1) (insert "<<"))
 	((search-backward "<<"  nil t) (delete-char 2) (insert "<"))
 	(t (insert "<"))))

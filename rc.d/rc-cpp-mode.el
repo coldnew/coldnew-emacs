@@ -69,6 +69,7 @@
 
 ;;;;; Keybinding Functions
 
+;; insert yasnippet
 (defcmd cpp-mode:insert-inc-or-if ()
   "If at the start of line. add `inc' and expand it,
 else add `if' and expand it."
@@ -93,6 +94,7 @@ else add `if' and expand it."
       )
     (yas/expand)))
 
+;; Insert char smart
 (defcmd cpp-mode:insert-equal ()
   "insert eaual with extra space."
   (cond ((in-string-p) (insert "="))
@@ -110,13 +112,13 @@ else add `if' and expand it."
 (defcmd cpp-mode:insert-greater-or-shift ()
   "insert > or >> if not in string."
   (cond ((in-string-p) (insert ">"))
-	((search-backward ">" nil t) (delete-char 1) (insert ">>"))
+	((search-backward ">"   nil t) (delete-char 1) (insert ">>"))
 	((search-backward ">>"  nil t) (delete-char 2) (insert ">"))
 	(t (insert ">"))))
 
 (defcmd cpp-mode:insert-lesser-or-shift ()
   "insert < or << if not in string."
   (cond ((in-string-p) (insert "<"))
-	((search-backward "<" nil t) (delete-char 1) (insert "<<"))
+	((search-backward "<"   nil t) (delete-char 1) (insert "<<"))
 	((search-backward "<<"  nil t) (delete-char 2) (insert "<"))
 	(t (insert "<"))))

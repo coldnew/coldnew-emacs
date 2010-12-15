@@ -13,6 +13,7 @@
   (set-newline-and-indent)		; 行尾按ENTER自動縮排
   (indent-file-when-save)		; 儲存檔案時自動縮排
   (use-hungry-delete)			; 啟用 hungry-delete mode
+  (use-paredit-mode)			; 增加部份基於 Paredit 的按鍵綁定
   )
 
 
@@ -20,7 +21,6 @@
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
 ;;;; Functions
-
 
 (defun show-too-long-lines ()
   "highlight too long lines."
@@ -62,3 +62,23 @@
   "Use hungry delete mode"
   (when (require 'hungry-delete nil 'noerror)
     (turn-on-hungry-delete-mode)))
+
+(defun use-paredit-mode ()
+  "Enable some Paredit-keybinding"
+  (when (require 'paredit nil 'noerror)
+    ;; Make paredit work with eldoc
+    (when (require 'eldoc nil 'noerror)
+      (eldoc-add-command
+       'paredit-backward-delete
+       'paredit-close-round))
+    ;; My keybinding
+    (vim:local-imap (kbd "(")    'paredit-open-round)
+    (vim:local-imap (kbd ")")    'paredit-close-round)
+    (vim:local-imap (kbd "M-(")  'paredit-wrap-round)
+    (vim:local-imap (kbd "M-)")  'paredit-close-round-and-newline)
+    (vim:local-imap (kbd "[")    'paredit-open-square)
+    (vim:local-imap (kbd "]")    'paredit-close-square)
+    (vim:local-imap (kbd "\"")   'paredit-doublequote)
+    (vim:local-imap (kbd "M-\"") 'paredit-meta-doublequote)
+    ;; TODO: need add more keybinding
+    ))
