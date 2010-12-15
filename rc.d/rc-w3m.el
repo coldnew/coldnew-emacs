@@ -30,15 +30,16 @@
        ))
 
   ;; (add-hook 'w3m-mode-hook
-  ;; 	    '(lambda ()
-  ;; 	       '(color-theme-xp))
-  ;; 	    ))
+  ;;	    '(lambda ()
+  ;;	       '(color-theme-xp))
+  ;;	    ))
 
   (add-hook 'w3m-mode-hook
 	    '(lambda ()
 	       ;;     (setq (make-local-variable background-color) "white")
 
 	       ))
+
 
   ;; (cond
   ;;  ( (mac-p ))

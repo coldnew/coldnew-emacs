@@ -1,4 +1,3 @@
-(provide 'rc-emacs-lisp-mode)
 
 (eval-when-compile (require 'cl))
 
@@ -28,12 +27,11 @@
 	       (turn-on-pretty-lambda-mode))
 
 	     ;; Hooks for emacs-lisp-mode
-;;;;	     (byte-compile-when-save)	; bytecompile the elisp file after save
+	     (byte-compile-when-save)	; bytecompile the elisp file after save
 	     (remove-elc-when-visit)	; when visit elisp file, remove .elc extensioon
 	     (programming-common-hook)	; programming common hook
 	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)
 	     ))
-
 
 ;;;;;; Keybindings
 (add-hook 'emacs-lisp-mode-hook
@@ -42,8 +40,6 @@
 	       (vim:local-imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
 	       (vim:local-imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
 	       )))
-
-
 
 ;;;;;; Functions
 
@@ -109,7 +105,5 @@
 ;; (add-hook 'after-save-hook 'my-auto-update-tags)
 
 
-
-
-
-;;; emacs-lisp.el ends here
+(provide 'rc-emacs-lisp-mode)
+;;; rc-emacs-lisp-mode.el ends here
