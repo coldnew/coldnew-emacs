@@ -47,7 +47,7 @@
 
 (defun set-newline-and-indent ()
   (when (require 'rc-vim-mode nil 'noerror)
-    (vim:imap (kbd "RET") 'newline-and-indent)))
+    (vim:local-imap (kbd "RET") 'newline-and-indent)))
 
 
 (defun indent-file-when-save ()

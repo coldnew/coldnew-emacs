@@ -2,6 +2,11 @@
 (provide 'rc-function)
 
 
+(defun show-dot-emacs-structure ()
+  "Show the outline-mode structure of ~/.emacs"
+  (interactive)
+  (occur "^;;;;+"))
+
 ;; rename file and buffer
 ;; -------------------
 (defun rename-file-and-buffer (new-name)

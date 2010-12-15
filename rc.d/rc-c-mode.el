@@ -5,7 +5,7 @@
 (require 'thingatpt)
 (require 'smartchr)
 
-;; Coding-Style Setting
+;;;; Coding-Style Setting
 (add-hook 'c-mode-hook
 	  '(lambda ()
 	     (c-set-style "linux")                ; C 語言風格為 linux
@@ -17,35 +17,20 @@
 	     ;;(substatement-open   .   0)
 	     ))
 
-;;;; Extra Coding Style setting
-;; Enlightenment(EFL 、) Coding Style
-(c-add-style
- "enlightenment"
- '("gnu"
-   (indent-tabs-mode . nil)
-   (tab-width . 8)
-   (c-offsets-alist.
-    ((defun-block-intro . 3)
-     (statement-block-intro . 3)
-     (case-label . 1)
-     (statement-case-intro . 3)
-     (inclass . 3)
-     ))))
-
 ;;;; Keybindings
 (add-hook 'c-mode-hook
 	  '(lambda ()
 	     (vim:local-nmap (kbd ",o") 'ff-find-other-file)
 	     (vim:local-nmap (kbd ",h") 'ff-find-related-file)
+	     ;; Insert yasnippet
 	     (vim:local-imap (kbd "M-i") 'c-mode:insert-inc-or-if) ; insert "#include <>" or "if () {...}"
 	     (vim:local-imap (kbd "M-d") 'c-mode:insert-do-while)  ; insert "do {...} while()"
 	     (vim:local-imap (kbd "M-m") 'c-mode:insert-main-function) ; insert "int main () {...}"
-	     ;; FIXME:
-	     ;;	     (vim:imap (kbd "=")   'c-mode:insert-equal)
-	     ;;     (vim:imap (kbd "=")   (my-char '(" = " " == ")))
-	     ;; (vim:imap (kbd ".")   'c-mode:insert-pointer)
-	     ;; (vim:imap (kbd ">")   'c-mode:insert-greater-or-shift)
-	     ;; (vim:imap (kbd "<")   'c-mode:insert-lesser-or-shift)
+	     ;; Insert smart char
+	     (vim:local-imap (kbd "=")   'c-mode:insert-equal)
+	     (vim:local-imap (kbd ".")   'c-mode:insert-pointer)
+	     (vim:local-imap (kbd ">")   'c-mode:insert-greater-or-shift)
+	     (vim:local-imap (kbd "<")   'c-mode:insert-lesser-or-shift)
 	     ))
 
 ;;;; Hooks
@@ -63,7 +48,20 @@
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c-mode))
 (add-to-list 'auto-mode-alist '("\\.c\\'" . c-mode))
 
-
+;;;; Extra Coding Style setting
+;; Enlightenment(EFL 、) Coding Style
+(c-add-style
+ "enlightenment"
+ '("gnu"
+   (indent-tabs-mode . nil)
+   (tab-width . 8)
+   (c-offsets-alist.
+    ((defun-block-intro . 3)
+     (statement-block-intro . 3)
+     (case-label . 1)
+     (statement-case-intro . 3)
+     (inclass . 3)
+     ))))
 
 ;;;; Functions
 
@@ -90,71 +88,30 @@ else add `if' and expand it."
 	(insert "main"))
     (yas/expand)))
 
-;; FIXME:
-;; (defun c-mode:insert-equal ()
-;;   ""
-;;   (interactive)
-;;   (lexical-let ((count 0))
-;;     (lambda ()
-;;       (interactive)
-;;       (if (eq this-command real-last-command)
-;; 	  (incf count)
-;; 	(setq count 0))
-;;       (message "%d" count)
-;;       (insert count))))
+(defcmd c-mode:insert-equal ()
+  "insert eaual with extra space."
+  (cond ((in-string-p) (insert "="))
+	((search-backward " = "  nil t) (delete-char 3) (insert " == "))
+	((search-backward " == " nil t) (delete-char 4) (insert " = "))
+	(t (insert " = "))))
 
-;; (defun c-mode:insert-equal ()
-;;   (interactive)
-;;   (if (not (in-string-p))
-;;       (backward-char 1)
-;;     (if (looking-at ">")
-;; 	(message "adasd"))))
+(defcmd c-mode:insert-pointer ()
+  "insert . or -> if not in string."
+  (cond ((in-string-p) (insert "."))
+	((search-backward "->" nil t) (delete-char 2) (insert "."))
+	((search-backward "."  nil t) (delete-char 1) (insert "->"))
+	(t (insert "."))))
 
+(defcmd c-mode:insert-greater-or-shift ()
+  "insert > or >> if not in string."
+  (cond ((in-string-p) (insert ">"))
+	((search-backward ">" nil t) (delete-char 1) (insert ">>"))
+	((search-backward ">>"  nil t) (delete-char 2) (insert ">"))
+	(t (insert ">"))))
 
-;; (let* ((first "->")
-;; 	     (second "."))
-;; 	(cond
-;; 	 ((search-backward first   (line-beginning-position) t)
-;; 	  (save-excursion
-;; 	    (goto-char (point))
-;; 	    (backward-delete-char (length first))
-;; 	    (message "%d " (length first))
-;; 	    ;;(insert second))
-;; 	    )   )
-;; 	 ((search-backward second  (line-beginning-position) t)
-;; 	  (goto-char (point))
-;; 	  ;;(delete-backward-char (length second))
-;; 	  ;;(insert first))
-;; 	  )
-;; 	 )))
-;; (self-insert-command 1)))
-
-
-;; (defcmd c-mode:insert-equal ()
-;;   "insert equal for easy."
-;;   (if (not (in-string-p))
-;;       ;;(funcall (smartchr '(" = " " == "  "=")))))
-;;       (funcall (smartchr '(" = " " == " "=")))))
-
-;; (defcmd c-mode:insert-pointer ()
-;;   "insert . or -> for easy."
-;;   (if (and (featurep 'smartchr)
-;;   	   (not (in-string-p)))
-;;       (smartchr '("." "->"))
-;;     (self-insert-command 1)
-;;     ))
-
-
-;; (defcmd c-mode:insert-greater-or-shift ()
-;;   "insert > or >> for easy."
-;;   (if (and (featurep 'smartchr)
-;; 	   (not (in-string-p)))
-;;       (smartchr '(">" ">>"))
-;;     (self-insert-command)))
-
-;; (defcmd c-mode:insert-lesser-or-shift ()
-;;   "insert < or << for easy."
-;;   (if (and (featurep 'smartchr)
-;; 	   (not (in-string-p)))
-;;       (smartchr '("<" "<<"))
-;;     (self-insert-command)))
+(defcmd c-mode:insert-lesser-or-shift ()
+  "insert < or << if not in string."
+  (cond ((in-string-p) (insert "<"))
+	((search-backward "<" nil t) (delete-char 1) (insert "<<"))
+	((search-backward "<<"  nil t) (delete-char 2) (insert "<"))
+	(t (insert "<"))))

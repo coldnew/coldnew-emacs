@@ -49,14 +49,48 @@
 ;; Keybinding
 (add-hook 'objc-mode-hook
 	  '(lambda ()
-	     (when (require 'rc-vim-mode nil 'noerror)
-	       (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))
-	       )
+	     ;; Insert smart char
+	     (vim:local-imap (kbd "=")   'objc-mode:insert-equal)
+	     (vim:local-imap (kbd ".")   'objc-mode:insert-pointer)
+	     (vim:local-imap (kbd ">")   'objc-mode:insert-greater-or-shift)
+	     (vim:local-imap (kbd "<")   'objc-mode:insert-lesser-or-shift)
 	     ;;         (define-key objc-mode-map (kbd "C-c w") 'xcdoc:ask-search)
 	     ))
 
 
+
 ;;;; Functions
+
+(defcmd objc-mode:insert-equal ()
+  "insert eaual with extra space."
+  (cond ((in-string-p) (insert "="))
+	((search-backward " = "  nil t) (delete-char 3) (insert " == "))
+	((search-backward " == " nil t) (delete-char 4) (insert " = "))
+	(t (insert " = "))))
+
+(defcmd objc-mode:insert-pointer ()
+  "insert . or -> if not in string."
+  (cond ((in-string-p) (insert "."))
+	((search-backward "->" nil t) (delete-char 2) (insert "."))
+	((search-backward "."  nil t) (delete-char 1) (insert "->"))
+	(t (insert "."))))
+
+(defcmd objc-mode:insert-greater-or-shift ()
+  "insert > or >> if not in string."
+  (cond ((in-string-p) (insert ">"))
+	((search-backward ">" nil t) (delete-char 1) (insert ">>"))
+	((search-backward ">>"  nil t) (delete-char 2) (insert ">"))
+	(t (insert ">"))))
+
+(defcmd objc-mode:insert-lesser-or-shift ()
+  "insert < or << if not in string."
+  (cond ((in-string-p) (insert "<"))
+	((search-backward "<" nil t) (delete-char 1) (insert "<<"))
+	((search-backward "<<"  nil t) (delete-char 2) (insert "<"))
+	(t (insert "<"))))
+
+
+;;;;;; Mac OSX special Setting
 ;;; Those Funtcions for MacOs
 (when mac-p
   (defun xcode:build-and-run ()

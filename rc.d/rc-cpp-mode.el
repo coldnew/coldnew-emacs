@@ -26,14 +26,15 @@
 	  '(lambda ()
 	     (vim:local-nmap (kbd ",o") 'ff-find-other-file)
 	     (vim:local-nmap (kbd ",h") 'ff-find-related-file)
+	     ;; Insert yasnippet
 	     (vim:local-imap (kbd "M-i") 'cpp-mode:insert-inc-or-if)
 	     (vim:local-imap (kbd "M-d") 'cpp-mode:insert-do-while)
 	     (vim:local-imap (kbd "M-m") 'cpp-mode:insert-main-function)
-	     ;; FIXME:
-	     ;; (vim:imap (kbd "=")   'cpp-mode:insert-equal)
-	     ;; (vim:imap (kbd ".")   'c-mode:insert-pointer)
-	     ;; (vim:imap (kbd ">")   'c-mode:insert-greater-or-shift)
-	     ;; (vim:imap (kbd "<")   'c-mode:insert-lesser-or-shift)
+	     ;; Insert smart char
+	     (vim:local-imap (kbd "=")   'cpp-mode:insert-equal)
+	     (vim:local-imap (kbd ".")   'cpp-mode:insert-pointer)
+	     (vim:local-imap (kbd ">")   'cpp-mode:insert-greater-or-shift)
+	     (vim:local-imap (kbd "<")   'cpp-mode:insert-lesser-or-shift)
 
 	     ))
 
@@ -92,35 +93,30 @@ else add `if' and expand it."
       )
     (yas/expand)))
 
+(defcmd cpp-mode:insert-equal ()
+  "insert eaual with extra space."
+  (cond ((in-string-p) (insert "="))
+	((search-backward " = "  nil t) (delete-char 3) (insert " == "))
+	((search-backward " == " nil t) (delete-char 4) (insert " = "))
+	(t (insert " = "))))
 
-;; FIXME:
-;; (defcmd cpp-mode:insert-equal ()
-;;   "insert equal for easy."
-;;   (if (and (featurep 'smartchr)
-;;     (not (in-string-p)))
-;;       (smartchr '(" = " " == "  "="))
-;;     (self-insert-command)))
+(defcmd cpp-mode:insert-pointer ()
+  "insert . or -> if not in string."
+  (cond ((in-string-p) (insert "."))
+	((search-backward "->" nil t) (delete-char 2) (insert "."))
+	((search-backward "."  nil t) (delete-char 1) (insert "->"))
+	(t (insert "."))))
 
-;; (defcmd cpp-mode:insert-pointer ()
-;;   "insert . or -> for easy."
-;;   (if (and (featurep 'smartchr)
-;;     (not (in-string-p)))
-;;       (smartchr '("." "->"))
-;;     (self-insert-command)))
+(defcmd cpp-mode:insert-greater-or-shift ()
+  "insert > or >> if not in string."
+  (cond ((in-string-p) (insert ">"))
+	((search-backward ">" nil t) (delete-char 1) (insert ">>"))
+	((search-backward ">>"  nil t) (delete-char 2) (insert ">"))
+	(t (insert ">"))))
 
-;; (defcmd cpp-mode:insert-greater-or-shift ()
-;;   "insert > or >> for easy."
-;;   (if (and (featurep 'smartchr)
-;;     (not (in-string-p)))
-;;       (smartchr '(">" ">>"))
-;;     (self-insert-command)))
-
-;; (defcmd cpp-mode:insert-lesser-or-shift ()
-;;   "insert < or << for easy."
-;;   (if (and (featurep 'smartchr)
-;;     (not (in-string-p)))
-;;       (smartchr '("<" "<<"))
-;;     (self-insert-command)))
-
-
-;; (vim:imap (kbd ";") (smartchr '(";" ik:insert-eol)))))
+(defcmd cpp-mode:insert-lesser-or-shift ()
+  "insert < or << if not in string."
+  (cond ((in-string-p) (insert "<"))
+	((search-backward "<" nil t) (delete-char 1) (insert "<<"))
+	((search-backward "<<"  nil t) (delete-char 2) (insert "<"))
+	(t (insert "<"))))
