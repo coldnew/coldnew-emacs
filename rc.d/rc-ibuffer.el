@@ -21,6 +21,7 @@
 			   (name . "^\\*tramp")
 			   (name . "^\\*shell\\*$")
 			   (name . "^\\*compilation\\*$")
+			   (name . "^\\*CEDET Global\\*$")
 			   (name . "^\\*Buffer List\\*$")))
 	   ("Version Control" (or (mode . svn-status-mode)
 				  (mode . svn-log-edit-mode)

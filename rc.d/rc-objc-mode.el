@@ -64,31 +64,42 @@
 ;; Insert char smart
 (defcmd objc-mode:insert-equal ()
   "insert eaual with extra space."
-  (cond ((in-string-p) (insert "="))
-	((search-backward " = "  nil t) (delete-char 3) (insert " == "))
-	((search-backward " == " nil t) (delete-char 4) (insert " = "))
-	(t (insert " = "))))
+  (if (eq this-command real-last-command)
+      (cond ((in-string-p) (insert "="))
+	    ((search-backward " = "  nil t) (delete-char 3) (insert " == "))
+	    ((search-backward " == " nil t) (delete-char 4) (insert " = "))
+	    (t (insert " = ")))
+    (insert " = ")))
 
 (defcmd objc-mode:insert-pointer ()
   "insert . or -> if not in string."
-  (cond ((in-string-p) (insert "."))
-	((search-backward "->" nil t) (delete-char 2) (insert "."))
-	((search-backward "."  nil t) (delete-char 1) (insert "->"))
-	(t (insert "."))))
+  (if (eq this-command real-last-command)
+      (cond ((in-string-p) (insert "."))
+	    ((search-backward "->" nil t) (delete-char 2) (insert "."))
+	    ((search-backward "."  nil t) (delete-char 1) (insert "->"))
+	    (t (insert ".")))
+    (insert ".")))
 
 (defcmd objc-mode:insert-greater-or-shift ()
   "insert > or >> if not in string."
-  (cond ((in-string-p) (insert ">"))
-	((search-backward ">"   nil t) (delete-char 1) (insert ">>"))
-	((search-backward ">>"  nil t) (delete-char 2) (insert ">"))
-	(t (insert ">"))))
+  (if (eq this-command real-last-command)
+      (cond ((in-string-p) (insert ">"))
+	    ((search-backward ">"   nil t) (delete-char 1) (insert ">>"))
+	    ((search-backward ">>"  nil t) (delete-char 2) (insert ">"))
+	    (t (insert ">")))
+    (insert ">")))
 
 (defcmd objc-mode:insert-lesser-or-shift ()
   "insert < or << if not in string."
-  (cond ((in-string-p) (insert "<"))
-	((search-backward "<"   nil t) (delete-char 1) (insert "<<"))
-	((search-backward "<<"  nil t) (delete-char 2) (insert "<"))
-	(t (insert "<"))))
+  (if (eq this-command real-last-command)
+      (cond ((in-string-p) (insert "<"))
+	    ((search-backward "<"   nil t) (delete-char 1) (insert "<<"))
+	    ((search-backward "<<"  nil t) (delete-char 2) (insert "<"))
+	    (t (insert "<")))
+    (insert "<")))
+
+
+
 
 
 ;;;;;; Mac OSX special Setting
@@ -104,36 +115,37 @@
 		     "      end tell \r"
 		     "end tell \r"
 		     ))))
-  )
+
 
 ;;;; alian regexp
-;; M-x align twice
-;; make following :
-;;   NSTimer *timer =
-;;        [NSTimer timerWithTimeInterval:1.0
-;;                 target:self
-;;                 selector:@selector(callback:)
-;;                 userInfo:nil
-;;                 repeats:YES];
-;; look like :
-;;     NSTimer *timer =
-;;        [NSTimer timerWithTimeInterval:1.0
-;;                                target:self
-;;                              selector:@selector(callback:)
-;;                              userInfo:nil
-;;                               repeats:YES];
-;;
-(obj-c-colons
- (regexp . "^\\(\\s-*[^:]+\\):")
- (justify . t)
- (repeat . t)
- (modes obj-c-mode))
+  ;; M-x align twice
+  ;; make following :
+  ;;   NSTimer *timer =
+  ;;        [NSTimer timerWithTimeInterval:1.0
+  ;;                 target:self
+  ;;                 selector:@selector(callback:)
+  ;;                 userInfo:nil
+  ;;                 repeats:YES];
+  ;; look like :
+  ;;     NSTimer *timer =
+  ;;        [NSTimer timerWithTimeInterval:1.0
+  ;;                                target:self
+  ;;                              selector:@selector(callback:)
+  ;;                              userInfo:nil
+  ;;                               repeats:YES];
+  ;;
+  (obj-c-colons
+   (regexp . "^\\(\\s-*[^:]+\\):")
+   (justify . t)
+   (repeat . t)
+   (modes obj-c-mode))
 
-(add-to-list 'align-rules-list
-	     '(obj-c-colons
-	       (regexp . "^\\(\\s-*[^:]+\\):")
-	       (justify . t)
-	       (repeat . t)
-	       (modes obj-c-mode)))
+  (add-to-list 'align-rules-list
+	       '(obj-c-colons
+		 (regexp . "^\\(\\s-*[^:]+\\):")
+		 (justify . t)
+		 (repeat . t)
+		 (modes obj-c-mode)))
+  )
 
 ;;http://github.com/kurain/kurain-dotfiles/blob/162ba05b04e14ff232c54f23e0f96300a9215922/.emacs.d/conf/init-objc.el

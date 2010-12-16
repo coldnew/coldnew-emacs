@@ -20,7 +20,6 @@
   (require 'semantic/ia nil 'noerror)
   (require 'semactic/lex nil 'noerror)
 
-
   ;; Database
   (require 'semantic/db nil 'noerror)
   (require 'semantic/db-el nil 'noerror)
@@ -46,6 +45,9 @@
   (require 'semantic/bovine nil 'noerror)
   (require 'semantic/bovine/c nil 'noerror)
   (require 'semantic/bovine/gcc nil 'noerror)
+
+  (semantic-add-system-include "/usr/include" 'c-mode)
+  (semantic-add-system-include "/usr/include" 'cpp-mode)
   ;; Add Support for Qt4
   (setq qt4-base-dir "/usr/include/qt4")
   (semantic-add-system-include qt4-base-dir 'c++-mode)
