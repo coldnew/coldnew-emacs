@@ -40,5 +40,6 @@
 	  xcode-document-viewer
 	  paredit
 	  paredit-viper-compat
+	  magit
 	  ;;emacs-w3m
 	  )))
