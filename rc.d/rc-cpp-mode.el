@@ -48,14 +48,14 @@
 	     ))
 
 ;;;; Support for Qt4
-(cond
- (mac-p
-  (setq qt4-base-dir "/usr/include/qt4")
-  (semantic-add-system-include qt4-base-dir 'c++-mode)
-  (add-to-list 'auto-mode-alist (cons qt4-base-dir 'c++-mode))
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig.h"))
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-dist.h"))
-  (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))))
+;; (cond
+;;  (mac-p
+;;   (setq qt4-base-dir "/usr/include/qt4")
+;;   (semantic-add-system-include qt4-base-dir 'c++-mode)
+;;   (add-to-list 'auto-mode-alist (cons qt4-base-dir 'c++-mode))
+;;   (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig.h"))
+;;   (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-dist.h"))
+;;   (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))))
 
 ;;;; Auto-Mode
 (add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
