@@ -71,4 +71,4 @@
 ;;(require 'rc-package-manager)
 ;; BUG: where is the fucking symbol function?
 ;;(require 'rc-slime)
-(require 'magit)
+;;(require 'magit)
