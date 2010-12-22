@@ -65,6 +65,7 @@
 (require 'rc-ielm-mode)
 (require 'rc-find-file)
 (require 'rc-xrefactory)
+(require 'rc-ccmode-common)
 
 (require 'circuit-mode)
 

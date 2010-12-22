@@ -26,11 +26,6 @@
 	     (vim:local-imap (kbd "M-i") 'c-mode:insert-inc-or-if) ; insert "#include <>" or "if () {...}"
 	     (vim:local-imap (kbd "M-d") 'c-mode:insert-do-while)  ; insert "do {...} while()"
 	     (vim:local-imap (kbd "M-m") 'c-mode:insert-main-function) ; insert "int main () {...}"
-	     ;; Insert smart char
-	     (vim:local-imap (kbd "=")   'c-mode:insert-equal)
-	     (vim:local-imap (kbd ".")   'c-mode:insert-pointer)
-	     (vim:local-imap (kbd ">")   'c-mode:insert-greater-or-shift)
-	     (vim:local-imap (kbd "<")   'c-mode:insert-lesser-or-shift)
 	     ))
 
 ;;;; Hooks
@@ -38,6 +33,8 @@
 	  '(lambda ()
 	     ;; Use my define programming-common environment
 	     (programming-common-hook)
+	     ;; Use my define cc-mode common environment
+	     (cc-mode-common-hook)
 
 	     ;; Enable C-Eldoc
 	     (when (require 'c-eldoc nil 'noerror)
@@ -88,40 +85,3 @@ else add `if' and expand it."
     (if (equal current begin)
 	(insert "main"))
     (yas/expand)))
-
-;; Insert char smart
-(defcmd c-mode:insert-equal ()
-  "insert eaual with extra space."
-  (if (eq this-command real-last-command)
-      (cond ((in-string-p) (insert "="))
-	    ((search-backward " = "  nil t) (delete-char 3) (insert " == "))
-	    ((search-backward " == " nil t) (delete-char 4) (insert " = "))
-	    (t (insert " = ")))
-    (insert " = ")))
-
-(defcmd c-mode:insert-pointer ()
-  "insert . or -> if not in string."
-  (if (eq this-command real-last-command)
-      (cond ((in-string-p) (insert "."))
-	    ((search-backward "->" nil t) (delete-char 2) (insert "."))
-	    ((search-backward "."  nil t) (delete-char 1) (insert "->"))
-	    (t (insert ".")))
-    (insert ".")))
-
-(defcmd c-mode:insert-greater-or-shift ()
-  "insert > or >> if not in string."
-  (if (eq this-command real-last-command)
-      (cond ((in-string-p) (insert ">"))
-	    ((search-backward ">"   nil t) (delete-char 1) (insert ">>"))
-	    ((search-backward ">>"  nil t) (delete-char 2) (insert ">"))
-	    (t (insert ">")))
-    (insert ">")))
-
-(defcmd c-mode:insert-lesser-or-shift ()
-  "insert < or << if not in string."
-  (if (eq this-command real-last-command)
-      (cond ((in-string-p) (insert "<"))
-	    ((search-backward "<"   nil t) (delete-char 1) (insert "<<"))
-	    ((search-backward "<<"  nil t) (delete-char 2) (insert "<"))
-	    (t (insert "<")))
-    (insert "<")))

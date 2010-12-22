@@ -30,20 +30,16 @@
 	     (vim:local-imap (kbd "M-i") 'cpp-mode:insert-inc-or-if)
 	     (vim:local-imap (kbd "M-d") 'cpp-mode:insert-do-while)
 	     (vim:local-imap (kbd "M-m") 'cpp-mode:insert-main-function)
-	     ;; Insert smart char
-	     (vim:local-imap (kbd "=")   'cpp-mode:insert-equal)
-	     (vim:local-imap (kbd ".")   'cpp-mode:insert-pointer)
-	     (vim:local-imap (kbd ">")   'cpp-mode:insert-greater-or-shift)
-	     (vim:local-imap (kbd "<")   'cpp-mode:insert-lesser-or-shift)
 
 	     ))
 
 ;;;; Hooks
 (add-hook 'c++-mode-hook
 	  '(lambda ()
-	     ;;
-	     ;; hook for cpp-mode
-	     (programming-common-hook)	; programming common hook
+	     ;; Use my define programming-common environment
+	     (programming-common-hook)
+	     ;; Use my define cc-mode common environment
+	     (cc-mode-common-hook)
 
 	     ))
 
@@ -92,40 +88,3 @@ else add `if' and expand it."
     (if (equal current begin)
 	(insert "main"))
     (yas/expand)))
-
-;; Insert char smart
-(defcmd cpp-mode:insert-equal ()
-  "insert eaual with extra space."
-  (if (eq this-command real-last-command)
-      (cond ((in-string-p) (insert "="))
-	    ((search-backward " = "  nil t) (delete-char 3) (insert " == "))
-	    ((search-backward " == " nil t) (delete-char 4) (insert " = "))
-	    (t (insert " = ")))
-    (insert " = ")))
-
-(defcmd cpp-mode:insert-pointer ()
-  "insert . or -> if not in string."
-  (if (eq this-command real-last-command)
-      (cond ((in-string-p) (insert "."))
-	    ((search-backward "->" nil t) (delete-char 2) (insert "."))
-	    ((search-backward "."  nil t) (delete-char 1) (insert "->"))
-	    (t (insert ".")))
-    (insert ".")))
-
-(defcmd cpp-mode:insert-greater-or-shift ()
-  "insert > or >> if not in string."
-  (if (eq this-command real-last-command)
-      (cond ((in-string-p) (insert ">"))
-	    ((search-backward ">"   nil t) (delete-char 1) (insert ">>"))
-	    ((search-backward ">>"  nil t) (delete-char 2) (insert ">"))
-	    (t (insert ">")))
-    (insert ">")))
-
-(defcmd cpp-mode:insert-lesser-or-shift ()
-  "insert < or << if not in string."
-  (if (eq this-command real-last-command)
-      (cond ((in-string-p) (insert "<"))
-	    ((search-backward "<"   nil t) (delete-char 1) (insert "<<"))
-	    ((search-backward "<<"  nil t) (delete-char 2) (insert "<"))
-	    (t (insert "<")))
-    (insert "<")))
