@@ -1,0 +1,857 @@
+.\" Copyright (c) 1997-2007 Marian Vittek, Bratislava.
+.TH XREF 1 \" -*- nroff -*-
+.SH NAME
+xref \- A cross referencing tool for C, C++ and Java.
+.SH SYNOPSIS
+.hy 0
+.na
+.TP
+.B xref
+.RB "[\|" "options"\&\|]
+.I infile 
+.RB "[\|" "\... infile"\&\|]
+.ad b
+.hy 1
+.SH TYPICAL INVOCATION FORMS
+.TP
+.B xref
+.I -create -p 
+<project>
+.TP
+.B xref
+.I -update -p 
+<project>
+.TP
+.B xref
+.I -smartHtml -p 
+<project>
+.TP
+.B xref
+.I -html -p 
+<project>
+.TP
+.B xref
+.I -html -recipe
+<recipe_file>
+.TP
+.B xref 
+.I -html
+<srcdir>
+.SH DESCRIPTION
+Xref is a C, C++ and Java cross-referencing tool. 
+It parses input files noting all symbol's
+definitions and usages. If not invoked with the
+.I -html
+its output is a list of symbols, together 
+with positions of declarations, definition and all usages.
+Output is written to the file specified by the 
+.I -refs
+option. Xref's cross references are destinated to be read by
+.I xref
+itself or by on-line editing macros. Programming language in which an 
+input file is written is inferred
+from file suffix as follows: .java for a Java language file, .y 
+for a YACC (and C) input file, .jar for a Java archive file, .cc and .cpp
+for C++ and finally
+all other suffixes are interpreted as C input files.
+
+When invoked with the 
+.I -html
+option xref  does not produce the cross reference file. Instead it
+converts input files into a HTML format browsable by standard Internet
+browsers. In those files each symbol is linked to its definition.
+Each definition is linked to a
+list of all symbol usages. 
+HTML files are written in directory hierarchy 
+specified by the 
+.I -htmlroot
+option.
+
+.SH WILD CHARACTERS 
+
+Following wild characters can be used when specifying input files: '*'
+expands to any (possibly empty) string; '?' expands to any single
+character and '[...]' pair expands to one of enclosed
+characters. Ranges of characters can be included between [ and ], so
+for example [a-z] matches any lower case letter, [0-9] matches any
+digit, as it is usual in standard shell expressions. If the first
+character following the [ is a ^ then the sense of expansion is
+inversed, for example [^0-9] expands to any non-digit
+character. Options -I, -classpath, -sourcepath and -javadocpath also
+accept wild characters. Be carefull when using wild characters in those options
+as they can considerably slow down the task.
+
+.SH NOTE
+Xref accepts many options, however except the
+.I -p
+,
+.I -create
+,
+.I -update
+and
+.I -html
+options, it is not recommended to write them directly on the command line. 
+The standard way of passing options to xref is configuration file named
+.I .xrefrc
+placed in user's home directory. Options stored in the ${HOME}/.xrefrc 
+file are read at each xref invocation. Storing command line options into 
+this file is the only way how you can pass project depending
+options to xref when invoked from Emacs.
+
+Order of options on command line is important. Options are processed in order
+in which they are written.
+
+.SH OPTIONS
+Here is the table of command options accepted by xref.
+
+.TP
+.B \-p project
+At the beginning of the execution, read and process
+options from the section 
+.I project
+of the 
+.I .xrefrc
+configuration file. This option is used to abstract from concrete
+options and file names when using xref from command line and from several
+IDEs.
+For more info, see the .xrefrc file documentation.
+
+.TP
+.B \-prune paths
+When recursively searching for input files do not enter into directories in paths. Paths
+can be either a simple name, an absolute path, or a ':' (';' under MS-Windows)
+separated list of both. For example -prune CVS:/project/backup will forbids scanning of
+the directory /project/backup as well as all directories named CVS. Usual wildchars can be used
+within paths.
+
+.TP
+.B \-r \-no\-r
+Those options control whether input directories are scanned
+recursively for input files or not. The default is -r, i.e. recursive scan.
+
+.TP
+.B \-encoding=<type>
+This option specifies international encoding of input files. Available 
+values for <type> 
+are 'default', 'european', 'euc', 'sjis', 'utf', 'utf-8', 'utf-16', 'utf-16le' 
+and 'utf-16be'. The 'default' value results in standard ASCII (and 'utf-8') 
+characters. If your files contain, for example, 8-bit european characters, then you 
+should include -encoding=european into your project setting.
+
+.TP
+.B "\-noconversion \-crconversion \-crlfconversion"
+Options controling end of line character conversions. By default xref automatically 
+determines which character sequence should be considered as end-of-line. Those
+options force xref to consider respectively linefeed (-noconversion), return (-crconversion),
+or return followed by linefeed (-crlfconversion) as beginning of next line. Those
+cases corresponds respectively to Unix, Mac OS and Windows systems. 
+
+.TP
+.B \-I dir
+Add the directory
+.I dir
+to the end of list of
+directories inspected when looking for an include file. 
+If specified more than one `\|\c
+.B \-I\c
+\&\|' option,
+the directories are scanned in left-to-right order. If the directory is specified
+using relative path, it is considered relative to the currently
+parsed file directory.
+
+.TP
+.BI "\-D" "name"\c
+\&
+Predefine \c
+.I name\c
+\& as a macro, with definition `\|\c
+.B 1\c
+\&\|'.
+
+.TP
+.BI "\-D" "name" = definition
+\&
+Predefine \c
+.I name\c
+\& as a macro, with definition \c
+.I definition\c
+\&.
+
+.TP
+.B \-undefineall
+This option removes all default macro definitions and all directories from 
+include directory list (including the directory /usr/include). 
+
+.TP
+.B \-nostdinc \-resetIncludeDirs
+Those two options remove all default directories from include directory list (including
+the directory /usr/include). Both options are equivalent, the -resetIncludeDirs is obsolete.
+
+
+.TP 
+.B \-nostdinc++ 
+This options removes all C++ specific default
+directories from include directory list. Standard C directories are
+kept.
+
+.TP
+.B \-H
+Print information about files included by the preprocessor.
+
+.TP
+.B \-E
+Do preprocessing only and print preprocessor output to stdout. The output contains
+informations about included files and defined macros.
+
+.TP
+.B \-acceptlinedirectives
+This option causes that the cross referencing tool will accept #line preprocessor
+directives. I.e. symbol references occuring after the #line directive will point
+to the place indicated by the directive, not to the actual place from where
+the symbol was readed. However, with this option references may not be correctly 
+updated when only referring or referred file are modified..
+
+.TP
+.B \-importtranslate <string> <file>
+This option serves to handle Microsoft preprocesor extension #import. When a preprocessor
+directive #import "string" is encountered in the source code, it is executed as if
+it was an #include "file" option.
+
+.TP
+.B \-cacheincludes
+This option causes that xref task will keep readed include files in memory
+and reuse them when processing next files.
+This can improve time performance when many source files are using
+common header files. Especially if those header files are read
+over network or from a slow drive. It will increase space requirements, 
+however.
+
+.TP
+.B \-tmpdir <dir>
+This option causes that xref will use 
+.B dir
+for storing preprocessor temporary files. If you feel that xref 
+is too slow on your system, you can use, for example, a directory on a RAM
+disk for storing temporary files.  Note that you will need around 16MB 
+of free space for storing temporary files.
+If the option is not present, the
+directory pointed by the environment variable TEMP (or the directory
+/tmp) is used for storing temporary files.
+
+
+.TP
+.B \-jdkclasspath paths
+This option defines path to standard runtime library (rt.jar) of your Java
+installation. If you are using JDK from Sun Microsystems, then
+xref task should be able to infer this path from PATH and JAVA_HOME environment
+variables. Otherwise you will need to specify it explicitly using
+-jdkclasspath option.
+The syntax of paths is the same as for the -classpath option.
+For example you can use the '-jdkclasspath /usr/local/jdk1.2.2/jre/lib/rt.jar' 
+settting for most Java 1.2 installations.
+
+.TP
+.B \-classpath paths
+This option specifies the classpath used for finding Java .class files.
+This option overrides the value of the environment variable CLASSPATH.
+See also the '-jdkclasspath' and '-sourcepath' option.
+
+.TP
+.B \-sourcepath paths
+This option specifies paths where sources of Java packages and classes
+are searched. This option overrides the value of the environment 
+variable SOURCEPATH.
+If not present the current classpath is used as default. The 'sourcepath'
+value is used for finding source files in the
+same way as 'classpath' is used for finding .class compiled files.
+When loading a class having both source and class available then the
+time of last modification of both files is examined and the class is
+loaded from the newer file. 
+
+.TP
+.B \-javadocpath=<path>
+Specifies paths where Javadoc documentation is stored in 
+local file system. Several paths can be specified, 
+the syntax is the same as for classpath value. When looking for a 
+javadoc documentation, xref will first search files on paths
+specified by -javadocpath, if not found and the package documentation
+is available (-javadocavailable option) the URL specified 
+by -javadocurl is taken.
+See also -javadocurl, -javadocavailable and -htmlgenjavadoclink options.
+
+.TP
+.B \-packages
+This option allows to enter package names instead of input file
+names on command line.
+
+.TP
+.B \-source <version>
+Specifies version of Java in which sources are written. Currently available values 
+are: "1.3", "1.4" and "auto". Version "auto" will cause that xref determines
+Java version automatically from Java runtime library. Version "1.4" means 
+that 'assert' command is allowed and 'assert' string
+is considered as keyword, so you can't have any method or variable of this
+name. Default value is "1.3".
+
+.TP
+.B \-java1.4
+This option is obsolete, use -source instead.
+With this option sources are considered to be written in Java version 1.4.
+
+
+.TP
+.B \-realpath
+Each file is considered by its real location, i.e. all symbolic links 
+are resolved. This option influence all usages of files including
+tag creation and project detection. Hence, it may provoke unwanted effects.
+
+.TP
+.B \-refs file
+This option specifies the file where the cross-references
+are stored. If the 
+.I -refnum=n
+option is present then the 
+.I file
+indicates the directory where cross-reference
+files are stored.
+
+.TP
+.B "\-refnum=<number>"
+This option specifies how many cross reference files will be generated.
+When 
+.I <number>
+== 1, the name specified by the '-refs' option is directly
+the name of the cross reference file. 
+When 
+.I <number>
+> 1 then the name specified by the '-refs' option is 
+interpreted as directory where cross reference files are stored.
+You should specify the 
+.I <number>
+proportionally to the size
+of your project. 
+Do not forget to delete the old cross-reference file if
+you change the -refnum from 1 to a bigger value.
+
+.TP
+.B "\-refalphahash"
+Split references into 28 files depending on the first letter of the
+symbol. This option is useful when generating HTML form, because
+it makes easy to find cross references for given symbol name.
+This option excludes using of the -refnum option. 
+
+.TP
+.B "\-refalpha2hash"
+Split references into 28*28 files depending on the first two letters of the
+symbol. This option is useful when generating HTML form, because
+it makes easy to find cross references for given symbol name.
+This option excludes using of the -refnum option. 
+
+.TP
+.B "\-exactpositionresolve"
+This option controls how symbols which are local to a compilation
+unit, but usually used in several files, are linked together. 
+This concerns C/C++ symbols like macros, structures and their records, etc.
+Such symbols have no link names passed to linker (like global functions have).
+This creates a problem how 'xref' can link together (for example) structures
+of the same name used in different compilation units.
+If the -exactpositionresolve option is present then such symbols
+are considered to be equals if their definitions come from the
+same header file and they are defined at the same position in the 
+file (in other words if this is
+a single definition in the source code). Otherwise two symbols
+are linked together when they have the same name.
+The '-exactpositionresolve' is very powerful feature
+because it allows perfect resolution of browsed symbol and allows you
+to safely rename one of two symbols if a name conflict occurs.
+However this option also
+causes that you will need to update cross reference file after
+each modification of a header file (as the cross-reference file stores
+information about position of the macro definition).
+Updating may be too annoying in normal use when you often edit header files.
+In general, this option is recommended when browsing
+source code which is not under active development.
+
+
+.TP
+.B \-storelocalxrefs \-no-storelocalxrefs 
+This option controls whether references of local symbols (local variables, 
+parameters, etc.) are stored in cross reference file or not. The default 
+is \-storelocalxrefs, i.e. store local references.
+Local references
+take additional disk space (especially in Java programs) making update slower 
+and are not needed for usual
+browsing as they can be computed during symbol resolution. However, they are useful
+if you do not modify your files very often or if you have long files and online
+parsing takes too much time. They are also useful during resolution of symbols 
+within header files. 
+
+
+.TP
+.B -noincluderefresh
+This is a particular option meaningful only when xref task is used
+from Emacs. It
+causes that xref task does not update
+include references when used by an Emacs macro. This avoids
+memory overflow for huge 
+projects or for
+projects including huge header files (for example when including
+Microsoft windows API headers).
+
+
+.TP
+.B "\-recipe <file>"
+Add a recipe file to the list of recipes describing the project. 
+Usualy, a recipe file is an output of 'xref-recipe-build' command and
+describes a single project build. Several recipe files can be used for one project
+using several options -recipe.
+
+.TP
+.B "\-create"
+Create cross-reference file by parsing all project files.
+
+
+.TP
+.B "\-update"
+This option represents standard way of how to keep cross-reference file
+up to date. It causes that
+modification time of all input files as well as those listed 
+in the existing cross-reference file are checked and only those
+having newer modification time than existing cross-reference file
+are scheduled to be processed. Also all files which includes (by
+Cpp pre-processor) those files are scheduled to be processed.
+
+
+.TP
+.B "\-fastupdate"
+The same as -update with the difference that only modified files
+are scheduled to be processed. Unless you 
+are using also '-exactpositionresolve' option this is 
+enough for most references to be correctly updated.
+
+.TP
+.B "\-fupdate"
+Full update, force update of input files. This option is like the 
+.I -update
+option with the difference that input files entered on command
+line are always reparsed (not depending on their modification time).
+
+.TP
+.B "\-set <name> <value>"
+The xref task provides a simple environment management. The -set option
+associates the string <name> to the string <value>. The value can be 
+then accessed by enclosing the name in ${ }.
+
+If an option contains a name of a previously defined variable enclosed in ${ and }, then
+the name (together with encolsing ${}) is replaced by the 
+corresponding value. Variables can be hence used to abbreviate
+options or to predefine repeating parts of options. 
+Following predefined variables can be used in order to introduce problematic
+characters into options: 'nl' for newline; 'pc' for percent; 'dl' for dollar; 'sp' for space 
+and 'dq' for double-quotes. Also all environment variables taken from
+operating system (like PATH, HOME, ...) are 'inherited' and can be used
+when enclosed in ${ }. For example ${PATH} string will be replaced 
+by the value of the environment variable PATH.
+
+Another usage of -set option is to define project depending
+values used by Emacs macros. Emacs can retrieve value of an
+environmnet variable by sending '-get <name>' request to xref task.
+Emacs is currently using following variables to get project depending
+settings: "compilefile", "compiledir", "compileproject", "run1", "run2", ... , "run5", "runthis"
+and "run". Those variables are used by 'Emacs IDE' macros to retrieve commands
+for compilation and running of project program.
+For example an option: -set run "echo will run now ${nl}a.out"
+will define run command to print 'will run now' message and then execute 
+a.out command. When a command string is enclosed in quotas it 
+can contain newline characters to separate sequence of commands.
+For more info about compile and run commands see on-line Emacs help of 
+the corresponding Xrefactory macros.
+
+.TP
+.B "\-brief"
+The output of cross referencing will be in compact form, still readable by
+.I xref
+but rather difficult for human reader. This option is default now.
+
+.TP
+.B "\-nobrief"
+The output of cross referencing will contain "comment" records
+for human readers.
+
+.TP
+.B "\-no_enum"
+Don't cross reference enumerators.
+
+.TP
+.B "\-no_mac"
+Don't cross reference macros.
+
+.TP
+.B "\-no_type"
+Don't cross-reference user defined types.
+
+.TP
+.B "\-no_str"
+Don't cross reference structure records.
+
+.TP
+.B "\-no_local"
+Don't cross reference function arguments and local variables.
+
+.TP
+.B "\-no_cfrefs"
+Don't get cross references from class files. This can decrease the size of
+your Tag file. However, because informations about class hierarchy are taken 
+mainly from class files this option may causes that showed class hierarchies
+will be incomplete.
+
+.TP
+.B \-html
+Causes xref to not produce the cross reference file. Instead 
+it proceeds input files and
+creates browsable files in HTML format.
+
+.TP
+.B \-smartHtml
+Causes xref to not produce the cross reference file. Instead it reads
+a previously generated cross reference file, then 
+it creates browsable files in the HTML format.
+
+.TP
+.B \-htmlroot=dir 
+Write output HTML files into directory hierarchy starting by the
+.I dir.
+This option is meaningful only in combination with 
+.I -html
+or
+.I -smartHtml
+option.
+
+.TP
+.B \-d dir
+Equivalent to -htmlroot=dir.
+
+.TP
+.B \-htmltab=number
+When generating HTML files, set the tabulator to
+.I number.
+
+.TP
+.B \-htmllinenums \-no\-htmllinenums
+When converting source files into HTML format generate (or not)
+line numbers before source code. The default value is \-htmllinenums,
+i.e. generate the line numbers.
+
+.TP
+.B \-htmlnocolors
+When converting source files into HTML format do not generate 
+color highlighting of keywords, commentaries and preprocessor
+directives.
+
+.TP
+.B \-htmlgxlist \-no\-htmlgxlist
+When converting source files into HTML format generate lists of all 
+usages for each 
+.I global
+symbol or not. The default is \-htmlgxlist, i.e. generate the lists.
+
+.TP
+.B \-htmllxlist  \-no\-htmllxlist
+When converting source files into HTML format generate lists of all 
+usages for each 
+.I local
+symbol. The default is \-htmllxlist, i.e. generate the lists.
+
+.TP
+.B \-htmldirectx \-no-\-htmldirectx 
+When converting source files into HTML format, link (or not) the first character
+of a symbol directly to its cross references. The default is \-htmldirectx.
+
+.TP
+.B \-htmlfunseparate
+Causes that HTML files will contain horizontal bar separating function
+definitions.
+
+.TP
+.B \-htmlcutpath=<path>
+This option causes that the output files from the 
+.I path
+directory are not stored with full path name under -htmlroot directory. 
+Rather the 
+.I path 
+is cut from the full file name. Xref accepts several '-htmlcutpath' 
+options. On MS-DOS (QNX) system, the path should be an absolute path
+but without drive (node) specification.
+
+.TP
+.B \-htmlcutcwd
+equals '-htmlcutpath=${CWD}' cutting current working directory path
+from html paths.
+
+.TP
+.B \-htmlcutsourcepaths
+cut also all Java source paths defined by SOURCEPATH environment variable
+or by -sourcepath option.
+
+.TP
+.B \-htmlcutsuffix
+Cut language suffix from generated html file names. With this option xref
+will generate files Class.html instead of Class.java.html (or file.html
+instead of file.c.html for C language).
+
+.TP
+.B \-htmllinenumlabel=<label>
+Set the label generated before line number in html documents. For example
+-htmllinenumlabel=line will generate line<n> labels compatible with
+links generated by javadoc version 1.4.
+
+.TP
+.B \-htmllinkcolor=<color>
+This option specifies the color in which links of the HTML document will
+appear. For example '-htmllinkcolor=black' or '-htmllinkcolor=#000000'
+causes that links will be black.
+
+.TP
+.B \-htmllinenumcolor=<color>
+This option specifies the color of line numbers for generated HTML.
+For example '-htmllinenumcolor=black' or '-htmllinenumcolor=#000000'
+causes that line numbers will always be black. This option is meaningful
+only in combination with -htmllinenums option.
+
+.TP
+.B \-htmlnounderline
+This option causes that links in the HTML document will not be underlined
+(if your browser support styles).
+
+.TP
+.B \-htmlColorTabHead=<color> \-htmlColorAmbigTabBody=<color> \-htmlColorRefTabBody=<color> \-htmlColorClassTab=<color>
+Set colors for backgrounds for respective parts of cross reference tables. For example, the 
+option -htmlColorClassTab=ffffff will make the background of class subtrees white.
+
+.TP
+.B \-htmlgenjavadoclinks
+When generating html generate links to Javadoc documentation for symbols
+without definition reference. 
+
+.TP
+.B \-javadocurl=<url> \-htmljavadocpath=<url>
+Specifies URL where existing non-local Javadoc documentation is stored. 
+Both options are equivalent, the -htmljavadocpath is obsolete.
+The default
+is "-javadocurl=http://java.sun.com/j2se/1.3/docs/api".
+It is supposed to contain Javadoc documentation of packages 
+for which you do not have source code nor local Javadoc
+documentation, but the documentation is available on the Internet.
+See also -javadocpath, -javadocavailable and -htmlgenjavadoclink options.
+
+.TP
+.B \-javadocavailable=<packs> \-htmljavadocavailable=<packs>
+Both options are equivalent, the -htmljavadocavailable is obsolete.
+The option specifies packages having Javadoc documentation placed
+on the URL specified by the -javadocurl option.
+The <packs> string is a list of packages separated by ':' sign. For example
+correct setting for standard jdk is: "-javadocavailable=java.applet:java.awt:java.beans:java.io:java.lang:java.math:java.net:java.rmi:java.security:java.sql:java.text:java.util:javax.accessibility:javax.swing:org.omg.CORBA:org.omg.CosNaming".
+See also -javadocpath, -javadocurl and -htmlgenjavadoclink options.
+
+.TP
+.B \-htmlzip=<command>
+This option causes that the command
+.I command
+is called after having created any HTML file. The character '!' included 
+in the 
+.I command
+has special meaning and is replaced by the name of the last generated
+HTML file. For example 
+.I """-htmlzip=gzip -f !"""
+option causes that all
+generated HTML files will be zipped. See also '-htmllinksuffix' option.
+
+.TP
+.B \-htmllinksuffix=<suf>
+This option causes that whenever a hypertext link to a file xxx should be 
+generated then in reality a link to the file xxx.suf is generated. This
+option is meaningful mainly with the '-htmlzip' option. For example
+the combination 
+.I """-htmlzip=gzip -f !""" -htmllinksuffix=.gz 
+causes
+that all generated HTML files will be compressed and the links are
+correctly generated to those compressed files.
+
+.TP
+.B \-optinclude file (or \-stdop file)
+This option causes that the file `\|\c
+.I file\c
+\&\|' is read and scanned for further options. When used in an .xrefrc file
+this options includes options defined in
+.I file.
+However, if the included file is modified while xref task is running
+then xref is unable to automatically reload new options.
+If you use -optinclude
+(-stdop) option, and you modify included file, you will need to kill
+and restart xref server task in order that changes take effect.
+
+.TP
+.B \-no_stdop
+This option forbids
+the search of standard option files '.xrefrc' and 'Xref.opt'.
+
+.TP
+.B -mf<n>
+This option sets the memory factor for cross-references.
+In the current version this
+option controls only the size of memory chunks allocated. It defines
+how many additional megabytes of memory are allocates when an additional 
+memory for cross references is needed. The default value is around 32.
+
+.TP
+.B "\-pass<n>"
+Strictly speaking this is not xref option. It is used in the .xrefrc
+configuration file to describe how to process source files in multiple passes.
+Multiple passes are necessary if you need to process your C or C++ sources
+for several initial macro settings. For more informations about this option
+read the 'xrefrc' manual page.
+
+.TP
+.B "\-keep_old"
+This option is obsolete. It is kept for compatibility reasons only.
+It is recommended to use multiple passes options of the '.xrefrc'
+file instead. The '-keep_old' option causes that
+the output of cross-referencing is added to 
+existing references from the file specified by the 
+.I -refs
+option. All old references of the reference file are kept.
+
+.TP
+.B "\-no_cpp_comment"
+When scanning input files, do not consider the string `\|\c
+.I //\c
+\&\|' as beginning of a comment ended by end of line.
+
+.TP
+.B "\-allowprogramcomments"
+When scanning input files, do not consider strings //& and /*&
+as beginning of comments. Those lexems are ignored together with
+the lexem &*/ ending a program commentary.
+This is used to temporarily 
+comment out pieces of code in your sources. Pieces enclosed
+between /*& and &*/ are considered as a commentary by the compiler, but
+xref will parse them and include them into cross references.
+
+.TP
+.B "\-csuffixes=<suffixes>"
+This option defines list of suffixes (separated by ':' character under Unix 
+and ';' under MS-Windows)
+for C source files. Files with those suffixes will be inserted
+into Tag file and parsed with Xrefactory's C parser. Suffixes should not start by the '.'
+dot character which is considered as suffix separator automatically. For example
+suffixes "c:tc" mean that files ending by ".c" or ".tc" are considered as C input
+files.
+
+.TP
+.B "\-cppsuffixes=<suffixes>"
+This option defines list of suffixes (separated by ':' character under Unix 
+and ';' under MS-Windows)
+for C++ source files. Files with those suffixes will be inserted
+into Tag file and parsed with Xrefactory's C++ parser. Suffixes should not start by the '.'
+dot character which is considered as suffix separator automatically. For example
+suffixes "c:cpp" mean that files ending by ".c" or ".cpp" are considered as C++ input
+files.
+
+.TP
+.B "\-javasuffixes=<suffixes>"
+This option defines list of suffixes (separated by ':' character under Unix 
+and ';' under MS-Windows)
+for Java source files. Files with those suffixes will be inserted
+into Tag file and parsed with Xrefactory's Java parser. Suffixes should not start by the '.'
+dot character which is consider as suffix separator automatically. 
+For example, the default value under MS-Windows is -javasuffixes=java;JAV.
+
+.TP
+.B "\-filescasesensitive" "\-filescaseunsensitive"
+This option controls whether xref is considering two file names differing only
+in cases as the same file or not. By default file names are considered as case
+sensitive. Setting names to be case unsensitive may avoid confusion
+in C #include directives under MS-Windows system.
+
+.TP
+.B "\-errors"
+Report all kinds of error messages independently on the gravity of the error.
+
+.TP
+.B "\-maxerrors=<n>"
+Report up to n error messages per file.
+
+.TP
+.B "\-ignoreopt<option>" "\-ignoreopt2<option>" "\-ignoreoptprefix<prefix>" 
+The option -ignoreopt<opt> causes that any following occurence of the 
+option <opt> on the command line will be ignored.
+I.e. it will take no effect and no error will be reported if no such option exists.
+Similarly -ignoreopt2<opt> causes that option <opt> will be ignored as well as
+any option following it. The option \-ignoreoptprefix<prefix> will cause that any
+further option starting by the <prefix> will be ignored. Those options are usualy used
+when creating HTML for some very complex projects, where file indexing is done directly
+from makefiles. In such case xref is called instead of the standard compiler and compiler
+specific options like '-c', '-o' are ignored.
+
+.TP
+.B "\-ignoreunknownopt"
+This option causes that any further unknown option is ignored and does not produce
+an error message.
+
+.TP
+.B -ignorecompileropt
+This is an abreviation for the following suite of options:
+-ignoreunknownopt -ignoreopt2-o -ignoreopt2-Xlinker -ignoreopt2-u -ignoreopt2-b -ignoreopt2-V 
+-ignoreopt2-MF -ignoreopt2-MT -ignoreopt2-undefined. This option is used in recipe files to
+ignore irrelevant compiler options.
+
+.TP  .B  -rcwd  <path>  
+This  option causes  that  relative  paths  in
+preprocessor   include   directives   are   considered   relative   to
+<path>. This option is used mainly in recipe files and it also trigger
+all other default recipe options like -ignorecompileropt, etc.
+
+.TP
+.B "\-platform-<platform>"
+Specifies whether platform specific macros and optionally standard include directories
+are preentered into preprocessor. Those predefined macros are required for parsing
+standard system headers. Available values for <platform> are: x86, ppc, sparc, freebsd, 
+linux, macosx, netbsd, openbsd, solaris and win32. If you use several -plaftorm options
+then predefined macros for all specified platforms are included. Usually you will need
+two options to fully specify your platform, for example -platform-x86 -platform-linux specifies
+a Linux system running on a Intel x86 processor. 
+
+.TP
+.B "\-cpp<option>"
+The string following -cpp prefix is sent directly to the C/C++ frontend. Xref does not analyze
+those options, it shifts them to the frontend. Using this generic
+option you can tune performances of the C/C++ frontend.
+This is supposed to be used mainly to set up C/C++ language dialects. In this way options
+-cpp--old_c, -cpp--c, -cpp--c99, -cpp--gcc, -cpp--sun and -cpp--microsoft
+set respectively K&R variant of C, C89, C99, GNU C/C++, SUN CC and Microsoft
+variants of C/C++. Supplementary options, for example -cpp--microsoft_version 1200 says to front-end
+to imitate MSVC++ 6 features, -cpp--gnu_version 30200 says to front-end
+to imitate GCC 3.2 features. Options -cpp-tnone, -cpp-tused and -cpp-tall set the front-end
+template instantiation policy by respectively preventing it from automatic instantiation of
+templates, making it to instantiate only used template entities, or instantiate all entities.
+The option -cpp--ignore_std makes the front-end to ignore the 'std' namespace making it equal
+to default namespace.
+Options -cpp--bool, -cpp_no_bool, -cpp--wchar_t_keyword and -cpp--no_wchar_t_keyword determine whether to consider or not bool and wchar_t as keywords.
+For the complete documentation about C/C++ front-end command line options read the
+edgoptions.ps file. This file contains excerpt from the frontend internal documentation. 
+Be aware that not all options documented in edgoptions.ps are operational. Especially
+all preprocessor related options are irrelevant as xref is using its own preprocessor.
+
+.TP
+.B -mt -mtd -md -mDd -pthread -pthreads -mthreads -openmp
+Those compiler compatibility options indicate that the input file should be
+considered as a multi-thread code. In practice it means that macros _MT, __MT__,
+_REENTRANT or _PTHREADS are predefined depending on the compiler
+which is imitated by xref.
+
+
+
+.SH "MORE INFO"
+.RB http://www.xref-tech.com
+.SH "SEE ALSO"
+.RB xrefrc(5),

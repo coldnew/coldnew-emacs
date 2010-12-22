@@ -47,7 +47,10 @@
 (require 'rc-common-hook)
 (require 'rc-complete)
 (require 'rc-cpp-mode)
-(require 'rc-ecb)
+
+(cond (emacs23-p
+       (require 'rc-ecb)))
+
 (require 'rc-emacs-lisp-mode)
 (require 'rc-fonts)
 (require 'rc-locale)
@@ -61,7 +64,7 @@
 (require 'rc-display)
 (require 'rc-ielm-mode)
 (require 'rc-find-file)
-
+(require 'rc-xrefactory)
 
 (require 'circuit-mode)
 

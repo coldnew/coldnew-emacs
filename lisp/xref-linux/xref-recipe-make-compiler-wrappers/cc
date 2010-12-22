@@ -1,0 +1,14 @@
+#!/bin/sh
+ccpars=""
+xrefpars="-cwd `pwd` ${XREFACTORY_FLAGS}"
+while test $# -gt 0
+do
+  ccpar=`printf %s\\\\n "$1" | sed -e 's/ /\\\\ /g' -e 's/\"/\\\\\"/g'`
+  ccpars="${ccpars} ${ccpar}"
+  xrefpar=`printf %s\\\\n "$1" | sed -e 's/ /${sp}/g' -e 's/\"/${dq}/g'`
+  xrefpars="${xrefpars} ${xrefpar}"
+  shift
+done
+printf "%s\n" "${xrefpars}" >> ${XREFACTORY_RECIPE_FILE}
+printf "end-of-options\n\n" >> ${XREFACTORY_RECIPE_FILE}
+printf "%s %s\n" "${XREFACTORY_WHICH_CC}" "${ccpars}" | sh

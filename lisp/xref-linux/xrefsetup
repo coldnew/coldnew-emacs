@@ -1,0 +1,360 @@
+#!/bin/sh
+PPWD=`pwd`
+
+#INSERT_RESET_PATH_HERE
+
+#do not change spelling of the following line, it is modified by sed!
+SYSTEM_INST=no
+
+NOXREF_EDITOR="__none__"
+XREF_EDITOR=${NOXREF_EDITOR}
+NODIR="__none__"
+SOURCEDIR=${NODIR}
+if test ${SYSTEM_INST} = "no"
+then
+	if test -f xref -a -f xrefsetup -a -d emacs
+	then
+		PATH=${PATH}:${PPWD}
+		export PATH
+	else
+		echo "This script can be invoked only when your current directory"
+		echo "is the Xrefactory binaries distribution directory named 'xref'."
+		echo "Please change the current directory to this directory and then "
+		echo "type 'sh ./xrefsetup'."
+		exit
+	fi
+fi
+#
+##############################################################################
+#                             get user's editor
+#
+xrefGetEditor() {
+while test ${XREF_EDITOR} = ${NOXREF_EDITOR}
+do
+	echo
+echo "************************************************************************"
+echo "This Xrefactory release is supporting the following editors:"
+echo "emacs xemacs"
+#echo "emacs xemacs jedit"
+# echo "emacs xemacs vedit3"
+echo "************************************************************************"
+	echo
+	echo -n "Input one of them which is close to the editor you are using: "
+	read eee
+	echo
+	if test X${eee} = "X"
+	then
+		XREF_EDITOR="__break__"
+	elif test ${eee} = "emacs" -o ${eee} = "emacs18" -o ${eee} = "emacs19" 
+	then
+		XREF_EDITOR=emacs
+		XREF_EDITORDIR=${eee}
+	elif test ${eee} = "xemacs"
+	then
+		XREF_EDITOR=xemacs
+		XREF_EDITORDIR=${eee}
+	elif test ${eee} = "jedit"
+	then
+		XREF_EDITOR=jedit
+		echo -n "Enter directory containing jedit.jar: "
+		read eee
+		while test X${eee}!=X -a ! -f ${eee}/jedit.jar
+		do
+			echo -n "${eee} does not contain jedit.jar. Try again: "
+			read eee
+		done
+		XREF_EDITORDIR=${eee}
+	else
+		echo
+		echo "sorry, editor" ${eee} "not yet implemented"
+	fi
+done
+if test ${XREF_EDITOR} = "__break__"
+then
+	XREF_EDITOR=${NOXREF_EDITOR}
+fi
+}
+#
+##############################################################################
+#                     detect xref installation directory
+#
+xrefGetInstallationPlace() {
+CPWD=`pwd`
+cd ${PPWD}
+if test -x xref
+then
+	XREF_INST="local"
+else
+	XREF_INST="system"
+fi
+cd ${CPWD}
+}
+#
+##############################################################################
+#######################            MAIN           ############################
+##############################################################################
+#
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo
+echo "---------------------- Xrefactory Setup Utility ----------------------"
+echo
+echo "If you are installing Xrefactory for the first time, it is recommended"
+echo "that you successively pass all points [1-3]."
+MAINLOOP="yes"
+while test ${MAINLOOP} = "yes"
+do
+echo
+echo
+echo
+echo "************************************************************************"
+echo "1.) Initialize Xrefactory."
+echo "2.) Check Xrefactory on small C exercise program."
+echo "3.) Check Xrefactory on small C++ exercise program."
+#echo "4.) Check Xrefactory on small Java exercise program."
+#echo "5.) Enter license string (binary distributions only)."
+echo "************************************************************************"
+echo
+echo -n "Choose action (0 to exit) [0-3]: "
+read aaa
+echo
+echo
+case ${aaa} in
+# #######################################################################
+# #######################################################################
+0)
+echo "Exiting."
+MAINLOOP="no"
+;;
+# #######################################################################
+# #######################################################################
+1)
+echo "Initializing Xrefactory."
+xrefGetInstallationPlace
+cd ${PPWD}
+#
+xrefGetEditor
+echo
+echo "In order to correctly set your environment, this script should modify"
+echo "your editors files."
+echo
+###########  first update editor files
+if test ${XREF_EDITOR} = "emacs" -o ${XREF_EDITOR} = "xemacs"
+then
+	echo
+	rm -f /tmp/xreftmp.tmp
+#	echo ";;Customization variables:" >> /tmp/xreftmp.tmp
+	echo "(defvar xref-current-project nil) ;; can be also \"my_project_name\"" >> /tmp/xreftmp.tmp
+	echo "(defvar xref-key-binding 'global) ;; can be also 'local or 'none" >> /tmp/xreftmp.tmp
+#	echo ";;" >> /tmp/xreftmp.tmp
+#	echo ";; Following two lines are required. Do not comment them out." >> /tmp/xreftmp.tmp
+	if test ${SYSTEM_INST} = "yes"
+	then
+		echo "(setq load-path (cons \"/usr/lib/${XREF_EDITOR}/site-lisp\" load-path))" >> /tmp/xreftmp.tmp
+	else
+		echo "(setq load-path (cons \"${PPWD}/${XREF_EDITOR}\" load-path))" >> /tmp/xreftmp.tmp
+	fi
+	echo "(setq exec-path (cons \"${PPWD}\" exec-path))" >> /tmp/xreftmp.tmp
+	echo "(load \"xrefactory\")" >> /tmp/xreftmp.tmp
+	EMACSRC=.emacs
+	if test ${XREF_EDITOR} = "xemacs"
+	then
+		if test -f ~/.xemacs/init.el
+		then
+			if test -f ~/.emacs
+			then
+				echo "-----------------------------------------------------------------"
+				echo "Your home directory contains both .emacs and .xemacs/init.el"
+				echo "files. Please enter the one which is active with your current"
+				echo "Xemacs installation."
+				echo "-----------------------------------------------------------------"
+				read EMACSRC
+				while test ! -f ~/${EMACSRC}
+				do
+					echo "The file ~/${EMACSRC} does not exist, please correct the name:"
+					read EMACSRC
+				done
+			else
+				EMACSRC=.xemacs/init.el
+			fi
+		fi
+	fi
+	echo
+	echo "In order to load Xrefactory into your ${XREF_EDITOR} environment"
+	echo "this script should append following lines to your ${EMACSRC} file: " 
+	echo "-----------------------------------------------------------------"
+	cat /tmp/xreftmp.tmp
+	echo "-----------------------------------------------------------------"
+	echo "Can I append this to your ~/${EMACSRC} file [y/n]?"
+	read aaa
+	if test ${aaa} = "y" -o ${aaa} = "Y"
+	then
+		echo "Making backup of ~/${EMACSRC} to ~/${EMACSRC}.xbk"
+		cp -i ${HOME}/${EMACSRC} ${HOME}/${EMACSRC}.xbk
+		if (fgrep ";; end of Xrefactory configuration part ;;" ${HOME}/${EMACSRC} > /dev/null) || (fgrep ";; end of Xref-Speller configuration part ;;" ${HOME}/${EMACSRC} > /dev/null)
+		then
+			echo
+			echo "Your ${EMACSRC} file contains an Xrefactory configuration part"
+			echo "from an older installation, replace it [y/n]?"
+			read aaa
+			if test ${aaa} = "y" -o ${aaa} = "Y"
+			then
+				cp -f ${HOME}/${EMACSRC} /tmp/xref.tmp
+				rm -f /tmp/xrefrep.sed
+				echo "/;; Xrefactory configuration part ;;/,/;; end of Xrefactory configuration part ;;/c\\" > /tmp/xrefrep.sed
+				echo ";; Xrefactory configuration part ;;\\" >> /tmp/xrefrep.sed
+#				echo ";; some Xrefactory defaults can be set here\\" >> /tmp/xrefrep.sed
+				sed -e "s/\$/\\\\/g"  /tmp/xreftmp.tmp >> /tmp/xrefrep.sed
+				echo ";; end of Xrefactory configuration part ;;\\" >> /tmp/xrefrep.sed
+				sed -f /tmp/xrefrep.sed /tmp/xref.tmp > ${HOME}/${EMACSRC}
+				rm -f /tmp/xref.tmp /tmp/xrefrep.sed
+				echo "Old Xrefactory part replaced."
+			else
+				echo "Old Xrefactory part kept!"
+			fi
+		else
+			echo ";; Xrefactory configuration part ;;" >> ${HOME}/${EMACSRC}
+			echo ";; some Xrefactory defaults can be set here" >> ${HOME}/${EMACSRC}
+			cat  /tmp/xreftmp.tmp >> ${HOME}/${EMACSRC}
+			echo ";; end of Xrefactory configuration part ;;" >> ${HOME}/${EMACSRC}
+			echo "(message \"xrefactory loaded\")" >> ${HOME}/${EMACSRC}
+			echo "Xrefactory part appended."
+		fi
+	else
+		echo "No change, you should edit it manually later."
+	fi
+	rm -f /tmp/xreftmp.tmp
+elif test ${XREF_EDITOR} = "jedit"
+then
+	cp ${PPWD}/${XREF_EDITOR}/Xrefactory.jar ${HOME}/.jedit/jars
+	if test ! -d ${HOME}/.jedit/jars/Xrefactory
+	then
+		mkdir ${HOME}/.jedit/jars/Xrefactory
+	fi
+	cp ${PPWD}/xref ${HOME}/.jedit/jars/Xrefactory
+fi
+echo Done.
+;;
+# #######################################################################
+# #######################################################################
+2)
+xrefGetEditor
+cd /tmp
+rm -r -f /tmp/xrefcexercise
+cp -r ${PPWD}/cexercise /tmp/xrefcexercise
+if test X${XREF_EDITOR} = Xjedit
+then
+	java -jar ${XREF_EDITORDIR}/jedit.jar /tmp/xrefcexercise/index.c
+else
+	${XREF_EDITOR} /tmp/xrefcexercise/index.c
+fi
+rm -r -f /tmp/xrefcexercise
+echo
+echo "Done."
+;;
+# #######################################################################
+# #######################################################################
+3)
+xrefGetEditor
+cd /tmp
+rm -r -f /tmp/xrefcppexercise
+cp -r ${PPWD}/cppexercise /tmp/xrefcppexercise
+if test X${XREF_EDITOR} = Xjedit
+then
+	java -jar ${XREF_EDITORDIR}/jedit.jar /tmp/xrefcppexercise/index.cpp
+else
+	${XREF_EDITOR} /tmp/xrefcppexercise/index.cpp
+fi
+rm -r -f /tmp/xrefcppexercise
+echo
+echo "Done."
+;;
+# #######################################################################
+# #######################################################################
+4)
+xrefGetEditor
+cd /tmp
+rm -r -f /tmp/xrefjexercise
+cp -r ${PPWD}/jexercise /tmp/xrefjexercise
+#export CLASSPATH=/tmp/xrefjexercise:${CLASSPATH}
+if test X${XREF_EDITOR} = Xjedit
+then
+	java -jar ${XREF_EDITORDIR}/jedit.jar /tmp/xrefjexercise/Index.java
+else
+	${XREF_EDITOR} /tmp/xrefjexercise/Index.java
+fi
+rm -r -f /tmp/xrefjexercise
+echo
+echo "Done."
+;;
+# #######################################################################
+# #######################################################################
+5)
+#echo "Registration."
+cd ${HOME}
+if test -f ${HOME}/.xrefrc
+then
+echo "Enter the license string purchased from your Xrefactory reseller:"
+read license
+if test X${license} = X
+then
+echo no string inserted, ignoring
+else
+	echo "Making backup of .xrefrc to .xrefrc.bak"
+	cp ${HOME}/.xrefrc ${HOME}/.xrefrc.bak
+	if grep "^[ \t]*-license=" ${HOME}/.xrefrc > /dev/null
+	then
+		echo "updating -license option in the ${HOME}/.xrefrc"
+		sed -e "s|^[ \t]*-license=.*|-license=${license}|g" \
+			${HOME}/.xrefrc > .xrefrc.tmp
+	else
+		echo "adding -license option to the ${HOME}/.xrefrc"
+		echo "-license=${license}" > .xrefrc.tmp
+		cat ${HOME}/.xrefrc >> .xrefrc.tmp
+	fi
+	mv .xrefrc.tmp ${HOME}/.xrefrc
+	echo
+	echo Done.
+fi
+else
+echo "The .xrefrc file does not exists in your home directory. Please"
+echo "go to the step 2."
+fi
+;;
+esac
+done		#MAINLOOP
+# #######################################################################
+#                        END OF MAIN LOOP
+# #######################################################################
+cat <<EOF
+**********************************************************************
+
+You may  read the 'README' file  and 'xref' and  'xrefrc' manual pages
+for further information.
+
+EOF
+if test ${SYSTEM_INST} != "yes" 
+then 
+cat <<EOF
+
+If you like Xrefactory and you  are super-user you can install it into
+system directories by running 'xrefinstall' script.
+
+EOF
+fi
+echo
+echo "**********************************************************************"
+echo
+
+
+
+
+
+
+
+

@@ -1,0 +1,313 @@
+.\" Copyright (c) 1999-2007 Marian Vittek, Bratislava.
+.TH XREFRC 5 \" -*- nroff -*-
+.SH NAME
+ .xrefrc \- file containing xref options.
+.SH DESCRIPTION
+
+The '.xrefrc' file ('_xrefrc' under MS-DOS) is configuration 
+file for the xref cross-referencing
+tool. It should be placed in user's home directory from where it is
+read at each xref invocation (under MS-DOS if the %HOME% environment
+variable is not set, this file should be placed in the C:\\ root folder).
+The file contains xref command
+line switches used for processing your projects, 
+mainly information about source files, 
+include directories ( '-I' 
+option )
+and  default  macro-definitions ( '-D' option). 
+It should equally  contain  the  '-refs'
+option  specifying  where  the
+resulting file with cross references should be searched or created. 
+.I Informations about available options can be found in the 'xref' 
+.I manual page ('xref.man' file). 
+
+The '.xrefrc' file can contain 
+comments starting by two slashes
+followed by at least one blank character and ending by end of the line.
+
+Xrefrc file can also contain specification of input source files via
+execution of an extern command. A command enclosed inside two `` signs is
+executed and the result of execution (from command's standard output)
+is interpreted as a blank separated list of input files. For example,
+if you wish to process  all files 
+with .java suffix (not those with .c suffix) under a given
+directory (say /usr/src/myproject), you can specify (under a Unix system)
+input files as: `find /usr/src/myproject -name \\*.java -print`
+
+Xrefrc file can also refer environment variables by enclosing variable name
+into ${ and } signs (or between two % % signs). For example, you can specify
+the position of a file 'toto' in your home directory by the 
+string "${HOME}/toto". The variable can be either internal xref variable (which
+must be set by the '-set <name> <value>' option), or any regular
+(shell) environment variable, such as USER, HOME, CLASSPATH, etc. Also 
+following predefined variables can be used in order to introduce problematic
+characters into options: 'pc' for percent; 'dl' for dollar, 'dq' for 
+double-quotes 'sp' for space and 'nl' for newline (even if space and 
+newline are not really problematic).
+A predefined variable __BASE
+is referring to current project name.
+
+In  order  to  handle multiple projects, '.xrefrc'
+file  is  composed  from  separate
+sections. Each section starts with a  section  marker  stating  the
+project  name.  Options defined inside a section are taken into account
+if 'xref' is invoked with the '-p'
+option followed by the name of the section. 
+In order to pass '-p' option to xref from Emacs/XEmacs
+editors, you have to set current project name with
+the 'M-x xref-project-set-active' function or by selecting it through
+the 'Xref->Project->Set Active" menu item.
+
+There can be options before the first section marker. Those options
+(not belonging to any project) are common to all projects and are
+processed everytime before project specific options.
+
+Lets take for example the '.xrefrc' file defining two projects
+('solver' and 'player'):
+
+---------------------------------------------------------
+
+[solver]        // first section
+.br
+-r /home/marian/solver 
+.br
+-r /home/marian/commons
+.br
+-I /usr/lib/gcc-lib/i386-redhat-linux/2.7.2.3/include
+.br
+-DTARGET=linux
+.br
+-refs /home/marian/XSrefs
+.br
+-htmlroot=/home/marian/HTML
+.br
+
+[player]          // second section
+.br
+-r /home/marian/player
+.br
+-classpath /usr/share/jdk/classes.zip:/java
+.br
+-refs /home/marian/Xplay
+.br
+-htmlroot=/home/marian/HTML
+
+---------------------------------------------------------
+
+Invocation via the 'xref -p solver' command will cause that
+(recursively) all source files from the '/home/marian/solver' 
+and '/home/marian/commons' directories will be cross-referenced.
+Also the 'TARGET' macro will be defined having the value 'linux'. The 
+resulting cross-references will be stored into the '/home/marian/XSrefs'
+file. 
+
+An invocation with the 'xref -p player' command will cause
+that source files from the '/home/marian/player' directory will 
+be processed with the classpath set to '/usr/share/jdk/classes.zip:/java'
+and the resulting
+cross-references will be stored in the '/home/marian/Xplay'
+file.
+
+An invocation with the 'xref -html -p player'
+command causes that all files from the '/home/marian/player' 
+directory will be processed
+with the classpath set to '/usr/share/jdk/classes.zip:/java',
+the input files will be
+converted to the HTML format and the resulting HTML files
+will be stored in a file hierarchy under the '/home/marian/HTML'
+directory.
+
+NOTE: If the '.xrefrc' file contains input file names, they are
+processed only when invoked with '-p' or '-create' options on
+the command line.
+
+NOTE2:  It  is  strongly  recommended  to use all file names within 
+the '.xrefrc' file with their full absolute paths.
+
+
+.I AUTOMATIC PROJECT DETECTION
+
+Xrefactory contains support for automatic project detection.
+If you select  under (X)Emacs 'Xref->Project->Set Active' and then you chose 
+"++ Automatic (directory dependent) ++" item, then 
+Xrefactory tries to detect active project automatically inferring
+it from the place where currently edited file is stored, i.e. from
+its absolute path.
+
+Automatic project detection interprets
+project names as directories and a project is activated if
+its name is a directory containing (directly or in several
+subdirectory levels) the currently edited file (i.e. if project name
+is a prefix of the absolute path of the currently edited file).
+In case that project names overlap, then the most specific one (but still
+covering input file) is selected. In case that no project can be activated
+for currently editing file, then the last auto-detected project remains active.
+
+For example, let's take the .xrefrc file:
+
+---------------------------------------------------------
+
+[/home/marian/solver]        // first section
+.br
+-I /usr/lib/gcc-lib/i386-redhat-linux/2.7.2.3/include
+.br
+-I /home/marian/include
+.br
+-I /mygroup/include
+.br
+-DTARGET=linux
+.br
+-refs /home/marian/XSrefs
+
+
+[/home/marian/xref]          // second section
+.br
+-I /usr/lib/gcc-lib/i386-redhat-linux/2.7.2.3/include
+.br
+-I /home/marian/include
+.br
+-I /mygroup/include
+.br
+-DNODEBUG
+.br
+-refs /home/marian/XXrefs
+
+---------------------------------------------------------
+
+The first part of the file is triggered for all source files
+with full path name starting by
+/home/marian/solver
+directory, the second part is triggered for  all
+files under '/home/marian/xref' directory. 
+For example if xref is invoked for
+a  file,  saying  
+/home/marian/xref/src/main.c
+this  file  will  be
+processed with options read from the second part.
+
+When creating cross references 'xref' is not able to 
+switch between different sections 
+in one single run, continuing our example, if you type the 
+command 'xref -r /home/marian' then all files will be
+processed with options from one section of the '.xrefrc' file,
+it is not defined which section will be taken.
+
+
+.I SHARING SAME OPTIONS IN DIFFERENT PROJECTS
+
+It is possible to define multiple projects sharing same options.
+You can put several project names separated by ':' (';' under
+MS-Windows) inside section marker, i.e. between [] brackets. 
+Options following such section marker belong to all
+mentioned projects. Autodetection of project works also for
+projects sharing same options. Sharing of options is supposed
+to be used mainly if your project directory
+is accessible also through symbolic links. In this case
+you can define original directory together with it its
+name through symbolic link to share same options.
+For example, if /dir2 is a symbolic link to /dir1, then you will
+put your options into a project:
+
+[/dir1:/dir2]
+.br
+  <projects option>
+
+
+
+.SH MULTIPLE PRE-PROCESSOR PASSES
+
+
+In C and C++ the same sources are often compiled multiple
+times with only different initial macro settings. Usually the initial
+macro setting is used to remove or to insert parts
+of source code enclosed in #if-#else-#endif directives. 
+In such case the '#if part' of code
+is never compiled together with the '#else part' of the code. However,
+for the purpose of cross referencing and (especially) for manipulations
+like renaming, it is essential to put cross-references
+from both parts together. For this reason
+xref permits to define multiple passes through source code
+collecting all references from those passes. Usually
+one pass corresponds to one possible compilation of sources (for example for one possible
+platform). Multiple
+passes are specified at '.xrefrc' file level by using special
+options '-pass<n>', where <n> is the pass number. If such an option
+occurs it causes that all following options (except other '-pass'
+option) are taken into account only when making the <n>-th pass through
+source code. By default xref makes as many passes through source code
+as is the greatest <n> used in '-pass' options. For example:
+
+
+---------------------------------------------------------
+
+[/home/marian/solve]
+.br
+-r /home/marian/solve
+.br
+-refs /home/marian/.xrefs/solve
+.br
+-pass1
+.br
+-DTARGET=linux
+.br
+-pass2
+.br
+-DTARGET=solaris
+
+---------------------------------------------------------
+
+This .xrefrc file causes that all source files
+from the '/home/marian/solve' directory will be processed twice
+first time with options:
+
+.br
+-r /home/marian/solve
+.br
+-refs /home/marian/.xrefs/solve
+.br
+-DTARGET=linux
+.br
+
+and second time with options:
+
+.br
+-r /home/marian/solve
+.br
+-refs /home/marian/.xrefs/solve
+.br
+-DTARGET=solaris
+
+References from both passes will be collected and inserted into
+the file '/home/marian/.xrefs/solve'.
+
+You can use multiple passes in combination with 'recipe' files
+by specifying different recipe files for different passes. For example,
+the project:
+
+[/home/marian/test]
+.br
+-refs /home/marian/.xrefs/test
+.br
+-pass1
+.br
+-recipe buildLinux.txt
+.br
+-pass2
+.br
+-recipe buildSolaris.txt
+
+will process sources in two passes using respectively recipe
+files 'buildLinux.txt' and 'buildSolaris.txt'.
+
+.I NOTE: 
+Multiple passes through sources will increase
+the time of file processing and can
+considerably slowdown on-line editing actions.
+
+.SH "MORE INFO"
+.RB http://www.xref-tech.com
+.SH "SEE ALSO"
+.RB xref(1),
+
+
+
