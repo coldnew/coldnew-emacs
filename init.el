@@ -76,3 +76,10 @@
 ;; BUG: where is the fucking symbol function?
 ;;(require 'rc-slime)
 ;;(require 'magit)
+
+;;(setq-default header-line-format mode-line-format) ; Copy mode-line to top
+;;(setq-default mode-line-format nil) ; Remove mode-line
+(defcmd show-mode-line ()
+	(if mode-line-format 
+	  	(setq mode-line-format nil)
+		(setq mode-line-format	t)))
