@@ -37,7 +37,7 @@
 	       (vim:local-imap (kbd "C-s") 'org-sparse-tree)
 	       (vim:local-imap (kbd "M-s") 'org-schedule)
 	       (vim:local-nmap (kbd "M-t") 'org-todo-list)
-	       (vim:local-imap (kbd "M-l") 'org-mode:insert-link)  ; insert "do {...} while()"
+	       (vim:local-imap (kbd "M-l") 'org-mode:insert-link)
 	       )))
 
 
