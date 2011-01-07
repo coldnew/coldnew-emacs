@@ -41,17 +41,17 @@
 (require 'rc-base)
 (require 'rc-ibuffer)
 (require 'rc-minibuffer)
-(require 'rc-c-mode)
+(require 'lang-c)
 (require 'rc-cedet)
 (require 'rc-color-theme)
 (require 'rc-common-hook)
 (require 'rc-complete)
-(require 'rc-cpp-mode)
+(require 'lang-cpp)
 
 (cond (emacs23-p
        (require 'rc-ecb)))
 
-(require 'rc-emacs-lisp-mode)
+(require 'lang-elisp)
 (require 'rc-fonts)
 (require 'rc-locale)
 (require 'rc-matlab-mode)

@@ -1,6 +1,6 @@
 ;; init lang.cpp
 
-(provide 'rc-cpp-mode)
+(provide 'lang-cpp)
 (eval-when-compile
   (require 'cl))
 

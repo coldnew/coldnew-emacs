@@ -106,5 +106,5 @@
 ;; (add-hook 'after-save-hook 'my-auto-update-tags)
 
 
-(provide 'rc-emacs-lisp-mode)
+(provide 'lang-elisp)
 ;;; rc-emacs-lisp-mode.el ends here

@@ -1,5 +1,5 @@
 ;;
-(provide 'rc-c-mode)
+(provide 'lang-c)
 
 (eval-when-compile (require 'cl))
 (require 'thingatpt)
