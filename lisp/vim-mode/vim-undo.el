@@ -23,10 +23,10 @@
 
 ;;; Code:
 
-(condition-case nil
-    (require 'redo)
-  (error
-   (message "vim-mode: Could not load 'redo', redo-command not available.")))
+;; try loading redo+, then redo
+(or (condition-case nil (require 'redo+ nil t) (error nil))
+    (condition-case nil (require 'redo nil t) (error nil)
+    (message "vim-mode: Could not load 'redo+' or 'redo', redo-command not available.")))
 
 (defvar vim:last-undo)
 

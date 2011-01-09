@@ -380,25 +380,24 @@ and switches to insert-mode."
 
 (vim:defcmd vim:cmd-yank-line (count register nonrepeatable)
   "Saves the next count lines into the kill-ring."
-  (let (lines
+  (let ((beg (line-beginning-position))
+	end
         (linenr (line-number-at-pos (point))))
     (setq count (or count 1))
     (save-excursion
-      (while (> count 0)
-        (push (buffer-substring (line-beginning-position) (line-end-position)) lines)
-        (forward-line)
-        (decf count)
-        (incf linenr)
-        (when (> linenr (line-number-at-pos (point)))
-          (setq count 0))))
-    (let ((txt (make-string 1 ? )))
-      (if register
-          (progn
-            (put-text-property 0 1 'yank-handler
-                               (list #'vim:yank-line-handler (reverse lines))
-                               txt)
-            (set-register register txt))
-        (kill-new txt nil (list #'vim:yank-line-handler (reverse lines)))))))
+      (forward-line (or count 1))
+      (setq end (point)))
+    (if register
+	(let ((txt (buffer-substring beg end)))
+	  (put-text-property 0 (- end beg)
+			     'yank-handler
+			     (list #'vim:yank-line-handler txt)
+			     txt)
+	  (set-register register txt))
+      (kill-new (buffer-substring-no-properties beg end)
+		nil
+		(list #'vim:yank-line-handler
+		      (buffer-substring beg end))))))
 
 
 (vim:defcmd vim:cmd-yank-rectangle (motion register nonrepeatable)
@@ -420,10 +419,13 @@ and switches to insert-mode."
                     (buffer-substring beg end))
               parts)
         (forward-line -1)))
-    (let ((txt (make-string 1 ? )))
+    (let ((txt (apply #'concat (cdr (mapcan
+				     #'(lambda (part) (list "\n" (cdr part)))
+				     parts)))))
+      ;; `txt' contains the block as single lines
       (if register
           (progn
-            (put-text-property 0 1
+            (put-text-property 0 (length txt)
                                'yank-handler
                                (list #'vim:yank-block-handler
                                      (cons (- endcol begcol -1) parts)
@@ -442,9 +444,8 @@ and switches to insert-mode."
   "Inserts the current text linewise."
   (beginning-of-line)
   (set-mark (point))
-  (dolist (line text)
-    (insert line)
-    (newline)))
+  (insert text))
+
 
 
 (defun vim:yank-block-handler (text)
@@ -513,16 +514,13 @@ and switches to insert-mode."
   
 (vim:defcmd vim:cmd-paste-before (count register)
   "Pastes the latest yanked text before the cursor position."
-  (unless (or kill-ring-yank-pointer register)
-    (error "kill-ring empty"))
-
   (let (beg end)
     (save-excursion
       (dotimes (i (or count 1))
         (if register
             (insert-for-yank (vim:get-register register))
           (set-mark (point))
-          (insert-for-yank (car kill-ring-yank-pointer))
+	  (yank)
           (setq beg (min (point) (mark t) (or beg (point)))
                 end (max (point) (mark t) (or end (point)))))))
     (setq vim:last-paste (list beg end (or count 1)))))
@@ -530,40 +528,37 @@ and switches to insert-mode."
 
 (vim:defcmd vim:cmd-paste-behind (count register)
   "Pastes the latest yanked text behind point."
-  (unless (or kill-ring-yank-pointer register)
-    (error "kill-ring empty"))
-
-  (let* ((txt (if register
-                  (vim:get-register register)
-                (car kill-ring-yank-pointer)))
-         (yhandler (get-text-property 0 'yank-handler txt)))
-    (case (car-safe yhandler)
-      (vim:yank-line-handler
-       (end-of-line)
-       (if (eobp)
-           (progn
-             (newline)
-             (save-excursion
-               (vim:cmd-paste-before :count count :register register)
-               (goto-char (point-max))
-               (delete-backward-char 1)))
-         (forward-line)
-         (vim:cmd-paste-before :count count :register register))
-       (vim:motion-first-non-blank))
-      
-      (vim:yank-block-handler
-       (forward-char)
-       (vim:cmd-paste-before :count count :register register))
-      
-      (t
-        (forward-char)
-        (set-mark (point))
-        (dotimes (i (or count 1))
-          (if register
-              (insert-for-yank (vim:get-register register))
-            (insert-for-yank (car kill-ring-yank-pointer))))
-        (setq vim:last-paste (list (mark t) (point) (or count 1)))
-        (backward-char)))))
+  (let ((txt (if register (vim:get-register register) (current-kill 0))))
+    (unless txt
+      (error "Kill-ring empty"))
+    (let ((yhandler (get-text-property 0 'yank-handler txt)))
+      (case (car-safe yhandler)
+	(vim:yank-line-handler
+	 (end-of-line)
+	 (if (eobp)
+	     (progn
+	       (newline)
+	       (save-excursion
+		 (vim:cmd-paste-before :count count :register register)
+		 (goto-char (point-max))
+		 (delete-backward-char 1)))
+	   (forward-line)
+	   (vim:cmd-paste-before :count count :register register))
+	 (vim:motion-first-non-blank))
+	
+	(vim:yank-block-handler
+	 (forward-char)
+	 (vim:cmd-paste-before :count count :register register))
+	
+	(t
+	 (unless (and (bolp) (eolp)) (forward-char))
+	 (set-mark (point))
+	 (dotimes (i (or count 1))
+	   (if register
+	       (insert-for-yank (vim:get-register register))
+	     (insert-for-yank (car kill-ring-yank-pointer))))
+	 (setq vim:last-paste (list (mark t) (point) (or count 1)))
+	 (backward-char))))))
 
 
 (vim:defcmd vim:cmd-join-lines (count)
@@ -744,4 +739,4 @@ and switches to insert-mode."
 
 (provide 'vim-commands)
 
-;;; vim-commands.el ends here
+;;; vim-commands.el ends here 

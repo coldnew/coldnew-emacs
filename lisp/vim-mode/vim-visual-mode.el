@@ -284,7 +284,9 @@
   (when (vim:cmd-arg-p command)
     (setq vim:current-motion-arg (read-char-exclusive)))
 
-  (vim:visual-adjust-region (vim:execute-current-motion))
+  (condition-case err
+      (vim:visual-adjust-region (vim:execute-current-motion))
+    (error (beep)))
   (vim:adjust-point)
   (vim:clear-key-sequence)
   (vim:reset-key-state))

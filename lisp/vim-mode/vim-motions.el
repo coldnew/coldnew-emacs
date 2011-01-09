@@ -103,6 +103,11 @@
   :type 'string
   :group 'vim-mode)
 
+(defcustom vim:find-skip-newlines nil
+  "If non-nil character find motions t,T,f,F skip over newlines."
+  :type 'boolean
+  :group 'vim-mode)
+
 (defun vim:adjust-point ()
   "Adjust the pointer after a command."
   ;; TODO: should we check modes directly?
@@ -352,6 +357,21 @@ return the correct end-position of emacs-ranges, i.e.
   "Moves count - 1 lines down."
   (vim:use-last-column)
   (forward-visible-line (1- (or count 1))))
+
+(vim:defmotion vim:motion-window-first-line (linewise count)
+  "Moves the cursor to the first line of the window, plus count lines, default zero."
+  (move-to-window-line (or count 0))
+  (back-to-indentation))
+
+(vim:defmotion vim:motion-window-middle-line (linewise count)
+  "Moves the cursor to the beginning of the middle line of the window.  Ignores count."
+  (move-to-window-line (/ (window-body-height) 2))
+  (back-to-indentation))
+
+(vim:defmotion vim:motion-window-last-line (linewise count)
+  "Moves the cursor to the last line of the window, minus count lines, default zero."
+  (move-to-window-line (- (window-body-height) (or count 0) 1))
+  (back-to-indentation))
 
 
 (defun vim:motion-beginning-of-line-or-digit-argument ()
@@ -1169,7 +1189,8 @@ text-object before or at point."
   (forward-char)
   (let ((case-fold-search nil))
     (unless (search-forward (char-to-string arg)
-                            nil t (or count 1))
+                            (unless vim:find-skip-newlines (line-end-position))
+			    t (or count 1))
       (backward-char)
       (error (format "Can't find %c" arg)))
     (setq vim:last-find (cons 'vim:motion-find arg))
@@ -1180,7 +1201,8 @@ text-object before or at point."
   "Move the cursor to the previous count'th occurrence of arg."
   (let ((case-fold-search nil))
     (unless (search-backward (char-to-string arg)
-                             nil t (or count 1))
+			     (unless vim:find-skip-newlines (line-beginning-position))
+                             t (or count 1))
       (error (format "Can't find %c" arg)))
     (setq vim:last-find (cons 'vim:motion-find-back arg))))
 

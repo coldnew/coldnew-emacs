@@ -178,15 +178,6 @@
   (vim:clear-key-sequence)
   (vim:adjust-point))
 
-
-(vim:define-mode operator-pending "VIM operator-pending mode"
-                 :ident "O"
-                 :keymaps '(vim:operator-pending-mode-keymap
-                            vim:motion-mode-keymap
-                            vim:operator-repeat-keymap
-                            vim:override-keymap)
-                 :command-function 'vim:operator-pending-mode-command)
-
 (provide 'vim-normal-mode)
 
 ;;; vim-normal-mode.el ends here

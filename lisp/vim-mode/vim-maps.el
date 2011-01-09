@@ -102,6 +102,10 @@
 (vim:mmap "G" 'vim:motion-go-to-first-non-blank-end) 
 (vim:mmap "gg" 'vim:motion-go-to-first-non-blank-beg) 
 
+(vim:mmap "H" 'vim:motion-window-first-line)
+(vim:mmap "M" 'vim:motion-window-middle-line)
+(vim:mmap "L" 'vim:motion-window-last-line)
+
 (vim:mmap "w" 'vim:motion-fwd-word)
 (vim:mmap "W" 'vim:motion-fwd-WORD)
 (vim:mmap "e" 'vim:motion-fwd-word-end)
