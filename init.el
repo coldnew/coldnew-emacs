@@ -33,31 +33,28 @@
 ;;;;;; load package initial setting
 
 ;; Macor must read first
-(require 'rc-macro)
+(require '000-macro)
+(require '003-base)
+(require '005-dependency)
+(require '006-backup)
+(require '006-woman)
+(require '006-color-theme)
+(require '011-vim-mode)
 
-(require 'rc-vim-mode)
-
-(require 'rc-backup)
-(require 'rc-base)
 (require 'rc-ibuffer)
 (require 'rc-minibuffer)
-(require 'lang-c)
 (require 'rc-cedet)
-(require 'rc-color-theme)
 (require 'rc-common-hook)
 (require 'rc-complete)
-(require 'lang-cpp)
 
 (cond (emacs23-p
        (require 'rc-ecb)))
 
-(require 'lang-elisp)
 (require 'rc-fonts)
 (require 'rc-locale)
 (require 'rc-matlab-mode)
 (require 'rc-org-mode)
 (require 'rc-session)
-(require 'rc-woman)
 (require 'rc-function)
 (require 'rc-smartchr)
 (require 'rc-w3m)
@@ -80,6 +77,6 @@
 ;;(setq-default header-line-format mode-line-format) ; Copy mode-line to top
 ;;(setq-default mode-line-format nil) ; Remove mode-line
 (defcmd show-mode-line ()
-	(if mode-line-format 
-	  	(setq mode-line-format nil)
-		(setq mode-line-format	t)))
+  (if mode-line-format
+      (setq mode-line-format nil)
+    (setq mode-line-format	t)))
