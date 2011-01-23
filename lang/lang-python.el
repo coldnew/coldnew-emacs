@@ -1,13 +1,9 @@
 ;; init for python mode
-(provide 'rc-python-mode)
 
-(require 'python  nil 'noerror)
 
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
-;; pymacs
-(require 'pymacs  nil 'noerror)
 ;;; Initialize Pymacs
 (autoload 'pymacs-apply "pymacs")
 (autoload 'pymacs-call "pymacs")
@@ -20,11 +16,10 @@
 (setq ropemacs-enable-shortcuts nil)
 
 ;; ipython
-(when (require 'ipython nil 'noerror)
-  (cond
-   (linux-p
-    (setq ipython-command "/usr/bin/ipython")
-    (setq py-python-command-args '("-i" "-colors" "Linux")))))
+(cond
+ (linux-p
+  (setq ipython-command "/usr/bin/ipython")
+  (setq py-python-command-args '("-i" "-colors" "Linux"))))
 
 ;;pylookup
 (defvar pylookup-dir "~/.emacs.d/lisp/pylookup")
@@ -42,3 +37,6 @@
   "Lookup SEARCH-TERM in the Python HTML indexes." t)
 (autoload 'pylookup-update "pylookup"
   "Run pylookup-update and create the database at `pylookup-db-file'." t)
+
+(provide 'lang-python)
+;; lang-python.el ends here.

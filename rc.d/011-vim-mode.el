@@ -10,6 +10,7 @@
 (vim:nmap (kbd "K") 'woman)
 (vim:nmap (kbd "C-x C-b") 'ibuffer)
 (vim:imap (kbd "C-x C-b") 'ibuffer)
+(vim:nmap (kbd "<f3>") 'shell-pop)
 
 (when (require 'undo-tree nil 'noerror)
   (global-undo-tree-mode)

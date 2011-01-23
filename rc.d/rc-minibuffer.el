@@ -1,5 +1,4 @@
 ;;
-(provide 'rc-minibuffer)
 
 ;;;; Minibuffer
 (add-hook 'minibuffer-setup-hook
@@ -17,3 +16,5 @@
 	     (local-set-key (kbd "C-b")   'backward-kill-word)))
 
 ;;;; switch-buffer
+
+(provide 'rc-minibuffer)

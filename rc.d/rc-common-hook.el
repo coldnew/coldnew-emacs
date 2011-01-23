@@ -48,9 +48,7 @@
 	      (highlight-changes-remove-highlight (point-min) (point-max)))))
 
 (defun set-newline-and-indent ()
-  (when (require 'rc-vim-mode nil 'noerror)
-    (vim:local-imap (kbd "RET") 'newline-and-indent)))
-
+  (vim:local-imap (kbd "RET") 'newline-and-indent))
 
 (defun indent-file-when-save ()
   "When save, indent whole file."
@@ -62,25 +60,21 @@
 
 (defun use-hungry-delete ()
   "Use hungry delete mode"
-  (when (require 'hungry-delete nil 'noerror)
-    (turn-on-hungry-delete-mode)))
+  (turn-on-hungry-delete-mode))
 
 (defun use-paredit-mode ()
   "Enable some Paredit-keybinding"
-  (when (require 'paredit nil 'noerror)
-    ;; Make paredit work with eldoc
-    (when (require 'eldoc nil 'noerror)
-      (eldoc-add-command
-       'paredit-backward-delete
-       'paredit-close-round))
-    ;; My keybinding
-    (vim:local-imap (kbd "(")    'paredit-open-round)
-    (vim:local-imap (kbd ")")    'paredit-close-round)
-    (vim:local-imap (kbd "M-(")  'paredit-wrap-round)
-    (vim:local-imap (kbd "M-)")  'paredit-close-round-and-newline)
-    (vim:local-imap (kbd "[")    'paredit-open-square)
-    (vim:local-imap (kbd "]")    'paredit-close-square)
-    (vim:local-imap (kbd "\"")   'paredit-doublequote)
-    (vim:local-imap (kbd "M-\"") 'paredit-meta-doublequote)
-    ;; TODO: need add more keybinding
-    ))
+  ;; Make paredit work with eldoc
+  (eldoc-add-command
+   'paredit-backward-delete
+   'paredit-close-round)
+  ;; My keybinding
+  ;; TODO: need add more keybinding
+  (vim:local-imap (kbd "(")    'paredit-open-round)
+  (vim:local-imap (kbd ")")    'paredit-close-round)
+  (vim:local-imap (kbd "M-(")  'paredit-wrap-round)
+  (vim:local-imap (kbd "M-)")  'paredit-close-round-and-newline)
+  (vim:local-imap (kbd "[")    'paredit-open-square)
+  (vim:local-imap (kbd "]")    'paredit-close-square)
+  (vim:local-imap (kbd "\"")   'paredit-doublequote)
+  (vim:local-imap (kbd "M-\"") 'paredit-meta-doublequote))

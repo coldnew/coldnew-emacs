@@ -32,18 +32,21 @@
 
 ;;;;;; load package initial setting
 
-(require '000-macro)
-(require '003-base)
-(require '005-dependency)
-(require '006-function)
-(require '007-backup)
-(require '008-fonts)
-(require '009-locale)
-(require '010-color-theme)
-(require '011-vim-mode)
-(require '012-display)
-(require '013-woman)
-(require '022-ibuffer)
+(require '000-macro)			; All Macros I use
+(require '003-base)			; Basic emacs config
+(require '005-dependency)		; All libraries included in
+(require '006-function)			; All functions I use
+(require '007-backup)			; Configure Backup Process
+(require '008-fonts)			; Setting Fonts
+(require '009-locale)			; Setting Locales
+(require '010-color-theme)		; Color-themes
+(require '011-vim-mode)			; Use Vim Keybindings
+(require '012-display)			; Configure window's size
+(require '013-woman)			; Woman-mode Settings
+(require '014-session)			; Store current positions
+(require '022-ibuffer)			; Call buffer-list
+
+
 (require 'rc-minibuffer)
 (require 'rc-cedet)
 (require 'rc-common-hook)
@@ -52,9 +55,7 @@
 (cond (emacs23-p
        (require 'rc-ecb)))
 
-(require 'rc-matlab-mode)
 (require 'rc-org-mode)
-(require 'rc-session)
 (require 'rc-smartchr)
 (require 'rc-w3m)
 (require 'rc-ielm-mode)

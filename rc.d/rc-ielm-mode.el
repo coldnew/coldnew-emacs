@@ -1,12 +1,9 @@
 ;;;
-(provide 'rc-ielm-mode)
 
 (add-hook 'ielm-mode-hook
 	  '(lambda ()
 	     (ielm-auto-complete)
 	     ))
-
-
 
 (defun ielm-auto-complete ()
   "Enables `auto-complete' support in \\[ielm]."
@@ -17,3 +14,5 @@
 		     ac-source-words-in-same-mode-buffers))
   (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
   (auto-complete-mode 1))
+
+(provide 'rc-ielm-mode)

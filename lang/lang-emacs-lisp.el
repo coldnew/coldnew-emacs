@@ -12,19 +12,14 @@
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
 	     ;; Highlight the parentheses
-	     (when (require 'highlight-parentheses)
-	       (highlight-parentheses-mode))
+	     (highlight-parentheses-mode)
 	     ;; Enable eldoc
-	     (when (require 'eldoc nil 'noerror)
-	       (require 'eldoc-extension nil 'noerror)
-	       (turn-on-eldoc-mode))
+	     (turn-on-eldoc-mode)
 	     ;; Remodify auto-complete setting in auto-complete-config.el
-	     (when (require 'auto-complete nil 'noerror)
-	       (setq ac-sources
-		     '(ac-source-symbols ac-source-company-elisp ac-source-words-in-same-mode-buffers)))
+	     (setq ac-sources
+		   '(ac-source-symbols ac-source-company-elisp ac-source-words-in-same-mode-buffers))
 	     ;; Enable pretty-lambda
-	     (when (require 'pretty-lambdada nil 'noerror)
-	       (turn-on-pretty-lambda-mode))
+	     (turn-on-pretty-lambda-mode)
 
 	     ;; Hooks for emacs-lisp-mode
 	     ;;(byte-compile-when-save)	; bytecompile the elisp file after save;
@@ -37,10 +32,9 @@
 ;;;;;; Keybindings
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
-	     (when (require 'rc-vim-mode nil 'noerror)
-	       (vim:local-imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
-	       (vim:local-imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
-	       )))
+	     (vim:local-imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
+	     (vim:local-imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
+	     ))
 
 ;;;;;; Functions
 
@@ -106,5 +100,6 @@
 ;; (add-hook 'after-save-hook 'my-auto-update-tags)
 
 
-(provide 'lang-elisp)
+
+(provide 'lang-emacs-lisp)
 ;;; rc-emacs-lisp-mode.el ends here
