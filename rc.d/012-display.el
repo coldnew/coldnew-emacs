@@ -1,6 +1,5 @@
 ;; setting for display
 
-(provide 'rc-display)
 
 ;;;; Setting the window width and height
 (cond
@@ -41,3 +40,6 @@
 		 '(left   . 100))
 		default-frame-alist)))
  )
+
+(provide '012-display)
+;; 012-display.el ends here.

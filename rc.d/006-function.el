@@ -1,6 +1,4 @@
 ;; other functions
-(provide 'rc-function)
-
 
 (defun show-dot-emacs-structure ()
   "Show the outline-mode structure of ~/.emacs"
@@ -179,3 +177,6 @@ to browser. If a region is active (a phrase), lookup that phrase."
 	 "ASCII Chart")
       (with-output-to-temp-buffer "ASCII Chart"
 	(princ chart)))))
+
+(provide '006-function)
+;; 006-function.el ends here.

@@ -23,5 +23,5 @@
 (setq-default delete-old-versions t ) ; 刪除不屬於以上15種版本的備份
 
 
-(provide '006-backup)
-;;; 006-backup.el ends here
+(provide '007-backup)
+;;; 007-backup.el ends here

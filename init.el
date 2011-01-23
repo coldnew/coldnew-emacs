@@ -32,16 +32,18 @@
 
 ;;;;;; load package initial setting
 
-;; Macor must read first
 (require '000-macro)
 (require '003-base)
 (require '005-dependency)
-(require '006-backup)
-(require '006-woman)
-(require '006-color-theme)
+(require '006-function)
+(require '007-backup)
+(require '008-fonts)
+(require '009-locale)
+(require '010-color-theme)
 (require '011-vim-mode)
-
-(require 'rc-ibuffer)
+(require '012-display)
+(require '013-woman)
+(require '022-ibuffer)
 (require 'rc-minibuffer)
 (require 'rc-cedet)
 (require 'rc-common-hook)
@@ -50,15 +52,11 @@
 (cond (emacs23-p
        (require 'rc-ecb)))
 
-(require 'rc-fonts)
-(require 'rc-locale)
 (require 'rc-matlab-mode)
 (require 'rc-org-mode)
 (require 'rc-session)
-(require 'rc-function)
 (require 'rc-smartchr)
 (require 'rc-w3m)
-(require 'rc-display)
 (require 'rc-ielm-mode)
 (require 'rc-find-file)
 (require 'rc-xrefactory)

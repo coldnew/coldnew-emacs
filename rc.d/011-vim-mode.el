@@ -2,12 +2,14 @@
 
 (vim-mode)				; start vim-mode
 
-;;keymapping
+;; Global Keymapping
 (vim:imap (kbd "RET") 'newline-and-indent)
 (vim:vmap (kbd "M-;") 'vim:visual-toggle-comment)
 (vim:wmap (kbd "C-w f") 'window-fullscreen)
 (vim:nmap (kbd "<f1>") 'woman)
 (vim:nmap (kbd "K") 'woman)
+(vim:nmap (kbd "C-x C-b") 'ibuffer)
+(vim:imap (kbd "C-x C-b") 'ibuffer)
 
 (when (require 'undo-tree nil 'noerror)
   (global-undo-tree-mode)

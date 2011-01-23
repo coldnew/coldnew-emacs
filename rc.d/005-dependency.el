@@ -6,6 +6,8 @@
 (require 'undo-tree)			; Use undo-tree instead of redo.el
 (require 'woman)			; Use Woman
 (require 'color-theme)			; Color-theme
+(require 'ibuffer)			; iBuffer
+;;(require 'ibuffer-expert)		; iBuffer Expert
 
 
 

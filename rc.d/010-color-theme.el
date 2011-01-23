@@ -48,5 +48,5 @@
 	    (setq *color-mode* 'day))
     ))
 
-(provide '006-color-theme)
-;; 006-color-theme.el ends here.
+(provide '010-color-theme)
+;; 010-color-theme.el ends here.
