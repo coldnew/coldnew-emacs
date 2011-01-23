@@ -1,7 +1,5 @@
-;; setting for display
-
-
 ;;;; Setting the window width and height
+
 (cond
  ;; 1280 * 800
  ((and (= (display-pixel-width) 1280) (= (display-pixel-height) 800))
@@ -38,8 +36,7 @@
 		 '(height . 40)
 		 '(top    . 90)
 		 '(left   . 100))
-		default-frame-alist)))
- )
+		default-frame-alist))))
 
 (provide '012-display)
 ;; 012-display.el ends here.

@@ -33,8 +33,8 @@
 ;;;;;; load package initial setting
 
 (require '000-macro)			; All Macros I use
-(require '003-base)			; Basic emacs config
-(require '005-dependency)		; All libraries included in
+(require '003-dependency)		; All libraries included in
+(require '005-base)			; Basic emacs config
 (require '006-function)			; All functions I use
 (require '007-backup)			; Configure Backup Process
 (require '008-fonts)			; Setting Fonts
@@ -45,7 +45,6 @@
 (require '013-woman)			; Woman-mode Settings
 (require '014-session)			; Store current positions
 (require '022-ibuffer)			; Call buffer-list
-(require '999-keybinding)		; Global Keybindings
 
 
 
@@ -69,6 +68,7 @@
 (require 'circuit-mode)
 
 
+(require '999-keybinding)		; Global Keybindings
 
 ;; FIXME: bug?
 ;;(require 'rc-package-manager)

@@ -9,6 +9,7 @@
 
 ;; Insert Map
 (vim:imap (kbd "C-n") 'auto-complete)
+;;(vim:imap (kbd "C-n") 'ac-start)
 (vim:imap (kbd "C-p") 'auto-complete)
 (vim:imap (kbd "C-x C-b") 'ibuffer)
 (vim:imap (kbd "RET") 'newline-and-indent)

@@ -20,6 +20,7 @@
 (require 'uniquify)
 (require 'vim)				; Use Vim-Mode
 (require 'woman)			; Use Woman
+(require 'ac-company)
 ;;(require 'ibuffer-expert)		; iBuffer Expert
 ;;(require 'ipython)			; iPython
 ;;(require 'matlab)			; Matlab
@@ -39,5 +40,5 @@
 
 
 
-(provide '005-dependency)
-;; 005-dependency.el ends here.
+(provide '003-dependency)
+;; 003-dependency.el ends here.
