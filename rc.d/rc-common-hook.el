@@ -1,5 +1,4 @@
 ;;
-(provide 'rc-common-hook)
 
 
 
@@ -15,7 +14,6 @@
   (use-hungry-delete)			; 啟用 hungry-delete mode
   (use-paredit-mode)			; 增加部份基於 Paredit 的按鍵綁定
   )
-
 
 
 
@@ -78,3 +76,5 @@
   (vim:local-imap (kbd "]")    'paredit-close-square)
   (vim:local-imap (kbd "\"")   'paredit-doublequote)
   (vim:local-imap (kbd "M-\"") 'paredit-meta-doublequote))
+
+(provide 'rc-common-hook)

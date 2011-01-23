@@ -45,6 +45,9 @@
 (require '013-woman)			; Woman-mode Settings
 (require '014-session)			; Store current positions
 (require '022-ibuffer)			; Call buffer-list
+(require '999-keybinding)		; Global Keybindings
+
+
 
 
 (require 'rc-minibuffer)

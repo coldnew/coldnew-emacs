@@ -8,8 +8,7 @@
 ;;; Code:
 
 (provide 'rc-complete)
-(eval-when-compile
-  (require 'cl))
+(eval-when-compile (require 'cl))
 
 ;;;; auto-complete.el
 (when (require 'auto-complete nil 'noerror)
@@ -45,9 +44,6 @@
   (define-key ac-menu-map (kbd "C-p") 'ac-previous)
   (define-key ac-completing-map "\t" 'ac-complete)
 
-  (when (require 'rc-vim-mode nil 'noerror)
-    (vim:imap (kbd "C-p") 'auto-complete)
-    (vim:imap (kbd "C-n") 'auto-complete))
 
   (when (require 'ac-company nil 'noerror)
     (ac-company-define-source ac-source-company-abbrev    company-abbrev   (symbol . "s"))

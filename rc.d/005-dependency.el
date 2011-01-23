@@ -2,27 +2,28 @@
 (eval-when-compile (require 'cl))
 
 ;; Must include in coldnew's emacs
-(require 'vim)				; Use Vim-Mode
-(require 'undo-tree)			; Use undo-tree instead of redo.el
-(require 'woman)			; Use Woman
+(require 'auto-complete)		; Auto-Complete
+(require 'cedet)
 (require 'color-theme)			; Color-theme
+(require 'eldoc)			; Emacs-Lisp Documents Browser
+(require 'eldoc-extension)		; Emacs-Lisp Documents Browser Extension
+(require 'highlight-parentheses)	; Highlight pair parentheses
+(require 'hungry-delete)
 (require 'ibuffer)			; iBuffer
-(require 'python)			; Python
-;;(require 'pymacs)			; Pymacs
 (require 'midnight)			; Use midnight-mode to auto-clean buffers
+(require 'paredit)			; Use Paredit to balance parentheses
+(require 'pretty-lambdada)		; Show lambda in smbol
+(require 'python)			; Python
 (require 'session)			; Use Session to save current positions
 (require 'shell-pop)			; Pop-up Shells
-(require 'cedet)
-;;(require 'matlab)			; Matlab
-(require 'paredit)			; Use Paredit to balance par
-(require 'eldoc)
-(require 'hungry-delete)
-(require 'highlight-parentheses)
-(require 'eldoc-extension)
-(require 'auto-complete)
-(require 'pretty-lambdada)
-;;(require 'ipython)			; iPython
+(require 'undo-tree)			; Use undo-tree instead of redo.el
+(require 'uniquify)
+(require 'vim)				; Use Vim-Mode
+(require 'woman)			; Use Woman
 ;;(require 'ibuffer-expert)		; iBuffer Expert
+;;(require 'ipython)			; iPython
+;;(require 'matlab)			; Matlab
+;;(require 'pymacs)			; Pymacs
 
 
 
@@ -32,6 +33,7 @@
 (require 'lang-emacs-lisp)		; Emacs-Lisp
 ;;(require 'lang-python)			; Python
 (require 'lang-matlab)			; Matlab
+(require 'lang-newlisp)			; Newlisp
 
 
 

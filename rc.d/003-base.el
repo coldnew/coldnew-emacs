@@ -73,8 +73,9 @@
 (delete-selection-mode      t )         ; 啟用 delsel-mode
 (visual-line-mode           t )         ; 折行時不拆開一個 "字"
 
+(global-undo-tree-mode)
+
 ;; uniquify changes conflicting buffer names from file<2> etc
-(require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 (setq uniquify-separator "/")
 (setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
