@@ -1,13 +1,9 @@
 ;;;; initial color theme
-(provide 'rc-color-theme)
 
-
-(when (require 'color-theme nil 'noerror)
-
-  (color-theme-initialize)
-  (setq color-theme-is-global nil)
-  (setq color-theme-is-cumulative t)
-  (setq color-theme-load-all-themes nil))
+(color-theme-initialize)
+(setq color-theme-is-global nil)
+(setq color-theme-is-cumulative t)
+(setq color-theme-load-all-themes nil)
 
 (require 'color-theme-coldnew-night nil 'noerror)
 (require 'color-theme-coldnew-day nil 'noerror)
@@ -51,3 +47,6 @@
     ('night (color-theme-coldnew-night)
 	    (setq *color-mode* 'day))
     ))
+
+(provide '006-color-theme)
+;; 006-color-theme.el ends here.

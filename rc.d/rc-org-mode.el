@@ -111,7 +111,7 @@
 (add-hook 'org-shiftdown-final-hook 'windmove-down)
 (add-hook 'org-shiftright-final-hook 'windmove-right)
 ;; Fix conflits with viper
-(define-key viper-vi-global-user-map "C-c /" 'org-sparse-tree)
+;;(define-key viper-vi-global-user-map "C-c /" 'org-sparse-tree)
 
 ;;;;;; Functions
 

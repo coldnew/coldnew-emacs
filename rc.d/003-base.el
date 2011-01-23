@@ -1,43 +1,5 @@
 ;;; rc-base.el ---
-
-;; Copyright 2010 Yen-Chin,Lee
-;;
-;; Author: Yen-Chin,Lee <coldnew.tw@gmail.com>
-;; Version: $Id: rc-base.el,v 0.0 2010/08/10 11:30:54 coldnew Exp $
-;; Keywords:
-;; X-URL: not distributed yet
-
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2, or (at your option)
-;; any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program; if not, write to the Free Software
-;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
-;;; Commentary:
-
-;;
-
-;; Put this file into your load-path and the following into your ~/.emacs:
-;;   (require 'rc-base)
-
-;;; Code:
-
-(provide 'rc-base)
-(eval-when-compile
-  (require 'cl))
-
-
-;;;;##########################################################################
-;;;;  User Options, Variables
-;;;;##########################################################################
+(eval-when-compile (require 'cl))
 
 ;;;; 個人資訊設定
 (setq-default user-mail-address "coldnew.tw@gmail.com" )
@@ -124,5 +86,5 @@
 	     (or (file-exists-p  (file-name-directory buffer-file-name))
 		 (make-directory (file-name-directory buffer-file-name) t))))
 
-
-;;; rc-base.el ends here
+(provide '003-base)
+;;; 003-base.el ends here

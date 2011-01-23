@@ -1,14 +1,10 @@
 ;;;
-(provide 'rc-macro)
 (eval-when-compile (require 'cl))
-
-
-
 
 ;;;;; Extra font-lock face for userdefine macro.
 
 ;; (add-hook 'emacs-lisp-mode-hook
-;; 	  (lambda ()
+;;	  (lambda ()
 (font-lock-add-keywords 'emacs-lisp-mode
 			'(("(\\(\\defcmd\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
 			   (1 font-lock-keyword-face)
@@ -67,9 +63,11 @@
 ;;   (eval-when-compile
 ;;     `(
 ;;       ,(concat "(require-maybe)\\>"
-;; 	       "[ \t']*\\(\\sw+\\)?")
+;;	       "[ \t']*\\(\\sw+\\)?")
 ;;       (1 font-lock-keyword-face)
 ;;       (2 font-lock-constant-face nil t)
 ;;       )
 ;;     )
 ;;   )
+
+(provide '000-macro)
