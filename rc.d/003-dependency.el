@@ -2,6 +2,7 @@
 (eval-when-compile (require 'cl))
 
 ;; Must include in coldnew's emacs
+(require 'ac-company)
 (require 'auto-complete)		; Auto-Complete
 (require 'cedet)
 (require 'color-theme)			; Color-theme
@@ -20,7 +21,16 @@
 (require 'uniquify)
 (require 'vim)				; Use Vim-Mode
 (require 'woman)			; Use Woman
-(require 'ac-company)
+(require 'smartchr)
+(require 'thingatpt)
+(require 'c-eldoc)
+(require 'company)
+;;(require 'cscope)
+(require 'magit)
+(require 'pos-tip)
+(require 'popup-pos-tip)
+(require 'rainbow-mode)
+;;(require 'emms)
 ;;(require 'ibuffer-expert)		; iBuffer Expert
 ;;(require 'ipython)			; iPython
 ;;(require 'matlab)			; Matlab

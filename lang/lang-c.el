@@ -1,9 +1,6 @@
 ;;
-(provide 'lang-c)
 
 (eval-when-compile (require 'cl))
-(require 'thingatpt)
-(require 'smartchr)
 
 ;;;; Coding-Style Setting
 (add-hook 'c-mode-hook
@@ -37,8 +34,7 @@
 	     (cc-mode-common-hook)
 
 	     ;; Enable C-Eldoc
-	     (when (require 'c-eldoc nil 'noerror)
-	       (c-turn-on-eldoc-mode))
+	     (c-turn-on-eldoc-mode)
 	     ))
 
 ;;;; Auto-Mode
@@ -85,3 +81,6 @@ else add `if' and expand it."
     (if (equal current begin)
 	(insert "main"))
     (yas/expand)))
+
+(provide 'lang-c)
+;; lang-c.el ends here.

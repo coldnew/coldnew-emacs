@@ -33,6 +33,8 @@
 ;;;;;; load package initial setting
 
 (require '000-macro)			; All Macros I use
+;;(require '001-environment)		; Environment Setting
+;;(require '002-variable)			; Variables Setting
 (require '003-dependency)		; All libraries included in
 (require '005-base)			; Basic emacs config
 (require '006-function)			; All functions I use
@@ -68,7 +70,7 @@
 (require 'circuit-mode)
 
 
-(require '999-keybinding)		; Global Keybindings
+(require '999-keybinding)		; Global Keybindings, must in the last line.
 
 ;; FIXME: bug?
 ;;(require 'rc-package-manager)
