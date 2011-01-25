@@ -29,23 +29,6 @@
        ;;		  '("\\`my:" w3m-search-uri-replace "My engine"))
        ))
 
-  ;; (add-hook 'w3m-mode-hook
-  ;;	    '(lambda ()
-  ;;	       '(color-theme-xp))
-  ;;	    ))
-
-  (add-hook 'w3m-mode-hook
-	    '(lambda ()
-	       ;;     (setq (make-local-variable background-color) "white")
-
-	       ))
-
-
-  ;; (cond
-  ;;  ( (mac-p ))
-  ;;  (  (linux-p )
-  ;;     ))
-
   ;; Rename w3m buffer
   (add-hook 'w3m-display-hook
 	    (lambda (url)
@@ -203,6 +186,7 @@
     (interactive "sGoogle Search (EN): ")
     (w3m-goto-url-new-session (concat "http://www.google.com/search?q="
 				      (w3m-url-encode-string what))))
+
 
 
   )
