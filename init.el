@@ -35,8 +35,7 @@
 ;;;;;; load package initial setting
 
 (require '000-macro)			; All Macros I use
-;;(require '001-environment)		; Environment Setting
-(require '002-variable)			; Variables Setting
+(require '001-environment)		; Environment Setting
 (require '003-dependency)		; All libraries included in
 (require '005-base)			; Basic emacs config
 (require '006-function)			; All functions I use
@@ -53,15 +52,18 @@
 (require '024-elpa)
 (require '025-yasnippet)
 (require '026-auto-complete)
+(require '027-minibuffer)
 
 
-(require 'rc-minibuffer)
+
+
+
+
 (require 'rc-cedet)
 (require 'rc-common-hook)
 
 (cond (emacs23-p
        (require 'rc-ecb)))
-
 (require 'rc-org-mode)
 (require 'rc-smartchr)
 (require 'rc-w3m)

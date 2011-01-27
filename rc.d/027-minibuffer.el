@@ -1,3 +1,5 @@
+;;
+
 ;;;; Minibuffer
 (add-hook 'minibuffer-setup-hook
 	  '(lambda ()
