@@ -1,0 +1,4 @@
+#name : setRelationshipKeyPathsForPrefetching
+#group : NSFetchRequest
+# --
+setRelationshipKeyPathsForPrefetching:${1:(NSArray *)keys}

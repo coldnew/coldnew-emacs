@@ -1,0 +1,4 @@
+#name : decodeArrayOfObjCType:count:at
+#group : NSCoder
+# --
+decodeArrayOfObjCType:${1:(const char *)itemType} count:${2:(NSUInteger)count} at:${3:(void *)array}

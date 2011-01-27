@@ -1,0 +1,4 @@
+#name : isEqual
+#group : NSObject
+# --
+isEqual:${1:(id)object}

@@ -1,0 +1,4 @@
+#name : textView:shouldChangeTextInRange:replacementText
+#group : UITextView
+# --
+textView:${1:(UITextView *)textView} shouldChangeTextInRange:${2:(NSRange)range} replacementText:${3:(NSString *)text}

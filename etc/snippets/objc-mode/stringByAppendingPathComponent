@@ -1,0 +1,4 @@
+#name : stringByAppendingPathComponent
+#group : NSPathUtilities
+# --
+stringByAppendingPathComponent:${1:(NSString *)str}

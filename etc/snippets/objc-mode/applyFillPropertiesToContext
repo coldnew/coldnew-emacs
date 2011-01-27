@@ -1,0 +1,4 @@
+#name : applyFillPropertiesToContext
+#group : MKOverlayPathView
+# --
+applyFillPropertiesToContext:${1:(CGContextRef)context}

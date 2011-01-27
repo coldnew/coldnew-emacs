@@ -1,0 +1,4 @@
+#name : inferredMappingModelForSourceModel:destinationModel:error
+#group : NSMappingModel
+# --
+inferredMappingModelForSourceModel:${1:(NSManagedObjectModel *)sourceModel} destinationModel:${2:(NSManagedObjectModel *)destinationModel} error:${3:(NSError **)error}

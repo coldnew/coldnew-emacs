@@ -1,0 +1,4 @@
+#name : placeholderRectForBounds
+#group : UITextField
+# --
+placeholderRectForBounds:${1:(CGRect)bounds}

@@ -1,0 +1,4 @@
+#name : numberWithChar
+#group : NSValue
+# --
+numberWithChar:${1:(char)value}

@@ -1,0 +1,4 @@
+#name : cancelPerformSelector:target:argument
+#group : NSRunLoop
+# --
+cancelPerformSelector:${1:(SEL)aSelector} target:${2:(id)target} argument:${3:(id)arg}

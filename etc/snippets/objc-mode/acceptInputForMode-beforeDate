@@ -1,0 +1,4 @@
+#name : acceptInputForMode:beforeDate
+#group : NSRunLoop
+# --
+acceptInputForMode:${1:(NSString *)mode} beforeDate:${2:(NSDate *)limitDate}

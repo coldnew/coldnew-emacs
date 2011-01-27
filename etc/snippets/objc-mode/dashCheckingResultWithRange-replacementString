@@ -1,0 +1,4 @@
+#name : dashCheckingResultWithRange:replacementString
+#group : NSTextCheckingResult
+# --
+dashCheckingResultWithRange:${1:(NSRange)range} replacementString:${2:(NSString *)replacementString}

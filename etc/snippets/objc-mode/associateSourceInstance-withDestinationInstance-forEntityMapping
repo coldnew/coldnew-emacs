@@ -1,0 +1,4 @@
+#name : associateSourceInstance:withDestinationInstance:forEntityMapping
+#group : NSMigrationManager
+# --
+associateSourceInstance:${1:(NSManagedObject *)sourceInstance} withDestinationInstance:${2:(NSManagedObject *)destinationInstance} forEntityMapping:${3:(NSEntityMapping *)entityMapping}

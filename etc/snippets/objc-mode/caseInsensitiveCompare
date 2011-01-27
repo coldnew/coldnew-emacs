@@ -1,0 +1,4 @@
+#name : caseInsensitiveCompare
+#group : NSString
+# --
+caseInsensitiveCompare:${1:(NSString *)string}

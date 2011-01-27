@@ -1,0 +1,4 @@
+#name : readFromURL:options:error
+#group : NSFileWrapper
+# --
+readFromURL:${1:(NSURL *)url} options:${2:(NSFileWrapperReadingOptions)options} error:${3:(NSError **)outError}

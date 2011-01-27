@@ -168,6 +168,16 @@ Will prompt you shell name when you type `C-u' before this command.
 
 ;;;***
 
+;;;### (autoloads (nav) "nav/nav" "nav/nav.el" (19777 18127))
+;;; Generated autoloads from nav/nav.el
+
+(autoload 'nav "nav/nav" "\
+Run nav-mode in a narrow window on the left side.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (pylookup-update pylookup-lookup) "pylookup/pylookup"
 ;;;;;;  "pylookup/pylookup.el" (19775 58061))
 ;;; Generated autoloads from pylookup/pylookup.el
@@ -196,8 +206,31 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 
 ;;;***
 
-;;;### (autoloads nil nil ("pymacs/pymacs.el" "ssh-config/ssh-config.el")
-;;;;;;  (19777 4989 530545))
+;;;### (autoloads (sr-dired sunrise-cd sunrise) "sunrise-commander/sunrise-commander"
+;;;;;;  "sunrise-commander/sunrise-commander.el" (19777 18030))
+;;; Generated autoloads from sunrise-commander/sunrise-commander.el
+
+(autoload 'sunrise "sunrise-commander/sunrise-commander" "\
+Starts the Sunrise Commander. If the param `left-directory' is given the left
+window  will  display  this  directory  (the  same   for   `right-directory').
+Specifying nil for any of these values uses the default, ie. home.
+
+\(fn &optional LEFT-DIRECTORY RIGHT-DIRECTORY FILENAME)" t nil)
+
+(autoload 'sunrise-cd "sunrise-commander/sunrise-commander" "\
+Run Sunrise but give it the current directory to use.
+
+\(fn)" t nil)
+
+(autoload 'sr-dired "sunrise-commander/sunrise-commander" "\
+Visits the given directory in sr-mode.
+
+\(fn DIRECTORY &optional SWITCHES)" t nil)
+
+;;;***
+
+;;;### (autoloads nil nil ("nav/nav-dev.el" "nav/nav-test.el" "pymacs/pymacs.el"
+;;;;;;  "ssh-config/ssh-config.el") (19777 18129 544925))
 
 ;;;***
 

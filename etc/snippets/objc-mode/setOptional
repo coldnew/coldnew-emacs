@@ -1,0 +1,4 @@
+#name : setOptional
+#group : NSPropertyDescription
+# --
+setOptional:${1:(BOOL)flag}

@@ -1,0 +1,4 @@
+#name : cut
+#group : UIResponder
+# --
+cut:${1:(id)sender}

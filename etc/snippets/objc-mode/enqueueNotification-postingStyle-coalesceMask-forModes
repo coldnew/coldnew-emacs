@@ -1,0 +1,4 @@
+#name : enqueueNotification:postingStyle:coalesceMask:forModes
+#group : NSNotificationQueue
+# --
+enqueueNotification:${1:(NSNotification *)notification} postingStyle:${2:(NSPostingStyle)postingStyle} coalesceMask:${3:(NSUInteger)coalesceMask} forModes:${4:(NSArray *)modes}

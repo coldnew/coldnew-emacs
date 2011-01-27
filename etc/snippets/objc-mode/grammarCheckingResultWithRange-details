@@ -1,0 +1,4 @@
+#name : grammarCheckingResultWithRange:details
+#group : NSTextCheckingResult
+# --
+grammarCheckingResultWithRange:${1:(NSRange)range} details:${2:(NSArray *)details}

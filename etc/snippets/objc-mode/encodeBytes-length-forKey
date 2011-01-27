@@ -1,0 +1,4 @@
+#name : encodeBytes:length:forKey
+#group : NSKeyedArchiver
+# --
+encodeBytes:${1:(const uint8_t *)bytesp} length:${2:(NSUInteger)lenv} forKey:${3:(NSString *)key}

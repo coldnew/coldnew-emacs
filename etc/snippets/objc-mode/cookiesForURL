@@ -1,0 +1,4 @@
+#name : cookiesForURL
+#group : NSHTTPCookieStorage
+# --
+cookiesForURL:${1:(NSURL *)URL}

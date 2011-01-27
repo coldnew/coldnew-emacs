@@ -1,0 +1,4 @@
+#name : bezierPathWithRoundedRect:byRoundingCorners:cornerRadii
+#group : UIBezierPath
+# --
+bezierPathWithRoundedRect:${1:(CGRect)rect} byRoundingCorners:${2:(UIRectCorner)corners} cornerRadii:${3:(CGSize)cornerRadii}

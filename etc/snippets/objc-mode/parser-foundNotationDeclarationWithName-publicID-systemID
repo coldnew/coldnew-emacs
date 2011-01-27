@@ -1,0 +1,4 @@
+#name : parser:foundNotationDeclarationWithName:publicID:systemID
+#group : NSXMLParser
+# --
+parser:${1:(NSXMLParser *)parser} foundNotationDeclarationWithName:${2:(NSString *)name} publicID:${3:(NSString *)publicID} systemID:${4:(NSString *)systemID}

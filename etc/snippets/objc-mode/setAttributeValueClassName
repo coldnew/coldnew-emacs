@@ -1,0 +1,4 @@
+#name : setAttributeValueClassName
+#group : NSAttributeDescription
+# --
+setAttributeValueClassName:${1:(NSString *)className}

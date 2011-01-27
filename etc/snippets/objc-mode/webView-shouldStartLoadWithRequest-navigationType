@@ -1,0 +1,4 @@
+#name : webView:shouldStartLoadWithRequest:navigationType
+#group : UIWebView
+# --
+webView:${1:(UIWebView *)webView} shouldStartLoadWithRequest:${2:(NSURLRequest *)request} navigationType:${3:(UIWebViewNavigationType)navigationType}

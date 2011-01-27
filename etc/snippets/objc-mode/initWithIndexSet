@@ -1,0 +1,4 @@
+#name : initWithIndexSet
+#group : NSIndexSet
+# --
+initWithIndexSet:${1:(NSIndexSet *)indexSet}

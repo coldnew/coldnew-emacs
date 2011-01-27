@@ -1,0 +1,4 @@
+#name : removeConnection:fromRunLoop:forMode
+#group : NSPort
+# --
+removeConnection:${1:(NSConnection *)conn} fromRunLoop:${2:(NSRunLoop *)runLoop} forMode:${3:(NSString *)mode}

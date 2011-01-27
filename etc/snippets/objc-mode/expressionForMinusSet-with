@@ -1,0 +1,4 @@
+#name : expressionForMinusSet:with
+#group : NSExpression
+# --
+expressionForMinusSet:${1:(NSExpression *)left} with:${2:(NSExpression *)right}

@@ -1,0 +1,4 @@
+#name : setHTTPBody
+#group : NSURLRequest
+# --
+setHTTPBody:${1:(NSData *)data}

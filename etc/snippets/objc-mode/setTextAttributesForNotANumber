@@ -1,0 +1,4 @@
+#name : setTextAttributesForNotANumber
+#group : NSNumberFormatter
+# --
+setTextAttributesForNotANumber:${1:(NSDictionary *)newAttributes}

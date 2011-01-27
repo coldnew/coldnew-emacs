@@ -1,0 +1,4 @@
+#name : loadMetadata
+#group : NSPersistentStore
+# --
+loadMetadata:${1:(NSError **)error}

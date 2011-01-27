@@ -1,0 +1,4 @@
+#name : acceptCallID:error
+#group : GKVoiceChatService
+# --
+acceptCallID:${1:(NSInteger)callID} error:${2:(NSError **)error}

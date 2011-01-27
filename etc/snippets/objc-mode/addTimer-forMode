@@ -1,0 +1,4 @@
+#name : addTimer:forMode
+#group : NSRunLoop
+# --
+addTimer:${1:(NSTimer *)timer} forMode:${2:(NSString *)mode}

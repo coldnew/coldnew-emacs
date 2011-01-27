@@ -1,0 +1,4 @@
+#name : minusSet
+#group : NSSet
+# --
+minusSet:${1:(NSSet *)otherSet}

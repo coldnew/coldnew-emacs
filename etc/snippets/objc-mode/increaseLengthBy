@@ -1,0 +1,4 @@
+#name : increaseLengthBy
+#group : NSData
+# --
+increaseLengthBy:${1:(NSUInteger)extraLength}

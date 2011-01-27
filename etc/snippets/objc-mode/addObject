@@ -1,0 +1,4 @@
+#name : addObject
+#group : NSSet
+# --
+addObject:${1:(id)object}

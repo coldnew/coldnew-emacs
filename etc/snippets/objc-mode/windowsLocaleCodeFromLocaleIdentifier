@@ -1,0 +1,4 @@
+#name : windowsLocaleCodeFromLocaleIdentifier
+#group : NSLocale
+# --
+windowsLocaleCodeFromLocaleIdentifier:${1:(NSString *)localeIdentifier}

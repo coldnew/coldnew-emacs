@@ -1,0 +1,4 @@
+#name : removeObjectsFromIndices:numIndices
+#group : NSArray
+# --
+removeObjectsFromIndices:${1:(NSUInteger *)indices} numIndices:${2:(NSUInteger)cnt}

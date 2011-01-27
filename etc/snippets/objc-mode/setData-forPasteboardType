@@ -1,0 +1,4 @@
+#name : setData:forPasteboardType
+#group : UIPasteboard
+# --
+setData:${1:(NSData *)data} forPasteboardType:${2:(NSString *)pasteboardType}

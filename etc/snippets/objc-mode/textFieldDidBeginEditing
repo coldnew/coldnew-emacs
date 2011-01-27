@@ -1,0 +1,4 @@
+#name : textFieldDidBeginEditing
+#group : UITextField
+# --
+textFieldDidBeginEditing:${1:(UITextField *)textField}

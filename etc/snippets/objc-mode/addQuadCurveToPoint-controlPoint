@@ -1,0 +1,4 @@
+#name : addQuadCurveToPoint:controlPoint
+#group : UIBezierPath
+# --
+addQuadCurveToPoint:${1:(CGPoint)endPoint} controlPoint:${2:(CGPoint)controlPoint}

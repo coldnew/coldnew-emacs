@@ -1,0 +1,4 @@
+#name : initWithBool
+#group : NSValue
+# --
+initWithBool:${1:(BOOL)value}

@@ -1,0 +1,4 @@
+#name : localeIdentifierFromWindowsLocaleCode
+#group : NSLocale
+# --
+localeIdentifierFromWindowsLocaleCode:${1:(uint32_t)lcid}

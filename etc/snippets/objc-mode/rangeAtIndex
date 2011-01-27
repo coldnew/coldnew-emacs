@@ -1,0 +1,4 @@
+#name : rangeAtIndex
+#group : NSTextCheckingResult
+# --
+rangeAtIndex:${1:(NSUInteger)idx}

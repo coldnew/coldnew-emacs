@@ -1,0 +1,4 @@
+#name : writeData
+#group : NSFileHandle
+# --
+writeData:${1:(NSData *)data}

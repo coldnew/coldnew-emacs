@@ -1,0 +1,4 @@
+#name : eventWithIdentifier
+#group : EKEventStore
+# --
+eventWithIdentifier:${1:(NSString *)identifier}

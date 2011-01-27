@@ -1,60 +1,62 @@
 ;;;; All extra dependency
 (eval-when-compile (require 'cl))
 
-;; Must include in coldnew's emacs
-(require 'ac-company)			; Auto-Complete with company-mode
-(require 'auto-complete)		; Auto-Complete
-(require 'auto-complete-config)
-(require 'c-eldoc)
-(require 'cedet)
-(require 'color-theme)			; Color-theme
-(require 'company)
-(require 'doxymacs)			; Doxygen for emacs
-(require 'dropdown-list)
-(require 'el-get)
-(require 'eldoc)			; Emacs-Lisp Documents Browser
-(require 'eldoc-extension)		; Emacs-Lisp Documents Browser Extension
-(require 'find-file)
-(require 'highlight-parentheses)	; Highlight pair parentheses
-(require 'hungry-delete)
-(require 'ibuffer)			; iBuffer
-(require 'lusty-explorer)		; A good explorer tools
-(require 'magit)
-(require 'midnight)			; Use midnight-mode to auto-clean buffers
-(require 'paredit)			; Use Paredit to balance parentheses
-(require 'popup-pos-tip)
-(require 'pos-tip)
-(require 'pos-tip)
-(require 'pretty-lambdada)		; Show lambda in smbol
-(require 'python)			; Python
-(require 'rainbow-mode)
-(require 'recentf)			; Recent Files
-(require 'session)			; Use Session to save current positions
-(require 'shell-pop)			; Pop-up Shells
-(require 'slime)
-(require 'smartchr)
-(require 'ssh-config)			; Syntax Highlight ssh-configure files
-(require 'thingatpt)
-(require 'undo-tree)			; Use undo-tree instead of redo.el
-(require 'uniquify)
-(require 'uniquify)			; If two buffer have the same name, rename both
-(require 'vim)				; Use Vim-Mode
-(require 'woman)			; Use Woman
-(require 'xcscope)
-(require 'yasnippet)
-(require 'newlisp)
-
-;;(require 'emms)
-;;(require 'ibuffer-expert)		; iBuffer Expert
-;;(require 'ipython)			; iPython
-;;(require 'matlab)			; Matlab
-;;(require 'pymacs)			; Pymacs
-
-
-
-
+(require-maybe 'ac-company)			; Auto-Complete with company-mode
+(require-maybe 'auto-complete)			; Auto-Complete
+(require-maybe 'auto-complete-clang)		;
+(require-maybe 'auto-complete-config)		;
+(require-maybe 'auto-complete-etags)		;
+(require-maybe 'auto-complete-extension)	;
+(require-maybe 'c-eldoc)			;
+(require-maybe 'cedet)				;
+(require-maybe 'color-theme)			; Color-theme
+(require-maybe 'company)			; Another aoto-complete plugins
+(require-maybe 'doxymacs)			; Doxygen for emacs
+(require-maybe 'dropdown-list)			;
+(require-maybe 'el-get)				; Emacs-Lisp Manager
+(require-maybe 'eldoc)				; Emacs-Lisp Documents Browser
+(require-maybe 'eldoc-extension)		; Emacs-Lisp Documents Browser Extension
+(require-maybe 'emms)				; Emacs Multimedia System
+(require-maybe 'find-file)			;
+(require-maybe 'highlight-parentheses)		; Highlight pair parentheses
+(require-maybe 'hungry-delete)			;
+(require-maybe 'ibuf-ext)			; iBuffer Extension
+(require-maybe 'ibuffer)			; iBuffer
+(require-maybe 'info)				;
+(require-maybe 'lusty-explorer)			; A good explorer tools
+(require-maybe 'magit)				;
+(require-maybe 'midnight)			; Use midnight-mode to auto-clean buffers
+(require-maybe 'multi-term)			;
+(require-maybe 'nav)				;
+(require-maybe 'newlisp)			; newlisp
+(require-maybe 'paredit)			; Use Paredit to balance parentheses
+(require-maybe 'popup-pos-tip)			;
+(require-maybe 'pos-tip)			;
+(require-maybe 'pretty-lambdada)		; Show lambda in smbol
+(require-maybe 'python)				; Python
+(require-maybe 'rainbow-mode)			; Color the emacs buffer
+(require-maybe 'recentf)			; Setup a menu of recently opened files
+(require-maybe 'session)			; Use Session to save current positions
+(require-maybe 'shell-pop)			; Helps you pop up and pop out shell buffer easily
+(require-maybe 'slime)				; Superior Lisp Interaction Mode for Emacs
+(require-maybe 'smartchr)			; Emacs version of smartchr.vim
+(require-maybe 'ssh-config)			; Syntax Highlight ssh-configure files
+(require-maybe 'sunrise-commander)		; A commander looks like MC
+(require-maybe 'thingatpt)			; Get the thing at point
+(require-maybe 'undo-tree)			; Use undo-tree instead of redo.el
+(require-maybe 'uniquify)			; If two buffer have the same name, rename both
+(require-maybe 'vim)				; Use Vim-Mode
+(require-maybe 'windmove)			; Directional window-selection routines
+(require-maybe 'woman)				; Use Woman
+(require-maybe 'xcscope)			; Cscope interface for Emacs
+(require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
+(require-maybe 'x-dnd)				; Drag and drop support for X
 
 
+
+;;(require-maybe 'ipython)			; iPython
+;;(require-maybe 'matlab)			; Matlab
+;;(require-maybe 'pymacs)			; Pymacs
 
 
 (provide '003-dependency)

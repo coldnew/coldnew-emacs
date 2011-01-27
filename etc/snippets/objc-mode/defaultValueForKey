@@ -1,0 +1,4 @@
+#name : defaultValueForKey
+#group : CALayer
+# --
+defaultValueForKey:${1:(NSString *)key}

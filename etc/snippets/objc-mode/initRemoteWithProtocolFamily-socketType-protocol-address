@@ -1,0 +1,4 @@
+#name : initRemoteWithProtocolFamily:socketType:protocol:address
+#group : NSPort
+# --
+initRemoteWithProtocolFamily:${1:(int)family} socketType:${2:(int)type} protocol:${3:(int)protocol} address:${4:(NSData *)address}

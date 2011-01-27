@@ -1,0 +1,4 @@
+#name : lockBeforeDate
+#group : NSLock
+# --
+lockBeforeDate:${1:(NSDate *)limit}

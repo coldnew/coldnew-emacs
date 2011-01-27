@@ -1,0 +1,4 @@
+#name : mutableArrayValueForKey
+#group : NSKeyValueCoding
+# --
+mutableArrayValueForKey:${1:(NSString *)key}

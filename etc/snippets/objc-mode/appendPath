@@ -1,0 +1,4 @@
+#name : appendPath
+#group : UIBezierPath
+# --
+appendPath:${1:(UIBezierPath *)bezierPath}

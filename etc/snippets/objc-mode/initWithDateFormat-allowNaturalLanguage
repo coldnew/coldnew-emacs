@@ -1,0 +1,4 @@
+#name : initWithDateFormat:allowNaturalLanguage
+#group : NSDateFormatter
+# --
+initWithDateFormat:${1:(NSString *)format} allowNaturalLanguage:${2:(BOOL)flag}

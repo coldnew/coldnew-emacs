@@ -1,0 +1,4 @@
+#name : deleteSections:withRowAnimation
+#group : UITableView
+# --
+deleteSections:${1:(NSIndexSet *)sections} withRowAnimation:${2:(UITableViewRowAnimation)animation}

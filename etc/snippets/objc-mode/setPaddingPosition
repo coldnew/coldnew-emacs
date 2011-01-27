@@ -1,0 +1,4 @@
+#name : setPaddingPosition
+#group : NSNumberFormatter
+# --
+setPaddingPosition:${1:(NSNumberFormatterPadPosition)position}

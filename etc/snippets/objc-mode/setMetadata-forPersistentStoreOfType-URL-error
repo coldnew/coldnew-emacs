@@ -1,0 +1,4 @@
+#name : setMetadata:forPersistentStoreOfType:URL:error
+#group : NSPersistentStoreCoordinator
+# --
+setMetadata:${1:(NSDictionary *)metadata} forPersistentStoreOfType:${2:(NSString *)storeType} URL:${3:(NSURL*)url} error:${4:(NSError **)error}

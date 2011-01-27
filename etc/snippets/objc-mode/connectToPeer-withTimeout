@@ -1,0 +1,4 @@
+#name : connectToPeer:withTimeout
+#group : GKSession
+# --
+connectToPeer:${1:(NSString *)peerID} withTimeout:${2:(NSTimeInterval)timeout}

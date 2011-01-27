@@ -1,0 +1,4 @@
+#name : application:didReceiveRemoteNotification
+#group : UIApplication
+# --
+application:${1:(UIApplication *)application} didReceiveRemoteNotification:${2:(NSDictionary *)userInfo}

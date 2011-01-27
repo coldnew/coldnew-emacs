@@ -1,0 +1,4 @@
+#name : decimalNumberHandlerWithRoundingMode:scale:raiseOnExactness:raiseOnOverflow:raiseOnUnderflow:raiseOnDivideByZero
+#group : NSDecimalNumber
+# --
+decimalNumberHandlerWithRoundingMode:${1:(NSRoundingMode)roundingMode} scale:${2:(short)scale} raiseOnExactness:${3:(BOOL)exact} raiseOnOverflow:${4:(BOOL)overflow} raiseOnUnderflow:${5:(BOOL)underflow} raiseOnDivideByZero:${6:(BOOL)divideByZero}

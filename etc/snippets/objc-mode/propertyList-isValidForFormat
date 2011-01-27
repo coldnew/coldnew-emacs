@@ -1,0 +1,4 @@
+#name : propertyList:isValidForFormat
+#group : NSPropertyList
+# --
+propertyList:${1:(id)plist} isValidForFormat:${2:(NSPropertyListFormat)format}

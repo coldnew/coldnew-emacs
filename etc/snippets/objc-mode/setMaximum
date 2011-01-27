@@ -1,0 +1,4 @@
+#name : setMaximum
+#group : NSNumberFormatter
+# --
+setMaximum:${1:(NSDecimalNumber *)aMaximum}

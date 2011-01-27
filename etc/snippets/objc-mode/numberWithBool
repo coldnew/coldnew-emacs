@@ -1,0 +1,4 @@
+#name : numberWithBool
+#group : NSValue
+# --
+numberWithBool:${1:(BOOL)value}

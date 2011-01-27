@@ -1,0 +1,4 @@
+#name : splitViewController:popoverController:willPresentViewController
+#group : UISplitViewController
+# --
+splitViewController:${1:(UISplitViewController*)svc} popoverController:${2:(UIPopoverController*)pc} willPresentViewController:${3:(UIViewController *)aViewController}

@@ -1,0 +1,4 @@
+#name : URLProtocol:didCancelAuthenticationChallenge
+#group : NSURLProtocol
+# --
+URLProtocol:${1:(NSURLProtocol *)protocol} didCancelAuthenticationChallenge:${2:(NSURLAuthenticationChallenge *)challenge}

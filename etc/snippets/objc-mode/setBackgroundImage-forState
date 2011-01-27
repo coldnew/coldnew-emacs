@@ -1,0 +1,4 @@
+#name : setBackgroundImage:forState
+#group : UIButton
+# --
+setBackgroundImage:${1:(UIImage *)image} forState:${2:(UIControlState)state}

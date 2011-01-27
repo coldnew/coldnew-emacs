@@ -1,0 +1,4 @@
+#name : expressionForIntersectSet:with
+#group : NSExpression
+# --
+expressionForIntersectSet:${1:(NSExpression *)left} with:${2:(NSExpression *)right}

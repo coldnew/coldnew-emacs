@@ -1,0 +1,4 @@
+#name : initWithPolyline
+#group : MKPolylineView
+# --
+initWithPolyline:${1:(MKPolyline *)polyline}

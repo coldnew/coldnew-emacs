@@ -1,0 +1,4 @@
+#name : initWithRequest:delegate:startImmediately
+#group : NSURLConnection
+# --
+initWithRequest:${1:(NSURLRequest *)request} delegate:${2:(id)delegate} startImmediately:${3:(BOOL)startImmediately}

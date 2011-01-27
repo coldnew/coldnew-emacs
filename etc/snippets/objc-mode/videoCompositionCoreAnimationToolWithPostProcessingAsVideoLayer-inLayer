@@ -1,0 +1,4 @@
+#name : videoCompositionCoreAnimationToolWithPostProcessingAsVideoLayer:inLayer
+#group : AVVideoComposition
+# --
+videoCompositionCoreAnimationToolWithPostProcessingAsVideoLayer:${1:(CALayer *)videoLayer} inLayer:${2:(CALayer *)animationLayer}

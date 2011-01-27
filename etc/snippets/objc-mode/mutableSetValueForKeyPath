@@ -1,0 +1,4 @@
+#name : mutableSetValueForKeyPath
+#group : NSKeyValueCoding
+# --
+mutableSetValueForKeyPath:${1:(NSString *)keyPath}

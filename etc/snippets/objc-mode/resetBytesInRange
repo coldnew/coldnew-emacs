@@ -1,0 +1,4 @@
+#name : resetBytesInRange
+#group : NSData
+# --
+resetBytesInRange:${1:(NSRange)range}

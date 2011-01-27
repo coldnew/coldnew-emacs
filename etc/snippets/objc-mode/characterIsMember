@@ -1,0 +1,4 @@
+#name : characterIsMember
+#group : NSCharacterSet
+# --
+characterIsMember:${1:(unichar)aCharacter}

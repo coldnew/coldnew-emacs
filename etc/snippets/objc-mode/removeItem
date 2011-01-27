@@ -1,0 +1,4 @@
+#name : removeItem
+#group : AVPlayer
+# --
+removeItem:${1:(AVPlayerItem *)item}

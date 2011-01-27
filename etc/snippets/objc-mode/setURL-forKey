@@ -1,0 +1,4 @@
+#name : setURL:forKey
+#group : NSUserDefaults
+# --
+setURL:${1:(NSURL *)url} forKey:${2:(NSString *)defaultName}

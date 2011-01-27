@@ -1,0 +1,4 @@
+#name : initWithCString
+#group : NSString
+# --
+initWithCString:${1:(const char *)bytes}

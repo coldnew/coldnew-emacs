@@ -1,0 +1,4 @@
+#name : colorWithPatternImage
+#group : UIColor
+# --
+colorWithPatternImage:${1:(UIImage *)image}

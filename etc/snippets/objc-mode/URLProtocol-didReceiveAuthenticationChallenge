@@ -1,0 +1,4 @@
+#name : URLProtocol:didReceiveAuthenticationChallenge
+#group : NSURLProtocol
+# --
+URLProtocol:${1:(NSURLProtocol *)protocol} didReceiveAuthenticationChallenge:${2:(NSURLAuthenticationChallenge *)challenge}

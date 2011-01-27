@@ -1,0 +1,4 @@
+#name : unableToSetNilForKey
+#group : NSKeyValueCoding
+# --
+unableToSetNilForKey:${1:(NSString *)key}

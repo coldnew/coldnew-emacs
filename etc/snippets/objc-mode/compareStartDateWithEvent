@@ -1,0 +1,4 @@
+#name : compareStartDateWithEvent
+#group : EKEvent
+# --
+compareStartDateWithEvent:${1:(EKEvent *)other}

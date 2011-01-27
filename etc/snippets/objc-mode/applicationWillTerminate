@@ -1,0 +1,4 @@
+#name : applicationWillTerminate
+#group : UIApplication
+# --
+applicationWillTerminate:${1:(UIApplication *)application}

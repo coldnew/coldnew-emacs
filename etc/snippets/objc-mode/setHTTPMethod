@@ -1,0 +1,4 @@
+#name : setHTTPMethod
+#group : NSURLRequest
+# --
+setHTTPMethod:${1:(NSString *)method}

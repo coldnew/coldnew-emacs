@@ -1,0 +1,4 @@
+#name : initWithAccessory:forProtocol
+#group : EASession
+# --
+initWithAccessory:${1:(EAAccessory *)accessory} forProtocol:${2:(NSString *)protocolString}

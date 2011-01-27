@@ -1,0 +1,4 @@
+#name : initWithSearchBar:contentsController
+#group : UISearchDisplayController
+# --
+initWithSearchBar:${1:(UISearchBar *)searchBar} contentsController:${2:(UIViewController *)viewController}

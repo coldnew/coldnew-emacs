@@ -1,0 +1,4 @@
+#name : stringWithFileSystemRepresentation:length
+#group : NSFileManager
+# --
+stringWithFileSystemRepresentation:${1:(const char *)str} length:${2:(NSUInteger)len}

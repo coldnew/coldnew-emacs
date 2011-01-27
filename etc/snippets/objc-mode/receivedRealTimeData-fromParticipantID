@@ -1,0 +1,4 @@
+#name : receivedRealTimeData:fromParticipantID
+#group : GKVoiceChatService
+# --
+receivedRealTimeData:${1:(NSData *)audio} fromParticipantID:${2:(NSString *)participantID}

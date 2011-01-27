@@ -1,0 +1,4 @@
+#name : application:didRegisterForRemoteNotificationsWithDeviceToken
+#group : UIApplication
+# --
+application:${1:(UIApplication *)application} didRegisterForRemoteNotificationsWithDeviceToken:${2:(NSData *)deviceToken}

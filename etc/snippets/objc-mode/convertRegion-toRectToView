@@ -1,0 +1,4 @@
+#name : convertRegion:toRectToView
+#group : MKMapView
+# --
+convertRegion:${1:(MKCoordinateRegion)region} toRectToView:${2:(UIView *)view}

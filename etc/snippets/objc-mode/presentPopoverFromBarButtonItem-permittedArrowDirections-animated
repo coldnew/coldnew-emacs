@@ -1,0 +1,4 @@
+#name : presentPopoverFromBarButtonItem:permittedArrowDirections:animated
+#group : UIPopoverController
+# --
+presentPopoverFromBarButtonItem:${1:(UIBarButtonItem *)item} permittedArrowDirections:${2:(UIPopoverArrowDirection)arrowDirections} animated:${3:(BOOL)animated}

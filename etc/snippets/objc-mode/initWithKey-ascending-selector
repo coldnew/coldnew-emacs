@@ -1,0 +1,4 @@
+#name : initWithKey:ascending:selector
+#group : NSSortDescriptor
+# --
+initWithKey:${1:(NSString *)key} ascending:${2:(BOOL)ascending} selector:${3:(SEL)selector}

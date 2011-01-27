@@ -1,0 +1,4 @@
+#name : objectAtIndexPath
+#group : NSFetchedResultsController
+# --
+objectAtIndexPath:${1:(NSIndexPath *)indexPath}

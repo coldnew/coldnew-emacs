@@ -1,0 +1,4 @@
+#name : rectForSection
+#group : UITableView
+# --
+rectForSection:${1:(NSInteger)section}

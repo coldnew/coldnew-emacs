@@ -1,0 +1,4 @@
+#name : metadataForPersistentStore
+#group : NSPersistentStoreCoordinator
+# --
+metadataForPersistentStore:${1:(NSPersistentStore *)store}

@@ -1,0 +1,4 @@
+#name : setIndexedBySpotlight
+#group : NSPropertyDescription
+# --
+setIndexedBySpotlight:${1:(BOOL)flag}

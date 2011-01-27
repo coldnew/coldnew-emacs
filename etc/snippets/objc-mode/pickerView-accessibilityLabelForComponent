@@ -1,0 +1,4 @@
+#name : pickerView:accessibilityLabelForComponent
+#group : UIAccessibilityAdditions
+# --
+pickerView:${1:(UIPickerView *)pickerView} accessibilityLabelForComponent:${2:(NSInteger)component}

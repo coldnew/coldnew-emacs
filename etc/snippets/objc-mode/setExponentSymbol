@@ -1,0 +1,4 @@
+#name : setExponentSymbol
+#group : NSNumberFormatter
+# --
+setExponentSymbol:${1:(NSString *)string}

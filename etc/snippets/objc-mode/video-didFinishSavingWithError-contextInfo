@@ -1,0 +1,4 @@
+#name : video:didFinishSavingWithError:contextInfo
+#group : UIImagePickerController
+# --
+video:${1:(NSString *)videoPath} didFinishSavingWithError:${2:(NSError *)error} contextInfo:${3:(void *)contextInfo}

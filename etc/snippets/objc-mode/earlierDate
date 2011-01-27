@@ -1,0 +1,4 @@
+#name : earlierDate
+#group : NSDate
+# --
+earlierDate:${1:(NSDate *)anotherDate}

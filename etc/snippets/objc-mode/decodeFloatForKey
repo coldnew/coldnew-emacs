@@ -1,0 +1,4 @@
+#name : decodeFloatForKey
+#group : NSKeyedArchiver
+# --
+decodeFloatForKey:${1:(NSString *)key}

@@ -1,0 +1,4 @@
+#name : imageNamed
+#group : UIImage
+# --
+imageNamed:${1:(NSString *)name}

@@ -1,0 +1,4 @@
+#name : initWithData
+#group : UIImage
+# --
+initWithData:${1:(NSData *)data}

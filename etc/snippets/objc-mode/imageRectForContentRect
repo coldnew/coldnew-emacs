@@ -1,0 +1,4 @@
+#name : imageRectForContentRect
+#group : UIButton
+# --
+imageRectForContentRect:${1:(CGRect)contentRect}

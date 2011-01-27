@@ -1,0 +1,4 @@
+#name : initWithTabBarSystemItem:tag
+#group : UITabBarItem
+# --
+initWithTabBarSystemItem:${1:(UITabBarSystemItem)systemItem} tag:${2:(NSInteger)tag}

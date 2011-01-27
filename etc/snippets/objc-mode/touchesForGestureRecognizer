@@ -1,0 +1,4 @@
+#name : touchesForGestureRecognizer
+#group : UIEvent
+# --
+touchesForGestureRecognizer:${1:(UIGestureRecognizer *)gesture}

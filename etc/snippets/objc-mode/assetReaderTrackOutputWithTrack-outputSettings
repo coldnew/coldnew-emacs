@@ -1,0 +1,4 @@
+#name : assetReaderTrackOutputWithTrack:outputSettings
+#group : AVAssetReaderOutput
+# --
+assetReaderTrackOutputWithTrack:${1:(AVAssetTrack *)track} outputSettings:${2:(NSDictionary *)outputSettings}

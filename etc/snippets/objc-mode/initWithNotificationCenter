@@ -1,0 +1,4 @@
+#name : initWithNotificationCenter
+#group : NSNotificationQueue
+# --
+initWithNotificationCenter:${1:(NSNotificationCenter *)notificationCenter}

@@ -1,0 +1,4 @@
+#name : enumerateObjectsWithOptions
+#group : NSSet
+# --
+enumerateObjectsWithOptions:${1:(NSEnumerationOptions)opts}

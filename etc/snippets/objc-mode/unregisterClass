@@ -1,0 +1,4 @@
+#name : unregisterClass
+#group : NSURLProtocol
+# --
+unregisterClass:${1:(Class)protocolClass}

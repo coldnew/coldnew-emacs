@@ -1,0 +1,4 @@
+#name : initWithMediaType:outputSettings
+#group : AVAssetWriterInput
+# --
+initWithMediaType:${1:(NSString *)mediaType} outputSettings:${2:(NSDictionary *)outputSettings}

@@ -1,0 +1,4 @@
+#name : setMaxCount
+#group : NSRelationshipDescription
+# --
+setMaxCount:${1:(NSUInteger)maxCount}

@@ -1,0 +1,4 @@
+#name : setSharedURLCache
+#group : NSURLCache
+# --
+setSharedURLCache:${1:(NSURLCache *)cache}

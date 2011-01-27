@@ -1,0 +1,4 @@
+#name : setProperty:forKey:inRequest
+#group : NSURLProtocol
+# --
+setProperty:${1:(id)value} forKey:${2:(NSString *)key} inRequest:${3:(NSMutableURLRequest *)request}

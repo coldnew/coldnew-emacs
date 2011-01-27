@@ -1,0 +1,4 @@
+#name : startVoiceChatWithParticipantID:error
+#group : GKVoiceChatService
+# --
+startVoiceChatWithParticipantID:${1:(NSString *)participantID} error:${2:(NSError **)error}

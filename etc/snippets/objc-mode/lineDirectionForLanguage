@@ -1,0 +1,4 @@
+#name : lineDirectionForLanguage
+#group : NSLocale
+# --
+lineDirectionForLanguage:${1:(NSString *)isoLangCode}

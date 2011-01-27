@@ -125,7 +125,12 @@
 	       :type git
 	       :url "https://github.com/may/newlisp-mode.git"
 	       :features newlisp)
-
+	(:name sunrise-commander
+	       :type emacswiki)
+	(:name nav
+	       :type svn
+	       :url "http://emacs-nav.googlecode.com/svn/trunk/"
+	       :features nav)
 
 	;;elscreen
 	;;auctex

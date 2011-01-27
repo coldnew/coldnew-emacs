@@ -1,0 +1,4 @@
+#name : setActive:withFlags:error
+#group : AVAudioSession
+# --
+setActive:${1:(BOOL)beActive} withFlags:${2:(NSInteger)flags} error:${3:(NSError**)outError}

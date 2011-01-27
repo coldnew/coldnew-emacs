@@ -1,0 +1,4 @@
+#name : initCircularRegionWithCenter
+#group : CLRegion
+# --
+initCircularRegionWithCenter:${1:(CLLocationCoordinate2D)center}

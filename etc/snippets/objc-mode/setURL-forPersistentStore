@@ -1,0 +1,4 @@
+#name : setURL:forPersistentStore
+#group : NSPersistentStoreCoordinator
+# --
+setURL:${1:(NSURL*)url} forPersistentStore:${2:(NSPersistentStore *)store}

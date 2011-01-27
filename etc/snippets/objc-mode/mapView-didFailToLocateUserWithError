@@ -1,0 +1,4 @@
+#name : mapView:didFailToLocateUserWithError
+#group : MKMapView
+# --
+mapView:${1:(MKMapView *)mapView} didFailToLocateUserWithError:${2:(NSError *)error}

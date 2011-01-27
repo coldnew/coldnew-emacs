@@ -1,0 +1,4 @@
+#name : addIndexes
+#group : NSIndexSet
+# --
+addIndexes:${1:(NSIndexSet *)indexSet}

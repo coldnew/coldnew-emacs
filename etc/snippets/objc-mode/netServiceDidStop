@@ -1,0 +1,4 @@
+#name : netServiceDidStop
+#group : NSNetServices
+# --
+netServiceDidStop:${1:(NSNetService *)sender}

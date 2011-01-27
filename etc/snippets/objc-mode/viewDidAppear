@@ -1,0 +1,4 @@
+#name : viewDidAppear
+#group : UIViewController
+# --
+viewDidAppear:${1:(BOOL)animated}

@@ -1,0 +1,4 @@
+#name : assetReaderWithAsset:error
+#group : AVAssetReader
+# --
+assetReaderWithAsset:${1:(AVAsset *)asset} error:${2:(NSError **)outError}

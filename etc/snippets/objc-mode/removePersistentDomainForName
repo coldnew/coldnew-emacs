@@ -1,0 +1,4 @@
+#name : removePersistentDomainForName
+#group : NSUserDefaults
+# --
+removePersistentDomainForName:${1:(NSString *)domainName}

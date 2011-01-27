@@ -1,0 +1,4 @@
+#name : getValue
+#group : NSValue
+# --
+getValue:${1:(void *)value}

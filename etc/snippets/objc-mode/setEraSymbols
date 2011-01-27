@@ -1,0 +1,4 @@
+#name : setEraSymbols
+#group : NSDateFormatter
+# --
+setEraSymbols:${1:(NSArray *)array}

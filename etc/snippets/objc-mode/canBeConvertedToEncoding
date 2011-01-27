@@ -1,0 +1,4 @@
+#name : canBeConvertedToEncoding
+#group : NSString
+# --
+canBeConvertedToEncoding:${1:(NSStringEncoding)encoding}

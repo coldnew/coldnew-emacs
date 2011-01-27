@@ -1,0 +1,4 @@
+#name : statusOfValueForKey:error
+#group : AVAsynchronousKeyValueLoading
+# --
+statusOfValueForKey:${1:(NSString *)key} error:${2:(NSError **)outError}

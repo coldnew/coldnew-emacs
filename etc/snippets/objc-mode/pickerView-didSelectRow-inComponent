@@ -1,0 +1,4 @@
+#name : pickerView:didSelectRow:inComponent
+#group : UIPickerView
+# --
+pickerView:${1:(UIPickerView *)pickerView} didSelectRow:${2:(NSInteger)row} inComponent:${3:(NSInteger)component}

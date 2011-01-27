@@ -1,0 +1,4 @@
+#name : dictionaryWithObject:forKey
+#group : NSDictionary
+# --
+dictionaryWithObject:${1:(id)object} forKey:${2:(id)key}

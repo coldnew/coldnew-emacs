@@ -1,0 +1,4 @@
+#name : removeTrack
+#group : AVComposition
+# --
+removeTrack:${1:(AVCompositionTrack *)track}

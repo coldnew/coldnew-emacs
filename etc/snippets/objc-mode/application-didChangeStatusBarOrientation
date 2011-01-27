@@ -1,0 +1,4 @@
+#name : application:didChangeStatusBarOrientation
+#group : UIApplication
+# --
+application:${1:(UIApplication *)application} didChangeStatusBarOrientation:${2:(UIInterfaceOrientation)oldStatusBarOrientation}

@@ -1,0 +1,4 @@
+#name : peerPickerControllerDidCancel
+#group : GKPeerPickerController
+# --
+peerPickerControllerDidCancel:${1:(GKPeerPickerController *)picker}

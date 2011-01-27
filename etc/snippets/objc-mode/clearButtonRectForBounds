@@ -1,0 +1,4 @@
+#name : clearButtonRectForBounds
+#group : UITextField
+# --
+clearButtonRectForBounds:${1:(CGRect)bounds}

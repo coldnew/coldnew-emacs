@@ -1,0 +1,4 @@
+#name : numberFromString
+#group : NSNumberFormatter
+# --
+numberFromString:${1:(NSString *)string}

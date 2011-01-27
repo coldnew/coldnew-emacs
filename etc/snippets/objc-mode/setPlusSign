@@ -1,0 +1,4 @@
+#name : setPlusSign
+#group : NSNumberFormatter
+# --
+setPlusSign:${1:(NSString *)string}

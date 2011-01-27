@@ -1,0 +1,4 @@
+#name : assetImageGeneratorWithAsset
+#group : AVAssetImageGenerator
+# --
+assetImageGeneratorWithAsset:${1:(AVAsset *)asset}

@@ -1,0 +1,4 @@
+#name : bezierPathWithOvalInRect
+#group : UIBezierPath
+# --
+bezierPathWithOvalInRect:${1:(CGRect)rect}

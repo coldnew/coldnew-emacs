@@ -1,0 +1,4 @@
+#name : mappingModelFromBundles:forSourceModel:destinationModel
+#group : NSMappingModel
+# --
+mappingModelFromBundles:${1:(NSArray *)bundles} forSourceModel:${2:(NSManagedObjectModel *)sourceModel} destinationModel:${3:(NSManagedObjectModel *)destinationModel}

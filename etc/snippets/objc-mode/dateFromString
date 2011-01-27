@@ -1,0 +1,4 @@
+#name : dateFromString
+#group : NSDateFormatter
+# --
+dateFromString:${1:(NSString *)string}

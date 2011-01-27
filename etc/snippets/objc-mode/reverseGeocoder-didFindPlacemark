@@ -1,0 +1,4 @@
+#name : reverseGeocoder:didFindPlacemark
+#group : MKReverseGeocoder
+# --
+reverseGeocoder:${1:(MKReverseGeocoder *)geocoder} didFindPlacemark:${2:(MKPlacemark *)placemark}

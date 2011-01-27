@@ -1,0 +1,4 @@
+#name : bookmarkDataWithOptions:includingResourceValuesForKeys:relativeToURL:error
+#group : NSURL
+# --
+bookmarkDataWithOptions:${1:(NSURLBookmarkCreationOptions)options} includingResourceValuesForKeys:${2:(NSArray *)keys} relativeToURL:${3:(NSURL *)relativeURL} error:${4:(NSError **)error}

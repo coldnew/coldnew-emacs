@@ -1,0 +1,4 @@
+#name : averagePowerForChannel
+#group : AVAudioRecorder
+# --
+averagePowerForChannel:${1:(NSUInteger)channelNumber}

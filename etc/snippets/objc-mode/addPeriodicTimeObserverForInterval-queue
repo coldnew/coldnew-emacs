@@ -1,0 +1,4 @@
+#name : addPeriodicTimeObserverForInterval:queue
+#group : AVPlayer
+# --
+addPeriodicTimeObserverForInterval:${1:(CMTime)interval} queue:${2:(dispatch_queue_t)queue}

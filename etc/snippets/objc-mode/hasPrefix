@@ -1,0 +1,4 @@
+#name : hasPrefix
+#group : NSString
+# --
+hasPrefix:${1:(NSString *)aString}

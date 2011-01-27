@@ -1,0 +1,4 @@
+#name : initWithUTF8String
+#group : NSString
+# --
+initWithUTF8String:${1:(const char *)nullTerminatedCString}

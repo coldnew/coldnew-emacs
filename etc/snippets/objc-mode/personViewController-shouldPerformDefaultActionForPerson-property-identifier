@@ -1,0 +1,4 @@
+#name : personViewController:shouldPerformDefaultActionForPerson:property:identifier
+#group : ABPersonViewController
+# --
+personViewController:${1:(ABPersonViewController *)personViewController} shouldPerformDefaultActionForPerson:${2:(ABRecordRef)person} property:${3:(ABPropertyID)property} identifier:${4:(ABMultiValueIdentifier)identifier}

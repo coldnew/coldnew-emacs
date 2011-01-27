@@ -1,0 +1,4 @@
+#name : registerForRemoteNotificationTypes
+#group : UIApplication
+# --
+registerForRemoteNotificationTypes:${1:(UIRemoteNotificationType)types}

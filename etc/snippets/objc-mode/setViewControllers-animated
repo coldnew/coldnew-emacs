@@ -1,0 +1,4 @@
+#name : setViewControllers:animated
+#group : UITabBarController
+# --
+setViewControllers:${1:(NSArray *)viewControllers} animated:${2:(BOOL)animated}

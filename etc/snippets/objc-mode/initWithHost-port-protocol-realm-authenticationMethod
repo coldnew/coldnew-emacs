@@ -1,0 +1,4 @@
+#name : initWithHost:port:protocol:realm:authenticationMethod
+#group : NSURLProtectionSpace
+# --
+initWithHost:${1:(NSString *)host} port:${2:(NSInteger)port} protocol:${3:(NSString *)protocol} realm:${4:(NSString *)realm} authenticationMethod:${5:(NSString *)authenticationMethod}

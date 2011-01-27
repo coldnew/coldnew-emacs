@@ -1,0 +1,4 @@
+#name : contentsOfDirectoryAtURL:includingPropertiesForKeys:options:error
+#group : NSFileManager
+# --
+contentsOfDirectoryAtURL:${1:(NSURL *)url} includingPropertiesForKeys:${2:(NSArray *)keys} options:${3:(NSDirectoryEnumerationOptions)mask} error:${4:(NSError **)error}

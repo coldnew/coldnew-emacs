@@ -1,0 +1,4 @@
+#name : publishWithOptions
+#group : NSNetServices
+# --
+publishWithOptions:${1:(NSNetServiceOptions)options}

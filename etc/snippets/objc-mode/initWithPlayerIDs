@@ -1,0 +1,4 @@
+#name : initWithPlayerIDs
+#group : GKLeaderboard
+# --
+initWithPlayerIDs:${1:(NSArray *)playerIDs}

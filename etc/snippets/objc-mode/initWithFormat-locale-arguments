@@ -1,0 +1,4 @@
+#name : initWithFormat:locale:arguments
+#group : NSString
+# --
+initWithFormat:${1:(NSString *)format} locale:${2:(id)locale} arguments:${3:(va_list)argList}

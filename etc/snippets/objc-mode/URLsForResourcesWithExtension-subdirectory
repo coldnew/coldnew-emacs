@@ -1,0 +1,4 @@
+#name : URLsForResourcesWithExtension:subdirectory
+#group : NSBundle
+# --
+URLsForResourcesWithExtension:${1:(NSString *)ext} subdirectory:${2:(NSString *)subpath}

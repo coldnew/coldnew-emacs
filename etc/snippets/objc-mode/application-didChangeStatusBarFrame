@@ -1,0 +1,4 @@
+#name : application:didChangeStatusBarFrame
+#group : UIApplication
+# --
+application:${1:(UIApplication *)application} didChangeStatusBarFrame:${2:(CGRect)oldStatusBarFrame}

@@ -1,0 +1,4 @@
+#name : seekToFileOffset
+#group : NSFileHandle
+# --
+seekToFileOffset:${1:(unsigned long long)offset}

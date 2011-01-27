@@ -1,0 +1,4 @@
+#name : propertyListFromData:mutabilityOption:format:errorDescription
+#group : NSPropertyList
+# --
+propertyListFromData:${1:(NSData *)data} mutabilityOption:${2:(NSPropertyListMutabilityOptions)opt} format:${3:(NSPropertyListFormat *)format} errorDescription:${4:(NSString **)errorString}

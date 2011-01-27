@@ -1,0 +1,4 @@
+#name : getObjects:andKeys
+#group : NSDictionary
+# --
+getObjects:${1:(id *)objects} andKeys:${2:(id *)keys}

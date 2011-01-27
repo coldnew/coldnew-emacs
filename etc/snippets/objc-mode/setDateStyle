@@ -1,0 +1,4 @@
+#name : setDateStyle
+#group : NSDateFormatter
+# --
+setDateStyle:${1:(NSDateFormatterStyle)style}

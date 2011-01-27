@@ -1,0 +1,4 @@
+#name : encodeFloat:forKey
+#group : NSKeyedArchiver
+# --
+encodeFloat:${1:(float)realv} forKey:${2:(NSString *)key}

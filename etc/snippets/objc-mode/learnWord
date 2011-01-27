@@ -1,0 +1,4 @@
+#name : learnWord
+#group : UITextChecker
+# --
+learnWord:${1:(NSString *)word}

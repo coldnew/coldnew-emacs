@@ -1,0 +1,4 @@
+#name : getCString
+#group : NSString
+# --
+getCString:${1:(char *)bytes}

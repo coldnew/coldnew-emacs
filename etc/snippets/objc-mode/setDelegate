@@ -1,0 +1,4 @@
+#name : setDelegate
+#group : NSFileManager
+# --
+setDelegate:${1:(id)delegate}

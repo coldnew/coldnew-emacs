@@ -1,0 +1,4 @@
+#name : fileURLWithPathComponents
+#group : NSURL
+# --
+fileURLWithPathComponents:${1:(NSArray *)components}

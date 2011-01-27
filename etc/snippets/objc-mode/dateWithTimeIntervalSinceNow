@@ -1,0 +1,4 @@
+#name : dateWithTimeIntervalSinceNow
+#group : NSDate
+# --
+dateWithTimeIntervalSinceNow:${1:(NSTimeInterval)secs}

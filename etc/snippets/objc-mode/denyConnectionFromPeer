@@ -1,0 +1,4 @@
+#name : denyConnectionFromPeer
+#group : GKSession
+# --
+denyConnectionFromPeer:${1:(NSString *)peerID}

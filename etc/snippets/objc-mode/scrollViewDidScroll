@@ -1,0 +1,4 @@
+#name : scrollViewDidScroll
+#group : UIScrollView
+# --
+scrollViewDidScroll:${1:(UIScrollView *)scrollView}

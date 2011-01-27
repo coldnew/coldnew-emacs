@@ -1,0 +1,4 @@
+#name : setFormatWidth
+#group : NSNumberFormatter
+# --
+setFormatWidth:${1:(NSUInteger)number}

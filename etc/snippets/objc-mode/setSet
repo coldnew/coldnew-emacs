@@ -1,0 +1,4 @@
+#name : setSet
+#group : NSSet
+# --
+setSet:${1:(NSSet *)otherSet}

@@ -1,0 +1,4 @@
+#name : canSetSessionPreset
+#group : AVCaptureSession
+# --
+canSetSessionPreset:${1:(NSString*)preset}

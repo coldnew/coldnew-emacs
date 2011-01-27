@@ -1,0 +1,4 @@
+#name : convertPoint:fromWindow
+#group : UIWindow
+# --
+convertPoint:${1:(CGPoint)point} fromWindow:${2:(UIWindow *)window}

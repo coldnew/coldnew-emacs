@@ -1,0 +1,4 @@
+#name : setMenuVisible:animated
+#group : UIMenuController
+# --
+setMenuVisible:${1:(BOOL)menuVisible} animated:${2:(BOOL)animated}

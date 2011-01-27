@@ -1,0 +1,4 @@
+#name : fileManager:shouldProceedAfterError
+#group : NSFileManager
+# --
+fileManager:${1:(NSFileManager *)fm} shouldProceedAfterError:${2:(NSDictionary *)errorInfo}

@@ -1,0 +1,4 @@
+#name : scanInteger
+#group : NSScanner
+# --
+scanInteger:${1:(NSInteger *)value}

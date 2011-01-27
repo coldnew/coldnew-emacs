@@ -1,0 +1,4 @@
+#name : characterSetWithRange
+#group : NSCharacterSet
+# --
+characterSetWithRange:${1:(NSRange)aRange}

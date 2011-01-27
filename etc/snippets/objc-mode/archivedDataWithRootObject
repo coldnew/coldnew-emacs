@@ -1,0 +1,4 @@
+#name : archivedDataWithRootObject
+#group : NSKeyedArchiver
+# --
+archivedDataWithRootObject:${1:(id)rootObject}

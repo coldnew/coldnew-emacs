@@ -1,0 +1,4 @@
+#name : countForFetchRequest:error
+#group : NSManagedObjectContext
+# --
+countForFetchRequest:${1:(NSFetchRequest *)request} error:${2:(NSError **)error}

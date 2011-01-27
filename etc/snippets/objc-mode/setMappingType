@@ -1,0 +1,4 @@
+#name : setMappingType
+#group : NSEntityMapping
+# --
+setMappingType:${1:(NSEntityMappingType)type}

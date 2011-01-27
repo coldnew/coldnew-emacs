@@ -1,0 +1,4 @@
+#name : segmentForTrackTime
+#group : AVAssetTrack
+# --
+segmentForTrackTime:${1:(CMTime)trackTime}

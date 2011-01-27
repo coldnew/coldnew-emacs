@@ -1,0 +1,4 @@
+#name : insertObject:atIndex
+#group : NSArray
+# --
+insertObject:${1:(id)anObject} atIndex:${2:(NSUInteger)index}

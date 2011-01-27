@@ -1,0 +1,4 @@
+#name : textInRange
+#group : UITextInput
+# --
+textInRange:${1:(UITextRange *)range}

@@ -1,0 +1,4 @@
+#name : deleteObject
+#group : NSManagedObjectContext
+# --
+deleteObject:${1:(NSManagedObject *)object}

@@ -1,0 +1,4 @@
+#name : conformsToProtocol
+#group : NSObject
+# --
+conformsToProtocol:${1:(Protocol *)protocol}

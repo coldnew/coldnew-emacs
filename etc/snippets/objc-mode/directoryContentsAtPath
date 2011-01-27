@@ -1,0 +1,4 @@
+#name : directoryContentsAtPath
+#group : NSFileManager
+# --
+directoryContentsAtPath:${1:(NSString *)path}

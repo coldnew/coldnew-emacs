@@ -1,0 +1,4 @@
+#name : fileManager:shouldProceedAfterError:copyingItemAtURL:toURL
+#group : NSFileManager
+# --
+fileManager:${1:(NSFileManager *)fileManager} shouldProceedAfterError:${2:(NSError *)error} copyingItemAtURL:${3:(NSURL *)srcURL} toURL:${4:(NSURL *)dstURL}

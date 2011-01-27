@@ -1,0 +1,4 @@
+#name : initWithMantissa:exponent:isNegative
+#group : NSDecimalNumber
+# --
+initWithMantissa:${1:(unsigned long long)mantissa} exponent:${2:(short)exponent} isNegative:${3:(BOOL)flag}

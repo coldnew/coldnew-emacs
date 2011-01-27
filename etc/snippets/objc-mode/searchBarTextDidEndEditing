@@ -1,0 +1,4 @@
+#name : searchBarTextDidEndEditing
+#group : UISearchBar
+# --
+searchBarTextDidEndEditing:${1:(UISearchBar *)searchBar}

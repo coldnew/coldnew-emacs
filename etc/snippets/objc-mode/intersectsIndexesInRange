@@ -1,0 +1,4 @@
+#name : intersectsIndexesInRange
+#group : NSIndexSet
+# --
+intersectsIndexesInRange:${1:(NSRange)range}

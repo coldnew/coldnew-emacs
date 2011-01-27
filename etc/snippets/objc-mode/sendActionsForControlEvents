@@ -1,0 +1,4 @@
+#name : sendActionsForControlEvents
+#group : UIControl
+# --
+sendActionsForControlEvents:${1:(UIControlEvents)controlEvents}

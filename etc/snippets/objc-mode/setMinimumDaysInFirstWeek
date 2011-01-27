@@ -1,0 +1,4 @@
+#name : setMinimumDaysInFirstWeek
+#group : NSCalendar
+# --
+setMinimumDaysInFirstWeek:${1:(NSUInteger)mdw}

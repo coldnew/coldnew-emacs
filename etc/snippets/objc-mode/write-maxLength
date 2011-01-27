@@ -1,0 +1,4 @@
+#name : write:maxLength
+#group : NSStream
+# --
+write:${1:(const uint8_t *)buffer} maxLength:${2:(NSUInteger)len}

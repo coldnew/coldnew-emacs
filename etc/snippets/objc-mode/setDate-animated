@@ -1,0 +1,4 @@
+#name : setDate:animated
+#group : UIDatePicker
+# --
+setDate:${1:(NSDate *)date} animated:${2:(BOOL)animated}

@@ -1,0 +1,4 @@
+#name : components:fromDate
+#group : NSCalendar
+# --
+components:${1:(NSUInteger)unitFlags} fromDate:${2:(NSDate *)date}

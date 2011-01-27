@@ -1,0 +1,4 @@
+#name : setValueExpression
+#group : NSPropertyMapping
+# --
+setValueExpression:${1:(NSExpression *)expression}

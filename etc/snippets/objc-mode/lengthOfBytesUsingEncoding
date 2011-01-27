@@ -1,0 +1,4 @@
+#name : lengthOfBytesUsingEncoding
+#group : NSString
+# --
+lengthOfBytesUsingEncoding:${1:(NSStringEncoding)enc}

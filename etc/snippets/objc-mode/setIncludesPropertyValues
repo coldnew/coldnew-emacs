@@ -1,0 +1,4 @@
+#name : setIncludesPropertyValues
+#group : NSFetchRequest
+# --
+setIncludesPropertyValues:${1:(BOOL)yesNo}

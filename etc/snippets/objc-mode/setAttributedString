@@ -1,0 +1,4 @@
+#name : setAttributedString
+#group : NSAttributedString
+# --
+setAttributedString:${1:(NSAttributedString *)attrString}

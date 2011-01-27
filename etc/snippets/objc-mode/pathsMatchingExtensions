@@ -1,0 +1,4 @@
+#name : pathsMatchingExtensions
+#group : NSPathUtilities
+# --
+pathsMatchingExtensions:${1:(NSArray *)filterTypes}

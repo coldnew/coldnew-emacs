@@ -1,0 +1,4 @@
+#name : outputStreamWithURL:append
+#group : NSStream
+# --
+outputStreamWithURL:${1:(NSURL *)url} append:${2:(BOOL)shouldAppend}

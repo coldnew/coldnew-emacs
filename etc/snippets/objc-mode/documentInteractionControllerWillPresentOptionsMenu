@@ -1,0 +1,4 @@
+#name : documentInteractionControllerWillPresentOptionsMenu
+#group : UIDocumentInteractionController
+# --
+documentInteractionControllerWillPresentOptionsMenu:${1:(UIDocumentInteractionController *)controller}

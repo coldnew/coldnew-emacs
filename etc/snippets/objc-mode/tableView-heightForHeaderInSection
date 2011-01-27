@@ -1,0 +1,4 @@
+#name : tableView:heightForHeaderInSection
+#group : UITableView
+# --
+tableView:${1:(UITableView *)tableView} heightForHeaderInSection:${2:(NSInteger)section}

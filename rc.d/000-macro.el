@@ -3,18 +3,21 @@
 
 ;;;;; Extra font-lock face for userdefine macro.
 
-;; (add-hook 'emacs-lisp-mode-hook
-;;	  (lambda ()
+
 (font-lock-add-keywords 'emacs-lisp-mode
 			'(("(\\(\\defcmd\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
 			   (1 font-lock-keyword-face)
 			   (2 font-lock-function-name-face))));))
-;;;;;; Macro
+
+(font-lock-add-keywords 'emacs-lisp-mode
+			'(("(\\(require-maybe\\)\\s [ \t']*\\(\\sw+\\)?"
+			   (1 font-lock-keyword-face)
+			   (2 font-lock-constant-face nil t))))
 
 
-;; FIXME: not good enough
+
 (defmacro* defcmd (name &rest body)
-  "Define a new command in macro."
+  "Define a interactive functions without arguments."
   (if (and (consp body)
 	   (cdr body)
 	   (stringp (car body)))
@@ -30,10 +33,6 @@
        (apply (get ',name 'function) args))))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
 
 ;; (defmacro require-maybe (feature &optional file)
 ;;   "*Try to require FEATURE, but don't signal an error if `require' fails."
@@ -46,8 +45,8 @@
 (defmacro require-maybe (feature &optional file)
   "*Try to require FEATURE, but don't signal an error if `require' fails."
   `(let ((require-result (require ,feature ,file 'noerror)))
-     (with-current-buffer (get-buffer-create "*Startup Log*")
-       (let* ((startup-log-format-string-prefix "%-20s--------[")
+     (with-current-buffer (get-buffer-create "*Loading Log*")
+       (let* ((startup-log-format-string-prefix "\t%-30s\t\t\t[")
 	      (startup-log-format-string-postfix "%s")
 	      (startup-status (if require-result "LOADED" "FAILED"))
 	      (startup-status-face `(face (:foreground
@@ -59,15 +58,6 @@
 	   (insert "]\n"))))
      require-result))
 
-;; (defvar tes-font-lock
-;;   (eval-when-compile
-;;     `(
-;;       ,(concat "(require-maybe)\\>"
-;;	       "[ \t']*\\(\\sw+\\)?")
-;;       (1 font-lock-keyword-face)
-;;       (2 font-lock-constant-face nil t)
-;;       )
-;;     )
-;;   )
 
 (provide '000-macro)
+;; 000-macro.el ends here.
