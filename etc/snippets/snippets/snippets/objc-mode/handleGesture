@@ -1,0 +1,4 @@
+#name : handleGesture
+#group : UIGestureRecognizer
+# --
+handleGesture:${1:(UIGestureRecognizer*)gestureRecognizer}

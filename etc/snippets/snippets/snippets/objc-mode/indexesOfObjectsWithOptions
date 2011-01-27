@@ -1,0 +1,4 @@
+#name : indexesOfObjectsWithOptions
+#group : NSArray
+# --
+indexesOfObjectsWithOptions:${1:(NSEnumerationOptions)opts}

@@ -1,0 +1,4 @@
+#name : tabBar:didSelectItem
+#group : UITabBar
+# --
+tabBar:${1:(UITabBar *)tabBar} didSelectItem:${2:(UITabBarItem *)item}

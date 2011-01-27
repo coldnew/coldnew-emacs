@@ -1,0 +1,4 @@
+#name : lockWhenCondition:beforeDate
+#group : NSLock
+# --
+lockWhenCondition:${1:(NSInteger)condition} beforeDate:${2:(NSDate *)limit}

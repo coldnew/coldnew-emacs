@@ -1,0 +1,4 @@
+#name : stopVoiceChatWithParticipantID
+#group : GKVoiceChatService
+# --
+stopVoiceChatWithParticipantID:${1:(NSString *)participantID}

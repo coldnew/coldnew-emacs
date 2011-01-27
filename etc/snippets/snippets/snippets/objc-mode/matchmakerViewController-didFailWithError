@@ -1,0 +1,4 @@
+#name : matchmakerViewController:didFailWithError
+#group : GKMatchmakerViewController
+# --
+matchmakerViewController:${1:(GKMatchmakerViewController *)viewController} didFailWithError:${2:(NSError *)error}

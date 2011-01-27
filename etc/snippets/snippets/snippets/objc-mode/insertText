@@ -1,0 +1,4 @@
+#name : insertText
+#group : UITextInput
+# --
+insertText:${1:(NSString *)text}

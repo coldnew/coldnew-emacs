@@ -1,0 +1,4 @@
+#name : reloadRowsAtIndexPaths:withRowAnimation
+#group : UITableView
+# --
+reloadRowsAtIndexPaths:${1:(NSArray *)indexPaths} withRowAnimation:${2:(UITableViewRowAnimation)animation}

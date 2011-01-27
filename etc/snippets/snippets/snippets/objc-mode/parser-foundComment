@@ -1,0 +1,4 @@
+#name : parser:foundComment
+#group : NSXMLParser
+# --
+parser:${1:(NSXMLParser *)parser} foundComment:${2:(NSString *)comment}

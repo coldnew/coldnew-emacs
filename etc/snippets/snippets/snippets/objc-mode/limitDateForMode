@@ -1,0 +1,4 @@
+#name : limitDateForMode
+#group : NSRunLoop
+# --
+limitDateForMode:${1:(NSString *)mode}

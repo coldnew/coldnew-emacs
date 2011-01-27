@@ -1,0 +1,4 @@
+#name : dataUsingEncoding
+#group : NSString
+# --
+dataUsingEncoding:${1:(NSStringEncoding)encoding}

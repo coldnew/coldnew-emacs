@@ -1,0 +1,4 @@
+#name : stringWithContentsOfURL
+#group : NSString
+# --
+stringWithContentsOfURL:${1:(NSURL *)url}

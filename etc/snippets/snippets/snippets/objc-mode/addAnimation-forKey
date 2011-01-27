@@ -1,0 +1,4 @@
+#name : addAnimation:forKey
+#group : CALayer
+# --
+addAnimation:${1:(CAAnimation *)anim} forKey:${2:(NSString *)key}

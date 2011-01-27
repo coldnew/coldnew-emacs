@@ -1,0 +1,4 @@
+#name : motionEnded:withEvent
+#group : UIResponder
+# --
+motionEnded:${1:(UIEventSubtype)motion} withEvent:${2:(UIEvent *)event}

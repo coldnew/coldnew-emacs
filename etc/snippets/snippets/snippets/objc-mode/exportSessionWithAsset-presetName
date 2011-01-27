@@ -1,0 +1,4 @@
+#name : exportSessionWithAsset:presetName
+#group : AVAssetExportSession
+# --
+exportSessionWithAsset:${1:(AVAsset *)asset} presetName:${2:(NSString *)presetName}

@@ -1,0 +1,4 @@
+#name : dictionaryWithDictionary
+#group : NSDictionary
+# --
+dictionaryWithDictionary:${1:(NSDictionary *)dict}

@@ -1,0 +1,4 @@
+#name : hasMediaType
+#group : AVCaptureDevice
+# --
+hasMediaType:${1:(NSString *)mediaType}

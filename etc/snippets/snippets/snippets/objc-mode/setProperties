@@ -1,0 +1,4 @@
+#name : setProperties
+#group : NSEntityDescription
+# --
+setProperties:${1:(NSArray *)properties}

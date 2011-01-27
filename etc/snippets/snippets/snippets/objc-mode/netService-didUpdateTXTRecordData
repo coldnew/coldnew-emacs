@@ -1,0 +1,4 @@
+#name : netService:didUpdateTXTRecordData
+#group : NSNetServices
+# --
+netService:${1:(NSNetService *)sender} didUpdateTXTRecordData:${2:(NSData *)data}

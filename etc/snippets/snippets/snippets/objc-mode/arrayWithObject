@@ -1,0 +1,4 @@
+#name : arrayWithObject
+#group : NSArray
+# --
+arrayWithObject:${1:(id)anObject}

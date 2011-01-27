@@ -1,0 +1,4 @@
+#name : samplePresentationTimeForTrackTime
+#group : AVAssetTrack
+# --
+samplePresentationTimeForTrackTime:${1:(CMTime)trackTime}

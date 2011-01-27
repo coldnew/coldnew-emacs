@@ -1,0 +1,4 @@
+#name : dataForKey
+#group : NSUserDefaults
+# --
+dataForKey:${1:(NSString *)defaultName}

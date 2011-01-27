@@ -1,0 +1,4 @@
+#name : predicateWithValue:forProperty:comparisonType
+#group : MPMediaQuery
+# --
+predicateWithValue:${1:(id)value} forProperty:${2:(NSString *)property} comparisonType:${3:(MPMediaPredicateComparison)comparisonType}

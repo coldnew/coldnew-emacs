@@ -1,0 +1,4 @@
+#name : linkItemAtPath:toPath:error
+#group : NSFileManager
+# --
+linkItemAtPath:${1:(NSString *)srcPath} toPath:${2:(NSString *)dstPath} error:${3:(NSError **)error}

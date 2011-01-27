@@ -1,0 +1,4 @@
+#name : polygonWithPoints:count
+#group : MKPolygon
+# --
+polygonWithPoints:${1:(MKMapPoint *)points} count:${2:(NSUInteger)count}

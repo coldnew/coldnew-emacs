@@ -1,0 +1,4 @@
+#name : sortedArrayFromArray:collationStringSelector
+#group : UILocalizedIndexedCollation
+# --
+sortedArrayFromArray:${1:(NSArray *)array} collationStringSelector:${2:(SEL)selector}

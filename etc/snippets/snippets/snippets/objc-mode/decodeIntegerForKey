@@ -1,0 +1,4 @@
+#name : decodeIntegerForKey
+#group : NSCoder
+# --
+decodeIntegerForKey:${1:(NSString *)key}

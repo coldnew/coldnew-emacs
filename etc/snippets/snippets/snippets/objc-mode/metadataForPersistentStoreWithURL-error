@@ -1,0 +1,4 @@
+#name : metadataForPersistentStoreWithURL:error
+#group : NSPersistentStore
+# --
+metadataForPersistentStoreWithURL:${1:(NSURL *)url} error:${2:(NSError **)error}

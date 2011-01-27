@@ -1,0 +1,4 @@
+#name : metadataItemsFromArray:withLocale
+#group : AVMetadataItem
+# --
+metadataItemsFromArray:${1:(NSArray *)array} withLocale:${2:(NSLocale *)locale}

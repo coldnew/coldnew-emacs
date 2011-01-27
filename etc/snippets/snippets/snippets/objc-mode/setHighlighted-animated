@@ -1,0 +1,4 @@
+#name : setHighlighted:animated
+#group : UITableViewCell
+# --
+setHighlighted:${1:(BOOL)highlighted} animated:${2:(BOOL)animated}

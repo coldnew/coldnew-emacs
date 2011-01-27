@@ -1,0 +1,4 @@
+#name : dismissWithClickedButtonIndex:animated
+#group : UIAlertView
+# --
+dismissWithClickedButtonIndex:${1:(NSInteger)buttonIndex} animated:${2:(BOOL)animated}

@@ -1,0 +1,4 @@
+#name : replaceCharactersInRange:withAttributedString
+#group : NSAttributedString
+# --
+replaceCharactersInRange:${1:(NSRange)range} withAttributedString:${2:(NSAttributedString *)attrString}

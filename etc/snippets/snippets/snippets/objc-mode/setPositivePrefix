@@ -1,0 +1,4 @@
+#name : setPositivePrefix
+#group : NSNumberFormatter
+# --
+setPositivePrefix:${1:(NSString *)string}

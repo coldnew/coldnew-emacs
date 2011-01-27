@@ -1,0 +1,4 @@
+#name : applicationProtectedDataDidBecomeAvailable
+#group : UIApplication
+# --
+applicationProtectedDataDidBecomeAvailable:${1:(UIApplication *)application}

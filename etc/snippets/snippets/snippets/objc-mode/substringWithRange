@@ -1,0 +1,4 @@
+#name : substringWithRange
+#group : NSString
+# --
+substringWithRange:${1:(NSRange)range}

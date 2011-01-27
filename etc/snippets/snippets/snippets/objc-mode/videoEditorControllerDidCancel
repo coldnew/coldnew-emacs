@@ -1,0 +1,4 @@
+#name : videoEditorControllerDidCancel
+#group : UIVideoEditorController
+# --
+videoEditorControllerDidCancel:${1:(UIVideoEditorController *)editor}

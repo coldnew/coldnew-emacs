@@ -1,0 +1,4 @@
+#name : backgroundRectForBounds
+#group : UIButton
+# --
+backgroundRectForBounds:${1:(CGRect)bounds}

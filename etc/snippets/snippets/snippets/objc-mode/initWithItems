@@ -1,0 +1,4 @@
+#name : initWithItems
+#group : UISegmentedControl
+# --
+initWithItems:${1:(NSArray *)items}

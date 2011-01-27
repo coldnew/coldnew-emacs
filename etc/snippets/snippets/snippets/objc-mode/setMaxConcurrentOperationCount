@@ -1,0 +1,4 @@
+#name : setMaxConcurrentOperationCount
+#group : NSOperation
+# --
+setMaxConcurrentOperationCount:${1:(NSInteger)cnt}

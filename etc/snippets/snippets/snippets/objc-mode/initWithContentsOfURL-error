@@ -1,0 +1,4 @@
+#name : initWithContentsOfURL:error
+#group : AVAudioPlayer
+# --
+initWithContentsOfURL:${1:(NSURL *)url} error:${2:(NSError **)outError}

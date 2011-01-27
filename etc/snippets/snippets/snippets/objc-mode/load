@@ -1,0 +1,4 @@
+#name : load
+#group : NSAtomicStore
+# --
+load:${1:(NSError **)error}

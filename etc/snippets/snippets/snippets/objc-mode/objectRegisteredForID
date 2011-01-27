@@ -1,0 +1,4 @@
+#name : objectRegisteredForID
+#group : NSManagedObjectContext
+# --
+objectRegisteredForID:${1:(NSManagedObjectID *)objectID}

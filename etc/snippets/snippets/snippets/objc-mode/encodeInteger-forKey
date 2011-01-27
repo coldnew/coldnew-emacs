@@ -1,0 +1,4 @@
+#name : encodeInteger:forKey
+#group : NSCoder
+# --
+encodeInteger:${1:(NSInteger)intv} forKey:${2:(NSString *)key}

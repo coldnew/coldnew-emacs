@@ -1,0 +1,4 @@
+#name : dismissMenuAnimated
+#group : UIDocumentInteractionController
+# --
+dismissMenuAnimated:${1:(BOOL)animated}

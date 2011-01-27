@@ -1,0 +1,4 @@
+#name : circleWithCenterCoordinate
+#group : MKCircle
+# --
+circleWithCenterCoordinate:${1:(CLLocationCoordinate2D)coord}

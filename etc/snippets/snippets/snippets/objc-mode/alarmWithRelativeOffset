@@ -1,0 +1,4 @@
+#name : alarmWithRelativeOffset
+#group : EKAlarm
+# --
+alarmWithRelativeOffset:${1:(NSTimeInterval)offset}

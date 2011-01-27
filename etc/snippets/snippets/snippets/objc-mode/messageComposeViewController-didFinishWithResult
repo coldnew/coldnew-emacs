@@ -1,0 +1,4 @@
+#name : messageComposeViewController:didFinishWithResult
+#group : MFMessageComposeViewController
+# --
+messageComposeViewController:${1:(MFMessageComposeViewController *)controller} didFinishWithResult:${2:(MessageComposeResult)result}

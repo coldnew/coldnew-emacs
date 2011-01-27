@@ -1,0 +1,4 @@
+#name : setVersionHashModifier
+#group : NSPropertyDescription
+# --
+setVersionHashModifier:${1:(NSString *)modifierString}

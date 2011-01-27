@@ -1,0 +1,4 @@
+#name : initWithInvite
+#group : GKMatchmakerViewController
+# --
+initWithInvite:${1:(GKInvite *)invite}

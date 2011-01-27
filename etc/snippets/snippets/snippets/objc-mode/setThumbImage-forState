@@ -1,0 +1,4 @@
+#name : setThumbImage:forState
+#group : UISlider
+# --
+setThumbImage:${1:(UIImage *)image} forState:${2:(UIControlState)state}

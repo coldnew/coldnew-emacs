@@ -1,0 +1,4 @@
+#name : replaceObjectsInRange:withObjectsFromArray
+#group : NSArray
+# --
+replaceObjectsInRange:${1:(NSRange)range} withObjectsFromArray:${2:(NSArray *)otherArray}

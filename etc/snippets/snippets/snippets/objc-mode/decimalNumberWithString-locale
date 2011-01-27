@@ -1,0 +1,4 @@
+#name : decimalNumberWithString:locale
+#group : NSDecimalNumber
+# --
+decimalNumberWithString:${1:(NSString *)numberValue} locale:${2:(id)locale}

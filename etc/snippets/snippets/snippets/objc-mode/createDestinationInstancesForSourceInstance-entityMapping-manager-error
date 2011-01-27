@@ -1,0 +1,4 @@
+#name : createDestinationInstancesForSourceInstance:entityMapping:manager:error
+#group : NSEntityMigrationPolicy
+# --
+createDestinationInstancesForSourceInstance:${1:(NSManagedObject *)sInstance} entityMapping:${2:(NSEntityMapping *)mapping} manager:${3:(NSMigrationManager *)manager} error:${4:(NSError **)error}

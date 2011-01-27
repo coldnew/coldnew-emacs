@@ -1,0 +1,4 @@
+#name : initWithAsset:presetName
+#group : AVAssetExportSession
+# --
+initWithAsset:${1:(AVAsset *)asset} presetName:${2:(NSString *)presetName}

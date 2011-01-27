@@ -1,0 +1,4 @@
+#name : initWithResponse:data
+#group : NSURLCache
+# --
+initWithResponse:${1:(NSURLResponse *)response} data:${2:(NSData *)data}

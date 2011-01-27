@@ -1,0 +1,4 @@
+#name : initWithInt
+#group : NSValue
+# --
+initWithInt:${1:(int)value}

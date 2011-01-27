@@ -1,0 +1,4 @@
+#name : rangeOfComposedCharacterSequencesForRange
+#group : NSString
+# --
+rangeOfComposedCharacterSequencesForRange:${1:(NSRange)range}

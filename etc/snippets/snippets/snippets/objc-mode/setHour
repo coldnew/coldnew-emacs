@@ -1,0 +1,4 @@
+#name : setHour
+#group : NSCalendar
+# --
+setHour:${1:(NSInteger)v}

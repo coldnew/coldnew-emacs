@@ -1,0 +1,4 @@
+#name : setProtocolSpecificInformation
+#group : NSNetServices
+# --
+setProtocolSpecificInformation:${1:(NSString *)specificInformation}

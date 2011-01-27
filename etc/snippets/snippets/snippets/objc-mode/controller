@@ -1,0 +1,4 @@
+#name : controller
+#group : NSFetchedResultsController
+# --
+controller:${1:(NSFetchedResultsController *)controller}

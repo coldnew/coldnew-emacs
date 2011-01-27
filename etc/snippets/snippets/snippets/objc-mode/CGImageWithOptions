@@ -1,0 +1,4 @@
+#name : CGImageWithOptions
+#group : ALAssetRepresentation
+# --
+CGImageWithOptions:${1:(NSDictionary *)options}

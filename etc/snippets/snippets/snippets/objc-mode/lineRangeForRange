@@ -1,0 +1,4 @@
+#name : lineRangeForRange
+#group : NSString
+# --
+lineRangeForRange:${1:(NSRange)range}

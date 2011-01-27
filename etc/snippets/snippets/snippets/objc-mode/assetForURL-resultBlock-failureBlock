@@ -1,0 +1,4 @@
+#name : assetForURL:resultBlock:failureBlock
+#group : ALAssetsLibrary
+# --
+assetForURL:${1:(NSURL *)assetURL} resultBlock:${2:(ALAssetsLibraryAssetForURLResultBlock)resultBlock} failureBlock:${3:(ALAssetsLibraryAccessFailureBlock)failureBlock}

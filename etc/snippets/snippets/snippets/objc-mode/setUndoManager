@@ -1,0 +1,4 @@
+#name : setUndoManager
+#group : NSManagedObjectContext
+# --
+setUndoManager:${1:(NSUndoManager *)undoManager}

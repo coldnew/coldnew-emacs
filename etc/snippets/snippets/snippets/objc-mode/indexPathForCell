@@ -1,0 +1,4 @@
+#name : indexPathForCell
+#group : UITableView
+# --
+indexPathForCell:${1:(UITableViewCell *)cell}

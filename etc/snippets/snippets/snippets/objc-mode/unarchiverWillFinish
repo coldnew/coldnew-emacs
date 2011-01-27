@@ -1,0 +1,4 @@
+#name : unarchiverWillFinish
+#group : NSKeyedArchiver
+# --
+unarchiverWillFinish:${1:(NSKeyedUnarchiver *)unarchiver}

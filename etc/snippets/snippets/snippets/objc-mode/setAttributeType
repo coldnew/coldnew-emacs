@@ -1,0 +1,4 @@
+#name : setAttributeType
+#group : NSAttributeDescription
+# --
+setAttributeType:${1:(NSAttributeType)type}

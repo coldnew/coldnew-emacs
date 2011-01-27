@@ -1,0 +1,4 @@
+#name : tryLockWhenCondition
+#group : NSLock
+# --
+tryLockWhenCondition:${1:(NSInteger)condition}

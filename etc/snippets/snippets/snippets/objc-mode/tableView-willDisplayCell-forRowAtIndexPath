@@ -1,0 +1,4 @@
+#name : tableView:willDisplayCell:forRowAtIndexPath
+#group : UITableView
+# --
+tableView:${1:(UITableView *)tableView} willDisplayCell:${2:(UITableViewCell *)cell} forRowAtIndexPath:${3:(NSIndexPath *)indexPath}

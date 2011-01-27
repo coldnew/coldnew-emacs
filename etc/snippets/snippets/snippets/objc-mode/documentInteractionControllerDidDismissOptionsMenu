@@ -1,0 +1,4 @@
+#name : documentInteractionControllerDidDismissOptionsMenu
+#group : UIDocumentInteractionController
+# --
+documentInteractionControllerDidDismissOptionsMenu:${1:(UIDocumentInteractionController *)controller}

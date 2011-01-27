@@ -1,0 +1,4 @@
+#name : setSelected:animated
+#group : UITableViewCell
+# --
+setSelected:${1:(BOOL)selected} animated:${2:(BOOL)animated}

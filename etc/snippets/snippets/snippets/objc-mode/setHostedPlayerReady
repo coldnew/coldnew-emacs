@@ -1,0 +1,4 @@
+#name : setHostedPlayerReady
+#group : GKMatchmakerViewController
+# --
+setHostedPlayerReady:${1:(NSString *)playerID}

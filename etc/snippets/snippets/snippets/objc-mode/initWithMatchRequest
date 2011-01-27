@@ -1,0 +1,4 @@
+#name : initWithMatchRequest
+#group : GKMatchmakerViewController
+# --
+initWithMatchRequest:${1:(GKMatchRequest *)request}

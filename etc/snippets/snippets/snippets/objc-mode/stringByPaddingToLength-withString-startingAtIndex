@@ -1,0 +1,4 @@
+#name : stringByPaddingToLength:withString:startingAtIndex
+#group : NSString
+# --
+stringByPaddingToLength:${1:(NSUInteger)newLength} withString:${2:(NSString *)padString} startingAtIndex:${3:(NSUInteger)padIndex}

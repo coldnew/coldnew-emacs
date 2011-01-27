@@ -1,0 +1,4 @@
+#name : performSelectorInBackground:withObject
+#group : NSThread
+# --
+performSelectorInBackground:${1:(SEL)aSelector} withObject:${2:(id)arg}

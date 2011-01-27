@@ -1,0 +1,4 @@
+#name : setExpressionResultType
+#group : NSExpressionDescription
+# --
+setExpressionResultType:${1:(NSAttributeType)type}

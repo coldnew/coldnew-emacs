@@ -1,0 +1,4 @@
+#name : locationOfTouch:inView
+#group : UIGestureRecognizer
+# --
+locationOfTouch:${1:(NSUInteger)touchIndex} inView:${2:(UIView*)view}

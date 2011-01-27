@@ -1,0 +1,4 @@
+#name : storedValueForKey
+#group : NSKeyValueCoding
+# --
+storedValueForKey:${1:(NSString *)key}

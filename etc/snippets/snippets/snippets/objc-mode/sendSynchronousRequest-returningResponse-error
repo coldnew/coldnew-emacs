@@ -1,0 +1,4 @@
+#name : sendSynchronousRequest:returningResponse:error
+#group : NSURLConnection
+# --
+sendSynchronousRequest:${1:(NSURLRequest *)request} returningResponse:${2:(NSURLResponse **)response} error:${3:(NSError **)error}

@@ -1,0 +1,4 @@
+#name : numberOfPreviewItemsInPreviewController
+#group : QLPreviewController
+# --
+numberOfPreviewItemsInPreviewController:${1:(QLPreviewController *)controller}

@@ -1,0 +1,4 @@
+#name : initWithURL:settings:error
+#group : AVAudioRecorder
+# --
+initWithURL:${1:(NSURL *)url} settings:${2:(NSDictionary *)settings} error:${3:(NSError **)outError}

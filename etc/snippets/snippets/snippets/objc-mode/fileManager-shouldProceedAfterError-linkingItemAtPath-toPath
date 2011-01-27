@@ -1,0 +1,4 @@
+#name : fileManager:shouldProceedAfterError:linkingItemAtPath:toPath
+#group : NSFileManager
+# --
+fileManager:${1:(NSFileManager *)fileManager} shouldProceedAfterError:${2:(NSError *)error} linkingItemAtPath:${3:(NSString *)srcPath} toPath:${4:(NSString *)dstPath}

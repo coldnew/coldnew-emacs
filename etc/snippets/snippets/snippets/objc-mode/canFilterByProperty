@@ -1,0 +1,4 @@
+#name : canFilterByProperty
+#group : MPMediaPlaylist
+# --
+canFilterByProperty:${1:(NSString *)property}

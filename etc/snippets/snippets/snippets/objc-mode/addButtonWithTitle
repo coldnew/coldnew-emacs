@@ -1,0 +1,4 @@
+#name : addButtonWithTitle
+#group : UIAlertView
+# --
+addButtonWithTitle:${1:(NSString *)title}

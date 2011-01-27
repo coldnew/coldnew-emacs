@@ -1,0 +1,4 @@
+#name : assetReaderAudioMixOutputWithAudioTracks:audioSettings
+#group : AVAssetReaderOutput
+# --
+assetReaderAudioMixOutputWithAudioTracks:${1:(NSArray *)audioTracks} audioSettings:${2:(NSDictionary *)audioSettings}

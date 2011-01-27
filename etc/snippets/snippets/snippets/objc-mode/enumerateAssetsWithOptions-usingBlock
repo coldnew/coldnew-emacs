@@ -1,0 +1,4 @@
+#name : enumerateAssetsWithOptions:usingBlock
+#group : ALAssetsGroup
+# --
+enumerateAssetsWithOptions:${1:(NSEnumerationOptions)options} usingBlock:${2:(ALAssetsGroupEnumerationResultsBlock)enumerationBlock}

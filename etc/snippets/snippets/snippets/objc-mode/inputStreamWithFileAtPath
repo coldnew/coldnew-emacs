@@ -1,0 +1,4 @@
+#name : inputStreamWithFileAtPath
+#group : NSStream
+# --
+inputStreamWithFileAtPath:${1:(NSString *)path}

@@ -1,0 +1,4 @@
+#name : animationDidStop:finished
+#group : CAAnimation
+# --
+animationDidStop:${1:(CAAnimation *)anim} finished:${2:(BOOL)flag}

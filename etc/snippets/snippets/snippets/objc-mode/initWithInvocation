@@ -1,0 +1,4 @@
+#name : initWithInvocation
+#group : NSOperation
+# --
+initWithInvocation:${1:(NSInvocation *)inv}

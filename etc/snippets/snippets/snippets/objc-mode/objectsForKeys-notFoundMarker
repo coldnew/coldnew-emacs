@@ -1,0 +1,4 @@
+#name : objectsForKeys:notFoundMarker
+#group : NSDictionary
+# --
+objectsForKeys:${1:(NSArray *)keys} notFoundMarker:${2:(id)marker}

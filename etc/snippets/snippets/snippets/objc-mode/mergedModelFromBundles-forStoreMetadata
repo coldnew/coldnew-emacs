@@ -1,0 +1,4 @@
+#name : mergedModelFromBundles:forStoreMetadata
+#group : NSManagedObjectModel
+# --
+mergedModelFromBundles:${1:(NSArray *)bundles} forStoreMetadata:${2:(NSDictionary *)metadata}

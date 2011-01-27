@@ -1,0 +1,4 @@
+#name : mapView:didAddOverlayViews
+#group : MKMapView
+# --
+mapView:${1:(MKMapView *)mapView} didAddOverlayViews:${2:(NSArray *)overlayViews}

@@ -1,0 +1,4 @@
+#name : tableView:viewForHeaderInSection
+#group : UITableView
+# --
+tableView:${1:(UITableView *)tableView} viewForHeaderInSection:${2:(NSInteger)section}

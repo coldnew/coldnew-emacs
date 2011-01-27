@@ -1,0 +1,4 @@
+#name : viewWithTag
+#group : UIView
+# --
+viewWithTag:${1:(NSInteger)tag}

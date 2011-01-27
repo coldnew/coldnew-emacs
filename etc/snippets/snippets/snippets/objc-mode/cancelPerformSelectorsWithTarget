@@ -1,0 +1,4 @@
+#name : cancelPerformSelectorsWithTarget
+#group : NSRunLoop
+# --
+cancelPerformSelectorsWithTarget:${1:(id)target}

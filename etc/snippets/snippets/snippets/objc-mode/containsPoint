@@ -1,0 +1,4 @@
+#name : containsPoint
+#group : UIBezierPath
+# --
+containsPoint:${1:(CGPoint)point}

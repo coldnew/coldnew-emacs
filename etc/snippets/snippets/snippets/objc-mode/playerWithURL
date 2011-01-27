@@ -1,0 +1,4 @@
+#name : playerWithURL
+#group : AVPlayer
+# --
+playerWithURL:${1:(NSURL *)URL}

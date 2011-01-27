@@ -1,0 +1,4 @@
+#name : initWithAuthenticationChallenge
+#group : NSURLAuthenticationChallenge
+# --
+initWithAuthenticationChallenge:${1:(NSURLAuthenticationChallenge *)challenge}

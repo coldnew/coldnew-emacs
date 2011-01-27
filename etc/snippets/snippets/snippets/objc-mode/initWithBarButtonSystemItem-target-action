@@ -1,0 +1,4 @@
+#name : initWithBarButtonSystemItem:target:action
+#group : UIBarButtonItem
+# --
+initWithBarButtonSystemItem:${1:(UIBarButtonSystemItem)systemItem} target:${2:(id)target} action:${3:(SEL)action}

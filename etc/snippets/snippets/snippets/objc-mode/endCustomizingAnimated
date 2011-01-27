@@ -1,0 +1,4 @@
+#name : endCustomizingAnimated
+#group : UITabBar
+# --
+endCustomizingAnimated:${1:(BOOL)animated}

@@ -1,0 +1,4 @@
+#name : setStoredInExternalRecord
+#group : NSPropertyDescription
+# --
+setStoredInExternalRecord:${1:(BOOL)flag}

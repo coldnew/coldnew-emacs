@@ -1,0 +1,4 @@
+#name : removeObject:inRange
+#group : NSArray
+# --
+removeObject:${1:(id)anObject} inRange:${2:(NSRange)range}

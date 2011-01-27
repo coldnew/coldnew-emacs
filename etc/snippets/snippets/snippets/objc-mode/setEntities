@@ -1,0 +1,4 @@
+#name : setEntities
+#group : NSManagedObjectModel
+# --
+setEntities:${1:(NSArray *)entities}

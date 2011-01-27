@@ -1,0 +1,4 @@
+#name : needsToBeUpdatedFromPath
+#group : NSFileWrapper
+# --
+needsToBeUpdatedFromPath:${1:(NSString *)path}

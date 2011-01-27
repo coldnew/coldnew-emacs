@@ -1,0 +1,4 @@
+#name : startAccelerometerUpdatesToQueue:withHandler
+#group : CMMotionManager
+# --
+startAccelerometerUpdatesToQueue:${1:(NSOperationQueue *)queue} withHandler:${2:(CMAccelerometerHandler)handler}

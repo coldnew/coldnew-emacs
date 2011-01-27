@@ -27,8 +27,7 @@
       (normal-top-level-add-subdirs-to-load-path)))
 
 ;;;;; binary path
-(cond (mac-p (require 'rc-mac)))
-(setq max-specpdl-size 5)  ; default is 1000, reduce the backtrace level
+(setq max-specpdl-size 2048)  ; default is 1000, reduce the backtrace level
 (setq debug-on-error t)    ; now you should get a backtrace
 
 

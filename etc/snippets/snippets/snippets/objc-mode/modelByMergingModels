@@ -1,0 +1,4 @@
+#name : modelByMergingModels
+#group : NSManagedObjectModel
+# --
+modelByMergingModels:${1:(NSArray *)models}

@@ -1,0 +1,4 @@
+#name : requestWithURL:cachePolicy:timeoutInterval
+#group : NSURLRequest
+# --
+requestWithURL:${1:(NSURL *)URL} cachePolicy:${2:(NSURLRequestCachePolicy)cachePolicy} timeoutInterval:${3:(NSTimeInterval)timeoutInterval}

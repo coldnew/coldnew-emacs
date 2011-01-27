@@ -1,0 +1,4 @@
+#name : didAnimateFirstHalfOfRotationToInterfaceOrientation
+#group : UIViewController
+# --
+didAnimateFirstHalfOfRotationToInterfaceOrientation:${1:(UIInterfaceOrientation)toInterfaceOrientation}

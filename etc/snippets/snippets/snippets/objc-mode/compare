@@ -1,0 +1,4 @@
+#name : compare
+#group : NSValue
+# --
+compare:${1:(NSNumber *)otherNumber}

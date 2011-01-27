@@ -1,0 +1,4 @@
+#name : setBool:forKey
+#group : NSUserDefaults
+# --
+setBool:${1:(BOOL)value} forKey:${2:(NSString *)defaultName}

@@ -1,0 +1,4 @@
+#name : addFileWithPath
+#group : NSFileWrapper
+# --
+addFileWithPath:${1:(NSString *)path}

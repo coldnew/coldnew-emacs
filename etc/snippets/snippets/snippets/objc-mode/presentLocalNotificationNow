@@ -1,0 +1,4 @@
+#name : presentLocalNotificationNow
+#group : UIApplication
+# --
+presentLocalNotificationNow:${1:(UILocalNotification *)notification}

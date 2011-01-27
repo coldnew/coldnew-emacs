@@ -1,0 +1,4 @@
+#name : exportPresetsCompatibleWithAsset
+#group : AVAssetExportSession
+# --
+exportPresetsCompatibleWithAsset:${1:(AVAsset *)asset}

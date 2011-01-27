@@ -1,0 +1,4 @@
+#name : setRoundingMode
+#group : NSNumberFormatter
+# --
+setRoundingMode:${1:(NSNumberFormatterRoundingMode)mode}

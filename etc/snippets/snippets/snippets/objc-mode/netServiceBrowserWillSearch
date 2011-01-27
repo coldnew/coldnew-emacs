@@ -1,0 +1,4 @@
+#name : netServiceBrowserWillSearch
+#group : NSNetServices
+# --
+netServiceBrowserWillSearch:${1:(NSNetServiceBrowser *)aNetServiceBrowser}

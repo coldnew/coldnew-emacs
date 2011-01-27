@@ -1,0 +1,4 @@
+#name : cachedResponseForRequest
+#group : NSURLCache
+# --
+cachedResponseForRequest:${1:(NSURLRequest *)request}

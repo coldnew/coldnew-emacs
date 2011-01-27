@@ -1,0 +1,4 @@
+#name : setMinimumFractionDigits
+#group : NSNumberFormatter
+# --
+setMinimumFractionDigits:${1:(NSUInteger)number}

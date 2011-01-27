@@ -1,0 +1,4 @@
+#name : timerWithTimeInterval:invocation:repeats
+#group : NSTimer
+# --
+timerWithTimeInterval:${1:(NSTimeInterval)ti} invocation:${2:(NSInvocation *)invocation} repeats:${3:(BOOL)yesOrNo}

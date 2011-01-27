@@ -1,0 +1,4 @@
+#name : setCurrencySymbol
+#group : NSNumberFormatter
+# --
+setCurrencySymbol:${1:(NSString *)string}

@@ -1,0 +1,4 @@
+#name : validateValue:forKey:error
+#group : NSKeyValueCoding
+# --
+validateValue:${1:(id *)ioValue} forKey:${2:(NSString *)inKey} error:${3:(NSError **)outError}

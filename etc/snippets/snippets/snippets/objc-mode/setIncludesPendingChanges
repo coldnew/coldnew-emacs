@@ -1,0 +1,4 @@
+#name : setIncludesPendingChanges
+#group : NSFetchRequest
+# --
+setIncludesPendingChanges:${1:(BOOL)flag}

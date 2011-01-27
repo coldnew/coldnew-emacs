@@ -1,0 +1,4 @@
+#name : isEqualToNumber
+#group : NSValue
+# --
+isEqualToNumber:${1:(NSNumber *)number}

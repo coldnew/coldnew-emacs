@@ -1,0 +1,4 @@
+#name : stringWithContentsOfFile
+#group : NSString
+# --
+stringWithContentsOfFile:${1:(NSString *)path}

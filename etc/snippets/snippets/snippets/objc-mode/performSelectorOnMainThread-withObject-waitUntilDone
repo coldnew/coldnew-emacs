@@ -1,0 +1,4 @@
+#name : performSelectorOnMainThread:withObject:waitUntilDone
+#group : NSThread
+# --
+performSelectorOnMainThread:${1:(SEL)aSelector} withObject:${2:(id)arg} waitUntilDone:${3:(BOOL)wait}

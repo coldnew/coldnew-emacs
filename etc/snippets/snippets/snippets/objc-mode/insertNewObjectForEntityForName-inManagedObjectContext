@@ -1,0 +1,4 @@
+#name : insertNewObjectForEntityForName:inManagedObjectContext
+#group : NSEntityDescription
+# --
+insertNewObjectForEntityForName:${1:(NSString *)entityName} inManagedObjectContext:${2:(NSManagedObjectContext *)context}

@@ -1,0 +1,4 @@
+#name : mediaPicker:didPickMediaItems
+#group : MPMediaPickerController
+# --
+mediaPicker:${1:(MPMediaPickerController *)mediaPicker} didPickMediaItems:${2:(MPMediaItemCollection *)mediaItemCollection}

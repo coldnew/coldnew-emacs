@@ -1,0 +1,4 @@
+#name : characterSetWithBitmapRepresentation
+#group : NSCharacterSet
+# --
+characterSetWithBitmapRepresentation:${1:(NSData *)data}

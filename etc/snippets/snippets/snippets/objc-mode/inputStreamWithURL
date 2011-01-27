@@ -1,0 +1,4 @@
+#name : inputStreamWithURL
+#group : NSStream
+# --
+inputStreamWithURL:${1:(NSURL *)url}

@@ -1,0 +1,4 @@
+#name : mailComposeController:didFinishWithResult:error
+#group : MFMailComposeViewController
+# --
+mailComposeController:${1:(MFMailComposeViewController *)controller} didFinishWithResult:${2:(MFMailComposeResult)result} error:${3:(NSError *)error}

@@ -1,0 +1,4 @@
+#name : localizedNameOfStringEncoding
+#group : NSString
+# --
+localizedNameOfStringEncoding:${1:(NSStringEncoding)encoding}

@@ -1,0 +1,4 @@
+#name : netServiceBrowser:didNotSearch
+#group : NSNetServices
+# --
+netServiceBrowser:${1:(NSNetServiceBrowser *)aNetServiceBrowser} didNotSearch:${2:(NSDictionary *)errorDict}

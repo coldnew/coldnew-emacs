@@ -1,0 +1,4 @@
+#name : valueWithRange
+#group : NSRange
+# --
+valueWithRange:${1:(NSRange)range}

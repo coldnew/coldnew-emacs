@@ -1,0 +1,4 @@
+#name : tabBarController:willEndCustomizingViewControllers:changed
+#group : UITabBarController
+# --
+tabBarController:${1:(UITabBarController *)tabBarController} willEndCustomizingViewControllers:${2:(NSArray *)viewControllers} changed:${3:(BOOL)changed}

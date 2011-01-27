@@ -1,0 +1,4 @@
+#name : gestureRecognizerShouldBegin
+#group : UIGestureRecognizer
+# --
+gestureRecognizerShouldBegin:${1:(UIGestureRecognizer *)gestureRecognizer}

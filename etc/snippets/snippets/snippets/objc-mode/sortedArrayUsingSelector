@@ -1,0 +1,4 @@
+#name : sortedArrayUsingSelector
+#group : NSArray
+# --
+sortedArrayUsingSelector:${1:(SEL)comparator}

@@ -1,0 +1,4 @@
+#name : getCharacters:range
+#group : NSString
+# --
+getCharacters:${1:(unichar *)buffer} range:${2:(NSRange)aRange}

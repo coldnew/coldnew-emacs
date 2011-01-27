@@ -1,0 +1,4 @@
+#name : sleepUntilDate
+#group : NSThread
+# --
+sleepUntilDate:${1:(NSDate *)date}

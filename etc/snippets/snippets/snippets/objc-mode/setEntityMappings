@@ -1,0 +1,4 @@
+#name : setEntityMappings
+#group : NSMappingModel
+# --
+setEntityMappings:${1:(NSArray *)mappings}

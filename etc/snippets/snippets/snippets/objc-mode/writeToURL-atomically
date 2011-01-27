@@ -1,0 +1,4 @@
+#name : writeToURL:atomically
+#group : NSString
+# --
+writeToURL:${1:(NSURL *)url} atomically:${2:(BOOL)atomically}

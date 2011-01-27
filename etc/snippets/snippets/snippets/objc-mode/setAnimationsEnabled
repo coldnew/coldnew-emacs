@@ -1,0 +1,4 @@
+#name : setAnimationsEnabled
+#group : UIView
+# --
+setAnimationsEnabled:${1:(BOOL)enabled}

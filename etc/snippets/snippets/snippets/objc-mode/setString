@@ -1,0 +1,4 @@
+#name : setString
+#group : NSString
+# --
+setString:${1:(NSString *)aString}

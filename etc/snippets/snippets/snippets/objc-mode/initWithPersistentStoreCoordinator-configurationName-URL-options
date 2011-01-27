@@ -1,0 +1,4 @@
+#name : initWithPersistentStoreCoordinator:configurationName:URL:options
+#group : NSPersistentStore
+# --
+initWithPersistentStoreCoordinator:${1:(NSPersistentStoreCoordinator *)root} configurationName:${2:(NSString *)name} URL:${3:(NSURL *)url} options:${4:(NSDictionary *)options}

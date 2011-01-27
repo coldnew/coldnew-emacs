@@ -1,0 +1,4 @@
+#name : expressionForFetch:context:countOnly
+#group : NSFetchRequestExpression
+# --
+expressionForFetch:${1:(NSExpression*)fetch} context:${2:(NSExpression*)context} countOnly:${3:(BOOL)countFlag}

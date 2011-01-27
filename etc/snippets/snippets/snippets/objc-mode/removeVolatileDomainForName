@@ -1,0 +1,4 @@
+#name : removeVolatileDomainForName
+#group : NSUserDefaults
+# --
+removeVolatileDomainForName:${1:(NSString *)domainName}

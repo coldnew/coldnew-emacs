@@ -1,0 +1,4 @@
+#name : setContentURL
+#group : MPMoviePlayerController
+# --
+setContentURL:${1:(NSURL *)contentURL}

@@ -1,0 +1,4 @@
+#name : initWithFloat
+#group : NSValue
+# --
+initWithFloat:${1:(float)value}

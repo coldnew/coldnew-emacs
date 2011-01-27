@@ -1,0 +1,4 @@
+#name : setRegion:animated
+#group : MKMapView
+# --
+setRegion:${1:(MKCoordinateRegion)region} animated:${2:(BOOL)animated}

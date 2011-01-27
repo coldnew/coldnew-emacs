@@ -1,0 +1,4 @@
+#name : URLByAppendingPathComponent
+#group : NSURL
+# --
+URLByAppendingPathComponent:${1:(NSString *)pathComponent}

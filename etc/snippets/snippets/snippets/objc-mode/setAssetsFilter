@@ -1,0 +1,4 @@
+#name : setAssetsFilter
+#group : ALAssetsGroup
+# --
+setAssetsFilter:${1:(ALAssetsFilter *)filter}

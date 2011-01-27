@@ -1,0 +1,4 @@
+#name : removeSuiteNamed
+#group : NSUserDefaults
+# --
+removeSuiteNamed:${1:(NSString *)suiteName}

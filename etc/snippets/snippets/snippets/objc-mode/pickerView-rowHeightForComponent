@@ -1,0 +1,4 @@
+#name : pickerView:rowHeightForComponent
+#group : UIPickerView
+# --
+pickerView:${1:(UIPickerView *)pickerView} rowHeightForComponent:${2:(NSInteger)component}

@@ -1,0 +1,4 @@
+#name : replaceObjectAtIndex:withObject
+#group : NSArray
+# --
+replaceObjectAtIndex:${1:(NSUInteger)index} withObject:${2:(id)anObject}

@@ -1,0 +1,4 @@
+#name : scanLongLong
+#group : NSScanner
+# --
+scanLongLong:${1:(long long *)value}

@@ -1,0 +1,4 @@
+#name : localizedStringWithFormat
+#group : NSString
+# --
+localizedStringWithFormat:${1:(NSString *)format}

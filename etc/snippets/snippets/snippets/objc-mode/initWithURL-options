@@ -1,0 +1,4 @@
+#name : initWithURL:options
+#group : AVAsset
+# --
+initWithURL:${1:(NSURL *)URL} options:${2:(NSDictionary *)options}

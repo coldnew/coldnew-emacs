@@ -1,0 +1,4 @@
+#name : handleFailureInFunction:file:lineNumber:description
+#group : NSException
+# --
+handleFailureInFunction:${1:(NSString *)functionName} file:${2:(NSString *)fileName} lineNumber:${3:(NSInteger)line} description:${4:(NSString *)format}

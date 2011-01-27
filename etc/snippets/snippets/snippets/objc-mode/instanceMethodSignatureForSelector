@@ -1,0 +1,4 @@
+#name : instanceMethodSignatureForSelector
+#group : NSObject
+# --
+instanceMethodSignatureForSelector:${1:(SEL)aSelector}

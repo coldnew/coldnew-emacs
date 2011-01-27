@@ -1,0 +1,4 @@
+#name : unknownPersonViewController:didResolveToPerson
+#group : ABUnknownPersonViewController
+# --
+unknownPersonViewController:${1:(ABUnknownPersonViewController *)unknownCardViewController} didResolveToPerson:${2:(ABRecordRef)person}

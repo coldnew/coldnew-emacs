@@ -1,0 +1,4 @@
+#name : requestHeaderFieldsWithCookies
+#group : NSHTTPCookie
+# --
+requestHeaderFieldsWithCookies:${1:(NSArray *)cookies}

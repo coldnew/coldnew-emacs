@@ -1,0 +1,4 @@
+#name : setWithCapacity
+#group : NSSet
+# --
+setWithCapacity:${1:(NSUInteger)numItems}

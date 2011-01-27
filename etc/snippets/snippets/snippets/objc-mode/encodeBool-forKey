@@ -1,0 +1,4 @@
+#name : encodeBool:forKey
+#group : NSKeyedArchiver
+# --
+encodeBool:${1:(BOOL)boolv} forKey:${2:(NSString *)key}

@@ -1,0 +1,4 @@
+#name : collectionWithItems
+#group : MPMediaItemCollection
+# --
+collectionWithItems:${1:(NSArray *)items}

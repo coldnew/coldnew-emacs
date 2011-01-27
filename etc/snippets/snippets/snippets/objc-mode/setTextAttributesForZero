@@ -1,0 +1,4 @@
+#name : setTextAttributesForZero
+#group : NSNumberFormatter
+# --
+setTextAttributesForZero:${1:(NSDictionary *)newAttributes}

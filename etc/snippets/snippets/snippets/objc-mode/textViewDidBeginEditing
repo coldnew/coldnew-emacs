@@ -1,0 +1,4 @@
+#name : textViewDidBeginEditing
+#group : UITextView
+# --
+textViewDidBeginEditing:${1:(UITextView *)textView}

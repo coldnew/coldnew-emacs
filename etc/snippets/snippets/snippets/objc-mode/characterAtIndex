@@ -1,0 +1,4 @@
+#name : characterAtIndex
+#group : NSString
+# --
+characterAtIndex:${1:(NSUInteger)index}

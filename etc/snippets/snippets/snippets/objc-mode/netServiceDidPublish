@@ -1,0 +1,4 @@
+#name : netServiceDidPublish
+#group : NSNetServices
+# --
+netServiceDidPublish:${1:(NSNetService *)sender}

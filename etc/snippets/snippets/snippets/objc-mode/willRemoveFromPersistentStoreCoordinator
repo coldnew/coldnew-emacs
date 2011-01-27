@@ -1,0 +1,4 @@
+#name : willRemoveFromPersistentStoreCoordinator
+#group : NSPersistentStore
+# --
+willRemoveFromPersistentStoreCoordinator:${1:(NSPersistentStoreCoordinator *)coordinator}

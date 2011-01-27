@@ -1,0 +1,4 @@
+#name : setLenient
+#group : NSNumberFormatter
+# --
+setLenient:${1:(BOOL)b}

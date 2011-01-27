@@ -1,0 +1,4 @@
+#name : dataWithCapacity
+#group : NSData
+# --
+dataWithCapacity:${1:(NSUInteger)aNumItems}

@@ -1,0 +1,4 @@
+#name : URL:resourceDidFailLoadingWithReason
+#group : NSURL
+# --
+URL:${1:(NSURL *)sender} resourceDidFailLoadingWithReason:${2:(NSString *)reason}

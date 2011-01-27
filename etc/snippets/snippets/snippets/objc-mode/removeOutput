@@ -1,0 +1,4 @@
+#name : removeOutput
+#group : AVCaptureSession
+# --
+removeOutput:${1:(AVCaptureOutput *)output}

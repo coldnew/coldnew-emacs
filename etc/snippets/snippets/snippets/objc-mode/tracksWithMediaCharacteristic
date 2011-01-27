@@ -1,0 +1,4 @@
+#name : tracksWithMediaCharacteristic
+#group : AVAsset
+# --
+tracksWithMediaCharacteristic:${1:(NSString *)mediaCharacteristic}

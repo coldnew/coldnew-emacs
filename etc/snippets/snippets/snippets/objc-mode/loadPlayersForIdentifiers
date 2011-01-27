@@ -1,0 +1,4 @@
+#name : loadPlayersForIdentifiers
+#group : GKPlayer
+# --
+loadPlayersForIdentifiers:${1:(NSArray *)identifiers}

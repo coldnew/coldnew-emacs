@@ -1,0 +1,4 @@
+#name : stringByReplacingOccurrencesOfString:withString:options:range
+#group : NSString
+# --
+stringByReplacingOccurrencesOfString:${1:(NSString *)target} withString:${2:(NSString *)replacement} options:${3:(NSStringCompareOptions)options} range:${4:(NSRange)searchRange}

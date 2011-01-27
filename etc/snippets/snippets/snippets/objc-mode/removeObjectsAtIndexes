@@ -1,0 +1,4 @@
+#name : removeObjectsAtIndexes
+#group : NSArray
+# --
+removeObjectsAtIndexes:${1:(NSIndexSet *)indexes}

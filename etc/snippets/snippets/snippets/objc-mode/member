@@ -1,0 +1,4 @@
+#name : member
+#group : NSSet
+# --
+member:${1:(id)object}

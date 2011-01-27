@@ -1,0 +1,4 @@
+#name : searchBar:textDidChange
+#group : UISearchBar
+# --
+searchBar:${1:(UISearchBar *)searchBar} textDidChange:${2:(NSString *)searchText}

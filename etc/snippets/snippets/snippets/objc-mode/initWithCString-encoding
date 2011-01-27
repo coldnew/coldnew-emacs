@@ -1,0 +1,4 @@
+#name : initWithCString:encoding
+#group : NSString
+# --
+initWithCString:${1:(const char *)nullTerminatedCString} encoding:${2:(NSStringEncoding)encoding}

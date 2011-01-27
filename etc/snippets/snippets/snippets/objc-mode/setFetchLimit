@@ -1,0 +1,4 @@
+#name : setFetchLimit
+#group : NSFetchRequest
+# --
+setFetchLimit:${1:(NSUInteger)limit}

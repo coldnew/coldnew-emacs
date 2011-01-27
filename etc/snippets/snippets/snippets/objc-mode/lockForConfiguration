@@ -1,0 +1,4 @@
+#name : lockForConfiguration
+#group : AVCaptureDevice
+# --
+lockForConfiguration:${1:(NSError **)outError}

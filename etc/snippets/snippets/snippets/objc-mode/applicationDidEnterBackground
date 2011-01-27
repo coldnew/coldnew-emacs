@@ -1,0 +1,4 @@
+#name : applicationDidEnterBackground
+#group : UIApplication
+# --
+applicationDidEnterBackground:${1:(UIApplication *)application}

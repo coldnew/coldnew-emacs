@@ -1,0 +1,4 @@
+#name : addAttachmentData:mimeType:fileName
+#group : MFMailComposeViewController
+# --
+addAttachmentData:${1:(NSData *)attachment} mimeType:${2:(NSString *)mimeType} fileName:${3:(NSString *)filename}

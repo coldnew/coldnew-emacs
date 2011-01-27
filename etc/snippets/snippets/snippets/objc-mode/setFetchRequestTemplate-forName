@@ -1,0 +1,4 @@
+#name : setFetchRequestTemplate:forName
+#group : NSManagedObjectModel
+# --
+setFetchRequestTemplate:${1:(NSFetchRequest *)fetchRequestTemplate} forName:${2:(NSString *)name}

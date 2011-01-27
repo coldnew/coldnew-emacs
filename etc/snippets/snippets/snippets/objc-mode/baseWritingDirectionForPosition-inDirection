@@ -1,0 +1,4 @@
+#name : baseWritingDirectionForPosition:inDirection
+#group : UITextInput
+# --
+baseWritingDirectionForPosition:${1:(UITextPosition *)position} inDirection:${2:(UITextStorageDirection)direction}

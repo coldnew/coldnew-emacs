@@ -1,0 +1,4 @@
+#name : forwardingTargetForSelector
+#group : NSObject
+# --
+forwardingTargetForSelector:${1:(SEL)aSelector}

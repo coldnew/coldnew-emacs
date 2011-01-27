@@ -1,0 +1,4 @@
+#name : invokeWithTarget
+#group : NSInvocation
+# --
+invokeWithTarget:${1:(id)target}

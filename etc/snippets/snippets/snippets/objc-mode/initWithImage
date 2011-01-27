@@ -1,0 +1,4 @@
+#name : initWithImage
+#group : UIImageView
+# --
+initWithImage:${1:(UIImage *)image}

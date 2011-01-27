@@ -1,0 +1,4 @@
+#name : sizeThatFits
+#group : UIView
+# --
+sizeThatFits:${1:(CGSize)size}

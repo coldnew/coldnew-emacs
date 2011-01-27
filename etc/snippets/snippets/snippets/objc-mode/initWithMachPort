@@ -1,0 +1,4 @@
+#name : initWithMachPort
+#group : NSPort
+# --
+initWithMachPort:${1:(uint32_t)machPort}

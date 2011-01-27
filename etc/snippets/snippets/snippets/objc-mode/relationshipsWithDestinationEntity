@@ -1,0 +1,4 @@
+#name : relationshipsWithDestinationEntity
+#group : NSEntityDescription
+# --
+relationshipsWithDestinationEntity:${1:(NSEntityDescription *)entity}

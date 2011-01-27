@@ -1,0 +1,4 @@
+#name : setDefaultTimeZone
+#group : NSTimeZone
+# --
+setDefaultTimeZone:${1:(NSTimeZone *)aTimeZone}

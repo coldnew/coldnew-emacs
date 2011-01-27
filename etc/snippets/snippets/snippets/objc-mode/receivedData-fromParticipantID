@@ -1,0 +1,4 @@
+#name : receivedData:fromParticipantID
+#group : GKVoiceChatService
+# --
+receivedData:${1:(NSData *)arbitraryData} fromParticipantID:${2:(NSString *)participantID}

@@ -1,0 +1,4 @@
+#name : seekToTime:toleranceBefore:toleranceAfter
+#group : AVPlayerItem
+# --
+seekToTime:${1:(CMTime)time} toleranceBefore:${2:(CMTime)toleranceBefore} toleranceAfter:${3:(CMTime)toleranceAfter}

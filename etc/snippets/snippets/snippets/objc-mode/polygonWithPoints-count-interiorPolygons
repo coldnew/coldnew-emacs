@@ -1,0 +1,4 @@
+#name : polygonWithPoints:count:interiorPolygons
+#group : MKPolygon
+# --
+polygonWithPoints:${1:(MKMapPoint *)points} count:${2:(NSUInteger)count} interiorPolygons:${3:(NSArray *)interiorPolygons}

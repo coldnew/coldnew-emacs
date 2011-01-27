@@ -1,0 +1,4 @@
+#name : startMonitoringForRegion
+#group : CLLocationManager
+# --
+startMonitoringForRegion:${1:(CLRegion *)region}

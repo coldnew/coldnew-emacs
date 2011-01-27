@@ -1,0 +1,4 @@
+#name : setHighlightedItemForProperty:withIdentifier
+#group : ABPersonViewController
+# --
+setHighlightedItemForProperty:${1:(ABPropertyID)property} withIdentifier:${2:(ABMultiValueIdentifier)identifier}

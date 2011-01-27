@@ -1,0 +1,4 @@
+#name : sourceInstancesForEntityMappingNamed:destinationInstances
+#group : NSMigrationManager
+# --
+sourceInstancesForEntityMappingNamed:${1:(NSString *)mappingName} destinationInstances:${2:(NSArray *)destinationInstances}

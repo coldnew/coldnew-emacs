@@ -1,0 +1,4 @@
+#name : offsetFromPosition:toPosition
+#group : UITextInput
+# --
+offsetFromPosition:${1:(UITextPosition *)from} toPosition:${2:(UITextPosition *)toPosition}

@@ -1,0 +1,4 @@
+#name : changeFileAttributes:atPath
+#group : NSFileManager
+# --
+changeFileAttributes:${1:(NSDictionary *)attributes} atPath:${2:(NSString *)path}

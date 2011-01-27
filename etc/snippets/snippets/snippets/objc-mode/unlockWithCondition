@@ -1,0 +1,4 @@
+#name : unlockWithCondition
+#group : NSLock
+# --
+unlockWithCondition:${1:(NSInteger)condition}

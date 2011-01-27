@@ -1,0 +1,4 @@
+#name : removeObjectForKey
+#group : NSUserDefaults
+# --
+removeObjectForKey:${1:(NSString *)defaultName}

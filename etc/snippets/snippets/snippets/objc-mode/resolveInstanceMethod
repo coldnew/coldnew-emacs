@@ -1,0 +1,4 @@
+#name : resolveInstanceMethod
+#group : NSObject
+# --
+resolveInstanceMethod:${1:(SEL)sel}

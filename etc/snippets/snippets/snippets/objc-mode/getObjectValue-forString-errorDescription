@@ -1,0 +1,4 @@
+#name : getObjectValue:forString:errorDescription
+#group : NSFormatter
+# --
+getObjectValue:${1:(out id *)obj} forString:${2:(NSString *)string} errorDescription:${3:(out NSString **)error}

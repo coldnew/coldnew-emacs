@@ -1,0 +1,4 @@
+#name : audioPlayerDecodeErrorDidOccur:error
+#group : AVAudioPlayer
+# --
+audioPlayerDecodeErrorDidOccur:${1:(AVAudioPlayer *)player} error:${2:(NSError *)error}

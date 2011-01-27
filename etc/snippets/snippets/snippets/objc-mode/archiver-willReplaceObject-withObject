@@ -1,0 +1,4 @@
+#name : archiver:willReplaceObject:withObject
+#group : NSKeyedArchiver
+# --
+archiver:${1:(NSKeyedArchiver *)archiver} willReplaceObject:${2:(id)object} withObject:${3:(id)newObject}
