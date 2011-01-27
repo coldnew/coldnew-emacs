@@ -13,7 +13,6 @@
 	     (turn-on-pretty-lambda-mode)
 	     ;; programming common hook
 	     (programming-common-hook)
-
 	     ))
 
 ;;;;;; Keybindings
@@ -45,6 +44,7 @@
 	     (vim:local-imap (kbd "M-l") 'forward-sexp)
 	     (vim:local-imap (kbd "M-h") 'backward-sexp)
 	     ))
+
 ;;;;;; Functions
 (defun run-newlisp ()
   "Starts newlisp interperter/or shows if already running.  Requires

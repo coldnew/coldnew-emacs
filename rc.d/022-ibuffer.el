@@ -17,6 +17,8 @@
 			 (name . "^\\*compilation\\*$")
 			 (name . "^\\*CEDET Global\\*$")
 			 (name . "^\\*Buffer List\\*$")
+			 (name . "^\\*Anything Log\\*$")
+			 (name . "^\\*anything for\\*$")
 			 (name . "^\\*Loading Log\\*$")))
 	 ("Version Control" (or (mode . svn-status-mode)
 				(mode . svn-log-edit-mode)

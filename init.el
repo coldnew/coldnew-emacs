@@ -52,7 +52,7 @@
 (require '029-lusty-explorer)
 (require '030-xrefactory)
 (require '031-comint-mode)
-
+(require '032-anything)
 
 (require 'rc-cedet)
 (require 'rc-common-hook)

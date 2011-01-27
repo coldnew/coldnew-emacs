@@ -3,6 +3,83 @@
 ;;; Code:
 
 
+;;;### (autoloads (anything-other-buffer anything-at-point anything)
+;;;;;;  "anything/anything" "anything/anything.el" (19777 30619))
+;;; Generated autoloads from anything/anything.el
+
+(autoload 'anything "anything/anything" "\
+Select anything. In Lisp program, some optional arguments can be used.
+
+PLIST is a list like (:key1 val1 :key2 val2 ...) or
+\(&optional sources input prompt resume preselect buffer keymap).
+
+Basic keywords are the following:
+
+- :sources
+
+Temporary value of `anything-sources'.  It also accepts a
+symbol, interpreted as a variable of an anything source.  It
+also accepts an alist representing an anything source, which is
+detected by (assq 'name ANY-SOURCES)
+
+- :input
+
+Temporary value of `anything-pattern', ie. initial input of minibuffer.
+
+- :prompt
+
+Prompt other than \"pattern: \".
+
+- :resume
+
+If t, Resurrect previously instance of `anything'. Skip the initialization.
+If 'noresume, this instance of `anything' cannot be resumed.
+
+- :preselect
+
+Initially selected candidate. Specified by exact candidate or a regexp.
+Note that it is not working with delayed sources.
+
+- :buffer
+
+`anything-buffer' instead of *anything*.
+
+- :keymap
+
+`anything-map' for current `anything' session.
+
+
+Of course, conventional arguments are supported, the two are same.
+
+\(anything :sources sources :input input :prompt prompt :resume resume
+:preselect preselect :buffer buffer :keymap keymap)
+\(anything sources input prompt resume preselect buffer keymap)
+
+
+Other keywords are interpreted as local variables of this anything session.
+The `anything-' prefix can be omitted. For example,
+
+\(anything :sources 'anything-c-source-buffers
+:buffer \"*buffers*\" :candidate-number-limit 10)
+
+means starting anything session with `anything-c-source-buffers'
+source in *buffers* buffer and set
+`anything-candidate-number-limit' to 10 as session local variable.
+
+\(fn &rest PLIST)" t nil)
+
+(autoload 'anything-at-point "anything/anything" "\
+Same as `anything' except when C-u is pressed, the initial input is the symbol at point.
+
+\(fn &optional ANY-SOURCES ANY-INPUT ANY-PROMPT ANY-RESUME ANY-PRESELECT ANY-BUFFER)" t nil)
+
+(autoload 'anything-other-buffer "anything/anything" "\
+Simplified interface of `anything' with other `anything-buffer'
+
+\(fn ANY-SOURCES ANY-BUFFER)" nil nil)
+
+;;;***
+
 ;;;### (autoloads nil "doxymacs/lisp/doxymacs" "doxymacs/lisp/doxymacs.el"
 ;;;;;;  (19777 4986))
 ;;; Generated autoloads from doxymacs/lisp/doxymacs.el
@@ -206,6 +283,52 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 
 ;;;***
 
+;;;### (autoloads (resume save-current-configuration wipe restore-window-configuration
+;;;;;;  current-window-configuration-printable) "revive/revive" "revive/revive.el"
+;;;;;;  (19777 34095))
+;;; Generated autoloads from revive/revive.el
+
+(autoload 'current-window-configuration-printable "revive/revive" "\
+Return the printable current-window-configuration.
+This configuration will be stored by restore-window-configuration.
+Returned configurations are list of:
+'(Screen-Width Screen-Height Edge-List Buffer-List)
+
+Edge-List is a return value of revive:all-window-edges, list of all
+window-edges whose first member is always of north west window.
+
+Buffer-List is a list of buffer property list of all windows.  This
+property lists are stored in order corresponding to Edge-List.  Buffer
+property list is formed as
+'((buffer-file-name) (buffer-name) (point) (window-start)).
+
+\(fn)" nil nil)
+
+(autoload 'restore-window-configuration "revive/revive" "\
+Restore the window configuration.
+Configuration CONFIG should be created by
+current-window-configuration-printable.
+
+\(fn CONFIG)" nil nil)
+
+(autoload 'wipe "revive/revive" "\
+Wipe Emacs.
+
+\(fn)" t nil)
+
+(autoload 'save-current-configuration "revive/revive" "\
+Save current window/buffer configuration into configuration file.
+
+\(fn &optional NUM)" t nil)
+
+(autoload 'resume "revive/revive" "\
+Resume window/buffer configuration.
+Configuration should be saved by save-current-configuration.
+
+\(fn &optional NUM)" t nil)
+
+;;;***
+
 ;;;### (autoloads (sr-dired sunrise-cd sunrise) "sunrise-commander/sunrise-commander"
 ;;;;;;  "sunrise-commander/sunrise-commander.el" (19777 18030))
 ;;; Generated autoloads from sunrise-commander/sunrise-commander.el
@@ -229,8 +352,14 @@ Visits the given directory in sr-mode.
 
 ;;;***
 
-;;;### (autoloads nil nil ("nav/nav-dev.el" "nav/nav-test.el" "pymacs/pymacs.el"
-;;;;;;  "ssh-config/ssh-config.el") (19777 18129 544925))
+;;;### (autoloads nil nil ("ac-anything/ac-anything.el" "anything-c-shell-history/anything-c-shell-history.el"
+;;;;;;  "anything-complete/anything-complete.el" "anything-grep/anything-grep.el"
+;;;;;;  "anything-gtags/anything-gtags.el" "anything-kyr/anything-kyr.el"
+;;;;;;  "anything-match-plugin/anything-match-plugin.el" "anything-menu/anything-menu.el"
+;;;;;;  "anything-migemo/anything-migemo.el" "anything-show-completion/anything-show-completion.el"
+;;;;;;  "anything-slime/anything-slime.el" "ipa/ipa.el" "nav/nav-dev.el"
+;;;;;;  "nav/nav-test.el" "pymacs/pymacs.el" "ssh-config/ssh-config.el")
+;;;;;;  (19777 35469 679179))
 
 ;;;***
 

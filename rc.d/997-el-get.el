@@ -131,7 +131,44 @@
 	       :type svn
 	       :url "http://emacs-nav.googlecode.com/svn/trunk/"
 	       :features nav)
-
+	(:name anything
+	       :type emacswiki)
+	(:name anything-config
+	       :type git
+	       :url "git://repo.or.cz/anything-config.git")
+	(:name anything-match-plugin
+	       :type emacswiki)
+	(:name anything-show-completion
+	       :type emacswiki)
+	(:name anything-migemo
+	       :type emacswiki)
+	(:name windows
+	       :type http
+	       :url "http://www.gentei.org/~yuuji/software/windows.el"
+	       :features "windows")
+	(:name anything-gtags
+	       :type emacswiki)
+	(:name anything-complete
+	       :type emacswiki)
+	(:name anything-ipa
+	       :type emacswiki)
+	(:name ipa
+	       :type emacswiki)
+	(:name revive
+	       :type http
+	       :url "http://www.gentei.org/~yuuji/software/revive.el")
+	(:name ac-anything
+	       :type emacswiki)
+	(:name anything-grep
+	       :type emacswiki)
+	(:name anything-kyr
+	       :type emacswiki)
+	(:name anything-slime
+	       :type emacswiki)
+	(:name anything-menu
+	       :type emacswiki)
+	(:name anything-c-shell-history
+	       :type emacswiki)
 	;;elscreen
 	;;auctex
 	;;color-theme			;

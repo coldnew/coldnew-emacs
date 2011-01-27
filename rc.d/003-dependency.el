@@ -1,7 +1,21 @@
 ;;;; All extra dependency
 (eval-when-compile (require 'cl))
 
+(require-maybe 'ac-anything)			; Auto Complete with Anything
 (require-maybe 'ac-company)			; Auto-Complete with company-mode
+(require-maybe 'anything)			;
+(require-maybe 'anything-c-shell-history)	; shell history anything.el interface
+(require-maybe 'anything-complete)		;
+(require-maybe 'anything-config)		;
+(require-maybe 'anything-grep)			; search refinement of grep result with anything
+(require-maybe 'anything-gtags)			;
+(require-maybe 'anything-ipa)			;
+(require-maybe 'anything-kyr)			; Show context-aware commands
+(require-maybe 'anything-match-plugin)		;
+(require-maybe 'anything-menu)			; anything.el candidate selection outside Emacs
+(require-maybe 'anything-migemo)		;
+(require-maybe 'anything-show-completion)	; Show selection in buffer for anything completion
+(require-maybe 'anything-slime)			; anything-sources and some utilities for SLIME.
 (require-maybe 'auto-complete)			; Auto-Complete
 (require-maybe 'auto-complete-clang)		;
 (require-maybe 'auto-complete-config)		;
@@ -18,11 +32,13 @@
 (require-maybe 'eldoc-extension)		; Emacs-Lisp Documents Browser Extension
 (require-maybe 'emms)				; Emacs Multimedia System
 (require-maybe 'find-file)			;
+(require-maybe 'grep)				;
 (require-maybe 'highlight-parentheses)		; Highlight pair parentheses
 (require-maybe 'hungry-delete)			;
 (require-maybe 'ibuf-ext)			; iBuffer Extension
 (require-maybe 'ibuffer)			; iBuffer
 (require-maybe 'info)				;
+(require-maybe 'ipa)				; In-place annotations
 (require-maybe 'lusty-explorer)			; A good explorer tools
 (require-maybe 'magit)				;
 (require-maybe 'midnight)			; Use midnight-mode to auto-clean buffers
@@ -47,16 +63,17 @@
 (require-maybe 'uniquify)			; If two buffer have the same name, rename both
 (require-maybe 'vim)				; Use Vim-Mode
 (require-maybe 'windmove)			; Directional window-selection routines
+(require-maybe 'windows)			;
 (require-maybe 'woman)				; Use Woman
+(require-maybe 'x-dnd)				; Drag and drop support for X
 (require-maybe 'xcscope)			; Cscope interface for Emacs
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
-(require-maybe 'x-dnd)				; Drag and drop support for X
-
-
 
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab
 ;;(require-maybe 'pymacs)			; Pymacs
+
+
 
 
 (provide '003-dependency)
