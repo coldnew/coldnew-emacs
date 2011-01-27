@@ -1,4 +1,0 @@
-#name : indexPathForRowAtPoint
-#group : UITableView
-# --
-indexPathForRowAtPoint:${1:(CGPoint)point}

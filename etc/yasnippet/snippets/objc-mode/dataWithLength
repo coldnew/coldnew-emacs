@@ -1,4 +1,0 @@
-#name : dataWithLength
-#group : NSData
-# --
-dataWithLength:${1:(NSUInteger)length}

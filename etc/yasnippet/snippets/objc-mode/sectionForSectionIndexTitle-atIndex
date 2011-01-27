@@ -1,4 +1,0 @@
-#name : sectionForSectionIndexTitle:atIndex
-#group : NSFetchedResultsController
-# --
-sectionForSectionIndexTitle:${1:(NSString *)title} atIndex:${2:(NSInteger)sectionIndex}

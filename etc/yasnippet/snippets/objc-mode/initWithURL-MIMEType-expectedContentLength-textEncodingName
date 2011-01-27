@@ -1,4 +1,0 @@
-#name : initWithURL:MIMEType:expectedContentLength:textEncodingName
-#group : NSURLResponse
-# --
-initWithURL:${1:(NSURL *)URL} MIMEType:${2:(NSString *)MIMEType} expectedContentLength:${3:(NSInteger)length} textEncodingName:${4:(NSString *)name}

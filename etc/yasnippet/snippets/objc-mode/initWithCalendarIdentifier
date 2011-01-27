@@ -1,4 +1,0 @@
-#name : initWithCalendarIdentifier
-#group : NSCalendar
-# --
-initWithCalendarIdentifier:${1:(NSString *)ident}

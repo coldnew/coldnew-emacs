@@ -1,4 +1,0 @@
-#name : valueWithCGPoint
-#group : UIGeometry
-# --
-valueWithCGPoint:${1:(CGPoint)point}

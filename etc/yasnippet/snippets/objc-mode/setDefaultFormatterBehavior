@@ -1,4 +1,0 @@
-#name : setDefaultFormatterBehavior
-#group : NSNumberFormatter
-# --
-setDefaultFormatterBehavior:${1:(NSNumberFormatterBehavior)behavior}

@@ -1,4 +1,0 @@
-#name : didPresentActionSheet
-#group : UIActionSheet
-# --
-didPresentActionSheet:${1:(UIActionSheet *)actionSheet}

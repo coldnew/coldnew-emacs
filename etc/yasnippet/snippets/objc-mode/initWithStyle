@@ -1,4 +1,0 @@
-#name : initWithStyle
-#group : UITableViewController
-# --
-initWithStyle:${1:(UITableViewStyle)style}

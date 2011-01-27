@@ -1,4 +1,0 @@
-#name : setNegativeFormat
-#group : NSNumberFormatter
-# --
-setNegativeFormat:${1:(NSString *)format}

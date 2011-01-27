@@ -1,4 +1,0 @@
-#name : characterOffsetOfPosition:withinRange
-#group : UITextInput
-# --
-characterOffsetOfPosition:${1:(UITextPosition *)position} withinRange:${2:(UITextRange *)range}

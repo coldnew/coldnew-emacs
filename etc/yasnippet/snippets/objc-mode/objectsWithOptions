@@ -1,4 +1,0 @@
-#name : objectsWithOptions
-#group : NSSet
-# --
-objectsWithOptions:${1:(NSEnumerationOptions)opts}

@@ -1,4 +1,0 @@
-#name : dataWithPropertyList:format:options:error
-#group : NSPropertyList
-# --
-dataWithPropertyList:${1:(id)plist} format:${2:(NSPropertyListFormat)format} options:${3:(NSPropertyListWriteOptions)opt} error:${4:(NSError **)error}

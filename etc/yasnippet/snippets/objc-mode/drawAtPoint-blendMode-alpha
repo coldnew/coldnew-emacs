@@ -1,4 +1,0 @@
-#name : drawAtPoint:blendMode:alpha
-#group : UIImage
-# --
-drawAtPoint:${1:(CGPoint)point} blendMode:${2:(CGBlendMode)blendMode} alpha:${3:(CGFloat)alpha}

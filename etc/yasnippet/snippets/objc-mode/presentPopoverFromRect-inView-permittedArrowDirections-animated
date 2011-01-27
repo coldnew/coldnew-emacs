@@ -1,4 +1,0 @@
-#name : presentPopoverFromRect:inView:permittedArrowDirections:animated
-#group : UIPopoverController
-# --
-presentPopoverFromRect:${1:(CGRect)rect} inView:${2:(UIView *)view} permittedArrowDirections:${3:(UIPopoverArrowDirection)arrowDirections} animated:${4:(BOOL)animated}

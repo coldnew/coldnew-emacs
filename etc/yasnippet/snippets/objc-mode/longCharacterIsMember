@@ -1,4 +1,0 @@
-#name : longCharacterIsMember
-#group : NSCharacterSet
-# --
-longCharacterIsMember:${1:(UTF32Char)theLongChar}

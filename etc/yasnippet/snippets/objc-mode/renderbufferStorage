@@ -1,4 +1,0 @@
-#name : renderbufferStorage
-#group : EAGLDrawable
-# --
-renderbufferStorage:${1:(NSUInteger)target}

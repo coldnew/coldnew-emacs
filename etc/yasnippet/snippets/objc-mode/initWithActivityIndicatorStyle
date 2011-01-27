@@ -1,4 +1,0 @@
-#name : initWithActivityIndicatorStyle
-#group : UIActivityIndicatorView
-# --
-initWithActivityIndicatorStyle:${1:(UIActivityIndicatorViewStyle)style}

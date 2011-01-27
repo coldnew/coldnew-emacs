@@ -1,4 +1,0 @@
-#name : setAMSymbol
-#group : NSDateFormatter
-# --
-setAMSymbol:${1:(NSString *)string}

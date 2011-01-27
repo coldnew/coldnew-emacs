@@ -1,4 +1,0 @@
-#name : initWithTarget:selector:object
-#group : NSThread
-# --
-initWithTarget:${1:(id)target} selector:${2:(SEL)selector} object:${3:(id)argument}

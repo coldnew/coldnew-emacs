@@ -1,4 +1,0 @@
-#name : fileHandleForReadingFromURL:error
-#group : NSFileHandle
-# --
-fileHandleForReadingFromURL:${1:(NSURL *)url} error:${2:(NSError **)error}

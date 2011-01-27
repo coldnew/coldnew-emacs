@@ -1,4 +1,0 @@
-#name : predicateWithFormat:argumentArray
-#group : NSPredicate
-# --
-predicateWithFormat:${1:(NSString *)predicateFormat} argumentArray:${2:(NSArray *)arguments}

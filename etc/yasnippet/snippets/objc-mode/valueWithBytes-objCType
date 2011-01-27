@@ -1,4 +1,0 @@
-#name : valueWithBytes:objCType
-#group : NSValue
-# --
-valueWithBytes:${1:(const void *)value} objCType:${2:(const char *)type}

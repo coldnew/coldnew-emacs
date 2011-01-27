@@ -1,4 +1,0 @@
-#name : addSublayer
-#group : CALayer
-# --
-addSublayer:${1:(CALayer *)layer}

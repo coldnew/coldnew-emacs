@@ -1,4 +1,0 @@
-#name : setEntityMigrationPolicyClassName
-#group : NSEntityMapping
-# --
-setEntityMigrationPolicyClassName:${1:(NSString *)name}

@@ -1,4 +1,0 @@
-#name : requestThumbnailImagesAtTimes:timeOption
-#group : MPMoviePlayerController
-# --
-requestThumbnailImagesAtTimes:${1:(NSArray *)playbackTimes} timeOption:${2:(MPMovieTimeOption)option}

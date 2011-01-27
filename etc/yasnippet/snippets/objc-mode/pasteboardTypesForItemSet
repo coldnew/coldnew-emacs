@@ -1,4 +1,0 @@
-#name : pasteboardTypesForItemSet
-#group : UIPasteboard
-# --
-pasteboardTypesForItemSet:${1:(NSIndexSet*)itemSet}

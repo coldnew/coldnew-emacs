@@ -1,4 +1,0 @@
-#name : displayNameForPeer
-#group : GKSession
-# --
-displayNameForPeer:${1:(NSString *)peerID}

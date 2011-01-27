@@ -1,4 +1,0 @@
-#name : timeIntervalSinceDate
-#group : NSDate
-# --
-timeIntervalSinceDate:${1:(NSDate *)anotherDate}

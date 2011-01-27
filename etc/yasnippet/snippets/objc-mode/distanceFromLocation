@@ -1,4 +1,0 @@
-#name : distanceFromLocation
-#group : CLLocation
-# --
-distanceFromLocation:${1:(const CLLocation *)location}

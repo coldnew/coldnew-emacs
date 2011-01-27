@@ -1,4 +1,0 @@
-#name : getArgumentTypeAtIndex
-#group : NSMethodSignature
-# --
-getArgumentTypeAtIndex:${1:(NSUInteger)idx}

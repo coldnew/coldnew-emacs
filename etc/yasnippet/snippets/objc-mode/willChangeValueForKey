@@ -1,4 +1,0 @@
-#name : willChangeValueForKey
-#group : NSKeyValueObserving
-# --
-willChangeValueForKey:${1:(NSString *)key}

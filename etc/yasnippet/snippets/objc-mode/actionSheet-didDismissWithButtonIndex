@@ -1,4 +1,0 @@
-#name : actionSheet:didDismissWithButtonIndex
-#group : UIActionSheet
-# --
-actionSheet:${1:(UIActionSheet *)actionSheet} didDismissWithButtonIndex:${2:(NSInteger)buttonIndex}

@@ -1,4 +1,0 @@
-#name : rangeOfCharacterFromSet:options
-#group : NSString
-# --
-rangeOfCharacterFromSet:${1:(NSCharacterSet *)aSet} options:${2:(NSStringCompareOptions)mask}

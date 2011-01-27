@@ -1,4 +1,0 @@
-#name : regularExpressionWithPattern:options:error
-#group : NSRegularExpression
-# --
-regularExpressionWithPattern:${1:(NSString *)pattern} options:${2:(NSRegularExpressionOptions)options} error:${3:(NSError **)error}

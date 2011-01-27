@@ -1,4 +1,0 @@
-#name : setPopoverContentSize:animated
-#group : UIPopoverController
-# --
-setPopoverContentSize:${1:(CGSize)size} animated:${2:(BOOL)animated}

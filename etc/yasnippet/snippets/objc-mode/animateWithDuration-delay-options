@@ -1,4 +1,0 @@
-#name : animateWithDuration:delay:options
-#group : UIView
-# --
-animateWithDuration:${1:(NSTimeInterval)duration} delay:${2:(NSTimeInterval)delay} options:${3:(UIViewAnimationOptions)options}

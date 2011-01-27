@@ -1,4 +1,0 @@
-#name : pickerView:widthForComponent
-#group : UIPickerView
-# --
-pickerView:${1:(UIPickerView *)pickerView} widthForComponent:${2:(NSInteger)component}

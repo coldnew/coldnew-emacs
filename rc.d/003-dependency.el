@@ -2,7 +2,7 @@
 (eval-when-compile (require 'cl))
 
 ;; Must include in coldnew's emacs
-(require 'ac-company)
+(require 'ac-company)			; Auto-Complete with company-mode
 (require 'auto-complete)		; Auto-Complete
 (require 'c-eldoc)
 (require 'cedet)
@@ -30,6 +30,14 @@
 (require 'uniquify)
 (require 'vim)				; Use Vim-Mode
 (require 'woman)			; Use Woman
+(require 'recentf)			; Recent Files
+(require 'el-get)
+(require 'uniquify)			; If two buffer have the same name, rename both
+(require 'slime)
+(require 'yasnippet)
+(require 'dropdown-list)
+(require 'pos-tip)
+(require 'auto-complete-config)
 ;;(require 'cscope)
 ;;(require 'emms)
 ;;(require 'ibuffer-expert)		; iBuffer Expert

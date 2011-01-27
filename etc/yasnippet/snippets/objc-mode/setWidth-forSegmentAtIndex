@@ -1,4 +1,0 @@
-#name : setWidth:forSegmentAtIndex
-#group : UISegmentedControl
-# --
-setWidth:${1:(CGFloat)width} forSegmentAtIndex:${2:(NSUInteger)segment}

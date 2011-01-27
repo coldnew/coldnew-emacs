@@ -1,4 +1,0 @@
-#name : addTarget:action:forControlEvents
-#group : UIControl
-# --
-addTarget:${1:(id)target} action:${2:(SEL)action} forControlEvents:${3:(UIControlEvents)controlEvents}

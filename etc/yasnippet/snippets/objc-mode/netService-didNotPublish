@@ -1,4 +1,0 @@
-#name : netService:didNotPublish
-#group : NSNetServices
-# --
-netService:${1:(NSNetService *)sender} didNotPublish:${2:(NSDictionary *)errorDict}

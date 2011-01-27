@@ -1,4 +1,0 @@
-#name : addOperation
-#group : NSOperation
-# --
-addOperation:${1:(NSOperation *)op}

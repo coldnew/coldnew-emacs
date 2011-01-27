@@ -1,1 +1,0 @@
-(:name gist :type elpa)

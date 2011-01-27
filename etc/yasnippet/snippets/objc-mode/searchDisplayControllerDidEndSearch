@@ -1,4 +1,0 @@
-#name : searchDisplayControllerDidEndSearch
-#group : UISearchDisplayController
-# --
-searchDisplayControllerDidEndSearch:${1:(UISearchDisplayController *)controller}

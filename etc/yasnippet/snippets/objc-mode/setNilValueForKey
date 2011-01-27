@@ -1,4 +1,0 @@
-#name : setNilValueForKey
-#group : NSKeyValueCoding
-# --
-setNilValueForKey:${1:(NSString *)key}

@@ -1,4 +1,0 @@
-#name : backgroundImageForState
-#group : UIButton
-# --
-backgroundImageForState:${1:(UIControlState)state}

@@ -1,4 +1,0 @@
-#name : searchDisplayControllerWillBeginSearch
-#group : UISearchDisplayController
-# --
-searchDisplayControllerWillBeginSearch:${1:(UISearchDisplayController *)controller}

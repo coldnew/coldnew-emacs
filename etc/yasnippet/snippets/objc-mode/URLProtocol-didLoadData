@@ -1,4 +1,0 @@
-#name : URLProtocol:didLoadData
-#group : NSURLProtocol
-# --
-URLProtocol:${1:(NSURLProtocol *)protocol} didLoadData:${2:(NSData *)data}

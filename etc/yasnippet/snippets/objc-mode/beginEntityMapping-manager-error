@@ -1,4 +1,0 @@
-#name : beginEntityMapping:manager:error
-#group : NSEntityMigrationPolicy
-# --
-beginEntityMapping:${1:(NSEntityMapping *)mapping} manager:${2:(NSMigrationManager *)manager} error:${3:(NSError **)error}

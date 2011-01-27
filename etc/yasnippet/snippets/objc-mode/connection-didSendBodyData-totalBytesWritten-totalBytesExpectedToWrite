@@ -1,4 +1,0 @@
-#name : connection:didSendBodyData:totalBytesWritten:totalBytesExpectedToWrite
-#group : NSURLConnection
-# --
-connection:${1:(NSURLConnection *)connection} didSendBodyData:${2:(NSInteger)bytesWritten} totalBytesWritten:${3:(NSInteger)totalBytesWritten} totalBytesExpectedToWrite:${4:(NSInteger)totalBytesExpectedToWrite}

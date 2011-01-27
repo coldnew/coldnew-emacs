@@ -1,4 +1,0 @@
-#name : notPredicateWithSubpredicate
-#group : NSCompoundPredicate
-# --
-notPredicateWithSubpredicate:${1:(NSPredicate *)predicate}

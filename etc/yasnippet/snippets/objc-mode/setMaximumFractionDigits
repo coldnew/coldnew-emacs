@@ -1,4 +1,0 @@
-#name : setMaximumFractionDigits
-#group : NSNumberFormatter
-# --
-setMaximumFractionDigits:${1:(NSUInteger)number}

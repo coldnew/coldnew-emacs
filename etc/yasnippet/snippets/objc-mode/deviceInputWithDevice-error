@@ -1,4 +1,0 @@
-#name : deviceInputWithDevice:error
-#group : AVCaptureInput
-# --
-deviceInputWithDevice:${1:(AVCaptureDevice *)device} error:${2:(NSError **)outError}

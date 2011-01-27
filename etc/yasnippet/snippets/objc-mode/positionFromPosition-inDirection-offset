@@ -1,4 +1,0 @@
-#name : positionFromPosition:inDirection:offset
-#group : UITextInput
-# --
-positionFromPosition:${1:(UITextPosition *)position} inDirection:${2:(UITextLayoutDirection)direction} offset:${3:(NSInteger)offset}

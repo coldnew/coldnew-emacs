@@ -1,4 +1,0 @@
-#name : setCurrentContext
-#group : EAGL
-# --
-setCurrentContext:${1:(EAGLContext*)context}

@@ -1,4 +1,0 @@
-#name : setReturnValue
-#group : NSInvocation
-# --
-setReturnValue:${1:(void *)retLoc}

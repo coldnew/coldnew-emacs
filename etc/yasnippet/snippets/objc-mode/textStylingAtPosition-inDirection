@@ -1,4 +1,0 @@
-#name : textStylingAtPosition:inDirection
-#group : UITextInput
-# --
-textStylingAtPosition:${1:(UITextPosition *)position} inDirection:${2:(UITextStorageDirection)direction}

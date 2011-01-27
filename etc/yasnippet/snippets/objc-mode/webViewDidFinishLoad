@@ -1,4 +1,0 @@
-#name : webViewDidFinishLoad
-#group : UIWebView
-# --
-webViewDidFinishLoad:${1:(UIWebView *)webView}

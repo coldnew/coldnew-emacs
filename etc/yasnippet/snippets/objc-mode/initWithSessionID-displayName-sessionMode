@@ -1,4 +1,0 @@
-#name : initWithSessionID:displayName:sessionMode
-#group : GKSession
-# --
-initWithSessionID:${1:(NSString *)sessionID} displayName:${2:(NSString *)name} sessionMode:${3:(GKSessionMode)mode}

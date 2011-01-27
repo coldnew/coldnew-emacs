@@ -1,4 +1,0 @@
-#name : setTitle:forSegmentAtIndex
-#group : UISegmentedControl
-# --
-setTitle:${1:(NSString *)title} forSegmentAtIndex:${2:(NSUInteger)segment}

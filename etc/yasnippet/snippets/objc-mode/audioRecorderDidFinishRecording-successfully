@@ -1,4 +1,0 @@
-#name : audioRecorderDidFinishRecording:successfully
-#group : AVAudioRecorder
-# --
-audioRecorderDidFinishRecording:${1:(AVAudioRecorder *)recorder} successfully:${2:(BOOL)flag}

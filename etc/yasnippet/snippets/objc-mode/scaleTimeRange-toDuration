@@ -1,4 +1,0 @@
-#name : scaleTimeRange:toDuration
-#group : AVCompositionTrack
-# --
-scaleTimeRange:${1:(CMTimeRange)timeRange} toDuration:${2:(CMTime)duration}

@@ -1,4 +1,0 @@
-#name : getBytes:range
-#group : NSData
-# --
-getBytes:${1:(void *)buffer} range:${2:(NSRange)range}

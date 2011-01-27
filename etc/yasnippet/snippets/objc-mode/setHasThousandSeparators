@@ -1,4 +1,0 @@
-#name : setHasThousandSeparators
-#group : NSNumberFormatter
-# --
-setHasThousandSeparators:${1:(BOOL)flag}

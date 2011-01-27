@@ -1,4 +1,0 @@
-#name : setGeneratesCalendarDates
-#group : NSDateFormatter
-# --
-setGeneratesCalendarDates:${1:(BOOL)b}

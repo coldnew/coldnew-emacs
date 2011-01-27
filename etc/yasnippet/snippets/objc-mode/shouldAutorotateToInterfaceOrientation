@@ -1,4 +1,0 @@
-#name : shouldAutorotateToInterfaceOrientation
-#group : UIViewController
-# --
-shouldAutorotateToInterfaceOrientation:${1:(UIInterfaceOrientation)toInterfaceOrientation}

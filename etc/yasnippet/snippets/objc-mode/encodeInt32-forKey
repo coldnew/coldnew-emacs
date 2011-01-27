@@ -1,4 +1,0 @@
-#name : encodeInt32:forKey
-#group : NSKeyedArchiver
-# --
-encodeInt32:${1:(int32_t)intv} forKey:${2:(NSString *)key}

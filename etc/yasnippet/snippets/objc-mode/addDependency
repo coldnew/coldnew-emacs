@@ -1,4 +1,0 @@
-#name : addDependency
-#group : NSOperation
-# --
-addDependency:${1:(NSOperation *)op}

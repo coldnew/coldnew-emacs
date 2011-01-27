@@ -1,4 +1,0 @@
-#name : initWithProxyHost:port:type:realm:authenticationMethod
-#group : NSURLProtectionSpace
-# --
-initWithProxyHost:${1:(NSString *)host} port:${2:(NSInteger)port} type:${3:(NSString *)type} realm:${4:(NSString *)realm} authenticationMethod:${5:(NSString *)authenticationMethod}

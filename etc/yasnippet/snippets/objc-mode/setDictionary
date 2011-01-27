@@ -1,4 +1,0 @@
-#name : setDictionary
-#group : NSDictionary
-# --
-setDictionary:${1:(NSDictionary *)otherDictionary}

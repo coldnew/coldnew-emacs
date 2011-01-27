@@ -1,4 +1,0 @@
-#name : documentInteractionController:performAction
-#group : UIDocumentInteractionController
-# --
-documentInteractionController:${1:(UIDocumentInteractionController *)controller} performAction:${2:(SEL)action}

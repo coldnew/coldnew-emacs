@@ -1,4 +1,0 @@
-#name : arrayByAddingObjectsFromArray
-#group : NSArray
-# --
-arrayByAddingObjectsFromArray:${1:(NSArray *)otherArray}

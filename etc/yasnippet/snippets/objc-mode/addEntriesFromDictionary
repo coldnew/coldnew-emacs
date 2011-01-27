@@ -1,4 +1,0 @@
-#name : addEntriesFromDictionary
-#group : NSDictionary
-# --
-addEntriesFromDictionary:${1:(NSDictionary *)otherDictionary}

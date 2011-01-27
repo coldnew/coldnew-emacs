@@ -1,4 +1,0 @@
-#name : addCurveToPoint:controlPoint1:controlPoint2
-#group : UIBezierPath
-# --
-addCurveToPoint:${1:(CGPoint)endPoint} controlPoint1:${2:(CGPoint)controlPoint1} controlPoint2:${3:(CGPoint)controlPoint2}

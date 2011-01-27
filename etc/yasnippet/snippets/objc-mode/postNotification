@@ -1,4 +1,0 @@
-#name : postNotification
-#group : NSNotification
-# --
-postNotification:${1:(NSNotification *)notification}

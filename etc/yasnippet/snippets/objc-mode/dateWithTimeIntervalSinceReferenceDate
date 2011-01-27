@@ -1,4 +1,0 @@
-#name : dateWithTimeIntervalSinceReferenceDate
-#group : NSDate
-# --
-dateWithTimeIntervalSinceReferenceDate:${1:(NSTimeInterval)secs}

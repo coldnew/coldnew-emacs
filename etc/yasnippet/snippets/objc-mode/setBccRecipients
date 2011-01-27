@@ -1,4 +1,0 @@
-#name : setBccRecipients
-#group : MFMailComposeViewController
-# --
-setBccRecipients:${1:(NSArray *)bccRecipients}

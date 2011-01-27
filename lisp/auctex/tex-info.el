@@ -49,7 +49,7 @@
     ("ifxml") ("ignore") ("itemize") ("lisp") ("macro") ("menu")
     ("multitable") ("quotation") ("smalldisplay") ("smallexample")
     ("smallformat") ("smalllisp") ("table") ("tex") ("titlepage")
-    ("verbatim") ("vtable")) 
+    ("verbatim") ("vtable"))
   "Alist of Texinfo environments.")
 
 (defconst texinfo-environment-regexp
@@ -112,14 +112,18 @@ With optional ARG, modify current environment."
   (let* ((envs (mapcar 'car Texinfo-environment-list))
 	 (regexp (concat "^[ \t]*" (regexp-quote TeX-esc) "\\(end \\)*"
 			 (regexp-opt envs t) "\\b"))
+	 (orig-pos (point))
 	 (level 1)
 	 case-fold-search)
     (save-restriction
       (save-excursion
 	(save-excursion
 	  (beginning-of-line)
+	  ;; Stop if point is inside of an @end <env> command, but not
+	  ;; if it is behind it.
 	  (when (and (looking-at regexp)
-		     (match-string 1))
+		     (match-string 1)
+		     (> (match-end 0) orig-pos))
 	    (setq level 0)))
 	(while (and (> level 0) (re-search-forward regexp nil t))
 	  (if (match-string 1)
@@ -128,24 +132,28 @@ With optional ARG, modify current environment."
       (if (= level 0)
 	  (goto-char (match-end 0))
 	(error "Can't locate end of current environment")))))
-      
+
 (defun Texinfo-find-env-start ()
   "Move point to the start of the current environment."
   (interactive)
   (let* ((envs (mapcar 'car Texinfo-environment-list))
-	 (regexp (concat "^[ \t]*" (regexp-quote TeX-esc) "\\(end \\)*"
+	 (regexp (concat "^[ \t]*\\(" (regexp-quote TeX-esc) "\\)\\(end \\)*"
 			 (regexp-opt envs t) "\\b"))
 	 (level 1)
+	 (orig-pos (point))
 	 case-fold-search)
     (save-restriction
       (save-excursion
 	(save-excursion
 	  (beginning-of-line)
+	  ;; Stop if point is inside of an @<env> command, but not if
+	  ;; it is before it.
 	  (when (and (looking-at regexp)
-		     (not (match-string 1)))
+		     (not (match-string 2))
+		     (< (match-beginning 1) orig-pos))
 	    (setq level 0)))
 	(while (and (> level 0) (re-search-backward regexp nil t))
-	  (if (match-string 1)
+	  (if (match-string 2)
 	      (setq level (1+ level))
 	    (setq level (1- level)))))
       (if (= level 0)
@@ -310,7 +318,7 @@ for @node."
     (?C    "@cite{" "}")
     (?\C-d "" "" t))
   "Font commands used in Texinfo mode.  See `TeX-font-list'.")
-  
+
 ;;; Mode:
 
 ;;;###autoload
@@ -334,10 +342,10 @@ value of `Texinfo-mode-hook'."
   (use-local-map Texinfo-mode-map)
   (set-syntax-table texinfo-mode-syntax-table)
   (make-local-variable 'page-delimiter)
-  (setq page-delimiter 
-	(concat 
-	 "^@node [ \t]*[Tt]op\\|^@\\(" 
-	 texinfo-chapter-level-regexp 
+  (setq page-delimiter
+	(concat
+	 "^@node [ \t]*[Tt]op\\|^@\\("
+	 texinfo-chapter-level-regexp
 	 "\\)"))
   (make-local-variable 'require-final-newline)
   (setq require-final-newline t)
@@ -376,13 +384,13 @@ value of `Texinfo-mode-hook'."
       ;; This was included in 19.31.
       ()
     (make-local-variable 'outline-regexp)
-    (setq outline-regexp 
+    (setq outline-regexp
 	  (concat "@\\("
 		  (mapconcat 'car texinfo-section-list "\\>\\|")
 		  "\\>\\)"))
     (make-local-variable 'outline-level)
     (setq outline-level 'texinfo-outline-level))
-  
+
   ;; Mostly AUCTeX stuff
   (easy-menu-add Texinfo-mode-menu Texinfo-mode-map)
   (easy-menu-add Texinfo-command-menu Texinfo-mode-map)
@@ -401,7 +409,7 @@ value of `Texinfo-mode-hook'."
   (setq TeX-command-default "TeX")
   (setq TeX-header-end "%*end")
   (setq TeX-trailer-start (regexp-quote (concat TeX-esc "bye")))
-  
+
   (make-local-variable 'TeX-complete-list)
   (setq TeX-complete-list
 	(list (list "@\\([a-zA-Z]*\\)" 1 'TeX-symbol-list nil)
@@ -411,7 +419,7 @@ value of `Texinfo-mode-hook'."
   (setq TeX-font-list Texinfo-font-list)
   (make-local-variable 'TeX-font-replace-function)
   (setq TeX-font-replace-function 'TeX-font-replace-macro)
-  
+
   (add-hook 'find-file-hooks (lambda ()
 			       (unless (file-exists-p (buffer-file-name))
 				 (TeX-master-file nil nil t))) nil t)
@@ -540,7 +548,7 @@ value of `Texinfo-mode-hook'."
    '("vskip" (TeX-arg-literal " ") (TeX-arg-free "Amount"))
    '("w" "Text")
    '("xref" "Node name"))
-  
+
   (TeX-run-mode-hooks 'text-mode-hook 'Texinfo-mode-hook)
   (TeX-set-mode-name))
 
@@ -560,7 +568,7 @@ The regexps will be anchored at the end of the file name to be matched,
 i.e. you do _not_ have to cater for this yourself by adding \\\\' or $."
   :type '(repeat regexp)
   :group 'TeX-command)
-  
+
 (provide 'tex-info)
-  
+
 ;;; tex-info.el ends here

@@ -1,4 +1,0 @@
-#name : writeBookmarkData:toURL:options:error
-#group : NSURL
-# --
-writeBookmarkData:${1:(NSData *)bookmarkData} toURL:${2:(NSURL *)bookmarkFileURL} options:${3:(NSURLBookmarkFileCreationOptions)options} error:${4:(NSError **)error}

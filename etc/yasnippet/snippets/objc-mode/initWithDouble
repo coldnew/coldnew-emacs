@@ -1,4 +1,0 @@
-#name : initWithDouble
-#group : NSValue
-# --
-initWithDouble:${1:(double)value}

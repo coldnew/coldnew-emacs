@@ -1,4 +1,0 @@
-#name : setCategory:error
-#group : AVAudioSession
-# --
-setCategory:${1:(NSString*)theCategory} error:${2:(NSError**)outError}

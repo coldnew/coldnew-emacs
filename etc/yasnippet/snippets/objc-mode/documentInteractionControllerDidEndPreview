@@ -1,4 +1,0 @@
-#name : documentInteractionControllerDidEndPreview
-#group : UIDocumentInteractionController
-# --
-documentInteractionControllerDidEndPreview:${1:(UIDocumentInteractionController *)controller}

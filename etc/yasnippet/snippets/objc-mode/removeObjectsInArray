@@ -1,4 +1,0 @@
-#name : removeObjectsInArray
-#group : NSArray
-# --
-removeObjectsInArray:${1:(NSArray *)otherArray}

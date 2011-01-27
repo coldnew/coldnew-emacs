@@ -1,4 +1,0 @@
-#name : setTransform:atTime
-#group : AVVideoComposition
-# --
-setTransform:${1:(CGAffineTransform)transform} atTime:${2:(CMTime)time}

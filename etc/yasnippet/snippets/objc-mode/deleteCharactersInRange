@@ -1,4 +1,0 @@
-#name : deleteCharactersInRange
-#group : NSString
-# --
-deleteCharactersInRange:${1:(NSRange)range}

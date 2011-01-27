@@ -1,4 +1,0 @@
-#name : isDescendantOfView
-#group : UIView
-# --
-isDescendantOfView:${1:(UIView *)view}

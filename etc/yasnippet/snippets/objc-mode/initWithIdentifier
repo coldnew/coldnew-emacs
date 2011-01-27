@@ -1,4 +1,0 @@
-#name : initWithIdentifier
-#group : GKAchievement
-# --
-initWithIdentifier:${1:(NSString *)identifier}

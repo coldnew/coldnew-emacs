@@ -1,4 +1,0 @@
-#name : removeObserver:fromObjectsAtIndexes:forKeyPath
-#group : NSKeyValueObserving
-# --
-removeObserver:${1:(NSObject *)observer} fromObjectsAtIndexes:${2:(NSIndexSet *)indexes} forKeyPath:${3:(NSString *)keyPath}

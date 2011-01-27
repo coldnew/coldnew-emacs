@@ -1,4 +1,0 @@
-#name : setNeedsDisplayInMapRect
-#group : MKOverlayView
-# --
-setNeedsDisplayInMapRect:${1:(MKMapRect)mapRect}

@@ -1,4 +1,0 @@
-#name : searchBar:selectedScopeButtonIndexDidChange
-#group : UISearchBar
-# --
-searchBar:${1:(UISearchBar *)searchBar} selectedScopeButtonIndexDidChange:${2:(NSInteger)selectedScope}

@@ -1,4 +1,0 @@
-#name : setLongEraSymbols
-#group : NSDateFormatter
-# --
-setLongEraSymbols:${1:(NSArray *)array}

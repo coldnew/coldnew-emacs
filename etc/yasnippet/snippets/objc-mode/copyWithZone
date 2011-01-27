@@ -1,4 +1,0 @@
-#name : copyWithZone
-#group : NSObject
-# --
-copyWithZone:${1:(NSZone *)zone}

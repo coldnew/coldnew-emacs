@@ -1,4 +1,0 @@
-#name : setInteger:forKey
-#group : NSUserDefaults
-# --
-setInteger:${1:(NSInteger)value} forKey:${2:(NSString *)defaultName}

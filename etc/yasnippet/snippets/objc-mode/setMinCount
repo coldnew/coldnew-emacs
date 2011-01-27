@@ -1,4 +1,0 @@
-#name : setMinCount
-#group : NSRelationshipDescription
-# --
-setMinCount:${1:(NSUInteger)minCount}

@@ -1,4 +1,0 @@
-#name : select
-#group : UIResponder
-# --
-select:${1:(id)sender}

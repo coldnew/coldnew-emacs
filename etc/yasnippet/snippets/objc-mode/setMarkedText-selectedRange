@@ -1,4 +1,0 @@
-#name : setMarkedText:selectedRange
-#group : UITextInput
-# --
-setMarkedText:${1:(NSString *)markedText} selectedRange:${2:(NSRange)selectedRange}

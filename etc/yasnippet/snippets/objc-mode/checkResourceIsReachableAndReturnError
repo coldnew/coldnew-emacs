@@ -1,4 +1,0 @@
-#name : checkResourceIsReachableAndReturnError
-#group : NSURL
-# --
-checkResourceIsReachableAndReturnError:${1:(NSError **)error}

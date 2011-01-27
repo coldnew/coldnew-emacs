@@ -1,4 +1,0 @@
-#name : setGroupsByEvent
-#group : NSUndoManager
-# --
-setGroupsByEvent:${1:(BOOL)groupsByEvent}

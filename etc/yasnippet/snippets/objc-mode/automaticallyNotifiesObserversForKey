@@ -1,4 +1,0 @@
-#name : automaticallyNotifiesObserversForKey
-#group : NSKeyValueObserving
-# --
-automaticallyNotifiesObserversForKey:${1:(NSString *)key}

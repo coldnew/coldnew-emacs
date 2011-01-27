@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/572/trunk/snippets/erlang-mode
+END
+mod
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/mod
+END
+.yas-parents
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/.yas-parents
+END
+begin
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/begin
+END
+imp
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/imp
+END
+compile
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/compile
+END
+fun
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/fun
+END
+rcv
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/rcv
+END
+rcv.after
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/rcv.after
+END
+ifndef
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/ifndef
+END
+exp
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/exp
+END
+if
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/if
+END
+beh
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/beh
+END
+def
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/def
+END
+undef
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/undef
+END
+after
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/after
+END
+loop
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/loop
+END
+rec
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/rec
+END
+inc
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/inc
+END
+case
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/case
+END
+ifdef
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/ifdef
+END
+inc.lib
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/inc.lib
+END
+try
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/572/trunk/snippets/erlang-mode/try
+END

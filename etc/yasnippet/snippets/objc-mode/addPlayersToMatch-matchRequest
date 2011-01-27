@@ -1,4 +1,0 @@
-#name : addPlayersToMatch:matchRequest
-#group : GKMatchmaker
-# --
-addPlayersToMatch:${1:(GKMatch *)match} matchRequest:${2:(GKMatchRequest *)matchRequest}

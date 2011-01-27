@@ -1,4 +1,0 @@
-#name : postNotificationName:object:userInfo
-#group : NSNotification
-# --
-postNotificationName:${1:(NSString *)aName} object:${2:(id)anObject} userInfo:${3:(NSDictionary *)aUserInfo}

@@ -1,4 +1,0 @@
-#name : setCurrencyGroupingSeparator
-#group : NSNumberFormatter
-# --
-setCurrencyGroupingSeparator:${1:(NSString *)string}

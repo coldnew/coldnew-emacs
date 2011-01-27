@@ -1,4 +1,0 @@
-#name : migrateStoreFromURL:type:options:withMappingModel:toDestinationURL:destinationType:destinationOptions:error
-#group : NSMigrationManager
-# --
-migrateStoreFromURL:${1:(NSURL *)sourceURL} type:${2:(NSString *)sStoreType} options:${3:(NSDictionary *)sOptions} withMappingModel:${4:(NSMappingModel *)mappings} toDestinationURL:${5:(NSURL *)dURL} destinationType:${6:(NSString *)dStoreType} destinationOptions:${7:(NSDictionary *)dOptions} error:${8:(NSError **)error}

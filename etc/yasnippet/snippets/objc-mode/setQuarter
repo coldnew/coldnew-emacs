@@ -1,4 +1,0 @@
-#name : setQuarter
-#group : NSCalendar
-# --
-setQuarter:${1:(NSInteger)v}

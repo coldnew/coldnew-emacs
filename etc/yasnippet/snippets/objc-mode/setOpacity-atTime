@@ -1,4 +1,0 @@
-#name : setOpacity:atTime
-#group : AVVideoComposition
-# --
-setOpacity:${1:(float)opacity} atTime:${2:(CMTime)time}

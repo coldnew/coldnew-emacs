@@ -1,4 +1,0 @@
-#name : addSuiteNamed
-#group : NSUserDefaults
-# --
-addSuiteNamed:${1:(NSString *)suiteName}

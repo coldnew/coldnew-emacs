@@ -1,4 +1,0 @@
-#name : firstObjectCommonWithArray
-#group : NSArray
-# --
-firstObjectCommonWithArray:${1:(NSArray *)otherArray}

@@ -1,4 +1,0 @@
-#name : raise:format:arguments
-#group : NSException
-# --
-raise:${1:(NSString *)name} format:${2:(NSString *)format} arguments:${3:(va_list)argList}

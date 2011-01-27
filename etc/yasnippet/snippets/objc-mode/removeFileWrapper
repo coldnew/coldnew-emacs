@@ -1,4 +1,0 @@
-#name : removeFileWrapper
-#group : NSFileWrapper
-# --
-removeFileWrapper:${1:(NSFileWrapper *)child}

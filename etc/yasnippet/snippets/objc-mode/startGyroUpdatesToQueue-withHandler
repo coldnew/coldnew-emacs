@@ -1,4 +1,0 @@
-#name : startGyroUpdatesToQueue:withHandler
-#group : CMMotionManager
-# --
-startGyroUpdatesToQueue:${1:(NSOperationQueue *)queue} withHandler:${2:(CMGyroHandler)handler}

@@ -1,4 +1,0 @@
-#name : scrollViewDidEndDragging:willDecelerate
-#group : UIScrollView
-# --
-scrollViewDidEndDragging:${1:(UIScrollView *)scrollView} willDecelerate:${2:(BOOL)decelerate}

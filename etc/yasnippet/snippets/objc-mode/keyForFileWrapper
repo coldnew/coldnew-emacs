@@ -1,4 +1,0 @@
-#name : keyForFileWrapper
-#group : NSFileWrapper
-# --
-keyForFileWrapper:${1:(NSFileWrapper *)child}

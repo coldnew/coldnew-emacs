@@ -1,4 +1,0 @@
-#name : loadHTMLString:baseURL
-#group : UIWebView
-# --
-loadHTMLString:${1:(NSString *)string} baseURL:${2:(NSURL *)baseURL}

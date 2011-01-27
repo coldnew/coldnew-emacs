@@ -1,4 +1,0 @@
-#name : videoEditorController:didFailWithError
-#group : UIVideoEditorController
-# --
-videoEditorController:${1:(UIVideoEditorController *)editor} didFailWithError:${2:(NSError *)error}

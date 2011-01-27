@@ -1,4 +1,0 @@
-#name : tableView:titleForFooterInSection
-#group : UITableView
-# --
-tableView:${1:(UITableView *)tableView} titleForFooterInSection:${2:(NSInteger)section}

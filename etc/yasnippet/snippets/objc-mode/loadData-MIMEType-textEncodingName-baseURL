@@ -1,4 +1,0 @@
-#name : loadData:MIMEType:textEncodingName:baseURL
-#group : UIWebView
-# --
-loadData:${1:(NSData *)data} MIMEType:${2:(NSString *)MIMEType} textEncodingName:${3:(NSString *)textEncodingName} baseURL:${4:(NSURL *)baseURL}

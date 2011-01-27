@@ -1,4 +1,0 @@
-#name : mapViewDidStopLocatingUser
-#group : MKMapView
-# --
-mapViewDidStopLocatingUser:${1:(MKMapView *)mapView}

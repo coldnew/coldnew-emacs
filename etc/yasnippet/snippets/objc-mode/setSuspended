@@ -1,4 +1,0 @@
-#name : setSuspended
-#group : NSOperation
-# --
-setSuspended:${1:(BOOL)b}

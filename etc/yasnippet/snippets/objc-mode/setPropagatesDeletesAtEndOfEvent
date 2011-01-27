@@ -1,4 +1,0 @@
-#name : setPropagatesDeletesAtEndOfEvent
-#group : NSManagedObjectContext
-# --
-setPropagatesDeletesAtEndOfEvent:${1:(BOOL)flag}

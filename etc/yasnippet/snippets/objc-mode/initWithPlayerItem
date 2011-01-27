@@ -1,4 +1,0 @@
-#name : initWithPlayerItem
-#group : AVPlayer
-# --
-initWithPlayerItem:${1:(AVPlayerItem *)item}

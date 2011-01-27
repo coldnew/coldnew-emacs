@@ -1,4 +1,0 @@
-#name : setTitleShadowColor:forState
-#group : UIButton
-# --
-setTitleShadowColor:${1:(UIColor *)color} forState:${2:(UIControlState)state}

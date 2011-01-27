@@ -1,4 +1,0 @@
-#name : isFocusModeSupported
-#group : AVCaptureDevice
-# --
-isFocusModeSupported:${1:(AVCaptureFocusMode)focusMode}

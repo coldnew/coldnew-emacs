@@ -1,4 +1,0 @@
-#name : writeToFile:atomically:updateFilenames
-#group : NSFileWrapper
-# --
-writeToFile:${1:(NSString *)path} atomically:${2:(BOOL)atomicFlag} updateFilenames:${3:(BOOL)updateFilenamesFlag}

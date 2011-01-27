@@ -28,13 +28,15 @@
 
 ;;;;; binary path
 (cond (mac-p (require 'rc-mac)))
+(setq max-specpdl-size 5)  ; default is 1000, reduce the backtrace level
+(setq debug-on-error t)    ; now you should get a backtrace
 
 
 ;;;;;; load package initial setting
 
 (require '000-macro)			; All Macros I use
 ;;(require '001-environment)		; Environment Setting
-;;(require '002-variable)			; Variables Setting
+(require '002-variable)			; Variables Setting
 (require '003-dependency)		; All libraries included in
 (require '005-base)			; Basic emacs config
 (require '006-function)			; All functions I use
@@ -47,14 +49,15 @@
 (require '013-woman)			; Woman-mode Settings
 (require '014-session)			; Store current positions
 (require '022-ibuffer)			; Call buffer-list
-
-
+(require '023-el-get)
+(require '024-elpa)
+(require '025-yasnippet)
+(require '026-auto-complete)
 
 
 (require 'rc-minibuffer)
 (require 'rc-cedet)
 (require 'rc-common-hook)
-(require 'rc-complete)
 
 (cond (emacs23-p
        (require 'rc-ecb)))
@@ -67,13 +70,11 @@
 (require 'rc-xrefactory)
 (require 'rc-ccmode-common)
 
-(require 'circuit-mode)
-
+;;(require 'circuit-mode)
 
 (require '999-keybinding)		; Global Keybindings, must in the last line.
 
 ;; FIXME: bug?
-;;(require 'rc-package-manager)
 ;; BUG: where is the fucking symbol function?
 ;;(require 'rc-slime)
 ;;(require 'magit)

@@ -1,4 +1,0 @@
-#name : initWithFileAtPath
-#group : NSStream
-# --
-initWithFileAtPath:${1:(NSString *)path}

@@ -1,4 +1,0 @@
-#name : modelByMergingModels:forStoreMetadata
-#group : NSManagedObjectModel
-# --
-modelByMergingModels:${1:(NSArray *)models} forStoreMetadata:${2:(NSDictionary *)metadata}

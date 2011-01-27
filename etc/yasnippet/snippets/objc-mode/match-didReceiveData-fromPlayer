@@ -1,4 +1,0 @@
-#name : match:didReceiveData:fromPlayer
-#group : GKMatch
-# --
-match:${1:(GKMatch *)match} didReceiveData:${2:(NSData *)data} fromPlayer:${3:(NSString *)playerID}

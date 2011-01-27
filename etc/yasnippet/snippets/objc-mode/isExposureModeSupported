@@ -1,4 +1,0 @@
-#name : isExposureModeSupported
-#group : AVCaptureDevice
-# --
-isExposureModeSupported:${1:(AVCaptureExposureMode)exposureMode}

@@ -1,4 +1,0 @@
-#name : pathContentOfSymbolicLinkAtPath
-#group : NSFileManager
-# --
-pathContentOfSymbolicLinkAtPath:${1:(NSString *)path}

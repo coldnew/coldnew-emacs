@@ -1,4 +1,0 @@
-#name : addToRunLoop:forMode
-#group : CADisplayLink
-# --
-addToRunLoop:${1:(NSRunLoop *)runloop} forMode:${2:(NSString *)mode}

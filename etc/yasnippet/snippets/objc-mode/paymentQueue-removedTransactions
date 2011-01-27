@@ -1,4 +1,0 @@
-#name : paymentQueue:removedTransactions
-#group : SKPaymentQueue
-# --
-paymentQueue:${1:(SKPaymentQueue *)queue} removedTransactions:${2:(NSArray *)transactions}

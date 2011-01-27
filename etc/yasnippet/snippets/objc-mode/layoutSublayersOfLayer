@@ -1,4 +1,0 @@
-#name : layoutSublayersOfLayer
-#group : CALayer
-# --
-layoutSublayersOfLayer:${1:(CALayer *)layer}

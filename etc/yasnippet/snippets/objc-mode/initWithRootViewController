@@ -1,4 +1,0 @@
-#name : initWithRootViewController
-#group : UINavigationController
-# --
-initWithRootViewController:${1:(UIViewController *)rootViewController}

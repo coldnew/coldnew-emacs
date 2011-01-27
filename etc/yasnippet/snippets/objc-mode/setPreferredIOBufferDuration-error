@@ -1,4 +1,0 @@
-#name : setPreferredIOBufferDuration:error
-#group : AVAudioSession
-# --
-setPreferredIOBufferDuration:${1:(NSTimeInterval)duration} error:${2:(NSError**)outError}

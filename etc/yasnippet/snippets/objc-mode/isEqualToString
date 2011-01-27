@@ -1,4 +1,0 @@
-#name : isEqualToString
-#group : NSString
-# --
-isEqualToString:${1:(NSString *)aString}

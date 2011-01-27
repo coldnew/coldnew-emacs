@@ -1,4 +1,0 @@
-#name : initWithDomain:type:name:port
-#group : NSNetServices
-# --
-initWithDomain:${1:(NSString *)domain} type:${2:(NSString *)type} name:${3:(NSString *)name} port:${4:(int)port}

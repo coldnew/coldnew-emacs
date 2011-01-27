@@ -1,4 +1,0 @@
-#name : objectsAtIndexes
-#group : NSArray
-# --
-objectsAtIndexes:${1:(NSIndexSet *)indexes}

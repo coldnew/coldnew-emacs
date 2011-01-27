@@ -1,4 +1,0 @@
-#name : indexPathWithIndex
-#group : NSIndexPath
-# --
-indexPathWithIndex:${1:(NSUInteger)index}

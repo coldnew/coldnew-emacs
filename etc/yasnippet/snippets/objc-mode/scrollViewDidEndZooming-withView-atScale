@@ -1,4 +1,0 @@
-#name : scrollViewDidEndZooming:withView:atScale
-#group : UIScrollView
-# --
-scrollViewDidEndZooming:${1:(UIScrollView *)scrollView} withView:${2:(UIView *)view} atScale:${3:(float)scale}

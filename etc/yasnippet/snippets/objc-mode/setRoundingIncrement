@@ -1,4 +1,0 @@
-#name : setRoundingIncrement
-#group : NSNumberFormatter
-# --
-setRoundingIncrement:${1:(NSNumber *)number}

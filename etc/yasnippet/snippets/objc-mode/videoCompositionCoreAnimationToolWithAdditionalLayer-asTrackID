@@ -1,4 +1,0 @@
-#name : videoCompositionCoreAnimationToolWithAdditionalLayer:asTrackID
-#group : AVVideoComposition
-# --
-videoCompositionCoreAnimationToolWithAdditionalLayer:${1:(CALayer *)layer} asTrackID:${2:(CMPersistentTrackID)trackID}

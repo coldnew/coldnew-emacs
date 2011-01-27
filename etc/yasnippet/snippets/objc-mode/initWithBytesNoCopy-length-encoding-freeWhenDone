@@ -1,4 +1,0 @@
-#name : initWithBytesNoCopy:length:encoding:freeWhenDone
-#group : NSString
-# --
-initWithBytesNoCopy:${1:(void *)bytes} length:${2:(NSUInteger)len} encoding:${3:(NSStringEncoding)encoding} freeWhenDone:${4:(BOOL)freeBuffer}

@@ -882,9 +882,10 @@ Remove the respective properties from the overlay OV."
 			(and (boundp 'global-disable-point-adjustment)
 			     global-disable-point-adjustment)
 			;; See preview.el on how to make this configurable.
-			(memq this-command (list (key-binding [left])
-						 (key-binding [right])
-						 'mouse-set-point)))
+			(memq this-command
+			      (list (key-binding [left]) (key-binding [right])
+				    'backward-char 'forward-char
+				    'mouse-set-point)))
 		;; Open new overlays.
 		(dolist (ol (nconc (when (and TeX-fold-unfold-around-mark
 					      (boundp 'mark-active)

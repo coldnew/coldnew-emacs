@@ -1,4 +1,0 @@
-#name : decimalNumberWithDecimal
-#group : NSDecimalNumber
-# --
-decimalNumberWithDecimal:${1:(NSDecimal)dcm}

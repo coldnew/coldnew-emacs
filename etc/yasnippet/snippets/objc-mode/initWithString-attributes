@@ -1,4 +1,0 @@
-#name : initWithString:attributes
-#group : NSAttributedString
-# --
-initWithString:${1:(NSString *)str} attributes:${2:(NSDictionary *)attrs}

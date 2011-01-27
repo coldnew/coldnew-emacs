@@ -1,4 +1,0 @@
-#name : initWithVideoTracks:videoSettings
-#group : AVAssetReaderOutput
-# --
-initWithVideoTracks:${1:(NSArray *)videoTracks} videoSettings:${2:(NSDictionary *)videoSettings}

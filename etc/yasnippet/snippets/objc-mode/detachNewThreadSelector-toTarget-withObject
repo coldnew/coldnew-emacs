@@ -1,4 +1,0 @@
-#name : detachNewThreadSelector:toTarget:withObject
-#group : NSThread
-# --
-detachNewThreadSelector:${1:(SEL)selector} toTarget:${2:(id)target} withObject:${3:(id)argument}

@@ -1,4 +1,0 @@
-#name : didChangeValueForKey:withSetMutation:usingObjects
-#group : NSKeyValueObserving
-# --
-didChangeValueForKey:${1:(NSString *)key} withSetMutation:${2:(NSKeyValueSetMutationKind)mutationKind} usingObjects:${3:(NSSet *)objects}

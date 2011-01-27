@@ -1,4 +1,0 @@
-#name : initWithCondition
-#group : NSLock
-# --
-initWithCondition:${1:(NSInteger)condition}

@@ -1,4 +1,0 @@
-#name : rangeOfUnit:inUnit:forDate
-#group : NSCalendar
-# --
-rangeOfUnit:${1:(NSCalendarUnit)smaller} inUnit:${2:(NSCalendarUnit)larger} forDate:${3:(NSDate *)date}

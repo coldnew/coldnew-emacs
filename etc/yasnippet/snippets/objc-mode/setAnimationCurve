@@ -1,4 +1,0 @@
-#name : setAnimationCurve
-#group : UIView
-# --
-setAnimationCurve:${1:(UIViewAnimationCurve)curve}

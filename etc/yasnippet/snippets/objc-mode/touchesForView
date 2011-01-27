@@ -1,4 +1,0 @@
-#name : touchesForView
-#group : UIEvent
-# --
-touchesForView:${1:(UIView *)view}

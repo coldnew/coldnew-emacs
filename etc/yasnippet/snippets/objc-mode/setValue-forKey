@@ -1,4 +1,0 @@
-#name : setValue:forKey
-#group : CATransaction
-# --
-setValue:${1:(id)anObject} forKey:${2:(NSString *)key}

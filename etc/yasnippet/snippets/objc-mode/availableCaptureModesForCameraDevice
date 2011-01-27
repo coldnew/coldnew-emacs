@@ -1,4 +1,0 @@
-#name : availableCaptureModesForCameraDevice
-#group : UIImagePickerController
-# --
-availableCaptureModesForCameraDevice:${1:(UIImagePickerControllerCameraDevice)cameraDevice}

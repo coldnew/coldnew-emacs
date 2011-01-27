@@ -1,4 +1,0 @@
-#name : mutableCopyWithZone
-#group : NSObject
-# --
-mutableCopyWithZone:${1:(NSZone *)zone}

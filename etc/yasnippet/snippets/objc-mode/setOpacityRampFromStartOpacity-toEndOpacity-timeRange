@@ -1,4 +1,0 @@
-#name : setOpacityRampFromStartOpacity:toEndOpacity:timeRange
-#group : AVVideoComposition
-# --
-setOpacityRampFromStartOpacity:${1:(float)startOpacity} toEndOpacity:${2:(float)endOpacity} timeRange:${3:(CMTimeRange)timeRange}

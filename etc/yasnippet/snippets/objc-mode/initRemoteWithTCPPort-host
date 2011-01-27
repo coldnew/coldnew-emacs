@@ -1,4 +1,0 @@
-#name : initRemoteWithTCPPort:host
-#group : NSPort
-# --
-initRemoteWithTCPPort:${1:(unsigned short)port} host:${2:(NSString *)hostName}

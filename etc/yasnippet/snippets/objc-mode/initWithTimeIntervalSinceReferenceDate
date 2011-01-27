@@ -1,4 +1,0 @@
-#name : initWithTimeIntervalSinceReferenceDate
-#group : NSDate
-# --
-initWithTimeIntervalSinceReferenceDate:${1:(NSTimeInterval)secsToBeAdded}

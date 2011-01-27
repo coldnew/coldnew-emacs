@@ -1,4 +1,0 @@
-#name : rangeOfMisspelledWordInString:range:startingAt:wrap:language
-#group : UITextChecker
-# --
-rangeOfMisspelledWordInString:${1:(NSString *)stringToCheck} range:${2:(NSRange)range} startingAt:${3:(NSInteger)startingOffset} wrap:${4:(BOOL)wrapFlag} language:${5:(NSString *)language}

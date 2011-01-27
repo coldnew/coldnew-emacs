@@ -1,4 +1,0 @@
-#name : scannerWithString
-#group : NSScanner
-# --
-scannerWithString:${1:(NSString *)string}

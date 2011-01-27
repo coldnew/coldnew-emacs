@@ -1,4 +1,0 @@
-#name : registerClass
-#group : NSURLProtocol
-# --
-registerClass:${1:(Class)protocolClass}

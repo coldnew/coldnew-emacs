@@ -1,4 +1,0 @@
-#name : willRemoveSubview
-#group : UIView
-# --
-willRemoveSubview:${1:(UIView *)subview}

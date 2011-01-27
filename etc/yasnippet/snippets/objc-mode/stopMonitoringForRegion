@@ -1,4 +1,0 @@
-#name : stopMonitoringForRegion
-#group : CLLocationManager
-# --
-stopMonitoringForRegion:${1:(CLRegion *)region}

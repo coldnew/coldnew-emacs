@@ -1,4 +1,0 @@
-#name : undoMenuTitleForUndoActionName
-#group : NSUndoManager
-# --
-undoMenuTitleForUndoActionName:${1:(NSString *)actionName}

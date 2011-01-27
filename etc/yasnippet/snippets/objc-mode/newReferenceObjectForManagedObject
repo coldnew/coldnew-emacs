@@ -1,4 +1,0 @@
-#name : newReferenceObjectForManagedObject
-#group : NSAtomicStore
-# --
-newReferenceObjectForManagedObject:${1:(NSManagedObject *)managedObject}

@@ -1,4 +1,0 @@
-#name : addAlarm
-#group : EKEvent
-# --
-addAlarm:${1:(EKAlarm *)alarm}

@@ -1,4 +1,0 @@
-#name : initDirectoryWithFileWrappers
-#group : NSFileWrapper
-# --
-initDirectoryWithFileWrappers:${1:(NSDictionary *)childrenByPreferredName}

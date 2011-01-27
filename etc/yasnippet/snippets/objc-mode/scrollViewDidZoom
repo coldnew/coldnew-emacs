@@ -1,4 +1,0 @@
-#name : scrollViewDidZoom
-#group : UIScrollView
-# --
-scrollViewDidZoom:${1:(UIScrollView *)scrollView}

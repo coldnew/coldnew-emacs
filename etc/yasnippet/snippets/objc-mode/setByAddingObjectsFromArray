@@ -1,4 +1,0 @@
-#name : setByAddingObjectsFromArray
-#group : NSSet
-# --
-setByAddingObjectsFromArray:${1:(NSArray *)other}

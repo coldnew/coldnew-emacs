@@ -1,4 +1,0 @@
-#name : mapView
-#group : MKMapView
-# --
-mapView:${1:(MKMapView *)mapView}

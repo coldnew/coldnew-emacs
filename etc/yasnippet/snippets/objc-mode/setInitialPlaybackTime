@@ -1,4 +1,0 @@
-#name : setInitialPlaybackTime
-#group : MPMoviePlayerController
-# --
-setInitialPlaybackTime:${1:(NSTimeInterval)initialPlaybackTime}

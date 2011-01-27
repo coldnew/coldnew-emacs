@@ -1,4 +1,0 @@
-#name : setQueuePriority
-#group : NSOperation
-# --
-setQueuePriority:${1:(NSOperationQueuePriority)p}

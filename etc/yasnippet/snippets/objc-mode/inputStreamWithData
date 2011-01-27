@@ -1,4 +1,0 @@
-#name : inputStreamWithData
-#group : NSStream
-# --
-inputStreamWithData:${1:(NSData *)data}

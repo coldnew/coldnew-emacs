@@ -1,4 +1,0 @@
-#name : ordinalityOfUnit:inUnit:forDate
-#group : NSCalendar
-# --
-ordinalityOfUnit:${1:(NSCalendarUnit)smaller} inUnit:${2:(NSCalendarUnit)larger} forDate:${3:(NSDate *)date}

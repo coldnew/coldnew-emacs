@@ -1,4 +1,0 @@
-#name : parser:foundExternalEntityDeclarationWithName:publicID:systemID
-#group : NSXMLParser
-# --
-parser:${1:(NSXMLParser *)parser} foundExternalEntityDeclarationWithName:${2:(NSString *)name} publicID:${3:(NSString *)publicID} systemID:${4:(NSString *)systemID}

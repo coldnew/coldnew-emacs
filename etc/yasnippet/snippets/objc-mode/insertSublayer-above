@@ -1,4 +1,0 @@
-#name : insertSublayer:above
-#group : CALayer
-# --
-insertSublayer:${1:(CALayer *)layer} above:${2:(CALayer *)sibling}

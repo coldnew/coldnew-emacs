@@ -1,4 +1,0 @@
-#name : isMemberOfClass
-#group : NSObject
-# --
-isMemberOfClass:${1:(Class)aClass}

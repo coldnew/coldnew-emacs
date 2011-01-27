@@ -1,4 +1,0 @@
-#name : isEqualToArray
-#group : NSArray
-# --
-isEqualToArray:${1:(NSArray *)otherArray}

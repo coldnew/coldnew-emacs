@@ -1,4 +1,0 @@
-#name : isWritableFileAtPath
-#group : NSFileManager
-# --
-isWritableFileAtPath:${1:(NSString *)path}

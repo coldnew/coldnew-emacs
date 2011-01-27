@@ -1,4 +1,0 @@
-#name : expressionForAggregate
-#group : NSExpression
-# --
-expressionForAggregate:${1:(NSArray *)subexpressions}

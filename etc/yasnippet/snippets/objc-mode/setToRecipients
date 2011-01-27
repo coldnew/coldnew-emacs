@@ -1,4 +1,0 @@
-#name : setToRecipients
-#group : MFMailComposeViewController
-# --
-setToRecipients:${1:(NSArray *)toRecipients}

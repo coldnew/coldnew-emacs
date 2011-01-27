@@ -1,4 +1,0 @@
-#name : loadAndReturnError
-#group : NSBundle
-# --
-loadAndReturnError:${1:(NSError **)error}

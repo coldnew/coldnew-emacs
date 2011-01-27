@@ -1,4 +1,0 @@
-#name : initWithBytes:length:encoding
-#group : NSString
-# --
-initWithBytes:${1:(const void *)bytes} length:${2:(NSUInteger)len} encoding:${3:(NSStringEncoding)encoding}

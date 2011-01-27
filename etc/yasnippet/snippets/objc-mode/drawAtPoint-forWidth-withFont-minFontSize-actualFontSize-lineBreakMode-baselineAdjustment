@@ -1,4 +1,0 @@
-#name : drawAtPoint:forWidth:withFont:minFontSize:actualFontSize:lineBreakMode:baselineAdjustment
-#group : UIStringDrawing
-# --
-drawAtPoint:${1:(CGPoint)point} forWidth:${2:(CGFloat)width} withFont:${3:(UIFont *)font} minFontSize:${4:(CGFloat)minFontSize} actualFontSize:${5:(CGFloat *)actualFontSize} lineBreakMode:${6:(UILineBreakMode)lineBreakMode} baselineAdjustment:${7:(UIBaselineAdjustment)baselineAdjustment}

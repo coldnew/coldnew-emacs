@@ -1,4 +1,0 @@
-#name : setAnimationDelay
-#group : UIView
-# --
-setAnimationDelay:${1:(NSTimeInterval)delay}

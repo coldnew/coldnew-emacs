@@ -1,4 +1,0 @@
-#name : applicationDidReceiveMemoryWarning
-#group : UIApplication
-# --
-applicationDidReceiveMemoryWarning:${1:(UIApplication *)application}

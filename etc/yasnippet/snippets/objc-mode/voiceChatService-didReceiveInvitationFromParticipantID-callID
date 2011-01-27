@@ -1,4 +1,0 @@
-#name : voiceChatService:didReceiveInvitationFromParticipantID:callID
-#group : GKPublicProtocols
-# --
-voiceChatService:${1:(GKVoiceChatService *)voiceChatService} didReceiveInvitationFromParticipantID:${2:(NSString *)participantID} callID:${3:(NSInteger)callID}

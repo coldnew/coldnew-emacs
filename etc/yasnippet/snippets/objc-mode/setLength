@@ -1,4 +1,0 @@
-#name : setLength
-#group : NSData
-# --
-setLength:${1:(NSUInteger)length}

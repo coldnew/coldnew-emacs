@@ -1,2 +1,0 @@
-(:name redo
-       :type emacswiki)

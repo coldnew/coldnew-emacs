@@ -1,4 +1,0 @@
-#name : setVisibleMapRect:edgePadding:animated
-#group : MKMapView
-# --
-setVisibleMapRect:${1:(MKMapRect)mapRect} edgePadding:${2:(UIEdgeInsets)insets} animated:${3:(BOOL)animate}

@@ -1,4 +1,0 @@
-#name : stringByFoldingWithOptions:locale
-#group : NSString
-# --
-stringByFoldingWithOptions:${1:(NSStringCompareOptions)options} locale:${2:(NSLocale *)locale}

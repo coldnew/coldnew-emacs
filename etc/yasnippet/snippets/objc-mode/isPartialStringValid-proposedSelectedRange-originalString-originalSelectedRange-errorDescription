@@ -1,4 +1,0 @@
-#name : isPartialStringValid:proposedSelectedRange:originalString:originalSelectedRange:errorDescription
-#group : NSFormatter
-# --
-isPartialStringValid:${1:(NSString **)partialStringPtr} proposedSelectedRange:${2:(NSRangePointer)proposedSelRangePtr} originalString:${3:(NSString *)origString} originalSelectedRange:${4:(NSRange)origSelRange} errorDescription:${5:(NSString **)error}

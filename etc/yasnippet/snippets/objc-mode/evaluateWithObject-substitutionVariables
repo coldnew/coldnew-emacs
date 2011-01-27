@@ -1,4 +1,0 @@
-#name : evaluateWithObject:substitutionVariables
-#group : NSPredicate
-# --
-evaluateWithObject:${1:(id)object} substitutionVariables:${2:(NSDictionary *)bindings}

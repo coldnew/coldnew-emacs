@@ -1,4 +1,0 @@
-#name : decodeBytesWithReturnedLength
-#group : NSCoder
-# --
-decodeBytesWithReturnedLength:${1:(NSUInteger *)lengthp}

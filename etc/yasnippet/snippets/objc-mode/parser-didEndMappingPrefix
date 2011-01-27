@@ -1,4 +1,0 @@
-#name : parser:didEndMappingPrefix
-#group : NSXMLParser
-# --
-parser:${1:(NSXMLParser *)parser} didEndMappingPrefix:${2:(NSString *)prefix}

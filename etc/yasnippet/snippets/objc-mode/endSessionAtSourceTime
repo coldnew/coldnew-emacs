@@ -1,4 +1,0 @@
-#name : endSessionAtSourceTime
-#group : AVAssetWriter
-# --
-endSessionAtSourceTime:${1:(CMTime)endTime}

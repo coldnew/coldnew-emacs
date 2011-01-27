@@ -1,4 +1,0 @@
-#name : createRelationshipsForDestinationInstance:entityMapping:manager:error
-#group : NSEntityMigrationPolicy
-# --
-createRelationshipsForDestinationInstance:${1:(NSManagedObject *)dInstance} entityMapping:${2:(NSEntityMapping *)mapping} manager:${3:(NSMigrationManager *)manager} error:${4:(NSError **)error}

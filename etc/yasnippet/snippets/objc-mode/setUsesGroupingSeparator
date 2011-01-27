@@ -1,4 +1,0 @@
-#name : setUsesGroupingSeparator
-#group : NSNumberFormatter
-# --
-setUsesGroupingSeparator:${1:(BOOL)b}

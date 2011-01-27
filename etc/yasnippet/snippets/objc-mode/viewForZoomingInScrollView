@@ -1,4 +1,0 @@
-#name : viewForZoomingInScrollView
-#group : UIScrollView
-# --
-viewForZoomingInScrollView:${1:(UIScrollView *)scrollView}

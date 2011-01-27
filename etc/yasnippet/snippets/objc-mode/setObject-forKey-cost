@@ -1,4 +1,0 @@
-#name : setObject:forKey:cost
-#group : NSCache
-# --
-setObject:${1:(id)obj} forKey:${2:(id)key} cost:${3:(NSUInteger)g}

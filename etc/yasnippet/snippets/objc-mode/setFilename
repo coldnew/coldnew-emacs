@@ -1,4 +1,0 @@
-#name : setFilename
-#group : NSFileWrapper
-# --
-setFilename:${1:(NSString *)fileName}

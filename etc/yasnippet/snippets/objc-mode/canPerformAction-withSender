@@ -1,4 +1,0 @@
-#name : canPerformAction:withSender
-#group : UIResponder
-# --
-canPerformAction:${1:(SEL)action} withSender:${2:(id)sender}

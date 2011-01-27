@@ -1,4 +1,0 @@
-#name : hitTest:withEvent
-#group : UIView
-# --
-hitTest:${1:(CGPoint)point} withEvent:${2:(UIEvent *)event}

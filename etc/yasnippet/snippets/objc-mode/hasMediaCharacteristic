@@ -1,4 +1,0 @@
-#name : hasMediaCharacteristic
-#group : AVAssetTrack
-# --
-hasMediaCharacteristic:${1:(NSString *)mediaCharacteristic}

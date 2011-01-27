@@ -1,4 +1,0 @@
-#name : initWithType:subpredicates
-#group : NSCompoundPredicate
-# --
-initWithType:${1:(NSCompoundPredicateType)type} subpredicates:${2:(NSArray *)subpredicates}

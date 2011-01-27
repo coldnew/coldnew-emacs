@@ -1,4 +1,0 @@
-#name : initWithFormat
-#group : NSString
-# --
-initWithFormat:${1:(NSString *)format}

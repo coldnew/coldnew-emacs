@@ -1,4 +1,0 @@
-#name : destinationOfSymbolicLinkAtPath:error
-#group : NSFileManager
-# --
-destinationOfSymbolicLinkAtPath:${1:(NSString *)path} error:${2:(NSError **)error}

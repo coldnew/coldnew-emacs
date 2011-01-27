@@ -1,4 +1,0 @@
-#name : setValue:animated
-#group : UISlider
-# --
-setValue:${1:(float)value} animated:${2:(BOOL)animated}

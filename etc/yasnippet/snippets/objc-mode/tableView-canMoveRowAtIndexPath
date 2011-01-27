@@ -1,4 +1,0 @@
-#name : tableView:canMoveRowAtIndexPath
-#group : UITableView
-# --
-tableView:${1:(UITableView *)tableView} canMoveRowAtIndexPath:${2:(NSIndexPath *)indexPath}

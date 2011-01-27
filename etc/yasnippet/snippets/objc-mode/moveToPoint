@@ -1,4 +1,0 @@
-#name : moveToPoint
-#group : UIBezierPath
-# --
-moveToPoint:${1:(CGPoint)point}

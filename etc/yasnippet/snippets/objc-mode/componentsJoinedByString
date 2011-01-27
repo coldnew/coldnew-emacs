@@ -1,4 +1,0 @@
-#name : componentsJoinedByString
-#group : NSArray
-# --
-componentsJoinedByString:${1:(NSString *)separator}

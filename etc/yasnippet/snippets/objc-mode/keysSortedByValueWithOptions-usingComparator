@@ -1,4 +1,0 @@
-#name : keysSortedByValueWithOptions:usingComparator
-#group : NSDictionary
-# --
-keysSortedByValueWithOptions:${1:(NSSortOptions)opts} usingComparator:${2:(NSComparator)cmptr}

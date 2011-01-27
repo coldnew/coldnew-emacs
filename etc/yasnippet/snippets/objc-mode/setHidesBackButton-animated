@@ -1,4 +1,0 @@
-#name : setHidesBackButton:animated
-#group : UINavigationBar
-# --
-setHidesBackButton:${1:(BOOL)hidesBackButton} animated:${2:(BOOL)animated}

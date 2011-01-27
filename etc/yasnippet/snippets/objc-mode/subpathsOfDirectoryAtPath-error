@@ -1,4 +1,0 @@
-#name : subpathsOfDirectoryAtPath:error
-#group : NSFileManager
-# --
-subpathsOfDirectoryAtPath:${1:(NSString *)path} error:${2:(NSError **)error}

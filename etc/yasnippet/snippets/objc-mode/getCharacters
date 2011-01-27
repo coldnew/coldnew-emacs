@@ -1,4 +1,0 @@
-#name : getCharacters
-#group : NSString
-# --
-getCharacters:${1:(unichar *)buffer}

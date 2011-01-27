@@ -1,4 +1,0 @@
-#name : setDecimalSeparator
-#group : NSNumberFormatter
-# --
-setDecimalSeparator:${1:(NSString *)string}

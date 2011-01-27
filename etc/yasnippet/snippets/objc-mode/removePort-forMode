@@ -1,4 +1,0 @@
-#name : removePort:forMode
-#group : NSRunLoop
-# --
-removePort:${1:(NSPort *)aPort} forMode:${2:(NSString *)mode}

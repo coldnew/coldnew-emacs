@@ -1,4 +1,0 @@
-#name : encodeWithCoder
-#group : NSObject
-# --
-encodeWithCoder:${1:(NSCoder *)aCoder}

@@ -1,4 +1,0 @@
-#name : initWithTypes:error
-#group : NSRegularExpression
-# --
-initWithTypes:${1:(NSTextCheckingTypes)checkingTypes} error:${2:(NSError **)error}

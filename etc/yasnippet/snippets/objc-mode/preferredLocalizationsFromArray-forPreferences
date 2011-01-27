@@ -1,4 +1,0 @@
-#name : preferredLocalizationsFromArray:forPreferences
-#group : NSBundle
-# --
-preferredLocalizationsFromArray:${1:(NSArray *)localizationsArray} forPreferences:${2:(NSArray *)preferencesArray}

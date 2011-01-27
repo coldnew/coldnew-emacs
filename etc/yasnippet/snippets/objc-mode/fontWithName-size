@@ -1,4 +1,0 @@
-#name : fontWithName:size
-#group : UIFont
-# --
-fontWithName:${1:(NSString *)fontName} size:${2:(CGFloat)fontSize}

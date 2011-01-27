@@ -1,4 +1,0 @@
-#name : presentOptionsMenuFromRect:inView:animated
-#group : UIDocumentInteractionController
-# --
-presentOptionsMenuFromRect:${1:(CGRect)rect} inView:${2:(UIView *)view} animated:${3:(BOOL)animated}

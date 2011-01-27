@@ -1,4 +1,0 @@
-#name : removeTimeRange
-#group : AVCompositionTrack
-# --
-removeTimeRange:${1:(CMTimeRange)timeRange}

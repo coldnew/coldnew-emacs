@@ -1,4 +1,0 @@
-#name : transformedValue
-#group : NSValueTransformer
-# --
-transformedValue:${1:(id)value}

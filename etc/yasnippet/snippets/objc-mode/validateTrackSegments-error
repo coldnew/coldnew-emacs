@@ -1,4 +1,0 @@
-#name : validateTrackSegments:error
-#group : AVCompositionTrack
-# --
-validateTrackSegments:${1:(NSArray *)trackSegments} error:${2:(NSError **)error}

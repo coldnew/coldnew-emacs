@@ -1,4 +1,0 @@
-#name : setRelationshipMappings
-#group : NSEntityMapping
-# --
-setRelationshipMappings:${1:(NSArray *)mappings}

@@ -1,4 +1,0 @@
-#name : playAtTime
-#group : AVAudioPlayer
-# --
-playAtTime:${1:(NSTimeInterval)time}

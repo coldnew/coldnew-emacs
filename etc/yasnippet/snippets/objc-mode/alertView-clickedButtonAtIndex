@@ -1,4 +1,0 @@
-#name : alertView:clickedButtonAtIndex
-#group : UIAlertView
-# --
-alertView:${1:(UIAlertView *)alertView} clickedButtonAtIndex:${2:(NSInteger)buttonIndex}

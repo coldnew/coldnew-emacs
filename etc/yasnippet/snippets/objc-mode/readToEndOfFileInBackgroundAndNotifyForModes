@@ -1,4 +1,0 @@
-#name : readToEndOfFileInBackgroundAndNotifyForModes
-#group : NSFileHandle
-# --
-readToEndOfFileInBackgroundAndNotifyForModes:${1:(NSArray *)modes}

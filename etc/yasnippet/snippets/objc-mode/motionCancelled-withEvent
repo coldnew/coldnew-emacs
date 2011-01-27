@@ -1,4 +1,0 @@
-#name : motionCancelled:withEvent
-#group : UIResponder
-# --
-motionCancelled:${1:(UIEventSubtype)motion} withEvent:${2:(UIEvent *)event}

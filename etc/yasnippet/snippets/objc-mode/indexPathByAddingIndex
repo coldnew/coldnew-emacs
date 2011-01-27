@@ -1,4 +1,0 @@
-#name : indexPathByAddingIndex
-#group : NSIndexPath
-# --
-indexPathByAddingIndex:${1:(NSUInteger)index}

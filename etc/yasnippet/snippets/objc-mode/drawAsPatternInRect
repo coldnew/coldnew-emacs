@@ -1,4 +1,0 @@
-#name : drawAsPatternInRect
-#group : UIImage
-# --
-drawAsPatternInRect:${1:(CGRect)rect}

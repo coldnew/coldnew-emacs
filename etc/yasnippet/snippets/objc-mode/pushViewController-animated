@@ -1,4 +1,0 @@
-#name : pushViewController:animated
-#group : UINavigationController
-# --
-pushViewController:${1:(UIViewController *)viewController} animated:${2:(BOOL)animated}

@@ -1,4 +1,0 @@
-#name : stringByReplacingMatchesInString:options:range:withTemplate
-#group : NSRegularExpression
-# --
-stringByReplacingMatchesInString:${1:(NSString *)string} options:${2:(NSMatchingOptions)options} range:${3:(NSRange)range} withTemplate:${4:(NSString *)templ}

@@ -1,4 +1,0 @@
-#name : delete
-#group : UIResponder
-# --
-delete:${1:(id)sender}

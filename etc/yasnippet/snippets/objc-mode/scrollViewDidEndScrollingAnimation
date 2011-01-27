@@ -1,4 +1,0 @@
-#name : scrollViewDidEndScrollingAnimation
-#group : UIScrollView
-# --
-scrollViewDidEndScrollingAnimation:${1:(UIScrollView *)scrollView}

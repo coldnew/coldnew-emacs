@@ -1,4 +1,0 @@
-#name : decimalNumberByDividingBy
-#group : NSDecimalNumber
-# --
-decimalNumberByDividingBy:${1:(NSDecimalNumber *)decimalNumber}

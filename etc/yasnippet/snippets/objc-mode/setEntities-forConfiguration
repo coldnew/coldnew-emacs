@@ -1,4 +1,0 @@
-#name : setEntities:forConfiguration
-#group : NSManagedObjectModel
-# --
-setEntities:${1:(NSArray *)entities} forConfiguration:${2:(NSString *)configuration}

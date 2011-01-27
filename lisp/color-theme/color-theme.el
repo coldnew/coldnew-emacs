@@ -72,11 +72,6 @@
                                   (string-match "XEmacs" emacs-version))
   "Non-nil if running XEmacs.")
 
-;; Add this since it appears to miss in emacs-2x
-(or (fboundp 'replace-in-string)
-    (defun replace-in-string (target old new)
-      (replace-regexp-in-string old new  target)))
-
 ;; face-attr-construct has a problem in Emacs 20.7 and older when
 ;; dealing with inverse-video faces.  Here is a short test to check
 ;; wether you are affected.
@@ -1626,9 +1621,10 @@ frame-parameter settings of previous color themes."
        (add-to-list 'color-themes
                     (list ',n
                           (upcase-initials
-                           (replace-in-string
-                            (replace-in-string 
-                             (symbol-name ',n) "^color-theme-" "") "-" " "))
+			   (replace-regexp-in-string
+			    "-" " "
+			    (replace-regexp-in-string
+			     "^color-theme-" "" (symbol-name ',n))))
                           ,author))
        (defun ,n ()
 	 ,description

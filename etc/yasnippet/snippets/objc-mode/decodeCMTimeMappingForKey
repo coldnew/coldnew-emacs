@@ -1,4 +1,0 @@
-#name : decodeCMTimeMappingForKey
-#group : AVTime
-# --
-decodeCMTimeMappingForKey:${1:(NSString *)key}

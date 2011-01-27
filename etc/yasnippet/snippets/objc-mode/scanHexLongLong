@@ -1,4 +1,0 @@
-#name : scanHexLongLong
-#group : NSScanner
-# --
-scanHexLongLong:${1:(unsigned long long *)result}
