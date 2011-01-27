@@ -3,7 +3,7 @@
 (require 'site-gentoo nil 'noerror)        ; 讀取 Gentoo 安裝的外掛資訊
 (setq-default inhibit-default-init t )     ; 關閉全域初始化
 (setq-default debug-on-error     nil )
-(setq-default custom-file "~/.emacs.d/custom.el")
+(setq-default custom-file "~/.emacs.d/rc.d/custom.el")
 
 ;;;;;;; start server for emacsclient
 (message "* --[ start the emacs server ]-- *")
@@ -49,6 +49,8 @@
 (require '026-auto-complete)
 (require '027-minibuffer)
 (require '028-uniquify)
+(require '029-lusty-explorer)
+
 
 
 
@@ -64,8 +66,7 @@
 (require 'rc-find-file)
 (require 'rc-xrefactory)
 (require 'rc-ccmode-common)
-
-(require '997-el-get)			; emacs lisp manager
+;; FIXME: (require '997-el-get)			; emacs lisp manager
 (require '998-elpa)			; emacs lisp manager
 (require '999-keybinding)		; Global Keybindings, must in the last line.
 

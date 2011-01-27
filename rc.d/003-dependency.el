@@ -38,6 +38,7 @@
 (require 'dropdown-list)
 (require 'pos-tip)
 (require 'auto-complete-config)
+(require 'lusty-explorer)
 ;;(require 'cscope)
 ;;(require 'emms)
 ;;(require 'ibuffer-expert)		; iBuffer Expert

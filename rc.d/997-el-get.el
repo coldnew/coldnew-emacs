@@ -96,6 +96,7 @@
 	       :url "https://github.com/imakado/emacs-xcode-document-viewer.git")
 	(:name lusty-explorer
 	       :type emacswiki)
+
 	;;elscreen
 	;;auctex
 	;;color-theme			;
