@@ -47,13 +47,6 @@
 
 
 
-;; Programming Language Configure Settings
-(require 'lang-c)			; C
-(require 'lang-cpp)			; C++
-(require 'lang-emacs-lisp)		; Emacs-Lisp
-;;(require 'lang-python)			; Python
-(require 'lang-matlab)			; Matlab
-(require 'lang-newlisp)			; Newlisp
 
 
 

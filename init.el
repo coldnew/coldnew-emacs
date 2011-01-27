@@ -45,13 +45,10 @@
 (require '013-woman)			; Woman-mode Settings
 (require '014-session)			; Store current positions
 (require '022-ibuffer)			; Call buffer-list
-(require '023-el-get)			; emacs lisp manager
-(require '024-elpa)			; emacs lisp manager
 (require '025-yasnippet)
 (require '026-auto-complete)
 (require '027-minibuffer)
 (require '028-uniquify)
-
 
 
 
@@ -68,15 +65,22 @@
 (require 'rc-xrefactory)
 (require 'rc-ccmode-common)
 
-;;(require 'circuit-mode)
-
+(require '997-el-get)			; emacs lisp manager
+(require '998-elpa)			; emacs lisp manager
 (require '999-keybinding)		; Global Keybindings, must in the last line.
 
+;; Programming Language Configure Settings
+(require 'lang-c)			; C
+(require 'lang-cpp)			; C++
+(require 'lang-emacs-lisp)		; Emacs-Lisp
+;;(require 'lang-python)			; Python
+(require 'lang-matlab)			; Matlab
+(require 'lang-newlisp)			; Newlisp
 ;; FIXME: bug?
 ;; BUG: where is the fucking symbol function?
-;;(require 'rc-slime)
 ;;(require 'magit)
 
+;;(require 'circuit-mode)
 ;;(setq-default header-line-format mode-line-format) ; Copy mode-line to top
 ;;(setq-default mode-line-format nil) ; Remove mode-line
 (defcmd show-mode-line ()

@@ -7,5 +7,6 @@
 			     yas/ido-prompt
 			     yas/completing-prompt))
 
+
 (provide '025-yasnippet)
 ;; 025-yasnippet.el ends here.
