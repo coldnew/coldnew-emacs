@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (anything-other-buffer anything-at-point anything)
-;;;;;;  "anything/anything" "anything/anything.el" (19777 30619))
+;;;;;;  "anything/anything" "anything/anything.el" (19777 35650))
 ;;; Generated autoloads from anything/anything.el
 
 (autoload 'anything "anything/anything" "\
@@ -245,7 +245,7 @@ Will prompt you shell name when you type `C-u' before this command.
 
 ;;;***
 
-;;;### (autoloads (nav) "nav/nav" "nav/nav.el" (19777 18127))
+;;;### (autoloads (nav) "nav/nav" "nav/nav.el" (19777 35651))
 ;;; Generated autoloads from nav/nav.el
 
 (autoload 'nav "nav/nav" "\
@@ -285,7 +285,7 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 
 ;;;### (autoloads (resume save-current-configuration wipe restore-window-configuration
 ;;;;;;  current-window-configuration-printable) "revive/revive" "revive/revive.el"
-;;;;;;  (19777 34095))
+;;;;;;  (19777 35651))
 ;;; Generated autoloads from revive/revive.el
 
 (autoload 'current-window-configuration-printable "revive/revive" "\
@@ -330,7 +330,7 @@ Configuration should be saved by save-current-configuration.
 ;;;***
 
 ;;;### (autoloads (sr-dired sunrise-cd sunrise) "sunrise-commander/sunrise-commander"
-;;;;;;  "sunrise-commander/sunrise-commander.el" (19777 18030))
+;;;;;;  "sunrise-commander/sunrise-commander.el" (19777 35651))
 ;;; Generated autoloads from sunrise-commander/sunrise-commander.el
 
 (autoload 'sunrise "sunrise-commander/sunrise-commander" "\
@@ -352,14 +352,10 @@ Visits the given directory in sr-mode.
 
 ;;;***
 
-;;;### (autoloads nil nil ("ac-anything/ac-anything.el" "anything-c-shell-history/anything-c-shell-history.el"
-;;;;;;  "anything-complete/anything-complete.el" "anything-grep/anything-grep.el"
-;;;;;;  "anything-gtags/anything-gtags.el" "anything-kyr/anything-kyr.el"
-;;;;;;  "anything-match-plugin/anything-match-plugin.el" "anything-menu/anything-menu.el"
-;;;;;;  "anything-migemo/anything-migemo.el" "anything-show-completion/anything-show-completion.el"
-;;;;;;  "anything-slime/anything-slime.el" "ipa/ipa.el" "nav/nav-dev.el"
-;;;;;;  "nav/nav-test.el" "pymacs/pymacs.el" "ssh-config/ssh-config.el")
-;;;;;;  (19777 35469 679179))
+;;;### (autoloads nil nil ("anything-dabbrev-expand/anything-dabbrev-expand.el"
+;;;;;;  "anything-include/anything-include.el" "anything-yaetags/anything-yaetags.el"
+;;;;;;  "ctagsfind/ctagsfind.el" "pymacs/pymacs.el" "ssh-config/ssh-config.el")
+;;;;;;  (19777 38586 23942))
 
 ;;;***
 
