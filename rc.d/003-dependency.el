@@ -74,7 +74,8 @@
 (require-maybe 'dabbrev)			;
 (require-maybe 'ctagsfind)			;
 (require-maybe 'gccsense)			; GCC's code analyzers
-(require-maybe 'completion-ui)
+(require-maybe 'completion-ui)			;
+(require-maybe 'async-eval)			; execute Emacs lisp in a separate process
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab
 ;;(require-maybe 'pymacs)			; Pymacs

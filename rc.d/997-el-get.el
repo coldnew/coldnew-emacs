@@ -180,7 +180,9 @@
 	       :options ("xf")
 	       :url "http://www.dr-qubit.org/download.php?file=predictive/completion-ui.tar.gz"
 	       )
-
+	(:name async-eval
+	       :type http
+	       :url "http://nschum.de/src/emacs/async-eval/async-eval.el")
 	;;elscreen
 	;;auctex
 	;;color-theme			;
