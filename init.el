@@ -50,8 +50,8 @@
 (require '027-minibuffer)
 (require '028-uniquify)
 (require '029-lusty-explorer)
-
-
+(require '030-xrefactory)
+(require '031-comint-mode)
 
 
 (require 'rc-cedet)
@@ -64,7 +64,6 @@
 (require 'rc-w3m)
 (require 'rc-ielm-mode)
 (require 'rc-find-file)
-(require 'rc-xrefactory)
 (require 'rc-ccmode-common)
 ;; FIXME: (require '997-el-get)			; emacs lisp manager
 (require '998-elpa)			; emacs lisp manager

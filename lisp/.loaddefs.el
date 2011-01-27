@@ -3,8 +3,58 @@
 ;;; Code:
 
 
+;;;### (autoloads nil "doxymacs/lisp/doxymacs" "doxymacs/lisp/doxymacs.el"
+;;;;;;  (19777 4986))
+;;; Generated autoloads from doxymacs/lisp/doxymacs.el
+
+(or (assoc 'doxymacs-mode minor-mode-alist) (setq minor-mode-alist (cons '(doxymacs-mode " doxy") minor-mode-alist)))
+
+;;;***
+
+;;;### (autoloads (xml-reformat-tags insert-xml read-xml) "doxymacs/lisp/xml-parse"
+;;;;;;  "doxymacs/lisp/xml-parse.el" (19777 4977))
+;;; Generated autoloads from doxymacs/lisp/xml-parse.el
+
+(autoload 'read-xml "doxymacs/lisp/xml-parse" "\
+Parse XML data at point into a Lisp structure.
+See `insert-xml' for a description of the format of this structure.
+Point is left at the end of the XML structure read.
+
+\(fn &optional PROGRESS-CALLBACK)" nil nil)
+
+(autoload 'insert-xml "doxymacs/lisp/xml-parse" "\
+Insert DATA, a recursive Lisp structure, at point as XML.
+DATA has the form:
+
+  ENTRY       ::=  (TAG CHILD*)
+  CHILD       ::=  STRING | ENTRY
+  TAG         ::=  TAG_NAME | (TAG_NAME ATTR+)
+  ATTR        ::=  (ATTR_NAME . ATTR_VALUE)
+  TAG_NAME    ::=  STRING
+  ATTR_NAME   ::=  STRING
+  ATTR_VALUE  ::=  STRING
+
+If ADD-NEWLINES is non-nil, newlines and indentation will be added to
+make the data user-friendly.
+
+If PUBLIC and SYSTEM are non-nil, a !DOCTYPE tag will be added at the
+top of the document to identify it as an XML document.
+
+DEPTH is normally for internal use only, and controls the depth of the
+indentation.
+
+\(fn DATA &optional ADD-NEWLINES PUBLIC SYSTEM DEPTH RET-DEPTH)" nil nil)
+
+(autoload 'xml-reformat-tags "doxymacs/lisp/xml-parse" "\
+If point is on the open bracket of an XML tag, reformat that tree.
+Note that this only works if the opening tag starts at column 0.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (highlight-parentheses-mode) "highlight-parentheses/highlight-parentheses"
-;;;;;;  "highlight-parentheses/highlight-parentheses.el" (19775 58312))
+;;;;;;  "highlight-parentheses/highlight-parentheses.el" (19777 341))
 ;;; Generated autoloads from highlight-parentheses/highlight-parentheses.el
 
 (autoload 'highlight-parentheses-mode "highlight-parentheses/highlight-parentheses" "\
@@ -51,7 +101,7 @@ Turns on hungry delete mode if the buffer is appropriate.
 ;;;;;;  lusty-open-this lusty-highlight-previous-column lusty-highlight-next-column
 ;;;;;;  lusty-highlight-previous lusty-highlight-next lusty-buffer-explorer
 ;;;;;;  lusty-file-explorer) "lusty-explorer/lusty-explorer" "lusty-explorer/lusty-explorer.el"
-;;;;;;  (19776 64005))
+;;;;;;  (19777 341))
 ;;; Generated autoloads from lusty-explorer/lusty-explorer.el
 
 (autoload 'lusty-file-explorer "lusty-explorer/lusty-explorer" "\
@@ -107,7 +157,7 @@ Launch dired at the current directory.
 ;;;***
 
 ;;;### (autoloads (multi-term) "multi-term/multi-term" "multi-term/multi-term.el"
-;;;;;;  (19776 57137))
+;;;;;;  (19777 341))
 ;;; Generated autoloads from multi-term/multi-term.el
 
 (autoload 'multi-term "multi-term/multi-term" "\
@@ -135,7 +185,7 @@ Run pylookup-update and create the database at `pylookup-db-file'.
 ;;;***
 
 ;;;### (autoloads (rainbow-mode) "rainbow-mode/rainbow-mode" "rainbow-mode/rainbow-mode.el"
-;;;;;;  (19775 57987))
+;;;;;;  (19777 341))
 ;;; Generated autoloads from rainbow-mode/rainbow-mode.el
 
 (autoload 'rainbow-mode "rainbow-mode/rainbow-mode" "\
@@ -146,11 +196,8 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 
 ;;;***
 
-;;;### (autoloads nil nil ("auto-complete-clang/auto-complete-clang.el"
-;;;;;;  "auto-complete-extension/auto-complete-extension.el" "auto-complete/auto-complete-config.el"
-;;;;;;  "auto-complete/auto-complete.el" "auto-complete/fuzzy.el"
-;;;;;;  "auto-complete/popup.el" "pos-tip/pos-tip.el" "pymacs/pymacs.el")
-;;;;;;  (19776 64006 843050))
+;;;### (autoloads nil nil ("pymacs/pymacs.el" "ssh-config/ssh-config.el")
+;;;;;;  (19777 4989 530545))
 
 ;;;***
 

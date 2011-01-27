@@ -20,9 +20,9 @@
 (setq-default backup-directory-alist `(("."  . ,emacs-backup-directory)))
 (setq-default version-control     t ) ; 啟用版本控制功能（可備份多次）
 (setq-default backup-by-copying   t ) ; 使用直接拷貝來備份檔案
-(setq-default kept-old-versions   3 ) ; 備份最原始的版本3次
-(setq-default kept-new-versions   12) ; 備份最新的版本12次
-(setq-default delete-old-versions t ) ; 刪除不屬於以上15種版本的備份
+(setq-default kept-old-versions   5 ) ; 備份最原始的版本5次
+(setq-default kept-new-versions   19) ; 備份最新的版本12次
+(setq-default delete-old-versions t ) ; 刪除不屬於以上24種版本的備份
 
 
 ;; I don't like auto-save-list directory show upder ~/.emacs.d/

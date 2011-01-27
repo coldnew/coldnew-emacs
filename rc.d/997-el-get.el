@@ -97,6 +97,36 @@
 	(:name lusty-explorer
 	       :type emacswiki)
 
+	(:name ssh-config
+	       :type git
+	       :url "git://github.com/renard/ssh-config-el.git"
+	       :features ssh-config)
+	(:name apel
+	       :type cvs
+	       :module "apel"
+	       :url ":pserver:anonymous@cvs.m17n.org:/cvs/root"
+	       :build
+	       (mapcar
+		(lambda (target)
+		  (list el-get-emacs
+			(split-string "-batch -q -no-site-file -l APEL-MK -f")
+			target
+			"prefix" "site-lisp" "site-lisp"))
+		'("compile-apel" "install-apel"))
+	       :load-path ("site-lisp/apel" "site-lisp/emu"))
+	(:name doxymacs
+	       :type git
+	       :url "git://doxymacs.git.sourceforge.net/gitroot/doxymacs/doxymacs"
+	       :load-path ("./lisp")
+	       :build ("./bootstrap" "./configure" "make")
+	       :features doxymacs
+	       )
+	(:name newlisp-mode
+	       :type git
+	       :url "https://github.com/may/newlisp-mode.git"
+	       :features newlisp)
+
+
 	;;elscreen
 	;;auctex
 	;;color-theme			;
@@ -104,6 +134,13 @@
 	;;  session
 	;; emacs-w3m
 	))
+
+
+;; BUG: After load this file, I can't use lusty-explorer, so rebind keymap
+(vim:nmap (kbd "C-x C-f") 'find-file)
+(vim:imap (kbd "C-x C-f") 'find-file)
+
+
 
 (provide '997-el-get)
 ;; 997-el-get.el ends here.
