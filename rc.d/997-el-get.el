@@ -169,6 +169,18 @@
 	       :type emacswiki)
 	(:name anything-c-shell-history
 	       :type emacswiki)
+	(:name anything-include
+	       :type emacswiki)
+	(:name anything-yaetags
+	       :type emacswiki)
+	(:name anything-dabbrev-expand
+	       :type emacswiki)
+	(:name completion-ui
+	       :type http-tar
+	       :options ("xf")
+	       :url "http://www.dr-qubit.org/download.php?file=predictive/completion-ui.tar.gz"
+	       )
+
 	;;elscreen
 	;;auctex
 	;;color-theme			;
