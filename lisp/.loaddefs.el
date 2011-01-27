@@ -47,6 +47,65 @@ Turns on hungry delete mode if the buffer is appropriate.
 
 ;;;***
 
+;;;### (autoloads (lusty-launch-dired lusty-select-current-name lusty-select-match
+;;;;;;  lusty-open-this lusty-highlight-previous-column lusty-highlight-next-column
+;;;;;;  lusty-highlight-previous lusty-highlight-next lusty-buffer-explorer
+;;;;;;  lusty-file-explorer) "lusty-explorer/lusty-explorer" "lusty-explorer/lusty-explorer.el"
+;;;;;;  (19776 64005))
+;;; Generated autoloads from lusty-explorer/lusty-explorer.el
+
+(autoload 'lusty-file-explorer "lusty-explorer/lusty-explorer" "\
+Launch the file/directory mode of LustyExplorer.
+
+\(fn)" t nil)
+
+(autoload 'lusty-buffer-explorer "lusty-explorer/lusty-explorer" "\
+Launch the buffer mode of LustyExplorer.
+
+\(fn)" t nil)
+
+(autoload 'lusty-highlight-next "lusty-explorer/lusty-explorer" "\
+Highlight the next match in *Lusty-Matches*.
+
+\(fn)" t nil)
+
+(autoload 'lusty-highlight-previous "lusty-explorer/lusty-explorer" "\
+Highlight the previous match in *Lusty-Matches*.
+
+\(fn)" t nil)
+
+(autoload 'lusty-highlight-next-column "lusty-explorer/lusty-explorer" "\
+Highlight the next column in *Lusty-Matches*.
+
+\(fn)" t nil)
+
+(autoload 'lusty-highlight-previous-column "lusty-explorer/lusty-explorer" "\
+Highlight the previous column in *Lusty-Matches*.
+
+\(fn)" t nil)
+
+(autoload 'lusty-open-this "lusty-explorer/lusty-explorer" "\
+Open the given file/directory/buffer, creating it if not already present.
+
+\(fn)" t nil)
+
+(autoload 'lusty-select-match "lusty-explorer/lusty-explorer" "\
+Activate the highlighted match in *Lusty-Matches* - recurse if dir, open if file/buffer.
+
+\(fn)" t nil)
+
+(autoload 'lusty-select-current-name "lusty-explorer/lusty-explorer" "\
+Open the given file/buffer or create a new buffer with the current name.
+
+\(fn)" t nil)
+
+(autoload 'lusty-launch-dired "lusty-explorer/lusty-explorer" "\
+Launch dired at the current directory.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (multi-term) "multi-term/multi-term" "multi-term/multi-term.el"
 ;;;;;;  (19776 57137))
 ;;; Generated autoloads from multi-term/multi-term.el
@@ -91,7 +150,7 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 ;;;;;;  "auto-complete-extension/auto-complete-extension.el" "auto-complete/auto-complete-config.el"
 ;;;;;;  "auto-complete/auto-complete.el" "auto-complete/fuzzy.el"
 ;;;;;;  "auto-complete/popup.el" "pos-tip/pos-tip.el" "pymacs/pymacs.el")
-;;;;;;  (19776 57138 516408))
+;;;;;;  (19776 64006 843050))
 
 ;;;***
 

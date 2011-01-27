@@ -8,8 +8,6 @@
   (add-to-list 'exec-path "/opt/local/bin/")
   (add-to-list 'exec-path "/usr/bin/")
   (add-to-list 'exec-path "/usr/X11/bin/"))
- (cygwin-p	;; If running on Cygwin
-  )
  (windows-p	;; If running in Windows
   )
  (t		;; Default is Linux

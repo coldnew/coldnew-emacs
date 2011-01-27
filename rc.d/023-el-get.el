@@ -39,7 +39,6 @@
 	       :type git
 	       :url "http://github.com/philjackson/magit.git"
 	       :info "."
-	       ;; that used to be how to build it :build ("./autogen.sh" "./configure" "make")
 	       :build ("make all")
 	       :build/darwin `(,(concat "PATH=" invocation-directory ":$PATH make all"))
 	       :features magit)
@@ -81,7 +80,6 @@
 	(:name c-eldoc
 	       :type http
 	       :url "http://www.emacswiki.org/emacs/download/c-eldoc.el")
-	;; FIXME:
 	(:name emms
 	       :type git
 	       :url "git://git.sv.gnu.org/emms.git"
@@ -96,7 +94,8 @@
 	(:name xcode-document-viewer
 	       :type git
 	       :url "https://github.com/imakado/emacs-xcode-document-viewer.git")
-
+	(:name lusty-explorer
+	       :type emacswiki)
 	;;elscreen
 	;;auctex
 	;;color-theme			;

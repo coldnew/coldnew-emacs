@@ -27,8 +27,6 @@
       (normal-top-level-add-subdirs-to-load-path)))
 
 ;;;;; binary path
-(setq max-specpdl-size 2048)  ; default is 1000, reduce the backtrace level
-(setq debug-on-error t)    ; now you should get a backtrace
 
 
 ;;;;;; load package initial setting
@@ -47,13 +45,12 @@
 (require '013-woman)			; Woman-mode Settings
 (require '014-session)			; Store current positions
 (require '022-ibuffer)			; Call buffer-list
-(require '023-el-get)
-(require '024-elpa)
+(require '023-el-get)			; emacs lisp manager
+(require '024-elpa)			; emacs lisp manager
 (require '025-yasnippet)
 (require '026-auto-complete)
 (require '027-minibuffer)
-
-
+(require '028-uniquify)
 
 
 

@@ -43,43 +43,37 @@
 (mouse-avoidance-mode 'animate ) ; 鼠標自動避開游標
 
 ;;;; 編輯環境
-(setq-default initial-scratch-message       nil )
-(setq-default major-mode    'text-mode ) ; 預設使用 text-mode
-(setq-default line-spacing                    4 ) ; 設定行間距為4格
-(setq-default fill-column                   100 ) ; 顯示默認的文檔的寬度為100列
-(setq-default kill-ring-max                 300 ) ; 設定刪除保存紀錄為300
+(setq-default initial-scratch-message       nil )  ; 不顯示 scratch 預設的訊息
+(setq-default major-mode    'text-mode )	   ; 預設使用 text-mode
+(setq-default line-spacing                    4 )  ; 設定行間距為4格
+(setq-default fill-column                   100 )  ; 顯示默認的文檔的寬度為100列
+(setq-default kill-ring-max                 300 )  ; 設定刪除保存紀錄為300
 ;; (setq show-paren-style     'expression )
-(setq-default track-eol                       t ) ; 在行尾上下移動時保持在行尾
-(setq-default kill-whole-line                 t ) ; 在行首使用C-k時，同時刪除該行
-(setq-default global-font-lock-mode           t ) ; 啟用全域語法高亮
-(setq-default global-auto-revert-mode         t ) ; 自動重新整理 Buffer
-(setq-default transient-mark-mode             t ) ; 高亮選中區塊
-(setq-default require-final-newline           t ) ; 在文檔最後自動插入一行空白
-(setq-default delete-trailing-whitespace      t ) ; 刪除每行最後的空格
-(setq-default x-stretch-cursor                t ) ; 全形符號時游標延展
-(setq-default x-select-enable-clipboard       t ) ; 支持 Emacs 和外部程序的黏貼
-(setq-default mouse-yank-at-point             t ) ; 允許滑鼠中鍵黏貼
-(setq-default line-number-mode                t ) ; 顯示行號
-(setq-default column-number-mode              t ) ; 顯示列號
-(setq-default partial-completion-mode         t ) ; 啟用自動補全函數和變量
-(setq-default enable-recursive-minibuffers    t ) ; 可以遞迴的使用 mini-buffer
-(setq-default completion-ignore-case          t ) ; 自動補全忽略大小寫
-(setq-default scroll-preserve-screen-position t ) ;
+(setq-default track-eol                       t )  ; 在行尾上下移動時保持在行尾
+(setq-default kill-whole-line                 t )  ; 在行首使用C-k時，同時刪除該行
+(setq-default global-font-lock-mode           t )  ; 啟用全域語法高亮
+(setq-default global-auto-revert-mode         t )  ; 自動重新整理 Buffer
+(setq-default transient-mark-mode             t )  ; 高亮選中區塊
+(setq-default require-final-newline           t )  ; 在文檔最後自動插入一行空白
+(setq-default delete-trailing-whitespace      t )  ; 刪除每行最後的空格
+(setq-default x-stretch-cursor                t )  ; 全形符號時游標延展
+(setq-default x-select-enable-clipboard       t )  ; 支持 Emacs 和外部程序的黏貼
+(setq-default mouse-yank-at-point             t )  ; 允許滑鼠中鍵黏貼
+(setq-default line-number-mode                t )  ; 顯示行號
+(setq-default column-number-mode              t )  ; 顯示列號
+(setq-default partial-completion-mode         t )  ; 啟用自動補全函數和變量
+(setq-default enable-recursive-minibuffers    t )  ; 可以遞迴的使用 mini-buffer
+(setq-default completion-ignore-case          t )  ; 自動補全忽略大小寫
+(setq-default scroll-preserve-screen-position t )  ;
 (setq-default minibuffer-electric-default-mode t ) ; 啟用部份補全
-(setq-default view-read-only t ) ; 開啟惟讀檔時啟用 view-mode
+(setq-default view-read-only t )		   ; 開啟惟讀檔時啟用 view-mode
 
 (cua-mode                   t )         ; 啟用 cua-mode
 (setq-default cua-enable-cua-keys nil )	; 不使用 cua-mode 裡的按鍵
 (delete-selection-mode      t )         ; 啟用 delsel-mode
 (visual-line-mode           t )         ; 折行時不拆開一個 "字"
+(global-undo-tree-mode)			; 開啟 undo-tree-mode
 
-(global-undo-tree-mode)
-
-;; uniquify changes conflicting buffer names from file<2> etc
-(setq uniquify-buffer-name-style 'reverse)
-(setq uniquify-separator "/")
-(setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
-(setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
 
 ;;  當 emacs 建立新檔案至不存在的資料夾時，於儲存前自動建立該資料夾
 (add-hook 'before-save-hook
