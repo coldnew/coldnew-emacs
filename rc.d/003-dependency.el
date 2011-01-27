@@ -68,7 +68,13 @@
 (require-maybe 'x-dnd)				; Drag and drop support for X
 (require-maybe 'xcscope)			; Cscope interface for Emacs
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
-
+(require-maybe 'anything-include)		; Anything-source made maintenance of history of C/C++
+(require-maybe 'anything-yaetags)		; Yet another etags interface with anything
+(require-maybe 'anything-dabbrev-expand)	; dabbrev using anything.el
+(require-maybe 'dabbrev)			;
+(require-maybe 'ctagsfind)			;
+(require-maybe 'gccsense)			; GCC's code analyzers
+(require-maybe 'completion-ui)
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab
 ;;(require-maybe 'pymacs)			; Pymacs

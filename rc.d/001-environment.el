@@ -11,6 +11,7 @@
  (windows-p	;; If running in Windows
   )
  (t		;; Default is Linux
+  (add-to-list 'exec-path "~/.emacs.d/lisp/gccsense/bin/")
 
   )
  )
