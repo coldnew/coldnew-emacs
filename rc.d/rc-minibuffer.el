@@ -1,5 +1,3 @@
-;;
-
 ;;;; Minibuffer
 (add-hook 'minibuffer-setup-hook
 	  '(lambda ()
@@ -15,6 +13,6 @@
 	     (local-set-key (kbd "C-w")   'kill-word)
 	     (local-set-key (kbd "C-b")   'backward-kill-word)))
 
-;;;; switch-buffer
 
-(provide 'rc-minibuffer)
+(provide '027-minibuffer)
+;; 027-minibuffer.el ends here.

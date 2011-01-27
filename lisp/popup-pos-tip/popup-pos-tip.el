@@ -57,93 +57,93 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'cl))
+(require 'cl))
 
 (require 'popup)
 (require 'pos-tip)
 
 (defun* popup-pos-tip (string
-                       &key
-                       point
-                       (around t)
-                       width
-                       (height 15) ; dummy
-                       min-height  ; dummy
-                       truncate    ; dummy
-                       margin
-                       margin-left
-                       margin-right
-                       scroll-bar  ; dummy
-                       parent
-                       parent-offset
-                       nowait
-                       prompt
-                       &aux rows)
-  (if (bufferp string)
-      (setq string (with-current-buffer string (buffer-string))))
+&key
+point
+(around t)
+width
+(height 15) ; dummy
+min-height  ; dummy
+truncate    ; dummy
+margin
+margin-left
+margin-right
+scroll-bar  ; dummy
+parent
+parent-offset
+nowait
+prompt
+&aux rows)
+(if (bufferp string)
+(setq string (with-current-buffer string (buffer-string))))
 
-  (or width (setq width popup-tip-max-width))
-  (and (eq margin t) (setq margin 1))
-  (or margin-left (setq margin-left (or margin 0)))
-  (or margin-right (setq margin-right (or margin 0)))
-  (and (null point) parent
-       (setq point (popup-child-point parent parent-offset)))
+(or width (setq width popup-tip-max-width))
+(and (eq margin t) (setq margin 1))
+(or margin-left (setq margin-left (or margin 0)))
+(or margin-right (setq margin-right (or margin 0)))
+(and (null point) parent
+(setq point (popup-child-point parent parent-offset)))
 
-  (setq rows (pos-tip-split-string string
-                                   (+ margin-left width)
-                                   margin-left
-                                   (and (> (car (pos-tip-string-width-height string))
-                                           width)
-                                        'none))
-        string (let ((rmargin-str (make-string margin-right ?\s)))
-                 (propertize (concat (mapconcat 'identity
-                                                rows
-                                                (concat rmargin-str "\n"))
-                                     rmargin-str)
-                             'face 'pos-tip-temp))
-        width (+ (apply 'max (mapcar 'string-width rows))
-                 margin-right)
-        height (length rows))
+(setq rows (pos-tip-split-string string
+(+ margin-left width)
+margin-left
+(and (> (car (pos-tip-string-width-height string))
+width)
+'none))
+string (let ((rmargin-str (make-string margin-right ?\s)))
+(propertize (concat (mapconcat 'identity
+rows
+(concat rmargin-str "\n"))
+rmargin-str)
+'face 'pos-tip-temp))
+width (+ (apply 'max (mapcar 'string-width rows))
+margin-right)
+height (length rows))
 
-  (face-spec-reset-face 'pos-tip-temp)
-  (set-face-font 'pos-tip-temp (frame-parameter nil 'font))
+(face-spec-reset-face 'pos-tip-temp)
+(set-face-font 'pos-tip-temp (frame-parameter nil 'font))
 
-  (pos-tip-show-no-propertize string
-                              'popup-tip-face
-                              point nil 0
-                              (pos-tip-tooltip-width width
-                                                     (frame-char-width))
-                              (pos-tip-tooltip-height height
-                                                      (frame-char-height))
-                              nil
-                              (- (* margin-left (frame-char-width)))
-                              (and (not around) 0))
+(pos-tip-show-no-propertize string
+'popup-tip-face
+point nil 0
+(pos-tip-tooltip-width width
+(frame-char-width))
+(pos-tip-tooltip-height height
+(frame-char-height))
+nil
+(- (* margin-left (frame-char-width)))
+(and (not around) 0))
 
-  (unless nowait
-    (clear-this-command-keys)
-    (unwind-protect
-        (push (read-event prompt) unread-command-events)
-      (pos-tip-hide))
-    t))
+(unless nowait
+(clear-this-command-keys)
+(unwind-protect
+(push (read-event prompt) unread-command-events)
+(pos-tip-hide))
+t))
 
 (defun popup-pos-tip-show-quick-help (menu &optional item &rest args)
-  (let* ((point (plist-get args :point))
-         (around nil)
-         (parent-offset (popup-offset menu))
-         (doc (popup-menu-documentation menu item)))
-    (when (stringp doc)
-      (if (popup-hidden-p menu)
-          (setq around t
-                menu nil
-                parent-offset nil)
-        (setq point nil))
-      (apply 'popup-pos-tip
-             doc
-             :point point
-             :around around
-             :parent menu
-             :parent-offset parent-offset
-             args))))
+(let* ((point (plist-get args :point))
+(around nil)
+(parent-offset (popup-offset menu))
+(doc (popup-menu-documentation menu item)))
+(when (stringp doc)
+(if (popup-hidden-p menu)
+(setq around t
+menu nil
+parent-offset nil)
+(setq point nil))
+(apply 'popup-pos-tip
+doc
+:point point
+:around around
+:parent menu
+:parent-offset parent-offset
+args))))
 
 (provide 'popup-pos-tip)
 

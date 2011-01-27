@@ -43,6 +43,40 @@
 
   (semantic-add-system-include "/usr/include" 'c-mode)
   (semantic-add-system-include "/usr/include" 'cpp-mode)
+  (setq semanticdb-search-system-databases t)
+
+  ;;
+  (defconst cedet-user-include-dirs
+    (list ".." "../include" "../inc" "../common" "../public" "."
+	  "../.." "../../include" "../../inc" "../../common" "../../public"))
+
+  (setq cedet-sys-include-dirs (list
+				"/usr/include"
+				"/usr/include/bits"
+				"/usr/include/glib-2.0"
+				"/usr/include/gnu"
+				"/usr/include/gtk-2.0"
+				"/usr/include/gtk-2.0/gdk-pixbuf"
+				"/usr/include/gtk-2.0/gtk"
+				"/usr/local/include"
+				"/usr/local/include"))
+
+  (let ((include-dirs cedet-user-include-dirs))
+    (setq include-dirs (append include-dirs cedet-sys-include-dirs))
+    (mapc (lambda (dir)
+	    (semantic-add-system-include dir 'c++-mode)
+	    (semantic-add-system-include dir 'c-mode))
+	  include-dirs))
+
+  (setq semantic-c-dependency-system-include-path "/usr/include/")
+
+
+
+
+  ;;
+
+
+
   ;; Add Support for Qt4
   (setq qt4-base-dir "/usr/include/qt4")
   (setq qt4-gui-dir (concat qt4-base-dir "/QtGui"))

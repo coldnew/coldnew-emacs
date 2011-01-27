@@ -19,7 +19,7 @@
 			 (name . "^\\*Buffer List\\*$")))
 	 ("Version Control" (or (mode . svn-status-mode)
 				(mode . svn-log-edit-mode)
-				(name . "^\\*svn-")
+				(name . "^\\*svn\\*")
 				(name . "^\\*vc\\*$")
 				(name . "^\\*Annotate")
 				(name . "^\\*git-")
