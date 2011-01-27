@@ -1,4 +1,0 @@
-#name : setSelector
-#group : NSInvocation
-# --
-setSelector:${1:(SEL)selector}

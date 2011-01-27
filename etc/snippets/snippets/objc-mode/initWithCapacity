@@ -1,4 +1,0 @@
-#name : initWithCapacity
-#group : NSString
-# --
-initWithCapacity:${1:(NSUInteger)capacity}

@@ -1,4 +1,0 @@
-#name : addCharactersInString
-#group : NSCharacterSet
-# --
-addCharactersInString:${1:(NSString *)aString}

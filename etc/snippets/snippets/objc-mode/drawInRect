@@ -1,4 +1,0 @@
-#name : drawInRect
-#group : UIImage
-# --
-drawInRect:${1:(CGRect)rect}

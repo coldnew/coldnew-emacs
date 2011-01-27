@@ -1,4 +1,0 @@
-#name : initWithFetchRequest:managedObjectContext:sectionNameKeyPath:cacheName
-#group : NSFetchedResultsController
-# --
-initWithFetchRequest:${1:(NSFetchRequest *)fetchRequest} managedObjectContext:${2:(NSManagedObjectContext *)context} sectionNameKeyPath:${3:(NSString *)sectionNameKeyPath} cacheName:${4:(NSString *)name}

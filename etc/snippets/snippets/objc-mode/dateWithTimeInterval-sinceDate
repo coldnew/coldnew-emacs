@@ -1,4 +1,0 @@
-#name : dateWithTimeInterval:sinceDate
-#group : NSDate
-# --
-dateWithTimeInterval:${1:(NSTimeInterval)ti} sinceDate:${2:(NSDate *)date}

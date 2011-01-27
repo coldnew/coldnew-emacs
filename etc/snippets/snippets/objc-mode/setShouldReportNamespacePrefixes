@@ -1,4 +1,0 @@
-#name : setShouldReportNamespacePrefixes
-#group : NSXMLParser
-# --
-setShouldReportNamespacePrefixes:${1:(BOOL)shouldReportNamespacePrefixes}

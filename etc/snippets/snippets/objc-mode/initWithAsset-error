@@ -1,4 +1,0 @@
-#name : initWithAsset:error
-#group : AVAssetReader
-# --
-initWithAsset:${1:(AVAsset *)asset} error:${2:(NSError **)outError}

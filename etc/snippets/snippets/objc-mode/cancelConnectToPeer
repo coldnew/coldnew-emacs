@@ -1,4 +1,0 @@
-#name : cancelConnectToPeer
-#group : GKSession
-# --
-cancelConnectToPeer:${1:(NSString *)peerID}

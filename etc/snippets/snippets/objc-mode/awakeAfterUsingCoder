@@ -1,4 +1,0 @@
-#name : awakeAfterUsingCoder
-#group : NSObject
-# --
-awakeAfterUsingCoder:${1:(NSCoder *)aDecoder}

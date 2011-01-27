@@ -1,4 +1,0 @@
-#name : initWithSet
-#group : NSSet
-# --
-initWithSet:${1:(NSSet *)set}

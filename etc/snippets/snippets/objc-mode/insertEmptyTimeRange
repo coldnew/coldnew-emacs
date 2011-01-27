@@ -1,4 +1,0 @@
-#name : insertEmptyTimeRange
-#group : AVCompositionTrack
-# --
-insertEmptyTimeRange:${1:(CMTimeRange)timeRange}

@@ -1,4 +1,0 @@
-#name : fileManager:shouldProceedAfterError:removingItemAtPath
-#group : NSFileManager
-# --
-fileManager:${1:(NSFileManager *)fileManager} shouldProceedAfterError:${2:(NSError *)error} removingItemAtPath:${3:(NSString *)path}

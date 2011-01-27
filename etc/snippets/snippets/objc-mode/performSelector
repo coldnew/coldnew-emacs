@@ -1,4 +1,0 @@
-#name : performSelector
-#group : NSObject
-# --
-performSelector:${1:(SEL)aSelector}

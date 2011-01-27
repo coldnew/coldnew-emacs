@@ -1,4 +1,0 @@
-#name : URLResourceDidFinishLoading
-#group : NSURL
-# --
-URLResourceDidFinishLoading:${1:(NSURL *)sender}

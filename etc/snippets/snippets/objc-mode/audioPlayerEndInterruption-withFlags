@@ -1,4 +1,0 @@
-#name : audioPlayerEndInterruption:withFlags
-#group : AVAudioPlayer
-# --
-audioPlayerEndInterruption:${1:(AVAudioPlayer *)player} withFlags:${2:(NSUInteger)flags}

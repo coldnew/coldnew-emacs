@@ -1,4 +1,0 @@
-#name : writeToURL:atomically:encoding:error
-#group : NSString
-# --
-writeToURL:${1:(NSURL *)url} atomically:${2:(BOOL)useAuxiliaryFile} encoding:${3:(NSStringEncoding)enc} error:${4:(NSError **)error}

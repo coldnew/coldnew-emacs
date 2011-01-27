@@ -1,4 +1,0 @@
-#name : dataWithContentsOfFile:options:error
-#group : NSData
-# --
-dataWithContentsOfFile:${1:(NSString *)path} options:${2:(NSDataReadingOptions)readOptionsMask} error:${3:(NSError **)errorPtr}

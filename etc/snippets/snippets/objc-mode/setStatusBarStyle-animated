@@ -1,4 +1,0 @@
-#name : setStatusBarStyle:animated
-#group : UIApplication
-# --
-setStatusBarStyle:${1:(UIStatusBarStyle)statusBarStyle} animated:${2:(BOOL)animated}

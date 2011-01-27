@@ -1,4 +1,0 @@
-#name : isSourceTypeAvailable
-#group : UIImagePickerController
-# --
-isSourceTypeAvailable:${1:(UIImagePickerControllerSourceType)sourceType}

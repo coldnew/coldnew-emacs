@@ -1,4 +1,0 @@
-#name : expressionForFunction:selectorName:arguments
-#group : NSExpression
-# --
-expressionForFunction:${1:(NSExpression *)target} selectorName:${2:(NSString *)name} arguments:${3:(NSArray *)parameters}

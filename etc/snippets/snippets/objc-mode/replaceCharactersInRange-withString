@@ -1,4 +1,0 @@
-#name : replaceCharactersInRange:withString
-#group : NSString
-# --
-replaceCharactersInRange:${1:(NSRange)range} withString:${2:(NSString *)aString}

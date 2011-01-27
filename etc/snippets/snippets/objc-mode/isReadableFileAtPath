@@ -1,4 +1,0 @@
-#name : isReadableFileAtPath
-#group : NSFileManager
-# --
-isReadableFileAtPath:${1:(NSString *)path}

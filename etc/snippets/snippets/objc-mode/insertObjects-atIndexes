@@ -1,4 +1,0 @@
-#name : insertObjects:atIndexes
-#group : NSArray
-# --
-insertObjects:${1:(NSArray *)objects} atIndexes:${2:(NSIndexSet *)indexes}

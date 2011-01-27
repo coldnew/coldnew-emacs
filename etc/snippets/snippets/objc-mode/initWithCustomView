@@ -1,4 +1,0 @@
-#name : initWithCustomView
-#group : UIBarButtonItem
-# --
-initWithCustomView:${1:(UIView *)customView}

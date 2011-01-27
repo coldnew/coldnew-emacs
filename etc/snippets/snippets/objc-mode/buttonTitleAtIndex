@@ -1,4 +1,0 @@
-#name : buttonTitleAtIndex
-#group : UIAlertView
-# --
-buttonTitleAtIndex:${1:(NSInteger)buttonIndex}

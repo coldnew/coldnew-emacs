@@ -1,4 +1,0 @@
-#name : setTextAttributesForPositiveValues
-#group : NSNumberFormatter
-# --
-setTextAttributesForPositiveValues:${1:(NSDictionary *)newAttributes}

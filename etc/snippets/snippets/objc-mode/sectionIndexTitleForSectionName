@@ -1,4 +1,0 @@
-#name : sectionIndexTitleForSectionName
-#group : NSFetchedResultsController
-# --
-sectionIndexTitleForSectionName:${1:(NSString *)sectionName}

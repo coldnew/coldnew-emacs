@@ -1,4 +1,0 @@
-#name : seekToDate
-#group : AVPlayerItem
-# --
-seekToDate:${1:(NSDate *)date}

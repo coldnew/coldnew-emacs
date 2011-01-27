@@ -1,4 +1,0 @@
-#name : endInterruptionWithFlags
-#group : AVAudioSession
-# --
-endInterruptionWithFlags:${1:(NSUInteger)flags}

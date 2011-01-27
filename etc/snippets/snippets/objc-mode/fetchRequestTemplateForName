@@ -1,4 +1,0 @@
-#name : fetchRequestTemplateForName
-#group : NSManagedObjectModel
-# --
-fetchRequestTemplateForName:${1:(NSString *)name}

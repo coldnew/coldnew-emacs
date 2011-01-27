@@ -1,4 +1,0 @@
-#name : setStandaloneWeekdaySymbols
-#group : NSDateFormatter
-# --
-setStandaloneWeekdaySymbols:${1:(NSArray *)array}

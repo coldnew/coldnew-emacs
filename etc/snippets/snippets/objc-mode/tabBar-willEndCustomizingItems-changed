@@ -1,4 +1,0 @@
-#name : tabBar:willEndCustomizingItems:changed
-#group : UITabBar
-# --
-tabBar:${1:(UITabBar *)tabBar} willEndCustomizingItems:${2:(NSArray *)items} changed:${3:(BOOL)changed}

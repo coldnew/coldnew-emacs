@@ -1,4 +1,0 @@
-#name : setCookies:forURL:mainDocumentURL
-#group : NSHTTPCookieStorage
-# --
-setCookies:${1:(NSArray *)cookies} forURL:${2:(NSURL *)URL} mainDocumentURL:${3:(NSURL *)mainDocumentURL}

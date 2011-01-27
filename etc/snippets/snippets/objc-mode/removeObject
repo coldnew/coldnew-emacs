@@ -1,4 +1,0 @@
-#name : removeObject
-#group : NSSet
-# --
-removeObject:${1:(id)object}

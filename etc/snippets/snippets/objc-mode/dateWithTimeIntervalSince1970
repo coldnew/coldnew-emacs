@@ -1,4 +1,0 @@
-#name : dateWithTimeIntervalSince1970
-#group : NSDate
-# --
-dateWithTimeIntervalSince1970:${1:(NSTimeInterval)secs}

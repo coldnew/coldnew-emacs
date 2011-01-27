@@ -1,4 +1,0 @@
-#name : gestureRecognizer:shouldReceiveTouch
-#group : UIGestureRecognizer
-# --
-gestureRecognizer:${1:(UIGestureRecognizer *)gestureRecognizer} shouldReceiveTouch:${2:(UITouch *)touch}

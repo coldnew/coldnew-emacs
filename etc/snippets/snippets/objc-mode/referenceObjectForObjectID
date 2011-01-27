@@ -1,4 +1,0 @@
-#name : referenceObjectForObjectID
-#group : NSAtomicStore
-# --
-referenceObjectForObjectID:${1:(NSManagedObjectID *)objectID}

@@ -1,4 +1,0 @@
-#name : enumerateAssetsUsingBlock
-#group : ALAssetsGroup
-# --
-enumerateAssetsUsingBlock:${1:(ALAssetsGroupEnumerationResultsBlock)enumerationBlock}

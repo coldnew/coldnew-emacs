@@ -1,4 +1,0 @@
-#name : audioRecorderEncodeErrorDidOccur:error
-#group : AVAudioRecorder
-# --
-audioRecorderEncodeErrorDidOccur:${1:(AVAudioRecorder *)recorder} error:${2:(NSError *)error}

@@ -1,4 +1,0 @@
-#name : addBoundaryTimeObserverForTimes:queue
-#group : AVPlayer
-# --
-addBoundaryTimeObserverForTimes:${1:(NSArray *)times} queue:${2:(dispatch_queue_t)queue}

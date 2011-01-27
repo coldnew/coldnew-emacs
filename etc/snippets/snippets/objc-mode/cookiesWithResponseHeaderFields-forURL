@@ -1,4 +1,0 @@
-#name : cookiesWithResponseHeaderFields:forURL
-#group : NSHTTPCookie
-# --
-cookiesWithResponseHeaderFields:${1:(NSDictionary *)headerFields} forURL:${2:(NSURL *)URL}

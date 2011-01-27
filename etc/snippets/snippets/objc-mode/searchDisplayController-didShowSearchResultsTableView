@@ -1,4 +1,0 @@
-#name : searchDisplayController:didShowSearchResultsTableView
-#group : UISearchDisplayController
-# --
-searchDisplayController:${1:(UISearchDisplayController *)controller} didShowSearchResultsTableView:${2:(UITableView *)tableView}

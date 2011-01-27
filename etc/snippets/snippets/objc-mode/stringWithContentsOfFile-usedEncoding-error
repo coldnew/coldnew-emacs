@@ -1,4 +1,0 @@
-#name : stringWithContentsOfFile:usedEncoding:error
-#group : NSString
-# --
-stringWithContentsOfFile:${1:(NSString *)path} usedEncoding:${2:(NSStringEncoding *)enc} error:${3:(NSError **)error}

@@ -1,4 +1,0 @@
-#name : insertTimeRange:ofAsset:atTime:error
-#group : AVComposition
-# --
-insertTimeRange:${1:(CMTimeRange)timeRange} ofAsset:${2:(AVAsset *)asset} atTime:${3:(CMTime)startTime} error:${4:(NSError **)outError}

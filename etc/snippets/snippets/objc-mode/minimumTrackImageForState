@@ -1,4 +1,0 @@
-#name : minimumTrackImageForState
-#group : UISlider
-# --
-minimumTrackImageForState:${1:(UIControlState)state}

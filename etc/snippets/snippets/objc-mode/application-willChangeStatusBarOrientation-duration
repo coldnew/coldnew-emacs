@@ -1,4 +1,0 @@
-#name : application:willChangeStatusBarOrientation:duration
-#group : UIApplication
-# --
-application:${1:(UIApplication *)application} willChangeStatusBarOrientation:${2:(UIInterfaceOrientation)newStatusBarOrientation} duration:${3:(NSTimeInterval)duration}

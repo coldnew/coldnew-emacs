@@ -1,4 +1,0 @@
-#name : initWithContentViewController
-#group : UIPopoverController
-# --
-initWithContentViewController:${1:(UIViewController *)viewController}

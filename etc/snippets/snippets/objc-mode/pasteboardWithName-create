@@ -1,4 +1,0 @@
-#name : pasteboardWithName:create
-#group : UIPasteboard
-# --
-pasteboardWithName:${1:(NSString *)pasteboardName} create:${2:(BOOL)create}

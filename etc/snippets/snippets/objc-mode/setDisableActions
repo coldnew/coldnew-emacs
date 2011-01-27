@@ -1,4 +1,0 @@
-#name : setDisableActions
-#group : CATransaction
-# --
-setDisableActions:${1:(BOOL)flag}

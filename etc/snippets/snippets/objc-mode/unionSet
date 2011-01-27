@@ -1,4 +1,0 @@
-#name : unionSet
-#group : NSSet
-# --
-unionSet:${1:(NSSet *)otherSet}

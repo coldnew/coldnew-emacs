@@ -1,4 +1,0 @@
-#name : poseAsClass
-#group : NSObject
-# --
-poseAsClass:${1:(Class)aClass}

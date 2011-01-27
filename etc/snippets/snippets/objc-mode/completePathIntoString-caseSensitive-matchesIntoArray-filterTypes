@@ -1,4 +1,0 @@
-#name : completePathIntoString:caseSensitive:matchesIntoArray:filterTypes
-#group : NSPathUtilities
-# --
-completePathIntoString:${1:(NSString **)outputName} caseSensitive:${2:(BOOL)flag} matchesIntoArray:${3:(NSArray **)outputArray} filterTypes:${4:(NSArray *)filterTypes}

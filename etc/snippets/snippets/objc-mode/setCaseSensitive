@@ -1,4 +1,0 @@
-#name : setCaseSensitive
-#group : NSScanner
-# --
-setCaseSensitive:${1:(BOOL)flag}

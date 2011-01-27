@@ -1,4 +1,0 @@
-#name : numberOfRowsInSection
-#group : UITableView
-# --
-numberOfRowsInSection:${1:(NSInteger)section}

@@ -1,4 +1,0 @@
-#name : initWithPatternImage
-#group : UIColor
-# --
-initWithPatternImage:${1:(UIImage*)image}

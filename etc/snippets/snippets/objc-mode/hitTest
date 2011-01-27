@@ -1,4 +1,0 @@
-#name : hitTest
-#group : CALayer
-# --
-hitTest:${1:(CGPoint)p}

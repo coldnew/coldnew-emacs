@@ -1,4 +1,0 @@
-#name : initWithPath
-#group : NSFileWrapper
-# --
-initWithPath:${1:(NSString *)path}

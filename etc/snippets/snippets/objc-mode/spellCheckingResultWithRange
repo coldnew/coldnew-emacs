@@ -1,4 +1,0 @@
-#name : spellCheckingResultWithRange
-#group : NSTextCheckingResult
-# --
-spellCheckingResultWithRange:${1:(NSRange)range}

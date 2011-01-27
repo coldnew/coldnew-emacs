@@ -1,4 +1,0 @@
-#name : setIgnoredWords
-#group : UITextChecker
-# --
-setIgnoredWords:${1:(NSArray *)words}

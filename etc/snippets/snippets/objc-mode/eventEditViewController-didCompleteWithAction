@@ -1,4 +1,0 @@
-#name : eventEditViewController:didCompleteWithAction
-#group : EKEventEditViewController
-# --
-eventEditViewController:${1:(EKEventEditViewController *)controller} didCompleteWithAction:${2:(EKEventEditViewAction)action}

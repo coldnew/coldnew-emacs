@@ -1,4 +1,0 @@
-#name : arrayWithContentsOfURL
-#group : NSArray
-# --
-arrayWithContentsOfURL:${1:(NSURL *)url}

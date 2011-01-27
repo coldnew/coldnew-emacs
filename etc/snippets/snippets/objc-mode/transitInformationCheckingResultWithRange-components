@@ -1,4 +1,0 @@
-#name : transitInformationCheckingResultWithRange:components
-#group : NSTextCheckingResult
-# --
-transitInformationCheckingResultWithRange:${1:(NSRange)range} components:${2:(NSDictionary *)components}

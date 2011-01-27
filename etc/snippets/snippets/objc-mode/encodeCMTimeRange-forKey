@@ -1,4 +1,0 @@
-#name : encodeCMTimeRange:forKey
-#group : AVTime
-# --
-encodeCMTimeRange:${1:(CMTimeRange)timeRange} forKey:${2:(NSString *)key}

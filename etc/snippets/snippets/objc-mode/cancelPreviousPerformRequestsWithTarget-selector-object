@@ -1,4 +1,0 @@
-#name : cancelPreviousPerformRequestsWithTarget:selector:object
-#group : NSRunLoop
-# --
-cancelPreviousPerformRequestsWithTarget:${1:(id)aTarget} selector:${2:(SEL)aSelector} object:${3:(id)anArgument}

@@ -1,4 +1,0 @@
-#name : controller:didChangeObject:atIndexPath:forChangeType:newIndexPath
-#group : NSFetchedResultsController
-# --
-controller:${1:(NSFetchedResultsController *)controller} didChangeObject:${2:(id)anObject} atIndexPath:${3:(NSIndexPath *)indexPath} forChangeType:${4:(NSFetchedResultsChangeType)type} newIndexPath:${5:(NSIndexPath *)newIndexPath}

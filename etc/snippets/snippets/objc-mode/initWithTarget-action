@@ -1,4 +1,0 @@
-#name : initWithTarget:action
-#group : UIGestureRecognizer
-# --
-initWithTarget:${1:(id)target} action:${2:(SEL)action}

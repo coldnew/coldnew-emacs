@@ -1,4 +1,0 @@
-#name : popNavigationItemAnimated
-#group : UINavigationBar
-# --
-popNavigationItemAnimated:${1:(BOOL)animated}

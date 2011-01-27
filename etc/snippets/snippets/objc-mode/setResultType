@@ -1,4 +1,0 @@
-#name : setResultType
-#group : NSFetchRequest
-# --
-setResultType:${1:(NSFetchRequestResultType)type}

@@ -1,4 +1,0 @@
-#name : enumerateIndexesInRange:options
-#group : NSIndexSet
-# --
-enumerateIndexesInRange:${1:(NSRange)range} options:${2:(NSEnumerationOptions)opts}

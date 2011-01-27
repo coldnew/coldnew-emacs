@@ -1,4 +1,0 @@
-#name : initWithData:error
-#group : AVAudioPlayer
-# --
-initWithData:${1:(NSData *)data} error:${2:(NSError **)outError}

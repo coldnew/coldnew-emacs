@@ -1,4 +1,0 @@
-#name : setHTTPBodyStream
-#group : NSURLRequest
-# --
-setHTTPBodyStream:${1:(NSInputStream *)inputStream}

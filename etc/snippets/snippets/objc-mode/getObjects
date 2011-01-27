@@ -1,4 +1,0 @@
-#name : getObjects
-#group : NSArray
-# --
-getObjects:${1:(id *)objects}

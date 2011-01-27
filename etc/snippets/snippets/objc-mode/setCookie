@@ -1,4 +1,0 @@
-#name : setCookie
-#group : NSHTTPCookieStorage
-# --
-setCookie:${1:(NSHTTPCookie *)cookie}

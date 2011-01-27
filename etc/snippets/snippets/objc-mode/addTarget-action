@@ -1,4 +1,0 @@
-#name : addTarget:action
-#group : UIGestureRecognizer
-# --
-addTarget:${1:(id)target} action:${2:(SEL)action}

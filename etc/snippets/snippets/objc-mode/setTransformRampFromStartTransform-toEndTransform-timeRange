@@ -1,4 +1,0 @@
-#name : setTransformRampFromStartTransform:toEndTransform:timeRange
-#group : AVVideoComposition
-# --
-setTransformRampFromStartTransform:${1:(CGAffineTransform)startTransform} toEndTransform:${2:(CGAffineTransform)endTransform} timeRange:${3:(CMTimeRange)timeRange}

@@ -1,4 +1,0 @@
-#name : getLineDash:count:phase
-#group : UIBezierPath
-# --
-getLineDash:${1:(CGFloat *)pattern} count:${2:(NSInteger *)count} phase:${3:(CGFloat *)phase}

@@ -1,4 +1,0 @@
-#name : migratePersistentStore:toURL:options:withType:error
-#group : NSPersistentStoreCoordinator
-# --
-migratePersistentStore:${1:(NSPersistentStore *)store} toURL:${2:(NSURL *)URL} options:${3:(NSDictionary *)options} withType:${4:(NSString *)storeType} error:${5:(NSError **)error}

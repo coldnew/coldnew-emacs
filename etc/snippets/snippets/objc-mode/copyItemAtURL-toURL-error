@@ -1,4 +1,0 @@
-#name : copyItemAtURL:toURL:error
-#group : NSFileManager
-# --
-copyItemAtURL:${1:(NSURL *)srcURL} toURL:${2:(NSURL *)dstURL} error:${3:(NSError **)error}

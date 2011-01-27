@@ -1,4 +1,0 @@
-#name : copyItemAtPath:toPath:error
-#group : NSFileManager
-# --
-copyItemAtPath:${1:(NSString *)srcPath} toPath:${2:(NSString *)dstPath} error:${3:(NSError **)error}

@@ -1,4 +1,0 @@
-#name : initWithIndex
-#group : NSIndexSet
-# --
-initWithIndex:${1:(NSUInteger)value}

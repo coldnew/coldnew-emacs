@@ -1,4 +1,0 @@
-#name : getBytes
-#group : NSData
-# --
-getBytes:${1:(void *)buffer}

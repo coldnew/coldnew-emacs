@@ -1,4 +1,0 @@
-#name : initWithAPI
-#group : EAGL
-# --
-initWithAPI:${1:(EAGLRenderingAPI)api}

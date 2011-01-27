@@ -1,4 +1,0 @@
-#name : dictionaryWithObjects:forKeys
-#group : NSDictionary
-# --
-dictionaryWithObjects:${1:(NSArray *)objects} forKeys:${2:(NSArray *)keys}

@@ -1,4 +1,0 @@
-#name : scrollToNearestSelectedRowAtScrollPosition:animated
-#group : UITableView
-# --
-scrollToNearestSelectedRowAtScrollPosition:${1:(UITableViewScrollPosition)scrollPosition} animated:${2:(BOOL)animated}

@@ -1,4 +1,0 @@
-#name : setAttributedStringForNotANumber
-#group : NSNumberFormatter
-# --
-setAttributedStringForNotANumber:${1:(NSAttributedString *)newAttributedString}

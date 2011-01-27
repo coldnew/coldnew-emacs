@@ -1,4 +1,0 @@
-#name : decodeCGPointForKey
-#group : UIGeometry
-# --
-decodeCGPointForKey:${1:(NSString *)key}

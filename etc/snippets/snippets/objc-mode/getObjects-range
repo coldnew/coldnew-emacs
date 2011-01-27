@@ -1,4 +1,0 @@
-#name : getObjects:range
-#group : NSArray
-# --
-getObjects:${1:(id *)objects} range:${2:(NSRange)range}

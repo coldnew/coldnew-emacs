@@ -1,4 +1,0 @@
-#name : initSymbolicLinkWithDestination
-#group : NSFileWrapper
-# --
-initSymbolicLinkWithDestination:${1:(NSString *)path}

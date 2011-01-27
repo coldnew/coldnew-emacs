@@ -1,4 +1,0 @@
-#name : primitiveValueForKey
-#group : NSManagedObject
-# --
-primitiveValueForKey:${1:(NSString *)key}

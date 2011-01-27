@@ -1,4 +1,0 @@
-#name : resourceValuesForKeys:error
-#group : NSURL
-# --
-resourceValuesForKeys:${1:(NSArray *)keys} error:${2:(NSError **)error}

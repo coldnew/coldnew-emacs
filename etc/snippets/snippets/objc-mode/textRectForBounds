@@ -1,4 +1,0 @@
-#name : textRectForBounds
-#group : UITextField
-# --
-textRectForBounds:${1:(CGRect)bounds}

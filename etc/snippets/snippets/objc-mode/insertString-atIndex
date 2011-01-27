@@ -1,4 +1,0 @@
-#name : insertString:atIndex
-#group : NSString
-# --
-insertString:${1:(NSString *)aString} atIndex:${2:(NSUInteger)loc}

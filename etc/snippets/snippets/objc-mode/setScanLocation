@@ -1,4 +1,0 @@
-#name : setScanLocation
-#group : NSScanner
-# --
-setScanLocation:${1:(NSUInteger)pos}

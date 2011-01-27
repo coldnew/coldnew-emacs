@@ -1,4 +1,0 @@
-#name : didChange:valuesAtIndexes:forKey
-#group : NSKeyValueObserving
-# --
-didChange:${1:(NSKeyValueChange)changeKind} valuesAtIndexes:${2:(NSIndexSet *)indexes} forKey:${3:(NSString *)key}

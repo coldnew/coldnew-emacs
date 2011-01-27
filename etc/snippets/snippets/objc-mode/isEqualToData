@@ -1,4 +1,0 @@
-#name : isEqualToData
-#group : NSData
-# --
-isEqualToData:${1:(NSData *)other}

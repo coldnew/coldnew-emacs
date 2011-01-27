@@ -1,4 +1,0 @@
-#name : expressionForKeyPath
-#group : NSExpression
-# --
-expressionForKeyPath:${1:(NSString *)keyPath}

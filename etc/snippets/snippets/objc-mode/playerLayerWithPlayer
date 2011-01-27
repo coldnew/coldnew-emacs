@@ -1,4 +1,0 @@
-#name : playerLayerWithPlayer
-#group : AVPlayerLayer
-# --
-playerLayerWithPlayer:${1:(AVPlayer *)player}

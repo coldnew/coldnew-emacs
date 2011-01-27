@@ -1,4 +1,0 @@
-#name : firstRectForRange
-#group : UITextInput
-# --
-firstRectForRange:${1:(UITextRange *)range}

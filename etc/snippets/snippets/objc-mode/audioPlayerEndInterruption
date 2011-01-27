@@ -1,4 +1,0 @@
-#name : audioPlayerEndInterruption
-#group : AVAudioPlayer
-# --
-audioPlayerEndInterruption:${1:(AVAudioPlayer *)player}

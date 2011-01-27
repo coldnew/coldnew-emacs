@@ -1,4 +1,0 @@
-#name : setAffectedStores
-#group : NSFetchRequest
-# --
-setAffectedStores:${1:(NSArray *)stores}

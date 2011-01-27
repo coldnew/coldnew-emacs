@@ -1,4 +1,0 @@
-#name : setWithArray
-#group : NSSet
-# --
-setWithArray:${1:(NSArray *)array}

@@ -1,4 +1,0 @@
-#name : popViewControllerAnimated
-#group : UINavigationController
-# --
-popViewControllerAnimated:${1:(BOOL)animated}

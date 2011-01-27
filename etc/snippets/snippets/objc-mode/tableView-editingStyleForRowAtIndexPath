@@ -1,4 +1,0 @@
-#name : tableView:editingStyleForRowAtIndexPath
-#group : UITableView
-# --
-tableView:${1:(UITableView *)tableView} editingStyleForRowAtIndexPath:${2:(NSIndexPath *)indexPath}

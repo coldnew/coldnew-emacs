@@ -1,4 +1,0 @@
-#name : getCString:maxLength:range:remainingRange
-#group : NSString
-# --
-getCString:${1:(char *)bytes} maxLength:${2:(NSUInteger)maxLength} range:${3:(NSRange)aRange} remainingRange:${4:(NSRangePointer)leftoverRange}

@@ -1,4 +1,0 @@
-#name : positionFromPosition:toBoundary:inDirection
-#group : UITextInput
-# --
-positionFromPosition:${1:(UITextPosition *)position} toBoundary:${2:(UITextGranularity)granularity} inDirection:${3:(UITextDirection)direction}

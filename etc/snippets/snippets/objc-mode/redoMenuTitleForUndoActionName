@@ -1,4 +1,0 @@
-#name : redoMenuTitleForUndoActionName
-#group : NSUndoManager
-# --
-redoMenuTitleForUndoActionName:${1:(NSString *)actionName}

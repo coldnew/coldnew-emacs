@@ -1,4 +1,0 @@
-#name : containsIndex
-#group : NSIndexSet
-# --
-containsIndex:${1:(NSUInteger)value}

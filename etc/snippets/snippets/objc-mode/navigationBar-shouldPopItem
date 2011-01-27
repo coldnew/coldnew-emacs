@@ -1,4 +1,0 @@
-#name : navigationBar:shouldPopItem
-#group : UINavigationBar
-# --
-navigationBar:${1:(UINavigationBar *)navigationBar} shouldPopItem:${2:(UINavigationItem *)item}

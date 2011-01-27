@@ -1,4 +1,0 @@
-#name : actionSheet:clickedButtonAtIndex
-#group : UIActionSheet
-# --
-actionSheet:${1:(UIActionSheet *)actionSheet} clickedButtonAtIndex:${2:(NSInteger)buttonIndex}

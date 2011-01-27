@@ -1,4 +1,0 @@
-#name : performSelector:withObject:afterDelay:inModes
-#group : NSRunLoop
-# --
-performSelector:${1:(SEL)aSelector} withObject:${2:(id)anArgument} afterDelay:${3:(NSTimeInterval)delay} inModes:${4:(NSArray *)modes}

@@ -1,4 +1,0 @@
-#name : compare:options
-#group : NSString
-# --
-compare:${1:(NSString *)string} options:${2:(NSStringCompareOptions)mask}

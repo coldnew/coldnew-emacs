@@ -1,4 +1,0 @@
-#name : appendFormat
-#group : NSString
-# --
-appendFormat:${1:(NSString *)format}

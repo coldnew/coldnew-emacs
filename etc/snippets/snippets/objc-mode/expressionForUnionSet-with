@@ -1,4 +1,0 @@
-#name : expressionForUnionSet:with
-#group : NSExpression
-# --
-expressionForUnionSet:${1:(NSExpression *)left} with:${2:(NSExpression *)right}

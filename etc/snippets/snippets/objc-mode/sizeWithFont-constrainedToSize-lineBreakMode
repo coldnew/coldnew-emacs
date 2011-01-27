@@ -1,4 +1,0 @@
-#name : sizeWithFont:constrainedToSize:lineBreakMode
-#group : UIStringDrawing
-# --
-sizeWithFont:${1:(UIFont *)font} constrainedToSize:${2:(CGSize)size} lineBreakMode:${3:(UILineBreakMode)lineBreakMode}

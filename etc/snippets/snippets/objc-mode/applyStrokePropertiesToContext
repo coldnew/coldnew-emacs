@@ -1,4 +1,0 @@
-#name : applyStrokePropertiesToContext
-#group : MKOverlayPathView
-# --
-applyStrokePropertiesToContext:${1:(CGContextRef)context}

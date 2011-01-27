@@ -1,4 +1,0 @@
-#name : sortedArrayWithOptions:usingComparator
-#group : NSArray
-# --
-sortedArrayWithOptions:${1:(NSSortOptions)opts} usingComparator:${2:(NSComparator)cmptr}

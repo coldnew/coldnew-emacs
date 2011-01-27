@@ -1,4 +1,0 @@
-#name : setNegativePrefix
-#group : NSNumberFormatter
-# --
-setNegativePrefix:${1:(NSString *)string}

@@ -1,4 +1,0 @@
-#name : setVisibleMapRect:animated
-#group : MKMapView
-# --
-setVisibleMapRect:${1:(MKMapRect)mapRect} animated:${2:(BOOL)animate}

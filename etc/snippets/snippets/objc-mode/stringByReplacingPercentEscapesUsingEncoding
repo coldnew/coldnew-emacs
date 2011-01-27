@@ -1,4 +1,0 @@
-#name : stringByReplacingPercentEscapesUsingEncoding
-#group : NSURL
-# --
-stringByReplacingPercentEscapesUsingEncoding:${1:(NSStringEncoding)enc}

@@ -1,4 +1,0 @@
-#name : setKeepAliveTimeout
-#group : UIApplication
-# --
-setKeepAliveTimeout:${1:(NSTimeInterval)timeout}

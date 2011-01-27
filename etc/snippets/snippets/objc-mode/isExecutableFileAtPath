@@ -1,4 +1,0 @@
-#name : isExecutableFileAtPath
-#group : NSFileManager
-# --
-isExecutableFileAtPath:${1:(NSString *)path}

@@ -1,4 +1,0 @@
-#name : setDataReceiveHandler:withContext
-#group : GKSession
-# --
-setDataReceiveHandler:${1:(id)handler} withContext:${2:(void *)context}

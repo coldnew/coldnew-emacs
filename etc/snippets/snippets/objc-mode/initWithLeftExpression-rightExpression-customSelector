@@ -1,4 +1,0 @@
-#name : initWithLeftExpression:rightExpression:customSelector
-#group : NSComparisonPredicate
-# --
-initWithLeftExpression:${1:(NSExpression *)lhs} rightExpression:${2:(NSExpression *)rhs} customSelector:${3:(SEL)selector}

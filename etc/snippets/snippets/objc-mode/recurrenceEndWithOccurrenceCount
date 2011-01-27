@@ -1,4 +1,0 @@
-#name : recurrenceEndWithOccurrenceCount
-#group : EKRecurrenceRule
-# --
-recurrenceEndWithOccurrenceCount:${1:(NSUInteger)occurrenceCount}

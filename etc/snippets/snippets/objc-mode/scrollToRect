@@ -1,4 +1,0 @@
-#name : scrollToRect
-#group : CAScrollLayer
-# --
-scrollToRect:${1:(CGRect)r}

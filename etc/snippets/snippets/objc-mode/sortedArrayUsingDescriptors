@@ -1,4 +1,0 @@
-#name : sortedArrayUsingDescriptors
-#group : NSSortDescriptor
-# --
-sortedArrayUsingDescriptors:${1:(NSArray *)sortDescriptors}

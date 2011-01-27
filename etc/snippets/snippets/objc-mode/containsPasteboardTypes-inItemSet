@@ -1,4 +1,0 @@
-#name : containsPasteboardTypes:inItemSet
-#group : UIPasteboard
-# --
-containsPasteboardTypes:${1:(NSArray *)pasteboardTypes} inItemSet:${2:(NSIndexSet *)itemSet}

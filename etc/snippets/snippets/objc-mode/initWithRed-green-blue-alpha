@@ -1,4 +1,0 @@
-#name : initWithRed:green:blue:alpha
-#group : UIColor
-# --
-initWithRed:${1:(CGFloat)red} green:${2:(CGFloat)green} blue:${3:(CGFloat)blue} alpha:${4:(CGFloat)alpha}

@@ -1,4 +1,0 @@
-#name : animationWithKeyPath
-#group : CAAnimation
-# --
-animationWithKeyPath:${1:(NSString *)path}

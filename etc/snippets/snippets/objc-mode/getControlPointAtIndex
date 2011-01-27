@@ -1,4 +1,0 @@
-#name : getControlPointAtIndex
-#group : CAMediaTimingFunction
-# --
-getControlPointAtIndex:${1:(size_t)idx}

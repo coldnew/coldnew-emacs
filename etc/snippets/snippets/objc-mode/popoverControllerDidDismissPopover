@@ -1,4 +1,0 @@
-#name : popoverControllerDidDismissPopover
-#group : UIPopoverController
-# --
-popoverControllerDidDismissPopover:${1:(UIPopoverController *)popoverController}

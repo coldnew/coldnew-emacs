@@ -1,4 +1,0 @@
-#name : dataUsingEncoding:allowLossyConversion
-#group : NSString
-# --
-dataUsingEncoding:${1:(NSStringEncoding)encoding} allowLossyConversion:${2:(BOOL)lossy}

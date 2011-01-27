@@ -1,4 +1,0 @@
-#name : addConnection:toRunLoop:forMode
-#group : NSPort
-# --
-addConnection:${1:(NSConnection *)conn} toRunLoop:${2:(NSRunLoop *)runLoop} forMode:${3:(NSString *)mode}

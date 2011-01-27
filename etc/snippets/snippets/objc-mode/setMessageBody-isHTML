@@ -1,4 +1,0 @@
-#name : setMessageBody:isHTML
-#group : MFMailComposeViewController
-# --
-setMessageBody:${1:(NSString *)body} isHTML:${2:(BOOL)isHTML}

@@ -1,4 +1,0 @@
-#name : initRecurrenceWithFrequency
-#group : EKRecurrenceRule
-# --
-initRecurrenceWithFrequency:${1:(EKRecurrenceFrequency)type}

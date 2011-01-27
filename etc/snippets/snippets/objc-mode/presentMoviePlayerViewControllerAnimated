@@ -1,4 +1,0 @@
-#name : presentMoviePlayerViewControllerAnimated
-#group : MPMoviePlayerViewController
-# --
-presentMoviePlayerViewControllerAnimated:${1:(MPMoviePlayerViewController *)moviePlayerViewController}

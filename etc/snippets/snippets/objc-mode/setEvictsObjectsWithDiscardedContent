@@ -1,4 +1,0 @@
-#name : setEvictsObjectsWithDiscardedContent
-#group : NSCache
-# --
-setEvictsObjectsWithDiscardedContent:${1:(BOOL)b}

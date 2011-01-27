@@ -1,4 +1,0 @@
-#name : URLProtocol:didFailWithError
-#group : NSURLProtocol
-# --
-URLProtocol:${1:(NSURLProtocol *)protocol} didFailWithError:${2:(NSError *)error}

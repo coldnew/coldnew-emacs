@@ -1,4 +1,0 @@
-#name : initWithObjects:forKeys:count
-#group : NSDictionary
-# --
-initWithObjects:${1:(id *)objects} forKeys:${2:(id *)keys} count:${3:(NSUInteger)cnt}

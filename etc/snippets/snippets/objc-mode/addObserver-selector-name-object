@@ -1,4 +1,0 @@
-#name : addObserver:selector:name:object
-#group : NSNotification
-# --
-addObserver:${1:(id)observer} selector:${2:(SEL)aSelector} name:${3:(NSString *)aName} object:${4:(id)anObject}

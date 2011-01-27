@@ -1,4 +1,0 @@
-#name : countOfIndexesInRange
-#group : NSIndexSet
-# --
-countOfIndexesInRange:${1:(NSRange)range}

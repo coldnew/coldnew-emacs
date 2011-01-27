@@ -1,4 +1,0 @@
-#name : connection:willSendRequest:redirectResponse
-#group : NSURLConnection
-# --
-connection:${1:(NSURLConnection *)connection} willSendRequest:${2:(NSURLRequest *)request} redirectResponse:${3:(NSURLResponse *)response}

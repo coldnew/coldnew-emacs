@@ -1,4 +1,0 @@
-#name : match:didFailWithError
-#group : GKMatch
-# --
-match:${1:(GKMatch *)match} didFailWithError:${2:(NSError *)error}

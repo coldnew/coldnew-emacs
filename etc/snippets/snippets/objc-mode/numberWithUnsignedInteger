@@ -1,4 +1,0 @@
-#name : numberWithUnsignedInteger
-#group : NSValue
-# --
-numberWithUnsignedInteger:${1:(NSUInteger)value}

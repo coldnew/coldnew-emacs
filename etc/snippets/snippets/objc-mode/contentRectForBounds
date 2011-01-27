@@ -1,4 +1,0 @@
-#name : contentRectForBounds
-#group : UIButton
-# --
-contentRectForBounds:${1:(CGRect)bounds}

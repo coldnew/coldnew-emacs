@@ -1,4 +1,0 @@
-#name : setShouldProcessNamespaces
-#group : NSXMLParser
-# --
-setShouldProcessNamespaces:${1:(BOOL)shouldProcessNamespaces}

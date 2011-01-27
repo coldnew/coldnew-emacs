@@ -1,4 +1,0 @@
-#name : insertAttributedString:atIndex
-#group : NSAttributedString
-# --
-insertAttributedString:${1:(NSAttributedString *)attrString} atIndex:${2:(NSUInteger)loc}

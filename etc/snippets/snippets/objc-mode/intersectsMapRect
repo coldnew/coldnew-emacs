@@ -1,4 +1,0 @@
-#name : intersectsMapRect
-#group : MKOverlay
-# --
-intersectsMapRect:${1:(MKMapRect)mapRect}

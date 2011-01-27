@@ -1,4 +1,0 @@
-#name : validateForInsert
-#group : NSManagedObject
-# --
-validateForInsert:${1:(NSError **)error}

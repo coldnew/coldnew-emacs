@@ -1,4 +1,0 @@
-#name : setDeleteRule
-#group : NSRelationshipDescription
-# --
-setDeleteRule:${1:(NSDeleteRule)rule}

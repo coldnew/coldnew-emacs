@@ -1,4 +1,0 @@
-#name : pathForAuxiliaryExecutable
-#group : NSBundle
-# --
-pathForAuxiliaryExecutable:${1:(NSString *)executableName}

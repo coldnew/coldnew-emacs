@@ -1,4 +1,0 @@
-#name : enumerateEventsMatchingPredicate:usingBlock
-#group : EKEventStore
-# --
-enumerateEventsMatchingPredicate:${1:(NSPredicate *)predicate} usingBlock:${2:(EKEventSearchCallback)block}

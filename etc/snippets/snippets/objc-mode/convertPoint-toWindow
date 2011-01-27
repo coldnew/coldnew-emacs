@@ -1,4 +1,0 @@
-#name : convertPoint:toWindow
-#group : UIWindow
-# --
-convertPoint:${1:(CGPoint)point} toWindow:${2:(UIWindow *)window}

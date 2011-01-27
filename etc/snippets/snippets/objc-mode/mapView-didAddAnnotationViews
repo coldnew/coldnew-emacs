@@ -1,4 +1,0 @@
-#name : mapView:didAddAnnotationViews
-#group : MKMapView
-# --
-mapView:${1:(MKMapView *)mapView} didAddAnnotationViews:${2:(NSArray *)views}

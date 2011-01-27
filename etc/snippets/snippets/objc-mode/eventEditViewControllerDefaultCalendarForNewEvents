@@ -1,4 +1,0 @@
-#name : eventEditViewControllerDefaultCalendarForNewEvents
-#group : EKEventEditViewController
-# --
-eventEditViewControllerDefaultCalendarForNewEvents:${1:(EKEventEditViewController *)controller}

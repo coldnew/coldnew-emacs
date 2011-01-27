@@ -1,4 +1,0 @@
-#name : runMode:beforeDate
-#group : NSRunLoop
-# --
-runMode:${1:(NSString *)mode} beforeDate:${2:(NSDate *)limitDate}

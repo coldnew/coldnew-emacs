@@ -1,4 +1,0 @@
-#name : setPartialStringValidationEnabled
-#group : NSNumberFormatter
-# --
-setPartialStringValidationEnabled:${1:(BOOL)b}

@@ -1,4 +1,0 @@
-#name : setLocalizesFormat
-#group : NSNumberFormatter
-# --
-setLocalizesFormat:${1:(BOOL)flag}

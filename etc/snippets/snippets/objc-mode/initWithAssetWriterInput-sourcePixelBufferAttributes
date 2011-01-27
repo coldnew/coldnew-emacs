@@ -1,4 +1,0 @@
-#name : initWithAssetWriterInput:sourcePixelBufferAttributes
-#group : AVAssetWriterInput
-# --
-initWithAssetWriterInput:${1:(AVAssetWriterInput *)input} sourcePixelBufferAttributes:${2:(NSDictionary *)sourcePixelBufferAttributes}

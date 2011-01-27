@@ -1,4 +1,0 @@
-#name : numberWithShort
-#group : NSValue
-# --
-numberWithShort:${1:(short)value}

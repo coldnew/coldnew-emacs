@@ -1,4 +1,0 @@
-#name : addItems
-#group : UIPasteboard
-# --
-addItems:${1:(NSArray *)items}

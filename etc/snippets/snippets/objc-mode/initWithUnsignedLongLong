@@ -1,4 +1,0 @@
-#name : initWithUnsignedLongLong
-#group : NSValue
-# --
-initWithUnsignedLongLong:${1:(unsigned long long)value}

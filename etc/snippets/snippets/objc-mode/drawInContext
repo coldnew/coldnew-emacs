@@ -1,4 +1,0 @@
-#name : drawInContext
-#group : CALayer
-# --
-drawInContext:${1:(CGContextRef)ctx}

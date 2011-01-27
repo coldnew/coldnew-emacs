@@ -1,4 +1,0 @@
-#name : request:didFailWithError
-#group : SKRequest
-# --
-request:${1:(SKRequest *)request} didFailWithError:${2:(NSError *)error}

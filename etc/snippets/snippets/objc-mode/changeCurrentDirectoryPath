@@ -1,4 +1,0 @@
-#name : changeCurrentDirectoryPath
-#group : NSFileManager
-# --
-changeCurrentDirectoryPath:${1:(NSString *)path}

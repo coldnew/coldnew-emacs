@@ -1,4 +1,0 @@
-#name : executeFetchRequest:error
-#group : NSManagedObjectContext
-# --
-executeFetchRequest:${1:(NSFetchRequest *)request} error:${2:(NSError **)error}

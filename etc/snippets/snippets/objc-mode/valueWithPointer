@@ -1,4 +1,0 @@
-#name : valueWithPointer
-#group : NSValue
-# --
-valueWithPointer:${1:(const void *)pointer}

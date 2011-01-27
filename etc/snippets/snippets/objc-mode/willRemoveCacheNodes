@@ -1,4 +1,0 @@
-#name : willRemoveCacheNodes
-#group : NSAtomicStore
-# --
-willRemoveCacheNodes:${1:(NSSet *)cacheNodes}

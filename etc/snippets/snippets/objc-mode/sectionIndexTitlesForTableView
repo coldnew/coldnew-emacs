@@ -1,4 +1,0 @@
-#name : sectionIndexTitlesForTableView
-#group : UITableView
-# --
-sectionIndexTitlesForTableView:${1:(UITableView *)tableView}

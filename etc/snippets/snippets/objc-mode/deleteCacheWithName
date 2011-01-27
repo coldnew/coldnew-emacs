@@ -1,4 +1,0 @@
-#name : deleteCacheWithName
-#group : NSFetchedResultsController
-# --
-deleteCacheWithName:${1:(NSString *)name}

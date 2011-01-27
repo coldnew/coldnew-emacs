@@ -1,4 +1,0 @@
-#name : initWithFrame:reuseIdentifier
-#group : UITableViewCell
-# --
-initWithFrame:${1:(CGRect)frame} reuseIdentifier:${2:(NSString *)reuseIdentifier}

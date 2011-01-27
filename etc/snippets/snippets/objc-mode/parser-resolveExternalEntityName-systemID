@@ -1,4 +1,0 @@
-#name : parser:resolveExternalEntityName:systemID
-#group : NSXMLParser
-# --
-parser:${1:(NSXMLParser *)parser} resolveExternalEntityName:${2:(NSString *)name} systemID:${3:(NSString *)systemID}

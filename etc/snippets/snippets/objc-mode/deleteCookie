@@ -1,4 +1,0 @@
-#name : deleteCookie
-#group : NSHTTPCookieStorage
-# --
-deleteCookie:${1:(NSHTTPCookie *)cookie}

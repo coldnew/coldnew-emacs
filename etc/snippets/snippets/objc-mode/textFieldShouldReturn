@@ -1,4 +1,0 @@
-#name : textFieldShouldReturn
-#group : UITextField
-# --
-textFieldShouldReturn:${1:(UITextField *)textField}

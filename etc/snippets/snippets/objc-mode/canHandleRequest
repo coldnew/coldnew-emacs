@@ -1,4 +1,0 @@
-#name : canHandleRequest
-#group : NSURLConnection
-# --
-canHandleRequest:${1:(NSURLRequest *)request}

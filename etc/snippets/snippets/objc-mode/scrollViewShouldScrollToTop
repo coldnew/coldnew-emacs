@@ -1,4 +1,0 @@
-#name : scrollViewShouldScrollToTop
-#group : UIScrollView
-# --
-scrollViewShouldScrollToTop:${1:(UIScrollView *)scrollView}

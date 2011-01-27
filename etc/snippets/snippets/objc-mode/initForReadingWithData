@@ -1,4 +1,0 @@
-#name : initForReadingWithData
-#group : NSKeyedArchiver
-# --
-initForReadingWithData:${1:(NSData *)data}

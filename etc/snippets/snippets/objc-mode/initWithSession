@@ -1,4 +1,0 @@
-#name : initWithSession
-#group : AVCaptureVideoPreviewLayer
-# --
-initWithSession:${1:(AVCaptureSession *)session}

@@ -1,4 +1,0 @@
-#name : scheduleLocalNotification
-#group : UIApplication
-# --
-scheduleLocalNotification:${1:(UILocalNotification *)notification}

@@ -1,4 +1,0 @@
-#name : decodeValuesOfObjCTypes
-#group : NSCoder
-# --
-decodeValuesOfObjCTypes:${1:(const char *)types}

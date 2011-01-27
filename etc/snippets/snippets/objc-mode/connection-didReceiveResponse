@@ -1,4 +1,0 @@
-#name : connection:didReceiveResponse
-#group : NSURLConnection
-# --
-connection:${1:(NSURLConnection *)connection} didReceiveResponse:${2:(NSURLResponse *)response}

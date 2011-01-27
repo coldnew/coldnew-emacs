@@ -1,4 +1,0 @@
-#name : dateFormatFromTemplate:options:locale
-#group : NSDateFormatter
-# --
-dateFormatFromTemplate:${1:(NSString *)tmplate} options:${2:(NSUInteger)opts} locale:${3:(NSLocale *)locale}

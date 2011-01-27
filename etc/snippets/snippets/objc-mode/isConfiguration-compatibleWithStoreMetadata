@@ -1,4 +1,0 @@
-#name : isConfiguration:compatibleWithStoreMetadata
-#group : NSManagedObjectModel
-# --
-isConfiguration:${1:(NSString *)configuration} compatibleWithStoreMetadata:${2:(NSDictionary *)metadata}

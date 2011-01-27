@@ -7,9 +7,6 @@
 			     yas/ido-prompt
 			     yas/completing-prompt))
 
-(setq-default yas/dont-activate #'(lambda ()
-				    (and yas/snippet-dirs
-					 (null (yas/get-snippet-tables)))))
 ;; Auto add TEMPLATE in new file
 (add-hook 'find-file-hook
 	  '(lambda ()

@@ -1,4 +1,0 @@
-#name : session:didReceiveConnectionRequestFromPeer
-#group : GKPublicProtocols
-# --
-session:${1:(GKSession *)session} didReceiveConnectionRequestFromPeer:${2:(NSString *)peerID}

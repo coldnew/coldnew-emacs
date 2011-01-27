@@ -1,4 +1,0 @@
-#name : imageWithSize
-#group : MPMediaItem
-# --
-imageWithSize:${1:(CGSize)size}

@@ -1,4 +1,0 @@
-#name : truncateFileAtOffset
-#group : NSFileHandle
-# --
-truncateFileAtOffset:${1:(unsigned long long)offset}

@@ -1,4 +1,0 @@
-#name : selectRowAtIndexPath:animated:scrollPosition
-#group : UITableView
-# --
-selectRowAtIndexPath:${1:(NSIndexPath *)indexPath} animated:${2:(BOOL)animated} scrollPosition:${3:(UITableViewScrollPosition)scrollPosition}

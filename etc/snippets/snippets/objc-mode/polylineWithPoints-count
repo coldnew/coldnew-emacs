@@ -1,4 +1,0 @@
-#name : polylineWithPoints:count
-#group : MKPolyline
-# --
-polylineWithPoints:${1:(MKMapPoint *)points} count:${2:(NSUInteger)count}

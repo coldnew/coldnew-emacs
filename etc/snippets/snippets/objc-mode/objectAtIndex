@@ -1,4 +1,0 @@
-#name : objectAtIndex
-#group : NSArray
-# --
-objectAtIndex:${1:(NSUInteger)index}

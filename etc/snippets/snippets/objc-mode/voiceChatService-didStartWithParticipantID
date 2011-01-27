@@ -1,4 +1,0 @@
-#name : voiceChatService:didStartWithParticipantID
-#group : GKPublicProtocols
-# --
-voiceChatService:${1:(GKVoiceChatService *)voiceChatService} didStartWithParticipantID:${2:(NSString *)participantID}

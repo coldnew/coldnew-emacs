@@ -1,4 +1,0 @@
-#name : tableView:titleForHeaderInSection
-#group : UITableView
-# --
-tableView:${1:(UITableView *)tableView} titleForHeaderInSection:${2:(NSInteger)section}

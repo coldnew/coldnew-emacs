@@ -1,4 +1,0 @@
-#name : setPerMillSymbol
-#group : NSNumberFormatter
-# --
-setPerMillSymbol:${1:(NSString *)string}

@@ -1,4 +1,0 @@
-#name : setAlwaysShowsDecimalSeparator
-#group : NSNumberFormatter
-# --
-setAlwaysShowsDecimalSeparator:${1:(BOOL)b}

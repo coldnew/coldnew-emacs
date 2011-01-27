@@ -1,4 +1,0 @@
-#name : initWithUser
-#group : NSUserDefaults
-# --
-initWithUser:${1:(NSString *)username}

@@ -1,4 +1,0 @@
-#name : attributesOfItemAtPath:error
-#group : NSFileManager
-# --
-attributesOfItemAtPath:${1:(NSString *)path} error:${2:(NSError **)error}

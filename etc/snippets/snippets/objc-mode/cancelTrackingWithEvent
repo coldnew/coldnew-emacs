@@ -1,4 +1,0 @@
-#name : cancelTrackingWithEvent
-#group : UIControl
-# --
-cancelTrackingWithEvent:${1:(UIEvent *)event}

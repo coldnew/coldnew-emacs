@@ -1,4 +1,0 @@
-#name : predicateWithSubstitutionVariables
-#group : NSPredicate
-# --
-predicateWithSubstitutionVariables:${1:(NSDictionary *)variables}

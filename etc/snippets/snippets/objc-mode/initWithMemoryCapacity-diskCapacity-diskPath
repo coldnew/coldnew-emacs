@@ -1,4 +1,0 @@
-#name : initWithMemoryCapacity:diskCapacity:diskPath
-#group : NSURLCache
-# --
-initWithMemoryCapacity:${1:(NSUInteger)memoryCapacity} diskCapacity:${2:(NSUInteger)diskCapacity} diskPath:${3:(NSString *)path}

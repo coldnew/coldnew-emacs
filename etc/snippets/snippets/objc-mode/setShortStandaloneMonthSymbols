@@ -1,4 +1,0 @@
-#name : setShortStandaloneMonthSymbols
-#group : NSDateFormatter
-# --
-setShortStandaloneMonthSymbols:${1:(NSArray *)array}

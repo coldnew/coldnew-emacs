@@ -1,4 +1,0 @@
-#name : setThousandSeparator
-#group : NSNumberFormatter
-# --
-setThousandSeparator:${1:(NSString *)newSeparator}

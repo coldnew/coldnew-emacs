@@ -1,4 +1,0 @@
-#name : indexPathForRow:inSection
-#group : UITableView
-# --
-indexPathForRow:${1:(NSUInteger)row} inSection:${2:(NSUInteger)section}

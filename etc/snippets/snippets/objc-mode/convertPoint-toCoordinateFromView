@@ -1,4 +1,0 @@
-#name : convertPoint:toCoordinateFromView
-#group : MKMapView
-# --
-convertPoint:${1:(CGPoint)point} toCoordinateFromView:${2:(UIView *)view}

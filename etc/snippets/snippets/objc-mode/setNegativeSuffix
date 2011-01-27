@@ -1,4 +1,0 @@
-#name : setNegativeSuffix
-#group : NSNumberFormatter
-# --
-setNegativeSuffix:${1:(NSString *)string}

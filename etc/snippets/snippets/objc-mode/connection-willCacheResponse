@@ -1,4 +1,0 @@
-#name : connection:willCacheResponse
-#group : NSURLConnection
-# --
-connection:${1:(NSURLConnection *)connection} willCacheResponse:${2:(NSCachedURLResponse *)cachedResponse}

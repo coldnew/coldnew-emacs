@@ -1,4 +1,0 @@
-#name : enumerateMatchesInString:options:range
-#group : NSRegularExpression
-# --
-enumerateMatchesInString:${1:(NSString *)string} options:${2:(NSMatchingOptions)options} range:${3:(NSRange)range}

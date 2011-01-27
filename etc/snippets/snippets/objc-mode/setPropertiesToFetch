@@ -1,4 +1,0 @@
-#name : setPropertiesToFetch
-#group : NSFetchRequest
-# --
-setPropertiesToFetch:${1:(NSArray *)values}
