@@ -1,0 +1,15 @@
+--<<alternative>>-{
+
+  It is available from
+
+    http://kanji.zinbun.kyoto-u.ac.jp/~tomo/lemi/dist/apel/
+
+--[[message/external-body; access-type=URL;
+	URL*0="http://";
+	URL*1="www.kanji.zinbun.kyoto-u.ac.jp/~tomo/";
+	URL*2="lemi/dist/";
+	URL*3="apel/";
+	URL*4="apel-VERSION.tar.gz"]]
+Content-Type: application/octet-stream
+Content-Disposition: attachment; filename="apel-VERSION.tar.gz"
+--}-<<alternative>>

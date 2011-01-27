@@ -96,6 +96,79 @@
 	       :url "https://github.com/imakado/emacs-xcode-document-viewer.git")
 	(:name lusty-explorer
 	       :type emacswiki)
+
+	(:name ssh-config
+	       :type git
+	       :url "git://github.com/renard/ssh-config-el.git"
+	       :features ssh-config)
+	(:name apel
+	       :type cvs
+	       :module "apel"
+	       :url ":pserver:anonymous@cvs.m17n.org:/cvs/root"
+	       :build
+	       (mapcar
+		(lambda (target)
+		  (list el-get-emacs
+			(split-string "-batch -q -no-site-file -l APEL-MK -f")
+			target
+			"prefix" "site-lisp" "site-lisp"))
+		'("compile-apel" "install-apel"))
+	       :load-path ("site-lisp/apel" "site-lisp/emu"))
+	(:name doxymacs
+	       :type git
+	       :url "git://doxymacs.git.sourceforge.net/gitroot/doxymacs/doxymacs"
+	       :load-path ("./lisp")
+	       :build ("./bootstrap" "./configure" "make")
+	       :features doxymacs
+	       )
+	(:name newlisp-mode
+	       :type git
+	       :url "https://github.com/may/newlisp-mode.git"
+	       :features newlisp)
+	(:name sunrise-commander
+	       :type emacswiki)
+	(:name nav
+	       :type svn
+	       :url "http://emacs-nav.googlecode.com/svn/trunk/"
+	       :features nav)
+	(:name anything
+	       :type emacswiki)
+	(:name anything-config
+	       :type git
+	       :url "git://repo.or.cz/anything-config.git")
+	(:name anything-match-plugin
+	       :type emacswiki)
+	(:name anything-show-completion
+	       :type emacswiki)
+	(:name anything-migemo
+	       :type emacswiki)
+	(:name windows
+	       :type http
+	       :url "http://www.gentei.org/~yuuji/software/windows.el"
+	       :features "windows")
+	(:name anything-gtags
+	       :type emacswiki)
+	(:name anything-complete
+	       :type emacswiki)
+	(:name anything-ipa
+	       :type emacswiki)
+	(:name ipa
+	       :type emacswiki)
+	(:name revive
+	       :type http
+	       :url "http://www.gentei.org/~yuuji/software/revive.el")
+	(:name ac-anything
+	       :type emacswiki)
+	(:name anything-grep
+	       :type emacswiki)
+	(:name anything-kyr
+	       :type emacswiki)
+	(:name anything-slime
+	       :type emacswiki)
+	(:name anything-menu
+	       :type emacswiki)
+	(:name anything-c-shell-history
+	       :type emacswiki)
 	;;elscreen
 	;;auctex
 	;;color-theme			;
@@ -103,6 +176,13 @@
 	;;  session
 	;; emacs-w3m
 	))
+
+
+;; BUG: After load this file, I can't use lusty-explorer, so rebind keymap
+(vim:nmap (kbd "C-x C-f") 'find-file)
+(vim:imap (kbd "C-x C-f") 'find-file)
+
+
 
 (provide '997-el-get)
 ;; 997-el-get.el ends here.

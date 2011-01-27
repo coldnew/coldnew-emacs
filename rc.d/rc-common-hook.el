@@ -1,7 +1,6 @@
 ;;
 
 
-
 (defun programming-common-hook ()
   "The meta functions for programmer use."
   (linum-mode)				; 顯示行號
@@ -14,7 +13,6 @@
   (use-hungry-delete)			; 啟用 hungry-delete mode
   (use-paredit-mode)			; 增加部份基於 Paredit 的按鍵綁定
   )
-
 
 
 ;; nuke whitespaces when writing to a file
