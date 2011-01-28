@@ -1,14 +1,17 @@
 ;;;; All extra dependency
 (eval-when-compile (require 'cl))
 
+
 (require-maybe 'ac-anything)			; Auto Complete with Anything
 (require-maybe 'ac-company)			; Auto-Complete with company-mode
 (require-maybe 'anything)			;
 (require-maybe 'anything-c-shell-history)	; shell history anything.el interface
 (require-maybe 'anything-complete)		;
 (require-maybe 'anything-config)		;
+(require-maybe 'anything-dabbrev-expand)	; dabbrev using anything.el
 (require-maybe 'anything-grep)			; search refinement of grep result with anything
 (require-maybe 'anything-gtags)			;
+(require-maybe 'anything-include)		; Anything-source made maintenance of history of C/C++
 (require-maybe 'anything-ipa)			;
 (require-maybe 'anything-kyr)			; Show context-aware commands
 (require-maybe 'anything-match-plugin)		;
@@ -16,6 +19,8 @@
 (require-maybe 'anything-migemo)		;
 (require-maybe 'anything-show-completion)	; Show selection in buffer for anything completion
 (require-maybe 'anything-slime)			; anything-sources and some utilities for SLIME.
+(require-maybe 'anything-yaetags)		; Yet another etags interface with anything
+(require-maybe 'async-eval)			; execute Emacs lisp in a separate process
 (require-maybe 'auto-complete)			; Auto-Complete
 (require-maybe 'auto-complete-clang)		;
 (require-maybe 'auto-complete-config)		;
@@ -25,6 +30,9 @@
 (require-maybe 'cedet)				;
 (require-maybe 'color-theme)			; Color-theme
 (require-maybe 'company)			; Another aoto-complete plugins
+(require-maybe 'completion-ui)			;
+(require-maybe 'ctagsfind)			;
+(require-maybe 'dabbrev)			;
 (require-maybe 'doxymacs)			; Doxygen for emacs
 (require-maybe 'dropdown-list)			;
 (require-maybe 'el-get)				; Emacs-Lisp Manager
@@ -32,6 +40,7 @@
 (require-maybe 'eldoc-extension)		; Emacs-Lisp Documents Browser Extension
 (require-maybe 'emms)				; Emacs Multimedia System
 (require-maybe 'find-file)			;
+(require-maybe 'gccsense)			; GCC's code analyzers
 (require-maybe 'grep)				;
 (require-maybe 'highlight-parentheses)		; Highlight pair parentheses
 (require-maybe 'hungry-delete)			;
@@ -54,6 +63,7 @@
 (require-maybe 'recentf)			; Setup a menu of recently opened files
 (require-maybe 'session)			; Use Session to save current positions
 (require-maybe 'shell-pop)			; Helps you pop up and pop out shell buffer easily
+(require-maybe 'shell-pop)			; Popup terminal
 (require-maybe 'slime)				; Superior Lisp Interaction Mode for Emacs
 (require-maybe 'smartchr)			; Emacs version of smartchr.vim
 (require-maybe 'ssh-config)			; Syntax Highlight ssh-configure files
@@ -62,20 +72,18 @@
 (require-maybe 'undo-tree)			; Use undo-tree instead of redo.el
 (require-maybe 'uniquify)			; If two buffer have the same name, rename both
 (require-maybe 'vim)				; Use Vim-Mode
+(require-maybe 'w3m)				;
+(require-maybe 'w3m-lnum)			;
 (require-maybe 'windmove)			; Directional window-selection routines
 (require-maybe 'windows)			;
 (require-maybe 'woman)				; Use Woman
 (require-maybe 'x-dnd)				; Drag and drop support for X
 (require-maybe 'xcscope)			; Cscope interface for Emacs
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
-(require-maybe 'anything-include)		; Anything-source made maintenance of history of C/C++
-(require-maybe 'anything-yaetags)		; Yet another etags interface with anything
-(require-maybe 'anything-dabbrev-expand)	; dabbrev using anything.el
-(require-maybe 'dabbrev)			;
-(require-maybe 'ctagsfind)			;
-(require-maybe 'gccsense)			; GCC's code analyzers
-(require-maybe 'completion-ui)			;
-(require-maybe 'async-eval)			; execute Emacs lisp in a separate process
+(require-maybe 'cflow-mode)			; major mode for viewing cflow output files
+
+
+
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab
 ;;(require-maybe 'pymacs)			; Pymacs

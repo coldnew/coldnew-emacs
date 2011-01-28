@@ -2,11 +2,6 @@
 (provide 'rc-cedet)
 
 
-;;;; Shell Popup
-(shell-pop-set-internal-mode "ansi-term")
-(shell-pop-set-internal-mode-shell "/bin/bash")
-(shell-pop-set-window-height 20)
-(shell-pop-set-window-position "bottom")
 
 
 (global-ede-mode t)

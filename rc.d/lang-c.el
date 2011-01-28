@@ -14,6 +14,13 @@
 	     ;;(substatement-open   .   0)
 	     ))
 
+;;;; Other Settings
+(setq c-mode:include-dirs		; Setting include directories
+      '(
+	"/usr/include"
+	"/usr/local/include"
+	))
+
 ;;;; Keybindings
 (add-hook 'c-mode-hook
 	  '(lambda ()
@@ -32,7 +39,6 @@
 	     (programming-common-hook)
 	     ;; Use my define cc-mode common environment
 	     (cc-mode-common-hook)
-
 	     ;; Enable C-Eldoc
 	     (c-turn-on-eldoc-mode)
 	     ))
@@ -65,9 +71,27 @@ else add `if' and expand it."
   (let* ((current (point))
 	 (begin (line-beginning-position)))
     (if (eq current begin)
-	(insert "inc")
-      (insert "if"))
-    (yas/expand)))
+	(progn
+	  (c-mode:skeleton-include)
+	  (newline-and-indent))
+      (progn
+	(insert "if")
+	(yas/expand)))))
+
+;; FIXME: We don't want directories also show in completion
+(define-skeleton c-mode:skeleton-include
+  "generate include<>" ""
+  > "#include <"
+  (completing-read "Enter include file："
+		   (mapcar #'(lambda (f) (list f ))
+			   (apply 'append
+				  (mapcar
+				   #'(lambda (dir)
+				       (directory-files dir))
+				   c-mode:include-dirs
+				   ))))
+  ">")
+
 
 (defcmd c-mode:insert-do-while ()
   "insert do{...} while()."

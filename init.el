@@ -6,7 +6,6 @@
 (setq-default custom-file "~/.emacs.d/rc.d/custom.el")
 
 ;;;;;;; start server for emacsclient
-(message "* --[ start the emacs server ]-- *")
 (when (require 'server nil 'noerror)
   (unless (server-running-p)
     (server-start)))
@@ -26,11 +25,7 @@
       (setq load-path (cons my-lisp-dir load-path))
       (normal-top-level-add-subdirs-to-load-path)))
 
-;;;;; binary path
-
-
 ;;;;;; load package initial setting
-
 (require '000-macro)			; All Macros I use
 (require '001-environment)		; Environment Setting
 (require '003-dependency)		; All libraries included in
@@ -45,14 +40,16 @@
 (require '013-woman)			; Woman-mode Settings
 (require '014-session)			; Store current positions
 (require '022-ibuffer)			; Call buffer-list
-(require '025-yasnippet)
-(require '026-auto-complete)
-(require '027-minibuffer)
-(require '028-uniquify)
-(require '029-lusty-explorer)
-(require '030-xrefactory)
-(require '031-comint-mode)
-(require '032-anything)
+(require '025-yasnippet)		; Yasnippet config
+(require '026-auto-complete)		; Auto COmplete config
+(require '027-minibuffer)		; Add some keybindinng fot minibuffer
+(require '028-uniquify)			; COnfigure uniquify
+(require '029-lusty-explorer)		; Another good files explorer
+(require '030-xrefactory)		;
+(require '031-comint-mode)		;
+(require '032-anything)			; Complete anything
+(require '033-w3m)			; W3m config
+(require '034-shell-pop)		; Popup terminal
 
 (require 'rc-cedet)
 (require 'rc-common-hook)
@@ -61,7 +58,6 @@
        (require 'rc-ecb)))
 (require 'rc-org-mode)
 (require 'rc-smartchr)
-(require 'rc-w3m)
 (require 'rc-ielm-mode)
 (require 'rc-find-file)
 (require 'rc-ccmode-common)
@@ -76,9 +72,8 @@
 ;;(require 'lang-python)			; Python
 (require 'lang-matlab)			; Matlab
 (require 'lang-newlisp)			; Newlisp
-;; FIXME: bug?
-;; BUG: where is the fucking symbol function?
-;;(require 'magit)
+
+
 
 ;;(require 'circuit-mode)
 ;;(setq-default header-line-format mode-line-format) ; Copy mode-line to top
