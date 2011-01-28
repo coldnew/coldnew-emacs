@@ -1,2 +1,0 @@
-TEMPLATE
-#include <stdio.h>
