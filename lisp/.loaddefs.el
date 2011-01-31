@@ -80,6 +80,34 @@ Simplified interface of `anything' with other `anything-buffer'
 
 ;;;***
 
+;;;### (autoloads (csharp-mode csharp-mode-hook) "csharp-mode/csharp-mode"
+;;;;;;  "csharp-mode/csharp-mode.el" (19782 12341))
+;;; Generated autoloads from csharp-mode/csharp-mode.el
+
+(add-to-list 'auto-mode-alist '("\\.cs$" . csharp-mode))
+
+(defvar csharp-mode-hook nil "\
+*Hook called by `csharp-mode'.")
+
+(custom-autoload 'csharp-mode-hook "csharp-mode/csharp-mode" t)
+
+(autoload 'csharp-mode "csharp-mode/csharp-mode" "\
+Major mode for editing C# code. This mode is derived from CC Mode to
+support C#.
+
+The hook `c-mode-common-hook' is run with no args at mode
+initialization, then `csharp-mode-hook'.
+
+This mode will automatically add a regexp for Csc.exe error and warning
+messages to the `compilation-error-regexp-alist'.
+
+Key bindings:
+\\{csharp-mode-map}
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads nil "doxymacs/lisp/doxymacs" "doxymacs/lisp/doxymacs.el"
 ;;;;;;  (19777 4986))
 ;;; Generated autoloads from doxymacs/lisp/doxymacs.el
@@ -130,6 +158,29 @@ Note that this only works if the opening tag starts at column 0.
 
 ;;;***
 
+;;;### (autoloads (gnugo) "gnugo/gnugo" "gnugo/gnugo.el" (19782 12465))
+;;; Generated autoloads from gnugo/gnugo.el
+
+(autoload 'gnugo "gnugo/gnugo" "\
+Run gnugo in a buffer, or resume a game in progress.
+Prefix arg means skip the game-in-progress check and start a new
+game straight away.
+
+You are queried for additional command-line options (Emacs supplies
+\"--mode gtp --quiet\" automatically).  Here is a list of options
+that gnugo.el understands and handles specially:
+
+--boardsize num   Set the board size to use (5--19)
+--color <color>   Choose your color ('black' or 'white')
+--handicap <num>  Set the number of handicap stones (0--9)
+
+If there is already a game in progress you may resume it instead of
+starting a new one.  See `gnugo-board-mode' documentation for more info.
+
+\(fn &optional NEW-GAME)" t nil)
+
+;;;***
+
 ;;;### (autoloads (highlight-parentheses-mode) "highlight-parentheses/highlight-parentheses"
 ;;;;;;  "highlight-parentheses/highlight-parentheses.el" (19777 341))
 ;;; Generated autoloads from highlight-parentheses/highlight-parentheses.el
@@ -138,6 +189,73 @@ Note that this only works if the opening tag starts at column 0.
 Minor mode to highlight the surrounding parentheses.
 
 \(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (htmlize-many-files-dired htmlize-many-files htmlize-file
+;;;;;;  htmlize-region htmlize-buffer) "htmlize/htmlize" "htmlize/htmlize.el"
+;;;;;;  (19782 11958))
+;;; Generated autoloads from htmlize/htmlize.el
+
+(autoload 'htmlize-buffer "htmlize/htmlize" "\
+Convert BUFFER to HTML, preserving colors and decorations.
+
+The generated HTML is available in a new buffer, which is returned.
+When invoked interactively, the new buffer is selected in the current
+window.  The title of the generated document will be set to the buffer's
+file name or, if that's not available, to the buffer's name.
+
+Note that htmlize doesn't fontify your buffers, it only uses the
+decorations that are already present.  If you don't set up font-lock or
+something else to fontify your buffers, the resulting HTML will be
+plain.  Likewise, if you don't like the choice of colors, fix the mode
+that created them, or simply alter the faces it uses.
+
+\(fn &optional BUFFER)" t nil)
+
+(autoload 'htmlize-region "htmlize/htmlize" "\
+Convert the region to HTML, preserving colors and decorations.
+See `htmlize-buffer' for details.
+
+\(fn BEG END)" t nil)
+
+(autoload 'htmlize-file "htmlize/htmlize" "\
+Load FILE, fontify it, convert it to HTML, and save the result.
+
+Contents of FILE are inserted into a temporary buffer, whose major mode
+is set with `normal-mode' as appropriate for the file type.  The buffer
+is subsequently fontified with `font-lock' and converted to HTML.  Note
+that, unlike `htmlize-buffer', this function explicitly turns on
+font-lock.  If a form of highlighting other than font-lock is desired,
+please use `htmlize-buffer' directly on buffers so highlighted.
+
+Buffers currently visiting FILE are unaffected by this function.  The
+function does not change current buffer or move the point.
+
+If TARGET is specified and names a directory, the resulting file will be
+saved there instead of to FILE's directory.  If TARGET is specified and
+does not name a directory, it will be used as output file name.
+
+\(fn FILE &optional TARGET)" t nil)
+
+(autoload 'htmlize-many-files "htmlize/htmlize" "\
+Convert FILES to HTML and save the corresponding HTML versions.
+
+FILES should be a list of file names to convert.  This function calls
+`htmlize-file' on each file; see that function for details.  When
+invoked interactively, you are prompted for a list of files to convert,
+terminated with RET.
+
+If TARGET-DIRECTORY is specified, the HTML files will be saved to that
+directory.  Normally, each HTML file is saved to the directory of the
+corresponding source file.
+
+\(fn FILES &optional TARGET-DIRECTORY)" t nil)
+
+(autoload 'htmlize-many-files-dired "htmlize/htmlize" "\
+HTMLize dired-marked files.
+
+\(fn ARG &optional TARGET-DIRECTORY)" t nil)
 
 ;;;***
 
@@ -352,8 +470,9 @@ Visits the given directory in sr-mode.
 
 ;;;***
 
-;;;### (autoloads nil nil ("async-eval/async-eval.el" "pymacs/pymacs.el"
-;;;;;;  "ssh-config/ssh-config.el") (19777 41542 406977))
+;;;### (autoloads nil nil ("async-eval/async-eval.el" "gobject-class/gobject-class.el"
+;;;;;;  "pymacs/pymacs.el" "quack/quack.el" "ssh-config/ssh-config.el"
+;;;;;;  "unicad/unicad.el") (19782 12466 268604))
 
 ;;;***
 

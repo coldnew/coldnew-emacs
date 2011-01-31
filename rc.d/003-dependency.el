@@ -1,7 +1,6 @@
 ;;;; All extra dependency
 (eval-when-compile (require 'cl))
 
-
 (require-maybe 'ac-anything)			; Auto Complete with Anything
 (require-maybe 'ac-company)			; Auto-Complete with company-mode
 (require-maybe 'anything)			;
@@ -28,9 +27,11 @@
 (require-maybe 'auto-complete-extension)	;
 (require-maybe 'c-eldoc)			;
 (require-maybe 'cedet)				;
+(require-maybe 'cflow-mode)			; major mode for viewing cflow output files
 (require-maybe 'color-theme)			; Color-theme
 (require-maybe 'company)			; Another aoto-complete plugins
 (require-maybe 'completion-ui)			;
+(require-maybe 'csharp-mode)			; C# mode derived mode
 (require-maybe 'ctagsfind)			;
 (require-maybe 'dabbrev)			;
 (require-maybe 'doxymacs)			; Doxygen for emacs
@@ -41,8 +42,11 @@
 (require-maybe 'emms)				; Emacs Multimedia System
 (require-maybe 'find-file)			;
 (require-maybe 'gccsense)			; GCC's code analyzers
+(require-maybe 'gnugo)				; Run GNU Go in a buffer
+(require-maybe 'gobject-class)			; functions to easy GObject-based class developers
 (require-maybe 'grep)				;
 (require-maybe 'highlight-parentheses)		; Highlight pair parentheses
+(require-maybe 'htmlize)			;
 (require-maybe 'hungry-delete)			;
 (require-maybe 'ibuf-ext)			; iBuffer Extension
 (require-maybe 'ibuffer)			; iBuffer
@@ -57,8 +61,10 @@
 (require-maybe 'paredit)			; Use Paredit to balance parentheses
 (require-maybe 'popup-pos-tip)			;
 (require-maybe 'pos-tip)			;
+(require-maybe 'pp)				; pretty printer for Emacs Lisp
 (require-maybe 'pretty-lambdada)		; Show lambda in smbol
 (require-maybe 'python)				; Python
+(require-maybe 'quack)				; enhanced support for editing and running Scheme code
 (require-maybe 'rainbow-mode)			; Color the emacs buffer
 (require-maybe 'recentf)			; Setup a menu of recently opened files
 (require-maybe 'session)			; Use Session to save current positions
@@ -70,19 +76,17 @@
 (require-maybe 'sunrise-commander)		; A commander looks like MC
 (require-maybe 'thingatpt)			; Get the thing at point
 (require-maybe 'undo-tree)			; Use undo-tree instead of redo.el
+(require-maybe 'unicad)				; Universal Charset Auto Detector
 (require-maybe 'uniquify)			; If two buffer have the same name, rename both
 (require-maybe 'vim)				; Use Vim-Mode
 (require-maybe 'w3m)				;
 (require-maybe 'w3m-lnum)			;
 (require-maybe 'windmove)			; Directional window-selection routines
-(require-maybe 'windows)			;
+(require-maybe 'windows)			; Window manager for GNU Emacs.
 (require-maybe 'woman)				; Use Woman
 (require-maybe 'x-dnd)				; Drag and drop support for X
 (require-maybe 'xcscope)			; Cscope interface for Emacs
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
-(require-maybe 'cflow-mode)			; major mode for viewing cflow output files
-
-
 
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab

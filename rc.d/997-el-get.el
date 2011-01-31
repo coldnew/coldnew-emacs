@@ -183,6 +183,21 @@
 	(:name async-eval
 	       :type http
 	       :url "http://nschum.de/src/emacs/async-eval/async-eval.el")
+	(:name unicad
+	       :type emacswiki)
+	(:name quack
+	       :type http
+	       :url "http://www.neilvandyke.org/quack/quack.el")
+	(:name htmlize
+	       :type http
+	       :url "http://fly.srk.fer.hr/~hniksic/emacs/htmlize.el")
+	(:name gobject-class
+	       :type http
+	       :url "http://blog.gustavobarbieri.com.br/old-website/gobject-class.el")
+	(:name csharp-mode
+	       :type emacswiki)
+	(:name gnugo
+	       :type emacswiki)
 	;;elscreen
 	;;auctex
 	;;color-theme			;

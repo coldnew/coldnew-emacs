@@ -1,12 +1,18 @@
 ;; other functions
 
+;;;; Interactive Functions
+
+;; ------------------------------------------------------------------------------
+;; show dot emacs structure
+;; ------------------------------------------------------------------------------
 (defun show-dot-emacs-structure ()
   "Show the outline-mode structure of ~/.emacs"
   (interactive)
   (occur "^;;;;+"))
 
+;; ------------------------------------------------------------------------------
 ;; rename file and buffer
-;; -------------------
+;; ------------------------------------------------------------------------------
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
@@ -23,8 +29,9 @@
 	  (set-buffer-modified-p nil))))))
 
 
+;; ------------------------------------------------------------------------------
 ;; lookup Wikipedia
-;; ----------------
+;; ------------------------------------------------------------------------------
 (defun lookup-wikipedia ()
   "Look up the word under cursor in Wikipedia.
 This command generates a url for Wikipedia.com and switches you
@@ -44,14 +51,9 @@ to browser. If a region is active (a phrase), lookup that phrase."
       (browse-url myurl))
     ))
 
-
-
-
-
-
-
+;; ------------------------------------------------------------------------------
 ;; goto-longest-line
-;; -----------------
+;; ------------------------------------------------------------------------------
 ;; Sometimes for code is nice to find lines that are pushed out too far.
 ;; This function moves point to the end of the longest line.  Also handy
 ;; for lining up columns of text when used in a narrowed buffer.
@@ -70,8 +72,9 @@ to browser. If a region is active (a phrase), lookup that phrase."
 	  (setq pos (point)))))
     (goto-char pos)))
 
+;; ------------------------------------------------------------------------------
 ;; goto-matching-paren
-;; -------------------
+;; ------------------------------------------------------------------------------
 ;; If point is sitting on a parenthetic character, jump to its match.
 ;; This matches the standard parenthesis highlighting for determining which
 ;; one it is sitting on.
@@ -83,8 +86,10 @@ to browser. If a region is active (a phrase), lookup that phrase."
 	((progn
 	   (backward-char 1)
 	   (looking-at "\\s\)")) (forward-char 1) (backward-list 1))))
+
+;; ------------------------------------------------------------------------------
 ;; execute-keyboard-macro-here
-;; ---------------------------
+;; ------------------------------------------------------------------------------
 ;; When clicked, move point to the location clicked and execute the last
 ;; defined keyboard macro there.  Very handy for automating actions which
 ;; must be done many times but at user controlled places. (e.g. lowercasing
@@ -96,8 +101,9 @@ to browser. If a region is active (a phrase), lookup that phrase."
   (mouse-set-point event)
   (call-last-kbd-macro))
 
+;; ------------------------------------------------------------------------------
 ;; kill-other-buffers
-;; ------------------
+;; ------------------------------------------------------------------------------
 ;; I find that Emacs buffers multiply faster than rabbits.  They were
 ;; regenerating faster than I could kill them so I wrote this.  (The
 ;; original version was my first code in ELisp!)  Run this macro to kill
@@ -109,8 +115,10 @@ to browser. If a region is active (a phrase), lookup that phrase."
   (mapc 'kill-buffer (delq (current-buffer) (buffer-list)))   ; Delete other buffers
   (delete-other-windows)                                      ; And then unsplit the current window...
   (delete-other-frames))                                      ; ...and remove other frames, too.
+
+;; ------------------------------------------------------------------------------
 ;; show-ascii-chart
-;; ----------------
+;; ------------------------------------------------------------------------------
 ;; Display a helpful ASCII reference chart when called.  Useful for quickly
 ;; double checking or looking up character codes.  Usually the
 ;; what-cursor-position (C-x =) is faster for spot lookups of the number
@@ -177,6 +185,21 @@ to browser. If a region is active (a phrase), lookup that phrase."
 	 "ASCII Chart")
       (with-output-to-temp-buffer "ASCII Chart"
 	(princ chart)))))
+
+
+
+
+;;;; Not Interactive functions
+;; ------------------------------------------------------------------------------
+;; show buffer major mode
+;; ------------------------------------------------------------------------------
+(defun show-buffer-major-mode(buffer-or-string)
+  "Returns the major mode associated with a buffer."
+  (with-current-buffer buffer-or-string major-mode)
+  )
+
+
+
 
 (provide '006-function)
 ;; 006-function.el ends here.
