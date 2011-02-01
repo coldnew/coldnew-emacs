@@ -2,7 +2,6 @@
 (eval-when-compile (require 'cl))
 
 (require-maybe 'ac-anything)			; Auto Complete with Anything
-(require-maybe 'ac-anything)			; Auto Complete with Anything
 (require-maybe 'ac-company)			; Auto-Complete with company-mode
 (require-maybe 'anything)			;
 (require-maybe 'anything-c-shell-history)	; shell history anything.el interface
