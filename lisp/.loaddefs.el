@@ -631,12 +631,19 @@ Simplified interface of `anything' with other `anything-buffer'
 
 ;;;***
 
+<<<<<<< HEAD
 ;;;### (autoloads nil nil ("ac-anything/ac-anything.el" "anything-complete/anything-complete.el"
 ;;;;;;  "anything-config/anything-match-plugin.el" "anything-config/anything-startup.el"
 ;;;;;;  "anything-grep/anything-grep.el" "anything-gtags/anything-gtags.el"
 ;;;;;;  "anything-include/anything-include.el" "anything-ipa/anything-ipa.el"
 ;;;;;;  "anything-kyr/anything-kyr.el" "anything-match-plugin/anything-match-plugin.el"
 ;;;;;;  "anything-menu/anything-menu.el") (19784 14492 637745))
+=======
+;;;### (autoloads nil nil ("async-eval/async-eval.el" "auto-async-byte-compile/auto-async-byte-compile.el"
+;;;;;;  "auto-complete-clang/auto-complete-clang.el" "ppindent/ppindent.el"
+;;;;;;  "pymacs/pymacs.el" "ssh-config/ssh-config.el") (19783 56171
+;;;;;;  669826))
+>>>>>>> parent of 608d383... update
 
 ;;;***
 

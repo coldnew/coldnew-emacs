@@ -192,14 +192,6 @@
 	       :url "http://blog.gustavobarbieri.com.br/old-website/gobject-class.el")
 	(:name ppindent
 	       :type emacswiki)
-	(:name highlight-cl
-	       :type emacswiki)
-	(:name vim-mode
-	       :type hg
-	       :url "https://bitbucket.org/lyro/vim-mode")
-	(:name qmake-mode
-	       :type hg
-	       :url "https://qmake-mode.googlecode.com/hg/ qmake-mode")
 	csharp-mode
 	gnugo
 	htmlize

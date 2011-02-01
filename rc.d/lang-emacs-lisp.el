@@ -26,7 +26,6 @@
 	     ;; Enable pretty-lambda
 	     (turn-on-pretty-lambda-mode)
 
-	     (highlight-cl-add-font-lock-keywords)
 	     ;; Hooks for emacs-lisp-mode
 	     ;;(byte-compile-when-save)	; bytecompile the elisp file after save;
 	     (remove-elc-when-visit)	; when visit elisp file, remove .elc extensioon
@@ -45,8 +44,6 @@
 ;; if *scratch* does not exist, create it.
 (run-with-idle-timer 1 t
 		     '(lambda () (get-buffer-create "*scratch*")))
-
-(add-hook 'lisp-interaction-mode-hook 'highlight-cl-add-font-lock-keywords)
 
 ;;;;;; Functions
 

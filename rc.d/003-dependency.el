@@ -98,8 +98,13 @@
 (require-maybe 'cc-mode)			;
 (require-maybe 'ctypes)				;
 (require-maybe 'linum)				;
+<<<<<<< HEAD
 ;;(require-maybe 'highlight-cl)			;
 (require-maybe 'qmake-mode)
+=======
+
+
+>>>>>>> parent of 608d383... update
 
 
 
