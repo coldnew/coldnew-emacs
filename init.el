@@ -32,54 +32,56 @@
 ;;(add-to-list 'load-path "~/.emacs.d/etc/recipes/")
 ;;;;;; load package initial setting
 (require '000-macro)			; All Macros I use
-(require '001-environment)		; Environment Setting
-(require '003-dependency)		; All libraries included in
-(require '005-base)			; Basic emacs config
-(require '006-function)			; All functions I use
-(require '007-backup)			; Configure Backup Process
-(require '008-fonts)			; Setting Fonts
-(require '009-locale)			; Setting Locales
-(require '010-color-theme)		; Color-themes
-(require '011-vim-mode)			; Use Vim Keybindings
-(require '012-display)			; Configure window's size
-(require '013-woman)			; Woman-mode Settings
-(require '014-session)			; Store current positions
-(require '015-desktop)
-(require '022-ibuffer)			; Call buffer-list
-(require '025-yasnippet)		; Yasnippet config
-(require '026-auto-complete)		; Auto COmplete config
-(require '027-minibuffer)		; Add some keybindinng fot minibuffer
-(require '028-uniquify)			; COnfigure uniquify
-(require '029-lusty-explorer)		; Another good files explorer
-(require '030-xrefactory)		;
-(require '031-comint-mode)		;
-(require '032-anything)			; Complete anything
-(require '033-w3m)			; W3m config
-(require '034-shell-pop)		; Popup terminal
-(require '035-multi-term)		; Multi-term Terminal
-(require '036-midnight)			;
+;;(require '001-environment)		; Environment Setting
+;;(require '003-dependency)		; All libraries included in
+;;(require '005-base)			; Basic emacs config
+;;(require '006-function)			; All functions I use
+;;(require '007-backup)			; Configure Backup Process
+;;(require '008-fonts)			; Setting Fonts
+;;(require '009-locale)			; Setting Locales
+;;(require '010-color-theme)		; Color-themes
+;;(require '011-vim-mode)			; Use Vim Keybindings
+;;(require '012-display)			; Configure window's size
+;;(require '013-woman)			; Woman-mode Settings
+;;(require '014-session)			; Store current positions
+;;(require '015-desktop)
+;;(require '022-ibuffer)			; Call buffer-list
+;;(require '025-yasnippet)		; Yasnippet config
+;;(require '026-auto-complete)		; Auto COmplete config
+;;(require '027-minibuffer)		; Add some keybindinng fot minibuffer
+;;(require '028-uniquify)			; COnfigure uniquify
+;;(require '029-lusty-explorer)		; Another good files explorer
+;;(require '030-xrefactory)		;
+;;(require '031-comint-mode)		;
+;;(require '032-anything)			; Complete anything
+;;(require '033-w3m)			; W3m config
+;;(require '034-shell-pop)		; Popup terminal
+;;(require '035-multi-term)		; Multi-term Terminal
+;;(require '036-midnight)			;
 
-(require 'rc-cedet)
-(require 'rc-common-hook)
+;;(require 'rc-cedet)
+;;(require 'rc-common-hook)
 
-(cond (emacs23-p
-       (require 'rc-ecb)))
-(require 'rc-org-mode)
-(require 'rc-smartchr)
-(require 'rc-ielm-mode)
-(require 'rc-find-file)
-(require 'rc-ccmode-common)
-;; FIXME: (require '997-el-get)			; emacs lisp manager
-(require '998-elpa)			; emacs lisp manager
-(require '999-keybinding)		; Global Keybindings, must in the last line.
+;;(cond (emacs23-p
+;;       (require 'rc-ecb)))
+;;(require 'rc-org-mode)
+;;(require 'rc-smartchr)
+;;(require 'rc-ielm-mode)
+;;(require 'rc-find-file)
+;;(require 'rc-ccmode-common)
+;; FIXME: 
+(require 'el-get)
+(require '997-el-get)			; emacs lisp manager
+;;(require '998-elpa)			; emacs lisp manager
+;;(require '999-keybinding)		; Global Keybindings, must in the last line.
 
 ;; Programming Language Configure Settings
-(require 'lang-c)			; C
-(require 'lang-cpp)			; C++
-(require 'lang-emacs-lisp)		; Emacs-Lisp
+;;(require 'lang-c)			; C
+;;(require 'lang-cpp)			; C++
+;;(require 'lang-emacs-lisp)		; Emacs-Lisp
 ;;(require 'lang-python)			; Python
-(require 'lang-matlab)			; Matlab
-(require 'lang-newlisp)			; Newlisp
+;;(require 'lang-matlab)			; Matlab
+;;(require 'lang-newlisp)			; Newlisp
 
 
 
