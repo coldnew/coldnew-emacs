@@ -1,7 +1,6 @@
 ;;;; All extra dependency
 (eval-when-compile (require 'cl))
 
-
 (require-maybe 'ac-anything)			; Auto Complete with Anything
 (require-maybe 'ac-anything)			; Auto Complete with Anything
 (require-maybe 'ac-company)			; Auto-Complete with company-mode
@@ -89,20 +88,7 @@
 (require-maybe 'x-dnd)				; Drag and drop support for X
 (require-maybe 'xcscope)			; Cscope interface for Emacs
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
-(require-maybe 'ansi-color)			;
-(require-maybe 'ppindent)			;
-(require-maybe 'etags)				;
-(require-maybe 'cc-mode)			;
-(require-maybe 'ctypes)				;
-(require-maybe 'linum)				;
-
-
-
-
-
-
-
-
+(require-maybe 'recentf)
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab
 ;;(require-maybe 'pymacs)			; Pymacs

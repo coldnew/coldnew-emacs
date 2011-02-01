@@ -35,11 +35,6 @@
 	     (vim:local-imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
 	     ))
 
-;;;; Misc settings
-;; if *scratch* does not exist, create it.
-(run-with-idle-timer 1 t
-		     '(lambda () (get-buffer-create "*scratch*")))
-
 ;;;;;; Functions
 
 (defun remove-elc-when-visit ()

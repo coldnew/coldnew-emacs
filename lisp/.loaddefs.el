@@ -471,9 +471,8 @@ Visits the given directory in sr-mode.
 ;;;***
 
 ;;;### (autoloads nil nil ("async-eval/async-eval.el" "auto-async-byte-compile/auto-async-byte-compile.el"
-;;;;;;  "auto-complete-clang/auto-complete-clang.el" "ppindent/ppindent.el"
-;;;;;;  "pymacs/pymacs.el" "ssh-config/ssh-config.el") (19783 56171
-;;;;;;  669826))
+;;;;;;  "pymacs/pymacs.el" "ssh-config/ssh-config.el") (19782 16613
+;;;;;;  973645))
 
 ;;;***
 
