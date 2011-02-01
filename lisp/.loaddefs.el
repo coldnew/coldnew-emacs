@@ -644,6 +644,9 @@ Simplified interface of `anything' with other `anything-buffer'
 ;;;;;;  "pymacs/pymacs.el" "ssh-config/ssh-config.el") (19783 56171
 ;;;;;;  669826))
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 608d383... update
+=======
 >>>>>>> parent of 608d383... update
 =======
 >>>>>>> parent of 608d383... update
