@@ -16,8 +16,7 @@
 	     ;; Enable eldoc
 	     (turn-on-eldoc-mode)
 	     ;; Remodify auto-complete setting in auto-complete-config.el
-	     (setq ac-sources
-		   '(ac-source-symbols ac-source-company-elisp ac-source-words-in-same-mode-buffers))
+	     (ac-emacs-lisp-mode-setup)
 	     ;; Enable pretty-lambda
 	     (turn-on-pretty-lambda-mode)
 
@@ -54,13 +53,10 @@
 	      (if (buffer-file-name)
 		  (byte-compile-file buffer-file-name)))))
 
-
-;; FIXME: remove one day
-(when (require 'auto-complete nil 'noerror)
-  (defun ac-emacs-lisp-mode-setup ()
-    (setq ac-sources '(ac-source-symbols ac-source-company-elisp
-					 ac-source-words-in-same-mode-buffers)))
-  (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup))
+(defun ac-emacs-lisp-mode-setup ()
+  "auto-complete settings for emacs-lisp-mode"
+  (setq ac-sources '(ac-source-symbols ac-source-company-elisp
+				       ac-source-words-in-same-mode-buffers)))
 
 
 ;; ;; 該資料夾內沒有 Tags 檔案時自動建立,若有時則更新 Tags 檔
@@ -77,7 +73,6 @@
 ;;	(cd olddir)) ; restore
 ;;     ;;  tagfile already exists; update it
 ;;     (shell-command "global -u && echo 'updated tagfile'")))
-
 
 
 ;; (defvar my-auto-update-tags-alist

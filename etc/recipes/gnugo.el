@@ -1,0 +1,2 @@
+(:name gnugo
+       :type emacswiki)

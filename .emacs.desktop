@@ -1,0 +1,51 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Tue Feb  1 00:32:58 2011
+;; Desktop file format version 206
+;; Emacs version 24.0.50.1
+
+;; Global section:
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist '((113 . "")))
+(setq file-name-history '("~/.emacs.d/ede-projects.el" "~/.emacs.d/rc.d/005-base.el" "~/.ipa" "~/.emacs.d/rc.d/003-dependency.el" "~/.emacs.d/rc.d/005-base.el" "~/.emacs.d/t" "~/.emacs.d/init.el" "~/.emacs.d/rc.d/lang-emacs-lisp.el" "~/.emacs.d/rc.d/lang-c.el" "~/.emacs.d/rc.d/026-auto-complete.el" "~/.emacs.d/lisp/newlisp-mode/newlisp.el" "~/.emacs.d/rc.d/997-el-get.el" "~/.emacs.d/etc/recipes/quack.el" "~/.emacs.d/etc/recipes/htmlize.el" "~/.emacs.d/lisp/.loaddefs.el" "~/.emacs.d/rc.d/001-environment.el" "~/.emacs.d/rc.d/003-dependency.el" "~/.emacs.d/rc.d/rc-ccmode-common.el" "/tmp/te.c" "~/.emacs.d/rc.d/rc-cedet.el" "~/.emacs.d/ad.c" "~/.emacs.d/a.c" "~/.emacs.d/r.c" "~/.emacs.d/tt.c" "~/.emacs.d/te.c" "~/.ipa" "~/.emacs.d/rc.d/012-display.el" "~/.emacs.d/rc.d/034-shell-pop.el" "~/.emacs.d/rc.d/rc-w3m.el" "~/.emacs.d/rc.d/032-anything.el" "~/.emacs.d/rc.d/022-ibuffer.el" "~/.emacs.d/README" "~/.emacs.d/lisp/windows/windows.el" "~/.emacs.d/rc.d/rc-common-hook.el" "~/.emacs.d/rc.d/999-keybinding.el" "~/.emacs.d/rc.d/lang-newlisp.el" "~/.emacs.d/te.pl" "~/.emacs.d/rc.d/025-yasnippet.el" "~/.emacs.d/c.nl" "~/.emacs.d/b.nl" "~/.emacs.d/a.nl" "~/.emacs.d/aa.nl" "~/.emacs.d/asc.nl" "~/.emacs.d/a.cl" "~/.emacs.d/ss.nl" "~/.emacs.d/as.nl" "~/.emacs.d/a.lsp" "/tmp/sf.nl" "/tmp/ds.nl" "/tmp/ds.n;" "/tmp/bi.nl" "" "/tmp/elo.nl" "/tmp/oo.nl" "/tmp/ee.nl" "/tmp/sa.nl" "/tmp/sss.nl" "/tmp/ss.nl" "/tmp/c.nl" "/tmp/b.el" "/tmp/e.nl" "~/.emacs.d/etc/snippets/newlisp-mode/TEMPLATE.yas" "~/.emacs.d/rc.d/011-vim-mode.el" "~/.emacs.d/rc.d/000-macro.el" "~/.emacs.d/rc.d/031-comint-mode.el" "~/.emacs.d/rc.d/rc-ecb.el" "~/.emacs.d/rc.d/007-backup.el" "~/.emacs.d/rc.d/rc-xrefactory.el" "~/.emacs.d/ini" "~/.emacs.d/rc.d/029-lusty-explorer.el" "~/.emacs.d/rc.d/rc-minibuffer.el" "~/.emacs.d/rc.d/no" "~/.emacs.d/in" "~/.emacs.d/" "~/.emacs.d/i" "~/.emacs.d/r" "~/.emacs.d/rc.d/024-elpa.el" "~/.emacs.d/rc.d/028-uniquify.el" "~/.emacs.d/rc.d/023-el-get.el" "/tmp/cc/aa/e.l" "/tmp/a/b/c" "~/.emacs.d/001" "~/.emacs.d/rc.d/002-variable.el" "~/.emacs.d/rc.d/rc-mac.el" "~/.emacs.d/rc.d/rc-complete.el" "~/.emacs.d/rc.d/rc-package-manager.el" "~/.emacs.d/el-get/.loaddefs.el" "~/.emacs.d/lang/lang-c.el" "~/.emacs.d/rc.d/003-base.el" "~/.emacs.d/rc.d/005-dependency.el" "~/.emacs.d/lang/lang-emacs-lisp.el" "~/.emacs.d/lang/lang-newlisp.el" "~/.emacs.d/lang/lang-elisp.el" "~/.emacs.d/rc.d/rc-matlab-mode.el" "~/.emacs.d/rc.d/rc-session.el" "~/.emacs.d/rc.d/rc-ielm-mode.el" "~/.emacs.d/rc.d/rc-python-mode.el" "~/.emacs.d/rc.d/006-woman.el" "~/.emacs.d/rc.d/007-display.el" "~/.emacs.d/rc.d/006-color-theme.el" "~/.emacs.d/rc.d/006-locale.el" "~/.emacs.d/rc.d/006-fonts.el" "~/.emacs.d/rc.d/006-backup.el" "~/.emacs.d/rc.d/005-function.el" "~/.emacs.d/rc.d/rc-ibuffer.el" "~/.emacs.d/rc.d/rc-display.el" "~/.emacs.d/rc.d/rc-locale.el" "~/.emacs.d/rc.d/rc-fonts.el" "~/.emacs.d/rc.d/rc-function.el" "~/.emacs.d/rc.d/rc-color-theme.el" "~/.emacs.d/rc.d/005-woman.el" "~/.emacs.d/rc.d/005-backup.el" "~/.emacs.d/rc.d/010-dependency.el" "~/.emacs.d/rc.d/rc-woman.el" "~/.emacs.d/rc.d/rc-base.el" "~/.emacs.d/rc.d/rc-backup.el" "~/.emacs.d/rc.d/rc-vim-mode.el" "~/.emacs.d/rc.d/rc-macro.el" "~/.emacs.d/rc.d/rc-org-mode.el" "~/.emacs.d/rc.d/loc" "~/.emacs.d/custom.el" "/tmp/te.lisp" "/tmp/matlab/readData.m" "~/.emacs.d/rc.d/rc-emacs-lisp-mode.el" "/tmp/ezbl/ezbl.el" "~/WorkSpace/Qt4/byteconverter/byteconverter.cpp" "~/WorkSpace/Qt4/byteconverter/byteconverter.hpp" "~/WorkSpace/Qt4/byteconverter/main.cpp" "/home/coldnew/WorkSpace/Qt4/signalSlot2" "~/WorkSpace/Qt4/signalSlot2/main.cpp" "~/.emacs.d/rc.d/rc-cpp-mode.el" "~/.emacs.d/te.cpp" "~/WorkSpace/Qt4/signalSlot/main.cpp" \.\.\.))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/coldnew/.emacs.d/rc.d/005-base.el"
+  "005-base.el"
+  'emacs-lisp-mode
+  '(auto-complete-mode eldoc-mode highlight-parentheses-mode undo-tree-mode vim-local-mode yas/minor-mode global-auto-revert-mode linum-mode highlight-changes-mode)
+  1422
+  '(3246 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix) (overwrite-mode) (highlight-changes-mode . t)))
+
+(desktop-create-buffer 206
+  "/home/coldnew/.emacs.d/rc.d/003-dependency.el"
+  "003-dependency.el"
+  'emacs-lisp-mode
+  '(auto-complete-mode eldoc-mode highlight-parentheses-mode undo-tree-mode vim-local-mode yas/minor-mode global-auto-revert-mode linum-mode highlight-changes-mode)
+  4563
+  '(4562 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix) (overwrite-mode) (highlight-changes-mode . t)))
+
+(desktop-create-buffer 206
+  "/home/coldnew/.ipa"
+  ".ipa"
+  'ipa-mode
+  '(undo-tree-mode vim-local-mode yas/minor-mode global-auto-revert-mode)
+  1
+  '(1 nil)
+  nil
+  nil
+  nil)
+

@@ -19,12 +19,17 @@
 (defvar emacs24-p (equal emacs-major-version 24))
 
 ;;;;;;;; 將指定目錄裡的東西全部加入清單
-(if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-    (let* ((my-lisp-dir "~/.emacs.d/")
-	   (default-directory my-lisp-dir))
-      (setq load-path (cons my-lisp-dir load-path))
-      (normal-top-level-add-subdirs-to-load-path)))
+;; (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+;;     (let* ((my-lisp-dir "~/.emacs.d/")
+;;	   (default-directory my-lisp-dir))
+;;       (setq load-path (cons my-lisp-dir load-path))
+;;       (normal-top-level-add-subdirs-to-load-path)))
+(add-to-list 'load-path "~/.emacs.d/rc.d/")
+(add-to-list 'load-path "~/.emacs.d/theme/")
+(let ((default-directory "~/.emacs.d/lisp/"))
+  (normal-top-level-add-subdirs-to-load-path))
 
+;;(add-to-list 'load-path "~/.emacs.d/etc/recipes/")
 ;;;;;; load package initial setting
 (require '000-macro)			; All Macros I use
 (require '001-environment)		; Environment Setting
@@ -39,6 +44,7 @@
 (require '012-display)			; Configure window's size
 (require '013-woman)			; Woman-mode Settings
 (require '014-session)			; Store current positions
+(require '015-desktop)
 (require '022-ibuffer)			; Call buffer-list
 (require '025-yasnippet)		; Yasnippet config
 (require '026-auto-complete)		; Auto COmplete config

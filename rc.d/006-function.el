@@ -198,6 +198,19 @@ to browser. If a region is active (a phrase), lookup that phrase."
   (with-current-buffer buffer-or-string major-mode)
   )
 
+;; ------------------------------------------------------------------------------
+;; Predicate if process ID is an emacs process
+;; ------------------------------------------------------------------------------
+(defun emacs-process-p (pid)
+  "If pid is the process ID of an emacs process, return t, else nil.
+Also returns nil if pid is nil."
+  (when pid
+    (let ((attributes (process-attributes pid)) (cmd))
+      (dolist (attr attributes)
+	(if (string= "comm" (car attr))
+	    (setq cmd (cdr attr))))
+      (if (and cmd (or (string= "emacs" cmd) (string= "emacs.exe" cmd))) t))))
+
 
 
 
