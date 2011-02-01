@@ -641,6 +641,7 @@ Simplified interface of `anything' with other `anything-buffer'
 =======
 ;;;### (autoloads nil nil ("async-eval/async-eval.el" "auto-async-byte-compile/auto-async-byte-compile.el"
 <<<<<<< HEAD
+<<<<<<< HEAD
 ;;;;;;  "auto-complete-clang/auto-complete-clang.el" "ppindent/ppindent.el"
 ;;;;;;  "pymacs/pymacs.el" "ssh-config/ssh-config.el") (19783 56171
 ;;;;;;  669826))
@@ -658,6 +659,11 @@ Simplified interface of `anything' with other `anything-buffer'
 ;;;;;;  "pymacs/pymacs.el" "ssh-config/ssh-config.el") (19782 16613
 ;;;;;;  973645))
 >>>>>>> parent of 70c3fa6... update
+=======
+;;;;;;  "auto-complete-clang/auto-complete-clang.el" "ppindent/ppindent.el"
+;;;;;;  "pymacs/pymacs.el" "ssh-config/ssh-config.el") (19783 56171
+;;;;;;  669826))
+>>>>>>> parent of 608d383... update
 
 ;;;***
 
