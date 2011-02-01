@@ -231,7 +231,7 @@ the named package action in the given method."
   :type '(repeat (cons symbol function))
   :group 'el-get)
 
-(defvar el-get-dir "~/.emacs.d/el-get/"
+(defvar el-get-dir "~/.emacs.d/lisp/"
   "Define where to fetch the packages.")
 
 (defvar el-get-recipe-path '("~/.emacs.d/el-get/el-get/recipes")

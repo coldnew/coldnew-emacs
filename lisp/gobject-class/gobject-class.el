@@ -255,5 +255,4 @@ class_name)))
 )
 )
 
-(provide 'gobject-class)
 ;;; gobject-class.el ends here
