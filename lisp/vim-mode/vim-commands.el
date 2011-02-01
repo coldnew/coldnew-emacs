@@ -495,7 +495,8 @@ and switches to insert-mode."
   (unless (and (member last-command '(vim:cmd-paste-pop
                                       vim:cmd-paste-pop-next
                                       vim:cmd-paste-before
-                                      vim:cmd-paste-behind))
+                                      vim:cmd-paste-behind
+				      yank))
                vim:last-paste)
     (error "Previous command was not a vim-mode paste"))
   (when vim:last-paste

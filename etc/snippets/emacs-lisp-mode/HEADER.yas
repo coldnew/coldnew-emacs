@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Header file
+# key: HEADER
+# binding:
+# expand-env:
+# type: 
+# --
+;;
+
+$0
+(provide '`(yas/file-sans)`)
+;; `(yas/file)` ends here.

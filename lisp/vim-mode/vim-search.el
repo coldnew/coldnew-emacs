@@ -176,7 +176,7 @@
                                     (concat "Query replacing " 
                                             (match-string 0) 
                                             " with "
-                                            (match-substitute-replacement replacement case-fold-search)
+                                            (vim:match-substitute-replacement replacement case-fold-search)
                                             ": "))
                                 #'(lambda (x) 
                                     (set-match-data x) 

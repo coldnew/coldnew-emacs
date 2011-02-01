@@ -56,6 +56,8 @@
 (require '032-anything)			; Complete anything
 (require '033-w3m)			; W3m config
 (require '034-shell-pop)		; Popup terminal
+(require '035-multi-term)		; Multi-term Terminal
+(require '036-midnight)			;
 
 (require 'rc-cedet)
 (require 'rc-common-hook)

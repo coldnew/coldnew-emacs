@@ -223,6 +223,26 @@
    (vim:xemacs-p (eq (try-completion string collection predicate) t))))
 
 
+(if (fboundp 'match-substitute-replacement)
+    (defalias 'vim:match-substitute-replacement 'match-substitute-replacement)
+  ;; A simple definition I found somewhere in the web.
+  (defun vim:match-substitute-replacement (replacement
+					   &optional fixedcase literal string subexp)
+    "Return REPLACEMENT as it will be inserted by `replace-match'.
+In other words, all back-references in the form `\\&' and `\\N'
+are substituted with actual strings matched by the last search.
+Optional FIXEDCASE, LITERAL, STRING and SUBEXP have the same
+meaning as for `replace-match'."
+    (let ((match (match-string 0 string)))
+      (save-match-data
+	(set-match-data (mapcar (lambda (x)
+				  (if (numberp x)
+				      (- x (match-beginning 0))
+				    x))
+				(match-data t)))
+	(replace-match replacement fixedcase literal match subexp)))))
+
+
 (defun vim:looking-back (regexp &optional limit greedy)
   "Return non-nil if text before point matches regular expression REGEXP.
 Like `looking-at' except matches before point, and is slower.
@@ -237,22 +257,22 @@ of a match for REGEXP."
    
    (vim:xemacs-p 
     (let ((start (point))
-          (pos
-           (save-excursion
-             (and (re-search-backward (concat "\\(?:" regexp "\\)\\=") limit t)
-                  (point)))))
+	  (pos
+	   (save-excursion
+	     (and (re-search-backward (concat "\\(?:" regexp "\\)\\=") limit t)
+		  (point)))))
       (if (and greedy pos)
-          (save-restriction
-            (narrow-to-region (point-min) start)
-            (while (and (> pos (point-min))
-                        (save-excursion
-                          (goto-char pos)
-                          (backward-char 1)
-                          (looking-at (concat "\\(?:"  regexp "\\)\\'"))))
-              (setq pos (1- pos)))
-            (save-excursion
-              (goto-char pos)
-              (looking-at (concat "\\(?:"  regexp "\\)\\'")))))
+	  (save-restriction
+	    (narrow-to-region (point-min) start)
+	    (while (and (> pos (point-min))
+			(save-excursion
+			  (goto-char pos)
+			  (backward-char 1)
+			  (looking-at (concat "\\(?:"  regexp "\\)\\'"))))
+	      (setq pos (1- pos)))
+	    (save-excursion
+	      (goto-char pos)
+	      (looking-at (concat "\\(?:"  regexp "\\)\\'")))))
       (not (null pos))))))
   
 

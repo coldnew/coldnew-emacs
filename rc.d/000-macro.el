@@ -7,14 +7,16 @@
 (font-lock-add-keywords 'emacs-lisp-mode
 			'(("(\\(\\defcmd\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
 			   (1 font-lock-keyword-face)
-			   (2 font-lock-function-name-face))));))
-
-(font-lock-add-keywords 'emacs-lisp-mode
-			'(("(\\(require-maybe\\)\\s [ \t']*\\(\\sw+\\)?"
+			   (2 font-lock-function-name-face))
+			  ("(\\(require-maybe\\)\\s [ \t']*\\(\\sw+\\)?"
 			   (1 font-lock-keyword-face)
-			   (2 font-lock-constant-face nil t))))
+			   (2 font-lock-constant-face nil t))
+			  ))
 
 
+(defmacro comment (&rest body)
+  "Ignores body, yields nil"
+  nil)
 
 (defmacro* defcmd (name &rest body)
   "Define a interactive functions without arguments."
@@ -58,6 +60,63 @@
 	   (insert "]\n"))))
      require-result))
 
+;; unsort macro
+;; (defmacro ->> (&rest body)
+;;   (let ((result (pop body)))
+;;     (dolist (form body result)
+;;       (setq result (append form (list result))))))
+
+;; (defmacro -> (&rest body)
+;;   (let ((result (pop body)))
+;;     (dolist (form body result)
+;;       (setq result (append (list (car form) result)
+;;			   (cdr form))))))
+
+;; Clojure's Trush operators
+(defmacro -> (x &optional form &rest more)
+  (cond ((not (null more))
+	 `(-> (-> ,x ,form) ,@more))
+	((not (null form))
+	 (if (sequencep form)
+	     `(,(first form) ,x ,@(rest form))
+	   (list form x)))
+	(t x)))
+
+(defmacro ->> (x form &rest more)
+  (cond ((not (null more)) `(->> (->> ,x ,form) ,@more))
+	(t (if (sequencep form)
+	       `(,(first form) ,@(rest form) ,x)
+	     (list form x)))))
+
+(defmacro -?> (x form &rest more)
+  (cond ((not (null more)) `(-?> (-?> ,x ,form) ,@more))
+	(t (if (sequencep form)
+	       `(if (null ,x) nil
+		  (,(first form) ,x ,@(rest form)))
+	     `(if (null ,x) nil
+		,(list form x))))))
+
+(defmacro -?>> (x form &rest more)
+  (cond ((not (null more)) `(-?>> (-?>> ,x ,form) ,@more))
+	(t (if (sequencep form)
+	       `(if (null ,x) nil
+		  (,(first form) ,@(rest form) ,x))
+	     `(if (null ,x) nil
+		,(list form x))))))
+
+;; Functional tools
+
+(defmacro partial (f &rest args)
+  `(lambda (&rest more)
+     (apply ',f ,@args more)))
+
+(defmacro lexdef (name args &rest body)
+  "Defun with lexically-scoped parameters. Could also be called lexical-defun."
+  `(defun ,name ,args
+     (lexical-let ,(->> args
+			(remove-if (partial equal '&rest))
+			(mapcar (lambda (arg) (list arg arg))))
+       ,@body)))
 
 (provide '000-macro)
 ;; 000-macro.el ends here.

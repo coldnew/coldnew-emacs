@@ -1,5 +1,7 @@
+
 ;;;; All extra dependency
 (eval-when-compile (require 'cl))
+
 
 (require-maybe 'ac-anything)			; Auto Complete with Anything
 (require-maybe 'ac-company)			; Auto-Complete with company-mode
@@ -28,12 +30,15 @@
 (require-maybe 'c-eldoc)			;
 (require-maybe 'cedet)				;
 (require-maybe 'cflow-mode)			; major mode for viewing cflow output files
+(require-maybe 'cl)				;
 (require-maybe 'color-theme)			; Color-theme
 (require-maybe 'company)			; Another aoto-complete plugins
 (require-maybe 'completion-ui)			;
 (require-maybe 'csharp-mode)			; C# mode derived mode
 (require-maybe 'ctagsfind)			;
 (require-maybe 'dabbrev)			;
+(require-maybe 'desktop)			;
+(require-maybe 'desktop-recover)		;
 (require-maybe 'doxymacs)			; Doxygen for emacs
 (require-maybe 'dropdown-list)			;
 (require-maybe 'el-get)				; Emacs-Lisp Manager
@@ -66,10 +71,10 @@
 (require-maybe 'python)				; Python
 (require-maybe 'quack)				; enhanced support for editing and running Scheme code
 (require-maybe 'rainbow-mode)			; Color the emacs buffer
+(require-maybe 'recentf)			;
 (require-maybe 'recentf)			; Setup a menu of recently opened files
 (require-maybe 'session)			; Use Session to save current positions
 (require-maybe 'shell-pop)			; Helps you pop up and pop out shell buffer easily
-(require-maybe 'shell-pop)			; Popup terminal
 (require-maybe 'slime)				; Superior Lisp Interaction Mode for Emacs
 (require-maybe 'smartchr)			; Emacs version of smartchr.vim
 (require-maybe 'ssh-config)			; Syntax Highlight ssh-configure files
@@ -87,7 +92,20 @@
 (require-maybe 'x-dnd)				; Drag and drop support for X
 (require-maybe 'xcscope)			; Cscope interface for Emacs
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
-(require-maybe 'recentf)
+(require-maybe 'ansi-color)			;
+(require-maybe 'ppindent)			;
+(require-maybe 'etags)				;
+(require-maybe 'cc-mode)			;
+(require-maybe 'ctypes)				;
+(require-maybe 'linum)				;
+
+
+
+
+
+
+
+
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab
 ;;(require-maybe 'pymacs)			; Pymacs
