@@ -95,9 +95,14 @@
 (require-maybe 'cc-mode)			;
 (require-maybe 'ctypes)				;
 (require-maybe 'linum)				;
-(require-maybe 'highlight-cl)			;
-(require-maybe 'qmake-mode)
-(require-maybe 'recentf)
+
+
+
+
+
+
+
+
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab
 ;;(require-maybe 'pymacs)			; Pymacs
