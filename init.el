@@ -32,6 +32,7 @@
 ;;(add-to-list 'load-path "~/.emacs.d/etc/recipes/")
 ;;;;;; load package initial setting
 (require '000-macro)			; All Macros I use
+<<<<<<< HEAD
 ;;(require '001-environment)		; Environment Setting
 ;;(require '003-dependency)		; All libraries included in
 ;;(require '005-base)			; Basic emacs config
@@ -58,6 +59,32 @@
 ;;(require '034-shell-pop)		; Popup terminal
 ;;(require '035-multi-term)		; Multi-term Terminal
 ;;(require '036-midnight)			;
+=======
+(require '001-environment)		; Environment Setting
+(require '003-dependency)		; All libraries included in
+(require '005-base)			; Basic emacs config
+(require '006-function)			; All functions I use
+(require '007-backup)			; Configure Backup Process
+(require '008-fonts)			; Setting Fonts
+(require '009-locale)			; Setting Locales
+(require '010-color-theme)		; Color-themes
+(require '011-vim-mode)			; Use Vim Keybindings
+(require '012-display)			; Configure window's size
+(require '013-woman)			; Woman-mode Settings
+(require '014-session)			; Store current positions
+(require '015-desktop)
+(require '022-ibuffer)			; Call buffer-list
+(require '025-yasnippet)		; Yasnippet config
+(require '026-auto-complete)		; Auto COmplete config
+(require '027-minibuffer)		; Add some keybindinng fot minibuffer
+(require '028-uniquify)			; COnfigure uniquify
+(require '029-lusty-explorer)		; Another good files explorer
+(require '030-xrefactory)		;
+(require '031-comint-mode)		;
+(require '032-anything)			; Complete anything
+(require '033-w3m)			; W3m config
+(require '034-shell-pop)		; Popup terminal
+>>>>>>> parent of 70c3fa6... update
 
 ;;(require 'rc-cedet)
 ;;(require 'rc-common-hook)

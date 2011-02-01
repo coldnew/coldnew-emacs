@@ -2,7 +2,6 @@
   "The meta functions fo cc-mode, like c-mode c++-mode and objc-mode."
   (cc-mode:high-light-functions)
   (cc-mode:high-ligth-if0)
-  (cc-mode:indent-macro-when-save)
   ;;;; Keybindings
   ;; Insert smart char
   (vim:local-imap (kbd "=")   'cc-mode:insert-equal)
@@ -61,14 +60,6 @@
    '((font-lock-if0 (0 font-lock-comment-face prepend))) 'add-to-end))
 
 
-(defun cc-mode:indent-macro-when-save ()
-  "When save, indent c/c++ macros."
-  (make-local-variable 'after-save-hook)
-  (add-hook 'after-save-hook
-	    (lambda ()
-	      (when (featurep 'ppindent)
-		(ppindent-c))
-	      (save-buffer))))
 
 (defun cc-mode:high-light-functions ()
   "hightlight functions if it's regexp match func() "

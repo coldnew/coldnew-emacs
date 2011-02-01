@@ -8,12 +8,6 @@
 ;;;;;; Auto-mode alist
 (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 
-;;;;;; Auto Complete Settings
-(defun ac-emacs-lisp-mode-setup ()
-  "auto-complete settings for emacs-lisp-mode"
-  (setq ac-sources '(ac-source-symbols ac-source-company-elisp
-				       ac-source-words-in-same-mode-buffers)))
-
 ;;;;;; Hook
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
@@ -28,6 +22,7 @@
 
 	     ;; Hooks for emacs-lisp-mode
 	     ;;(byte-compile-when-save)	; bytecompile the elisp file after save;
+
 	     (remove-elc-when-visit)	; when visit elisp file, remove .elc extensioon
 	     (programming-common-hook)	; programming common hook
 	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)
@@ -39,11 +34,6 @@
 	     (vim:local-imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
 	     (vim:local-imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
 	     ))
-
-;;;; Misc settings
-;; if *scratch* does not exist, create it.
-(run-with-idle-timer 1 t
-		     '(lambda () (get-buffer-create "*scratch*")))
 
 ;;;;;; Functions
 
@@ -63,6 +53,10 @@
 	      (if (buffer-file-name)
 		  (byte-compile-file buffer-file-name)))))
 
+(defun ac-emacs-lisp-mode-setup ()
+  "auto-complete settings for emacs-lisp-mode"
+  (setq ac-sources '(ac-source-symbols ac-source-company-elisp
+				       ac-source-words-in-same-mode-buffers)))
 
 
 ;; ;; 該資料夾內沒有 Tags 檔案時自動建立,若有時則更新 Tags 檔
