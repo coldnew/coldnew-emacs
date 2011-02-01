@@ -98,8 +98,8 @@
 (require-maybe 'cc-mode)			;
 (require-maybe 'ctypes)				;
 (require-maybe 'linum)				;
-
-
+(require-maybe 'highlight-cl)			;
+(require-maybe 'qmake-mode)
 
 
 

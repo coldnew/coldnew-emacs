@@ -471,9 +471,15 @@ Visits the given directory in sr-mode.
 ;;;***
 
 ;;;### (autoloads nil nil ("async-eval/async-eval.el" "auto-async-byte-compile/auto-async-byte-compile.el"
-;;;;;;  "auto-complete-clang/auto-complete-clang.el" "ppindent/ppindent.el"
-;;;;;;  "pymacs/pymacs.el" "ssh-config/ssh-config.el") (19783 56171
-;;;;;;  669826))
+;;;;;;  "auto-complete-clang/auto-complete-clang.el" "highlight-cl/highlight-cl.el"
+;;;;;;  "ppindent/ppindent.el" "pymacs/pymacs.el" "qmake-mode/qmake.el"
+;;;;;;  "ssh-config/ssh-config.el" "vim-mode/vim-commands.el" "vim-mode/vim-compat.el"
+;;;;;;  "vim-mode/vim-ex-commands.el" "vim-mode/vim-ex.el" "vim-mode/vim-insert-mode.el"
+;;;;;;  "vim-mode/vim-keymap.el" "vim-mode/vim-maps.el" "vim-mode/vim-modes.el"
+;;;;;;  "vim-mode/vim-motions.el" "vim-mode/vim-normal-mode.el" "vim-mode/vim-scroll.el"
+;;;;;;  "vim-mode/vim-search.el" "vim-mode/vim-undo.el" "vim-mode/vim-vim.el"
+;;;;;;  "vim-mode/vim-visual-mode.el" "vim-mode/vim-window.el" "vim-mode/vim.el")
+;;;;;;  (19784 2468 873934))
 
 ;;;***
 

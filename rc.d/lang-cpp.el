@@ -44,6 +44,9 @@
 	     ))
 
 ;;;; Support for Qt4
+(setq c-C++-access-key "\\<\\(slots\\|signals\\|private\\|protected\\|public\\)\\>[ \t]*[(slots\\|signals)]*[ \t]*:")
+(font-lock-add-keywords 'c++-mode '(("\\<\\(Q_OBJECT\\|public slots\\|public signals\\|private slots\\|private signals\\|protected slots\\|protected signals\\)\\>" . font-lock-constant-face)))
+
 ;; (cond
 ;;  (mac-p
 ;;   (setq qt4-base-dir "/usr/include/qt4")
