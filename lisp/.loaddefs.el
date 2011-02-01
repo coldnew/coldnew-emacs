@@ -645,6 +645,9 @@ Simplified interface of `anything' with other `anything-buffer'
 ;;;;;;  669826))
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 608d383... update
+=======
 >>>>>>> parent of 608d383... update
 =======
 >>>>>>> parent of 608d383... update
