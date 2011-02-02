@@ -1,0 +1,106 @@
+XREF-RECIPE_BUILD(1)                                      XREF-RECIPE_BUILD(1)
+
+
+
+NAME
+       xref-recipe-build,  xref-recipe-build-compiler-wrapper - Tools creating
+       Xrefactory recipe files.
+
+
+SYNOPSIS
+       xref-recipe-build [-wd wrappers_dir] <recipe_file> <make_command>
+       <make_command_options>
+
+       xref-recipe-build-compiler-wrapper [--xcall <compiler> [--recipe
+       <recipe_file>]] <compiler_options>
+
+
+DESCRIPTION
+       This pair of tasks is used for creating Xrefactory recipe files.  Read
+       Xrefactory README file for more informations about recipe files.  Xref-
+       recipe-build-compiler-wrapper is stored under names of usual compilers
+       (cc, gcc, g++, CC, etc.) in a particular directory.
+
+       When invoked, xref-recipe-build first modifies PATH environment
+       variable, putting directory with wrappers at the beginning, so that
+       compiler wrappers will be invoked instead of usual compilers. Then,
+       xref-recipe-build calls the make_command with its make_command_options.
+       If everything works all right, then the make_command invokes xref-
+       recipe-build-compiler-wrapper instead of the intended compiler. The
+       wrapper stores informations about compiler_options into recipe_file and
+       invokes the original compiler. This mechanism allows to build the
+       project while storing all compiler options (like -I and -D) into the
+       given recipe file.  The directory containing wrappers is determined
+       from the place where xref-recipe-build is stored in the file system,
+       the optional parameter -wd allows to specify an alternative directory.
+
+       In order to achieve this behavior several informations have to be
+       exchanged between both tasks. Information exchange is implemented
+       through environment variables.  In particular xref-recipe-build sets
+       the variable XREFACTORY_RECIPE_FILE pointing to the recipe_file. It
+       also sets the variable XREFACTORY_COMPILER_WRAPPERS pointing to the
+       directory containing compiler wrappers. XREFACTORY_COMPILER_WRAPPERS is
+       always terminated by slash character. A couple of variables is set to
+       determine original position of compilers (even if not really needed).
+       Variables XREFACTORY_WHICH_CPP, XREFACTORY_WHICH_GPP,
+       XREFACTORY_WHICH_GCC, XREFACTORY_WHICH_CC and XREFACTORY_WHICH__CC
+       point respectively to compilers c++, g++, gcc, cc and CC.
+
+
+       Xref-recipe-build-compiler-wrapper first appends the information about
+       compiled file and its options to the recipe file. It identifies its
+       compiler from the name by which it was invoked from command line. Then
+       it prepares options and environment for the compiler and executes it.
+       The new environment will not contain variables set by xref-recipe-build
+       and the PATH variable will be repaired to its original value.
+
+       Xref-recipe-build-compiler-wrapper recognizes optional parameters which
+       are not passed to the compiler. Those options can be used to provide
+       the wrapper with information about compiler to call and recipe file to
+       append to. In normal case, those options are useless because all
+       informations are passed through environment variables.
+
+
+
+USAGE
+       It is supposed that your project was cleaned before invocation of xref-
+       recipe-build command. I.e. that all project files will be compiled
+       during a single invocation of xref-recipe-build.  In order to create a
+       recipe file, clean your project and build it by invoking:
+
+            xref-recipe-build /my/recipe/file my-make my-make-params
+
+       instead of:
+
+            my-make my-make-params
+
+       In some circumstances, when your make does not use default compilers
+       from PATH you may need to set up things manually. A usual way, in such
+       cases, is to edit your Makefile by replacing all lines:
+
+       CC=/path/to/my/compiler
+
+       by:
+
+       CC=/path/to/xref/xref-recipe-build-compiler-wrapper --xcall
+       /path/to/my/compiler
+
+       Then you can invoke xref-recipe-build (as in the previous case) for
+       creating recipe file while an invocation of make will still
+       incrementaly build your project without touching recipe file (even if
+       each invocation of compiler will go through xref wrapper).
+
+
+AUTHOR
+       Marian Vittek, Bratislava 1997-2007.
+
+MORE INFO
+       http://www.xref-tech.com
+
+SEE ALSO
+       xref(1), xrefrc(5)
+
+
+
+
+                                                          XREF-RECIPE_BUILD(1)

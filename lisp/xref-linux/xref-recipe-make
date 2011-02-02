@@ -1,0 +1,90 @@
+#!/bin/sh 
+
+######################################################################
+
+# This is a simple wrapper to  the 'make' command.  It is catching all
+# calls to compilers  and memorizing used options.  If  you clean your
+# project and build with  'xref-recipe-make <file> <pars>' (instead of
+# 'make  <pars>'), you  will obtain  the  list of  compiled files  and
+# options in  the <file>.  This file  is directly usable by  xref as a
+# recipe for your project.
+
+######################################################################
+
+# WARNING: This script is obsolete, use:
+#  xref-recipe-build <recipe-file>  make  <parameters>
+# instead of
+#  xref-recipe-make <recipe-file>  <parameters>
+
+######################################################################
+
+if test "X$1" = X
+then
+XREFACTORY_RECIPE_FILE="/tmp/recipe"
+else
+XREFACTORY_RECIPE_FILE="$1"
+fi
+export XREFACTORY_RECIPE_FILE
+shift
+
+XREFACTORY_FLAGS=""
+export XREFACTORY_FLAGS
+
+######################################################################
+
+# define current paths to compilers
+XREFACTORY_WHICH_CPP=`which c++ 2>/dev/null`
+XREFACTORY_WHICH_GPP=`which g++ 2>/dev/null`
+XREFACTORY_WHICH_GCC=`which gcc 2>/dev/null`
+XREFACTORY_WHICH_CC=`which cc 2>/dev/null`
+XREFACTORY_WHICH__CC=`which CC 2>/dev/null`
+XREFACTORY_WHICH_JAVAC=`which javac 2>/dev/null`
+
+export XREFACTORY_WHICH_CPP 
+export XREFACTORY_WHICH_GPP
+export XREFACTORY_WHICH_GCC 
+export XREFACTORY_WHICH_CC
+export XREFACTORY_WHICH__CC
+export XREFACTORY_WHICH_JAVAC
+
+# get absolute path to this file from $0 or $PATH
+whichxrm=`which xref-recipe-make`
+dz1=`echo "$0" | cut -b 1`
+whichxrm1=`echo "${whichxrm}" | cut -b 1`
+if test "X${dz1}" = 'X/'
+then
+   XREF_RECIPE_MAKE_ABS_PATH=$0
+elif test "X${dz1}" = 'X.'
+then
+	XREF_RECIPE_MAKE_ABS_PATH=${PWD}/./$0
+elif test "X${whichxrm1}" = 'X/'
+then
+	XREF_RECIPE_MAKE_ABS_PATH=${whichxrm}
+elif test "X${whichxrm1}" = 'X.'
+then
+	XREF_RECIPE_MAKE_ABS_PATH=${PWD}/./${whichxrm}
+else
+   echo "Can not infer absolute path to the file xref-recipe-make."
+   echo "Put its directory into PATH, or invoke it with absolute prefix."
+   echo "Sorry."
+   exit 1
+fi
+
+# remove old recipe
+rm -f ${XREFACTORY_RECIPE_FILE}
+
+# if the path to recipe does not exists, create it
+if test ! -d `dirname ${XREFACTORY_RECIPE_FILE}`
+then
+  mkdir -p `dirname ${XREFACTORY_RECIPE_FILE}`
+fi
+ 
+# redefine PATH, so that xref wrappers are used instead of compilers
+# and build the project
+
+( PATH=${XREF_RECIPE_MAKE_ABS_PATH}-compiler-wrappers:${PATH} ; export PATH; make $* )
+
+
+#All done.
+echo Done.
+

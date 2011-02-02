@@ -84,130 +84,130 @@
 (require 'anything)
 
 (defvar anything-c-source-kyr
-  '((name . "Context-aware Commands")
-    (candidates . anything-kyr-candidates)
-    (display-to-real . (lambda (str) (intern-soft (car (split-string str " +\t")))))
-    (action ("Execute" . call-interactively)
-            ("Describe Function" . describe-function))
-    (persistent-action . describe-function)))
+'((name . "Context-aware Commands")
+(candidates . anything-kyr-candidates)
+(display-to-real . (lambda (str) (intern-soft (car (split-string str " +\t")))))
+(action ("Execute" . call-interactively)
+("Describe Function" . describe-function))
+(persistent-action . describe-function)))
 
 (defvar anything-kyr-commands-by-major-mode nil
-  "Show commands by major-mode.
+"Show commands by major-mode.
 It is a list of elements of (MAJOR-MODE COMMAND1 ...) or ((MAJOR-MODE1 MAJOR-MODE2) COMMAND1 ...).")
 (defvar anything-kyr-commands-by-file-name nil
-  "Show commands by file name.
+"Show commands by file name.
 It is a list of elements of (REGEXP COMMAND1 ...).")
 (defvar anything-kyr-commands-by-condition nil
-  "Show commands by condition.
+"Show commands by condition.
 It is a list of elements of (CONDITION COMMAND1 ...).")
 (defvar anything-kyr-kinds
-  '((anything-kyr-commands-by-condition . eval)
-    (anything-kyr-commands-by-file-name
-     . (lambda (re) (string-match re (or buffer-file-name ""))))
-    (anything-kyr-commands-by-major-mode
-     . (lambda (mode) (if (listp mode)
-                          (memq major-mode mode)
-                        (eq major-mode mode))))))
+'((anything-kyr-commands-by-condition . eval)
+(anything-kyr-commands-by-file-name
+. (lambda (re) (string-match re (or buffer-file-name ""))))
+(anything-kyr-commands-by-major-mode
+. (lambda (mode) (if (listp mode)
+(memq major-mode mode)
+(eq major-mode mode))))))
 ;; (anything 'anything-c-source-kyr)
 
 (defvar anything-kyr-display-format "%-30s\t%-s")
 (defun anything-kyr-candidates ()
-  (with-current-buffer anything-current-buffer
-    (delq nil
-          (loop for (varname . condition-func) in anything-kyr-kinds append
-                (loop for (condition . cmds) in (symbol-value varname)
-                      when (save-excursion
-                             (ignore-errors (funcall condition-func condition)))
-                      append (mapcar
-                              (lambda (command)
-                                (cond ((commandp command)
-                                       (symbol-name command))
-                                      ((and (consp command) (commandp (car command)))
-                                       (format anything-kyr-display-format
-                                               (symbol-name (car command))
-                                               (cdr command)))))
-                              cmds))))))
+(with-current-buffer anything-current-buffer
+(delq nil
+(loop for (varname . condition-func) in anything-kyr-kinds append
+(loop for (condition . cmds) in (symbol-value varname)
+when (save-excursion
+(ignore-errors (funcall condition-func condition)))
+append (mapcar
+(lambda (command)
+(cond ((commandp command)
+(symbol-name command))
+((and (consp command) (commandp (car command)))
+(format anything-kyr-display-format
+(symbol-name (car command))
+(cdr command)))))
+cmds))))))
 
 (defun anything-kyr-commands-by-major-mode ()
-  (assoc-default major-mode anything-kyr-commands-by-major-mode))
+(assoc-default major-mode anything-kyr-commands-by-major-mode))
 
 (defun anything-kyr ()
-  (interactive)
-  (anything 'anything-c-source-kyr))
+(interactive)
+(anything 'anything-c-source-kyr))
 
 ;;;; unit test
 ;; (install-elisp "http://www.emacswiki.org/cgi-bin/wiki/download/el-expectations.el")
 ;; (install-elisp "http://www.emacswiki.org/cgi-bin/wiki/download/el-mock.el")
 (dont-compile
-  (when (fboundp 'expectations)
-    (expectations
-      (desc "anything-kyr-commands-by-condition")
-      (expect '("find-file")
-        (let (anything-kyr-commands-by-major-mode
-              anything-kyr-commands-by-file-name
-              (anything-kyr-commands-by-condition
-               '(((eq t t) find-file)
-                 ((eq t nil) switch-to-buffer))))
-          (anything-kyr-candidates)))
-      (expect '("find-file")
-        (let (anything-kyr-commands-by-major-mode
-              anything-kyr-commands-by-file-name
-              (anything-kyr-commands-by-condition
-               '(((equal buffer-file-name "hoge") find-file)
-                 ((eq t nil) switch-to-buffer)))
-              (buffer-file-name "hoge"))
-          (anything-kyr-candidates)))
-      (desc "anything-kyr-commands-by-file-name")
-      (expect '("describe-variable" "describe-function")
-        (let (anything-kyr-commands-by-major-mode
-              anything-kyr-commands-by-condition
-              (anything-kyr-commands-by-file-name
-               '((".lisp$" describe-variable describe-function)))
-              (buffer-file-name "test.lisp"))
-          (anything-kyr-candidates)))
-      (desc "anything-kyr-commands-by-major-mode")
-      (expect '("gomoku")
-        (let (anything-kyr-commands-by-file-name
-              anything-kyr-commands-by-condition
-              (anything-kyr-commands-by-major-mode
-               '((lisp-mode gomoku)))
-              (major-mode 'lisp-mode))
-          (anything-kyr-candidates)))
-      (expect '("gomoku")
-        (let (anything-kyr-commands-by-file-name
-              anything-kyr-commands-by-condition
-              (anything-kyr-commands-by-major-mode
-               '(((lisp-mode perl-mode) gomoku)))
-              (major-mode 'lisp-mode))
-          (anything-kyr-candidates)))
-      (desc "condition / file-name / major-mode")
-      (expect '("find-file" "describe-variable" "describe-function" "gomoku")
-        (let ((anything-kyr-commands-by-file-name
-               '((".lisp$" describe-variable describe-function)))
-              (anything-kyr-commands-by-major-mode
-               '((lisp-mode gomoku)))
-              (anything-kyr-commands-by-condition
-               '(((eq t t) find-file)
-                 ((eq t nil) switch-to-buffer)))
-              (buffer-file-name "test.lisp")
-              (major-mode 'lisp-mode))
-          (anything-kyr-candidates)))
-      (desc "only commands are listed")
-      (expect '("find-file")
-        (let (anything-kyr-commands-by-major-mode
-              anything-kyr-commands-by-file-name
-              (anything-kyr-commands-by-condition
-               '((t find-file not-command))))
-          (anything-kyr-candidates)))
-      (desc "command with description")
-      (expect '("find-file" "switch-to-buffer \tBuffer Switch")
-        (let (anything-kyr-commands-by-major-mode
-              anything-kyr-commands-by-file-name
-              (anything-kyr-display-format "%s \t%s") 
-              (anything-kyr-commands-by-condition
-               '((t find-file (switch-to-buffer . "Buffer Switch")))))
-          (anything-kyr-candidates)))
-      )))
+(when (fboundp 'expectations)
+(expectations
+(desc "anything-kyr-commands-by-condition")
+(expect '("find-file")
+(let (anything-kyr-commands-by-major-mode
+anything-kyr-commands-by-file-name
+(anything-kyr-commands-by-condition
+'(((eq t t) find-file)
+((eq t nil) switch-to-buffer))))
+(anything-kyr-candidates)))
+(expect '("find-file")
+(let (anything-kyr-commands-by-major-mode
+anything-kyr-commands-by-file-name
+(anything-kyr-commands-by-condition
+'(((equal buffer-file-name "hoge") find-file)
+((eq t nil) switch-to-buffer)))
+(buffer-file-name "hoge"))
+(anything-kyr-candidates)))
+(desc "anything-kyr-commands-by-file-name")
+(expect '("describe-variable" "describe-function")
+(let (anything-kyr-commands-by-major-mode
+anything-kyr-commands-by-condition
+(anything-kyr-commands-by-file-name
+'((".lisp$" describe-variable describe-function)))
+(buffer-file-name "test.lisp"))
+(anything-kyr-candidates)))
+(desc "anything-kyr-commands-by-major-mode")
+(expect '("gomoku")
+(let (anything-kyr-commands-by-file-name
+anything-kyr-commands-by-condition
+(anything-kyr-commands-by-major-mode
+'((lisp-mode gomoku)))
+(major-mode 'lisp-mode))
+(anything-kyr-candidates)))
+(expect '("gomoku")
+(let (anything-kyr-commands-by-file-name
+anything-kyr-commands-by-condition
+(anything-kyr-commands-by-major-mode
+'(((lisp-mode perl-mode) gomoku)))
+(major-mode 'lisp-mode))
+(anything-kyr-candidates)))
+(desc "condition / file-name / major-mode")
+(expect '("find-file" "describe-variable" "describe-function" "gomoku")
+(let ((anything-kyr-commands-by-file-name
+'((".lisp$" describe-variable describe-function)))
+(anything-kyr-commands-by-major-mode
+'((lisp-mode gomoku)))
+(anything-kyr-commands-by-condition
+'(((eq t t) find-file)
+((eq t nil) switch-to-buffer)))
+(buffer-file-name "test.lisp")
+(major-mode 'lisp-mode))
+(anything-kyr-candidates)))
+(desc "only commands are listed")
+(expect '("find-file")
+(let (anything-kyr-commands-by-major-mode
+anything-kyr-commands-by-file-name
+(anything-kyr-commands-by-condition
+'((t find-file not-command))))
+(anything-kyr-candidates)))
+(desc "command with description")
+(expect '("find-file" "switch-to-buffer \tBuffer Switch")
+(let (anything-kyr-commands-by-major-mode
+anything-kyr-commands-by-file-name
+(anything-kyr-display-format "%s \t%s")
+(anything-kyr-commands-by-condition
+'((t find-file (switch-to-buffer . "Buffer Switch")))))
+(anything-kyr-candidates)))
+)))
 
 (provide 'anything-kyr)
 

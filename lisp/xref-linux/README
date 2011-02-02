@@ -1,0 +1,762 @@
+**********************************************************************
+*              Automatic installation under Unix                     *
+**********************************************************************
+
+In order to install Xrefactory on your machine just type:
+
+    sh ./xrefsetup
+
+This script will guide you  through the installation of Xrefactory and
+will introduce its main functions.
+
+If  you  like Xrefactory  and  you  are  super-user, you  can  install
+Xrefactory  into  system  directories  by running  'sh  ./xrefinstall'
+script.  This  will make  Xrefactory available for  all users  on this
+machine.   However,  this  script  does  not  guide  you  through  the
+Xrefactory features.
+
+**********************************************************************
+*         Manual installation for Emacs/XEmacs under Unix            *
+**********************************************************************
+
+In following text XREFDIR denotes the directory where you have untared
+the  Xrefactory  distribution (it  is  not  an environment  variable).
+Substitute this  directory for XREFDIR  in the following text  and put
+lines:
+
+	(setq exec-path (cons "XREFDIR" exec-path))
+	(setq load-path (cons "XREFDIR/emacs" load-path))
+	(load "xrefactory")
+
+  to your ~/.emacs file.
+
+It  is  done. It  is  highly recommended  that  you  work through  the
+tutorials     in     the     files     'XREFDIR/jexercise/Index.java',
+'XREFDIR/cexercise/index.c'  and  'XREFDIR/cppexercise/index.cpp'.  To
+start  the   tutorial  just  open  mentioned  files   and  follow  the
+instructions written there.
+
+Xrefactory uses  F3-F8 functional hot-keys.  It  is highly recommended
+that you keep this binding during the tutorials and initial evaluation
+of Xrefactory.  Later, you can redefine key bindings either by editing
+xrefactory.el file or by adding the line:
+
+    (defvar xref-key-binding 'none)
+
+to your  .emacs file  BEFORE loading of  "xrefactory" file.  This line
+prevents Xrefactory  from binding its  functions to hot  keys allowing
+you to define your own keys.
+
+
+**********************************************************************
+*                         .xrefrc option file                        *
+**********************************************************************
+
+Xrefactory supports  multiple projects.  Options for  all projects are
+maintained in a single  configuration file.  The default configuration
+file  name  is .xrefrc  ('_xrefrc'  under  MS-Windows).  This file  is
+usually placed in your home directory.
+
+Each  invocation of xref  reads the  .xrefrc configuration  file.  The
+file  contains xref  command  line switches  mainly specifying  source
+files,   include   directories   (    -I   option   ),   and   default
+macro-definitions   (  -D   option).   For   Java  it   also  contains
+informations about classpaths  (-classpath option), source paths, etc.
+For all types of project it  specifies where to store Tag files (-refs
+option).
+
+Beginners do  not need  to concern themselves  with the  .xrefrc file.
+From  (X)Emacs  you  can  manage   this  file  via  functions  in  the
+'Xref->Project'  menu.  These  functions enable  you to  manage simple
+projects without needing to manually edit the .xrefrc file.
+
+
+
+**********************************************************************
+*             Using recipe files from project built.                 *
+**********************************************************************
+
+
+For large and complex projects  it may be difficult to specify options
+like -D and -I common for  all files in the project. For example files
+from one subdirectory may use different include directories than other
+files. Xrefactory offers a possibility to specify command line options
+for each file separately.  You  can specify a "recipe" file containing
+file specific  options for each  single file of the  project.  Putting
+the  option -recipe  <recipefile> into  your project  will  cause that
+Xrefactory reads given recipe file  and is using file specific options
+in addition to general project options.
+
+Xrefactory offers  an automatic way  to generate recipe file  from the
+build of  your project.   If you build  your project using  the script
+'xref-recipe-make <file> <pars>' instead of the standard 'make <pars>'
+command,  than your  project  will  be build  and  all invocations  of
+compiler together with  used command line options will  be stored into
+the  <file>.   This  file is  directly  usable  as  a recipe  file  by
+Xrefactory.
+
+
+**********************************************************************
+*         Creating and Maintaining Cross Reference File              *
+**********************************************************************
+
+Creating and updating of Tags  is performed directly from the (X)Emacs
+editor. From the command line you can also create and update Tags with
+the xref  command and appropriate  options.  In order to  maintain Tag
+files your  .xrefrc file  needs to be  correctly set. For  example, in
+order to create a Tag file for the project "toto" type:
+
+    xref -p toto
+
+In order to update Tags for project "toto" type:
+
+    xref -update -p toto
+
+
+If you feel  that the generated cross-references are  not correct, you
+can  invoke  xref  with   '-debug'  or  '-errors'  options,  producing
+respectively  a full  trace of  the execution  and all  error messages
+produced during the parsing. If the '-nobrief' option is present, then
+the resulting Tag file also  contains informations in a human readable
+form.
+
+NOTE:  On-line editing macros  re-parse the  currently edited  file in
+order to  have fresh  references for  this file. There  is no  need to
+update  the   tag  file  "all   the  time"  while  editing   only  one
+file. However, on-line editing macros  do not save the new references,
+so you should refresh the Tag file when you finish editing each source
+file.
+
+
+**********************************************************************
+*        Creating and Maintaining HTML Documentation with xref       *
+**********************************************************************
+
+The easiest  way to create HTML from  all of the files  in the current
+directory is to type the command:
+
+  xref -html -htmlroot=${HOME}/HTML *.c *.cpp *.java
+
+Generating HTML in this way is best for small, simple projects.  Other
+available command line options are described in the xref manual page.
+
+
+    **************************************************************
+
+Using recipe.
+
+If you can build  your project using 'make' then it is  a good idea to
+create a 'recipe' file describing your project and to use this file to
+generate correct  documentation. You can  create a recipe  by invoking
+the  command 'xref-recipe-make'  instead of  the standard  'make'. The
+'xref-recipe-make' is a simple  shell wrapper building the project and
+memorizing compilation options into an Xrefactory recipe.
+
+For example, following suite of  commands will build and generate HTML
+documentation for xpdf project.
+
+    cd ~/xpdf-2.02pl1
+    make clean
+    xref-recipe-make /tmp/recipe
+    xref -html -htmlroot=${HOME}/HTML -recipe /tmp/recipe
+
+
+    **************************************************************
+
+Generating HTML repeatedly for the same project.
+
+For projects  where you generate  HTML repeatedly, you may  place your
+project  options into  the .xrefrc  file and  cross references  may be
+stored in  a separate "Tag" file.  You can then reuse  options and Tag
+file to update HTML form of your project.
+
+If  you  have created  your  .xrefrc  from  within (X)Emacs,  all  the
+necessary  options  should be  present.   For  more information  about
+format of .xrefrc file please see  the xrefrc manual page.  Here is an
+example defining a  project named 'toto'. The source  is stored in the
+directory ${HOME}/src/toto.
+
+-----------------------------------------------------
+[toto]
+
+  ${HOME}/src/toto              // directory containing sources
+
+  -refs=${HOME}/Xrefs/toto
+  -refalphahash
+  -htmlroot=${HOME}/HTML
+  -htmltab=4 
+
+-----------------------------------------------------
+
+After creating  the above .xrefrc file  you will need to  create a Tag
+file. This is done with the following command:
+
+  xref -p toto
+
+and then create HTML using the command:
+
+  xref -smartHtml -p toto
+
+This should  read all source  files and produce resulting  HTML forms.
+Output  files  are  stored  in  file  hierarchy  under  the  directory
+${HOME}/HTML.
+
+You can update  Tag files by re-parsing only  modified files using the
+-update option of xref.
+
+    xref -update -p toto
+
+
+**********************************************************************
+*                  Cross references in HTML format                   *
+**********************************************************************
+
+Generated HTML form contains  cross-references where each reference is
+represented  by file  name  and line  number  with additional  special
+informative characters.   A '+' character after the  line number means
+that the  corresponding line contains multiple references  of the same
+symbol.   Special  prefix  characters  designate  reference  types  as
+follows:
+
+ '*'  definition references,
+ '+'  declaration references,
+ '.'  address references (&x for example) and
+ ','  l-value references (x=1; for example).
+
+
+
+
+**********************************************************************
+*                  Using Xrefactory Editing Macros                   *
+**********************************************************************
+
+There  are macros  available for  manipulating .xrefrc  and  Tag files
+directly from  (X)Emacs.  They also  permit you to browse  source code
+interactively and provide access to several refactorings.  Intelligent
+code  completion is  also  available.  All  editing  functions can  be
+accessed through 'Xref' item of (X)Emacs's menu bar.  To get help on a
+particular function, type
+  "C-h k" 
+ (control h  and then k)  and then invoke  the menu item  in question.
+
+**********************************************************************
+*            Standard Xrefactory key-binding for Emacs/XEmacs        *
+**********************************************************************
+
+Xrefactory  key binding  under Emacs  can  be either  global (for  all
+modes) or local  (only under C and Java modes).   You can switch among
+those  possibilities  by setting  the  "xref-key-binding" variable  to
+'global or 'local before loading  "xrefactory" file.  You can also set
+this variable to  'none, in this case Xrefactory's  functions will not
+be bound to keys.
+
+Xrefactory's standard key binding is:
+
+F8      - Completion of identifiers. Info on symbols.
+F7      - Delete an xrefactory window.
+F6      - look for cross-references of the selected identifier, 
+          push those references onto stack,
+          and go to the definition.
+F5      - pop last cross-references pushed by F6, 
+          go to the position from where those references were pushed.
+F4      - go to the next reference of the top symbol pushed by F6.
+F3      - go to the previous reference of the top symbol pushed by F6.
+
+C-F8    - compile & run. Invoke last compilation and run of program.
+C-F7    - show symbol and references on the top of reference stack
+C-F6    - push and list references of the selected identifier
+C-F5    - repush lastly poped references
+C-F4    - move to the next reference of selected symbol, no pushing.
+          After a compilation move to the next error message.
+C-F3    - move to the previous reference of selected symbol, no pushing.
+          After a compilation move to the previous error message.
+
+Under  (X)Emacs xref  macros  can  also be  invoked  by selecting  the
+appropriate item from the 'Xref' menu on the menu bar.  Another way of
+invoking   an  Xrefactory   command  is   the  key   combination  
+  'M-x xref-<command_name>'.
+
+Xrefactory  may  display several  dialog  windows  while invoking  its
+functions. In those windows a  particular key bindings may be defined.
+Usually the '?' key displays  simple help information aboul local keys
+available.  In general you can  inspect the definition (or Javadoc) of
+any highlighted symbol using  the 'mouse1' or 'mouse2' buttons.  Also,
+'mouse3'   button    pops   up   a   menu    listing   all   available
+functions. Informations shown  in those windows may be  wider than the
+current window and  if so will be truncated.  If  this happens you can
+scroll those windows left and  right using Shift-left (Shift with left
+arrow) and Shift-right key combinations.
+
+Xrefactory also binds the 'Shift-mouse1' and 'Shift-mouse2' buttons to
+a function  parsing the file name  pointed to by the  mouse cursor and
+will open it.  It is useful  if you need to visit files mentioned (for
+example) in your compilation or run report.
+
+
+**********************************************************************
+*                         Smart Browsing Mode                        *
+**********************************************************************
+
+When you  wish to move  to the definition  of a symbol pointed  by the
+cursor, Xrefactory first  has to "resolve" the symbol.   It means that
+Xrefactory needs to know attributes  of the symbol such as whether the
+symbol is  a macro, a  method or  a field; it  needs to know  types of
+parameters for an  overloaded method, class where it  is defined, etc.
+There are two ways how Xrefactory can determine symbol attributes. The
+first way is  to parse the currently edited  buffer (together with all
+includes) and to get the  attributes during the parsing.  We call this
+way  a "standard  browsing  mode". The  second  way is  to scan  cross
+reference file and  to look for the reference  refering to the current
+cursor position.  Once having  the reference, the cross-reference file
+contains all  necessary informations to  determine the symbol  and its
+attributes.  This second way we call a "smart browsing mode".
+
+User can  freely switch between  both modes using  a menu item  in the
+main  Xrefactory  menu.   Both  browsing  modes  leads  to  equivalent
+resolution, they  differ only in time  performances. Standard browsing
+mode takes time proportional to the size of the edited file and to the
+size of included headers.  Smart browsing mode takes time proportional
+to  the size  of one  cross-reference file.   The smart  browsing mode
+requires that references  are up to date, so it  requires an update of
+references before the first browsing action.
+
+All in  all the Smart  browsing mode is particularly  advantageous for
+understanding large  projects which are not  under active development.
+In such  case, update  of references takes  zero time (project  is not
+modified) and scanning of references is very fast compared to the time
+required for parsing a buffer (especially in C++).
+
+
+
+**********************************************************************
+*                         Filtering References                       *
+**********************************************************************
+
+If you invoke a function producing  list of all usages of a symbol you
+will receive  a list of all  references of the  given symbol. Pressing
+numeric  keys  a filter  is  applied causing  that  only  some of  the
+references are  shown.  There  are 4 filter  levels available  for the
+moment.   Applied filters  differs depending  on the  type  of browsed
+symbol.
+
+For a variable (or field) the levels are:
+
+Level 3: only definition and declarations are shown. 
+Level 2: as level 3 plus l-value usages. 
+Level 1: as level 2 plus usages when address of the variable is got. 
+Level 0: all references. 
+
+If the browsed symbol is a type name (struct, enum, typedef ...)  then
+the filter levels are:
+
+Level 3: Only definitions and declarations are shown.
+Level 2: as level 3 plus  usages in the EXTENDS and IMPLEMENTS clauses
+         (meaningful only for Java)
+Level 1: as level 2  plus all usages  in the top level  scope (global
+         vars and function  definitions). This can be used  to see all
+         the functions working with a particular type.
+Level 0: all references are shown.
+
+The default is Level 0.
+
+
+**********************************************************************
+*                          Symbol resolution                         *
+**********************************************************************
+
+Xrefactory provides full  name  lookup when you   decide to  browse  a
+symbol. However, there may be situations when the symbol is ambiguous.
+This can happen, for example,  in the C language if   a macro body  is
+expanded in different contexts.  Ambiguity  is seen frequently in Java
+and C++ programs when using virtual methods.  In this case it is often
+undecidable which method will be invoked at run time.
+
+In both cases Xrefactory offers manual resolution of symbols. A dialog
+with  a  listing of  possible  symbols  appears.  The  dialog contains
+symbols    and  classes   where those     symbols   are defined    (or
+inherited). Each line of the list corresponds to a class of references
+which will   be optionally  pushed to  the  reference  stack.  You can
+select  the classes you wish  to browse using  either the middle mouse
+button or   the 'Ins'   key.  You  can   then push  all  the  selected
+references to the  top of the reference stack  (by  pressing return or
+through a popup menu).  In C  a symbol is  identified only by its name
+and category.  In Java and C++ a symbol is identified by its name, its
+profile and the class where it is defined (or used).
+
+For example let's take a simple program:
+
+ln 1: import java.awt.*;
+ln 2: class MyFrame extends Frame {
+ln 3:     public void fun() {
+ln 4:         addNotify();
+ln 5:         FileDialog fd = new FileDialog(this);
+ln 6:         fd.addNotify();
+ln 7:         Window x = new Window(this);
+ln 8:         x.addNotify();       // <- cursor on addNotify
+ln 9:     }
+ln10: }
+
+and imagine  that you browse the  addNotify symbol on the  line 8.  In
+this case Xrefactory displays the following screen:
+
+== addNotify()
+       -/-      *Component
+       -/-        +- *Container
++ >>   -/1            +- *Window
++      -/-                +- *Dialog
++      -/-                |   +- *FileDialog
++      -/-                +- *Frame
+       -/1                    +- MyFrame
+
+In  this screen  you can  see that  you are  browsing  the 'addNotify'
+method with no arguments.  Then  you see the classes where this symbol
+is defined and  used.  Numeric columns inform you  about the number of
+definition/usages indexed  in Tag file.   The classes are  ordered and
+indented, so  they form a  subtree of the inheritance  hierarchy.  The
+'+' in  the first column indicates the  currently selected application
+classes, you can  toggle between space and '+'  using the middle mouse
+button.  If  you now  finish the selection,  all references  where the
+addNotify() method  is applied to  the classes Window,  Frame, Dialog,
+and  FileDialog will  be pushed  on the  reference stack.   By default
+Xrefactory selects all classes that  may contain the definition of the
+invoked method (note that there  can be several functions invoked at a
+single place of code because of virtual methods).
+
+NOTE! The printed class hierarchy  is not exhaustive. It contains only
+references  which  were  loaded  when  your  sources  was  indexed  by
+Xrefactory.   It  will  not  contain  classes from  your  .jar  (.zip)
+archives, which  were not loaded during  the indexing! If  you wish to
+load a complete .jar archive you have to add it to the input files.
+
+FILTERING:  There  may be  methods  of the  same  name  which are  not
+displayed  on  default  screen.   You  can  access  those  symbols  by
+decreasing the filter level.  There are three filtering levels:
+
+Level 2: Shows symbols with the same name and profile as browsed symbol
+         and  applied on  a  class related  (via  inheritance) to  the
+         browsed symbol.
+Level 1: All Symbols with the same profile no depending on application
+         class are shown.
+Level 0: All symbols of the same name no matter the profile and class
+         are listed.
+
+
+
+**********************************************************************
+*                        Some Useful Hints                           *
+**********************************************************************
+
+1.) Program comments.
+
+       Important  references can  be lost  in  temporarily "commented"
+pieces   of  code.    In  order   to  avoid   this,  use   the  option
+-allowprogramcomments together with  so called 'program commentaries'.
+With  this  option,   Xrefactory  recognizes  three  special  'program
+commentary' lexems '/*&', '&*/' and '//&'.  When processing the source
+file those lexems  are ignored (meaning they do  not cause these parts
+of  the program  to  be seen  as  comments during  the parsing).   For
+example:
+
+        void fun(int i) {
+            //& printf("entering fun(%d)\n",i);
+            ...
+            /*& printf("leaving fun(%d)\n",i); &*/
+        }
+
+the  occurrences  of  the  variable  'i' in the 'printf' calls will be
+included into cross-references (and so renamed, ...), even  when  they
+are commented for standard compilers.
+
+    **************************************************************
+
+2.)   "Fast update" versus "Full Update" versus "Create".
+
+    Xrefactory offers you two ways to update the cross-reference file.
+The  fast update  ('-fastupdate' option)  will update  only references
+from input files modified since  the last fast update (or update).  In
+case  of C  programming  language,  the fast  update  does not  update
+references from header files (even  if header was modified).  The full
+update ('-update'  option) will process  all files modified  since the
+last full  update plus  all files depending  on modified  files.  Full
+update  proceeds also  references from  header files.   Usually source
+browsing does  not require a  full update.  However, before  a serious
+source modification  (for example before renaming a  global symbol) or
+when you need to  be sure to visit all usages of  a global symbol, you
+should do a full update of all cross-references.
+	After a large  number of Updates the Tag file  may become large as
+it contains  also few informations  which can't be removed  when based
+only  on partial  information about  project. This  happens  mainly to
+class  hierarchy informations  in  Java.  It  is  then recommended  to
+re-Create the Tag file from time  to time.  Also in case that you feel
+that your Tag file is not correct  (or if it is corrupted in some way)
+recreate the Tag file from scratch.
+
+
+    **************************************************************
+                         Hints for C/C++ users
+    **************************************************************
+
+
+3.) replace "#if 0" by "#if ZERO"
+	If you  are using the  '#if 0' command  to remove a piece  of code
+from the compilation, we strongly recommend to replace it by a command
+'#if ZERO', where  ZERO is an undefined macro.   You will then include
+the  '-DZERO' in  your '.xrefrc'  file.  In  this way  Xrefactory will
+process  these pieces of  code and  the references  will not  be lost.
+Operations  like renaming  will also  apply to  references  from those
+parts of code, what is what you need.
+
+    **************************************************************
+
+4.) reduce usage of "#else"
+    It is  recommended that you  refrain from using the  #else clause.
+The main reason  is that to correctly process  source containing #else
+you  need at  least two  passes. However,  if you  use  two consequent
+positive #ifs, and then a clever initial macro settings you can handle
+the  totality of code  within a  single pass  and save  a considerable
+amount of time.
+
+    **************************************************************
+
+5.) reduce usage of anonymous struct/union
+    It  is common  practice in  C  to use  anonymous struct/unions  in
+combination with typedef, for example defining an integerPair type as:
+
+  typedef struct {
+    int x,y;
+  } integerPair;
+
+However, Xrefactory uses the name of the structure (union) to identify
+and link together structure records  from different compilation units.
+In  the case  of  an  anonymous  structure,  Xrefactory generates   an
+internal name  based  on the position   (in the  source   code) of the
+definition.   In this   way    all references,  even    from different
+compilation units, which use the same definition  from the same header
+file can be linked together.  Unfortunately, if  you modify the header
+file  and  make  the  definition  occur at  a  different  position all
+existing  references to this structure  will be lost.  References will
+be lost until the next  "Full update  of Tag  file".  However, if  you
+name the  structure, Xrefactory  can use this  name  to link structure
+references together, so references will not be dependent upon position
+and will not need to be updated so often.   For this reason it is much
+more convenient to always name  structures, even if  you never use the
+name.  So continuing our example it would be better to write:
+
+  typedef struct integerPair {
+    int x,y;
+  } integerPair;
+
+    **************************************************************
+
+6.) Browsing programs with complex pre-processing constructions.
+      Xrefactory  contains an  integrated C  pre-processor and  has no
+problem browsing within CPP constructions. For example, let's take the
+situation:
+
+ 1: void panic(int retcode) { exit(retcode); }
+ 2:
+ 3: #define _set_ver(xxx) xxx
+ 4:
+ 5: #define panic _set_ver(panic)
+ 6:
+ 7: main() {
+ 8:   panic(1);
+ 9: }
+
+    Now, if you wish to find the 'panic' function called from the line
+8, you  position the cursor  on the 'panic'  symbol on the line  8 and
+call the  "push this symbol and goto  definition" Xrefactory function.
+The  cursor will  be moved  to the  line 5  on the  definition  of the
+'panic' macro.  Then you can move  the cursor on the invocation of the
+'_set_ver' on  the same line and  call the "push this  symbol and goto
+definition" function once more time.   The cursor will be moved to the
+definition  of the  '_set_ver' macro.   Here you  can see  that  it is
+directly the parameter of the '_set_ver' macro which is invoked as the
+function  you are  looking for.   However,  now, if  you position  the
+cursor on the 'xxx' symbol  and call Xrefactory, nothing will happened
+as 'xxx' is just a macro argument (its definition is on the same line)
+.   You need  to  go back  to the  line  5 (using  "pop symbol"),  and
+position  the cursor  on  the  'panic' symbol  inside  the macro  body
+(inside the '_set_ver(panic)' string)  and finally call the "push this
+symbol and goto definition" at this  symbol. This will move you to the
+definition of the 'panic' function (line 1).
+
+    **************************************************************
+
+7.) Symbol retrieval in header files.
+    Sometimes Xrefactory is unable to determine the type and origin of
+a symbol.   For example,  suppose that you  are editing a  header file
+'toto.h' containing the single line:
+
+  1: static int toto()  {return TOTO; }
+
+Further  suppose that  in all  your  source files  'toto.h' is  always
+included after  a header file defining  the 'TOTO' macro.   If you put
+the cursor  on the TOTO invocation  in the 'toto.h' file  and call the
+'push this symbol and goto definition' Xrefactory function, the cursor
+will not be moved to the definition of the TOTO macro. This is because
+TOTO is not  declared when 'toto.h' is processed.   To get around this
+problem  first call the  'Update Xref  TAG File'  function and  try to
+browse  the symbol TOTO  again.  It  should be  identified now  by its
+position.   If  this does  not  work use  the  'push  symbol by  name'
+function.  This  function will  look through all  the cross-references
+and report all symbols of the  given name. If neither this works (this
+may happen, for example, when  browsing only a part of identifier used
+in ## cpp  construction), you can use the  function "Search definition
+in tags" This function will  look through all the cross-references and
+will report all symbols containing the given string.
+
+
+    **************************************************************
+
+8.) Include <-> included relation browsing
+    You  can  inspect  the  file  included by  a  particular  #include
+directive by moving  the cursor on the 'include'  word and then invoke
+'push this symbol  and goto definition' action. If  you are interested
+in browsing all files including the given header file you can open the
+header file, go  to the beginning of the file  (beginning of the first
+line) and invoke  the 'push this symbol and  goto definition' function
+at this place.
+
+    **************************************************************
+
+9.) Setting up standard macros in .xrefrc file
+	If you are  working on a platform which is  not predefined, or you
+feel  that predefined  macros are  not correct,  you can  specify your
+whole environment  from scratch. Use  the option -undefineall  in your
+project  and then put  all compiler  predefined macros.   To determine
+predefined   macros  of   your   compiler  you   may   use  the   file
+misc/macros.cpp.  After  preprocessinf this  file you will  obtain the
+list of the  most common macros and their setting.  For example, on my
+linux machine, the command gcc -E -P misc/macros.cpp results in:
+-D__cplusplus=1
+-D__GNUC__=2
+-D__GNUC_MINOR__=96
+-D__GNUC_PATCHLEVEL__=0
+-Di386=1
+-D__i386=1
+-D__i386__=1
+-Dlinux=1
+-D__linux=1
+-D__STDC__=1
+-Dunix=1
+-D__unix=1
+-D__unix__=1
+
+
+
+
+
+
+
+
+**********************************************************************
+*                               TROUBLES                             *
+**********************************************************************
+----------------------------------------------------------------------
+You see a message of form:
+
+:[warning] main.c:160 ,can't open file tin.h
+
+This  means that  the directory  containing  the 'tin.h'  file is  not
+specified  in  your include  paths.   You  should  edit your  personal
+'~/.xrefrc' file and add there the
+
+    -I directory
+
+option, where directory is the directory containing the 'tin.h' file.
+
+----------------------------------------------------------------------
+While creating cross references of a file 'myfile.c' you see a message
+like:
+
+'myfile.c'
+:[warning] stdlib.h:32 ,     can't open file stddef.h
+
+meaning that  the file 'stddef.h',  included from the  standard header
+'stdlib.h', was not found. This  can occur when your compiler is using
+non standard include  directories. In this case you  have to determine
+which directory contains 'stdlib.h'  and add this directory, using the
+'-I' option,  into your '~/.xrefrc'  file.  In order to  determine the
+include  directory of your  compiler, you  can pre-process  your input
+file with your compiler and look for the place where the searched file
+was included, i.e. (following our example) type:
+
+    gcc -E myfile.c | grep "stddef.h"
+
+and you will obtain an output in the form:
+
+ #line 1 "/usr/lib/gcc-lib/i386-redhat-linux/2.7.2.3/include/stddef.h" 1 3
+
+Here you see the directory containing the file in question and you can
+now add the line:
+
+    -I /usr/lib/gcc-lib/i386-redhat-linux/2.7.2.3/include
+
+to your '.xrefrc' file.
+
+----------------------------------------------------------------------
+While calling code completion you receive the error message:
+
+    '[error] sorry, memory mbMemory overflowed over borne'
+
+The macro-body  memory overflowed. This  probably means that  you have
+invoked  the completion  inside  a macro  invocation  with no  closing
+parentheses. Just  put a closing parenthesis after  the macro argument
+and  call  the completion  again.  If this  does  not  work, read  the
+following item.
+
+
+----------------------------------------------------------------------
+You see a message like:
+
+    "[warning] cx_memory resizing required" 
+
+This happens  when the memory which stores  cross references overflows
+and  cannot be  resized  anymore.   If this  happens  when calling  an
+editing macro  you should probably put the  "-noincluderefs" option in
+your .xrefrc option file or to use "-mf<n>" command line option.
+
+
+
+----------------------------------------------------------------------
+
+
+**********************************************************************
+*                       SENDING A BUG REPORT                         *
+**********************************************************************
+
+If you have a  problem which you consider as a bug,  please write us a
+bug report on the  address vittek@xref-tech.com. The bug report should
+contain the specification of  the platform (for example: MS-Windows on
+i586; Linux  on i486;  Solaris on sun4;  alpha station, ...)   and the
+exact version  and build  date of Xrefactory  you are using.   You can
+obtain this  information by invoking  xref with '-version'  option. 
+
+
+**********************************************************************
+*                             PAYMENT INFO                           *
+**********************************************************************
+
+You can purchase  a permanent license for using  Xrefactory at our web
+site on the address http://www.xref-tech.com.
+
+
+**********************************************************************
+*                             ACKNOWLEDGMENT                         *
+**********************************************************************
+
+Many thanks to Ed Soniat, Paul  Ruben and Reuben Thomas for their help
+with  Xrefactory documentation.  Thanks also  to Jean-loup  Gailly and
+Mark Adler for their generous  license to use zlib library allowing us
+to read compressed .jar archives.
+
+
+
+
+
+
+
+
+
+

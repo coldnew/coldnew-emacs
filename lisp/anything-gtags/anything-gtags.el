@@ -145,175 +145,175 @@
 (require 'gtags nil t)
 
 (defgroup anything-gtags nil
-  "Gtags Anything interface"
-  :group 'anything)
+"Gtags Anything interface"
+:group 'anything)
 
 (defcustom anything-gtags-enable-initial-pattern nil
-  "*If non-nil, initial input of `anything-gtags-select' is current symbol."
-  :group 'anything-gtags
-  :type 'boolean)
+"*If non-nil, initial input of `anything-gtags-select' is current symbol."
+:group 'anything-gtags
+:type 'boolean)
 
 (defvar anything-c-source-gtags-select
-  '((name . "GTAGS")
-    (init
-     . (lambda ()
-         (call-process-shell-command
-          "global -c" nil (anything-candidate-buffer 'global))))
-    (candidates-in-buffer)
-    (action
-     ("Goto the location" . (lambda (candidate)
-                              (gtags-push-context)
-                              (gtags-goto-tag candidate "")))
-     ("Goto the location (other-window)" . (lambda (candidate)
-                                             (gtags-push-context)
-                                             (gtags-goto-tag candidate "" t)))
-     ("Move to the referenced point" . (lambda (candidate)
-                                         (gtags-push-context)
-                                         (gtags-goto-tag candidate "r"))))))
+'((name . "GTAGS")
+(init
+. (lambda ()
+(call-process-shell-command
+"global -c" nil (anything-candidate-buffer 'global))))
+(candidates-in-buffer)
+(action
+("Goto the location" . (lambda (candidate)
+(gtags-push-context)
+(gtags-goto-tag candidate "")))
+("Goto the location (other-window)" . (lambda (candidate)
+(gtags-push-context)
+(gtags-goto-tag candidate "" t)))
+("Move to the referenced point" . (lambda (candidate)
+(gtags-push-context)
+(gtags-goto-tag candidate "r"))))))
 
 ;; (setq anything-sources (list anything-c-source-gtags-select))
 
 (defun anything-gtags-select ()
-  "Tag jump using gtags and `anything'."
-  (interactive)
-  (let* ((initial-pattern (regexp-quote (or (thing-at-point 'symbol) ""))))
-    (anything '(anything-c-source-gtags-select)
-              (if anything-gtags-enable-initial-pattern initial-pattern)
-              "Find Tag: " nil)))
+"Tag jump using gtags and `anything'."
+(interactive)
+(let* ((initial-pattern (regexp-quote (or (thing-at-point 'symbol) ""))))
+(anything '(anything-c-source-gtags-select)
+(if anything-gtags-enable-initial-pattern initial-pattern)
+"Find Tag: " nil)))
 
 ;;;; `gtags-select-mode' replacement
 (defvar anything-gtags-hijack-gtags-select-mode t
-  "Use `anything' instead of `gtags-select-mode'.")
+"Use `anything' instead of `gtags-select-mode'.")
 (defcustom anything-gtags-classify nil
-  "*If non-nil, use separate source file by file.
+"*If non-nil, use separate source file by file.
 If it is t, enable classification and suppress file name output in candidates.
 If it is other symbol, display file name in candidates even if classification is enabled."
-  :group 'anything-gtags
-  :type '(choice boolean symbol))
+:group 'anything-gtags
+:type '(choice boolean symbol))
 (defvar aggs-base-source
-  '((candidates-in-buffer)
-    (get-line . aggs-candidate-display)
-    (display-to-real
-     . (lambda (c) (if (string-match "^ " c) (concat "_ " c) c)))
-    (action ("Goto the location" . aggs-select-it))))
+'((candidates-in-buffer)
+(get-line . aggs-candidate-display)
+(display-to-real
+. (lambda (c) (if (string-match "^ " c) (concat "_ " c) c)))
+(action ("Goto the location" . aggs-select-it))))
 (defvar aggs-buffer "*anything gtags select*")
 
 (defun aggs-candidate-display (s e)
-  (buffer-substring-no-properties (aggs-search-not-space-point s e) e))
+(buffer-substring-no-properties (aggs-search-not-space-point s e) e))
 
 (defun aggs-search-not-space-point (s e)
-  (save-excursion
-    (goto-char s)
-    (let ((space-point (search-forward " " e t)))
-      (if (and space-point (> (- space-point s) 16))
-          (- space-point 1) ; for buffer-substring
-        (+ s 16)))))
+(save-excursion
+(goto-char s)
+(let ((space-point (search-forward " " e t)))
+(if (and space-point (> (- space-point s) 16))
+(- space-point 1) ; for buffer-substring
+(+ s 16)))))
 
 (defun aggs-set-anything-current-position ()
-  (declare (special c-source-file))
-  ;; It's needed because `anything' saves
-  ;; *GTAGS SELECT* buffer's position,
-  (save-window-excursion
-    (switch-to-buffer c-source-file)
-    (setq anything-current-position (cons (point) (window-start)))))
+(declare (special c-source-file))
+;; It's needed because `anything' saves
+;; *GTAGS SELECT* buffer's position,
+(save-window-excursion
+(switch-to-buffer c-source-file)
+(setq anything-current-position (cons (point) (window-start)))))
 
 (defun ag-hijack-gtags-select-mode ()
-  ;; `save' C source file / `buffer': gtags-select-mode gtags-select-buffer
-  ;; They are defined at `gtags-goto-tag'.
-  (declare (special save buffer))
-  (let* ((c-source-file save)
-         (gtags-select-buffer buffer)
-         (anything-candidate-number-limit 9999)
-         (pwd (with-current-buffer gtags-select-buffer (expand-file-name default-directory)))
-         (basename (substring (with-current-buffer c-source-file buffer-file-name)
-                              (length pwd)))
-         (lineno (with-current-buffer c-source-file
-                   (save-restriction
-                     (widen)
-                     (line-number-at-pos))))
-         (sources (if anything-gtags-classify
-                      '(((name . "GTAGS SELECT meta source")
-                         (init . aggs-meta-source-init)))
-                    `(((name . "GTAGS SELECT")
-                       (init
-                        . (lambda ()
-                            (aggs-set-anything-current-position)
-                            (anything-candidate-buffer gtags-select-buffer)))
-                       ,@aggs-base-source))))
-         (aggs-buffer (concat "*anything gtags*"
-                              (substring (buffer-name gtags-select-buffer) 15))))
-    (with-current-buffer (get-buffer-create aggs-buffer)
-      (set (make-local-variable 'gtags-select-buffer) gtags-select-buffer)
-      (set (make-local-variable 'pwd) pwd))
-    (anything
-     sources
-     nil nil nil (format "\\(\\(%d\\) +%s\\)" lineno (regexp-quote basename))
-     aggs-buffer)))
+;; `save' C source file / `buffer': gtags-select-mode gtags-select-buffer
+;; They are defined at `gtags-goto-tag'.
+(declare (special save buffer))
+(let* ((c-source-file save)
+(gtags-select-buffer buffer)
+(anything-candidate-number-limit 9999)
+(pwd (with-current-buffer gtags-select-buffer (expand-file-name default-directory)))
+(basename (substring (with-current-buffer c-source-file buffer-file-name)
+(length pwd)))
+(lineno (with-current-buffer c-source-file
+(save-restriction
+(widen)
+(line-number-at-pos))))
+(sources (if anything-gtags-classify
+'(((name . "GTAGS SELECT meta source")
+(init . aggs-meta-source-init)))
+`(((name . "GTAGS SELECT")
+(init
+. (lambda ()
+(aggs-set-anything-current-position)
+(anything-candidate-buffer gtags-select-buffer)))
+,@aggs-base-source))))
+(aggs-buffer (concat "*anything gtags*"
+(substring (buffer-name gtags-select-buffer) 15))))
+(with-current-buffer (get-buffer-create aggs-buffer)
+(set (make-local-variable 'gtags-select-buffer) gtags-select-buffer)
+(set (make-local-variable 'pwd) pwd))
+(anything
+sources
+nil nil nil (format "\\(\\(%d\\) +%s\\)" lineno (regexp-quote basename))
+aggs-buffer)))
 
 (defun aggs-candidate-buffer-by-filename (filename)
-  (get-buffer-create (concat "*anything gtags*" filename)))
+(get-buffer-create (concat "*anything gtags*" filename)))
 (defun aggs-meta-source-init ()
-  (declare (special gtags-select-buffer))
-  (aggs-set-anything-current-position)
-  (with-current-buffer gtags-select-buffer
-    (goto-char (point-min))
-    (let (files prev-filename)
-      (loop while (re-search-forward " [0-9]+ \\([^ ]+\\) " (point-at-eol) t)
-            for filename = (match-string 1)
-            for bol = (point-at-bol)
-            for eol = (point-at-eol)
-            do
-            (with-current-buffer (aggs-candidate-buffer-by-filename filename)
-              (unless (equal prev-filename filename)
-                (setq files (cons filename files))
-                (erase-buffer))
-              (save-excursion (insert-buffer-substring gtags-select-buffer bol eol))
-              (goto-char (point-max))
-              (insert "\n"))
-            (forward-line 1)
-            (setq prev-filename filename))
-      (anything-set-sources
-       (loop for file in (nreverse files) collect
-             (append `((name . ,file)
-                       (init . (lambda ()
-                                 (anything-candidate-buffer
-                                  ,(aggs-candidate-buffer-by-filename file)))))
-                     aggs-base-source)))
-      (anything-funcall-foreach 'init))))
+(declare (special gtags-select-buffer))
+(aggs-set-anything-current-position)
+(with-current-buffer gtags-select-buffer
+(goto-char (point-min))
+(let (files prev-filename)
+(loop while (re-search-forward " [0-9]+ \\([^ ]+\\) " (point-at-eol) t)
+for filename = (match-string 1)
+for bol = (point-at-bol)
+for eol = (point-at-eol)
+do
+(with-current-buffer (aggs-candidate-buffer-by-filename filename)
+(unless (equal prev-filename filename)
+(setq files (cons filename files))
+(erase-buffer))
+(save-excursion (insert-buffer-substring gtags-select-buffer bol eol))
+(goto-char (point-max))
+(insert "\n"))
+(forward-line 1)
+(setq prev-filename filename))
+(anything-set-sources
+(loop for file in (nreverse files) collect
+(append `((name . ,file)
+(init . (lambda ()
+(anything-candidate-buffer
+,(aggs-candidate-buffer-by-filename file)))))
+aggs-base-source)))
+(anything-funcall-foreach 'init))))
 
 (defun aggs-select-it (candidate)
-  (with-temp-buffer
-    ;; `pwd' is defined at `ag-hijack-gtags-select-mode'.
-    (setq default-directory (buffer-local-value 'pwd (get-buffer anything-buffer)))
-    (insert candidate "\n")
-    (forward-line -1)
-    (gtags-select-it nil)
-    ;; TODO fboundp
-     (when (and anything-in-persistent-action
-               (fboundp 'anything-persistent-highlight-point))
-      (anything-persistent-highlight-point (point-at-bol) (point-at-eol)))))
+(with-temp-buffer
+;; `pwd' is defined at `ag-hijack-gtags-select-mode'.
+(setq default-directory (buffer-local-value 'pwd (get-buffer anything-buffer)))
+(insert candidate "\n")
+(forward-line -1)
+(gtags-select-it nil)
+;; TODO fboundp
+(when (and anything-in-persistent-action
+(fboundp 'anything-persistent-highlight-point))
+(anything-persistent-highlight-point (point-at-bol) (point-at-eol)))))
 
 (defun anything-gtags-resume ()
-  "Select previously selected anything gtags buffer."
-  (interactive)
-  (anything-resume nil "*anything  gtags* "))
+"Select previously selected anything gtags buffer."
+(interactive)
+(anything-resume nil "*anything  gtags* "))
 
 (defadvice switch-to-buffer (around anything-gtags activate)
-  "Use `anything' instead of `gtags-select-mode' when `anything-gtags-hijack-gtags-select-mode' is non-nil."
-  (unless (and anything-gtags-hijack-gtags-select-mode
-           (string-match "*GTAGS SELECT*"
-                         (if (bufferp (ad-get-arg 0))
-                             (buffer-name (ad-get-arg 0))
-                               (or (ad-get-arg 0) ""))))
-    ad-do-it))
-;; (progn (ad-disable-advice 'switch-to-buffer 'around 'anything-gtags) (ad-update 'switch-to-buffer)) 
+"Use `anything' instead of `gtags-select-mode' when `anything-gtags-hijack-gtags-select-mode' is non-nil."
+(unless (and anything-gtags-hijack-gtags-select-mode
+(string-match "*GTAGS SELECT*"
+(if (bufferp (ad-get-arg 0))
+(buffer-name (ad-get-arg 0))
+(or (ad-get-arg 0) ""))))
+ad-do-it))
+;; (progn (ad-disable-advice 'switch-to-buffer 'around 'anything-gtags) (ad-update 'switch-to-buffer))
 
 (defadvice gtags-select-mode (around anything-gtags activate)
-  "Use `anything' instead of `gtags-select-mode' when `anything-gtags-hijack-gtags-select-mode' is non-nil."
-  (if anything-gtags-hijack-gtags-select-mode
-      (ag-hijack-gtags-select-mode)
-    ad-do-it))
-;; (progn (ad-disable-advice 'gtags-select-mode 'around 'anything-gtags) (ad-update 'gtags-select-mode)) 
+"Use `anything' instead of `gtags-select-mode' when `anything-gtags-hijack-gtags-select-mode' is non-nil."
+(if anything-gtags-hijack-gtags-select-mode
+(ag-hijack-gtags-select-mode)
+ad-do-it))
+;; (progn (ad-disable-advice 'gtags-select-mode 'around 'anything-gtags) (ad-update 'gtags-select-mode))
 
 (provide 'anything-gtags)
 

@@ -57,29 +57,30 @@
 (require '033-w3m)			; W3m config
 (require '034-shell-pop)		; Popup terminal
 
-;;(require 'rc-cedet)
-;;(require 'rc-common-hook)
+
+
+(require 'rc-cedet)
+(require 'rc-common-hook)
 
 ;;(cond (emacs23-p
 ;;       (require 'rc-ecb)))
-;;(require 'rc-org-mode)
-;;(require 'rc-smartchr)
-;;(require 'rc-ielm-mode)
-;;(require 'rc-find-file)
-;;(require 'rc-ccmode-common)
-;; FIXME: 
-(require 'el-get)
-(require '997-el-get)			; emacs lisp manager
-;;(require '998-elpa)			; emacs lisp manager
-;;(require '999-keybinding)		; Global Keybindings, must in the last line.
+(require 'rc-org-mode)
+(require 'rc-smartchr)
+(require 'rc-ielm-mode)
+(require 'rc-find-file)
+(require 'rc-ccmode-common)
+;; FIXME:
+;;(require '997-el-get)			; emacs lisp manager
+(require '998-elpa)			; emacs lisp manager
+(require '999-keybinding)		; Global Keybindings, must in the last line.
 
 ;; Programming Language Configure Settings
-;;(require 'lang-c)			; C
-;;(require 'lang-cpp)			; C++
-;;(require 'lang-emacs-lisp)		; Emacs-Lisp
+(require 'lang-c)			; C
+(require 'lang-cpp)			; C++
+(require 'lang-emacs-lisp)		; Emacs-Lisp
 ;;(require 'lang-python)			; Python
 ;;(require 'lang-matlab)			; Matlab
-;;(require 'lang-newlisp)			; Newlisp
+(require 'lang-newlisp)			; Newlisp
 
 
 

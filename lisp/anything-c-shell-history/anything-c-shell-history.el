@@ -93,74 +93,74 @@
 (defvar anything-c-shell-history-file "~/.bash_history")
 
 (defun anything-c-shell-history-command()
-  "Make command"
-  (if (string-match "zsh_history" anything-c-shell-history-file)
-      (concat "cut -d ';' -f 2 " anything-c-shell-history-file)
-    (concat "less " anything-c-shell-history-file)))
+"Make command"
+(if (string-match "zsh_history" anything-c-shell-history-file)
+(concat "cut -d ';' -f 2 " anything-c-shell-history-file)
+(concat "less " anything-c-shell-history-file)))
 
 (defvar anything-c-source-shell-history
-  '((name . "Shell History")
-    (init
-     . (lambda ()
-         (call-process-shell-command
-          (anything-c-shell-history-command) nil (anything-candidate-buffer 'global))))
-    (candidates-in-buffer)
-    (search-from-end)
-    (action
-     ("Execute History" . (lambda (candidate)
-                            (save-excursion
-                              (message "wait....")
-                              (call-process-shell-command candidate nil (get-buffer-create "*Shell Command*"))
-                              (if (featurep 'shell-history)
-                                  (add-to-shell-history candidate))
-                              (switch-to-buffer "*Shell Command*")
-                              (message (delete-and-extract-region (point-min) (point-max)))
-                              (set-buffer-modified-p (buffer-modified-p))
-                              (kill-buffer "*Shell Command*"))))
-     ("Edit and Execute" . (lambda (candidate)
-                             (let ((command ""))
-                               (save-excursion
-                                 (setq command (read-from-minibuffer (concat "command:(" default-directory ") ") candidate))
-                                 (message "wait....")
-                                 (call-process-shell-command command nil (get-buffer-create "*Shell Command*"))
-                                 (if (featurep 'shell-history)
-                                     (add-to-shell-history command))
-                                 (switch-to-buffer "*Shell Command*")
-                                 (message (delete-and-extract-region (point-min) (point-max)))
-                                 (set-buffer-modified-p (buffer-modified-p))
-                                 (kill-buffer "*Shell Command*")))))
-     ("Execute History Asynchronous" . anything-c-shell-history-execute-history-async))))
+'((name . "Shell History")
+(init
+. (lambda ()
+(call-process-shell-command
+(anything-c-shell-history-command) nil (anything-candidate-buffer 'global))))
+(candidates-in-buffer)
+(search-from-end)
+(action
+("Execute History" . (lambda (candidate)
+(save-excursion
+(message "wait....")
+(call-process-shell-command candidate nil (get-buffer-create "*Shell Command*"))
+(if (featurep 'shell-history)
+(add-to-shell-history candidate))
+(switch-to-buffer "*Shell Command*")
+(message (delete-and-extract-region (point-min) (point-max)))
+(set-buffer-modified-p (buffer-modified-p))
+(kill-buffer "*Shell Command*"))))
+("Edit and Execute" . (lambda (candidate)
+(let ((command ""))
+(save-excursion
+(setq command (read-from-minibuffer (concat "command:(" default-directory ") ") candidate))
+(message "wait....")
+(call-process-shell-command command nil (get-buffer-create "*Shell Command*"))
+(if (featurep 'shell-history)
+(add-to-shell-history command))
+(switch-to-buffer "*Shell Command*")
+(message (delete-and-extract-region (point-min) (point-max)))
+(set-buffer-modified-p (buffer-modified-p))
+(kill-buffer "*Shell Command*")))))
+("Execute History Asynchronous" . anything-c-shell-history-execute-history-async))))
 
 (defun anything-c-shell-history-execute-history-async (candidate)
-  (anything-c-shell-history-async-do
-   :command candidate
-   :buffer-name "*Shell Command*"
-   :args nil
-   :callback (lambda ()
-               (kill-new (format "%s" (current-buffer)))
-               (run-with-timer ;; called after with-current-buffer... in `anything-c-shell-history-async-do'
-                0.1
-                nil
-                (switch-to-buffer (current-buffer))))))
+(anything-c-shell-history-async-do
+:command candidate
+:buffer-name "*Shell Command*"
+:args nil
+:callback (lambda ()
+(kill-new (format "%s" (current-buffer)))
+(run-with-timer ;; called after with-current-buffer... in `anything-c-shell-history-async-do'
+0.1
+nil
+(switch-to-buffer (current-buffer))))))
 
 (defun* anything-c-shell-history-async-do
-    (&key command args buffer-name
-          (callback 'identity)
-          (errorback (lambda() (message (buffer-string)))))
-  (lexical-let ((buf (get-buffer-create buffer-name))
-                (callback callback)
-                (errorback errorback))
-    (lexical-let
-      ((sentinel (lambda (proc event)
-         (cond ((and (string= event "finished\n")
-                     (= (process-exit-status proc) 0))
-                (with-current-buffer buf
-                  (funcall callback)))
-               ((and (string= event "finished\n")
-                     (/= (process-exit-status proc) 0))
-                (with-current-buffer buf
-                  (funcall errorback)))))))
-      (set-process-sentinel (apply 'start-process-shell-command command buf command args) sentinel))))
+(&key command args buffer-name
+(callback 'identity)
+(errorback (lambda() (message (buffer-string)))))
+(lexical-let ((buf (get-buffer-create buffer-name))
+(callback callback)
+(errorback errorback))
+(lexical-let
+((sentinel (lambda (proc event)
+(cond ((and (string= event "finished\n")
+(= (process-exit-status proc) 0))
+(with-current-buffer buf
+(funcall callback)))
+((and (string= event "finished\n")
+(/= (process-exit-status proc) 0))
+(with-current-buffer buf
+(funcall errorback)))))))
+(set-process-sentinel (apply 'start-process-shell-command command buf command args) sentinel))))
 
 (provide 'anything-c-shell-history)
 

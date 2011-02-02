@@ -1,0 +1,50 @@
+**********************************************************************
+*              Automatic installation under Unix                     *
+**********************************************************************
+
+In order to install Xrefactory on your machine just type:
+
+    sh ./xrefsetup
+
+This script will guide you  through the installation of Xrefactory and
+will introduce its main functions.
+
+If  you  like Xrefactory  and  you  are  super-user, you  can  install
+Xrefactory  into  system  directories  by running  'sh  ./xrefinstall'
+script.  This  will make  Xrefactory available for  all users  on this
+machine.   However,  this  script  does  not  guide  you  through  the
+Xrefactory features.
+
+**********************************************************************
+*         Manual installation for Emacs/XEmacs under Unix            *
+**********************************************************************
+
+In following text XREFDIR denotes the directory where you have untared
+the  Xrefactory  distribution (it  is  not  an environment  variable).
+Substitute this  directory for XREFDIR  in the following text  and put
+lines:
+
+	(setq exec-path (cons "XREFDIR" exec-path))
+	(setq load-path (cons "XREFDIR/emacs" load-path))
+	(load "xrefactory")
+
+  to your ~/.emacs file.
+
+It  is  done. It  is  highly recommended  that  you  work through  the
+tutorials     in     the     files     'XREFDIR/jexercise/Index.java',
+'XREFDIR/cexercise/index.c'  and  'XREFDIR/cppexercise/index.cpp'.  To
+start  the   tutorial  just  open  mentioned  files   and  follow  the
+instructions written there.
+
+Xrefactory uses  F3-F8 functional hot-keys.  It  is highly recommended
+that you keep this binding during the tutorials and initial evaluation
+of Xrefactory.  Later, you can redefine key bindings either by editing
+xrefactory.el file or by adding the line:
+
+    (defvar xref-key-binding 'none)
+
+to your  .emacs file  BEFORE loading of  "xrefactory" file.  This line
+prevents Xrefactory  from binding its  functions to hot  keys allowing
+you to define your own keys.
+
+

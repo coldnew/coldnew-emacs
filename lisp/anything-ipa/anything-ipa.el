@@ -74,49 +74,49 @@
 
 ;;;; file-local source
 (defvar anything-c-source-ipa
-  '((name . "In Place Annotations (Current Buffer)")
-    (candidates . anything-ipa-candidates)
-    (action . goto-char)
-    (migemo))
-  "`anything' source of ipa in current-buffer.")
+'((name . "In Place Annotations (Current Buffer)")
+(candidates . anything-ipa-candidates)
+(action . goto-char)
+(migemo))
+"`anything' source of ipa in current-buffer.")
 
 (defun anything-ipa-candidates ()
-  (save-excursion
-    (set-buffer anything-current-buffer)
-    (loop for (overlay . text) in ipa-annotations-in-buffer 
-          for pos = (overlay-start overlay)
-          for line = (progn (goto-char pos)
-                            (buffer-substring (point-at-bol) (point-at-eol)))
-          for lineno = (line-number-at-pos pos)
-          collect
-          (cons (format "%5d:[%s]%s"
-                        lineno (propertize text 'face ipa-annotation-face) line)
-                pos))))
+(save-excursion
+(set-buffer anything-current-buffer)
+(loop for (overlay . text) in ipa-annotations-in-buffer
+for pos = (overlay-start overlay)
+for line = (progn (goto-char pos)
+(buffer-substring (point-at-bol) (point-at-eol)))
+for lineno = (line-number-at-pos pos)
+collect
+(cons (format "%5d:[%s]%s"
+lineno (propertize text 'face ipa-annotation-face) line)
+pos))))
 
 (defun anything-ipa ()
-  "`anything' interface of ipa."
-  (interactive)
-  (anything 'anything-c-source-ipa))
+"`anything' interface of ipa."
+(interactive)
+(anything 'anything-c-source-ipa))
 
 ;;;; global source
 (defvar anything-c-source-ipa-global
-  '((name . "In Place Annotations (global)")
-    (init . (lambda () (anything-candidate-buffer (ipa-find-storage-file))))
-    (get-line . (lambda (s e) (unless (= s e) (cons (buffer-substring s e) s))))
-    (candidates-in-buffer)
-    (migemo)
-    (action ("Go To" . anything-ipa-go-to-annotation)))
-  "`anything' source of all IPAs.")
+'((name . "In Place Annotations (global)")
+(init . (lambda () (anything-candidate-buffer (ipa-find-storage-file))))
+(get-line . (lambda (s e) (unless (= s e) (cons (buffer-substring s e) s))))
+(candidates-in-buffer)
+(migemo)
+(action ("Go To" . anything-ipa-go-to-annotation)))
+"`anything' source of all IPAs.")
 
 (defun anything-ipa-go-to-annotation (pos)
-  (with-current-buffer (ipa-find-storage-file)
-    (goto-char pos)
-    (ipa-go-to-annotation)))
+(with-current-buffer (ipa-find-storage-file)
+(goto-char pos)
+(ipa-go-to-annotation)))
 
 (defun anything-ipa-global ()
-  "`anything' interface of ipa (global)."
-  (interactive)
-  (anything 'anything-c-source-ipa-global))
+"`anything' interface of ipa (global)."
+(interactive)
+(anything 'anything-c-source-ipa-global))
 
 (provide 'anything-ipa)
 

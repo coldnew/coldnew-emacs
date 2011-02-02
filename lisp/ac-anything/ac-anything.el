@@ -87,54 +87,54 @@
 (require 'pulldown nil t)               ;for latest version of auto-complete
 
 (when (require 'anything-show-completion nil t)
-  (use-anything-show-completion 'ac-complete-with-anything
-                                '(length (anything-attr 'ac-prefix))))
+(use-anything-show-completion 'ac-complete-with-anything
+'(length (anything-attr 'ac-prefix))))
 
 (defun ac-complete-with-anything ()
-  "Select auto-complete candidates by `anything'.
+"Select auto-complete candidates by `anything'.
 It is useful to narrow candidates."
-  (interactive)
-  (when ac-completing
-    (anything 'anything-c-source-auto-complete-candidates nil nil nil nil
-              "*anything auto-complete*")))
+(interactive)
+(when ac-completing
+(anything 'anything-c-source-auto-complete-candidates nil nil nil nil
+"*anything auto-complete*")))
 
 (defun anything-c-auto-complete-init ()
-  (anything-attrset 'ac-candidates ac-candidates)
-  (anything-attrset 'menu-width
-                    (if (fboundp 'pulldown-width)
-                        (pulldown-width ac-menu)
-                      (ac-menu-width ac-menu)))
-  (anything-attrset 'ac-prefix ac-prefix)
-  (ac-abort))
+(anything-attrset 'ac-candidates ac-candidates)
+(anything-attrset 'menu-width
+(if (fboundp 'pulldown-width)
+(pulldown-width ac-menu)
+(ac-menu-width ac-menu)))
+(anything-attrset 'ac-prefix ac-prefix)
+(ac-abort))
 
 (defun anything-c-auto-complete-action (string)
-  (delete-backward-char (length (anything-attr 'ac-prefix)))
-  (insert string)
-  (prog1 (let ((action (ac-get-candidate-property 'action string)))
-           (if action (funcall action)))
-    ;; for GC
-    (anything-attrset 'ac-candidates nil)))
+(delete-backward-char (length (anything-attr 'ac-prefix)))
+(insert string)
+(prog1 (let ((action (ac-get-candidate-property 'action string)))
+(if action (funcall action)))
+;; for GC
+(anything-attrset 'ac-candidates nil)))
 
 (defun anything-c-auto-complete-candidates ()
-  (loop for x in (anything-attr 'ac-candidates) collect
-        (cons
-         (anything-aif (ac-get-candidate-property 'action x)
-             (format "%s%s <%s>"
-                     x
-                     ;; padding
-                     (make-string (- (anything-attr 'menu-width) (length x)) ? )
-                     ;; action function name
-                     it)
-           x)
-         x)))
+(loop for x in (anything-attr 'ac-candidates) collect
+(cons
+(anything-aif (ac-get-candidate-property 'action x)
+(format "%s%s <%s>"
+x
+;; padding
+(make-string (- (anything-attr 'menu-width) (length x)) ? )
+;; action function name
+it)
+x)
+x)))
 
 (defvar anything-c-source-auto-complete-candidates
-  '((name . "Auto Complete")
-    (init . anything-c-auto-complete-init)
-    (candidates . anything-c-auto-complete-candidates)
-    (action . anything-c-auto-complete-action)
-    (ac-candidates)
-    (menu-width)))
+'((name . "Auto Complete")
+(init . anything-c-auto-complete-init)
+(candidates . anything-c-auto-complete-candidates)
+(action . anything-c-auto-complete-action)
+(ac-candidates)
+(menu-width)))
 
 (provide 'ac-anything)
 

@@ -31,7 +31,7 @@
 (require-maybe 'color-theme)			; Color-theme
 (require-maybe 'company)			; Another aoto-complete plugins
 (require-maybe 'completion-ui)			;
-(require-maybe 'csharp-mode)			; C# mode derived mode
+;;(require-maybe 'csharp-mode)			; C# mode derived mode
 (require-maybe 'ctagsfind)			;
 (require-maybe 'dabbrev)			;
 (require-maybe 'doxymacs)			; Doxygen for emacs

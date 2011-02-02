@@ -156,116 +156,116 @@
 (require 'anything)
 
 (when (require 'anything-show-completion nil t)
-  (use-anything-show-completion 'anything-dabbrev-expand
-                                '(length anything-dabbrev-last-target)))
+(use-anything-show-completion 'anything-dabbrev-expand
+'(length anything-dabbrev-last-target)))
 
 (defvar anything-dabbrev-map (copy-keymap anything-map)
-  "Keymap for `anything-dabbrev-expand'. It is based on `anything-map'.")
+"Keymap for `anything-dabbrev-expand'. It is based on `anything-map'.")
 (defvar anything-dabbrev-idle-delay 0.7
-  "*The user has to be idle for this many seconds, before
-  dabbrev candidates from all buffers are collected.")
+"*The user has to be idle for this many seconds, before
+dabbrev candidates from all buffers are collected.")
 (defvar anything-dabbrev-input-idle-delay anything-input-idle-delay)
 (defvar anything-dabbrev-all-min-length 4
-  "*Automatically collects candidates from all buffers when input is larger than this value.")
+"*Automatically collects candidates from all buffers when input is larger than this value.")
 (defvar anything--dabbrev-char-regexp "[a-zA-Z0-9?!_-]"
-  "Regexp of characters of dabbrev candidates. It is parsable by Ruby and Emacs.")
+"Regexp of characters of dabbrev candidates. It is parsable by Ruby and Emacs.")
 
 (defvar anything-dabbrev-last-target nil)
 (defvar anything-dabbrev-expand-candidate-number-limit 15
-  "*Do not show more candidates than this limit from dabbrev candidates.")
+"*Do not show more candidates than this limit from dabbrev candidates.")
 (defvar anything-dabbrev-candidates nil)
 (defvar anything-dabbrev-partial-candidates nil)
 (defvar anything-dabbrev-all-candidates nil)
 (defvar anything-dabbrev-candidate-inserted nil)
 (defvar anything-dabbrev-source
-  '((name . "dabbrev")
-    (init
-     . (lambda ()
-         (setq anything-dabbrev-candidates (anything-dabbrev-get-candidates abbrev))))
-    (candidates . anything-dabbrev-candidates)
-    (action . anything-dabbrev-insert-candidate)
-    (volatile)))
+'((name . "dabbrev")
+(init
+. (lambda ()
+(setq anything-dabbrev-candidates (anything-dabbrev-get-candidates abbrev))))
+(candidates . anything-dabbrev-candidates)
+(action . anything-dabbrev-insert-candidate)
+(volatile)))
 (defvar anything-dabbrev-partial-source
-  '((name . "dabbrev (partial match)")
-    ;;(candidates . anything-dabbrev-partial-candidates)
-    (init . anything-dabbrev-make-candidates--partial-match)
-    (candidates-in-buffer)
-    (action . anything-dabbrev-insert-candidate)))
+'((name . "dabbrev (partial match)")
+;;(candidates . anything-dabbrev-partial-candidates)
+(init . anything-dabbrev-make-candidates--partial-match)
+(candidates-in-buffer)
+(action . anything-dabbrev-insert-candidate)))
 
 (defvar anything-dabbrev-all-source-timer nil)
 (defvar anything-dabbrev-all-source
-  '((name . "dabbrev (all buffer)")
-    (init
-     . (lambda ()
-         (setq anything-dabbrev-all-candidates nil)
-         (setq anything-dabbrev-all-source-timer
-               (run-with-idle-timer
-                anything-dabbrev-idle-delay nil
-                (lambda ()
-                  (when (and (get-buffer-window anything-buffer)
-                             (>= (length anything-dabbrev-last-target) anything-dabbrev-all-min-length))
-                    (setq anything-dabbrev-all-candidates
-                          (anything-dabbrev-get-all-candidates anything-dabbrev-last-target))
-                    (anything-update)))))))
-    (cleanup . (lambda () (cancel-timer anything-dabbrev-all-source-timer)))
-    (candidates . anything-dabbrev-all-candidates)
-    (action . anything-dabbrev-insert-candidate)
-    (volatile)))
+'((name . "dabbrev (all buffer)")
+(init
+. (lambda ()
+(setq anything-dabbrev-all-candidates nil)
+(setq anything-dabbrev-all-source-timer
+(run-with-idle-timer
+anything-dabbrev-idle-delay nil
+(lambda ()
+(when (and (get-buffer-window anything-buffer)
+(>= (length anything-dabbrev-last-target) anything-dabbrev-all-min-length))
+(setq anything-dabbrev-all-candidates
+(anything-dabbrev-get-all-candidates anything-dabbrev-last-target))
+(anything-update)))))))
+(cleanup . (lambda () (cancel-timer anything-dabbrev-all-source-timer)))
+(candidates . anything-dabbrev-all-candidates)
+(action . anything-dabbrev-insert-candidate)
+(volatile)))
 (defvar anything-dabbrev-sources
-  '(anything-dabbrev-partial-source anything-dabbrev-all-source))
+'(anything-dabbrev-partial-source anything-dabbrev-all-source))
 
 (defun anything-dabbrev-insert-candidate (c)
-  (delete-backward-char (length anything-dabbrev-last-target))
-  (insert c)
-  (setq anything-dabbrev-candidate-inserted t))
+(delete-backward-char (length anything-dabbrev-last-target))
+(insert c)
+(setq anything-dabbrev-candidate-inserted t))
 
 ;; dabbrev strategies
 (defvar anything-dabbrev-expand-strategies
-  '(anything-dabbrev-expand--first-dabbrev
-    anything-dabbrev-expand--first-partial-dabbrev
-    anything-dabbrev-expand--anything)
-  "Strategy of `anything-dabbrev-expand'.
+'(anything-dabbrev-expand--first-dabbrev
+anything-dabbrev-expand--first-partial-dabbrev
+anything-dabbrev-expand--anything)
+"Strategy of `anything-dabbrev-expand'.
 If you prefer normal dabbrev, eval this sexp:
-  (setq anything-dabbrev-expand-strategies
-    '(anything-dabbrev-expand--first-dabbrev
-      anything-dabbrev-expand--anything))
+(setq anything-dabbrev-expand-strategies
+'(anything-dabbrev-expand--first-dabbrev
+anything-dabbrev-expand--anything))
 
 If you only use partial dabbrev, eval this sexp:
-  (setq anything-dabbrev-expand-strategies
-    '(anything-dabbrev-expand--first-partial-dabbrev
-      anything-dabbrev-expand--anything))
+(setq anything-dabbrev-expand-strategies
+'(anything-dabbrev-expand--first-partial-dabbrev
+anything-dabbrev-expand--anything))
 ")
 
 ;; strategy function must return nil on failure.
 (defun anything-dabbrev-expand--anything (target pt)
-  (let ((newstr (buffer-substring pt (point))))
-    (delete-region pt (point))
-    (insert anything-dabbrev-last-target)
-    (anything-dabbrev-expand-main target)))
+(let ((newstr (buffer-substring pt (point))))
+(delete-region pt (point))
+(insert anything-dabbrev-last-target)
+(anything-dabbrev-expand-main target)))
 
 (defun anything-dabbrev-expand--first-dabbrev (target pt)
-  (let* ((dabbrev-search-these-buffers-only (list (current-buffer)))
-         (abbrev (dabbrev--find-expansion target 0 dabbrev-case-fold-search)))
-    (when abbrev
-      (insert (substring abbrev (length target)))
-      t)))
+(let* ((dabbrev-search-these-buffers-only (list (current-buffer)))
+(abbrev (dabbrev--find-expansion target 0 dabbrev-case-fold-search)))
+(when abbrev
+(insert (substring abbrev (length target)))
+t)))
 (defun anything-dabbrev-expand--first-partial-dabbrev (target pt)
-  (let (sym)
-    (when
-        (save-excursion
-          (goto-char pt)
-          (and (re-search-backward
-                (format "%s*%s%s*"
-                        anything--dabbrev-char-regexp target anything--dabbrev-char-regexp)
-                nil t)
-               (symbol-at-point)))
-      (delete-region pt (point))
-      (insert (match-string 0))
-      (message "Partial match")
-      t)))
+(let (sym)
+(when
+(save-excursion
+(goto-char pt)
+(and (re-search-backward
+(format "%s*%s%s*"
+anything--dabbrev-char-regexp target anything--dabbrev-char-regexp)
+nil t)
+(symbol-at-point)))
+(delete-region pt (point))
+(insert (match-string 0))
+(message "Partial match")
+t)))
 
 (defun anything-dabbrev-expand ()
-  "The command does dynamic abbrev expansion for multiple selection using `anything'.
+"The command does dynamic abbrev expansion for multiple selection using `anything'.
 
 When you execute this command, it behaves as well as normal
 `dabbrev-expand'. It complements only one candidate.
@@ -275,90 +275,90 @@ It displays multiple selection using `anything'.
 
 The behavior is controlled by `anything-dabbrev-expand-strategies'.
 "
-  (interactive)
-  (dabbrev--reset-global-variables)
-  (setq anything-dabbrev-candidate-inserted nil)
-  (let* ((n (seq-times 'anything-dabbrev-expand
-                       (length anything-dabbrev-expand-strategies)))
-         (strategy (nthcdr n anything-dabbrev-expand-strategies)))
-    (when (zerop n)
-      (setq anything-dabbrev-last-target (dabbrev--abbrev-at-point)))
-    (run-hook-with-args-until-success
-     'strategy anything-dabbrev-last-target
-     (- seq-start-point (length anything-dabbrev-last-target)))))
+(interactive)
+(dabbrev--reset-global-variables)
+(setq anything-dabbrev-candidate-inserted nil)
+(let* ((n (seq-times 'anything-dabbrev-expand
+(length anything-dabbrev-expand-strategies)))
+(strategy (nthcdr n anything-dabbrev-expand-strategies)))
+(when (zerop n)
+(setq anything-dabbrev-last-target (dabbrev--abbrev-at-point)))
+(run-hook-with-args-until-success
+'strategy anything-dabbrev-last-target
+(- seq-start-point (length anything-dabbrev-last-target)))))
 
 (defun anything-dabbrev-get-candidates (abbrev &optional all)
-  (let ((dabbrev-check-other-buffers all))
-    (dabbrev--reset-global-variables)
-    (dabbrev--find-all-expansions abbrev nil)))
+(let ((dabbrev-check-other-buffers all))
+(dabbrev--reset-global-variables)
+(dabbrev--find-all-expansions abbrev nil)))
 
 (defun* anything-dabbrev-get-all-candidates (&optional (abbrev anything-dabbrev-last-target))
-  (anything-dabbrev-get-candidates abbrev t))
+(anything-dabbrev-get-candidates abbrev t))
 
 (defun anything-dabbrev-make-candidates--partial-match (&optional pattern)
-  "Collect all words matching pattern in the current buffer.
+"Collect all words matching pattern in the current buffer.
 It uses ruby because elisp is too slow."
-  (let ((buf (if (active-minibuffer-window)
-                 (window-buffer (minibuffer-selected-window))
-               (current-buffer))))
-    (with-current-buffer buf
-      (let ((wstart (window-start))
-            (wend (window-end))
-            (pt (point))
-            (pmin (point-min))
-            (pmax (point-max)))
-        (setq pattern (or pattern anything-dabbrev-last-target))
-        (anything-candidate-buffer 'global)
-        (with-temp-buffer
-          ;; In most cases, wanted partial dabbrev candidate is in visible window.
-          (insert-buffer-substring buf wstart pt) (insert "\0")
-          (insert-buffer-substring buf pt wend) (insert "\0")
-          (insert-buffer-substring buf pmin wstart) (insert "\0")
-          (insert-buffer-substring buf wend pmax)
-          (call-process-region
-           (point-min) (point-max) "ruby" nil (anything-candidate-buffer) nil
-           "-e"
-           (format
-            "def g(s) (s||'').scan(%%r%s%s*%s%s*%s); end
-             a=ARGF.read.split(/\\0/);
-             (g(a[0]).reverse.concat(g(a[1])).concat(g(a[2]).reverse).
-                concat(g(a[3])).uniq - %%w%s%s%s).each{|x| puts(x)}"
-            "\001" anything--dabbrev-char-regexp pattern anything--dabbrev-char-regexp "\001"
-            ;; remove pattern itself
-            "\001" pattern "\001")))))))
+(let ((buf (if (active-minibuffer-window)
+(window-buffer (minibuffer-selected-window))
+(current-buffer))))
+(with-current-buffer buf
+(let ((wstart (window-start))
+(wend (window-end))
+(pt (point))
+(pmin (point-min))
+(pmax (point-max)))
+(setq pattern (or pattern anything-dabbrev-last-target))
+(anything-candidate-buffer 'global)
+(with-temp-buffer
+;; In most cases, wanted partial dabbrev candidate is in visible window.
+(insert-buffer-substring buf wstart pt) (insert "\0")
+(insert-buffer-substring buf pt wend) (insert "\0")
+(insert-buffer-substring buf pmin wstart) (insert "\0")
+(insert-buffer-substring buf wend pmax)
+(call-process-region
+(point-min) (point-max) "ruby" nil (anything-candidate-buffer) nil
+"-e"
+(format
+"def g(s) (s||'').scan(%%r%s%s*%s%s*%s); end
+a=ARGF.read.split(/\\0/);
+(g(a[0]).reverse.concat(g(a[1])).concat(g(a[2]).reverse).
+concat(g(a[3])).uniq - %%w%s%s%s).each{|x| puts(x)}"
+"\001" anything--dabbrev-char-regexp pattern anything--dabbrev-char-regexp "\001"
+;; remove pattern itself
+"\001" pattern "\001")))))))
 
 (defun anything-dabbrev-expand-main (abbrev)
-  "Execute `anything' for dabbrev candidates in current buffer."
-  (let ((anything-candidate-number-limit anything-dabbrev-expand-candidate-number-limit)
-        (anything-input-idle-delay anything-dabbrev-input-idle-delay)
-        (anything-idle-delay anything-dabbrev-idle-delay)
-        (anything-sources anything-dabbrev-sources))
-    (let ((anything-map anything-dabbrev-map)
-          anything-samewindow)
-      (anything nil nil nil nil nil "*anything dabbrev*"))))
+"Execute `anything' for dabbrev candidates in current buffer."
+(let ((anything-candidate-number-limit anything-dabbrev-expand-candidate-number-limit)
+(anything-input-idle-delay anything-dabbrev-input-idle-delay)
+(anything-idle-delay anything-dabbrev-idle-delay)
+(anything-sources anything-dabbrev-sources))
+(let ((anything-map anything-dabbrev-map)
+anything-samewindow)
+(anything nil nil nil nil nil "*anything dabbrev*"))))
 
 (defun anything-dabbrev-find-all-buffers (&rest ignore)
-  "Display dabbrev candidates in all buffers."
-  (interactive)
-  (setq anything-dabbrev-all-candidates
-        (anything-dabbrev-get-all-candidates anything-dabbrev-last-target))
-  (anything-update))
+"Display dabbrev candidates in all buffers."
+(interactive)
+(setq anything-dabbrev-all-candidates
+(anything-dabbrev-get-all-candidates anything-dabbrev-last-target))
+(anything-update))
 
 ;;; from EmacsWiki (oddmuse-edit "EmacsWiki" "DoubleKeyBinding")
 (unless (fboundp 'seq-times)
-  (defvar seq-store-times 0)
-  (defvar seq-start-point 0
-    "Stores location of pointer when sequence of calls of the same
- function was started. This variable is updated by `seq-times'")
+(defvar seq-store-times 0)
+(defvar seq-start-point 0
+"Stores location of pointer when sequence of calls of the same
+function was started. This variable is updated by `seq-times'")
 
-  (defun seq-times (name &optional max)
-    "Returns number of times command `name' was executed. If `max'
- is specified the counter will wrap around at the value of `max'
- never reaching it. It also updates `seq-start-point'."
-    (if (eq last-command name)
-        (if (= (setq seq-store-times (1+ seq-store-times)) max)
-            (setq seq-store-times 0) seq-store-times)
-      (setq seq-start-point (point) seq-store-times 0))))
+(defun seq-times (name &optional max)
+"Returns number of times command `name' was executed. If `max'
+is specified the counter will wrap around at the value of `max'
+never reaching it. It also updates `seq-start-point'."
+(if (eq last-command name)
+(if (= (setq seq-store-times (1+ seq-store-times)) max)
+(setq seq-store-times 0) seq-store-times)
+(setq seq-start-point (point) seq-store-times 0))))
 
 (provide 'anything-dabbrev-expand)
 

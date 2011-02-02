@@ -1,4 +1,4 @@
-;;;; anything-menu.el --- anything.el candidate selection outside Emacs 
+;;;; anything-menu.el --- anything.el candidate selection outside Emacs
 ;; $Id: anything-menu.el,v 1.6 2010/04/01 12:10:35 rubikitch Exp $
 
 ;; Copyright (C) 2010  rubikitch
@@ -100,62 +100,62 @@
 (defvar anything-menu-version "$Id: anything-menu.el,v 1.6 2010/04/01 12:10:35 rubikitch Exp $")
 (require 'anything)
 (defgroup anything-menu nil
-  "anything-menu"
-  :group 'emacs)
+"anything-menu"
+:group 'emacs)
 
 (defvar am/tmp-file "/tmp/.am-tmp-file")
 (defvar am/frame nil)
 (defun am/set-frame ()
-  (unless (and am/frame (frame-live-p am/frame))
-    (setq am/frame (make-frame '((name . "anything menu")
-                                 (title . "anything menu")))))
-  (select-frame am/frame)
-  (make-frame-visible am/frame)
-  (sit-for 0))
+(unless (and am/frame (frame-live-p am/frame))
+(setq am/frame (make-frame '((name . "anything menu")
+(title . "anything menu")))))
+(select-frame am/frame)
+(make-frame-visible am/frame)
+(sit-for 0))
 
 (defun am/close-frame ()
-  (ignore-errors (make-frame-invisible am/frame))
-  (when (fboundp 'do-applescript)
-    (funcall 'do-applescript "tell application \"iTerm\"
-                                activate
-                             end")))
+(ignore-errors (make-frame-invisible am/frame))
+(when (fboundp 'do-applescript)
+(funcall 'do-applescript "tell application \"iTerm\"
+activate
+end")))
 (defun am/write-result (line)
-  (write-region (or line "") nil am/tmp-file))
+(write-region (or line "") nil am/tmp-file))
 
 (defun anything-menu (&optional any-sources any-input any-prompt any-resume any-preselect any-buffer any-keymap)
-  "Call `anything' outside Emacs.
+"Call `anything' outside Emacs.
 Arguments are the same as `anything'.
 Pop up anything frame and close it after session."
-  (interactive)
-  (am/set-frame)
-  (unwind-protect
-      (let ((anything-samewindow t)
-            (anything-display-function 'anything-default-display-buffer))
-        (anything any-sources any-input any-prompt any-resume any-preselect any-buffer any-keymap))
-    (am/close-frame)))
+(interactive)
+(am/set-frame)
+(unwind-protect
+(let ((anything-samewindow t)
+(anything-display-function 'anything-default-display-buffer))
+(anything any-sources any-input any-prompt any-resume any-preselect any-buffer any-keymap))
+(am/close-frame)))
 
 (defun anything-menu-select (am-prompt &rest am-selections)
-  "Select from a list AM-SELECTIONS and write selection to /tmp/.am-tmp-file,
+"Select from a list AM-SELECTIONS and write selection to /tmp/.am-tmp-file,
 the default file of `am/tmp-file'. "
-  (anything-menu `(((name . ,am-prompt)
-                    (candidates . am-selections)
-                    (migemo)
-                    (action . am/write-result)))
-                 nil (concat am-prompt ": ") nil nil "*anything menu select*"))
+(anything-menu `(((name . ,am-prompt)
+(candidates . am-selections)
+(migemo)
+(action . am/write-result)))
+nil (concat am-prompt ": ") nil nil "*anything menu select*"))
 
 (defun* anything-menu-select-from-file (am-filename &optional (am-prompt "selection"))
-  "Select a candidate in file AM-FILENAME and write selection to /tmp/.am-tmp-file,
+"Select a candidate in file AM-FILENAME and write selection to /tmp/.am-tmp-file,
 the default file of `am/tmp-file'.
 
 The anything-menu script calls this function and print selection to stdout."
-  (anything-menu `(((name . ,am-prompt)
-                    (init . (lambda ()
-                              (with-current-buffer (anything-candidate-buffer 'global)
-                                (insert-file-contents am-filename))))
-                    (candidates-in-buffer)
-                    (migemo)
-                    (action . am/write-result)))
-                 nil (concat am-prompt ": ") nil nil "*anything menu select*"))
+(anything-menu `(((name . ,am-prompt)
+(init . (lambda ()
+(with-current-buffer (anything-candidate-buffer 'global)
+(insert-file-contents am-filename))))
+(candidates-in-buffer)
+(migemo)
+(action . am/write-result)))
+nil (concat am-prompt ": ") nil nil "*anything menu select*"))
 
 (provide 'anything-menu)
 

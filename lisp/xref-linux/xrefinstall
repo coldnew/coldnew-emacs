@@ -1,0 +1,95 @@
+#!/bin/sh
+XREFBINPATH=/usr/bin
+XREFLIBPATH=/usr/lib
+XREFMANPATH=/usr/share/man
+#
+PPWD=`pwd`
+if test -f xref -a -f xrefsetup -a -d emacs
+then
+	echo
+else
+	echo
+	echo "You have to run this script from the Xrefactory distribution"
+	echo "directory. Please go there and type 'sh ./xrefinstall'"
+	echo
+	exit
+fi
+echo
+echo " ------------- Xref system installation script ---------------------"
+echo
+echo
+echo "************************************************************************"
+echo "This script creates symbolic links in following system directories of"
+echo "your computer:"
+echo "binaries:         " ${XREFBINPATH}
+echo "man pages:        " ${XREFMANPATH}
+echo "editors lib dirs: " ${XREFLIBPATH}
+echo "Those links will point to files of the"
+echo "'${PPWD}' directory."
+echo "You must be super-user to do this. Equally the"
+echo "'${PPWD}' directory must be the"
+echo "final place where the Xrefactory installation will be stored. Users"
+echo "then can use Xrefactory without further initializations."
+echo "NOTE: You do not need to install Xrefactory into system directories in"
+echo "order to use it. For this you can simply run the xrefsetup script."
+echo "Installation just permits to other users to use it without need"
+echo "of having their own copy."
+echo "************************************************************************"
+echo
+echo -n "Can I continue the installation (y/n)? "
+read aaa
+if test ${aaa} = "y" -o ${aaa} = "Y"
+then
+	cd ${PPWD}
+# Link binary and man files to system directories
+	ln -sf ${PPWD}/xref ${XREFBINPATH}/xref
+	ln -sf ${PPWD}/xref-recipe-make ${XREFBINPATH}/xref-recipe-make
+	ln -sf ${PPWD}/xref-recipe-make-compiler-wrappers ${XREFBINPATH}/xref-recipe-make-compiler-wrappers
+	ln -sf ${PPWD}/xref-recipe-build ${XREFBINPATH}/xref-recipe-build
+	ln -sf ${PPWD}/xref-recipe-build-compiler-wrappers ${XREFBINPATH}/xref-recipe-build-compiler-wrappers
+	ln -sf ${PPWD}/xref.man ${XREFMANPATH}/man1/xref.1
+	ln -sf ${PPWD}/xrefrc.man ${XREFMANPATH}/man5/xrefrc.5
+# Link emacs files to system directories
+	cd ${PPWD}/emacs
+	if test ! -d ${XREFLIBPATH}/emacs
+	then
+		mkdir ${XREFLIBPATH}/emacs
+	fi
+	if test ! -d ${XREFLIBPATH}/emacs/site-lisp
+	then
+		mkdir ${XREFLIBPATH}/emacs/site-lisp
+	fi
+	ln -sf ${PPWD}/emacs/xref.el ${XREFLIBPATH}/emacs/site-lisp/xref.el
+	ln -sf ${PPWD}/emacs/xrefactory.el ${XREFLIBPATH}/emacs/site-lisp/xrefactory.el
+	ln -sf ${PPWD}/emacs/xrefdoc.el ${XREFLIBPATH}/emacs/site-lisp/xrefdoc.el
+	ln -sf ${PPWD}/emacs/xrefprotocol.el ${XREFLIBPATH}/emacs/site-lisp/xrefprotocol.el
+# Link xemacs files to system directories
+	if test ! -d ${XREFLIBPATH}/xemacs
+	then
+		mkdir ${XREFLIBPATH}/xemacs
+	fi
+	if test ! -d ${XREFLIBPATH}/xemacs/site-lisp
+	then
+		mkdir ${XREFLIBPATH}/xemacs/site-lisp
+	fi
+	ln -sf ${PPWD}/xemacs/xref.el ${XREFLIBPATH}/xemacs/site-lisp/xref.el
+	ln -sf ${PPWD}/xemacs/xrefactory.el ${XREFLIBPATH}/xemacs/site-lisp/xrefactory.el
+	ln -sf ${PPWD}/emacs/xrefdoc.el ${XREFLIBPATH}/emacs/site-lisp/xrefdoc.el
+	ln -sf ${PPWD}/emacs/xrefprotocol.el ${XREFLIBPATH}/emacs/site-lisp/xrefprotocol.el
+echo
+echo "************************************************************************"
+echo "Users at your system can now use Xrefactory."
+echo "************************************************************************"
+echo
+echo "Done. You should now run the '/usr/sbin/makewhatis' command to update"
+echo "your whatis manual database."
+fi
+
+
+
+
+
+
+
+
+
