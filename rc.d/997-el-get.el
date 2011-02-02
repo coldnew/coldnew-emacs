@@ -1,5 +1,7 @@
 ;;
-
+(setq el-get-dir "~/.emacs.d/lisp/")
+(add-to-list 'el-get-recipe-path "~/.emacs.d/etc/recipes")
+(add-to-list 'load-path "~/.emacs.d/etc/recipes/")
 (defalias 'install 'el-get-install)
 (defalias 'remove  'el-get-remove)
 (setq el-get-sources
@@ -185,19 +187,15 @@
 	       :url "http://nschum.de/src/emacs/async-eval/async-eval.el")
 	(:name unicad
 	       :type emacswiki)
-	(:name quack
-	       :type http
-	       :url "http://www.neilvandyke.org/quack/quack.el")
-	(:name htmlize
-	       :type http
-	       :url "http://fly.srk.fer.hr/~hniksic/emacs/htmlize.el")
 	(:name gobject-class
 	       :type http
 	       :url "http://blog.gustavobarbieri.com.br/old-website/gobject-class.el")
-	(:name csharp-mode
-	       :type emacswiki)
-	(:name gnugo
-	       :type emacswiki)
+	csharp-mode
+	gnugo
+	htmlize
+	quack
+	;; (:name gnugo
+	;;        :type emacswiki)
 	;;elscreen
 	;;auctex
 	;;color-theme			;
@@ -206,10 +204,12 @@
 	;; emacs-w3m
 	))
 
+(el-get 'sync)
+(el-get 'wait)
 
 ;; BUG: After load this file, I can't use lusty-explorer, so rebind keymap
-(vim:nmap (kbd "C-x C-f") 'find-file)
-(vim:imap (kbd "C-x C-f") 'find-file)
+;;(vim:nmap (kbd "C-x C-f") 'find-file)
+;;(vim:imap (kbd "C-x C-f") 'find-file)
 
 
 

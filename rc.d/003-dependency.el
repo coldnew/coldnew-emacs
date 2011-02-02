@@ -31,7 +31,7 @@
 (require-maybe 'color-theme)			; Color-theme
 (require-maybe 'company)			; Another aoto-complete plugins
 (require-maybe 'completion-ui)			;
-(require-maybe 'csharp-mode)			; C# mode derived mode
+;;(require-maybe 'csharp-mode)			; C# mode derived mode
 (require-maybe 'ctagsfind)			;
 (require-maybe 'dabbrev)			;
 (require-maybe 'doxymacs)			; Doxygen for emacs
@@ -87,7 +87,7 @@
 (require-maybe 'x-dnd)				; Drag and drop support for X
 (require-maybe 'xcscope)			; Cscope interface for Emacs
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
-
+(require-maybe 'recentf)
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab
 ;;(require-maybe 'pymacs)			; Pymacs

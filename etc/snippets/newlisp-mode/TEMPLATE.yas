@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: Template 
-# key: TEMPLATE
-# binding:
-# expand-env:
-# type: 
-# --
-#!/usr/bin/env newlisp
-$0
