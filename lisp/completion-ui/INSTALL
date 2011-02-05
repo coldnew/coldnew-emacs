@@ -1,0 +1,49 @@
+
+Obtaining
+---------
+
+The current version of the completion-ui package can be obtained from:
+
+  http://www.dr-qubit.org/emacs.php
+
+Developed and maintained by Toby Cubitt (toby-predictive@dr-qubit.org).
+
+
+
+
+Installing
+----------
+
+To install the package, extract the files using
+
+  tar -xvzf completion-ui.tar.gz
+
+This will unpack the files into a new directory called
+completion-ui/. Now byte-compile all the Lisp files and create the
+required dictionaries by running
+
+  make
+
+in the completion-ui/ directory. If necessary, you can specify explicitly
+where your Emacs resides with
+
+  make EMACS=/path/to/emacs
+
+Alternatively, if you cannot use the "make" utility, you can byte-compile
+the Lisp files manually from within Emacs using `byte-compile-file' or
+one of the other Emacs byte-compilation commands (see The Compilation
+Functions, GNU Emacs Lisp Reference Manual). Personally, I like to use
+`dired' when byte-compiling multiple files from within Emacs. (See
+Operating on Files, GNU Emacs manual.)
+
+Now copy the package files to a directory in your Emacs `load-path'
+(you can view the current `load-path' from within Emacs using
+"C-h v load-path").
+
+Finally, add the following line to your .emacs file:
+
+  (require 'completion-ui)
+
+See the commentary at the top of the "completion-ui.el" file for an
+overview of how to use it, or browse the `completion-ui' customization
+group to discover the myriad customization options.

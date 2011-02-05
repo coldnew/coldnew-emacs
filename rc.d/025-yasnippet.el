@@ -1,6 +1,9 @@
 
 (eval-when-compile (require 'cl))
 
+(add-to-list 'auto-mode-alist '("\\.yasnippet\\'" . snippet-mode))
+(add-to-list 'auto-mode-alist '("\\.yas\\'" . snippet-mode))
+
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/etc/snippets")
 (setq yas/prompt-functions '(yas/dropdown-prompt

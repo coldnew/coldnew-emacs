@@ -1,7 +1,7 @@
 
 ;; Normal Map
 (vim:nmap (kbd "<f1>") 'woman)
-(vim:nmap (kbd "<f3>") 'shell-pop)
+(vim:nmap (kbd "<f4>") 'shell-pop)
 (vim:nmap (kbd "C-r") 'undo-tree-redo)
 (vim:nmap (kbd "C-x C-b") 'ibuffer)
 (vim:nmap (kbd "K") 'woman)

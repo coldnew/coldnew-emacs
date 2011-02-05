@@ -20,9 +20,10 @@
 	  '(lambda ()
 	     (vim:local-nmap (kbd "C-p") 'term-send-up)
 	     (vim:local-nmap (kbd "C-n") 'term-send-down)
-	     (vim:local-imap (kbd "<f3>") 'shell-pop)
+	     (vim:local-imap (kbd "<f4>") 'shell-pop)
 	     (vim:local-imap (kbd "RET") 'term-send-raw)
 	     ))
+
 
 (provide '034-terminal)
 ;; 034-terminal.el ends here.

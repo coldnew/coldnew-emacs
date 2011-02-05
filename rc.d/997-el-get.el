@@ -77,6 +77,17 @@
 	       :type emacswiki)
 	(:name rcirc-controls
 	       :type emacswiki)
+	(:name redo+
+	       :type emacswiki)
+	(:name rw-hunspell
+	       :type http
+	       :url "http://www.mail-archive.com/gnu-emacs-sources@gnu.org/msg01709/rw-hunspell.el")
+	(:name rw-ispell
+	       :type http
+	       :url "http://www.mail-archive.com/gnu-emacs-sources@gnu.org/msg01709/rw-ispell.el")
+	(:name rw-language-and-country-codes
+	       :type http
+	       :url "http://www.mail-archive.com/gnu-emacs-sources@gnu.org/msg01709/rw-language-and-country-codes.el")
 	;;elscreen
 	;;auctex
 	;;color-theme			;

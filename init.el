@@ -61,6 +61,7 @@
 (require '035-rcirc)			; IRC Client Setting
 (require '036-midnight)			;
 (require '037-ipa)			; In-place annotations
+(require '038-flyspell)			; on-the-fly spell checker
 
 
 
