@@ -7,3 +7,6 @@
 [submodule "lisp/smartchr"]
 	path = lisp/smartchr
 	url = https://github.com/imakado/emacs-smartchr.git
+[submodule "lisp/xcode-document-viewer"]
+	path = lisp/xcode-document-viewer
+	url = https://github.com/imakado/emacs-xcode-document-viewer.git
