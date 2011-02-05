@@ -58,7 +58,7 @@
 (require '032-anything)			; Complete anything
 (require '033-w3m)			; W3m config
 (require '034-terminal)			; Terminal Settings
-
+(require '035-rcirc)			; IRC Client Setting
 (require '036-midnight)			;
 (require '037-ipa)			; In-place annotations
 

@@ -77,6 +77,7 @@
 (require-maybe 'qmake-mode)			; qmake mode for emacs
 (require-maybe 'quack)				; enhanced support for editing and running Scheme code
 (require-maybe 'rainbow-mode)			; Color the emacs buffer
+(require-maybe 'rcirc)				;
 (require-maybe 'recentf)			;
 (require-maybe 'recentf)			;
 (require-maybe 'recentf)			; Setup a menu of recently opened files
@@ -101,6 +102,8 @@
 (require-maybe 'xcscope)			; Cscope interface for Emacs
 (require-maybe 'xcscope+)			; Providing an extension to xcscope
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
+(require-maybe 'rcirc-color)			; color rcirc nicks
+(require-maybe 'rcirc-controls)			; color rcirc control sequences
 
 
 

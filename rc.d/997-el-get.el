@@ -72,6 +72,11 @@
 
 	(:name xcscope+
 	       :type emacswiki)
+
+	(:name rcirc-color
+	       :type emacswiki)
+	(:name rcirc-controls
+	       :type emacswiki)
 	;;elscreen
 	;;auctex
 	;;color-theme			;
