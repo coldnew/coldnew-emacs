@@ -5,6 +5,7 @@
 (require-maybe 'ac-anything)			; Auto Complete with Anything
 (require-maybe 'ac-company)			; Auto-Complete with company-mode
 (require-maybe 'advice)				;
+(require-maybe 'ansi-color)			;
 (require-maybe 'anything)			;
 (require-maybe 'anything-c-shell-history)	; shell history anything.el interface
 (require-maybe 'anything-complete)		;
@@ -28,20 +29,25 @@
 (require-maybe 'auto-complete-etags)		;
 (require-maybe 'auto-complete-extension)	;
 (require-maybe 'c-eldoc)			;
+(require-maybe 'cc-mode)			;
 (require-maybe 'cedet)				;
 (require-maybe 'cflow-mode)			; major mode for viewing cflow output files
+(require-maybe 'cl)				;
 (require-maybe 'color-theme)			; Color-theme
 (require-maybe 'company)			; Another aoto-complete plugins
 (require-maybe 'completion-ui)			;
 (require-maybe 'csharp-mode)			; C# mode derived mode
 (require-maybe 'ctagsfind)			;
+(require-maybe 'ctypes)				;
 (require-maybe 'dabbrev)			;
+(require-maybe 'desktop)			;
 (require-maybe 'doxymacs)			; Doxygen for emacs
 (require-maybe 'dropdown-list)			;
 (require-maybe 'el-get)				; Emacs-Lisp Manager
 (require-maybe 'eldoc)				; Emacs-Lisp Documents Browser
 (require-maybe 'eldoc-extension)		; Emacs-Lisp Documents Browser Extension
 (require-maybe 'emms)				; Emacs Multimedia System
+(require-maybe 'etags)				;
 (require-maybe 'find-file)			;
 (require-maybe 'gccsense)			; GCC's code analyzers
 (require-maybe 'gnugo)				; Run GNU Go in a buffer
@@ -55,6 +61,7 @@
 (require-maybe 'ibuffer)			; iBuffer
 (require-maybe 'info)				;
 (require-maybe 'ipa)				; In-place annotations
+(require-maybe 'linum)				;
 (require-maybe 'lusty-explorer)			; A good explorer tools
 (require-maybe 'magit)				;
 (require-maybe 'midnight)			; Use midnight-mode to auto-clean buffers
@@ -67,16 +74,15 @@
 (require-maybe 'pp)				; pretty printer for Emacs Lisp
 (require-maybe 'ppindent)			;
 (require-maybe 'pretty-lambdada)		; Show lambda in smbol
-;;(require-maybe 'protbuf)			; Protect buffers from accidental killing
 (require-maybe 'python)				; Python
 (require-maybe 'qmake-mode)			;
 (require-maybe 'quack)				; enhanced support for editing and running Scheme code
 (require-maybe 'rainbow-mode)			; Color the emacs buffer
 (require-maybe 'recentf)			;
+(require-maybe 'recentf)			;
 (require-maybe 'recentf)			; Setup a menu of recently opened files
 (require-maybe 'session)			; Use Session to save current positions
 (require-maybe 'shell-pop)			; Helps you pop up and pop out shell buffer easily
-(require-maybe 'shell-pop)			; Popup terminal
 (require-maybe 'slime)				; Superior Lisp Interaction Mode for Emacs
 (require-maybe 'smartchr)			; Emacs version of smartchr.vim
 (require-maybe 'ssh-config)			; Syntax Highlight ssh-configure files
@@ -94,12 +100,17 @@
 (require-maybe 'woman)				; Use Woman
 (require-maybe 'x-dnd)				; Drag and drop support for X
 (require-maybe 'xcscope)			; Cscope interface for Emacs
+(require-maybe 'xcscope+)			; Providing an extension to xcscope
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
+
+
 
 
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab
 ;;(require-maybe 'pymacs)			; Pymacs
+
+
 
 
 

@@ -28,7 +28,9 @@
 (add-to-list 'load-path "~/.emacs.d/theme/")
 (let ((default-directory "~/.emacs.d/lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
-;;(add-to-list 'load-path "~/.emacs.d/etc/recipes/")
+(let ((default-directory "~/.emacs.d/local-lisp/"))
+  (normal-top-level-add-subdirs-to-load-path))
+
 ;;;;;; load package initial setting
 (require '000-macro)			; All Macros I use
 (require '001-environment)		; Environment Setting
@@ -55,9 +57,12 @@
 (require '031-comint-mode)		;
 (require '032-anything)			; Complete anything
 (require '033-w3m)			; W3m config
-(require '034-shell-pop)		; Popup terminal
-(require '035-multi-term)		;
+(require '034-terminal)			; Terminal Settings
+
 (require '036-midnight)			;
+(require '037-ipa)			; In-place annotations
+
+
 
 
 (require 'rc-cedet)

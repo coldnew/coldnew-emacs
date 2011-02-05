@@ -69,6 +69,9 @@
 	xcode-document-viewer
 	yasnippet
 
+
+	(:name xcscope+
+	       :type emacswiki)
 	;;elscreen
 	;;auctex
 	;;color-theme			;
