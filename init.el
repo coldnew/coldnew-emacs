@@ -56,6 +56,8 @@
 (require '033-w3m)			; W3m config
 (require '034-shell-pop)		; Popup terminal
 (require '035-multi-term)		;
+(require '036-midnight)			;
+
 
 (require 'rc-cedet)
 (require 'rc-common-hook)
@@ -67,7 +69,7 @@
 (require 'rc-ielm-mode)
 (require 'rc-find-file)
 (require 'rc-ccmode-common)
-;; FIXME:
+
 ;;(require '997-el-get)			; emacs lisp manager
 (require '998-elpa)			; emacs lisp manager
 (require '999-keybinding)		; Global Keybindings, must in the last line.

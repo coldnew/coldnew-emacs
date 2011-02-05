@@ -6,7 +6,7 @@
 ;; Keywords: gobject, glib, gtk, helper, utilities
 ;;; Commentary:
 ;;; Code:
-
+(provide 'gobject-class)
 
 (defun string-join (list separator)
 "Takes a list of string and joins them using delimiter."
@@ -255,5 +255,4 @@ class_name)))
 )
 )
 
-(provide 'gobject-class)
 ;;; gobject-class.el ends here

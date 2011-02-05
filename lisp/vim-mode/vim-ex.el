@@ -8,45 +8,140 @@
 
 ;;; Code:
 
+(eval-when-compile (require 'cl))
+(require 'vim-macs)
+(require 'vim-core)
+(require 'vim-compat)
+(require 'vim-motions)
+
 (defvar vim:ex-commands nil
   "List of pairs (command . function).")
-
-(defvar vim:ex-current-buffer)
 
 (vim:deflocalvar vim:ex-local-commands nil
   "List of pairs (command . function).")
 
+(defvar vim:ex-minibuffer nil
+  "The currenty active ex minibuffer.")
+
+(defvar vim:ex-current-buffer nil
+  "The buffer to which the currently active ex session belongs to.")
+
+(defvar vim:ex-current-window nil
+  "The window to which the currently active ex session belongs to.")
+
+(defvar vim:ex-info-length nil
+  "Current info string.")
+
+(defvar vim:ex-info-string nil
+  "Current info string.")
+
+(defvar vim:ex-update-info nil
+  "Flag to indicate that an update is in progress.")
+
 (defvar vim:ex-history nil
   "History of ex-commands.")
 
-(defun vim:emap (keys command)
-  "Maps an ex-command to some function."
-  (unless (find-if #'(lambda (x) (string= (car x) keys)) vim:ex-commands)
-    (add-to-list 'vim:ex-commands (cons keys command))))
+(defface vim:ex-info '(( ((supports :slant))
+			 :slant italic
+			 :foreground "red"))
+  "Face for the info message in ex mode."
+  :group 'vim-mode)
 
-(defun vim:local-emap (keys command)
-  "Maps an ex-command to some function buffer-local."
-  (unless (find-if #'(lambda (x) (string= (car x) keys)) vim:ex-local-commands)
-    (add-to-list 'vim:ex-local-commands (cons keys command))))
-
-(defun vim:ex-binding (cmd)
-  "Returns the current binding of `cmd' or nil."
-  (with-current-buffer vim:ex-current-buffer
-    (or (cdr-safe (assoc cmd vim:ex-local-commands))
-        (cdr-safe (assoc cmd vim:ex-commands)))))
+(defvar vim:ex-cmd nil
+  "The currently parsed command.")
+(defvar vim:ex-arg nil
+  "The currently parse command.")
+(defvar vim:ex-arg-handler nil
+  "The currently active argument handler.")
+(defvar vim:ex-range nil
+  "The currently parsed region.")
 
 (defvar vim:ex-keymap (make-sparse-keymap)
   "Keymap used in ex-mode.")
 
 (define-key vim:ex-keymap "\t" 'minibuffer-complete)
-(define-key vim:ex-keymap [return] 'exit-minibuffer)
-(define-key vim:ex-keymap (kbd "RET") 'exit-minibuffer)
+(define-key vim:ex-keymap [return] 'vim:ex-mode-exit)
+(define-key vim:ex-keymap (kbd "RET") 'vim:ex-mode-exit)
 (define-key vim:ex-keymap " " 'vim:ex-expect-argument)
-(define-key vim:ex-keymap (kbd "C-j") 'vim:ex-execute-command)
-(define-key vim:ex-keymap (kbd "C-g") 'abort-recursive-edit)
+(define-key vim:ex-keymap (kbd "C-j") 'vim:ex-mode-exit)
+(define-key vim:ex-keymap (kbd "C-g") 'vim:ex-mode-abort)
 (define-key vim:ex-keymap [up] 'previous-history-element)
 (define-key vim:ex-keymap [down] 'next-history-element)
 (define-key vim:ex-keymap "\d" 'vim:ex-delete-backward-char)
+(define-key vim:ex-keymap (kbd "ESC ESC ESC") 'vim:ex-mode-keyboard-escape-quit)
+
+
+(defun vim:ex-set-info (info)
+  "Changes the active ex info message."
+  (when (and vim:ex-minibuffer
+	     (not (equal info vim:ex-info-string)))
+    (with-current-buffer vim:ex-minibuffer
+      (let ((vim:ex-update-info t)
+	    after-change-functions)
+	(when vim:ex-info-length
+	  (delete-region (- (point-max) vim:ex-info-length) (point-max)))
+	(if info
+	    (let ((beg (point-max)))
+	      (save-excursion
+		(goto-char (point-max))
+		(insert (concat "   [" info "]"))
+		(setq vim:ex-info-length (- (point-max) beg))
+		(put-text-property beg (point-max) 'point-entered #'vim:ex-info-point-entered)
+		(put-text-property beg (point-max) 'face #'vim:ex-info)
+		))
+	  (setq vim:ex-info-length nil))))
+    (setq vim:ex-info-string info)))
+
+
+(defun vim:ex-info-point-entered (old new)
+  "Moves point before the info string."
+  (goto-char (- (point-max) vim:ex-info-length)))
+
+
+(defun vim:ex-contents ()
+  "Returns the contents of the ex buffer.
+The content is the same as minibuffer-contents would return
+except for the info message."
+  (with-current-buffer vim:ex-minibuffer
+    (buffer-substring-no-properties
+     (minibuffer-prompt-end)
+     (if vim:ex-info-length
+	 (- (point-max) vim:ex-info-length)
+       (point-max)))))
+
+(defun vim:emap (keys command)
+  "Maps an ex-command to some function."
+  (let ((binding (assoc keys vim:ex-commands)))
+    (if binding
+	(setcdr binding command)
+      (add-to-list 'vim:ex-commands (cons keys command)))))
+
+(defun vim:local-emap (keys command)
+  "Maps an ex-command to some function buffer-local."
+  (let ((binding (assoc keys vim:ex-local-commands)))
+    (if binding
+	(setcdr binding command)
+      (add-to-list 'vim:ex-local-commands (cons keys command)))))
+
+(defun vim:ex-binding (cmd)
+  "Returns the current binding of `cmd' or nil."
+  (if (not (stringp cmd)) cmd
+    (with-current-buffer vim:ex-current-buffer
+      (let* ((cmds (vim:ex-complete-command cmd nil t))
+	     (c (cond
+		 ;; no command found
+		 ((null cmds) nil) 
+		 ;; exactly one completion found
+		 ((null (cdr cmds)) (car cmds))
+		 ;; one exact completion found
+		 ((member cmd cmds) cmd)
+		 ;; more than one inexact completion found
+		 (t nil))))
+      
+	(while (and c (stringp c))
+	  (setq c (or (cdr-safe (assoc c vim:ex-local-commands))
+		      (cdr-safe (assoc c vim:ex-commands)))))
+	c))))
 
 (defun vim:ex-delete-backward-char (n)
   "Delete the previous `n' characters. If ex-buffer is empty,
@@ -57,13 +152,150 @@ cancel ex-mode."
       (exit-minibuffer))
   (delete-backward-char n))
 
-(defvar vim:ex-keep-reading nil)
-(defvar vim:ex-cmdline nil)
-(defvar vim:ex-cmd nil)
-(defvar vim:ex-beg nil)
-(defvar vim:ex-end nil)
+
+
+(defstruct (vim:arg-handler
+            (:constructor vim:make-arg-handler))
+  complete   ;; The completion function.
+  activate   ;; Called when the argument is activated for the first time.
+  deactivate ;; Called when the argument is deactivated.
+  update     ;; Called whenever the argument has changed.
+  )
+
+(defvar vim:argument-handlers-alist
+  `((text . ,(vim:make-arg-handler :complete #'vim:ex-complete-text-argument))
+    (file . ,(vim:make-arg-handler :complete #'vim:ex-complete-file-argument))
+    (buffer . ,(vim:make-arg-handler :complete #'vim:ex-complete-buffer-argument)))
+  "An alist that contains for each argument type the appropriate handler."
+  )
+
+(defun* vim:define-arg-handler (arg-type &key
+					 complete
+					 activate
+					 deactivate
+					 update)
+  "Defines a new argument handler `arg-type'."
+  (let ((newah (vim:make-arg-handler :complete complete
+					 :activate activate
+					 :deactivate deactivate
+					 :update update))
+	(ah (assoc arg-type vim:argument-handlers-alist)))
+    (if ah
+	(setcdr ah newah)
+      (push (cons arg-type newah) vim:argument-handlers-alist))))
+
+
+(defun vim:ex-get-arg-handler (cmd)
+  "Returns the argument handler of command `cmd'."
+  (let ((cmd (vim:ex-binding cmd)))
+    (if (not cmd)
+	(ding)
+      (let* ((arg-type (vim:cmd-arg cmd))
+	     (arg-handler (assoc arg-type vim:argument-handlers-alist)))
+	(if arg-handler (cdr arg-handler))))))
+
+(defun vim:ex-setup ()
+  "Initializes the minibuffer for an ex-like mode.
+This function should be called as minibuffer-setup-hook when an
+ex-mode starts."
+  (remove-hook 'minibuffer-setup-hook #'vim:ex-setup) ; Just for the case.
+  (setq vim:ex-info-length nil
+	vim:ex-info-string nil
+	vim:ex-cmd nil
+	vim:ex-arg nil
+	vim:ex-arg-handler nil
+	vim:ex-range nil
+	vim:ex-minibuffer (current-buffer)))
+
+(defun vim:ex-teardown ()
+  "Deinitializes the minibuffer for an ex-like mode.
+This function should be called whenever the minibuffer is exited."
+  (when vim:ex-info-length
+    (with-current-buffer vim:ex-minibuffer
+      (let ((len vim:ex-info-length))
+	(remove-text-properties (minibuffer-prompt-end)
+				(point-max)
+				'(point-entered nil))
+	(setq vim:ex-info-string nil)
+	(setq vim:ex-info-length nil)
+	(delete-char (- (point-max) len)
+		     (point-max)))))
+  (setq vim:ex-minibuffer nil))
+  
+
+(defun vim:ex-start-session ()
+  "Initializes the minibuffer when ex-mode is started."
+  (vim:ex-setup)
+  (remove-hook 'minibuffer-setup-hook #'vim:ex-start-session)
+  (add-hook 'after-change-functions #'vim:ex-change nil t))
+
+
+(defun vim:ex-stop-session ()
+  "Deinitializes the minibuffer when ex-mode is stopped."
+  (vim:ex-teardown)
+  (let ((arg-deactivate (and vim:ex-arg-handler (vim:arg-handler-deactivate vim:ex-arg-handler))))
+    (when arg-deactivate (funcall arg-deactivate)))
+  (remove-hook 'after-change-functions #'vim:ex-change t))
+  
+
+(defun vim:ex-mode-exit ()
+  "Calls `minibuffer-complete-and-exit' and cleanup."
+  (interactive)
+  (vim:ex-stop-session)
+  (exit-minibuffer))
+
+
+(defun vim:ex-mode-abort ()
+  "Calls `abort-recursive-edit' and cleanup."
+  (interactive)
+  (vim:ex-stop-session)
+  (abort-recursive-edit))
+
+
+(defun vim:ex-mode-keyboard-escape-quit ()
+  "Calls `keyboard-escape-quit' and cleanup."
+  (interactive)
+  (vim:ex-stop-session)
+  (keyboard-escape-quit))
+
+
+(defun vim:ex-change (beg end len)
+  "Checkes if the command or argument changed and informs the
+argument handler."
+  (unless vim:ex-update-info
+    (let ((cmdline (vim:ex-contents)))
+      (multiple-value-bind (range cmd spaces arg beg end) (vim:ex-split-cmdline cmdline)
+	(cond
+	 ((not (string= vim:ex-cmd cmd))
+	  ;; command changed, update argument handler ...
+	  (setq vim:ex-cmd cmd
+		vim:ex-arg arg
+		vim:ex-range (cons beg end))
+	  ;; ... deactivate old handler ...
+	  (let ((arg-deactivate (and vim:ex-arg-handler
+				     (vim:arg-handler-deactivate vim:ex-arg-handler))))
+	    (when arg-deactivate (funcall arg-deactivate)))
+	  ;; ... activate and store new handler ...
+	  (let ((cmd (vim:ex-binding cmd)))
+	    (setq vim:ex-arg-handler
+		  (and cmd (vim:ex-get-arg-handler cmd)))
+	    (let ((arg-activate (and vim:ex-arg-handler
+				     (vim:arg-handler-activate vim:ex-arg-handler))))
+	      (when arg-activate (funcall arg-activate)))))
+       
+	 ((or (not (string= vim:ex-arg arg))
+	      (not (equal (cons beg end) vim:ex-range)))
+	  ;; command remained the same, but argument or range changed
+	  ;; so inform the argument handler
+	  (setq vim:ex-arg arg)
+	  (setq vim:ex-range (cons beg end))
+	  (let ((arg-update (and vim:ex-arg-handler
+				 (vim:arg-handler-update vim:ex-arg-handler))))
+	    (when arg-update (funcall arg-update)))))))))
+	
 
 (defun vim:ex-split-cmdline (cmdline)
+  "Splits the command line in range, command and argument part."
   (multiple-value-bind (cmd-region beg end) (vim:ex-parse cmdline)
     (if (null cmd-region)
         (values cmdline "" cmdline "" beg end)
@@ -79,31 +311,27 @@ cancel ex-mode."
       
         (values range cmd spaces arg beg end)))))
 
+
 (defun vim:ex-expect-argument (n)
-  ;; called if the space separating the command from the argument has
-  ;; been pressed
+  "Called if the space separating the command from the argument
+has been pressed."
   (interactive "p")
-  (let ((cmdline (vim:minibuffer-contents)))
+  (let ((cmdline (vim:ex-contents)))
     (self-insert-command n)
     (multiple-value-bind (range cmd spaces arg beg end) (vim:ex-split-cmdline cmdline)
 
       (when (and (= (point) (point-max))
                  (zerop (length spaces))
                  (zerop (length arg)))
-        (while (stringp cmd)
-          (setq cmd (vim:ex-binding cmd)))
-        
-        (if (null cmd) (ding)
-          (let ((result (case (vim:cmd-arg cmd)
-                          (file
-                           (vim:ex-complete-file-argument nil nil nil))
-                          (buffer
-                           (vim:ex-complete-buffer-argument nil nil nil))
-                          ((t)
-                           (vim:ex-complete-text-argument nil nil nil)))))
-            (when result (insert result))))))))
+	(setq cmd (vim:ex-binding cmd))
+	(if (null cmd) (ding)
+	  (setq vim:ex-cmd cmd)
+	  (let ((result (vim:ex-complete-argument nil nil nil)))
+	    (when result (insert result))))))))
           
+
 (defun vim:ex-complete (cmdline predicate flag)
+  "Called to complete an object in the ex-buffer."
   (multiple-value-bind (range cmd spaces arg beg end) (vim:ex-split-cmdline cmdline)
     (setq vim:ex-cmd cmd)
 
@@ -134,36 +362,30 @@ cancel ex-mode."
 
         
 (defun vim:ex-complete-command (cmd predicate flag)
-  ;; completes the command
+  "Called to complete the current command."
   (with-current-buffer vim:ex-current-buffer
     (cond
      ((null flag) (or (try-completion cmd vim:ex-local-commands predicate)
                       (try-completion cmd vim:ex-commands predicate)))
    
-     ((eq t flag) (or (all-completions cmd vim:ex-local-commands predicate)
-                      (all-completions cmd vim:ex-commands predicate)))
+     ((eq t flag) (append (all-completions cmd vim:ex-local-commands predicate)
+			  (all-completions cmd vim:ex-commands predicate)))
    
      ((eq 'lambda flag) (or (vim:test-completion cmd vim:ex-local-commands predicate)
                             (vim:test-completion cmd vim:ex-commands predicate))))))
 
-(defun vim:ex-complete-argument (arg predicate flag)
-  ;; completes the argument
-  (let ((cmd vim:ex-cmd))
-    (while (stringp cmd)
-      (setq cmd (vim:ex-binding cmd)))
 
-    (if (null cmd) (ding)
-      (case (vim:cmd-arg cmd)
-        (file
-         (vim:ex-complete-file-argument arg predicate flag))
-        (buffer
-         (vim:ex-complete-buffer-argument arg predicate flag))
-        ((t)
-         (vim:ex-complete-text-argument arg predicate flag))
-        (t (ding))))))
+(defun vim:ex-complete-argument (arg predicate flag)
+  "Called to complete the current argument w.r.t. the current command."
+  (let* ((cmd vim:ex-cmd)
+	 (arg-handler (vim:ex-get-arg-handler cmd)))
+    (funcall (or (vim:arg-handler-complete arg-handler)
+		 #'vim:ex-complete-text-argument)
+	     arg predicate flag)))
+
 
 (defun vim:ex-complete-file-argument (arg predicate flag)
-  ;; completes a file-name
+  "Called to complete a file argument."
   (if (null arg)
       default-directory
     (let ((dir (or (file-name-directory arg)
@@ -184,8 +406,9 @@ cancel ex-mode."
        ((eq 'lambda flag)
         (eq (file-name-completion fname dir) t))))))
       
+
 (defun vim:ex-complete-buffer-argument (arg predicate flag)
-  ;; completes a buffer name
+  "Called to complete a buffer name argument."
   (when arg
     (let ((buffers (mapcar #'(lambda (buffer) (cons (buffer-name buffer) nil)) (buffer-list t))))
       (cond
@@ -196,17 +419,19 @@ cancel ex-mode."
        ((eq 'lambda flag)
         (vim:test-completion arg buffers predicate))))))
 
+
 (defun vim:ex-complete-text-argument (arg predicate flag)
-  ;; completes an arbitrary text-argument
+  "Called to complete standard argument, therefore does nothing."
   (when arg
     (case flag
       ((nil) t)
       ((t) (list arg))
       ('lambda t))))
 
-(defun vim:ex-execute-command (cmdline)
-  (interactive)
 
+(defun vim:ex-execute-command (cmdline)
+  "Called to execute the current command."
+  (interactive)
   (multiple-value-bind (range cmd spaces arg beg end) (vim:ex-split-cmdline cmdline)
     (setq vim:ex-cmd cmd)
     
@@ -232,8 +457,7 @@ cancel ex-mode."
                                      :type 'linewise))))
           (count (and (not end) beg)))
       
-      (while (stringp cmd)
-        (setq cmd (vim:ex-binding cmd)))
+      (setq cmd (vim:ex-binding cmd))
 
       (when (zerop (length arg))
         (setq arg nil))
@@ -315,6 +539,8 @@ Returns a list of up to three elements: (cmd beg end)"
 
 
 (defun vim:ex-parse-address (text pos)
+  "Parses `text' starting at `pos' for an address, returning a two values,
+the range and the new position."
   (cond
    ((>= pos (length text)) nil)
    
@@ -323,7 +549,7 @@ Returns a list of up to three elements: (cmd beg end)"
             (match-end 0)))
 
    ((= (aref text pos) ?$)
-    (values (cons 'abs (line-number-at-pos (point-max))) (1+ pos)))
+    (values 'last-line (1+ pos)))
 
    ((= (aref text pos) ?\%)
     (values 'all (1+ pos)))
@@ -359,6 +585,8 @@ Returns a list of up to three elements: (cmd beg end)"
 
 
 (defun vim:ex-parse-offset (text pos)
+  "Parses `text' starting at `pos' for an offset, returning a two values,
+the offset and the new position."
   (let ((off nil))
     (while (= pos (or (string-match "\\([-+]\\)\\([0-9]+\\)?" text pos) -1))
       (if (string= (match-string 1 text) "+")
@@ -428,8 +656,10 @@ Returns a list of up to three elements: (cmd beg end)"
 (defun vim:ex-read-command (&optional initial-input)
   "Starts ex-mode."
   (interactive)
-  (let ((vim:ex-current-buffer (current-buffer)))
+  (let ((vim:ex-current-buffer (current-buffer))
+	(vim:ex-current-window (selected-window)))
     (let ((minibuffer-local-completion-map vim:ex-keymap))
+      (add-hook 'minibuffer-setup-hook #'vim:ex-start-session)
       (let ((result (completing-read ":" 'vim:ex-complete nil nil initial-input  'vim:ex-history)))
         (when (and result
                    (not (zerop (length result))))

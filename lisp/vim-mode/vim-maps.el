@@ -69,6 +69,19 @@
 
 ;;; Code:
 
+(eval-when-compile (require 'cl))
+(require 'vim-keymap)
+(require 'vim-motions)
+(require 'vim-commands)
+(require 'vim-ex-commands)
+(require 'vim-scroll)
+(require 'vim-window)
+(require 'vim-search)
+(require 'vim-normal-mode)
+(require 'vim-insert-mode)
+(require 'vim-visual-mode)
+(require 'vim-ex)
+
 (vim:nmap "\\" 'vim:cmd-emacs)
 
 (vim:nmap (kbd "C-z") 'vim:activate-emacs-mode)
@@ -96,7 +109,9 @@
 (vim:mmap "g_" 'vim:motion-last-non-blank)
 
 (vim:mmap "k" 'vim:motion-up)
+(vim:mmap "gk" 'vim:motion-screen-up)
 (vim:mmap "j" 'vim:motion-down)
+(vim:mmap "gj" 'vim:motion-screen-down)
 (vim:mmap "-" "k^")
 (vim:mmap "+" "j^")
 (vim:mmap "G" 'vim:motion-go-to-first-non-blank-end) 
@@ -172,6 +187,17 @@
 (vim:omap "it" 'vim:motion-inner-xml-tags)
 (vim:omap "at" 'vim:motion-outer-xml-tags)
 
+(vim:omap "i'" 'vim:motion-inner-single-quote)
+(vim:omap "a'" 'vim:motion-outer-single-quote)
+(vim:omap "i\"" 'vim:motion-inner-double-quote)
+(vim:omap "a\"" 'vim:motion-outer-double-quote)
+(vim:omap "i`" 'vim:motion-inner-back-quote)
+(vim:omap "a`" 'vim:motion-outer-back-quote)
+
+(vim:omap "v" 'vim:cmd-force-charwise)
+(vim:omap "V" 'vim:cmd-force-linewise)
+(vim:omap (kbd "C-v") 'vim:cmd-force-blockwise)
+
 ;(vim:nmap "x" "dl")
 (vim:nmap "m" 'vim:cmd-set-mark)
 (vim:nmap "x" 'vim:cmd-delete-char)
@@ -194,17 +220,14 @@
 
 (vim:nmap "J" 'vim:cmd-join-lines)
 
-(vim:nmap "/" 'vim:search-start)
-(vim:nmap "?" 'vim:search-start-backward)
+(vim:nmap "/" 'vim:motion-search-fwd)
+(vim:nmap "?" 'vim:motion-search-bwd)
 (vim:nmap "*" 'vim:search-word)
 (vim:nmap "#" 'vim:search-word-backward)
 (vim:nmap "g*" 'vim:search-unbounded-word)
 (vim:nmap "g#" 'vim:search-unbounded-word-backward)
-(vim:nmap "n" 'vim:search-repeat)
-(vim:nmap "N" 'vim:search-repeat-opposite)
-;; The next two maps are very special for an active search.
-(vim:map "n" 'vim:search-repeat :keymap vim:search-keymap)
-(vim:map "N" 'vim:search-repeat-opposite :keymap vim:search-keymap)
+(vim:nmap "n" 'vim:motion-search-next)
+(vim:nmap "N" 'vim:motion-search-next-reverse)
 
 (vim:nmap "i" 'vim:cmd-insert)
 (vim:nmap "a" 'vim:cmd-append)
@@ -241,7 +264,7 @@
 (vim:omap (vconcat "z" [return]) "zt^")
 (vim:omap (kbd "z RET") (vconcat "z" [return]))
 (vim:omap "zz" 'vim:scroll-line-to-center)
-(vim:omap "z." "z.^")
+(vim:omap "z." "zz^")
 (vim:omap "zb" 'vim:scroll-line-to-bottom)
 (vim:omap "z-" "zb^")
 
@@ -394,6 +417,8 @@
 (vim:emap "substitute" 'vim:cmd-substitute)
 (vim:emap "s" "substitute")
 (vim:emap "marks" 'vim:cmd-show-marks)
+(vim:emap "noh" "nohlsearch")
+(vim:emap "nohlsearch" 'vim:cmd-nohighlight)
 
 
 (vim:nmap (vector vim:down-mouse-1) 'vim:visual-mouse-clicked)

@@ -87,6 +87,14 @@
 
 ;;; Code:
 
+(eval-when-compile (require 'cl))
+(require 'vim-defs)
+(require 'vim-macs)
+(require 'vim-core)
+(require 'vim-compat)
+(require 'vim-motions)
+
+
 (defcustom vim:shift-width 8
   "The number of columns for shifting commands like < or >."
   :type 'integer
@@ -419,9 +427,7 @@ and switches to insert-mode."
                     (buffer-substring beg end))
               parts)
         (forward-line -1)))
-    (let ((txt (apply #'concat (cdr (mapcan
-				     #'(lambda (part) (list "\n" (cdr part)))
-				     parts)))))
+    (let ((txt (mapconcat #'cdr parts "\n")))
       ;; `txt' contains the block as single lines
       (if register
           (progn
@@ -495,7 +501,8 @@ and switches to insert-mode."
   (unless (and (member last-command '(vim:cmd-paste-pop
                                       vim:cmd-paste-pop-next
                                       vim:cmd-paste-before
-                                      vim:cmd-paste-behind))
+                                      vim:cmd-paste-behind
+				      yank))
                vim:last-paste)
     (error "Previous command was not a vim-mode paste"))
   (when vim:last-paste
@@ -680,7 +687,9 @@ and switches to insert-mode."
   "Shows all currently defined marks."
   (let ((all-marks (append vim:local-marks-alist vim:global-marks-alist)))
     (when marks
-      (setq all-marks (remove-if-not #'(lambda (x) (find (car x) marks)) all-marks)))
+      (setq marks (append marks nil))
+      (setq all-marks
+	    (remq nil (mapcar #'(lambda (x) (and (memq (car x) marks) x)) all-marks))))
 
     (setq all-marks (sort all-marks #'(lambda (x y) (< (car x) (car y)))))
     (setq all-marks (apply #'concat

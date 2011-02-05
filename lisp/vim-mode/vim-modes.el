@@ -1,4 +1,4 @@
-;;; vim-modes.el
+;;; vim-modes.el - Implementation of VIM submodes.
 
 ;; Copyright (C) 2009, 2010 Frank Fischer
 
@@ -8,7 +8,21 @@
 
 ;;; Code:
 
+(eval-when-compile (require 'cl))
+(require 'vim-macs)
+
 (vim:deflocalvar vim:mode-string)
+
+(vim:deflocalvar vim:active-mode nil
+  "The currently active vim-mode.") 
+
+(vim:deflocalvar vim:active-command-function nil
+  "The command function of the currently active vim-mode.")
+
+(defvar vim:emulation-mode-alist nil
+  "List of all keymaps used by some modes.")
+
+
 (defun vim:update-mode-line (ident)
   "Updates the mode-line to show the specified identifier `ident'."
   (setq vim:mode-string (concat "<" (or ident "?") ">"))
@@ -20,11 +34,6 @@
 'normal is converted to 'vim:normal-mode."
   (intern (concat "vim:" (symbol-name mode) "-mode")))
 
-(vim:deflocalvar vim:active-mode nil
-  "The currently active vim-mode.") 
-
-(vim:deflocalvar vim:active-command-function nil
-  "The command function of the currently active vim-mode.")
 
 (defun vim:activate-mode (mode)
   "Activates a certain vim-mode, disabling the currently active one."
@@ -32,6 +41,26 @@
     (funcall vim:active-mode -1))
   (when mode
     (funcall (vim:mode-name mode) 1)))
+
+
+;; This function sets up the keymaps for the current mode.
+(defmacro vim:set-keymaps (mode-name keymaps)
+  (when (eq (car-safe mode-name) 'quote)
+    (setq mode-name (cadr mode-name)))
+  (when (eq (car-safe keymaps) 'quote)
+    (setq keymaps (cadr keymaps)))
+  `(setq vim:emulation-mode-alist
+         (list
+	  ,@(apply #'append '((cons 'vim:intercept-ESC-mode vim:intercept-ESC-keymap))
+		    (mapcar #'(lambda (keym)
+				(let ((localname (intern (replace-regexp-in-string
+							  "mode-keymap" "mode-local-keymap"
+							  (symbol-name keym)))))
+				  (if (eq localname keym)
+				      (list `(cons ',mode-name ,keym))
+				    (list `(cons ',mode-name ,localname)
+					  `(cons ',mode-name ,keym)))))
+			    keymaps)))))
 
 
 (defmacro* vim:define-mode (name doc

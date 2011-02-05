@@ -11,6 +11,13 @@
 
 ;;; Code:
 
+(eval-when-compile (require 'cl))
+(require 'vim-macs)
+(require 'vim-core)
+(require 'vim-undo)
+(require 'vim-normal-mode)
+(require 'vim-motions)
+
 (vim:deflocalvar vim:last-insert-undo nil)
 
 (defcustom vim:insert-mode-replace-cursor 'hbar

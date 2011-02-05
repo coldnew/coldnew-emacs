@@ -23,12 +23,19 @@
 
 ;;; Code:
 
+(eval-when-compile (require 'cl))
+(require 'vim-macs)
+(require 'vim-defs)
+(require 'vim-compat)
+(require 'vim-modes)
+
 ;; try loading redo+, then redo
 (or (condition-case nil (require 'redo+ nil t) (error nil))
     (condition-case nil (require 'redo nil t) (error nil)
     (message "vim-mode: Could not load 'redo+' or 'redo', redo-command not available.")))
 
-(defvar vim:last-undo)
+(defvar vim:last-undo nil
+  "The last item in the undo list.")
 
 ;; undo stuff
 (defun vim:connect-undos (last-undo)

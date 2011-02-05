@@ -14,6 +14,14 @@
 
 ;;; Code:
 
+(eval-when-compile (require 'cl))
+(require 'vim-macs)
+(require 'vim-modes)
+(require 'vim-normal-mode)
+(require 'vim-insert-mode)
+(require 'vim-ex)
+(require 'vim-commands)
+
 (defcustom vim:visual-region-face vim:default-region-face
   "Face of the highlighted region."
   :type 'face
@@ -184,11 +192,9 @@
                                                 transient-mark-mode)
         vim:visual-old-global-variables
         ;; Remember which system variables weren't buffer local
-        (mapcan #'(lambda (variable)
-                    (if (assoc variable (buffer-local-variables))
-                        (list variable)
-                      nil))
-                vim:visual-temporary-local-variables))
+	(remq nil (mapcar #'(lambda (variable)
+			      (and (local-variable-p variable) variable))
+			  vim:visual-temporary-local-variables)))
   
   ;; The make them all buffer local, too.
   (mapc #'make-local-variable vim:visual-temporary-local-variables)

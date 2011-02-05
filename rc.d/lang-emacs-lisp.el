@@ -25,7 +25,7 @@
 	     (ac-emacs-lisp-mode-setup)
 	     ;; Enable pretty-lambda
 	     (turn-on-pretty-lambda-mode)
-
+	     (highlight-cl-add-font-lock-keywords)
 	     ;; Hooks for emacs-lisp-mode
 	     ;;(byte-compile-when-save)	; bytecompile the elisp file after save;
 
@@ -40,7 +40,10 @@
 	     (vim:local-imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
 	     (vim:local-imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
 	     ))
-
+;;;;;; Misc Settings
+(run-with-idle-timer 1 t
+		     '(lambda () (get-buffer-create "*scratch*")))
+(add-hook 'lisp-interaction-mode-hook 'highlight-cl-add-font-lock-keywords)
 ;;;;;; Functions
 
 (defun remove-elc-when-visit ()

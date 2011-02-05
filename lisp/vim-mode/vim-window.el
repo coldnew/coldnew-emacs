@@ -14,18 +14,16 @@
 
 ;;; Code:
 
+(eval-when-compile (require 'cl))
+(require 'vim-macs)
+(require 'vim-core)
+(require 'vim-ex-commands)
+
 (condition-case nil
     (require 'windmove)
   (error
    (message "vim-mode: Could not load 'windmove', window-commands not available.")
    nil))
-
-(vim:define-keymap window-mode "window mode" :map-command wmap)
-
-(vim:define-mode window "VIM window mode"
-                 :ident "W"
-                 :keymaps '(vim:window-mode-keymap)
-                 :command-function 'vim:normal-mode-command)
 
 (defun vim:resize-window (new-size &optional horizontal)   
   "Sets the current window's with or height to `new-size'."

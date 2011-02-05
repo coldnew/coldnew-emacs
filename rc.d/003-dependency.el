@@ -3,6 +3,7 @@
 
 (require-maybe 'ac-anything)			; Auto Complete with Anything
 (require-maybe 'ac-company)			; Auto-Complete with company-mode
+(require-maybe 'advice)				;
 (require-maybe 'anything)			;
 (require-maybe 'anything-c-shell-history)	; shell history anything.el interface
 (require-maybe 'anything-complete)		;
@@ -31,7 +32,7 @@
 (require-maybe 'color-theme)			; Color-theme
 (require-maybe 'company)			; Another aoto-complete plugins
 (require-maybe 'completion-ui)			;
-;;(require-maybe 'csharp-mode)			; C# mode derived mode
+(require-maybe 'csharp-mode)			; C# mode derived mode
 (require-maybe 'ctagsfind)			;
 (require-maybe 'dabbrev)			;
 (require-maybe 'doxymacs)			; Doxygen for emacs
@@ -66,6 +67,7 @@
 (require-maybe 'python)				; Python
 (require-maybe 'quack)				; enhanced support for editing and running Scheme code
 (require-maybe 'rainbow-mode)			; Color the emacs buffer
+(require-maybe 'recentf)			;
 (require-maybe 'recentf)			; Setup a menu of recently opened files
 (require-maybe 'session)			; Use Session to save current positions
 (require-maybe 'shell-pop)			; Helps you pop up and pop out shell buffer easily
@@ -74,6 +76,7 @@
 (require-maybe 'smartchr)			; Emacs version of smartchr.vim
 (require-maybe 'ssh-config)			; Syntax Highlight ssh-configure files
 (require-maybe 'sunrise-commander)		; A commander looks like MC
+(require-maybe 'term)				;
 (require-maybe 'thingatpt)			; Get the thing at point
 (require-maybe 'undo-tree)			; Use undo-tree instead of redo.el
 (require-maybe 'unicad)				; Universal Charset Auto Detector
@@ -87,9 +90,9 @@
 (require-maybe 'x-dnd)				; Drag and drop support for X
 (require-maybe 'xcscope)			; Cscope interface for Emacs
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
-(require-maybe 'recentf)			;
-(require-maybe 'advice)				;
-(require-maybe 'term)				;
+(require-maybe 'highlight-cl)			;
+(require-maybe 'qmake-mode)			;
+(require-maybe 'auto-install)			;
 
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab

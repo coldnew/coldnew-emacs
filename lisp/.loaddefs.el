@@ -53,19 +53,19 @@ Basic keywords are the following:
 Of course, conventional arguments are supported, the two are same.
 
  (anything :sources sources :input input :prompt prompt :resume resume
-           :preselect preselect :buffer buffer :keymap keymap)
+	   :preselect preselect :buffer buffer :keymap keymap)
  (anything sources input prompt resume preselect buffer keymap)
-           
+
 
 Other keywords are interpreted as local variables of this anything session.
 The `anything-' prefix can be omitted. For example,
 
  (anything :sources 'anything-c-source-buffers
-           :buffer \"*buffers*\" :candidate-number-limit 10)
+	   :buffer \"*buffers*\" :candidate-number-limit 10)
 
 means starting anything session with `anything-c-source-buffers'
 source in *buffers* buffer and set
-`anything-candidate-number-limit' to 10 as session local variable. 
+`anything-candidate-number-limit' to 10 as session local variable.
 
 \(fn &rest PLIST)" t nil)
 
@@ -472,7 +472,7 @@ Preconfigured anything for `anything-c-source-evaluation-result'.
 \(fn ARG)" t nil)
 
 (autoload 'anything-eval-expression-with-eldoc "anything-config/anything-config" "\
-Preconfigured anything for `anything-c-source-evaluation-result' with `eldoc' support. 
+Preconfigured anything for `anything-c-source-evaluation-result' with `eldoc' support.
 
 \(fn)" t nil)
 
@@ -555,67 +555,67 @@ Set value to VAR interactively.
 ;;;***
 
 ;;;### (autoloads (anything-other-buffer anything-at-point anything)
-;;;;;;  "anything/anything" "anything/anything.el" (19784 16610))
+;;;;;;  "anything/anything" "anything/anything.el" (19789 13048))
 ;;; Generated autoloads from anything/anything.el
 
 (autoload 'anything "anything/anything" "\
 Select anything. In Lisp program, some optional arguments can be used.
 
 PLIST is a list like (:key1 val1 :key2 val2 ...) or
- (&optional sources input prompt resume preselect buffer keymap).
+\(&optional sources input prompt resume preselect buffer keymap).
 
 Basic keywords are the following:
 
 - :sources
 
-  Temporary value of `anything-sources'.  It also accepts a
-  symbol, interpreted as a variable of an anything source.  It
-  also accepts an alist representing an anything source, which is
-  detected by (assq 'name ANY-SOURCES)
+Temporary value of `anything-sources'.  It also accepts a
+symbol, interpreted as a variable of an anything source.  It
+also accepts an alist representing an anything source, which is
+detected by (assq 'name ANY-SOURCES)
 
 - :input
 
-  Temporary value of `anything-pattern', ie. initial input of minibuffer.
+Temporary value of `anything-pattern', ie. initial input of minibuffer.
 
 - :prompt
 
-  Prompt other than \"pattern: \".
+Prompt other than \"pattern: \".
 
 - :resume
 
-  If t, Resurrect previously instance of `anything'. Skip the initialization.
-  If 'noresume, this instance of `anything' cannot be resumed.
+If t, Resurrect previously instance of `anything'. Skip the initialization.
+If 'noresume, this instance of `anything' cannot be resumed.
 
 - :preselect
 
-  Initially selected candidate. Specified by exact candidate or a regexp.
-  Note that it is not working with delayed sources.
+Initially selected candidate. Specified by exact candidate or a regexp.
+Note that it is not working with delayed sources.
 
 - :buffer
 
-  `anything-buffer' instead of *anything*.
+`anything-buffer' instead of *anything*.
 
 - :keymap
 
-  `anything-map' for current `anything' session.
+`anything-map' for current `anything' session.
 
 
 Of course, conventional arguments are supported, the two are same.
 
- (anything :sources sources :input input :prompt prompt :resume resume
-           :preselect preselect :buffer buffer :keymap keymap)
- (anything sources input prompt resume preselect buffer keymap)
-           
+\(anything :sources sources :input input :prompt prompt :resume resume
+:preselect preselect :buffer buffer :keymap keymap)
+\(anything sources input prompt resume preselect buffer keymap)
+
 
 Other keywords are interpreted as local variables of this anything session.
 The `anything-' prefix can be omitted. For example,
 
- (anything :sources 'anything-c-source-buffers
-           :buffer \"*buffers*\" :candidate-number-limit 10)
+\(anything :sources 'anything-c-source-buffers
+:buffer \"*buffers*\" :candidate-number-limit 10)
 
 means starting anything session with `anything-c-source-buffers'
 source in *buffers* buffer and set
-`anything-candidate-number-limit' to 10 as session local variable. 
+`anything-candidate-number-limit' to 10 as session local variable.
 
 \(fn &rest PLIST)" t nil)
 
@@ -633,7 +633,7 @@ Simplified interface of `anything' with other `anything-buffer'
 
 ;;;### (autoloads (vassoc set-modified-alist modify-alist remove-alist
 ;;;;;;  set-alist del-alist put-alist) "apel/site-lisp/apel/alist"
-;;;;;;  "apel/site-lisp/apel/alist.el" (17099 15668))
+;;;;;;  "apel/site-lisp/apel/alist.el" (19785 303))
 ;;; Generated autoloads from apel/site-lisp/apel/alist.el
 
 (autoload 'put-alist "apel/site-lisp/apel/alist" "\
@@ -682,7 +682,7 @@ See also `assoc'.
 
 ;;;### (autoloads (module-installed-p exec-installed-p file-installed-p
 ;;;;;;  get-latest-path add-latest-path add-path) "apel/site-lisp/apel/path-util"
-;;;;;;  "apel/site-lisp/apel/path-util.el" (17099 15668))
+;;;;;;  "apel/site-lisp/apel/path-util.el" (19785 303))
 ;;; Generated autoloads from apel/site-lisp/apel/path-util.el
 
 (autoload 'add-path "apel/site-lisp/apel/path-util" "\
@@ -745,7 +745,7 @@ If PATHS is omitted, `load-path' is used.
 ;;;***
 
 ;;;### (autoloads (richtext-decode richtext-encode) "apel/site-lisp/emu/richtext"
-;;;;;;  "apel/site-lisp/emu/richtext.el" (17099 15669))
+;;;;;;  "apel/site-lisp/emu/richtext.el" (19785 304))
 ;;; Generated autoloads from apel/site-lisp/emu/richtext.el
 
 (autoload 'richtext-encode "apel/site-lisp/emu/richtext" "\
@@ -760,8 +760,36 @@ Not documented
 
 ;;;***
 
+;;;### (autoloads (csharp-mode csharp-mode-hook) "csharp-mode/csharp-mode"
+;;;;;;  "csharp-mode/csharp-mode.el" (19789 14584))
+;;; Generated autoloads from csharp-mode/csharp-mode.el
+
+(add-to-list 'auto-mode-alist '("\\.cs$" . csharp-mode))
+
+(defvar csharp-mode-hook nil "\
+*Hook called by `csharp-mode'.")
+
+(custom-autoload 'csharp-mode-hook "csharp-mode/csharp-mode" t)
+
+(autoload 'csharp-mode "csharp-mode/csharp-mode" "\
+Major mode for editing C# code. This mode is derived from CC Mode to
+support C#.
+
+The hook `c-mode-common-hook' is run with no args at mode
+initialization, then `csharp-mode-hook'.
+
+This mode will automatically add a regexp for Csc.exe error and warning
+messages to the `compilation-error-regexp-alist'.
+
+Key bindings:
+\\{csharp-mode-map}
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads nil "doxymacs/lisp/doxymacs" "doxymacs/lisp/doxymacs.el"
-;;;;;;  (19777 4986))
+;;;;;;  (19789 9868))
 ;;; Generated autoloads from doxymacs/lisp/doxymacs.el
 
 (or (assoc 'doxymacs-mode minor-mode-alist) (setq minor-mode-alist (cons '(doxymacs-mode " doxy") minor-mode-alist)))
@@ -810,6 +838,39 @@ Note that this only works if the opening tag starts at column 0.
 
 ;;;***
 
+;;;### (autoloads (turn-on-hungry-delete-mode hungry-delete-mode
+;;;;;;  hungry-delete-backward hungry-delete-forward) "hungury-delete/hungry-delete"
+;;;;;;  "hungury-delete/hungry-delete.el" (19789 12940))
+;;; Generated autoloads from hungury-delete/hungry-delete.el
+
+(autoload 'hungry-delete-forward "hungury-delete/hungry-delete" "\
+Delete the following character or all following whitespace up
+to the next non-whitespace character.  See
+\\[c-hungry-delete-backward].
+
+\(fn)" t nil)
+
+(autoload 'hungry-delete-backward "hungury-delete/hungry-delete" "\
+Delete the preceding character or all preceding whitespace
+back to the previous non-whitespace character.  See also
+\\[c-hungry-delete-forward].
+
+\(fn)" t nil)
+
+(autoload 'hungry-delete-mode "hungury-delete/hungry-delete" "\
+Minor mode to enable hungry deletion.  This will delete all
+whitespace after or before point when the deletion command is
+executed.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'turn-on-hungry-delete-mode "hungury-delete/hungry-delete" "\
+Turns on hungry delete mode if the buffer is appropriate.
+
+\(fn)" nil nil)
+
+;;;***
+
 ;;;### (autoloads (pylookup-update-all pylookup-update pylookup-lookup)
 ;;;;;;  "pylookup/pylookup" "pylookup/pylookup.el" (19784 14506))
 ;;; Generated autoloads from pylookup/pylookup.el
@@ -832,7 +893,7 @@ Run pylookup-update for all sources and create the database at `pylookup-db-file
 ;;;***
 
 ;;;### (autoloads (rainbow-mode) "rainbow-mode/rainbow-mode" "rainbow-mode/rainbow-mode.el"
-;;;;;;  (19777 341))
+;;;;;;  (19784 17751))
 ;;; Generated autoloads from rainbow-mode/rainbow-mode.el
 
 (autoload 'rainbow-mode "rainbow-mode/rainbow-mode" "\
@@ -846,7 +907,7 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 ;;;### (autoloads (resume-windows see-you-again win-load-all-configurations
 ;;;;;;  wipe-windows win-save-all-configurations win:startup-with-window
 ;;;;;;  win:set-wc win-switch-to-window) "windows/windows" "windows/windows.el"
-;;;;;;  (19784 17074))
+;;;;;;  (19789 9857))
 ;;; Generated autoloads from windows/windows.el
 
 (autoload 'win-switch-to-window "windows/windows" "\
@@ -896,31 +957,19 @@ Non-nil for optional argument PRESERVE keeps current buffers.
 
 ;;;***
 
-;;;### (autoloads nil nil ("ac-anything/ac-anything.el" "anything-c-shell-history/anything-c-shell-history.el"
-;;;;;;  "anything-complete/anything-complete.el" "anything-config/anything-match-plugin.el"
-;;;;;;  "anything-config/anything-startup.el" "anything-dabbrev-expand/anything-dabbrev-expand.el"
-;;;;;;  "anything-grep/anything-grep.el" "anything-gtags/anything-gtags.el"
-;;;;;;  "anything-include/anything-include.el" "anything-ipa/anything-ipa.el"
-;;;;;;  "anything-kyr/anything-kyr.el" "anything-match-plugin/anything-match-plugin.el"
-;;;;;;  "anything-menu/anything-menu.el" "anything-migemo/anything-migemo.el"
-;;;;;;  "anything-show-completion/anything-show-completion.el" "anything-yaetags/anything-yaetags.el"
-;;;;;;  "apel/site-lisp/apel/calist.el" "apel/site-lisp/apel/filename.el"
-;;;;;;  "apel/site-lisp/apel/install.el" "apel/site-lisp/emu/apel-ver.el"
-;;;;;;  "apel/site-lisp/emu/broken.el" "apel/site-lisp/emu/emu.el"
-;;;;;;  "apel/site-lisp/emu/inv-23.el" "apel/site-lisp/emu/invisible.el"
-;;;;;;  "apel/site-lisp/emu/mcharset.el" "apel/site-lisp/emu/mcs-20.el"
-;;;;;;  "apel/site-lisp/emu/mcs-e20.el" "apel/site-lisp/emu/mule-caesar.el"
-;;;;;;  "apel/site-lisp/emu/pccl-20.el" "apel/site-lisp/emu/pccl.el"
-;;;;;;  "apel/site-lisp/emu/pces-20.el" "apel/site-lisp/emu/pces-e20.el"
-;;;;;;  "apel/site-lisp/emu/pces.el" "apel/site-lisp/emu/pcustom.el"
-;;;;;;  "apel/site-lisp/emu/poe.el" "apel/site-lisp/emu/poem-e20.el"
-;;;;;;  "apel/site-lisp/emu/poem-e20_3.el" "apel/site-lisp/emu/poem.el"
-;;;;;;  "apel/site-lisp/emu/product.el" "apel/site-lisp/emu/pym.el"
-;;;;;;  "apel/site-lisp/emu/static.el" "async-eval/async-eval.el"
+;;;### (autoloads nil nil ("anything-config/anything-match-plugin.el"
+;;;;;;  "anything-config/anything-startup.el" "auto-install/auto-install.el"
 ;;;;;;  "autocomplete/auto-complete-config.el" "autocomplete/auto-complete.el"
-;;;;;;  "autocomplete/fuzzy.el" "autocomplete/popup.el" "gobject-class/gobject-class.el"
-;;;;;;  "pymacs/pymacs.el" "ssh-config/ssh-config.el") (19784 17084
-;;;;;;  191253))
+;;;;;;  "autocomplete/fuzzy.el" "autocomplete/popup.el" "highlight-cl/highlight-cl.el"
+;;;;;;  "pymacs/pymacs.el" "qmake-mode/qmake.el" "smartchr/smartchr.el"
+;;;;;;  "ssh-config/ssh-config.el" "vim-mode/vim-commands.el" "vim-mode/vim-compat.el"
+;;;;;;  "vim-mode/vim-core.el" "vim-mode/vim-defs.el" "vim-mode/vim-ex-commands.el"
+;;;;;;  "vim-mode/vim-ex.el" "vim-mode/vim-insert-mode.el" "vim-mode/vim-keymap.el"
+;;;;;;  "vim-mode/vim-macs.el" "vim-mode/vim-maps.el" "vim-mode/vim-modes.el"
+;;;;;;  "vim-mode/vim-motions.el" "vim-mode/vim-normal-mode.el" "vim-mode/vim-scroll.el"
+;;;;;;  "vim-mode/vim-search.el" "vim-mode/vim-undo.el" "vim-mode/vim-visual-mode.el"
+;;;;;;  "vim-mode/vim-window.el" "vim-mode/vim.el" "xcode-document-viewer/xcode-document-viewer.el")
+;;;;;;  (19789 15711 600588))
 
 ;;;***
 

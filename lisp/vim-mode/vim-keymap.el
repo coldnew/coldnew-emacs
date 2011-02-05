@@ -8,9 +8,11 @@
 
 ;;; Code:
 
+(eval-when-compile (require 'cl))
+
 (defmacro vim:kbdmacro-to-command (events)
   "Creates a command passing prefix-argument to given keyboard-macro `events'."
-  (let ((arg (gensym)))
+  (let ((arg (make-symbol "arg")))
     `(lambda (,arg)
        (interactive "P")
        (execute-kbd-macro
@@ -67,8 +69,6 @@ and vim:local-`map-command'."
                (vim:map keys command :keymap ',(intern lockeym))))))))
 (font-lock-add-keywords 'emacs-lisp-mode '("vim:define-keymap"))
              
-    
-  
 
 ;; Interception of ESC event. The ESC event is intercepted. If not
 ;; followed by another key, i.e. not used as a prefix-key, the event
@@ -102,47 +102,6 @@ and vim:local-`map-command'."
 (defconst vim:override-keymap (make-keymap)
   "Global parent keymap to override some Emacs default bindings.")
 (suppress-keymap vim:override-keymap)
-(vim:map (kbd "ESC ESC ESC")
-         (lambda ()
-           "Exits any VIM mode and returns to normal-mode."
-           (interactive)
-           (vim:activate-normal-mode)
-           (ding))
-         :keymap vim:override-keymap)
-
-
-;; This function sets up the keymaps for the current mode.
-(defmacro vim:set-keymaps (mode-name keymaps)
-  (when (eq (car-safe mode-name) 'quote)
-    (setq mode-name (cadr mode-name)))
-  (when (eq (car-safe keymaps) 'quote)
-    (setq keymaps (cadr keymaps)))
-  `(setq vim:emulation-mode-alist
-         (list ,@(cons '(cons 'vim:intercept-ESC-mode vim:intercept-ESC-keymap)
-                       (mapcan #'(lambda (keym)
-                                   (let ((localname (intern (replace-regexp-in-string "mode-keymap" "mode-local-keymap"
-                                                                                      (symbol-name keym)))))
-                                     (if (eq localname keym)
-                                         (list `(cons ',mode-name ,keym))
-                                       (list `(cons ',mode-name ,localname)
-                                             `(cons ',mode-name ,keym)))))
-                               keymaps)))))
-
-;; TODO: This function is currently empty and serves only as hook for
-;; defadvice.
-(defun vim:reset-key-state ()
-  "Resets the current internal key-state."
-  nil)
-
-(vim:deflocalvar vim:current-key-sequence nil
-  "The key-sequence of the current command.")
-
-(vim:deflocalvar vim:new-buffer nil
-  "The buffer the be made current at the end of key-handline.")
-
-(defun vim:clear-key-sequence ()
-  "Clears the internal log of key-sequences."
-  (setq vim:current-key-sequence nil))
 
 (provide 'vim-keymap)
 

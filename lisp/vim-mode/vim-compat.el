@@ -10,6 +10,10 @@
 
 ;; Check emacs and xemacs
 
+(require 'vim-macs)
+(require 'vim-defs)
+(eval-when-compile (require 'cl))
+
 (defconst vim:xemacs-p (string-match "XEmacs" emacs-version))
 (defconst vim:emacs23-p (>= emacs-major-version 23))
 (defconst vim:emacs-p (not vim:xemacs-p))
@@ -21,8 +25,10 @@
 
 (defmacro vim:emacsen (&rest impls)
   "Defines some body depending in emacs version."
-  `(progn ,@(cdr (or (find-if #'(lambda (x) (eval (car x))) impls)
-                     '(t (error "Not implemented for this Emacs version"))))))
+  (while (and impls (not (eval (caar impls))))
+    (pop impls))
+  (if impls `(progn ,@(cdar impls))
+    (error "Not implemented for this Emacs version")))
 
 (defun vim:set-cursor (cursor)
   "Changes the cursor to type `cursor'."
@@ -129,7 +135,8 @@
     (let ((time (posn-timestamp event)))
       (setq vim:mouse-click-count
             (cond
-             ((intersection (event-modifiers event) '(double triple))
+             ((or (memq 'double (event-modifiers event))
+		  (memq 'triple (event-modifiers event)))
               (event-click-count event))
              ((and vim:mouse-click-last-time
                    (< (- time vim:mouse-click-last-time) double-click-time))
@@ -223,6 +230,26 @@
    (vim:xemacs-p (eq (try-completion string collection predicate) t))))
 
 
+(if (fboundp 'match-substitute-replacement)
+    (defalias 'vim:match-substitute-replacement 'match-substitute-replacement)
+  ;; A simple definition I found somewhere in the web.
+  (defun vim:match-substitute-replacement (replacement
+					   &optional fixedcase literal string subexp)
+    "Return REPLACEMENT as it will be inserted by `replace-match'.
+In other words, all back-references in the form `\\&' and `\\N'
+are substituted with actual strings matched by the last search.
+Optional FIXEDCASE, LITERAL, STRING and SUBEXP have the same
+meaning as for `replace-match'."
+    (let ((match (match-string 0 string)))
+      (save-match-data
+	(set-match-data (mapcar (lambda (x)
+				  (if (numberp x)
+				      (- x (match-beginning 0))
+				    x))
+				(match-data t)))
+	(replace-match replacement fixedcase literal match subexp)))))
+
+
 (defun vim:looking-back (regexp &optional limit greedy)
   "Return non-nil if text before point matches regular expression REGEXP.
 Like `looking-at' except matches before point, and is slower.
@@ -237,22 +264,22 @@ of a match for REGEXP."
    
    (vim:xemacs-p 
     (let ((start (point))
-          (pos
-           (save-excursion
-             (and (re-search-backward (concat "\\(?:" regexp "\\)\\=") limit t)
-                  (point)))))
+	  (pos
+	   (save-excursion
+	     (and (re-search-backward (concat "\\(?:" regexp "\\)\\=") limit t)
+		  (point)))))
       (if (and greedy pos)
-          (save-restriction
-            (narrow-to-region (point-min) start)
-            (while (and (> pos (point-min))
-                        (save-excursion
-                          (goto-char pos)
-                          (backward-char 1)
-                          (looking-at (concat "\\(?:"  regexp "\\)\\'"))))
-              (setq pos (1- pos)))
-            (save-excursion
-              (goto-char pos)
-              (looking-at (concat "\\(?:"  regexp "\\)\\'")))))
+	  (save-restriction
+	    (narrow-to-region (point-min) start)
+	    (while (and (> pos (point-min))
+			(save-excursion
+			  (goto-char pos)
+			  (backward-char 1)
+			  (looking-at (concat "\\(?:"  regexp "\\)\\'"))))
+	      (setq pos (1- pos)))
+	    (save-excursion
+	      (goto-char pos)
+	      (looking-at (concat "\\(?:"  regexp "\\)\\'")))))
       (not (null pos))))))
   
 
@@ -268,9 +295,11 @@ of a match for REGEXP."
    (vim:xemacs-p
     (if enable
 	(vim:normalize-minor-mode-map-alist)
-      (setq minor-mode-map-alist (set-difference minor-mode-map-alist
-						 vim:emulation-mode-alist
-						 :key 'car))))))
+      (setq minor-mode-map-alist
+	    (remq nil
+		  (mapcar #'(lambda (x)
+			      (unless (assq (car x) vim:emulation-mode-alist) x))
+			  minor-mode-map-alist)))))))
 
 
 (when vim:xemacs-p
@@ -280,10 +309,13 @@ of a match for REGEXP."
   
   (defun vim:normalize-minor-mode-map-alist ()
     (make-local-variable 'minor-mode-map-alist)
-    (setq minor-mode-map-alist (append vim:emulation-mode-alist
-				       (set-difference minor-mode-map-alist
-						       vim:emulation-mode-alist
-						       :key 'car))))
+    (setq minor-mode-map-alist
+	  (apply #'append
+		 vim:emulation-mode-alist
+		 (mapcar #'(lambda (x)
+			     (unless (assq (car x) vim:emulation-mode-alist)
+			       (list x)))
+			 minor-mode-map-alist))))
   
   (defadvice add-minor-mode (after vim:add-minor-mode 
                              (toggle name &optional keymap after toggle-fun)
@@ -469,6 +501,7 @@ See `%s' for more information on %s."
      ((= (window-point) goal) lines)
      (t (vertical-motion 1)
 	(walk-screen-lines (1+ lines) goal))))
+  
   (defun windmove-coordinates-of-position (pos &optional window)
     (let* ((w (if (null window)
 		  (selected-window)

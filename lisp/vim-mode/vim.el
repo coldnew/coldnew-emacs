@@ -111,6 +111,21 @@
 (eval-when-compile
   (require 'cl))
 
+(let ((load-path (cons (expand-file-name ".") load-path)))
+  (eval-when-compile
+    (load "vim-core")
+    (load "vim-compat")
+    (load "vim-normal-mode")
+    (load "vim-keymap")
+    (load "vim-maps"))
+  
+  (require 'vim-core)
+  (require 'vim-compat)
+  (require 'vim-normal-mode)
+  (require 'vim-keymap)
+  (require 'vim-maps))
+
+
 (defgroup vim-mode nil
   "A VIM emulation mode."
   :group 'emulations)
@@ -138,53 +153,6 @@ given major-mode is created."
   :type '(repeat (cons (symbol :tag "major mode") (symbol :tag "vim-mode start mode")))
   :group 'vim-mode)
 
-
-(defmacro vim:deflocalvar (name &rest args)
-  "Defines a buffer-local variable."
-  (declare (indent defun))
-  `(progn
-     (defvar ,name ,@args)
-     (make-variable-buffer-local ',name)))
-(font-lock-add-keywords 'emacs-lisp-mode '("vim:deflocalvar"))
-
-(defvar vim:emulation-mode-alist nil
-  "List of all keymaps used by some modes.")
-
-(let ((load-path (cons (expand-file-name ".") load-path)))
-  (eval-when-compile
-    (load "vim-compat")
-    (load "vim-keymap")
-    (load "vim-modes")
-    (load "vim-vim")
-    (load "vim-normal-mode")
-    (load "vim-insert-mode")
-    (load "vim-visual-mode")
-    (load "vim-commands")
-    (load "vim-motions")
-    (load "vim-scroll")
-    (load "vim-window")
-    (load "vim-undo")
-    (load "vim-ex")
-    (load "vim-ex-commands")
-    (load "vim-search")
-    (load "vim-maps"))
-  
-  (require 'vim-compat)
-  (require 'vim-keymap)
-  (require 'vim-modes)
-  (require 'vim-vim)
-  (require 'vim-normal-mode)
-  (require 'vim-insert-mode)
-  (require 'vim-visual-mode)
-  (require 'vim-commands)
-  (require 'vim-motions)
-  (require 'vim-scroll)
-  (require 'vim-window)
-  (require 'vim-undo)
-  (require 'vim-ex)
-  (require 'vim-ex-commands)
-  (require 'vim-search)
-  (require 'vim-maps))
 
 (define-minor-mode vim-local-mode
   "VIM emulation mode."
