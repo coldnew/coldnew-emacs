@@ -59,5 +59,8 @@
      require-result))
 
 
+
+
+
 (provide '000-macro)
 ;; 000-macro.el ends here.

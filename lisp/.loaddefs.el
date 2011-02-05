@@ -838,6 +838,96 @@ Note that this only works if the opening tag starts at column 0.
 
 ;;;***
 
+;;;### (autoloads (gnugo) "gnugo/gnugo" "gnugo/gnugo.el" (19789 18872))
+;;; Generated autoloads from gnugo/gnugo.el
+
+(autoload 'gnugo "gnugo/gnugo" "\
+Run gnugo in a buffer, or resume a game in progress.
+Prefix arg means skip the game-in-progress check and start a new
+game straight away.
+
+You are queried for additional command-line options (Emacs supplies
+\"--mode gtp --quiet\" automatically).  Here is a list of options
+that gnugo.el understands and handles specially:
+
+--boardsize num   Set the board size to use (5--19)
+--color <color>   Choose your color ('black' or 'white')
+--handicap <num>  Set the number of handicap stones (0--9)
+
+If there is already a game in progress you may resume it instead of
+starting a new one.  See `gnugo-board-mode' documentation for more info.
+
+\(fn &optional NEW-GAME)" t nil)
+
+;;;***
+
+;;;### (autoloads (htmlize-many-files-dired htmlize-many-files htmlize-file
+;;;;;;  htmlize-region htmlize-buffer) "htmlize/htmlize" "htmlize/htmlize.el"
+;;;;;;  (19789 19046))
+;;; Generated autoloads from htmlize/htmlize.el
+
+(autoload 'htmlize-buffer "htmlize/htmlize" "\
+Convert BUFFER to HTML, preserving colors and decorations.
+
+The generated HTML is available in a new buffer, which is returned.
+When invoked interactively, the new buffer is selected in the current
+window.  The title of the generated document will be set to the buffer's
+file name or, if that's not available, to the buffer's name.
+
+Note that htmlize doesn't fontify your buffers, it only uses the
+decorations that are already present.  If you don't set up font-lock or
+something else to fontify your buffers, the resulting HTML will be
+plain.  Likewise, if you don't like the choice of colors, fix the mode
+that created them, or simply alter the faces it uses.
+
+\(fn &optional BUFFER)" t nil)
+
+(autoload 'htmlize-region "htmlize/htmlize" "\
+Convert the region to HTML, preserving colors and decorations.
+See `htmlize-buffer' for details.
+
+\(fn BEG END)" t nil)
+
+(autoload 'htmlize-file "htmlize/htmlize" "\
+Load FILE, fontify it, convert it to HTML, and save the result.
+
+Contents of FILE are inserted into a temporary buffer, whose major mode
+is set with `normal-mode' as appropriate for the file type.  The buffer
+is subsequently fontified with `font-lock' and converted to HTML.  Note
+that, unlike `htmlize-buffer', this function explicitly turns on
+font-lock.  If a form of highlighting other than font-lock is desired,
+please use `htmlize-buffer' directly on buffers so highlighted.
+
+Buffers currently visiting FILE are unaffected by this function.  The
+function does not change current buffer or move the point.
+
+If TARGET is specified and names a directory, the resulting file will be
+saved there instead of to FILE's directory.  If TARGET is specified and
+does not name a directory, it will be used as output file name.
+
+\(fn FILE &optional TARGET)" t nil)
+
+(autoload 'htmlize-many-files "htmlize/htmlize" "\
+Convert FILES to HTML and save the corresponding HTML versions.
+
+FILES should be a list of file names to convert.  This function calls
+`htmlize-file' on each file; see that function for details.  When
+invoked interactively, you are prompted for a list of files to convert,
+terminated with RET.
+
+If TARGET-DIRECTORY is specified, the HTML files will be saved to that
+directory.  Normally, each HTML file is saved to the directory of the
+corresponding source file.
+
+\(fn FILES &optional TARGET-DIRECTORY)" t nil)
+
+(autoload 'htmlize-many-files-dired "htmlize/htmlize" "\
+HTMLize dired-marked files.
+
+\(fn ARG &optional TARGET-DIRECTORY)" t nil)
+
+;;;***
+
 ;;;### (autoloads (turn-on-hungry-delete-mode hungry-delete-mode
 ;;;;;;  hungry-delete-backward hungry-delete-forward) "hungury-delete/hungry-delete"
 ;;;;;;  "hungury-delete/hungry-delete.el" (19789 16857))
@@ -871,6 +961,18 @@ Turns on hungry delete mode if the buffer is appropriate.
 
 ;;;***
 
+;;;### (autoloads (multi-term) "multi-term/multi-term" "multi-term/multi-term.el"
+;;;;;;  (19789 18514))
+;;; Generated autoloads from multi-term/multi-term.el
+
+(autoload 'multi-term "multi-term/multi-term" "\
+Create new term buffer.
+Will prompt you shell name when you type `C-u' before this command.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (pylookup-update-all pylookup-update pylookup-lookup)
 ;;;;;;  "pylookup/pylookup" "pylookup/pylookup.el" (19784 14506))
 ;;; Generated autoloads from pylookup/pylookup.el
@@ -901,6 +1003,29 @@ Colorize strings that represent colors.
 This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 
 \(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (sr-dired sunrise-cd sunrise) "sunrise-commander/sunrise-commander"
+;;;;;;  "sunrise-commander/sunrise-commander.el" (19789 18859))
+;;; Generated autoloads from sunrise-commander/sunrise-commander.el
+
+(autoload 'sunrise "sunrise-commander/sunrise-commander" "\
+Starts the Sunrise Commander. If the param `left-directory' is given the left
+window  will  display  this  directory  (the  same   for   `right-directory').
+Specifying nil for any of these values uses the default, ie. home.
+
+\(fn &optional LEFT-DIRECTORY RIGHT-DIRECTORY FILENAME)" t nil)
+
+(autoload 'sunrise-cd "sunrise-commander/sunrise-commander" "\
+Run Sunrise but give it the current directory to use.
+
+\(fn)" t nil)
+
+(autoload 'sr-dired "sunrise-commander/sunrise-commander" "\
+Visits the given directory in sr-mode.
+
+\(fn DIRECTORY &optional SWITCHES)" t nil)
 
 ;;;***
 
@@ -957,18 +1082,25 @@ Non-nil for optional argument PRESERVE keeps current buffers.
 
 ;;;***
 
-;;;### (autoloads nil nil ("anything-config/anything-match-plugin.el"
-;;;;;;  "anything-config/anything-startup.el" "autocomplete/auto-complete-config.el"
+;;;### (autoloads nil nil ("ac-anything/ac-anything.el" "anything-c-shell-history/anything-c-shell-history.el"
+;;;;;;  "anything-complete/anything-complete.el" "anything-config/anything-match-plugin.el"
+;;;;;;  "anything-config/anything-startup.el" "anything-dabbrev-expand/anything-dabbrev-expand.el"
+;;;;;;  "anything-grep/anything-grep.el" "anything-gtags/anything-gtags.el"
+;;;;;;  "anything-include/anything-include.el" "anything-ipa/anything-ipa.el"
+;;;;;;  "anything-kyr/anything-kyr.el" "anything-menu/anything-menu.el"
+;;;;;;  "anything-migemo/anything-migemo.el" "anything-slime/anything-slime.el"
+;;;;;;  "anything-yaetags/anything-yaetags.el" "autocomplete/auto-complete-config.el"
 ;;;;;;  "autocomplete/auto-complete.el" "autocomplete/fuzzy.el" "autocomplete/popup.el"
-;;;;;;  "highlight-cl/highlight-cl.el" "ppindent/ppindent.el" "pymacs/pymacs.el"
-;;;;;;  "qmake-mode/qmake.el" "ssh-config/ssh-config.el" "vim-mode/vim-commands.el"
-;;;;;;  "vim-mode/vim-compat.el" "vim-mode/vim-core.el" "vim-mode/vim-defs.el"
-;;;;;;  "vim-mode/vim-ex-commands.el" "vim-mode/vim-ex.el" "vim-mode/vim-insert-mode.el"
-;;;;;;  "vim-mode/vim-keymap.el" "vim-mode/vim-macs.el" "vim-mode/vim-maps.el"
-;;;;;;  "vim-mode/vim-modes.el" "vim-mode/vim-motions.el" "vim-mode/vim-normal-mode.el"
-;;;;;;  "vim-mode/vim-scroll.el" "vim-mode/vim-search.el" "vim-mode/vim-undo.el"
-;;;;;;  "vim-mode/vim-visual-mode.el" "vim-mode/vim-window.el" "vim-mode/vim.el")
-;;;;;;  (19789 18154 136625))
+;;;;;;  "highlight-cl/highlight-cl.el" "ipa/ipa.el" "ppindent/ppindent.el"
+;;;;;;  "pymacs/pymacs.el" "qmake-mode/qmake.el" "ssh-config/ssh-config.el"
+;;;;;;  "unicad/unicad.el" "vim-mode/vim-commands.el" "vim-mode/vim-compat.el"
+;;;;;;  "vim-mode/vim-core.el" "vim-mode/vim-defs.el" "vim-mode/vim-ex-commands.el"
+;;;;;;  "vim-mode/vim-ex.el" "vim-mode/vim-insert-mode.el" "vim-mode/vim-keymap.el"
+;;;;;;  "vim-mode/vim-macs.el" "vim-mode/vim-maps.el" "vim-mode/vim-modes.el"
+;;;;;;  "vim-mode/vim-motions.el" "vim-mode/vim-normal-mode.el" "vim-mode/vim-scroll.el"
+;;;;;;  "vim-mode/vim-search.el" "vim-mode/vim-undo.el" "vim-mode/vim-visual-mode.el"
+;;;;;;  "vim-mode/vim-window.el" "vim-mode/vim.el") (19789 19047
+;;;;;;  536440))
 
 ;;;***
 

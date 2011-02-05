@@ -34,5 +34,6 @@
 (defun yas/login-name ()
   (user-login-name))
 
+
 (provide '025-yasnippet)
 ;; 025-yasnippet.el ends here.

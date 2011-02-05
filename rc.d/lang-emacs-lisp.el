@@ -41,6 +41,7 @@
 	     (vim:local-imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
 	     ))
 ;;;;;; Misc Settings
+;; if *scratch* does not exist, create it.
 (run-with-idle-timer 1 t
 		     '(lambda () (get-buffer-create "*scratch*")))
 (add-hook 'lisp-interaction-mode-hook 'highlight-cl-add-font-lock-keywords)

@@ -71,7 +71,7 @@
 (require 'rc-find-file)
 (require 'rc-ccmode-common)
 
-;;(require '997-el-get)			; emacs lisp manager
+(require '997-el-get)			; emacs lisp manager
 (require '998-elpa)			; emacs lisp manager
 (require '999-keybinding)		; Global Keybindings, must in the last line.
 
