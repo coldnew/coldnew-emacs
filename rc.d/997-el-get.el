@@ -1,9 +1,7 @@
 ;;
 (setq el-get-dir "~/.emacs.d/lisp/")
 (add-to-list 'el-get-recipe-path "~/.emacs.d/etc/recipes")
-;;(add-to-list 'load-path "~/.emacs.d/etc/recipes/")
-;;(defalias 'install 'el-get-install)
-;;(defalias 'remove  'el-get-remove)
+
 (setq el-get-sources
       '(
 	ac-anything
@@ -71,8 +69,6 @@
 	xcode-document-viewer
 	yasnippet
 
-	;; (:name gnugo
-	;;        :type emacswiki)
 	;;elscreen
 	;;auctex
 	;;color-theme			;
