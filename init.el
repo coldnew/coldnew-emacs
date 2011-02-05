@@ -44,6 +44,7 @@
 (require '013-woman)			; Woman-mode Settings
 (require '014-session)			; Store current positions
 (require '015-desktop)
+;; 016~022
 (require '022-ibuffer)			; Call buffer-list
 (require '025-yasnippet)		; Yasnippet config
 (require '026-auto-complete)		; Auto COmplete config

@@ -198,9 +198,8 @@
 	(:name qmake-mode
 	       :type hg
 	       :url "https://qmake-mode.googlecode.com/hg/ qmake-mode")
-	(:name auto-install
+	(:name ppindent
 	       :type emacswiki)
-
 
 	csharp-mode
 	gnugo

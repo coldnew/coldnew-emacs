@@ -1,3 +1,4 @@
+
 ;;;; All extra dependency
 (eval-when-compile (require 'cl))
 
@@ -92,7 +93,8 @@
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
 (require-maybe 'highlight-cl)			;
 (require-maybe 'qmake-mode)			;
-(require-maybe 'auto-install)			;
+(require-maybe 'ppindent)			;
+
 
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab

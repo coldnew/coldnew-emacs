@@ -16,7 +16,23 @@
 	       (insert "HEADER")
 	       (yas/expand))))
 
-
+;;;;;; Functions
+(defun yas/dir ()
+  (file-name-directory (buffer-file-name)))
+(defun yas/file ()
+  (file-name-nondirectory (buffer-file-name)))
+(defun yas/file-sans ()
+  (file-name-sans-extension (file-name-nondirectory (buffer-file-name))))
+(defun yas/file-ext ()
+  (file-name-extension (file-name-nondirectory (buffer-file-name))))
+(defun yas/file-sans-upcase ()
+  (upcase (yas/file-sans)))
+(defun yas/year ()
+  (format-time-string "%Y"))
+(defun yas/user-name ()
+  (user-full-name))
+(defun yas/login-name ()
+  (user-login-name))
 
 (provide '025-yasnippet)
 ;; 025-yasnippet.el ends here.

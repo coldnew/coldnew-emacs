@@ -840,7 +840,7 @@ Note that this only works if the opening tag starts at column 0.
 
 ;;;### (autoloads (turn-on-hungry-delete-mode hungry-delete-mode
 ;;;;;;  hungry-delete-backward hungry-delete-forward) "hungury-delete/hungry-delete"
-;;;;;;  "hungury-delete/hungry-delete.el" (19789 12940))
+;;;;;;  "hungury-delete/hungry-delete.el" (19789 16857))
 ;;; Generated autoloads from hungury-delete/hungry-delete.el
 
 (autoload 'hungry-delete-forward "hungury-delete/hungry-delete" "\
@@ -958,18 +958,17 @@ Non-nil for optional argument PRESERVE keeps current buffers.
 ;;;***
 
 ;;;### (autoloads nil nil ("anything-config/anything-match-plugin.el"
-;;;;;;  "anything-config/anything-startup.el" "auto-install/auto-install.el"
-;;;;;;  "autocomplete/auto-complete-config.el" "autocomplete/auto-complete.el"
-;;;;;;  "autocomplete/fuzzy.el" "autocomplete/popup.el" "highlight-cl/highlight-cl.el"
-;;;;;;  "pymacs/pymacs.el" "qmake-mode/qmake.el" "smartchr/smartchr.el"
-;;;;;;  "ssh-config/ssh-config.el" "vim-mode/vim-commands.el" "vim-mode/vim-compat.el"
-;;;;;;  "vim-mode/vim-core.el" "vim-mode/vim-defs.el" "vim-mode/vim-ex-commands.el"
-;;;;;;  "vim-mode/vim-ex.el" "vim-mode/vim-insert-mode.el" "vim-mode/vim-keymap.el"
-;;;;;;  "vim-mode/vim-macs.el" "vim-mode/vim-maps.el" "vim-mode/vim-modes.el"
-;;;;;;  "vim-mode/vim-motions.el" "vim-mode/vim-normal-mode.el" "vim-mode/vim-scroll.el"
-;;;;;;  "vim-mode/vim-search.el" "vim-mode/vim-undo.el" "vim-mode/vim-visual-mode.el"
-;;;;;;  "vim-mode/vim-window.el" "vim-mode/vim.el" "xcode-document-viewer/xcode-document-viewer.el")
-;;;;;;  (19789 15711 600588))
+;;;;;;  "anything-config/anything-startup.el" "autocomplete/auto-complete-config.el"
+;;;;;;  "autocomplete/auto-complete.el" "autocomplete/fuzzy.el" "autocomplete/popup.el"
+;;;;;;  "highlight-cl/highlight-cl.el" "ppindent/ppindent.el" "pymacs/pymacs.el"
+;;;;;;  "qmake-mode/qmake.el" "ssh-config/ssh-config.el" "vim-mode/vim-commands.el"
+;;;;;;  "vim-mode/vim-compat.el" "vim-mode/vim-core.el" "vim-mode/vim-defs.el"
+;;;;;;  "vim-mode/vim-ex-commands.el" "vim-mode/vim-ex.el" "vim-mode/vim-insert-mode.el"
+;;;;;;  "vim-mode/vim-keymap.el" "vim-mode/vim-macs.el" "vim-mode/vim-maps.el"
+;;;;;;  "vim-mode/vim-modes.el" "vim-mode/vim-motions.el" "vim-mode/vim-normal-mode.el"
+;;;;;;  "vim-mode/vim-scroll.el" "vim-mode/vim-search.el" "vim-mode/vim-undo.el"
+;;;;;;  "vim-mode/vim-visual-mode.el" "vim-mode/vim-window.el" "vim-mode/vim.el")
+;;;;;;  (19789 18154 136625))
 
 ;;;***
 
