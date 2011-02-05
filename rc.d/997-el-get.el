@@ -78,13 +78,10 @@
 
 	;;  session
 	;; emacs-w3m
+
 	))
 
-(el-get 'wait)
-
-;; BUG: After load this file, I can't use lusty-explorer, so rebind keymap
-;;(vim:nmap (kbd "C-x C-f") 'find-file)
-;;(vim:imap (kbd "C-x C-f") 'find-file)
+;;(el-get 'wait)
 
 
 

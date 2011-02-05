@@ -3,7 +3,7 @@
 
 ;;;;; Extra font-lock face for userdefine macro.
 
-
+;;;; Extra font-lock
 (font-lock-add-keywords 'emacs-lisp-mode
 			'(("(\\(\\defcmd\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
 			   (1 font-lock-keyword-face)

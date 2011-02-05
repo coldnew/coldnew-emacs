@@ -18,6 +18,8 @@
 ;;;; Keybindings
 (add-hook 'term-mode-hook
 	  '(lambda ()
+	     (vim:local-nmap (kbd "C-p") 'term-send-up)
+	     (vim:local-nmap (kbd "C-n") 'term-send-down)
 	     (vim:local-imap (kbd "<f3>") 'shell-pop)
 	     (vim:local-imap (kbd "RET") 'term-send-raw)
 	     ))

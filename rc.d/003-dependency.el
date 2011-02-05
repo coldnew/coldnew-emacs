@@ -38,7 +38,6 @@
 (require-maybe 'completion-ui)			;
 (require-maybe 'csharp-mode)			; C# mode derived mode
 (require-maybe 'ctagsfind)			;
-(require-maybe 'ctypes)				;
 (require-maybe 'dabbrev)			;
 (require-maybe 'desktop)			;
 (require-maybe 'doxymacs)			; Doxygen for emacs
@@ -75,7 +74,7 @@
 (require-maybe 'ppindent)			;
 (require-maybe 'pretty-lambdada)		; Show lambda in smbol
 (require-maybe 'python)				; Python
-(require-maybe 'qmake-mode)			;
+(require-maybe 'qmake-mode)			; qmake mode for emacs
 (require-maybe 'quack)				; enhanced support for editing and running Scheme code
 (require-maybe 'rainbow-mode)			; Color the emacs buffer
 (require-maybe 'recentf)			;
