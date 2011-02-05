@@ -47,6 +47,7 @@
 (require-maybe 'gnugo)				; Run GNU Go in a buffer
 (require-maybe 'gobject-class)			; functions to easy GObject-based class developers
 (require-maybe 'grep)				;
+(require-maybe 'highlight-cl)			;
 (require-maybe 'highlight-parentheses)		; Highlight pair parentheses
 (require-maybe 'htmlize)			;
 (require-maybe 'hungry-delete)			;
@@ -64,8 +65,11 @@
 (require-maybe 'popup-pos-tip)			;
 (require-maybe 'pos-tip)			;
 (require-maybe 'pp)				; pretty printer for Emacs Lisp
+(require-maybe 'ppindent)			;
 (require-maybe 'pretty-lambdada)		; Show lambda in smbol
+;;(require-maybe 'protbuf)			; Protect buffers from accidental killing
 (require-maybe 'python)				; Python
+(require-maybe 'qmake-mode)			;
 (require-maybe 'quack)				; enhanced support for editing and running Scheme code
 (require-maybe 'rainbow-mode)			; Color the emacs buffer
 (require-maybe 'recentf)			;
@@ -91,9 +95,6 @@
 (require-maybe 'x-dnd)				; Drag and drop support for X
 (require-maybe 'xcscope)			; Cscope interface for Emacs
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
-(require-maybe 'highlight-cl)			;
-(require-maybe 'qmake-mode)			;
-(require-maybe 'ppindent)			;
 
 
 ;;(require-maybe 'ipython)			; iPython

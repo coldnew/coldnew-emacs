@@ -1,0 +1,1 @@
+(:name vim-mode :type hg :url "https://bitbucket.org/lyro/vim-mode")

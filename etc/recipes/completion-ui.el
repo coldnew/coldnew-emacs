@@ -1,0 +1,1 @@
+(:name completion-ui :type http-tar :options ("xf") :url "http://www.dr-qubit.org/download.php?file=predictive/completion-ui.tar.gz")

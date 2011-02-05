@@ -1092,15 +1092,15 @@ Non-nil for optional argument PRESERVE keeps current buffers.
 ;;;;;;  "anything-yaetags/anything-yaetags.el" "autocomplete/auto-complete-config.el"
 ;;;;;;  "autocomplete/auto-complete.el" "autocomplete/fuzzy.el" "autocomplete/popup.el"
 ;;;;;;  "highlight-cl/highlight-cl.el" "ipa/ipa.el" "ppindent/ppindent.el"
-;;;;;;  "pymacs/pymacs.el" "qmake-mode/qmake.el" "ssh-config/ssh-config.el"
-;;;;;;  "unicad/unicad.el" "vim-mode/vim-commands.el" "vim-mode/vim-compat.el"
-;;;;;;  "vim-mode/vim-core.el" "vim-mode/vim-defs.el" "vim-mode/vim-ex-commands.el"
-;;;;;;  "vim-mode/vim-ex.el" "vim-mode/vim-insert-mode.el" "vim-mode/vim-keymap.el"
-;;;;;;  "vim-mode/vim-macs.el" "vim-mode/vim-maps.el" "vim-mode/vim-modes.el"
-;;;;;;  "vim-mode/vim-motions.el" "vim-mode/vim-normal-mode.el" "vim-mode/vim-scroll.el"
-;;;;;;  "vim-mode/vim-search.el" "vim-mode/vim-undo.el" "vim-mode/vim-visual-mode.el"
-;;;;;;  "vim-mode/vim-window.el" "vim-mode/vim.el") (19789 19047
-;;;;;;  536440))
+;;;;;;  "protbuf/protbuf.el" "pymacs/pymacs.el" "qmake-mode/qmake.el"
+;;;;;;  "ssh-config/ssh-config.el" "unicad/unicad.el" "vim-mode/vim-commands.el"
+;;;;;;  "vim-mode/vim-compat.el" "vim-mode/vim-core.el" "vim-mode/vim-defs.el"
+;;;;;;  "vim-mode/vim-ex-commands.el" "vim-mode/vim-ex.el" "vim-mode/vim-insert-mode.el"
+;;;;;;  "vim-mode/vim-keymap.el" "vim-mode/vim-macs.el" "vim-mode/vim-maps.el"
+;;;;;;  "vim-mode/vim-modes.el" "vim-mode/vim-motions.el" "vim-mode/vim-normal-mode.el"
+;;;;;;  "vim-mode/vim-scroll.el" "vim-mode/vim-search.el" "vim-mode/vim-undo.el"
+;;;;;;  "vim-mode/vim-visual-mode.el" "vim-mode/vim-window.el" "vim-mode/vim.el")
+;;;;;;  (19789 20947 429008))
 
 ;;;***
 

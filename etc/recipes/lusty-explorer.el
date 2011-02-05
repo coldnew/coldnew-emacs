@@ -1,0 +1,1 @@
+(:name lusty-explorer :type emacswiki)

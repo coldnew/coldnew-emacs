@@ -1,0 +1,1 @@
+(:name anything-match-plugin :type emacswiki)

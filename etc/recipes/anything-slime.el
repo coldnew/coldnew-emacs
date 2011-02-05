@@ -1,0 +1,1 @@
+(:name anything-slime :type emacswiki)

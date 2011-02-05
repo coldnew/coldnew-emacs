@@ -1,0 +1,1 @@
+(:name anything-dabbrev-expand :type emacswiki)

@@ -1,0 +1,1 @@
+(:name anything-config :type git :url "git://repo.or.cz/anything-config.git")

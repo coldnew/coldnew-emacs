@@ -1,0 +1,1 @@
+(:name async-eval :type http :url "http://nschum.de/src/emacs/async-eval/async-eval.el")
