@@ -13,8 +13,9 @@
 	     (when (and (buffer-file-name)
 			(not (file-exists-p (buffer-file-name)))
 			(= (point-max) 1))
-	       (insert "TEMPLATE")
+	       (insert "HEADER")
 	       (yas/expand))))
+
 
 
 (provide '025-yasnippet)

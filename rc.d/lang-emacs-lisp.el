@@ -8,6 +8,12 @@
 ;;;;;; Auto-mode alist
 (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 
+;;;;; Auto-complete
+(defun ac-emacs-lisp-mode-setup ()
+  "auto-complete settings for emacs-lisp-mode"
+  (setq ac-sources '(ac-source-symbols ac-source-company-elisp
+				       ac-source-words-in-same-mode-buffers)))
+
 ;;;;;; Hook
 (add-hook 'emacs-lisp-mode-hook
 	  '(lambda ()
@@ -53,10 +59,6 @@
 	      (if (buffer-file-name)
 		  (byte-compile-file buffer-file-name)))))
 
-(defun ac-emacs-lisp-mode-setup ()
-  "auto-complete settings for emacs-lisp-mode"
-  (setq ac-sources '(ac-source-symbols ac-source-company-elisp
-				       ac-source-words-in-same-mode-buffers)))
 
 
 ;; ;; 該資料夾內沒有 Tags 檔案時自動建立,若有時則更新 Tags 檔

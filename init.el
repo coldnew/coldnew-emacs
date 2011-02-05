@@ -28,7 +28,6 @@
 (add-to-list 'load-path "~/.emacs.d/theme/")
 (let ((default-directory "~/.emacs.d/lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
-
 ;;(add-to-list 'load-path "~/.emacs.d/etc/recipes/")
 ;;;;;; load package initial setting
 (require '000-macro)			; All Macros I use
@@ -56,8 +55,7 @@
 (require '032-anything)			; Complete anything
 (require '033-w3m)			; W3m config
 (require '034-shell-pop)		; Popup terminal
-
-
+(require '035-multi-term)		;
 
 (require 'rc-cedet)
 (require 'rc-common-hook)
