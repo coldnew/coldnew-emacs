@@ -7,3 +7,6 @@
 [submodule "lisp/xcode-document-viewer"]
 	path = lisp/xcode-document-viewer
 	url = https://github.com/imakado/emacs-xcode-document-viewer.git
+[submodule "lisp/magit"]
+	path = lisp/magit
+	url = http://github.com/philjackson/magit.git
