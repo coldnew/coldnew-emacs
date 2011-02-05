@@ -1,7 +1,8 @@
 ;;
 (eval-when-compile (require 'cl))
 
-(setq ipa-file "~/.emacs.d/vat/cache/ipa.cache")
+(setq ipa-file "~/.emacs.d/var/cache/ipa.cache")
+
 
 
 
