@@ -1,9 +1,6 @@
 [submodule "lisp/hungury-delete"]
 	path = lisp/hungury-delete
 	url = http://github.com/nflath/hungry-delete.git
-[submodule "lisp/newlisp-mode"]
-	path = lisp/newlisp-mode
-	url = https://github.com/may/newlisp-mode.git
 [submodule "lisp/smartchr"]
 	path = lisp/smartchr
 	url = https://github.com/imakado/emacs-smartchr.git
