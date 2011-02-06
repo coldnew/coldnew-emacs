@@ -760,6 +760,31 @@ Not documented
 
 ;;;***
 
+;;;### (autoloads (adict-change-dictionary adict-guess-dictionary
+;;;;;;  auto-dictionary-mode) "auto-dictionary/auto-dictionary" "auto-dictionary/auto-dictionary.el"
+;;;;;;  (19789 65046))
+;;; Generated autoloads from auto-dictionary/auto-dictionary.el
+
+(autoload 'auto-dictionary-mode "auto-dictionary/auto-dictionary" "\
+A minor mode that automatically sets `ispell-dictionary`.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'adict-guess-dictionary "auto-dictionary/auto-dictionary" "\
+Automatically change ispell dictionary based on buffer language.
+Calls `ispell-change-dictionary' and runs `adict-change-dictionary-hook'.  If
+BUFFER is nil, the current buffer is used.  If IDLE-ONLY is set, abort
+when an input event occurs.
+
+\(fn &optional IDLE-ONLY)" t nil)
+
+(autoload 'adict-change-dictionary "auto-dictionary/auto-dictionary" "\
+Set buffer language to LANG and stop detecting it automatically.
+
+\(fn &optional LANG)" t nil)
+
+;;;***
+
 ;;;### (autoloads (csharp-mode csharp-mode-hook) "csharp-mode/csharp-mode"
 ;;;;;;  "csharp-mode/csharp-mode.el" (19789 14584))
 ;;; Generated autoloads from csharp-mode/csharp-mode.el
@@ -962,7 +987,7 @@ Turns on hungry delete mode if the buffer is appropriate.
 ;;;***
 
 ;;;### (autoloads (magit-status) "magit/magit" "magit/magit.el" (19789
-;;;;;;  25566))
+;;;;;;  31922))
 ;;; Generated autoloads from magit/magit.el
 
 (autoload 'magit-status "magit/magit" "\
@@ -1014,6 +1039,39 @@ Colorize strings that represent colors.
 This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 
 \(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (speck-multi-read speck-buffer speck-mode) "speck/speck"
+;;;;;;  "speck/speck.el" (19790 23053))
+;;; Generated autoloads from speck/speck.el
+
+(autoload 'speck-mode "speck/speck" "\
+Toggle `speck-mode'.
+With prefix ARG, turn speck-mode on if and only if ARG is
+positive.  Turning on speck-mode will spell-check (\"speck\") all
+windows showing the current buffer.
+
+Global bindings (customizable via `speck-mode-keys').
+
+\\{speck-mode-map}
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'speck-buffer "speck/speck" "\
+Toggle `speck-mode' for current buffer.
+With non-numeric prefix argument ARG prompt for (new)
+dictionary.  With prefix argument ARG zero use the default
+dictionary.  With ARG any other number use the corresponding
+entry from `speck-dictionary-names-alist'.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'speck-multi-read "speck/speck" "\
+Convert annotations to properties.
+BEGIN and END denote the region to convert.
+
+\(fn BEGIN END)" nil nil)
 
 ;;;***
 
@@ -1102,12 +1160,10 @@ Non-nil for optional argument PRESERVE keeps current buffers.
 ;;;;;;  "anything-migemo/anything-migemo.el" "anything-slime/anything-slime.el"
 ;;;;;;  "anything-yaetags/anything-yaetags.el" "autocomplete/auto-complete-config.el"
 ;;;;;;  "autocomplete/auto-complete.el" "autocomplete/fuzzy.el" "autocomplete/popup.el"
-;;;;;;  "highlight-cl/highlight-cl.el" "ipa/ipa.el" "magit/50magit.el"
-;;;;;;  "magit/magit-key-mode.el" "magit/magit-pkg.el" "magit/magit-svn.el"
-;;;;;;  "magit/magit-topgit.el" "magit/rebase-mode.el" "ppindent/ppindent.el"
+;;;;;;  "highlight-cl/highlight-cl.el" "ipa/ipa.el" "ppindent/ppindent.el"
 ;;;;;;  "pymacs/pymacs.el" "qmake-mode/qmake.el" "rcirc-color/rcirc-color.el"
-;;;;;;  "rcirc-controls/rcirc-controls.el" "redo+/redo+.el" "rw-hunspell/rw-hunspell.el"
-;;;;;;  "rw-ispell/rw-ispell.el" "rw-language-and-country-codes/rw-language-and-country-codes.el"
+;;;;;;  "rcirc-controls/rcirc-controls.el" "redo+/redo+.el" "rw-ispell/rw-ispell.el"
+;;;;;;  "rw-language-and-country-codes/rw-language-and-country-codes.el"
 ;;;;;;  "ssh-config/ssh-config.el" "unicad/unicad.el" "vim-mode/vim-commands.el"
 ;;;;;;  "vim-mode/vim-compat.el" "vim-mode/vim-core.el" "vim-mode/vim-defs.el"
 ;;;;;;  "vim-mode/vim-ex-commands.el" "vim-mode/vim-ex.el" "vim-mode/vim-insert-mode.el"
@@ -1115,7 +1171,7 @@ Non-nil for optional argument PRESERVE keeps current buffers.
 ;;;;;;  "vim-mode/vim-modes.el" "vim-mode/vim-motions.el" "vim-mode/vim-normal-mode.el"
 ;;;;;;  "vim-mode/vim-scroll.el" "vim-mode/vim-search.el" "vim-mode/vim-undo.el"
 ;;;;;;  "vim-mode/vim-visual-mode.el" "vim-mode/vim-window.el" "vim-mode/vim.el"
-;;;;;;  "xcscope+/xcscope+.el") (19789 29317 330208))
+;;;;;;  "xcscope+/xcscope+.el") (19790 23054 652359))
 
 ;;;***
 

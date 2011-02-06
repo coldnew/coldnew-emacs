@@ -29,6 +29,7 @@
 (require-maybe 'auto-complete-config)		;
 (require-maybe 'auto-complete-etags)		;
 (require-maybe 'auto-complete-extension)	;
+(require-maybe 'auto-dictionary)		;
 (require-maybe 'c-eldoc)			;
 (require-maybe 'cc-mode)			;
 (require-maybe 'cedet)				;
@@ -109,7 +110,8 @@
 (require-maybe 'xcscope)			; Cscope interface for Emacs
 (require-maybe 'xcscope+)			; Providing an extension to xcscope
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
-
+(require-maybe 'speck)				; minor mode for spell checking
+(require-maybe 'idutils)			;
 
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab

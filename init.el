@@ -62,7 +62,7 @@
 (require '036-midnight)			;
 (require '037-ipa)			; In-place annotations
 (require '038-flyspell)			; on-the-fly spell checker
-
+;;(require '038-spellcheck)		; Spell Checking Setting
 
 
 
