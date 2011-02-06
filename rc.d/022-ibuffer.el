@@ -1,8 +1,6 @@
 ;;
 (eval-when-compile (require 'cl))
 
-
-
 ;;;;;; Keybindings
 (add-hook 'ibuffer-hook
 	  '(lambda ()
@@ -10,25 +8,21 @@
 	     (vim:local-nmap (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
 	     ))
 
+;;;;;; Settings
+(setq ibuffer-always-compile-formats         t )
+(setq ibuffer-always-show-last-buffer        t )
+(setq ibuffer-default-shrink-to-minimum-size t )
+(setq ibuffer-expert                         t )
+(setq ibuffer-show-empty-filter-groups     nil )
+(setq ibuffer-use-other-window             nil )
+
 ;;;;;; Hooks
 (add-hook 'ibuffer-mode-hook
 	  (lambda ()
 	    (hl-line-mode)		; Enable hight-line
 	    (ibuffer-switch-to-saved-filter-groups "default")
 	    (ibuffer-do-sort-by-filename/process)
-	    (ibuffer-invert-sorting)
 	    ))
-
-
-
-
-;;;;;; Settings
-;;(setq ibuffer-always-compile-formats         t )
-;;(setq ibuffer-always-show-last-buffer        t )
-;;(setq ibuffer-default-shrink-to-minimum-size t )
-(setq ibuffer-expert                         t )
-(setq ibuffer-show-empty-filter-groups     nil )
-(setq ibuffer-use-other-window             nil )
 
 ;;;;;; Buffer lists
 (setq ibuffer-saved-filter-groups

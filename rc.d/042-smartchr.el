@@ -1,7 +1,5 @@
 ;; init for smartchr
-(provide 'rc-smartchr)
 
-(require 'smartchr)
 
 (defun smartchr-insert-eol (s)
   (lexical-let ((s s))
@@ -51,3 +49,6 @@
   "insert character more smart."
   (when (featurep 'smartchr)
     (vim:imap (kbd "=") (smartchr '(" = " " == "  "=")))))
+
+(provide '042-smartchr)
+;; 042-smartchr.el ends here.

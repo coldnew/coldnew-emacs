@@ -8,9 +8,10 @@
 
 ;;
 (defadvice kill-buffer (around kill-buffer-around-advice activate)
-  "bury *scratch* buffer instead of kill it "
+  "bury *scratch* or *Ibuffer* buffer instead of kill it "
   (let ((buffer-to-kill (ad-get-arg 0)))
-    (if (equal buffer-to-kill "*scratch*")
+    (if (or (equal buffer-to-kill "*scratch*")
+	    (equal buffer-to-kill "*Ibuffer*"))
 	(bury-buffer)
       ad-do-it)))
 

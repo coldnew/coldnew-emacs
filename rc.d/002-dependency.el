@@ -115,8 +115,19 @@
 (require* 'xcscope+)			  ; Providing an extension to xcscope
 (require* 'yasnippet)			  ; Yet another snippet extension for Emacs
 (require* 'zencoding-mode)		  ; Unfold CSS-selector-like expressions to markup
-
-
+(require* 'semantic)			  ;
+(require* 'semantic/ia)			  ;
+(require* 'semactic/lex)		  ;
+(require* 'semantic/db)			  ;
+(require* 'semantic/db-el)		  ;
+(require* 'semantic/db-find)		  ;
+(require* 'semantic/db-file)		  ;
+(require* 'semantic/db-ref)		  ;
+(require* 'semantic/db-global)		  ;
+(require* 'semantic/db-typecache)	  ;
+(require* 'semantic/bovine)		  ;
+(require* 'semantic/bovine/c)		  ;
+(require* 'semantic/bovine/gcc)		  ;
 
 
 ;;(require* 'ipython)			; iPython
