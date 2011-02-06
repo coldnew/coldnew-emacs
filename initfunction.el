@@ -1,4 +1,5 @@
 ;;;; init file
+(eval-when-compile (require 'cl))
 
 (require 'site-gentoo nil 'noerror)        ; 讀取 Gentoo 安裝的外掛資訊
 (setq-default inhibit-default-init t )     ; 關閉全域初始化

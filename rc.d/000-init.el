@@ -1,25 +1,23 @@
 ;;
 (eval-when-compile (require 'cl))
 
-
 (require '001-environment)		; Environment Setting
 (require '002-dependency)		; All libraries included in
 (require '003-macros)			; Macros or not interactive functions
 (require '004-functions)		; Interactive Functions
 (require '005-advices)			; Advice
 (require '006-deadcode)			; unusecode, maybe use some day...
-
-(require '005-base)			; Basic emacs config
-(require '007-backup)			; Configure Backup Process
+(require '007-base)			; Basic emacs config
 (require '008-fonts)			; Setting Fonts
 (require '009-locale)			; Setting Locales
 (require '010-color-theme)		; Color-themes
-(require '011-vim-mode)			; Use Vim Keybindings instead of pure emacs
+(require '011-backup)			; Configure Backup Process
 (require '012-display)			; Configure window's size
 (require '013-woman)			; Woman-mode Settings
 (require '014-session)			; Store current positions
 (require '015-desktop)
-;; 016~022
+(require '016-vim-mode)			; Use Vim Keybindings instead of pure emacs
+;; 017~022
 (require '022-ibuffer)			; Call buffer-list
 (require '025-yasnippet)		; Yasnippet config
 (require '026-auto-complete)		; Auto COmplete config
@@ -62,6 +60,10 @@
 ;;(require 'lang-matlab)			; Matlab
 (require 'lang-newlisp)			; Newlisp
 (require 'lang-sgml)			; SGML
+
+
+
+
 
 (provide '000-init)
 ;; 000-init.el ends here.

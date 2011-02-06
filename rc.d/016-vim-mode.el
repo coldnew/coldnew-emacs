@@ -17,5 +17,5 @@
 			   (progn (setq old-fullscreen current-value)
 				  'fullboth)))))
 
-(provide '011-vim-mode)
-;; 011-vim-mode.el ends here.
+(provide '016-vim-mode)
+;; 016-vim-mode.el ends here.
