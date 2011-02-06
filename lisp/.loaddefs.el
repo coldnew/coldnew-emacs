@@ -1428,6 +1428,51 @@ Not documented
 
 ;;;***
 
+;;;### (autoloads (fic-mode) "fic-mode/fic-mode" "fic-mode/fic-mode.el"
+;;;;;;  (19790 46427))
+;;; Generated autoloads from fic-mode/fic-mode.el
+
+(autoload 'fic-mode "fic-mode/fic-mode" "\
+highlight FIXMEs in comments and strings (as well as TODO BUG and KLUDGE
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (framemove-default-keybindings fm-right-frame fm-left-frame
+;;;;;;  fm-up-frame fm-down-frame) "framemove/framemove" "framemove/framemove.el"
+;;;;;;  (19790 47712))
+;;; Generated autoloads from framemove/framemove.el
+
+(autoload 'fm-down-frame "framemove/framemove" "\
+Not documented
+
+\(fn)" t nil)
+
+(autoload 'fm-up-frame "framemove/framemove" "\
+Not documented
+
+\(fn)" t nil)
+
+(autoload 'fm-left-frame "framemove/framemove" "\
+Not documented
+
+\(fn)" t nil)
+
+(autoload 'fm-right-frame "framemove/framemove" "\
+Not documented
+
+\(fn)" t nil)
+
+(autoload 'framemove-default-keybindings "framemove/framemove" "\
+Set up keybindings for `framemove'.
+Keybindings are of the form MODIFIER-{left,right,up,down}.
+Default MODIFIER is 'meta.
+
+\(fn &optional MODIFIER)" t nil)
+
+;;;***
+
 ;;;### (autoloads (gnugo) "gnugo/gnugo" "gnugo/gnugo.el" (19789 18872))
 ;;; Generated autoloads from gnugo/gnugo.el
 
@@ -1778,7 +1823,9 @@ accept it or skip it.
 ;;;;;;  "anything-migemo/anything-migemo.el" "anything-slime/anything-slime.el"
 ;;;;;;  "anything-yaetags/anything-yaetags.el" "autocomplete/auto-complete-config.el"
 ;;;;;;  "autocomplete/auto-complete.el" "autocomplete/fuzzy.el" "autocomplete/popup.el"
-;;;;;;  "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
+;;;;;;  "eclim/company-emacs-eclim.el" "eclim/eclim-ant.el" "eclim/eclim-java.el"
+;;;;;;  "eclim/eclim-maven.el" "eclim/eclim-problems.el" "eclim/eclim-project.el"
+;;;;;;  "eclim/eclim.el" "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
 ;;;;;;  "ipa/ipa.el" "ppindent/ppindent.el" "pymacs/pymacs.el" "qmake-mode/qmake.el"
 ;;;;;;  "rcirc-color/rcirc-color.el" "rcirc-controls/rcirc-controls.el"
 ;;;;;;  "redo+/redo+.el" "rw-ispell/rw-ispell.el" "rw-language-and-country-codes/rw-language-and-country-codes.el"
@@ -1788,7 +1835,7 @@ accept it or skip it.
 ;;;;;;  "vim-mode/vim-modes.el" "vim-mode/vim-normal-mode.el" "vim-mode/vim-scroll.el"
 ;;;;;;  "vim-mode/vim-search.el" "vim-mode/vim-undo.el" "vim-mode/vim-visual-mode.el"
 ;;;;;;  "vim-mode/vim-window.el" "xcscope+/xcscope+.el" "zencoding-mode/zencoding-trie.el")
-;;;;;;  (19790 42821 749283))
+;;;;;;  (19790 50423 299368))
 
 ;;;***
 

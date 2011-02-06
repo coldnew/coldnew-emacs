@@ -4,6 +4,7 @@
 (vim:nmap (kbd "<f4>") 'shell-pop)
 (vim:nmap (kbd "C-r") 'undo-tree-redo)
 (vim:nmap (kbd "C-x C-b") 'ibuffer)
+(vim:nmap (kbd "C-x C-s") 'save-buffer-always)
 (vim:nmap (kbd "K") 'woman)
 (vim:nmap (kbd "u") 'undo-tree-undo)
 (vim:nmap (kbd "C-x C-f") 'lusty-file-explorer)
@@ -19,6 +20,7 @@
 (vim:imap (kbd "C-x C-f") 'lusty-file-explorer)
 (vim:imap (kbd "C-x b") 'lusty-buffer-explorer)
 (vim:imap (kbd "C-x f") 'anything-for-files)
+(vim:imap (kbd "C-x C-s") 'save-buffer-always)
 
 
 ;; Visual Map

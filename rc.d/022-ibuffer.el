@@ -121,7 +121,7 @@
 		(name 18 18 :left :elide)
 		" "
 		(size-h 9 -1 :right)
-		" "
+		"  "
 		(mode 16 16 :left :elide)
 		"   "
 		;; (eproject 16 16 :left :elide)

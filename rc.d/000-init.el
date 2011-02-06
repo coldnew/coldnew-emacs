@@ -37,16 +37,12 @@
 (requiref '039-speck)			; on-the-fly spell checker
 (requiref '040-gnus)			; GNUS Setting
 (requiref '041-ielm)			; ielm
-(requiref '042-smartchr)		;
-(requiref '043-semantic)		;
-
+(requiref '042-smartchr)		; smartchr
+(requiref '043-semantic)		; Semantic Setting
+(requiref '044-org)			; Org mode
 
 
 (requiref 'rc-common-hook)
-
-;;(cond (emacs23-p
-;;       (requiref 'rc-ecb)))
-(requiref 'rc-org-mode)
 (requiref 'rc-ccmode-common)
 
 (requiref '997-el-get)			; emacs lisp manager
@@ -68,7 +64,9 @@
 
 
 
-
+;; FIXME: ecb can't use in emacs24
+;;(cond (emacs23-p
+;;       (requiref 'rc-ecb)))
 
 
 

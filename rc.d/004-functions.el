@@ -2,6 +2,15 @@
 (eval-when-compile (require 'cl))
 
 ;; ------------------------------------------------------------------------------
+;; Always save buffer even if it is already saved
+;; ------------------------------------------------------------------------------
+(defun save-buffer-always ()
+  "Save the buffer even if it is not modified."
+  (interactive)
+  (set-buffer-modified-p t)
+  (save-buffer))
+
+;; ------------------------------------------------------------------------------
 ;; show dot emacs structure
 ;; ------------------------------------------------------------------------------
 (defun show-dot-emacs-structure ()

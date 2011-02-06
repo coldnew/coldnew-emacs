@@ -1,4 +1,5 @@
-;; init org mode
+;;
+(eval-when-compile (require 'cl))
 
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
@@ -130,8 +131,5 @@
 
 
 
-
-
-
-(provide 'rc-org-mode)
-;; rc-org-mode.el ends here
+(provide '044-org)
+;; 044-org.el ends here.

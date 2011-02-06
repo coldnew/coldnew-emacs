@@ -4,6 +4,9 @@
 
 
 
+
+
+
 (require* 'ac-anything)			  ; Auto Complete with Anything
 (require* 'ac-company)			  ; Auto-Complete with company-mode
 (require* 'advice)			  ;
@@ -45,6 +48,8 @@
 (require* 'desktop)			  ;
 (require* 'doxymacs)			  ; Doxygen for emacs
 (require* 'dropdown-list)		  ;
+(require* 'eclim)			  ; an interface to the Eclipse IDE.
+(require* 'ediff)
 (require* 'el-get)			  ; Emacs-Lisp Manager
 (require* 'eldoc)			  ; Emacs-Lisp Documents Browser
 (require* 'eldoc-extension)		  ; Emacs-Lisp Documents Browser Extension
@@ -53,6 +58,7 @@
 (require* 'executable)			  ;
 (require* 'find-file)			  ;
 (require* 'flyspell)			  ; on-the-fly spell checker
+(require* 'framemove)			  ; directional frame selection routines
 (require* 'gccsense)			  ; GCC's code analyzers
 (require* 'gnugo)			  ; Run GNU Go in a buffer
 (require* 'gobject-class)		  ; functions to easy GObject-based class developers
@@ -91,6 +97,19 @@
 (require* 'rw-hunspell)			  ;
 (require* 'rw-ispell)			  ;
 (require* 'rw-language-and-country-codes) ;
+(require* 'semactic/lex)		  ;
+(require* 'semantic)			  ;
+(require* 'semantic/bovine)		  ;
+(require* 'semantic/bovine/c)		  ;
+(require* 'semantic/bovine/gcc)		  ;
+(require* 'semantic/db)			  ;
+(require* 'semantic/db-el)		  ;
+(require* 'semantic/db-file)		  ;
+(require* 'semantic/db-find)		  ;
+(require* 'semantic/db-global)		  ;
+(require* 'semantic/db-ref)		  ;
+(require* 'semantic/db-typecache)	  ;
+(require* 'semantic/ia)			  ;
 (require* 'session)			  ; Use Session to save current positions
 (require* 'shell)			  ;
 (require* 'shell-pop)			  ; Helps you pop up and pop out shell buffer easily
@@ -115,19 +134,6 @@
 (require* 'xcscope+)			  ; Providing an extension to xcscope
 (require* 'yasnippet)			  ; Yet another snippet extension for Emacs
 (require* 'zencoding-mode)		  ; Unfold CSS-selector-like expressions to markup
-(require* 'semantic)			  ;
-(require* 'semantic/ia)			  ;
-(require* 'semactic/lex)		  ;
-(require* 'semantic/db)			  ;
-(require* 'semantic/db-el)		  ;
-(require* 'semantic/db-find)		  ;
-(require* 'semantic/db-file)		  ;
-(require* 'semantic/db-ref)		  ;
-(require* 'semantic/db-global)		  ;
-(require* 'semantic/db-typecache)	  ;
-(require* 'semantic/bovine)		  ;
-(require* 'semantic/bovine/c)		  ;
-(require* 'semantic/bovine/gcc)		  ;
 
 
 ;;(require* 'ipython)			; iPython

@@ -34,7 +34,6 @@
 	doxymacs
 	el-get
 	emms
-	fic-mode
 	gnugo
 	gobject-class
 	highlight-cl
@@ -107,6 +106,13 @@
 	(:name ibuffer-git
 	       :type git
 	       :url "git://github.com/jrockway/ibuffer-git")
+
+	(:name framemove
+	       :type emacswiki)
+	(:name eclim
+	       :type git
+	       :url "https://github.com/senny/emacs-eclim.git")
+
 	;;elscreen
 	;;auctex
 	;;color-theme			;
