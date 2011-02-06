@@ -104,6 +104,9 @@
 	       :build `("autoconf" ("./configure" ,(concat "--with-emacs=" el-get-emacs)) "make")
 	       :info "doc")
 
+	(:name ibuffer-git
+	       :type git
+	       :url "git://github.com/jrockway/ibuffer-git")
 	;;elscreen
 	;;auctex
 	;;color-theme			;
