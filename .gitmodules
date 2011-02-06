@@ -10,3 +10,6 @@
 [submodule "lisp/magit"]
 	path = lisp/magit
 	url = http://github.com/philjackson/magit.git
+[submodule "lisp/zencoding-mode"]
+	path = lisp/zencoding-mode
+	url = https://github.com/chrisdone/zencoding.git
