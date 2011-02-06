@@ -8,79 +8,37 @@
 
 ;;; Commentary:
 
-;; Motions describe functions moving the cursor or representing an
-;; argument for an operator. There are three types of motions:
-;; character-wise, line-wise and block-wise. Usually only the first
-;; two types are represented by motion-commands while the last one is
-;; implicitly used by visual-block-mode.
-;;
-;; A motion is defined using the macro 'vim:defmotion' which has the
-;; following form:
+;; Vim-mode motions can be defined with the macro vim:defmotion.
+;; Similar to commands motions have several keyword-like optional
+;; parameters and a view attributes. The general form is as follows.
 ;; 
-;; (vim:defmotion name (count 
-;;                      argument[:{char}] 
-;;                      {inclusive,exclusive,linewise,block}) 
-;;   body...)
+;;   (vim:defmotion motion-name ((count [count-name])
+;;                               (argument [argument-name])
+;;                               {inclusive,exclusive,linewise,block})
+;;     body ...)
+;; 
+;; The count and argument parameters are optional and can have a
+;; special variable-name. Exactly one of the attributes inclusive,
+;; exclusive, linewise, block must be specified.
+;; 
+;; count: The number of times the motion should be repeated.
+;; 
+;; argument: An extra character argument to be given after the motion
+;;           command has been initiated. Examples are the motions f F
+;;           t T of Vim.
+;; 
+;; inclusive, exclusive, linewise, block: This is the default motion
+;;                                        type of this motion command.
+;; 
+;; Each motion command should return an object of type vim:motion (see
+;; below). If the function does not return such an object explicitly,
+;; it is automatically created implicitly based on the position of
+;; (point) before and after execution of the motion and the specified
+;; motion-type. This means when a motion is called from lisp code it
+;; returns *always* a vim:motion object.
 ;;
-;; Each of the arguments is optional. The names of the arguments must
-;; be exactly as in the definition above (but see 'Argument-renaming'
-;; below).
-;;
-;; The COUNT argument (if given) takes the count of the motion which
-;; is usually the number how often the motion should be repeated. This
-;; argument may be nil if no count is given.
-;;
-;; The ARGUMENT argument is an aditional text-argument to be given and
-;; may be nil, too. If it is specified as ARGUMENT:CHAR, the argument
-;; is a one-character argument (see `vim:motion-find' usually bound to
-;; 'f' for an example), otherwise it's a string-argument. Currently all
-;; motions taking an argument take a character-argument.
-;;
-;; One if the pseudo-arguments INCLUSIVE, EXCLUSIVE, LINEWISE and BLOCK
-;; must be given and specifies the type of the motion. See the Vim-manual
-;; for an explanation of motion-types.
-;;
-;; If you do not like the default argument names, they may be renamed by using
-;; (ARG NEWNAME) instead of ARG, e.g.
-;;
-;;   (vim:defmotion vim:motion-find (inclusive count (argument:char arg))
-;;
-;; defines an inclusive motion with a count-argument but renames the 
-;; character-argument to ARG.
-;;
-;; Each motion should return an object of type `vim:motion'. This may happen
-;; in one of two ways: explicit or implicit. 
-;;
-;; Explicit: The function creates an object of type `vim:motion' using
-;; `vim:make-motion' specifing the begin position, the end position
-;; and the type of the motion (overriding the motion-type specified in
-;; the argument list). If the motion is a usual motion, the vim:motion
-;; parameter :has-begin should be nil, if it's a text-objects it
-;; should be t. The difference is that text-objects actively define a
-;; range from the begin-position to the end-position, while
-;; conventional motions define only the end-position placing begin at
-;; (point). The motion should also change (point) usually to the
-;; end-position of the returned motion.
-;;
-;; Implicit: Creating an explicit `vim:motion' object is overkill for
-;; most simple motions. If the motion does not return a `vim:motion'
-;; object, its created implicitly with the following rules: 
-;;   - the begin-position is set to (point) before the execution of motion's 
-;;     body
-;;   - the end-position is set to (point) after the execution of motion's
-;;     body
-;;   - :has-begin is nil 
-;;   - the type is the type defined in the motion's argument list
-;; Almost all motions defined in this file are implicit.
-;;
-;; Note that, independently on whether the motion is defined
-;; implicitly or explicitly, calling a motion always returns a
-;; `vim:motion' object, i.e. (vim:motion-p (vim:motion-left)) would
-;; return t.
-;;
-;; Motions can be bound to some key-sequence as any other interactive
-;; Emacs function, but they work only in vim-mode. Ususally motions
-;; are bound to the operator-pending-mode keymap using `vim:omap'.
+;; For more information about the vim:motion struct and motion types
+;; look at vim-core.el.
 
 ;;; Code:
 
@@ -274,6 +232,23 @@
       (goto-line count)
     (goto-char (point-max)))
   (vim:motion-first-non-blank))
+
+(vim:defmotion vim:motion-beginning-of-screen-line (exclusive)
+  "Move the cursor to the first character of the current screen
+line."
+  (beginning-of-visual-line))
+
+(vim:defmotion vim:motion-first-non-blank-of-screen-line (exclusive)
+  "Move the cursor to the first non blank character of the
+current screen line."
+  (vim:motion-beginning-of-screen-line)
+  (skip-chars-forward " \t\r"))
+
+(vim:defmotion vim:motion-end-of-screen-line (inclusive count)
+  "Move the cursor to the last character of the current screen
+line or [count - 1] screen lines downward."
+  (end-of-visual-line count)
+  (unless (bolp) (backward-char)))
 
 
 (defun vim:boundary-chars (direction chars)
@@ -1068,7 +1043,7 @@ expression subgroup 1."
 (defun vim:generic-motion-xml-blocks (block-function count)
   "Calls a block selection function with regular expressions
 matching xml tags. `block-function' should be either
-#'vim:inner-block or #'vim:out-block."
+#'vim:inner-block or #'vim:outer-block."
   (funcall block-function
 	   "<\\([^/>]+?\\)>" "</\\([^/>]+?\\)>"
 	   #'vim:compare-blocks-match1
@@ -1319,6 +1294,110 @@ jumps to the corresponding one."
         (progn
           (goto-char (1+ pos))
           (backward-list))))))
+
+
+(defun vim:forward-end-of-block (open-re close-re count)
+  "Go to the `count'-th next unmatched end of block."
+  (let ((cnt (or count 1))
+	(re (concat "\\(" open-re "\\)\\|\\(" close-re "\\)")))
+    (save-excursion
+      (while (and (> cnt 0)
+		  (re-search-forward re nil t))
+	(if (match-beginning 1)
+	    (incf cnt)
+	  (decf cnt))))
+    (if (zerop cnt)
+	(goto-char (match-beginning 0))
+      (signal 'no-such-object (list "No closing of block found.")))))
+      
+(defun vim:backward-beginning-of-block (open-re close-re count)
+  "Go to the `count'-th previous unmatched beginning of block."
+  (let ((cnt (or count 1))
+	(re (concat "\\(" open-re "\\)\\|\\(" close-re "\\)")))
+    (save-excursion
+      (while (and (> cnt 0)
+		  (re-search-backward re nil t))
+	(if (match-beginning 1)
+	    (decf cnt)
+	  (incf cnt))))
+    (if (zerop cnt)
+	(goto-char (match-beginning 0))
+      (signal 'no-such-object (list "No opening of block found.")))))
+      
+
+(vim:defmotion vim:motion-forward-closing-parenthesis (exclusive count)
+  "Go to the `count'-th next unmatched closing )."
+  (vim:forward-end-of-block "(" ")" count))
+
+(vim:defmotion vim:motion-backward-opening-parenthesis (exclusive count)
+  "Go to the `count'-th previous unmatched opening (."
+  (vim:backward-beginning-of-block "(" ")" count))
+
+(vim:defmotion vim:motion-forward-closing-bracket (exclusive count)
+  "Go to the `count'-th next unmatched closing ]."
+  (vim:forward-end-of-block "[" "]" count))
+
+(vim:defmotion vim:motion-backward-opening-bracket (exclusive count)
+  "Go to the `count'-th previous unmatched opening [."
+  (vim:backward-beginning-of-block "[" "]" count))
+
+(vim:defmotion vim:motion-forward-closing-brace (exclusive count)
+  "Go to the `count'-th next unmatched closing }."
+  (vim:forward-end-of-block "{" "}" count))
+
+(vim:defmotion vim:motion-backward-opening-brace (exclusive count)
+  "Go to the `count'-th previous unmatched opening {."
+  (vim:backward-beginning-of-block "{" "}" count))
+
+(vim:defmotion vim:motion-forward-preprocessor-endif (exclusive count)
+  "Go the the `count'-th next unmatched #else or #endif."
+  (let ((cnt (or count 1))
+	(re "\\(^[ \t]*#if\\)\\|\\(^[ \t]*#else\\)\\|\\(^[ \t]*#endif\\)"))
+    (save-excursion
+      (while (and (> cnt 0)
+		  (re-search-forward re nil t))
+	(cond
+	 ((match-beginning 1) ; found #if
+	  (incf cnt)
+	  (setq prev-was-endif nil))
+	 ((match-beginning 2) ; found #else
+	  (when (= 1 cnt) (decf cnt)))
+	 (t ; found #endif
+	  (decf cnt)))))
+    (if (zerop cnt)
+	(goto-char (match-beginning 0))
+      (signal 'no-such-object (list "No closing of block found.")))))
+
+(vim:defmotion vim:motion-backward-preprocessor-if (exclusive count)
+  "Go the the `count'-th next unmatched #else or #if."
+  (let ((cnt (or count 1))
+	(re "\\(^[ \t]*#if\\)\\|\\(^[ \t]*#else\\)\\|\\(^[ \t]*#endif\\)"))
+    (save-excursion
+      (while (and (> cnt 0)
+		  (re-search-backward re nil t))
+	(cond
+	 ((match-beginning 1) ; found #if
+	  (decf cnt)
+	  (setq prev-was-endif nil))
+	 ((match-beginning 2) ; found #else
+	  (when (= 1 cnt) (decf cnt)))
+	 (t ; found #endif
+	  (incf cnt)))))
+    (if (zerop cnt)
+	(goto-char (match-beginning 0))
+      (signal 'no-such-object (list "No opening of block found.")))))
+
+(vim:defmotion vim:motion-backward-opening-comment (exclusive count)
+  "Go to the `count'-th previous unmatched opening /*."
+  (when (save-excursion
+	  (re-search-backward "/\\*" nil t count))
+    (goto-char (match-beginning 0))))
+
+(vim:defmotion vim:motion-forward-closing-comment (exclusive count)
+  "Go to the `count'-th next unmatched closing ]."
+  (when (save-excursion
+	  (re-search-forward "\\*/" nil t count))
+    (goto-char (match-beginning 0))))
 
 
 (vim:defmotion vim:motion-mark (exclusive (argument:char mark-char))

@@ -6,6 +6,61 @@
 ;;
 ;; This file is not part of GNU Emacs.
 
+;;; Commentary:
+
+;; In Vim there several types of motions. The four basic types are
+;; 
+;; # characterwise, inclusive
+;; # characterwise, exclusive
+;; # linewise
+;; # blockwise
+;; 
+;; The motion type has no influence when the motion is just used to
+;; move (point) but influences on which region of the buffer a certain
+;; command that requires a motion parameter works. If the motions
+;; starts at point beg and ends at point end, characterwise inclusive
+;; motions work on all characters from beg to end including end while
+;; characterwise exclusive motions work on all characters from beg up
+;; to end - 1 excluding end. Examples for the first type are e % for
+;; the second type w l. Linewise motions always operate on whole lines
+;; from the line containing beg up to the line containing end.
+;; Blockwise motions operate on the rectangular region defined by row
+;; and column of beg and end.
+;; 
+;; A motion returns an object of type vim:motion either implicitly or
+;; explicitly and a command gets an object of type vim:motion passed
+;; in its motion parameter when called. The command should the work on
+;; the region specified by the begin and end position of the motion
+;; w.r.t. the motion type, e.g., linewise motions should work on whole
+;; lines.
+;; 
+;; The vim:motion object is a structure with four fields:
+;; 
+;; type: The motion type, inclusive, exclusive, linewise, block.
+;; 
+;; has-begin: If non nil the motion defines both an explicit end
+;;            position and an explicit start position of the region.
+;;            If it is nil the motion only defines an explicit end
+;;            position and the start position is implicitly set to
+;;            (point). All usual motions should set this field to nil
+;;            and specify the new position of (point) as end position
+;;            whereas text-objects, e.g., iw aw ib ab should set it to
+;;            t and specify both positions.
+;; 
+;; begin: The beginning of the motion, if not given it is set to
+;;        (point).
+;; 
+;; end: The end position of the motion.
+;; 
+;; Most usual motions do not need to create the vim:motion object
+;; explicitly. Just move (point) to the desired position and the
+;; vim:motion object will be created automatically.
+;; 
+;; Note that an explicitly returned vim:motion object may have a
+;; different type than the default motion type. The default motion
+;; type is only important for simple motions that do not return an
+;; explicit vim:motion.
+
 ;;; Code:
 
 (eval-when-compile (require 'cl))
@@ -425,7 +480,6 @@ command-specific transformations."
     (let ((command (key-binding keys)))
       (setq this-command command)
       (setq last-command-event (elt keys (1- (length keys))))
-      (setq last-command-char last-command-event)
       (command-execute command)
       (when (memq command '(digit-argument
                             universal-argument))

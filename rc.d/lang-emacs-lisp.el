@@ -36,10 +36,19 @@
 
 ;;;;;; Keybindings
 (add-hook 'emacs-lisp-mode-hook
-	  '(lambda ()
-	     (vim:local-imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
-	     (vim:local-imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
-	     ))
+	  (lambda ()
+	    ;; Normal map
+	    (vim:local-nmap (kbd "zv") 'describe-variable)
+	    (vim:local-nmap (kbd "zf") 'describe-function)
+	    (vim:local-nmap (kbd "zk") 'describe-key)
+	    (vim:local-nmap (kbd "zs") 'describe-syntax)
+	    (vim:local-nmap (kbd "zm") 'describe-mode)
+	    (vim:local-nmap (kbd "zc") 'describe-coding-system)
+
+	    ;; Insert map
+	    (vim:local-imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
+	    (vim:local-imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
+	    ))
 ;;;;;; Misc Settings
 ;; if *scratch* does not exist, create it.
 (run-with-idle-timer 1 t

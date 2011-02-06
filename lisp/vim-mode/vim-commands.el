@@ -8,82 +8,87 @@
 
 ;;; Commentary:
 
-;; In general there are two types of commands: those operating on a
-;; motion and those not taking a motion. Examples of the first one are
-;; the vim-commands c, d, y, =, examples of the second one are dd, D,
-;; p, x.
-;;
-;; Commands are defined using the `vim:defcmd' macro and have the
-;; following form:
-;;
-;;   (vim:defcmd name (count 
-;;                     motion[:optional]
-;;                     argument[:{char,file,buffer}] 
-;;                     [nonrepeatable]
-;;                     [keep-visual])
-;;      body ...)
-;;
-;; Each of the arguments is optional. The names of the arguments must
-;; be exactly as in the definition above (but see 'Argument-renaming'
-;; below).
-;;
-;; The COUNT argument (if given) takes the count of the command which
-;; is usually the number how often the command should be repeated.
-;; This argument may be nil if no count is given. If the command takes
-;; a MOTION argument, no COUNT argument is allowed (will always be
-;; nil).
-;;
-;; The MOTION argument defines the range where the command should work
-;; on. It's always of type `vim:motion'. Usually, a command should
-;; respect the of the motion, i.e. charwise, linewise or block, but
-;; there are commands that behave indepently of the motion type (e.g.
-;; `vim:cmd-shift-left' always works linewise). If the MOTION
-;; parameter has the form motion:optional, the MOTION parameter may be
-;; nil, which can only happen if the command is bound in ex-mode (e.g.
-;; the command `vim:cmd-substitute' is bound to :s may be called
-;; without a motion, in which case it works only on the current line).
-;; If the command is bound in normal-mode, the MOTION argument will
-;; usually be created by some motion-command bound in
-;; operator-pending-mode.
-;;
-;; The ARGUMENT argument is an aditional text-argument to be given and
-;; may be nil, too. If it is specified as ARGUMENT:CHAR, the argument
-;; is a one-character argument (see `vim:cmd-replace-char' usually
-;; bound to 'r' for an example). If it specified as ARGUMENT:FILE it
-;; takes a file-name as argument, ARGUMENT:BUFFER takes a buffer-name
-;; as argument and a single ARGUMENT takes a string as argument. Only
-;; the type ARGUMENT:CHAR has an effect in normal-mode, the others are
-;; only important if bound in ex-mode. In this case the type of the
-;; argument determines how minibuffer-completion is done. The argument
-;; may be nil in which case the command should have a default
-;; behaviour (e.g. the command `vim:cmd-write' bound to :write takes
-;; an ARGUMENT:FILE argument and saves the current buffer to the given
-;; file or to the buffer's own file if ARGUMENT is nil).
-;;
-;; The pseudo-argument NONREPEATABLE means, the command will not be
-;; recorded to the repeat command (usually bound to '.'). This is
-;; useful for non-editing commands, e.g. all window and scrolling
-;; commands have this behaviour.
-;;
-;; The pseudo-argument KEEP-VISUAL means the command should not exit
-;; visual-mode and go back to normal-mode when called in visual-mode.
-;; This is useful for scrolling-commands which stay in visual-mode but
-;; are no regular motions (scrolling commands move the (point) but are
-;; no real motions since they can't in operating-pending mode), or
-;; some visual-mode specific command like
-;; `vim:visual-exchange-point-and-mark', usually bound to 'o').
+;; Vim-mode commands are defined using the macro vim:defcmd, which has the following form.
 ;; 
-;; If you do not like the default argument names, they may be renamed
-;; by using (ARG NEWNAME) instead of ARG, e.g.
+;;   (vim:defcmd command-name ((count [count-name])
+;;                             (motion [motion-name])
+;;                             (register [register-name])
+;;                             (argument[:{char,text,file,buffer,...}] [arg-name]) 
+;;                             [nonrepeatable]
+;;                             [keep-visual])
+;;     body ...)
+;; 
+;; The first three arguments are keyword arguments similar to
+;; defun*. The fourth and fifth argument are not real arguments,
+;; i.e., they do not bind a value. Instead they define special
+;; attributes of the command.
+;; 
+;; Each of the arguments is optional. An argument is either given as
+;; two element list (parameter parameter-name) or without explicit
+;; name just parameter. When no parameter name is specified the
+;; name is the same as the parameter itself, i.e., the parameter
+;; count defines the variable count whereas the parameter
+;; (count cnt) defines the variable cnt.
+;; 
+;; The parameters have the following meanings.
+;; 
+;; count: A numeric argument usually defining how many times a certain
+;;        command should be repeated. If no explicit count has been
+;;        given, the parameter has the value nil.
+;; 
+;; motion: If the command operates on a certain region, the region is
+;;         usually defined by a motion and this argument should be
+;;         specified. When the command is executed in normal-mode
+;;         vim-mode will switch to operator-pending to wait for the
+;;         motion to be specified. Afterwards the command is executed
+;;         with this motion. Note that usually count is nil if the
+;;         command takes a motion because the repeat count will be
+;;         used by the motion. If this parameter is not present the
+;;         command will not take a motion but will be executed without
+;;         switching to operator-pending mode.
+;; 
+;; argument: Some commands take another argument besides the motion
+;;           and the count. There are several types of arguments, the
+;;           type is specified by appending a colon and the type-name
+;;           after argument, i.e., argument:char defines an argument
+;;           which is a single character, argument:text a general
+;;           string, argument:file a file-path and argument:buffer a
+;;           buffer-name. If no explicit type is given the argument
+;;           type will be char. Note that the only allowed argument
+;;           type for commands bound in another mode than ex-mode
+;;           (using vim:emap or vim:local-emap) is char, i.e., when
+;;           calling the command an additional character is read an
+;;           passed to the function. An example for a command like
+;;           this is the r command of Vim. All other argument types
+;;           make only sense for ex-mode commands.
+;; 
+;; register: If specified the command can operator on a register. The
+;;           name of the register, which is a character, is passed in
+;;           this argument.
+;; 
+;; nonrepeatable: If specified the command cannot be repeated by the
+;;                repeat command bound to '.' by default. This is
+;;                usually the case for scrolling or window commands.
+;; 
+;; keep-visual: If specified the command does not end visual-mode when
+;;              executed in visual-mode. This is usually the case for
+;;              scrolling or window commands. Note that most editing
+;;              commands do disable visual-mode.
+;; 
+;; As described above vim:defcmd can be used to define commands for
+;; both normal-mode and ex-mode. Each command should place (point) at
+;; the correct position after the operation.
+;; 
+;; In order to call a command from lisp-code, one has to use keyword
+;; arguments, e.g.,
+;; 
+;;   (vim:cmd-delete-line :count 5)
+;; 
+;; deletes five lines. Note that the keyword used to call a commands
+;; are always :count, :motion, :register or :argument no matter which
+;; parameter names are used to define the command.
 ;;
-;;   (vim:defcmd vim:cmd-replace-char (count (argument:char arg))
-;;
-;; defines a simple command with a COUNT argument but renames the
-;; character-argument to ARG.
-;;
-;; Each command should place (point) at the correct position after the
-;; operation.
-;;
+;; For more information about the vim:motion struct look at vim-core.el.
 
 ;;; Code:
 

@@ -11,8 +11,6 @@
 (vim:nmap (kbd "C-x f") 'anything-for-files)
 (vim:nmap (kbd "M-p") 'anything-show-kill-ring)
 
-
-
 ;; Insert Map
 (vim:imap (kbd "C-n") 'auto-complete)
 (vim:imap (kbd "C-p") 'auto-complete)

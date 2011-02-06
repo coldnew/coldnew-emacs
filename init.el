@@ -41,7 +41,7 @@
 (require '008-fonts)			; Setting Fonts
 (require '009-locale)			; Setting Locales
 (require '010-color-theme)		; Color-themes
-(require '011-vim-mode)			; Use Vim Keybindings
+(require '011-vim-mode)			; Use Vim Keybindings instead of pure emacs
 (require '012-display)			; Configure window's size
 (require '013-woman)			; Woman-mode Settings
 (require '014-session)			; Store current positions
@@ -63,6 +63,7 @@
 (require '037-ipa)			; In-place annotations
 (require '038-flyspell)			; on-the-fly spell checker
 (require '039-speck)			; on-the-fly spell checker
+(require '040-gnus)			; GNUS Setting
 
 
 (require 'rc-cedet)

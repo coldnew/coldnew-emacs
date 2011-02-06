@@ -1,13 +1,13 @@
 ;;; vim.el --- a VIM-emulation for Emacs
 
-;; Copyright (C) 2009, 2010 Frank Fischer
+;; Copyright (C) 2009, 2010, 2011 Frank Fischer
 
 ;; Author: Frank Fischer <frank.fischer@mathematik.tu-chemnitz.de>,
 ;; Maintainer: Frank Fischer <frank.fischer@mathematik.tu-chemnitz.de>,
 ;; URL: http://www.emacswiki.org/emacs/VimMode 
 ;; License: GPLv2 or later, as described below under "License"
-;; Compatibility: Emacs 22, 23, XEmacs 21.4
-;; Version: 0.3.0
+;; Compatibility: Emacs 22, 23
+;; Version: 0.4.0
 ;; Keywords: emulation, vim
 ;; Human-Keywords: vim, emacs
 ;;
@@ -28,7 +28,7 @@
 
 ;; A simple VIM-mode for Emacs
 ;;
-;; This project is in a VERY early development state and many function
+;; This project is in an early development state and many function
 ;; have not been implemented yet.
 ;;
 ;; If you want to try, open this file in your Emacs and evaluate the buffer.
@@ -49,9 +49,13 @@
 ;;
 ;;  - vim-keymap.el: A few functions for defining keymaps for vim-mode.
 ;;
-;;  - vim-vim.el: This file contains the macros for defining motions
-;;                and commands as well as some utility functions for
-;;                calling them.
+;;  - vim-macs.el: This file contains the macros for defining motions
+;;                and commands.
+;;
+;;  - vim-defs.el: Global variables.
+;;
+;;  - vim-core.el: Controlling of active modes and execution of
+;;                 motions and commands.
 ;;
 ;;  - vim-modes.el: Each VIM-mode (normal-mode, insert-mode, ...) corresponds
 ;;                  to an Emacs-minor-mode. This file contains some macros and
@@ -63,7 +67,7 @@
 ;;                                                                    
 ;;  - vim-visual-mode.el: The implementation of visual-mode.         
 ;;
-;;  - vim-ex-mode.el: The implementation of ex-mode.         
+;;  - vim-ex.el: The implementation of ex-mode.         
 ;;                                                                    
 ;;  - vim-commands.el: The implementations of commands like 'delete', 
 ;;                     'yank', 'paste' and so on.               
@@ -86,25 +90,6 @@
 ;;  - vim-maps.el: The definition of the basic keymaps.  This file
 ;;                 connects the keymaps with the commands and motions
 ;;                 defined in vim-commands.el and vim-motions.el.
-;;
-;; TODO:
-;;
-;; HAVE:
-;;   - framework for keymaps, motions, commands and command-mappings
-;;   - insert-mode, normal-mode, visual-mode and ex-mode
-;;   - simple motions
-;;   - deletion, yank, paste, change, replace
-;;   - undo/redo
-;;   - repeat
-;;
-;; MISSING:
-;;   - better Emacs integration (modes, buffer local variables, ...)
-;;   - text objects
-;;   - several commands
-;;   - marks and register
-;;   - ...
-
-;; - several calls 'looking-back' may be inefficient
 
 ;;; Code:
 
