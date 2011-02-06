@@ -198,6 +198,11 @@
        (highlight-changes-delete
 	((t (:background ,_RedGray-6 :foreground nil))))
 
+       ;; ibuffer-git
+       (ibuffer-git-add-face
+	((t (:foreground ,_Green))))
+       (ibuffer-git-del-face
+	((t (:foreground ,_Red))))
 
        ;; ecb
        (ecb-default-highlight-face

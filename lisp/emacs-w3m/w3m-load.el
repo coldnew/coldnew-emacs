@@ -19,7 +19,7 @@ Default bookmark handler for w3m buffers.
 
 ;;;### (autoloads (w3m-buffer w3m-region w3m-find-file w3m-browse-url
 ;;;;;;  w3m w3m-gohome w3m-goto-url-new-session w3m-goto-url w3m-download
-;;;;;;  w3m-retrieve) "w3m" "w3m.el" (19783 17107))
+;;;;;;  w3m-retrieve) "w3m" "w3m.el" (19630 41920))
 ;;; Generated autoloads from w3m.el
 
 (autoload 'w3m-retrieve "w3m" "\
@@ -325,7 +325,7 @@ Process half-dumped data and fontify forms in this buffer.
 ;;;;;;  w3m-linknum-print-this-url w3m-linknum-edit-this-url w3m-linknum-external-view-this-url
 ;;;;;;  w3m-linknum-save-image w3m-linknum-view-image w3m-linknum-toggle-inline-image
 ;;;;;;  w3m-linknum-follow w3m-go-to-linknum w3m-link-numbering-mode)
-;;;;;;  "w3m-lnum" "w3m-lnum.el" (19735 58055))
+;;;;;;  "w3m-lnum" "w3m-lnum.el" (19615 64163))
 ;;; Generated autoloads from w3m-lnum.el
 
 (autoload 'w3m-link-numbering-mode "w3m-lnum" "\
@@ -348,10 +348,6 @@ When link - visit it, when button - press, when input - activate it,
 when image - toggle it.
 With prefix ARG visit link in new session or don't move over
 field/button/image on activation/push/toggle.
-With `-' ARG, for link image - go to it and toggle it.
-With -4 ARG, for link image - toggle it.
-With double prefix ARG, prompt for url to visit.
-With triple prefix ARG, prompt for url to visit in new session.
 
 \(fn ARG)" t nil)
 
@@ -469,19 +465,14 @@ Generate query string for ENGINE from URI matched by last search.
 ;;;***
 
 ;;;### (autoloads (w3m-session-last-crashed-session w3m-session-last-autosave-session
-;;;;;;  w3m-setup-session-menu w3m-session-select w3m-session-crash-recovery-remove
-;;;;;;  w3m-session-save) "w3m-session" "w3m-session.el" (19710 52140))
+;;;;;;  w3m-setup-session-menu w3m-session-select w3m-session-save)
+;;;;;;  "w3m-session" "w3m-session.el" (19563 28233))
 ;;; Generated autoloads from w3m-session.el
 
 (autoload 'w3m-session-save "w3m-session" "\
 Save list of displayed session.
 
 \(fn)" t nil)
-
-(autoload 'w3m-session-crash-recovery-remove "w3m-session" "\
-Remove crash recovery session set.
-
-\(fn)" nil nil)
 
 (autoload 'w3m-session-select "w3m-session" "\
 Select session from session list.

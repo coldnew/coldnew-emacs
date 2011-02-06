@@ -1,5 +1,7 @@
 ;;
-(setq ibuffer-expert t)
+(eval-when-compile (require 'cl))
+
+
 
 ;;;;;; Keybindings
 (add-hook 'ibuffer-hook
@@ -7,6 +9,7 @@
 	     (vim:local-nmap (kbd "d") 'ibuffer-mark-for-delete)
 	     (vim:local-nmap (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
 	     ))
+
 ;;;;;; Hooks
 (add-hook 'ibuffer-mode-hook
 	  (lambda ()
@@ -14,6 +17,14 @@
 	    (ibuffer-switch-to-saved-filter-groups "default")
 	    (ibuffer-do-sort-by-filename/process)
 	    ))
+
+;;;;;; Settings
+(setq ibuffer-always-compile-formats         t )
+(setq ibuffer-always-show-last-buffer        t )
+(setq ibuffer-default-shrink-to-minimum-size t )
+(setq ibuffer-expert                         t )
+(setq ibuffer-show-empty-filter-groups     nil )
+(setq ibuffer-use-other-window             nil )
 
 ;;;;;; Buffer lists
 (setq ibuffer-saved-filter-groups
@@ -29,24 +40,24 @@
 			 (name . "^\\*Kill Ring\\*$")
 			 (name . "^\\*Completions\\*$")
 			 (name . "^\\*tramp")
-			 (name . "^\\*shell\\*$")
 			 (name . "^\\*compilation\\*$")
 			 (name . "^\\*CEDET Global\\*$")
 			 (name . "^\\*Buffer List\\*$")
 			 (name . "^\\*Anything Log\\*$")
 			 (name . "^\\*anything for\\*$")
-			 (name . "^\\*Loading Log\\*$")
+			 (name . "^\\**Loading Config Log\\*$")
+			 (name . "^\\**Loading Library Log\\*$")
 			 (name . "^\\*anything*")
 			 (name . "^ipa*")
 			 ))
 	 ("Version Control" (or (mode . svn-status-mode)
 				(mode . svn-log-edit-mode)
-				(name . "^\\*svn\\*")
-				(name . "^\\*vc\\*$")
+				(name . "^\\*svn*\\*")
+				(name . "^\\*vc*\\*$")
 				(name . "^\\*Annotate")
-				(name . "^\\*git-")
-				(name . "^\\*cvs")
-				(name . "^\\*vc-")))
+				(name . "^\\*git-*")
+				(name . "^\\*cvs*")
+				(name . "^\\*vc-*")))
 	 ("Help" (or (mode . woman-mode)
 		     (mode . man-mode)
 		     (mode . info-mode)
@@ -90,6 +101,38 @@
   "Kill the ibuffer buffer on exit."
   (kill-buffer "*Ibuffer*"))
 (ad-activate 'ibuffer-quit)
+
+;; visiting a file in ibuffer makes it "fullscreen"
+(defadvice ibuffer-visit-buffer (after ibuffer-fs-after-visit (arg))
+  "Delete other windows after visiting buffer"
+  (delete-other-windows))
+(ad-activate 'ibuffer-visit-buffer)
+
+;; Use human readable Size column instead of original one
+(define-ibuffer-column size-h
+  (:name "Size" :inline t)
+  (cond
+   ((> (buffer-size) 1000) (format "%7.2fk" (/ (buffer-size) 1000.0)))
+   ((> (buffer-size) 10000) (format "%7.3fM" (/ (buffer-size) 10000.0)))
+   (t (format "%8d" (buffer-size)))))
+
+;; integrate ibuffer with git
+(when (featurep 'ibuffer-git)
+  (setq ibuffer-formats
+	'((mark modified read-only git-status-mini " "
+		(name 18 18 :left :elide)
+		" "
+		(size-h 9 -1 :right)
+		" "
+		(mode 16 16 :left :elide)
+		"   "
+		;; (eproject 16 16 :left :elide)
+		;; " "
+		(git-status 8 8 :left)
+		"      "
+		filename-and-process))))
+
+
 
 (provide '022-ibuffer)
 ;; 022-ibuffer.el ends here.

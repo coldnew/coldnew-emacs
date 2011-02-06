@@ -1,65 +1,69 @@
 ;;
 (eval-when-compile (require 'cl))
 
-(require '001-environment)		; Environment Setting
-(require '002-dependency)		; All libraries included in
-(require '003-macros)			; Macros or not interactive functions
-(require '004-functions)		; Interactive Functions
-(require '005-advices)			; Advice
-(require '006-deadcode)			; unusecode, maybe use some day...
-(require '007-base)			; Basic emacs config
-(require '008-fonts)			; Setting Fonts
-(require '009-locale)			; Setting Locales
-(require '010-color-theme)		; Color-themes
-(require '011-backup)			; Configure Backup Process
-(require '012-display)			; Configure window's size
-(require '013-woman)			; Woman-mode Settings
-(require '014-session)			; Store current positions
-(require '015-desktop)
-(require '016-vim-mode)			; Use Vim Keybindings instead of pure emacs
+;; Libraries configure
+(requiref '001-environment)		; Environment Setting
+(requiref '002-dependency)		; All libraries included in
+(requiref '003-macros)			; Macros or not interactive functions
+(requiref '004-functions)		; Interactive Functions
+(requiref '005-advices)			; Advice
+(requiref '006-deadcode)		; unusecode, maybe use some day...
+(requiref '007-base)			; Basic emacs config
+(requiref '008-fonts)			; Setting Fonts
+(requiref '009-locale)			; Setting Locales
+(requiref '010-color-theme)		; Color-themes
+(requiref '011-backup)			; Configure Backup Process
+(requiref '012-display)			; Configure window's size
+(requiref '013-woman)			; Woman-mode Settings
+(requiref '014-session)			; Store current positions
+(requiref '015-desktop)			;
+(requiref '016-vim-mode)		; Use Vim Keybindings instead of pure emacs
 ;; 017~022
-(require '022-ibuffer)			; Call buffer-list
-(require '025-yasnippet)		; Yasnippet config
-(require '026-auto-complete)		; Auto COmplete config
-(require '027-minibuffer)		; Add some keybindinng fot minibuffer
-(require '028-uniquify)			; COnfigure uniquify
-(require '029-lusty-explorer)		; Another good files explorer
-(require '030-xrefactory)		;
-(require '031-comint-mode)		;
-(require '032-anything)			; Complete anything
-(require '033-w3m)			; W3m config
-(require '034-terminal)			; Terminal Settings
-(require '035-rcirc)			; IRC Client Setting
-(require '036-midnight)			;
-(require '037-ipa)			; In-place annotations
-(require '038-flyspell)			; on-the-fly spell checker
-(require '039-speck)			; on-the-fly spell checker
-(require '040-gnus)			; GNUS Setting
+(requiref '022-ibuffer)			; Call buffer-list
+(requiref '025-yasnippet)		; Yasnippet config
+(requiref '026-auto-complete)		; Auto COmplete config
+(requiref '027-minibuffer)		; Add some keybindinng fot minibuffer
+(requiref '028-uniquify)		; COnfigure uniquify
+(requiref '029-lusty-explorer)		; Another good files explorer
+(requiref '030-xrefactory)		;
+(requiref '031-comint-mode)		;
+(requiref '032-anything)		; Complete anything
+(requiref '033-w3m)			; W3m config
+(requiref '034-terminal)		; Terminal Settings
+(requiref '035-rcirc)			; IRC Client Setting
+(requiref '036-midnight)		; clean unuse buffers in midnight
+(requiref '037-ipa)			; In-place annotations
+(requiref '038-flyspell)		; on-the-fly spell checker
+(requiref '039-speck)			; on-the-fly spell checker
+(requiref '040-gnus)			; GNUS Setting
+(requiref '041-ielm)			; ielm
 
-
-(require 'rc-cedet)
-(require 'rc-common-hook)
+(requiref 'rc-cedet)
+(requiref 'rc-common-hook)
 
 ;;(cond (emacs23-p
-;;       (require 'rc-ecb)))
-(require 'rc-org-mode)
-(require 'rc-smartchr)
-(require 'rc-ielm-mode)
-(require 'rc-find-file)
-(require 'rc-ccmode-common)
+;;       (requiref 'rc-ecb)))
+(requiref 'rc-org-mode)
+(requiref 'rc-smartchr)
+(requiref 'rc-find-file)
+(requiref 'rc-ccmode-common)
 
-(require '997-el-get)			; emacs lisp manager
-(require '998-elpa)			; emacs lisp manager
-(require '999-keybinding)		; Global Keybindings, must in the last line.
+(requiref '997-el-get)			; emacs lisp manager
+(requiref '998-elpa)			; emacs lisp manager
+(requiref '999-keybinding)		; Global Keybindings, must in the last line.
 
 ;; Programming Language Configure Settings
-(require 'lang-c)			; C
-(require 'lang-cpp)			; C++
-(require 'lang-emacs-lisp)		; Emacs-Lisp
-;;(require 'lang-python)			; Python
-;;(require 'lang-matlab)			; Matlab
-(require 'lang-newlisp)			; Newlisp
-(require 'lang-sgml)			; SGML
+(requiref 'lang-c)			; C
+(requiref 'lang-cpp)			; C++
+(requiref 'lang-emacs-lisp)		; Emacs-Lisp
+;;(requiref 'lang-python)			; Python
+;;(requiref 'lang-matlab)			; Matlab
+(requiref 'lang-newlisp)			; Newlisp
+(requiref 'lang-sgml)			; SGML
+
+
+
+
 
 
 

@@ -1,5 +1,8 @@
 ;;;
 
+(eval-when-compile (require 'cl))
+
+
 (add-hook 'ielm-mode-hook
 	  '(lambda ()
 	     (ielm-auto-complete)
@@ -15,4 +18,5 @@
   (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
   (auto-complete-mode 1))
 
-(provide 'rc-ielm-mode)
+(provide '041-ielm)
+;; 041-ielm.el ends here.
