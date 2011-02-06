@@ -94,6 +94,10 @@
 	       :features auto-dictionary)
 	(:name speck
 	       :type emacswiki)
+	(:name zencoding-mode
+	       :type git
+	       :url "https://github.com/chrisdone/zencoding.git"
+	       :build ("make"))
 	;;elscreen
 	;;auctex
 	;;color-theme			;

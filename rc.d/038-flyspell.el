@@ -1,8 +1,12 @@
 ;;
 (eval-when-compile (require 'cl))
 
+;; do not start flyspell at startup
+(flyspell-mode nil)
+
 ;; use hunspell instead ispell
 (setq-default ispell-program-name "hunspell")
+
 ;;(setq ispell-personal-dictionary "~/.ispell-dico-perso")
 (setq ispell-dictionary-alist
       '(
@@ -27,7 +31,6 @@
 
 ;; Hook
 (add-hook 'flyspell-mode-hook '(lambda () (auto-dictionary-mode 1)))
-
 
 
 (provide '038-flyspell)

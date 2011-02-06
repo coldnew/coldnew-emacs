@@ -1151,6 +1151,59 @@ Non-nil for optional argument PRESERVE keeps current buffers.
 
 ;;;***
 
+;;;### (autoloads (zencoding-preview zencoding-expand-yas zencoding-mode
+;;;;;;  zencoding-expand-line) "zencoding-mode/zencoding-mode" "zencoding-mode/zencoding-mode.el"
+;;;;;;  (19790 25099))
+;;; Generated autoloads from zencoding-mode/zencoding-mode.el
+
+(autoload 'zencoding-expand-line "zencoding-mode/zencoding-mode" "\
+Replace the current line's zencode expression with the corresponding expansion.
+If prefix ARG is given or region is visible call `zencoding-preview' to start an
+interactive preview.
+
+Otherwise expand line directly.
+
+For more information see `zencoding-mode'.
+
+\(fn ARG)" t nil)
+
+(autoload 'zencoding-mode "zencoding-mode/zencoding-mode" "\
+Minor mode for writing HTML and CSS markup.
+With zen coding for HTML and CSS you can write a line like
+
+  ul#name>li.item*2
+
+and have it expanded to
+
+  <ul id=\"name\">
+    <li class=\"item\"></li>
+    <li class=\"item\"></li>
+  </ul>
+
+This minor mode defines keys for quick access:
+
+\\{zencoding-mode-keymap}
+
+Home page URL `http://www.emacswiki.org/emacs/ZenCoding'.
+
+See also `zencoding-expand-line'.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'zencoding-expand-yas "zencoding-mode/zencoding-mode" "\
+Not documented
+
+\(fn)" t nil)
+
+(autoload 'zencoding-preview "zencoding-mode/zencoding-mode" "\
+Expand zencode between BEG and END interactively.
+This will show a preview of the expanded zen code and you can
+accept it or skip it.
+
+\(fn BEG END)" t nil)
+
+;;;***
+
 ;;;### (autoloads nil nil ("ac-anything/ac-anything.el" "anything-c-shell-history/anything-c-shell-history.el"
 ;;;;;;  "anything-complete/anything-complete.el" "anything-config/anything-match-plugin.el"
 ;;;;;;  "anything-config/anything-startup.el" "anything-dabbrev-expand/anything-dabbrev-expand.el"
@@ -1171,7 +1224,8 @@ Non-nil for optional argument PRESERVE keeps current buffers.
 ;;;;;;  "vim-mode/vim-modes.el" "vim-mode/vim-motions.el" "vim-mode/vim-normal-mode.el"
 ;;;;;;  "vim-mode/vim-scroll.el" "vim-mode/vim-search.el" "vim-mode/vim-undo.el"
 ;;;;;;  "vim-mode/vim-visual-mode.el" "vim-mode/vim-window.el" "vim-mode/vim.el"
-;;;;;;  "xcscope+/xcscope+.el") (19790 23054 652359))
+;;;;;;  "xcscope+/xcscope+.el" "zencoding-mode/zencoding-trie.el")
+;;;;;;  (19790 25099 605577))
 
 ;;;***
 

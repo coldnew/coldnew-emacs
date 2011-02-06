@@ -62,8 +62,7 @@
 (require '036-midnight)			;
 (require '037-ipa)			; In-place annotations
 (require '038-flyspell)			; on-the-fly spell checker
-;;(require '038-spellcheck)		; Spell Checking Setting
-
+(require '039-speck)			; on-the-fly spell checker
 
 
 (require 'rc-cedet)
@@ -88,7 +87,7 @@
 ;;(require 'lang-python)			; Python
 ;;(require 'lang-matlab)			; Matlab
 (require 'lang-newlisp)			; Newlisp
-
+(require 'lang-sgml)			; SGML
 
 
 ;;(require 'circuit-mode)

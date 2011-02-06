@@ -3,6 +3,7 @@
 (eval-when-compile (require 'cl))
 
 
+
 (require-maybe 'ac-anything)			; Auto Complete with Anything
 (require-maybe 'ac-company)			; Auto-Complete with company-mode
 (require-maybe 'advice)				;
@@ -49,6 +50,7 @@
 (require-maybe 'eldoc-extension)		; Emacs-Lisp Documents Browser Extension
 (require-maybe 'emms)				; Emacs Multimedia System
 (require-maybe 'etags)				;
+(require-maybe 'executable)			;
 (require-maybe 'find-file)			;
 (require-maybe 'flyspell)			; on-the-fly spell checker
 (require-maybe 'gccsense)			; GCC's code analyzers
@@ -61,6 +63,7 @@
 (require-maybe 'hungry-delete)			;
 (require-maybe 'ibuf-ext)			; iBuffer Extension
 (require-maybe 'ibuffer)			; iBuffer
+(require-maybe 'idutils)			;
 (require-maybe 'info)				;
 (require-maybe 'ipa)				; In-place annotations
 (require-maybe 'linum)				;
@@ -83,16 +86,16 @@
 (require-maybe 'rcirc)				;
 (require-maybe 'rcirc-color)			; color rcirc nicks
 (require-maybe 'rcirc-controls)			; color rcirc control sequences
-(require-maybe 'recentf)			;
-(require-maybe 'recentf)			;
 (require-maybe 'recentf)			; Setup a menu of recently opened files
 (require-maybe 'rw-hunspell)			;
 (require-maybe 'rw-ispell)			;
 (require-maybe 'rw-language-and-country-codes)	;
 (require-maybe 'session)			; Use Session to save current positions
+(require-maybe 'shell)				;
 (require-maybe 'shell-pop)			; Helps you pop up and pop out shell buffer easily
 (require-maybe 'slime)				; Superior Lisp Interaction Mode for Emacs
 (require-maybe 'smartchr)			; Emacs version of smartchr.vim
+(require-maybe 'speck)				; minor mode for spell checking
 (require-maybe 'ssh-config)			; Syntax Highlight ssh-configure files
 (require-maybe 'sunrise-commander)		; A commander looks like MC
 (require-maybe 'term)				;
@@ -110,8 +113,7 @@
 (require-maybe 'xcscope)			; Cscope interface for Emacs
 (require-maybe 'xcscope+)			; Providing an extension to xcscope
 (require-maybe 'yasnippet)			; Yet another snippet extension for Emacs
-(require-maybe 'speck)				; minor mode for spell checking
-(require-maybe 'idutils)			;
+(require-maybe 'zencoding-mode)			; Unfold CSS-selector-like expressions to markup
 
 ;;(require-maybe 'ipython)			; iPython
 ;;(require-maybe 'matlab)			; Matlab
