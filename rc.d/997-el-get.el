@@ -88,6 +88,16 @@
 	(:name rw-language-and-country-codes
 	       :type http
 	       :url "http://www.mail-archive.com/gnu-emacs-sources@gnu.org/msg01709/rw-language-and-country-codes.el")
+	(:name auto-dictionary
+	       :type http
+	       :url "http://nschum.de/src/emacs/auto-dictionary/auto-dictionary.el"
+	       :features auto-dictionary)
+	(:name speck
+	       :type emacswiki)
+	(:name zencoding-mode
+	       :type git
+	       :url "https://github.com/chrisdone/zencoding.git"
+	       :build ("make"))
 	;;elscreen
 	;;auctex
 	;;color-theme			;

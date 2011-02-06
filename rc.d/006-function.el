@@ -292,33 +292,33 @@ Also returns nil if pid is nil."
   (cons (cons key value) (alist-remove alist key)))
 
 ;;;;
-(defun require* (feature &optional force)
-  (when (or force (not (featurep feature)))
-    (setq feature (symbol-name feature))
-    (let ((path load-path)
-	  (found-filename nil)
-	  head el-attribs elc-attribs)
-      (while (and (not found-filename) path)
-	(setq head (pop path))
-	(let ((el-filename (format "%s/%s.el" head feature))
-	      (elc-filename (format "%s/%s.elc" head feature)))
-	  ;; if .el and .elc both exist, pick the newest
-	  ;; otherwise pick the one that exists if any
-	  (cond ((and (file-exists-p el-filename)
-		      (file-exists-p elc-filename))
-		 (if (file-newer-than-file-p el-filename elc-filename)
-		     (setq found-filename el-filename)
-		   (setq found-filename elc-filename)))
-		((file-exists-p el-filename)
-		 (setq found-filename el-filename))
-		((file-exists-p elc-filename)
-		 (setq found-filename elc-filename)))
-	  ;; load file if found
-	  (when found-filename
-	    (message (format "Found: [%s]" found-filename))
-	    (let ((load-suffixes ()))
-	      (load found-filename)))))
-      (unless found-filename (error "Unable to find %s" feature)))))
+;; (defun require* (feature &optional force)
+;;   (when (or force (not (featurep feature)))
+;;     (setq feature (symbol-name feature))
+;;     (let ((path load-path)
+;;	  (found-filename nil)
+;;	  head el-attribs elc-attribs)
+;;       (while (and (not found-filename) path)
+;;	(setq head (pop path))
+;;	(let ((el-filename (format "%s/%s.el" head feature))
+;;	      (elc-filename (format "%s/%s.elc" head feature)))
+;;	  ;; if .el and .elc both exist, pick the newest
+;;	  ;; otherwise pick the one that exists if any
+;;	  (cond ((and (file-exists-p el-filename)
+;;		      (file-exists-p elc-filename))
+;;		 (if (file-newer-than-file-p el-filename elc-filename)
+;;		     (setq found-filename el-filename)
+;;		   (setq found-filename elc-filename)))
+;;		((file-exists-p el-filename)
+;;		 (setq found-filename el-filename))
+;;		((file-exists-p elc-filename)
+;;		 (setq found-filename elc-filename)))
+;;	  ;; load file if found
+;;	  (when found-filename
+;;	    (message (format "Found: [%s]" found-filename))
+;;	    (let ((load-suffixes ()))
+;;	      (load found-filename)))))
+;;       (unless found-filename (error "Unable to find %s" feature)))))
 
 
 

@@ -8,7 +8,7 @@
 			'(("(\\(\\defcmd\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
 			   (1 font-lock-keyword-face)
 			   (2 font-lock-function-name-face))
-			  ("(\\(require-maybe\\)\\s [ \t']*\\(\\sw+\\)?"
+			  ("(\\(require\\*\\)\\s [ \t']*\\(\\sw+\\)?"
 			   (1 font-lock-keyword-face)
 			   (2 font-lock-constant-face nil t))))
 
@@ -42,7 +42,7 @@
   "*Do something if FUNCTION is available."
   `(when (fboundp ,func) ,foo))
 
-(defmacro require-maybe (feature &optional file)
+(defmacro require* (feature &optional file)
   "*Try to require FEATURE, but don't signal an error if `require' fails."
   `(let ((require-result (require ,feature ,file 'noerror)))
      (with-current-buffer (get-buffer-create "*Loading Log*")
