@@ -1,0 +1,8 @@
+Noweb is used to generate an Emacs-Lisp file from zencoding-trie.nw.
+The program `pdflatex` is required to generate a PDF from the LaTeX
+file that can be generated.
+
+To use zencoding-mode, run `make`. To generate the documentation, run
+`make docs`.
+
+The code is licensed under the GNU General Public License version 3.
