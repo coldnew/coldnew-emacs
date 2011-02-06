@@ -15,7 +15,7 @@
 	  (lambda ()
 	    (hl-line-mode)		; Enable hight-line
 	    (ibuffer-switch-to-saved-filter-groups "default")
-	    ;;	    (ibuffer-do-sort-by-filename/process)
+	    (ibuffer-do-sort-by-filename/process)
 	    (ibuffer-invert-sorting)
 	    ))
 
