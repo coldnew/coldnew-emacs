@@ -762,7 +762,7 @@ Not documented
 
 ;;;### (autoloads (adict-change-dictionary adict-guess-dictionary
 ;;;;;;  auto-dictionary-mode) "auto-dictionary/auto-dictionary" "auto-dictionary/auto-dictionary.el"
-;;;;;;  (19789 65046))
+;;;;;;  (19790 25986))
 ;;; Generated autoloads from auto-dictionary/auto-dictionary.el
 
 (autoload 'auto-dictionary-mode "auto-dictionary/auto-dictionary" "\
@@ -1043,7 +1043,7 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 ;;;***
 
 ;;;### (autoloads (speck-multi-read speck-buffer speck-mode) "speck/speck"
-;;;;;;  "speck/speck.el" (19790 23053))
+;;;;;;  "speck/speck.el" (19790 25986))
 ;;; Generated autoloads from speck/speck.el
 
 (autoload 'speck-mode "speck/speck" "\
@@ -1153,7 +1153,7 @@ Non-nil for optional argument PRESERVE keeps current buffers.
 
 ;;;### (autoloads (zencoding-preview zencoding-expand-yas zencoding-mode
 ;;;;;;  zencoding-expand-line) "zencoding-mode/zencoding-mode" "zencoding-mode/zencoding-mode.el"
-;;;;;;  (19790 25099))
+;;;;;;  (19790 26166))
 ;;; Generated autoloads from zencoding-mode/zencoding-mode.el
 
 (autoload 'zencoding-expand-line "zencoding-mode/zencoding-mode" "\
@@ -1225,7 +1225,7 @@ accept it or skip it.
 ;;;;;;  "vim-mode/vim-scroll.el" "vim-mode/vim-search.el" "vim-mode/vim-undo.el"
 ;;;;;;  "vim-mode/vim-visual-mode.el" "vim-mode/vim-window.el" "vim-mode/vim.el"
 ;;;;;;  "xcscope+/xcscope+.el" "zencoding-mode/zencoding-trie.el")
-;;;;;;  (19790 25099 605577))
+;;;;;;  (19790 26167 230407))
 
 ;;;***
 

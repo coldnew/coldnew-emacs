@@ -322,7 +322,6 @@ Also returns nil if pid is nil."
 
 
 
-(require* 'vim)
 
 (provide '006-function)
 ;; 006-function.el ends here.
