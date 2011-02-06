@@ -864,7 +864,7 @@ Note that this only works if the opening tag starts at column 0.
 ;;;***
 
 ;;;### (autoloads (bookmark-w3m-bookmark-jump) "emacs-w3m/bookmark-w3m"
-;;;;;;  "emacs-w3m/bookmark-w3m.el" (19648 52975))
+;;;;;;  "emacs-w3m/bookmark-w3m.el" (19790 35946))
 ;;; Generated autoloads from emacs-w3m/bookmark-w3m.el
 
 (autoload 'bookmark-w3m-bookmark-jump "emacs-w3m/bookmark-w3m" "\
@@ -875,7 +875,7 @@ Default bookmark handler for w3m buffers.
 ;;;***
 
 ;;;### (autoloads (mime-w3m-preview-text/html) "emacs-w3m/mime-w3m"
-;;;;;;  "emacs-w3m/mime-w3m.el" (19790 31620))
+;;;;;;  "emacs-w3m/mime-w3m.el" (19790 42257))
 ;;; Generated autoloads from emacs-w3m/mime-w3m.el
 
 (autoload 'mime-w3m-preview-text/html "emacs-w3m/mime-w3m" "\
@@ -887,7 +887,7 @@ Not documented
 
 ;;;### (autoloads (octet-mime-setup mime-view-octet mime-preview-octet
 ;;;;;;  octet-find-file octet-buffer) "emacs-w3m/octet" "emacs-w3m/octet.el"
-;;;;;;  (19563 28233))
+;;;;;;  (19790 35946))
 ;;; Generated autoloads from emacs-w3m/octet.el
 
 (autoload 'octet-buffer "emacs-w3m/octet" "\
@@ -921,7 +921,7 @@ Octet setting for MIME module.
 
 ;;;### (autoloads (w3m-buffer w3m-region w3m-find-file w3m-browse-url
 ;;;;;;  w3m w3m-gohome w3m-goto-url-new-session w3m-goto-url w3m-download
-;;;;;;  w3m-retrieve) "emacs-w3m/w3m" "emacs-w3m/w3m.el" (19790 31620))
+;;;;;;  w3m-retrieve) "emacs-w3m/w3m" "emacs-w3m/w3m.el" (19790 42257))
 ;;; Generated autoloads from emacs-w3m/w3m.el
 
 (autoload 'w3m-retrieve "emacs-w3m/w3m" "\
@@ -1067,7 +1067,7 @@ See `w3m-region' for the optional arguments.
 ;;;***
 
 ;;;### (autoloads (w3m-antenna w3m-about-antenna) "emacs-w3m/w3m-antenna"
-;;;;;;  "emacs-w3m/w3m-antenna.el" (19187 58267))
+;;;;;;  "emacs-w3m/w3m-antenna.el" (19790 35946))
 ;;; Generated autoloads from emacs-w3m/w3m-antenna.el
 
 (autoload 'w3m-about-antenna "emacs-w3m/w3m-antenna" "\
@@ -1085,7 +1085,7 @@ Report changes of WEB sites, which is specified in `w3m-antenna-sites'.
 ;;;### (autoloads (w3m-setup-bookmark-menu w3m-about-bookmark w3m-bookmark-view-new-session
 ;;;;;;  w3m-bookmark-view w3m-bookmark-add-current-url-group w3m-bookmark-add-all-urls
 ;;;;;;  w3m-bookmark-add-current-url w3m-bookmark-add-this-url) "emacs-w3m/w3m-bookmark"
-;;;;;;  "emacs-w3m/w3m-bookmark.el" (19528 64563))
+;;;;;;  "emacs-w3m/w3m-bookmark.el" (19790 35946))
 ;;; Generated autoloads from emacs-w3m/w3m-bookmark.el
 
 (autoload 'w3m-bookmark-add-this-url "emacs-w3m/w3m-bookmark" "\
@@ -1133,7 +1133,7 @@ Setup w3m bookmark items in menubar.
 
 ;;;### (autoloads (w3m-about-cookie w3m-cookie w3m-cookie-get w3m-cookie-set
 ;;;;;;  w3m-cookie-shutdown) "emacs-w3m/w3m-cookie" "emacs-w3m/w3m-cookie.el"
-;;;;;;  (19449 53703))
+;;;;;;  (19790 35946))
 ;;; Generated autoloads from emacs-w3m/w3m-cookie.el
 
 (autoload 'w3m-cookie-shutdown "emacs-w3m/w3m-cookie" "\
@@ -1165,7 +1165,7 @@ Make the html contents to display and to enable you to manage cookies.
 ;;;***
 
 ;;;### (autoloads (w3m-dtree w3m-about-dtree) "emacs-w3m/w3m-dtree"
-;;;;;;  "emacs-w3m/w3m-dtree.el" (18964 36505))
+;;;;;;  "emacs-w3m/w3m-dtree.el" (19790 35946))
 ;;; Generated autoloads from emacs-w3m/w3m-dtree.el
 
 (autoload 'w3m-about-dtree "emacs-w3m/w3m-dtree" "\
@@ -1182,7 +1182,7 @@ If called with 'prefix argument', display all directorys and files.
 ;;;***
 
 ;;;### (autoloads (w3m-fb-mode) "emacs-w3m/w3m-fb" "emacs-w3m/w3m-fb.el"
-;;;;;;  (17681 2386))
+;;;;;;  (19790 35946))
 ;;; Generated autoloads from emacs-w3m/w3m-fb.el
 
 (defvar w3m-fb-mode nil "\
@@ -1203,7 +1203,7 @@ This allows frame-local lists of buffers (tabs).
 ;;;***
 
 ;;;### (autoloads (w3m-filter) "emacs-w3m/w3m-filter" "emacs-w3m/w3m-filter.el"
-;;;;;;  (18560 15090))
+;;;;;;  (19790 35946))
 ;;; Generated autoloads from emacs-w3m/w3m-filter.el
 
 (autoload 'w3m-filter "emacs-w3m/w3m-filter" "\
@@ -1214,7 +1214,7 @@ Apply filtering rule of URL against a content in this buffer.
 ;;;***
 
 ;;;### (autoloads (w3m-fontify-forms) "emacs-w3m/w3m-form" "emacs-w3m/w3m-form.el"
-;;;;;;  (19563 28233))
+;;;;;;  (19790 35946))
 ;;; Generated autoloads from emacs-w3m/w3m-form.el
 
 (autoload 'w3m-fontify-forms "emacs-w3m/w3m-form" "\
@@ -1228,7 +1228,7 @@ Process half-dumped data and fontify forms in this buffer.
 ;;;;;;  w3m-linknum-print-this-url w3m-linknum-edit-this-url w3m-linknum-external-view-this-url
 ;;;;;;  w3m-linknum-save-image w3m-linknum-view-image w3m-linknum-toggle-inline-image
 ;;;;;;  w3m-linknum-follow w3m-go-to-linknum w3m-link-numbering-mode)
-;;;;;;  "emacs-w3m/w3m-lnum" "emacs-w3m/w3m-lnum.el" (19790 31620))
+;;;;;;  "emacs-w3m/w3m-lnum" "emacs-w3m/w3m-lnum.el" (19790 42257))
 ;;; Generated autoloads from emacs-w3m/w3m-lnum.el
 
 (autoload 'w3m-link-numbering-mode "emacs-w3m/w3m-lnum" "\
@@ -1251,10 +1251,6 @@ When link - visit it, when button - press, when input - activate it,
 when image - toggle it.
 With prefix ARG visit link in new session or don't move over
 field/button/image on activation/push/toggle.
-With `-' ARG, for link image - go to it and toggle it.
-With -4 ARG, for link image - toggle it.
-With double prefix ARG, prompt for url to visit.
-With triple prefix ARG, prompt for url to visit in new session.
 
 \(fn ARG)" t nil)
 
@@ -1314,7 +1310,7 @@ If no link under point, activate numbering and ask for one.
 ;;;***
 
 ;;;### (autoloads (w3m-namazu w3m-about-namazu) "emacs-w3m/w3m-namazu"
-;;;;;;  "emacs-w3m/w3m-namazu.el" (18964 36505))
+;;;;;;  "emacs-w3m/w3m-namazu.el" (19790 35946))
 ;;; Generated autoloads from emacs-w3m/w3m-namazu.el
 
 (autoload 'w3m-about-namazu "emacs-w3m/w3m-namazu" "\
@@ -1330,7 +1326,7 @@ Search indexed files with Namazu.
 ;;;***
 
 ;;;### (autoloads (w3m-perldoc w3m-about-perldoc) "emacs-w3m/w3m-perldoc"
-;;;;;;  "emacs-w3m/w3m-perldoc.el" (18197 61165))
+;;;;;;  "emacs-w3m/w3m-perldoc.el" (19790 35946))
 ;;; Generated autoloads from emacs-w3m/w3m-perldoc.el
 
 (autoload 'w3m-about-perldoc "emacs-w3m/w3m-perldoc" "\
@@ -1347,7 +1343,7 @@ View Perl documents.
 
 ;;;### (autoloads (w3m-search-uri-replace w3m-search-new-session
 ;;;;;;  w3m-search) "emacs-w3m/w3m-search" "emacs-w3m/w3m-search.el"
-;;;;;;  (19563 22872))
+;;;;;;  (19790 35946))
 ;;; Generated autoloads from emacs-w3m/w3m-search.el
 
 (autoload 'w3m-search "emacs-w3m/w3m-search" "\
@@ -1373,20 +1369,15 @@ Generate query string for ENGINE from URI matched by last search.
 ;;;***
 
 ;;;### (autoloads (w3m-session-last-crashed-session w3m-session-last-autosave-session
-;;;;;;  w3m-setup-session-menu w3m-session-select w3m-session-crash-recovery-remove
-;;;;;;  w3m-session-save) "emacs-w3m/w3m-session" "emacs-w3m/w3m-session.el"
-;;;;;;  (19790 31620))
+;;;;;;  w3m-setup-session-menu w3m-session-select w3m-session-save)
+;;;;;;  "emacs-w3m/w3m-session" "emacs-w3m/w3m-session.el" (19790
+;;;;;;  42257))
 ;;; Generated autoloads from emacs-w3m/w3m-session.el
 
 (autoload 'w3m-session-save "emacs-w3m/w3m-session" "\
 Save list of displayed session.
 
 \(fn)" t nil)
-
-(autoload 'w3m-session-crash-recovery-remove "emacs-w3m/w3m-session" "\
-Remove crash recovery session set.
-
-\(fn)" nil nil)
 
 (autoload 'w3m-session-select "emacs-w3m/w3m-session" "\
 Select session from session list.
@@ -1411,7 +1402,7 @@ Not documented
 ;;;***
 
 ;;;### (autoloads (w3m-replace-symbol) "emacs-w3m/w3m-symbol" "emacs-w3m/w3m-symbol.el"
-;;;;;;  (18791 2971))
+;;;;;;  (19790 35946))
 ;;; Generated autoloads from emacs-w3m/w3m-symbol.el
 
 (autoload 'w3m-replace-symbol "emacs-w3m/w3m-symbol" "\
@@ -1422,7 +1413,7 @@ Not documented
 ;;;***
 
 ;;;### (autoloads (w3m-about-weather w3m-weather) "emacs-w3m/w3m-weather"
-;;;;;;  "emacs-w3m/w3m-weather.el" (18197 61165))
+;;;;;;  "emacs-w3m/w3m-weather.el" (19790 35946))
 ;;; Generated autoloads from emacs-w3m/w3m-weather.el
 
 (autoload 'w3m-weather "emacs-w3m/w3m-weather" "\
@@ -1787,10 +1778,6 @@ accept it or skip it.
 ;;;;;;  "anything-migemo/anything-migemo.el" "anything-slime/anything-slime.el"
 ;;;;;;  "anything-yaetags/anything-yaetags.el" "autocomplete/auto-complete-config.el"
 ;;;;;;  "autocomplete/auto-complete.el" "autocomplete/fuzzy.el" "autocomplete/popup.el"
-;;;;;;  "emacs-w3m/mew-w3m.el" "emacs-w3m/w3m-bug.el" "emacs-w3m/w3m-ccl.el"
-;;;;;;  "emacs-w3m/w3m-ems.el" "emacs-w3m/w3m-favicon.el" "emacs-w3m/w3m-hist.el"
-;;;;;;  "emacs-w3m/w3m-image.el" "emacs-w3m/w3m-mail.el" "emacs-w3m/w3m-proc.el"
-;;;;;;  "emacs-w3m/w3m-rss.el" "emacs-w3m/w3m-tabmenu.el" "emacs-w3m/w3m-ucs.el"
 ;;;;;;  "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
 ;;;;;;  "ipa/ipa.el" "ppindent/ppindent.el" "pymacs/pymacs.el" "qmake-mode/qmake.el"
 ;;;;;;  "rcirc-color/rcirc-color.el" "rcirc-controls/rcirc-controls.el"
@@ -1801,7 +1788,7 @@ accept it or skip it.
 ;;;;;;  "vim-mode/vim-modes.el" "vim-mode/vim-normal-mode.el" "vim-mode/vim-scroll.el"
 ;;;;;;  "vim-mode/vim-search.el" "vim-mode/vim-undo.el" "vim-mode/vim-visual-mode.el"
 ;;;;;;  "vim-mode/vim-window.el" "xcscope+/xcscope+.el" "zencoding-mode/zencoding-trie.el")
-;;;;;;  (19790 35622 897424))
+;;;;;;  (19790 42821 749283))
 
 ;;;***
 

@@ -15,13 +15,17 @@
 	  (lambda ()
 	    (hl-line-mode)		; Enable hight-line
 	    (ibuffer-switch-to-saved-filter-groups "default")
-	    (ibuffer-do-sort-by-filename/process)
+	    ;;	    (ibuffer-do-sort-by-filename/process)
+	    (ibuffer-invert-sorting)
 	    ))
 
+
+
+
 ;;;;;; Settings
-(setq ibuffer-always-compile-formats         t )
-(setq ibuffer-always-show-last-buffer        t )
-(setq ibuffer-default-shrink-to-minimum-size t )
+;;(setq ibuffer-always-compile-formats         t )
+;;(setq ibuffer-always-show-last-buffer        t )
+;;(setq ibuffer-default-shrink-to-minimum-size t )
 (setq ibuffer-expert                         t )
 (setq ibuffer-show-empty-filter-groups     nil )
 (setq ibuffer-use-other-window             nil )
