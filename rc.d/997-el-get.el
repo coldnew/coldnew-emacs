@@ -69,7 +69,6 @@
 	xcode-document-viewer
 	yasnippet
 
-
 	(:name xcscope+
 	       :type emacswiki)
 

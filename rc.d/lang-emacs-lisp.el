@@ -1,10 +1,6 @@
 
 (eval-when-compile (require 'cl))
 
-;;;;##########################################################################
-;;;;  User Options, Variables
-;;;;##########################################################################
-
 ;;;;;; Auto-mode alist
 (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 
@@ -25,13 +21,13 @@
 	     (ac-emacs-lisp-mode-setup)
 	     ;; Enable pretty-lambda
 	     (turn-on-pretty-lambda-mode)
+	     ;; Highlight common-lisp functions
 	     (highlight-cl-add-font-lock-keywords)
 	     ;; Hooks for emacs-lisp-mode
 	     ;;(byte-compile-when-save)	; bytecompile the elisp file after save;
 
 	     (remove-elc-when-visit)	; when visit elisp file, remove .elc extensioon
 	     (programming-common-hook)	; programming common hook
-	     (define-key emacs-lisp-mode-map [f5] 'eval-current-buffer)
 	     ))
 
 ;;;;;; Keybindings
@@ -44,10 +40,13 @@
 	    (vim:local-nmap (kbd "zs") 'describe-syntax)
 	    (vim:local-nmap (kbd "zm") 'describe-mode)
 	    (vim:local-nmap (kbd "zc") 'describe-coding-system)
+	    (vim:local-nmap (kbd "<f5>") 'eval-current-buffer)
 
 	    ;; Insert map
 	    (vim:local-imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
 	    (vim:local-imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
+	    (vim:local-imap (kbd "<f5>") 'eval-current-buffer)
+
 	    ))
 ;;;;;; Misc Settings
 ;; if *scratch* does not exist, create it.

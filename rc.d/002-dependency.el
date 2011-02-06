@@ -125,5 +125,5 @@
 
 
 
-(provide '003-dependency)
-;; 003-dependency.el ends here.
+(provide '002-dependency)
+;; 002-dependency.el ends here.

@@ -31,64 +31,72 @@
 (let ((default-directory "~/.emacs.d/local-lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
 
+;;;; Extra font-lock
+(font-lock-add-keywords 'emacs-lisp-mode
+			'(("(\\(\\defcmd\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
+			   (1 font-lock-keyword-face)
+			   (2 font-lock-function-name-face))
+			  ("(\\(require\\*\\)\\s [ \t']*\\(\\sw+\\)?"
+			   (1 font-lock-keyword-face)
+			   (2 font-lock-constant-face nil t))))
+
+
+(defmacro* defcmd (name &rest body)
+  "Define a interactive functions without arguments."
+  (if (and (consp body)
+	   (cdr body)
+	   (stringp (car body)))
+      (setq doc (car body)
+	    body (cdr body))
+    (setq doc (format "Command (%s)" name)))
+  `(progn
+     (put ',name 'function
+	  (function* (lambda  ,@body)))
+     (defun* ,name (&rest args)
+       ,doc
+       (interactive)
+       (apply (get ',name 'function) args))))
+
+
+
+;; (defmacro require-maybe (feature &optional file)
+;;   "*Try to require FEATURE, but don't signal an error if `require' fails."
+;;   `(require ,feature ,file 'noerror))
+
+(defmacro when-available (func foo)
+  "*Do something if FUNCTION is available."
+  `(when (fboundp ,func) ,foo))
+
+(defmacro require* (feature &optional file)
+  "*Try to require FEATURE, but don't signal an error if `require' fails."
+  `(let ((require-result (require ,feature ,file 'noerror)))
+     (with-current-buffer (get-buffer-create "*Loading Log*")
+       (let* ((startup-log-format-string-prefix "\t%-30s\t\t\t[")
+	      (startup-log-format-string-postfix "%s")
+	      (startup-status (if require-result "LOADED" "FAILED"))
+	      (startup-status-face `(face (:foreground
+					   ,(if require-result "green" "red")))))
+	 (insert (format startup-log-format-string-prefix ,feature))
+	 (let ((start-pos (point)))
+	   (insert (format startup-log-format-string-postfix startup-status))
+	   (add-text-properties start-pos (point) startup-status-face)
+	   (insert "]\n"))))
+     require-result))
+
+
+
+
+
+
+
+
+(load "000-init")
+
+
+
 ;;;;;; load package initial setting
 (require '000-macro)			; All Macros I use
-(require '001-environment)		; Environment Setting
-(require '003-dependency)		; All libraries included in
-(require '005-base)			; Basic emacs config
-(require '006-function)			; All functions I use
-(require '007-backup)			; Configure Backup Process
-(require '008-fonts)			; Setting Fonts
-(require '009-locale)			; Setting Locales
-(require '010-color-theme)		; Color-themes
-(require '011-vim-mode)			; Use Vim Keybindings instead of pure emacs
-(require '012-display)			; Configure window's size
-(require '013-woman)			; Woman-mode Settings
-(require '014-session)			; Store current positions
-(require '015-desktop)
-;; 016~022
-(require '022-ibuffer)			; Call buffer-list
-(require '025-yasnippet)		; Yasnippet config
-(require '026-auto-complete)		; Auto COmplete config
-(require '027-minibuffer)		; Add some keybindinng fot minibuffer
-(require '028-uniquify)			; COnfigure uniquify
-(require '029-lusty-explorer)		; Another good files explorer
-(require '030-xrefactory)		;
-(require '031-comint-mode)		;
-(require '032-anything)			; Complete anything
-(require '033-w3m)			; W3m config
-(require '034-terminal)			; Terminal Settings
-(require '035-rcirc)			; IRC Client Setting
-(require '036-midnight)			;
-(require '037-ipa)			; In-place annotations
-(require '038-flyspell)			; on-the-fly spell checker
-(require '039-speck)			; on-the-fly spell checker
-(require '040-gnus)			; GNUS Setting
 
-
-(require 'rc-cedet)
-(require 'rc-common-hook)
-
-;;(cond (emacs23-p
-;;       (require 'rc-ecb)))
-(require 'rc-org-mode)
-(require 'rc-smartchr)
-(require 'rc-ielm-mode)
-(require 'rc-find-file)
-(require 'rc-ccmode-common)
-
-(require '997-el-get)			; emacs lisp manager
-(require '998-elpa)			; emacs lisp manager
-(require '999-keybinding)		; Global Keybindings, must in the last line.
-
-;; Programming Language Configure Settings
-(require 'lang-c)			; C
-(require 'lang-cpp)			; C++
-(require 'lang-emacs-lisp)		; Emacs-Lisp
-;;(require 'lang-python)			; Python
-;;(require 'lang-matlab)			; Matlab
-(require 'lang-newlisp)			; Newlisp
-(require 'lang-sgml)			; SGML
 
 
 ;;(require 'circuit-mode)
