@@ -18,12 +18,7 @@
 (defvar emacs23-p (equal emacs-major-version 23))
 (defvar emacs24-p (equal emacs-major-version 24))
 
-;;;;;;;; 將指定目錄裡的東西全部加入清單
-;; (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-;;     (let* ((my-lisp-dir "~/.emacs.d/")
-;;	   (default-directory my-lisp-dir))
-;;       (setq load-path (cons my-lisp-dir load-path))
-;;       (normal-top-level-add-subdirs-to-load-path)))
+;;;;;; Load Path
 (add-to-list 'load-path "~/.emacs.d/rc.d/")
 (add-to-list 'load-path "~/.emacs.d/theme/")
 (let ((default-directory "~/.emacs.d/lisp/"))
@@ -31,16 +26,8 @@
 (let ((default-directory "~/.emacs.d/local-lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
 
-;;;; Extra font-lock
-(font-lock-add-keywords 'emacs-lisp-mode
-			'(("(\\(\\defcmd\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
-			   (1 font-lock-keyword-face)
-			   (2 font-lock-function-name-face))
-			  ("(\\(require\\*\\)\\s [ \t']*\\(\\sw+\\)?"
-			   (1 font-lock-keyword-face)
-			   (2 font-lock-constant-face nil t))))
 
-
+;;;;;; Functions
 (defmacro* defcmd (name &rest body)
   "Define a interactive functions without arguments."
   (if (and (consp body)
@@ -56,12 +43,6 @@
        ,doc
        (interactive)
        (apply (get ',name 'function) args))))
-
-
-
-;; (defmacro require-maybe (feature &optional file)
-;;   "*Try to require FEATURE, but don't signal an error if `require' fails."
-;;   `(require ,feature ,file 'noerror))
 
 (defmacro when-available (func foo)
   "*Do something if FUNCTION is available."
@@ -84,25 +65,19 @@
      require-result))
 
 
+;;;; Extra font-lock
+(font-lock-add-keywords 'emacs-lisp-mode
+			'(("(\\(\\defcmd\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
+			   (1 font-lock-keyword-face)
+			   (2 font-lock-function-name-face))
+			  ("(\\(require\\*\\)\\s [ \t']*\\(\\sw+\\)?"
+			   (1 font-lock-keyword-face)
+			   (2 font-lock-constant-face nil t))
+			  ("(\\(when-available\\*\\)\\s [ \t']*\\(\\sw+\\)?"
+			   (1 font-lock-keyword-face)
+			   (2 font-lock-constant-face nil t))
+			  ))
 
 
-
-
-
-
+;; load init file
 (load "000-init")
-
-
-
-;;;;;; load package initial setting
-(require '000-macro)			; All Macros I use
-
-
-
-;;(require 'circuit-mode)
-;;(setq-default header-line-format mode-line-format) ; Copy mode-line to top
-;;(setq-default mode-line-format nil) ; Remove mode-line
-(defcmd show-mode-line ()
-  (if mode-line-format
-      (setq mode-line-format nil)
-    (setq mode-line-format	t)))

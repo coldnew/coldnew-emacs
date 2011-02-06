@@ -3,8 +3,6 @@
 
 ;;;; Macros
 
-;; Functional tools
-
 (defmacro partial (f &rest args)
   `(lambda (&rest more)
      (apply ',f ,@args more)))
@@ -17,6 +15,9 @@
 			(mapcar (lambda (arg) (list arg arg))))
        ,@body)))
 
+;; (defmacro require-maybe (feature &optional file)
+;;   "*Try to require FEATURE, but don't signal an error if `require' fails."
+;;   `(require ,feature ,file 'noerror))
 
 
 ;; Math
@@ -109,6 +110,23 @@
 ;;	    (let ((load-suffixes ()))
 ;;	      (load found-filename)))))
 ;;       (unless found-filename (error "Unable to find %s" feature)))))
+
+
+;;(setq-default header-line-format mode-line-format) ; Copy mode-line to top
+;;(setq-default mode-line-format nil) ; Remove mode-line
+;; (defcmd show-mode-line ()
+;;   (if mode-line-format
+;;       (setq mode-line-format nil)
+;;     (setq mode-line-format	t)))
+
+
+;;;;;;;; 將指定目錄裡的東西全部加入清單
+;; (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+;;     (let* ((my-lisp-dir "~/.emacs.d/")
+;;	   (default-directory my-lisp-dir))
+;;       (setq load-path (cons my-lisp-dir load-path))
+;;       (normal-top-level-add-subdirs-to-load-path)))
+
 
 
 (provide '006-deadcode)

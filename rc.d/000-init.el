@@ -8,7 +8,7 @@
 (require '004-functions)		; Interactive Functions
 (require '005-advices)			; Advice
 (require '006-deadcode)			; unusecode, maybe use some day...
-(require '006-function)			; All functions I use
+
 (require '005-base)			; Basic emacs config
 (require '007-backup)			; Configure Backup Process
 (require '008-fonts)			; Setting Fonts
