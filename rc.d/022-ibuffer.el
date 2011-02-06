@@ -93,5 +93,22 @@
   (kill-buffer "*Ibuffer*"))
 (ad-activate 'ibuffer-quit)
 
+;; integrate ibuffer with git
+(when (featurep 'ibuffer-git)
+  (mark modified read-only git-status-mini " "
+	(name 18 18 :left :elide)
+	" "
+	(size 9 -1 :right)
+	" "
+	(mode 16 16 :left :elide)
+	" "
+	(eproject 16 16 :left :elide)
+	" "
+	(git-status 8 8 :left)
+	" " filename-and-process)
+  )
+
+
+
 (provide '022-ibuffer)
 ;; 022-ibuffer.el ends here.

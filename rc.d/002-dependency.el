@@ -114,6 +114,7 @@
 (require* 'xcscope+)			  ; Providing an extension to xcscope
 (require* 'yasnippet)			  ; Yet another snippet extension for Emacs
 (require* 'zencoding-mode)		  ; Unfold CSS-selector-like expressions to markup
+(require* 'ibuffer-git)			  ; show git status in ibuffer column
 
 ;;(require* 'ipython)			; iPython
 ;;(require* 'matlab)			; Matlab
