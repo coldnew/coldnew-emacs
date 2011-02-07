@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# contributor : coldnew <coldnew.tw@gmil.com>
+# name : Header file
+# key: HEADER
+# type: command
+# --
+
+;; If this file is C header file, insert Guard Macro
+(if (equal (yas/file-ext) "h")
+ (yas/expand-snippet 
+  "
+#ifndef ${1:_`(upcase (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))`__H__}
+#define $1
+
+  $>$0
+
+#endif /* $1 */
+  $>/* `(yas/file)` ends here. */
+  ")
+ )
+
+;; If this file is C source file, insert information
+(if (equal (yas/file-ext) "c")
+ (yas/expand-snippet 
+  "
+
+  $>$0
+
+  $>/* `(yas/file)` ends here. */
+  ")
+  )

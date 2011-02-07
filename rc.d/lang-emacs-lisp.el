@@ -78,7 +78,9 @@
   when buffer is 001-init, insert requiref instead of require
   when buffer is 002-dependency, insert require* "
   (insert "require")
-  (yas/expand))
+  (yas/expand)
+  )
+
 
 
 

@@ -1,12 +1,6 @@
 ;; init lang.cpp
 
-(provide 'lang-cpp)
-(eval-when-compile
-  (require 'cl))
-
-(require 'find-file nil 'noerror)
-(require 'smartchr  nil 'noerror)
-(require 'yasnippet nil 'noerror)
+(eval-when-compile (require 'cl))
 
 
 ;; Coding-Style Setting
@@ -92,3 +86,8 @@ else add `if' and expand it."
     (if (equal current begin)
 	(insert "main"))
     (yas/expand)))
+
+
+
+(provide 'lang-cpp)
+;; lang-cpp.el ends here.
