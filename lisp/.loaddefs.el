@@ -1620,7 +1620,7 @@ Will prompt you shell name when you type `C-u' before this command.
 ;;;***
 
 ;;;### (autoloads (notify) "notify/notify" "notify/notify.el" (19791
-;;;;;;  28318))
+;;;;;;  37135))
 ;;; Generated autoloads from notify/notify.el
 
 (autoload 'notify "notify/notify" "\
@@ -1665,7 +1665,7 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 ;;;***
 
 ;;;### (autoloads (rcirc-groups-mode) "rcirc-groups/rcirc-groups"
-;;;;;;  "rcirc-groups/rcirc-groups.el" (19791 26507))
+;;;;;;  "rcirc-groups/rcirc-groups.el" (19791 37135))
 ;;; Generated autoloads from rcirc-groups/rcirc-groups.el
 
 (autoload 'rcirc-groups-mode "rcirc-groups/rcirc-groups" "\
@@ -1840,34 +1840,31 @@ accept it or skip it.
 ;;;### (autoloads nil nil ("ac-anything/ac-anything.el" "anything-c-shell-history/anything-c-shell-history.el"
 ;;;;;;  "anything-complete/anything-complete.el" "anything-config/anything-match-plugin.el"
 ;;;;;;  "anything-config/anything-startup.el" "anything-dabbrev-expand/anything-dabbrev-expand.el"
-;;;;;;  "anything-emms/anything-emms.el" "anything-grep/anything-grep.el"
-;;;;;;  "anything-gtags/anything-gtags.el" "anything-include/anything-include.el"
-;;;;;;  "anything-ipa/anything-ipa.el" "anything-kyr/anything-kyr.el"
-;;;;;;  "anything-menu/anything-menu.el" "anything-migemo/anything-migemo.el"
-;;;;;;  "anything-slime/anything-slime.el" "anything-yaetags/anything-yaetags.el"
-;;;;;;  "apel/site-lisp/apel/calist.el" "apel/site-lisp/apel/filename.el"
-;;;;;;  "apel/site-lisp/apel/install.el" "apel/site-lisp/emu/apel-ver.el"
-;;;;;;  "apel/site-lisp/emu/broken.el" "apel/site-lisp/emu/emu.el"
-;;;;;;  "apel/site-lisp/emu/inv-23.el" "apel/site-lisp/emu/invisible.el"
-;;;;;;  "apel/site-lisp/emu/mcharset.el" "apel/site-lisp/emu/mcs-20.el"
-;;;;;;  "apel/site-lisp/emu/mcs-e20.el" "apel/site-lisp/emu/mule-caesar.el"
-;;;;;;  "apel/site-lisp/emu/pccl-20.el" "apel/site-lisp/emu/pccl.el"
-;;;;;;  "apel/site-lisp/emu/pces-20.el" "apel/site-lisp/emu/pces-e20.el"
-;;;;;;  "apel/site-lisp/emu/pces.el" "apel/site-lisp/emu/pcustom.el"
-;;;;;;  "apel/site-lisp/emu/poe.el" "apel/site-lisp/emu/poem-e20.el"
-;;;;;;  "apel/site-lisp/emu/poem-e20_3.el" "apel/site-lisp/emu/poem.el"
-;;;;;;  "apel/site-lisp/emu/product.el" "apel/site-lisp/emu/pym.el"
-;;;;;;  "apel/site-lisp/emu/static.el" "autocomplete/auto-complete-config.el"
-;;;;;;  "autocomplete/auto-complete.el" "autocomplete/fuzzy.el" "autocomplete/popup.el"
-;;;;;;  "eclim/company-emacs-eclim.el" "eclim/eclim-ant.el" "eclim/eclim-java.el"
-;;;;;;  "eclim/eclim-maven.el" "eclim/eclim-problems.el" "eclim/eclim-project.el"
-;;;;;;  "eclim/eclim.el" "elscreen/elscreen.el" "emms-get-lyrics/emms-get-lyrics.el"
+;;;;;;  "anything-grep/anything-grep.el" "anything-gtags/anything-gtags.el"
+;;;;;;  "anything-include/anything-include.el" "anything-ipa/anything-ipa.el"
+;;;;;;  "anything-kyr/anything-kyr.el" "anything-menu/anything-menu.el"
+;;;;;;  "anything-migemo/anything-migemo.el" "anything-slime/anything-slime.el"
+;;;;;;  "anything-yaetags/anything-yaetags.el" "apel/site-lisp/apel/calist.el"
+;;;;;;  "apel/site-lisp/apel/filename.el" "apel/site-lisp/apel/install.el"
+;;;;;;  "apel/site-lisp/emu/apel-ver.el" "apel/site-lisp/emu/broken.el"
+;;;;;;  "apel/site-lisp/emu/emu.el" "apel/site-lisp/emu/inv-23.el"
+;;;;;;  "apel/site-lisp/emu/invisible.el" "apel/site-lisp/emu/mcharset.el"
+;;;;;;  "apel/site-lisp/emu/mcs-20.el" "apel/site-lisp/emu/mcs-e20.el"
+;;;;;;  "apel/site-lisp/emu/mule-caesar.el" "apel/site-lisp/emu/pccl-20.el"
+;;;;;;  "apel/site-lisp/emu/pccl.el" "apel/site-lisp/emu/pces-20.el"
+;;;;;;  "apel/site-lisp/emu/pces-e20.el" "apel/site-lisp/emu/pces.el"
+;;;;;;  "apel/site-lisp/emu/pcustom.el" "apel/site-lisp/emu/poe.el"
+;;;;;;  "apel/site-lisp/emu/poem-e20.el" "apel/site-lisp/emu/poem-e20_3.el"
+;;;;;;  "apel/site-lisp/emu/poem.el" "apel/site-lisp/emu/product.el"
+;;;;;;  "apel/site-lisp/emu/pym.el" "apel/site-lisp/emu/static.el"
+;;;;;;  "autocomplete/auto-complete-config.el" "autocomplete/auto-complete.el"
+;;;;;;  "autocomplete/fuzzy.el" "autocomplete/popup.el" "eclim/company-emacs-eclim.el"
+;;;;;;  "eclim/eclim-ant.el" "eclim/eclim-java.el" "eclim/eclim-maven.el"
+;;;;;;  "eclim/eclim-problems.el" "eclim/eclim-project.el" "eclim/eclim.el"
+;;;;;;  "elscreen/elscreen.el" "emms-get-lyrics/emms-get-lyrics.el"
 ;;;;;;  "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
 ;;;;;;  "ipa/ipa.el" "ppindent/ppindent.el" "pymacs/pymacs.el" "qmake-mode/qmake.el"
-;;;;;;  "rcirc-auto-away/rcirc-auto-away.el" "rcirc-color/rcirc-color.el"
-;;;;;;  "rcirc-controls/rcirc-controls.el" "rcirc-dbus/rcirc-dbus.el"
-;;;;;;  "rcirc-late-fix/rcirc-late-fix.el" "rcirc-nonames-on-join/rcirc-nonames-on-join.el"
-;;;;;;  "rcirc-notify/rcirc-notify.el" "rcirc-pounce/rcirc-pounce.el"
+;;;;;;  "rcirc-color/rcirc-color.el" "rcirc-controls/rcirc-controls.el"
 ;;;;;;  "redo+/redo+.el" "rw-ispell/rw-ispell.el" "rw-language-and-country-codes/rw-language-and-country-codes.el"
 ;;;;;;  "ssh-config/ssh-config.el" "unicad/unicad.el" "vim-mode/vim-compat.el"
 ;;;;;;  "vim-mode/vim-defs.el" "vim-mode/vim-ex-commands.el" "vim-mode/vim-ex.el"
@@ -1875,7 +1872,7 @@ accept it or skip it.
 ;;;;;;  "vim-mode/vim-modes.el" "vim-mode/vim-normal-mode.el" "vim-mode/vim-scroll.el"
 ;;;;;;  "vim-mode/vim-search.el" "vim-mode/vim-undo.el" "vim-mode/vim-visual-mode.el"
 ;;;;;;  "vim-mode/vim-window.el" "xcscope+/xcscope+.el" "zencoding-mode/zencoding-trie.el")
-;;;;;;  (19791 33790 18854))
+;;;;;;  (19791 37247 950480))
 
 ;;;***
 
