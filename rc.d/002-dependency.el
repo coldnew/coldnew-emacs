@@ -168,7 +168,6 @@
 
 
 
-
 ;;(require* 'ipython)			; iPython
 ;;(require* 'matlab)			; Matlab
 ;;(require* 'pymacs)			; Pymacs

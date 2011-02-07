@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# contributor : coldnew <coldnew.tw@gmil.com>
+# name : require
+# key: require
+# --
+(require`(cond ((equal (buffer-name) "000-init.el")       (insert "f"))
+	       ((equal (buffer-name) "002-dependency.el") (insert "*")))
+	       ` '${1:FEATURE})
+$>$0

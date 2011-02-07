@@ -45,6 +45,7 @@
 	    ;; Insert map
 	    (vim:local-imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
 	    (vim:local-imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
+	    (vim:local-imap (kbd "M-r") 'emacs-lisp-mode:insert-require)
 	    (vim:local-imap (kbd "<f5>") 'eval-current-buffer)
 
 	    ))
@@ -71,42 +72,13 @@
 	      (if (buffer-file-name)
 		  (byte-compile-file buffer-file-name)))))
 
-
-
-;; ;; 該資料夾內沒有 Tags 檔案時自動建立,若有時則更新 Tags 檔
-;; (defun etags-create-or-update ()
-;;   "create or update the etag file"
-;;   (interactive)
-;;   ;; tagfile doesn't exist?
-;;   (if (not (= 0 (call-process "global" nil nil nil " -p")))
-;;       (let ((olddir default-directory)
-;;	    (topdir (read-directory-name
-;;		     "gtags: top of source tree:" default-directory)))
-;;	(cd topdir)
-;;	(shell-command "gtags && echo 'created tagfile'")
-;;	(cd olddir)) ; restore
-;;     ;;  tagfile already exists; update it
-;;     (shell-command "global -u && echo 'updated tagfile'")))
-
-
-;; (defvar my-auto-update-tags-alist
-;;   (list '("/some/path/to/TAGS" "command_to_build_tags")
-;;         '("/another/path/to/TAGS" "another_build_command")))
-
-;; (defun my-auto-update-tags ()
-;;   "Automatically update TAGS files"
-;;   (tags-table-check-computed-list)
-;;   (let ((filename (buffer-file-name))
-;;         build-cmd)
-;;     (mapc (lambda (tag-file)
-;;             (set-buffer tag-file)
-;;             (when (member filename (tags-table-files))
-;;               (setq build-cmd (cdr (assoc tag-file my-auto-update-tags-alist)))
-;;               (when build-cmd
-;;                 (call-process build-cmd nil 0))))
-;;           tags-table-computed-list)))
-
-;; (add-hook 'after-save-hook 'my-auto-update-tags)
+(defcmd emacs-lisp-mode:insert-require ()
+  "insert require smartly
+  I use special function `reauiref' and `reauire*' in emacs config
+  when buffer is 001-init, insert requiref instead of require
+  when buffer is 002-dependency, insert require* "
+  (insert "require")
+  (yas/expand))
 
 
 
