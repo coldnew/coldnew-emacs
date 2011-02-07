@@ -1,8 +1,8 @@
 ;;; invisible.el --- hide region
 
-;; Copyright (C) 1995,1996,1997,1998 Free Software Foundation, Inc.
+;; Copyright (C) 1995,1996,1997,1998,1999,2010 Free Software Foundation, Inc.
 
-;; Author: MORIOKA Tomohiko <morioka@jaist.ac.jp>
+;; Author: MORIOKA Tomohiko <tomo@m17n.org>
 ;; Keywords: invisible, text-property, region
 
 ;; This file is part of APEL (A Portable Emacs Library).
@@ -27,6 +27,8 @@
 (cond
  ((featurep 'xemacs)
   (require 'inv-xemacs))
+ ((>= emacs-major-version 23)
+  (require 'inv-23))
  ((>= emacs-major-version 19)
   (require 'inv-19))
  (t

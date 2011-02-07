@@ -19,3 +19,5 @@ var/
 *.git/
 *.py
 *.pl
+.authinfo
+

@@ -1,8 +1,8 @@
 echo off
 rem MAKE1.BAT for APEL.
 rem
-rem Version: $Id: make1.bat,v 1.1 2001/02/01 03:19:36 minakaji Exp $
-rem Last Modified: $Date: 2001/02/01 03:19:36 $
+rem Version: $Id: make1.bat,v 1.1 2001-02-01 03:19:36 minakaji Exp $
+rem Last Modified: $Date: 2001-02-01 03:19:36 $
 
 rem --- argument
 rem ---   elc : byte compile

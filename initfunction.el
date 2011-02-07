@@ -100,3 +100,10 @@
 
 ;; load init file
 (load "000-init")
+
+
+;; ;; Load external config files
+;; (let ((init-folder "~/.emacs.d/rc.d"))
+;;   (if (file-readable-p init-folder)
+;;       (dolist (config-file (directory-files init-folder t ".*\.elc?$"))
+;;	(load-file config-file))))

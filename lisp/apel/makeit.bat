@@ -5,8 +5,8 @@ rem ---  1999/07/07, Masaki YATSU mailto:yatsu@aurora.dti.ne.jp
 rem ---              cmail ML member
 rem ---  modified 1999/12/01, Yuh Ohmura, mailto:yutopia@t3.rim.or.jp
 rem ---  modified 2000/12/26, Takeshi Morishima mailto:tm@interaccess.com
-rem ---  date $Date: 2001/02/01 03:19:36 $
-rem ---  version $Id: makeit.bat,v 1.1 2001/02/01 03:19:36 minakaji Exp $
+rem ---  date $Date: 2001-02-01 03:19:36 $
+rem ---  version $Id: makeit.bat,v 1.1 2001-02-01 03:19:36 minakaji Exp $
 
 set ELISPMK_APP=apel
 

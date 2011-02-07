@@ -47,6 +47,9 @@
 	anything-c-source-recentf
 	anything-c-source-emacs-commands
 	anything-c-source-include
+	anything-c-source-emms-playlist
+	anything-c-source-emms-directory
+	anything-c-source-emms-file
 	))
 
 

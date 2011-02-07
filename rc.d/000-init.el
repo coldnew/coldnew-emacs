@@ -40,7 +40,8 @@
 (requiref '042-smartchr)		; smartchr
 (requiref '043-semantic)		; Semantic Setting
 (requiref '044-org)			; Org mode
-
+(requiref '045-elscreen)		; elscreen settings
+(requiref '046-emms)			; Emacs Multimedia System
 
 (requiref 'rc-common-hook)
 (requiref 'rc-ccmode-common)

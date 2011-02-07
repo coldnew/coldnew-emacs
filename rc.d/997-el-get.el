@@ -113,8 +113,31 @@
 	       :type git
 	       :url "https://github.com/senny/emacs-eclim.git")
 
+	(:name rcirc-notify
+	       :type emacswiki)
+	(:name rcirc-nonames-on-join
+	       :type emacswiki)
+	(:name rcirc-pounce
+	       :type emacswiki)
+	(:name rcirc-auto-away
+	       :type emacswiki)
+	(:name rcirc-late-fix
+	       :type emacswiki)
+	(:name rcirc-groups
+	       :type emacswiki)
+	(:name rcirc-dbus
+	       :type emacswiki)
+	(:name elscreen
+	       :type git
+	       :url "https://github.com/emacsmirror/elscreen.git")
+	(:name notify
+	       :type emacswiki)
+	(:name anything-emms
+	       :type emacswiki)
+	(:name emms-get-lyrics
+	       :type git
+	       :url "https://github.com/talau/elisp.git")
 
-	;;elscreen
 	;;auctex
 	;;color-theme			;
 

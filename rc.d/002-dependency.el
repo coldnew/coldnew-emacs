@@ -2,6 +2,8 @@
 ;;;; All extra dependency
 (eval-when-compile (require 'cl))
 
+
+
 (require* 'ac-anything)			  ; Auto Complete with Anything
 (require* 'ac-company)			  ; Auto-Complete with company-mode
 (require* 'advice)			  ;
@@ -41,13 +43,16 @@
 (require* 'ctagsfind)			  ;
 (require* 'dabbrev)			  ;
 (require* 'desktop)			  ;
+(require* 'dirtrack)			  ; Directory Tracking by watching the prompt
 (require* 'doxymacs)			  ; Doxygen for emacs
 (require* 'dropdown-list)		  ;
+(require* 'easymenu)			  ;
 (require* 'eclim)			  ; an interface to the Eclipse IDE.
 (require* 'ediff)
 (require* 'el-get)			  ; Emacs-Lisp Manager
 (require* 'eldoc)			  ; Emacs-Lisp Documents Browser
 (require* 'eldoc-extension)		  ; Emacs-Lisp Documents Browser Extension
+(require* 'elscreen)			  ; have multiple screens on emacs as well as GNU screen
 (require* 'emms)			  ; emacs Multimedia System
 (require* 'etags)			  ;
 (require* 'executable)			  ;
@@ -75,6 +80,7 @@
 (require* 'multi-term)			  ;
 (require* 'nav)				  ;
 (require* 'newlisp)			  ; newlisp
+(require* 'notify)			  ; notification front-end
 (require* 'paredit)			  ; Use Paredit to balance parentheses
 (require* 'popup-pos-tip)		  ;
 (require* 'pos-tip)			  ;
@@ -86,8 +92,15 @@
 (require* 'quack)			  ; enhanced support for editing and running Scheme code
 (require* 'rainbow-mode)		  ; Color the emacs buffer
 (require* 'rcirc)			  ;
+(require* 'rcirc-auto-away)		  ; Go /away after emacs is idle for a period of time.
 (require* 'rcirc-color)			  ; color rcirc nicks
 (require* 'rcirc-controls)		  ; color rcirc control sequences
+(require* 'rcirc-dbus)			  ; rcirc dbus notifications
+(require* 'rcirc-groups)		  ; an emacs buffer in rcirc-groups major mode
+(require* 'rcirc-late-fix)		  ; Replace s/wrong/right strings on rcirc buffers
+(require* 'rcirc-nonames-on-join)	  ; don't show 'JOIN' messages in rcirc
+(require* 'rcirc-notify)		  ; rcirc libnotify popups
+(require* 'rcirc-pounce)		  ; maintain a message queue for offline nicks
 (require* 'recentf)			  ; Setup a menu of recently opened files
 (require* 'rw-hunspell)			  ;
 (require* 'rw-ispell)			  ;
@@ -129,8 +142,30 @@
 (require* 'xcscope+)			  ; Providing an extension to xcscope
 (require* 'yasnippet)			  ; Yet another snippet extension for Emacs
 (require* 'zencoding-mode)		  ; Unfold CSS-selector-like expressions to markup
-(require* 'dirtrack)			  ; Directory Tracking by watching the prompt
-(require* 'easymenu)			  ;
+(require* 'emms)			  ; Emacs Multimedia System
+(require* 'emms-setup)			  ; Setup script for EMMS
+(require* 'emms-lyrics)			  ; Display lyrics synchronically
+(require* 'emms-mode-line)		  ; Mode-Line and titlebar infos for emms
+(require* 'emms-mode-line-icon)		  ; show an icon in the Emacs mode-line
+(require* 'emms-playing-time)		  ; Display emms playing time on mode line
+(require* 'emms-streams)		  ; interface to add and play streams
+(require* 'emms-info)			  ; Retrieving track information
+(require* 'emms-browser)		  ; a track browser supporting covers and filtering
+(require* 'emms-tag-editor)		  ; Edit track tags.
+(require* 'emms-bookmarks)		  ; Bookmarks for Emms
+(require* 'emms-cache)			  ; persistence for emms-track
+(require* 'emms-compat)			  ; Compatibility routines for EMMS
+(require* 'emms-history)		  ; save all playlists when exiting emacs
+(require* 'emms-i18n)			  ; functions for handling coding systems
+(require* 'emms-player-mplayer)		  ; mplayer support for EMMS
+(require* 'emms-player-simple)		  ; A generic simple player
+;;(require* 'anything-emms)		  ; Integrate EMMS with `anything.el'
+(require* 'emms-get-lyrics)		  ; Get the lyrics of the song emms is currently playing
+(require* 'emms-player-mpg321-remote)	  ; play files with mpg321 -R
+
+
+
+
 
 
 

@@ -47,6 +47,8 @@
 			 (name . "^\\**Loading Library Log\\*$")
 			 (name . "^\\*anything*")
 			 (name . "^ipa*")
+			 (name . "^\\*irc*")
+			 (name . "^\\*el-get*")
 			 ))
 	 ("Version Control" (or (mode . svn-status-mode)
 				(mode . svn-log-edit-mode)
@@ -81,6 +83,8 @@
 	 ("Emacs" (mode . emacs-lisp-mode))
 	 )))
 
+;; Following buffer will not show in iBuffer
+(add-to-list 'ibuffer-never-show-predicates "^\\*Buffer List\\*$")
 
 ;; Reverse group list
 (defadvice ibuffer-generate-filter-groups (after reverse-ibuffer-groups () activate)

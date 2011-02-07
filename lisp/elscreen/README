@@ -39,8 +39,6 @@ Usage
 -----
 You may use following sequences on ElScreen:
 
-
-
   C-z c
   C-z C-c  Create a new screen and switch to it.
   C-z C    Create a new screen with the window-configuration of the
