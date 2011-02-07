@@ -10,3 +10,6 @@
 [submodule "lisp/magit"]
 	path = lisp/magit
 	url = http://github.com/philjackson/magit.git
+[submodule "lisp/emms"]
+	path = lisp/emms
+	url = git://git.sv.gnu.org/emms.git
