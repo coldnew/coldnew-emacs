@@ -69,5 +69,5 @@
 (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qconfig-dist.h"))
 (add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat qt4-base-dir "/Qt/qglobal.h"))
 
-(provide '043-semactic)
-;; 043-semactic.el ends here.
+(provide '043-semantic)
+;; 043-semantic.el ends here.

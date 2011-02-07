@@ -1826,16 +1826,17 @@ accept it or skip it.
 ;;;;;;  "eclim/company-emacs-eclim.el" "eclim/eclim-ant.el" "eclim/eclim-java.el"
 ;;;;;;  "eclim/eclim-maven.el" "eclim/eclim-problems.el" "eclim/eclim-project.el"
 ;;;;;;  "eclim/eclim.el" "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
-;;;;;;  "ipa/ipa.el" "ppindent/ppindent.el" "pymacs/pymacs.el" "qmake-mode/qmake.el"
-;;;;;;  "rcirc-color/rcirc-color.el" "rcirc-controls/rcirc-controls.el"
-;;;;;;  "redo+/redo+.el" "rw-ispell/rw-ispell.el" "rw-language-and-country-codes/rw-language-and-country-codes.el"
+;;;;;;  "ipa/ipa.el" "pabbrev/pabbrev.el" "ppindent/ppindent.el"
+;;;;;;  "pymacs/pymacs.el" "qmake-mode/qmake.el" "rcirc-color/rcirc-color.el"
+;;;;;;  "rcirc-controls/rcirc-controls.el" "redo+/redo+.el" "rw-ispell/rw-ispell.el"
+;;;;;;  "rw-language-and-country-codes/rw-language-and-country-codes.el"
 ;;;;;;  "ssh-config/ssh-config.el" "unicad/unicad.el" "vim-mode/vim-compat.el"
 ;;;;;;  "vim-mode/vim-defs.el" "vim-mode/vim-ex-commands.el" "vim-mode/vim-ex.el"
 ;;;;;;  "vim-mode/vim-insert-mode.el" "vim-mode/vim-keymap.el" "vim-mode/vim-macs.el"
 ;;;;;;  "vim-mode/vim-modes.el" "vim-mode/vim-normal-mode.el" "vim-mode/vim-scroll.el"
 ;;;;;;  "vim-mode/vim-search.el" "vim-mode/vim-undo.el" "vim-mode/vim-visual-mode.el"
 ;;;;;;  "vim-mode/vim-window.el" "xcscope+/xcscope+.el" "zencoding-mode/zencoding-trie.el")
-;;;;;;  (19790 50423 299368))
+;;;;;;  (19790 52754 448254))
 
 ;;;***
 

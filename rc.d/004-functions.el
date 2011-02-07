@@ -1,6 +1,20 @@
 ;;
 (eval-when-compile (require 'cl))
 
+
+
+(defun resolve-sym-link ()
+  "Replace the string at the point with the true path."
+  (interactive)
+  (beginning-of-line)
+  (let* ((file (buffer-substring (point)
+				 (save-excursion (end-of-line) (point))))
+	 (file-dir (file-name-directory file))
+	 (file-true-dir (file-truename file-dir))
+	 (file-name (file-name-nondirectory file)))
+    (delete-region (point) (save-excursion (end-of-line) (point)))
+    (insert (concat file-true-dir file-name))))
+
 ;; ------------------------------------------------------------------------------
 ;; Always save buffer even if it is already saved
 ;; ------------------------------------------------------------------------------

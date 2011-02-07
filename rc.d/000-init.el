@@ -1,7 +1,7 @@
 ;;
 (eval-when-compile (require 'cl))
 
-;; Libraries configure
+;;;;;; Libraries configure
 (requiref '001-environment)		; Environment Setting
 (requiref '002-dependency)		; All libraries included in
 (requiref '003-macros)			; Macros or not interactive functions
@@ -53,7 +53,7 @@
 
 
 
-;; Programming Language Configure Settings
+;;;;;; Programming Language Configure Settings
 (requiref 'lang-c)			; C
 (requiref 'lang-cpp)			; C++
 (requiref 'lang-emacs-lisp)		; Emacs-Lisp

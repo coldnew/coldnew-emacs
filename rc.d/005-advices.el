@@ -13,6 +13,19 @@
 	(bury-buffer)
       ad-do-it)))
 
+(defadvice find-file (around find-file-set-trigger-variable protect activate)
+  "bind a variable so that history command can do special behavior for find-file"
+  (interactive (let (inside-find-file-command) (find-file-read-args "Find file: " nil)))
+  ad-do-it)
+
+(defadvice next-history-element (around next-history-element-special-behavior-for-find-file protect activate)
+  "when doing history for find-file, use the buffer-list as history"
+  (if (boundp 'inside-find-file-command)
+      (let ((find-file-history (delq nil (mapcar 'buffer-file-name (buffer-list))))
+	    (minibuffer-history-variable 'find-file-history))
+	ad-do-it)
+    ad-do-it))
+
 ;; BUG: when use sort-lines, this will prompt
 ;; (defadvice kill-buffer (around my-kill-buffer-check activate)
 ;;   "Prompt when a buffer is about to be killed."

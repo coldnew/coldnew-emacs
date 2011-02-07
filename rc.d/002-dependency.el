@@ -2,11 +2,6 @@
 ;;;; All extra dependency
 (eval-when-compile (require 'cl))
 
-
-
-
-
-
 (require* 'ac-anything)			  ; Auto Complete with Anything
 (require* 'ac-company)			  ; Auto-Complete with company-mode
 (require* 'advice)			  ;
@@ -134,6 +129,9 @@
 (require* 'xcscope+)			  ; Providing an extension to xcscope
 (require* 'yasnippet)			  ; Yet another snippet extension for Emacs
 (require* 'zencoding-mode)		  ; Unfold CSS-selector-like expressions to markup
+(require* 'dirtrack)			  ; Directory Tracking by watching the prompt
+(require* 'easymenu)			  ;
+
 
 
 ;;(require* 'ipython)			; iPython

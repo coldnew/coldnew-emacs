@@ -74,7 +74,6 @@
 (visual-line-mode           t )         ; 折行時不拆開一個 "字"
 (global-undo-tree-mode)			; 開啟 undo-tree-mode
 
-
 ;;  當 emacs 建立新檔案至不存在的資料夾時，於儲存前自動建立該資料夾
 (add-hook 'before-save-hook
 	  '(lambda ()
