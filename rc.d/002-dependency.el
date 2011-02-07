@@ -162,6 +162,7 @@
 ;;(require* 'anything-emms)		  ; Integrate EMMS with `anything.el'
 (require* 'emms-get-lyrics)		  ; Get the lyrics of the song emms is currently playing
 (require* 'emms-player-mpg321-remote)	  ; play files with mpg321 -R
+(require* 'mmm-mode)			  ; Allow Multiple Major Modes in a buffer
 
 
 

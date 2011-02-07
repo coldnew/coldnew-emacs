@@ -33,9 +33,13 @@
 (defun yas/year ()
   (format-time-string "%Y"))
 (defun yas/user-name ()
-  (user-full-name))
+  (insert user-full-name))
 (defun yas/login-name ()
-  (user-login-name))
+  (insert user-login-name))
+(defun yas/user-email ()
+  (insert user-mail-address))
+(defun yas/user-nickname ()
+  (insert user-nickname))
 
 
 (provide '025-yasnippet)

@@ -137,7 +137,9 @@
 	(:name emms-get-lyrics
 	       :type git
 	       :url "https://github.com/talau/elisp.git")
-
+	(:name mmm-mode
+	       :type git
+	       :url "git://github.com/purcell/mmm-mode.git")
 	;;auctex
 	;;color-theme			;
 

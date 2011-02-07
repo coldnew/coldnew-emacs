@@ -1862,16 +1862,18 @@ accept it or skip it.
 ;;;;;;  "eclim/eclim-ant.el" "eclim/eclim-java.el" "eclim/eclim-maven.el"
 ;;;;;;  "eclim/eclim-problems.el" "eclim/eclim-project.el" "eclim/eclim.el"
 ;;;;;;  "elscreen/elscreen.el" "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
-;;;;;;  "ipa/ipa.el" "ppindent/ppindent.el" "pymacs/pymacs.el" "qmake-mode/qmake.el"
-;;;;;;  "rcirc-color/rcirc-color.el" "rcirc-controls/rcirc-controls.el"
+;;;;;;  "ipa/ipa.el" "mmm-mode/mmm-auto.el" "mmm-mode/mmm-class.el"
+;;;;;;  "mmm-mode/mmm-cmds.el" "mmm-mode/mmm-compat.el" "mmm-mode/mmm-cweb.el"
+;;;;;;  "mmm-mode/mmm-mason.el" "mmm-mode/mmm-mode.el" "mmm-mode/mmm-myghty.el"
+;;;;;;  "mmm-mode/mmm-noweb.el" "mmm-mode/mmm-region.el" "mmm-mode/mmm-rpm.el"
+;;;;;;  "mmm-mode/mmm-sample.el" "mmm-mode/mmm-univ.el" "mmm-mode/mmm-utils.el"
+;;;;;;  "mmm-mode/mmm-vars.el" "ppindent/ppindent.el" "pymacs/pymacs.el"
+;;;;;;  "qmake-mode/qmake.el" "rcirc-color/rcirc-color.el" "rcirc-controls/rcirc-controls.el"
 ;;;;;;  "redo+/redo+.el" "rw-ispell/rw-ispell.el" "rw-language-and-country-codes/rw-language-and-country-codes.el"
-;;;;;;  "ssh-config/ssh-config.el" "unicad/unicad.el" "vim-mode/vim-compat.el"
-;;;;;;  "vim-mode/vim-defs.el" "vim-mode/vim-ex-commands.el" "vim-mode/vim-ex.el"
-;;;;;;  "vim-mode/vim-insert-mode.el" "vim-mode/vim-keymap.el" "vim-mode/vim-macs.el"
-;;;;;;  "vim-mode/vim-modes.el" "vim-mode/vim-normal-mode.el" "vim-mode/vim-scroll.el"
-;;;;;;  "vim-mode/vim-search.el" "vim-mode/vim-undo.el" "vim-mode/vim-visual-mode.el"
-;;;;;;  "vim-mode/vim-window.el" "xcscope+/xcscope+.el" "zencoding-mode/zencoding-trie.el")
-;;;;;;  (19791 37801 206093))
+;;;;;;  "ssh-config/ssh-config.el" "unicad/unicad.el" "vim-mode/vim-defs.el"
+;;;;;;  "vim-mode/vim-ex-commands.el" "vim-mode/vim-macs.el" "vim-mode/vim-scroll.el"
+;;;;;;  "vim-mode/vim-undo.el" "vim-mode/vim-window.el" "xcscope+/xcscope+.el"
+;;;;;;  "zencoding-mode/zencoding-trie.el") (19791 56133 127472))
 
 ;;;***
 

@@ -190,5 +190,11 @@
 
 
 
+
+
+
+
+
+
 (provide '006-deadcode)
 ;; 006-deadcode.el ends here.

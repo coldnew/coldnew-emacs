@@ -28,6 +28,7 @@
 (setq ibuffer-saved-filter-groups
       '(("default"
 	 ("*Buffer*" (or (name . "^\\*Messages\\*$")
+			 (name . "^\\*scratch\\*$")
 			 (name . "^TAGS\\(<[0-9]+>\\)?$")
 			 (name . "^\\*Occur\\*$")
 			 (name . "^\\*grep\\*$")
@@ -80,7 +81,8 @@
 			  (mode . objc-mode)))
 	 ("Lisp"  (or (mode . newlisp-mode)
 		      (mode . slime-mode)))
-	 ("Emacs" (mode . emacs-lisp-mode))
+	 ("Emacs" (or (mode . emacs-lisp-mode)
+		      (mode . lisp-interaction-mode)))
 	 )))
 
 ;; Following buffer will not show in iBuffer
