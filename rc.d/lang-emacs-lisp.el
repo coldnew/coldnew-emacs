@@ -33,7 +33,7 @@
 ;;;;;; Keybindings
 (add-hook 'emacs-lisp-mode-hook
 	  (lambda ()
-	    ;; Normal map
+	    ;;;; Normal map
 	    (vim:local-nmap (kbd "zv") 'describe-variable)
 	    (vim:local-nmap (kbd "zf") 'describe-function)
 	    (vim:local-nmap (kbd "zk") 'describe-key)
@@ -42,13 +42,22 @@
 	    (vim:local-nmap (kbd "zc") 'describe-coding-system)
 	    (vim:local-nmap (kbd "<f5>") 'eval-current-buffer)
 
-	    ;; Insert map
+	    ;;;; Insert map
+	    ;; Insert (if )
 	    (vim:local-imap (kbd "M-i") (lambda () (interactive) (insert "if") (yas/expand)))
+	    ;; Insert (setq )
 	    (vim:local-imap (kbd "M-s") (lambda () (interactive) (insert "setq") (yas/expand)))
-	    (vim:local-imap (kbd "M-r") 'emacs-lisp-mode:insert-require)
+	    ;; Insert (add-hook 'HOOK 'FUNCTION)
+	    (vim:local-imap (kbd "M-a") (lambda () (interactive) (insert "add-hook") (yas/expand)))
+	    ;; Insert (require 'FEATURE)
+	    (vim:local-imap (kbd "M-r") (lambda () (interactive) (insert "require") (yas/expand)))
+	    ;; Insert (lambda () "DOCSTRING" (interactive) BODY)
+	    (vim:local-imap (kbd "M-l") (lambda () (interactive) (insert "lambda") (yas/expand)))
+	    ;; Insert (format "STRING" &rest OBJECTS)
+	    (vim:local-imap (kbd "M-f") (lambda () (interactive) (insert "format") (yas/expand)))
 	    (vim:local-imap (kbd "<f5>") 'eval-current-buffer)
-
 	    ))
+
 ;;;;;; Misc Settings
 ;; if *scratch* does not exist, create it.
 (run-with-idle-timer 1 t
@@ -71,18 +80,6 @@
 	    (lambda ()
 	      (if (buffer-file-name)
 		  (byte-compile-file buffer-file-name)))))
-
-(defcmd emacs-lisp-mode:insert-require ()
-  "insert require smartly
-  I use special function `reauiref' and `reauire*' in emacs config
-  when buffer is 001-init, insert requiref instead of require
-  when buffer is 002-dependency, insert require* "
-  (insert "require")
-  (yas/expand)
-  )
-
-
-
 
 (provide 'lang-emacs-lisp)
 ;;; rc-emacs-lisp-mode.el ends here

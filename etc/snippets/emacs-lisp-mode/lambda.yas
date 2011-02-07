@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# contributor : coldnew <coldnew.tw@gmil.com>
+# name: lambda
+# key: lambda
+# --
+(lambda (${1:}) "${2:DOCSTRING}" (interactive) ${3:BODY})
+$0

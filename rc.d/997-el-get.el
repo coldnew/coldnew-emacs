@@ -140,6 +140,10 @@
 	(:name mmm-mode
 	       :type git
 	       :url "git://github.com/purcell/mmm-mode.git")
+	(:name smex
+	       :type git
+	       :url "https://github.com/nonsequitur/smex.git")
+
 	;;auctex
 	;;color-theme			;
 

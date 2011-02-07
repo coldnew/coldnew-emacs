@@ -71,6 +71,13 @@
 	(insert "/" input)
 	(rcirc-send-input)))))
 
+(defun-rcirc-command calc (input)
+  "calculate value of some expression using bc"
+  (let ((expr (mapconcat 'identity args " ")))
+    (when (length expr)
+      (let ((result (shell-command-to-string (concat "echo '" expr "' | bc ")))
+	    (when result (rcirc-send-message (concat expr " = " result))))))))
+
 
 ;;;;;; Other Settings
 

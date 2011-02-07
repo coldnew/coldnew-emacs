@@ -163,6 +163,13 @@
 (require* 'emms-get-lyrics)		  ; Get the lyrics of the song emms is currently playing
 (require* 'emms-player-mpg321-remote)	  ; play files with mpg321 -R
 (require* 'mmm-mode)			  ; Allow Multiple Major Modes in a buffer
+(require* 'mmm-auto)			  ; loading and enabling MMM Mode automatically
+(require* 'smex)			  ; M-x interface with Ido-style fuzzy matching.
+(require* 'ido)				  ; interactively do things with buffers and files
+
+
+
+
 
 
 

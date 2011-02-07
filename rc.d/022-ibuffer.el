@@ -40,7 +40,7 @@
 			 (name . "^\\*Completions\\*$")
 			 (name . "^\\*tramp")
 			 (name . "^\\*compilation\\*$")
-			 (name . "^\\*CEDET Global\\*$")
+			 ;;			 (name . "^\\*CEDET Global\\*$")
 			 (name . "^\\*Buffer List\\*$")
 			 (name . "^\\*Anything Log\\*$")
 			 (name . "^\\*anything for\\*$")
@@ -72,13 +72,16 @@
 		      (name . "^\\*w3m*")))
 	 ("Org"   (mode . org-mode))
 	 ("Shell Script" (or (mode . shell-mode)
-			     (mode . python-mode)
 			     (mode . perl-mode)
 			     (mode . ruby-mode)))
+	 ("Python" (or (mode . python-mode)
+		       (mode . ipython-mode)))
 	 ("C++ . C#" (or (mode . c++-mode)
 			 (mode . csharpmode)))
 	 ("C . Obj-C" (or (mode . c-mode)
 			  (mode . objc-mode)))
+	 ("Snippet" (or (mode . snippet-mode)
+			(name . "*.yas$")))
 	 ("Lisp"  (or (mode . newlisp-mode)
 		      (mode . slime-mode)))
 	 ("Emacs" (or (mode . emacs-lisp-mode)
@@ -87,6 +90,7 @@
 
 ;; Following buffer will not show in iBuffer
 (add-to-list 'ibuffer-never-show-predicates "^\\*Buffer List\\*$")
+(add-to-list 'ibuffer-never-show-predicates"^\\*CEDET Global\\*$")
 
 ;; Reverse group list
 (defadvice ibuffer-generate-filter-groups (after reverse-ibuffer-groups () activate)

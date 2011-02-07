@@ -42,6 +42,14 @@
 (requiref '044-org)			; Org mode
 (requiref '045-elscreen)		; elscreen settings
 (requiref '046-emms)			; Emacs Multimedia System
+(requiref '047-mmm-mode)		;
+(requiref '048-smex)			; M-x interface with Ido-style fuzzy matching.
+(requiref '049-ido)			; ido setting
+
+
+
+
+
 
 (requiref 'rc-common-hook)
 (requiref 'rc-ccmode-common)

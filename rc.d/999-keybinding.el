@@ -11,6 +11,7 @@
 (vim:nmap (kbd "C-x b") 'lusty-buffer-explorer)
 (vim:nmap (kbd "C-x f") 'anything-for-files)
 (vim:nmap (kbd "M-p") 'anything-show-kill-ring)
+(vim:nmap (kbd "M-x") 'smex)
 
 ;; Insert Map
 (vim:imap (kbd "C-n") 'auto-complete)
@@ -21,6 +22,7 @@
 (vim:imap (kbd "C-x b") 'lusty-buffer-explorer)
 (vim:imap (kbd "C-x f") 'anything-for-files)
 (vim:imap (kbd "C-x C-s") 'save-buffer-always)
+(vim:imap (kbd "M-x") 'smex)
 
 
 ;; Visual Map
@@ -29,6 +31,7 @@
 (vim:wmap (kbd "C-w f") 'window-fullscreen)
 (vim:wmap (kbd "C-x C-b") 'ibuffer)
 (vim:wmap (kbd "C-x f") 'anything-for-files)
+(vim:wmap (kbd "M-x") 'smex)
 
 
 

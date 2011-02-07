@@ -1675,6 +1675,17 @@ A major mode for handling rcirc notifications
 
 ;;;***
 
+;;;### (autoloads (smex-initialize) "smex/smex" "smex/smex.el" (19791
+;;;;;;  63090))
+;;; Generated autoloads from smex/smex.el
+
+(autoload 'smex-initialize "smex/smex" "\
+Not documented
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (speck-multi-read speck-buffer speck-mode) "speck/speck"
 ;;;;;;  "speck/speck.el" (19790 25986))
 ;;; Generated autoloads from speck/speck.el
@@ -1862,18 +1873,13 @@ accept it or skip it.
 ;;;;;;  "eclim/eclim-ant.el" "eclim/eclim-java.el" "eclim/eclim-maven.el"
 ;;;;;;  "eclim/eclim-problems.el" "eclim/eclim-project.el" "eclim/eclim.el"
 ;;;;;;  "elscreen/elscreen.el" "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
-;;;;;;  "ipa/ipa.el" "mmm-mode/mmm-auto.el" "mmm-mode/mmm-class.el"
-;;;;;;  "mmm-mode/mmm-cmds.el" "mmm-mode/mmm-compat.el" "mmm-mode/mmm-cweb.el"
-;;;;;;  "mmm-mode/mmm-mason.el" "mmm-mode/mmm-mode.el" "mmm-mode/mmm-myghty.el"
-;;;;;;  "mmm-mode/mmm-noweb.el" "mmm-mode/mmm-region.el" "mmm-mode/mmm-rpm.el"
-;;;;;;  "mmm-mode/mmm-sample.el" "mmm-mode/mmm-univ.el" "mmm-mode/mmm-utils.el"
-;;;;;;  "mmm-mode/mmm-vars.el" "ppindent/ppindent.el" "pymacs/pymacs.el"
-;;;;;;  "qmake-mode/qmake.el" "rcirc-color/rcirc-color.el" "rcirc-controls/rcirc-controls.el"
+;;;;;;  "ipa/ipa.el" "ppindent/ppindent.el" "pymacs/pymacs.el" "qmake-mode/qmake.el"
+;;;;;;  "rcirc-color/rcirc-color.el" "rcirc-controls/rcirc-controls.el"
 ;;;;;;  "redo+/redo+.el" "rw-ispell/rw-ispell.el" "rw-language-and-country-codes/rw-language-and-country-codes.el"
 ;;;;;;  "ssh-config/ssh-config.el" "unicad/unicad.el" "vim-mode/vim-defs.el"
 ;;;;;;  "vim-mode/vim-ex-commands.el" "vim-mode/vim-macs.el" "vim-mode/vim-scroll.el"
 ;;;;;;  "vim-mode/vim-undo.el" "vim-mode/vim-window.el" "xcscope+/xcscope+.el"
-;;;;;;  "zencoding-mode/zencoding-trie.el") (19791 56133 127472))
+;;;;;;  "zencoding-mode/zencoding-trie.el") (19791 63091 374021))
 
 ;;;***
 
