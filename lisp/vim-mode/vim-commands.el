@@ -99,11 +99,14 @@
 (require 'vim-compat)
 (require 'vim-motions)
 
+(defgroup vim-commands nil
+  "Commands"
+  :group 'vim-mode)
 
 (defcustom vim:shift-width 8
   "The number of columns for shifting commands like < or >."
   :type 'integer
-  :group 'vim-mode)
+  :group 'vim-commands)
 
 (vim:defcmd vim:cmd-insert (count)
   "Switches to insert-mode before point."
@@ -688,6 +691,31 @@ and switches to insert-mode."
   "Sets the mark `mark-char' at point."
   (vim:set-mark mark-char))
 
+(defun vim:print-mark-list (marks)
+  "Prints information about the alist marks."
+  (mapconcat
+   #'(lambda (mark)
+       (let ((show-buffer-name
+	      (not (eq (current-buffer) (marker-buffer (cdr mark))))))
+	 (with-current-buffer (marker-buffer (cdr mark))
+	   (save-excursion
+	     (goto-char (cdr mark))
+	     (let ((file-or-text
+		    (if show-buffer-name (buffer-name)
+		      (let* ((beg (save-excursion
+				    (vim:motion-first-non-blank)
+				    (point)))
+			     (end (min (+ beg 60) (line-end-position))))
+			(buffer-substring-no-properties beg end)))))
+	       (format "%3s  %5d %3d %s"
+		       (car mark)
+		       (line-number-at-pos)
+		       (current-column)
+		       file-or-text))))))
+   marks "\n"))
+	       
+	       
+
 (vim:defcmd vim:cmd-show-marks (nonrepeatable (argument marks))
   "Shows all currently defined marks."
   (let ((all-marks (append vim:local-marks-alist vim:global-marks-alist)))
@@ -697,27 +725,33 @@ and switches to insert-mode."
 	    (remq nil (mapcar #'(lambda (x) (and (memq (car x) marks) x)) all-marks))))
 
     (setq all-marks (sort all-marks #'(lambda (x y) (< (car x) (car y)))))
-    (setq all-marks (apply #'concat
-                           (mapcar
-                            #'(lambda (m)
-                                (format "%3c  %5d %3d %s\n"
-                                        (car m)
-                                        (line-number-at-pos (cdr m))
-                                        (save-excursion
-                                          (goto-char (cdr m))
-                                          (current-column))
-                                        (buffer-substring-no-properties
-                                         (save-excursion
-                                           (goto-char (cdr m))
-                                           (line-beginning-position))
-                                         (+ 20
-                                            (save-excursion
-                                              (goto-char (cdr m))
-                                              (line-beginning-position))))))
-                            all-marks)))
+    (setq all-marks (vim:print-mark-list
+		     (mapcar #'(lambda (x)
+				 (cons (char-to-string (car x)) (cdr x)))
+			     all-marks)))
     (let (message-truncate-lines message-log-max)
       (message "%4s %5s %3s %s\n%s" "Mark" "Line" "Col" "File/Text"
                all-marks))))
+
+(vim:defcmd vim:cmd-show-jumps (nonrepeatable)
+  "Shows the current jump-list."
+  (let* ((cnt 0)
+	 (pjumps (mapcar 
+		  #'(lambda (x)
+		      (incf cnt)
+		      (cons (int-to-string cnt) x))
+		  (car vim:jumplist))))
+    (setq cnt -1)
+    (let ((njumps (mapcar
+		   #'(lambda (x)
+		       (incf cnt)
+		       (cons (int-to-string cnt) x))
+		   (cdr vim:jumplist))))
+      (let ((jumps (vim:print-mark-list (append (reverse pjumps) njumps)))
+	    message-truncate-lines message-log-max)
+	(message "%4s %5s %3s %s\n%s" "Jump" "Line" "Col" "File/Text" jumps)))))
+    
+  
 
 (vim:deflocalvar vim:current-macro nil
   "The name of the currently recorded macro.")

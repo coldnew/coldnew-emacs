@@ -164,6 +164,9 @@
 
 (vim:omap "'" 'vim:motion-mark-line)
 (vim:omap "`" 'vim:motion-mark)
+(vim:omap (kbd "C-o") 'vim:cmd-prev-jump)
+(vim:omap (kbd "C-i") 'vim:cmd-next-jump)
+(vim:omap [tab] 'indent-for-tab-command)
 
 (vim:omap "iw" 'vim:motion-inner-word)
 (vim:omap "aw" 'vim:motion-outer-word)
@@ -431,6 +434,8 @@
 (vim:emap "substitute" 'vim:cmd-substitute)
 (vim:emap "s" "substitute")
 (vim:emap "marks" 'vim:cmd-show-marks)
+(vim:emap "jumps" 'vim:cmd-show-jumps)
+(vim:emap "ju" "jumps")
 (vim:emap "noh" "nohlsearch")
 (vim:emap "nohlsearch" 'vim:cmd-nohighlight)
 

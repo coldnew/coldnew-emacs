@@ -95,13 +95,14 @@ like 'dd', 'yy',... .")
 	(setq vim:current-key-sequence
 	      (vconcat vim:current-key-sequence (vim:this-command-keys)))
 	(funcall command))
-    (case (vim:cmd-type command)
-      ('simple (error "No simple-commands allowed in operator-pending mode."))
-      ('complex (error "No complex-commands allowed in operator-pending mode."))
-      (t (vim:normal-execute-complex-command command)))
+    (unwind-protect
+	(case (vim:cmd-type command)
+	  ('simple (error "No simple-commands allowed in operator-pending mode."))
+	  ('complex (error "No complex-commands allowed in operator-pending mode."))
+	  (t (vim:normal-execute-complex-command command)))
     
-    (when (vim:operator-pending-mode-p)
-      (vim:activate-normal-mode))))
+      (when (vim:operator-pending-mode-p)
+	(vim:activate-normal-mode)))))
 
 
 (vim:defcmd vim:cmd-force-charwise (nonrepeatable)

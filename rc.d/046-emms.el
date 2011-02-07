@@ -1,11 +1,11 @@
 ;;
 (eval-when-compile (require 'cl))
 
-(emms-standard)
-(emms-default-players)
+;; (emms-standard)
+;; (emms-default-players)
 
 
-;; Default emms directory
+;; default emms directory
 (setq emms-directory "~/.emacs.d/var/emms")
 
 ;; The default directory to look for media files.

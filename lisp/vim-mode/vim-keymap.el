@@ -76,7 +76,7 @@ and vim:local-`map-command'."
 ;; the next command and the ESC event is resent.
 (defcustom vim:intercept-ESC-timeout 0.1
   "Time in seconds to wait for another key after an ESC event."
-  :group 'vim-mode)
+  :group 'vim-mode-general)
 
 (defconst vim:intercept-ESC-keymap (make-sparse-keymap)
   "Keymap to map ESC to [escape].")

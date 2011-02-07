@@ -115,11 +115,15 @@
   "A VIM emulation mode."
   :group 'emulations)
 
+(defgroup vim-mode-general nil
+  "General options for Vim-Mode"
+  :group 'vim-mode)
+
 (defcustom vim:default-initial-mode
   'normal
   "The default initial vim sub-mode."
   :type '(symbol :tag "vim-mode start mode")
-  :group 'vim-mode)
+  :group 'vim-mode-general)
 
 (defcustom vim:initial-modes
   '((debugger-mode . window)
@@ -136,7 +140,7 @@
 vim sub-mode in which vim-mode should start when a buffer with the
 given major-mode is created."
   :type '(repeat (cons (symbol :tag "major mode") (symbol :tag "vim-mode start mode")))
-  :group 'vim-mode)
+  :group 'vim-mode-general)
 
 
 (define-minor-mode vim-local-mode
@@ -180,7 +184,7 @@ given major-mode is created."
   "The minimal distance between point and a parenthesis which
 causes the parenthesis to be highlighted."
   :type 'integer
-  :group 'vim-mode)
+  :group 'vim-mode-general)
 
 
 (defadvice show-paren-function (around vim:show-paren-function)

@@ -1620,7 +1620,7 @@ Will prompt you shell name when you type `C-u' before this command.
 ;;;***
 
 ;;;### (autoloads (notify) "notify/notify" "notify/notify.el" (19791
-;;;;;;  37135))
+;;;;;;  37678))
 ;;; Generated autoloads from notify/notify.el
 
 (autoload 'notify "notify/notify" "\
@@ -1665,7 +1665,7 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 ;;;***
 
 ;;;### (autoloads (rcirc-groups-mode) "rcirc-groups/rcirc-groups"
-;;;;;;  "rcirc-groups/rcirc-groups.el" (19791 37135))
+;;;;;;  "rcirc-groups/rcirc-groups.el" (19791 37678))
 ;;; Generated autoloads from rcirc-groups/rcirc-groups.el
 
 (autoload 'rcirc-groups-mode "rcirc-groups/rcirc-groups" "\
@@ -1861,8 +1861,7 @@ accept it or skip it.
 ;;;;;;  "autocomplete/fuzzy.el" "autocomplete/popup.el" "eclim/company-emacs-eclim.el"
 ;;;;;;  "eclim/eclim-ant.el" "eclim/eclim-java.el" "eclim/eclim-maven.el"
 ;;;;;;  "eclim/eclim-problems.el" "eclim/eclim-project.el" "eclim/eclim.el"
-;;;;;;  "elscreen/elscreen.el" "emms-get-lyrics/emms-get-lyrics.el"
-;;;;;;  "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
+;;;;;;  "elscreen/elscreen.el" "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
 ;;;;;;  "ipa/ipa.el" "ppindent/ppindent.el" "pymacs/pymacs.el" "qmake-mode/qmake.el"
 ;;;;;;  "rcirc-color/rcirc-color.el" "rcirc-controls/rcirc-controls.el"
 ;;;;;;  "redo+/redo+.el" "rw-ispell/rw-ispell.el" "rw-language-and-country-codes/rw-language-and-country-codes.el"
@@ -1872,7 +1871,7 @@ accept it or skip it.
 ;;;;;;  "vim-mode/vim-modes.el" "vim-mode/vim-normal-mode.el" "vim-mode/vim-scroll.el"
 ;;;;;;  "vim-mode/vim-search.el" "vim-mode/vim-undo.el" "vim-mode/vim-visual-mode.el"
 ;;;;;;  "vim-mode/vim-window.el" "xcscope+/xcscope+.el" "zencoding-mode/zencoding-trie.el")
-;;;;;;  (19791 37247 950480))
+;;;;;;  (19791 37801 206093))
 
 ;;;***
 

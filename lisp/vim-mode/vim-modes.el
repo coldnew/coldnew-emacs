@@ -11,6 +11,10 @@
 (eval-when-compile (require 'cl))
 (require 'vim-macs)
 
+(defgroup vim-cursors nil
+  "Cursor types for modes."
+  :group 'vim-mode)
+
 (vim:deflocalvar vim:mode-string)
 
 (vim:deflocalvar vim:active-mode nil
@@ -82,7 +86,7 @@ vim-command should be executed, a `cursor' shape and a list of `keymaps'."
     `(progn
        (defcustom ,cursor-name ,cursor
          ,(concat "The cursor-type for vim-mode " (symbol-name name) ".")
-         :group 'vim-mode)
+         :group 'vim-cursors)
        
        (define-minor-mode ,mode-name ,doc nil nil nil
          (when ,mode-name

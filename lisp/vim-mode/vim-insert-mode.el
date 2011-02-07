@@ -22,7 +22,7 @@
 
 (defcustom vim:insert-mode-replace-cursor 'hbar
   "Cursor for replace-mode."
-  :group 'vim-mode)
+  :group 'vim-cursors)
 
 (vim:define-keymap insert-mode "insert-mode" :map-command imap)
 

@@ -158,7 +158,8 @@
   (vim:deflocalvar vim:mouse-click-count 0)
   (vim:deflocalvar vim:mouse-click-last-time nil)
   (defcustom vim:visual-double-click-time 500
-    "Number of milliseconds for a repeating click.")
+    "Number of milliseconds for a repeating click."
+    :group 'vim-mode-general)
   (defun vim:mouse-click-count (event)
     (let ((time (event-timestamp event)))
       (message "TIME: %s %s" time vim:mouse-click-last-time)

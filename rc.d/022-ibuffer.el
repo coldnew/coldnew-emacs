@@ -114,8 +114,8 @@
 (define-ibuffer-column size-h
   (:name "Size" :inline t)
   (cond
-   ((> (buffer-size) 1000) (format "%7.2fk" (/ (buffer-size) 1000.0)))
-   ((> (buffer-size) 10000) (format "%7.3fM" (/ (buffer-size) 10000.0)))
+   ((> (buffer-size) 1000) (format "%7.3fk" (/ (buffer-size) 1000.0)))
+   ((> (buffer-size) 1000000) (format "%7.3fM" (/ (buffer-size) 1000000.0)))
    (t (format "%8d" (buffer-size)))))
 
 ;; integrate ibuffer with git

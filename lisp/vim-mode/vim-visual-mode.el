@@ -22,10 +22,13 @@
 (require 'vim-ex)
 (require 'vim-commands)
 
-(defcustom vim:visual-region-face vim:default-region-face
-  "Face of the highlighted region."
-  :type 'face
+(defgroup vim-visual-mode nil
+  "Visual mode"
   :group 'vim-mode)
+
+(defface vim:visual-region `(( t :inherit ,vim:default-region-face))
+  "Face of the highlighted region."
+  :group 'vim-visual-mode)
 
 (vim:define-keymap visual-mode "visual mode" :map-command vmap)
 
@@ -442,7 +445,7 @@ This function is also responsible for setting the X-selection."
 		  (setq new (cons overlay new)
 			old (cdr old)))
 	      (setq overlay (make-overlay row-start row-end))
-	      (overlay-put overlay 'face vim:visual-region-face)
+	      (overlay-put overlay 'face 'vim:visual-region)
 	      (overlay-put overlay 'priority 99)
 	      (setq new (cons overlay new))))
 	  (forward-line 1))
@@ -461,7 +464,7 @@ This function is also responsible for setting the X-selection."
         ov)
     (let ((ov (make-overlay start  end)))
       (vim:visual-hide-region)
-      (overlay-put ov 'face vim:visual-region-face)
+      (overlay-put ov 'face 'vim:visual-region)
       (overlay-put ov 'priority 99)
       ov)))
     

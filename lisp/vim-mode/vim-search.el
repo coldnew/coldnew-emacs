@@ -17,20 +17,19 @@
 (require 'vim-macs)
 (require 'vim-ex)
 
-
 (defcustom vim:interactive-search-highlight 'all-windows
   "Determine in which windows the interactive highlighting should be shown."
   :type '(radio (const :tag "All windows." all-windows)
 		(const :tag "Selected window." selected-window)
 		(const :tag "Disable highlighting." nil))
-  :group 'vim-mode)
+  :group 'vim-ex-mode)
 
 (defcustom vim:search-case 'smart
   "The case behaviour of the search command."
   :type '(radio (const :tag "Case sensitive." 'sensitive)
 		(const :tag "Case insensitive." 'insensitive)
 		(const :tag "Smart case." 'smart))
-  :group 'vim-mode)
+  :group 'vim-ex-mode)
 
 (defcustom vim:substitute-case nil
   "The case behaviour of the search command."
@@ -38,28 +37,28 @@
 		(const :tag "Case sensitive." 'sensitive)
 		(const :tag "Case insensitive." 'insensitive)
 		(const :tag "Smart case." 'smart))
-  :group 'vim-mode)
+  :group 'vim-ex-mode)
 
 (defcustom vim:search-interactive t
   "If t search is interactive."
   :type 'boolean
-  :group 'vim-mode)
+  :group 'vim-ex-mode)
 
 (defcustom vim:search-highlight-all t
   "If t and interactive search is enabled, all matches are
 highlighted."
   :type 'boolean
-  :group 'vim-mode)
+  :group 'vim-ex-mode)
 
 (defcustom vim:substitute-highlight-all t
   "If t all matches for the substitute pattern are highlighted."
   :type 'boolean
-  :group 'vim-mode)
+  :group 'vim-ex-mode)
 
 (defcustom vim:substitute-interactive-replace t
   "If t and substitute patterns are highlighted the replacement is shown interactively."
   :type 'boolean
-  :group 'vim-mode)
+  :group 'vim-ex-mode)
 
 (defconst vim:search-keymap (make-sparse-keymap)
   "Keymap used in search-ex-mode.")
@@ -94,11 +93,19 @@ highlighted."
 (defvar vim:substitute-replacement nil
   "The actual replacement.")
 
+(defface vim:search '((t :inherit isearch))
+  "Face for interactive search."
+  :group 'vim-ex-mode)
+
+(defface vim:lazy-highlight '((t :inherit lazy-highlight))
+  "Face for highlighting all matches in interactive search."
+  :group 'vim-ex-mode)
+
 (defface vim:substitute '(( ((supports :underline))
 			    :underline t
 			    :foreground "red"))
-  "Face interactive replacement text."
-  :group 'vim-mode)
+  "Face for interactive replacement text."
+  :group 'vim-ex-mode)
 
 
 (define-key vim:search-keymap [return] #'vim:search-exit)
@@ -167,7 +174,7 @@ will be case-insensitive."
   )
 
 (defun* vim:make-hl (name &key
-			  (face 'lazy-highlight)
+			  (face 'vim:lazy-highlight)
 			  (win (selected-window))
 			  (beg nil)
 			  (end nil)
@@ -446,7 +453,7 @@ possibly wrapping and eob or bob."
 			vim:search-match-end)
 	(setq vim:search-overlay (make-overlay vim:search-match-beg vim:search-match-end))
 	(overlay-put vim:search-overlay 'priority 1001)
-	(overlay-put vim:search-overlay 'face 'isearch)))
+	(overlay-put vim:search-overlay 'face 'vim:search)))
     (when vim:search-highlight-all
       (vim:hl-change 'vim:search (and isearch-success vim:search-pattern)))))
 
@@ -540,6 +547,7 @@ possibly wrapping and eob or bob."
 				 ('backward "?"))
 			       nil 'vim:search-history)
 	      (goto-char vim:search-start-point)
+	      (vim:add-jump)
 	      (if vim:search-match-beg
 		  (goto-char vim:search-match-beg)
 		(vim:find-next))
@@ -557,6 +565,7 @@ possibly wrapping and eob or bob."
 (vim:defmotion vim:motion-search-next (exclusive count)
   "Goes to the next occurrence."
   (setq vim:search-start-point (point))
+  (vim:add-jump)
   (dotimes (i (or count 1))
     (case vim:search-direction
       ('backward (backward-char))
@@ -715,6 +724,7 @@ The search matches the `count'-th occurrence of the word."
   (multiple-value-bind (pattern replacement flags) (vim:parse-substitute argument)
     (unless pattern (error "No pattern given."))
     (unless replacement (error "No replacement given."))
+    (vim:add-jump)
     (setq flags (append flags nil))
     (lexical-let* ((replacement replacement)
                    (first-line (if motion (vim:motion-first-line motion) (line-number-at-pos (point))))

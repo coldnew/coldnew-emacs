@@ -54,20 +54,24 @@
 (require 'vim-core)
 (require 'vim-compat)
 
+(defgroup vim-motions nil
+  "Motions"
+  :group 'vim-mode)
+
 (defcustom vim:word "[:word:]_"
   "Regexp-set matching a word."
   :type 'string
-  :group 'vim-mode)
+  :group 'vim-motions)
 
 (defcustom vim:whitespace " \t\r\n"
   "Regexp-set matching a whitespace."
   :type 'string
-  :group 'vim-mode)
+  :group 'vim-motions)
 
 (defcustom vim:find-skip-newlines nil
   "If non-nil character find motions t,T,f,F skip over newlines."
   :type 'boolean
-  :group 'vim-mode)
+  :group 'vim-motions)
 
 (vim:deflocalvar vim:last-find nil
   "The previous find command (command . arg).")
@@ -87,6 +91,17 @@
   "Returns t if `mark-char' is a global mark."
   (and (>= mark-char ?A) (<= mark-char ?z)))
 
+(defun vim:special-mark-p (mark-char)
+  "Returns t if `mark-char' is one of the special marks ( ) { }."
+  (member mark-char '(?\( ?\) ?{ ?})))
+
+(defconst vim:special-mark-functions-alist
+  '((?\( . vim:motion-bwd-sentence)
+    (?\) . vim:motion-fwd-sentence)
+    (?{  . vim:motion-bwd-paragraph)
+    (?}  . vim:motion-fwd-paragraph))
+  "Assocative list for special marks to corresponding functions.")
+
 (defun vim:set-mark (mark-char &optional pos)
   "Sets the mark `mark-char' to `pos' or (point)."
   (let (m)
@@ -102,6 +117,8 @@
       (unless m
         (setq m (make-marker))
         (push (cons mark-char m) vim:global-marks-alist)))
+     ((vim:special-mark-p mark-char)
+      (error "Can't set special mark '%c'" mark-char))
      (t (error "Unknown mark '%c'" mark-char)))
     (set-marker m (or pos (point)))))
 
@@ -119,20 +136,110 @@
               m
             (error "Global mark '%c' not in current buffer." mark-char))
         (error "No mark '%c' defined." mark-char))))
+   ((vim:special-mark-p mark-char)
+    (save-excursion
+      (funcall (cdr (assoc mark-char vim:special-mark-functions-alist)))
+      (point)))
    (t
     (error "Unknown mark: '%c'" mark-char))))
-
-(add-hook 'vim-mode-on-hook
-	  #'(lambda ()
-	      (add-hook 'before-change-functions 'vim:set-change-mark)))
-
-(add-hook 'vim-mode-off-hook
-	  #'(lambda ()
-	      (remove-hook 'before-change-functions 'vim:set-change-mark)))
 
 (defun vim:set-change-mark (beg end)
   "Sets the change mark . to `beg'."
   (vim:set-mark ?. beg))
+
+(add-hook 'vim-mode-on-hook
+	  #'(lambda ()
+	      (add-hook 'before-change-functions 'vim:set-change-mark)
+	      (add-hook 'find-file-hook #'vim:add-file-jump)))
+
+(add-hook 'vim-mode-off-hook
+	  #'(lambda ()
+	      (remove-hook 'before-change-functions 'vim:set-change-mark)
+	      (remove-hook 'find-file-hook #'vim:add-file-jump)))
+
+(defcustom vim:max-jumplist 10
+  "Maximal number of jumps in the jumplist."
+  :group 'vim-motions)
+
+(defvar vim:jumplist '(nil . nil)
+  "The jumplist.
+In contrast to VIM, vim-mode mode has only one jump-list for all
+windows. The reason is that Emacs does not have window-local variables.")
+
+(defun vim:add-file-jump ()
+  "Add a jump into the previous buffer when a new file is
+visited."
+  (let ((b (car (buffer-list))))
+    (with-current-buffer b
+      (vim:add-jump))))
+
+(defun vim:add-jump (&optional pos)
+  "Adds a position or (point) to the jump list."
+  ;; put everything on the before list
+  (dolist (next (cdr vim:jumplist))
+    (push next (car vim:jumplist)))
+  ;; use (point) as default
+  (unless pos (setq pos (point)))
+  ;; filter all old jumps at the same line
+  (let ((line (line-number-at-pos pos))
+	old-jumps new-jumps
+	(size 0))
+    (dolist (j (car vim:jumplist))
+      (if (and (eq (marker-buffer j) (current-buffer))
+	       (= line (line-number-at-pos j)))
+	  (push j old-jumps)
+	(push j new-jumps)
+	(incf size)))
+    
+    ;; remove markers above maximum
+    (while (> size vim:max-jumplist)
+      (push (pop new-jumps) old-jumps))
+    ;; create new marker or reuse old one
+    (let ((m (or (pop old-jumps) (make-marker))))
+      (set-marker m pos)
+      (setcar vim:jumplist (cons m (nreverse new-jumps)))
+      (setcdr vim:jumplist nil))
+    ;; delete old markers
+    (dolist (j old-jumps)
+      (set-marker j nil))))
+      
+
+(vim:defcmd vim:cmd-prev-jump (nonrepeatable count)
+  "Goes to the `count'-th previous jump-position."
+  (unless (car vim:jumplist)
+    (signal 'no-prev-jump (list "No previous jump")))
+  (setq count (or count 1))
+  (while (and (car vim:jumplist)
+	      (> count 0))
+    (if (cdr vim:jumplist)
+	(progn
+	  (push (pop (car vim:jumplist))
+		(cdr vim:jumplist))
+	  (decf count))
+      (vim:add-jump)
+      (push (pop (car vim:jumplist))
+	    (cdr vim:jumplist))))
+  (unless (eq (marker-buffer (cadr vim:jumplist)) 
+	      (current-buffer))
+    (switch-to-buffer (marker-buffer (cadr vim:jumplist))))
+  (goto-char (cadr vim:jumplist)))
+
+
+(vim:defcmd vim:cmd-next-jump (nonrepeatable count)
+  "Goes to the `count'-th previous jump-position."
+  (when (or (null (cdr vim:jumplist))
+	    (null (cddr vim:jumplist)))
+    (signal 'no-next-jump (list "No next jump")))
+  (setq count (or count 1))
+  (while (and (cdr vim:jumplist)
+	      (> count 0))
+    (push (pop (cdr vim:jumplist)) (car vim:jumplist))
+    (decf count))
+  (unless (eq (marker-buffer (cadr vim:jumplist)) 
+	      (current-buffer))
+    (switch-to-buffer (marker-buffer (cadr vim:jumplist))))
+  (goto-char (cadr vim:jumplist)))
+    
 
 (vim:defmotion vim:motion-left (exclusive count)
   "Move the cursor count characters left."
@@ -175,16 +282,19 @@
 
 (vim:defmotion vim:motion-window-first-line (linewise count)
   "Moves the cursor to the first line of the window, plus count lines, default zero."
+  (vim:add-jump)
   (move-to-window-line (or count 0))
   (back-to-indentation))
 
 (vim:defmotion vim:motion-window-middle-line (linewise count)
   "Moves the cursor to the beginning of the middle line of the window.  Ignores count."
+  (vim:add-jump)
   (move-to-window-line (/ (window-body-height) 2))
   (back-to-indentation))
 
 (vim:defmotion vim:motion-window-last-line (linewise count)
   "Moves the cursor to the last line of the window, minus count lines, default zero."
+  (vim:add-jump)
   (move-to-window-line (- (window-body-height) (or count 0) 1))
   (back-to-indentation))
 
@@ -221,6 +331,7 @@
 
 (vim:defmotion vim:motion-go-to-first-non-blank-beg (linewise count)
   "Moves the cursor to the first non-blank charactor of line count."
+  (vim:add-jump)
   (if count
       (goto-line count)
     (goto-char (point-min)))
@@ -228,6 +339,7 @@
 
 (vim:defmotion vim:motion-go-to-first-non-blank-end (linewise count)
   "Moves the cursor to the first non-blank charactor of line count."
+  (vim:add-jump)
   (if count
       (goto-line count)
     (goto-char (point-max)))
@@ -939,6 +1051,7 @@ text-object before or at point."
 
 (vim:defmotion vim:motion-fwd-sentence (exclusive count)
   "Move the cursor `count' sentences forward."
+  (vim:add-jump)
   (dotimes (i (or count 1))
     (goto-char (min (save-excursion
                       (vim:move-fwd-beg 1 #'vim:boundary-sentence)
@@ -950,6 +1063,7 @@ text-object before or at point."
 
 (vim:defmotion vim:motion-bwd-sentence (exclusive count)
   "Move the cursor `count' sentences backward."
+  (vim:add-jump)
   (vim:move-bwd-beg (or count 1)
                     (vim:union-boundary #'vim:boundary-sentence #'vim:boundary-paragraph)))
 
@@ -970,6 +1084,7 @@ text-object before or at point."
 
 (vim:defmotion vim:motion-fwd-paragraph (exclusive count)
   "Move the cursor `count' paragraphs forward."
+  (vim:add-jump)
   (if (eobp) (signal 'end-of-buffer nil)
     (dotimes (i (or count 1))
       (goto-char (or (vim:boundary-paragraph 'fwd) (point-max)))
@@ -978,6 +1093,7 @@ text-object before or at point."
 
 (vim:defmotion vim:motion-bwd-paragraph (exclusive count)
   "Move the cursor `count' paragraphs backward."
+  (vim:add-jump)
   (if (bobp) (signal 'beginning-of-buffer nil)
     (dotimes (i (or count 1))
       (goto-char (or (vim:boundary-paragraph 'bwd) (point-min)))
@@ -1274,6 +1390,7 @@ but only on the current line."
 (vim:defmotion vim:motion-jump-item (inclusive)
   "Find the next item in this line after or under the cursor and
 jumps to the corresponding one."
+  (vim:add-jump) 
   (let ((next-open
          (condition-case err
              (1- (scan-lists (point) 1 -1))
@@ -1402,10 +1519,12 @@ jumps to the corresponding one."
 
 (vim:defmotion vim:motion-mark (exclusive (argument:char mark-char))
   "Moves to the position of `mark-char'."
+  (vim:add-jump)
   (goto-char (vim:get-local-mark mark-char)))
 
 (vim:defmotion vim:motion-mark-line (linewise (argument:char mark-char))
   "Moves to the first non-blank char in the line of `mark-char'."
+  (vim:add-jump)
   (goto-char (vim:get-local-mark mark-char))
   (vim:motion-first-non-blank)
   t)

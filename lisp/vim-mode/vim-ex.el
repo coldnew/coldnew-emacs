@@ -14,6 +14,10 @@
 (require 'vim-compat)
 (require 'vim-motions)
 
+(defgroup vim-ex-mode nil
+  "Configure ex-mode and search mode."
+  :group 'vim-mode)
+
 (defvar vim:ex-commands nil
   "List of pairs (command . function).")
 
@@ -45,7 +49,7 @@
 			 :slant italic
 			 :foreground "red"))
   "Face for the info message in ex mode."
-  :group 'vim-mode)
+  :group 'vim-ex-mode)
 
 (defvar vim:ex-cmd nil
   "The currently parsed command.")
