@@ -16,3 +16,6 @@
 [submodule "lisp/emms-get-lyrics"]
 	path = lisp/emms-get-lyrics
 	url = https://github.com/talau/elisp.git
+[submodule "lisp/mmm-mode"]
+	path = lisp/mmm-mode
+	url = git://github.com/purcell/mmm-mode.git
