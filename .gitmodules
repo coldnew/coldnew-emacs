@@ -19,3 +19,6 @@
 [submodule "lisp/mmm-mode"]
 	path = lisp/mmm-mode
 	url = git://github.com/purcell/mmm-mode.git
+[submodule "lisp/smex"]
+	path = lisp/smex
+	url = https://github.com/nonsequitur/smex.git
