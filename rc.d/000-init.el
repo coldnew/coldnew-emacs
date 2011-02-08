@@ -7,7 +7,7 @@
 (requiref '003-macros)			; Macros or not interactive functions
 (requiref '004-functions)		; Interactive Functions
 (requiref '005-advices)			; Advice
-(requiref '006-deadcode)		; unusecode, maybe use some day...
+(requiref '006-deprecated)		; deprecated code, maybe use some day...
 (requiref '007-base)			; Basic emacs config
 (requiref '008-fonts)			; Setting Fonts
 (requiref '009-locale)			; Setting Locales

@@ -143,13 +143,15 @@
 	(:name smex
 	       :type git
 	       :url "https://github.com/nonsequitur/smex.git")
-
+	(:name thingatpt+
+	       :type emacswiki)
+	(:name ascii
+	       :type emacswiki)
 	;;auctex
 	;;color-theme			;
 
 	;;  session
 	;; emacs-w3m
-
 	))
 
 ;;(el-get 'wait)

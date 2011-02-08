@@ -13,7 +13,7 @@
 	     (setq compilation-window-height 10 ) ; 編譯結果視窗高度
 	     ;;(substatement-open   .   0)
 	     ))
-
+;; (setq c-font-lock-extra-types '("FILE" "\\sw+_t"))))
 ;;;; Other Settings
 (setq c-mode:include-dirs		; Setting include directories
       '(

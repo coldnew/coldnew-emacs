@@ -1676,7 +1676,7 @@ A major mode for handling rcirc notifications
 ;;;***
 
 ;;;### (autoloads (smex-initialize) "smex/smex" "smex/smex.el" (19791
-;;;;;;  63090))
+;;;;;;  64566))
 ;;; Generated autoloads from smex/smex.el
 
 (autoload 'smex-initialize "smex/smex" "\
@@ -1739,6 +1739,35 @@ Run Sunrise but give it the current directory to use.
 Visits the given directory in sr-mode.
 
 \(fn DIRECTORY &optional SWITCHES)" t nil)
+
+;;;***
+
+;;;### (autoloads (find-fn-or-var-nearest-point near-point-y-distance
+;;;;;;  near-point-x-distance) "thingatpt+/thingatpt+" "thingatpt+/thingatpt+.el"
+;;;;;;  (19792 43770))
+;;; Generated autoloads from thingatpt+/thingatpt+.el
+
+(defvar near-point-x-distance 50 "\
+Maximum number of characters from point to search, left and right.
+Used by functions that provide default text for minibuffer input.
+Some functions might ignore or override this setting temporarily.")
+
+(custom-autoload 'near-point-x-distance "thingatpt+/thingatpt+" t)
+
+(defvar near-point-y-distance 5 "\
+Maximum number of lines from point to search, up and down.
+To constrain search to the same line as point, set this to zero.
+Used by functions that provide default text for minibuffer input.
+Some functions might ignore or override this setting temporarily.")
+
+(custom-autoload 'near-point-y-distance "thingatpt+/thingatpt+" t)
+
+(autoload 'find-fn-or-var-nearest-point "thingatpt+/thingatpt+" "\
+Go to the definition of the function or variable nearest the cursor.
+With a prefix arg, or if no function or variable is near the cursor,
+prompt for the function or variable to find, instead.
+
+\(fn &optional CONFIRMP)" t nil)
 
 ;;;***
 
@@ -1879,7 +1908,7 @@ accept it or skip it.
 ;;;;;;  "ssh-config/ssh-config.el" "unicad/unicad.el" "vim-mode/vim-defs.el"
 ;;;;;;  "vim-mode/vim-ex-commands.el" "vim-mode/vim-macs.el" "vim-mode/vim-scroll.el"
 ;;;;;;  "vim-mode/vim-undo.el" "vim-mode/vim-window.el" "xcscope+/xcscope+.el"
-;;;;;;  "zencoding-mode/zencoding-trie.el") (19791 63091 374021))
+;;;;;;  "zencoding-mode/zencoding-trie.el") (19792 43771 223542))
 
 ;;;***
 

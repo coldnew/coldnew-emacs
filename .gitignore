@@ -20,4 +20,4 @@ var/
 *.py
 *.pl
 .authinfo
-
+.#*

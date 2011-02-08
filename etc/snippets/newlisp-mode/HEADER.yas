@@ -4,3 +4,5 @@
 # key: HEADER
 # --
 #!/usr/bin/env newlisp
+
+$0

@@ -4,8 +4,13 @@
 ;;;;;; Keybindings
 (add-hook 'ibuffer-hook
 	  '(lambda ()
-	     (vim:local-nmap (kbd "d") 'ibuffer-mark-for-delete)
-	     (vim:local-nmap (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
+	     ;; Normal map
+	     (vim:local-nmap (kbd "d") 'ibuffer-do-delete)
+	     (vim:local-nmap (kbd "s") 'ibuffer-do-sort-by-size)
+	     ;; Insert map
+	     (vim:local-imap (kbd "d") 'ibuffer-mark-for-delete)
+	     (vim:local-imap (kbd "u") 'ibuffer-unmark-all)
+	     (vim:local-imap (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
 	     ))
 
 ;;;;;; Settings

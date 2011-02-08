@@ -20,6 +20,7 @@
 ;;   `(require ,feature ,file 'noerror))
 
 
+
 ;; Math
 
 (defun mean (values)
@@ -189,12 +190,22 @@
 
 
 
+;; FIXME: I dont's like after fc-eval-and-replace, nil or t will show
+;; templary us m eval-and-replace instead
+(defun fc-eval-and-replace ()
+  "Replace the preceding sexp with its value."
+  (interactive)
+  (backward-kill-sexp)
+  (condition-case nil
+      (prin1 (eval (read (current-kill 0)))
+	     (current-buffer))
+    (error (message "Invalid expression")
+	   (insert (current-kill 0)))))
 
 
 
 
 
 
-
-(provide '006-deadcode)
-;; 006-deadcode.el ends here.
+(provide '006-deprecated)
+;; 006-deprecated.el ends here.

@@ -11,91 +11,99 @@
 		(directory-file-name (buffer-file-name)))
 	;; If file in ~/.emacs.d/rc.d, it's my emacs-config file
 	(yas/expand-snippet
-	 ";;
-	  (eval-when-compile (require 'cl))
-
-
-	  $0
-
-
-	  (provide '`(yas/file-sans)`)
-	  ;; `(yas/file)` ends here.
-	  ")
+	 (concat
+	  ";;                                                                                  \n"
+	  "(eval-when-compile (require 'cl))                                                   \n"
+	  "                                                                                    \n"
+	  "                                                                                    \n"
+	  "$0                                                                                  \n"
+	  "                                                                                    \n"
+	  "                                                                                    \n"
+	  "(provide '`(yas/file-sans)`)                                                        \n"
+	  ";; `(yas/file)` ends here.                                                          \n"
+	  ))
       ;; If not in ~/.emacs.d/rc.d , it's not my config file
       ;; take it as emacs libraries
       (yas/expand-snippet
-       ";;; `(yas/file)` --- $1
-
-;; Copyright `(yas/year)` `(yas/user-name)`
-;;
-;; Author: `(yas/user-nickname)` `(yas/user-email)`
-;; Keywords: $2
-;; X-URL: http://www.emacswiki.org/cgi-bin/wiki/download/`(yas/file)`
-(defconst `(yas/file-sans)`-version \"0.1\")
-
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 2, or (at your option)
-;; any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program; if not, write to the Free Software
-;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
-;;; Commentary:
-;;
-;; $3
-
-;;; Bug Report:
-;;
-;; If you have problems, send a bug report via M-x `(file-sans)`-send-bug-report.
-;; I implemented bug report feature because I want to know your current state.
-;; It helps me to solve problems easily.
-;; The step is:
-;;  0) Setup mail in Emacs, the easiest way is:
-;;       (setq user-mail-address \"your@mail.address\")
-;;       (setq user-full-name \"Your Full Name\")
-;;       (setq smtpmail-smtp-server \"your.smtp.server.tw\")
-;;       (setq mail-user-agent 'message-user-agent)
-;;       (setq message-send-mail-function 'message-smtpmail-send-it)
-;;  1) Be sure to use the LATEST version of anything.el.
-;;  2) Enable debugger. M-x toggle-debug-on-error or (setq debug-on-error t)
-;;  3) Use Lisp version instead of compiled one: (load \"`(yas/file)`\")
-;;  4) Do it!
-;;  5) If you got an error, please do not close *Backtrace* buffer.
-;;  6) M-x `(file-sans)`-send-bug-report (outside)
-;;     then M-x insert-buffer *Backtrace* (if you got error)
-;;  7) Describe the bug using a precise recipe.
-;;  8) Type C-c C-c to send.
-;;  # If you are a Taiwanese, please write in Taiwanese :P
-
-;;; Change Log:
-;;
-;;
-
-;; Put this file into your load-path and the following into your ~/.emacs:
-;;   (require '`(yas/file-sans)`)
-
-;;; Code:
-
-(provide '`(yas/file-sans)`)
-(eval-when-compile (require 'cl))
-
-;;;;##########################################################################
-;;;;  User Options, Variables
-;;;;##########################################################################
-
-
-$0
-
-;; `(yas/file)` ends here.
-"))
+       (concat
+	";;; `(yas/file)` --- $1                                                               \n"
+	"                                                                                      \n"
+	";; Copyright `(yas/year)` `(yas/user-name)`                                           \n"
+	";;                                                                                    \n"
+	";; Author: `(yas/user-nickname)` `(yas/user-email)`                                   \n"
+	";; Keywords: $2                                                                       \n"
+	";; X-URL: http://www.emacswiki.org/cgi-bin/wiki/download/`(yas/file)`                 \n"
+	"(defconst `(yas/file-sans)`-version \"0.1\")                                          \n"
+	"                                                                                      \n"
+	";; This program is free software; you can redistribute it and/or modify               \n"
+	";; it under the terms of the GNU General Public License as published by               \n"
+	";; the Free Software Foundation; either version 2, or (at your option)                \n"
+	";; any later version.                                                                 \n"
+	";;                                                                                    \n"
+	";; This program is distributed in the hope that it will be useful,                    \n"
+	";; but WITHOUT ANY WARRANTY; without even the implied warranty of                     \n"
+	";; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                      \n"
+	";; GNU General Public License for more details.                                       \n"
+	";;                                                                                    \n"
+	";; You should have received a copy of the GNU General Public License                  \n"
+	";; along with this program; if not, write to the Free Software                        \n"
+	";; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.                          \n"
+	"                                                                                      \n"
+	";;; Commentary:                                                                       \n"
+	";;                                                                                    \n"
+	";; $3                                                                                 \n"
+	"                                                                                      \n"
+	";;; Bug Report:                                                                       \n"
+	";;                                                                                    \n"
+	";; If you have problems, send a bug report via M-x `(yas/file-sans)`-send-bug-report. \n"
+	";; I implemented bug report feature because I want to know your current state.        \n"
+	";; It helps me to solve problems easily.                                              \n"
+	";; The step is:                                                                       \n"
+	";;  0) Setup mail in Emacs, the easiest way is:                                       \n"
+	";;       (setq user-mail-address \"your@mail.address\")                               \n"
+	";;       (setq user-full-name \"Your Full Name\")                                     \n"
+	";;       (setq smtpmail-smtp-server \"your.smtp.server.tw\")                          \n"
+	";;       (setq mail-user-agent 'message-user-agent)                                   \n"
+	";;       (setq message-send-mail-function 'message-smtpmail-send-it)                  \n"
+	";;  1) Be sure to use the LATEST version of anything.el.                              \n"
+	";;  2) Enable debugger. M-x toggle-debug-on-error or (setq debug-on-error t)          \n"
+	";;  3) Use Lisp version instead of compiled one: (load \"`(yas/file)`\")              \n"
+	";;  4) Do it!                                                                         \n"
+	";;  5) If you got an error, please do not close *Backtrace* buffer.                   \n"
+	";;  6) M-x `(yas/file-sans)`-send-bug-report (outside)                                \n"
+	";;     then M-x insert-buffer *Backtrace* (if you got error)                          \n"
+	";;  7) Describe the bug using a precise recipe.                                       \n"
+	";;  8) Type C-c C-c to send.                                                          \n"
+	";;  # If you are a Taiwanese, please write in Taiwanese :P                            \n"
+	"                                                                                      \n"
+	";;; Change Log:                                                                       \n"
+	";;                                                                                    \n"
+	";;                                                                                    \n"
+	"                                                                                      \n"
+	";;; Usage:                                                                            \n"
+	";; Put this file into your load-path and the following into your ~/.emacs:            \n"
+	";;   (require '`(yas/file-sans)`)                                                     \n"
+	"                                                                                      \n"
+	";;; Code:                                                                             \n"
+	"                                                                                      \n"
+	"(eval-when-compile (require 'cl))                                                     \n"
+	"                                                                                      \n"
+	";;;;##########################################################################        \n"
+	";;;;  User Options, Variables                                                         \n"
+	";;;;##########################################################################        \n"
+	"                                                                                      \n"
+	"                                                                                      \n"
+	"$0                                                                                    \n"
+	"                                                                                      \n"
+	"                                                                                      \n"
+	"                                                                                      \n"
+	"(provide '`(yas/file-sans)`)                                                          \n"
+	";; `(yas/file)` ends here.                                                            \n"
+	)))
   ;; file does not in ~/.emacs.d, take it as a script file
   (yas/expand-snippet
-   "#!/usr/bin/emacs --script"
-   ))
+   (concat
+    "#!/usr/bin/emacs --script                                                               \n"
+    "                                                                                        \n"
+    "$0                                                                                      \n"
+    )))

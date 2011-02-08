@@ -2,6 +2,17 @@
 (eval-when-compile (require 'cl))
 
 
+(defun eval-and-replace ()
+  "Replace the preceding sexp with its value.
+   If eval failure, paste the sexp and show error"
+  (interactive)
+  (backward-kill-sexp)
+  (condition-case nil
+      (progn
+	(eval (read (current-kill 0)))
+	(message "eval-and-replace SUCCESS!!"))
+    (error (message "Invalid expression")
+	   (insert (current-kill 0)))))
 
 (defun resolve-sym-link ()
   "Replace the string at the point with the true path."
@@ -15,26 +26,17 @@
     (delete-region (point) (save-excursion (end-of-line) (point)))
     (insert (concat file-true-dir file-name))))
 
-;; ------------------------------------------------------------------------------
-;; Always save buffer even if it is already saved
-;; ------------------------------------------------------------------------------
 (defun save-buffer-always ()
   "Save the buffer even if it is not modified."
   (interactive)
   (set-buffer-modified-p t)
   (save-buffer))
 
-;; ------------------------------------------------------------------------------
-;; show dot emacs structure
-;; ------------------------------------------------------------------------------
 (defun show-dot-emacs-structure ()
   "Show the outline-mode structure of ~/.emacs"
   (interactive)
   (occur "^;;;;+"))
 
-;; ------------------------------------------------------------------------------
-;; rename file and buffer
-;; ------------------------------------------------------------------------------
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
@@ -50,10 +52,6 @@
 	  (set-visited-file-name new-name)
 	  (set-buffer-modified-p nil))))))
 
-
-;; ------------------------------------------------------------------------------
-;; lookup Wikipedia
-;; ------------------------------------------------------------------------------
 (defun lookup-wikipedia ()
   "Look up the word under cursor in Wikipedia.
 This command generates a url for Wikipedia.com and switches you

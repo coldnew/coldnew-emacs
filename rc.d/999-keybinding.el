@@ -12,6 +12,7 @@
 (vim:nmap (kbd "C-x f") 'anything-for-files)
 (vim:nmap (kbd "M-p") 'anything-show-kill-ring)
 (vim:nmap (kbd "M-x") 'smex)
+(vim:nmap (kbd "z.") 'find-file-at-point)
 
 ;; Insert Map
 (vim:imap (kbd "C-n") 'auto-complete)

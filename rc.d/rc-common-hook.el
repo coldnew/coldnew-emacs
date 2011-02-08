@@ -12,6 +12,7 @@
   (indent-file-when-save)		    ; 儲存檔案時自動縮排
   (use-hungry-delete)			    ; 啟用 hungry-delete mode
   (use-paredit-mode)			    ; 增加部份基於 Paredit 的按鍵綁定
+  (auto-complete-mode)			    ; 啟動自動補全
   ;;(flyspell-prog-mode)			; 對於註釋使用 flyspell 進行檢查
   )
 

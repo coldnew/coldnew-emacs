@@ -166,6 +166,15 @@
 (require* 'mmm-auto)			  ; loading and enabling MMM Mode automatically
 (require* 'smex)			  ; M-x interface with Ido-style fuzzy matching.
 (require* 'ido)				  ; interactively do things with buffers and files
+(require* 'find-lisp)			  ; emulation of find in Emacs Lisp
+(require* 'thingatpt+)			  ; Extensions to `thingatpt.el'.
+(require* 'ascii)			  ;
+
+
+
+
+
+
 
 
 

@@ -3,6 +3,13 @@
 (add-to-list 'auto-mode-alist '("\\.nl$"  . newlisp-mode))
 (add-to-list 'auto-mode-alist '("\\.lsp$" . newlisp-mode))
 
+;;;;; Auto-complete
+(defun ac-newlisp-mode-setup ()
+  "auto-complete settings for emacs-lisp-mode"
+  (setq ac-sources '(ac-source-symbols ac-source-words-in-same-mode-buffers)))
+;;;;;; Add extra font-lock
+;; (font-lock-add-keywords 'newlisp-mode
+;;			'(("^#!/usr/bin/env newlisp"  font-lock-comment-face )))
 
 ;;;;;; Hook
 (add-hook 'newlisp-mode-hook
@@ -11,8 +18,10 @@
 	     (highlight-parentheses-mode)
 	     ;; Enable pretty-lambda
 	     (turn-on-pretty-lambda-mode)
-	     ;; programming common hook
+	     ;; Programming common hook
 	     (programming-common-hook)
+	     ;; Auto Complete setting
+	     (ac-newlisp-mode-setup)
 	     ))
 
 ;;;;;; Keybindings

@@ -55,6 +55,8 @@
 	    (vim:local-imap (kbd "M-l") (lambda () (interactive) (insert "lambda") (yas/expand)))
 	    ;; Insert (format "STRING" &rest OBJECTS)
 	    (vim:local-imap (kbd "M-f") (lambda () (interactive) (insert "format") (yas/expand)))
+	    ;; Insert(defun NAME (ARGLIST) "DOCSTRING" BODY)
+	    (vim:local-imap (kbd "M-d") (lambda () (interactive) (insert "defun") (yas/expand)))
 	    (vim:local-imap (kbd "<f5>") 'eval-current-buffer)
 	    ))
 
