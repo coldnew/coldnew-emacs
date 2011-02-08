@@ -7,6 +7,24 @@
       (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
+(defun move-buffer-file (dir)
+  "Moves both current buffer and file it's visiting to DIR." (interactive "DNew directory: ")
+  (let* ((name (buffer-name))
+	 (filename (buffer-file-name))
+	 (dir
+	  (if (string-match dir "\\(?:/\\|\\\\)$")
+	      (substring dir 0 -1) dir))
+	 (newname (concat dir "/" name)))
+
+    (if (not filename)
+	(message "Buffer '%s' is not visiting a file!" name)
+      (progn
+	(copy-file filename newname 1)
+	(delete-file filename)
+	(set-visited-file-name newname)
+	(set-buffer-modified-p nil)	t))))
+
+
 (defun rename-current-buffer-and-file (newname)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sEnter new file's name: ")
