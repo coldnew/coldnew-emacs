@@ -17,6 +17,7 @@
 	anything-kyr
 	anything-match-plugin
 	anything-menu
+	wanderlust
 	anything-migemo
 	anything-show-completion
 	anything-slime
@@ -36,6 +37,7 @@
 	emms
 	gnugo
 	gobject-class
+	flim
 	highlight-cl
 	highlight-parentheses
 	htmlize
@@ -59,6 +61,8 @@
 	rainbow-mode
 	revive
 	smartchr
+	semi
+	bbdb
 	ssh-config
 	sunrise-commander
 	undo-tree

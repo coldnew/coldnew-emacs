@@ -1148,6 +1148,1317 @@ Set buffer language to LANG and stop detecting it automatically.
 
 ;;;***
 
+;;;### (autoloads (bbdb-include-anniversaries bbdb-anniversaries
+;;;;;;  bbdb-utilities-anniversaries) "bbdb/bits/bbdb-anniv" "bbdb/bits/bbdb-anniv.el"
+;;;;;;  (19793 5388))
+;;; Generated autoloads from bbdb/bits/bbdb-anniv.el
+
+(let ((loads (get 'bbdb-utilities-anniversaries 'custom-loads))) (if (member '"bbdb/bits/bbdb-anniv" loads) nil (put 'bbdb-utilities-anniversaries 'custom-loads (cons '"bbdb/bits/bbdb-anniv" loads))))
+
+(defvar bbdb-anniversaries nil "\
+Should BBDB anniversaries be included when the diary is displayed (fancy)?
+You must modify via \\[customize] for this variable to have an effect.")
+
+(custom-autoload 'bbdb-anniversaries "bbdb/bits/bbdb-anniv" nil)
+
+(autoload 'bbdb-include-anniversaries "bbdb/bits/bbdb-anniv" "\
+Not documented
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-field-edit-del bbdb-field-edit-add) "bbdb/bits/bbdb-edit"
+;;;;;;  "bbdb/bits/bbdb-edit.el" (19793 5388))
+;;; Generated autoloads from bbdb/bits/bbdb-edit.el
+
+(autoload 'bbdb-field-edit-add "bbdb/bits/bbdb-edit" "\
+Add VALUE to FIELD of bbdb-record(s).
+
+\(fn BBDB-RECORD FIELD VALUE)" t nil)
+
+(autoload 'bbdb-field-edit-del "bbdb/bits/bbdb-edit" "\
+Delete VALUE to FIELD of bbdb-record(s).
+If prefix arg exists, delete all existing field values matching VALUE(regexp).
+
+\(fn BBDB-RECORD FIELD VALUE)" t nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-gnokii-add-field bbdb-gnokii-export) "bbdb/bits/bbdb-gnokii"
+;;;;;;  "bbdb/bits/bbdb-gnokii.el" (19793 5388))
+;;; Generated autoloads from bbdb/bits/bbdb-gnokii.el
+
+(defalias 'bbdb-to-gnokii-file 'bbdb-gnokii-export)
+
+(autoload 'bbdb-gnokii-export "bbdb/bits/bbdb-gnokii" "\
+Export phone entries from BBDB to a gnokii contacts file FILENAME.
+Unless RECORDS is given, all BBDB entries are processed.
+
+\(fn FILENAME &optional RECORDS)" t nil)
+
+(autoload 'bbdb-gnokii-add-field "bbdb/bits/bbdb-gnokii" "\
+Go through all RECORDS and ask for adding a gnokii field.
+If RECORDS is nil, go thru all records.  If a BBDB record has an
+expire field in YYYY-MM-DD format (e.g. \"expire=2003-12-31\"),
+the record is skipped if it is older than today.
+
+\(fn &optional RECORDS)" t nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-obsolete-net-canonicalize-net-hook) "bbdb/bits/bbdb-obsolete"
+;;;;;;  "bbdb/bits/bbdb-obsolete.el" (19793 5388))
+;;; Generated autoloads from bbdb/bits/bbdb-obsolete.el
+
+(autoload 'bbdb-obsolete-net-canonicalize-net-hook "bbdb/bits/bbdb-obsolete" "\
+Return user's current net address given obsolete ADDR.
+
+Return ADDR if it is not obsolete anywhere, or there is no net address
+in the matching record.  The field is set in `bbdb-obsolete-net-field'.
+
+\(fn ADDR)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-utilities-pgp) "bbdb/bits/bbdb-pgp" "bbdb/bits/bbdb-pgp.el"
+;;;;;;  (19793 5388))
+;;; Generated autoloads from bbdb/bits/bbdb-pgp.el
+
+(let ((loads (get 'bbdb-utilities-pgp 'custom-loads))) (if (member '"bbdb/bits/bbdb-pgp" loads) nil (put 'bbdb-utilities-pgp 'custom-loads (cons '"bbdb/bits/bbdb-pgp" loads))))
+
+;;;***
+
+;;;### (autoloads (vcard-parse-region vcard-parse-string vcard-pretty-print
+;;;;;;  vcard-standard-filters vcard-pretty-print-function) "bbdb/bits/vcard"
+;;;;;;  "bbdb/bits/vcard.el" (19793 5388))
+;;; Generated autoloads from bbdb/bits/vcard.el
+
+(defvar vcard-pretty-print-function 'vcard-format-sample-box "\
+*Formatting function used by `vcard-pretty-print'.")
+
+(custom-autoload 'vcard-pretty-print-function "bbdb/bits/vcard" t)
+
+(defvar vcard-standard-filters '(vcard-filter-html vcard-filter-adr-newlines vcard-filter-tel-normalize vcard-filter-textprop-cr) "\
+*Standard list of filters to apply to parsed vcard data.
+These filters are applied sequentially to vcard attributes when
+the function `vcard-standard-filter' is supplied as the second argument to
+`vcard-parse'.")
+
+(custom-autoload 'vcard-standard-filters "bbdb/bits/vcard" t)
+
+(autoload 'vcard-pretty-print "bbdb/bits/vcard" "\
+Format VCARD into a string suitable for display to user.
+VCARD can be an unparsed string containing raw VCF vcard data
+or a parsed vcard alist as returned by `vcard-parse-string'.
+
+The result is a string with formatted vcard information suitable for
+insertion into a mime presentation buffer.
+
+The function specified by the variable `vcard-pretty-print-function'
+actually performs the formatting.  That function will always receive a
+parsed vcard alist.
+
+\(fn VCARD)" nil nil)
+
+(autoload 'vcard-parse-string "bbdb/bits/vcard" "\
+Parse RAW vcard data as a string, and return an alist representing data.
+
+If the optional function FILTER is specified, apply that filter to each
+attribute.  If no filter is specified, `vcard-standard-filter' is used.
+
+Filters should accept two arguments: the property list and the value list.
+Modifying in place the property or value list will affect the resulting
+attribute in the vcard alist.
+
+Vcard data is normally in the form
+
+    begin:                        vcard
+    prop1a:                       value1a
+    prop2a;prop2b;prop2c=param2c: value2a
+    prop3a;prop3b:                value3a;value3b;value3c
+    end:                          vcard
+
+\(Whitespace around the `:' separating properties and values is optional.)
+If supplied to this function an alist of the form
+
+    (((\"prop1a\") \"value1a\")
+     ((\"prop2a\" \"prop2b\" (\"prop2c\" . \"param2c\")) \"value2a\")
+     ((\"prop3a\" \"prop3b\") \"value3a\" \"value3b\" \"value3c\"))
+
+would be returned.
+
+\(fn RAW &optional FILTER)" nil nil)
+
+(autoload 'vcard-parse-region "bbdb/bits/vcard" "\
+Parse the raw vcard data in region, and return an alist representing data.
+This function is just like `vcard-parse-string' except that it operates on
+a region of the current buffer rather than taking a string as an argument.
+
+Note: this function modifies the buffer!
+
+\(fn BEG END &optional FILTER)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-insinuate-message bbdb-initialize bbdb-multiple-buffers
+;;;;;;  bbdb-submit-bug-report) "bbdb/lisp/bbdb" "bbdb/lisp/bbdb.el"
+;;;;;;  (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb.el
+
+(autoload 'bbdb-submit-bug-report "bbdb/lisp/bbdb" "\
+Submit a bug report, with pertinent information to the BBDB info list.
+
+\(fn)" t nil)
+
+(defvar bbdb-multiple-buffers nil "\
+When non-nil we create a new buffer of every buffer causing pop-ups.
+You can also set this to a function returning a buffer name.")
+
+(custom-autoload 'bbdb-multiple-buffers "bbdb/lisp/bbdb" t)
+
+(autoload 'bbdb-initialize "bbdb/lisp/bbdb" "\
+*Initialize the BBDB.  One or more of the following symbols can be
+passed as arguments to initiate the appropriate insinuations.
+
+ Initialization of mail/news readers:
+
+   gnus       Initialize BBDB support for the gnus mail/news reader
+	      version 3.15 or newer.  If you pass the `gnus' symbol,
+	      you should probably also pass the `message' symbol.
+   mh-e       Initialize BBDB support for the MH-E mail reader.
+   rmail      Initialize BBDB support for the RMAIL mail reader.
+   sendmail   Initialize BBDB support for sendmail (M-x mail).
+   vm         Initialize BBDB support for the VM mail reader.
+	      NOTE: For the VM insinuation to work properly, you must
+	      either call `bbdb-initialize' with the `vm' symbol from
+	      within your VM initialization file (\"~/.vm\") or you
+	      must call `bbdb-insinuate-vm' manually from within your
+	      VM initialization file.
+
+ Initialization of miscellaneous package:
+
+   message    Initialize BBDB support for Message mode.
+   reportmail Initialize BBDB support for the Reportmail mail
+	      notification package.
+   sc or      Initialize BBDB support for the Supercite message
+   supercite  citation package.
+   w3         Initialize BBDB support for Web browsers.
+
+\(fn &rest TO-INSINUATE)" nil nil)
+
+(autoload 'bbdb-insinuate-message "bbdb/lisp/bbdb" "\
+Call this function to hook BBDB into `message-mode'.
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-get-only-first-address-p bbdb-get-addresses-headers
+;;;;;;  bbdb-update-records bbdb-update-records-mode bbdb-help bbdb-info
+;;;;;;  bbdb-creation-no-change bbdb-creation-newer bbdb-creation-older
+;;;;;;  bbdb-timestamp-newer bbdb-timestamp-older bbdb-finger bbdb-dial
+;;;;;;  bbdb-add-or-remove-mail-alias bbdb-define-all-aliases bbdb-yank
+;;;;;;  bbdb-complete-name bbdb-read-addresses-with-completion bbdb-completion-predicate
+;;;;;;  bbdb-completion-check-record bbdb-show-all-recipients bbdb-send-mail
+;;;;;;  bbdb-dwim-net-address bbdb-sort-addresses bbdb-sort-phones
+;;;;;;  bbdb-sort-notes bbdb-refile-record bbdb-omit-record bbdb-display-record-with-layout
+;;;;;;  bbdb-display-record-completely bbdb-display-all-records-completely
+;;;;;;  bbdb-toggle-records-display-layout bbdb-toggle-all-records-display-layout
+;;;;;;  bbdb-delete-current-record bbdb-delete-current-field-or-record
+;;;;;;  bbdb-transpose-fields bbdb-record-edit-property bbdb-record-edit-notes
+;;;;;;  bbdb-edit-current-field bbdb-insert-new-field bbdb-append-records
+;;;;;;  bbdb-append-records-p bbdb-apply-next-command-to-all-records
+;;;;;;  bbdb-create bbdb-redisplay-records bbdb-changed bbdb-notes
+;;;;;;  bbdb-net bbdb-company bbdb-name bbdb bbdb-search-invert-set)
+;;;;;;  "bbdb/lisp/bbdb-com" "bbdb/lisp/bbdb-com.el" (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-com.el
+
+(autoload 'bbdb-search-invert-set "bbdb/lisp/bbdb-com" "\
+Typing \\<bbdb-mode-map>\\[bbdb-search-invert-set] inverts the meaning of the next search command.
+Sets `bbdb-search-invert' to t.
+You will have to call this function again, if you want to
+do repeated inverted searches.
+
+\(fn)" t nil)
+
+(autoload 'bbdb "bbdb/lisp/bbdb-com" "\
+Display all entries in the BBDB matching the regexp STRING
+in either the name(s), company, network address, or notes.
+
+\(fn STRING ELIDEP)" t nil)
+
+(autoload 'bbdb-name "bbdb/lisp/bbdb-com" "\
+Display all entries in the BBDB matching the regexp STRING in the name
+\(or ``alternate'' names).
+
+\(fn STRING ELIDEP)" t nil)
+
+(autoload 'bbdb-company "bbdb/lisp/bbdb-com" "\
+Display all entries in BBDB matching STRING in the company field.
+
+\(fn STRING ELIDEP)" t nil)
+
+(autoload 'bbdb-net "bbdb/lisp/bbdb-com" "\
+Display all entries in BBDB matching regexp STRING in the network address.
+
+\(fn STRING ELIDEP)" t nil)
+
+(autoload 'bbdb-notes "bbdb/lisp/bbdb-com" "\
+Display all entries in BBDB matching STRING in the named notes field.
+
+\(fn WHICH STRING ELIDEP)" t nil)
+
+(autoload 'bbdb-changed "bbdb/lisp/bbdb-com" "\
+Display all entries in the bbdb database which have been changed since
+the database was last saved.
+
+\(fn ELIDEP)" t nil)
+
+(autoload 'bbdb-redisplay-records "bbdb/lisp/bbdb-com" "\
+Regrinds the contents of the *BBDB* buffer, without scrolling.
+If possible, you should call `bbdb-redisplay-one-record' instead.
+
+\(fn)" nil nil)
+
+(autoload 'bbdb-create "bbdb/lisp/bbdb-com" "\
+Add a new entry to the bbdb database ; prompts for all relevant info
+using the echo area, inserts the new record in the db, sorted alphabetically,
+and offers to save the db file.  DO NOT call this from a program.  Call
+bbdb-create-internal instead.
+
+\(fn RECORD)" t nil)
+
+(autoload 'bbdb-apply-next-command-to-all-records "bbdb/lisp/bbdb-com" "\
+Typing \\<bbdb-mode-map>\\[bbdb-apply-next-command-to-all-records] in the *BBDB* buffer makes the next command operate on all
+of the records currently displayed.  (Note that this only works for
+certain commands.)
+
+\(fn)" t nil)
+
+(autoload 'bbdb-append-records-p "bbdb/lisp/bbdb-com" "\
+Not documented
+
+\(fn)" nil nil)
+
+(autoload 'bbdb-append-records "bbdb/lisp/bbdb-com" "\
+Typing \\<bbdb-mode-map>\\[bbdb-append-records] in the *BBDB* buffer makes the next search/display command to append
+new records to those in the *BBDB* buffer.
+
+With an prefix arg (C-u) toggle between always append and no append.
+With an prefix arg that is a positive number append will be enabled for that
+many times.
+With any other argument append will be enabled once.
+
+\(fn ARG)" t nil)
+
+(autoload 'bbdb-insert-new-field "bbdb/lisp/bbdb-com" "\
+Add a new field to the current record; the field type and contents
+are prompted for if not supplied.
+
+If you are inserting a new phone-number field, you can control whether
+it is a north american or european phone number by providing a prefix
+argument.  A prefix arg of ^U means it's to be a euronumber, and any
+other prefix arg means it's to be a a structured north american number.
+Otherwise, which style is used is controlled by the variable
+`bbdb-north-american-phone-numbers-p'.
+
+If you are inserting a new net address, you can have BBDB append a
+default domain to any net address that does not contain one.  Set
+`bbdb-default-domain' to a string such as \"mycompany.com\" (or,
+depending on your environment, (getenv \"DOMAINNAME\")), and
+\"@mycompany.com\" will be appended to an address that is entered as
+just a username.  A prefix arg of ^U (or a `bbdb-default-domain'
+value of \"\", the default) means do not alter the address.
+
+\(fn RECORD NAME CONTENTS)" t nil)
+
+(autoload 'bbdb-edit-current-field "bbdb/lisp/bbdb-com" "\
+Edit the contents of the Insidious Big Brother Database field displayed on
+the current line (this is only meaningful in the \"*BBDB*\" buffer.)   If the
+cursor is in the middle of a multi-line field, such as an address or comments
+section, then the entire field is edited, not just the current line.
+
+\(fn)" t nil)
+
+(autoload 'bbdb-record-edit-notes "bbdb/lisp/bbdb-com" "\
+Not documented
+
+\(fn BBDB-RECORD &optional REGRIND)" t nil)
+
+(autoload 'bbdb-record-edit-property "bbdb/lisp/bbdb-com" "\
+Not documented
+
+\(fn BBDB-RECORD &optional PROP REGRIND)" t nil)
+
+(autoload 'bbdb-transpose-fields "bbdb/lisp/bbdb-com" "\
+This is like the `transpose-lines' command, but it is for BBDB fields.
+If the cursor is on a field of a BBDB record, that field and the previous
+field will be transposed.
+
+With argument ARG, takes previous line and moves it past ARG fields.
+With argument 0, interchanges field point is in with field mark is in.
+
+Both fields must be in the same record, and must be of the same basic type
+\(that is, you can use this command to change the order in which phone-number
+fields are listed, but you can't use it to make an address appear before a
+phone number; the order of field types is fixed.)
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'bbdb-delete-current-field-or-record "bbdb/lisp/bbdb-com" "\
+Delete the line which the cursor is on; actually, delete the field which
+that line represents from the database.  If the cursor is on the first line
+of a database entry (the name/company line) then the entire entry will be
+deleted.
+
+\(fn &optional RECORDS NOPROMPT)" t nil)
+
+(autoload 'bbdb-delete-current-record "bbdb/lisp/bbdb-com" "\
+Delete the entire bbdb database entry which the cursor is within.
+Pressing \\<bbdb-mode-map>\\[bbdb-apply-next-command-to-all-records] will
+delete all records listed in the BBDB buffer.
+
+\(fn RECS &optional NOPROMPT)" t nil)
+
+(autoload 'bbdb-toggle-all-records-display-layout "bbdb/lisp/bbdb-com" "\
+Show all the fields of all visible records.
+Like `bbdb-toggle-records-display-layout' but for all visible records.
+
+\(fn ARG &optional RECORDS)" t nil)
+
+(autoload 'bbdb-toggle-records-display-layout "bbdb/lisp/bbdb-com" "\
+Toggle whether the current record is displayed expanded or elided
+\(multi-line or one-line display.)  With a numeric argument of 0, the
+current record will unconditionally be made elided; with any other argument,
+the current record will unconditionally be shown expanded.
+\\<bbdb-mode-map>
+If \"\\[bbdb-apply-next-command-to-all-records]\\[bbdb-toggle-records-display-layout]\" is used instead of simply \"\\[bbdb-toggle-records-display-layout]\", then the state of all records will
+be changed instead of just the one at point.  In this case, an argument
+of 0 means that all records will unconditionally be made elided; any other
+numeric argument means that all of the records will unconditionally be shown
+expanded; and no numeric argument means that the records are made to be in
+the opposite state of the record under point.
+
+\(fn ARG)" t nil)
+
+(autoload 'bbdb-display-all-records-completely "bbdb/lisp/bbdb-com" "\
+Show all the fields of all currently displayed records.
+The display layout `full-multi-line' is used for this.
+
+\(fn ARG &optional RECORDS)" t nil)
+
+(autoload 'bbdb-display-record-completely "bbdb/lisp/bbdb-com" "\
+Show all the fields of the current record.
+The display layout `full-multi-line' is used for this.
+
+\(fn ARG)" t nil)
+
+(autoload 'bbdb-display-record-with-layout "bbdb/lisp/bbdb-com" "\
+Show all the fields of the current record using LAYOUT.
+
+\(fn LAYOUT &optional RECORDS)" t nil)
+
+(autoload 'bbdb-omit-record "bbdb/lisp/bbdb-com" "\
+Remove the current record from the display without deleting it from the
+database.  With a prefix argument, omit the next N records.  If negative,
+omit backwards.
+
+\(fn N)" t nil)
+
+(autoload 'bbdb-refile-record "bbdb/lisp/bbdb-com" "\
+Merge the current record into some other record; that is, delete the
+record under point after copying all of the data within it into some other
+record.  this is useful if you realize that somehow a redundant record has
+gotten into the database, and you want to merge it with another.
+
+If both records have names and/or companies, you are asked which to use.
+Phone numbers, addresses, and network addresses are simply concatenated.
+The first record is the record under the point; the second is prompted for.
+Completion behaviour is as dictated by the variable `bbdb-completion-type'.
+
+\(fn OLD-RECORD NEW-RECORD)" t nil)
+
+(autoload 'bbdb-sort-notes "bbdb/lisp/bbdb-com" "\
+Sort the notes in the record according to `bbdb-notes-sort-order'.
+Can be used in `bbdb-change-hook'.
+
+\(fn REC)" nil nil)
+
+(autoload 'bbdb-sort-phones "bbdb/lisp/bbdb-com" "\
+Sort the phones in the record according to the location.
+Can be used in `bbdb-change-hook'.
+
+\(fn REC)" nil nil)
+
+(autoload 'bbdb-sort-addresses "bbdb/lisp/bbdb-com" "\
+Sort the addresses in the record according to the location.
+Can be used in `bbdb-change-hook'.
+
+\(fn REC)" nil nil)
+
+(autoload 'bbdb-dwim-net-address "bbdb/lisp/bbdb-com" "\
+Return a string to use as the email address of the given record.
+It is formatted like \"Firstname Lastname <addr>\" unless both the first name
+and last name are constituents of the address, as in John.Doe@SomeHost, or the
+address is already in the form \"Name <foo>\" or \"foo (Name)\", in which case
+the address is used as-is.
+
+If the record has the field 'mail-name it is used instead of the record's name.
+
+If `bbdb-dwim-net-address-allow-redundancy' is non-nil, the name is always
+included.  If `bbdb-dwim-net-address-allow-redundancy' is 'netonly the name is
+never included!
+
+A title is prepended from the field `bbdb-dwim-net-address-title-field' if it
+exists.
+
+\(fn RECORD &optional NET)" nil nil)
+
+(autoload 'bbdb-send-mail "bbdb/lisp/bbdb-com" "\
+Compose a mail message to the person indicated by the current bbdb record.
+The first (most-recently-added) address is used if there are more than one.
+\\<bbdb-mode-map>
+If \"\\[bbdb-apply-next-command-to-all-records]\\[bbdb-send-mail]\" is used instead of simply \"\\[bbdb-send-mail]\", then mail will be sent to all of the
+folks listed in the *BBDB* buffer instead of just the person at point.
+
+\(fn BBDB-RECORD &optional SUBJECT)" t nil)
+
+(autoload 'bbdb-show-all-recipients "bbdb/lisp/bbdb-com" "\
+*Display BBDB records for all recipients of the message in this buffer.
+
+\(fn)" t nil)
+
+(autoload 'bbdb-completion-check-record "bbdb/lisp/bbdb-com" "\
+Not documented
+
+\(fn SYM REC)" nil nil)
+
+(autoload 'bbdb-completion-predicate "bbdb/lisp/bbdb-com" "\
+For use as the third argument to `completing-read'.
+Obey the semantics of `bbdb-completion-type'.
+
+\(fn SYMBOL)" nil nil)
+
+(autoload 'bbdb-read-addresses-with-completion "bbdb/lisp/bbdb-com" "\
+Like `read-string', but allows `bbdb-complete-name' style completion.
+
+\(fn PROMPT &optional DEFAULT)" nil nil)
+
+(autoload 'bbdb-complete-name "bbdb/lisp/bbdb-com" "\
+Complete the user full-name or net-address before point (up to the
+preceeding newline, colon, or comma, or the value of START-POS).  If
+what has been typed is unique, insert an entry of the form \"User Name
+<net-addr>\" (although see documentation for
+bbdb-dwim-net-address-allow-redundancy).  If it is a valid completion
+but not unique, a list of completions is displayed.
+
+If the completion is done and `bbdb-complete-name-allow-cycling' is
+true then cycle through the nets for the matching record.
+
+When called with a prefix arg then display a list of all nets.
+
+Completion behaviour can be controlled with `bbdb-completion-type'.
+
+\(fn &optional START-POS)" t nil)
+
+(autoload 'bbdb-yank "bbdb/lisp/bbdb-com" "\
+Insert the current contents of the *BBDB* buffer at point.
+
+\(fn)" t nil)
+
+(autoload 'bbdb-define-all-aliases "bbdb/lisp/bbdb-com" "\
+Define mail aliases for some of the records in the database.
+Every record which has a `mail-alias' field (but see
+`bbdb-define-all-aliases-field') will have a mail alias defined for it
+which is the contents of that field.  If there are multiple
+comma-separated words in this field, then all of those words will be
+defined as aliases for that record.
+
+If multiple entries in the database have the same mail alias, then
+that alias expands to a comma-separated list of the primary network
+addresses of all of those people.
+
+An alias ending in \"*\" will expand to all the nets of the record.
+An alias ending in \"[NTH]\" will expand the the NTH net of the
+record.
+
+Special nets exist and expand to other nets using one of
+`bbdb-magic-net-*', `bbdb-magic-net-1' or `bbdb-magic-net-SOMETHING'.
+Magic nets may not contain any comma character. If you need one, please
+put it into a custom magic net function or use the octal escape
+sequence \"\\054\".
+
+Nets matching \"FUNCTION/ARG\" (i.e. containing at least one \"/\")
+will be passed to the function `bbdb-magic-net-FUNCTION' with the
+string argument ARG.
+
+Nets starting with a \"(\" will be considered as a lisp list where the
+first element is prefixed by `bbdb-magic-net-' and then called as a
+function with the rest of the list as arguments.
+
+Nets which do not contain an \"@\" character and also exist as aliases
+are expanded recursively.  This can be used to define hierarchical
+aliases.
+
+Other nets are formatted by `bbdb-dwim-net-address'.
+
+\(fn)" t nil)
+
+(autoload 'bbdb-add-or-remove-mail-alias "bbdb/lisp/bbdb-com" "\
+Add NEWALIAS in all RECORDS or remove it if DELETE it t.
+When called with prefix argument it will remove the alias.
+We honor `bbdb-apply-next-command-to-all-records'!
+The new alias will only be added if it isn't there yet.
+
+\(fn &optional RECORDS NEWALIAS DELETE)" t nil)
+
+(autoload 'bbdb-dial "bbdb/lisp/bbdb-com" "\
+Dial the number at point.
+If the point is at the beginning of a record, dial the first
+phone number.  Does not dial the extension.  Does not apply the
+transformations from bbdb-dial-local-prefix-alist if a prefix arg
+is given.
+
+\(fn PHONE FORCE-AREA-CODE)" t nil)
+
+(autoload 'bbdb-finger "bbdb/lisp/bbdb-com" "\
+Finger the network address of a BBDB record.
+If this command is executed from the *BBDB* buffer, finger the network
+address of the record at point; otherwise, it prompts for a user.
+With a numeric prefix argument, finger the Nth network address of the
+current record; with a prefix argument of ^U, finger all of them.
+The *finger* buffer is filled asynchronously, meaning that you don't
+have to wait around for it to finish; but fingering another user before
+the first finger has finished could have unpredictable results.
+\\<bbdb-mode-map>
+If this command is executed from the *BBDB* buffer, it may be prefixed
+with \"\\[bbdb-apply-next-command-to-all-records]\" (as in \"\\[bbdb-apply-next-command-to-all-records]\\[bbdb-finger]\" instead of simply \"\\[bbdb-finger]\"), meaning to finger all of
+the users currently listed in the *BBDB* buffer instead of just the one
+at point.  The numeric prefix argument has the same interpretation.
+
+You can define a special network address to \"finger\" by defining a
+field `finger-host' (default value of `bbdb-finger-host-field').
+
+\(fn RECORD &optional WHICH-ADDRESS)" t nil)
+
+(autoload 'bbdb-timestamp-older "bbdb/lisp/bbdb-com" "\
+*Display records with timestamp older than DATE.
+DATE must be in yyyy-mm-dd format.
+
+\(fn DATE)" t nil)
+
+(autoload 'bbdb-timestamp-newer "bbdb/lisp/bbdb-com" "\
+*Display records with timestamp newer than DATE.
+DATE must be in yyyy-mm-dd format.
+
+\(fn DATE)" t nil)
+
+(autoload 'bbdb-creation-older "bbdb/lisp/bbdb-com" "\
+*Display records with creation-date older than DATE.
+DATE must be in yyyy-mm-dd format.
+
+\(fn DATE)" t nil)
+
+(autoload 'bbdb-creation-newer "bbdb/lisp/bbdb-com" "\
+*Display records with creation-date newer than DATE.
+DATE must be in yyyy-mm-dd format.
+
+\(fn DATE)" t nil)
+
+(autoload 'bbdb-creation-no-change "bbdb/lisp/bbdb-com" "\
+*Display records that have the same timestamp and creation-date.
+
+\(fn)" t nil)
+
+(autoload 'bbdb-info "bbdb/lisp/bbdb-com" "\
+Not documented
+
+\(fn)" t nil)
+
+(autoload 'bbdb-help "bbdb/lisp/bbdb-com" "\
+Not documented
+
+\(fn)" t nil)
+
+(defvar bbdb-update-records-mode 'annotating "\
+Controls how `bbdb-update-records' processes email addresses.
+Set this to an expression which evaluates either to 'searching or
+'annotating.  When set to 'annotating email addresses will be fed to
+`bbdb-annotate-message-sender' in order to update existing records or create
+new ones.  A value of 'searching will search just for existing records having
+the right net.
+
+There is a version of this variable for each MUA, which overrides this variable
+when set!
+
+This variable is also used for inter-function communication between the
+functions `bbdb-update-records' and `bbdb-prompt-for-create'.")
+
+(custom-autoload 'bbdb-update-records-mode "bbdb/lisp/bbdb-com" t)
+
+(autoload 'bbdb-update-records "bbdb/lisp/bbdb-com" "\
+Returns the records corresponding to the list of addresses ADDRS,
+creating or modifying them as necessary.  A record will be created if
+AUTO-CREATE-P is non-nil or if OFFER-TO-CREATE is true and the user
+confirms the creation.
+
+`bbdb-update-records-mode' controls if records are updated or not.
+A MUA specific variable, e.g. `bbdb/vm-update-records-mode', can
+overwrite this.
+
+See also `bbdb-get-only-first-address-p' to limit the update to the
+sender of the message.
+
+When hitting C-g once you will not be asked any more for new people listed
+in this message, but it will search only for existing records.  When hitting
+C-g again it will stop scanning.
+
+\(fn ADDRS AUTO-CREATE-P OFFER-TO-CREATE)" nil nil)
+
+(defvar bbdb-get-addresses-headers '((authors "From" "Resent-From" "Reply-To") (recipients "Resent-To" "Resent-CC" "To" "CC" "BCC")) "\
+*List of headers to search for senders and recipients email addresses.
+The headers are grouped into two classes, the authors and the senders headers.")
+
+(custom-autoload 'bbdb-get-addresses-headers "bbdb/lisp/bbdb-com" t)
+
+(defvar bbdb-get-only-first-address-p nil "\
+*If t `bbdb-update-records' will return only the first one.
+Changing this variable will show its effect only after clearing the
+`bbdb-message-cache' of a folder or closing and visiting it again.")
+
+(custom-autoload 'bbdb-get-only-first-address-p "bbdb/lisp/bbdb-com" t)
+
+;;;***
+
+;;;### (autoloads (bbdb-create-ftp-site bbdb-ftp) "bbdb/lisp/bbdb-ftp"
+;;;;;;  "bbdb/lisp/bbdb-ftp.el" (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-ftp.el
+
+(autoload 'bbdb-ftp "bbdb/lisp/bbdb-ftp" "\
+Use ange-ftp to open an ftp-connection to a BBDB record's name.
+If this command is executed from the *BBDB* buffer, ftp the site of
+the record at point; otherwise, it prompts for an ftp-site.
+
+\(fn BBDB-RECORD &optional WHICH)" t nil)
+
+(autoload 'bbdb-create-ftp-site "bbdb/lisp/bbdb-ftp" "\
+Add a new ftp-site entry to the bbdb database.
+Prompts for all relevant info using the echo area,
+inserts the new record in the db, sorted alphabetically.
+
+\(fn RECORD)" t nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-insinuate-gnus bbdb/gnus-summary-show-all-recipients
+;;;;;;  bbdb/gnus-score bbdb/gnus-snarf-signature bbdb/gnus-show-all-recipients
+;;;;;;  bbdb/gnus-show-records bbdb/gnus-annotate-sender bbdb/gnus-update-records
+;;;;;;  bbdb/gnus-update-record) "bbdb/lisp/bbdb-gnus" "bbdb/lisp/bbdb-gnus.el"
+;;;;;;  (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-gnus.el
+
+(autoload 'bbdb/gnus-update-record "bbdb/lisp/bbdb-gnus" "\
+Return the record corresponding to the current Gnus message, creating
+or modifying it as necessary.  A record will be created if
+bbdb/news-auto-create-p is non-nil, or if OFFER-TO-CREATE is true and
+the user confirms the creation.
+
+\(fn &optional OFFER-TO-CREATE)" nil nil)
+
+(autoload 'bbdb/gnus-update-records "bbdb/lisp/bbdb-gnus" "\
+Return the records corresponding to the current Gnus message, creating
+or modifying it as necessary.  A record will be created if
+`bbdb/news-auto-create-p' is non-nil or if OFFER-TO-CREATE is true
+and the user confirms the creation.
+
+The variable `bbdb/gnus-update-records-mode' controls what actions
+are performed and it might override `bbdb-update-records-mode'.
+
+When hitting C-g once you will not be asked anymore for new people listed
+in this message, but it will search only for existing records.  When hitting
+C-g again it will stop scanning.
+
+\(fn &optional OFFER-TO-CREATE)" nil nil)
+
+(autoload 'bbdb/gnus-annotate-sender "bbdb/lisp/bbdb-gnus" "\
+Add a line to the end of the Notes field of the BBDB record
+corresponding to the sender of this message.  If REPLACE is non-nil,
+replace the existing notes entry (if any).
+
+\(fn STRING &optional REPLACE)" t nil)
+
+(autoload 'bbdb/gnus-show-records "bbdb/lisp/bbdb-gnus" "\
+Display the contents of the BBDB for all addresses of this message.
+This buffer will be in `bbdb-mode', with associated keybindings.
+
+\(fn &optional ADDRESS-CLASS)" t nil)
+
+(autoload 'bbdb/gnus-show-all-recipients "bbdb/lisp/bbdb-gnus" "\
+Show all recipients of this message. Counterpart to `bbdb/vm-show-sender'.
+
+\(fn)" t nil)
+
+(autoload 'bbdb/gnus-snarf-signature "bbdb/lisp/bbdb-gnus" "\
+Snarf signature from the corresponding *Article* buffer.
+
+\(fn)" t nil)
+
+(autoload 'bbdb/gnus-score "bbdb/lisp/bbdb-gnus" "\
+This returns a score alist for Gnus.  A score pair will be made for
+every member of the net field in records which also have a gnus-score
+field.  This allows the BBDB to serve as a supplemental global score
+file, with the advantage that it can keep up with multiple and changing
+addresses better than the traditionally static global scorefile.
+
+\(fn GROUP)" nil nil)
+
+(autoload 'bbdb/gnus-summary-show-all-recipients "bbdb/lisp/bbdb-gnus" "\
+Display BBDB records for all recipients of the message.
+
+\(fn NOT-ELIDED)" t nil)
+
+(autoload 'bbdb-insinuate-gnus "bbdb/lisp/bbdb-gnus" "\
+Call this function to hook BBDB into Gnus.
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-menu bbdb-fontify-buffer) "bbdb/lisp/bbdb-gui"
+;;;;;;  "bbdb/lisp/bbdb-gui.el" (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-gui.el
+
+(autoload 'bbdb-fontify-buffer "bbdb/lisp/bbdb-gui" "\
+Not documented
+
+\(fn &optional RECORDS)" t nil)
+
+(autoload 'bbdb-menu "bbdb/lisp/bbdb-gui" "\
+Not documented
+
+\(fn EVENT)" t nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-force-record-create sample-bbdb-canonicalize-net-hook
+;;;;;;  bbdb-auto-notes-hook bbdb-ignore-some-messages-hook bbdb-ignore-selected-messages-hook
+;;;;;;  bbdb-ignore-most-messages-hook bbdb-extract-field-value bbdb-header-start
+;;;;;;  bbdb-creation-date-hook bbdb-timestamp-hook) "bbdb/lisp/bbdb-hooks"
+;;;;;;  "bbdb/lisp/bbdb-hooks.el" (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-hooks.el
+
+(autoload 'bbdb-timestamp-hook "bbdb/lisp/bbdb-hooks" "\
+For use as a `bbdb-change-hook'; maintains a notes-field called `timestamp'
+for the given record which contains the time when it was last modified.  If
+there is such a field there already, it is changed, otherwise it is added.
+
+\(fn RECORD)" nil nil)
+
+(autoload 'bbdb-creation-date-hook "bbdb/lisp/bbdb-hooks" "\
+For use as a `bbdb-create-hook'; adds a notes-field called `creation-date'
+which is the current time string.
+
+\(fn RECORD)" nil nil)
+
+(autoload 'bbdb-header-start "bbdb/lisp/bbdb-hooks" "\
+Returns a marker at the beginning of the header block of the current
+message.  This will not necessarily be in the current buffer.
+
+\(fn)" nil nil)
+
+(autoload 'bbdb-extract-field-value "bbdb/lisp/bbdb-hooks" "\
+Given the name of a field (like \"Subject\") this returns the value of
+that field in the current message, or nil.  This works whether you're in
+Gnus, Rmail, or VM.  This works on multi-line fields, but if more than
+one field of the same name is present, only the last is returned.  It is
+expected that the current buffer has a message in it, and (point) is at the
+beginning of the message headers.
+
+\(fn FIELD-NAME)" nil nil)
+
+(autoload 'bbdb-ignore-most-messages-hook "bbdb/lisp/bbdb-hooks" "\
+For use as the value of bbdb/news-auto-create-p or bbdb/mail-auto-create-p.
+This will automatically create BBDB entries for messages which match
+the bbdb-ignore-most-messages-alist (which see) and *no* others.
+
+\(fn &optional INVERT-SENSE)" nil nil)
+
+(autoload 'bbdb-ignore-selected-messages-hook "bbdb/lisp/bbdb-hooks" "\
+For use as a bbdb/news-auto-create-hook or bbdb/mail-auto-create-hook.
+This will automatically create BBDB entries for messages based on a
+combination of bbdb-ignore-some-messages-alist and
+bbdb-ignore-most-messages-alist.  It first looks at the SOME list.  If
+that doesn't disqualify a message, then it looks at the MOST list.  If
+that qualifies the message, the record is auto-created, but a
+confirmation is conditionally sought, based on the value of
+`bbdb-ignore-selected-messages-confirmation'.
+
+\(fn)" nil nil)
+
+(autoload 'bbdb-ignore-some-messages-hook "bbdb/lisp/bbdb-hooks" "\
+For use as a `bbdb/news-auto-create-hook' or `bbdb/mail-auto-create-hook'.
+This will automatically create BBDB entries for messages which do *not*
+match the `bbdb-ignore-some-messages-alist' (which see).
+
+\(fn)" nil nil)
+
+(autoload 'bbdb-auto-notes-hook "bbdb/lisp/bbdb-hooks" "\
+For use as a `bbdb-notice-hook'.  This might automatically add some text
+to the notes field of the BBDB record corresponding to the current record
+based on the header of the current message.  See the documentation for
+the variables `bbdb-auto-notes-alist' and `bbdb-auto-notes-ignore'.
+
+\(fn RECORD)" nil nil)
+
+(autoload 'sample-bbdb-canonicalize-net-hook "bbdb/lisp/bbdb-hooks" "\
+Not documented
+
+\(fn ADDR)" nil nil)
+
+(autoload 'bbdb-force-record-create "bbdb/lisp/bbdb-hooks" "\
+Force automatic creation of a BBDB records for the current message.
+You might add this to the reply hook of your MUA in order to automatically
+get records added for those people you reply to.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-merge-file bbdb-merge-record) "bbdb/lisp/bbdb-merge"
+;;;;;;  "bbdb/lisp/bbdb-merge.el" (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-merge.el
+
+(autoload 'bbdb-merge-record "bbdb/lisp/bbdb-merge" "\
+Generic merge function.
+
+Merges new-record into your bbdb, using DATE to check who's more
+up-to-date and OVERRIDE to decide who gets precedence if two dates
+match. DATE can be extracted from a notes if it's an alist with an
+element marked timestamp. Set OVERRIDE to 'new to allow the new record
+to stomp on existing data, 'old to preserve existing data or nil to
+merge both together. If it can't find a record to merge with, it will
+create a new record. If MERGE-RECORD is set, it's a record discovered
+by other means that should be merged with.
+
+Returns the Grand Unified Record.
+
+\(fn NEW-RECORD &optional MERGE-RECORD OVERRIDE)" nil nil)
+
+(autoload 'bbdb-merge-file "bbdb/lisp/bbdb-merge" "\
+Merge a bbdb file into the in-core bbdb.
+
+\(fn &optional BBDB-NEW OVERRIDE MATCH-FUN)" t nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-insinuate-mh bbdb/mh-show-sender bbdb/mh-annotate-sender
+;;;;;;  bbdb/mh-update-record) "bbdb/lisp/bbdb-mhe" "bbdb/lisp/bbdb-mhe.el"
+;;;;;;  (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-mhe.el
+
+(autoload 'bbdb/mh-update-record "bbdb/lisp/bbdb-mhe" "\
+Returns the record corresponding to the current MH message, creating or
+modifying it as necessary.  A record will be created if
+bbdb/mail-auto-create-p is non-nil, or if OFFER-TO-CREATE is true and
+the user confirms the creation.
+
+\(fn &optional OFFER-TO-CREATE)" nil nil)
+
+(autoload 'bbdb/mh-annotate-sender "bbdb/lisp/bbdb-mhe" "\
+Add a line to the end of the Notes field of the BBDB record
+corresponding to the sender of this message.  If REPLACE is non-nil,
+replace the existing notes entry (if any).
+
+\(fn STRING &optional REPLACE)" t nil)
+
+(autoload 'bbdb/mh-show-sender "bbdb/lisp/bbdb-mhe" "\
+Display the contents of the BBDB for the sender of this message.
+This buffer will be in bbdb-mode, with associated keybindings.
+
+\(fn)" t nil)
+
+(autoload 'bbdb-insinuate-mh "bbdb/lisp/bbdb-mhe" "\
+Call this function to hook BBDB into MH-E.
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-migrate-update-file-version bbdb-migrate-rewrite-all
+;;;;;;  bbdb-unmigrate-record bbdb-migrate bbdb-migration-query)
+;;;;;;  "bbdb/lisp/bbdb-migrate" "bbdb/lisp/bbdb-migrate.el" (19793
+;;;;;;  5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-migrate.el
+
+(autoload 'bbdb-migration-query "bbdb/lisp/bbdb-migrate" "\
+Ask if the database is to be migrated.
+ONDISK is the version number of the database as currently stored on
+disk.  Returns the version for the saved database.
+
+\(fn ONDISK)" nil nil)
+
+(autoload 'bbdb-migrate "bbdb/lisp/bbdb-migrate" "\
+Migrate the BBDB from the version on disk (the car of
+`bbdb-file-format-migration') to the current version (in
+`bbdb-file-format').
+
+\(fn RECORDS)" nil nil)
+
+(autoload 'bbdb-unmigrate-record "bbdb/lisp/bbdb-migrate" "\
+Reverse-migrate a single record from the current version (in
+`bbdb-file-format') to the version to be saved (the cdr of
+`bbdb-file-format-migration').
+
+\(fn RECORD)" nil nil)
+
+(autoload 'bbdb-migrate-rewrite-all "bbdb/lisp/bbdb-migrate" "\
+Rewrite each and every record in the bbdb file; this is necessary if we
+are updating an old file format.  MESSAGE-P says whether to sound off
+for each record converted.  If RECORDS is non-nil, its value will be
+used as the list of records to update.
+
+\(fn MESSAGE-P &optional RECORDS)" nil nil)
+
+(autoload 'bbdb-migrate-update-file-version "bbdb/lisp/bbdb-migrate" "\
+Change the `file-version' string from the OLD version to the NEW
+version.
+
+\(fn OLD NEW)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-print) "bbdb/lisp/bbdb-print" "bbdb/lisp/bbdb-print.el"
+;;;;;;  (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-print.el
+
+(autoload 'bbdb-print "bbdb/lisp/bbdb-print" "\
+Make a TeX file for printing out the bbdb database.\\<bbdb-mode-map>
+If \"\\[bbdb-apply-next-command-to-all-records]\\[bbdb-print]\" is used instead of simply \"\\[bbdb-print]\", then includes only the
+people currently in the *BBDB* buffer.  With a prefix argument, makes
+a brief (one-line-per-entry) printout.
+
+There are various variables for customizing the content & format of
+the printout, notably the variables `bbdb-print-alist' and
+`bbdb-print-require'.  See the file bbdb-print.el for more information.
+
+\(fn VISIBLE-RECORDS TO-FILE BRIEF)" t nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-insinuate-reportmail) "bbdb/lisp/bbdb-reportmail"
+;;;;;;  "bbdb/lisp/bbdb-reportmail.el" (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-reportmail.el
+
+(autoload 'bbdb-insinuate-reportmail "bbdb/lisp/bbdb-reportmail" "\
+Call this function to hook BBDB into reportmail.
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-insinuate-rmail bbdb/rmail-show-sender bbdb/rmail-annotate-sender
+;;;;;;  bbdb/rmail-update-records bbdb/rmail-update-record) "bbdb/lisp/bbdb-rmail"
+;;;;;;  "bbdb/lisp/bbdb-rmail.el" (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-rmail.el
+
+(autoload 'bbdb/rmail-update-record "bbdb/lisp/bbdb-rmail" "\
+Not documented
+
+\(fn &optional OFFER-TO-CREATE)" nil nil)
+
+(autoload 'bbdb/rmail-update-records "bbdb/lisp/bbdb-rmail" "\
+Returns the records corresponding to the current RMAIL emssage,
+creating or modifying them as necessary.  A record will be created if
+bbdb/mail-auto-create-p is non-nil or if OFFER-TO-CREATE is true, and
+the user confirms the creation.
+
+The variable `bbdb/rmail-update-records-mode' controls what actions
+are performed and it might override `bbdb-update-records-mode'.
+
+When hitting C-g once you will not be asked anymore for new people
+listed n this message, but it will search only for existing records.
+When hitting C-g again it will stop scanning.
+
+\(fn &optional OFFER-TO-CREATE)" nil nil)
+
+(autoload 'bbdb/rmail-annotate-sender "bbdb/lisp/bbdb-rmail" "\
+Add a line to the end of the Notes field of the BBDB record
+corresponding to the sender of this message.  If REPLACE is non-nil,
+replace the existing notes entry (if any).
+
+\(fn STRING &optional REPLACE)" t nil)
+
+(autoload 'bbdb/rmail-show-sender "bbdb/lisp/bbdb-rmail" "\
+Display the contents of the BBDB for the sender of this message.
+This buffer will be in bbdb-mode, with associated keybindings.
+
+\(fn)" t nil)
+
+(autoload 'bbdb-insinuate-rmail "bbdb/lisp/bbdb-rmail" "\
+Call this function to hook BBDB into RMAIL.
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-insinuate-sc bbdb/sc-default) "bbdb/lisp/bbdb-sc"
+;;;;;;  "bbdb/lisp/bbdb-sc.el" (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-sc.el
+
+(autoload 'bbdb/sc-default "bbdb/lisp/bbdb-sc" "\
+If the current \"from\" field in `sc-mail-info' alist
+contains only an e-mail address, lookup e-mail address in
+BBDB, and prepend a new \"from\" field to `sc-mail-info'.
+
+\(fn)" nil nil)
+
+(autoload 'bbdb-insinuate-sc "bbdb/lisp/bbdb-sc" "\
+Call this function to hook BBDB into Supercite.
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-rfc822-addresses bbdb-extract-address-components
+;;;;;;  bbdb-snarf-region bbdb-snarf) "bbdb/lisp/bbdb-snarf" "bbdb/lisp/bbdb-snarf.el"
+;;;;;;  (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-snarf.el
+
+(autoload 'bbdb-snarf "bbdb/lisp/bbdb-snarf" "\
+snarf up a bbdb record WHERE the point is.
+We assume things are line-broken and paragraph-bounded.
+The name comes first and other fields (address,
+phone, email, web pages) are recognized by context.
+
+Required context:
+    addresses end with \"City, State ZIP\" or \"City, State\"
+    phones match bbdb-snarf-phone-regexp
+	(currently US-style phones)
+    e-mail addresses have @'s in them
+    web sites are recognized by http:// or www.
+
+Address and phone context are currently US-specific;
+patches to internationalize these assumptions are welcome.
+
+\\[bbdb-snarf] is similar to \\[bbdb-whois-sentinel], but less specialized.
+
+\(fn WHERE)" t nil)
+
+(autoload 'bbdb-snarf-region "bbdb/lisp/bbdb-snarf" "\
+snarf up a bbdb record in the current region.  See `bbdb-snarf' for
+more details.
+
+\(fn BEGIN END)" t nil)
+
+(autoload 'bbdb-extract-address-components "bbdb/lisp/bbdb-snarf" "\
+Return a list of address components found in ADSTRING.
+If extracting fails one probably has to adjust the variable
+`bbdb-extract-address-component-regexps'.
+
+\(fn ADSTRING &optional IGNORE-ERRORS)" nil nil)
+
+(autoload 'bbdb-rfc822-addresses "bbdb/lisp/bbdb-snarf" "\
+Split ADDRLINE into a list of parsed addresses.
+
+You can't do this with rfc822.el in any sort of useful way because it discards
+the comments. You can't do this with mail-extr.el because the multiple address
+parsing in GNU Emacs appears to be broken beyond belief, and the XEmacs
+version doesn't support multiple addresses.
+
+\(fn ADDRLINE &optional IGNORE-ERRORS)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-srv-add-phone bbdb/srv-auto-create-mail-news-dispatcher
+;;;;;;  bbdb/srv-handle-headers-with-delay) "bbdb/lisp/bbdb-srv"
+;;;;;;  "bbdb/lisp/bbdb-srv.el" (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-srv.el
+
+(autoload 'bbdb/srv-handle-headers-with-delay "bbdb/lisp/bbdb-srv" "\
+Just like bbdb/srv-handle-headers, but only updates every few seconds.
+This is so that trying to display many records in succession won't queue them
+up, but will end up only displaying a record when no displays have been
+requested for a couple of seconds.
+
+\(fn HEADERS)" nil nil)
+
+(defalias 'bbdb-srv 'bbdb/srv-handle-headers-with-delay)
+
+(autoload 'bbdb/srv-auto-create-mail-news-dispatcher "bbdb/lisp/bbdb-srv" "\
+For use as the value of bbdb/srv-auto-create-p.
+This will try to decide if this is a mail message or a news message, and then
+run either bbdb/news-auto-create-p or bbdb/mail-auto-create-p as appropriate.
+\(The heuristic is that news messages never have a Status or X-Mozilla-Status
+header; and that mail messages never have Path headers.)
+
+\(fn)" nil nil)
+
+(autoload 'bbdb-srv-add-phone "bbdb/lisp/bbdb-srv" "\
+Not documented
+
+\(fn PHONE-STRING &optional DESCRIPTION RECORD)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-insinuate-vm bbdb/vm-set-auto-folder-alist
+;;;;;;  bbdb/vm-set-auto-folder-alist-headers bbdb/vm-set-auto-folder-alist-field
+;;;;;;  bbdb/vm-show-sender bbdb/vm-show-all-recipients bbdb/vm-show-records
+;;;;;;  bbdb/vm-annotate-sender bbdb/vm-update-records bbdb/vm-update-record)
+;;;;;;  "bbdb/lisp/bbdb-vm" "bbdb/lisp/bbdb-vm.el" (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-vm.el
+
+(autoload 'bbdb/vm-update-record "bbdb/lisp/bbdb-vm" "\
+Not documented
+
+\(fn &optional OFFER-TO-CREATE)" nil nil)
+
+(autoload 'bbdb/vm-update-records "bbdb/lisp/bbdb-vm" "\
+Returns the records corresponding to the current VM message,
+creating or modifying them as necessary.  A record will be created if
+`bbdb/mail-auto-create-p' is non-nil or if OFFER-TO-CREATE is true, and
+the user confirms the creation.
+
+The variable `bbdb/vm-update-records-mode' controls what actions
+are performed and it might override `bbdb-update-records-mode'.
+
+When hitting C-g once you will not be asked anymore for new people listed
+in this message, but it will search only for existing records.  When hitting
+C-g again it will stop scanning.
+
+\(fn &optional OFFER-TO-CREATE)" nil nil)
+
+(autoload 'bbdb/vm-annotate-sender "bbdb/lisp/bbdb-vm" "\
+Add a line to the end of the Notes field of the BBDB record
+corresponding to the sender of this message.  If REPLACE is non-nil,
+replace the existing notes entry (if any).
+
+\(fn STRING &optional REPLACE)" t nil)
+
+(autoload 'bbdb/vm-show-records "bbdb/lisp/bbdb-vm" "\
+Display the contents of the BBDB for the sender of this message.
+This buffer will be in bbdb-mode, with associated keybindings.
+
+\(fn &optional ADDRESS-CLASS)" t nil)
+
+(autoload 'bbdb/vm-show-all-recipients "bbdb/lisp/bbdb-vm" "\
+Show all recipients of this message. Counterpart to `bbdb/vm-show-sender'.
+
+\(fn)" t nil)
+
+(autoload 'bbdb/vm-show-sender "bbdb/lisp/bbdb-vm" "\
+Display the contents of the BBDB for the senders of this message.
+With a prefix argument show the recipients instead,
+with two prefix arguments show all records.
+This buffer will be in `bbdb-mode', with associated keybindings.
+
+\(fn &optional SHOW-RECIPIENTS)" t nil)
+
+(defvar bbdb/vm-set-auto-folder-alist-field 'vm-folder "\
+*The field which `bbdb/vm-set-auto-folder-alist' searches for.")
+
+(custom-autoload 'bbdb/vm-set-auto-folder-alist-field "bbdb/lisp/bbdb-vm" t)
+
+(defvar bbdb/vm-set-auto-folder-alist-headers '("From:" "To:" "CC:") "\
+*The headers used by `bbdb/vm-set-auto-folder-alist'.
+The order in this list is the order how matching will be performed!")
+
+(custom-autoload 'bbdb/vm-set-auto-folder-alist-headers "bbdb/lisp/bbdb-vm" t)
+
+(autoload 'bbdb/vm-set-auto-folder-alist "bbdb/lisp/bbdb-vm" "\
+Create a `vm-auto-folder-alist' according to the records in the bbdb.
+For each record that has a 'vm-folder' attribute, add an
+element (email-regexp . folder) to the `vm-auto-folder-alist'.
+
+The element gets added to the 'element-name' sublist of the
+`vm-auto-folder-alist'.
+
+The car of the element consists of all the email addresses for the
+bbdb record concatenated with OR; the cdr is the value of the
+vm-folder attribute.
+
+If the first character of vm-folders value is a quote ' it will be
+parsed as lisp expression and is evaluated to return a folder name,
+e.g. define you own function `my-folder-name' and set it to
+	'(my-folder-name)
+
+\(fn)" t nil)
+
+(autoload 'bbdb-insinuate-vm "bbdb/lisp/bbdb-vm" "\
+Call this function to hook BBDB into VM.
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-insinuate-w3 bbdb-www-grab-homepage bbdb-www)
+;;;;;;  "bbdb/lisp/bbdb-w3" "bbdb/lisp/bbdb-w3.el" (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-w3.el
+
+(autoload 'bbdb-www "bbdb/lisp/bbdb-w3" "\
+Visit URLs stored in the `www' field of the current record.
+\\[bbdb-apply-next-command-to-all-records]\\[bbdb-www] means to try all records currently visible.
+Non-interactively, do all records if arg is nonnil.
+
+\(fn REC &optional WHICH)" t nil)
+
+(autoload 'bbdb-www-grab-homepage "bbdb/lisp/bbdb-w3" "\
+Grab the current URL and store it in the bbdb database
+
+\(fn RECORD)" t nil)
+
+(autoload 'bbdb-insinuate-w3 "bbdb/lisp/bbdb-w3" "\
+Call this function to hook BBDB into W3.
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-whois) "bbdb/lisp/bbdb-whois" "bbdb/lisp/bbdb-whois.el"
+;;;;;;  (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-whois.el
+
+(autoload 'bbdb-whois "bbdb/lisp/bbdb-whois" "\
+Not documented
+
+\(fn THE-RECORD &optional SERVER)" t nil)
+
+;;;***
+
+;;;### (autoloads (bbdb-load-touchtones bbdb-sound-volume bbdb-sounds-directory
+;;;;;;  bbdb-xemacs-display-completion-list) "bbdb/lisp/bbdb-xemacs"
+;;;;;;  "bbdb/lisp/bbdb-xemacs.el" (19793 5388))
+;;; Generated autoloads from bbdb/lisp/bbdb-xemacs.el
+
+(autoload 'bbdb-xemacs-display-completion-list "bbdb/lisp/bbdb-xemacs" "\
+Wrapper for `display-completion-list'.
+Allows callbacks on XEmacs `display-completion-list' is called with
+`:activate-callback CALLBACK' if CALLBACK is non-nil.
+`:user-data DATA' is also used if DATA is non-nil.
+Neither are used if CALLBACK is nil.
+
+\(fn LIST &optional CALLBACK DATA)" nil nil)
+
+(defvar bbdb-sounds-directory (expand-file-name "~/.xemacs/etc/sounds") "\
+The directory to load the touchtone sound files from, or nil if none.")
+
+(custom-autoload 'bbdb-sounds-directory "bbdb/lisp/bbdb-xemacs" t)
+
+(defvar bbdb-sound-volume 50 "\
+Volume for playing sounds.")
+
+(custom-autoload 'bbdb-sound-volume "bbdb/lisp/bbdb-xemacs" t)
+
+(autoload 'bbdb-load-touchtones "bbdb/lisp/bbdb-xemacs" "\
+Load the touchtone sounds into `sound-alist'.
+The directory specified in `bbdb-sounds-directory' is searched for the files
+touchtone.*\\.\\(wav\\|au\\) as named in `bbdb-sound-files'.
+They are stored in `sound-alist' as touchtone0 to touchtone11.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (csharp-mode csharp-mode-hook) "csharp-mode/csharp-mode"
 ;;;;;;  "csharp-mode/csharp-mode.el" (19789 14584))
 ;;; Generated autoloads from csharp-mode/csharp-mode.el
@@ -1802,6 +3113,401 @@ highlight FIXMEs in comments and strings (as well as TODO BUG and KLUDGE
 
 ;;;***
 
+;;;### (autoloads (mime-decode-header-in-buffer mime-decode-header-in-region
+;;;;;;  mime-decode-field-body mime-update-field-decoder-cache mime-find-field-decoder
+;;;;;;  mime-find-field-presentation-method mime-set-field-decoder)
+;;;;;;  "flim/site-lisp/flim/eword-decode" "flim/site-lisp/flim/eword-decode.el"
+;;;;;;  (19793 5243))
+;;; Generated autoloads from flim/site-lisp/flim/eword-decode.el
+
+(autoload 'mime-set-field-decoder "flim/site-lisp/flim/eword-decode" "\
+Set decoder of FIELD.
+SPECS must be like `MODE1 DECODER1 MODE2 DECODER2 ...'.
+Each mode must be `nil', `plain', `wide', `summary' or `nov'.
+If mode is `nil', corresponding decoder is set up for every modes.
+
+\(fn FIELD &rest SPECS)" nil nil)
+
+(autoload 'mime-find-field-presentation-method "flim/site-lisp/flim/eword-decode" "\
+Return field-presentation-method from NAME.
+NAME must be `plain', `wide', `summary' or `nov'.
+
+\(fn NAME)" nil (quote macro))
+
+(autoload 'mime-find-field-decoder "flim/site-lisp/flim/eword-decode" "\
+Return function to decode field-body of FIELD in MODE.
+Optional argument MODE must be object or name of
+field-presentation-method.  Name of field-presentation-method must be
+`plain', `wide', `summary' or `nov'.
+Default value of MODE is `summary'.
+
+\(fn FIELD &optional MODE)" nil nil)
+
+(autoload 'mime-update-field-decoder-cache "flim/site-lisp/flim/eword-decode" "\
+Update field decoder cache `mime-field-decoder-cache'.
+
+\(fn FIELD MODE &optional FUNCTION)" nil nil)
+
+(autoload 'mime-decode-field-body "flim/site-lisp/flim/eword-decode" "\
+Decode FIELD-BODY as FIELD-NAME in MODE, and return the result.
+Optional argument MODE must be `plain', `wide', `summary' or `nov'.
+Default mode is `summary'.
+
+If MODE is `wide' and MAX-COLUMN is non-nil, the result is folded with
+MAX-COLUMN.
+
+Non MIME encoded-word part in FILED-BODY is decoded with
+`default-mime-charset'.
+
+\(fn FIELD-BODY FIELD-NAME &optional MODE MAX-COLUMN)" nil nil)
+
+(autoload 'mime-decode-header-in-region "flim/site-lisp/flim/eword-decode" "\
+Decode MIME encoded-words in region between START and END.
+If CODE-CONVERSION is nil, it decodes only encoded-words.  If it is
+mime-charset, it decodes non-ASCII bit patterns as the mime-charset.
+Otherwise it decodes non-ASCII bit patterns as the
+default-mime-charset.
+
+\(fn START END &optional CODE-CONVERSION)" t nil)
+
+(autoload 'mime-decode-header-in-buffer "flim/site-lisp/flim/eword-decode" "\
+Decode MIME encoded-words in header fields.
+If CODE-CONVERSION is nil, it decodes only encoded-words.  If it is
+mime-charset, it decodes non-ASCII bit patterns as the mime-charset.
+Otherwise it decodes non-ASCII bit patterns as the
+default-mime-charset.
+If SEPARATOR is not nil, it is used as header separator.
+
+\(fn &optional CODE-CONVERSION SEPARATOR)" t nil)
+
+;;;***
+
+;;;### (autoloads (mime-encode-header-in-buffer mime-encode-field-body)
+;;;;;;  "flim/site-lisp/flim/eword-encode" "flim/site-lisp/flim/eword-encode.el"
+;;;;;;  (19793 5243))
+;;; Generated autoloads from flim/site-lisp/flim/eword-encode.el
+
+(autoload 'mime-encode-field-body "flim/site-lisp/flim/eword-encode" "\
+Encode FIELD-BODY as FIELD-NAME, and return the result.
+A lexical token includes non-ASCII character is encoded as MIME
+encoded-word.  ASCII token is not encoded.
+
+\(fn FIELD-BODY FIELD-NAME)" nil nil)
+
+(autoload 'mime-encode-header-in-buffer "flim/site-lisp/flim/eword-encode" "\
+Encode header fields to network representation, such as MIME encoded-word.
+It refers the `mime-field-encoding-method-alist' variable.
+
+\(fn &optional CODE-CONVERSION)" t nil)
+
+;;;***
+
+;;;### (autoloads (mime-write-decoded-region mime-insert-encoded-file
+;;;;;;  mime-decode-string mime-decode-region mime-encode-region)
+;;;;;;  "flim/site-lisp/flim/mel" "flim/site-lisp/flim/mel.el" (19793
+;;;;;;  5244))
+;;; Generated autoloads from flim/site-lisp/flim/mel.el
+
+(autoload 'mime-encode-region "flim/site-lisp/flim/mel" "\
+Encode region START to END of current buffer using ENCODING.
+ENCODING must be string.
+
+\(fn START END ENCODING)" t nil)
+
+(autoload 'mime-decode-region "flim/site-lisp/flim/mel" "\
+Decode region START to END of current buffer using ENCODING.
+ENCODING must be string.
+
+\(fn START END ENCODING)" t nil)
+
+(autoload 'mime-decode-string "flim/site-lisp/flim/mel" "\
+Decode STRING using ENCODING.
+ENCODING must be string.  If ENCODING is found in
+`mime-string-decoding-method-alist' as its key, this function decodes
+the STRING by its value.
+
+\(fn STRING ENCODING)" nil nil)
+
+(autoload 'mime-insert-encoded-file "flim/site-lisp/flim/mel" "\
+Insert file FILENAME encoded by ENCODING format.
+
+\(fn FILENAME ENCODING)" t nil)
+
+(autoload 'mime-write-decoded-region "flim/site-lisp/flim/mel" "\
+Decode and write current region encoded by ENCODING into FILENAME.
+START and END are buffer positions.
+
+\(fn START END FILENAME ENCODING)" t nil)
+
+;;;***
+
+;;;### (autoloads (mime-format-mailcap-command mime-parse-mailcap-file
+;;;;;;  mime-parse-mailcap-buffer) "flim/site-lisp/flim/mime-conf"
+;;;;;;  "flim/site-lisp/flim/mime-conf.el" (17099 15680))
+;;; Generated autoloads from flim/site-lisp/flim/mime-conf.el
+
+(autoload 'mime-parse-mailcap-buffer "flim/site-lisp/flim/mime-conf" "\
+Parse BUFFER as a mailcap, and return the result.
+If optional argument ORDER is a function, result is sorted by it.
+If optional argument ORDER is not specified, result is sorted original
+order.  Otherwise result is not sorted.
+
+\(fn &optional BUFFER ORDER)" nil nil)
+
+(defvar mime-mailcap-file "~/.mailcap" "\
+*File name of user's mailcap file.")
+
+(autoload 'mime-parse-mailcap-file "flim/site-lisp/flim/mime-conf" "\
+Parse FILENAME as a mailcap, and return the result.
+If optional argument ORDER is a function, result is sorted by it.
+If optional argument ORDER is not specified, result is sorted original
+order.  Otherwise result is not sorted.
+
+\(fn &optional FILENAME ORDER)" nil nil)
+
+(autoload 'mime-format-mailcap-command "flim/site-lisp/flim/mime-conf" "\
+Return formated command string from MTEXT and SITUATION.
+
+MTEXT is a command text of mailcap specification, such as
+view-command.
+
+SITUATION is an association-list about information of entity.  Its key
+may be:
+
+	'type		primary media-type
+	'subtype	media-subtype
+	'filename	filename
+	STRING		parameter of Content-Type field
+
+\(fn MTEXT SITUATION)" nil nil)
+
+;;;***
+
+;;;### (autoloads (mime-parse-buffer mime-uri-parse-cid mime-parse-msg-id
+;;;;;;  mime-read-Content-Transfer-Encoding mime-parse-Content-Transfer-Encoding
+;;;;;;  mime-read-Content-Disposition mime-parse-Content-Disposition
+;;;;;;  mime-read-Content-Type mime-parse-Content-Type) "flim/site-lisp/flim/mime-parse"
+;;;;;;  "flim/site-lisp/flim/mime-parse.el" (19793 5244))
+;;; Generated autoloads from flim/site-lisp/flim/mime-parse.el
+
+(autoload 'mime-parse-Content-Type "flim/site-lisp/flim/mime-parse" "\
+Parse FIELD-BODY as a Content-Type field.
+FIELD-BODY is a string.
+Return value is a mime-content-type object.
+If FIELD-BODY is not a valid Content-Type field, return nil.
+
+\(fn FIELD-BODY)" nil nil)
+
+(autoload 'mime-read-Content-Type "flim/site-lisp/flim/mime-parse" "\
+Parse field-body of Content-Type field of current-buffer.
+Return value is a mime-content-type object.
+If Content-Type field is not found, return nil.
+
+\(fn)" nil nil)
+
+(autoload 'mime-parse-Content-Disposition "flim/site-lisp/flim/mime-parse" "\
+Parse FIELD-BODY as a Content-Disposition field.
+FIELD-BODY is a string.
+Return value is a mime-content-disposition object.
+If FIELD-BODY is not a valid Content-Disposition field, return nil.
+
+\(fn FIELD-BODY)" nil nil)
+
+(autoload 'mime-read-Content-Disposition "flim/site-lisp/flim/mime-parse" "\
+Parse field-body of Content-Disposition field of current-buffer.
+Return value is a mime-content-disposition object.
+If Content-Disposition field is not found, return nil.
+
+\(fn)" nil nil)
+
+(autoload 'mime-parse-Content-Transfer-Encoding "flim/site-lisp/flim/mime-parse" "\
+Parse FIELD-BODY as a Content-Transfer-Encoding field.
+FIELD-BODY is a string.
+Return value is a string.
+If FIELD-BODY is not a valid Content-Transfer-Encoding field, return nil.
+
+\(fn FIELD-BODY)" nil nil)
+
+(autoload 'mime-read-Content-Transfer-Encoding "flim/site-lisp/flim/mime-parse" "\
+Parse field-body of Content-Transfer-Encoding field of current-buffer.
+Return value is a string.
+If Content-Transfer-Encoding field is not found, return nil.
+
+\(fn)" nil nil)
+
+(autoload 'mime-parse-msg-id "flim/site-lisp/flim/mime-parse" "\
+Parse TOKENS as msg-id of Content-ID or Message-ID field.
+
+\(fn TOKENS)" nil nil)
+
+(autoload 'mime-uri-parse-cid "flim/site-lisp/flim/mime-parse" "\
+Parse STRING as cid URI.
+
+\(fn STRING)" nil nil)
+
+(autoload 'mime-parse-buffer "flim/site-lisp/flim/mime-parse" "\
+Parse BUFFER as a MIME message.
+If buffer is omitted, it parses current-buffer.
+
+\(fn &optional BUFFER REPRESENTATION-TYPE)" nil nil)
+
+;;;***
+
+;;;### (autoloads (qmtp-send-buffer qmtp-via-qmtp) "flim/site-lisp/flim/qmtp"
+;;;;;;  "flim/site-lisp/flim/qmtp.el" (17099 15681))
+;;; Generated autoloads from flim/site-lisp/flim/qmtp.el
+
+(defvar qmtp-open-connection-function #'open-network-stream)
+
+(autoload 'qmtp-via-qmtp "flim/site-lisp/flim/qmtp" "\
+Not documented
+
+\(fn SENDER RECIPIENTS BUFFER)" nil nil)
+
+(autoload 'qmtp-send-buffer "flim/site-lisp/flim/qmtp" "\
+Not documented
+
+\(fn SENDER RECIPIENTS BUFFER)" nil nil)
+
+;;;***
+
+;;;### (autoloads (sha1) "flim/site-lisp/flim/sha1-el" "flim/site-lisp/flim/sha1-el.el"
+;;;;;;  (19680 22220))
+;;; Generated autoloads from flim/site-lisp/flim/sha1-el.el
+
+(autoload 'sha1 "flim/site-lisp/flim/sha1-el" "\
+Return the SHA1 (Secure Hash Algorithm) of an object.
+OBJECT is either a string or a buffer.
+Optional arguments BEG and END denote buffer positions for computing the
+hash of a portion of OBJECT.
+If BINARY is non-nil, return a string in binary form.
+
+\(fn OBJECT &optional BEG END BINARY)" nil nil)
+
+;;;***
+
+;;;### (autoloads (smtp-send-buffer smtp-via-smtp) "flim/site-lisp/flim/smtp"
+;;;;;;  "flim/site-lisp/flim/smtp.el" (19793 5244))
+;;; Generated autoloads from flim/site-lisp/flim/smtp.el
+
+(defvar smtp-open-connection-function #'open-network-stream "\
+*Function used for connecting to a SMTP server.
+The function will be called with the same four arguments as
+`open-network-stream' and should return a process object.
+Here is an example:
+
+\(setq smtp-open-connection-function
+      #'(lambda (name buffer host service)
+	  (let ((process-connection-type nil))
+	    (start-process name buffer \"ssh\" \"-C\" host
+			   \"nc\" host service))))
+
+It connects to a SMTP server using \"ssh\" before actually connecting
+to the SMTP port.  Where the command \"nc\" is the netcat executable;
+see http://www.atstake.com/research/tools/index.html#network_utilities
+for details.")
+
+(autoload 'smtp-via-smtp "flim/site-lisp/flim/smtp" "\
+Like `smtp-send-buffer', but sucks in any errors.
+
+\(fn SENDER RECIPIENTS BUFFER)" nil nil)
+
+(autoload 'smtp-send-buffer "flim/site-lisp/flim/smtp" "\
+Send a message.
+SENDER is an envelope sender address.
+RECIPIENTS is a list of envelope recipient addresses.
+BUFFER may be a buffer or a buffer name which contains mail message.
+
+\(fn SENDER RECIPIENTS BUFFER)" nil nil)
+
+;;;***
+
+;;;### (autoloads (std11-extract-address-components std11-parse-msg-ids-string
+;;;;;;  std11-parse-msg-id-string std11-parse-addresses-string std11-parse-address-string
+;;;;;;  std11-fill-msg-id-list-string std11-msg-id-string std11-full-name-string
+;;;;;;  std11-address-string std11-lexical-analyze std11-unfold-string
+;;;;;;  std11-field-body std11-narrow-to-header std11-fetch-field)
+;;;;;;  "flim/site-lisp/flim/std11" "flim/site-lisp/flim/std11.el"
+;;;;;;  (19793 5244))
+;;; Generated autoloads from flim/site-lisp/flim/std11.el
+
+(autoload 'std11-fetch-field "flim/site-lisp/flim/std11" "\
+Return the value of the header field NAME.
+The buffer is expected to be narrowed to just the headers of the message.
+
+\(fn NAME)" nil nil)
+
+(autoload 'std11-narrow-to-header "flim/site-lisp/flim/std11" "\
+Narrow to the message header.
+If BOUNDARY is not nil, it is used as message header separator.
+
+\(fn &optional BOUNDARY)" nil nil)
+
+(autoload 'std11-field-body "flim/site-lisp/flim/std11" "\
+Return the value of the header field NAME.
+If BOUNDARY is not nil, it is used as message header separator.
+
+\(fn NAME &optional BOUNDARY)" nil nil)
+
+(autoload 'std11-unfold-string "flim/site-lisp/flim/std11" "\
+Unfold STRING as message header field.
+
+\(fn STRING)" nil nil)
+
+(autoload 'std11-lexical-analyze "flim/site-lisp/flim/std11" "\
+Analyze STRING as lexical tokens of STD 11.
+
+\(fn STRING &optional ANALYZER START)" nil nil)
+
+(autoload 'std11-address-string "flim/site-lisp/flim/std11" "\
+Return string of address part from parsed ADDRESS of RFC 822.
+
+\(fn ADDRESS)" nil nil)
+
+(autoload 'std11-full-name-string "flim/site-lisp/flim/std11" "\
+Return string of full-name part from parsed ADDRESS of RFC 822.
+
+\(fn ADDRESS)" nil nil)
+
+(autoload 'std11-msg-id-string "flim/site-lisp/flim/std11" "\
+Return string from parsed MSG-ID of RFC 822.
+
+\(fn MSG-ID)" nil nil)
+
+(autoload 'std11-fill-msg-id-list-string "flim/site-lisp/flim/std11" "\
+Fill list of msg-id in STRING, and return the result.
+
+\(fn STRING &optional COLUMN)" nil nil)
+
+(autoload 'std11-parse-address-string "flim/site-lisp/flim/std11" "\
+Parse STRING as mail address.
+
+\(fn STRING)" nil nil)
+
+(autoload 'std11-parse-addresses-string "flim/site-lisp/flim/std11" "\
+Parse STRING as mail address list.
+
+\(fn STRING)" nil nil)
+
+(autoload 'std11-parse-msg-id-string "flim/site-lisp/flim/std11" "\
+Parse STRING as msg-id.
+
+\(fn STRING)" nil nil)
+
+(autoload 'std11-parse-msg-ids-string "flim/site-lisp/flim/std11" "\
+Parse STRING as `*(phrase / msg-id)'.
+
+\(fn STRING)" nil nil)
+
+(autoload 'std11-extract-address-components "flim/site-lisp/flim/std11" "\
+Extract full name and canonical address from STRING.
+Returns a list of the form (FULL-NAME CANONICAL-ADDRESS).
+If no name can be extracted, FULL-NAME will be nil.
+
+\(fn STRING)" nil nil)
+
+;;;***
+
 ;;;### (autoloads (framemove-default-keybindings fm-right-frame fm-left-frame
 ;;;;;;  fm-up-frame fm-down-frame) "framemove/framemove" "framemove/framemove.el"
 ;;;;;;  (19790 47712))
@@ -2038,6 +3744,359 @@ A major mode for handling rcirc notifications
 
 ;;;***
 
+;;;### (autoloads (mime-edit-again mime-edit-decode-message-in-buffer
+;;;;;;  turn-on-mime-edit mime-edit-mode) "semi/mime-edit" "semi/mime-edit.el"
+;;;;;;  (19793 5473))
+;;; Generated autoloads from semi/mime-edit.el
+
+(autoload 'mime-edit-mode "semi/mime-edit" "\
+MIME minor mode for editing the tagged MIME message.
+
+In this mode, basically, the message is composed in the tagged MIME
+format. The message tag looks like:
+
+	--[[text/plain; charset=ISO-2022-JP][7bit]]
+
+The tag specifies the MIME content type, subtype, optional parameters
+and transfer encoding of the message following the tag.  Messages
+without any tag are treated as `text/plain' by default.  Charset and
+transfer encoding are automatically defined unless explicitly
+specified.  Binary messages such as audio and image are usually
+hidden.  The messages in the tagged MIME format are automatically
+translated into a MIME compliant message when exiting this mode.
+
+Available charsets depend on Emacs version being used.  The following
+lists the available charsets of each emacs.
+
+Without mule:	US-ASCII and ISO-8859-1 (or other charset) are available.
+With mule:	US-ASCII, ISO-8859-* (except for ISO-8859-5), KOI8-R,
+		ISO-2022-JP, ISO-2022-JP-2, EUC-KR, CN-GB-2312,
+		CN-BIG5 and ISO-2022-INT-1 are available.
+
+ISO-2022-JP-2 and ISO-2022-INT-1 charsets used in mule is expected to
+be used to represent multilingual text in intermixed manner.  Any
+languages that has no registered charset are represented as either
+ISO-2022-JP-2 or ISO-2022-INT-1 in mule.
+
+If you want to use non-ISO-8859-1 charset in Emacs 19 or XEmacs
+without mule, please set variable `default-mime-charset'.  This
+variable must be symbol of which name is a MIME charset.
+
+If you want to add more charsets in mule, please set variable
+`charsets-mime-charset-alist'.  This variable must be alist of which
+key is list of charset and value is symbol of MIME charset.  If name
+of coding-system is different as MIME charset, please set variable
+`mime-charset-coding-system-alist'.  This variable must be alist of
+which key is MIME charset and value is coding-system.
+
+Following commands are available in addition to major mode commands:
+
+\[make single part]
+\\[mime-edit-insert-text]	insert a text message.
+\\[mime-edit-insert-file]	insert a (binary) file.
+\\[mime-edit-insert-external]	insert a reference to external body.
+\\[mime-edit-insert-voice]	insert a voice message.
+\\[mime-edit-insert-message]	insert a mail or news message.
+\\[mime-edit-insert-mail]	insert a mail message.
+\\[mime-edit-insert-signature]	insert a signature file at end.
+\\[mime-edit-insert-key]	insert PGP public key.
+\\[mime-edit-insert-tag]	insert a new MIME tag.
+
+\[make enclosure (maybe multipart)]
+\\[mime-edit-enclose-alternative-region]   enclose as multipart/alternative.
+\\[mime-edit-enclose-parallel-region]	   enclose as multipart/parallel.
+\\[mime-edit-enclose-mixed-region]	   enclose as multipart/mixed.
+\\[mime-edit-enclose-digest-region]	   enclose as multipart/digest.
+\\[mime-edit-enclose-pgp-signed-region]	   enclose as PGP signed.
+\\[mime-edit-enclose-pgp-encrypted-region] enclose as PGP encrypted.
+\\[mime-edit-enclose-quote-region]	   enclose as verbose mode
+					   (to avoid to expand tags)
+
+\[other commands]
+\\[mime-edit-set-transfer-level-7bit]	set transfer-level as 7.
+\\[mime-edit-set-transfer-level-8bit]	set transfer-level as 8.
+\\[mime-edit-set-split]			set message splitting mode.
+\\[mime-edit-set-sign]			set PGP-sign mode.
+\\[mime-edit-set-encrypt]		set PGP-encryption mode.
+\\[mime-edit-preview-message]		preview editing MIME message.
+\\[mime-edit-exit]			exit and translate into a MIME
+					compliant message.
+\\[mime-edit-help]			show this help.
+\\[mime-edit-maybe-translate]		exit and translate if in MIME mode,
+					then split.
+
+Additional commands are available in some major modes:
+C-c C-c		exit, translate and run the original command.
+C-c C-s		exit, translate and run the original command.
+
+The following is a message example written in the tagged MIME format.
+TABs at the beginning of the line are not a part of the message:
+
+	This is a conventional plain text.  It should be translated
+	into text/plain.
+	--[[text/plain]]
+	This is also a plain text.  But, it is explicitly specified as
+	is.
+	--[[text/plain; charset=ISO-8859-1]]
+	This is also a plain text.  But charset is specified as
+	iso-8859-1.
+
+	¡Hola!  Buenos días.  ¿Cómo está usted?
+	--[[text/enriched]]
+	This is a <bold>enriched text</bold>.
+	--[[image/gif][base64]]...image encoded in base64 here...
+	--[[audio/basic][base64]]...audio encoded in base64 here...
+
+User customizable variables (not documented all of them):
+ mime-edit-prefix
+    Specifies a key prefix for MIME minor mode commands.
+
+ mime-ignore-preceding-spaces
+    Preceding white spaces in a message body are ignored if non-nil.
+
+ mime-ignore-trailing-spaces
+    Trailing white spaces in a message body are ignored if non-nil.
+
+ mime-auto-hide-body
+    Hide a non-textual body message encoded in base64 after insertion
+    if non-nil.
+
+ mime-transfer-level
+    A number of network transfer level.  It should be bigger than 7.
+    If you are in 8bit-through environment, please set 8.
+
+ mime-edit-voice-recorder
+    Specifies a function to record a voice message and encode it.
+    The function `mime-edit-voice-recorder-for-sun' is for Sun
+    SparcStations.
+
+ mime-edit-mode-hook
+    Turning on MIME mode calls the value of mime-edit-mode-hook, if
+    it is non-nil.
+
+ mime-edit-translate-hook
+    The value of mime-edit-translate-hook is called just before translating
+    the tagged MIME format into a MIME compliant message if it is
+    non-nil.  If the hook call the function mime-edit-insert-signature,
+    the signature file will be inserted automatically.
+
+ mime-edit-exit-hook
+    Turning off MIME mode calls the value of mime-edit-exit-hook, if it is
+    non-nil.
+
+\(fn)" t nil)
+
+(autoload 'turn-on-mime-edit "semi/mime-edit" "\
+Unconditionally turn on MIME-Edit mode.
+
+\(fn)" t nil)
+
+(defalias 'edit-mime 'turn-on-mime-edit)
+
+(autoload 'mime-edit-decode-message-in-buffer "semi/mime-edit" "\
+Not documented
+
+\(fn &optional DEFAULT-CONTENT-TYPE NOT-DECODE-TEXT)" nil nil)
+
+(autoload 'mime-edit-again "semi/mime-edit" "\
+Convert current buffer to MIME-Edit buffer and turn on MIME-Edit mode.
+Content-Type and Content-Transfer-Encoding header fields will be
+converted to MIME-Edit tags.
+
+\(fn &optional NOT-DECODE-TEXT NO-SEPARATOR NOT-TURN-ON)" t nil)
+
+;;;***
+
+;;;### (autoloads (mime-play-entity mime-preview-play-current-entity)
+;;;;;;  "semi/mime-play" "semi/mime-play.el" (19793 5473))
+;;; Generated autoloads from semi/mime-play.el
+
+(autoload 'mime-preview-play-current-entity "semi/mime-play" "\
+Play current entity.
+It decodes current entity to call internal or external method.  The
+method is selected from variable `mime-acting-condition'.
+If IGNORE-EXAMPLES (C-u prefix) is specified, this function ignores
+`mime-acting-situation-example-list'.
+If MODE is specified, play as it.  Default MODE is \"play\".
+
+\(fn &optional IGNORE-EXAMPLES MODE)" t nil)
+
+(autoload 'mime-play-entity "semi/mime-play" "\
+Play entity specified by ENTITY.
+It decodes the entity to call internal or external method.  The method
+is selected from variable `mime-acting-condition'.  If MODE is
+specified, play as it.  Default MODE is \"play\".
+
+\(fn ENTITY &optional SITUATION IGNORED-METHOD)" nil nil)
+
+;;;***
+
+;;;### (autoloads (mime-view-buffer mime-display-message) "semi/mime-view"
+;;;;;;  "semi/mime-view.el" (19793 5473))
+;;; Generated autoloads from semi/mime-view.el
+
+(autoload 'mime-display-message "semi/mime-view" "\
+View MESSAGE in MIME-View mode.
+
+Optional argument PREVIEW-BUFFER specifies the buffer of the
+presentation.  It must be either nil or a name of preview buffer.
+
+Optional argument MOTHER specifies mother-buffer of the preview-buffer.
+
+Optional argument DEFAULT-KEYMAP-OR-FUNCTION is nil, keymap or
+function.  If it is a keymap, keymap of MIME-View mode will be added
+to it.  If it is a function, it will be bound as default binding of
+keymap of MIME-View mode.
+
+Optional argument ORIGINAL-MAJOR-MODE is major-mode of representation
+buffer of MESSAGE.  If it is nil, current `major-mode' is used.
+
+Optional argument KEYMAP is keymap of MIME-View mode.  If it is
+non-nil, DEFAULT-KEYMAP-OR-FUNCTION is ignored.  If it is nil,
+`mime-view-mode-default-map' is used.
+
+\(fn MESSAGE &optional PREVIEW-BUFFER MOTHER DEFAULT-KEYMAP-OR-FUNCTION ORIGINAL-MAJOR-MODE KEYMAP)" nil nil)
+
+(autoload 'mime-view-buffer "semi/mime-view" "\
+View RAW-BUFFER in MIME-View mode.
+Optional argument PREVIEW-BUFFER is either nil or a name of preview
+buffer.
+Optional argument DEFAULT-KEYMAP-OR-FUNCTION is nil, keymap or
+function.  If it is a keymap, keymap of MIME-View mode will be added
+to it.  If it is a function, it will be bound as default binding of
+keymap of MIME-View mode.
+Optional argument REPRESENTATION-TYPE is representation-type of
+message.  It must be nil, `binary' or `cooked'.  If it is nil,
+`cooked' is used as default.
+
+\(fn &optional RAW-BUFFER PREVIEW-BUFFER MOTHER DEFAULT-KEYMAP-OR-FUNCTION REPRESENTATION-TYPE)" t nil)
+
+;;;***
+
+;;;### (autoloads (pgg-snarf-keys-region pgg-insert-key pgg-verify-region
+;;;;;;  pgg-sign-region pgg-decrypt-region pgg-encrypt-region) "semi/pgg"
+;;;;;;  "semi/pgg.el" (19793 5473))
+;;; Generated autoloads from semi/pgg.el
+
+(autoload 'pgg-encrypt-region "semi/pgg" "\
+Encrypt the current region between START and END for RCPTS.
+
+\(fn START END RCPTS)" t nil)
+
+(autoload 'pgg-decrypt-region "semi/pgg" "\
+Decrypt the current region between START and END.
+
+\(fn START END)" t nil)
+
+(autoload 'pgg-sign-region "semi/pgg" "\
+Make the signature from text between START and END.
+If the optional 3rd argument CLEARTEXT is non-nil, it does not create
+a detached signature.
+
+\(fn START END &optional CLEARTEXT)" t nil)
+
+(autoload 'pgg-verify-region "semi/pgg" "\
+Verify the current region between START and END.
+If the optional 3rd argument SIGNATURE is non-nil, it is treated as
+the detached signature of the current region.
+
+If the optional 4th argument FETCH is non-nil, we attempt to fetch the
+signer's public key from `pgg-default-keyserver-address'.
+
+\(fn START END &optional SIGNATURE FETCH)" t nil)
+
+(autoload 'pgg-insert-key "semi/pgg" "\
+Insert the ASCII armored public key.
+
+\(fn)" t nil)
+
+(autoload 'pgg-snarf-keys-region "semi/pgg" "\
+Import public keys in the current region between START and END.
+
+\(fn START END)" t nil)
+
+;;;***
+
+;;;### (autoloads (pgg-make-scheme-gpg) "semi/pgg-gpg" "semi/pgg-gpg.el"
+;;;;;;  (19793 5473))
+;;; Generated autoloads from semi/pgg-gpg.el
+
+(autoload 'pgg-make-scheme-gpg "semi/pgg-gpg" "\
+Not documented
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (pgg-make-scheme-pgp) "semi/pgg-pgp" "semi/pgg-pgp.el"
+;;;;;;  (19793 5473))
+;;; Generated autoloads from semi/pgg-pgp.el
+
+(autoload 'pgg-make-scheme-pgp "semi/pgg-pgp" "\
+Not documented
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (pgg-make-scheme-pgp5) "semi/pgg-pgp5" "semi/pgg-pgp5.el"
+;;;;;;  (19793 5473))
+;;; Generated autoloads from semi/pgg-pgp5.el
+
+(autoload 'pgg-make-scheme-pgp5 "semi/pgg-pgp5" "\
+Not documented
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (mime-display-application/x-postpet postpet-decode)
+;;;;;;  "semi/postpet" "semi/postpet.el" (19793 5473))
+;;; Generated autoloads from semi/postpet.el
+
+(autoload 'postpet-decode "semi/postpet" "\
+Not documented
+
+\(fn STRING)" nil nil)
+
+(autoload 'mime-display-application/x-postpet "semi/postpet" "\
+Not documented
+
+\(fn ENTITY SITUATION)" nil nil)
+
+;;;***
+
+;;;### (autoloads (smime-verify-region smime-sign-region smime-decrypt-region
+;;;;;;  smime-encrypt-region) "semi/smime" "semi/smime.el" (19793
+;;;;;;  5473))
+;;; Generated autoloads from semi/smime.el
+
+(autoload 'smime-encrypt-region "semi/smime" "\
+Encrypt the current region between START and END.
+
+\(fn START END)" nil nil)
+
+(autoload 'smime-decrypt-region "semi/smime" "\
+Decrypt the current region between START and END.
+
+\(fn START END)" nil nil)
+
+(autoload 'smime-sign-region "semi/smime" "\
+Make the signature from text between START and END.
+If the optional 3rd argument CLEARTEXT is non-nil, it does not create
+a detached signature.
+
+\(fn START END &optional CLEARTEXT)" nil nil)
+
+(autoload 'smime-verify-region "semi/smime" "\
+Verify the current region between START and END.
+If the optional 3rd argument SIGNATURE is non-nil, it is treated as
+the detached signature of the current region.
+
+\(fn START END SIGNATURE)" nil nil)
+
+;;;***
+
 ;;;### (autoloads (smex-initialize) "smex/smex" "smex/smex.el" (19791
 ;;;;;;  64566))
 ;;; Generated autoloads from smex/smex.el
@@ -2131,6 +4190,90 @@ With a prefix arg, or if no function or variable is near the cursor,
 prompt for the function or variable to find, instead.
 
 \(fn &optional CONFIRMP)" t nil)
+
+;;;***
+
+;;;### (autoloads (elmo-make-folder) "wanderlust/site-lisp/wl/elmo"
+;;;;;;  "wanderlust/site-lisp/wl/elmo.el" (19661 39599))
+;;; Generated autoloads from wanderlust/site-lisp/wl/elmo.el
+
+(autoload 'elmo-make-folder "wanderlust/site-lisp/wl/elmo" "\
+Make an ELMO folder structure specified by NAME.
+If optional argument NON-PERSISTENT is non-nil, the folder msgdb is not saved.
+If optional argument MIME-CHARSET is specified, it is used for
+encode and decode a multibyte string.
+
+\(fn NAME &optional NON-PERSISTENT MIME-CHARSET)" nil nil)
+
+;;;***
+
+;;;### (autoloads (elmo-split) "wanderlust/site-lisp/wl/elmo-split"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-split.el" (17735 17889))
+;;; Generated autoloads from wanderlust/site-lisp/wl/elmo-split.el
+
+(autoload 'elmo-split "wanderlust/site-lisp/wl/elmo-split" "\
+Split messages in the `elmo-split-folder' according to `elmo-split-rule'.
+If prefix argument ARG is specified, do a reharsal (no harm).
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (wl-draft-send-with-imput-async) "wanderlust/site-lisp/wl/im-wl"
+;;;;;;  "wanderlust/site-lisp/wl/im-wl.el" (16269 16088))
+;;; Generated autoloads from wanderlust/site-lisp/wl/im-wl.el
+
+(autoload 'wl-draft-send-with-imput-async "wanderlust/site-lisp/wl/im-wl" "\
+Send the message in the current buffer with imput asynchronously.
+
+\(fn EDITING-BUFFER KILL-WHEN-DONE)" nil nil)
+
+;;;***
+
+;;;### (autoloads (wl-other-frame wl) "wanderlust/site-lisp/wl/wl"
+;;;;;;  "wanderlust/site-lisp/wl/wl.el" (19267 1566))
+;;; Generated autoloads from wanderlust/site-lisp/wl/wl.el
+
+(autoload 'wl "wanderlust/site-lisp/wl/wl" "\
+Start Wanderlust -- Yet Another Message Interface On Emacsen.
+If ARG (prefix argument) is specified, folder checkings are skipped.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'wl-other-frame "wanderlust/site-lisp/wl/wl" "\
+Pop up a frame to read messages via Wanderlust.
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (wl-addrmgr) "wanderlust/site-lisp/wl/wl-addrmgr"
+;;;;;;  "wanderlust/site-lisp/wl/wl-addrmgr.el" (19265 46107))
+;;; Generated autoloads from wanderlust/site-lisp/wl/wl-addrmgr.el
+
+(autoload 'wl-addrmgr "wanderlust/site-lisp/wl/wl-addrmgr" "\
+Start an Address manager.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (wl-user-agent-compose wl-draft) "wanderlust/site-lisp/wl/wl-draft"
+;;;;;;  "wanderlust/site-lisp/wl/wl-draft.el" (19780 13473))
+;;; Generated autoloads from wanderlust/site-lisp/wl/wl-draft.el
+
+(autoload 'wl-draft "wanderlust/site-lisp/wl/wl-draft" "\
+Write and send mail/news message with Wanderlust.
+
+\(fn &optional HEADER-ALIST CONTENT-TYPE CONTENT-TRANSFER-ENCODING BODY EDIT-AGAIN PARENT-FOLDER PARENT-NUMBER)" t nil)
+
+(autoload 'wl-user-agent-compose "wanderlust/site-lisp/wl/wl-draft" "\
+Support the `compose-mail' interface for wl.
+Only support for TO, SUBJECT, and OTHER-HEADERS has been implemented.
+Support for CONTINUE, YANK-ACTION, SEND-ACTIONS and RETURN-ACTION has not
+been implemented yet.  Partial support for SWITCH-FUNCTION now supported.
+
+\(fn &optional TO SUBJECT OTHER-HEADERS CONTINUE SWITCH-FUNCTION YANK-ACTION SEND-ACTIONS RETURN-ACTION)" nil nil)
 
 ;;;***
 
@@ -2266,21 +4409,80 @@ accept it or skip it.
 ;;;;;;  "auctex/preview/prv-xemacs.el" "auctex/tex-buf.el" "auctex/tex-mik.el"
 ;;;;;;  "auctex/tex-site.el" "auctex/tex-style.el" "auctex/tex-wizard.el"
 ;;;;;;  "autocomplete/auto-complete-config.el" "autocomplete/auto-complete.el"
-;;;;;;  "autocomplete/fuzzy.el" "autocomplete/popup.el" "eclim/company-emacs-eclim.el"
+;;;;;;  "autocomplete/fuzzy.el" "autocomplete/popup.el" "bbdb/bits/bbdb-adapt-ispell.el"
+;;;;;;  "bbdb/bits/bbdb-canonicalize-lt.el" "bbdb/bits/bbdb-ldif.el"
+;;;;;;  "bbdb/bits/bbdb-mail-folders.el" "bbdb/bits/bbdb-mew.el"
+;;;;;;  "bbdb/bits/bbdb-signature.el" "bbdb/bits/bbdb-sort-mailrc.el"
+;;;;;;  "bbdb/bits/bbdb-to-outlook.el" "bbdb/bits/bbdb-vcard-export.el"
+;;;;;;  "bbdb/bits/bbdb-vcard-import.el" "bbdb/bits/bbdbpalm.el"
+;;;;;;  "bbdb/lisp/bbdb-autoloads.el" "eclim/company-emacs-eclim.el"
 ;;;;;;  "eclim/eclim-ant.el" "eclim/eclim-java.el" "eclim/eclim-maven.el"
 ;;;;;;  "eclim/eclim-problems.el" "eclim/eclim-project.el" "eclim/eclim.el"
 ;;;;;;  "elscreen-dired/elscreen-dired.el" "elscreen-dnd/elscreen-dnd.el"
 ;;;;;;  "elscreen-goby/elscreen-goby.el" "elscreen-howm/elscreen-howm.el"
 ;;;;;;  "elscreen-server/elscreen-server.el" "elscreen-speedbar/elscreen-speedbar.el"
 ;;;;;;  "elscreen-w3m/elscreen-w3m.el" "elscreen-wl/elscreen-wl.el"
-;;;;;;  "elscreen/elscreen.el" "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
+;;;;;;  "elscreen/elscreen.el" "flim/site-lisp/flim/hex-util.el"
+;;;;;;  "flim/site-lisp/flim/hmac-def.el" "flim/site-lisp/flim/hmac-md5.el"
+;;;;;;  "flim/site-lisp/flim/hmac-sha1.el" "flim/site-lisp/flim/luna.el"
+;;;;;;  "flim/site-lisp/flim/lunit.el" "flim/site-lisp/flim/md4.el"
+;;;;;;  "flim/site-lisp/flim/md5.el" "flim/site-lisp/flim/mel-b-ccl.el"
+;;;;;;  "flim/site-lisp/flim/mel-b-el.el" "flim/site-lisp/flim/mel-g.el"
+;;;;;;  "flim/site-lisp/flim/mel-q-ccl.el" "flim/site-lisp/flim/mel-q.el"
+;;;;;;  "flim/site-lisp/flim/mel-u.el" "flim/site-lisp/flim/mime-def.el"
+;;;;;;  "flim/site-lisp/flim/mime.el" "flim/site-lisp/flim/mmbuffer.el"
+;;;;;;  "flim/site-lisp/flim/mmcooked.el" "flim/site-lisp/flim/mmexternal.el"
+;;;;;;  "flim/site-lisp/flim/mmgeneric.el" "flim/site-lisp/flim/ntlm.el"
+;;;;;;  "flim/site-lisp/flim/sasl-cram.el" "flim/site-lisp/flim/sasl-digest.el"
+;;;;;;  "flim/site-lisp/flim/sasl-ntlm.el" "flim/site-lisp/flim/sasl-scram.el"
+;;;;;;  "flim/site-lisp/flim/sasl.el" "flim/site-lisp/flim/sha1.el"
+;;;;;;  "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
 ;;;;;;  "ipa/ipa.el" "ppindent/ppindent.el" "pymacs/pymacs.el" "qmake-mode/qmake.el"
 ;;;;;;  "rcirc-color/rcirc-color.el" "rcirc-controls/rcirc-controls.el"
 ;;;;;;  "redo+/redo+.el" "rw-ispell/rw-ispell.el" "rw-language-and-country-codes/rw-language-and-country-codes.el"
-;;;;;;  "ssh-config/ssh-config.el" "unicad/unicad.el" "vim-mode/vim-defs.el"
-;;;;;;  "vim-mode/vim-ex-commands.el" "vim-mode/vim-macs.el" "vim-mode/vim-scroll.el"
-;;;;;;  "vim-mode/vim-undo.el" "vim-mode/vim-window.el" "xcscope+/xcscope+.el"
-;;;;;;  "zencoding-mode/zencoding-trie.el") (19793 4013 647633))
+;;;;;;  "semi/mail-mime-setup.el" "semi/mime-bbdb.el" "semi/mime-image.el"
+;;;;;;  "semi/mime-mc.el" "semi/mime-partial.el" "semi/mime-pgp.el"
+;;;;;;  "semi/mime-setup.el" "semi/mime-w3.el" "semi/pgg-def.el"
+;;;;;;  "semi/pgg-parse.el" "semi/semi-def.el" "semi/semi-setup.el"
+;;;;;;  "semi/signature.el" "ssh-config/ssh-config.el" "unicad/unicad.el"
+;;;;;;  "vim-mode/vim-defs.el" "vim-mode/vim-ex-commands.el" "vim-mode/vim-macs.el"
+;;;;;;  "vim-mode/vim-scroll.el" "vim-mode/vim-undo.el" "vim-mode/vim-window.el"
+;;;;;;  "wanderlust/site-lisp/wl/acap.el" "wanderlust/site-lisp/wl/elmo-access.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-archive.el" "wanderlust/site-lisp/wl/elmo-cache.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-date.el" "wanderlust/site-lisp/wl/elmo-dop.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-file.el" "wanderlust/site-lisp/wl/elmo-filter.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-flag.el" "wanderlust/site-lisp/wl/elmo-imap4.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-internal.el" "wanderlust/site-lisp/wl/elmo-localdir.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-localnews.el" "wanderlust/site-lisp/wl/elmo-maildir.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-map.el" "wanderlust/site-lisp/wl/elmo-mime.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-msgdb.el" "wanderlust/site-lisp/wl/elmo-multi.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-net.el" "wanderlust/site-lisp/wl/elmo-nntp.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-null.el" "wanderlust/site-lisp/wl/elmo-pipe.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-pop3.el" "wanderlust/site-lisp/wl/elmo-search.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-sendlog.el" "wanderlust/site-lisp/wl/elmo-signal.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-spam.el" "wanderlust/site-lisp/wl/elmo-util.el"
+;;;;;;  "wanderlust/site-lisp/wl/elmo-vars.el" "wanderlust/site-lisp/wl/elmo-version.el"
+;;;;;;  "wanderlust/site-lisp/wl/elsp-bogofilter.el" "wanderlust/site-lisp/wl/elsp-bsfilter.el"
+;;;;;;  "wanderlust/site-lisp/wl/elsp-sa.el" "wanderlust/site-lisp/wl/elsp-spamoracle.el"
+;;;;;;  "wanderlust/site-lisp/wl/mmimap.el" "wanderlust/site-lisp/wl/modb-entity.el"
+;;;;;;  "wanderlust/site-lisp/wl/modb-legacy.el" "wanderlust/site-lisp/wl/modb-standard.el"
+;;;;;;  "wanderlust/site-lisp/wl/modb.el" "wanderlust/site-lisp/wl/pldap.el"
+;;;;;;  "wanderlust/site-lisp/wl/rfc2368.el" "wanderlust/site-lisp/wl/slp.el"
+;;;;;;  "wanderlust/site-lisp/wl/ssl.el" "wanderlust/site-lisp/wl/utf7.el"
+;;;;;;  "wanderlust/site-lisp/wl/wl-acap.el" "wanderlust/site-lisp/wl/wl-action.el"
+;;;;;;  "wanderlust/site-lisp/wl/wl-addrbook.el" "wanderlust/site-lisp/wl/wl-address.el"
+;;;;;;  "wanderlust/site-lisp/wl/wl-batch.el" "wanderlust/site-lisp/wl/wl-complete.el"
+;;;;;;  "wanderlust/site-lisp/wl/wl-demo.el" "wanderlust/site-lisp/wl/wl-e21.el"
+;;;;;;  "wanderlust/site-lisp/wl/wl-expire.el" "wanderlust/site-lisp/wl/wl-fldmgr.el"
+;;;;;;  "wanderlust/site-lisp/wl/wl-folder.el" "wanderlust/site-lisp/wl/wl-highlight.el"
+;;;;;;  "wanderlust/site-lisp/wl/wl-mailto.el" "wanderlust/site-lisp/wl/wl-message.el"
+;;;;;;  "wanderlust/site-lisp/wl/wl-mime.el" "wanderlust/site-lisp/wl/wl-news.el"
+;;;;;;  "wanderlust/site-lisp/wl/wl-refile.el" "wanderlust/site-lisp/wl/wl-score.el"
+;;;;;;  "wanderlust/site-lisp/wl/wl-spam.el" "wanderlust/site-lisp/wl/wl-summary.el"
+;;;;;;  "wanderlust/site-lisp/wl/wl-template.el" "wanderlust/site-lisp/wl/wl-thread.el"
+;;;;;;  "wanderlust/site-lisp/wl/wl-util.el" "wanderlust/site-lisp/wl/wl-vars.el"
+;;;;;;  "wanderlust/site-lisp/wl/wl-version.el" "xcscope+/xcscope+.el"
+;;;;;;  "zencoding-mode/zencoding-trie.el") (19793 5719 864132))
 
 ;;;***
 

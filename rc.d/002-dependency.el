@@ -7,6 +7,22 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (require* 'ac-anything)			  ; Auto Complete with Anything
 (require* 'ac-company)			  ; Auto-Complete with company-mode
 (require* 'advice)			  ;
@@ -35,6 +51,7 @@
 (require* 'auto-complete-etags)		  ;
 (require* 'auto-complete-extension)	  ;
 (require* 'auto-dictionary)		  ;
+(require* 'bbdb)			; Big Brother Database
 (require* 'c-eldoc)			  ;
 (require* 'cc-mode)			  ;
 (require* 'cedet)			  ;
@@ -57,6 +74,16 @@
 (require* 'eldoc)			  ; Emacs-Lisp Documents Browser
 (require* 'eldoc-extension)		  ; Emacs-Lisp Documents Browser Extension
 (require* 'elscreen)			  ; have multiple screens on emacs as well as GNU screen
+(require* 'elscreen-color-theme)	  ;
+(require* 'elscreen-dired)		  ;
+(require* 'elscreen-dnd)		  ; enable drag and drop file to elscreen
+(require* 'elscreen-gf)			  ;
+(require* 'elscreen-goby)		  ;
+(require* 'elscreen-howm)		  ;
+(require* 'elscreen-server)		  ;
+(require* 'elscreen-speedbar)		  ; elscreen with speedbar
+(require* 'elscreen-w3m)		  ; elscreen with w3m
+(require* 'elscreen-wl)			  ; elscreen with wanderlust
 (require* 'emms)			  ; Emacs Multimedia System
 (require* 'emms)			  ; emacs Multimedia System
 (require* 'emms-bookmarks)		  ; Bookmarks for Emms
@@ -102,6 +129,7 @@
 (require* 'lusty-explorer)		  ; A good explorer tools
 (require* 'magit)			  ;
 (require* 'midnight)			  ; Use midnight-mode to auto-clean buffers
+(require* 'mime)			; MIME library module
 (require* 'mmm-auto)			  ; loading and enabling MMM Mode automatically
 (require* 'mmm-mode)			  ; Allow Multiple Major Modes in a buffer
 (require* 'multi-term)			  ;
@@ -114,6 +142,7 @@
 (require* 'pp)				  ; pretty printer for Emacs Lisp
 (require* 'ppindent)			  ;
 (require* 'pretty-lambdada)		  ; Show lambda in smbol
+(require* 'pymacs)			  ; Interface between Emacs Lisp and Python - Lisp part.
 (require* 'python)			  ; Python
 (require* 'qmake-mode)			  ; qmake mode for emacs
 (require* 'quack)			  ; enhanced support for editing and running Scheme code
@@ -151,60 +180,30 @@
 (require* 'slime)			  ; Superior Lisp Interaction Mode for Emacs
 (require* 'smartchr)			  ; Emacs version of smartchr.vim
 (require* 'smex)			  ; M-x interface with Ido-style fuzzy matching.
+(require* 'smime)			; S/MIME interface
 (require* 'speck)			  ; minor mode for spell checking
 (require* 'ssh-config)			  ; Syntax Highlight ssh-configure files
 (require* 'sunrise-commander)		  ; A commander looks like MC
 (require* 'term)			  ;
 (require* 'thingatpt)			  ; Get the thing at point
 (require* 'thingatpt+)			  ; Extensions to `thingatpt.el'.
+(require* 'tramp)			  ; Transparent Remote Access, Multiple Protocol
 (require* 'undo-tree)			  ; Use undo-tree instead of redo.el
 (require* 'unicad)			  ; Universal Charset Auto Detector
 (require* 'uniquify)			  ; If two buffer have the same name, rename both
+(require* 'url)				  ; Uniform Resource Locator retrieval tool
 (require* 'vim)				  ; Use Vim-Mode
 (require* 'w3m)				  ;
 (require* 'w3m-lnum)			  ;
 (require* 'windmove)			  ; Directional window-selection routines
 (require* 'windows)			  ; Window manager for GNU Emacs.
+(require* 'wl)				  ; Wanderlust is a mail and news client.
 (require* 'woman)			  ; Use Woman
 (require* 'x-dnd)			  ; Drag and drop support for X
 (require* 'xcscope)			  ; Cscope interface for Emacs
 (require* 'xcscope+)			  ; Providing an extension to xcscope
 (require* 'yasnippet)			  ; Yet another snippet extension for Emacs
 (require* 'zencoding-mode)		  ; Unfold CSS-selector-like expressions to markup
-(require* 'pymacs)			  ; Interface between Emacs Lisp and Python - Lisp part.
-(require* 'tramp)			  ; Transparent Remote Access, Multiple Protocol
-(require* 'url)				  ; Uniform Resource Locator retrieval tool
-(require* 'elscreen-dnd)		  ;
-(require* 'elscreen-gf)			  ;
-(require* 'elscreen-server)		  ;
-(require* 'elscreen-dired)		  ;
-(require* 'elscreen-color-theme)	  ;
-(require* 'elscreen-howm)		  ;
-(require* 'elscreen-goby)		  ;
-(require* 'elscreen-speedbar)		  ;
-(require* 'elscreen-w3m)		  ;
-(require* 'elscrren-wl)			  ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
