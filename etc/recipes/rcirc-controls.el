@@ -1,0 +1,1 @@
+(:name rcirc-controls :type emacswiki)

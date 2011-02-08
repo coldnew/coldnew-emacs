@@ -1,0 +1,1 @@
+(:name rcirc-nonames-on-join :type emacswiki)

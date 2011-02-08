@@ -1,0 +1,1 @@
+(:name thingatpt+ :type emacswiki)

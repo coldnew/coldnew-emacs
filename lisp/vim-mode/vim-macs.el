@@ -172,8 +172,8 @@
            (apply (get ',name 'function) args))))))
 
 (font-lock-add-keywords
- 'emacs-lisp-mode '
- ("vim:deflocalvar" "vim:defcmd" "vim:defmotion"))
+ 'emacs-lisp-mode 
+ '("vim:deflocalvar" "vim:defcmd" "vim:defmotion"))
 
 (provide 'vim-macs)
 

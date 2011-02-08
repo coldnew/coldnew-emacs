@@ -1,0 +1,1 @@
+(:name rw-hunspell :type http :url "http://www.mail-archive.com/gnu-emacs-sources@gnu.org/msg01709/rw-hunspell.el")

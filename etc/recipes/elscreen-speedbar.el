@@ -1,0 +1,1 @@
+(:name elscreen-speedbar :type http-tar :options ("xzf") :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-speedbar-0.0.0.tar.gz")

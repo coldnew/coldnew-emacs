@@ -1,0 +1,1 @@
+(:name auto-dictionary :type http :url "http://nschum.de/src/emacs/auto-dictionary/auto-dictionary.el" :features auto-dictionary)

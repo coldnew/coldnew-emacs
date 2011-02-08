@@ -1,0 +1,1 @@
+(:name elscreen-howm :type http-tar :options ("xzf") :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-howm-0.1.3.tar.gz")

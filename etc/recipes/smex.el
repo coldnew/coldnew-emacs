@@ -1,0 +1,1 @@
+(:name smex :type git :url "https://github.com/nonsequitur/smex.git")

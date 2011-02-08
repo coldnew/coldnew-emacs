@@ -1,0 +1,1 @@
+(:name elscreen-goby :type http-tar :options ("xzf") :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-goby-0.0.0.tar.gz")

@@ -1,0 +1,1 @@
+(:name eclim :type git :url "https://github.com/senny/emacs-eclim.git")

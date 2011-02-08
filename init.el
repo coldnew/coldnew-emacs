@@ -22,8 +22,10 @@
 ;;;;;; Load Path
 (add-to-list 'load-path "~/.emacs.d/rc.d/")
 (add-to-list 'load-path "~/.emacs.d/theme/")
+(add-to-list 'load-path "~/.emacs.d/local-lisp/")
 (let ((default-directory "~/.emacs.d/lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
+;; FIXME: NoUSE?
 (let ((default-directory "~/.emacs.d/local-lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
 

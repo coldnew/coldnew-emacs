@@ -1,0 +1,1 @@
+(:name rcirc-color :type emacswiki)

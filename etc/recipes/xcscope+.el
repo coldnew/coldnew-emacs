@@ -1,0 +1,1 @@
+(:name xcscope+ :type emacswiki)

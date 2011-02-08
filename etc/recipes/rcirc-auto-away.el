@@ -1,0 +1,1 @@
+(:name rcirc-auto-away :type emacswiki)

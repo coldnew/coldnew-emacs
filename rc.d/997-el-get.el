@@ -10,6 +10,7 @@
 	anything-c-shell-history
 	anything-dabbrev-expand
 	anything
+	anything-emms
 	anything-grep
 	anything-gtags
 	anything-include
@@ -17,38 +18,59 @@
 	anything-kyr
 	anything-match-plugin
 	anything-menu
-	wanderlust
 	anything-migemo
 	anything-show-completion
 	anything-slime
 	anything-yaetags
 	apel
+	ascii
 	async-eval
+	auctex
 	auto-complete-clang
 	autocomplete
 	auto-complete-etags
 	auto-complete-extension
+	auto-dictionary
+	bbdb
 	c-eldoc
 	company
 	completion-ui
 	csharp-mode
 	doxymacs
+	eclim
 	el-get
+	elscreen-color-theme
+	elscreen-dired
+	elscreen-dnd
+	elscreen
+	elscreen-gf
+	elscreen-goby
+	elscreen-howm
+	elscreen-server
+	elscreen-speedbar
+	elscreen-w3m
+	elscreen-wl
+	emacs-w3m
 	emms
+	emms-get-lyrics
+	flim
+	framemove
 	gnugo
 	gobject-class
-	flim
 	highlight-cl
 	highlight-parentheses
 	htmlize
 	hungury-delete
+	ibuffer-git
 	ipa
 	ipython
 	lusty-explorer
 	magit
+	mmm-mode
 	multi-term
 	nav
 	newlisp-mode
+	notify
 	paredit
 	popup-kill-ring
 	popup-pos-tip
@@ -59,148 +81,36 @@
 	qmake-mode
 	quack
 	rainbow-mode
+	rcirc-auto-away
+	rcirc-color
+	rcirc-controls
+	rcirc-dbus
+	rcirc-groups
+	rcirc-late-fix
+	rcirc-nonames-on-join
+	rcirc-notify
+	rcirc-pounce
+	redo+
 	revive
-	smartchr
+	rw-hunspell
+	rw-ispell
+	rw-language-and-country-codes
 	semi
-	bbdb
+	smartchr
+	smex
+	speck
 	ssh-config
 	sunrise-commander
+	thingatpt+
 	undo-tree
 	unicad
 	vim-mode
+	wanderlust
 	windows
 	xcode-document-viewer
+	xcscope+
 	yasnippet
-
-	(:name xcscope+
-	       :type emacswiki)
-
-	(:name rcirc-color
-	       :type emacswiki)
-	(:name rcirc-controls
-	       :type emacswiki)
-	(:name redo+
-	       :type emacswiki)
-	(:name rw-hunspell
-	       :type http
-	       :url "http://www.mail-archive.com/gnu-emacs-sources@gnu.org/msg01709/rw-hunspell.el")
-	(:name rw-ispell
-	       :type http
-	       :url "http://www.mail-archive.com/gnu-emacs-sources@gnu.org/msg01709/rw-ispell.el")
-	(:name rw-language-and-country-codes
-	       :type http
-	       :url "http://www.mail-archive.com/gnu-emacs-sources@gnu.org/msg01709/rw-language-and-country-codes.el")
-	(:name auto-dictionary
-	       :type http
-	       :url "http://nschum.de/src/emacs/auto-dictionary/auto-dictionary.el"
-	       :features auto-dictionary)
-	(:name speck
-	       :type emacswiki)
-	(:name zencoding-mode
-	       :type git
-	       :url "https://github.com/chrisdone/zencoding.git"
-	       :build ("make"))
-	(:name emacs-w3m
-	       :type cvs
-	       :module "emacs-w3m"
-	       :url ":pserver:anonymous@cvs.namazu.org:/storage/cvsroot"
-	       :build `("autoconf" ("./configure" ,(concat "--with-emacs=" el-get-emacs)) "make")
-	       :info "doc")
-
-	(:name ibuffer-git
-	       :type git
-	       :url "git://github.com/jrockway/ibuffer-git")
-
-	(:name framemove
-	       :type emacswiki)
-	(:name eclim
-	       :type git
-	       :url "https://github.com/senny/emacs-eclim.git")
-
-	(:name rcirc-notify
-	       :type emacswiki)
-	(:name rcirc-nonames-on-join
-	       :type emacswiki)
-	(:name rcirc-pounce
-	       :type emacswiki)
-	(:name rcirc-auto-away
-	       :type emacswiki)
-	(:name rcirc-late-fix
-	       :type emacswiki)
-	(:name rcirc-groups
-	       :type emacswiki)
-	(:name rcirc-dbus
-	       :type emacswiki)
-	(:name elscreen
-	       :type git
-	       :url "https://github.com/emacsmirror/elscreen.git")
-	(:name notify
-	       :type emacswiki)
-	(:name anything-emms
-	       :type emacswiki)
-	(:name emms-get-lyrics
-	       :type git
-	       :url "https://github.com/talau/elisp.git")
-	(:name mmm-mode
-	       :type git
-	       :url "git://github.com/purcell/mmm-mode.git")
-	(:name smex
-	       :type git
-	       :url "https://github.com/nonsequitur/smex.git")
-	(:name thingatpt+
-	       :type emacswiki)
-	(:name ascii
-	       :type emacswiki)
-	(:name auctex
-	       :type cvs
-	       :module "auctex"
-	       :url ":pserver:anonymous@cvs.sv.gnu.org:/sources/auctex"
-	       :build `("./autogen.sh" ,(concat "./configure --with-lispdir=`pwd` --with-emacs=" el-get-emacs) "make")
-	       :load-path ("." "preview")
-	       :load  ("tex-site.el" "preview/preview-latex.el")
-	       :info "doc")
-	(:name elscreen-dnd
-	       :type http-tar
-	       :options ("xzf")
-	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-dnd-0.0.0.tar.gz"
-	       :features elscreen-dnd)
-	(:name elscreen-server
-	       :type http-tar
-	       :options ("xzf")
-	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-server-0.2.0.tar.gz")
-	(:name elscreen-dired
-	       :type http-tar
-	       :options ("xzf")
-	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-dired-0.1.0.tar.gz")
-	(:name elscreen-gf
-	       :type http-tar
-	       :options ("xzf")
-	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-gf-1.5.3.tar.gz")
-	(:name elscreen-goby
-	       :type http-tar
-	       :options ("xzf")
-	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-goby-0.0.0.tar.gz")
-	(:name elscreen-howm
-	       :type http-tar
-	       :options ("xzf")
-	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-howm-0.1.3.tar.gz")
-
-	(:name elscreen-speedbar
-	       :type http-tar
-	       :options ("xzf")
-	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-speedbar-0.0.0.tar.gz")
-	(:name elscreen-w3m
-	       :type http-tar
-	       :options ("xzf")
-	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-w3m-0.2.2.tar.gz")
-	(:name elscreen-color-theme
-	       :type http-tar
-	       :options ("xzf")
-	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-color-theme-0.0.0.tar.gz")
-	(:name elscreen-wl
-	       :type http-tar
-	       :options ("xzf")
-	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-wl-0.8.0.tar.gz")
+	zencoding-mode
 
 	;;  session
 	;; emacs-w3m

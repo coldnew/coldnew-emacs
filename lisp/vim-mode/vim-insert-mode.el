@@ -1,6 +1,6 @@
 ;;; vim-insert-mode.el - VIM insert-mode.
 
-;; Copyright (C) 2009, 2010 Frank Fischer
+;; Copyright (C) 2009, 2010, 2011 Frank Fischer
 
 ;; Author: Frank Fischer <frank.fischer@mathematik.tu-chemnitz.de>,
 ;;
@@ -19,6 +19,12 @@
 (require 'vim-motions)
 
 (vim:deflocalvar vim:last-insert-undo nil)
+
+(vim:deflocalvar vim:insert-count nil
+  "The number of times the insertion should be repeated.")
+
+(vim:deflocalvar vim:insert-marker nil
+  "A marker which is placed at the point where insertion started.")
 
 (defcustom vim:insert-mode-replace-cursor 'hbar
   "Cursor for replace-mode."
@@ -50,6 +56,34 @@
       (setq cursor-type vim:insert-mode-cursor)
       (vim:update-mode-line "I"))))
 
+(defun vim:insert-mode-insert-newline ()
+  "Inserts a newline according to current insert-mode direction."
+  (case vim:insert-newline
+    (above
+     (vim:motion-beginning-of-line)
+     (newline)
+     (forward-line -1)
+     (indent-according-to-mode))
+    (below
+     (vim:motion-end-of-line)
+     (newline)
+     (indent-according-to-mode))))
+
+(defun vim:start-insert-mode (&optional count newline)
+  "Activates insert-mode with a certain repeat `count'.
+`newline' should be 'above or 'below or nil which determines
+where to insert a newline."
+  (setq vim:insert-count count
+	vim:insert-newline newline)
+  (vim:insert-mode-insert-newline)
+  (when (eq vim:insert-newline 'above)
+    (setq vim:insert-newline 'below))
+  (if (eobp)
+      (setq vim:insert-marker 'eob)
+    (setq vim:insert-marker (make-marker))
+    (move-marker vim:insert-marker (1+ (point))))
+  (vim:activate-insert-mode))
+
 (defun vim:insert-mode-command (command)
   "Executes a simple command in insert mode."
   (case (vim:cmd-type command)
@@ -72,12 +106,25 @@
   ;; and will therefore NOT override repeat-sequence.
   (setq vim:repeat-events (vconcat vim:repeat-events
                                    vim:current-key-sequence))
-  (setq vim:last-undo vim:last-insert-undo))
+  (setq vim:last-undo vim:last-insert-undo)
+
+  ;; repeat insertion
+  (dotimes (i (1- (or vim:insert-count 1)))
+    (goto-char (if (eq vim:insert-marker 'eob)
+		   (point-max)
+		 (1- vim:insert-marker)))
+    (vim:insert-mode-insert-newline)
+    (execute-kbd-macro vim:current-key-sequence))
+  (when (and vim:insert-marker
+	     (not (eq vim:insert-marker 'eob)))
+    (move-marker vim:insert-marker nil))
+  (setq vim:insert-marker nil
+	vim:insert-count nil))
+
 
 (defun vim:insert-save-key-sequence ()
   "Called in insert-mode to save key-events."
-  (when (and (vim:toplevel-execution)
-             (not (eq this-command 'vim:intercept-ESC)))
+  (unless (eq this-command 'vim:intercept-ESC)
     (setq vim:current-key-sequence (vconcat vim:current-key-sequence
                                             (vim:this-command-keys)))))
 

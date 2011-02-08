@@ -193,7 +193,8 @@ visited."
     
     ;; remove markers above maximum
     (while (> size vim:max-jumplist)
-      (push (pop new-jumps) old-jumps))
+      (push (pop new-jumps) old-jumps)
+      (decf size))
     ;; create new marker or reuse old one
     (let ((m (or (pop old-jumps) (make-marker))))
       (set-marker m pos)
@@ -1182,7 +1183,7 @@ but only on the current line."
   (save-excursion
     (let* ((p (point))
 	   (end (line-end-position))
-	   (re (concat open-qt "\\(?:[^\\\\]\\|\\\\.\\)*" close-qt))
+	   (re (concat open-qt "\\(?:[^\\\\]\\|\\\\.\\)*?" close-qt))
 	   md
 	   (retry t))
       (beginning-of-line)

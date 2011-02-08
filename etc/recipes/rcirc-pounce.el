@@ -1,0 +1,1 @@
+(:name rcirc-pounce :type emacswiki)
