@@ -22,3 +22,6 @@
 [submodule "lisp/smex"]
 	path = lisp/smex
 	url = https://github.com/nonsequitur/smex.git
+[submodule "lisp/bbdb"]
+	path = lisp/bbdb
+	url = git://github.com/barak/BBDB.git
