@@ -107,3 +107,5 @@
   )
 
 ;;http://github.com/kurain/kurain-dotfiles/blob/162ba05b04e14ff232c54f23e0f96300a9215922/.emacs.d/conf/init-objc.el
+(provide 'lang-objc)
+;; lang-objc.el ends here.
