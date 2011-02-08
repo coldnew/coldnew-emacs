@@ -38,5 +38,5 @@
 ;; (autoload 'pylookup-update "pylookup"
 ;;   "Run pylookup-update and create the database at `pylookup-db-file'." t)
 
-;; (provide 'lang-python)
-;; ;; lang-python.el ends here.
+(provide 'lang-python)
+;; lang-python.el ends here.

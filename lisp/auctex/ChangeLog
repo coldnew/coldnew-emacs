@@ -1,3 +1,27 @@
+2011-02-06  Ralf Angeli  <angeli@caeruleus.net>
+
+	* style/letter.el (LaTeX-env-recipient): Use \renewcommand instead
+	of \def to set date.
+
+2011-01-30  Ralf Angeli  <angeli@caeruleus.net>
+
+	* tex.el (TeX-parse-macro): Do not insert braces if the argument
+	is 0 or less.
+	(TeX-parse-argument): Put both the macro and the marked region in
+	a TeX group if the argument is less than 0.
+
+	* latex.el (LaTeX-common-initialization): Give macros that change
+	font size a -1 argument so that braces are added around them if
+	if there is an active region.
+
+	* doc/auctex.texi (Adding Macros): Document special options 0 and
+	-1 for number-type specs.
+
+2011-01-29  Ralf Angeli  <angeli@caeruleus.net>
+
+	* tex.el (TeX-complete-symbol): Get rid of the window with the
+	completions when possible.
+
 2011-01-23  Ralf Angeli  <angeli@caeruleus.net>
 
 	* tex-fold.el (TeX-fold-post-command): Add `forward-char' and

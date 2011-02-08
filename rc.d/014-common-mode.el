@@ -77,4 +77,5 @@
   (vim:local-imap (kbd "\"")   'paredit-doublequote)
   (vim:local-imap (kbd "M-\"") 'paredit-meta-doublequote))
 
-(provide 'rc-common-hook)
+(provide '014-common-mode)
+;; 014-common-mode.el ends here.

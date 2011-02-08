@@ -1,0 +1,8 @@
+(
+;; active playlist
+" *temp*"
+;; playlists: ((BUFFER_NAME SELECT_POSITION TRACKS) ...)
+nil
+;; play method
+((emms-repeat-track) (emms-repeat-playlist))
+)

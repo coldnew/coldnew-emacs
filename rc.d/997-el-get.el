@@ -147,11 +147,60 @@
 	       :type emacswiki)
 	(:name ascii
 	       :type emacswiki)
-	;;auctex
-	;;color-theme			;
+	(:name auctex
+	       :type cvs
+	       :module "auctex"
+	       :url ":pserver:anonymous@cvs.sv.gnu.org:/sources/auctex"
+	       :build `("./autogen.sh" ,(concat "./configure --with-lispdir=`pwd` --with-emacs=" el-get-emacs) "make")
+	       :load-path ("." "preview")
+	       :load  ("tex-site.el" "preview/preview-latex.el")
+	       :info "doc")
+	(:name elscreen-dnd
+	       :type http-tar
+	       :options ("xzf")
+	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-dnd-0.0.0.tar.gz"
+	       :features elscreen-dnd)
+	(:name elscreen-server
+	       :type http-tar
+	       :options ("xzf")
+	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-server-0.2.0.tar.gz")
+	(:name elscreen-dired
+	       :type http-tar
+	       :options ("xzf")
+	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-dired-0.1.0.tar.gz")
+	(:name elscreen-gf
+	       :type http-tar
+	       :options ("xzf")
+	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-gf-1.5.3.tar.gz")
+	(:name elscreen-goby
+	       :type http-tar
+	       :options ("xzf")
+	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-goby-0.0.0.tar.gz")
+	(:name elscreen-howm
+	       :type http-tar
+	       :options ("xzf")
+	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-howm-0.1.3.tar.gz")
+
+	(:name elscreen-speedbar
+	       :type http-tar
+	       :options ("xzf")
+	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-speedbar-0.0.0.tar.gz")
+	(:name elscreen-w3m
+	       :type http-tar
+	       :options ("xzf")
+	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-w3m-0.2.2.tar.gz")
+	(:name elscreen-color-theme
+	       :type http-tar
+	       :options ("xzf")
+	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-color-theme-0.0.0.tar.gz")
+	(:name elscreen-wl
+	       :type http-tar
+	       :options ("xzf")
+	       :url "ftp://ftp.morishima.net/pub/morishima.net/naoto/ElScreen/elscreen-wl-0.8.0.tar.gz")
 
 	;;  session
 	;; emacs-w3m
+	;;color-theme			;
 	))
 
 ;;(el-get 'wait)

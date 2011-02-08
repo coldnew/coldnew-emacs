@@ -10,7 +10,7 @@
 			     yas/ido-prompt
 			     yas/completing-prompt))
 
-;; Auto add TEMPLATE in new file
+;; Auto add HEADER in new file
 (add-hook 'find-file-hook
 	  '(lambda ()
 	     (when (and (buffer-file-name)

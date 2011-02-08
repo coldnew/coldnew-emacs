@@ -30,5 +30,5 @@
 (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
 
 
-(provide '015-desktop)
-;; 015-desktop.el ends here.
+(provide '020-desktop)
+;; 020-desktop.el ends here.

@@ -4,6 +4,9 @@
 
 
 
+
+
+
 (require* 'ac-anything)			  ; Auto Complete with Anything
 (require* 'ac-company)			  ; Auto-Complete with company-mode
 (require* 'advice)			  ;
@@ -24,6 +27,7 @@
 (require* 'anything-show-completion)	  ; Show selection in buffer for anything completion
 (require* 'anything-slime)		  ; anything-sources and some utilities for SLIME.
 (require* 'anything-yaetags)		  ; Yet another etags interface with anything
+(require* 'ascii)			  ; ASCII code display.
 (require* 'async-eval)			  ; execute Emacs lisp in a separate process
 (require* 'auto-complete)		  ; Auto-Complete
 (require* 'auto-complete-clang)		  ;
@@ -53,10 +57,30 @@
 (require* 'eldoc)			  ; Emacs-Lisp Documents Browser
 (require* 'eldoc-extension)		  ; Emacs-Lisp Documents Browser Extension
 (require* 'elscreen)			  ; have multiple screens on emacs as well as GNU screen
+(require* 'emms)			  ; Emacs Multimedia System
 (require* 'emms)			  ; emacs Multimedia System
+(require* 'emms-bookmarks)		  ; Bookmarks for Emms
+(require* 'emms-browser)		  ; a track browser supporting covers and filtering
+(require* 'emms-cache)			  ; persistence for emms-track
+(require* 'emms-compat)			  ; Compatibility routines for EMMS
+(require* 'emms-get-lyrics)		  ; Get the lyrics of the song emms is currently playing
+(require* 'emms-history)		  ; save all playlists when exiting emacs
+(require* 'emms-i18n)			  ; functions for handling coding systems
+(require* 'emms-info)			  ; Retrieving track information
+(require* 'emms-lyrics)			  ; Display lyrics synchronically
+(require* 'emms-mode-line)		  ; Mode-Line and titlebar infos for emms
+(require* 'emms-mode-line-icon)		  ; show an icon in the Emacs mode-line
+(require* 'emms-player-mpg321-remote)	  ; play files with mpg321 -R
+(require* 'emms-player-mplayer)		  ; mplayer support for EMMS
+(require* 'emms-player-simple)		  ; A generic simple player
+(require* 'emms-playing-time)		  ; Display emms playing time on mode line
+(require* 'emms-setup)			  ; Setup script for EMMS
+(require* 'emms-streams)		  ; interface to add and play streams
+(require* 'emms-tag-editor)		  ; Edit track tags.
 (require* 'etags)			  ;
 (require* 'executable)			  ;
 (require* 'find-file)			  ;
+(require* 'find-lisp)			  ; emulation of find in Emacs Lisp
 (require* 'flyspell)			  ; on-the-fly spell checker
 (require* 'framemove)			  ; directional frame selection routines
 (require* 'gccsense)			  ; GCC's code analyzers
@@ -70,6 +94,7 @@
 (require* 'ibuf-ext)			  ; iBuffer Extension
 (require* 'ibuffer)			  ; iBuffer
 (require* 'ibuffer-git)			  ; show git status in ibuffer column
+(require* 'ido)				  ; interactively do things with buffers and files
 (require* 'idutils)			  ;
 (require* 'info)			  ;
 (require* 'ipa)				  ; In-place annotations
@@ -77,6 +102,8 @@
 (require* 'lusty-explorer)		  ; A good explorer tools
 (require* 'magit)			  ;
 (require* 'midnight)			  ; Use midnight-mode to auto-clean buffers
+(require* 'mmm-auto)			  ; loading and enabling MMM Mode automatically
+(require* 'mmm-mode)			  ; Allow Multiple Major Modes in a buffer
 (require* 'multi-term)			  ;
 (require* 'nav)				  ;
 (require* 'newlisp)			  ; newlisp
@@ -123,11 +150,13 @@
 (require* 'shell-pop)			  ; Helps you pop up and pop out shell buffer easily
 (require* 'slime)			  ; Superior Lisp Interaction Mode for Emacs
 (require* 'smartchr)			  ; Emacs version of smartchr.vim
+(require* 'smex)			  ; M-x interface with Ido-style fuzzy matching.
 (require* 'speck)			  ; minor mode for spell checking
 (require* 'ssh-config)			  ; Syntax Highlight ssh-configure files
 (require* 'sunrise-commander)		  ; A commander looks like MC
 (require* 'term)			  ;
 (require* 'thingatpt)			  ; Get the thing at point
+(require* 'thingatpt+)			  ; Extensions to `thingatpt.el'.
 (require* 'undo-tree)			  ; Use undo-tree instead of redo.el
 (require* 'unicad)			  ; Universal Charset Auto Detector
 (require* 'uniquify)			  ; If two buffer have the same name, rename both
@@ -142,52 +171,51 @@
 (require* 'xcscope+)			  ; Providing an extension to xcscope
 (require* 'yasnippet)			  ; Yet another snippet extension for Emacs
 (require* 'zencoding-mode)		  ; Unfold CSS-selector-like expressions to markup
-(require* 'emms)			  ; Emacs Multimedia System
-(require* 'emms-setup)			  ; Setup script for EMMS
-(require* 'emms-lyrics)			  ; Display lyrics synchronically
-(require* 'emms-mode-line)		  ; Mode-Line and titlebar infos for emms
-(require* 'emms-mode-line-icon)		  ; show an icon in the Emacs mode-line
-(require* 'emms-playing-time)		  ; Display emms playing time on mode line
-(require* 'emms-streams)		  ; interface to add and play streams
-(require* 'emms-info)			  ; Retrieving track information
-(require* 'emms-browser)		  ; a track browser supporting covers and filtering
-(require* 'emms-tag-editor)		  ; Edit track tags.
-(require* 'emms-bookmarks)		  ; Bookmarks for Emms
-(require* 'emms-cache)			  ; persistence for emms-track
-(require* 'emms-compat)			  ; Compatibility routines for EMMS
-(require* 'emms-history)		  ; save all playlists when exiting emacs
-(require* 'emms-i18n)			  ; functions for handling coding systems
-(require* 'emms-player-mplayer)		  ; mplayer support for EMMS
-(require* 'emms-player-simple)		  ; A generic simple player
+(require* 'pymacs)			  ; Interface between Emacs Lisp and Python - Lisp part.
+(require* 'tramp)			  ; Transparent Remote Access, Multiple Protocol
+(require* 'url)				  ; Uniform Resource Locator retrieval tool
+(require* 'elscreen-dnd)		  ;
+(require* 'elscreen-gf)			  ;
+(require* 'elscreen-server)		  ;
+(require* 'elscreen-dired)		  ;
+(require* 'elscreen-color-theme)	  ;
+(require* 'elscreen-howm)		  ;
+(require* 'elscreen-goby)		  ;
+(require* 'elscreen-speedbar)		  ;
+(require* 'elscreen-w3m)		  ;
+(require* 'elscrren-wl)			  ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ;;(require* 'anything-emms)		  ; Integrate EMMS with `anything.el'
-(require* 'emms-get-lyrics)		  ; Get the lyrics of the song emms is currently playing
-(require* 'emms-player-mpg321-remote)	  ; play files with mpg321 -R
-(require* 'mmm-mode)			  ; Allow Multiple Major Modes in a buffer
-(require* 'mmm-auto)			  ; loading and enabling MMM Mode automatically
-(require* 'smex)			  ; M-x interface with Ido-style fuzzy matching.
-(require* 'ido)				  ; interactively do things with buffers and files
-(require* 'find-lisp)			  ; emulation of find in Emacs Lisp
-(require* 'thingatpt+)			  ; Extensions to `thingatpt.el'.
-(require* 'ascii)			  ;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;;(require* 'ipython)			; iPython
+;;(require* 'ipython)			; Adds support for IPython to python-mode.el
 ;;(require* 'matlab)			; Matlab
-;;(require* 'pymacs)			; Pymacs
 
 
 

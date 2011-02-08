@@ -29,25 +29,7 @@
 
 
 ;;;;;; Functions
-(defmacro* defcmd (name &rest body)
-  "Define a interactive functions without arguments."
-  (if (and (consp body)
-	   (cdr body)
-	   (stringp (car body)))
-      (setq doc (car body)
-	    body (cdr body))
-    (setq doc (format "Command (%s)" name)))
-  `(progn
-     (put ',name 'function
-	  (function* (lambda  ,@body)))
-     (defun* ,name (&rest args)
-       ,doc
-       (interactive)
-       (apply (get ',name 'function) args))))
 
-(defmacro when-available (func foo)
-  "*Do something if FUNCTION is available."
-  `(when (fboundp ,func) ,foo))
 
 (defmacro require* (feature &optional file)
   "*Try to require FEATURE, but don't signal an error if `require' fails."
@@ -83,16 +65,10 @@
 
 ;;;; Extra font-lock
 (font-lock-add-keywords 'emacs-lisp-mode
-			'(("(\\(\\defcmd\\)\\s \\(\\(?:\\s_\\|\\sw\\)+\\)"
-			   (1 font-lock-keyword-face)
-			   (2 font-lock-function-name-face))
-			  ("(\\(require\\*\\)\\s [ \t']*\\(\\sw+\\)?"
+			'(("(\\(require\\*\\)\\s [ \t']*\\(\\sw+\\)?"
 			   (1 font-lock-keyword-face)
 			   (2 font-lock-constant-face nil t))
 			  ("(\\(requiref\\)\\s [ \t']*\\(\\sw+\\)?"
-			   (1 font-lock-keyword-face)
-			   (2 font-lock-constant-face nil t))
-			  ("(\\(when-available\\*\\)\\s [ \t']*\\(\\sw+\\)?"
 			   (1 font-lock-keyword-face)
 			   (2 font-lock-constant-face nil t))
 			  ))

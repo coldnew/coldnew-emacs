@@ -2400,11 +2400,14 @@ Or alternatively:
 	       (pattern (TeX-match-buffer 0))
 	       (symbol (buffer-substring begin end))
 	       (list (funcall (nth 2 entry)))
-	       (completion (try-completion symbol list)))
+	       (completion (try-completion symbol list))
+	       (buf-name "*Completions*"))
 	  (cond ((eq completion t)
 		 (and close
 		      (not (looking-at (regexp-quote close)))
-		      (insert close)))
+		      (insert close))
+		 (let ((window (get-buffer-window buf-name)))
+		   (when window (delete-window window))))
 		((null completion)
 		 (error "Can't find completion for \"%s\"" pattern))
 		((not (string-equal symbol completion))
@@ -2413,13 +2416,19 @@ Or alternatively:
 		 (and close
 		      (eq (try-completion completion list) t)
 		      (not (looking-at (regexp-quote close)))
-		      (insert close)))
+		      (insert close))
+		 (let ((window (get-buffer-window buf-name)))
+		   (when window (delete-window window))))
 		(t
-		 (message "Making completion list...")
-		 (let ((list (all-completions symbol list nil)))
-		   (with-output-to-temp-buffer "*Completions*"
-		     (display-completion-list list)))
-		 (message "Making completion list...done"))))
+		 (if (fboundp 'completion-in-region)
+		     (completion-in-region begin end
+					   (all-completions symbol list nil))
+		   (message "Making completion list...")
+		   (let ((list (all-completions symbol list nil)))
+		     (with-output-to-temp-buffer buf-name
+		       (display-completion-list list)))
+		   (set-window-dedicated-p (get-buffer-window buf-name) 'soft)
+		   (message "Making completion list...done")))))
       (funcall (nth 1 entry)))))
 
 (defcustom TeX-default-macro "ref"
@@ -2557,10 +2566,10 @@ type of ARGS:
 	   (goto-char (marker-position exit-mark))
 	   (set-marker exit-mark nil))
 	  ((and TeX-insert-braces
-		;; Do not add braces for macros defined as `("foo" 0)'
+		;; Do not add braces if the argument is 0 or -1.
 		(not (and (= (safe-length args) 1)
 			  (numberp (car args))
-			  (= (car args) 0)))
+			  (<= (car args) 0)))
 		(equal position (point))
 		(string-match "[a-zA-Z]+" symbol)
 		(not (texmathp)))
@@ -2625,11 +2634,25 @@ See `TeX-parse-macro' for details."
 	   (TeX-arg-string optional arg)
 	   (setq insert-flag t))
 	  ((numberp arg)
-	   (unless (< arg 1)
-	     (TeX-parse-argument optional t)
-	     (while (> arg 1)
-	       (TeX-parse-argument optional nil)
-	       (setq arg (- arg 1)))))
+	   (cond ((< arg 0)
+		  (when (TeX-active-mark)
+		    ;; Put both the macro and the marked region in a TeX group.
+		    (let ((beg (min (point) (mark)))
+			  (end (set-marker (make-marker) (max (point) (mark)))))
+		      (insert " ")
+		      (goto-char beg)
+		      (skip-chars-backward "^\\\\")
+		      (backward-char)
+		      (insert TeX-arg-opening-brace)
+		      (goto-char (marker-position end))
+		      (insert TeX-arg-closing-brace)
+		      (setq insert-flag t))))
+		 ((= arg 0)) ; nop for clarity
+		 ((> arg 0)
+		  (TeX-parse-argument optional t)
+		  (while (> arg 1)
+		    (TeX-parse-argument optional nil)
+		    (setq arg (- arg 1))))))
 	  ((null arg)
 	   (insert TeX-arg-opening-brace)
 	   (when (and (not optional) (TeX-active-mark))

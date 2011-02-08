@@ -15,6 +15,30 @@
 			(mapcar (lambda (arg) (list arg arg))))
        ,@body)))
 
+					; load given package if directory exists
+(defmacro load-if-dir (dir-name &rest body)
+  (let ((path-to-load (make-symbol "path-to-load")))
+    `(let ((,path-to-load ,dir-name))
+       (when (file-directory-p ,path-to-load)
+	 (add-to-list 'load-path ,path-to-load)
+	 ,@body))))
+
+					; load given file if exists
+(defmacro load-if-file (file-name &rest body)
+  (let ((file-to-load (make-symbol "file-to-load")))
+    `(let ((,file-to-load ,file-name))
+       (when (file-readable-p ,file-to-load)
+	 (load ,file-to-load)
+	 ,@body))))
+
+					; load given file if exists, and add dir to path
+(defmacro load-if-dir-and-file (dir-name file-name &rest body)
+  `(progn
+     (load-if-dir ,dir-name)
+     (load-if-file (concat ,dir-name ,file-name))
+     ,@body))
+
+
 ;; (defmacro require-maybe (feature &optional file)
 ;;   "*Try to require FEATURE, but don't signal an error if `require' fails."
 ;;   `(require ,feature ,file 'noerror))
@@ -202,6 +226,75 @@
     (error (message "Invalid expression")
 	   (insert (current-kill 0)))))
 
+
+(defun resolve-sym-link ()
+  "Replace the string at the point with the true path."
+  (interactive)
+  (beginning-of-line)
+  (let* ((file (buffer-substring (point)
+				 (save-excursion (end-of-line) (point))))
+	 (file-dir (file-name-directory file))
+	 (file-true-dir (file-truename file-dir))
+	 (file-name (file-name-nondirectory file)))
+    (delete-region (point) (save-excursion (end-of-line) (point)))
+    (insert (concat file-true-dir file-name))))
+
+
+(defun show-dot-emacs-structure ()
+  "Show the outline-mode structure of ~/.emacs"
+  (interactive)
+  (occur "^;;;;+"))
+
+
+(defun lookup-wikipedia ()
+  "Look up the word under cursor in Wikipedia.
+This command generates a url for Wikipedia.com and switches you
+to browser. If a region is active (a phrase), lookup that phrase."
+  (interactive)
+  (let (myword myurl)
+    (setq myword
+	  (if (and transient-mark-mode mark-active)
+	      (buffer-substring-no-properties (region-beginning) (region-end))
+	    (thing-at-point 'symbol)))
+
+    (setq myword (replace-regexp-in-string " " "_" myword))
+    (setq myurl (concat "http://en.wikipedia.org/wiki/" myword))
+    ;;(browse-url myurl)
+    (if (featurep 'w3m)
+	(w3m-browse-url myurl)
+      (browse-url myurl))
+    ))
+
+
+
+;; ------------------------------------------------------------------------------
+;; execute-keyboard-macro-here
+;; ------------------------------------------------------------------------------
+;; When clicked, move point to the location clicked and execute the last
+;; defined keyboard macro there.  Very handy for automating actions which
+;; must be done many times but at user controlled places. (e.g. lowercasing
+;; HTML tags.)
+;;
+(defun execute-keyboard-macro-here (event)
+  "Move point and execute the currently defined macro."
+  (interactive "e")
+  (mouse-set-point event)
+  (call-last-kbd-macro))
+
+;; ------------------------------------------------------------------------------
+;; kill-other-buffers
+;; ------------------------------------------------------------------------------
+;; I find that Emacs buffers multiply faster than rabbits.  They were
+;; regenerating faster than I could kill them so I wrote this.  (The
+;; original version was my first code in ELisp!)  Run this macro to kill
+;; all but the active buffer and the unsplit the window if need be.
+;;
+(defun kill-other-buffers ()
+  "Kill all buffers except the current and unsplit the window."
+  (interactive)
+  (mapc 'kill-buffer (delq (current-buffer) (buffer-list)))   ; Delete other buffers
+  (delete-other-windows)                                      ; And then unsplit the current window...
+  (delete-other-frames))                                      ; ...and remove other frames, too.
 
 
 

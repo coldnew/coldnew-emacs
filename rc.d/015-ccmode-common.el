@@ -114,5 +114,5 @@
     (insert "<")))
 
 
-(provide 'rc-ccmode-common)
-;; rc-ccmode-common.el ends here.
+(provide '015-ccmode-common)
+;; 015-ccmode-common.el ends here.

@@ -13,3 +13,6 @@
 	     (programming-common-hook)	; programming common hook
 	     (insert-equal-char-smart)  ; insert `=' more easily
 	     ))
+
+(provide 'lang-perl)
+;; lang-perl.el ends here.

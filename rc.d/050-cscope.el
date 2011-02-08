@@ -12,5 +12,5 @@
 
 
 
-(provide 'rc-cscope)
-;; rc-cscope.el ends here
+(provide '050-cscope)
+;; 050-cscope.el ends here

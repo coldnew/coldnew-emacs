@@ -35,7 +35,7 @@
 ;;(emms-lyrics t)
 
 ;; If all playlists should be restored on startup add this
-(emms-history-load)
+;;(emms-history-load)
 
 ;;
 (setq emms-player-list '(emms-player-mplayer emms-player-mpg321))

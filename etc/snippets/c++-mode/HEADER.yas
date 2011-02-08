@@ -6,28 +6,40 @@
 # --
 
 ;; If this file is C++ header file, insert Guard Macro
-(if (or (equal (yas/file-ext) "hpp")
-        (equal (yas/file-ext) "h"))
- (yas/expand-snippet 
-  "
-#ifndef ${1:_`(upcase (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))`__H__}
-#define $1
+(if (equal (yas/file-ext) "hpp")
+    (yas/expand-snippet
+     (concat
+      "#ifndef ${1:__`(yas/file-sans-upcase)`_HPP__}                        \n"
+      "#define $1                                                           \n"
+      "                                                                     \n"
+      "$0                                                                   \n"
+      "                                                                     \n"
+      "                                                                     \n"
+      "#endif /* $1 */                                                      \n"
+      "/* `(yas/file)` ends here. */                                        \n"
+      )))
 
-  $>$0
-
-#endif /* $1 */
-  $>/* `(yas/file)` ends here. */
-  ")
- )
+;; If this file is C++ header file, insert Guard Macro
+(if (equal (yas/file-ext) "h")
+    (yas/expand-snippet
+     (concat
+      "#ifndef ${1:__`(yas/file-sans-upcase)`_H__}                          \n"
+      "#define $1                                                           \n"
+      "                                                                     \n"
+      "$0                                                                   \n"
+      "                                                                     \n"
+      "                                                                     \n"
+      "#endif /* $1 */                                                      \n"
+      "/* `(yas/file)` ends here. */                                        \n"
+      )))
 
 ;; If this file is C++ source file, insert information
 (if (or (equal (yas/file-ext) "cpp")
-        (equal (yas/file-ext) "cc"))
- (yas/expand-snippet 
-  "
-
-  $>$0
-
-  $>/* `(yas/file)` ends here. */
-  ")
-  )
+	(equal (yas/file-ext) "cc"))
+    (yas/expand-snippet
+     "                                                                     \n"
+     "                                                                     \n"
+     "$0                                                                   \n"
+     "                                                                     \n"
+     "/* `(yas/file)` ends here. */                                        \n"
+     ))

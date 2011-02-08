@@ -1,6 +1,10 @@
 ;;
 (eval-when-compile (require 'cl))
 
+;; Display elscreen tabar
+(setq elscreen-display-tab t)
+
+
 
 
 (provide '045-elscreen)

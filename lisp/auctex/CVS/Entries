@@ -1,6 +1,6 @@
 /.cvsignore/1.8/Fri Apr 29 10:12:52 2005//
 /COPYING/5.12/Sun Feb  3 14:53:34 2008//
-/ChangeLog/5.1724/Sun Jan 23 18:52:49 2011//
+/ChangeLog/5.1727/Sun Feb  6 14:30:10 2011//
 /Makefile.in/1.171/Sun Sep 12 15:20:22 2010//
 /README.CVS/1.4/Mon Jun 13 23:36:43 2005//
 /RELEASE/1.55/Sun Feb 21 12:23:09 2010//
@@ -15,7 +15,7 @@
 /context.el/1.76/Sun Dec  5 20:49:23 2010//
 /font-latex.el/5.191/Sun Sep 12 09:48:15 2010//
 /install-sh/1.2/Wed Jun  8 23:02:03 2005//
-/latex.el/5.465/Sat Jan 22 16:23:58 2011//
+/latex.el/5.466/Sun Jan 30 16:24:36 2011//
 /lpath.el/5.7/Sat Jan 15 10:32:15 2005//
 /mkinstalldirs/1.2/Wed Jun  8 22:54:02 2005//
 /multi-prompt.el/5.12/Mon Apr 13 16:54:36 2009//
@@ -30,7 +30,7 @@
 /tex-site.el.in/1.34/Sun Mar 22 16:51:10 2009//
 /tex-style.el/5.11/Sat Dec 26 15:31:56 2009//
 /tex-wizard.el/1.3/Sun Feb  3 14:53:32 2008//
-/tex.el/5.672/Sat Jan 22 16:24:29 2011//
+/tex.el/5.674/Sun Jan 30 16:24:15 2011//
 /texmathp.el/5.23/Sun May 25 06:50:32 2008//
 /toolbar-x.el/1.20/Sat Aug  2 20:19:27 2008//
 D

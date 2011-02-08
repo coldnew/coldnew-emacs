@@ -1,6 +1,26 @@
 ;;
 (eval-when-compile (require 'cl))
 
+(defun sudo-edit (&optional arg)
+  (interactive "p")
+  (if (or arg (not buffer-file-name))
+      (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
+(defun rename-current-buffer-and-file (newname)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sEnter new file's name: ")
+  (let ((name (buffer-name))
+	(filename (buffer-file-name)))
+    (if (not filename)
+	(message "Buffer '%s' is not visiting a file!" name)
+      (if (get-buffer newname)
+	  (message "A buffer named '%s' already exists!" newname)
+	(progn
+	  (rename-file name newname 1)
+	  (rename-buffer newname)
+	  (set-visited-file-name newname)
+	  (set-buffer-modified-p nil))))))
 
 (defun eval-and-replace ()
   "Replace the preceding sexp with its value.
@@ -14,70 +34,12 @@
     (error (message "Invalid expression")
 	   (insert (current-kill 0)))))
 
-(defun resolve-sym-link ()
-  "Replace the string at the point with the true path."
-  (interactive)
-  (beginning-of-line)
-  (let* ((file (buffer-substring (point)
-				 (save-excursion (end-of-line) (point))))
-	 (file-dir (file-name-directory file))
-	 (file-true-dir (file-truename file-dir))
-	 (file-name (file-name-nondirectory file)))
-    (delete-region (point) (save-excursion (end-of-line) (point)))
-    (insert (concat file-true-dir file-name))))
-
 (defun save-buffer-always ()
   "Save the buffer even if it is not modified."
   (interactive)
   (set-buffer-modified-p t)
   (save-buffer))
 
-(defun show-dot-emacs-structure ()
-  "Show the outline-mode structure of ~/.emacs"
-  (interactive)
-  (occur "^;;;;+"))
-
-(defun rename-file-and-buffer (new-name)
-  "Renames both current buffer and file it's visiting to NEW-NAME."
-  (interactive "sNew name: ")
-  (let ((name (buffer-name))
-	(filename (buffer-file-name)))
-    (if (not filename)
-	(message "Buffer '%s' is not visiting a file!" name)
-      (if (get-buffer new-name)
-	  (message "A buffer named '%s' already exists!" new-name)
-	(progn
-	  (rename-file name new-name 1)
-	  (rename-buffer new-name)
-	  (set-visited-file-name new-name)
-	  (set-buffer-modified-p nil))))))
-
-(defun lookup-wikipedia ()
-  "Look up the word under cursor in Wikipedia.
-This command generates a url for Wikipedia.com and switches you
-to browser. If a region is active (a phrase), lookup that phrase."
-  (interactive)
-  (let (myword myurl)
-    (setq myword
-	  (if (and transient-mark-mode mark-active)
-	      (buffer-substring-no-properties (region-beginning) (region-end))
-	    (thing-at-point 'symbol)))
-
-    (setq myword (replace-regexp-in-string " " "_" myword))
-    (setq myurl (concat "http://en.wikipedia.org/wiki/" myword))
-    ;;(browse-url myurl)
-    (if (featurep 'w3m)
-	(w3m-browse-url myurl)
-      (browse-url myurl))
-    ))
-
-;; ------------------------------------------------------------------------------
-;; goto-longest-line
-;; ------------------------------------------------------------------------------
-;; Sometimes for code is nice to find lines that are pushed out too far.
-;; This function moves point to the end of the longest line.  Also handy
-;; for lining up columns of text when used in a narrowed buffer.
-;;
 (defun goto-longest-line ()
   "Finds the longest line and puts the point there."
   (interactive)
@@ -92,61 +54,12 @@ to browser. If a region is active (a phrase), lookup that phrase."
 	  (setq pos (point)))))
     (goto-char pos)))
 
-;; ------------------------------------------------------------------------------
-;; goto-matching-paren
-;; ------------------------------------------------------------------------------
-;; If point is sitting on a parenthetic character, jump to its match.
-;; This matches the standard parenthesis highlighting for determining which
-;; one it is sitting on.
-;;
-(defun goto-matching-paren ()
-  "If point is sitting on a parenthetic character, jump to its match."
-  (interactive)
-  (cond ((looking-at "\\s\(") (forward-list 1))
-	((progn
-	   (backward-char 1)
-	   (looking-at "\\s\)")) (forward-char 1) (backward-list 1))))
-
-;; ------------------------------------------------------------------------------
-;; execute-keyboard-macro-here
-;; ------------------------------------------------------------------------------
-;; When clicked, move point to the location clicked and execute the last
-;; defined keyboard macro there.  Very handy for automating actions which
-;; must be done many times but at user controlled places. (e.g. lowercasing
-;; HTML tags.)
-;;
-(defun execute-keyboard-macro-here (event)
-  "Move point and execute the currently defined macro."
-  (interactive "e")
-  (mouse-set-point event)
-  (call-last-kbd-macro))
-
-;; ------------------------------------------------------------------------------
-;; kill-other-buffers
-;; ------------------------------------------------------------------------------
-;; I find that Emacs buffers multiply faster than rabbits.  They were
-;; regenerating faster than I could kill them so I wrote this.  (The
-;; original version was my first code in ELisp!)  Run this macro to kill
-;; all but the active buffer and the unsplit the window if need be.
-;;
-(defun kill-other-buffers ()
-  "Kill all buffers except the current and unsplit the window."
-  (interactive)
-  (mapc 'kill-buffer (delq (current-buffer) (buffer-list)))   ; Delete other buffers
-  (delete-other-windows)                                      ; And then unsplit the current window...
-  (delete-other-frames))                                      ; ...and remove other frames, too.
-
-;; ------------------------------------------------------------------------------
-;; show-ascii-chart
-;; ------------------------------------------------------------------------------
-;; Display a helpful ASCII reference chart when called.  Useful for quickly
-;; double checking or looking up character codes.  Usually the
-;; what-cursor-position (C-x =) is faster for spot lookups of the number
-;; for a character here and there.  It's terrible, however, for finding the
-;; character given a number.
-;;
 (defun show-ascii-chart ()
-  "Display a helpful ASCII chart."
+  "Display a helpful ASCII reference chart when called.  Useful for quickly
+   double checking or looking up character codes.  Usually the
+   what-cursor-position (C-x =) is faster for spot lookups of the number
+   for a character here and there.  It's terrible, however, for finding the
+   character given a number."
   (interactive)
   (let ((chart (concat
 		"==============================================================================\n"
@@ -205,6 +118,13 @@ to browser. If a region is active (a phrase), lookup that phrase."
 	 "ASCII Chart")
       (with-output-to-temp-buffer "ASCII Chart"
 	(princ chart)))))
+
+
+
+
+
+
+
 
 (provide '004-functions)
 ;; 004-functions.el ends here.

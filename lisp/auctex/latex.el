@@ -5350,8 +5350,9 @@ i.e. you do _not_ have to cater for this yourself by adding \\\\' or $."
    "clearpage" "cleardoublepage" "twocolumn" "onecolumn"
 
    "maketitle" "tableofcontents" "listoffigures" "listoftables"
-   "tiny" "scriptsize" "footnotesize" "small"
-   "normalsize" "large" "Large" "LARGE" "huge" "Huge"
+   '("tiny" -1) '("scriptsize" -1) '("footnotesize" -1) '("small" -1)
+   '("normalsize" -1) '("large" -1) '("Large" -1) '("LARGE" -1) '("huge" -1)
+   '("Huge" -1)
    "pounds" "copyright"
    "hfil" "hfill" "vfil" "vfill" "hrulefill" "dotfill"
    "indent" "noindent" "today"

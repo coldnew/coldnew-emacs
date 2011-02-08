@@ -67,7 +67,8 @@
 	  (newline-and-indent)))
     (if (not (zerop (length date)))
 	(progn
-	  (insert TeX-esc "def" TeX-esc "today" TeX-grop date TeX-grcl)
+	  (insert TeX-esc "renewcommand" TeX-grop TeX-esc "today" TeX-grcl
+		  TeX-grop date TeX-grcl)
 	  (newline-and-indent)))
     (newline-and-indent)
 
