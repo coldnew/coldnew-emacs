@@ -25,10 +25,6 @@
 ;;
 ;;
 
-;;; Change Log:
-;;
-;;
-
 ;;; Usage:
 ;; Put this file into your load-path and the following into your ~/.emacs:
 ;;   (require 'vim-elscreen)
@@ -45,17 +41,16 @@
 ;;;;##########################################################################
 
 
+
+
 ;;;;;;;; Opening a new page
 
 (vim:defcmd vim:cmd-tab-new ((argument:file file) nonrepeatable)
   "Open a new tab page and edit {file}, like with :edit."
-  "If the {file} is nil, create a new tab page with empty window, after the current tab page."
+  "If the {file} is nil, create a new tab page with *scratch* buffer, after the current tab page."
   (if file
       (elscreen-find-file file)
-    (progn
-      (elscreen-create)
-      (switch-to-buffer  (get-buffer-create (generate-new-buffer-name "[No Name]"))))))
-
+    (elscreen-create)))
 
 (vim:defcmd vim:cmd-tab-find ((argument:file file) nonrepeatable)
   "Open a new tab page and edit {file} in 'path', like with :find. "

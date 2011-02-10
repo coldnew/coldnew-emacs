@@ -37,8 +37,11 @@
 (vim:wmap (kbd "C-x f") 'anything-for-files)
 (vim:wmap (kbd "M-x") 'smex)
 
-
-
+;; FIXME: I send this to author, one day to remove
+(vim:mmap (kbd "<left>") 'vim:motion-left)
+(vim:mmap (kbd "<right>") 'vim:motion-right)
+(vim:mmap (kbd "<up>") 'vim:motion-up)
+(vim:mmap (kbd "<down>") 'vim:motion-down)
 
 (provide '999-keybinding)
 ;; 999-keybinding.el ends here.

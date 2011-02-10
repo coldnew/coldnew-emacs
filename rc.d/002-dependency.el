@@ -85,7 +85,6 @@
 (require* 'elscreen-w3m)		  ; elscreen with w3m
 (require* 'elscreen-wl)			  ; elscreen with wanderlust
 (require* 'emms)			  ; Emacs Multimedia System
-(require* 'emms)			  ; emacs Multimedia System
 (require* 'emms-bookmarks)		  ; Bookmarks for Emms
 (require* 'emms-browser)		  ; a track browser supporting covers and filtering
 (require* 'emms-cache)			  ; persistence for emms-track
@@ -180,7 +179,7 @@
 (require* 'slime)			  ; Superior Lisp Interaction Mode for Emacs
 (require* 'smartchr)			  ; Emacs version of smartchr.vim
 (require* 'smex)			  ; M-x interface with Ido-style fuzzy matching.
-(require* 'smime)			; S/MIME interface
+(require* 'smime)			  ; S/MIME interface
 (require* 'speck)			  ; minor mode for spell checking
 (require* 'ssh-config)			  ; Syntax Highlight ssh-configure files
 (require* 'sunrise-commander)		  ; A commander looks like MC
@@ -204,10 +203,11 @@
 (require* 'xcscope+)			  ; Providing an extension to xcscope
 (require* 'yasnippet)			  ; Yet another snippet extension for Emacs
 (require* 'zencoding-mode)		  ; Unfold CSS-selector-like expressions to markup
-(require* 'vim-elscreen)
-
-
-
+(require* 'vim-elscreen)		  ;
+(require* 'mime-w3m)			  ; mime-view content filter for text
+(require* 'pop3)			  ; Post Office Protocol (RFC 1460) interface
+(require* 'gnus)			  ; a newsreader for GNU Emacs
+(require* 'password-cache)		  ; Read passwords, possibly using a password cache
 
 
 

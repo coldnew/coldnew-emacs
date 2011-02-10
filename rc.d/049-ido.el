@@ -8,6 +8,7 @@
 (setq ido-default-file-method 'samewindow)
 (setq ido-default-buffer-method 'samewindow)
 (setq ido-save-directory-list-file "~/.emacs.d/var/cache/ido.cache")
+(setq ido-create-new-buffer 'always)
 
 ;; Ignore following buffer in ido
 (setq ido-ignore-buffers

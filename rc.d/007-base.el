@@ -13,7 +13,6 @@
 (setq-default ring-bell-function (lambda () t)) ; 關閉 console 下的螢幕閃爍
 
 (setq-default confirm-nonexistent-file-or-buffer nil)
-(setq ido-create-new-buffer 'always)
 (setq kill-buffer-query-functions
       (remq 'process-kill-buffer-query-function
 	    kill-buffer-query-functions))
@@ -41,14 +40,17 @@
 (iimage-mode               t )
 (recentf-mode              t )
 (mouse-avoidance-mode 'animate ) ; 鼠標自動避開游標
+;;(set-buffer-major-mode 'lisp-interaction-mode)
 
 ;;;; 編輯環境
 (setq-default initial-scratch-message       nil )  ; 不顯示 scratch 預設的訊息
-(setq-default major-mode    'text-mode )	   ; 預設使用 text-mode
+(setq-default major-mode 'lisp-interaction-mode )  ; 預設使用 lisp-interaction-mode
+(setq-default view-read-only                  t )  ; 開啟惟讀檔時啟用 view-mode
 (setq-default line-spacing                    4 )  ; 設定行間距為4格
 (setq-default fill-column                   100 )  ; 顯示默認的文檔的寬度為100列
 (setq-default kill-ring-max                 300 )  ; 設定刪除保存紀錄為300
-;; (setq show-paren-style     'expression )
+;;(setq show-paren-style     'expression)
+(setq show-paren-style     'mixed)
 (setq-default track-eol                       t )  ; 在行尾上下移動時保持在行尾
 (setq-default kill-whole-line                 t )  ; 在行首使用C-k時，同時刪除該行
 (setq-default global-font-lock-mode           t )  ; 啟用全域語法高亮
@@ -66,7 +68,6 @@
 (setq-default completion-ignore-case          t )  ; 自動補全忽略大小寫
 (setq-default scroll-preserve-screen-position t )  ;
 (setq-default minibuffer-electric-default-mode t ) ; 啟用部份補全
-(setq-default view-read-only t )		   ; 開啟惟讀檔時啟用 view-mode
 
 (cua-mode                   t )         ; 啟用 cua-mode
 (setq-default cua-enable-cua-keys nil )	; 不使用 cua-mode 裡的按鍵
