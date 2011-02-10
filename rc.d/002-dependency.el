@@ -188,6 +188,8 @@
 (require* 'pop3)			  ; Post Office Protocol (RFC 1460) interface
 (require* 'gnus)			  ; a newsreader for GNU Emacs
 (require* 'password-cache)		  ; Read passwords, possibly using a password cache
+(require* 'server)			  ; Lisp code for GNU Emacs running as server process
+
 
 
 

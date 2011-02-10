@@ -6,10 +6,6 @@
 (setq-default debug-on-error     nil )
 (setq-default custom-file "~/.emacs.d/rc.d/custom.el")
 
-;;;;;;; start server for emacsclient
-(when (require 'server nil 'noerror)
-  (unless (server-running-p)
-    (server-start)))
 
 ;;;;;;; 運行環境辨別
 (defvar mac-p     (eq system-type 'darwin))
@@ -26,8 +22,8 @@
 (let ((default-directory "~/.emacs.d/lisp/"))
   (normal-top-level-add-subdirs-to-load-path))
 ;; FIXME: NoUSE?
-(let ((default-directory "~/.emacs.d/local-lisp/"))
-  (normal-top-level-add-subdirs-to-load-path))
+;; (let ((default-directory "~/.emacs.d/local-lisp/"))
+;;   (normal-top-level-add-subdirs-to-load-path))
 
 
 ;;;;;; Functions
@@ -49,37 +45,45 @@
 	   (insert "]\n"))))
      require-result))
 
-(defmacro requiref (feature &optional file)
-  "*Try to require FEATURE, but don't signal an error if `require' fails."
-  `(let ((require-result (require ,feature ,file 'noerror)))
-     (with-current-buffer (get-buffer-create "*Loading Config Log*")
-       (let* ((startup-log-format-string-prefix "\t Loading %-20s\t <-------------------------\t\t [")
-	      (startup-log-format-string-postfix "%s")
-	      (startup-status (if require-result "SUCCESS" "FAILED"))
-	      (startup-status-face `(face (:foreground
-					   ,(if require-result "green" "red")))))
-	 (insert (format startup-log-format-string-prefix ,feature))
-	 (let ((start-pos (point)))
-	   (insert (format startup-log-format-string-postfix startup-status))
-	   (add-text-properties start-pos (point) startup-status-face)
-	   (insert "]\n"))))
-     require-result))
+;; (defmacro requiref (feature &optional file)
+;;   "*Try to require FEATURE, but don't signal an error if `require' fails."
+;;   `(let ((require-result (require ,feature ,file 'noerror)))
+;;      (with-current-buffer (get-buffer-create "*Loading Config Log*")
+;;        (let* ((startup-log-format-string-prefix "\t Loading %-20s\t <-------------------------\t\t [")
+;;	      (startup-log-format-string-postfix "%s")
+;;	      (startup-status (if require-result "SUCCESS" "FAILED"))
+;;	      (startup-status-face `(face (:foreground
+;;					   ,(if require-result "green" "red")))))
+;;	 (insert (format startup-log-format-string-prefix ,feature))
+;;	 (let ((start-pos (point)))
+;;	   (insert (format startup-log-format-string-postfix startup-status))
+;;	   (add-text-properties start-pos (point) startup-status-face)
+;;	   (insert "]\n"))))
+;;      require-result))
 
 ;;;; Extra font-lock
 (font-lock-add-keywords 'emacs-lisp-mode
 			'(("(\\(require\\*\\)\\s [ \t']*\\(\\sw+\\)?"
 			   (1 font-lock-keyword-face)
 			   (2 font-lock-constant-face nil t))
-			  ("(\\(requiref\\)\\s [ \t']*\\(\\sw+\\)?"
-			   (1 font-lock-keyword-face)
-			   (2 font-lock-constant-face nil t))
+			  ;; ("(\\(requiref\\)\\s [ \t']*\\(\\sw+\\)?"
+			  ;;  (1 font-lock-keyword-face)
+			  ;;  (2 font-lock-constant-face nil t))
 			  ))
 
 
 ;; Load external config files
+;; (let ((init-folder "~/.emacs.d/rc.d"))
+;;   (if (file-readable-p init-folder)
+;;       (dolist (config-file (directory-files init-folder t ".*\.elc?$"))
+;;	;;(load-file config-file)
+;;	(requiref (intern (file-name-sans-extension (file-name-nondirectory config-file))))
+;;	)))
+
 (let ((init-folder "~/.emacs.d/rc.d"))
   (if (file-readable-p init-folder)
       (dolist (config-file (directory-files init-folder t ".*\.elc?$"))
-	;;(load-file config-file)
-	(requiref (intern (file-name-sans-extension (file-name-nondirectory config-file))))
-	)))
+	(let* ((feature (file-name-sans-extension (file-name-nondirectory config-file)))
+	       (loading-result (require (intern feature) nil 'noerror)))
+	  (with-current-buffer (get-buffer-create "*Loading Config Log*")
+	    (insert (format "\t Loading %-20s\t \n" (concat feature ".el"))))))))
