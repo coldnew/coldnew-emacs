@@ -38,5 +38,5 @@
 		 '(left   . 100))
 		default-frame-alist))))
 
-(provide '012-display)
-;; 012-display.el ends here.
+(provide '013-display)
+;; 013-display.el ends here.

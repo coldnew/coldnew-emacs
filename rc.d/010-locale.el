@@ -14,5 +14,5 @@
 (setq system-time-locale      "en_US" ) ; 設定時間顯示使用英文
 
 
-(provide '009-locale)
-;;; 009-locale.el ends here
+(provide '010-locale)
+;;; 010-locale.el ends here

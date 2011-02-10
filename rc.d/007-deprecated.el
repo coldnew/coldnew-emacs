@@ -300,5 +300,5 @@ to browser. If a region is active (a phrase), lookup that phrase."
 
 
 
-(provide '006-deprecated)
-;; 006-deprecated.el ends here.
+(provide '007-deprecated)
+;; 007-deprecated.el ends here.

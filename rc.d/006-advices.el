@@ -79,5 +79,5 @@ line instead."
 
 
 
-(provide '005-advices)
-;; 005-advices.el ends here.
+(provide '006-advices)
+;; 006-advices.el ends here.

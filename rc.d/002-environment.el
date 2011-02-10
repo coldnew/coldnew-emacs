@@ -1,4 +1,11 @@
 ;;
+;;;;;;; 運行環境辨別
+(defvar mac-p     (eq system-type 'darwin))
+(defvar linux-p   (and (eq system-type 'gnu/linux) (not mac-p)))
+(defvar cygwin-p  (eq system-type 'cygwin))
+(defvar windows-p (eq system-type 'windows-nt))
+(defvar emacs23-p (equal emacs-major-version 23))
+(defvar emacs24-p (equal emacs-major-version 24))
 
 (cond
  (mac-p		;; If running on Mac OSX
@@ -11,8 +18,7 @@
  (windows-p	;; If running in Windows
   )
  (t		;; Default is Linux
-  (add-to-list 'exec-path "~/.emacs.d/lisp/gccsense/bin/")
-
+  (require* 'site-gentoo)
   )
  )
 
@@ -26,5 +32,5 @@
 (setq ac-comphist-file "~/.emacs.d/var/cache/auto-complete.cache")
 
 
-(provide '001-environment)
-;; 001-environment.el ends here.
+(provide '002-environment)
+;; 002-environment.el ends here.
