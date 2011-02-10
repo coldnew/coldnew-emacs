@@ -108,14 +108,14 @@
 
 (vim:defcmd vim:cmd-tab-next (count argument nonrepeatable)
   ""
-  ;;; BUG:
-  ;;      when elscreen-display-screen-number is t, can't use 0gt go to the first tab
-  ;;      vim:motion-beginning-of-line-or-digit-argument may cause this problem
   (if elscreen-display-screen-number
-      (cond
-       (argument (elscreen-goto (string-to-number argument)))
-       (count (elscreen-goto count))
-       (t (elscreen-next)))
+      (progn
+	(if (string= real-last-command "vim:motion-beginning-of-line-or-digit-argument")
+	    (setq count 0))
+	(cond
+	 (argument (elscreen-goto (string-to-number argument)))
+	 (count  (elscreen-goto count))
+	 (t (elscreen-next))))
     ;; If tab does not display number, do the same as vim's :tabnext
     (cond
      (argument (dotimes (dummy (string-to-number argument))
@@ -127,14 +127,14 @@
 
 (vim:defcmd vim:cmd-tab-previous (count argument nonrepeatable)
   ""
-  ;;; BUG:
-  ;;      when elscreen-display-screen-number is t, can't use 0gT go to the first tab
-  ;;      vim:motion-beginning-of-line-or-digit-argument may cause this problem
   (if elscreen-display-screen-number
-      (cond
-       (argument (elscreen-goto (string-to-number argument)))
-       (count (elscreen-goto count))
-       (t (elscreen-previous)))
+      (progn
+	(if (string= real-last-command "vim:motion-beginning-of-line-or-digit-argument")
+	    (setq count 0))
+	(cond
+	 (argument (elscreen-goto (string-to-number argument)))
+	 (count (elscreen-goto count))
+	 (t (elscreen-previous))))
     ;; If tab does not display number, do the same as vim's :tabprevious
     (cond
      (argument (dotimes (dummy (string-to-number argument))
@@ -151,6 +151,7 @@
 (vim:nmap (kbd "gT") 'vim:cmd-tab-previous)
 (vim:nmap (kbd "C-<prior>") 'vim:cmd-tab-previous)
 
+(vim:mmap (kbd "gt") 'vim:cmd-tab-next)
 ;; Insert map
 (vim:imap (kbd "C-<next>") 'vim:cmd-tab-next)
 (vim:imap (kbd "C-<prior>") 'vim:cmd-tab-previous)

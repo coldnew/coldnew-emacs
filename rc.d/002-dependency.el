@@ -3,26 +3,6 @@
 (eval-when-compile (require 'cl))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 (require* 'ac-anything)			  ; Auto Complete with Anything
 (require* 'ac-company)			  ; Auto-Complete with company-mode
 (require* 'advice)			  ;

@@ -8,22 +8,31 @@
 ;; so I don't need this prefix
 (elscreen-set-prefix-key "")
 
-;; Make elscreen automatically create new screen when only one tab there
-(defmacro elscreen-create-automatically (ad-do-it)
-  `(if (not (elscreen-one-screen-p))
-       ,ad-do-it
-     (elscreen-create)
-     (elscreen-notify-screen-modification 'force-immediately)
-     (elscreen-message "New screen is automatically created")))
+;; ;; Create all the elscreen-tab at start up
+;; (if (elscreen-one-screen-p)
+;;     (dotimes (value 9) (elscreen-create))
+;;   ;; goto first tab (default 0)
+;;   (elscreen-goto 0))
 
-(defadvice elscreen-next (around elscreen-create-automatically activate)
-  (elscreen-create-automatically ad-do-it))
+;; Do not show Kill-icon on tab
+(setq elscreen-tab-display-kill-screen nil)
 
-(defadvice elscreen-previous (around elscreen-create-automatically activate)
-  (elscreen-create-automatically ad-do-it))
+;; ;; Make elscreen automatically create new screen when only one tab there
+;; (defmacro elscreen-create-automatically (ad-do-it)
+;;   `(if (not (elscreen-one-screen-p))
+;;        ,ad-do-it
+;;      (elscreen-create)
+;;      (elscreen-notify-screen-modification 'force-immediately)
+;;      (elscreen-message "New screen is automatically created")))
 
-(defadvice elscreen-toggle (around elscreen-create-automatically activate)
-  (elscreen-create-automatically ad-do-it))
+;; (defadvice elscreen-next (around elscreen-create-automatically activate)
+;;   (elscreen-create-automatically ad-do-it))
+
+;; (defadvice elscreen-previous (around elscreen-create-automatically activate)
+;;   (elscreen-create-automatically ad-do-it))
+
+;; (defadvice elscreen-toggle (around elscreen-create-automatically activate)
+;;   (elscreen-create-automatically ad-do-it))
 
 
 
