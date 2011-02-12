@@ -297,6 +297,58 @@ to browser. If a region is active (a phrase), lookup that phrase."
   (delete-other-frames))                                      ; ...and remove other frames, too.
 
 
+;; remove duplicate lines in a buffer
+(defun remove-duplicate-lines()
+  "Remove duplicate lines in a buffer"
+  (interactive)
+  (save-excursion
+    (let
+	((lines_hash (make-hash-table :test #'equal))
+	 (numlines (count-lines 1 (progn (end-of-buffer)(point)))))
+
+      ;; Make a hash table with key=line
+      ;;     and value=the smallest line number that contains a line.
+      (loop for i from numlines downto 1 do
+	    (let ((line nil))
+	      (goto-line i)
+	      (setf line (get-current-line))
+	      ;; Want to store the smallest line number for
+	      ;;     a particular line.
+	      (setf (gethash line lines_hash) i)))
+      ;; If a line has a line number not equal to the smallest line, kill it.
+      (loop for i from numlines downto 1 do
+	    (let ((line nil))
+	      (goto-line i)
+	      (setf line (get-current-line))
+	      (beginning-of-line)
+	      (if (not (equal line ""))
+		  (if (not (=
+			    (let ((min-line (gethash line lines_hash)))
+			      (if (null min-line)
+				  -1
+				min-line))
+			    i))
+		      (kill-line 1))))))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;; Dead emacs Config <- some old emacs config I use, all in comment and won't use again
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; 移除掉的預設功能
+;;(setq-default visible-bell                  t ) ; 關閉出錯時的警告鈴聲
+;;(setq-default inhibit-startup-message       t ) ; 關閉 Emacs 啟動時的螢幕閃爍
+;;(setq-default gnus-inhibit-startup-message  t ) ; 去掉 GNU 引導介面
+;;(setq-default ring-bell-function (lambda () t)) ; 關閉 console 下的螢幕閃爍
+;;;; 基本外觀設置
+;;(menu-bar-mode          t ) ; 移除菜單欄
+;;(blink-cursor-mode     -1 )    ; 關閉游標閃爍
+;;(scroll-bar-mode       -1 )    ; 去掉滾動條，使用鼠標滾輪
+;;(tool-bar-mode         -1 )    ; 去掉工具欄
+;;(transient-mark-mode    t )    ; 高亮顯示要拷貝的區域
+
+
+
+
 
 
 

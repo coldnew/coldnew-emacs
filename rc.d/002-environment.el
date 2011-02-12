@@ -7,20 +7,26 @@
 (defvar emacs23-p (equal emacs-major-version 23))
 (defvar emacs24-p (equal emacs-major-version 24))
 
+;;;; OS independent setting
 (cond
- (mac-p		;; If running on Mac OSX
+ ;; If running on Mac OSX
+ (mac-p
   ;; Add binary PATH for Mac OSX
   (add-to-list 'exec-path "~/Gentoo/bin") ; Gentoo prefix
   (add-to-list 'exec-path "/usr/local/bin/")
   (add-to-list 'exec-path "/opt/local/bin/")
   (add-to-list 'exec-path "/usr/bin/")
   (add-to-list 'exec-path "/usr/X11/bin/"))
- (windows-p	;; If running in Windows
+ ;; If running in Windows
+ (windows-p
   )
- (t		;; Default is Linux
-  (require* 'site-gentoo)
-  )
- )
+ ;; Default is Linux
+ (t
+  ))
+
+;;;; Global Setting
+(setenv "GPG_AGENT_INFO" nil)
+
 
 ;;;; Following setting must run before load the libraries.
 

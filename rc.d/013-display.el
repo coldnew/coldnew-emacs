@@ -1,8 +1,14 @@
 ;;;; Setting the window width and height
 
+;;;; Resolution
+(defvar resolution-1280x800-p  (and (= (display-pixel-width) 1280) (= (display-pixel-height) 800)))
+(defvar resolution-1280x1024-p (and (= (display-pixel-width) 1280) (= (display-pixel-height) 1024)))
+(defvar resolution-1920x1080-p (and (= (display-pixel-width) 1920) (= (display-pixel-height) 1080)))
+
 (cond
  ;; 1280 * 800
- ((and (= (display-pixel-width) 1280) (= (display-pixel-height) 800))
+ (resolution-1280x800-p
+  ;;  (and (= (display-pixel-width) 1280) (= (display-pixel-height) 800))
   (setq default-frame-alist
 	(append (list
 		 '(width  . 114)
@@ -11,7 +17,8 @@
 		 '(left   . 300))
 		default-frame-alist)))
  ;; 1280 * 1024
- ((and (= (display-pixel-width) 1280) (= (display-pixel-height) 1024))
+ (resolution-1280x1024-p
+  ;; (and (= (display-pixel-width) 1280) (= (display-pixel-height) 1024))
   (setq default-frame-alist
 	(append (list
 		 '(width  . 114)
@@ -20,7 +27,8 @@
 		 '(left   . 300))
 		default-frame-alist)))
  ;; 1920 * 1080
- ((and (= (display-pixel-width) 1920) (= (display-pixel-height) 1080))
+ (;;resolution-1920x1080-p
+  (and (= (display-pixel-width) 1920) (= (display-pixel-height) 1080))
   (setq default-frame-alist
 	(append (list
 		 '(width  . 134)

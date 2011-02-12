@@ -111,7 +111,6 @@
 	xcscope+
 	yasnippet
 	zencoding-mode
-
 	;;  session
 	;; emacs-w3m
 	;;color-theme			;

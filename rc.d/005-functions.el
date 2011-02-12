@@ -1,21 +1,34 @@
 ;;
 (eval-when-compile (require 'cl))
 
+(defun switch-to-scratch-and-back ()
+  "Toggle between *scratch* buffer and the current buffer.
+     If the *scratch* buffer does not exist, create it."
+  (interactive)
+  (let ((scratch-buffer-name (get-buffer-create "*scratch*")))
+    (if (equal (current-buffer) scratch-buffer-name)
+	(switch-to-buffer (other-buffer))
+      (progn
+	(switch-to-buffer scratch-buffer-name)
+	(unless (equal major-mode 'lisp-interaction-mode)
+	  (lisp-interaction-mode))))))
+
 (defun sudo-edit (&optional arg)
+  "Edit file with sudo in emacs"
   (interactive "p")
   (if (or arg (not buffer-file-name))
       (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 (defun move-buffer-file (dir)
-  "Moves both current buffer and file it's visiting to DIR." (interactive "DNew directory: ")
+  "Moves both current buffer and file it's visiting to DIR."
+  (interactive "DNew directory: ")
   (let* ((name (buffer-name))
 	 (filename (buffer-file-name))
 	 (dir
 	  (if (string-match dir "\\(?:/\\|\\\\)$")
 	      (substring dir 0 -1) dir))
 	 (newname (concat dir "/" name)))
-
     (if (not filename)
 	(message "Buffer '%s' is not visiting a file!" name)
       (progn
@@ -23,7 +36,6 @@
 	(delete-file filename)
 	(set-visited-file-name newname)
 	(set-buffer-modified-p nil)	t))))
-
 
 (defun rename-current-buffer-and-file (newname)
   "Renames both current buffer and file it's visiting to NEW-NAME."
@@ -136,6 +148,7 @@
 	 "ASCII Chart")
       (with-output-to-temp-buffer "ASCII Chart"
 	(princ chart)))))
+
 
 
 

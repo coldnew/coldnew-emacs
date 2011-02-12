@@ -1,6 +1,11 @@
 ;;
 (eval-when-compile (require 'cl))
 
+(defadvice switch-to-buffer (after switch-to-buffer activate)
+  "After switch-to-buffer, if tht buffer is Fundamental-mode, change it to lisp-interaction-mode"
+  (if (equal major-mode 'fundamental-mode)
+      (lisp-interaction-mode)))
+
 (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
   (flet ((process-list ())) ad-do-it))

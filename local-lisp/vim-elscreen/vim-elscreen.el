@@ -5,7 +5,7 @@
 ;; Author: coldnew coldnew.tw@gmail.com
 ;; Keywords:
 ;; X-URL: http://www.emacswiki.org/cgi-bin/wiki/download/vim-elscreen.el
-(defconst vim-elscreen-version "0.2")
+(defconst vim-elscreen-version "0.3")
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -35,13 +35,6 @@
 
 (require 'vim)
 (require 'elscreen)
-
-;;;;##########################################################################
-;;;;  User Options, Variables
-;;;;##########################################################################
-
-
-
 
 ;;;;;;;; Opening a new page
 
@@ -90,7 +83,7 @@
   "Close current tab page. However the buffer still alive."
   (elscreen-kill))
 
-(vim:defcmd vim:cmd-tab-close-f (nonrepeatable)
+(vim:defcmd vim:cmd-tab-close-q (nonrepeatable)
   "Close current tab page. and also kill current buffer."
   (kill-buffer)
   (elscreen-kill))
@@ -99,7 +92,7 @@
   "Close all other tabpages. Do not kill other buffers"
   (elscreen-kill-others))
 
-(vim:defcmd vim:cmd-tab-close-other-f (nonrepeatable)
+(vim:defcmd vim:cmd-tab-close-other-q (nonrepeatable)
   "Close all other tabpages and alos kill other buffers"
   (elscreen-kill-others)
   (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
@@ -165,11 +158,11 @@
 (vim:emap "tab" 'vim:cmd-tab-command)
 (vim:emap "tabclose" 'vim:cmd-tab-close)
 (vim:emap "tabc" "tabclose")
-(vim:emap "tabclose!" 'vim:cmd-tab-close-f)
+(vim:emap "tabclose!" 'vim:cmd-tab-close-q)
 (vim:emap "tabc!" "tabclose!")
 (vim:emap "tabonly" 'vim:cmd-tab-close-other)
 (vim:emap "tabo" "tabonly")
-(vim:emap "tabonly!" 'vim:cmd-tab-close-other-f)
+(vim:emap "tabonly!" 'vim:cmd-tab-close-other-q)
 (vim:emap "tabo!" "tabonly!")
 (vim:emap "tabnext" 'vim:cmd-tab-next)
 (vim:emap "tabn" "tabnext")

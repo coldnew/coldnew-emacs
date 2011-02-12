@@ -189,10 +189,8 @@
 (require* 'gnus)			  ; a newsreader for GNU Emacs
 (require* 'password-cache)		  ; Read passwords, possibly using a password cache
 (require* 'server)			  ; Lisp code for GNU Emacs running as server process
-
-
-
-
+(require* 'epa-file)			  ; the EasyPG Assistant, transparent file encryption
+(require* 'site-gentoo)			  ; site initialisation for Gentoo-installed packages
 
 
 ;;(require* 'anything-emms)		  ; Integrate EMMS with `anything.el'

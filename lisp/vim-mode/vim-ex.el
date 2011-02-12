@@ -128,8 +128,14 @@ except for the info message."
       (add-to-list 'vim:ex-local-commands (cons keys command)))))
 
 (defun vim:ex-binding (cmd)
-  "Returns the current binding of `cmd' or nil."
-  (if (not (stringp cmd)) cmd
+  "Returns a pair the current binding of `cmd'. If no such
+binding exists then nil is returned. If no such binding exists
+but `cmd' is the beginning of more than one possible completion
+the symbol 'incomplete is returned."
+  (cond
+   ((not (stringp cmd)) cmd)
+   ((zerop (length cmd)) nil)
+   (t
     (with-current-buffer vim:ex-current-buffer
       (let* ((cmds (vim:ex-complete-command cmd nil t))
 	     (c (cond
@@ -140,12 +146,16 @@ except for the info message."
 		 ;; one exact completion found
 		 ((member cmd cmds) cmd)
 		 ;; more than one inexact completion found
-		 (t nil))))
+		 (t 'incomplete))))
       
 	(while (and c (stringp c))
 	  (setq c (or (cdr-safe (assoc c vim:ex-local-commands))
 		      (cdr-safe (assoc c vim:ex-commands)))))
-	c))))
+	c)))))
+
+(defsubst vim:ex-binding-p (binding)
+  "Returns t iff the given binding non-nil and not 'incomplete."
+  (and binding (not (eq binding 'incomplete))))
 
 (defun vim:ex-delete-backward-char (n)
   "Delete the previous `n' characters. If ex-buffer is empty,
@@ -192,7 +202,7 @@ cancel ex-mode."
 (defun vim:ex-get-arg-handler (cmd)
   "Returns the argument handler of command `cmd'."
   (let ((cmd (vim:ex-binding cmd)))
-    (if (not cmd)
+    (if (not (vim:ex-binding-p cmd))
 	(ding)
       (let* ((arg-type (vim:cmd-arg cmd))
 	     (arg-handler (assoc arg-type vim:argument-handlers-alist)))
@@ -216,14 +226,7 @@ ex-mode starts."
 This function should be called whenever the minibuffer is exited."
   (when vim:ex-info-length
     (with-current-buffer vim:ex-minibuffer
-      (let ((len vim:ex-info-length))
-	(remove-text-properties (minibuffer-prompt-end)
-				(point-max)
-				'(point-entered nil))
-	(setq vim:ex-info-string nil)
-	(setq vim:ex-info-length nil)
-	(delete-char (- (point-max) len)
-		     (point-max)))))
+      (vim:ex-set-info nil)))
   (setq vim:ex-minibuffer nil))
   
 
@@ -236,10 +239,10 @@ This function should be called whenever the minibuffer is exited."
 
 (defun vim:ex-stop-session ()
   "Deinitializes the minibuffer when ex-mode is stopped."
-  (vim:ex-teardown)
   (let ((arg-deactivate (and vim:ex-arg-handler (vim:arg-handler-deactivate vim:ex-arg-handler))))
     (when arg-deactivate (funcall arg-deactivate)))
-  (remove-hook 'after-change-functions #'vim:ex-change t))
+  (remove-hook 'after-change-functions #'vim:ex-change t)
+  (vim:ex-teardown))
   
 
 (defun vim:ex-mode-exit ()
@@ -281,11 +284,19 @@ argument handler."
 	    (when arg-deactivate (funcall arg-deactivate)))
 	  ;; ... activate and store new handler ...
 	  (let ((cmd (vim:ex-binding cmd)))
-	    (setq vim:ex-arg-handler
-		  (and cmd (vim:ex-get-arg-handler cmd)))
-	    (let ((arg-activate (and vim:ex-arg-handler
-				     (vim:arg-handler-activate vim:ex-arg-handler))))
-	      (when arg-activate (funcall arg-activate)))))
+	    (cond
+	     ((eq cmd 'incomplete)
+	      (vim:ex-set-info "Incomplete command"))
+	     ((and (not cmd)
+		   (not (zerop (length vim:ex-cmd))))
+	      (vim:ex-set-info "Unknown command"))
+	     (t
+	      (vim:ex-set-info nil)
+	      (setq vim:ex-arg-handler
+		    (and cmd (vim:ex-get-arg-handler cmd)))
+	      (let ((arg-activate (and vim:ex-arg-handler
+				       (vim:arg-handler-activate vim:ex-arg-handler))))
+		(when arg-activate (funcall arg-activate)))))))
        
 	 ((or (not (string= vim:ex-arg arg))
 	      (not (equal (cons beg end) vim:ex-range)))
@@ -328,7 +339,7 @@ has been pressed."
                  (zerop (length spaces))
                  (zerop (length arg)))
 	(setq cmd (vim:ex-binding cmd))
-	(if (null cmd) (ding)
+	(if (not (vim:ex-binding-p cmd)) (ding)
 	  (setq vim:ex-cmd cmd)
 	  (let ((result (vim:ex-complete-argument nil nil nil)))
 	    (when result (insert result))))))))
@@ -336,6 +347,7 @@ has been pressed."
 
 (defun vim:ex-complete (cmdline predicate flag)
   "Called to complete an object in the ex-buffer."
+  (vim:ex-set-info nil)
   (multiple-value-bind (range cmd spaces arg beg end) (vim:ex-split-cmdline cmdline)
     (setq vim:ex-cmd cmd)
 
@@ -383,9 +395,11 @@ has been pressed."
   "Called to complete the current argument w.r.t. the current command."
   (let* ((cmd vim:ex-cmd)
 	 (arg-handler (vim:ex-get-arg-handler cmd)))
-    (funcall (or (vim:arg-handler-complete arg-handler)
-		 #'vim:ex-complete-text-argument)
-	     arg predicate flag)))
+    (if arg-handler
+	(funcall (or (vim:arg-handler-complete arg-handler)
+		     #'vim:ex-complete-text-argument)
+		 arg predicate flag)
+      (vim:ex-complete-text-argument arg predicate flag))))
 
 
 (defun vim:ex-complete-file-argument (arg predicate flag)
@@ -468,24 +482,28 @@ has been pressed."
 
       (with-current-buffer vim:ex-current-buffer
         (cond
-         (cmd (case (vim:cmd-type cmd)
-                ('complex
-                 (if (vim:cmd-arg-p cmd)
-                     (funcall cmd :motion motion :argument arg)
-                   (funcall cmd :motion motion)))
-                ('simple
-                (when end
-                  (error "Command does not take a range: %s" vim:ex-cmd))
-                (if (vim:cmd-arg-p cmd)
-                    (if (vim:cmd-count-p cmd)
-                        (funcall cmd :count beg :argument arg)
-                      (funcall cmd :argument arg))
-                  (if (vim:cmd-count-p cmd)
-                      (funcall cmd :count (or count (and arg (string-to-number arg))))
-                    (funcall cmd))))
-                (t (error "Unexpected command-type bound to %s" vim:ex-cmd))))
-         (beg (vim:motion-go-to-first-non-blank-beg :count (or end beg)))
-         (t (ding)))))))
+         ((vim:ex-binding-p cmd)
+	  (case (vim:cmd-type cmd)
+	    ('complex
+	     (if (vim:cmd-arg-p cmd)
+		 (funcall cmd :motion motion :argument arg)
+	       (funcall cmd :motion motion)))
+	    ('simple
+	     (when end
+	       (error "Command does not take a range: %s" vim:ex-cmd))
+	     (if (vim:cmd-arg-p cmd)
+		 (if (vim:cmd-count-p cmd)
+		     (funcall cmd :count beg :argument arg)
+		   (funcall cmd :argument arg))
+	       (if (vim:cmd-count-p cmd)
+		   (funcall cmd :count (or count (and arg (string-to-number arg))))
+		 (funcall cmd))))
+	    (t (error "Unexpected command-type bound to %s" vim:ex-cmd))))
+         (beg
+	  (vim:motion-go-to-first-non-blank-beg :count (or end beg)))
+         (t
+	  (vim:ex-set-info nil)
+	  (error "Unknown command: %s" vim:ex-cmd)))))))
     
 
 ;; parser for ex-commands

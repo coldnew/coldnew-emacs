@@ -1,11 +1,5 @@
 ;;
 (eval-when-compile (require 'cl))
-(eval-after-load 'rcirc '(load "~/.emacs.d/.authinfo")) ; Password Settings in it
-
-;;;;;; Persional Info
-(setq rcirc-default-nick "coldnew")
-(setq rcirc-default-user-name "coldnew")
-(setq rcirc-default-full-name "Yen-Chin,Lee")
 
 ;;;;;; Settings
 ;; for debugging.
