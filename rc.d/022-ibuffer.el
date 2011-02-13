@@ -115,11 +115,11 @@
   (kill-buffer "*Ibuffer*"))
 (ad-activate 'ibuffer-quit)
 
-;; visiting a file in ibuffer makes it "fullscreen"
-(defadvice ibuffer-visit-buffer (after ibuffer-fs-after-visit (arg))
-  "Delete other windows after visiting buffer"
-  (delete-other-windows))
-(ad-activate 'ibuffer-visit-buffer)
+;; ;; visiting a file in ibuffer makes it "fullscreen"
+;; (defadvice ibuffer-visit-buffer (after ibuffer-fs-after-visit (arg))
+;;   "Delete other windows after visiting buffer"
+;;   (delete-other-windows))
+;; (ad-activate 'ibuffer-visit-buffer)
 
 ;; Use human readable Size column instead of original one
 (define-ibuffer-column size-h

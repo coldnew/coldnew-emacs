@@ -22,9 +22,18 @@
 ;; If this file is C source file, insert information
 (if (equal (yas/file-ext) "c")
     (yas/expand-snippet
-     "                                                                     \n"
-     "                                                                     \n"
-     "$0                                                                   \n"
-     "                                                                     \n"
-     "/* `(yas/file)` ends here. */                                        \n"
-     ))
+     (concat
+      "                                                                     \n"
+      "                                                                     \n"
+      "$0                                                                   \n"
+      "                                                                     \n"
+      "/* `(yas/file)` ends here. */                                        \n"
+      )))
+
+;; After create C-header file, create C-source file (only if it does not exist)
+(let ((c-source-file (concat (yas/dir) (yas/file-sans) ".c"))
+      (c-header-buffer (current-buffer)))
+  (if (not (file-exists-p c-source-file))
+      (progn
+	(find-file c-source-file)
+	(switch-to-buffer c-header-buffer))))

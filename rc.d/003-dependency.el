@@ -31,7 +31,7 @@
 (require* 'auto-complete-etags)		  ;
 (require* 'auto-complete-extension)	  ;
 (require* 'auto-dictionary)		  ;
-(require* 'bbdb)			; Big Brother Database
+(require* 'bbdb)			  ; Big Brother Database
 (require* 'c-eldoc)			  ;
 (require* 'cc-mode)			  ;
 (require* 'cedet)			  ;
@@ -108,7 +108,7 @@
 (require* 'lusty-explorer)		  ; A good explorer tools
 (require* 'magit)			  ;
 (require* 'midnight)			  ; Use midnight-mode to auto-clean buffers
-(require* 'mime)			; MIME library module
+(require* 'mime)			  ; MIME library module
 (require* 'mmm-auto)			  ; loading and enabling MMM Mode automatically
 (require* 'mmm-mode)			  ; Allow Multiple Major Modes in a buffer
 (require* 'multi-term)			  ;
@@ -191,6 +191,12 @@
 (require* 'server)			  ; Lisp code for GNU Emacs running as server process
 (require* 'epa-file)			  ; the EasyPG Assistant, transparent file encryption
 (require* 'site-gentoo)			  ; site initialisation for Gentoo-installed packages
+(require* 'env)				  ; functions to manipulate environment variables
+(require* 'layout-restore)		  ; keep window configuration as layout and restore it simply.
+(require* 'revive)			  ; x
+
+
+
 
 
 ;;(require* 'anything-emms)		  ; Integrate EMMS with `anything.el'

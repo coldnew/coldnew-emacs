@@ -16,8 +16,11 @@
 	     (when (and (buffer-file-name)
 			(not (file-exists-p (buffer-file-name)))
 			(= (point-max) 1))
-	       (insert "HEADER")
-	       (yas/expand))))
+	       (let ((header-snippet "HEADER"))
+		 (insert header-snippet)
+		 ;; if can't expand snippet, delete insert string
+		 (if (not (yas/expand))
+		     (backward-delete-char (1+ (length header-snippet))))))))
 
 ;;;;;; Functions
 (defun yas/dir ()

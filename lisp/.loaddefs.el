@@ -4277,59 +4277,6 @@ been implemented yet.  Partial support for SWITCH-FUNCTION now supported.
 
 ;;;***
 
-;;;### (autoloads (resume-windows see-you-again win-load-all-configurations
-;;;;;;  wipe-windows win-save-all-configurations win:startup-with-window
-;;;;;;  win:set-wc win-switch-to-window) "windows/windows" "windows/windows.el"
-;;;;;;  (19796 35693))
-;;; Generated autoloads from windows/windows.el
-
-(autoload 'win-switch-to-window "windows/windows" "\
-Switch window configurations to a buffer specified by keyboard.
-If calling from program, optional second argument WINDOW can specify
-the window number.
-
-\(fn ARG &optional WINDOW)" t nil)
-
-(autoload 'win:set-wc "windows/windows" "\
-(Windows low level internal) Set the NUM-th windows configuration.
-If Windows uses frame(Emacs 19), Select the NUM-th window frame.
-
-\(fn NUM)" nil nil)
-
-(autoload 'win:startup-with-window "windows/windows" "\
-Start up Emacs with window[1] selected.
-
-\(fn)" nil nil)
-
-(autoload 'win-save-all-configurations "windows/windows" "\
-Save all window configurations into the configuration file.
-
-\(fn)" t nil)
-
-(autoload 'wipe-windows "windows/windows" "\
-Kill all buffers.  Optional argument NO-ASK non-nil skips query.
-
-\(fn &optional NO-ASK)" t nil)
-
-(autoload 'win-load-all-configurations "windows/windows" "\
-Load all window configurations from the configuration file.
-Non-nil for optional argument PRESERVE keeps all current buffers.
-
-\(fn &optional PRESERVE)" t nil)
-
-(autoload 'see-you-again "windows/windows" "\
-Save all of the window configurations and kill-emacs.
-
-\(fn)" t nil)
-
-(autoload 'resume-windows "windows/windows" "\
-Restore all window configurations reading configurations from a file.
-Non-nil for optional argument PRESERVE keeps current buffers.
-
-\(fn &optional PRESERVE)" t nil)
-
-;;;***
-
 ;;;### (autoloads (zencoding-preview zencoding-expand-yas zencoding-mode
 ;;;;;;  zencoding-expand-line) "zencoding-mode/zencoding-mode" "zencoding-mode/zencoding-mode.el"
 ;;;;;;  (19796 35698))
@@ -4383,7 +4330,8 @@ accept it or skip it.
 
 ;;;***
 
-;;;### (autoloads nil nil ("redo+/redo+.el") (19797 17055 925238))
+;;;### (autoloads nil nil ("layout-restore/layout-restore.el" "redo+/redo+.el")
+;;;;;;  (19798 44504 859925))
 
 ;;;***
 

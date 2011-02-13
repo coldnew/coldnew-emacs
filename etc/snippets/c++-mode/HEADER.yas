@@ -6,24 +6,11 @@
 # --
 
 ;; If this file is C++ header file, insert Guard Macro
-(if (equal (yas/file-ext) "hpp")
+(if (or (equal (yas/file-ext) "hpp")
+	(equal (yas/file-ext) "h"))
     (yas/expand-snippet
      (concat
       "#ifndef ${1:__`(yas/file-sans-upcase)`_HPP__}                        \n"
-      "#define $1                                                           \n"
-      "                                                                     \n"
-      "$0                                                                   \n"
-      "                                                                     \n"
-      "                                                                     \n"
-      "#endif /* $1 */                                                      \n"
-      "/* `(yas/file)` ends here. */                                        \n"
-      )))
-
-;; If this file is C++ header file, insert Guard Macro
-(if (equal (yas/file-ext) "h")
-    (yas/expand-snippet
-     (concat
-      "#ifndef ${1:__`(yas/file-sans-upcase)`_H__}                          \n"
       "#define $1                                                           \n"
       "                                                                     \n"
       "$0                                                                   \n"
@@ -37,9 +24,18 @@
 (if (or (equal (yas/file-ext) "cpp")
 	(equal (yas/file-ext) "cc"))
     (yas/expand-snippet
-     "                                                                     \n"
-     "                                                                     \n"
-     "$0                                                                   \n"
-     "                                                                     \n"
-     "/* `(yas/file)` ends here. */                                        \n"
-     ))
+     (concat
+      "                                                                     \n"
+      "                                                                     \n"
+      "$0                                                                   \n"
+      "                                                                     \n"
+      "/* `(yas/file)` ends here. */                                        \n"
+      )))
+
+;; After create C++-header file, create C++-source file (only if it does not exist)
+(let ((cpp-source-file (concat (yas/dir) (yas/file-sans) ".cpp"))
+      (cpp-header-buffer (current-buffer)))
+  (if (not (file-exists-p cpp-source-file))
+      (progn
+	(find-file cpp-source-file)
+	(switch-to-buffer cpp-header-buffer))))

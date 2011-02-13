@@ -3,7 +3,7 @@
 # name: defun
 # key: defun
 # --
-(defun ${1:NAME} (${2})
+(defun ${1:NAME} (${2:OBJECT})
   "${3:DOCSTRING}"
   ${4:BODY}
   )

@@ -111,6 +111,10 @@
 	xcscope+
 	yasnippet
 	zencoding-mode
+	(:name layout-restore
+	       :type emacswiki)
+
+
 	;;  session
 	;; emacs-w3m
 	;;color-theme			;

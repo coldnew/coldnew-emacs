@@ -7,7 +7,7 @@
 (defvar emacs23-p (equal emacs-major-version 23))
 (defvar emacs24-p (equal emacs-major-version 24))
 
-;;;; OS independent setting
+;;;; OS independent environ setting
 (cond
  ;; If running on Mac OSX
  (mac-p
@@ -24,7 +24,7 @@
  (t
   ))
 
-;;;; Global Setting
+;;;; Global environment Setting
 (setenv "GPG_AGENT_INFO" nil)
 
 
