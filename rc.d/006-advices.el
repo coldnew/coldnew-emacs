@@ -6,9 +6,14 @@
   (if (equal major-mode 'fundamental-mode)
       (lisp-interaction-mode)))
 
-(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
+(defadvice kill-emacs (around no-query-kill-emacs activate)
   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
   (flet ((process-list ())) ad-do-it))
+
+(defadvice kill-emacs (around recompile-emacs-config activate)
+  "Before exit emacs, recompile emacs-config"
+  (let ((emacs-config-dir "~/.emacs.d/rc.d/"))
+    (byte-recompile-directory emacs-config-dir 0) ad-do-it))
 
 (defadvice kill-buffer (around kill-buffer-around-advice activate)
   "bury *scratch* or *Ibuffer* buffer instead of kill it "
