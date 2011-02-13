@@ -49,10 +49,10 @@
 
 	     ))
 ;; Keybinding
-(add-hook 'objc-mode-hook
-	  '(lambda ()
-	     ;;         (define-key objc-mode-map (kbd "C-c w") 'xcdoc:ask-search)
-	     ))
+;; (add-hook 'objc-mode-hook
+;;	  '(lambda ()
+;;	     ;;         (define-key objc-mode-map (kbd "C-c w") 'xcdoc:ask-search)
+;;	     ))
 
 
 
@@ -62,7 +62,9 @@
 
 ;;;;;; Mac OSX special Setting
 ;;; Those Funtcions for MacOs
-(when mac-p
+
+(cond
+ (mac-p
   (defun xcode:build-and-run ()
     (interactive)
     (do-applescript
@@ -92,11 +94,11 @@
   ;;                              userInfo:nil
   ;;                               repeats:YES];
   ;;
-  (obj-c-colons
-   (regexp . "^\\(\\s-*[^:]+\\):")
-   (justify . t)
-   (repeat . t)
-   (modes obj-c-mode))
+  ;; (obj-c-colons
+  ;;  (regexp . "^\\(\\s-*[^:]+\\):")
+  ;;  (justify . t)
+  ;;  (repeat . t)
+  ;;  (modes obj-c-mode))
 
   (add-to-list 'align-rules-list
 	       '(obj-c-colons
@@ -104,7 +106,7 @@
 		 (justify . t)
 		 (repeat . t)
 		 (modes obj-c-mode)))
-  )
+  ))
 
 ;;http://github.com/kurain/kurain-dotfiles/blob/162ba05b04e14ff232c54f23e0f96300a9215922/.emacs.d/conf/init-objc.el
 (provide 'lang-objc)

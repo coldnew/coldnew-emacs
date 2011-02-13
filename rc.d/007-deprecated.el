@@ -350,6 +350,16 @@ to browser. If a region is active (a phrase), lookup that phrase."
 
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;; Deprecated Functions
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (defun byte-compile-when-save()
+;;   "When save, recompile it"
+;;   (make-local-variable 'after-save-hook)
+;;   (add-hook 'after-save-hook
+;;	    (lambda ()
+;;	      (if (buffer-file-name)
+;;		  (byte-compile-file buffer-file-name)))))
 
 
 (provide '007-deprecated)

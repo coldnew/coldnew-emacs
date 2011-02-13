@@ -22,6 +22,13 @@
 		 (if (not (yas/expand))
 		     (backward-delete-char (1+ (length header-snippet))))))))
 
+;; (add-hook 'yas/minor-mode-hook
+;;	  '(lambda ()
+;;	     (vim:local-imap (vector vim:ESC-event) 'vim:skip-and-exit)))
+;; (defcmd vim:skip-and-exit ()
+;;   (yas/skip-and-clear)
+;;   (vim:insert-mode-exit))
+
 ;;;;;; Functions
 (defun yas/dir ()
   (file-name-directory (buffer-file-name)))

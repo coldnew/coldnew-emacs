@@ -24,8 +24,6 @@
 	     ;; Highlight common-lisp functions
 	     (highlight-cl-add-font-lock-keywords)
 	     ;; Hooks for emacs-lisp-mode
-	     ;;(byte-compile-when-save)	; bytecompile the elisp file after save;
-
 	     (remove-elc-when-visit)	; when visit elisp file, remove .elc extensioon
 	     (programming-common-hook)	; programming common hook
 	     ))
@@ -74,14 +72,6 @@
 	    (lambda ()
 	      (if (file-exists-p (concat buffer-file-name "c"))
 		  (delete-file (concat buffer-file-name "c"))))))
-
-(defun byte-compile-when-save()
-  "When save, recompile it"
-  (make-local-variable 'after-save-hook)
-  (add-hook 'after-save-hook
-	    (lambda ()
-	      (if (buffer-file-name)
-		  (byte-compile-file buffer-file-name)))))
 
 (provide 'lang-emacs-lisp)
 ;;; rc-emacs-lisp-mode.el ends here
