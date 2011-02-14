@@ -66,6 +66,7 @@
 				(name . "^\\*vc-*")
 				(mode . egg-status-buffer-mode)
 				(mode . egg-log-buffer-mode)
+				(mode . egg-commit-buffer-mode)
 				))
 	 ("Help" (or (mode . woman-mode)
 		     (mode . man-mode)
