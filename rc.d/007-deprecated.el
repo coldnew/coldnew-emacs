@@ -39,9 +39,6 @@
      ,@body))
 
 
-;; (defmacro require-maybe (feature &optional file)
-;;   "*Try to require FEATURE, but don't signal an error if `require' fails."
-;;   `(require ,feature ,file 'noerror))
 
 
 
@@ -296,6 +293,12 @@ to browser. If a region is active (a phrase), lookup that phrase."
 
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;; Deprecated Macros
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (defmacro require-maybe (feature &optional file)
+;;   "*Try to require FEATURE, but don't signal an error if `require' fails."
+;;   `(require ,feature ,file 'noerror))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
