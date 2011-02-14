@@ -9,7 +9,8 @@
 ;; do not switch to the status buffer in the same window
 (setq egg-switch-to-buffer t)
 
-;; kyebindings
+;;;;;;;; kyebindings
+;; all local-nmap use prefix M- ,this make me don't need to switch imap to press command
 (add-hook 'egg-status-buffer-mode-hook
 	  '(lambda ()
 	     (vim:local-nmap (kbd "M-s") 'egg-stage-untracked-files)
