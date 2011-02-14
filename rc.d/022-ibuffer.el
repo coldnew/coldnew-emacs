@@ -55,6 +55,7 @@
 			 (name . "^ipa*")
 			 (name . "^\\*irc*")
 			 (name . "^\\*el-get*")
+			 (name . "^\\*EGG:*")
 			 ))
 	 ("Version Control" (or (mode . svn-status-mode)
 				(mode . svn-log-edit-mode)
@@ -100,6 +101,7 @@
 ;; Following buffer will not show in iBuffer
 (add-to-list 'ibuffer-never-show-predicates "^\\*Buffer List\\*$")
 (add-to-list 'ibuffer-never-show-predicates"^\\*CEDET Global\\*$")
+(add-to-list 'ibuffer-never-show-predicates"^\\*Egg:Select Action\\*$")
 
 ;; Reverse group list
 (defadvice ibuffer-generate-filter-groups (after reverse-ibuffer-groups () activate)
