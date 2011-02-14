@@ -18,6 +18,8 @@
 	     (vim:local-nmap (kbd "p") 'egg-buffer-cmd-navigate-prev)
 	     (vim:local-nmap (kbd "n") 'egg-buffer-cmd-navigate-next)
 	     (vim:local-nmap (kbd "l") 'egg-log)
+	     (vim:local-nmap (kbd "g") 'egg-status-buffer-redisplay)
+
 	     ))
 
 ;;(define-key egg-buffer-mode-map)
