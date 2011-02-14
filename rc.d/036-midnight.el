@@ -28,7 +28,10 @@
 ;; append to *-init instead of itself
 (setq clean-buffer-list-kill-never-regexps
       (append '("^\\*EMMS Playlist\\*.*$"
-		".*irc\\.freenode\\.net.*"))
+		".*irc\\.freenode\\.net.*"
+		".*irc\\.debian\\.org.*"
+		"^\\*ansi-term*"
+		"^\\*terminal*"))
       clean-buffer-list-kill-never-regexps-init)
 
 
