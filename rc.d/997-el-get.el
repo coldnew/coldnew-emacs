@@ -111,9 +111,16 @@
 	xcscope+
 	yasnippet
 	zencoding-mode
-	(:name layout-restore
-	       :type emacswiki)
-
+	(:name egg
+	       :type git
+	       :url "https://github.com/byplayer/egg.git"
+	       :load-path (".")
+	       :compile nil ;; egg uses eval at places which breaks compilation
+	       :features egg)
+	(:name git-emacs
+	       :type git
+	       :url "https://github.com/tsgates/git-emacs.git"
+	       :features git-emacs)
 
 	;;  session
 	;; emacs-w3m
