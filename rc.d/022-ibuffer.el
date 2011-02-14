@@ -101,6 +101,7 @@
 ;; Following buffer will not show in iBuffer
 (add-to-list 'ibuffer-never-show-predicates "^\\*Buffer List\\*$")
 (add-to-list 'ibuffer-never-show-predicates"^\\*CEDET Global\\*$")
+(add-to-list 'ibuffer-never-show-predicates"^\\*MiniBuf*")
 (add-to-list 'ibuffer-never-show-predicates"^\\*Egg:Select Action\\*$")
 
 ;; Reverse group list

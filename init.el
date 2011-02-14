@@ -2,7 +2,7 @@
 (eval-when-compile (require 'cl))
 
 ;;(setq-default inhibit-default-init t )     ; 關閉全域初始化
-(setq-default debug-on-error     nil )
+;;(setq-default debug-on-error     nil )
 (setq-default custom-file "~/.emacs.d/rc.d/000-custom.el")
 
 
