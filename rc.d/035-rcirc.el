@@ -17,14 +17,14 @@
 ;;
 (setq rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE"))
 ;; Prompt Settings
-(setq rcirc-prompt ">> ")
+(setq rcirc-prompt " %n  >> ")
 ;; Do not show on modline
 (setq rcirc-track-minor-mode nil)
 
 ;; Join these channels at startup.
 (setq rcirc-server-alist
       '(
-	("irc.freenode.net" :channels  ("#emacs" "#lisp" "##linux"	; english channel
+	("irc.freenode.net" :channels  ("#emacs" "#lisp" "##linux" "#gentoo"	; english channel
 					"#tossug" "#gentoo-tw" "#python.tw" "#ubuntu-tw"))
 	("irc.debian.org" :channels ("#dot"))
 	))
@@ -37,12 +37,6 @@
 	     ;; Use Omit-mode
 	     (rcirc-omit-mode)
 	     ))
-
-;; (add-hook 'rcirc-print-hooks
-;;	  '(lambda ()
-;;	     ;; Writing Log in ~/.emacs.d/var/log/rcirc/
-;;	     (rcirc-write-log)
-;;	     ))
 
 ;;;;;; Keybindings
 (add-hook 'rcirc-mode-hook
