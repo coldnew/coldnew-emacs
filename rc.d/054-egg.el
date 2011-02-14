@@ -27,6 +27,7 @@
 	     ))
 (add-hook 'egg-log-msg-mode-hook
 	  '(lambda ()
+	     (vim:local-nmap (kbd "b") 'vim:motion-bwd-word)
 	     (vim:local-nmap (kbd "M-p") 'egg-buffer-cmd-navigate-prev)
 	     (vim:local-nmap (kbd "M-n") 'egg-buffer-cmd-navigate-next)
 	     (vim:local-nmap (kbd "M-/") 'egg-search-changes)
