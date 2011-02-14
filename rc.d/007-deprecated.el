@@ -107,54 +107,6 @@
   "Doesn't change the original alist, returns a new one instead."
   (cons (cons key value) (alist-remove alist key)))
 
-;;;;
-;; (defun require* (feature &optional force)
-;;   (when (or force (not (featurep feature)))
-;;     (setq feature (symbol-name feature))
-;;     (let ((path load-path)
-;;	  (found-filename nil)
-;;	  head el-attribs elc-attribs)
-;;       (while (and (not found-filename) path)
-;;	(setq head (pop path))
-;;	(let ((el-filename (format "%s/%s.el" head feature))
-;;	      (elc-filename (format "%s/%s.elc" head feature)))
-;;	  ;; if .el and .elc both exist, pick the newest
-;;	  ;; otherwise pick the one that exists if any
-;;	  (cond ((and (file-exists-p el-filename)
-;;		      (file-exists-p elc-filename))
-;;		 (if (file-newer-than-file-p el-filename elc-filename)
-;;		     (setq found-filename el-filename)
-;;		   (setq found-filename elc-filename)))
-;;		((file-exists-p el-filename)
-;;		 (setq found-filename el-filename))
-;;		((file-exists-p elc-filename)
-;;		 (setq found-filename elc-filename)))
-;;	  ;; load file if found
-;;	  (when found-filename
-;;	    (message (format "Found: [%s]" found-filename))
-;;	    (let ((load-suffixes ()))
-;;	      (load found-filename)))))
-;;       (unless found-filename (error "Unable to find %s" feature)))))
-
-
-;;(setq-default header-line-format mode-line-format) ; Copy mode-line to top
-;;(setq-default mode-line-format nil) ; Remove mode-line
-;; (defcmd show-mode-line ()
-;;   (if mode-line-format
-;;       (setq mode-line-format nil)
-;;     (setq mode-line-format	t)))
-
-
-;;;;;;;; 將指定目錄裡的東西全部加入清單
-;; (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
-;;     (let* ((my-lisp-dir "~/.emacs.d/")
-;;	   (default-directory my-lisp-dir))
-;;       (setq load-path (cons my-lisp-dir load-path))
-;;       (normal-top-level-add-subdirs-to-load-path)))
-
-
-
-
 
 ;;;; Functions
 (defun find-file:find-proper-mode ()
@@ -214,17 +166,6 @@
 
 
 
-;; FIXME: I dont's like after fc-eval-and-replace, nil or t will show
-;; templary us m eval-and-replace instead
-(defun fc-eval-and-replace ()
-  "Replace the preceding sexp with its value."
-  (interactive)
-  (backward-kill-sexp)
-  (condition-case nil
-      (prin1 (eval (read (current-kill 0)))
-	     (current-buffer))
-    (error (message "Invalid expression")
-	   (insert (current-kill 0)))))
 
 
 (defun resolve-sym-link ()
@@ -334,6 +275,13 @@ to browser. If a region is active (a phrase), lookup that phrase."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;; Dead emacs Config <- some old emacs config I use, all in comment and won't use again
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;; 將指定目錄裡的東西全部加入清單
+;; (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+;;     (let* ((my-lisp-dir "~/.emacs.d/")
+;;	   (default-directory my-lisp-dir))
+;;       (setq load-path (cons my-lisp-dir load-path))
+;;       (normal-top-level-add-subdirs-to-load-path)))
+;;;
 ;;;; 移除掉的預設功能
 ;;(setq-default visible-bell                  t ) ; 關閉出錯時的警告鈴聲
 ;;(setq-default inhibit-startup-message       t ) ; 關閉 Emacs 啟動時的螢幕閃爍
@@ -360,7 +308,50 @@ to browser. If a region is active (a phrase), lookup that phrase."
 ;;	    (lambda ()
 ;;	      (if (buffer-file-name)
 ;;		  (byte-compile-file buffer-file-name)))))
-
+;;;;
+;; (defun require* (feature &optional force)
+;;   (when (or force (not (featurep feature)))
+;;     (setq feature (symbol-name feature))
+;;     (let ((path load-path)
+;;	  (found-filename nil)
+;;	  head el-attribs elc-attribs)
+;;       (while (and (not found-filename) path)
+;;	(setq head (pop path))
+;;	(let ((el-filename (format "%s/%s.el" head feature))
+;;	      (elc-filename (format "%s/%s.elc" head feature)))
+;;	  ;; if .el and .elc both exist, pick the newest
+;;	  ;; otherwise pick the one that exists if any
+;;	  (cond ((and (file-exists-p el-filename)
+;;		      (file-exists-p elc-filename))
+;;		 (if (file-newer-than-file-p el-filename elc-filename)
+;;		     (setq found-filename el-filename)
+;;		   (setq found-filename elc-filename)))
+;;		((file-exists-p el-filename)
+;;		 (setq found-filename el-filename))
+;;		((file-exists-p elc-filename)
+;;		 (setq found-filename elc-filename)))
+;;	  ;; load file if found
+;;	  (when found-filename
+;;	    (message (format "Found: [%s]" found-filename))
+;;	    (let ((load-suffixes ()))
+;;	      (load found-filename)))))
+;;       (unless found-filename (error "Unable to find %s" feature)))))
+;;;
+;; (defcmd show-mode-line ()
+;;   (if mode-line-format
+;;       (setq mode-line-format nil)
+;;     (setq mode-line-format	t)))
+;;;
+;; FIXME: I dont's like after fc-eval-and-replace, nil or t will show templary us m eval-and-replace instead
+;; (defun fc-eval-and-replace ()
+;;   "Replace the preceding sexp with its value."
+;;   (interactive)
+;;   (backward-kill-sexp)
+;;   (condition-case nil
+;;       (prin1 (eval (read (current-kill 0)))
+;;	     (current-buffer))
+;;     (error (message "Invalid expression")
+;;	   (insert (current-kill 0)))))
 
 (provide '007-deprecated)
 ;; 007-deprecated.el ends here.

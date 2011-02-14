@@ -1,6 +1,19 @@
 ;;
 (eval-when-compile (require 'cl))
 
+(defun insert-tiny-url (url)
+  "Insert a shortend URL at point by passed in URL"
+  (interactive "sEnter url: " )
+  (let* ((url (replace-regexp-in-string "^http://" "" url))
+	 (tinyurl
+	  (save-excursion
+	    (with-temp-buffer
+	      (mm-url-insert
+	       (concat "http://tinyurl.com/api-create.php?url=http://" url))
+	      (kill-ring-save (point-min) (point-max))
+	      (buffer-string)))))
+    (insert tinyurl)))
+
 (defun switch-to-scratch-and-back ()
   "Toggle between *scratch* buffer and the current buffer.
      If the *scratch* buffer does not exist, create it."

@@ -6,7 +6,7 @@
   (if (equal major-mode 'fundamental-mode)
       (lisp-interaction-mode)))
 
-(defadvice kill-emacs (around no-query-kill-emacs activate)
+(defadvice save-buffers-kill-terminal (around no-query-kill-emacs activate)
   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
   (flet ((process-list ())) ad-do-it))
 

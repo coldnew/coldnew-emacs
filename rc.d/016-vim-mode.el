@@ -22,6 +22,57 @@
   (if file
       (find-file (concat "/sudo:root@localhost:" file))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defmacro vim:do-insert-yasnippet-command (vars string-case &rest body)
+  (let ((commnd-list (nth 0 vars))
+	(spec     (nth 1 vars))
+	(keys     (nth 2 vars))
+	(fn       (nth 3 vars))
+	(examples (nth 4 vars)))
+    `(dolist (,spec ,command-list)
+       (if (stringp ,spec)
+	   ,string-case
+	 (let ((,keys (let ((k (car ,spec)))
+			(cond ((stringp k) (list k))
+			      ((listp k) k)
+			      (t (error "Invalid vim-insert command %s."
+					,spec)))))
+	       (,fn (cadr ,spec))
+	       (,examples (cddr ,spec)))
+	   ,@body)))))
+
+(defun vim:local-insert-define-keys (command-list)
+  (vim:do-insert-yasnippet-command (command-list spec keys fn examples)
+				   nil       ; string case
+				   (dolist (key keys)
+				     (vim:local-imap (read-kbd-macro key) (lambda () (interactive) (insert fn) (yas/expand)
+									    )))))
+;; (caar elisp:commands)
+;; (cadar elisp:commands)
+
+(add-hook 'emacs-lisp-mode-hook
+	  (lambda ()
+	    ;;  (vim:local-insert-define-keys elisp:commands)
+	    ))
+(setq elisp:commands
+      '(
+	("M-i" "if")
+	("M-r" "require")
+	))
+
+;; (setq elisp:commands
+;;       '(
+;;	("M-h" "require")
+;;	("M-n" "if")
+;;	))
+
+;; (dolist (va elisp:commands)
+;;   (vim:local-imap (read-kbd-macro (car va)) (lambda () (interactive) (insert (cadr va)) (yas/expand)))
+;;   )
+
+
+
 ;; el-get
 (vim:defcmd vim:cmd-el-get-install ((argument:text text) nonrepeatable)
   ""

@@ -192,9 +192,10 @@
 (require* 'epa-file)			  ; the EasyPG Assistant, transparent file encryption
 (require* 'site-gentoo)			  ; site initialisation for Gentoo-installed packages
 (require* 'env)				  ; functions to manipulate environment variables
-(require* 'layout-restore)		  ; keep window configuration as layout and restore it simply.
-(require* 'revive)			  ; x
-
+(require* 'revive)			  ;
+(require* 'mm-url)			  ; a wrapper of url functions/commands for Gnus
+(require* 'egg)				  ; egg -- Emacs Got Git, A magit fork
+(require* 'git-emacs)			  ; yet another git emacs mode for newbies
 
 
 
