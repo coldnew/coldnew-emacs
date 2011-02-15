@@ -7,6 +7,7 @@
 (vim:nmap (kbd "C-x C-b") 'ibuffer)
 (vim:nmap (kbd "C-x C-f") 'lusty-file-explorer)
 (vim:nmap (kbd "C-x C-s") 'save-buffer-always)
+(vim:nmap (kbd "C-x M-s") 'egg-status)
 (vim:nmap (kbd "C-x b") 'lusty-buffer-explorer)
 (vim:nmap (kbd "C-x f") 'anything-for-files)
 (vim:nmap (kbd "K") 'woman)
@@ -22,7 +23,8 @@
 (vim:imap (kbd "C-n") 'auto-complete)
 (vim:imap (kbd "C-p") 'auto-complete)
 (vim:imap (kbd "C-x C-b") 'ibuffer)
-(vim:imap (kbd "C-x C-f") 'lusty-file-explorer)
+(vim:
+(vim:imap (kbd "C-x M-s") 'egg-status)
 (vim:imap (kbd "C-x C-s") 'save-buffer-always)
 (vim:imap (kbd "C-x b") 'lusty-buffer-explorer)
 (vim:imap (kbd "C-x f") 'anything-for-files)
