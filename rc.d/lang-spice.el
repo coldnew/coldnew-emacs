@@ -2,6 +2,7 @@
 (eval-when-compile (require 'cl))
 
 ;;;;;;;; Variable Setting
+
 ;; Use ng-spice-rework as spice simulator
 (setq spice-simulator "ngspice")
 ;; Empty initial file
@@ -10,6 +11,8 @@
 (setq spice-highlight-keywords t)
 ;; Describe mode at startup
 (setq spice-show-describe-mode t)
+;; Use gwave as Waveform viewer
+(setq spice-waveform-viewer "gwave")
 
 
 
