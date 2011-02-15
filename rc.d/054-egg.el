@@ -3,8 +3,8 @@
 
 
 
-;; auto-update egg-status on file save
-(setq egg-auto-update t)
+;; do not auto-update egg-status on file save
+(setq egg-auto-update nil)
 
 ;; do not switch to the status buffer in the same window
 (setq egg-switch-to-buffer t)
