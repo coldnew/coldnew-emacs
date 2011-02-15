@@ -1,7 +1,7 @@
 ;;
 (eval-when-compile (require 'cl))
 
-
+(setq verilog-linter "verilator --lint-only")
 
 
 
