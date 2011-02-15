@@ -63,6 +63,11 @@
   ad-do-it
   (delete-other-windows))
 
+(defadvice egg-commit-log-edit (around goto-egg-commit-buffer activate)
+  "Delete other windows after visiting egg-commit-buffer"
+  ad-do-it
+  (delete-other-windows))
+
 
 (provide '054-egg)
 ;; 054-egg.el ends here.
