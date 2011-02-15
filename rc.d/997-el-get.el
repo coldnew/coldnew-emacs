@@ -121,7 +121,6 @@
 	       :type git
 	       :url "https://github.com/tsgates/git-emacs.git"
 	       :features git-emacs)
-
 	;;  session
 	;; emacs-w3m
 	;;color-theme			;
