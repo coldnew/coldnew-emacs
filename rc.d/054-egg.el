@@ -79,7 +79,7 @@
   (kill-buffer)
   ad-do-it)
 
-(defadvice egg-log-msg-done (after kill-egg-commit-buffer activate)
+(defadvice egg-log-msg-done (after egg-log-msg-done activate)
   "Delete other windows after visiting egg-commit-buffer."
   (kill-buffer))
 
