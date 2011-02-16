@@ -23,7 +23,6 @@
 (vim:imap (kbd "C-n") 'auto-complete)
 (vim:imap (kbd "C-p") 'auto-complete)
 (vim:imap (kbd "C-x C-b") 'ibuffer)
-(vim:
 (vim:imap (kbd "C-x M-s") 'egg-status)
 (vim:imap (kbd "C-x C-s") 'save-buffer-always)
 (vim:imap (kbd "C-x b") 'lusty-buffer-explorer)
