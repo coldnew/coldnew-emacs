@@ -75,7 +75,7 @@
   (delete-other-windows))
 
 (defadvice egg-commit-log-edit (around kill-egg-status-buffer activate)
-  "Delete other windows after visiting egg-commit-buffer."
+  "Delete egg-status buffer after visiting egg-commit-buffer."
   (kill-buffer)
   ad-do-it)
 
