@@ -60,11 +60,13 @@
 ;; visiting a file in ibuffer makes it "fullscreen"
 (defadvice egg-status (around goto-egg-status-buffer activate)
   "Delete other windows after visiting egg-status"
+  (kill-buffer)
   ad-do-it
   (delete-other-windows))
 
 (defadvice egg-commit-log-edit (around goto-egg-commit-buffer activate)
   "Delete other windows after visiting egg-commit-buffer"
+  (kill-buffer)
   ad-do-it
   (delete-other-windows))
 
