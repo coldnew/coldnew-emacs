@@ -79,9 +79,11 @@
   (kill-buffer)
   ad-do-it)
 
-;; (defadvice egg-log-msg-done (before egg-log-msg-done activate)
-;;   "Delete other windows after visiting egg-commit-buffer."
-;;   (kill-buffer))
+(defadvice egg-log-msg-done (before egg-log-msg-done activate)
+  "Delete other windows after visiting egg-commit-buffer."
+  ;; (kill-buffer)
+  (message (buffer-name))
+  )
 
 (provide '054-egg)
 ;; 054-egg.el ends here.
