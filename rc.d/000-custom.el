@@ -2,6 +2,8 @@
 (provide '000-custom)
 (eval-when-compile (require 'cl))
 
+(setq custom-file "~/.emacs.d/rc.d/000-custom.el")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
