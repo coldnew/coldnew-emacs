@@ -272,6 +272,8 @@ to browser. If a region is active (a phrase), lookup that phrase."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;; Dead emacs Config <- some old emacs config I use, all in comment and won't use again
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;(setq-default inhibit-default-init t )     ; 關閉全域初始化
+;;(setq-default debug-on-error     nil )
 ;;;;;;;; 將指定目錄裡的東西全部加入清單
 ;; (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
 ;;     (let* ((my-lisp-dir "~/.emacs.d/")
