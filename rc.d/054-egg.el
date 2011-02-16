@@ -20,6 +20,7 @@
 	     (vim:local-imap (kbd "k") 'vim:motion-up)
 	     ;; Following key missing in nmap
 	     (vim:local-nmap (kbd "c") 'egg-commit-log-edit)
+	     (vim:local-nmap (kbd "l") 'egg-log)
 	     ;;	     (vim:local-nmap (kbd "b") 'vim:motion-bwd-word)
 	     ;;	     (vim:local-nmap (kbd "h") 'vim:motion-left)
 	     ;;	     (vim:local-nmap (kbd "M-s") 'egg-stage-untracked-files)
@@ -27,7 +28,6 @@
 	     ;;	     (vim:local-nmap (kbd "M-c") 'egg-commit-log-edit)
 	     ;;	     (vim:local-nmap (kbd "M-p") 'egg-buffer-cmd-navigate-prev)
 	     ;;	     (vim:local-nmap (kbd "M-n") 'egg-buffer-cmd-navigate-next)
-	     ;;	     (vim:local-nmap (kbd "M-l") 'egg-log)
 	     ;;	     (vim:local-nmap (kbd "M-g") 'egg-status-buffer-redisplay)
 	     ;;	     (vim:local-nmap (kbd "M-h") 'egg-section-cmd-toggle-hide-show)
 	     ;;	     (vim:local-nmap (kbd "M-H") 'egg-section-cmd-toggle-hide-show-children)
