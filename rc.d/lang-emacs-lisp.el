@@ -63,6 +63,7 @@
 (run-with-idle-timer 1 t
 		     '(lambda () (get-buffer-create "*scratch*")))
 (add-hook 'lisp-interaction-mode-hook 'highlight-cl-add-font-lock-keywords)
+
 ;;;;;; Functions
 
 (defun remove-elc-when-visit ()

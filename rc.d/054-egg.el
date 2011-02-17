@@ -33,8 +33,10 @@
 	     ;;	     (vim:local-nmap (kbd "M-q") 'egg-quit-buffer)
 	     ;;	     (vim:local-nmap (kbd "M-u") 'egg-diff-section-cmd-undo)
 	     ))
+
 (add-hook 'egg-log-msg-mode-hook
 	  '(lambda ()
+	     ;; ????/?
 	     (vim:local-nmap (kbd "c") 'egg-log-msg-done)
 	     ;;	     (vim:local-nmap (kbd "b") 'vim:motion-bwd-word)
 	     ;;	     (vim:local-nmap (kbd "h") 'vim:motion-left)

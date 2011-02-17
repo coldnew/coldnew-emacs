@@ -2,7 +2,9 @@
 (eval-when-compile (require 'cl))
 
 
-;; Load Path
+
+
+;; Load Path Setting
 (let* ((emacs-dir "~/.emacs.d/")
        (lisp-dir '("rc.d/" "theme/" "lisp/" "local-lisp/")))
   (dolist (lisp-path lisp-dir)
@@ -11,7 +13,8 @@
       (setq load-path (cons load-dir load-path))
       (normal-top-level-add-subdirs-to-load-path))))
 
-;; Loading my emacs configures
+
+;; Loading emacs configures
 (let ((init-folder "~/.emacs.d/rc.d/")
       (authinfo-file (expand-file-name "~/.emacs.d/.authinfo.gpg")))
   (if (file-readable-p init-folder)
