@@ -11,6 +11,7 @@
  '(auto-compression-mode t)
  '(blink-cursor-mode nil)
  '(custom-file "~/.emacs.d/rc.d/000-custom.el")
+ '(default-major-mode (quote lisp-interaction-mode) t)
  '(global-auto-revert-mode t)
  '(global-font-lock-mode t)
  '(gnus-inhibit-startup-message t)
