@@ -10,7 +10,6 @@
 (setq egg-switch-to-buffer t)
 
 ;;;;;;;; kyebindings
-;; all local-nmap use prefix M- ,this make me don't need to switch imap to press command
 (add-hook 'egg-status-buffer-mode-hook
 	  '(lambda ()
 	     ;; I want to use j and k to move
@@ -36,6 +35,7 @@
 	     ))
 (add-hook 'egg-log-msg-mode-hook
 	  '(lambda ()
+	     (vim:local-nmap (kbd "c") 'egg-log-msg-done)
 	     ;;	     (vim:local-nmap (kbd "b") 'vim:motion-bwd-word)
 	     ;;	     (vim:local-nmap (kbd "h") 'vim:motion-left)
 	     ;;	     (vim:local-nmap (kbd "p") 'egg-buffer-cmd-navigate-prev)
@@ -55,11 +55,6 @@
 	     ;;	     (vim:local-nmap (kbd "m") 'egg-log-buffer-merge)
 	     ;;	     (vim:local-nmap (kbd "r") 'egg-log-buffer-rebase)
 	     ;;	     (vim:local-nmap (kbd "R") 'egg-log-buffer-rebase-interactive)
-	     ;;	     ;;
-	     ;;	     ;; (vim:local-nmap (kbd "S") 'egg-stage-all-files)
-	     ;;	     ;; (vim:local-nmap (kbd "c") 'egg-commit-log-edit)
-	     ;;	     ;; (vim:local-nmap (kbd "l") 'egg-log)
-	     ;;	     ;; (vim:local-nmap (kbd "u") 'egg-diff-section-cmd-undo)
 	     ))
 
 ;;;;;;;; Advice
