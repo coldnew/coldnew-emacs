@@ -192,7 +192,9 @@ of the command handling code the buffer in vim:new-buffer is made current.")
 (defun vim:select-register ()
   "Sets the register for the next command."
   (interactive)
-  (setq vim:current-register (read-char-exclusive)))
+  (setq vim:current-register (read-char-exclusive))
+  (setq vim:current-key-sequence (vconcat vim:current-key-sequence
+					  (vim:this-command-keys))))
 
 (defun vim:get-register (register)
   "Returns the content of `register', signals error on fail."

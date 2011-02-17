@@ -215,41 +215,13 @@ and switches to insert-mode."
      ;; deal with cw and cW
      (when (and vim:current-motion
                 (not (member (char-after) '(?  ?\r ?\n ?\t))))
-       (cond
-        ((eq vim:current-motion 'vim:motion-fwd-word)
-         (let* ((cnt (* (or vim:current-cmd-count 1)
-                        (or vim:current-motion-count 1)))
-                (pos
-                (save-excursion
-                  (dotimes (i cnt)
-                    (while
-                        (not
-                         (or (and (looking-at (concat "[^ \t\r\n]"
-                                                      "[ \t\r\n]")))
-                             (and (looking-at (concat "[" vim:word "]"
-                                                      "[^ \t\r\n" vim:word "]")))
-                             (and (looking-at (concat "[^ \t\r\n" vim:word "]"
-                                                      "[" vim:word "]")))))
-                      (forward-char))
-                    (when (< i (1- cnt))
-                      (forward-char)))
-                  (point))))
-           (setq motion (vim:make-motion :begin (point) :end pos :type 'inclusive))))
-        
-        ((eq vim:current-motion 'vim:motion-fwd-WORD)
-         (let* ((cnt (* (or vim:current-cmd-count 1)
-                        (or vim:current-motion-count 1)))
-                (pos
-                 (save-excursion
-                   (dotimes (i cnt)
-                     (while
-                         (not (looking-at (concat "[^ \t\r\n]"
-                                                  "[ \t\r\n]")))
-                       (forward-char))
-                     (when (< i (1- cnt))
-                       (forward-char)))
-                   (point))))
-           (setq motion (vim:make-motion :begin (point) :end pos :type 'inclusive))))))
+       (let ((cnt (* (or vim:current-cmd-count 1)
+		     (or vim:current-motion-count 1))))
+	 (case vim:current-motion
+	   (vim:motion-fwd-word
+	    (setq motion (vim:motion-fwd-word-end :count cnt)))
+	   (vim:motion-fwd-WORD
+	    (setq motion (vim:motion-fwd-WORD-end :count cnt))))))
         
      (vim:cmd-delete :motion motion :register register)
      (if (eolp)

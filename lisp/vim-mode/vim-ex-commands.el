@@ -69,6 +69,12 @@
     (when (buffer-file-name)
       (find-file (buffer-file-name)))))
 
+(vim:defcmd vim:cmd-show-buffers (nonrepeatable)
+  "Shows the buffer-list."
+  (let (message-truncate-lines message-log-max)
+    (message "%s"
+	     (mapconcat #'buffer-name (buffer-list) "\n"))))
+
 (vim:defcmd vim:cmd-buffer ((argument:buffer buffer) nonrepeatable)
   "Switches to another buffer."
   (if buffer
@@ -76,6 +82,31 @@
                 (y-or-n-p (format "No buffer with name \"%s\" exists. Create new buffer? " buffer)))
         (switch-to-buffer buffer))
     (switch-to-buffer (other-buffer))))
+
+(vim:defcmd vim:cmd-next-buffer (count nonrepeatable)
+  "Goes to the `count'-th next buffer in the buffer list."
+  (dotimes (i (or count 1))
+    (next-buffer)))
+  
+(vim:defcmd vim:cmd-prev-buffer (count nonrepeatable)
+  "Goes to the `count'-th prev buffer in the buffer list."
+  (dotimes (i (or count 1))
+    (previous-buffer)))
+
+(vim:defcmd vim:cmd-split-buffer ((argument:buffer buffer) nonrepeatable)
+  "Splits window and switches to another buffer."
+  (vim:window-split)
+  (vim:cmd-buffer :argument buffer))
+
+(vim:defcmd vim:cmd-split-next-buffer (count nonrepeatable)
+  "Splits window and goes to the `count'-th next buffer in the buffer list."
+  (vim:window-split)
+  (vim:cmd-next-buffer :count count))
+  
+(vim:defcmd vim:cmd-split-prev-buffer (count nonrepeatable)
+  "Splits window and goes to the `count'-th prev buffer in the buffer list."
+  (vim:window-split)
+  ((vim:cmd-prev-buffer :count count)))
 
 (vim:defcmd vim:cmd-delete-buffer ((argument:buffer buffer) nonrepeatable)
   "Deletes a buffer."
