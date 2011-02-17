@@ -1,8 +1,6 @@
 ;;;; init
 (eval-when-compile (require 'cl))
 
-;;(setq-default custom-file "~/.emacs.d/rc.d/000-custom.el")
-
 
 ;; Load Path
 (let* ((emacs-dir "~/.emacs.d/")

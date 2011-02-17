@@ -2,7 +2,6 @@
 (provide '000-custom)
 (eval-when-compile (require 'cl))
 
-(setq custom-file "~/.emacs.d/rc.d/000-custom.el")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -11,6 +10,7 @@
  ;; If there is more than one, they won't work right.
  '(auto-compression-mode t)
  '(blink-cursor-mode nil)
+ '(custom-file "~/.emacs.d/rc.d/000-custom.el")
  '(global-auto-revert-mode t)
  '(global-font-lock-mode t)
  '(gnus-inhibit-startup-message t)
