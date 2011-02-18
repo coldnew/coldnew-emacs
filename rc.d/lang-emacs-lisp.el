@@ -23,9 +23,10 @@
 	     (turn-on-pretty-lambda-mode)
 	     ;; Highlight common-lisp functions
 	     (highlight-cl-add-font-lock-keywords)
-	     ;; Hooks for emacs-lisp-mode
-	     (remove-elc-when-visit)	; when visit elisp file, remove .elc extensioon
-	     (programming-common-hook)	; programming common hook
+	     ;; when visit elisp file, remove .elc extensioon
+	     (remove-elc-when-visit)
+	     ;; programming common hook
+	     (programming-common-hook)
 	     ))
 
 ;;;;;; Keybindings

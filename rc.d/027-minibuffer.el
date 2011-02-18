@@ -2,6 +2,7 @@
 ;;;;;; Settings
 (setq enable-recursive-minibuffers t)
 (setq max-mini-window-height .25)	; 2 lines high
+(setq-default minibuffer-electric-default-mode t )
 
 ;;;;;; Keybindings
 (add-hook 'minibuffer-setup-hook

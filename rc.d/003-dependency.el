@@ -197,6 +197,8 @@
 (require* 'egg)				  ; egg -- Emacs Got Git, A magit fork
 (require* 'git-emacs)			  ; yet another git emacs mode for newbies
 (require* 'spice-mode)			  ; major mode providing a spice mode hook for fontification
+(require* 'identica-mode)		  ; Major mode for Identica
+
 
 
 

@@ -24,6 +24,5 @@
 			   (1 font-lock-keyword-face)
 			   (2 font-lock-constant-face nil t))))
 
-
 (provide '001-initfunction)
 ;; 001-initfunction.el ends here.

@@ -7,16 +7,18 @@
 ;; (setq-default user-nickname     "coldnew"              )
 
 
-(setq-default confirm-nonexistent-file-or-buffer nil)
-(setq kill-buffer-query-functions
-      (remq 'process-kill-buffer-query-function
-	    kill-buffer-query-functions))
+;; (setq-default confirm-nonexistent-file-or-buffer nil)
+
+;; TODO: How about remove this?
+;; (setq kill-buffer-query-functions
+;;       (remq 'process-kill-buffer-query-function
+;;	    kill-buffer-query-functions))
 
 ;;;; Debugging emacs
 (setq-default max-specpdl-size    32000 )
 (setq-default max-lisp-eval-depth 20000 )
-(setq debug-on-error t)
-(setq debug-on-quit  t)
+;; (setq debug-on-error t)
+;; (setq debug-on-quit  t)
 
 
 ;;;; 其他基礎設置
@@ -24,8 +26,8 @@
 (icomplete-mode            t )   ; 用  M-x 選命令時，給予可選的命令提示
 ;;(auto-compression-mode     t )   ; 打開壓縮文件時自動解壓縮
 ;;(show-paren-mode           t )   ; 顯示括號匹配
-(global-auto-revert-mode   t )   ; 自動重讀修改過的檔案
-(auto-image-file-mode      t )   ; 圖片顯示功能
+;; (global-auto-revert-mode   t )   ; 自動重讀修改過的檔案
+;; (auto-image-file-mode      t )   ; 圖片顯示功能
 (iimage-mode               t )
 (recentf-mode              t )
 ;;(mouse-avoidance-mode 'animate ) ; 鼠標自動避開游標
@@ -50,19 +52,16 @@
 (setq-default x-stretch-cursor                t )  ; 全形符號時游標延展
 ;;(setq-default x-select-enable-clipboard       t )  ; 支持 Emacs 和外部程序的黏貼
 ;;(setq-default mouse-yank-at-point             t )  ; 允許滑鼠中鍵黏貼
-(setq-default line-number-mode                t )  ; 顯示行號
-(setq-default column-number-mode              t )  ; 顯示列號
+;; (setq-default line-number-mode                t )  ; 顯示行號
+;; (setq-default column-number-mode              t )  ; 顯示列號
 (setq-default partial-completion-mode         t )  ; 啟用自動補全函數和變量
-(setq-default enable-recursive-minibuffers    t )  ; 可以遞迴的使用 mini-buffer
+;; (setq-default enable-recursive-minibuffers    t )  ; 可以遞迴的使用 mini-buffer
 (setq-default completion-ignore-case          t )  ; 自動補全忽略大小寫
 (setq-default scroll-preserve-screen-position t )  ;
-(setq-default minibuffer-electric-default-mode t ) ; 啟用部份補全
+;; (setq-default minibuffer-electric-default-mode t ) ; 啟用部份補全
 
-(cua-mode                   t )         ; 啟用 cua-mode
-(setq-default cua-enable-cua-keys nil )	; 不使用 cua-mode 裡的按鍵
 (delete-selection-mode      t )         ; 啟用 delsel-mode
 (visual-line-mode           t )         ; 折行時不拆開一個 "字"
-(global-undo-tree-mode)			; 開啟 undo-tree-mode
 
 ;;  當 emacs 建立新檔案至不存在的資料夾時，於儲存前自動建立該資料夾
 (add-hook 'before-save-hook

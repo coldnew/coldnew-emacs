@@ -34,6 +34,7 @@
       '(("default"
 	 ("*Buffer*" (or (name . "^\\*Messages\\*$")
 			 (name . "^\\*scratch\\*$")
+			 (name . "^\\*Warnings\\*$")
 			 (name . "^TAGS\\(<[0-9]+>\\)?$")
 			 (name . "^\\*Occur\\*$")
 			 (name . "^\\*grep\\*$")
