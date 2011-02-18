@@ -80,6 +80,8 @@
 	 ("Terminal" (or (mode . eshell-mode)
 			 (mode . term-mode)
 			 (mode . comint-mode)))
+	 ("Text" (or (mode . text-mode)
+		     (name . "*.txt")))
 	 ("w3m"   (or (mode . w3m-mode)
 		      (name . "^\\*w3m*")))
 	 ("Org"   (mode . org-mode))

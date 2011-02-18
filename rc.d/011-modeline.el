@@ -7,7 +7,7 @@
 	 mode-line-modified
 	 mode-line-frame-identification
 	 mode-line-buffer-identification
-	 "  "
+	 "   "
 	 vim:mode-string
 	 "   "
 	 mode-line-position
