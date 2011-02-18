@@ -5,7 +5,7 @@
 (defmacro require* (feature &optional file)
   "*Try to require FEATURE, but don't signal an error if `require' fails."
   `(let ((require-result (require ,feature ,file 'noerror)))
-     (with-current-buffer (set-buffer-major-mode (get-buffer-create "*Loading Library Log*"))
+     (with-current-buffer (get-buffer-create "*Loading Library Log*")
        (let* ((startup-log-format-string-prefix "\t%-30s\t\t\t[")
 	      (startup-log-format-string-postfix "%s")
 	      (startup-status (if require-result "LOADED" "FAILED"))
