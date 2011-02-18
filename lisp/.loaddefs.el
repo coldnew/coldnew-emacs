@@ -2538,7 +2538,7 @@ Note that this only works if the opening tag starts at column 0.
 ;;;***
 
 ;;;### (autoloads (egg-minor-mode-find-file-hook egg-minor-mode)
-;;;;;;  "egg/egg" "egg/egg.el" (19801 12627))
+;;;;;;  "egg/egg" "egg/egg.el" (19801 21740))
 ;;; Generated autoloads from egg/egg.el
 
 (autoload 'egg-minor-mode "egg/egg" "\
@@ -2567,7 +2567,7 @@ Not documented
 ;;;***
 
 ;;;### (autoloads (egg-grep egg-grep-mode egg-grep-process-setup)
-;;;;;;  "egg/egg-grep" "egg/egg-grep.el" (19801 12627))
+;;;;;;  "egg/egg-grep" "egg/egg-grep.el" (19801 21740))
 ;;; Generated autoloads from egg/egg-grep.el
 
 (autoload 'egg-grep-process-setup "egg/egg-grep" "\
@@ -3594,7 +3594,7 @@ Default MODIFIER is 'meta.
 ;;;***
 
 ;;;### (autoloads (git-reblame git-blame-mode) "git-emacs/git-blame"
-;;;;;;  "git-emacs/git-blame.el" (19801 12864))
+;;;;;;  "git-emacs/git-blame.el" (19801 21740))
 ;;; Generated autoloads from git-emacs/git-blame.el
 
 (autoload 'git-blame-mode "git-emacs/git-blame" "\
@@ -3731,6 +3731,17 @@ executed.
 Turns on hungry delete mode if the buffer is appropriate.
 
 \(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (identica) "identica-mode/identica-mode" "identica-mode/identica-mode.el"
+;;;;;;  (19806 464))
+;;; Generated autoloads from identica-mode/identica-mode.el
+
+(autoload 'identica "identica-mode/identica-mode" "\
+Start identica-mode.
+
+\(fn)" t nil)
 
 ;;;***
 
@@ -4399,10 +4410,7 @@ accept it or skip it.
 
 ;;;***
 
-;;;### (autoloads nil nil ("git-emacs/git--test.el" "git-emacs/git-emacs-autoloads.el"
-;;;;;;  "git-emacs/git-emacs.el" "git-emacs/git-global-keys.el" "git-emacs/git-log.el"
-;;;;;;  "git-emacs/git-modeline.el" "git-emacs/git-status.el" "redo+/redo+.el")
-;;;;;;  (19801 12864 856542))
+;;;### (autoloads nil nil ("redo+/redo+.el") (19806 466 747042))
 
 ;;;***
 

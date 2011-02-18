@@ -121,6 +121,9 @@
 	       :type git
 	       :url "https://github.com/tsgates/git-emacs.git"
 	       :features git-emacs)
+	(:name identica-mode
+	       :type git
+	       :url "http://git.savannah.gnu.org/cgit/identica-mode.git")
 	;;  session
 	;; emacs-w3m
 	;;color-theme			;
