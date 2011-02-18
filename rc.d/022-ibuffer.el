@@ -106,6 +106,8 @@
 (add-to-list 'ibuffer-never-show-predicates"^\\*MiniBuf-*")
 (add-to-list 'ibuffer-never-show-predicates"^\\*Egg:Select Action\\*$")
 
+
+;;;;;;;; Advice
 ;; Reverse group list
 (defadvice ibuffer-generate-filter-groups (after reverse-ibuffer-groups () activate)
   (setq ad-return-value (nreverse ad-return-value)))
