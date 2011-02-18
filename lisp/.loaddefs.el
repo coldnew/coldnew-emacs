@@ -4273,6 +4273,17 @@ prompt for the function or variable to find, instead.
 
 ;;;***
 
+;;;### (autoloads (twit) "twittering-mode/twittering-mode" "twittering-mode/twittering-mode.el"
+;;;;;;  (19806 1455))
+;;; Generated autoloads from twittering-mode/twittering-mode.el
+
+(autoload 'twit "twittering-mode/twittering-mode" "\
+Start twittering-mode.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (elmo-make-folder) "wanderlust/site-lisp/wl/elmo"
 ;;;;;;  "wanderlust/site-lisp/wl/elmo.el" (19796 35716))
 ;;; Generated autoloads from wanderlust/site-lisp/wl/elmo.el
@@ -4410,7 +4421,8 @@ accept it or skip it.
 
 ;;;***
 
-;;;### (autoloads nil nil ("redo+/redo+.el") (19806 466 747042))
+;;;### (autoloads nil nil ("redo+/redo+.el" "twittering-mode/test.el")
+;;;;;;  (19806 1457 806364))
 
 ;;;***
 

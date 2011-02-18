@@ -124,6 +124,9 @@
 	(:name identica-mode
 	       :type git
 	       :url "http://git.savannah.gnu.org/cgit/identica-mode.git")
+	(:name twittering-mode
+	       :type git
+	       :url "git://github.com/hayamiz/twittering-mode.git")
 	;;  session
 	;; emacs-w3m
 	;;color-theme			;
