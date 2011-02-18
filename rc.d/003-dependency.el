@@ -198,6 +198,12 @@
 (require* 'git-emacs)			  ; yet another git emacs mode for newbies
 (require* 'spice-mode)			  ; major mode providing a spice mode hook for fontification
 (require* 'identica-mode)		  ; Major mode for Identica
+(require* 'elisp-depend)		  ; Parse depend libraries of elisp file.
+
+
+
+
+
 
 
 

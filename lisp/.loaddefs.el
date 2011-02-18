@@ -3735,7 +3735,7 @@ Turns on hungry delete mode if the buffer is appropriate.
 ;;;***
 
 ;;;### (autoloads (identica) "identica-mode/identica-mode" "identica-mode/identica-mode.el"
-;;;;;;  (19806 464))
+;;;;;;  (19806 1815))
 ;;; Generated autoloads from identica-mode/identica-mode.el
 
 (autoload 'identica "identica-mode/identica-mode" "\
@@ -4274,7 +4274,7 @@ prompt for the function or variable to find, instead.
 ;;;***
 
 ;;;### (autoloads (twit) "twittering-mode/twittering-mode" "twittering-mode/twittering-mode.el"
-;;;;;;  (19806 1455))
+;;;;;;  (19806 1815))
 ;;; Generated autoloads from twittering-mode/twittering-mode.el
 
 (autoload 'twit "twittering-mode/twittering-mode" "\
@@ -4421,8 +4421,8 @@ accept it or skip it.
 
 ;;;***
 
-;;;### (autoloads nil nil ("redo+/redo+.el" "twittering-mode/test.el")
-;;;;;;  (19806 1457 806364))
+;;;### (autoloads nil nil ("elisp-depend/elisp-depend.el" "redo+/redo+.el")
+;;;;;;  (19806 20796 925520))
 
 ;;;***
 
