@@ -5,7 +5,6 @@
 (global-auto-complete-mode t)		; 全域啟動自動補全
 (ac-config-default)
 
-
 ;; Fix popup-tip's bug
 (defadvice popup-tip
   (around popup-pos-tip-wrapper (string &rest args) activate)

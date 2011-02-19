@@ -2,7 +2,6 @@
 (eval-when-compile (require 'cl))
 
 
-
 (setq elisp-depend-directory-list
       '("~/.emacs.d/"
 	"~/.emacs.d/lisp/"
