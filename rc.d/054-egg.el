@@ -46,7 +46,7 @@
   ad-do-it)
 
 (defadvice egg-log-msg-done (around kill-egg-commit-buffer activate)
-  ""
+  "Delete egg-commit-buffer after commit."
   (let ((commit-buffer (current-buffer)))
     ad-do-it
     (kill-buffer commit-buffer)))
