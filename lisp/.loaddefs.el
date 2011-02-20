@@ -4421,8 +4421,8 @@ accept it or skip it.
 
 ;;;***
 
-;;;### (autoloads nil nil ("elisp-depend/elisp-depend.el" "redo+/redo+.el")
-;;;;;;  (19806 20796 925520))
+;;;### (autoloads nil nil ("el-get/el-get-install.el" "el-get/el-get.el"
+;;;;;;  "redo+/redo+.el") (19808 53774 573337))
 
 ;;;***
 
