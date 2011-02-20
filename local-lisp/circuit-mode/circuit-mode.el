@@ -35,7 +35,7 @@
 
 
 ;; define font-lock
-;; TODO:only write to p.36
+;; TODO:only write to p.38
 ;; take a look at http://xahlee.org/emacs/elisp_syntax_coloring.html
 (defvar circuit-mode-element
   '("AND_gate" "AND_gen" "BOX_gate" "BUFFER_gate" "BUFFER_gen" "Cos" "Cosine"
@@ -43,12 +43,17 @@
     "IOdefs" "Intersect_" "LH_symbol" "Loopover_" "LT_symbol" "Max" "Min"
     "Mux" "NAND_gate" "NOR_gate" "NOT_gate" "OR_gate" "OR_gen" "Point_"
     "Rect_" "Sin" "Vperp" "XOR_gate" "abs_" "adc" "amp" "along_" "antenna"
-
+    "arca" "arcd" "arcto" "arrowline" "b_current" "battery" "beginshade" "bell"
+    "bi_trans" "boxcoord" "boxdim" "bswitch" "buzzer" "c_fet" "capacitor" "cbreaker"
+    "centerline_" "cintersect" "clabel" "consource" "corner" "contact" "contline"
+    "consd" "cross" "cross3D" "crossover" "dac" "d_fet" "dabove" "darrow" "dashline"
+    "dbelow" "dcosine3D" "delay" "dend" "diff3D" "diff_" "dimension_" "diode"
     ))
 (defvar circuit-mode-macro
   '("AND_ht" "AND_wd" "BUF_ht" "BUF_wd" "E_" "FF_ht" "FF_wid" "G_hht" "HOMELIB_"
     "H_ht" "Int_" "L_unit" "Mux_ht" "Mux_wid" "Mx_pins" "NOT_circle" "NOT_rad"
-    "OR_rad" "View3D" "XOR_off" "above_"
+    "OR_rad" "View3D" "XOR_off" "above_" "b_" "bellow_" "cct_init"
+    "crosswd_" "csdim_" "darrow_init" "def_biset" "delay_rad_" "deleminit_" "dimen_"
     ))
 
 ;; (defgroup circuit nil
