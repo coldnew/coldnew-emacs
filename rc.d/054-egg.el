@@ -42,14 +42,15 @@
 
 (defadvice egg-commit-log-edit (around kill-egg-status-buffer activate)
   "Delete egg-status buffer after visiting egg-commit-buffer."
-  (kill-buffer)
-  ad-do-it)
+  (let ((egg-status-buffer (current-buffer)))
+    (kill-buffer egg-status-buffer)
+    ad-do-it))
 
 (defadvice egg-log-msg-done (around kill-egg-commit-buffer activate)
   "Delete egg-commit-buffer after commit."
-  (let ((commit-buffer (current-buffer)))
+  (let ((egg-commit-buffer (current-buffer)))
     ad-do-it
-    (kill-buffer commit-buffer)))
+    (kill-buffer egg-commit-buffer)))
 
 (provide '054-egg)
 ;; 054-egg.el ends here.
