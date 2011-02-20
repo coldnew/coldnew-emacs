@@ -45,6 +45,11 @@
   (kill-buffer)
   ad-do-it)
 
+(defadvice egg-log-msg-done (around kill-egg-commit-buffer activate)
+  ""
+  (let ((commit-buffer (current-buffer)))
+    ad-do-it
+    (kill-buffer commit-buffer)))
 
 (provide '054-egg)
 ;; 054-egg.el ends here.
