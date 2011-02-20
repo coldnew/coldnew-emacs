@@ -91,6 +91,12 @@
 ;;                 connects the keymaps with the commands and motions
 ;;                 defined in vim-commands.el and vim-motions.el.
 
+;;; Changelog:
+
+;; version 0.5
+;;     * ex-commands :bn, :bp 
+;;     * ex-mode shows info about current command
+
 ;;; Code:
 
 (eval-when-compile
