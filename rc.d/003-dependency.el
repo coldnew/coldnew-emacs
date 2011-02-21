@@ -65,6 +65,7 @@
 (require* 'elscreen-w3m)		  ; elscreen with w3m
 (require* 'elscreen-wl)			  ; elscreen with wanderlust
 (require* 'emms)			  ; Emacs Multimedia System
+(require* 'emms-setup)			  ; Setup script for EMMS
 (require* 'emms-bookmarks)		  ; Bookmarks for Emms
 (require* 'emms-browser)		  ; a track browser supporting covers and filtering
 (require* 'emms-cache)			  ; persistence for emms-track
@@ -80,7 +81,6 @@
 (require* 'emms-player-mplayer)		  ; mplayer support for EMMS
 (require* 'emms-player-simple)		  ; A generic simple player
 (require* 'emms-playing-time)		  ; Display emms playing time on mode line
-(require* 'emms-setup)			  ; Setup script for EMMS
 (require* 'emms-streams)		  ; interface to add and play streams
 (require* 'emms-tag-editor)		  ; Edit track tags.
 (require* 'etags)			  ;
@@ -114,7 +114,6 @@
 (require* 'multi-term)			  ;
 (require* 'nav)				  ;
 (require* 'newlisp)			  ; newlisp
-(require* 'notify)			  ; notification front-end
 (require* 'paredit)			  ; Use Paredit to balance parentheses
 (require* 'popup-pos-tip)		  ;
 (require* 'pos-tip)			  ;
@@ -190,7 +189,6 @@
 (require* 'password-cache)		  ; Read passwords, possibly using a password cache
 (require* 'server)			  ; Lisp code for GNU Emacs running as server process
 (require* 'epa-file)			  ; the EasyPG Assistant, transparent file encryption
-(require* 'site-gentoo)			  ; site initialisation for Gentoo-installed packages
 (require* 'env)				  ; functions to manipulate environment variables
 (require* 'revive)			  ;
 (require* 'mm-url)			  ; a wrapper of url functions/commands for Gnus
@@ -202,8 +200,16 @@
 
 
 
-
-
+;; environ
+(cond
+ (mac-p
+  )
+ (windows-p
+  )
+ (linux-p
+  (require* 'notify)			  ; notification front-end
+  (require* 'site-gentoo)		  ; site initialisation for Gentoo-installed packages
+  ))
 
 
 
