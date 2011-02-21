@@ -27,6 +27,7 @@
 	("irc.freenode.net" :channels  ("#emacs" "#lisp" "##linux" "#gentoo"	; english channel
 					"#tossug" "#gentoo-tw" "#python.tw" "#ubuntu-tw"))
 	("irc.debian.org" :channels ("#dot"))
+	("im.bitlbee.org")
 	))
 
 ;;;;;; Hooks

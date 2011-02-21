@@ -20,6 +20,8 @@
 (setq ac-use-quick-help   t )
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/etc/dict")
 
+(setq ac-comphist-file "~/.emacs.d/var/cache/auto-complete.cache")
+
 (setq-default ac-sources
 	      '(ac-source-abbrev     ac-source-semantic   ac-source-symbols
 				     ac-source-filename   ac-source-functions

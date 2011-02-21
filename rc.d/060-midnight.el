@@ -30,10 +30,11 @@
       (append '("^\\*EMMS Playlist\\*.*$"
 		".*irc\\.freenode\\.net.*"
 		".*irc\\.debian\\.org.*"
+		".*im\\.bitlbee\\.org.*"
 		"^\\*ansi-term*"
 		"^\\*terminal*"))
       clean-buffer-list-kill-never-regexps-init)
 
 
-(provide '036-midnight)
-;; 036-midnight.el ends here.
+(provide '060-midnight)
+;; 060-midnight.el ends here.

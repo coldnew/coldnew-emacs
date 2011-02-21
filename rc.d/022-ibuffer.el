@@ -55,6 +55,7 @@
 			 (name . "^\\*anything*")
 			 (name . "^ipa*")
 			 (name . "^\\*irc*")
+			 (name . "^\\*im.bitlbee.org\\*$")
 			 (name . "^\\*el-get*")
 			 (name . "^\\*EGG:*")
 			 (name . "^\\*WoMan-Log\\*")
@@ -107,6 +108,7 @@
 (add-to-list 'ibuffer-never-show-predicates"^\\*CEDET Global\\*$")
 (add-to-list 'ibuffer-never-show-predicates"^\\*MiniBuf-*")
 (add-to-list 'ibuffer-never-show-predicates"^\\*Egg:Select Action\\*$")
+(add-to-list 'ibuffer-never-show-predicates"^\\*Ido Completions\\*$")
 
 
 ;;;;;;;; Advice

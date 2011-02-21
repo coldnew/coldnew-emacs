@@ -27,15 +27,17 @@
 ;;;; Global environment Setting
 (setenv "GPG_AGENT_INFO" nil)
 
+;;;; Alias
+(defalias 'irc 'erc)
 
 ;;;; Following setting must run before load the libraries.
 
-;; el-get.el
-(setq el-get-dir "~/.emacs.d/lisp/")
-(setq el-get-recipe-path "~/.emacs.d/etc/recipes")
+;; ;; el-get.el
+;; (setq el-get-dir "~/.emacs.d/lisp/")
+;; (setq el-get-recipe-path "~/.emacs.d/etc/recipes")
 
-;; auto-complete.el
-(setq ac-comphist-file "~/.emacs.d/var/cache/auto-complete.cache")
+;; ;; auto-complete.el
+;; (setq ac-comphist-file "~/.emacs.d/var/cache/auto-complete.cache")
 
 
 (provide '002-environment)

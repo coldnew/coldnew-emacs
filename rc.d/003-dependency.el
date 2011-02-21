@@ -197,6 +197,7 @@
 (require* 'spice-mode)			  ; major mode providing a spice mode hook for fontification
 (require* 'identica-mode)		  ; Major mode for Identica
 (require* 'elisp-depend)		  ; Parse depend libraries of elisp file.
+(require* 'erc)				  ; An Emacs Internet Relay Chat client
 
 
 
