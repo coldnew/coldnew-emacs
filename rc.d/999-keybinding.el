@@ -17,7 +17,7 @@
 (vim:nmap (kbd "u") 'undo-tree-undo)
 (vim:nmap (kbd "z.") 'find-file-at-point)
 (vim:nmap (kbd "gs") 'switch-to-scratch-and-back)
-
+(vim:nmap (kbd "C-x tn") 'vim:cmd-tab-new)
 
 ;; Insert Map
 (vim:imap (kbd "C-c C-e") 'eval-and-replace)

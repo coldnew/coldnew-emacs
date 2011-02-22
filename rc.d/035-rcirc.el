@@ -47,7 +47,6 @@
 	     ))
 
 
-
 ;;;;;; RCIRC Commands
 (defun-rcirc-command all (input)
   "Run the arguments as a command for all connections.

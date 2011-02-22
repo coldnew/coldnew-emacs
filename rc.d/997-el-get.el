@@ -129,6 +129,8 @@
 	       :url "git://github.com/hayamiz/twittering-mode.git")
 	(:name elisp-depend
 	       :type emacswiki)
+	(:name sr-speedbar
+	       :type emacswiki)
 	;;  session
 	;; emacs-w3m
 	;;color-theme			;

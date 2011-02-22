@@ -112,7 +112,7 @@
 (require* 'mmm-auto)			  ; loading and enabling MMM Mode automatically
 (require* 'mmm-mode)			  ; Allow Multiple Major Modes in a buffer
 (require* 'multi-term)			  ;
-(require* 'nav)				  ;
+(require* 'nav)				  ; Emacs mode for IDE-like navigation of directories
 (require* 'newlisp)			  ; newlisp
 (require* 'paredit)			  ; Use Paredit to balance parentheses
 (require* 'popup-pos-tip)		  ;
@@ -200,6 +200,10 @@
 (require* 'erc)				  ; An Emacs Internet Relay Chat client
 (require* 'edebug)			  ; a source-level debugger for Emacs Lisp
 (require* 'sr-speedbar)			  ; Same frame speedbar
+(require* 'speedbar)			  ; quick access to files and tags in a frame
+
+
+
 
 
 
