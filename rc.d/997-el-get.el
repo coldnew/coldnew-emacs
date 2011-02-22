@@ -131,6 +131,23 @@
 	       :type emacswiki)
 	(:name sr-speedbar
 	       :type emacswiki)
+	(:name xml-rpc-el
+	       :type bzr
+	       :url "lp:xml-rpc-el")
+	(:name org2blog
+	       :type git
+	       :url "https://github.com/punchagan/org2blog.git"
+	       :features org2blog)
+	(:name org-contacts
+	       :type git
+	       :features org-contacts
+	       :url "git://git.naquadah.org/org-contacts.git")
+	(:name org-buffers
+	       :type git
+	       :url "https://github.com/dandavison/org-buffers.git")
+	(:name org-fstree
+	       :type git
+	       :url "http://repo.or.cz/r/org-fstree.git")
 	;;  session
 	;; emacs-w3m
 	;;color-theme			;

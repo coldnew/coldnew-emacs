@@ -103,7 +103,7 @@
   ;; file does not in ~/.emacs.d, take it as a script file
   (yas/expand-snippet
    (concat
-    "#!/usr/bin/emacs --no-site-file --script                                                \n"
+    "#!/usr/bin/emacs --script                                                               \n"
     "                                                                                        \n"
     "$0                                                                                      \n"
     )))
