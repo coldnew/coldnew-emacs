@@ -1,13 +1,16 @@
 ;;
 (eval-when-compile (require 'cl))
 
+;;;;;;;; Auto-Mode
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
 
-;;  Hooks
+;;;;;;;;  Settings
 (add-hook 'org-mode-hook
 	  '(lambda ()
-	     (setq org-hide-leading-stars nil)
+	     ;; Make org-mode has clean view
+	     (setq org-hide-leading-stars t)
+	     ;;
 	     (setq org-log-done t)
 	     (setq org-log-done 'time)	; 對已完成事項加上時間
 	     (setq org-agenda-files '("~/.emacs.d/var/org/work.org"
@@ -25,21 +28,20 @@
 	     (org-turn-on-iimage-in-org) ; display image on load
 	     ))
 
-;;;;; Keybinding
+;;;;;;;; Keybinding
 (add-hook 'org-mode-hook
 	  '(lambda ()
-	     (when (require 'rc-vim-mode nil 'noerror)
-	       (vim:local-nmap "\C-l" 'org-store-link) ;
-	       (vim:local-nmap "\C-a" 'org-agenda)	 ; 進入日程表
-	       (vim:local-nmap "\C-b" 'org-iswitchb)
-	       (vim:local-imap (kbd "RET") 'org-return)
-	       (vim:local-imap (kbd "M-t") 'org-insert-todo-heading-respect-content)
-	       (vim:local-imap (kbd "C-t") 'org-todo)
-	       (vim:local-imap (kbd "C-s") 'org-sparse-tree)
-	       (vim:local-imap (kbd "M-s") 'org-schedule)
-	       (vim:local-nmap (kbd "M-t") 'org-todo-list)
-	       (vim:local-imap (kbd "M-l") 'org-mode:insert-link)
-	       )))
+	     (vim:local-nmap "\C-l" 'org-store-link) ;
+	     (vim:local-nmap "\C-a" 'org-agenda)	 ; 進入日程表
+	     (vim:local-nmap "\C-b" 'org-iswitchb)
+	     (vim:local-imap (kbd "RET") 'org-return)
+	     (vim:local-imap (kbd "M-t") 'org-insert-todo-heading-respect-content)
+	     (vim:local-imap (kbd "C-t") 'org-todo)
+	     (vim:local-imap (kbd "C-s") 'org-sparse-tree)
+	     (vim:local-imap (kbd "M-s") 'org-schedule)
+	     (vim:local-nmap (kbd "M-t") 'org-todo-list)
+	     (vim:local-imap (kbd "M-l") 'org-mode:insert-link)
+	     ))
 
 
 

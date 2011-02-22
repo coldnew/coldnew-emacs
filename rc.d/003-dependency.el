@@ -203,7 +203,6 @@
 (require* 'speedbar)			  ; quick access to files and tags in a frame
 (require* 'xml-rpc)			  ; An elisp implementation of clientside XML-RPC
 (require* 'org2blog)			  ; blog from Org mode to wordpress
-(require* 'org-contacts)		  ; Contacts management
 (require* 'org-buffers)			  ; An Org-mode tool for buffer management
 (require* 'org-fstree)			  ; include a filesystem subtree into an org file
 
