@@ -131,7 +131,7 @@
 	       :type emacswiki)
 	(:name sr-speedbar
 	       :type emacswiki)
-	(:name xml-rpc-el
+	(:name xml-rpc
 	       :type bzr
 	       :url "lp:xml-rpc-el")
 	(:name org2blog
