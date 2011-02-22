@@ -1,0 +1,69 @@
+
+
+* Installation
+  - put this path into your load-path 
+  - insert "(require 'org-fstree)" into ~/.emacs
+
+
+* Establishing links
+A link between a file and a headline is established 
+by simply adding a link to the file to the headline
+
+Examples:
+
+** Put your note here [[file:yourfile][And a link to one of your files here]]	    :SOMETAG:
+** A file you probably have [[file:~/.emacs]]				:GNU:
+
+   
+* Generating a static tree
+
+** Render as plain text
+Somewhere in your org file add the following line and press C-c C-c
+while on it:
+#+BEGIN_FSTREE: ~/ :non-recursive t
+
+Removing the ':non-recursive' option will show a complete static
+representation of your home directory, which can take some time
+(abort with C-g).
+
+
+** Using column view
+  :PROPERTIES:
+  :COLUMNS:  %40ITEM %Link1 %Link2
+  :END:
+
+Somewhere in your org file set the properties of some headline as done
+above, add the following line, press C-c C-c while on it and switch to
+column-view (C-c C-x C-c).
+#+BEGIN_FSTREE: ~/ :non-recursive t :links-as-properties t
+
+To add the complete subtree recursively remove the :non-recursive option. 
+This will quickly become slow; you can stop generation with C-g.
+
+
+
+** Options
+   - :non-recursive t , to suppress recursion into directories
+   - :exclude-regexp-name <list of regexp strings> , exclude file/directory names matching either 
+     of the given regexp expressions
+       Examples: 
+         :exclude-regexp-name (".*\\.pdf$" ".*\\.zip$"), excludes files/directories ending with either ".pdf" or ".zip"
+         :exclude-regexp-name ("^\\.git$") , excludes files/directories named ".git"
+   - :exclude-regexp-fullpath <list of regexp strings>, same as :exclude-regexp-name but matches absolute path to file/directory
+   - :relative-links t , generates relative instead of absolute links
+   - :show-only-matches t , only files that are being linked to show up
+   - :links-as-properties t, sets the links as properties Link1, Link2,... for use in column view [Does not work with dynamic-update!]
+
+
+* Generating a dynamic tree
+  :PROPERTIES:
+  :COLUMNS:  %40ITEM %Link1 %Link2
+  :END:
+
+In a dynamic tree initially only the representation of the given
+directory's content is generated and the content of a subdirectory is
+dynamically generated or deleted on visibility change.
+This makes the complete filesystem browsable inside the org file.
+
+Press C-c C-c on the following line. (BUG: Switching to column-view breaks dynamic update, but shows the links )
+#+BEGIN_FSTREE: ~/ :dynamic-update t
