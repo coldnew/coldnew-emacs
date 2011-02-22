@@ -198,6 +198,8 @@
 (require* 'identica-mode)		  ; Major mode for Identica
 (require* 'elisp-depend)		  ; Parse depend libraries of elisp file.
 (require* 'erc)				  ; An Emacs Internet Relay Chat client
+(require* 'edebug)			  ; a source-level debugger for Emacs Lisp
+(require* 'sr-speedbar)			  ; Same frame speedbar
 
 
 

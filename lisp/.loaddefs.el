@@ -4421,8 +4421,8 @@ accept it or skip it.
 
 ;;;***
 
-;;;### (autoloads nil nil ("el-get/el-get-install.el" "el-get/el-get.el"
-;;;;;;  "redo+/redo+.el") (19808 53774 573337))
+;;;### (autoloads nil nil ("el-get/el-get-install.el" "redo+/redo+.el"
+;;;;;;  "sr-speedbar/sr-speedbar.el") (19811 6684 594704))
 
 ;;;***
 
