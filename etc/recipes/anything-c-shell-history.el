@@ -1,1 +1,0 @@
-(:name anything-c-shell-history :type emacswiki)

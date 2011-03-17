@@ -1,1 +1,0 @@
-(:name anything-yaetags :type emacswiki)

@@ -1,1 +1,0 @@
-(:name mmm-mode :type git :url "git://github.com/purcell/mmm-mode.git")

@@ -1,1 +1,0 @@
-(:name notify :type emacswiki)

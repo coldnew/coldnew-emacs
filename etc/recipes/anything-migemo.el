@@ -1,1 +1,0 @@
-(:name anything-migemo :type emacswiki)

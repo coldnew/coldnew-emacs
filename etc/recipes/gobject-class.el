@@ -1,1 +1,0 @@
-(:name gobject-class :type http :url "http://blog.gustavobarbieri.com.br/old-website/gobject-class.el")

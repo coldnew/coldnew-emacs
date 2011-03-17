@@ -1,1 +1,0 @@
-(:name newlisp-mode :type git :url "https://github.com/may/newlisp-mode.git" :features newlisp)

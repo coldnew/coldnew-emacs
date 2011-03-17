@@ -1,1 +1,0 @@
-(:name speck :type emacswiki)

@@ -1,1 +1,0 @@
-(:name anything-ipa :type emacswiki)

@@ -1,1 +1,0 @@
-(:name emms-get-lyrics :type git :url "https://github.com/talau/elisp.git")

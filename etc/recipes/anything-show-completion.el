@@ -1,1 +1,0 @@
-(:name anything-show-completion :type emacswiki)

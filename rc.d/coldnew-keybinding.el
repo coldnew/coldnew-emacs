@@ -1,6 +1,16 @@
 ;;
 (eval-when-compile (require 'cl))
 
+
+;;;;;;;; Packages Import
+(require 'coldnew-macro)
+(require 'coldnew-functions)
+(require 'coldnew-commands)
+(require 'coldnew-variables)
+(require 'coldnew-vim)
+
+
+;; Normal Map
 (vim:nmap (kbd "C-x C-b") 'ibuffer)
 (vim:nmap (kbd "C-x f") 'anything-find-file)
 (vim:nmap (kbd "C-x C-f") 'lusty-file-explorer)
@@ -11,11 +21,7 @@
 (vim:nmap (kbd "C-x M-l") 'egg-log)
 (vim:nmap (kbd "C-x C-s") 'save-buffer-always)
 
-
-
-
-
-
+;; Insert Map
 (vim:imap (kbd "C-x C-b") 'ibuffer)
 (vim:imap (kbd "C-x C-f") 'lusty-file-explorer)
 (vim:imap (kbd "M-x") 'anything-execute-extended-command)
@@ -27,6 +33,10 @@
 
 ;; Visual Map
 (vim:vmap (kbd "M-;") 'vim:visual-toggle-comment)
+
+;; Window Map
+(vim:wmap (kbd C-w f) 'fullscreen-window)
+
 
 (provide 'coldnew-keybinding)
 ;; coldnew-keybinding.el ends here.

@@ -1,1 +1,0 @@
-(:name qmake-mode :type hg :url "https://qmake-mode.googlecode.com/hg/ qmake-mode")

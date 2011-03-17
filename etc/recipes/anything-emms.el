@@ -1,1 +1,0 @@
-(:name anything-emms :type emacswiki)

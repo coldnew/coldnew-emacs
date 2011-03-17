@@ -1,1 +1,0 @@
-(:name framemove :type emacswiki)

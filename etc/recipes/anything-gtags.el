@@ -1,1 +1,0 @@
-(:name anything-gtags :type emacswiki)
