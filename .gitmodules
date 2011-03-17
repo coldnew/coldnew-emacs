@@ -1,0 +1,15 @@
+[submodule "lisp/hungury-delete"]
+	path = lisp/hungury-delete
+	url = http://github.com/nflath/hungry-delete.git
+[submodule "lisp/smartchr"]
+	path = lisp/smartchr
+	url = https://github.com/imakado/emacs-smartchr.git
+[submodule "lisp/smex"]
+	path = lisp/smex
+	url = https://github.com/nonsequitur/smex.git
+[submodule "lisp/xcscope"]
+	path = lisp/xcscope
+	url = git://github.com/To1ne/xcscope.git
+[submodule "lisp/pysmell"]
+	path = lisp/pysmell
+	url = https://github.com/orestis/pysmell.git
