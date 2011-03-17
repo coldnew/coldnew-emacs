@@ -25,6 +25,8 @@
 (vim:imap (kbd "C-x C-s") 'save-buffer-always)
 
 
+;; Visual Map
+(vim:vmap (kbd "M-;") 'vim:visual-toggle-comment)
 
 (provide 'coldnew-keybinding)
 ;; coldnew-keybinding.el ends here.

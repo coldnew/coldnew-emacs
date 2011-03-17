@@ -8,6 +8,8 @@
   "directory to back up files.")
 (defvar emacs-etc-dir "~/.emacs.d/etc/"
   "directory to place other stuff.")
+(defvar emacs-lisp-dir "~/.emacs.d/lisp/"
+  "directory to place lisp package from internet.")
 
 ;;;;;;;; Variables
 ;; ;; TODO: remove
