@@ -9,6 +9,7 @@
 (require 'coldnew-vim)
 (require 'coldnew-emacs)
 (require 'coldnew-locale)
+(require 'coldnew-advice)
 
 (require 'coldnew-core)
 
@@ -40,9 +41,11 @@
 (require 'coldnew-anything)
 (require 'coldnew-backup)
 (require 'coldnew-complete)
+(require 'coldnew-session)
+
 
 (require 'coldnew-lang-elisp)
-
+(require 'coldnew-lang-ruby)
 
 
 

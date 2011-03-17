@@ -6,6 +6,9 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
+(require 'coldnew-complete)
+(require 'coldnew-snippets)
+
 
 ;;;;;;;; Settings
 (setq line-spacing                    4 )
@@ -13,6 +16,19 @@
 (setq kill-ring-max                 300 )
 (setq line-number-mode                t )
 (setq column-number-mode              t )
+
+;; Auto add a newline at the end of document
+(setq require-final-newline           t )
+
+;; Enable global font-lock
+(setq global-font-lock-mode           t )
+
+;; Auto revert file if file modified
+(setq global-auto-revert-mode         t )
+
+;; Use lisp-interaction-mode as default major mode
+(setq-default major-mode 'lisp-interaction-mode )
+
 
 ;;;;;;;; Programming Mode
 (defun programming-mode ()

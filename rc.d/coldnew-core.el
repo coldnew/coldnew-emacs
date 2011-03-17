@@ -25,6 +25,8 @@
 ;; disable bllink cursor
 (blink-cursor-mode -1)
 
+;; Use y or n instead of yes and not
+(fset 'yes-or-no-p 'y-or-n-p )
 
 
 (provide 'coldnew-core)

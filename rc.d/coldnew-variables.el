@@ -10,6 +10,9 @@
   "directory to place other stuff.")
 (defvar emacs-lisp-dir "~/.emacs.d/lisp/"
   "directory to place lisp package from internet.")
+(defvar emacs-config-dir "~/.emacs.d/rc.d/"
+  "directory to place emacs configure.")
+
 
 ;;;;;;;; Variables
 ;; ;; TODO: remove
@@ -25,7 +28,7 @@
 ;;			(= (point-max) 1)))
 
 (defvar mac?     (eq system-type 'darwin))
-(defvar linux?   (and (eq system-type 'gnu/linux) (not mac?)))
+(defvar linux?   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin))))
 (defvar cygwin?  (eq system-type 'cygwin))
 (defvar windows? (eq system-type 'windows-nt))
 (defvar emacs23? (equal emacs-major-version 23))
@@ -35,6 +38,13 @@
 		       (not (file-exists-p (buffer-file-name)))
 		       (= (point-max) 1)))
 
+
+(defvar 1280x800?   (and (= (display-pixel-width) 1280)
+			 (= (display-pixel-height) 800)))
+(defvar 1280x1024?  (and (= (display-pixel-width) 1280)
+			 (= (display-pixel-height) 1024)))
+(defvar 1920x1080?  (and (= (display-pixel-width) 1920)
+			 (= (display-pixel-height) 1080)))
 
 
 

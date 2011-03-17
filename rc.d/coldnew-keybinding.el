@@ -35,7 +35,7 @@
 (vim:vmap (kbd "M-;") 'vim:visual-toggle-comment)
 
 ;; Window Map
-(vim:wmap (kbd C-w f) 'fullscreen-window)
+(vim:wmap (kbd "C-w f") 'fullscreen-window)
 
 
 (provide 'coldnew-keybinding)
