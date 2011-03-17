@@ -6,12 +6,12 @@
 ;;         See http://www.emacswiki.org/emacs/PrettyLambda for the original
 ;;         code snippet and its history.
 ;; Maintainer: Drew Adams
-;; Copyright (C) 2009-2010, Drew Adams, all rights reserved.
+;; Copyright (C) 2009-2011, Drew Adams, all rights reserved.
 ;; Created: Sun Jun 14 11:07:04 2009 (-0700)
 ;; Version: 22.0
-;; Last-Updated: Fri Jan 15 13:35:51 2010 (-0800)
+;; Last-Updated: Tue Jan  4 13:18:23 2011 (-0800)
 ;;           By: dradams
-;;     Update #: 137
+;;     Update #: 141
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/pretty-lambdada.el
 ;; Keywords: convenience display
 ;; Compatibility: GNU Emacs: 22.x, 23.x
@@ -67,8 +67,10 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Change log:
+;;; Change Log:
 ;;
+;; 2011/01/04 dadams
+;;     Added autoload cookies (for defgroup, defcustom, and commands).
 ;; 2009/06/14 dadams
 ;;     Added: group pretty-lambda, (global-)pretty-lambda-mode,
 ;;            pretty-lambda-for-modes, pretty-lambda-auto-modes,
@@ -101,70 +103,75 @@
 ;;
 ;;; Code:
 
+;;;###autoload
 (defgroup pretty-lambda nil
-  "Display of the word `lambda' as the Greek character."
-    :group 'convenience :group 'programming)
+"Display of the word `lambda' as the Greek character."
+:group 'convenience :group 'programming)
 
+;;;###autoload
 (defcustom pretty-lambda-auto-modes
-  '(lisp-mode emacs-lisp-mode lisp-interaction-mode scheme-mode)
-  "*Modes affected by `pretty-lambda-for-modes'."
-  :type '(repeat symbol) :group 'pretty-lambda)
+'(lisp-mode emacs-lisp-mode lisp-interaction-mode scheme-mode)
+"*Modes affected by `pretty-lambda-for-modes'."
+:type '(repeat symbol) :group 'pretty-lambda)
 
+;;;###autoload
 (defun pretty-lambda-for-modes (&optional turn-off)
-  "Use `pretty-lambda-mode' for modes in `pretty-lambda-auto-modes'.
+"Use `pretty-lambda-mode' for modes in `pretty-lambda-auto-modes'.
 `C-u' to turn off."
-  (interactive "P")
-  (let (hook-var)
-    (cond (turn-off
-           (dolist (m  pretty-lambda-auto-modes)
-             (remove-hook (setq hook-var (intern (concat (symbol-name m) "-hook")))
-                          'turn-on-pretty-lambda-mode)
-             (add-hook hook-var 'turn-off-pretty-lambda-mode))
-           (when (memq major-mode pretty-lambda-auto-modes)
-             (turn-off-pretty-lambda-mode))) ; Current buffer
-          (t
-           (dolist (m  pretty-lambda-auto-modes)
-             (remove-hook (setq hook-var (intern (concat (symbol-name m) "-hook")))
-                          'turn-off-pretty-lambda-mode)
-             (add-hook hook-var 'turn-on-pretty-lambda-mode))
-           (when (memq major-mode pretty-lambda-auto-modes)
-             (turn-on-pretty-lambda-mode)))))) ; Current buffer
+(interactive "P")
+(let (hook-var)
+(cond (turn-off
+(dolist (m  pretty-lambda-auto-modes)
+(remove-hook (setq hook-var (intern (concat (symbol-name m) "-hook")))
+'turn-on-pretty-lambda-mode)
+(add-hook hook-var 'turn-off-pretty-lambda-mode))
+(when (memq major-mode pretty-lambda-auto-modes)
+(turn-off-pretty-lambda-mode))) ; Current buffer
+(t
+(dolist (m  pretty-lambda-auto-modes)
+(remove-hook (setq hook-var (intern (concat (symbol-name m) "-hook")))
+'turn-off-pretty-lambda-mode)
+(add-hook hook-var 'turn-on-pretty-lambda-mode))
+(when (memq major-mode pretty-lambda-auto-modes)
+(turn-on-pretty-lambda-mode)))))) ; Current buffer
 
+;;;###autoload
 (define-minor-mode pretty-lambda-mode
-    "Buffer-local minor mode to display the word `lambda' as the Greek letter.
+"Buffer-local minor mode to display the word `lambda' as the Greek letter.
 With ARG, turn mode on if ARG is positive, off otherwise."
-  :init-value nil
-  (cond (pretty-lambda-mode
-         (pretty-lambda)
-         (font-lock-fontify-buffer))
-        (t
-         (font-lock-remove-keywords
-          nil `(("\\<lambda\\>"
-                 (0 (progn (compose-region (match-beginning 0) (match-end 0)
-                                           ,(make-char 'greek-iso8859-7 107))
-                           nil)))))
-         (save-excursion
-           (goto-char (point-min))
-           (while (re-search-forward "\\<lambda\\>" nil t)
-             (decompose-region (match-beginning 0) (match-end 0)))))))
+:init-value nil
+(cond (pretty-lambda-mode
+(pretty-lambda)
+(font-lock-fontify-buffer))
+(t
+(font-lock-remove-keywords
+nil `(("\\<lambda\\>"
+(0 (progn (compose-region (match-beginning 0) (match-end 0)
+,(make-char 'greek-iso8859-7 107))
+nil)))))
+(save-excursion
+(goto-char (point-min))
+(while (re-search-forward "\\<lambda\\>" nil t)
+(decompose-region (match-beginning 0) (match-end 0)))))))
 
+;;;###autoload
 (define-globalized-minor-mode global-pretty-lambda-mode
-    pretty-lambda-mode turn-on-pretty-lambda-mode
-    "Global minor mode to display the word `lambda' as the Greek letter.
+pretty-lambda-mode turn-on-pretty-lambda-mode
+"Global minor mode to display the word `lambda' as the Greek letter.
 With ARG, turn mode on if ARG is positive, off otherwise.")
 
 ;; This was originally from <URL: http://www.emacswiki.org/emacs/PrettyLambda>.
 ;; See that page for the history of this code snippet.  I just added MODE as an
 ;; optional argument.
 (defun pretty-lambda (&optional mode)
-  "Display the word `lambda' as the Greek letter.
+"Display the word `lambda' as the Greek letter.
 Non-nil optional arg means use pretty-lambda display in that MODE.
 nil means use pretty-lambda display for the current mode."
-  (font-lock-add-keywords
-   mode `(("\\<lambda\\>"
-   (0 (progn (compose-region (match-beginning 0) (match-end 0)
-        ,(make-char 'greek-iso8859-7 107))
-      nil))))))
+(font-lock-add-keywords
+mode `(("\\<lambda\\>"
+(0 (progn (compose-region (match-beginning 0) (match-end 0)
+,(make-char 'greek-iso8859-7 107))
+nil))))))
 
 (defun turn-on-pretty-lambda-mode  () (pretty-lambda-mode  1))
 (defun turn-off-pretty-lambda-mode () (pretty-lambda-mode -1))

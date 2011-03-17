@@ -43,7 +43,7 @@
 ;; 2009-04-05 taiki
 ;;   * version 1.0.2
 ;;   * add highlight-cl-macro face.
-;;
+;; 
 ;; 2009-04-03 taiki
 ;;   * initial release.
 
@@ -71,7 +71,7 @@
 (and (fboundp sym)
 (symbol-file sym)
 (let ((file (file-name-sans-extension
-(file-name-nondirectory
+(file-name-nondirectory 
 (symbol-file sym)))))
 (string-match "^cl\\(-.+\\)?$" file))))
 
@@ -119,8 +119,8 @@ highlight-cl-keywords-alist
 
 (defun highlight-cl-add-font-lock-keywords ()
 "Add `cl' function keywords to `font-lock-keywords'."
-(font-lock-add-keywords
-nil
+(font-lock-add-keywords 
+nil 
 (mapcar
 (lambda (x)
 (list

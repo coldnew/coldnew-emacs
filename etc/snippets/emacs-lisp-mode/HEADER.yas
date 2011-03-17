@@ -100,10 +100,24 @@
 	"(provide '`(yas/file-sans)`)                                                          \n"
 	";; `(yas/file)` ends here.                                                            \n"
 	)))
-  ;; file does not in ~/.emacs.d, take it as a script file
-  (yas/expand-snippet
-   (concat
-    "#!/usr/bin/emacs --script                                                               \n"
-    "                                                                                        \n"
-    "$0                                                                                      \n"
-    )))
+  (if (search (expand-file-name "~/WorkSpace/")
+	      (directory-file-name (buffer-file-name)))
+      (yas/expand-snippet
+       (concat
+	";;                                                                                  \n"
+	"(eval-when-compile (require 'cl))                                                   \n"
+	"                                                                                    \n"
+	"                                                                                    \n"
+	"$0                                                                                  \n"
+	"                                                                                    \n"
+	"                                                                                    \n"
+	"(provide '`(yas/file-sans)`)                                                        \n"
+	";; `(yas/file)` ends here.                                                          \n"
+	))
+    ;; file does not in ~/.emacs.d, take it as a script file
+    (yas/expand-snippet
+     (concat
+      "#!/usr/bin/emacs --script                                                               \n"
+      "                                                                                        \n"
+      "$0                                                                                      \n"
+      ))))

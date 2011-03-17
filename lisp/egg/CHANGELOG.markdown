@@ -1,5 +1,20 @@
 # Egg (Emacs Got Git).
 
+## v1.0.0
+- add option comment for egg-mode-key-prefix
+- update indent .
+- add feature for diff other repository .
+
+## v0.96
+- fix bug of View File History .
+
+## v 0.95
+- change egg-goto-block-filename function to bypte-compile some environments .
+  Thanks for Antoine Levitt .
+
+## v 0.94
+- add const of egg-version .
+
 ## v 0.93
 - fixed magit path . Thanks for SebastianRose .
 - added egg-log-msg-cancel for quit from buffer commit message . Thanks for Alexander Prusov .

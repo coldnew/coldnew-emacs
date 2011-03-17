@@ -1128,7 +1128,7 @@ text-object before or at point."
 
 (vim:defmotion vim:motion-outer-brackets (inclusive count)
   "Select `count' enclosing pairs of [] inclusive."
-  (vim:outer-block "[" "]" nil (or count 1)))
+  (vim:outer-block "\\[" "\\]" nil (or count 1)))
 
 
 (vim:defmotion vim:motion-inner-braces (inclusive count)

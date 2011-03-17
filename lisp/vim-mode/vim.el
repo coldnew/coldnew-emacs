@@ -94,6 +94,18 @@
 ;;; Changelog:
 
 ;; version 0.5
+;;     * add ]p and ]P commands
+;;     * paste-pop works for all mixes of block/linewise/char and for
+;;       paste-before and paste-behind
+;;     * add :setmode ex-command for setting vim-mode's start-mode
+;;       for the current major-mode
+;;     * enable search commands /, ?, *, #, g*, g# in motion-mode,
+;;       repeat search with C-n and C-N instead of n and N
+;;     * : starts ex-mode in motion-mode
+;;     * C-: starts ex-mode in window-mode
+;;     * command can take an addition force argument which is set
+;;       to non-nil iff an exclamation mark has been typed behind
+;;       the command in ex-mode
 ;;     * ex-commands :bn, :bp 
 ;;     * ex-mode shows info about current command
 

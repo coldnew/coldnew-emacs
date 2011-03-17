@@ -44,34 +44,34 @@
 (require 'company nil t)
 
 (defmacro ac-company-define-source (name backend &rest overrides)
-  "Define auto-complete source NAME from company BACKEND.
+"Define auto-complete source NAME from company BACKEND.
 When OVERRIDES is specified, OVERRIDES is prepend to original source."
-  `(defvar ,name
-     '(,@overrides
-       (candidates . (ac-company-candidates ',backend))
-       (prefix . (ac-company-prefix ',backend))
-       (document . (lambda (item) (ac-company-document ',backend item))))))
-  
+`(defvar ,name
+'(,@overrides
+(candidates . (ac-company-candidates ',backend))
+(prefix . (ac-company-prefix ',backend))
+(document . (lambda (item) (ac-company-document ',backend item))))))
+
 (defun ac-company-prefix (backend)
-  (require backend nil t)
-  (when (fboundp backend)
-    (let ((prefix (funcall backend 'prefix)))
-      (when (stringp prefix) 
-	(- (point) (length prefix))))))
+(require backend nil t)
+(when (fboundp backend)
+(let ((prefix (funcall backend 'prefix)))
+(when (stringp prefix) 
+(- (point) (length prefix))))))
 
 (defun ac-company-candidates (backend)
-  (funcall backend 'candidates ac-prefix))
+(funcall backend 'candidates ac-prefix))
 
 (defun ac-company-meta-as-document (backend item)
-  (funcall backend 'meta item))
+(funcall backend 'meta item))
 
 (defun ac-company-doc-buffer-as-document (backend item)
-  (with-current-buffer (funcall backend 'doc-buffer item)
-    (buffer-string)))
+(with-current-buffer (funcall backend 'doc-buffer item)
+(buffer-string)))
 
 (defun ac-company-document (backend item)
-  (or (ac-company-doc-buffer-as-document backend item)
-      (ac-company-meta-as-document backend item)))
+(or (ac-company-doc-buffer-as-document backend item)
+(ac-company-meta-as-document backend item)))
 
 (provide 'ac-company)
 ;;; ac-company.el ends here

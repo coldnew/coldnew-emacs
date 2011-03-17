@@ -26,6 +26,7 @@
         (argument nil)
         (keep-visual nil)
         (repeatable t)
+	(force nil)
         (params nil)
         (named-params nil)
         (doc nil))
@@ -77,6 +78,14 @@
         ('do-not-keep-visual (setq keep-visual nil))
         ('repeatable (setq repeatable t))
         ('nonrepeatable (setq repeatable nil))
+	('force 
+	 (when force 
+	   (error "%s: only one force argument may be specified: %s" 'vim:defcmd arg))
+	 (setq force t)
+	 (push 'force params)
+         (when (and (consp arg)
+                    (not (eq (cadr arg) 'force)))
+           (push `(,(cadr arg) force) named-params)))
         
 	(t
 	 (let ((arg-name (symbol-name (if (consp arg) (car arg) arg))))
@@ -101,6 +110,7 @@
        (put ',name 'register ,register)
        (put ',name 'keep-visual ,keep-visual)
        (put ',name 'repeatable ,repeatable)
+       (put ',name 'force ,force)
        (put ',name 'function
             (function* (lambda (,@(when params `(&key ,@params))
                                 ,@(when named-params `(&aux ,@named-params)))

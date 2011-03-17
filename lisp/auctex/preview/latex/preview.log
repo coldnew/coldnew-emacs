@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.12.17)  14 FEB 2011 21:11
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2011.3.8)  17 MAR 2011 01:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -142,8 +142,8 @@ LaTeX Warning: Marginpar on page 8 moved.
 
 ) [8] (./preview.aux) ) 
 Here is how much of TeX's memory you used:
- 658 strings out of 494986
- 7914 string characters out of 3178766
+ 657 strings out of 494986
+ 7877 string characters out of 3180826
  62573 words of memory out of 3000000
  3895 multiletter control sequences out of 15000+200000
  9748 words of font info for 36 fonts, out of 3000000 for 9000

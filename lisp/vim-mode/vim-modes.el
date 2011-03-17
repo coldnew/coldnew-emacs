@@ -23,6 +23,9 @@
 (vim:deflocalvar vim:active-command-function nil
   "The command function of the currently active vim-mode.")
 
+(defvar vim:mode-alist nil
+  "Assocative list of all registered submodes, (mode-symbol . mode-text).")
+
 (defvar vim:emulation-mode-alist nil
   "List of all keymaps used by some modes.")
 
@@ -88,6 +91,7 @@ vim-command should be executed, a `cursor' shape and a list of `keymaps'."
          ,(concat "The cursor-type for vim-mode " (symbol-name name) ".")
          :group 'vim-cursors)
        
+       (push (cons ',mode-name ,(symbol-name name)) vim:mode-alist)
        (define-minor-mode ,mode-name ,doc nil nil nil
          (when ,mode-name
            ,@(when ident `((vim:update-mode-line ,ident)))

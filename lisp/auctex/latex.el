@@ -5408,6 +5408,7 @@ i.e. you do _not_ have to cater for this yourself by adding \\\\' or $."
        [ "Number of arguments" ] [ "Default value for first argument" ] t)
      '("usepackage" LaTeX-arg-usepackage)
      '("RequirePackage" LaTeX-arg-usepackage)
+     '("ProvidesPackage" "Name" [ "Version" ])
      '("documentclass" TeX-arg-document)))
 
   (TeX-add-style-hook "latex2e"

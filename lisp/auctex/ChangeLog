@@ -1,3 +1,27 @@
+2011-03-13  Ralf Angeli  <angeli@caeruleus.net>
+
+	* Makefile.in (STYLESRC): Add style/lettrine.el and
+	style/multicol.el.
+
+	* style/lettrine.el: Add copyright notice and license blurb.
+	Correct a few things.
+
+	* style/multicol.el: Add copyright notice and license blurb.
+	Simplify environment definitions.  Provide completion for lengths
+	the package defines.  Get rid of indentation and filling barrier.
+	Remove fontification definitions.
+
+2011-03-13  Mads Jensen  <mje@inducks.org>
+
+	* style/lettrine.el: New file.
+
+	* style/multicol.el: New file.
+
+2011-02-27  Ralf Angeli  <angeli@caeruleus.net>
+
+	* latex.el (LaTeX-common-initialization): Add support for
+	\ProvidesPackage.
+
 2011-02-06  Ralf Angeli  <angeli@caeruleus.net>
 
 	* style/letter.el (LaTeX-env-recipient): Use \renewcommand instead

@@ -161,6 +161,10 @@ of the command handling code the buffer in vim:new-buffer is made current.")
   "Returns non-nil iff command cmd should stay in visual mode."
   (get cmd 'keep-visual))
   
+(defun vim:cmd-force-p (cmd)
+  "Returns non-nil iff command cmd takes a force argument."
+  (not (null (get cmd 'force))))
+  
 (defun vim:cmd-type (cmd)
   "Returns the type of command cmd."
   (get cmd 'type))

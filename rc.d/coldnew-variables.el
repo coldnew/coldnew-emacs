@@ -1,0 +1,41 @@
+;;
+
+(eval-when-compile (require 'cl))
+
+(defvar emacs-cache-dir "~/.emacs.d/var/cache/"
+  "cache file directory.")
+(defvar emacs-backup-dir "~/.emacs.d/var/backup/"
+  "directory to back up files.")
+(defvar emacs-etc-dir "~/.emacs.d/etc/"
+  "directory to place other stuff.")
+
+;;;;;;;; Variables
+;; ;; TODO: remove
+;; (defvar mac-p     (eq system-type 'darwin))
+;; (defvar linux-p   (and (eq system-type 'gnu/linux) (not mac-p)))
+;; (defvar cygwin-p  (eq system-type 'cygwin))
+;; (defvar windows-p (eq system-type 'windows-nt))
+;; (defvar emacs23-p (equal emacs-major-version 23))
+;; (defvar emacs24-p (equal emacs-major-version 24))
+
+;; (defvar new-file-p (and (buffer-file-name)
+;;			(not (file-exists-p (buffer-file-name)))
+;;			(= (point-max) 1)))
+
+(defvar mac?     (eq system-type 'darwin))
+(defvar linux?   (and (eq system-type 'gnu/linux) (not mac?)))
+(defvar cygwin?  (eq system-type 'cygwin))
+(defvar windows? (eq system-type 'windows-nt))
+(defvar emacs23? (equal emacs-major-version 23))
+(defvar emacs24? (equal emacs-major-version 24))
+
+(defvar new-file? (and (buffer-file-name)
+		       (not (file-exists-p (buffer-file-name)))
+		       (= (point-max) 1)))
+
+
+
+
+
+(provide 'coldnew-variables)
+;; coldnew-variables.el ends here.

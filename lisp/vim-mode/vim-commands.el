@@ -9,33 +9,33 @@
 ;;; Commentary:
 
 ;; Vim-mode commands are defined using the macro vim:defcmd, which has the following form.
-;; 
+;;
 ;;   (vim:defcmd command-name ((count [count-name])
 ;;                             (motion [motion-name])
 ;;                             (register [register-name])
-;;                             (argument[:{char,text,file,buffer,...}] [arg-name]) 
+;;                             (argument[:{char,text,file,buffer,...}] [arg-name])
 ;;                             [nonrepeatable]
 ;;                             [keep-visual])
 ;;     body ...)
-;; 
+;;
 ;; The first three arguments are keyword arguments similar to
 ;; defun*. The fourth and fifth argument are not real arguments,
 ;; i.e., they do not bind a value. Instead they define special
 ;; attributes of the command.
-;; 
+;;
 ;; Each of the arguments is optional. An argument is either given as
 ;; two element list (parameter parameter-name) or without explicit
 ;; name just parameter. When no parameter name is specified the
 ;; name is the same as the parameter itself, i.e., the parameter
 ;; count defines the variable count whereas the parameter
 ;; (count cnt) defines the variable cnt.
-;; 
+;;
 ;; The parameters have the following meanings.
-;; 
+;;
 ;; count: A numeric argument usually defining how many times a certain
 ;;        command should be repeated. If no explicit count has been
 ;;        given, the parameter has the value nil.
-;; 
+;;
 ;; motion: If the command operates on a certain region, the region is
 ;;         usually defined by a motion and this argument should be
 ;;         specified. When the command is executed in normal-mode
@@ -46,7 +46,7 @@
 ;;         used by the motion. If this parameter is not present the
 ;;         command will not take a motion but will be executed without
 ;;         switching to operator-pending mode.
-;; 
+;;
 ;; argument: Some commands take another argument besides the motion
 ;;           and the count. There are several types of arguments, the
 ;;           type is specified by appending a colon and the type-name
@@ -61,29 +61,29 @@
 ;;           passed to the function. An example for a command like
 ;;           this is the r command of Vim. All other argument types
 ;;           make only sense for ex-mode commands.
-;; 
+;;
 ;; register: If specified the command can operator on a register. The
 ;;           name of the register, which is a character, is passed in
 ;;           this argument.
-;; 
+;;
 ;; nonrepeatable: If specified the command cannot be repeated by the
 ;;                repeat command bound to '.' by default. This is
 ;;                usually the case for scrolling or window commands.
-;; 
+;;
 ;; keep-visual: If specified the command does not end visual-mode when
 ;;              executed in visual-mode. This is usually the case for
 ;;              scrolling or window commands. Note that most editing
 ;;              commands do disable visual-mode.
-;; 
+;;
 ;; As described above vim:defcmd can be used to define commands for
 ;; both normal-mode and ex-mode. Each command should place (point) at
 ;; the correct position after the operation.
-;; 
+;;
 ;; In order to call a command from lisp-code, one has to use keyword
 ;; arguments, e.g.,
-;; 
+;;
 ;;   (vim:cmd-delete-line :count 5)
-;; 
+;;
 ;; deletes five lines. Note that the keyword used to call a commands
 ;; are always :count, :motion, :register or :argument no matter which
 ;; parameter names are used to define the command.
@@ -222,7 +222,7 @@ and switches to insert-mode."
 	    (setq motion (vim:motion-fwd-word-end :count cnt)))
 	   (vim:motion-fwd-WORD
 	    (setq motion (vim:motion-fwd-WORD-end :count cnt))))))
-        
+
      (vim:cmd-delete :motion motion :register register)
      (if (eolp)
          (vim:cmd-append :count 1)
@@ -254,7 +254,7 @@ and switches to insert-mode."
                                            :type 'inclusive)
                   :register register)
   (vim:cmd-append :count 1))
-                                
+
 
 
 (vim:defcmd vim:cmd-change-char (count register)
@@ -301,33 +301,22 @@ and switches to insert-mode."
        (if register
            (set-register register text)
          (kill-new text))))))
-  
+
 
 (vim:defcmd vim:cmd-yank-line (count register nonrepeatable)
   "Saves the next count lines into the kill-ring."
-  (let ((beg (line-beginning-position))
-	end add-newline)
-    ;; search end point 
+  (let ((beg (line-beginning-position)))
     (save-excursion
-      (let ((nleft (forward-line (or count 1))))
-	(setq end (point))
-	(when (or (> nleft 0) (not (bolp)))
-	  ;; the last line does not end in a newline
-	  (setq add-newline t))))
-
-    (let ((txt (buffer-substring beg end))
-	  (len (- end beg)))
-      (when add-newline
-	(setq txt (concat txt "\n")
-	      len (1+ len)))
-      (if register
-	  (progn
-	    (put-text-property 0 len
-			       'yank-handler
-			       (list #'vim:yank-line-handler txt)
-			       txt)
-	    (set-register register txt))
-	(kill-new txt nil (list #'vim:yank-line-handler txt))))))
+      (forward-line (1- (or count 1)))
+      (let ((txt (concat (buffer-substring beg (line-end-position)) "\n")))
+	(if register
+	    (progn
+	      (put-text-property 0 (length txt)
+				 'yank-handler
+				 (list #'vim:yank-line-handler txt)
+				 txt)
+	      (set-register register txt))
+	  (kill-new txt nil (list #'vim:yank-line-handler txt)))))))
 
 
 (vim:defcmd vim:cmd-yank-rectangle (motion register nonrepeatable)
@@ -358,7 +347,7 @@ and switches to insert-mode."
                                (list #'vim:yank-block-handler
                                      (cons (- endcol begcol -1) parts)
                                      nil
-                                     #'delete-rectangle) 
+                                     #'delete-rectangle)
                                txt)
             (set-register register txt))
         (kill-new txt nil (list #'vim:yank-block-handler
@@ -386,21 +375,21 @@ and switches to insert-mode."
         (col (current-column))
 	(current-line (line-number-at-pos (point)))
         (last-pos (point)))
-    
+
     (set-mark (point))
     (dolist (part parts)
-      
+
       (let* ((offset (car part))
              (txt (cdr part))
              (len (length txt)))
-	
+
 	;; maybe we have to insert a new line at eob
 	(when (< (line-number-at-pos (point))
 		 current-line)
           (goto-char (point-max))
           (newline))
 	(incf current-line)
-        
+
         (unless (and (< (current-column) col)   ; nothing in this line
                      (<= offset 0) (zerop len)) ; and nothing to insert
           (move-to-column (+ col (max 0 offset)) t)
@@ -414,80 +403,170 @@ and switches to insert-mode."
     (exchange-point-and-mark)))
 
 
-(defvar vim:last-paste nil
-  "Information (beg end count) of the latest paste.")
+(defstruct (vim:paste-info
+            (:constructor vim:make-paste-info))
+  point    ;; point where command took place
+  begin    ;; beginning of inserted region
+  end      ;; end of inserted region
+  count    ;; repeat count of insertion
+  command  ;; paste command
+  at-eob   ;; t iff last paste-behind took place at eob
+  )
 
+(defvar vim:last-paste nil
+  "Information of the latest paste.")
 
 (vim:defcmd vim:cmd-paste-pop (count)
   "Cycles through the kill-ring like yank-pop."
-  (unless (and (member last-command '(vim:cmd-paste-pop
+  (unless (and (member last-command '(yank
+				      vim:cmd-paste-pop
                                       vim:cmd-paste-pop-next
                                       vim:cmd-paste-before
                                       vim:cmd-paste-behind
-				      yank))
-               vim:last-paste)
-    (error "Previous command was not a vim-mode paste"))
+				      vim:cmd-paste-before-and-indent
+				      vim:cmd-paste-behind-and-indent))
+	       vim:last-paste)
+    (error "Previous command was not a vim-mode paste: %s" last-command))
   (when vim:last-paste
-    (save-excursion
-      (funcall (or yank-undo-function #'delete-region)
-               (car vim:last-paste)
-               (cadr vim:last-paste))
-      (goto-char (car vim:last-paste))
-      (current-kill (or count 1))
-      (vim:cmd-paste-before :count (caddr vim:last-paste)))))
+    (funcall (or yank-undo-function #'delete-region)
+	     (vim:paste-info-begin vim:last-paste)
+	     (vim:paste-info-end vim:last-paste))
+    (goto-char (vim:paste-info-point vim:last-paste))
+    (current-kill (or count 1))
+    (funcall (vim:paste-info-command vim:last-paste)
+	     :count (vim:paste-info-count vim:last-paste))))
 
 
 (vim:defcmd vim:cmd-paste-pop-next (count)
   "Cycles through the kill-ring like yank-pop."
+  (setq this-command last-command)
   (vim:cmd-paste-pop :count (- (or count 1))))
-  
+
+
 (vim:defcmd vim:cmd-paste-before (count register)
   "Pastes the latest yanked text before the cursor position."
-  (let (beg end)
+  (let ((pos (point))
+	beg end)
     (save-excursion
       (dotimes (i (or count 1))
         (if register
             (insert-for-yank (vim:get-register register))
           (set-mark (point))
-	  (yank)
+	  (insert-for-yank (current-kill 0))
           (setq beg (min (point) (mark t) (or beg (point)))
                 end (max (point) (mark t) (or end (point)))))))
-    (setq vim:last-paste (list beg end (or count 1)))))
+    (let* ((txt (if register (vim:get-register register) (current-kill 0)))
+	   (yhandler (get-text-property 0 'yank-handler txt)))
+      (when (eq (car-safe yhandler) 'vim:yank-line-handler)
+	;; place cursor at for non-blank of first inserted line
+	(goto-char pos)
+	(vim:motion-first-non-blank)))
+    (setq vim:last-paste
+	  (vim:make-paste-info :point pos
+			       :begin beg
+			       :end end
+			       :count count
+			       :command 'vim:cmd-paste-before))))
 
 
 (vim:defcmd vim:cmd-paste-behind (count register)
   "Pastes the latest yanked text behind point."
+  ;; Paste behind works by moving the cursor and calling
+  ;; vim:cmd-paste-before afterwards. Afterwards the information of
+  ;; vim:last-paste is updated.
   (let ((txt (if register (vim:get-register register) (current-kill 0))))
     (unless txt
       (error "Kill-ring empty"))
-    (let ((yhandler (get-text-property 0 'yank-handler txt)))
+    (let ((yhandler (get-text-property 0 'yank-handler txt))
+	  (pos (point)))
       (case (car-safe yhandler)
 	(vim:yank-line-handler
-	 (end-of-line)
-	 (if (eobp)
-	     (progn
-	       (newline)
-	       (save-excursion
-		 (vim:cmd-paste-before :count count :register register)
-		 (goto-char (point-max))
-		 (delete-backward-char 1)))
+	 (let ((at-eob (= (line-end-position) (point-max))))
+	   ;; We have to take care of the special case where we cannot
+	   ;; go to the next line because we reached eob.
 	   (forward-line)
-	   (vim:cmd-paste-before :count count :register register))
-	 (vim:motion-first-non-blank))
-	
+	   (when at-eob (newline))
+	   (vim:cmd-paste-before :count count :register register)
+	   (when at-eob
+	     ;; we have to remove the final newline and update paste-info
+	     (goto-char (third vim:last-paste))
+	     (delete-backward-char 1)
+	     (setf (vim:paste-info-begin vim:last-paste)
+		   (max (point-min) (1- (vim:paste-info-begin vim:last-paste)))
+
+		   (vim:paste-info-end vim:last-paste)
+		   (1- (vim:paste-info-end vim:last-paste))
+
+		   (vim:paste-info-at-eob vim:last-paste)
+		   t))
+	   (vim:motion-first-non-blank)))
+
 	(vim:yank-block-handler
 	 (forward-char)
 	 (vim:cmd-paste-before :count count :register register))
-	
+
 	(t
-	 (unless (and (bolp) (eolp)) (forward-char))
-	 (set-mark (point))
-	 (dotimes (i (or count 1))
-	   (if register
-	       (insert-for-yank (vim:get-register register))
-	     (insert-for-yank (car kill-ring-yank-pointer))))
-	 (setq vim:last-paste (list (mark t) (point) (or count 1)))
-	 (backward-char))))))
+	 (unless (eobp) (forward-char))
+	 (vim:cmd-paste-before :count count :register register)
+	 ;; goto end of paste
+	 (goto-char (1- (vim:paste-info-end vim:last-paste)))))
+      (setf (vim:paste-info-point vim:last-paste) pos
+	    (vim:paste-info-command vim:last-paste) 'vim:cmd-paste-behind))))
+
+
+(vim:defcmd vim:cmd-paste-before-and-indent (count register)
+  "Pastes the latest yanked text before point.
+If the inserted text consists of full lines those lines are
+indented according to the current mode."
+  (vim:cmd-paste-before :count count :register register)
+  (let* ((txt (if register (vim:get-register register) (current-kill 0)))
+	 (yhandler (get-text-property 0 'yank-handler txt)))
+    (when (eq (car-safe yhandler) 'vim:yank-line-handler)
+      ;; We have to reindent the lines and update the paste-data.
+      (let* ((txt (if register (vim:get-register register) (current-kill 0)))
+	     (yhandler (get-text-property 0 'yank-handler txt)))
+      (let ((begln (line-number-at-pos (vim:paste-info-begin vim:last-paste)))
+	    (endln (line-number-at-pos (vim:paste-info-end vim:last-paste))))
+	(indent-region (vim:paste-info-begin vim:last-paste)
+		       (vim:paste-info-end vim:last-paste))
+	(setf (vim:paste-info-end vim:last-paste)
+	      (save-excursion
+		(goto-line endln)
+		(line-beginning-position)))
+	(vim:motion-first-non-blank)))))
+  (setf (vim:paste-info-command vim:last-paste)
+	'vim:cmd-paste-before-and-indent))
+
+
+(vim:defcmd vim:cmd-paste-behind-and-indent (count register)
+  "Pastes the latest yanked text behind point.
+If the inserted text consists of full lines those lines are
+indented according to the current mode."
+  (vim:cmd-paste-behind :count count :register register)
+  (let* ((txt (if register (vim:get-register register) (current-kill 0)))
+	 (yhandler (get-text-property 0 'yank-handler txt)))
+    (when (eq (car-safe yhandler) 'vim:yank-line-handler)
+      ;; We have to reindent the lines and update the paste-data.
+      (let ((begln (line-number-at-pos (vim:paste-info-begin vim:last-paste)))
+	    (endln (line-number-at-pos (vim:paste-info-end vim:last-paste))))
+	(if (vim:paste-info-at-eob vim:last-paste)
+	    (progn
+	      (indent-region (1+ (vim:paste-info-begin vim:last-paste))
+			     (1+ (vim:paste-info-end vim:last-paste)))
+	      (setf (vim:paste-info-end vim:last-paste)
+		    (save-excursion
+		      (goto-line endln)
+		      (line-end-position))))
+
+	  (indent-region (vim:paste-info-begin vim:last-paste)
+			 (vim:paste-info-end vim:last-paste))
+	  (setf (vim:paste-info-end vim:last-paste)
+		(save-excursion
+		  (goto-line endln)
+		  (line-beginning-position))))
+	(vim:motion-first-non-blank))))
+  (setf (vim:paste-info-command vim:last-paste)
+	'vim:cmd-paste-behind-and-indent))
 
 
 (vim:defcmd vim:cmd-join-lines (count)
@@ -513,7 +592,7 @@ and switches to insert-mode."
   (goto-line (vim:motion-first-line motion))
   (indent-region (line-beginning-position)
                  (line-end-position (vim:motion-line-count motion))))
-  
+
 
 (vim:defcmd vim:cmd-shift-left (motion)
   "Shift the lines covered by `motion' leftwards."
@@ -529,7 +608,7 @@ and switches to insert-mode."
   (indent-rigidly (line-beginning-position)
                   (line-end-position (vim:motion-line-count motion))
                   vim:shift-width))
-  
+
 
 (vim:defcmd vim:cmd-toggle-case (motion)
   "Toggles the case of all characters defined by `motion'."
@@ -643,8 +722,8 @@ block motions."
 		       (current-column)
 		       file-or-text))))))
    marks "\n"))
-	       
-	       
+
+
 
 (vim:defcmd vim:cmd-show-marks (nonrepeatable (argument marks))
   "Shows all currently defined marks."
@@ -666,7 +745,7 @@ block motions."
 (vim:defcmd vim:cmd-show-jumps (nonrepeatable)
   "Shows the current jump-list."
   (let* ((cnt 0)
-	 (pjumps (mapcar 
+	 (pjumps (mapcar
 		  #'(lambda (x)
 		      (incf cnt)
 		      (cons (int-to-string cnt) x))
@@ -680,8 +759,8 @@ block motions."
       (let ((jumps (vim:print-mark-list (append (reverse pjumps) njumps)))
 	    message-truncate-lines message-log-max)
 	(message "%4s %5s %3s %s\n%s" "Jump" "Line" "Col" "File/Text" jumps)))))
-    
-  
+
+
 
 (vim:deflocalvar vim:current-macro nil
   "The name of the currently recorded macro.")
@@ -717,4 +796,4 @@ block motions."
 
 (provide 'vim-commands)
 
-;;; vim-commands.el ends here 
+;;; vim-commands.el ends here
