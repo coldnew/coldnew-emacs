@@ -1,6 +1,3 @@
-[submodule "lisp/hungury-delete"]
-	path = lisp/hungury-delete
-	url = http://github.com/nflath/hungry-delete.git
 [submodule "lisp/smartchr"]
 	path = lisp/smartchr
 	url = https://github.com/imakado/emacs-smartchr.git
@@ -13,3 +10,6 @@
 [submodule "lisp/pysmell"]
 	path = lisp/pysmell
 	url = https://github.com/orestis/pysmell.git
+[submodule "lisp/hungury-delete"]
+	path = lisp/hungury-delete
+	url = http://github.com/nflath/hungry-delete.git
