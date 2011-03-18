@@ -7,21 +7,6 @@
 (require 'coldnew-commands)
 (require 'coldnew-variables)
 
-;;;;;;;; Variables
-
-;;;;;;;; Advice
-(defadvice switch-to-buffer (after switch-to-buffer activate)
-  "After switch-to-buffer, if tht buffer is Fundamental-mode, change it to lisp-interaction-mode"
-  (if (equal major-mode 'fundamental-mode)
-      (lisp-interaction-mode)))
-
-(defadvice kill-buffer (around kill-buffer-around-advice activate)
-  "bury *scratch* or *Ibuffer* buffer instead of kill it "
-  (let ((buffer-to-kill (ad-get-arg 0)))
-    (if (or (equal buffer-to-kill "*scratch*")
-	    (equal buffer-to-kill "*Ibuffer*"))
-	(bury-buffer)
-      ad-do-it)))
 
 
 ;;;;;;;; Uniquify
@@ -85,6 +70,8 @@
 			   (name . "^\\*Backtrace\\*$")
 			   (name . "^\\*Process List\\*$")
 			   (name . "^\\*gud\\*$")
+			   (name . "^loaddefs.el$")
+			   (name . "^\\*wclock\\*$")
 			   (name . "^\\*Kill Ring\\*$")
 			   (name . "^\\*Completions\\*$")
 			   (name . "^\\*tramp")
@@ -184,15 +171,15 @@
   (define-ibuffer-column size-h
     (:name "Size" :inline t)
     (cond
-     ((> (buffer-size) 1000) (format "%7.3fk" (/ (buffer-size) 1000.0)))
+     ((> (buffer-size) 1000) (format "%7.3fK" (/ (buffer-size) 1000.0)))
      ((> (buffer-size) 1000000) (format "%7.3fM" (/ (buffer-size) 1000000.0)))
-     (t (format "%8d" (buffer-size)))))
+     (t (format "%8dB" (buffer-size)))))
 
   ;; integrate ibuffer with git
   (when (require* 'ibuffer-git)
     (setq ibuffer-formats
 	  '((mark modified read-only git-status-mini " "
-		  (name 18 18 :left :elide)
+		  (name 23 23 :left :elide)
 		  " "
 		  (size-h 9 -1 :right)
 		  "  "

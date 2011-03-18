@@ -36,6 +36,10 @@
 			'(("(\\(require\*\\*\\)\\s [ \t']*\\(\\sw+\\)?"
 			   (1 font-lock-keyword-face)
 			   (2 font-lock-constant-face nil t))))
+(font-lock-add-keywords 'lisp-interaction-mode
+			'(("(\\(require\*\\*\\)\\s [ \t']*\\(\\sw+\\)?"
+			   (1 font-lock-keyword-face)
+			   (2 font-lock-constant-face nil t))))
 
 ;;;;;;;; Functions
 

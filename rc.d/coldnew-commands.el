@@ -95,6 +95,18 @@
 			   (progn (setq old-fullscreen current-value)
 				  'fullboth)))))
 
+;;;;;;;; Conversion
+(defun unix2dos ()
+  "Convert buffer file from unix file to dos file."
+  (interactive)
+  (unix->dos (current-buffer))
+  )
+
+(defun dos2unix ()
+  "Convert buffer file from dos file to unix file."
+  (interactive)
+  (dos->unix (current-buffer))
+  )
 
 ;;;;;;;; Tramp
 (defun sudo-edit (&optional arg)

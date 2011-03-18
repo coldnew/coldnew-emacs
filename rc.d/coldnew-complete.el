@@ -7,33 +7,40 @@
 (require 'coldnew-commands)
 (require 'coldnew-variables)
 
+
 ;;;;;;;; Auto Complete
 
 (when (require* 'auto-complete)
 
-  ;; Enable fuzzy match
-  (setq ac-use-fuzzy t)
+  ;; Enabls auto-complete globally
+  (global-auto-complete-mode t)
+
+  ;; Disable fuzzy match
+  (setq ac-use-fuzzy nil)
 
   ;; Enable auto-start
   (setq ac-auto-start t)
 
-  ;; Use smart comlete
+  ;; Ignore case if completion target string doesn't include upper characters
   (setq ac-ignore-case 'smart)
 
   ;; Enable auto-complete quick help
-  (setq ac-use-quick-help)
+  (setq ac-use-quick-help t)
 
-  ;; Enabls auto-complete globally
-  (global-auto-complete-mode t)
+  ;; After 0.01 sec, show help window
+  (setq ac-quick-help-delay 0.01)
 
   ;; Add aditional dictionary
   (add-to-list 'ac-dictionary-directories (concat emacs-etc-dir "ac-dict"))
 
   ;; Enable ac-comphist
-  (setq ac-use-comphist)
+  (setq ac-use-comphist t)
 
   ;; Setting ac-comphist data
   (setq ac-comphist-file (concat emacs-cache-dir "auto-complete.dat"))
+
+  ;; Show menu
+  (setq ac-auto-show-menu t)
 
   ;; Enable ac-menu-map
   (setq ac-use-menu-map t)
@@ -48,11 +55,25 @@
     (ac-config-default))
 
   ;; Fix popup-tip's bug
-  (defadvice popup-tip
-    (around popup-pos-tip-wrapper (string &rest args) activate)
-    (if (eq window-system 'x)
-	(apply 'popup-pos-tip string args)
-      ad-do-it))
+  (when (require* 'popup-pos-tip)
+    (defadvice popup-tip
+      (around popup-pos-tip-wrapper (string &rest args) activate)
+      (if (eq window-system 'x)
+	  (apply 'popup-pos-tip string args)
+	ad-do-it)))
+
+  ;; Default sources
+  (setq ac-sources
+	'(ac-source-abbrev
+	  ac-source-semantic
+	  ac-source-symbols
+	  ac-source-filename
+	  ac-source-functions
+	  ac-source-variables
+	  ac-source-dictionary
+	  ac-source-files-in-current-dir
+	  ac-source-words-in-same-mode-buffers
+	  ))
 
   ;;;;;; ac-company
   ;; Use Company Backends for Auto-Complete.
@@ -71,8 +92,8 @@
     (ac-company-define-source ac-source-company-keywords  company-keywords (symbol . "s"))
     (ac-company-define-source ac-source-company-nxml      company-nxml     (symbol . "s"))
     (ac-company-define-source ac-source-company-semantic  comapny-semactic (symbol . "s"))
-
     )
+
 
   )
 

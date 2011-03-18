@@ -1,6 +1,14 @@
 ;;
 (eval-when-compile (require 'cl))
 
+;;;;;;;; Packages Import
+(require 'coldnew-macro)
+(require 'coldnew-functions)
+(require 'coldnew-commands)
+(require 'coldnew-variables)
+
+;;;;;;;; Variables
+
 ;; Font type setting
 (defvar emacs-english-font "Inconsolata"
   "The font name of English.")
@@ -16,6 +24,8 @@
   "Default CJK font size.")
 (defvar emacs-symbol-font-size 10
   "Default Symbol font size.")
+
+;;;;;;;; Settings
 
 ;; Setting English Fonts
 (set-frame-font (format "%s-%s" (eval emacs-english-font) (eval emacs-english-font-size)))

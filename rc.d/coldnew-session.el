@@ -44,5 +44,26 @@
   )
 
 
+;;;;;;;; midnight
+;;
+(when (require* 'midnight)
+
+  )
+
+;;;;;;;; tempbuf
+;; a minor mode that enables buffers to get automatically deleted in the
+;; background when it can be deduced that they are no longer of any use.
+;; It could be common for example to apply this mode to dired-mode buffers
+;; or read-only buffers visiting files, relieving you from having to delete
+;; each of them manually when the buffer list grows too large.
+;;
+(when (require* 'tempbuf)
+  ;; Take following mode as temp buffer
+  (add-hook 'custom-mode-hook 'turn-on-tempbuf-mode)
+  (add-hook 'w3-mode-hook 'turn-on-tempbuf-mode)
+  (add-hook 'Man-mode-hook 'turn-on-tempbuf-mode)
+  (add-hook 'view-mode-hook 'turn-on-tempbuf-mode)
+  )
+
 (provide 'coldnew-session)
 ;; coldnew-session.el ends here.

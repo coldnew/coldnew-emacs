@@ -15,8 +15,7 @@
 (defvar emacs-popup-shell-window-position "bottom"
   "Make popup shell window at buttom by default.")
 
-;;;;;;;; Settings
-;; Shell-pop
+;;;;;;;; Shell-pop
 (when (require* 'shell-pop)
   (shell-pop-set-internal-mode "ansi-term")
   (shell-pop-set-internal-mode-shell emacs-default-shell)
@@ -24,22 +23,38 @@
   (shell-pop-set-window-position emacs-popup-shell-window-position)
   )
 
-;; Multi-term
-(setq multi-term-program emacs-default-shell)
+;;;;;;;; Multi-term
+(when (require* 'multi-term)
+  (setq multi-term-program emacs-default-shell))
 
-;; Term
+;;;;;;;; Term
 (setq term-default-bg-color nil)
 (setq term-default-fg-color nil)
 
-;;;; Keybindings
+;;;;;;;;;; Keybindings
 (add-hook 'term-mode-hook
 	  '(lambda ()
-	     (when (require* 'vim)
-	       (vim:local-nmap (kbd "C-p") 'term-send-up)
-	       (vim:local-nmap (kbd "C-n") 'term-send-down)
-	       (vim:local-imap (kbd "<f4>") 'shell-pop)
-	       (vim:local-imap (kbd "RET") 'term-send-raw)
-	       )))
+	     (define-key term-raw-map (kbd "<f4>") 'shell-pop)
+	     ))
+
+;;;;;;;; Functions
+
+;;;; Rewrite shell-pop function
+;; I don't like use vim like key in shell,after shell popup
+;; use emacs-key instead of vim-mode
+;; TODO: use advice to rewrite this function.
+;;
+(defun shell-pop ()
+  "Toggle vim-mode between shell-pop-up and shell-pop-down."
+  (interactive)
+  (if (equal (buffer-name) shell-pop-internal-mode-buffer)
+      (progn
+	(shell-pop-out)
+	(vim-mode))
+    (progn
+      (shell-pop-up)
+      (vim-mode -1))))
+
 
 
 (provide 'coldnew-terminal)

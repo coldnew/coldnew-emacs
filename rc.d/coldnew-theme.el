@@ -1,6 +1,11 @@
 ;;
 (eval-when-compile (require 'cl))
 
+;;;;;;;; Packages Import
+(require 'coldnew-macro)
+(require 'coldnew-functions)
+(require 'coldnew-commands)
+(require 'coldnew-variables)
 
 ;;;;;;;; color-theme
 ;; Color theme is an Emacs-Lisp package with more than
@@ -12,6 +17,36 @@
   (setq color-theme-is-global nil)
   (setq color-theme-is-cumulative t)
   (setq color-theme-load-all-themes nil)
+
+  ;; TODO: I must rewrite coldnew's color-theme
+  (require* 'color-theme-coldnew-day-old)
+  (require* 'color-theme-coldnew-night-old)
+
+
+  ;; Default theme use night.
+  (cond
+   (mac?   (progn
+	     (setq *color-mode* 'day)
+	     (color-theme-coldnew-day)))
+   (linux? (progn
+	     (setq *color-mode* 'night)
+	     (color-theme-coldnew-night))))
+
+
+  ;; Specified special color-theme according different modes
+  (if linux?
+      (add-hook 'post-command-hook
+		'(lambda ()
+		   (cond
+		    ;; When enter w3m, change color to color-thme-day.
+		    ((derived-mode-p 'w3m-mode) (color-theme-coldnew-day))
+		    ;; We don't want to change color iwhen enter minibuffer.
+		    ;; This is the default option and might set in the end.
+		    ((not (minibufferp))
+		     (case *color-mode*
+		       ('night (color-theme-coldnew-night))
+		       ('day   (color-theme-coldnew-day))))))))
+
   )
 
 

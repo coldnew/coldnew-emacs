@@ -29,10 +29,9 @@
   ;; Auto add HEADER in new file
   (add-hook 'find-file-hook
 	    '(lambda ()
-	       (when ;;new-file?
-		   (and (buffer-file-name)
-			(not (file-exists-p (buffer-file-name)))
-			(= (point-max) 1))
+	       (when (and (buffer-file-name)
+			  (not (file-exists-p (buffer-file-name)))
+			  (= (point-max) 1))
 		 (let ((header-snippet "HEADER"))
 		   (insert header-snippet)
 		   ;; if can't expand snippet, delete insert string

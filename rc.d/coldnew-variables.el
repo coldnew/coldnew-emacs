@@ -48,6 +48,5 @@
 
 
 
-
 (provide 'coldnew-variables)
 ;; coldnew-variables.el ends here.
