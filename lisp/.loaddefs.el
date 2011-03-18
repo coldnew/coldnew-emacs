@@ -1170,7 +1170,7 @@ Jump to the previous location of the symbol at point within the defun.
 
 ;;;### (autoloads (turn-on-hungry-delete-mode hungry-delete-mode
 ;;;;;;  hungry-delete-backward hungry-delete-forward) "hungury-delete/hungry-delete"
-;;;;;;  "hungury-delete/hungry-delete.el" (19840 54424))
+;;;;;;  "hungury-delete/hungry-delete.el" (19842 14235))
 ;;; Generated autoloads from hungury-delete/hungry-delete.el
 
 (autoload 'hungry-delete-forward "hungury-delete/hungry-delete" "\
@@ -1260,6 +1260,18 @@ Launch dired at the current directory.
 
 ;;;***
 
+;;;### (autoloads (multi-term) "multi-term/multi-term" "multi-term/multi-term.el"
+;;;;;;  (19842 19339))
+;;; Generated autoloads from multi-term/multi-term.el
+
+(autoload 'multi-term "multi-term/multi-term" "\
+Create new term buffer.
+Will prompt you shell name when you type `C-u' before this command.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (paredit-mode) "paredit/paredit" "paredit/paredit.el"
 ;;;;;;  (19840 51791))
 ;;; Generated autoloads from paredit/paredit.el
@@ -1343,14 +1355,35 @@ Run pylookup-update for all sources and create the database at `pylookup-db-file
 
 ;;;***
 
-;;;### (autoloads (smex-initialize) "smex/smex" "smex/smex.el" (19839
-;;;;;;  12093))
+;;;### (autoloads (smex-initialize) "smex/smex" "smex/smex.el" (19842
+;;;;;;  14351))
 ;;; Generated autoloads from smex/smex.el
 
 (autoload 'smex-initialize "smex/smex" "\
 Not documented
 
 \(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (turn-on-tempbuf-mode tempbuf-mode) "tempbuf/tempbuf"
+;;;;;;  "tempbuf/tempbuf.el" (19842 18616))
+;;; Generated autoloads from tempbuf/tempbuf.el
+
+(autoload 'tempbuf-mode "tempbuf/tempbuf" "\
+Toggle tempbuf mode.
+
+With prefix ARG, turn the mode on if ARG is positive.
+After mode activation, `tempbuf-mode-hook' is run.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'turn-on-tempbuf-mode "tempbuf/tempbuf" "\
+Turn on tempbuf mode.
+
+See also function `tempbuf-mode'.
+
+\(fn)" nil nil)
 
 ;;;***
 
@@ -1376,10 +1409,10 @@ Not documented
 ;;;;;;  "cedet/common/cedet-loaddefs.el" "cedet/common/cedet.el"
 ;;;;;;  "cedet/common/ezimage.el" "cedet/common/working.el" "el-get/el-get-install.el"
 ;;;;;;  "eldoc-extension/eldoc-extension.el" "highlight-cl/highlight-cl.el"
-;;;;;;  "ibuffer-git/ibuffer-git.el" "pos-tip/pos-tip.el" "pymacs/pymacs.el"
-;;;;;;  "pysmell/pysmell.el" "smartchr/smartchr.el" "ssh-config/ssh-config.el"
-;;;;;;  "undo-tree/undo-tree.el" "unicad/unicad.el" "xcscope+/xcscope+.el"
-;;;;;;  "xcscope/xcscope.el") (19841 28138 361742))
+;;;;;;  "ibuffer-git/ibuffer-git.el" "popup-pos-tip/popup-pos-tip.el"
+;;;;;;  "pymacs/pymacs.el" "shell-pop/shell-pop.el" "ssh-config/ssh-config.el"
+;;;;;;  "undo-tree/undo-tree.el" "unicad/unicad.el" "xcscope+/xcscope+.el")
+;;;;;;  (19842 64993 497561))
 
 ;;;***
 
