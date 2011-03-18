@@ -27,7 +27,7 @@
 (setq global-auto-revert-mode         t )
 
 ;; Use lisp-interaction-mode as default major mode
-(setq-default major-mode 'lisp-interaction-mode )
+(setq major-mode 'lisp-interaction-mode )
 
 
 ;;;;;;;; Programming Mode
@@ -155,11 +155,15 @@ line instead."
   "Use this function as a hook to fontify numbers as constant"
   (font-lock-add-keywords nil
 			  ;; hexa
-			  '(("[^a-zA-Z_]\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
+			  '(
+			    ;;			    ("[^a-zA-Z_]\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
+			    ("\\ +\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
 			    ;; float
 			    ("[^a-zA-Z_]\\(-?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
 			    ;; int
-			    ("[^a-zA-Z_1-9]\\(-?[0-9]+L?\\)" 1 font-lock-constant-face))))
+			    ;;("[^a-zA-Z_1-9]\\(-?[0-9]+L?\\)" 1 font-lock-constant-face)
+			    ("\\ +\\([+-]?[0-9]+\\)\\b" 1 font-lock-constant-face)
+			    )))
 
 
 
