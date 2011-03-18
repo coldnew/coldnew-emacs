@@ -1170,7 +1170,7 @@ Jump to the previous location of the symbol at point within the defun.
 
 ;;;### (autoloads (turn-on-hungry-delete-mode hungry-delete-mode
 ;;;;;;  hungry-delete-backward hungry-delete-forward) "hungury-delete/hungry-delete"
-;;;;;;  "hungury-delete/hungry-delete.el" (19842 14235))
+;;;;;;  "hungury-delete/hungry-delete.el" (19843 12761))
 ;;; Generated autoloads from hungury-delete/hungry-delete.el
 
 (autoload 'hungry-delete-forward "hungury-delete/hungry-delete" "\
@@ -1410,9 +1410,9 @@ See also function `tempbuf-mode'.
 ;;;;;;  "cedet/common/ezimage.el" "cedet/common/working.el" "el-get/el-get-install.el"
 ;;;;;;  "eldoc-extension/eldoc-extension.el" "highlight-cl/highlight-cl.el"
 ;;;;;;  "ibuffer-git/ibuffer-git.el" "popup-pos-tip/popup-pos-tip.el"
-;;;;;;  "pymacs/pymacs.el" "shell-pop/shell-pop.el" "ssh-config/ssh-config.el"
-;;;;;;  "undo-tree/undo-tree.el" "unicad/unicad.el" "xcscope+/xcscope+.el")
-;;;;;;  (19842 64993 497561))
+;;;;;;  "pymacs/pymacs.el" "sdcv/sdcv.el" "shell-pop/shell-pop.el"
+;;;;;;  "showtip/showtip.el" "ssh-config/ssh-config.el" "undo-tree/undo-tree.el"
+;;;;;;  "unicad/unicad.el" "xcscope+/xcscope+.el") (19843 14882 795965))
 
 ;;;***
 

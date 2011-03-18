@@ -43,6 +43,7 @@
 (require 'coldnew-complete)
 (require 'coldnew-session)
 (require 'coldnew-time)
+(require 'coldnew-dictionary)
 
 (require 'coldnew-lang-elisp)
 (require 'coldnew-lang-ruby)

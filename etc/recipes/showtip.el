@@ -1,0 +1,1 @@
+(:name showtip :type emacswiki)

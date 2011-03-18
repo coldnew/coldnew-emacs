@@ -155,10 +155,10 @@ line instead."
   "Use this function as a hook to fontify numbers as constant"
   (font-lock-add-keywords nil
 			  '(
-			    ;; hexa
+			    ;; hexadecimal
 			    ("\\ +\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
 			    ;; float
-			    ("[^a-zA-Z_]\\(-?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
+			    ("\\ +\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
 			    ;; int
 			    ("\\ +\\([+-]?[0-9]+\\)\\b" 1 font-lock-constant-face)
 			    )))
