@@ -1,0 +1,1 @@
+(:name tempbuf :type emacswiki)
