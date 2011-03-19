@@ -3,6 +3,11 @@
 
 
 
+;; (require 'escreen)
+;; (require 'escreen-tab)
+
+;; (escreen-install)
+;; (add-hook 'window-setup-hook 'escreen-tab-mode-line-update)
 
 
 

@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/ESS/!svn/ver/4459/trunk/debian
+END
+emacsen-install
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/ESS/!svn/ver/4426/trunk/debian/emacsen-install
+END
+control
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/ESS/!svn/ver/4459/trunk/debian/control
+END
+postinst
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/ESS/!svn/ver/3871/trunk/debian/postinst
+END
+compat
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/ESS/!svn/ver/4161/trunk/debian/compat
+END
+prerm
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/ESS/!svn/ver/3871/trunk/debian/prerm
+END
+changelog
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/ESS/!svn/ver/4459/trunk/debian/changelog
+END
+docs
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/ESS/!svn/ver/3871/trunk/debian/docs
+END
+rules
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/ESS/!svn/ver/4161/trunk/debian/rules
+END
+dirs
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/ESS/!svn/ver/3871/trunk/debian/dirs
+END
+emacsen-remove
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/ESS/!svn/ver/3871/trunk/debian/emacsen-remove
+END
+watch
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/ESS/!svn/ver/3904/trunk/debian/watch
+END
+copyright
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/ESS/!svn/ver/4435/trunk/debian/copyright
+END
+emacsen-startup
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/ESS/!svn/ver/4426/trunk/debian/emacsen-startup
+END
+postinst.debhelper
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/ESS/!svn/ver/3871/trunk/debian/postinst.debhelper
+END
+doc-base
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/ESS/!svn/ver/4272/trunk/debian/doc-base
+END
+prerm.debhelper
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/ESS/!svn/ver/3871/trunk/debian/prerm.debhelper
+END

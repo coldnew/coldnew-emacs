@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/ESS/!svn/ver/1697/trunk/doc/techrep
+END
+ess.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/ESS/!svn/ver/1697/trunk/doc/techrep/ess.pdf
+END
+ess.bib
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/ESS/!svn/ver/1690/trunk/doc/techrep/ess.bib
+END
+unsrtnat.bst
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/ESS/!svn/ver/1488/trunk/doc/techrep/unsrtnat.bst
+END
+abbrvnat.bst
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/ESS/!svn/ver/1488/trunk/doc/techrep/abbrvnat.bst
+END
+ess.tex
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/ESS/!svn/ver/1696/trunk/doc/techrep/ess.tex
+END
+bibentry.sty
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/ESS/!svn/ver/1488/trunk/doc/techrep/bibentry.sty
+END
+natbib.sty
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/ESS/!svn/ver/1488/trunk/doc/techrep/natbib.sty
+END
+plainnat.bst
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/ESS/!svn/ver/1658/trunk/doc/techrep/plainnat.bst
+END

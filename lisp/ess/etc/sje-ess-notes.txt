@@ -1,0 +1,121 @@
+Stephen Eglen's notes on future changes to ESS                   -*- org -*-
+
+
+* completion of functions within buffers
+
+From: Stephen Eglen <S.J.Eglen@damtp.cam.ac.uk>
+To: ESS-help@stat.math.ethz.ch
+Date: Tue, 22 Jun 2010 14:00:25 +0100
+Cc: Stephen Eglen <S.J.Eglen@damtp.cam.ac.uk>
+Subject: [ESS] request for comments: completion within .R buffers
+Sender: ess-help-bounces@stat.math.ethz.ch
+
+Rodney recently kindly polled ess-help, and a summary of the results can
+be seen in the SVN sources at:
+
+https://svn.r-project.org/ESS/trunk/rsn.txt
+
+One thing that came up was (thanks Ista Zhan):
+
+  Function/variable completion in script files (maybe this already is
+  supposed to work, but for me completion only works in interactive
+  sessions).
+
+Below is some suggested code to implement this, based on a hint from
+Deepayan.  If you press TAB at the start of the line, you still get
+standard indentation, but if you are already typing something, e.g.
+ write.t
+
+then hitting TAB will complete to write.table
+
+Hitting TAB again, will then bring up a *Completions* window showing
+(for me):
+
+Possible completions are:
+write.table
+write.table0
+
+I don't like the *Completions* window hanging around, but apart from
+that, is that the sort of completion people would like?  Erik Iverson
+mentioned something related:
+
+  I think ESS is very feature complete at this point.  The only thing
+  I've looked at that seems interesting is some sort of 'intellisense'
+  feature that uses R's built-in completion mechanism to temporarily
+  display available completions using something like company-mode,
+  autocomplete, or completion-ui.  I had at one point something that
+  almost worked, but I believe the library it was built in,
+  company-mode, has now changed significantly.
+
+but I've not explored those options.
+
+Code/ideas welcome!
+
+Stephen
+
+----------------------------------------------------------------------
+
+(defun ess-indent-or-complete (&optional whole-exp)
+  (interactive "P")
+  "Function bound to TAB key in R mode buffers.
+If at the start of the line, or numeric prefix provided, call
+`ess-indent-command', otherwise try to complete object at point."
+  (if (or whole-exp
+	   (save-excursion
+	     (skip-chars-backward " \t")
+	     (bolp)))
+      (ess-indent-command whole-exp)
+    (ess-complete-object-name)))
+
+(add-hook 'ess-mode-hook
+	  '(lambda ()   (local-set-key "\t" 'ess-indent-or-complete)))
+
+
+* ess-eldoc.el
+
+** Switch to use R-mode-hook, rather than ess-mode-hook
+
+** Document in the info node.
+
+* Debugger
+
+Would like to implement a debugger akin to Norm Matloff's work:
+
+http://cran.r-project.org/web/packages/edtdbg/index.html
+
+http://www.stats.uwo.ca/faculty/murdoch/software/debuggingR/
+
+Norm posted that he had started work on ESS, but had to abandon it.
+
+
+* Comint so slow? ess-eval-visibly-p should be t again.
+
+Why is comint so slow when passing code line by line?  Markus Triska
+recently looked at this:
+
+To: ess-help@stat.math.ethz.ch
+connect(): No such file or directory
+From: Markus Triska <markus.triska@gmx.at>
+Date: Sun, 16 May 2010 13:59:57 +0200
+Subject: Re: [ESS] ESS on Mac slower than R.app?
+Sender: ess-help-bounces@stat.math.ethz.ch
+
+Hi Rodney,
+
+Rodney Sparapani <rsparapa@mcw.edu> writes:
+
+> I think if you update to the latest version of ESS this problem will
+> go away.  See the previous discussion of a very similar GNU Emacs bug
+> fix at https://stat.ethz.ch/pipermail/ess-bugs/2009q4/000584.html
+
+I think ess-eval-visibly-p should remain true by default, as it is quite
+useful. If you change the accept-process-output call in
+ess-eval-linewise to:
+
+    (accept-process-output sprocess 0 timeout-ms)
+
+(the difference being that you explicitly state to wait for input from
+"sprocess"), the test case works instantly also with ess-eval-visibly-p.
+
+All the best,
+Markus

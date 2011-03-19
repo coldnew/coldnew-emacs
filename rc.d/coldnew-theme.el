@@ -20,7 +20,7 @@
 
   ;; TODO: I must rewrite coldnew's color-theme
   (require* 'color-theme-coldnew-day-old)
-  (require* 'color-theme-coldnew-night-old)
+  (require* 'color-theme-coldnew-night)
 
 
   ;; Default theme use night.
