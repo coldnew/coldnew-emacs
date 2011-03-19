@@ -1105,56 +1105,6 @@ Not documented
 
 ;;;***
 
-;;;### (autoloads (Rd-mode) "ess/lisp/ess-rd" "ess/lisp/ess-rd.el"
-;;;;;;  (19844 57758))
-;;; Generated autoloads from ess/lisp/ess-rd.el
-
-(autoload 'Rd-mode "ess/lisp/ess-rd" "\
-Major mode for editing R documentation source files.
-
-This mode makes it easier to write R documentation by helping with
-indentation, doing some of the typing for you (with Abbrev mode) and by
-showing keywords, strings, etc. in different faces (with Font Lock mode
-on terminals that support it).
-
-Type \\[list-abbrevs] to display the built-in abbrevs for Rd keywords.
-
-Keybindings
-===========
-
-\\{Rd-mode-map}
-
-Variables you can use to customize Rd mode
-==========================================
-
-`Rd-indent-level'
-  Indentation of Rd code with respect to containing blocks.
-  Default is 2.
-
-Turning on Rd mode runs the hook `Rd-mode-hook'.
-
-To automatically turn on the abbrev(iate) features, add the
-following lines to your `.emacs' file:
-
-  (add-hook 'Rd-mode-hook
-	    (lambda ()
-	      (abbrev-mode 1)))
-
-\(fn)" t nil)
-
-;;;***
-
-;;;### (autoloads (mouse-me) "ess/lisp/mouseme" "ess/lisp/mouseme.el"
-;;;;;;  (19844 57758))
-;;; Generated autoloads from ess/lisp/mouseme.el
-
-(autoload 'mouse-me "ess/lisp/mouseme" "\
-Popup a menu of functions to run on selected string or region.
-
-\(fn EVENT)" t nil)
-
-;;;***
-
 ;;;### (autoloads (highlight-parentheses-mode) "highlight-parentheses/highlight-parentheses"
 ;;;;;;  "highlight-parentheses/highlight-parentheses.el" (19839 8486))
 ;;; Generated autoloads from highlight-parentheses/highlight-parentheses.el

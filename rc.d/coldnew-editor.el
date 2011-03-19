@@ -132,7 +132,7 @@
 ;;   All of the same contents in the buffer are highlighted
 ;; - Edit one of the them
 ;;   The change is applied to all other contents simultaneously
-;;- Finish - by pressing C-; again
+;; - Finish - by pressing C-; again
 ;;
 (when (require* 'iedit))
 
