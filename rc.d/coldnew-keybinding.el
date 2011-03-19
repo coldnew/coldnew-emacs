@@ -24,6 +24,7 @@
 (vim:nmap (kbd "<f4>") 'shell-pop)
 (vim:nmap (kbd "C-x M-s") 'egg-status)
 (vim:nmap (kbd "C-x M-l") 'egg-log)
+(vim:nmap (kbd "C-;") 'iedit-mode)
 
 ;;;;;;;; Insert Map
 (vim:imap (kbd "C-x C-b") 'ibuffer)
@@ -43,6 +44,7 @@
 
 ;;;;;;;; Visual Map
 (vim:vmap (kbd "M-;") 'vim:visual-toggle-comment)
+(vim:vmap (kbd "C-;") 'iedit-mode)
 
 ;;;;;;;; Window Map
 (vim:wmap (kbd "C-w f") 'fullscreen-window)
