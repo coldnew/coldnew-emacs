@@ -7,10 +7,14 @@
 (require 'coldnew-commands)
 (require 'coldnew-variables)
 
+
+
+
+
 ;;;;;;;; desktop
 ;;
 (when (require* 'desktop)
-  (setq desktop-path '("~/.emacs.d/var/cache/"))
+  (setq desktop-path (list emacs-cache-dir))
   (setq desktop-dirname emacs-cache-dir)
   (setq desktop-base-file-name "desktop.dat")
 
@@ -36,10 +40,17 @@
 		    (run-with-timer 5 300 'autosave-desktop))))
 
   ;; Following modes are ignore and won't save to desktop
+  (setq desktop-buffers-not-to-save
+	(concat "\\("
+		"^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
+		"\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
+		"\\)$"))
   (add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
   (add-to-list 'desktop-modes-not-to-save 'dired-mode)
   (add-to-list 'desktop-modes-not-to-save 'Info-mode)
   (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
+  (add-to-list 'desktop-modes-not-to-save 'w3m-mode)
+  (add-to-list 'desktop-modes-not-to-save 'view-mode)
 
   )
 
@@ -61,6 +72,7 @@
   ;; Take following mode as temp buffer
   (add-hook 'custom-mode-hook 'turn-on-tempbuf-mode)
   (add-hook 'w3-mode-hook 'turn-on-tempbuf-mode)
+  (add-hook 'w3m-mode-hook 'turn-on-tempbuf-mode)
   (add-hook 'Man-mode-hook 'turn-on-tempbuf-mode)
   (add-hook 'view-mode-hook 'turn-on-tempbuf-mode)
   )
