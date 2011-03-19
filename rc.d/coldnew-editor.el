@@ -27,7 +27,7 @@
 (setq global-auto-revert-mode         t )
 
 ;; Use lisp-interaction-mode as default major mode
-(setq major-mode 'lisp-interaction-mode )
+(setq-default major-mode 'lisp-interaction-mode )
 
 
 ;;;;;;;; Programming Mode
@@ -66,7 +66,7 @@
 ;;;;;;;; Advices
 (defadvice kill-ring-save (before slick-copy activate compile)
   "When called interactively with no active region, copy a single
-line instead."
+   line instead."
   (interactive
    (if mark-active (list (region-beginning) (region-end))
      (message "Copied line")
@@ -94,7 +94,7 @@ line instead."
   (setq-default cua-enable-cua-keys nil))
 
 ;;;;;;;; Smartchr
-;;emacs version of smartchr.vim
+;; emacs version of smartchr.vim
 ;;
 (when (require* 'smartchr))
 
@@ -102,6 +102,40 @@ line instead."
 ;; An elisp port of Mozilla Universal Charset Auto Detector
 ;;
 (when (require* 'unicad))
+
+;;;;;;;; rainbow-mode
+;; Displays color names with colored background.
+;;
+(when (require* 'rainbow-mode)
+  ;; Auto enable rainbow-mode if the file is emacs color-theme and any css file.
+  ;; TODO: There must more elegent way to search wheather file-name contains "color-theme"
+  ;;       I must rewrite following code oneday.
+  (add-hook 'find-file-hook
+	    '(lambda ()
+	       (if (and (not (rainbow-mode))
+			(or
+			 ;; File is emacs color-theme
+			 (and (search "color-theme" (buffer-file-name))
+			      (equal major-mode 'emacs-lip-mode))
+			 ;; CSS file
+			 (equal major-mode 'css-mode)))
+		   ;; Enable rainbow-mode
+		   (rainbow-mode))
+	       ))
+  )
+
+;;;;;;;; iedit-mode
+;; This package provides a more intuitive way of replace-string operation
+;; (at least for me):
+;; - Mark the content in the buffer
+;; - Start iedit minor mode - by press C-;
+;;   All of the same contents in the buffer are highlighted
+;; - Edit one of the them
+;;   The change is applied to all other contents simultaneously
+;;- Finish - by pressing C-; again
+;;
+(when (require* 'iedit))
+
 
 ;;;;;;;; textmate
 ;; TextMate has some very nice to use bindings on quotes, brackets,
@@ -156,11 +190,11 @@ line instead."
   (font-lock-add-keywords nil
 			  '(
 			    ;; hexadecimal
-			    ("\\ +\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
+			    ("\\ +\\(0x[0-9a-fA-F]+\\)"       1 font-lock-constant-face)
 			    ;; float
 			    ("\\ +\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
 			    ;; int
-			    ("\\ +\\([+-]?[0-9]+\\)\\b" 1 font-lock-constant-face)
+			    ("\\ +\\([+-]?[0-9]+\\)\\b"       1 font-lock-constant-face)
 			    )))
 
 

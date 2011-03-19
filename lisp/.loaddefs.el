@@ -1105,6 +1105,56 @@ Not documented
 
 ;;;***
 
+;;;### (autoloads (Rd-mode) "ess/lisp/ess-rd" "ess/lisp/ess-rd.el"
+;;;;;;  (19844 57758))
+;;; Generated autoloads from ess/lisp/ess-rd.el
+
+(autoload 'Rd-mode "ess/lisp/ess-rd" "\
+Major mode for editing R documentation source files.
+
+This mode makes it easier to write R documentation by helping with
+indentation, doing some of the typing for you (with Abbrev mode) and by
+showing keywords, strings, etc. in different faces (with Font Lock mode
+on terminals that support it).
+
+Type \\[list-abbrevs] to display the built-in abbrevs for Rd keywords.
+
+Keybindings
+===========
+
+\\{Rd-mode-map}
+
+Variables you can use to customize Rd mode
+==========================================
+
+`Rd-indent-level'
+  Indentation of Rd code with respect to containing blocks.
+  Default is 2.
+
+Turning on Rd mode runs the hook `Rd-mode-hook'.
+
+To automatically turn on the abbrev(iate) features, add the
+following lines to your `.emacs' file:
+
+  (add-hook 'Rd-mode-hook
+	    (lambda ()
+	      (abbrev-mode 1)))
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (mouse-me) "ess/lisp/mouseme" "ess/lisp/mouseme.el"
+;;;;;;  (19844 57758))
+;;; Generated autoloads from ess/lisp/mouseme.el
+
+(autoload 'mouse-me "ess/lisp/mouseme" "\
+Popup a menu of functions to run on selected string or region.
+
+\(fn EVENT)" t nil)
+
+;;;***
+
 ;;;### (autoloads (highlight-parentheses-mode) "highlight-parentheses/highlight-parentheses"
 ;;;;;;  "highlight-parentheses/highlight-parentheses.el" (19839 8486))
 ;;; Generated autoloads from highlight-parentheses/highlight-parentheses.el
@@ -1198,6 +1248,38 @@ executed.
 Turns on hungry delete mode if the buffer is appropriate.
 
 \(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (iedit-mode) "iedit/iedit" "iedit/iedit.el" (19844
+;;;;;;  58740))
+;;; Generated autoloads from iedit/iedit.el
+
+(autoload 'iedit-mode "iedit/iedit" "\
+Toggle iedit mode.
+If iedit mode is off, turn iedit mode on, off otherwise.
+
+In Transient Mark mode, when iedit mode is turned on, all the
+occurrences of the current region are highlighted. If one
+occurrence is modified, the change are propagated to all other
+occurrences simultaneously.
+
+If Transient Mark mode is disabled or the region is not active,
+the `current-word' is used as occurrence. All the occurrences of
+the `current-word' are highlighted.
+
+You can also switch to iedit mode from isearch mode directly. The
+current search string is used as occurrence.  All occurrences of
+the current search string are highlighted.
+
+With a prefix argument, the occurrence when iedit is turned off
+last time is used as occurrence.  This is intended to recover
+last iedit which is turned off by mistake.
+
+Commands:
+\\{iedit-mode-map}
+
+\(fn &optional ARG)" t nil)
 
 ;;;***
 
@@ -1355,6 +1437,18 @@ Run pylookup-update for all sources and create the database at `pylookup-db-file
 
 ;;;***
 
+;;;### (autoloads (rainbow-mode) "rainbow-mode/rainbow-mode" "rainbow-mode/rainbow-mode.el"
+;;;;;;  (19843 28306))
+;;; Generated autoloads from rainbow-mode/rainbow-mode.el
+
+(autoload 'rainbow-mode "rainbow-mode/rainbow-mode" "\
+Colorize strings that represent colors.
+This will fontify with colors the string like \"#aabbcc\" or \"blue\".
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
 ;;;### (autoloads (smex-initialize) "smex/smex" "smex/smex.el" (19842
 ;;;;;;  14351))
 ;;; Generated autoloads from smex/smex.el
@@ -1408,11 +1502,31 @@ See also function `tempbuf-mode'.
 ;;;;;;  "auto-complete-extension/auto-complete-extension.el" "cedet/common/cedet-load.el"
 ;;;;;;  "cedet/common/cedet-loaddefs.el" "cedet/common/cedet.el"
 ;;;;;;  "cedet/common/ezimage.el" "cedet/common/working.el" "el-get/el-get-install.el"
-;;;;;;  "eldoc-extension/eldoc-extension.el" "highlight-cl/highlight-cl.el"
-;;;;;;  "ibuffer-git/ibuffer-git.el" "popup-pos-tip/popup-pos-tip.el"
-;;;;;;  "pymacs/pymacs.el" "sdcv/sdcv.el" "shell-pop/shell-pop.el"
-;;;;;;  "showtip/showtip.el" "ssh-config/ssh-config.el" "undo-tree/undo-tree.el"
-;;;;;;  "unicad/unicad.el" "xcscope+/xcscope+.el") (19843 14882 795965))
+;;;;;;  "eldoc-extension/eldoc-extension.el" "escreen-tab/escreen-tab.el"
+;;;;;;  "escreen/escreen.el" "ess/lisp/ess-arc-d.el" "ess/lisp/ess-bugs-d.el"
+;;;;;;  "ess/lisp/ess-bugs-l.el" "ess/lisp/ess-comp.el" "ess/lisp/ess-compat.el"
+;;;;;;  "ess/lisp/ess-custom.el" "ess/lisp/ess-dde.el" "ess/lisp/ess-debug.el"
+;;;;;;  "ess/lisp/ess-eldoc.el" "ess/lisp/ess-font-lock.el" "ess/lisp/ess-help.el"
+;;;;;;  "ess/lisp/ess-inf.el" "ess/lisp/ess-install.el" "ess/lisp/ess-jags-d.el"
+;;;;;;  "ess/lisp/ess-lsp-l.el" "ess/lisp/ess-menu.el" "ess/lisp/ess-mode.el"
+;;;;;;  "ess/lisp/ess-mous.el" "ess/lisp/ess-mouse.el" "ess/lisp/ess-noweb.el"
+;;;;;;  "ess/lisp/ess-omg-d.el" "ess/lisp/ess-omg-l.el" "ess/lisp/ess-r-a.el"
+;;;;;;  "ess/lisp/ess-r-args.el" "ess/lisp/ess-r-d.el" "ess/lisp/ess-r-gui.el"
+;;;;;;  "ess/lisp/ess-rdired.el" "ess/lisp/ess-roxy.el" "ess/lisp/ess-rutils.el"
+;;;;;;  "ess/lisp/ess-s-l.el" "ess/lisp/ess-s3-d.el" "ess/lisp/ess-s4-d.el"
+;;;;;;  "ess/lisp/ess-sas-a.el" "ess/lisp/ess-sas-d.el" "ess/lisp/ess-sas-l.el"
+;;;;;;  "ess/lisp/ess-send.el" "ess/lisp/ess-send2.el" "ess/lisp/ess-site.el"
+;;;;;;  "ess/lisp/ess-sp3-d.el" "ess/lisp/ess-sp4-d.el" "ess/lisp/ess-sp5-d.el"
+;;;;;;  "ess/lisp/ess-sp6-d.el" "ess/lisp/ess-sp6w-d.el" "ess/lisp/ess-sta-d.el"
+;;;;;;  "ess/lisp/ess-sta-l.el" "ess/lisp/ess-swv.el" "ess/lisp/ess-toolbar.el"
+;;;;;;  "ess/lisp/ess-trns.el" "ess/lisp/ess-utils.el" "ess/lisp/ess-vst-d.el"
+;;;;;;  "ess/lisp/ess-xls-d.el" "ess/lisp/ess.el" "ess/lisp/essd-els.el"
+;;;;;;  "ess/lisp/make-regexp.el" "ess/lisp/msdos.el" "ess/lisp/noweb-font-lock-mode.el"
+;;;;;;  "ess/lisp/noweb-mode.el" "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
+;;;;;;  "popup-pos-tip/popup-pos-tip.el" "pymacs/pymacs.el" "sdcv/sdcv.el"
+;;;;;;  "shell-pop/shell-pop.el" "showtip/showtip.el" "ssh-config/ssh-config.el"
+;;;;;;  "undo-tree/undo-tree.el" "unicad/unicad.el" "xcscope+/xcscope+.el")
+;;;;;;  (19844 58741 330404))
 
 ;;;***
 
