@@ -60,6 +60,7 @@
 
   ;; Highlight fontify numbers ad constant
   (highlight-fontify-numbers)
+
   )
 
 
@@ -107,16 +108,15 @@
 ;; Displays color names with colored background.
 ;;
 (when (require* 'rainbow-mode)
-  ;; Auto enable rainbow-mode if the file is emacs color-theme and any css file.
-  ;; TODO: There must more elegent way to search wheather file-name contains "color-theme"
-  ;;       I must rewrite following code oneday.
+  ;; Auto enable rainbow-mode if the file is emacs's color-theme and any css file.
   (add-hook 'find-file-hook
 	    '(lambda ()
+	       ;; On following situation will enable rainbow-mode automatically
+	       ;; if rainbow-mode does not start yet.
 	       (if (and (not (rainbow-mode))
 			(or
-			 ;; File is emacs color-theme
-			 (and (search "color-theme" (buffer-file-name))
-			      (equal major-mode 'emacs-lip-mode))
+			 ;; Emacs's color-theme file
+			 (string-match "color-theme-\\w*\\.el" (buffer-file-name))
 			 ;; CSS file
 			 (equal major-mode 'css-mode)))
 		   ;; Enable rainbow-mode
@@ -182,23 +182,22 @@
 
 (defun highlight-additional-keywords ()
   "Highlight additional keywords."
-  (font-lock-add-keywords nil '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))
-  (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 font-lock-doc-face t))))
+  (font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\):" 1 font-lock-warning-face t)))
+  (font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
+  (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t)))
+  )
 
 (defun highlight-fontify-numbers ()
   "Use this function as a hook to fontify numbers as constant"
   (font-lock-add-keywords nil
 			  '(
 			    ;; hexadecimal
-			    ("\\ +\\(0x[0-9a-fA-F]+\\)"       1 font-lock-constant-face)
+			    ("\\<\\(0x[0-9a-fA-F]+\\)"       1 font-lock-constant-face)
 			    ;; float
-			    ("\\ +\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
+			    ("\\<\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
 			    ;; int
-			    ("\\ +\\([+-]?[0-9]+\\)\\b"       1 font-lock-constant-face)
+			    ("\\<\\([+-]?[0-9]+\\)\\b"       1 font-lock-constant-face)
 			    )))
-
-
-
 
 
 ;; (defun load-tags-cache (file)
