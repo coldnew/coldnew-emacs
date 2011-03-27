@@ -7,8 +7,37 @@
 (require 'coldnew-variables)
 
 
+;;;;;;;; Window Moving
+(defun windmove-down-fullscreen ()
+  "Select window below current one and make it fullscreen."
+  (interactive)
+  (if (windmove-down)
+      (delete-other-windows))
+  )
+
+(defun windmove-up-fullscreen ()
+  "Select window above the current one and make it fullscreen."
+  (interactive)
+  (if (windmove-up)
+      (delete-other-windows))
+  )
+
+(defun windmove-left-fullscreen ()
+  "Select window left to current one and make it fullscreen."
+  (interactive)
+  (if (windmove-left)
+      (delete-other-windows))
+  )
+
+(defun windmove-right-fullscreen ()
+  "Select window right to current one and make it fullscreen."
+  (interactive)
+  (if (windmove-right)
+      (delete-other-windows))
+  )
+
 ;;;;;;;; Insert
-(defun insert-tiny-url (url)
+(defun insert-tinyurl (url)
   "Insert a shortend URL at point by passed in URL"
   (interactive "sEnter url: " )
   (let* ((url (replace-regexp-in-string "^http://" "" url))
@@ -116,7 +145,6 @@
       (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
-
 ;;;;;;;; Help or Document
 (defun show-ascii-chart ()
   "Display a helpful ASCII reference chart when called.  Useful for quickly
@@ -129,7 +157,7 @@
 		"==============================================================================\n"
 		"                        Common ASCII Codes And Escapes\n"
 		"==============================================================================\n"
-		"Char  Dec Hex Oct Esc Name             | Char  Dec Hex Oct Esc Name\n"
+		"Char  Dec Hex Oct Esc Name              | Char  Dec Hex Oct Esc Name\n"
 		"------------------------------------------------------------------------------\n"
 		"(nul)   0  00 000 \\0  Null             | (np)   12  0c 014 \\f  Form Feed\n"
 		"(bel)   7  07 007 \\a  Audible Alert    | (cr)   13  0d 015 \\r  Carriage Return\n"
@@ -145,7 +173,7 @@
 		"-----------------------------------------------------------------------------\n"
 		"(nul)   0  00 000 | (sp)   32  20 040 | @      64  40 100 | `      96  60 140\n"
 		"(soh)   1  01 001 | !      33  21 041 | A      65  41 101 | a      97  61 141\n"
-		"(stx)   2  02 002 | \"      34  22 042 | B      66  42 102 | b      98  62 142\n"
+		"(stx)   2  02 002 | \"     34  22 042 | B      66  42 102 | b      98  62 142\n"
 		"(etx)   3  03 003 | #      35  23 043 | C      67  43 103 | c      99  63 143\n"
 		"(eot)   4  04 004 | $      36  24 044 | D      68  44 104 | d     100  64 144\n"
 		"(enq)   5  05 005 | %      37  25 045 | E      69  45 105 | e     101  65 145\n"

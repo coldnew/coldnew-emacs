@@ -25,6 +25,11 @@
 (when (require* 'sdcv)
   (setq sdcv-dictionary-simple-list
 	'(
+	  "朗道英漢字典5.0"
+	  ))
+  (setq sdcv-dictionary-complete-list
+	'(
+	  "牛津現代英漢雙解詞典"
 	  ))
 
   )

@@ -2,16 +2,25 @@
 
 (eval-when-compile (require 'cl))
 
-(defvar emacs-cache-dir "~/.emacs.d/var/cache/"
-  "cache file directory.")
-(defvar emacs-backup-dir "~/.emacs.d/var/backup/"
-  "directory to back up files.")
-(defvar emacs-etc-dir "~/.emacs.d/etc/"
-  "directory to place other stuff.")
-(defvar emacs-lisp-dir "~/.emacs.d/lisp/"
-  "directory to place lisp package from internet.")
+
+;;;;;;;; Packages Import
+(require 'coldnew-macro)
+(require 'coldnew-functions)
+
+;;;;;;;; System Variables
 (defvar emacs-config-dir "~/.emacs.d/rc.d/"
   "directory to place emacs configure.")
+(defvar emacs-etc-dir    "~/.emacs.d/etc/"
+  "directory to place other stuff.")
+(defvar emacs-var-dir    "~/.emacs.d/var/"
+  "directory to place cache and backup files.")
+(defvar emacs-lisp-dir   "~/.emacs.d/lisp/"
+  "directory to place lisp package from internet.")
+
+(defvar emacs-cache-dir  (concat emacs-var-dir "cache/")
+  "cache file directory.")
+(defvar emacs-backup-dir (concat emacs-var-dir "backup/")
+  "directory to back up files.")
 
 
 ;;;;;;;; Variables

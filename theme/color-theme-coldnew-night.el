@@ -89,28 +89,37 @@
 
     (color-theme-install
      `(color-theme-coldnew-night
-       ( (background-color . "#0B0B0E")
-	 (background-mode  . dark)
-	 (border-color     . "#0B0B0E")
-	 (cursor-color     . "#C2C2C2")
-	 (foreground-color . "#DCDCDC"))
-       ;; Font Lock
-       (font-lock-comment-face        ; 註解文字的顏色
+       (
+	;; Background
+	(background-color . "#0B0B0E")
+	(background-mode  . dark)
+	;; Foreground
+	(foreground-color . "#DCDCDC")
+	;; Cursor
+	(cursor-color     . "#C2C2C2")
+	(border-color     . "#0B0B0E"))
+       ;;;; Font Lock
+       ;; Comment
+       (font-lock-comment-face
 	((t (:foreground "#5D9AE4"   :italic t :slant italic))))
-       (font-lock-doc-face            ; 解釋文檔的顏色
+       ;; Comment Delimiter
+       (font-lock-comment-delimiter-face ;
+	((t (:inherit font-lock-comment-face))))
+       ;; Doc String
+       (font-lock-doc-face
 	((t (:foreground "#40AAFA"))))
-       (font-lock-function-name-face  ; 函數的顏色
+       ;; Function name
+       (font-lock-function-name-face
 	;;((t (:foreground "#C391DF" :italic t :bold t))))
 	((t (:foreground "#ad7fa8" :italic t :bold t))))
-       (font-lock-string-face         ; 字串的顏色
+       ;;  String
+       (font-lock-string-face
 	((t (:foreground "#95E454" :italic t))))
-       (font-lock-warning-face        ; 警告文字的顏色
+       ;; Waring
+       (font-lock-warning-face
 	((t (:foreground "#E91303" :bold t))))
        (font-lock-builtin-face        ; 內建的顏色
 	((t (:foreground "#4BC98A"))))
-       (font-lock-comment-delimiter-face ;
-	((t (:inherit font-lock-comment-face))))
-       ;;((t (:foreground "#99968b"   :italic t :slant italic))))
        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
        (font-lock-constant-face       ; 常數的顏色
 	((t (:foreground ,_Red-1    :bold t))))

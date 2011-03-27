@@ -61,6 +61,9 @@
   ;; Highlight fontify numbers ad constant
   (highlight-fontify-numbers)
 
+  ;; Use paredit-mode
+  (use-paredit-mode)
+
   )
 
 
@@ -103,6 +106,13 @@
 ;; An elisp port of Mozilla Universal Charset Auto Detector
 ;;
 (when (require* 'unicad))
+
+;;;;;;;; Undo-tree
+;;
+(when (require 'undo-tree)
+  (global-undo-tree-mode))
+
+
 
 ;;;;;;;; rainbow-mode
 ;; Displays color names with colored background.
@@ -198,6 +208,20 @@
 			    ;; int
 			    ("\\<\\([+-]?[0-9]+\\)\\b"       1 font-lock-constant-face)
 			    )))
+
+(defun use-paredit-mode ()
+  "Enable paredit-mode and rebind the keybinding to vim-mode when use it."
+  (when (require* 'paredit)
+    ;; Make eldoc work with Paredit
+    (when (require* 'eldoc)
+      (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
+    ;; Enable Paredit in vim-mode
+    (when (require* 'vim)
+
+
+      ))
+  )
+
 
 
 ;; (defun load-tags-cache (file)
