@@ -95,7 +95,8 @@
   ;; Enable cua-mode
   (cua-mode t)
   ;; disable default-keybindings in cua-mode
-  (setq-default cua-enable-cua-keys nil))
+  (setq cua-enable-cua-keys nil)
+  )
 
 ;;;;;;;; Smartchr
 ;; emacs version of smartchr.vim

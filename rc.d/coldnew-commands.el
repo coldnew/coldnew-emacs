@@ -101,9 +101,9 @@
   (save-buffer))
 
 ;;;;;;;; Buffer switch
-(defun switch-to-scratch-and-back ()
+(defun scratch-toggle ()
   "Toggle between *scratch* buffer and the current buffer.
-     If the *scratch* buffer does not exist, create it."
+   If the *scratch* buffer does not exist, create it."
   (interactive)
   (let ((scratch-buffer-name (get-buffer-create "*scratch*")))
     (if (equal (current-buffer) scratch-buffer-name)
@@ -112,6 +112,18 @@
 	(switch-to-buffer scratch-buffer-name)
 	(unless (equal major-mode 'lisp-interaction-mode)
 	  (lisp-interaction-mode))))))
+
+(defun ielm-toggle ()
+  "Toggle between *ielm* buffer and the current buffer.
+   If the *ielm* buffer does not exist, create it."
+  (interactive)
+  (let ((ielm-buffer-name (get-buffer-create "*ielm*")))
+    (if (equal (current-buffer) ielm-buffer-name)
+	(switch-to-buffer (other-buffer))
+      (progn
+	(switch-to-buffer ielm-buffer-name)
+	(unless (equal major-mode 'inferior-emacs-lisp-mode)
+	  (inferior-emacs-lisp-mode))))))
 
 ;;;;;;;; Windows
 (defun fullscreen-window ()

@@ -1,6 +1,8 @@
 ;;
 (eval-when-compile (require 'cl))
 
+;;;;;;;; Packages Import
+(require 'coldnew-macro)
 
 
 (defun show-buffer-major-mode (buffer-or-string)
@@ -27,6 +29,18 @@ Also returns nil if pid is nil."
   (length (buffer-substring (save-excursion (beginning-of-line) (point))
 			    (save-excursion (end-of-line) (point)))))
 
+;;;;;;;; Date and time
+(defun day-of-week (year month day)
+  "Returns the day of the week as an integer.
+   Monday is 1."
+  (nth 6 (decode-time (encode-time 0 0 0 day month year))))
+
+(defun day-of-week-in-string (year month day)
+  "Return the day of the week as day name."
+  (let* ((day-names '("Sunday" "Monday" "Tuesday" "Wednesday"
+		      "Thursday" "Friday" "Saturday"))
+	 (day-index (nth 6 (decode-time (encode-time 0 0 0 day month year)))))
+    (nth day-index day-names)))
 
 ;;;;;;;; Convertion
 (defun unix->dos (buf)

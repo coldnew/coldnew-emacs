@@ -1469,7 +1469,7 @@ See also function `tempbuf-mode'.
 ;;;;;;  "ibuffer-git/ibuffer-git.el" "popup-pos-tip/popup-pos-tip.el"
 ;;;;;;  "pymacs/pymacs.el" "quack/quack.el" "sdcv/sdcv.el" "shell-pop/shell-pop.el"
 ;;;;;;  "showtip/showtip.el" "ssh-config/ssh-config.el" "undo-tree/undo-tree.el"
-;;;;;;  "unicad/unicad.el" "xcscope+/xcscope+.el") (19852 49345 995928))
+;;;;;;  "unicad/unicad.el" "xcscope+/xcscope+.el") (19857 59706 498657))
 
 ;;;***
 

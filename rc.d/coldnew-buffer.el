@@ -15,6 +15,7 @@
   (if (equal major-mode 'fundamental-mode)
       (lisp-interaction-mode)))
 
+
 ;; Prevent to kill *scratch* and *Ibuffer*
 (defadvice kill-buffer (around kill-buffer-around-advice activate)
   "Bury *scratch* or *Ibuffer* buffer instead of kill it "
@@ -76,36 +77,39 @@
 ;;;;;; Buffer lists
   (setq ibuffer-saved-filter-groups
 	'(("default"
-	   ("*Buffer*" (or (name . "^\\*Messages\\*$")
-			   (name . "^\\*scratch\\*$")
-			   (name . "^\\*Warnings\\*$")
-			   (name . "^TAGS\\(<[0-9]+>\\)?$")
-			   (name . "^\\*Occur\\*$")
-			   (name . "^\\*grep\\*$")
-			   (name . "^\\*Compile-Log\\*$")
-			   (name . "^\\*Backtrace\\*$")
-			   (name . "^\\*Process List\\*$")
-			   (name . "^\\*gud\\*$")
-			   (name . "^loaddefs.el$")
-			   (name . "^\\*wclock\\*$")
-			   (name . "^\\*Kill Ring\\*$")
-			   (name . "^\\*Completions\\*$")
-			   (name . "^\\*tramp")
-			   (name . "^\\*compilation\\*$")
-			   (name . "^\\*CEDET Global\\*$")
-			   (name . "^\\*Buffer List\\*$")
-			   (name . "^\\*Anything Log\\*$")
-			   (name . "^\\*anything for\\*$")
-			   (name . "^\\**Loading Config Log\\*$")
-			   (name . "^\\**Loading Library Log\\*$")
-			   (name . "^\\*anything*")
-			   (name . "^ipa*")
-			   (name . "^\\*irc*")
-			   (name . "^\\*im.bitlbee.org\\*$")
-			   (name . "^\\*el-get*")
-			   (name . "^\\*EGG:*")
-			   (name . "^\\*WoMan-Log\\*")
-			   ))
+	   ("*Buffer*" (or
+			(name . "^TAGS\\(<[0-9]+>\\)?$")
+			(name . "^\\**Loading Config Log\\*$")
+			(name . "^\\**Loading Library Log\\*$")
+			(name . "^\\*Anything Log\\*$")
+			(name . "^\\*Backtrace\\*$")
+			(name . "^\\*Buffer List\\*$")
+			(name . "^\\*CEDET Global\\*$")
+			(name . "^\\*Compile-Log\\*$")
+			(name . "^\\*Completions\\*$")
+			(name . "^\\*EGG:*")
+			(name . "^\\*Kill Ring\\*$")
+			(name . "^\\*Occur\\*$")
+			(name . "^\\*Process List\\*$")
+			(name . "^\\*Shell Command Output\\*")
+			(name . "^\\*Warnings\\*$")
+			(name . "^\\*anything for\\*$")
+			(name . "^\\*anything*")
+			(name . "^\\*compilation\\*$")
+			(name . "^\\*el-get*")
+			(name . "^\\*grep\\*$")
+			(name . "^\\*gud\\*$")
+			(name . "^\\*ielm\\*")
+			(name . "^\\*im.bitlbee.org\\*$")
+			(name . "^\\*irc*")
+			(name . "^\\*scratch\\*$")
+			(name . "^\\*tramp")
+			(name . "^\\*wclock\\*$")
+			(name . "^ipa*")
+			(name . "^loaddefs.el$")
+			(name . "^\\*Messages\\*$")
+			(name . "^\\*WoMan-Log\\*")
+			))
 	   ("Version Control" (or (mode . svn-status-mode)
 				  (mode . svn-log-edit-mode)
 				  (name . "^\\*svn*\\*")
@@ -144,8 +148,6 @@
 	   ("Object-C"   (mode . objc-mode))
 	   ("Snippet" (or (mode . snippet-mode)
 			  (name . "*.yas$")))
-	   ;; temporary add this
-	   ("cemacs" (name . "cemacs-*"))
 	   ("newLisp"  (mode . newlisp-mode))
 	   ("Lisp"     (mode . slime-mode))
 	   ("Emacs" (or (mode . emacs-lisp-mode)
@@ -164,7 +166,7 @@
 	  ))
 
 
-;;;;;;;; Advice
+  ;;;; Advice
   ;; Reverse group list
   (defadvice ibuffer-generate-filter-groups (after reverse-ibuffer-groups () activate)
     (setq ad-return-value (nreverse ad-return-value)))
@@ -208,6 +210,52 @@
 		  filename-and-process))))
 
   )
+
+;;;;;;;; tempbuf
+;; a minor mode that enables buffers to get automatically deleted in the
+;; background when it can be deduced that they are no longer of any use.
+;; It could be common for example to apply this mode to dired-mode buffers
+;; or read-only buffers visiting files, relieving you from having to delete
+;; each of them manually when the buffer list grows too large.
+;;
+(when (require* 'tempbuf)
+  ;; Take following mode as temp buffer
+  (add-hook 'custom-mode-hook 'turn-on-tempbuf-mode)
+  (add-hook 'w3-mode-hook 'turn-on-tempbuf-mode)
+  (add-hook 'w3m-mode-hook 'turn-on-tempbuf-mode)
+  (add-hook 'Man-mode-hook 'turn-on-tempbuf-mode)
+  (add-hook 'view-mode-hook 'turn-on-tempbuf-mode)
+  )
+
+;;;;;;;; midnight
+;;
+(when (require* 'midnight)
+
+  ;; Auto clean buffers at 00:00AM every day.
+  (midnight-delay-set 'midnight-delay "00:00am")
+
+  ;; Every 4 hour clean buffer
+  (setq midnight-period 14400)
+
+  ;; Prevent to kill buffers if match rules.
+  (add-to-list 'clean-buffer-list-kill-never-buffer-names
+	       (append       "*Messages*"
+			     "*cmd*"
+			     "*scratch*"
+			     "*w3m*"
+			     "*w3m-cache*"
+			     "*Inferior Octave*"
+			     ))
+  (add-to-list 'clean-buffer-list-kill-never-regexps
+	       (append	       "^\\*EMMS Playlist\\*.*$"
+			       ".*irc\\.freenode\\.net.*"
+			       ".*irc\\.debian\\.org.*"
+			       ".*im\\.bitlbee\\.org.*"
+			       "^\\*ansi-term*"
+			       "^\\*terminal*"
+			       ))
+  )
+
 
 (provide 'coldnew-buffer)
 ;; coldnew-buffer.el ends here.

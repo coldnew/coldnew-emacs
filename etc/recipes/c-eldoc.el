@@ -1,2 +1,2 @@
 (:name c-eldoc 
-       :type emacswiki)
+    :type emacswiki)

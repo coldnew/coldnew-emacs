@@ -30,7 +30,6 @@
 
 	     ;; Enable Auto Complete
 	     (when (require* 'auto-complete)
-
 	       (ac-emacs-lisp-mode-setup))
 
 	     ;; Highlight differnet parentheses
@@ -58,6 +57,85 @@
 	     (remove-elc-when-visit)
 
 	     ))
+
+;;;;;;;; Lisp-interaction mode
+;; TODO: is there a more elegent way to achive following?
+;; make lisp-interaction-hook use the same functions as in
+;; emacs-lisp-mode-hook
+;;
+(add-hook 'lisp-interaction-mode-hook
+	  '(lambda ()
+
+	     ;; Enable Auto Complete
+	     (when (require* 'auto-complete)
+	       (ac-emacs-lisp-mode-setup))
+
+	     ;; Highlight differnet parentheses
+	     (when (require* 'highlight-parentheses)
+	       (highlight-parentheses-mode))
+
+	     ;; Enable eldoc
+	     (when (require* 'eldoc)
+	       ;; Add extension for eldoc
+	       (require* 'eldoc-extension)
+	       (turn-on-eldoc-mode))
+
+	     ;; Use Greek character lambda instead of string
+	     (when (require* 'pretty-lambdada)
+	       (turn-on-pretty-lambda-mode))
+
+	     ;; Highlight Common Lisp style functions
+	     (when (require* 'highlight-cl)
+	       (highlight-cl-add-font-lock-keywords))
+
+	     ;; Use global programming mode
+	     (programming-mode)
+
+	     ;; After visit elisp file, remove .elc extension file.
+	     (remove-elc-when-visit)
+
+	     ))
+
+;;;;;;;; ielm
+;; A nice little mode that acts like an interactive Lisp interpreter.
+;; It doesn't do all the fancy shell stuff such as redirection
+;; – use the EmacsShell if you need that
+;; IELM is an alternative to Lisp Interactive mode,
+;; which is the mode of buffer "*scratch*".
+;;
+(when (require* 'ielm)
+  ;;;; Hooks
+  (add-hook 'ielm-mode-hook
+	    '(lambda ()
+
+	       ;; Enable Auto Complete
+	       (when (require* 'auto-complete)
+		 (ac-emacs-lisp-mode-setup))
+
+	       ;; Highlight differnet parentheses
+	       (when (require* 'highlight-parentheses)
+		 (highlight-parentheses-mode))
+
+	       ;; Enable eldoc
+	       (when (require* 'eldoc)
+		 ;; Add extension for eldoc
+		 (require* 'eldoc-extension)
+		 (turn-on-eldoc-mode))
+
+	       ;; Use Greek character lambda instead of string
+	       (when (require* 'pretty-lambdada)
+		 (turn-on-pretty-lambda-mode))
+
+	       ;; Highlight Common Lisp style functions
+	       (when (require* 'highlight-cl)
+		 (highlight-cl-add-font-lock-keywords))
+
+	       ;; Use global programming mode
+	       (programming-mode)
+
+	       ))
+  )
+
 
 ;;;;;;;; Functions
 

@@ -26,9 +26,8 @@
 		       ac-source-words-in-same-mode-buffers
 		       ))))
 
-
 ;;;;;;;; Hooks
-(add-hook 'emacs-lisp-mode-hook
+(add-hook 'c-mode-hook
 	  '(lambda ()
 
 	     ;; Enable Auto Complete

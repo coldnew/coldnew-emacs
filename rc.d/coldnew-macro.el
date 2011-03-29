@@ -44,6 +44,19 @@
 ;;;;;;;; Functions
 
 
+(defun try-require (&rest args)
+  "Attempt to load a library or module. Return true if all of the libraries
+given as arguments are successfully loaded"
+  (if (member nil
+	      (mapcar (lambda (thing)
+			(condition-case e
+			    (if (stringp thing)
+				(load-library thing)
+			      (require thing))
+			  (file-error () nil)))
+		      args))
+      nil
+    t))
 
 (provide 'coldnew-macro)
 ;; coldnew-macro.el ends here.

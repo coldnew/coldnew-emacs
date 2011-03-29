@@ -29,7 +29,8 @@
 (vim:nmap (kbd "C-r") 'undo-tree-redo)
 (vim:nmap (kbd "M-p") 'anything-show-kill-ring)
 (vim:nmap (kbd "M-K") 'sdcv-search-pointer+)
-
+(vim:nmap (kbd "C-x M-S") 'scratch-toggle)
+(vim:nmap (kbd "C-x M-i") 'ielm-toggle)
 
 ;;;;;;;; Insert Map
 (vim:imap (kbd "C-x C-b") 'ibuffer)
@@ -47,6 +48,8 @@
 (vim:imap (kbd "DEL") 'hungry-delete-forward)
 (vim:imap (kbd "C-n") 'auto-complete)
 (vim:imap (kbd "C-p") 'auto-complete)
+(vim:imap (kbd "C-x M-S") 'scratch-toggle)
+(vim:imap (kbd "C-x M-i") 'ielm-toggle)
 
 ;;;;;;;; Visual Map
 (vim:vmap (kbd "M-;") 'vim:visual-toggle-comment)
