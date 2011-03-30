@@ -224,36 +224,37 @@
   (add-hook 'w3-mode-hook 'turn-on-tempbuf-mode)
   (add-hook 'w3m-mode-hook 'turn-on-tempbuf-mode)
   (add-hook 'Man-mode-hook 'turn-on-tempbuf-mode)
+  (add-hook 'woman-mode-hook 'turn-on-tempbuf-mode)
+  (add-hook 'help-mode-hook 'turn-on-tempbuf-mode)
   (add-hook 'view-mode-hook 'turn-on-tempbuf-mode)
   )
 
 ;;;;;;;; midnight
+;; Midnight mode is a package that comes with Emacs for running configured
+;; actions at every `midnight.
 ;;
 (when (require* 'midnight)
 
-  ;; Auto clean buffers at 00:00AM every day.
-  (midnight-delay-set 'midnight-delay "00:00am")
+  ;; Every day clean the buffer
+  (setq clean-buffer-list-delay-general 1)
 
-  ;; Every 4 hour clean buffer
-  (setq midnight-period 14400)
+  ;; Kill anything, clean-buffer-list is very intelligent
+  ;; at not killing unsaved buffer.
+  (setq clean-buffer-list-kill-regexps '("^.*$"))
 
   ;; Prevent to kill buffers if match rules.
-  (add-to-list 'clean-buffer-list-kill-never-buffer-names
-	       (append       "*Messages*"
-			     "*cmd*"
-			     "*scratch*"
-			     "*w3m*"
-			     "*w3m-cache*"
-			     "*Inferior Octave*"
-			     ))
   (add-to-list 'clean-buffer-list-kill-never-regexps
-	       (append	       "^\\*EMMS Playlist\\*.*$"
-			       ".*irc\\.freenode\\.net.*"
-			       ".*irc\\.debian\\.org.*"
-			       ".*im\\.bitlbee\\.org.*"
-			       "^\\*ansi-term*"
-			       "^\\*terminal*"
-			       ))
+	       '("^\\*EMMS Playlist\\*.*$"
+		 ".*irc\\.freenode\\.net.*"
+		 ".*irc\\.debian\\.org.*"
+		 ".*im\\.bitlbee\\.org.*"
+		 "^\\*ansi-term*"
+		 "^\\*terminal*"
+		 "^\\*Messages\\*$"
+		 "^\\*scratch\\*$"
+		 "^\\*w3m\\*$"
+		 "^\\*Inferior*"
+		 ))
   )
 
 
