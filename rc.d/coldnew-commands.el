@@ -7,6 +7,50 @@
 (require 'coldnew-variables)
 
 
+;;;;;;;; Screenshot
+(defun save-screenshots (name)
+  "Save shot fullscreen"
+  (interactive "sEnter picture name: ")
+  (let ((screenshot-dir "~/screenshot/"))
+    (if (executable-find "scrot")
+	(progn
+	  (if (not (file-exists-p screenshot-dir))
+	      (make-directory screenshot-dir))
+	  (shell-command (format "scrot %s%s" screenshot-dir name))
+	  (message (concat "Your screenshot " name " is save to " screenshot-dir))
+	  )
+      (message "You need to install scrot first.")))
+  )
+
+(defun save-screenshots-window (name)
+  "Save shot in window"
+  (interactive "sEnter picture name: ")
+  (let ((screenshot-dir "~/screenshot/"))
+    (if (executable-find "scrot")
+	(progn
+	  (if (not (file-exists-p screenshot-dir))
+	      (make-directory screenshot-dir))
+	  (shell-command (format "scrot -bs %s%s" screenshot-dir name))
+	  (message (concat "Your screenshot " name " is save to " screenshot-dir))
+	  )
+      (message "You need to install scrot first.")))
+  )
+
+(defun save-screenshots-region (name)
+  "Save shot in region"
+  (interactive "sEnter picture name: ")
+  (let ((screenshot-dir "~/screenshot/"))
+    (if (executable-find "scrot")
+	(progn
+	  (if (not (file-exists-p screenshot-dir))
+	      (make-directory screenshot-dir))
+	  (shell-command (format "scrot -s %s%s" screenshot-dir name))
+	  (message (concat "Your screenshot " name " is save to " screenshot-dir))
+	  )
+      (message "You need to install scrot first.")))
+  )
+
+
 ;;;;;;;; Window Moving
 (defun windmove-down-fullscreen ()
   "Select window below current one and make it fullscreen."
