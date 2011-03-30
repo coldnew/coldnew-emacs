@@ -144,7 +144,8 @@
   (make-local-variable 'find-file-hook)
   (add-hook 'find-file-hook
 	    (lambda ()
-	      (if (file-exists-p (concat buffer-file-name "c"))
+	      (if (and (file-exists-p (concat buffer-file-name "c"))
+		       (file-writable-p (concat buffer-file-name "c")))
 		  (delete-file (concat buffer-file-name "c"))))))
 
 

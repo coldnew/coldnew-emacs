@@ -9,8 +9,8 @@
 
 
 ;;;;;;;; Emacs-lisp-mode extensions
-(add-to-list 'auto-mode-alist '("\\.scm$" . geiser-mode))
-(add-to-list 'auto-mode-alist '("\\.gl$"  . geiser-mode))
+(add-to-list 'auto-mode-alist '("\\.scm$" . scheme-mode))
+(add-to-list 'auto-mode-alist '("\\.gl$"  . scheme-mode))
 
 
 ;;;;;;;; Auto Complete Settings
@@ -29,7 +29,7 @@
 
 
 ;;;;;;;; Hooks
-(add-hook 'emacs-lisp-mode-hook
+(add-hook 'scheme-mode-hook
 	  '(lambda ()
 
 	     ;; Enable Auto Complete

@@ -48,6 +48,7 @@
 (require 'coldnew-lang-elisp)
 (require 'coldnew-lang-ruby)
 (require 'coldnew-lang-guile)
+(require 'coldnew-lang-racket)
 (require 'coldnew-lang-c)
 (require 'coldnew-lang-newlisp)
 
