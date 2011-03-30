@@ -72,6 +72,12 @@ Also returns nil if pid is nil."
     (* n (factorial (1- n)))))
   )
 
+;;;;;;;; String
+(defun string-empty? (str)
+  "Return t if string is empty."
+  (string= "" str))
+
+
 ;;;;;; TODO: Need to review
 ;;;; Enable APIS
 ;; Perl	http://perldoc.perl.org/search.html?q=XYZ
