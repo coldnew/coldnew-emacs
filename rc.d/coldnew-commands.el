@@ -7,6 +7,24 @@
 (require 'coldnew-variables)
 
 
+;;;;;;;; Terminal
+(defun run-program (prg &optional use-existing)
+  ""
+  (interactive)
+  (let ((buffer (concat "*" prg "*")))
+    (when (not (and use-existing
+		    (let ((buf (get-buffer buffer)))
+		      (and buf (buffer-name (switch-to-buffer buffer)))
+		      )))
+      (ansi-term prg prg)
+      )
+    )
+  )
+
+
+
+
+
 ;;;;;;;; Screenshot
 (defun save-screenshots (name)
   "Save shot fullscreen"

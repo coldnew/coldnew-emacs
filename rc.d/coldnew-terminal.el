@@ -16,6 +16,7 @@
   "Make popup shell window at buttom by default.")
 
 ;;;;;;;; Shell-pop
+;;
 (when (require* 'shell-pop)
   (shell-pop-set-internal-mode "ansi-term")
   (shell-pop-set-internal-mode-shell emacs-default-shell)
@@ -24,18 +25,45 @@
   )
 
 ;;;;;;;; Multi-term
+;;
 (when (require* 'multi-term)
-  (setq multi-term-program emacs-default-shell))
+  (setq multi-term-program emacs-default-shell)
+  )
 
 ;;;;;;;; Term
-(setq term-default-bg-color nil)
-(setq term-default-fg-color nil)
+;;
+(when (require* 'term)
+  (setq term-default-bg-color nil)
+  (setq term-default-fg-color nil)
 
-;;;;;;;;;; Keybindings
-(add-hook 'term-mode-hook
-	  '(lambda ()
-	     (define-key term-raw-map (kbd "<f4>") 'shell-pop)
-	     ))
+  ;;;; Keybindings
+  (add-hook 'term-mode-hook
+	    '(lambda ()
+	       (define-key term-raw-map (kbd "<f4>") 'shell-pop)
+	       ))
+  )
+
+;;;;;;;; Comint mode
+;;
+(when (require* 'comint)
+
+  ;; Do not show password in comint-mode
+  (setq comint-output-filter-functions  '(comint-watch-for-password-prompt))
+  (setq comint-password-prompt-regexp
+	"\\(\\([Oo]ld \\|[Nn]ew \\|^\\)[Pp]assword\\|Enter password\\):\\s *\\'")
+
+  ;;;; Keybindings
+  (add-hook 'comint-mode-hook
+	    '(lambda ()
+
+	       (when (require* 'vim)
+		 (vim:local-nmap (kbd "M-k") 'comint-previous-input)
+		 (vim:local-nmap (kbd "M-j") 'comint-previous-input)
+		 (vim:local-imap (kbd "RET") 'newline-and-indent)
+		 )
+	       ))
+  )
+
 
 ;;;;;;;; Functions
 

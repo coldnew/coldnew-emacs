@@ -8,15 +8,14 @@
 
 
 
-;;;;;;;; Emacs-lisp-mode extensions
-(add-to-list 'auto-mode-alist '("\\.scm$" . scheme-mode))
+;;;;;;;; Guile-lisp-mode extensions
 (add-to-list 'auto-mode-alist '("\\.gl$"  . scheme-mode))
 
 
 ;;;;;;;; Auto Complete Settings
 (when (require* 'auto-complete)
   (defun ac-guile-mode-setup ()
-    "auto-complete settings for emacs-lisp-mode"
+    "auto-complete settings for scheme-mode"
     (setq ac-sources '(ac-source-dictionary
 		       ac-source-symbols
 		       ac-source-variables
