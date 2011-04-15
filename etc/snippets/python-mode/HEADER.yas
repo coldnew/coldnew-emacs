@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor : coldnew <coldnew.tw@gmil.com>
+# name : Header file
+# key: HEADER
+# type: command
+# --
+
+(yas/expand-snippet
+ (concat
+  "#!/usr/bin/eny python                                                \n"
+  "# -*- encoding: utf-8 -*-                                            \n"
+  "#                                                                    \n"
+  "                                                                     \n"
+  "                                                                     \n"
+  "                                                                     \n"
+  "if __name__ == '__main__':                                           \n"
+  "$0                                                                   \n"
+  ))

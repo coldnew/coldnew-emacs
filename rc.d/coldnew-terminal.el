@@ -52,6 +52,14 @@
   (setq comint-password-prompt-regexp
 	"\\(\\([Oo]ld \\|[Nn]ew \\|^\\)[Pp]assword\\|Enter password\\):\\s *\\'")
 
+  ;;;; Hooks
+  (add-hook 'comint-mode-hook
+	    '(lambda ()
+
+	       ;; Use global programming mode
+	       (programming-mode)
+	       ))
+
   ;;;; Keybindings
   (add-hook 'comint-mode-hook
 	    '(lambda ()

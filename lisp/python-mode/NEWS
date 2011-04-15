@@ -1,0 +1,35 @@
+Python Mode News
+================
+
+New in version 5.2.1
+--------------------
+
+- Syntax highlight as a keyword "lambda:" just like "lambda x:".  Given by Dan
+  Davison.
+- Add "python3" as a key for python-mode in interpreter-mode-alist and
+  auto-mode-alist.
+
+New in version 5.2.0
+--------------------
+
+- Fixed filling of triple-quoted strings.
+
+- Add new font-lock faces for class names and exception names.
+
+- Do not fill when calling fill-paragraph with point in a region of code.
+
+- Fixed font-locking of exception names in parenthesized lists.
+
+- Fixed font-locking of decorators with arguments.
+
+- Fixed font-locking of triple-quoted strings; single quotes appearing in
+  triple-quoted strings no longer upset font-locking.
+
+- Fixed the stack-entry regexp used by pdbtrack so that it now works with
+  module-level frames.
+
+- Do not bind C-c C-h; `py-help-at-point' is now on C-c C-e by default.
+
+- hide-show mode is now supported.
+
+- When shifting regions right and left, keep the region active in Emacs.

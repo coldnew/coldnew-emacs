@@ -79,7 +79,7 @@
 	'(("default"
 	   ("*Buffer*" (or
 			(name . "^TAGS\\(<[0-9]+>\\)?$")
-			(name . "^\\**Loading Config Log\\*$")
+			;;(name . "^\\**Loading Config Log\\*$")
 			(name . "^\\**Loading Library Log\\*$")
 			(name . "^\\*Anything Log\\*$")
 			(name . "^\\*Backtrace\\*$")
@@ -108,7 +108,7 @@
 			(name . "^ipa*")
 			(name . "^loaddefs.el$")
 			(name . "^\\*Messages\\*$")
-			(name . "^\\*WoMan-Log\\*")
+			(name . "^\\*WoMan-Log\\*$")
 			))
 	   ("Version Control" (or (mode . svn-status-mode)
 				  (mode . svn-log-edit-mode)
@@ -126,32 +126,46 @@
 		       (mode . man-mode)
 		       (mode . info-mode)
 		       (mode . help-mode)
-		       (name . "\\*Help\\*$")))
+		       (name . "\\*Help\\*$")
+		       ))
+	   ("Dired" (or (mode . dired-mode)
+			(mode . nav-mode)
+			))
 	   ("IRC"   (or (mode . erc-mode)
-			(mode . rcirc-mode)))
+			(mode . rcirc-mode)
+			))
 	   ("Terminal" (or (mode . eshell-mode)
 			   (mode . term-mode)
-			   (mode . comint-mode)))
+			   (mode . inferior-python-mode)
+			   (mode . comint-mode)
+			   ))
 	   ("Text" (or (mode . text-mode)
-		       (name . "*.txt$")))
+		       (name . "*.txt$")
+		       ))
 	   ("w3m"   (or (mode . w3m-mode)
-			(name . "^\\*w3m*")))
+			(name . "^\\*w3m*")
+			))
 	   ("Org"   (mode . org-mode))
 	   ("Shell Script" (or (mode . shell-mode)
 			       (mode . perl-mode)
-			       (mode . ruby-mode)))
+			       (mode . ruby-mode)
+			       ))
 	   ("Python" (or (mode . python-mode)
-			 (mode . ipython-mode)))
+			 (mode . ipython-mode)
+			 ))
 	   ("C++ . C#" (or (mode . c++-mode)
-			   (mode . csharpmode)))
+			   (mode . csharpmode)
+			   ))
 	   ("C"          (mode . c-mode))
 	   ("Object-C"   (mode . objc-mode))
 	   ("Snippet" (or (mode . snippet-mode)
-			  (name . "*.yas$")))
+			  (name . "*.yas$")
+			  ))
 	   ("newLisp"  (mode . newlisp-mode))
 	   ("Lisp"     (mode . slime-mode))
 	   ("Emacs" (or (mode . emacs-lisp-mode)
-			(mode . lisp-interaction-mode)))
+			(mode . lisp-interaction-mode)
+			))
 	   )))
 
   ;; Following buffer will not show in iBuffer
@@ -163,6 +177,9 @@
 	  "^\\*Ido Completions\\*$"
 	  "^\\*SPEEDBAR\\*$"
 	  "^\\*nav\\*$"
+	  "^\\*RE-Ruilder\\*$"
+	  "^\\*anything\\*$"
+	  "^\\*anything complete\\*$"
 	  ))
 
 
@@ -220,14 +237,27 @@
 ;;
 (when (require* 'tempbuf)
   ;; Take following mode as temp buffer
-  (add-hook 'custom-mode-hook 'turn-on-tempbuf-mode)
-  (add-hook 'w3-mode-hook 'turn-on-tempbuf-mode)
-  (add-hook 'w3m-mode-hook 'turn-on-tempbuf-mode)
-  (add-hook 'Man-mode-hook 'turn-on-tempbuf-mode)
-  (add-hook 'woman-mode-hook 'turn-on-tempbuf-mode)
-  (add-hook 'help-mode-hook 'turn-on-tempbuf-mode)
-  (add-hook 'view-mode-hook 'turn-on-tempbuf-mode)
-  )
+  ;; (add-hook 'custom-mode-hook 'turn-on-tempbuf-mode)
+  ;; (add-hook 'w3-mode-hook 'turn-on-tempbuf-mode)
+  ;; (add-hook 'w3m-mode-hook 'turn-on-tempbuf-mode)
+  ;; (add-hook 'Man-mode-hook 'turn-on-tempbuf-mode)
+  ;; (add-hook 'woman-mode-hook 'turn-on-tempbuf-mode)
+  ;; (add-hook 'help-mode-hook 'turn-on-tempbuf-mode)
+  ;; (add-hook 'view-mode-hook 'turn-on-tempbuf-mode)
+  ;; (add-hook 'dired-mode-hook 'turn-in-tempbuf-mode)
+  ;; Setting up which mode need to be a tempbuf
+  (let ((tempbuf-mode
+	 '(custom-mode
+	   w3-mode
+	   w3m-mode
+	   Man-mode
+	   woman-mode
+	   help-mode
+	   view-mode
+	   dired-mode
+	   )))
+    (dolist (tempbuf-hook tempbuf-mode)
+      (add-hook (intern (concat (symbol-name tempbuf-hook) "-hook")) 'turn-on-tempbuf-mode))))
 
 ;;;;;;;; midnight
 ;; Midnight mode is a package that comes with Emacs for running configured
@@ -235,8 +265,11 @@
 ;;
 (when (require* 'midnight)
 
-  ;; Every day clean the buffer
-  (setq clean-buffer-list-delay-general 1)
+  ;; ;; Every day clean the buffer
+  ;; (setq clean-buffer-list-delay-general 1)
+
+  ;; Clean the buffer-list every 2hr
+  (setq clean-buffer-list-delay-special (* 2 3600))
 
   ;; Kill anything, clean-buffer-list is very intelligent
   ;; at not killing unsaved buffer.

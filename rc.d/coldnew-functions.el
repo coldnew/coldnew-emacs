@@ -77,6 +77,16 @@ Also returns nil if pid is nil."
   "Return t if string is empty."
   (string= "" str))
 
+;;;;;;;; Terminal
+;; TODO: Need to review
+(defun run-program-in-terminal (prg &optional use-existing)
+  ""
+  (let ((buffer (concat "*" prg "*")))
+    (when (not (and use-existing
+		    (let ((buf (get-buffer buffer)))
+		      (and buf (buffer-name (switch-to-buffer buffer)))
+		      )))
+      (ansi-term prg prg))))
 
 ;;;;;; TODO: Need to review
 ;;;; Enable APIS

@@ -1304,6 +1304,16 @@ Will prompt you shell name when you type `C-u' before this command.
 
 ;;;***
 
+;;;### (autoloads (nav) "nav/nav" "nav/nav.el" (19878 59256))
+;;; Generated autoloads from nav/nav.el
+
+(autoload 'nav "nav/nav" "\
+Run nav-mode in a narrow window on the left side.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (paredit-mode) "paredit/paredit" "paredit/paredit.el"
 ;;;;;;  (19840 51791))
 ;;; Generated autoloads from paredit/paredit.el
@@ -1366,6 +1376,31 @@ See `pretty-lambda-mode' for more information on Pretty-Lambda mode.
 
 ;;;***
 
+;;;### (autoloads (svn-status svn-checkout) "psvn/psvn" "psvn/psvn.el"
+;;;;;;  (19878 53359))
+;;; Generated autoloads from psvn/psvn.el
+
+(autoload 'svn-checkout "psvn/psvn" "\
+Run svn checkout REPOS-URL PATH.
+
+\(fn REPOS-URL PATH)" t nil)
+(defalias 'svn-examine 'svn-status)
+
+(autoload 'svn-status "psvn/psvn" "\
+Examine the status of Subversion working copy in directory DIR.
+If ARG is -, allow editing of the parameters. One could add -N to
+run svn status non recursively to make it faster.
+For every other non nil ARG pass the -u argument to `svn status', which
+asks svn to connect to the repository and check to see if there are updates
+there.
+
+If there is no .svn directory, examine if there is CVS and run
+`cvs-examine'. Otherwise ask if to run `dired'.
+
+\(fn DIR &optional ARG)" t nil)
+
+;;;***
+
 ;;;### (autoloads (pylookup-update-all pylookup-update pylookup-lookup)
 ;;;;;;  "pylookup/pylookup" "pylookup/pylookup.el" (19840 56836))
 ;;; Generated autoloads from pylookup/pylookup.el
@@ -1384,6 +1419,152 @@ Run pylookup-update and create the database at `pylookup-db-file'.
 Run pylookup-update for all sources and create the database at `pylookup-db-file'.
 
 \(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (doctest-mode doctest-register-mmm-classes) "python-mode/doctest-mode"
+;;;;;;  "python-mode/doctest-mode.el" (19878 53736))
+;;; Generated autoloads from python-mode/doctest-mode.el
+
+(autoload 'doctest-register-mmm-classes "python-mode/doctest-mode" "\
+Register doctest's mmm classes, allowing doctest to be used as a
+submode region in other major modes, such as python-mode and rst-mode.
+Two classes are registered:
+
+`doctest-docstring'
+
+    Used to edit docstrings containing doctest examples in python-
+    mode.  Docstring submode regions start and end with triple-quoted
+    strings (\"\"\").  In order to avoid confusing start-string
+    markers and end-string markers, all triple-quote strings in the
+    buffer are treated as submode regions (even if they're not
+    actually docstrings).  Use (C-c % C-d) to insert a new doctest-
+    docstring region.  When `doctest-execute' (C-c C-c) is called
+    inside a doctest-docstring region, it executes just the current
+    docstring.  The globals for this execution are constructed by
+    importing the current buffer's contents in Python.
+
+`doctest-example'
+
+    Used to edit doctest examples in text-editing modes, such as
+    `rst-mode' or `text-mode'.  Docstring submode regions start with
+    optionally indented prompts (>>>) and end with blank lines.  Use
+    (C-c % C-e) to insert a new doctest-example region.  When
+    `doctest-execute' (C-c C-c) is called inside a doctest-example
+    region, it executes all examples in the buffer.
+
+If ADD-MODE-EXT-CLASSES is true, then register the new classes in
+`mmm-mode-ext-classes-alist', which will cause them to be used by
+default in the following modes:
+
+    doctest-docstring:  python-mode
+    doctest-example:    rst-mode
+
+If FIX-MMM-FONTIFY-REGION-BUG is true, then register a hook that will
+fix a bug in `mmm-fontify-region' that affects some (but not all)
+versions of emacs.  (See `doctest-fixed-mmm-fontify-region' for more
+info.)
+
+\(fn &optional ADD-MODE-EXT-CLASSES FIX-MMM-FONTIFY-REGION-BUG)" t nil)
+
+(add-to-list 'auto-mode-alist '("\\.doctest$" . doctest-mode))
+
+(autoload 'doctest-mode "python-mode/doctest-mode" "\
+A major mode for editing text files that contain Python
+doctest examples.  Doctest is a testing framework for Python that
+emulates an interactive session, and checks the result of each
+command.  For more information, see the Python library reference:
+<http://docs.python.org/lib/module-doctest.html>
+
+`doctest-mode' defines three kinds of line, each of which is
+treated differently:
+
+  - 'Source lines' are lines consisting of a Python prompt
+    ('>>>' or '...'), followed by source code.  Source lines are
+    colored (similarly to `python-mode') and auto-indented.
+
+  - 'Output lines' are non-blank lines immediately following
+    source lines.  They are colored using several doctest-
+    specific output faces.
+
+  - 'Text lines' are any other lines.  They are not processed in
+    any special way.
+
+\\{doctest-mode-map}
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (py-shell python-mode) "python-mode/python-mode"
+;;;;;;  "python-mode/python-mode.el" (19878 53736))
+;;; Generated autoloads from python-mode/python-mode.el
+
+(autoload 'python-mode "python-mode/python-mode" "\
+Major mode for editing Python files.
+To submit a problem report, enter `\\[py-submit-bug-report]' from a
+`python-mode' buffer.  Do `\\[py-describe-mode]' for detailed
+documentation.  To see what version of `python-mode' you are running,
+enter `\\[py-version]'.
+
+This mode knows about Python indentation, tokens, comments and
+continuation lines.  Paragraphs are separated by blank lines only.
+
+COMMANDS
+\\{py-mode-map}
+VARIABLES
+
+py-indent-offset		indentation increment
+py-block-comment-prefix		comment string used by `comment-region'
+py-python-command		shell command to invoke Python interpreter
+py-temp-directory		directory used for temp files (if needed)
+py-beep-if-tab-change		ring the bell if `tab-width' is changed
+
+\(fn)" t nil)
+
+(let ((modes '(("jython" . jython-mode) ("python" . python-mode) ("python3" . python-mode)))) (while modes (when (not (assoc (car modes) interpreter-mode-alist)) (push (car modes) interpreter-mode-alist)) (setq modes (cdr modes))))
+
+(when (not (or (rassq 'python-mode auto-mode-alist) (rassq 'jython-mode auto-mode-alist))) (push '("\\.py$" . python-mode) auto-mode-alist))
+
+(autoload 'py-shell "python-mode/python-mode" "\
+Start an interactive Python interpreter in another window.
+This is like Shell mode, except that Python is running in the window
+instead of a shell.  See the `Interactive Shell' and `Shell Mode'
+sections of the Emacs manual for details, especially for the key
+bindings active in the `*Python*' buffer.
+
+With optional \\[universal-argument], the user is prompted for the
+flags to pass to the Python interpreter.  This has no effect when this
+command is used to switch to an existing process, only when a new
+process is started.  If you use this, you will probably want to ensure
+that the current arguments are retained (they will be included in the
+prompt).  This argument is ignored when this function is called
+programmatically, or when running in Emacs 19.34 or older.
+
+Note: You can toggle between using the CPython interpreter and the
+Jython interpreter by hitting \\[py-toggle-shells].  This toggles
+buffer local variables which control whether all your subshell
+interactions happen to the `*Jython*' or `*Python*' buffers (the
+latter is the name used for the CPython buffer).
+
+Warning: Don't use an interactive Python if you change sys.ps1 or
+sys.ps2 from their default values, or if you're running code that
+prints `>>> ' or `... ' at the start of a line.  `python-mode' can't
+distinguish your output from Python's output, and assumes that `>>> '
+at the start of a line is a prompt from Python.  Similarly, the Emacs
+Shell mode code assumes that both `>>> ' and `... ' at the start of a
+line are Python prompts.  Bad things can happen if you fool either
+mode.
+
+Warning:  If you do any editing *in* the process buffer *while* the
+buffer is accepting output from Python, do NOT attempt to `undo' the
+changes.  Some of the output (nowhere near the parts you changed!) may
+be lost if you do.  This appears to be an Emacs bug, an unfortunate
+interaction between undo and process filters; the same problem exists in
+non-Python process buffers using the default (Emacs-supplied) process
+filter.
+
+\(fn &optional ARGPROMPT)" t nil)
 
 ;;;***
 
@@ -1466,10 +1647,13 @@ See also function `tempbuf-mode'.
 ;;;;;;  "geiser/elisp/geiser-reload.el" "geiser/elisp/geiser-repl.el"
 ;;;;;;  "geiser/elisp/geiser-syntax.el" "geiser/elisp/geiser-table.el"
 ;;;;;;  "geiser/elisp/geiser-xref.el" "geiser/elisp/geiser.el" "highlight-cl/highlight-cl.el"
-;;;;;;  "ibuffer-git/ibuffer-git.el" "popup-pos-tip/popup-pos-tip.el"
-;;;;;;  "pymacs/pymacs.el" "quack/quack.el" "sdcv/sdcv.el" "shell-pop/shell-pop.el"
+;;;;;;  "ibuffer-git/ibuffer-git.el" "ipython/ipython.el" "nav/nav-dev.el"
+;;;;;;  "nav/nav-test.el" "popup-pos-tip/popup-pos-tip.el" "pymacs/pymacs.el"
+;;;;;;  "python-mode/highlight-indentation.el" "python-mode/pars-part-output.el"
+;;;;;;  "python-mode/py-bug-numbered-tests.el" "python-mode/pycomplete.el"
+;;;;;;  "quack/quack.el" "sdcv/sdcv.el" "shell-pop/shell-pop.el"
 ;;;;;;  "showtip/showtip.el" "ssh-config/ssh-config.el" "undo-tree/undo-tree.el"
-;;;;;;  "unicad/unicad.el" "xcscope+/xcscope+.el") (19857 59706 498657))
+;;;;;;  "unicad/unicad.el" "xcscope+/xcscope+.el") (19878 59257 427122))
 
 ;;;***
 

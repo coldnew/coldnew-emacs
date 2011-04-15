@@ -27,6 +27,7 @@
 
 ;;;;;;;; Settings
 
+(cond ((eq window-system 'x)
 ;; Setting English Fonts
 (set-frame-font (format "%s-%s" (eval emacs-english-font) (eval emacs-english-font-size)))
 
@@ -40,7 +41,7 @@
 
 ;; Make new frame use this fontset
 (add-to-list 'default-frame-alist '(font . "Inconsolata-12" ))
-
+))
 ;; list text sample
 (setq-default list-faces-sample-text
 	      (concat

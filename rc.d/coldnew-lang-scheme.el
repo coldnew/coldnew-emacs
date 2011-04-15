@@ -3,18 +3,17 @@
 
 ;;;;;;;; Packages Import
 (require 'coldnew-editor)
-(require 'newlisp)
+(require 'geiser-install)
+(require 'quack)
+
 
 
 ;;;;;;;; Scheme-mode extensions
-(add-to-list 'auto-mode-alist '("\\.lisp$" . newlisp-mode))
-(add-to-list 'auto-mode-alist '("\\.lsp$" . newlisp-mode))
-
-
+(add-to-list 'auto-mode-alist '("\\.scm$" . scheme-mode))
 
 ;;;;;;;; Auto Complete Settings
 (when (require* 'auto-complete)
-  (defun ac-newlisp-mode-setup ()
+  (defun ac-scheme-mode-setup ()
     "auto-complete settings for scheme-mode"
     (setq ac-sources '(ac-source-dictionary
 		       ac-source-symbols
@@ -26,19 +25,21 @@
 		       ac-source-words-in-same-mode-buffers
 		       ))))
 ;;;;;;;; Settings
-(add-hook 'newlisp-mode-hook
+(add-hook 'scheme-mode-hook
 	  '(lambda ()
 
+	     ;; Use Gambit-C as my Scheme implementation
+	     (setq scheme-program-name "gsi")
 
 	     ))
 
 ;;;;;;;; Hooks
-(add-hook 'newlisp-mode-hook
+(add-hook 'scheme-mode-hook
 	  '(lambda ()
 
 	     ;; Enable Auto Complete
 	     (when (require* 'auto-complete)
-	       (ac-newlisp-mode-setup))
+	       (ac-guile-mode-setup))
 
 	     ;; Highlight differnet parentheses
 	     (when (require* 'highlight-parentheses)
@@ -54,18 +55,6 @@
 	     ))
 
 
-;;;;;;;; Functions
-(defun run-newlisp ()
-  "Starts newlisp interperter/or shows if already running.
-   Requires newlisp-mode to be loaded."
-  (interactive)
-  (newlisp-show-interpreter)
-  (other-window 1)
-  )
 
-
-
-
-
-(provide 'coldnew-lang-newlisp)
-;; coldnew-lang-newlisp.el ends here.
+(provide 'coldnew-lang-scheme)
+;; coldnew-lang-scheme.el ends here.
