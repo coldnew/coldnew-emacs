@@ -9,8 +9,10 @@
 
 
 (when (require* 'woman)
-  (setq woman-cache-filename (concat emacs-cache-dir "woman.cache"))
   (setq woman-use-own-frame nil)
+  (setq woman-cache-filename (concat emacs-cache-dir "woman.cache"))
+  (setq woman-use-topic-at-point nil)
+  (setq woman-fill-column 100)
   )
 
 

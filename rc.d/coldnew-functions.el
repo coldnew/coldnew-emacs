@@ -61,6 +61,13 @@ Also returns nil if pid is nil."
     (while (search-forward "\r" nil t) (replace-match "")))
   )
 
+;;;;;;;; System
+(defun font-exist? (fontname)
+  "test if this font is exist or not."
+  (if (not (x-list-fonts fontname))
+      nil t))
+
+
 ;;;;;;;; Math
 (defun factorial (n)
   "Calculate n!"

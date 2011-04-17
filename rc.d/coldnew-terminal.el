@@ -70,6 +70,11 @@
 		 (vim:local-imap (kbd "RET") 'newline-and-indent)
 		 )
 	       ))
+  ;;;; Functions
+  (defun comint-mode:clear-region ()
+    (interactive)
+    (delete-region (point-min) (point-max))
+    (comint-send-input))
   )
 
 

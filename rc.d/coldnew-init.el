@@ -52,7 +52,7 @@
 (require 'coldnew-lang-c)
 (require 'coldnew-lang-newlisp)
 (require 'coldnew-lang-scheme)
-
+;;(require 'coldnew-lang-python)
 
 
 

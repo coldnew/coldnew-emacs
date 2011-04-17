@@ -31,6 +31,8 @@
 (vim:nmap (kbd "M-K") 'sdcv-search-pointer+)
 (vim:nmap (kbd "C-x M-S") 'scratch-toggle)
 (vim:nmap (kbd "C-x M-i") 'ielm-toggle)
+(vim:nmap (kbd "<f1>") 'woman)
+(vim:nmap (kbd "K") 'anything-man-woman)
 
 ;;;;;;;; Insert Map
 (vim:imap (kbd "C-x C-b") 'ibuffer)
@@ -50,8 +52,9 @@
 (vim:imap (kbd "C-p") 'auto-complete)
 (vim:imap (kbd "C-x M-S") 'scratch-toggle)
 (vim:imap (kbd "C-x M-i") 'ielm-toggle)
+(vim:imap (kbd "<f1>") 'woman)
 
-;;;;;;;; Visual Map
+;;;;;;; Visual Map
 (vim:vmap (kbd "M-;") 'vim:visual-toggle-comment)
 (vim:vmap (kbd "C-;") 'iedit-mode)
 

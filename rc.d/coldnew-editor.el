@@ -75,7 +75,7 @@
    (if mark-active (list (region-beginning) (region-end))
      (message "Copied line")
      (list (line-beginning-position)
-           (line-beginning-position 2)))))
+	   (line-beginning-position 2)))))
 
 (defadvice kill-region (before slick-cut activate compile)
   "When called interactively with no active region, kill a single
@@ -83,7 +83,7 @@
   (interactive
    (if mark-active (list (region-beginning) (region-end))
      (list (line-beginning-position)
-           (line-beginning-position 2)))))
+	   (line-beginning-position 2)))))
 
 ;;;;;;;; cua
 ;; CUA package provides a complete emulation of the
@@ -121,18 +121,18 @@
 (when (require* 'rainbow-mode)
   ;; Auto enable rainbow-mode if the file is emacs's color-theme and any css file.
   (add-hook 'find-file-hook
-            '(lambda ()
-               ;; On following situation will enable rainbow-mode automatically
-               ;; if rainbow-mode does not start yet.
-               (if (and (not (rainbow-mode))
-                        (or
-                         ;; Emacs's color-theme file
-                         (string-match "color-theme-\\w*\\.el" (buffer-file-name))
-                         ;; CSS file
-                         (equal major-mode 'css-mode)))
-                   ;; Enable rainbow-mode
-                   (rainbow-mode))
-               ))
+	    '(lambda ()
+	       ;; On following situation will enable rainbow-mode automatically
+	       ;; if rainbow-mode does not start yet.
+	       (if (and (not (rainbow-mode))
+			(or
+			 ;; Emacs's color-theme file
+			 (string-match "color-theme-\\w*\\.el" (buffer-file-name))
+			 ;; CSS file
+			 (equal major-mode 'css-mode)))
+		   ;; Enable rainbow-mode
+		   (rainbow-mode))
+	       ))
   )
 
 ;;;;;;;; iedit-mode
@@ -150,6 +150,7 @@
 ;;;;;;;; nav
 ;;
 (when (require* 'nav)
+
   )
 
 ;;;;;;;; textmate
@@ -175,16 +176,16 @@
   "Indent whole file after saved."
   (make-local-variable 'after-save-hook)
   (add-hook 'after-save-hook
-            '(lambda ()
-               (indent-region (point-min) (point-max) nil)
-               (save-buffer))))
+	    '(lambda ()
+	       (indent-region (point-min) (point-max) nil)
+	       (save-buffer))))
 
 (defun cleanup-whitespace-before-save ()
   "Cleanup whitespaces before save to a file."
   (make-local-variable 'before-save-hook)
   (add-hook 'before-save-hook
-            '(lambda ()
-               (whitespace-cleanup))))
+	    '(lambda ()
+	       (whitespace-cleanup))))
 
 (defun make-ret-newline-and-indent ()
   "Always make Enter key do newline-and-indent."
@@ -205,14 +206,14 @@
 (defun highlight-fontify-numbers ()
   "Use this function as a hook to fontify numbers as constant"
   (font-lock-add-keywords nil
-                          '(
-                            ;; hexadecimal
-                            ("\\<\\(0x[0-9a-fA-F]+\\)"       1 font-lock-constant-face)
-                            ;; float
-                            ("\\<\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
-                            ;; int
-                            ("\\<\\([+-]?[0-9]+\\)\\b"       1 font-lock-constant-face)
-                            )))
+			  '(
+			    ;; hexadecimal
+			    ("\\<\\(0x[0-9a-fA-F]+\\)"       1 font-lock-constant-face)
+			    ;; float
+			    ("\\<\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
+			    ;; int
+			    ("\\<\\([+-]?[0-9]+\\)\\b"       1 font-lock-constant-face)
+			    )))
 
 (defun use-paredit-mode ()
   "Enable paredit-mode and rebind the keybinding to vim-mode when use it."

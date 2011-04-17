@@ -4,30 +4,32 @@
 
 ;;;;;;;; Initial Settings
 
-;; remove global setting
+;; Remove global setting
 (setq inhibit-default-init t)
 
-;; use visible instead of ring bell
+;; Use visible instead of ring bell
 (setq visible-bell t)
 
-;; remove start-message after startup
+;; Remove start-message after startup
 (setq inhibit-startup-message t)
 
-;; remove default scratch-message
+;; Remove default scratch-message
 (setq initial-scratch-message)
 
-;; remove tool-bar
+;; Remove tool-bar
 (tool-bar-mode -1)
 
-;; remove scroll-bar
+;; Remove scroll-bar
 (scroll-bar-mode -1)
 
-;; disable bllink cursor
+;; Disable bllink cursor
 (blink-cursor-mode -1)
 
 ;; Use y or n instead of yes and not
 (fset 'yes-or-no-p 'y-or-n-p )
 
+;; Remove menu-bar
+(menu-bar-mode -1)
 
 (provide 'coldnew-core)
 ;; coldnew-core.el ends here.
