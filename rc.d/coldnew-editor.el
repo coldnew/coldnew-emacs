@@ -64,6 +64,8 @@
   ;; Use paredit-mode
   (use-paredit-mode)
 
+  ;; Show matching parentheses all the time
+  (show-paren-mode t)
   )
 
 
@@ -73,17 +75,17 @@
    line instead."
   (interactive
    (if mark-active (list (region-beginning) (region-end))
-     (message "Copied line")
-     (list (line-beginning-position)
-	   (line-beginning-position 2)))))
+       (message "Copied line")
+       (list (line-beginning-position)
+	     (line-beginning-position 2)))))
 
 (defadvice kill-region (before slick-cut activate compile)
   "When called interactively with no active region, kill a single
    line instead."
   (interactive
    (if mark-active (list (region-beginning) (region-end))
-     (list (line-beginning-position)
-	   (line-beginning-position 2)))))
+       (list (line-beginning-position)
+	     (line-beginning-position 2)))))
 
 ;;;;;;;; cua
 ;; CUA package provides a complete emulation of the
@@ -113,6 +115,18 @@
 (when (require 'undo-tree)
   (global-undo-tree-mode))
 
+;;;;;;;; linum+
+;; linum+ is an extention for smart control width of line number
+;; displayed on linum-mode. If visible line number of current bufffer is
+;; from 1 to 50, then width of line number is 2, and visible line number
+;; of current buffer is from 100 to 150, then width of line number is 3.
+;;
+(when (require* 'linum+)
+  ;; define line number format when `linum-format' is `dynamic'.
+  (setq linum+-dynamic-format "%%%dd")
+  ;; define line number format when `linum-format' is `smart'.
+  (setq linum+-smart-format   "%%%dd")
+  )
 
 
 ;;;;;;;; rainbow-mode
@@ -150,8 +164,19 @@
 ;;;;;;;; nav
 ;;
 (when (require* 'nav)
-
   )
+
+;;;;;;;; pomodoro
+;; Pomodoro Technique for emacs
+;; The Pomodoro Technique® is a way to get the most out of time management.
+;; Turn time into a valuable ally to accomplish what we want to do and chart
+;; continuous improvement in the way we do it.
+;;
+(when (require* 'pomodoro)
+  ;; auto start pomodoro
+  ;;  (pomodoro)
+  )
+
 
 ;;;;;;;; textmate
 ;; TextMate has some very nice to use bindings on quotes, brackets,
@@ -163,7 +188,8 @@
 ;; ", ', (, [, {, and their closing pairs.
 ;;
 (when (require* 'textmate)
-  (tm/initialize))
+  ;; (tm/initialize)
+  )
 
 
 ;;;;;;;; Functions
@@ -223,11 +249,36 @@
       (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
     ;; Enable Paredit in vim-mode
     (when (require* 'vim)
-
-
+      ;; Normal Map
+      (vim:local-nmap (kbd "C-9") 'paredit-forward)
+      (vim:local-nmap (kbd "C-0") 'paredit-backward)
+      (vim:local-nmap (kbd "C-(") 'paredit-forward-slurp-sexp)
+      (vim:local-nmap (kbd "M-(") 'paredit-backward-slurp-sexp)
+      (vim:local-nmap (kbd "C-)") 'paredit-forward-barf-sexp)
+      (vim:local-nmap (kbd "M-)") 'paredit-backward-barf-sexp)
+      ;; Insert Map
+      (vim:local-imap (kbd "(")  'paredit-open-round)
+      (vim:local-imap (kbd ")")  'paredit-close-round)
+      (vim:local-imap (kbd "[")  'paredit-open-square)
+      (vim:local-imap (kbd "]")  'paredit-close-square)
+      (vim:local-imap (kbd "{")  'paredit-open-curly)
+      (vim:local-imap (kbd "}")  'paredit-close-curly)
+      (vim:local-imap (kbd "\"") 'paredit-doublequote)
+      (vim:local-imap (kbd "M-(") 'paredit-wrap-sexp)
+      (vim:local-imap (kbd "C-(") 'paredit-splice-sexp)
+      (vim:local-imap (kbd "M-)") 'paredit-close-round-and-newline)
+      (vim:local-imap (kbd "C-)") 'paredit-split-sexp)
+      (vim:local-imap (kbd "C-j") 'paredit-join-sexps)
+      (vim:local-imap (kbd "M-\"") 'paredit-meta-doublequote)
+      ;; TODO: need combine hungry-forward delete with it?
+      ;; if combine paredit-delete with hungry-delete
+      ;; make following function usable in local-nmap
+      (vim:local-imap (kbd "<delete>") 'paredit-forward-delete)
+      (vim:local-imap (kbd "C-d") 'paredit-forward-delete)
+      (vim:local-imap (kbd "<backspace>") 'paredit-backward-delete)
+      (vim:local-imap (kbd "C-l") 'paredit-backward-delete)
       ))
   )
-
 
 
 ;; (defun load-tags-cache (file)
@@ -245,8 +296,9 @@
 ;;     (write-file file)))
 
 ;; ;; Example usage
-;; (defvar tags-completion-table-file "~/.emacs.d/tags-completion-table")
+;; (defvar tags-completion-table-file \\\"~/.emacs.d/tags-completion-table\\\")
 ;; (load-tags-cache tags-completion-table-file)
 
-(provide 'coldnew-editor)
+
+(provide 'coldnew-editor)" "
 ;; coldnew-editor.el ends here.
