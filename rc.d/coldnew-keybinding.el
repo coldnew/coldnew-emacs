@@ -53,6 +53,8 @@
 (vim:imap (kbd "C-x M-S") 'scratch-toggle)
 (vim:imap (kbd "C-x M-i") 'ielm-toggle)
 (vim:imap (kbd "<f1>") 'woman)
+(vim:imap (kbd "C-u") 'universal-argument)
+
 
 ;;;;;;; Visual Map
 (vim:vmap (kbd "M-;") 'vim:visual-toggle-comment)

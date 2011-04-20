@@ -7,10 +7,6 @@
 (require 'coldnew-variables)
 
 
-
-
-
-
 ;;;;;;;; Screenshot
 (defun save-screenshots (name)
   "Save shot fullscreen"
@@ -54,6 +50,22 @@
       (message "You need to install scrot first.")))
   )
 
+;;;;;;;; Window Size
+;; TODO: how aout not enter number and use default as 10?
+(defun set-popup-window-size (height)
+  "Setup popup window size."
+  (interactive "nEnter new popup window size: ")
+  (enlarge-window (- (frame-height) (or height 10) (window-height))))
+
+(defun fullscreen-window ()
+  "Make the window full-screen."
+  (interactive)
+  (let ((current-value (frame-parameter nil 'fullscreen)))
+    (set-frame-parameter nil 'fullscreen
+			 (if (equal 'fullboth current-value)
+			     (if (boundp 'old-fullscreen) old-fullscreen nil)
+			   (progn (setq old-fullscreen current-value)
+				  'fullboth)))))
 
 ;;;;;;;; Window Moving
 (defun windmove-down-fullscreen ()
@@ -172,17 +184,6 @@
 	(switch-to-buffer ielm-buffer-name)
 	(unless (equal major-mode 'inferior-emacs-lisp-mode)
 	  (inferior-emacs-lisp-mode))))))
-
-;;;;;;;; Windows
-(defun fullscreen-window ()
-  "Make the window full-screen."
-  (interactive)
-  (let ((current-value (frame-parameter nil 'fullscreen)))
-    (set-frame-parameter nil 'fullscreen
-			 (if (equal 'fullboth current-value)
-			     (if (boundp 'old-fullscreen) old-fullscreen nil)
-			   (progn (setq old-fullscreen current-value)
-				  'fullboth)))))
 
 ;;;;;;;; Conversion
 (defun unix2dos ()

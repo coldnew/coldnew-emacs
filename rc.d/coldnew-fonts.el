@@ -26,6 +26,8 @@
   "Default Symbol font size.")
 
 ;;;;;;;; Settings
+
+;; Use my defined font under X
 (cond ((eq window-system 'x)
        ;; Setting English Fonts
        (set-frame-font (format "%s-%s" (eval emacs-english-font) (eval emacs-english-font-size)))
@@ -38,12 +40,12 @@
        (set-fontset-font (frame-parameter nil 'font)
 			 'symbol (format "%s-%s" (eval emacs-symbol-font) (eval emacs-symbol-font-size)))
 
-       ;; Make new frame use this fontset
-       (add-to-list 'default-frame-alist '(font . "Inconsolata-12" ))
        ))
 
 
 
+;; Make new frame use this fontset
+(add-to-list 'default-frame-alist '(font . "Inconsolata-12" ))
 
 
 

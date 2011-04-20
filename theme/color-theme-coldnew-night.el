@@ -32,8 +32,8 @@
 
 (provide 'color-theme-coldnew-night)
 (eval-when-compile
-  (require 'cl)
-  (require 'color-theme))
+ (require 'cl)
+ (require 'color-theme))
 
 
 ;;;;##########################################################################
@@ -120,6 +120,10 @@
 	((t (:foreground "#E91303" :bold t))))
        (font-lock-builtin-face        ; 內建的顏色
 	((t (:foreground "#4BC98A"))))
+
+       (comint-highlight-prompt
+	((t (:foreground "#5D9AE4"))))
+
        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
        (font-lock-constant-face       ; 常數的顏色
 	((t (:foreground ,_Red-1    :bold t))))

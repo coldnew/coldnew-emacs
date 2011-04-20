@@ -65,13 +65,16 @@
 	    '(lambda ()
 
 	       (when (require* 'vim)
+		 ;; Normal map
 		 (vim:local-nmap (kbd "M-k") 'comint-previous-input)
 		 (vim:local-nmap (kbd "M-j") 'comint-previous-input)
+		 (vim:local-nmap (kbd "C-c C-r") 'comint-clear-region)
+		 ;; Insert map
 		 (vim:local-imap (kbd "RET") 'newline-and-indent)
 		 )
 	       ))
   ;;;; Functions
-  (defun comint-mode:clear-region ()
+  (defun comint-clear-region ()
     (interactive)
     (delete-region (point-min) (point-max))
     (comint-send-input))
@@ -90,11 +93,11 @@
   (interactive)
   (if (equal (buffer-name) shell-pop-internal-mode-buffer)
       (progn
-	(shell-pop-out)
-	(vim-mode))
-    (progn
-      (shell-pop-up)
-      (vim-mode -1))))
+       (shell-pop-out)
+       (vim-mode))
+      (progn
+       (shell-pop-up)
+       (vim-mode -1))))
 
 
 

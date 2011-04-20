@@ -15,6 +15,9 @@
 	 (when (require* 'vim)
 	   vim:mode-string)
 	 "   "
+	 (when (require* 'pomodoro)
+	   pomodoro-display-string)
+	 "   "
 	 (which-func-mode ("" which-func-format ""))
 	 (vc-mode vc-mode)
 	 "   "
@@ -25,6 +28,7 @@
 	 ;; " ( " minor-mode-alist " )"
 	 "  "
 	 display-time-string
+	 " "
 	 )))
 
 ;; Make all mode-line use default-mode-line-format

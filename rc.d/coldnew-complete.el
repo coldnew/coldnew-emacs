@@ -50,6 +50,12 @@
   (define-key ac-menu-map (kbd "C-p") 'ac-previous)
   (define-key ac-completing-map "\t" 'ac-complete)
 
+  ;; BUG: unuse?
+  ;;
+  (when (require* 'ac-anything)
+    (define-key ac-completing-map (kbd "C-o") 'ac-complete-with-anything)
+    )
+
   ;; use default config
   (when (require* 'auto-complete-config)
     (ac-config-default))

@@ -18,7 +18,6 @@
 		       ac-source-functions
 		       ac-source-features
 		       ac-source-filename
-		       ac-source-words-in-buffer
 		       ac-source-company-elisp
 		       ac-source-words-in-same-mode-buffers
 		       ))))

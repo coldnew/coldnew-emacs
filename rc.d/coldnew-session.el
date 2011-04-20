@@ -27,11 +27,11 @@
       (setq ad-return-value nil)))
 
 
-  (defun desktop-in-use-p ()
+  (defun desktop-in-use? ()
     (and (file-exists-p desktop-base-file-name) (file-exists-p desktop-base-lock-name)))
 
   (defun autosave-desktop ()
-    (if (desktop-in-use-p) (desktop-save-in-desktop-dir)))
+    (if (desktop-in-use?) (desktop-save-in-desktop-dir)))
 
   ;; auto save desktop
   (add-hook 'after-init-hook
@@ -42,7 +42,7 @@
   ;; Following modes are ignore and won't save to desktop
   (setq desktop-buffers-not-to-save
 	(concat "\\("
-		"^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
+		"^\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
 		"\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
 		"\\)$"))
   (add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
@@ -54,7 +54,47 @@
 
   )
 
+;;;;;;;; recentf
+;;
+(when (require* 'recentf)
 
+  ;; Setting cache file for recentf
+  (setq recentf-save-file (concat emacs-cache-dir "recentf"))
+
+  ;; Following file won;t contain in recentf
+  (setq recentf-exclude '("\\.elc$" "\\.pyc$" "\\.recentd$" "^/tmp/"))
+
+  )
+
+
+;;;;;;;; session
+;; When you start Emacs, package Session restores various variables (e.g.,
+;; input histories) from your last session.  It also provides a menu
+;; containing recently changed/visited files and restores the places (e.g.,
+;; point) of such a file when you revisit it.
+;;
+(when (require* 'session)
+
+  (setq session-save-file (concat emacs-cache-dir "session.dat"))
+
+  ;; Memory-size setting
+  (setq session-globals-max-string  2048)
+  (setq session-registers-max-string 2048)
+
+  (setq session-globals-include '((kill-ring 100)
+				  (session-file-alist 500)
+				  (file-name-history 1000)))
+
+  (setq history-length t)
+
+  (setq session-set-file-name-exclude-regexp
+	(concat
+	 "/\\.overview\\|\\.session\\|News/\\||^/var/folders/\\"
+	 "|^/tmp/\\|\\.orig\\|\\.elc\\|\\.pyc\\|\\.recentf\\|\\.howm-kyes"))
+
+  (add-hook 'after-init-hook 'session-initialize)
+
+  )
 
 
 (provide 'coldnew-session)

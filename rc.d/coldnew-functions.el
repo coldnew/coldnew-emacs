@@ -5,6 +5,14 @@
 (require 'coldnew-macro)
 
 
+(defun map-define-key (mode-map keylist fname)
+  "Like define-key but the key arg is a list that should be mapped over.
+   For example: (map-define-key '(a b c d) 'function-name)."
+  (mapc (lambda (k)
+	  (progn
+	   (define-key mode-map k fname)))
+	keylist))
+
 (defun show-buffer-major-mode (buffer-or-string)
   "Returns the major mode associated with a buffer."
   (with-current-buffer buffer-or-string major-mode))
@@ -15,8 +23,8 @@ Also returns nil if pid is nil."
   (when pid
     (let ((attributes (process-attributes pid)) (cmd))
       (dolist (attr attributes)
-	(if (string= "comm" (car attr))
-	    (setq cmd (cdr attr))))
+	      (if (string= "comm" (car attr))
+		  (setq cmd (cdr attr))))
       (if (and cmd (or (string= "emacs" cmd) (string= "emacs.exe" cmd))) t))))
 
 (defun get-current-line ()
@@ -60,6 +68,15 @@ Also returns nil if pid is nil."
     (goto-char(point-min))
     (while (search-forward "\r" nil t) (replace-match "")))
   )
+
+(defun file->string (file)
+  "Convert file to string in buffer with quote."
+  (when (file-readable-p file)
+    (with-temp-buffer
+     (insert-file-contents file)
+     (buffer-string)))
+  )
+
 
 ;;;;;;;; System
 (defun font-exist? (fontname)
@@ -113,7 +130,7 @@ If a region is active (a phrase), lookup that phrase."
     (setq myword
 	  (if (and transient-mark-mode mark-active)
 	      (buffer-substring-no-properties (region-beginning) (region-end))
-	    (thing-at-point 'symbol)))
+	      (thing-at-point 'symbol)))
 
     (setq myword (replace-regexp-in-string " " "%20" myword))
     (setq myurl (concat url myword))

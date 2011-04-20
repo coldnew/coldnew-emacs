@@ -31,5 +31,8 @@
 ;; Remove menu-bar
 (menu-bar-mode -1)
 
+
+(setq warning-suppress-types nil)
+
 (provide 'coldnew-core)
 ;; coldnew-core.el ends here.
