@@ -66,20 +66,27 @@
       (around popup-pos-tip-wrapper (string &rest args) activate)
       (if (eq window-system 'x)
 	  (apply 'popup-pos-tip string args)
-	ad-do-it)))
+	  ad-do-it)))
 
   ;; Default sources
-  (setq ac-sources
-	'(ac-source-abbrev
-	  ac-source-semantic
-	  ac-source-symbols
-	  ac-source-filename
-	  ac-source-functions
-	  ac-source-variables
-	  ac-source-dictionary
-	  ac-source-files-in-current-dir
-	  ac-source-words-in-same-mode-buffers
-	  ))
+  (defvar ac-source-default
+    '(ac-source-dictionary
+      ac-source-abbrev
+      ac-source-semantic
+      ac-source-filename
+      ac-source-files-in-current-dir
+      ac-source-words-in-same-mode-buffers
+      )
+    "")
+  (setq ac-sources ac-source-default
+	;; '(ac-source-dictionary
+	;;   ac-source-abbrev
+	;;   ac-source-semantic
+	;;   ac-source-filename
+	;;   ac-source-files-in-current-dir
+	;;   ac-source-words-in-same-mode-buffers
+	;;         )
+	)
 
   ;;;;;; ac-company
   ;; Use Company Backends for Auto-Complete.

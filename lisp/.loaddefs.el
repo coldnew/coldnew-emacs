@@ -1856,7 +1856,8 @@ See also function `tempbuf-mode'.
 ;;;;;;  "auctex/preview/prv-emacs.el" "auctex/preview/prv-install.el"
 ;;;;;;  "auctex/preview/prv-xemacs.el" "auctex/tex-buf.el" "auctex/tex-mik.el"
 ;;;;;;  "auctex/tex-site.el" "auctex/tex-style.el" "auctex/tex-wizard.el"
-;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete-extension/auto-complete-extension.el"
+;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete-clang/sample-config.el"
+;;;;;;  "auto-complete-etags/auto-complete-etags.el" "auto-complete-extension/auto-complete-extension.el"
 ;;;;;;  "auto-pair+/auto-pair+.el" "autopair/autopair.el" "c-eldoc/c-eldoc.el"
 ;;;;;;  "eldoc-extension/eldoc-extension.el" "escreen-tab/escreen-tab.el"
 ;;;;;;  "escreen/escreen.el" "guess-offset/guess-offset.el" "highlight-cl/highlight-cl.el"
@@ -1867,7 +1868,7 @@ See also function `tempbuf-mode'.
 ;;;;;;  "quack/quack.el" "sdcv/sdcv.el" "shell-pop/shell-pop.el"
 ;;;;;;  "showtip/showtip.el" "sr-speedbar/sr-speedbar.el" "ssh-config/ssh-config.el"
 ;;;;;;  "tea-time/tea-time.el" "undo-tree/undo-tree.el" "unicad/unicad.el"
-;;;;;;  "xcscope+/xcscope+.el") (19904 20770 1012))
+;;;;;;  "xcscope+/xcscope+.el") (19905 23421 184131))
 
 ;;;***
 

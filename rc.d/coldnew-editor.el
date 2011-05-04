@@ -121,18 +121,18 @@
 (when (require* 'rainbow-mode)
   ;; Auto enable rainbow-mode if the file is emacs's color-theme and any css file.
   (add-hook 'find-file-hook
-	    '(lambda ()
-	       ;; On following situation will enable rainbow-mode automatically
-	       ;; if rainbow-mode does not start yet.
-	       (if (and (not (rainbow-mode))
-			(or
-			 ;; Emacs's color-theme file
-			 (string-match "color-theme-\\w*\\.el" (buffer-file-name))
-			 ;; CSS file
-			 (equal major-mode 'css-mode)))
-		   ;; Enable rainbow-mode
-		   (rainbow-mode))
-	       ))
+            '(lambda ()
+               ;; On following situation will enable rainbow-mode automatically
+               ;; if rainbow-mode does not start yet.
+               (if (and (not (rainbow-mode))
+                        (or
+                         ;; Emacs's color-theme file
+                         (string-match "color-theme-\\w*\\.el" (buffer-file-name))
+                         ;; CSS file
+                         (equal major-mode 'css-mode)))
+                   ;; Enable rainbow-mode
+                   (rainbow-mode))
+               ))
   )
 
 ;;;;;;;; iedit-mode
@@ -196,25 +196,25 @@
   (semantic-mode 1)
 
   ;; Setting up Semantic-mode
-  (setq semantic-default-submodes
-	'(
-	  ;; Maintain tag database
-	  global-semanticdb-minor-mode
-	  ;; Reparse buffer when idle
-	  global-semantic-idle-scheduler-mode
-	  ;; Show summary of tag at point
-	  global-semantic-idle-summary-mode
-	  ;; Show completions when idle
-	  global-semantic-idle-completions-mode
-	  ;; Additional tag decorations
-	  global-semantic-decoration-mode
-	  ;; Highlight the current tag.
-	  global-semantic-highlight-func-mode
-	  ;; Show current fun in header line
-	  global-semantic-stickyfunc-mode
-	  ;; Provide `switch-to-buffer'-like keybinding for tag names.
-	  global-semantic-mru-bookmark-mode
-	  ))
+  ;; (setq semantic-default-submodes
+  ;;    '(
+  ;;      ;; Maintain tag database
+  ;;      global-semanticdb-minor-mode
+  ;;      ;; Reparse buffer when idle
+  ;;      global-semantic-idle-scheduler-mode
+  ;;      ;; Show summary of tag at point
+  ;;      global-semantic-idle-summary-mode
+  ;;      ;; Show completions when idle
+  ;;      global-semantic-idle-completions-mode
+  ;;      ;; Additional tag decorations
+  ;;      global-semantic-decoration-mode
+  ;;      ;; Highlight the current tag.
+  ;;      global-semantic-highlight-func-mode
+  ;;      ;; Show current fun in header line
+  ;;      global-semantic-stickyfunc-mode
+  ;;      ;; Provide `switch-to-buffer'-like keybinding for tag names.
+  ;;      global-semantic-mru-bookmark-mode
+  ;;      ))
 
   )
 
@@ -247,32 +247,32 @@
     ;; TODO: fix this function
     (defadvice hungry-delete-backward (before delete-empty-pair activate)
       (let ((pair-alist '(
-			  (?\( . ?\))
-			  (?\' . ?\')
-			  (?\" . ?\")
-			  (?[  . ?])
-			  (?{  . ?})
-			  (?$  . ?$) )))
-	(if (eq (cdr (assq (char-before) pair-alist)) (char-after))
-	    (and (char-after) (delete-char 1))
-	    )
-	)
+                          (?\( . ?\))
+                          (?\' . ?\')
+                          (?\" . ?\")
+                          (?[  . ?])
+                          (?{  . ?})
+                          (?$  . ?$) )))
+        (if (eq (cdr (assq (char-before) pair-alist)) (char-after))
+            (and (char-after) (delete-char 1))
+            )
+        )
       )))
 
 (defun indent-file-after-save ()
   "Indent whole file after saved."
   (make-local-variable 'after-save-hook)
   (add-hook 'after-save-hook
-	    '(lambda ()
-	       (indent-region (point-min) (point-max) nil)
-	       (save-buffer))))
+            '(lambda ()
+               (indent-region (point-min) (point-max) nil)
+               (save-buffer))))
 
 (defun cleanup-whitespace-before-save ()
   "Cleanup whitespaces before save to a file."
   (make-local-variable 'before-save-hook)
   (add-hook 'before-save-hook
-	    '(lambda ()
-	       (whitespace-cleanup))))
+            '(lambda ()
+               (whitespace-cleanup))))
 
 (defun make-ret-newline-and-indent ()
   "Always make Enter key do newline-and-indent."
@@ -293,14 +293,14 @@
 (defun highlight-fontify-numbers ()
   "Use this function as a hook to fontify numbers as constant"
   (font-lock-add-keywords nil
-			  '(
-			    ;; hexadecimal
-			    ("\\<\\(0x[0-9a-fA-F]+\\)"       1 font-lock-constant-face)
-			    ;; float
-			    ("\\<\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
-			    ;; int
-			    ("\\<\\([+-]?[0-9]+\\)\\b"       1 font-lock-constant-face)
-			    )))
+                          '(
+                            ;; hexadecimal
+                            ("\\<\\(0x[0-9a-fA-F]+\\)"       1 font-lock-constant-face)
+                            ;; float
+                            ("\\<\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
+                            ;; int
+                            ("\\<\\([+-]?[0-9]+\\)\\b"       1 font-lock-constant-face)
+                            )))
 
 
 (defun use-autopair-mode ()
@@ -313,12 +313,12 @@
     ;; Make autopair work with paredit-mode
     (when (require* 'paredit)
       (defadvice paredit-mode (around disable-autopairs-around (arg) activate)
-	"Disable autopairs mode if paredit-mode is turned on"
-	ad-do-it
-	(if (null ad-return-value)
-	    (autopair-mode 1)
-	    (autopair-mode 0)
-	    ))
+        "Disable autopairs mode if paredit-mode is turned on"
+        ad-do-it
+        (if (null ad-return-value)
+            (autopair-mode 1)
+            (autopair-mode 0)
+            ))
       )
     ))
 
@@ -366,7 +366,7 @@
   ad-do-it
   (when (require* 'hungry-delete)
     (if (eq (char-before) ?\ )
-	(hungry-delete-backward))))
+        (hungry-delete-backward))))
 
 
 (defadvice paredit-forward-delete (after paredit-forward-delete activate)
@@ -374,7 +374,7 @@
   ad-do-it
   (when (require* 'hungry-delete)
     (if (eolp)
-	(hungry-delete-forward))))
+        (hungry-delete-forward))))
 
 
 ;; (defun load-tags-cache (file)
