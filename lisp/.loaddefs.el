@@ -53,7 +53,7 @@ Basic keywords are the following:
 Of course, conventional arguments are supported, the two are same.
 
  (anything :sources sources :input input :prompt prompt :resume resume
-	   :preselect preselect :buffer buffer :keymap keymap)
+           :preselect preselect :buffer buffer :keymap keymap)
  (anything sources input prompt resume preselect buffer keymap)
 
 
@@ -61,7 +61,7 @@ Other keywords are interpreted as local variables of this anything session.
 The `anything-' prefix can be omitted. For example,
 
  (anything :sources 'anything-c-source-buffers
-	   :buffer \"*buffers*\" :candidate-number-limit 10)
+           :buffer \"*buffers*\" :candidate-number-limit 10)
 
 means starting anything session with `anything-c-source-buffers'
 source in *buffers* buffer and set
@@ -797,15 +797,15 @@ Add PATH to `load-path' if it exists under `default-load-path'
 directories and it does not exist in `load-path'.
 
 You can use following PATH styles:
-	load-path relative: \"PATH/\"
-			(it is searched from `default-load-path')
-	home directory relative: \"~/PATH/\" \"~USER/PATH/\"
-	absolute path: \"/HOO/BAR/BAZ/\"
+        load-path relative: \"PATH/\"
+                        (it is searched from `default-load-path')
+        home directory relative: \"~/PATH/\" \"~USER/PATH/\"
+        absolute path: \"/HOO/BAR/BAZ/\"
 
 You can specify following OPTIONS:
-	'all-paths	search from `load-path'
-			instead of `default-load-path'
-	'append		add PATH to the last of `load-path'
+        'all-paths	search from `load-path'
+                        instead of `default-load-path'
+        'append		add PATH to the last of `load-path'
 
 \(fn PATH &rest OPTIONS)" nil nil)
 
@@ -1856,19 +1856,18 @@ See also function `tempbuf-mode'.
 ;;;;;;  "auctex/preview/prv-emacs.el" "auctex/preview/prv-install.el"
 ;;;;;;  "auctex/preview/prv-xemacs.el" "auctex/tex-buf.el" "auctex/tex-mik.el"
 ;;;;;;  "auctex/tex-site.el" "auctex/tex-style.el" "auctex/tex-wizard.el"
-;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete-clang/sample-config.el"
-;;;;;;  "auto-complete-etags/auto-complete-etags.el" "auto-complete-extension/auto-complete-extension.el"
-;;;;;;  "auto-pair+/auto-pair+.el" "autopair/autopair.el" "c-eldoc/c-eldoc.el"
-;;;;;;  "eldoc-extension/eldoc-extension.el" "escreen-tab/escreen-tab.el"
-;;;;;;  "escreen/escreen.el" "guess-offset/guess-offset.el" "highlight-cl/highlight-cl.el"
-;;;;;;  "ibuffer-git/ibuffer-git.el" "ipython/ipython.el" "nav/nav-dev.el"
-;;;;;;  "nav/nav-test.el" "popup-pos-tip/popup-pos-tip.el" "pymacs/pymacs.el"
-;;;;;;  "python-mode/highlight-indentation.el" "python-mode/pars-part-output.el"
-;;;;;;  "python-mode/py-bug-numbered-tests.el" "python-mode/pycomplete.el"
-;;;;;;  "quack/quack.el" "sdcv/sdcv.el" "shell-pop/shell-pop.el"
-;;;;;;  "showtip/showtip.el" "sr-speedbar/sr-speedbar.el" "ssh-config/ssh-config.el"
-;;;;;;  "tea-time/tea-time.el" "undo-tree/undo-tree.el" "unicad/unicad.el"
-;;;;;;  "xcscope+/xcscope+.el") (19905 23421 184131))
+;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete-etags/auto-complete-etags.el"
+;;;;;;  "auto-complete-extension/auto-complete-extension.el" "auto-pair+/auto-pair+.el"
+;;;;;;  "autopair/autopair.el" "c-eldoc/c-eldoc.el" "eldoc-extension/eldoc-extension.el"
+;;;;;;  "escreen-tab/escreen-tab.el" "escreen/escreen.el" "guess-offset/guess-offset.el"
+;;;;;;  "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
+;;;;;;  "ipython/ipython.el" "nav/nav-dev.el" "nav/nav-test.el" "popup-pos-tip/popup-pos-tip.el"
+;;;;;;  "pymacs/pymacs.el" "python-mode/highlight-indentation.el"
+;;;;;;  "python-mode/pars-part-output.el" "python-mode/py-bug-numbered-tests.el"
+;;;;;;  "python-mode/pycomplete.el" "quack/quack.el" "sdcv/sdcv.el"
+;;;;;;  "shell-pop/shell-pop.el" "showtip/showtip.el" "sr-speedbar/sr-speedbar.el"
+;;;;;;  "ssh-config/ssh-config.el" "tea-time/tea-time.el" "undo-tree/undo-tree.el"
+;;;;;;  "unicad/unicad.el" "xcscope+/xcscope+.el") (19905 29769 139075))
 
 ;;;***
 

@@ -196,26 +196,25 @@
   (semantic-mode 1)
 
   ;; Setting up Semantic-mode
-  ;; (setq semantic-default-submodes
-  ;;    '(
-  ;;      ;; Maintain tag database
-  ;;      global-semanticdb-minor-mode
-  ;;      ;; Reparse buffer when idle
-  ;;      global-semantic-idle-scheduler-mode
-  ;;      ;; Show summary of tag at point
-  ;;      global-semantic-idle-summary-mode
-  ;;      ;; Show completions when idle
-  ;;      global-semantic-idle-completions-mode
-  ;;      ;; Additional tag decorations
-  ;;      global-semantic-decoration-mode
-  ;;      ;; Highlight the current tag.
-  ;;      global-semantic-highlight-func-mode
-  ;;      ;; Show current fun in header line
-  ;;      global-semantic-stickyfunc-mode
-  ;;      ;; Provide `switch-to-buffer'-like keybinding for tag names.
-  ;;      global-semantic-mru-bookmark-mode
-  ;;      ))
-
+  (setq semantic-default-submodes
+        '(
+          ;; Maintain tag database
+          global-semanticdb-minor-mode
+          ;; Reparse buffer when idle
+          global-semantic-idle-scheduler-mode
+          ;; Show summary of tag at point
+          global-semantic-idle-summary-mode
+          ;; Show completions when idle
+          global-semantic-idle-completions-mode
+          ;; Additional tag decorations
+          global-semantic-decoration-mode
+          ;; Highlight the current tag.
+          global-semantic-highlight-func-mode
+          ;; Show current fun in header line
+          global-semantic-stickyfunc-mode
+          ;; Provide `switch-to-buffer'-like keybinding for tag names.
+          global-semantic-mru-bookmark-mode
+          ))
   )
 
 

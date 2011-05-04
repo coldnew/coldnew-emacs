@@ -17,7 +17,8 @@
   ;; Setting my c-mode auto-complete source
   (defun ac-c-mode-setup ()
     "auto-complete settings for c-mode."
-    (setq ac-sources '(ac-source-clang-complete
+    (setq ac-sources '(
+                       ac-source-clang
                        ac-source-dictionary
                        ac-source-abbrev
                        ac-source-semantic
@@ -28,6 +29,7 @@
     )
   ;; Default clang completion flags, generate by "pkg-config --cflags gtk+-3.0"
   (setq clang-completion-flags
+        ;;(setq ac-clang-flags
         (split-string "-pthread
                        -I/usr/include/gtk-3.0  -I/usr/include/gtk-3.0/include
                        -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include
