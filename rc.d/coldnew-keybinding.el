@@ -67,6 +67,9 @@
 (vim:wmap (kbd "C-w L") 'windmove-right-fullscreen)
 (vim:wmap (kbd "C-w K") 'windmove-up-fullscreen)
 
+(vim:wmap (kbd "C-w C-s") 'sr-speedbar-toggle)
+(vim:wmap (kbd "C-w C-d") 'nav-toggle)
+
 
 ;;;;;;;; Function
 

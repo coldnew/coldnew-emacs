@@ -1,6 +1,0 @@
-*-compile-script
-cogre-loaddefs.el
-*-make-script
-wisent-dot-wy.el
-*.info
-*.jpg

@@ -1,5 +1,0 @@
-*-compile-script
-grammar-make-script
-srecode-loaddefs.el
-srecode-template-wy.el
-*.info

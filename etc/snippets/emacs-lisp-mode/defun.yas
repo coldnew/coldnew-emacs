@@ -3,8 +3,4 @@
 # name: defun
 # key: defun
 # --
-(defun ${1:NAME} (${2:ARGLIST})
-  "${3:DOCSTRING}"
-  ${4:BODY}
-  )
-$0
+(defun $0)

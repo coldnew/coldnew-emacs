@@ -1,6 +1,3 @@
-
-;;
-
 (eval-when-compile (require 'cl))
 
 ;;;;;;;; Packages Import
@@ -9,14 +6,14 @@
 (require 'coldnew-commands)
 (require 'coldnew-variables)
 
-(defvar emacs-snippet-file-dir "~/.emacs.d/etc/snippets"
-  "")
-
+(defvar emacs-snippet-file-dir (expand-file-name "~/.emacs.d/etc/snippets"))
 
 ;;;;;;;; yasnippet
 (when (require* 'yasnippet)
   (yas/initialize)
   (yas/load-directory emacs-snippet-file-dir)
+  ;;(yas/load-directory "~/.emacs.d/etc/snippets")
+
   (setq yas/prompt-functions
 	'(yas/dropdown-prompt
 	  yas/ido-prompt

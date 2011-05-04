@@ -52,6 +52,9 @@
 	     ;; Use global programming mode
 	     (programming-mode)
 
+	     ;; Use paredit in elisp
+	     (use-paredit-mode)
+
 	     ;; After visit elisp file, remove .elc extension file.
 	     (remove-elc-when-visit)
 
@@ -90,11 +93,31 @@
 	     ;; Use global programming mode
 	     (programming-mode)
 
+	     ;; Use paredit in elisp
+	     (use-paredit-mode)
+
 	     ;; After visit elisp file, remove .elc extension file.
 	     (remove-elc-when-visit)
 
 	     ))
 
+;;;;;;;; Keybindings
+(add-hook 'emacs-lisp-mode-hook
+	  '(lambda ()
+
+	     ;; Normal Map
+
+	     ;; Insert Map
+
+	     ;;;; Insert and expand by short-key
+	     ;; (define )
+	     (vim:local-imap-insert-expand (kbd "M-d") "defun")
+	     ;; (lambda () )
+	     (vim:local-imap-insert-expand (kbd "M-l") "lambda")
+	     ;; (defmacro ())
+	     (vim:local-imap-insert-expand (kbd "M-D") "defmacro")
+
+	     ))
 ;;;;;;;; ielm
 ;; A nice little mode that acts like an interactive Lisp interpreter.
 ;; It doesn't do all the fancy shell stuff such as redirection

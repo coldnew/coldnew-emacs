@@ -44,6 +44,9 @@
 (require 'coldnew-session)
 (require 'coldnew-time)
 (require 'coldnew-dictionary)
+;; Some extra setting that I dont't know how to sort it
+(require 'coldnew-extra)
+
 
 (require 'coldnew-lang-elisp)
 (require 'coldnew-lang-ruby)

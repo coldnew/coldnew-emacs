@@ -61,31 +61,17 @@
   ;; Highlight fontify numbers ad constant
   (highlight-fontify-numbers)
 
-  ;; Use paredit-mode
-  (use-paredit-mode)
+  ;; ;; Use paredit-mode
+  ;; (use-paredit-mode)
+
+  ;; Use auto-pair
+  (use-autopair-mode)
 
   ;; Show matching parentheses all the time
   (show-paren-mode t)
+
   )
 
-
-;;;;;;;; Advices
-(defadvice kill-ring-save (before slick-copy activate compile)
-  "When called interactively with no active region, copy a single
-   line instead."
-  (interactive
-   (if mark-active (list (region-beginning) (region-end))
-       (message "Copied line")
-       (list (line-beginning-position)
-	     (line-beginning-position 2)))))
-
-(defadvice kill-region (before slick-cut activate compile)
-  "When called interactively with no active region, kill a single
-   line instead."
-  (interactive
-   (if mark-active (list (region-beginning) (region-end))
-       (list (line-beginning-position)
-	     (line-beginning-position 2)))))
 
 ;;;;;;;; cua
 ;; CUA package provides a complete emulation of the
@@ -162,8 +148,11 @@
 (when (require* 'iedit))
 
 ;;;;;;;; nav
+;; Emacs mode for filesystem navigation
 ;;
 (when (require* 'nav)
+  ;; Ignore following regexp
+  (setq nav-boring-file-regexps '("\\.elc$"  "^[.].*$" "\\.pyc$" "\\.bak$" "\\.o$" "\\~$"))
   )
 
 ;;;;;;;; pomodoro
@@ -192,11 +181,83 @@
   )
 
 
+;;;;;;;; cedet
+;; CEDET is a Collection of Emacs Development Environment Tools written with the
+;; end goal of creating an advanced development environment in Emacs.
+;;
+(when (require* 'cedet)
+  ;; loding libraries
+  (require* 'semantic/sb)
+
+  ;; Enable EDE (Project Management) features
+  (global-ede-mode 1)
+
+  ;; Enable Semantic feactures
+  (semantic-mode 1)
+
+  ;; Setting up Semantic-mode
+  (setq semantic-default-submodes
+	'(
+	  ;; Maintain tag database
+	  global-semanticdb-minor-mode
+	  ;; Reparse buffer when idle
+	  global-semantic-idle-scheduler-mode
+	  ;; Show summary of tag at point
+	  global-semantic-idle-summary-mode
+	  ;; Show completions when idle
+	  global-semantic-idle-completions-mode
+	  ;; Additional tag decorations
+	  global-semantic-decoration-mode
+	  ;; Highlight the current tag.
+	  global-semantic-highlight-func-mode
+	  ;; Show current fun in header line
+	  global-semantic-stickyfunc-mode
+	  ;; Provide `switch-to-buffer'-like keybinding for tag names.
+	  global-semantic-mru-bookmark-mode
+	  ))
+
+  )
+
+
+;;;;;;;; ECB
+;; ECB stands for "Emacs Code Browser". While Emacs already has good editing support for many modes,
+;; its browsing support is somewhat lacking. That's where ECB comes in: it displays a number of
+;; informational windows that allow for easy source code navigation and overview.
+;;
+(when (require* 'ecb)
+  (setq stack-trace-on-error t)
+  )
+
+
+;;;;;;;; Speedbar
+(when (require* 'speedbar)
+  (require* 'sr-speedbar)
+  (setq sr-speedbar-right-side nil)
+  )
+
+
+
+
 ;;;;;;;; Functions
 (defun use-hungry-delete ()
   "Use hungry delete mode"
   (when (require* 'hungry-delete)
-    (turn-on-hungry-delete-mode)))
+    (turn-on-hungry-delete-mode)
+
+    ;; TODO: fix this function
+    (defadvice hungry-delete-backward (before delete-empty-pair activate)
+      (let ((pair-alist '(
+			  (?\( . ?\))
+			  (?\' . ?\')
+			  (?\" . ?\")
+			  (?[  . ?])
+			  (?{  . ?})
+			  (?$  . ?$) )))
+	(if (eq (cdr (assq (char-before) pair-alist)) (char-after))
+	    (and (char-after) (delete-char 1))
+	    )
+	)
+      )))
 
 (defun indent-file-after-save ()
   "Indent whole file after saved."
@@ -241,6 +302,26 @@
 			    ("\\<\\([+-]?[0-9]+\\)\\b"       1 font-lock-constant-face)
 			    )))
 
+
+(defun use-autopair-mode ()
+  "Enable autopair for all mode."
+  (when (require* 'autopair)
+    ;; Use auto-pair+ for more functions
+    (require* 'auto-pair+)
+    ;; Enable autopair-mode
+    (autopair-mode 1)
+    ;; Make autopair work with paredit-mode
+    (when (require* 'paredit)
+      (defadvice paredit-mode (around disable-autopairs-around (arg) activate)
+	"Disable autopairs mode if paredit-mode is turned on"
+	ad-do-it
+	(if (null ad-return-value)
+	    (autopair-mode 1)
+	    (autopair-mode 0)
+	    ))
+      )
+    ))
+
 (defun use-paredit-mode ()
   "Enable paredit-mode and rebind the keybinding to vim-mode when use it."
   (when (require* 'paredit)
@@ -270,15 +351,30 @@
       (vim:local-imap (kbd "C-)") 'paredit-split-sexp)
       (vim:local-imap (kbd "C-j") 'paredit-join-sexps)
       (vim:local-imap (kbd "M-\"") 'paredit-meta-doublequote)
-      ;; TODO: need combine hungry-forward delete with it?
-      ;; if combine paredit-delete with hungry-delete
-      ;; make following function usable in local-nmap
       (vim:local-imap (kbd "<delete>") 'paredit-forward-delete)
       (vim:local-imap (kbd "C-d") 'paredit-forward-delete)
       (vim:local-imap (kbd "<backspace>") 'paredit-backward-delete)
       (vim:local-imap (kbd "C-l") 'paredit-backward-delete)
       ))
   )
+
+
+;;;;;;;; Functions
+
+(defadvice paredit-backward-delete (after paredit-backward-delete activate)
+  "Intergrated paredit-backward-delete with hungry-delete."
+  ad-do-it
+  (when (require* 'hungry-delete)
+    (if (eq (char-before) ?\ )
+	(hungry-delete-backward))))
+
+
+(defadvice paredit-forward-delete (after paredit-forward-delete activate)
+  "Intergrated paredit-forward-delete with hungry-delete."
+  ad-do-it
+  (when (require* 'hungry-delete)
+    (if (eolp)
+	(hungry-delete-forward))))
 
 
 ;; (defun load-tags-cache (file)
@@ -300,5 +396,5 @@
 ;; (load-tags-cache tags-completion-table-file)
 
 
-(provide 'coldnew-editor)" "
+(provide 'coldnew-editor)
 ;; coldnew-editor.el ends here.
