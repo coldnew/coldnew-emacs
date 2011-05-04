@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor : coldnew <coldnew.tw@gmil.com>
+# name: defmacro
+# key: defmacro
+# --
+(defmacro $0)

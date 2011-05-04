@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# contributor : coldnew <coldnew.tw@gmil.com>
+# name: begin
+# key: begin
+# --
+(begin
+  $0)

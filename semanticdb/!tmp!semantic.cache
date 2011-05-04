@@ -1,0 +1,18 @@
+;; Object tmp/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "tmp/"
+  :tables (list 
+   (semanticdb-table "aa.c"
+    :major-mode 'c-mode
+    :tags nil
+    :file "aa.c"
+    :pointmax 74
+    :fsize 79
+    :lastmodtime '(19904 11979)
+    :unmatched-syntax '((semantic-list 6 . 8) (IF 3 . 5) (semantic-list 9 . 14) (semantic-list 6 . 8) (IF 3 . 5) (semantic-list 6 . 8) (IF 3 . 5))
+    )
+   )
+  :file "!tmp!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# contributor : coldnew <coldnew.tw@gmil.com>
+# name: lambda
+# key: lambda
+# --
+(lambda ($1) $0)
