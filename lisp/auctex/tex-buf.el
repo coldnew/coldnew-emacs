@@ -796,7 +796,7 @@ reasons.  Use `TeX-run-function' instead."
 
 (defun TeX-synchronous-sentinel (name file result)
   "Process TeX command output buffer after the process dies."
-  (let* ((buffer (TeX-process-buffer file)))
+  (let* ((buffer (TeX-process-buffer (file-name-nondirectory file))))
     (save-excursion
       (set-buffer buffer)
 

@@ -867,6 +867,37 @@ Not documented
 
 ;;;***
 
+;;;### (autoloads (ascii-off ascii-on ascii-display ascii-customize)
+;;;;;;  "ascii/ascii" "ascii/ascii.el" (19906 11018))
+;;; Generated autoloads from ascii/ascii.el
+
+(autoload 'ascii-customize "ascii/ascii" "\
+Customize ASCII options.
+
+\(fn)" t nil)
+
+(autoload 'ascii-display "ascii/ascii" "\
+Toggle ASCII code display.
+
+If ARG is null, toggle ASCII code display.
+If ARG is a number and is greater than zero, turn on display; otherwise, turn
+off display.
+If ARG is anything else, turn on display.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'ascii-on "ascii/ascii" "\
+Turn on ASCII code display.
+
+\(fn)" t nil)
+
+(autoload 'ascii-off "ascii/ascii" "\
+Turn off ASCII code display.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (turn-on-bib-cite bib-cite-minor-mode) "auctex/bib-cite"
 ;;;;;;  "auctex/bib-cite.el" (18341 54637))
 ;;; Generated autoloads from auctex/bib-cite.el
@@ -943,7 +974,7 @@ of context-mode-hook.
 ;;;***
 
 ;;;### (autoloads (font-latex-setup) "auctex/font-latex" "auctex/font-latex.el"
-;;;;;;  (19596 41439))
+;;;;;;  (19906 11658))
 ;;; Generated autoloads from auctex/font-latex.el
 
 (autoload 'font-latex-setup "auctex/font-latex" "\
@@ -954,7 +985,7 @@ Setup this buffer for LaTeX font-lock.  Usually called from a hook.
 ;;;***
 
 ;;;### (autoloads (docTeX-mode TeX-latex-mode BibTeX-auto-store)
-;;;;;;  "auctex/latex" "auctex/latex.el" (19818 30245))
+;;;;;;  "auctex/latex" "auctex/latex.el" (19906 11658))
 ;;; Generated autoloads from auctex/latex.el
 
 (autoload 'BibTeX-auto-store "auctex/latex" "\
@@ -1088,7 +1119,7 @@ Report a bug in the preview-latex package.
 
 ;;;### (autoloads (TeX-submit-bug-report TeX-auto-generate-global
 ;;;;;;  TeX-auto-generate TeX-tex-mode) "auctex/tex" "auctex/tex.el"
-;;;;;;  (19781 37039))
+;;;;;;  (19906 11658))
 ;;; Generated autoloads from auctex/tex.el
 
 (autoload 'TeX-tex-mode "auctex/tex" "\
@@ -1145,8 +1176,8 @@ Install toolbar buttons for LaTeX mode.
 
 ;;;***
 
-;;;### (autoloads nil "auctex/tex-fold" "auctex/tex-fold.el" (19772
-;;;;;;  30949))
+;;;### (autoloads nil "auctex/tex-fold" "auctex/tex-fold.el" (19906
+;;;;;;  11658))
 ;;; Generated autoloads from auctex/tex-fold.el
 (autoload 'TeX-fold-mode "tex-fold" "Minor mode for hiding and revealing macros and environments." t)
 
@@ -1851,23 +1882,21 @@ See also function `tempbuf-mode'.
 ;;;;;;  "apel/site-lisp/emu/poem-e20.el" "apel/site-lisp/emu/poem-e20_3.el"
 ;;;;;;  "apel/site-lisp/emu/poem.el" "apel/site-lisp/emu/product.el"
 ;;;;;;  "apel/site-lisp/emu/pym.el" "apel/site-lisp/emu/static.el"
-;;;;;;  "auctex/auctex.el" "auctex/auto-loads.el" "auctex/lpath.el"
-;;;;;;  "auctex/preview/auto.el" "auctex/preview/preview-latex.el"
-;;;;;;  "auctex/preview/prv-emacs.el" "auctex/preview/prv-install.el"
-;;;;;;  "auctex/preview/prv-xemacs.el" "auctex/tex-buf.el" "auctex/tex-mik.el"
-;;;;;;  "auctex/tex-site.el" "auctex/tex-style.el" "auctex/tex-wizard.el"
-;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete-etags/auto-complete-etags.el"
-;;;;;;  "auto-complete-extension/auto-complete-extension.el" "auto-pair+/auto-pair+.el"
-;;;;;;  "autopair/autopair.el" "c-eldoc/c-eldoc.el" "eldoc-extension/eldoc-extension.el"
-;;;;;;  "escreen-tab/escreen-tab.el" "escreen/escreen.el" "guess-offset/guess-offset.el"
-;;;;;;  "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
-;;;;;;  "ipython/ipython.el" "nav/nav-dev.el" "nav/nav-test.el" "popup-pos-tip/popup-pos-tip.el"
-;;;;;;  "pymacs/pymacs.el" "python-mode/highlight-indentation.el"
-;;;;;;  "python-mode/pars-part-output.el" "python-mode/py-bug-numbered-tests.el"
-;;;;;;  "python-mode/pycomplete.el" "quack/quack.el" "sdcv/sdcv.el"
-;;;;;;  "shell-pop/shell-pop.el" "showtip/showtip.el" "sr-speedbar/sr-speedbar.el"
-;;;;;;  "ssh-config/ssh-config.el" "tea-time/tea-time.el" "undo-tree/undo-tree.el"
-;;;;;;  "unicad/unicad.el" "xcscope+/xcscope+.el") (19905 29769 139075))
+;;;;;;  "auctex/lpath.el" "auctex/preview/prv-emacs.el" "auctex/preview/prv-install.el"
+;;;;;;  "auctex/preview/prv-xemacs.el" "auctex/tex-mik.el" "auctex/tex-style.el"
+;;;;;;  "auctex/tex-wizard.el" "auto-complete-clang/auto-complete-clang.el"
+;;;;;;  "auto-complete-etags/auto-complete-etags.el" "auto-complete-extension/auto-complete-extension.el"
+;;;;;;  "auto-pair+/auto-pair+.el" "autopair/autopair.el" "c-eldoc/c-eldoc.el"
+;;;;;;  "eldoc-extension/eldoc-extension.el" "escreen-tab/escreen-tab.el"
+;;;;;;  "escreen/escreen.el" "guess-offset/guess-offset.el" "highlight-cl/highlight-cl.el"
+;;;;;;  "ibuffer-git/ibuffer-git.el" "ipython/ipython.el" "nav/nav-dev.el"
+;;;;;;  "nav/nav-test.el" "popup-pos-tip/popup-pos-tip.el" "pymacs/pymacs.el"
+;;;;;;  "python-mode/highlight-indentation.el" "python-mode/pars-part-output.el"
+;;;;;;  "python-mode/py-bug-numbered-tests.el" "python-mode/pycomplete.el"
+;;;;;;  "quack/quack.el" "sdcv/sdcv.el" "shell-pop/shell-pop.el"
+;;;;;;  "showtip/showtip.el" "sr-speedbar/sr-speedbar.el" "ssh-config/ssh-config.el"
+;;;;;;  "tea-time/tea-time.el" "undo-tree/undo-tree.el" "unicad/unicad.el"
+;;;;;;  "xcscope+/xcscope+.el") (19906 31835 457297))
 
 ;;;***
 

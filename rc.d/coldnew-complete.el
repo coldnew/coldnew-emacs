@@ -50,7 +50,7 @@
   (define-key ac-menu-map (kbd "C-p") 'ac-previous)
   (define-key ac-completing-map "\t" 'ac-complete)
 
-  ;; BUG: unuse?
+  ;; BUG: nouse?
   ;;
   (when (require* 'ac-anything)
     (define-key ac-completing-map (kbd "C-o") 'ac-complete-with-anything)
@@ -69,24 +69,14 @@
 	  ad-do-it)))
 
   ;; Default sources
-  (defvar ac-source-default
-    '(ac-source-dictionary
-      ac-source-abbrev
-      ac-source-semantic
-      ac-source-filename
-      ac-source-files-in-current-dir
-      ac-source-words-in-same-mode-buffers
-      )
-    "")
-  (setq ac-sources ac-source-default
-	;; '(ac-source-dictionary
-	;;   ac-source-abbrev
-	;;   ac-source-semantic
-	;;   ac-source-filename
-	;;   ac-source-files-in-current-dir
-	;;   ac-source-words-in-same-mode-buffers
-	;;         )
-	)
+  (setq-default ac-sources
+		'(ac-source-dictionary
+		  ac-source-abbrev
+		  ac-source-semantic
+		  ac-source-filename
+		  ac-source-files-in-current-dir
+		  ac-source-words-in-same-mode-buffers
+		  ))
 
   ;;;;;; ac-company
   ;; Use Company Backends for Auto-Complete.

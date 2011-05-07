@@ -142,11 +142,11 @@ set it with `TeX-modes-set'."
 		      `(TeX-modes-set ',var ,var t))
 		    (setq list (cdr list))))))
 
-(defconst AUCTeX-version "2011-03-13"
+(defconst AUCTeX-version "2011-05-01"
     "AUCTeX version.
 If not a regular release, the date of the last change.")
 
-(defconst AUCTeX-date "2011-03-13"
+(defconst AUCTeX-date "2011-05-01"
   "AUCTeX release date using the ISO 8601 format, yyyy-mm-dd.")
 
 ;; Store bibitems when saving a BibTeX buffer
@@ -232,7 +232,7 @@ of context-mode-hook.
 ;;;***
 
 ;;;### (autoloads (font-latex-setup) "font-latex" "font-latex.el"
-;;;;;;  (19596 41439))
+;;;;;;  (19906 11658))
 ;;; Generated autoloads from font-latex.el
 
 (autoload 'font-latex-setup "font-latex" "\
@@ -243,7 +243,7 @@ Setup this buffer for LaTeX font-lock.  Usually called from a hook.
 ;;;***
 
 ;;;### (autoloads (docTeX-mode TeX-latex-mode BibTeX-auto-store)
-;;;;;;  "latex" "latex.el" (19818 30245))
+;;;;;;  "latex" "latex.el" (19906 11658))
 ;;; Generated autoloads from latex.el
 
 (autoload 'BibTeX-auto-store "latex" "\
@@ -343,7 +343,7 @@ of `AmS-TeX-mode-hook'.
 ;;;***
 
 ;;;### (autoloads (TeX-submit-bug-report TeX-auto-generate-global
-;;;;;;  TeX-auto-generate TeX-tex-mode) "tex" "tex.el" (19781 37039))
+;;;;;;  TeX-auto-generate TeX-tex-mode) "tex" "tex.el" (19906 11658))
 ;;; Generated autoloads from tex.el
 
 (autoload 'TeX-tex-mode "tex" "\
@@ -400,7 +400,7 @@ Install toolbar buttons for LaTeX mode.
 
 ;;;***
 
-;;;### (autoloads nil "tex-fold" "tex-fold.el" (19772 30949))
+;;;### (autoloads nil "tex-fold" "tex-fold.el" (19906 11658))
 ;;; Generated autoloads from tex-fold.el
  (autoload 'TeX-fold-mode "tex-fold" "Minor mode for hiding and revealing macros and environments." t)
 

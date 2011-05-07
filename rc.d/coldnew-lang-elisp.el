@@ -12,14 +12,19 @@
 (when (require* 'auto-complete)
   (defun ac-emacs-lisp-mode-setup ()
     "auto-complete settings for emacs-lisp-mode"
-    (setq ac-sources (append
-		      '(ac-source-symbols
-			ac-source-variables
-			ac-source-functions
-			ac-source-features
-			ac-source-company-elisp
-			) ac-sources))))
-
+    (setq ac-sources
+	  '(ac-source-dictionary
+	    ac-source-symbols
+	    ac-source-variables
+	    ac-source-functions
+	    ac-source-features
+	    ac-source-company-elisp
+	    ac-source-abbrev
+	    ac-source-semantic
+	    ac-source-filename
+	    ac-source-files-in-current-dir
+	    ac-source-words-in-same-mode-buffers
+	    ))))
 
 ;;;;;;;; Hooks
 (add-hook 'emacs-lisp-mode-hook

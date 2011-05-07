@@ -120,7 +120,7 @@ STYLESRC = style/prosper.el \
 	   style/multido.el   style/pst-grad.el  style/pst-node.el \
 	   style/pst-plot.el  style/pst-slpe.el  style/shortvrb.el \
 	   style/austrian.el  style/naustrian.el style/french.el \
-	   style/lettrine.el  style/multicol.el
+	   style/lettrine.el  style/multicol.el  style/xspace.el
 STYLEELC = $(STYLESRC:.el=.elc)
 
 CLEANFILES = $(AUCELC) $(STYLEELC) $(MULEELC)

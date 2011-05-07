@@ -1,3 +1,74 @@
+2011-05-01  Ralf Angeli  <angeli@caeruleus.net>
+
+	* tex.el (TeX-tree-expand): Use a different test to check for an
+	absolute path on Windows.
+
+	* font-latex.el (font-latex-built-in-keyword-classes): Add
+	definition for \rule and remove the one for \sbox.
+
+2011-04-25  Ralf Angeli  <angeli@caeruleus.net>
+
+	* style/setspace.el: Add support for changing \displayskipstretch.
+
+2011-04-25  Mads Jensen  <mje@inducks.org>
+
+	* style/setspace.el: New file.
+
+2011-04-25  Ralf Angeli  <angeli@caeruleus.net>
+
+	* latex.el (LaTeX-style-list): Add memoir.
+
+2011-04-20  Ralf Angeli  <angeli@caeruleus.net>
+
+	* tex-fold.el (TeX-fold-expand-spec): Make sure the expansion of a
+	placeholder is not processed again.
+
+2011-04-15  Ralf Angeli  <angeli@caeruleus.net>
+
+	* font-latex.el (font-latex-built-in-keyword-classes): Make a few
+	additions and corrections.
+
+	* latex.el (LaTeX-common-initialization): Prompt for file
+	extension instead of name when inserting \addcontentsline or
+	\addtocontents.
+
+2011-04-10  Ralf Angeli  <angeli@caeruleus.net>
+
+	* tex.el (TeX-source-correlate-mode): Check for D-Bus session.
+
+2011-04-10  Antoine Levitt  <antoine.levitt@gmail.com>  (tiny change)
+
+	* tex.el (TeX-source-correlate-sync-source): Do not use
+	`goto-line'.
+
+2011-04-03  Ralf Angeli  <angeli@caeruleus.net>
+
+	* Makefile.in (STYLESRC): Add style/xspace.el.
+
+	* style/xspace.el: Add copyright notice and license blurb.
+	Correct a few things.
+
+2011-04-03  Mads Jensen  <mje@inducks.org>
+
+	* style/xspace.el: New file.
+
+2011-03-27  Tassilo Horn  <tassilo@member.fsf.org>
+
+	* tex.el (TeX-source-correlate-mode): Add support for I/O
+	correlation mode inverse search for the Evince document viewer.
+
+2011-03-23  Ralf Angeli  <angeli@caeruleus.net>
+
+	* style/bulgarian.el, style/czech.el, style/danish.el,
+	style/frenchb.el, style/icelandic.el, style/polish.el,
+	style/polski.el, style/slovak.el, style/swedish.el: Do not set
+	`TeX-quote-language' if `override' is in effect.
+
+2011-03-20  Ralf Angeli  <angeli@caeruleus.net>
+
+	* tex-buf.el (TeX-synchronous-sentinel): Strip directory part of
+	master file because we are already in the master directory.
+
 2011-03-13  Ralf Angeli  <angeli@caeruleus.net>
 
 	* Makefile.in (STYLESRC): Add style/lettrine.el and

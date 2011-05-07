@@ -1598,6 +1598,7 @@ string."
 			      ("dinbrief")
 			      ("foils")
 			      ("letter")
+			      ("memoir")
 			      ("minimal")
 			      ("prosper")
 			      ("report")
@@ -5318,11 +5319,11 @@ i.e. you do _not_ have to cater for this yourself by adding \\\\' or $."
    '("include" (TeX-arg-input-file "File" t))
    '("includeonly" t)
    '("input" TeX-arg-input-file)
-   '("addcontentsline" TeX-arg-file
-     (TeX-arg-eval
-      completing-read "Numbering style: " LaTeX-section-list)
-     t)
-   '("addtocontents" TeX-arg-file t)
+   '("addcontentsline"
+     (TeX-arg-eval completing-read "File: " '(("toc") ("lof") ("lot")))
+     (TeX-arg-eval completing-read "Numbering style: " LaTeX-section-list) t)
+   '("addtocontents"
+     (TeX-arg-eval completing-read "File: " '(("toc") ("lof") ("lot"))) t)
    '("typeout" t)
    '("typein" [ TeX-arg-define-macro ] t)
    '("verb" TeX-arg-verb)

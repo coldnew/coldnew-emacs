@@ -5,7 +5,8 @@
 (TeX-add-style-hook
  "danish"
  (lambda ()
-   (setq TeX-quote-language `("danish" "\"`" "\"'" ,TeX-quote-after-quote))
+   (unless (eq (car TeX-quote-language) 'override)
+     (setq TeX-quote-language `("danish" "\"`" "\"'" ,TeX-quote-after-quote)))
    (setq LaTeX-babel-hyphen-language "danish")
    ;; Fontification of quotation marks.
    (when (fboundp 'font-latex-add-quotes)

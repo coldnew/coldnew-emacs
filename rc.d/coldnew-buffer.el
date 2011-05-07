@@ -7,25 +7,6 @@
 (require 'coldnew-commands)
 (require 'coldnew-variables)
 
-;;;;;;;; Advice
-
-;; Change all fundamental-mode buffer to lisp-interaction-mode.
-(defadvice switch-to-buffer (after switch-to-buffer activate)
-  "After switch-to-buffer, if tht buffer is Fundamental-mode, change it to lisp-interaction-mode"
-  (if (equal major-mode 'fundamental-mode)
-      (lisp-interaction-mode)))
-
-
-;; Prevent to kill *scratch* and *Ibuffer*
-(defadvice kill-buffer (around kill-buffer-around-advice activate)
-  "Bury *scratch* or *Ibuffer* buffer instead of kill it "
-  (let ((buffer-to-kill (ad-get-arg 0)))
-    (if (or (equal buffer-to-kill "*scratch*")
-	    (equal buffer-to-kill "*Ibuffer*"))
-	(bury-buffer)
-      ad-do-it)))
-
-
 ;;;;;;;; Uniquify
 ;; The library uniquify overrides Emacs' default mechanism for
 ;; making buffer names unique (using suffixes like <2>, <3> etc.)
@@ -48,11 +29,11 @@
 (when (require* 'ibuffer)
   ;; Settings
   (setq ibuffer-always-compile-formats         t )
-  (setq ibuffer-always-show-last-buffer        t )
   (setq ibuffer-default-shrink-to-minimum-size t )
   (setq ibuffer-expert                         t )
   (setq ibuffer-show-empty-filter-groups     nil )
   (setq ibuffer-use-other-window             nil )
+  (setq ibuffer-always-show-last-buffer      nil )
 
   ;; Keybindings
   (add-hook 'ibuffer-hook
@@ -68,11 +49,11 @@
 
 ;;;;;; Hooks
   (add-hook 'ibuffer-mode-hook
-	    (lambda ()
-	      (hl-line-mode)		; Enable highlight-line
-	      (ibuffer-switch-to-saved-filter-groups "default")
-	      (ibuffer-do-sort-by-filename/process)
-	      ))
+	    '(lambda ()
+	       (hl-line-mode)		; Enable highlight-line
+	       (ibuffer-switch-to-saved-filter-groups "default")
+	       (ibuffer-do-sort-by-filename/process)
+	       ))
 
 ;;;;;; Buffer lists
   (setq ibuffer-saved-filter-groups
@@ -154,6 +135,8 @@
 	   ("Python" (or (mode . python-mode)
 			 (mode . ipython-mode)
 			 ))
+	   ("Octave" (or (mode . octave-mode)
+			 (inferior-octave)))
 	   ("C++ . C#" (or (mode . c++-mode)
 			   (mode . csharpmode)
 			   ))
@@ -180,12 +163,12 @@
 	  "^\\*Ido Completions\\*$"
 	  "^\\*SPEEDBAR\\*$"
 	  "^\\*nav\\*$"
-	  "^\\*RE-Ruilder\\*$"
+	  "^\\*RE-Builder\\*$"
 	  "^\\*anything\\*$"
 	  "^\\*anything complete\\*$"
 	  "^\\*pomodoro\\*$"
+	  ;;        "^\\*.*\\(-preprocessed\\)\\>\\*$"
 	  ))
-
 
   ;;;; Advice
   ;; Reverse group list
@@ -252,7 +235,7 @@
 	   dired-mode
 	   )))
     (dolist (tempbuf-hook tempbuf-mode-list)
-      (add-hook (intern (concat (symbol-name tempbuf-hook) "-hook")) 'turn-on-tempbuf-mode))))
+	    (add-hook (intern (concat (symbol-name tempbuf-hook) "-hook")) 'turn-on-tempbuf-mode))))
 
 ;;;;;;;; midnight
 ;; Midnight mode is a package that comes with Emacs for running configured
@@ -298,9 +281,6 @@
 	   ".*im\\.bitlbee\\.org.*"
 	   "^\\*ansi-term*"
 	   "^\\*terminal*"
-	   ;;   "^\\*Messages\\*$"
-	   ;; "^\\*scratch\\*$"
-	   ;;  "^\\*w3m\\*$"
 	   "^\\*Inferior*"
 	   )
 	 clean-buffer-list-kill-never-regexps-init))
