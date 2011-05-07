@@ -61,9 +61,6 @@
   ;; Highlight fontify numbers ad constant
   (highlight-fontify-numbers)
 
-  ;; ;; Use paredit-mode
-  ;; (use-paredit-mode)
-
   ;; Use auto-pair
   (use-autopair-mode)
 
