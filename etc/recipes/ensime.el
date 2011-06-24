@@ -1,7 +1,7 @@
 (:name ensime
  :type git
  :url "https://github.com/aemoncannon/ensime.git"
- :build ("sbt update stage")
+;; :build ("sbt update stage")
  :features ensime
  :load-path ("./dist/elisp")
  :post-init (lambda ()

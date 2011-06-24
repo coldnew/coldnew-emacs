@@ -99,6 +99,7 @@
 ;;;;;;;; Insert
 (defun insert-tinyurl (url)
   "Insert a shortend URL at point by passed in URL"
+  (require 'mm-url)
   (interactive "sEnter url: " )
   (let* ((url (replace-regexp-in-string "^http://" "" url))
 	 (tinyurl

@@ -1821,6 +1821,17 @@ filter.
 
 ;;;***
 
+;;;### (autoloads (rainbow-delimiters-mode) "rainbow-delimiters/rainbow-delimiters"
+;;;;;;  "rainbow-delimiters/rainbow-delimiters.el" (19925 4377))
+;;; Generated autoloads from rainbow-delimiters/rainbow-delimiters.el
+
+(autoload 'rainbow-delimiters-mode "rainbow-delimiters/rainbow-delimiters" "\
+Color nested parentheses, brackets, and braces according to their depth.
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
 ;;;### (autoloads (rainbow-mode) "rainbow-mode/rainbow-mode" "rainbow-mode/rainbow-mode.el"
 ;;;;;;  (19843 28306))
 ;;; Generated autoloads from rainbow-mode/rainbow-mode.el
@@ -1830,6 +1841,85 @@ Colorize strings that represent colors.
 This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 
 \(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (scala-mode) "scala-mode/scala-mode" "scala-mode/scala-mode.el"
+;;;;;;  (19947 42031))
+;;; Generated autoloads from scala-mode/scala-mode.el
+
+(autoload 'scala-mode "scala-mode/scala-mode" "\
+Major mode for editing Scala code.
+When started, run `scala-mode-hook'.
+\\{scala-mode-map}
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (scala-quit-interpreter scala-load-file scala-eval-buffer
+;;;;;;  scala-eval-definition scala-eval-region scala-switch-to-interpreter
+;;;;;;  scala-run-scala scala-interpreter-running-p-1) "scala-mode/scala-mode-inf"
+;;;;;;  "scala-mode/scala-mode-inf.el" (19947 42031))
+;;; Generated autoloads from scala-mode/scala-mode-inf.el
+
+(autoload 'scala-interpreter-running-p-1 "scala-mode/scala-mode-inf" "\
+
+
+\(fn)" nil nil)
+
+(autoload 'scala-run-scala "scala-mode/scala-mode-inf" "\
+Run a Scala interpreter in an Emacs buffer
+
+\(fn CMD-LINE)" t nil)
+
+(autoload 'scala-switch-to-interpreter "scala-mode/scala-mode-inf" "\
+Switch to buffer containing the interpreter
+
+\(fn)" t nil)
+
+(autoload 'scala-eval-region "scala-mode/scala-mode-inf" "\
+Send current region to Scala interpreter.
+
+\(fn START END)" t nil)
+
+(autoload 'scala-eval-definition "scala-mode/scala-mode-inf" "\
+Send the current 'definition' to the Scala interpreter.
+This function's idea of a definition is the block of text ending
+in the current line (or the first non-empty line going
+backwards), and begins in the first line that is not empty and
+does not start with whitespace or '{'.
+
+For example:
+
+println( \"aja\")
+println( \"hola\" )
+
+if the cursor is somewhere in the second print statement, the
+interpreter should output 'hola'.
+
+In the following case, if the cursor is in the second line, then
+the complete function definition will be send to the interpreter:
+
+def foo =
+  1 + 2
+
+\(fn)" t nil)
+
+(autoload 'scala-eval-buffer "scala-mode/scala-mode-inf" "\
+Send whole buffer to Scala interpreter.
+
+\(fn)" t nil)
+
+(autoload 'scala-load-file "scala-mode/scala-mode-inf" "\
+Load a file in the Scala interpreter.
+
+\(fn FILE-NAME)" t nil)
+
+(autoload 'scala-quit-interpreter "scala-mode/scala-mode-inf" "\
+Quit Scala interpreter.
+
+\(fn)" t nil)
 
 ;;;***
 
@@ -1884,19 +1974,25 @@ See also function `tempbuf-mode'.
 ;;;;;;  "apel/site-lisp/emu/pym.el" "apel/site-lisp/emu/static.el"
 ;;;;;;  "auctex/lpath.el" "auctex/preview/prv-emacs.el" "auctex/preview/prv-install.el"
 ;;;;;;  "auctex/preview/prv-xemacs.el" "auctex/tex-mik.el" "auctex/tex-style.el"
-;;;;;;  "auctex/tex-wizard.el" "auto-complete-clang/auto-complete-clang.el"
-;;;;;;  "auto-complete-etags/auto-complete-etags.el" "auto-complete-extension/auto-complete-extension.el"
-;;;;;;  "auto-pair+/auto-pair+.el" "autopair/autopair.el" "c-eldoc/c-eldoc.el"
-;;;;;;  "eldoc-extension/eldoc-extension.el" "escreen-tab/escreen-tab.el"
-;;;;;;  "escreen/escreen.el" "guess-offset/guess-offset.el" "highlight-cl/highlight-cl.el"
-;;;;;;  "ibuffer-git/ibuffer-git.el" "ipython/ipython.el" "nav/nav-dev.el"
-;;;;;;  "nav/nav-test.el" "popup-pos-tip/popup-pos-tip.el" "pymacs/pymacs.el"
-;;;;;;  "python-mode/highlight-indentation.el" "python-mode/pars-part-output.el"
-;;;;;;  "python-mode/py-bug-numbered-tests.el" "python-mode/pycomplete.el"
-;;;;;;  "quack/quack.el" "sdcv/sdcv.el" "shell-pop/shell-pop.el"
-;;;;;;  "showtip/showtip.el" "sr-speedbar/sr-speedbar.el" "ssh-config/ssh-config.el"
-;;;;;;  "tea-time/tea-time.el" "undo-tree/undo-tree.el" "unicad/unicad.el"
-;;;;;;  "xcscope+/xcscope+.el") (19906 31835 457297))
+;;;;;;  "auctex/tex-wizard.el" "auto-complete-etags/auto-complete-etags.el"
+;;;;;;  "auto-complete-extension/auto-complete-extension.el" "auto-pair+/auto-pair+.el"
+;;;;;;  "autopair/autopair.el" "c-eldoc/c-eldoc.el" "eldoc-extension/eldoc-extension.el"
+;;;;;;  "escreen-tab/escreen-tab.el" "escreen/escreen.el" "guess-offset/guess-offset.el"
+;;;;;;  "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
+;;;;;;  "ipython/ipython.el" "nav/nav-dev.el" "nav/nav-test.el" "popup-pos-tip/popup-pos-tip.el"
+;;;;;;  "pymacs/pymacs.el" "python-mode/highlight-indentation.el"
+;;;;;;  "python-mode/pars-part-output.el" "python-mode/py-bug-numbered-tests.el"
+;;;;;;  "python-mode/pycomplete.el" "quack/quack.el" "scala-mode/scala-mode-auto.el"
+;;;;;;  "scala-mode/scala-mode-constants.el" "scala-mode/scala-mode-feature-electric.el"
+;;;;;;  "scala-mode/scala-mode-feature-speedbar.el" "scala-mode/scala-mode-feature-tags.el"
+;;;;;;  "scala-mode/scala-mode-feature.el" "scala-mode/scala-mode-fontlock.el"
+;;;;;;  "scala-mode/scala-mode-indent.el" "scala-mode/scala-mode-lib.el"
+;;;;;;  "scala-mode/scala-mode-navigation.el" "scala-mode/scala-mode-ui.el"
+;;;;;;  "scala-mode/scala-mode-variables.el" "scheme-complete/scheme-complete.el"
+;;;;;;  "sdcv/sdcv.el" "shell-pop/shell-pop.el" "showtip/showtip.el"
+;;;;;;  "sr-speedbar/sr-speedbar.el" "ssh-config/ssh-config.el" "tea-time/tea-time.el"
+;;;;;;  "undo-tree/undo-tree.el" "unicad/unicad.el" "xcscope+/xcscope+.el")
+;;;;;;  (19947 42032 556346))
 
 ;;;***
 

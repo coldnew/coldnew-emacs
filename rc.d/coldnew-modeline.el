@@ -1,53 +1,79 @@
 ;;
 (eval-when-compile (require 'cl))
 
+;;;;;;;; Packages Import
+(require 'coldnew-macro)
+(require 'coldnew-functions)
+(require 'coldnew-commands)
+(require 'coldnew-variables)
+
+;;;;see
+;; https://github.com/ZaneA/Dotfiles/blob/master/.emacs#L206
 
 
+(defun vim-mode-string ()
+  (let ((vim-string (substring vim:mode-string 1 2))
+	(vim-string-face 'white))
+    (setq vim-string-face
+	  (cond
+	   ((string= "N" vim-string) 'mode-line-vim-string-N)
+	   ((string= "I" vim-string) 'mode-line-vim-string-I)
+	   ((string= "V" vim-string) 'mode-line-vim-string-V)
+	   ))
+
+    (concat "<" (propertize vim-string 'face vim-string-face) ">")
+    ))
+
+
+;;TODO: add mode line face
+;; (setq mode-line-in-non-selected-windows nil)
 ;;;;;;;; Settings
-;;;; Mode-Line Settings
-(setq default-mode-line-format
-      '((" "
-	 mode-line-mule-info
-	 mode-line-modified
-	 mode-line-frame-identification
-	 mode-line-buffer-identification
-	 "   "
-	 (when (require* 'vim)
-	   vim:mode-string)
-	 "   "
-	 (when (require* 'pomodoro)
-	   pomodoro-display-string)
-	 "   "
-	 (which-func-mode ("" which-func-format ""))
-	 (vc-mode vc-mode)
-	 "   "
-	 mode-line-position
-	 " "
-	 ;; "<< " major-mode-string " >>"
-	 mode-line-modes
-	 ;; " ( " minor-mode-alist " )"
-	 "  "
-	 display-time-string
-	 " "
-	 )))
-
-;; Make all mode-line use default-mode-line-format
-(setq mode-line-format default-mode-line-format)
+;; Make all mode-line use mode-line-format as default
+(setq-default mode-line-format
+	      '((" "
+		 mode-line-mule-info
+		 mode-line-modified
+		 mode-line-frame-identification
+		 mode-line-buffer-identification
+		 "   "
+		 (when (featurep 'vim)
+		   (:eval (vim-mode-string)))
+		 ;; "   "
+		 ;; (when (require* 'pomodoro)
+		 ;;   pomodoro-display-string)
+		 "   "
+		 (which-func-mode ("" which-func-format ""))
+		 (vc-mode vc-mode)
+		 "   "
+		 ;;; major-mode name
+		 "<< "
+		 (:propertize mode-name
+			      help-echo (format-mode-line minor-mode-alist)
+			      face 'mode-line-mode-name-face)
+		 " >>"
+		 " (" minor-mode-alist " )"
+		 "   "
+		 mode-line-position
+		 "  "
+		 display-time-string
+		 " "
+		 )))
 
 ;;;; Remove or shrink some mode-line strings
 (when (require* 'diminish)
-  (when (require* 'yasnippet)
+  (when (featurep 'yasnippet)
     (diminish 'yas/minor-mode ""))
-  (when (require* 'egg)
+  (when (featurep 'egg)
     (diminish 'egg-minor-mode ""))
-  (when (require* 'eldoc)
+  (when (featurep 'eldoc)
     (diminish 'eldoc-mode ""))
-  (when (require* 'undo-tree)
+  (when (featurep 'undo-tree)
     (diminish 'undo-tree-mode ""))
-  (when (require* 'highlight-parentheses)
+  (when (featurep 'highlight-parentheses)
     (diminish 'highlight-parentheses-mode ""))
-  (when (require* 'auto-complete)
+  (when (featurep 'auto-complete)
     (diminish 'auto-complete-mode ""))
+
   ;;(when (require* 'textmate)
   ;;  (diminish 'textmate-mode ""))
   )

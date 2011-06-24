@@ -52,6 +52,34 @@
 ;; TODO: add face for numbers
 ;;(defface font-lock-number-face )
 
+(defface mode-line-vim-face
+  '((t (:inherit font-lock-keyword-face)))
+  "face for vim-mode strig in mode-line"
+  :group 'mode-line)
+
+(defface mode-line-mode-name-face
+  '((t (:inherit font-lock-keyword-face)))
+  "face for mode-name-string in modeline."
+  :group 'mode-line)
+
+(defface mode-line-vim-string-N
+  '((t (:inherit font-lock-function-name-face)))
+  "face for vim-string in normal-map on mode-line."
+  :group 'mode-line)
+
+(defface mode-line-vim-string-I
+  '((t (:inherit font-lock-constant-face)))
+  "face for vim-string in insert-map on mode-line."
+  :group 'mode-line)
+
+(defface mode-line-vim-string-V
+  '((t (:inherit font-lock-variable-name-face)))
+  "face for vim-string in visual-map on mode-line."
+  :group 'mode-line)
+
+
+
+
 ;; TODO: need to test this function
 (defvar new-file? (and (buffer-file-name)
 		       (not (file-exists-p (buffer-file-name)))

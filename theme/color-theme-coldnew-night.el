@@ -32,8 +32,8 @@
 
 (provide 'color-theme-coldnew-night)
 (eval-when-compile
- (require 'cl)
- (require 'color-theme))
+  (require 'cl)
+  (require 'color-theme))
 
 
 ;;;;##########################################################################
@@ -155,6 +155,13 @@
 
        (fringe                        ; 窗口邊緣
 	((t (:background ,_Gray-6))))
+
+
+;;;
+       (diff-added ((t (:foreground "Green"))) 'now)
+       (diff-removed ((t (:foreground "Red"))) 'now)
+
+
 
        ;; Mode Line
        (mode-line                     ; 使用中的buffer

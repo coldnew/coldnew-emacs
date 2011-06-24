@@ -14,7 +14,8 @@
 (vim:nmap (kbd "C-x C-b") 'ibuffer)
 (vim:nmap (kbd "C-x f") 'anything-find-file)
 (vim:nmap (kbd "C-x C-f") 'lusty-file-explorer)
-(vim:nmap (kbd "M-x") 'anything-execute-extended-command)
+;;(vim:nmap (kbd "M-x") 'anything-execute-extended-command)
+(vim:nmap (kbd "M-x") 'anything-M-x)
 (vim:nmap (kbd "C-M-X") 'smex)
 (vim:nmap (kbd "C-c C-e") 'eval-and-replace)
 (vim:nmap (kbd "C-x C-s") 'save-buffer-always)
@@ -37,7 +38,8 @@
 ;;;;;;;; Insert Map
 (vim:imap (kbd "C-x C-b") 'ibuffer)
 (vim:imap (kbd "C-x C-f") 'lusty-file-explorer)
-(vim:imap (kbd "M-x") 'anything-execute-extended-command)
+(vim:imap (kbd "M-x") 'anything-M-x)
+;;(vim:imap (kbd "M-x") 'anything-execute-extended-command)
 (vim:imap (kbd "C-c C-e") 'eval-and-replace)
 (vim:imap (kbd "C-x C-s") 'save-buffer-always)
 (vim:imap (kbd "C-=") 'text-scale-increase)
@@ -69,9 +71,6 @@
 
 (vim:wmap (kbd "C-w C-s") 'sr-speedbar-toggle)
 (vim:wmap (kbd "C-w C-d") 'nav-toggle)
-
-
-;;;;;;;; Function
 
 
 

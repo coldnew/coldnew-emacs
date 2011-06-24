@@ -136,7 +136,9 @@
 			 (mode . ipython-mode)
 			 ))
 	   ("Octave" (or (mode . octave-mode)
-			 (inferior-octave)))
+			 (mode . inferior-octave-mode)))
+	   ("Scala" (or (mode . scala-mode)
+			(name . "\\*inferior-scala\\*$")))
 	   ("C++ . C#" (or (mode . c++-mode)
 			   (mode . csharpmode)
 			   ))
@@ -167,6 +169,7 @@
 	  "^\\*anything\\*$"
 	  "^\\*anything complete\\*$"
 	  "^\\*pomodoro\\*$"
+	  ;; "^"
 	  ;;        "^\\*.*\\(-preprocessed\\)\\>\\*$"
 	  ))
 
@@ -235,7 +238,7 @@
 	   dired-mode
 	   )))
     (dolist (tempbuf-hook tempbuf-mode-list)
-	    (add-hook (intern (concat (symbol-name tempbuf-hook) "-hook")) 'turn-on-tempbuf-mode))))
+      (add-hook (intern (concat (symbol-name tempbuf-hook) "-hook")) 'turn-on-tempbuf-mode))))
 
 ;;;;;;;; midnight
 ;; Midnight mode is a package that comes with Emacs for running configured

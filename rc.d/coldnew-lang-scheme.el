@@ -5,7 +5,7 @@
 (require 'coldnew-editor)
 ;;(require 'geiser-install)
 (require* 'quack)
-(require* 'gambit)
+;;(require* 'gambit-mode)
 
 ;;;;;;;; Scheme-mode extensions
 (add-to-list 'auto-mode-alist '("\\.scm$" . scheme-mode))
@@ -27,8 +27,8 @@
 	  '(lambda ()
 
 	     ;; Use Gambit-C as my Scheme implementation
-	     (when (require* 'gambit)
-	       (setq scheme-program-name "gsi -:d-"))
+	     ;; (when (require* 'gambit-mode)
+	     ;;   (setq scheme-program-name "gsi -:d-"))
 
 	     ))
 
@@ -48,9 +48,9 @@
 	     (when (require* 'pretty-lambdada)
 	       (turn-on-pretty-lambda-mode))
 
-	     ;; Use Gambit-C as my Scheme implementation
-	     (when (require* 'gambit)
-	       (gambit-mode))
+	     ;; ;; Use Gambit-C as my Scheme implementation
+	     ;; (when (require* 'gambit-mode)
+	     ;;   (gambit-mode))
 
 	     ;; Use global programming mode
 	     (programming-mode)
@@ -74,9 +74,9 @@
 	     (when (require* 'pretty-lambdada)
 	       (turn-on-pretty-lambda-mode))
 
-	     ;; Use Gambit-C as my Scheme implementation
-	     (when (require* 'gambit)
-	       (gambit-inferior-mode))
+	     ;; ;; Use Gambit-C as my Scheme implementation
+	     ;; (when (require* 'gambit-mode)
+	     ;;   (gambit-inferior-mode))
 
 	     ;; Use global programming mode
 	     (programming-mode)
@@ -144,7 +144,7 @@
   "Toggle between scheme-inferior-shell and currentwindows"
   (if (equal (current-buffer) (get-buffer-name "*scheme*"))
       (switch-to-buffer (other-buffer))
-      (switch-to-scheme))
+    (switch-to-scheme))
   )
 
 (defun gambit-quit ()
@@ -161,7 +161,10 @@
 ;;    If current window is gambit-inferior-shell, switch to other window."
 ;;   (interactive)
 ;;   (progn
-;;     (call-interactively 'run-scheme)
+;;     (call-i
+
+
+;;nteractively 'run-scheme)
 ;;     (let* ((current-window (selected-window))
 ;;         (gambit-window (get-buffer-window "*scheme*"))
 ;;         (gambit-window-size 15))
@@ -170,12 +173,99 @@
 ;;       (select-window current-window)
 ;;       (rename-buffer "*Gambit-C*" t))
 ;;     ))
+;; Copied from scheme-indent-function, but ignore
+;; scheme-indent-function property for local variables.
+
+;;(require 'scheme-complete)
+;;(setq lisp-indent-function 'scheme-smart-indent-function)
 
 
 
+(put 'c-declare 'scheme-indent-function 'dummy)
 
+(defun dummy (state indent-point normal-indent)
+  (let ((containing-sexp-start (elt state 1))
+	containing-sexp-point
+	containing-sexp-column
+	body-indent)
+    ;;Move to the start of containing sexp, calculate its
+    ;;indentation, store its point and move past the function
+    ;;symbol so that we can use 'parse-partial-sexp'.
+    ;;
+    ;;'lisp-indent-function' guarantees that there is at least
+    ;;one word or symbol character following open paren of
+    ;;containing sexp.
+    (forward-char 1)
+    (goto-char containing-sexp-start)
+    (setq containing-sexp-point (point))
+    (setq containing-sexp-column (current-column))
+    (setq body-indent 2)
+    (forward-char 1)    ;Move past the open paren.
+    (forward-sexp 1)    ;Move to the next sexp.
 
+    ;;Now go back to the beginning of the line holding
+    ;;the indentation point.
+    (parse-partial-sexp (point) indent-point 1 t)
+    (while (and (< (point) indent-point)
+		(condition-case ()
+		    (progn
+		      (forward-sexp 1)
+		      (parse-partial-sexp (point) indent-point 1 t))
+		  (error nil))))
+    ;;Point is sitting on the first char of the line.
+    (forward-to-indentation 0)  ;Move to the first non-blank char.
+    (forward-char 1)            ;Move past the open paren.
 
+    ;; (list
+    (if (looking-at "\\<#<<END\\>")
+	(progn
+	  (beginning-of-line)
+	  (delete-char 1)
+	  (insert "a"))
+      ;;           body-indent
+      ;;         (+ 2 body-indent)) containing-sexp-point)
+
+      )
+    ))
+
+(defun my-scheme-indent-compensate (state indent-point normal-indent)
+  (let ((containing-sexp-start (elt state 1))
+	containing-sexp-point
+	containing-sexp-column
+	body-indent)
+    ;;Move to the start of containing sexp, calculate its
+    ;;indentation, store its point and move past the function
+    ;;symbol so that we can use 'parse-partial-sexp'.
+    ;;
+    ;;'lisp-indent-function' guarantees that there is at least
+    ;;one word or symbol character following open paren of
+    ;;containing sexp.
+    (forward-char 1)
+    (goto-char containing-sexp-start)
+    (setq containing-sexp-point (point))
+    (setq containing-sexp-column (current-column))
+    (setq body-indent 5)
+    (forward-char 1)    ;Move past the open paren.
+    (forward-sexp 1)    ;Move to the next sexp.
+
+    ;;Now go back to the beginning of the line holding
+    ;;the indentation point.
+    (parse-partial-sexp (point) indent-point 1 t)
+    (while (and (< (point) indent-point)
+		(condition-case ()
+		    (progn
+		      (forward-sexp 1)
+		      (parse-partial-sexp (point) indent-point 1 t))
+		  (error nil))))
+    ;;Point is sitting on the first char of the line.
+    (forward-to-indentation 0)  ;Move to the first non-blank char.
+    (forward-char 1)            ;Move past the open paren.
+    ;;Point is sitting on first character of sexp.
+    ;; (list (if (looking-at "\\<with\\>")
+    ;;           body-indent
+    ;;         (+ 2 body-indent)) containing-sexp-point)
+
+    ))
 
 
 (provide 'coldnew-lang-scheme)

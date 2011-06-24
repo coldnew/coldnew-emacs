@@ -46,6 +46,8 @@
 (require 'coldnew-dictionary)
 ;; Some extra setting that I dont't know how to sort it
 (require 'coldnew-extra)
+(require 'coldnew-emms)
+
 
 
 (require 'coldnew-lang-elisp)
@@ -57,7 +59,7 @@
 (require 'coldnew-lang-scheme)
 ;;(require 'coldnew-lang-python)
 (require 'coldnew-lang-octave)
-
+(require 'coldnew-lang-scala)
 
 
 

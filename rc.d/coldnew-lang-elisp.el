@@ -34,9 +34,15 @@
 	     (when (require* 'auto-complete)
 	       (ac-emacs-lisp-mode-setup))
 
+	     ;; TODO: whate's the defierence between highlight-parentheses and rainbow-delimiters?
+	     ;;
 	     ;; Highlight differnet parentheses
-	     (when (require* 'highlight-parentheses)
-	       (highlight-parentheses-mode))
+	     ;; (when (require* 'highlight-parentheses)
+	     ;;   (highlight-parentheses-mode))
+
+	     ;; Color nested parentheses, brackets, and braces according to their depth
+	     (when (require* 'rainbow-delimiters)
+	       (rainbow-delimiters-mode))
 
 	     ;; Enable eldoc
 	     (when (require* 'eldoc)
@@ -51,6 +57,7 @@
 	     ;; Highlight Common Lisp style functions
 	     (when (require* 'highlight-cl)
 	       (highlight-cl-add-font-lock-keywords))
+
 
 	     ;; Use global programming mode
 	     (programming-mode)

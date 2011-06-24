@@ -16,6 +16,8 @@
     (setq ac-sources
 	  '(
 	    ac-source-octave
+	    ;;ac-source-octave-variable
+	    ;;ac-source-octave-function
 	    ))))
 
 
