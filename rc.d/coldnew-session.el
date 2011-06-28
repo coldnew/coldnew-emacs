@@ -10,7 +10,6 @@
 
 
 
-
 ;;;;;;;; desktop
 ;;
 (when (require* 'desktop)
@@ -67,34 +66,35 @@
   )
 
 
-;;;;;;;; session
-;; When you start Emacs, package Session restores various variables (e.g.,
-;; input histories) from your last session.  It also provides a menu
-;; containing recently changed/visited files and restores the places (e.g.,
-;; point) of such a file when you revisit it.
-;;
-(when (require* 'session)
+;; ;;;;;;;; session
+;; ;; When you start Emacs, package Session restores various variables (e.g.,
+;; ;; input histories) from your last session.  It also provides a menu
+;; ;; containing recently changed/visited files and restores the places (e.g.,
+;; ;; point) of such a file when you revisit it.
+;; ;;
+;; (when (require* 'session)
 
-  (setq session-save-file (concat emacs-cache-dir "session.dat"))
+;;   (setq session-save-file (concat emacs-cache-dir "session.dat"))
 
-  ;; Memory-size setting
-  (setq session-globals-max-string  2048)
-  (setq session-registers-max-string 2048)
+;;   ;; Memory-size setting
+;;   (setq session-globals-max-string  2048)
+;;   (setq session-registers-max-string 2048)
 
-  (setq session-globals-include '((kill-ring 100)
-				  (session-file-alist 500)
-				  (file-name-history 1000)))
+;;   (setq session-globals-include '((kill-ring 100)
+;;				  (session-file-alist 500)
+;;				  (file-name-history 1000)))
 
-  (setq history-length t)
+;;   (setq history-length t)
 
-  (setq session-set-file-name-exclude-regexp
-	(concat
-	 "/\\.overview\\|\\.session\\|News/\\||^/var/folders/\\"
-	 "|^/tmp/\\|\\.orig\\|\\.elc\\|\\.pyc\\|\\.recentf\\|\\.howm-kyes"))
+;;   (setq session-set-file-name-exclude-regexp
+;;	(concat
+;;	 "/\\.overview\\|\\.session\\|News/\\||^/var/folders/\\"
+;;	 "|^/tmp/\\|\\.orig\\|\\.elc\\|\\.pyc\\|\\.recentf\\|\\.howm-kyes"))
 
-  (add-hook 'after-init-hook 'session-initialize)
+;;   (add-hook 'after-init-hook 'session-initialize)
 
-  )
+;;   )
+
 
 
 (provide 'coldnew-session)
