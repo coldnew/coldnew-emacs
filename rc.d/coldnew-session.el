@@ -65,6 +65,15 @@
 
   )
 
+;;;;;;;; Svaeplace
+(when  (require 'saveplace)
+  (setq save-place-file (concat emacs-cache-dir "saveplace.dat"))
+  (setq-default save-place t)
+  )
+
+
+
+;;;;;;;;;;;;;;;;;;;; deprecated code ;;;;;;;;;;;;;;;;;;;;
 
 ;; ;;;;;;;; session
 ;; ;; When you start Emacs, package Session restores various variables (e.g.,
