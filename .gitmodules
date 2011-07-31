@@ -25,3 +25,12 @@
 [submodule "lisp/auto-complete-clang"]
 	path = lisp/auto-complete-clang
 	url = https://github.com/mikeandmore/auto-complete-clang.git
+[submodule "lisp/ac-anything"]
+	path = lisp/ac-anything
+	url = https://github.com/emacsmirror/ac-anything.git
+[submodule "lisp/ac-slime"]
+	path = lisp/ac-slime
+	url = https://github.com/purcell/ac-slime.git
+[submodule "lisp/anything-config"]
+	path = lisp/anything-config
+	url = git://repo.or.cz/anything-config.git
