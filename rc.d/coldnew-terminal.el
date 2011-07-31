@@ -15,6 +15,19 @@
 (defvar emacs-popup-shell-window-position "bottom"
   "Make popup shell window at buttom by default.")
 
+;;;;;;;; Ansi-Color
+;; reset ansi-color to match with my theme
+;; default is [ "black" "red" "green" yellow" "blue" "magenta" "cyan" "white"]
+;;
+(when (require* 'ansi-color)
+  (setq ansi-color-names-vector
+	(vector (frame-parameter nil 'background-color)
+		"#ffffff" "#CA3839" "#8ae234" "#edd400"
+		"#729fcf" "#ad7fa8" "cyan3"   "#eeeeec")
+	ansi-term-color-vector ansi-color-names-vector
+	ansi-color-map (ansi-color-make-color-map))
+  )
+
 ;;;;;;;; Shell-pop
 ;;
 (when (require* 'shell-pop)
@@ -93,11 +106,11 @@
   (interactive)
   (if (equal (buffer-name) shell-pop-internal-mode-buffer)
       (progn
-       (shell-pop-out)
-       (vim-mode))
-      (progn
-       (shell-pop-up)
-       (vim-mode -1))))
+	(shell-pop-out)
+	(vim-mode))
+    (progn
+      (shell-pop-up)
+      (vim-mode -1))))
 
 
 
