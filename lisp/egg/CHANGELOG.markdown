@@ -1,5 +1,8 @@
 # Egg (Emacs Got Git).
 
+## v1.0.1
+- add feature to stage selected area on egg-status Thanks for jedbrown and mooz
+
 ## v1.0.0
 - add option comment for egg-mode-key-prefix
 - update indent .

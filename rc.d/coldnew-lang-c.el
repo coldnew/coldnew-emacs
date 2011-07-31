@@ -31,7 +31,7 @@
 	  (split-string
 	   (concat
 	    "-pthread -I./ -I../ "
-	    (shell-command-to-string "pkg-config --cflags-only-I gtk+-3.0")
+	    (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0")
 	    )))
     ))
 

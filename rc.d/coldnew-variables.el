@@ -21,7 +21,8 @@
   "cache file directory.")
 (defvar emacs-backup-dir (concat emacs-var-dir "backup/")
   "directory to back up files.")
-
+(defvar emacs-log-dir (concat emacs-var-dir "log/")
+  "log file directory.")
 
 ;;;;;;;; Variables
 (defvar mac?     (eq system-type 'darwin)

@@ -50,8 +50,9 @@
 (require 'electric)
 (require 'ediff)
 (require 'ffap)
+(require 'diff-mode)
 
-(defconst egg-version "1.0.0")
+(defconst egg-version "1.0.1")
 
 (defgroup egg nil
   "Controlling Git from Emacs."
@@ -2051,7 +2052,7 @@ physical offsets."
          (end (+ (nth 2 diff-info) beg)))
     (buffer-substring-no-properties beg end)))
 
-(defun egg-hunk-section-patch-string (&optional pos)
+(defun egg-hunk-section-patch-string (&optional pos reverse)
   "Build a single hunk patch based on the delta hunk at POS."
   (let* ((diff-info (get-text-property (or pos (point)) :diff))
          (head-beg (nth 1 diff-info))
@@ -2059,9 +2060,63 @@ physical offsets."
          (hunk-info (get-text-property (or pos (point)) :hunk))
          (hunk-beg (+ (nth 1 hunk-info) head-beg))
          (hunk-end (+ (nth 2 hunk-info) head-beg)))
-    ;; append hunk to diff header
-    (concat (buffer-substring-no-properties head-beg head-end)
-            (buffer-substring-no-properties hunk-beg hunk-end))))
+    ;; craete diff patch
+    (if (egg-use-region-p)
+        (egg-hunk-section-patch-region-string pos diff-info reverse)
+      (concat (buffer-substring-no-properties head-beg head-end)
+              (buffer-substring-no-properties hunk-beg hunk-end)))))
+
+(defun egg-use-region-p ()
+  (if (fboundp 'use-region-p)
+      (use-region-p)
+    (and transient-mark-mode mark-active)))
+
+(defun egg-insert-current-line-buffer (buf)
+  (egg-insert-string-buffer (egg-current-line-string) buf))
+
+(defun egg-current-line-string ()
+  (buffer-substring-no-properties
+   (line-beginning-position) (line-beginning-position 2)))
+
+(defun egg-insert-string-buffer (string buf)
+  (with-current-buffer buf
+     (insert string)))
+
+(defun egg-hunk-section-patch-region-string (pos diff-info reverse)
+  (let* ((head-beg (nth 1 diff-info))
+         (head-end (+ (nth 3 diff-info) head-beg))
+         (hunk-info (get-text-property (or pos (point)) :hunk))
+         (hunk-beg (+ (nth 1 hunk-info) head-beg))
+         (hunk-end (+ (nth 2 hunk-info) head-beg))
+         (beg (region-beginning))
+         (end (region-end))
+         (hunk-buf (current-buffer)))
+    (with-temp-buffer
+      (let ((buf (current-buffer)))
+        (with-current-buffer hunk-buf
+          ;; insert header
+          (egg-insert-string-buffer
+           (buffer-substring-no-properties head-beg head-end) buf)
+          (goto-char hunk-beg)
+          ;; insert beginning of hunk
+          (egg-insert-current-line-buffer buf)
+          (forward-line)
+          (let ((copy-op (if reverse "+" "-")))
+            (while (< (point) hunk-end)
+              (if (and (<= beg (point)) (< (point) end))
+                  (egg-insert-current-line-buffer buf)
+                (cond ((looking-at " ")
+                       (egg-insert-current-line-buffer buf))
+                      ((looking-at copy-op)
+                       (egg-insert-string-buffer
+                        (concat
+                         " "
+                         (buffer-substring-no-properties
+                          (+ (point) 1) (line-beginning-position 2))) buf))))
+              (forward-line))))
+        ;; with current buffer `buf'
+        (diff-fixup-modifs (point-min) (point-max))
+        (buffer-string)))))
 
 ;;;========================================================
 ;;; Buffer
@@ -2358,7 +2413,7 @@ rebase session."
    (egg-pretty-help-text
     "\\<egg-unstaged-diff-section-map>\n"
     "\\[egg-diff-section-cmd-visit-file-other-window]:visit file/line  "
-    "\\[egg-diff-section-cmd-stage]:stage/unstage file/hunk  "
+    "\\[egg-diff-section-cmd-stage]:stage/unstage file/hunk/selected area  "
     "\\[egg-diff-section-cmd-undo]:undo file/hunk's modifications\n")))
 
 (defun egg-sb-insert-repo-section ()
@@ -2907,7 +2962,7 @@ If INIT was not nil, then perform 1st-time initializations as well."
       (cons file output))))
 
 (defun egg-hunk-section-patch-cmd (pos program &rest args)
-  (let ((patch (egg-hunk-section-patch-string pos))
+  (let ((patch (egg-hunk-section-patch-string pos (find "--reverse" args)))
         (file (car (get-text-property pos :diff))))
     (unless (stringp file)
       (error "No diff with file-name here!"))

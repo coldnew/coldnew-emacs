@@ -31,10 +31,12 @@
   (add-hook 'egg-log-msg-mode-hook
 	    '(lambda ()
 	       (when (require* 'vim)
-		 (vim:local-nmap (kbd "c") 'egg-log-msg-done))
-	       )
+		 (vim:local-nmap (kbd "c") 'egg-log-msg-done)
+		 ;; TODO: no use
+		 ;; (vim:local-nmap (kbd "U") 'egg-log-buffer-push-to-remote)
+		 ;; (vim:local-nmap (kbd "u") 'egg-log-buffer-push-to-local)
+		 ))
 	    )
-
 ;;;;;;;; Advice
 
   (defadvice egg-status (around goto-egg-status-buffer activate)

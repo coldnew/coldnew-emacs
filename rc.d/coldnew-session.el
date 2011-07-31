@@ -66,6 +66,7 @@
   )
 
 ;;;;;;;; Svaeplace
+;;
 (when  (require 'saveplace)
   (setq save-place-file (concat emacs-cache-dir "saveplace.dat"))
   (setq-default save-place t)
