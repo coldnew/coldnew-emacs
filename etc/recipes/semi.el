@@ -1,4 +1,5 @@
 (:name semi
+       :depends (apel flim)
        :type cvs
        :module "semi"
        :url ":pserver:anonymous@cvs.m17n.org:/cvs/root"
@@ -14,6 +15,8 @@
 
                  (split-string "-batch -q -no-site-file -l SEMI-MK -f")
                  target
-                 "prefix" "NONE" "NONE"))
-         '("compile-semi" "install-semi"))))
+                 "prefix" "site-lisp" "site-lisp"))
+         '("compile-semi" "install-semi")))
+        :load-path ("site-lisp/semi/")
+       )
 
