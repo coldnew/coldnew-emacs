@@ -1,7 +1,6 @@
 ;;
 (eval-when-compile (require 'cl))
 
-
 ;;;;;;;; Packages Import
 (require 'coldnew-macro)
 (require 'coldnew-functions)
@@ -35,6 +34,7 @@
 (vim:nmap (kbd "C-x M-i") 'ielm-toggle)
 (vim:nmap (kbd "<f1>") 'woman)
 (vim:nmap (kbd "K") 'anything-man-woman)
+(vim:nmap (kbd "C-x C-r") 'sudo-edit)
 
 ;;;;;;;; Insert Map
 (vim:imap (kbd "C-x C-b") 'ibuffer)
@@ -58,6 +58,7 @@
 (vim:imap (kbd "C-x M-i") 'ielm-toggle)
 (vim:imap (kbd "<f1>") 'woman)
 (vim:imap (kbd "C-u") 'universal-argument)
+(vim:imap (kbd "C-x C-r") 'sudo-edit)
 
 
 ;;;;;;; Visual Map
@@ -91,6 +92,7 @@
 (global-set-key (kbd "M-x") 'anything-M-x)
 (global-set-key (kbd "C-x M-S") 'scratch-toggle)
 (global-set-key (kbd "C-x M-i") 'ielm-toggle)
+(global-set-key (kbd "C-x C-r") 'sudo-edit)
 
 (provide 'coldnew-keybinding)
 ;; coldnew-keybinding.el ends here.
