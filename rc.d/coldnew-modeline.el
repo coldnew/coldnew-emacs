@@ -27,6 +27,11 @@
     ))
 
 
+(defun mode-line-major-mode ()
+  "Get major-mode name with << >>."
+  (concat "<< " (propertize mode-name 'face 'mode-line-mode-name-face) " >>")
+  )
+
 ;;TODO: add mode line face
 ;; (setq mode-line-in-non-selected-windows nil)
 ;;;;;;;; Settings
@@ -48,11 +53,11 @@
 		 (vc-mode vc-mode)
 		 "   "
 		 ;;; major-mode name
-		 "<< "
+		 (:eval (mode-line-major-mode))
+
 		 ;; (:propertize mode-name
 		 ;;	      help-echo (format-mode-line minor-mode-alist)
 		 ;;	      face 'mode-line-mode-name-face)
-		 " >>"
 		 " (" minor-mode-alist " )"
 		 "   "
 		 mode-line-position
