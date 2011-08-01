@@ -7,13 +7,6 @@
 (require 'coldnew-commands)
 (require 'coldnew-variables)
 
-;;;;;;;; Variables
-(defvar emacs-default-shell "/bin/bash"
-  "Default shell for cemacs.")
-(defvar emacs-popup-shell-window-height 20
-  "Window hight of popup shell.")
-(defvar emacs-popup-shell-window-position "bottom"
-  "Make popup shell window at buttom by default.")
 
 ;;;;;;;; Ansi-Color
 ;; reset ansi-color to match with my theme
@@ -32,6 +25,7 @@
 ;;
 (when (require* 'shell-pop)
   (shell-pop-set-internal-mode "ansi-term")
+  ;;  (shell-pop-set-internal-mode "multi-term")
   (shell-pop-set-internal-mode-shell emacs-default-shell)
   (shell-pop-set-window-height emacs-popup-shell-window-height)
   (shell-pop-set-window-position emacs-popup-shell-window-position)
@@ -54,6 +48,7 @@
 	    '(lambda ()
 	       ;; Add new key-map
 	       (define-key term-raw-map (kbd "<f4>") 'shell-pop)
+	       (define-key term-raw-map (kbd "M-x") 'anything-M-x)
 	       ))
   )
 

@@ -23,6 +23,7 @@
 (vim:nmap (kbd "C-+") 'text-scale-increase)
 (vim:nmap (kbd "C--") 'text-scale-decrease)
 (vim:nmap (kbd "<f4>") 'shell-pop)
+(vim:nmap (kbd "C-x <f4>") 'switch-to-terminal)
 (vim:nmap (kbd "C-x M-s") 'egg-status)
 (vim:nmap (kbd "C-x M-l") 'egg-log)
 (vim:nmap (kbd "C-;") 'iedit-mode)
@@ -46,6 +47,7 @@
 (vim:imap (kbd "C-+") 'text-scale-increase)
 (vim:imap (kbd "C--") 'text-scale-decrease)
 (vim:imap (kbd "<f4>") 'shell-pop)
+(vim:imap (kbd "C-x <f4>") 'switch-to-terminal)
 (vim:imap (kbd "C-x M-s") 'egg-status)
 (vim:imap (kbd "C-x M-l") 'egg-log)
 (vim:imap (kbd "<backspace>") 'hungry-delete-backward)
@@ -76,6 +78,7 @@
 ;;;;;;;; Emacs Map
 (global-set-key (kbd "<f1>") 'woman)
 (global-set-key (kbd "<f4>") 'shell-pop)
+(global-set-key (kbd "C-x <f4>") 'switch-to-terminal)
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "C-=") 'text-scale-increase)
@@ -88,7 +91,6 @@
 (global-set-key (kbd "M-x") 'anything-M-x)
 (global-set-key (kbd "C-x M-S") 'scratch-toggle)
 (global-set-key (kbd "C-x M-i") 'ielm-toggle)
-
 
 (provide 'coldnew-keybinding)
 ;; coldnew-keybinding.el ends here.

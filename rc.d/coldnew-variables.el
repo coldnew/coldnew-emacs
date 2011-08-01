@@ -24,6 +24,13 @@
 (defvar emacs-log-dir (concat emacs-var-dir "log/")
   "log file directory.")
 
+(defvar emacs-default-shell "/bin/bash"
+  "Default shell for cemacs.")
+(defvar emacs-popup-shell-window-height 30
+  "Window hight of popup shell.")
+(defvar emacs-popup-shell-window-position "bottom"
+  "Make popup shell window at buttom by default.")
+
 ;;;;;;;; Variables
 (defvar mac?     (eq system-type 'darwin)
   "Return nil if OS is not Mac.")

@@ -7,6 +7,20 @@
 (require 'coldnew-variables)
 
 
+;;;;;;;; Terminal
+;; TODO: I don't like previous buffer is ibuffer.
+(defun switch-to-terminal ()
+  "If there is no *ansi-term*, run it and switch to *ansi-term*.
+   If there is one running, switch to that buffer.
+   If we are in an *ansi-term*, switch to previous buffer."
+  (interactive)
+  (if (equal (buffer-name) "*ansi-term*")
+      (previous-buffer)
+    (if (get-buffer "*ansi-term*")
+	(switch-to-buffer "*ansi-term*")
+      (ansi-term emacs-default-shell)))
+  )
+
 ;;;;;;;; Screenshot
 (defun save-screenshots (name)
   "Save shot fullscreen"
