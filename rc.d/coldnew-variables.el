@@ -84,6 +84,11 @@
   "face for vim-string in visual-map on mode-line."
   :group 'mode-line)
 
+(defface mode-line-vim-string-E
+  '((t (:inherit font-lock-string-face)))
+  "face for vim-string in emacs-map on mode-line."
+  :group 'mode-line)
+
 
 
 

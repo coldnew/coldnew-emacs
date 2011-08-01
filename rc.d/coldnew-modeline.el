@@ -13,12 +13,14 @@
 
 (defun vim-mode-string ()
   (let ((vim-string (substring vim:mode-string 1 2))
-	(vim-string-face 'white))
+	;;	(vim-string-face "white")
+	)
     (setq vim-string-face
 	  (cond
 	   ((string= "N" vim-string) 'mode-line-vim-string-N)
 	   ((string= "I" vim-string) 'mode-line-vim-string-I)
 	   ((string= "V" vim-string) 'mode-line-vim-string-V)
+	   ((string= "E" vim-string) 'mode-line-vim-string-E)
 	   ))
 
     (concat "<" (propertize vim-string 'face vim-string-face) ">")
@@ -47,9 +49,9 @@
 		 "   "
 		 ;;; major-mode name
 		 "<< "
-		 (:propertize mode-name
-			      help-echo (format-mode-line minor-mode-alist)
-			      face 'mode-line-mode-name-face)
+		 ;; (:propertize mode-name
+		 ;;	      help-echo (format-mode-line minor-mode-alist)
+		 ;;	      face 'mode-line-mode-name-face)
 		 " >>"
 		 " (" minor-mode-alist " )"
 		 "   "
