@@ -52,6 +52,7 @@
   ;;;; Keybindings
   (add-hook 'term-mode-hook
 	    '(lambda ()
+	       ;; Add new key-map
 	       (define-key term-raw-map (kbd "<f4>") 'shell-pop)
 	       ))
   )
@@ -76,7 +77,6 @@
   ;;;; Keybindings
   (add-hook 'comint-mode-hook
 	    '(lambda ()
-
 	       (when (require* 'vim)
 		 ;; Normal map
 		 (vim:local-nmap (kbd "M-k") 'comint-previous-input)
@@ -107,11 +107,21 @@
   (if (equal (buffer-name) shell-pop-internal-mode-buffer)
       (progn
 	(shell-pop-out)
-	(vim-mode))
+	(vim:normal-mode)
+	)
     (progn
       (shell-pop-up)
-      (vim-mode -1))))
+      (vim:emacs-mode)
+      )))
 
+;; ;; Use emacs-key instead of Vim-key in term-mode
+;; ;; TODO: is there a better way to do this?
+(defadvice switch-to-buffer (after switch-to-buffer activate)
+  "After switch-to-buffer, if tht buffer is term-mode, disable vim-mode."
+  (if (equal major-mode 'term-mode)
+      (vim:emacs-mode)
+    (vim:normal-mode)
+    ))
 
 
 (provide 'coldnew-terminal)

@@ -73,6 +73,21 @@
 (vim:wmap (kbd "C-w C-d") 'nav-toggle)
 
 
+;;;;;;;; Emacs Map
+(global-set-key (kbd "<f1>") 'woman)
+(global-set-key (kbd "<f4>") 'shell-pop)
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C-M-X") 'smex)
+(global-set-key (kbd "C-c C-e") 'eval-and-replace)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x C-s") 'save-buffer-always)
+(global-set-key (kbd "C-x M-l") 'egg-log)
+(global-set-key (kbd "C-x M-s") 'egg-status)
+(global-set-key (kbd "M-x") 'anything-M-x)
+(global-set-key (kbd "C-x M-S") 'scratch-toggle)
+(global-set-key (kbd "C-x M-i") 'ielm-toggle)
 
 
 (provide 'coldnew-keybinding)

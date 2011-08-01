@@ -32,7 +32,7 @@
 
 (define-obsolete-variable-alias
   'company-gtags-gnu-global-program-name
-  'company-gtags-executable)
+  'company-gtags-executable "earlier")
 
 (defvar company-gtags--tags-available-p 'unknown)
 (make-variable-buffer-local 'company-gtags--tags-available-p)

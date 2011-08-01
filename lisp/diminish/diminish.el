@@ -109,7 +109,7 @@
 (eval-when-compile (require 'cl))
 
 (defvar diminish-must-not-copy-minor-mode-alist nil
-  "Non-nil means loading diminish.el won't (copy-alist minor-mode-alist).
+"Non-nil means loading diminish.el won't (copy-alist minor-mode-alist).
 Normally `minor-mode-alist' is setq to that copy on loading diminish because
 at least one of its cons cells, that for abbrev-mode, is read-only (see
 ELisp Info on \"pure storage\").  If you setq this variable to t & then
@@ -117,16 +117,16 @@ try to diminish abbrev-mode under GNU Emacs 19.34, you'll get the error
 message \"Attempt to modify read-only object\".")
 
 (or diminish-must-not-copy-minor-mode-alist
-    (callf copy-alist minor-mode-alist))
+(callf copy-alist minor-mode-alist))
 
 (defvar diminished-mode-alist nil
-  "The original `minor-mode-alist' value of all (diminish)ed modes.")
+"The original `minor-mode-alist' value of all (diminish)ed modes.")
 
 (defvar diminish-history-symbols nil
-  "Command history for symbols of diminished modes.")
+"Command history for symbols of diminished modes.")
 
 (defvar diminish-history-names nil
-  "Command history for names of diminished modes.")
+"Command history for names of diminished modes.")
 
 ;; When we diminish a mode, we are saying we want it to continue doing its
 ;; work for us, but we no longer want to be reminded of it.  It becomes a
@@ -153,7 +153,7 @@ message \"Attempt to modify read-only object\".")
 
 ;;;###autoload
 (defun diminish (mode &optional to-what)
-  "Diminish mode-line display of minor mode MODE to TO-WHAT (default \"\").
+"Diminish mode-line display of minor mode MODE to TO-WHAT (default \"\").
 
 Interactively, enter (with completion) the name of any minor mode, followed
 on the next line by what you want it diminished to (default empty string).
@@ -168,23 +168,23 @@ letters for some modes, without leading spaces.  Capitalizing them works
 best; if you then diminish some mode to \"X\" but have abbrev-mode enabled as
 well, you'll get a display like \"AbbrevX\".  This function prepends a space
 to TO-WHAT if it's > 1 char long & doesn't already begin with a space."
-  (interactive (list (read (completing-read
-                            "Diminish what minor mode: "
-                            (mapcar (lambda (x) (list (symbol-name (car x))))
-                                    minor-mode-alist)
-                            nil t nil 'diminish-history-symbols))
-                     (read-from-minibuffer
-                      "To what mode-line display: "
-                      nil nil nil 'diminish-history-names)))
-  (let ((minor (assq mode minor-mode-alist)))
-    (or minor (error "%S is not currently registered as a minor mode" mode))
-    (callf or to-what "")
-    (when (> (length to-what) 1)
-      (or (= (string-to-char to-what) ?\ )
-          (callf2 concat " " to-what)))
-    (or (assq mode diminished-mode-alist)
-        (push (copy-sequence minor) diminished-mode-alist))
-    (setcdr minor (list to-what))))
+(interactive (list (read (completing-read
+"Diminish what minor mode: "
+(mapcar (lambda (x) (list (symbol-name (car x))))
+minor-mode-alist)
+nil t nil 'diminish-history-symbols))
+(read-from-minibuffer
+"To what mode-line display: "
+nil nil nil 'diminish-history-names)))
+(let ((minor (assq mode minor-mode-alist)))
+(or minor (error "%S is not currently registered as a minor mode" mode))
+(callf or to-what "")
+(when (> (length to-what) 1)
+(or (= (string-to-char to-what) ?\ )
+(callf2 concat " " to-what)))
+(or (assq mode diminished-mode-alist)
+(push (copy-sequence minor) diminished-mode-alist))
+(setcdr minor (list to-what))))
 
 ;; But an image comes to me, vivid in its unreality, of a loon alone on his
 ;; forest lake, shrieking his soul out into a canopy of stars.  Alone this
@@ -204,7 +204,7 @@ to TO-WHAT if it's > 1 char long & doesn't already begin with a space."
 
 ;;;###autoload
 (defun diminish-undo (mode)
-  "Restore mode-line display of diminished mode MODE to its minor-mode value.
+"Restore mode-line display of diminished mode MODE to its minor-mode value.
 Do nothing if the arg is a minor mode that hasn't been diminished.
 
 Interactively, enter (with completion) the name of any diminished mode (a
@@ -212,24 +212,24 @@ mode that was formerly a minor mode on which you invoked M-x diminish).
 To restore all diminished modes to minor status, answer `diminished-modes'.
 The response to the prompt shouldn't be quoted.  However, in Lisp code,
 the arg must be quoted as a symbol, as in (diminish-undo 'diminished-modes)."
-  (interactive
-   (list (read (completing-read
-                "Restore what diminished mode: "
-                (cons (list "diminished-modes")
-                      (mapcar (lambda (x) (list (symbol-name (car x))))
-                              diminished-mode-alist))
-                nil t nil 'diminish-history-symbols))))
-  (if (eq mode 'diminished-modes)
-      (let ((diminished-modes diminished-mode-alist))
-        (while diminished-modes
-          (diminish-undo (caar diminished-modes))
-          (callf cdr diminished-modes)))
-    (let ((minor      (assq mode      minor-mode-alist))
-          (diminished (assq mode diminished-mode-alist)))
-      (or minor
-          (error "%S is not currently registered as a minor mode" mode))
-      (when diminished
-        (setcdr minor (cdr diminished))))))
+(interactive
+(list (read (completing-read
+"Restore what diminished mode: "
+(cons (list "diminished-modes")
+(mapcar (lambda (x) (list (symbol-name (car x))))
+diminished-mode-alist))
+nil t nil 'diminish-history-symbols))))
+(if (eq mode 'diminished-modes)
+(let ((diminished-modes diminished-mode-alist))
+(while diminished-modes
+(diminish-undo (caar diminished-modes))
+(callf cdr diminished-modes)))
+(let ((minor      (assq mode      minor-mode-alist))
+(diminished (assq mode diminished-mode-alist)))
+(or minor
+(error "%S is not currently registered as a minor mode" mode))
+(when diminished
+(setcdr minor (cdr diminished))))))
 
 ;; Plumber Bob was not from Seattle, my grey city, for rainy Seattle is a
 ;; city of interiors, a city of the self-diminished.  When I moved here one
@@ -242,33 +242,33 @@ the arg must be quoted as a symbol, as in (diminish-undo 'diminished-modes)."
 
 ;;;###autoload
 (defun diminished-modes ()
-  "Echo all active diminished or minor modes as if they were minor.
+"Echo all active diminished or minor modes as if they were minor.
 The display goes in the echo area; if it's too long even for that,
 you can see the whole thing in the *Messages* buffer.
 This doesn't change the status of any modes; it just lets you see
 what diminished modes would be on the mode-line if they were still minor."
-  (interactive)
-  (let ((minor-modes minor-mode-alist)
-        message)
-    (while minor-modes
-      (when (symbol-value (caar minor-modes))
-        ;; This minor mode is active in this buffer
-        (let* ((mode-pair (car minor-modes))
-               (mode (car mode-pair))
-               (minor-pair (or (assq mode diminished-mode-alist) mode-pair))
-               (minor-name (cadr minor-pair)))
-          (when (symbolp minor-name)
-            ;; This minor mode uses symbol indirection in the cdr
-            (let ((symbols-seen (list minor-name)))
-              (while (and (symbolp (callf symbol-value minor-name))
-                          (not (memq minor-name symbols-seen)))
-                (push minor-name symbols-seen))))
-          (push minor-name message)))
-      (callf cdr minor-modes))
-    (setq message (mapconcat 'identity (nreverse message) ""))
-    (when (= (string-to-char message) ?\ )
-      (callf substring message 1))
-    (message "%s" message)))
+(interactive)
+(let ((minor-modes minor-mode-alist)
+message)
+(while minor-modes
+(when (symbol-value (caar minor-modes))
+;; This minor mode is active in this buffer
+(let* ((mode-pair (car minor-modes))
+(mode (car mode-pair))
+(minor-pair (or (assq mode diminished-mode-alist) mode-pair))
+(minor-name (cadr minor-pair)))
+(when (symbolp minor-name)
+;; This minor mode uses symbol indirection in the cdr
+(let ((symbols-seen (list minor-name)))
+(while (and (symbolp (callf symbol-value minor-name))
+(not (memq minor-name symbols-seen)))
+(push minor-name symbols-seen))))
+(push minor-name message)))
+(callf cdr minor-modes))
+(setq message (mapconcat 'identity (nreverse message) ""))
+(when (= (string-to-char message) ?\ )
+(callf substring message 1))
+(message "%s" message)))
 
 ;; A human mind is a Black Forest of diminished modes.  Some are dangerous;
 ;; most of the mind of an intimate is a secret stranger, and these diminished

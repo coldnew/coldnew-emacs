@@ -87,56 +87,56 @@
 (push "^No symbol at point$" debug-ignored-errors)
 
 (defgroup highlight-symbol nil
-  "Automatic and manual symbols highlighting"
-  :group 'faces
-  :group 'matching)
+"Automatic and manual symbols highlighting"
+:group 'faces
+:group 'matching)
 
 (defface highlight-symbol-face
-  '((((class color) (background dark))
-     (:background "gray30"))
-    (((class color) (background light))
-     (:background "gray90")))
-  "*Face used by `highlight-symbol-mode'."
-  :group 'highlight-symbol)
+'((((class color) (background dark))
+(:background "gray30"))
+(((class color) (background light))
+(:background "gray90")))
+"*Face used by `highlight-symbol-mode'."
+:group 'highlight-symbol)
 
 (defvar highlight-symbol-timer nil)
 
 (defun highlight-symbol-update-timer (value)
-  (when highlight-symbol-timer
-    (cancel-timer highlight-symbol-timer))
-  (setq highlight-symbol-timer
-        (and value (/= value 0)
-             (run-with-idle-timer value t 'highlight-symbol-temp-highlight))))
+(when highlight-symbol-timer
+(cancel-timer highlight-symbol-timer))
+(setq highlight-symbol-timer
+(and value (/= value 0)
+(run-with-idle-timer value t 'highlight-symbol-temp-highlight))))
 
 (defvar highlight-symbol-mode nil)
 
 (defun highlight-symbol-set (symbol value)
-  (when symbol (set symbol value))
-  (when highlight-symbol-mode
-    (highlight-symbol-update-timer value)))
+(when symbol (set symbol value))
+(when highlight-symbol-mode
+(highlight-symbol-update-timer value)))
 
 (defcustom highlight-symbol-idle-delay 1.5
-  "*Number of seconds of idle time before highlighting the current symbol.
+"*Number of seconds of idle time before highlighting the current symbol.
 If this variable is set to 0, no idle time is required.
 Changing this does not take effect until `highlight-symbol-mode' has been
 disabled for all buffers."
-  :type 'number
-  :set 'highlight-symbol-set
-  :group 'highlight-symbol)
+:type 'number
+:set 'highlight-symbol-set
+:group 'highlight-symbol)
 
 (defcustom highlight-symbol-colors
-  '("yellow" "DeepPink" "cyan" "MediumPurple1" "SpringGreen1"
-    "DarkOrange" "HotPink1" "RoyalBlue1" "OliveDrab")
-  "*Colors used by `highlight-symbol-at-point'.
+'("yellow" "DeepPink" "cyan" "MediumPurple1" "SpringGreen1"
+"DarkOrange" "HotPink1" "RoyalBlue1" "OliveDrab")
+"*Colors used by `highlight-symbol-at-point'.
 highlighting the symbols will use these colors in order."
-  :type '(repeat color)
-  :group 'highlight-symbol)
+:type '(repeat color)
+:group 'highlight-symbol)
 
 (defcustom highlight-symbol-on-navigation-p nil
-  "*Wether or not to temporary highlight the symbol when using
+"*Wether or not to temporary highlight the symbol when using
 `highlight-symbol-jump' family of functions."
-  :type 'boolean
-  :group 'highlight-symbol)
+:type 'boolean
+:group 'highlight-symbol)
 
 (defvar highlight-symbol-color-index 0)
 (make-variable-buffer-local 'highlight-symbol-color-index)
@@ -148,160 +148,160 @@ highlighting the symbols will use these colors in order."
 (make-variable-buffer-local 'highlight-symbol-list)
 
 (defconst highlight-symbol-border-pattern
-  (if (>= emacs-major-version 22) '("\\_<" . "\\_>") '("\\<" . "\\>")))
+(if (>= emacs-major-version 22) '("\\_<" . "\\_>") '("\\<" . "\\>")))
 
 ;;;###autoload
 (define-minor-mode highlight-symbol-mode
-  "Minor mode that highlights the symbol under point throughout the buffer.
+"Minor mode that highlights the symbol under point throughout the buffer.
 Highlighting takes place after `highlight-symbol-idle-delay'."
-  nil " hl-s" nil
-  (if highlight-symbol-mode
-      ;; on
-      (let ((hi-lock-archaic-interface-message-used t))
-        (unless hi-lock-mode (hi-lock-mode 1))
-        (highlight-symbol-update-timer highlight-symbol-idle-delay)
-        (add-hook 'post-command-hook 'highlight-symbol-mode-post-command nil t))
-    ;; off
-    (remove-hook 'post-command-hook 'highlight-symbol-mode-post-command t)
-    (highlight-symbol-mode-remove-temp)
-    (kill-local-variable 'highlight-symbol)))
+nil " hl-s" nil
+(if highlight-symbol-mode
+;; on
+(let ((hi-lock-archaic-interface-message-used t))
+(unless hi-lock-mode (hi-lock-mode 1))
+(highlight-symbol-update-timer highlight-symbol-idle-delay)
+(add-hook 'post-command-hook 'highlight-symbol-mode-post-command nil t))
+;; off
+(remove-hook 'post-command-hook 'highlight-symbol-mode-post-command t)
+(highlight-symbol-mode-remove-temp)
+(kill-local-variable 'highlight-symbol)))
 
 ;;;###autoload
 (defun highlight-symbol-at-point ()
-  "Toggle highlighting of the symbol at point.
+"Toggle highlighting of the symbol at point.
 This highlights or unhighlights the symbol at point using the first
 element in of `highlight-symbol-faces'."
-  (interactive)
-  (let ((symbol (highlight-symbol-get-symbol)))
-    (unless symbol (error "No symbol at point"))
-    (unless hi-lock-mode (hi-lock-mode 1))
-    (if (member symbol highlight-symbol-list)
-        ;; remove
-        (progn
-          (setq highlight-symbol-list (delete symbol highlight-symbol-list))
-          (hi-lock-unface-buffer symbol))
-      ;; add
-      (when (equal symbol highlight-symbol)
-        (highlight-symbol-mode-remove-temp))
-      (let ((color (nth highlight-symbol-color-index
-                        highlight-symbol-colors)))
-        (if color ;; wrap
-            (incf highlight-symbol-color-index)
-          (setq highlight-symbol-color-index 1
-                color (car highlight-symbol-colors)))
-        (setq color `((background-color . ,color)
-                      (foreground-color . "black")))
-        ;; highlight
-        (with-no-warnings
-          (if (< emacs-major-version 22)
-              (hi-lock-set-pattern `(,symbol (0 (quote ,color) t)))
-            (hi-lock-set-pattern symbol color)))
-        (push symbol highlight-symbol-list)))))
+(interactive)
+(let ((symbol (highlight-symbol-get-symbol)))
+(unless symbol (error "No symbol at point"))
+(unless hi-lock-mode (hi-lock-mode 1))
+(if (member symbol highlight-symbol-list)
+;; remove
+(progn
+(setq highlight-symbol-list (delete symbol highlight-symbol-list))
+(hi-lock-unface-buffer symbol))
+;; add
+(when (equal symbol highlight-symbol)
+(highlight-symbol-mode-remove-temp))
+(let ((color (nth highlight-symbol-color-index
+highlight-symbol-colors)))
+(if color ;; wrap
+(incf highlight-symbol-color-index)
+(setq highlight-symbol-color-index 1
+color (car highlight-symbol-colors)))
+(setq color `((background-color . ,color)
+(foreground-color . "black")))
+;; highlight
+(with-no-warnings
+(if (< emacs-major-version 22)
+(hi-lock-set-pattern `(,symbol (0 (quote ,color) t)))
+(hi-lock-set-pattern symbol color)))
+(push symbol highlight-symbol-list)))))
 
 ;;;###autoload
 (defun highlight-symbol-remove-all ()
-  "Remove symbol highlighting in buffer."
-  (interactive)
-  (mapc 'hi-lock-unface-buffer highlight-symbol-list)
-  (setq highlight-symbol-list nil))
+"Remove symbol highlighting in buffer."
+(interactive)
+(mapc 'hi-lock-unface-buffer highlight-symbol-list)
+(setq highlight-symbol-list nil))
 
 ;;;###autoload
 (defun highlight-symbol-next ()
-  "Jump to the next location of the symbol at point within the function."
-  (interactive)
-  (highlight-symbol-jump 1))
+"Jump to the next location of the symbol at point within the function."
+(interactive)
+(highlight-symbol-jump 1))
 
 ;;;###autoload
 (defun highlight-symbol-prev ()
-  "Jump to the previous location of the symbol at point within the function."
-  (interactive)
-  (highlight-symbol-jump -1))
+"Jump to the previous location of the symbol at point within the function."
+(interactive)
+(highlight-symbol-jump -1))
 
 ;;;###autoload
 (defun highlight-symbol-next-in-defun ()
-  "Jump to the next location of the symbol at point within the defun."
-  (interactive)
-  (save-restriction
-    (narrow-to-defun)
-    (highlight-symbol-jump 1)))
+"Jump to the next location of the symbol at point within the defun."
+(interactive)
+(save-restriction
+(narrow-to-defun)
+(highlight-symbol-jump 1)))
 
 ;;;###autoload
 (defun highlight-symbol-prev-in-defun ()
-  "Jump to the previous location of the symbol at point within the defun."
-  (interactive)
-  (save-restriction
-    (narrow-to-defun)
-    (highlight-symbol-jump -1)))
+"Jump to the previous location of the symbol at point within the defun."
+(interactive)
+(save-restriction
+(narrow-to-defun)
+(highlight-symbol-jump -1)))
 
 ;;;###autoload
 (defun highlight-symbol-query-replace (replacement)
-  "*Replace the symbol at point."
-  (interactive (let ((symbol (or (thing-at-point 'symbol)
-                                 (error "No symbol at point"))))
-                 (highlight-symbol-temp-highlight)
-                 (set query-replace-to-history-variable
-                      (cons (substring-no-properties symbol)
-                            (eval query-replace-to-history-variable)))
-                 (list
-                  (read-from-minibuffer "Replacement: " nil nil nil
-                                        query-replace-to-history-variable))))
-  (goto-char (beginning-of-thing 'symbol))
-  (query-replace-regexp (highlight-symbol-get-symbol) replacement))
+"*Replace the symbol at point."
+(interactive (let ((symbol (or (thing-at-point 'symbol)
+(error "No symbol at point"))))
+(highlight-symbol-temp-highlight)
+(set query-replace-to-history-variable
+(cons (substring-no-properties symbol)
+(eval query-replace-to-history-variable)))
+(list
+(read-from-minibuffer "Replacement: " nil nil nil
+query-replace-to-history-variable))))
+(goto-char (beginning-of-thing 'symbol))
+(query-replace-regexp (highlight-symbol-get-symbol) replacement))
 
 (defun highlight-symbol-get-symbol ()
-  "Return a regular expression dandifying the symbol at point."
-  (let ((symbol (thing-at-point 'symbol)))
-    (when symbol (concat (car highlight-symbol-border-pattern)
-                         (regexp-quote symbol)
-                         (cdr highlight-symbol-border-pattern)))))
+"Return a regular expression dandifying the symbol at point."
+(let ((symbol (thing-at-point 'symbol)))
+(when symbol (concat (car highlight-symbol-border-pattern)
+(regexp-quote symbol)
+(cdr highlight-symbol-border-pattern)))))
 
 (defun highlight-symbol-temp-highlight ()
-  "Highlight the current symbol until a command is executed."
-  (when highlight-symbol-mode
-    (let ((symbol (highlight-symbol-get-symbol)))
-      (unless (or (equal symbol highlight-symbol)
-                  (member symbol highlight-symbol-list))
-        (highlight-symbol-mode-remove-temp)
-        (when symbol
-          (setq highlight-symbol symbol)
-          (hi-lock-set-pattern symbol 'highlight-symbol-face))))))
+"Highlight the current symbol until a command is executed."
+(when highlight-symbol-mode
+(let ((symbol (highlight-symbol-get-symbol)))
+(unless (or (equal symbol highlight-symbol)
+(member symbol highlight-symbol-list))
+(highlight-symbol-mode-remove-temp)
+(when symbol
+(setq highlight-symbol symbol)
+(hi-lock-set-pattern symbol 'highlight-symbol-face))))))
 
 (defun highlight-symbol-mode-remove-temp ()
-  "Remove the temporary symbol highlighting."
-  (when highlight-symbol
-    (hi-lock-unface-buffer highlight-symbol)
-    (setq highlight-symbol nil)))
+"Remove the temporary symbol highlighting."
+(when highlight-symbol
+(hi-lock-unface-buffer highlight-symbol)
+(setq highlight-symbol nil)))
 
 (defun highlight-symbol-mode-post-command ()
-  "After a command, change the temporary highlighting.
+"After a command, change the temporary highlighting.
 Remove the temporary symbol highlighting and, unless a timeout is specified,
 create the new one."
-  (if (eq this-command 'highlight-symbol-jump)
-      (when highlight-symbol-on-navigation-p
-        (highlight-symbol-temp-highlight))
-    (if (eql highlight-symbol-idle-delay 0)
-        (highlight-symbol-temp-highlight)
-      (highlight-symbol-mode-remove-temp))))
+(if (eq this-command 'highlight-symbol-jump)
+(when highlight-symbol-on-navigation-p
+(highlight-symbol-temp-highlight))
+(if (eql highlight-symbol-idle-delay 0)
+(highlight-symbol-temp-highlight)
+(highlight-symbol-mode-remove-temp))))
 
 (defun highlight-symbol-jump (dir)
-  "Jump to the next or previous occurence of the symbol at point.
+"Jump to the next or previous occurence of the symbol at point.
 DIR has to be 1 or -1."
-  (let ((symbol (highlight-symbol-get-symbol)))
-    (if symbol
-        (let* ((case-fold-search nil)
-               (bounds (bounds-of-thing-at-point 'symbol))
-               (offset (- (point) (if (< 0 dir) (cdr bounds) (car bounds)))))
-          (unless (eq last-command 'highlight-symbol-jump)
-            (push-mark))
-          ;; move a little, so we don't find the same instance again
-          (goto-char (- (point) offset))
-          (let ((target (re-search-forward symbol nil t dir)))
-            (unless target
-              (goto-char (if (< 0 dir) (point-min) (point-max)))
-              (setq target (re-search-forward symbol nil nil dir)))
-            (goto-char (+ target offset)))
-          (setq this-command 'highlight-symbol-jump))
-      (error "No symbol at point"))))
+(let ((symbol (highlight-symbol-get-symbol)))
+(if symbol
+(let* ((case-fold-search nil)
+(bounds (bounds-of-thing-at-point 'symbol))
+(offset (- (point) (if (< 0 dir) (cdr bounds) (car bounds)))))
+(unless (eq last-command 'highlight-symbol-jump)
+(push-mark))
+;; move a little, so we don't find the same instance again
+(goto-char (- (point) offset))
+(let ((target (re-search-forward symbol nil t dir)))
+(unless target
+(goto-char (if (< 0 dir) (point-min) (point-max)))
+(setq target (re-search-forward symbol nil nil dir)))
+(goto-char (+ target offset)))
+(setq this-command 'highlight-symbol-jump))
+(error "No symbol at point"))))
 
 (provide 'highlight-symbol)
 

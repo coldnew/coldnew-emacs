@@ -14,12 +14,12 @@
   (let ((screenshot-dir "~/screenshot/"))
     (if (executable-find "scrot")
 	(progn
-	 (if (not (file-exists-p screenshot-dir))
-	     (make-directory screenshot-dir))
-	 (shell-command (format "scrot %s%s" screenshot-dir name))
-	 (message (concat "Your screenshot " name " is save to " screenshot-dir))
-	 )
-	(message "You need to install scrot first.")))
+	  (if (not (file-exists-p screenshot-dir))
+	      (make-directory screenshot-dir))
+	  (shell-command (format "scrot %s%s" screenshot-dir name))
+	  (message (concat "Your screenshot " name " is save to " screenshot-dir))
+	  )
+      (message "You need to install scrot first.")))
   )
 
 (defun save-screenshots-window (name)
@@ -28,12 +28,12 @@
   (let ((screenshot-dir "~/screenshot/"))
     (if (executable-find "scrot")
 	(progn
-	 (if (not (file-exists-p screenshot-dir))
-	     (make-directory screenshot-dir))
-	 (shell-command (format "scrot -bs %s%s" screenshot-dir name))
-	 (message (concat "Your screenshot " name " is save to " screenshot-dir))
-	 )
-	(message "You need to install scrot first.")))
+	  (if (not (file-exists-p screenshot-dir))
+	      (make-directory screenshot-dir))
+	  (shell-command (format "scrot -bs %s%s" screenshot-dir name))
+	  (message (concat "Your screenshot " name " is save to " screenshot-dir))
+	  )
+      (message "You need to install scrot first.")))
   )
 
 (defun save-screenshots-region (name)
@@ -42,12 +42,12 @@
   (let ((screenshot-dir "~/screenshot/"))
     (if (executable-find "scrot")
 	(progn
-	 (if (not (file-exists-p screenshot-dir))
-	     (make-directory screenshot-dir))
-	 (shell-command (format "scrot -s %s%s" screenshot-dir name))
-	 (message (concat "Your screenshot " name " is save to " screenshot-dir))
-	 )
-	(message "You need to install scrot first.")))
+	  (if (not (file-exists-p screenshot-dir))
+	      (make-directory screenshot-dir))
+	  (shell-command (format "scrot -s %s%s" screenshot-dir name))
+	  (message (concat "Your screenshot " name " is save to " screenshot-dir))
+	  )
+      (message "You need to install scrot first.")))
   )
 
 ;;;;;;;; Window Size
@@ -64,8 +64,8 @@
     (set-frame-parameter nil 'fullscreen
 			 (if (equal 'fullboth current-value)
 			     (if (boundp 'old-fullscreen) old-fullscreen nil)
-			     (progn (setq old-fullscreen current-value)
-				    'fullboth)))))
+			   (progn (setq old-fullscreen current-value)
+				  'fullboth)))))
 
 ;;;;;;;; Window Moving
 (defun windmove-down-fullscreen ()
@@ -104,11 +104,11 @@
   (let* ((url (replace-regexp-in-string "^http://" "" url))
 	 (tinyurl
 	  (save-excursion
-	   (with-temp-buffer
-	    (mm-url-insert
-	     (concat "http://tinyurl.com/api-create.php?url=http://" url))
-	    (kill-ring-save (point-min) (point-max))
-	    (buffer-string)))))
+	    (with-temp-buffer
+	      (mm-url-insert
+	       (concat "http://tinyurl.com/api-create.php?url=http://" url))
+	      (kill-ring-save (point-min) (point-max))
+	      (buffer-string)))))
     (insert tinyurl)))
 
 (defun insert-random-string ()
@@ -133,11 +133,11 @@
   (interactive)
   (backward-kill-sexp)
   (condition-case nil
-		  (progn
-		   (eval (read (current-kill 0)))
-		   (message "eval-and-replace SUCCESS!!"))
-		  (error (message "Invalid expression")
-			 (insert (current-kill 0)))))
+      (progn
+	(eval (read (current-kill 0)))
+	(message "eval-and-replace SUCCESS!!"))
+    (error (message "Invalid expression")
+	   (insert (current-kill 0)))))
 
 ;;;;;;;; Line Handle
 (defun goto-longest-line ()
@@ -169,10 +169,10 @@
   (let ((scratch-buffer-name (get-buffer-create "*scratch*")))
     (if (equal (current-buffer) scratch-buffer-name)
 	(switch-to-buffer (other-buffer))
-	(progn
-	 (switch-to-buffer scratch-buffer-name)
-	 (unless (equal major-mode 'lisp-interaction-mode)
-	   (lisp-interaction-mode))))))
+      (progn
+	(switch-to-buffer scratch-buffer-name)
+	(unless (equal major-mode 'lisp-interaction-mode)
+	  (lisp-interaction-mode))))))
 
 (defun ielm-toggle ()
   "Toggle between *ielm* buffer and the current buffer.
@@ -181,10 +181,18 @@
   (let ((ielm-buffer-name (get-buffer-create "*ielm*")))
     (if (equal (current-buffer) ielm-buffer-name)
 	(switch-to-buffer (other-buffer))
-	(progn
-	 (switch-to-buffer ielm-buffer-name)
-	 (unless (equal major-mode 'inferior-emacs-lisp-mode)
-	   (inferior-emacs-lisp-mode))))))
+      (progn
+	(switch-to-buffer ielm-buffer-name)
+	(unless (equal major-mode 'inferior-emacs-lisp-mode)
+	  (inferior-emacs-lisp-mode))))))
+
+;;;;;;;; Buffer Search
+(defun multi-occur-in-this-mode ()
+  "Show all lines matching REGEXP in buffers with this major mode."
+  (interactive)
+  (multi-occur
+   (get-buffers-matching-mode major-mode)
+   (car (occur-read-primary-args))))
 
 ;;;;;;;; Conversion
 (defun unix2dos ()
@@ -205,7 +213,7 @@
   (interactive "p")
   (if (or arg (not buffer-file-name))
       (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
-      (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 ;;;;;;;; Help or Document
 (defun show-ascii-chart ()
@@ -270,10 +278,15 @@
 	 (lambda ()
 	   (princ chart))
 	 "ASCII Chart")
-	(with-output-to-temp-buffer "ASCII Chart"
-				    (princ chart)))))
+      (with-output-to-temp-buffer "ASCII Chart"
+	(princ chart)))))
 
 
+;;;;;;;;;;;;;;;; Alias Commands
+(defalias 'egi 'el-get-install)
+(defalias 'egu 'el-get-update)
+(defalias 'eb  'eval-buffer)
+(defalias 'qrr 'query-replace-regexp)
 
 
 (provide 'coldnew-commands)

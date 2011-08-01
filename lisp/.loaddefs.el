@@ -5,7 +5,7 @@
 
 ;;;### (autoloads (anything-other-buffer anything-at-point anything)
 ;;;;;;  "anything-config/anything" "anything-config/anything.el"
-;;;;;;  (19882 36530))
+;;;;;;  (20021 22151))
 ;;; Generated autoloads from anything-config/anything.el
 
 (autoload 'anything "anything-config/anything" "\
@@ -55,7 +55,7 @@ Of course, conventional arguments are supported, the two are same.
  (anything :sources sources :input input :prompt prompt :resume resume
            :preselect preselect :buffer buffer :keymap keymap)
  (anything sources input prompt resume preselect buffer keymap)
-
+           
 
 Other keywords are interpreted as local variables of this anything session.
 The `anything-' prefix can be omitted. For example,
@@ -65,7 +65,7 @@ The `anything-' prefix can be omitted. For example,
 
 means starting anything session with `anything-c-source-buffers'
 source in *buffers* buffer and set
-`anything-candidate-number-limit' to 10 as session local variable.
+`anything-candidate-number-limit' to 10 as session local variable. 
 
 \(fn &rest PLIST)" t nil)
 
@@ -84,35 +84,42 @@ Simplified interface of `anything' with other `anything-buffer'
 ;;;### (autoloads (anything-c-reset-adaptative-history anything-c-set-variable
 ;;;;;;  anything-c-call-interactively w32-shell-execute-open-file
 ;;;;;;  anything-ratpoison-commands anything-c-run-external-command
-;;;;;;  anything-c-shell-command-if-needed anything-apt anything-world-time
-;;;;;;  anything-select-xfont anything-top anything-create anything-execute-anything-command
-;;;;;;  anything-call-source anything-surfraw anything-calcul-expression
-;;;;;;  anything-eval-expression-with-eldoc anything-eval-expression
-;;;;;;  anything-yaoddmuse-emacswiki-post-library anything-yaoddmuse-emacswiki-edit-or-view
-;;;;;;  anything-yaoddmuse-cache-pages anything-all-mark-rings anything-global-mark-ring
-;;;;;;  anything-mark-ring anything-simple-call-tree anything-bookmark-ext
-;;;;;;  anything-manage-advice anything-M-x anything-filelist+ anything-filelist
-;;;;;;  anything-yank-text-at-point anything-c-goto-next-file anything-c-goto-precedent-file
-;;;;;;  anything-do-grep anything-dired-bindings anything-dired-hardlink-file
+;;;;;;  anything-c-complete-file-name-at-point anything-lisp-completion-at-point-or-indent
+;;;;;;  anything-lisp-completion-at-point anything-esh-pcomplete
+;;;;;;  anything-completion-mode anything-c-shell-command-if-needed
+;;;;;;  anything-apt anything-world-time anything-select-xfont anything-top
+;;;;;;  anything-create anything-execute-anything-command anything-call-source
+;;;;;;  anything-surfraw anything-calcul-expression anything-eval-expression-with-eldoc
+;;;;;;  anything-eval-expression anything-yaoddmuse-emacswiki-post-library
+;;;;;;  anything-yaoddmuse-emacswiki-edit-or-view anything-yaoddmuse-cache-pages
+;;;;;;  anything-all-mark-rings anything-global-mark-ring anything-mark-ring
+;;;;;;  anything-simple-call-tree anything-bookmark-ext anything-manage-advice
+;;;;;;  anything-M-x anything-filelist+ anything-filelist anything-etags-help
+;;;;;;  anything-yank-text-at-point anything-pdfgrep-help anything-grep-help
+;;;;;;  anything-c-goto-next-file anything-c-goto-precedent-file
+;;;;;;  anything-do-zgrep anything-do-grep anything-dired-mode anything-dired-hardlink-file
 ;;;;;;  anything-dired-symlink-file anything-dired-copy-file anything-dired-rename-file
 ;;;;;;  anything-insert-file anything-write-file anything-find-files
-;;;;;;  anything-ff-run-gnus-attach-files anything-ff-run-open-file-externally
-;;;;;;  anything-ff-run-switch-other-frame anything-ff-run-switch-other-window
-;;;;;;  anything-ff-run-switch-to-eshell anything-ff-run-complete-fn-at-point
-;;;;;;  anything-ff-run-delete-file anything-ff-run-symlink-file
-;;;;;;  anything-ff-run-ediff-merge-file anything-ff-run-ediff-file
-;;;;;;  anything-ff-run-eshell-command-on-file anything-ff-run-load-file
-;;;;;;  anything-ff-run-byte-compile-file anything-ff-run-rename-file
-;;;;;;  anything-ff-run-copy-file anything-ff-run-grep anything-ff-run-switch-to-history
-;;;;;;  anything-buffer-switch-to-elscreen anything-buffer-switch-other-frame
-;;;;;;  anything-buffer-switch-other-window anything-buffer-run-query-replace-regexp
-;;;;;;  anything-buffer-run-grep anything-buffer-run-kill-buffers
+;;;;;;  anything-ff-run-kill-buffer-persistent anything-ff-properties-persistent
+;;;;;;  anything-ff-run-print-file anything-ff-run-gnus-attach-files
+;;;;;;  anything-ff-run-open-file-externally anything-ff-run-switch-other-frame
+;;;;;;  anything-ff-run-switch-other-window anything-ff-run-switch-to-eshell
+;;;;;;  anything-ff-run-complete-fn-at-point anything-ff-run-delete-file
+;;;;;;  anything-ff-run-symlink-file anything-ff-run-ediff-merge-file
+;;;;;;  anything-ff-run-ediff-file anything-ff-run-eshell-command-on-file
+;;;;;;  anything-ff-run-load-file anything-ff-run-byte-compile-file
+;;;;;;  anything-ff-run-rename-file anything-ff-run-copy-file anything-ff-run-zgrep
+;;;;;;  anything-ff-run-pdfgrep anything-ff-run-grep anything-ff-run-switch-to-history
+;;;;;;  anything-ff-run-toggle-auto-update anything-buffer-switch-to-elscreen
+;;;;;;  anything-buffer-switch-other-frame anything-buffer-switch-other-window
+;;;;;;  anything-buffer-run-query-replace anything-buffer-run-query-replace-regexp
+;;;;;;  anything-buffer-run-zgrep anything-buffer-run-grep anything-buffer-run-kill-buffers
 ;;;;;;  anything-buffer-save-persistent anything-buffer-revert-persistent
 ;;;;;;  anything-buffer-diff-persistent anything-toggle-all-marks
 ;;;;;;  anything-unmark-all anything-mark-all anything-regexp anything-kill-buffers
-;;;;;;  anything-org-headlines anything-browse-code anything-occur
-;;;;;;  anything-list-emacs-process anything-timers anything-bm-list
-;;;;;;  anything-eev-anchors anything-emms anything-org-keywords
+;;;;;;  anything-info-gnus anything-org-headlines anything-browse-code
+;;;;;;  anything-occur anything-list-emacs-process anything-timers
+;;;;;;  anything-bm-list anything-eev-anchors anything-emms anything-org-keywords
 ;;;;;;  anything-man-woman anything-register anything-c-insert-latex-math
 ;;;;;;  anything-c-pp-bookmarks anything-bookmarks anything-colors
 ;;;;;;  anything-firefox-bookmarks anything-w3m-bookmarks anything-locate
@@ -121,7 +128,7 @@ Simplified interface of `anything' with other `anything-buffer'
 ;;;;;;  anything-show-kill-ring anything-info-emacs anything-info-at-point
 ;;;;;;  anything-recentf anything-for-files anything-mini anything-configuration)
 ;;;;;;  "anything-config/anything-config" "anything-config/anything-config.el"
-;;;;;;  (19882 36530))
+;;;;;;  (20021 22151))
 ;;; Generated autoloads from anything-config/anything-config.el
 
 (autoload 'anything-configuration "anything-config/anything-config" "\
@@ -159,8 +166,10 @@ Preconfigured anything for Emacs manual index.
 \(fn)" t nil)
 
 (autoload 'anything-show-kill-ring "anything-config/anything-config" "\
-Preconfigured `anything' for `kill-ring'. It is drop-in replacement of `yank-pop'.
+Preconfigured `anything' for `kill-ring'.
+It is drop-in replacement of `yank-pop'.
 You may bind this command to M-y.
+First call open the kill-ring browser, next calls move to next line.
 
 \(fn)" t nil)
 
@@ -210,15 +219,17 @@ http://bbdb.sourceforge.net/
 
 (autoload 'anything-locate "anything-config/anything-config" "\
 Preconfigured `anything' for Locate.
-Note you can add locate command after entering pattern.
+Note: you can add locate options after entering pattern.
+See 'man locate' for valid options.
 
 You can specify a specific database with prefix argument ARG (C-u).
 Many databases can be used: navigate and mark them.
+See also `anything-locate-with-db'.
 
 To create a user specific db, use
 \"updatedb -l 0 -o db_path -U directory\".
-
-See man locate for more infos.
+Where db_path is a filename matched by
+`anything-locate-db-file-regexp'.
 
 \(fn ARG)" t nil)
 
@@ -326,6 +337,11 @@ Preconfigured anything to show org headlines.
 
 \(fn)" t nil)
 
+(autoload 'anything-info-gnus "anything-config/anything-config" "\
+Preconfigured anything to browse Gnus Manual.
+
+\(fn)" t nil)
+
 (autoload 'anything-kill-buffers "anything-config/anything-config" "\
 Preconfigured `anything' to kill buffer you selected.
 
@@ -378,8 +394,18 @@ Run Grep action from `anything-c-source-buffer+'.
 
 \(fn)" t nil)
 
+(autoload 'anything-buffer-run-zgrep "anything-config/anything-config" "\
+Run Grep action from `anything-c-source-buffer+'.
+
+\(fn)" t nil)
+
 (autoload 'anything-buffer-run-query-replace-regexp "anything-config/anything-config" "\
 Run Query replace regexp action from `anything-c-source-buffer+'.
+
+\(fn)" t nil)
+
+(autoload 'anything-buffer-run-query-replace "anything-config/anything-config" "\
+Run Query replace action from `anything-c-source-buffer+'.
 
 \(fn)" t nil)
 
@@ -398,12 +424,27 @@ Run switch to elscreen  action from `anything-c-source-buffer+'.
 
 \(fn)" t nil)
 
+(autoload 'anything-ff-run-toggle-auto-update "anything-config/anything-config" "\
+
+
+\(fn)" t nil)
+
 (autoload 'anything-ff-run-switch-to-history "anything-config/anything-config" "\
 Run Switch to history action from `anything-c-source-find-files'.
 
 \(fn)" t nil)
 
 (autoload 'anything-ff-run-grep "anything-config/anything-config" "\
+Run Grep action from `anything-c-source-find-files'.
+
+\(fn)" t nil)
+
+(autoload 'anything-ff-run-pdfgrep "anything-config/anything-config" "\
+Run Pdfgrep action from `anything-c-source-find-files'.
+
+\(fn)" t nil)
+
+(autoload 'anything-ff-run-zgrep "anything-config/anything-config" "\
 Run Grep action from `anything-c-source-find-files'.
 
 \(fn)" t nil)
@@ -483,6 +524,21 @@ Run gnus attach files command action from `anything-c-source-find-files'.
 
 \(fn)" t nil)
 
+(autoload 'anything-ff-run-print-file "anything-config/anything-config" "\
+Run Print file action from `anything-c-source-find-files'.
+
+\(fn)" t nil)
+
+(autoload 'anything-ff-properties-persistent "anything-config/anything-config" "\
+Show properties without quitting anything.
+
+\(fn)" t nil)
+
+(autoload 'anything-ff-run-kill-buffer-persistent "anything-config/anything-config" "\
+Execute `anything-ff-kill-buffer-fname' whitout quitting.
+
+\(fn)" t nil)
+
 (autoload 'anything-find-files "anything-config/anything-config" "\
 Preconfigured `anything' for anything implementation of `find-file'.
 Called with a prefix arg show history if some.
@@ -521,11 +577,21 @@ Preconfigured `anything' to hardlink files from dired.
 
 \(fn)" t nil)
 
-(autoload 'anything-dired-bindings "anything-config/anything-config" "\
-Replace usual dired commands `C' and `R' by anything ones.
-When call interactively toggle dired bindings and anything bindings.
-When call non--interactively with arg > 0, enable anything bindings.
-You can put (anything-dired-binding 1) in init file to enable anything bindings.
+(defvar anything-dired-mode "Enable anything completion in Dired functions.\nBindings affected are C, R, S, H." "\
+Non-nil if Anything-Dired mode is enabled.
+See the command `anything-dired-mode' for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `anything-dired-mode'.")
+
+(custom-autoload 'anything-dired-mode "anything-config/anything-config" nil)
+
+(autoload 'anything-dired-mode "anything-config/anything-config" "\
+Toggle Anything-Dired mode on or off.
+Interactively, with no prefix argument, toggle the mode.
+With universal prefix ARG turn mode on.
+With zero or negative ARG turn mode off.
+\\{anything-dired-mode-map}
 
 \(fn &optional ARG)" t nil)
 
@@ -543,6 +609,11 @@ See also `anything-do-grep1'.
 
 \(fn)" t nil)
 
+(autoload 'anything-do-zgrep "anything-config/anything-config" "\
+Preconfigured anything for zgrep.
+
+\(fn CANDIDATE)" nil nil)
+
 (autoload 'anything-c-goto-precedent-file "anything-config/anything-config" "\
 Go to precedent file in anything grep/etags buffers.
 
@@ -553,8 +624,23 @@ Go to precedent file in anything grep/etags buffers.
 
 \(fn)" t nil)
 
+(autoload 'anything-grep-help "anything-config/anything-config" "\
+
+
+\(fn)" t nil)
+
+(autoload 'anything-pdfgrep-help "anything-config/anything-config" "\
+
+
+\(fn)" t nil)
+
 (autoload 'anything-yank-text-at-point "anything-config/anything-config" "\
 Yank text at point in minibuffer.
+
+\(fn)" t nil)
+
+(autoload 'anything-etags-help "anything-config/anything-config" "\
+
 
 \(fn)" t nil)
 
@@ -586,9 +672,9 @@ Preconfigured `anything' to disable/enable function advices.
 
 (autoload 'anything-bookmark-ext "anything-config/anything-config" "\
 Preconfigured `anything' for bookmark-extensions sources.
-Needs bookmark-ext.el
-
-http://mercurial.intuxication.org/hg/emacs-bookmark-extension
+Needs bookmark-ext.el:
+<http://mercurial.intuxication.org/hg/emacs-bookmark-extension>.
+Contain also `anything-c-source-google-suggest'.
 
 \(fn)" t nil)
 
@@ -645,7 +731,7 @@ Preconfigured anything for `anything-c-source-evaluation-result'.
 \(fn ARG)" t nil)
 
 (autoload 'anything-eval-expression-with-eldoc "anything-config/anything-config" "\
-Preconfigured anything for `anything-c-source-evaluation-result' with `eldoc' support.
+Preconfigured anything for `anything-c-source-evaluation-result' with `eldoc' support. 
 
 \(fn)" t nil)
 
@@ -699,6 +785,45 @@ Preconfigured `anything' : frontend of APT package manager.
 
 
 \(fn COMMAND)" t nil)
+
+(defvar anything-completion-mode nil "\
+Non-nil if Anything-Completion mode is enabled.
+See the command `anything-completion-mode' for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `anything-completion-mode'.")
+
+(custom-autoload 'anything-completion-mode "anything-config/anything-config" nil)
+
+(autoload 'anything-completion-mode "anything-config/anything-config" "\
+Toggle generic anything completion.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'anything-esh-pcomplete "anything-config/anything-config" "\
+Preconfigured anything to provide anything completion in eshell.
+
+\(fn)" t nil)
+
+(autoload 'anything-lisp-completion-at-point "anything-config/anything-config" "\
+Anything lisp symbol completion at point.
+
+\(fn)" t nil)
+
+(autoload 'anything-lisp-completion-at-point-or-indent "anything-config/anything-config" "\
+First call indent and second call complete lisp symbol.
+The second call should happen before `anything-lisp-completion-or-indent-delay',
+after this delay, next call will indent again.
+After completion, next call is always indent.
+See that like click and double mouse click.
+One hit indent, two quick hits maybe indent and complete.
+
+\(fn ARG)" t nil)
+
+(autoload 'anything-c-complete-file-name-at-point "anything-config/anything-config" "\
+Complete file name at point.
+
+\(fn)" t nil)
 
 (autoload 'anything-c-run-external-command "anything-config/anything-config" "\
 Preconfigured `anything' to run External PROGRAM asyncronously from Emacs.
@@ -1308,7 +1433,7 @@ what diminished modes would be on the mode-line if they were still minor.
 ;;;***
 
 ;;;### (autoloads (egg-minor-mode-find-file-hook egg-minor-mode)
-;;;;;;  "egg/egg" "egg/egg.el" (19839 7939))
+;;;;;;  "egg/egg" "egg/egg.el" (19977 13972))
 ;;; Generated autoloads from egg/egg.el
 
 (autoload 'egg-minor-mode "egg/egg" "\
@@ -1317,9 +1442,9 @@ egg in current buffer.\\<egg-minor-mode-map>
 \\[egg-start-new-branch] start a new branch from the current HEAD.
 \\[egg-status] shows the repo's current status
 \\[egg-commit-log-edit] start editing the commit message for the current staged changes.
-\\[egg-file-stage-current-file] stage new changes of the current file
-\\[egg-log] shows repo's history
-\\[egg-file-checkout-other-version] checkout another version of the current file
+\\[egg-file-stage-current-file] stage new changes of the current file 
+\\[egg-log] shows repo's history 
+\\[egg-file-checkout-other-version] checkout another version of the current file 
 \\[egg-file-cancel-modifications] delete unstaged modifications in the current file
 \\[egg-next-action] perform the next logical action
 \\[egg-file-diff] compare file with index or other commits
@@ -1330,7 +1455,7 @@ egg in current buffer.\\<egg-minor-mode-map>
 \(fn &optional ARG)" t nil)
 
 (autoload 'egg-minor-mode-find-file-hook "egg/egg" "\
-Not documented
+
 
 \(fn)" nil nil)
 
@@ -1423,7 +1548,7 @@ Jump to the previous location of the symbol at point within the defun.
 
 ;;;### (autoloads (turn-on-hungry-delete-mode hungry-delete-mode
 ;;;;;;  hungry-delete-backward hungry-delete-forward) "hungury-delete/hungry-delete"
-;;;;;;  "hungury-delete/hungry-delete.el" (19843 12761))
+;;;;;;  "hungury-delete/hungry-delete.el" (20012 10420))
 ;;; Generated autoloads from hungury-delete/hungry-delete.el
 
 (autoload 'hungry-delete-forward "hungury-delete/hungry-delete" "\
@@ -1955,9 +2080,7 @@ See also function `tempbuf-mode'.
 
 ;;;***
 
-;;;### (autoloads nil nil ("ac-anything/ac-anything.el" "ac-company/ac-company.el"
-;;;;;;  "ac-slime/ac-slime.el" "anything-complete/anything-complete.el"
-;;;;;;  "anything-config/anything-match-plugin.el" "anything-config/anything-startup.el"
+;;;### (autoloads nil nil ("ac-company/ac-company.el" "anything-complete/anything-complete.el"
 ;;;;;;  "anything-include/anything-include.el" "anything-match-plugin/anything-match-plugin.el"
 ;;;;;;  "anything-show-completion/anything-show-completion.el" "apel/site-lisp/apel/calist.el"
 ;;;;;;  "apel/site-lisp/apel/filename.el" "apel/site-lisp/apel/install.el"
@@ -1975,8 +2098,10 @@ See also function `tempbuf-mode'.
 ;;;;;;  "auctex/lpath.el" "auctex/preview/prv-emacs.el" "auctex/preview/prv-install.el"
 ;;;;;;  "auctex/preview/prv-xemacs.el" "auctex/tex-mik.el" "auctex/tex-style.el"
 ;;;;;;  "auctex/tex-wizard.el" "auto-complete-etags/auto-complete-etags.el"
-;;;;;;  "auto-complete-extension/auto-complete-extension.el" "auto-pair+/auto-pair+.el"
-;;;;;;  "autopair/autopair.el" "c-eldoc/c-eldoc.el" "eldoc-extension/eldoc-extension.el"
+;;;;;;  "auto-complete-extension/auto-complete-extension.el" "auto-complete/auto-complete-config.el"
+;;;;;;  "auto-complete/auto-complete.el" "auto-complete/fuzzy.el"
+;;;;;;  "auto-complete/popup.el" "auto-pair+/auto-pair+.el" "autopair/autopair.el"
+;;;;;;  "c-eldoc/c-eldoc.el" "eldoc-extension/eldoc-extension.el"
 ;;;;;;  "escreen-tab/escreen-tab.el" "escreen/escreen.el" "guess-offset/guess-offset.el"
 ;;;;;;  "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
 ;;;;;;  "ipython/ipython.el" "nav/nav-dev.el" "nav/nav-test.el" "popup-pos-tip/popup-pos-tip.el"
@@ -1992,7 +2117,7 @@ See also function `tempbuf-mode'.
 ;;;;;;  "sdcv/sdcv.el" "shell-pop/shell-pop.el" "showtip/showtip.el"
 ;;;;;;  "sr-speedbar/sr-speedbar.el" "ssh-config/ssh-config.el" "tea-time/tea-time.el"
 ;;;;;;  "undo-tree/undo-tree.el" "unicad/unicad.el" "xcscope+/xcscope+.el")
-;;;;;;  (19947 42032 556346))
+;;;;;;  (20021 24374 528225))
 
 ;;;***
 

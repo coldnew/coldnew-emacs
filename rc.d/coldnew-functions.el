@@ -10,7 +10,7 @@
    For example: (map-define-key '(a b c d) 'function-name)."
   (mapc (lambda (k)
 	  (progn
-	   (define-key mode-map k fname)))
+	    (define-key mode-map k fname)))
 	keylist))
 
 (defun show-buffer-major-mode (buffer-or-string)
@@ -23,8 +23,8 @@ Also returns nil if pid is nil."
   (when pid
     (let ((attributes (process-attributes pid)) (cmd))
       (dolist (attr attributes)
-	      (if (string= "comm" (car attr))
-		  (setq cmd (cdr attr))))
+	(if (string= "comm" (car attr))
+	    (setq cmd (cdr attr))))
       (if (and cmd (or (string= "emacs" cmd) (string= "emacs.exe" cmd))) t))))
 
 (defun get-current-line ()
@@ -73,8 +73,8 @@ Also returns nil if pid is nil."
   "Convert file to string in buffer with quote."
   (when (file-readable-p file)
     (with-temp-buffer
-     (insert-file-contents file)
-     (buffer-string)))
+      (insert-file-contents file)
+      (buffer-string)))
   )
 
 
@@ -112,6 +112,17 @@ Also returns nil if pid is nil."
 		      )))
       (ansi-term prg prg))))
 
+
+;;;;;;;; Buffer
+(defun get-buffers-matching-mode (mode)
+  "Returns a list of buffers where their major-mode is equal to MODE"
+  (let ((buffer-mode-matches '()))
+    (dolist (buf (buffer-list))
+      (with-current-buffer buf
+	(if (eq mode major-mode)
+	    (add-to-list 'buffer-mode-matches buf))))
+    buffer-mode-matches))
+
 ;;;;;; TODO: Need to review
 ;;;; Enable APIS
 ;; Perl	http://perldoc.perl.org/search.html?q=XYZ
@@ -130,7 +141,7 @@ If a region is active (a phrase), lookup that phrase."
     (setq myword
 	  (if (and transient-mark-mode mark-active)
 	      (buffer-substring-no-properties (region-beginning) (region-end))
-	      (thing-at-point 'symbol)))
+	    (thing-at-point 'symbol)))
 
     (setq myword (replace-regexp-in-string " " "%20" myword))
     (setq myurl (concat url myword))
