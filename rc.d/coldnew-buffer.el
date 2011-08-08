@@ -7,6 +7,7 @@
 (require 'coldnew-commands)
 (require 'coldnew-variables)
 
+
 ;;;;;;;; Uniquify
 ;; The library uniquify overrides Emacs' default mechanism for
 ;; making buffer names unique (using suffixes like <2>, <3> etc.)
@@ -27,6 +28,7 @@
 ;; features are highlighting and various alternate layouts.
 ;;
 (when (require* 'ibuffer)
+  (require 'ibuf-ext)
   ;; Settings
   (setq ibuffer-always-compile-formats         t )
   (setq ibuffer-default-shrink-to-minimum-size t )
@@ -122,6 +124,7 @@
                            (mode . comint-mode)
                            (name . "\\*scheme\\*$")
                            ))
+           ("Config" (name . "*.conf$"))
            ("Text" (or (mode . text-mode)
                        (name . "*.txt$")
                        ))
@@ -160,20 +163,21 @@
 
   ;; Following buffer will not show in iBuffer
   (setq ibuffer-never-show-predicates
-        '("^\\*Buffer List\\*$"
-          "^\\*CEDET Global\\*$"
-          "^\\*MiniBuf-*"
-          "^\\*Egg:Select Action\\*$"
-          "^\\*Ido Completions\\*$"
-          "^\\*SPEEDBAR\\*$"
-          "^\\*nav\\*$"
-          "^\\*RE-Builder\\*$"
-          "^\\*anything\\*$"
-          "^\\*anything complete\\*$"
-          "^\\*pomodoro\\*$"
-          ;; "^"
-          "^\\*.*\\(-preprocessed\\)\\>\\*$"
-          ))
+        (list
+         "^\\*Buffer List\\*$"
+         "^\\*CEDET Global\\*$"
+         "^\\*MiniBuf-*"
+         "^\\*Egg:Select Action\\*$"
+         "^\\*Ido Completions\\*$"
+         "^\\*SPEEDBAR\\*$"
+         "^\\*nav\\*$"
+         "^\\*RE-Builder\\*$"
+         "^\\*anything\\*$"
+         "^\\*anything complete\\*$"
+         "^\\*pomodoro\\*$"
+         ;; "^"
+         "^\\*.*\\(-preprocessed\\)\\>\\*"
+         ))
 
   ;;;; Advice
   ;; Reverse group list
@@ -248,17 +252,21 @@
 ;;
 (when (require* 'midnight)
 
+  (defvar clean-buffer-delay-time (* 2 3600)
+    "Every delay time will clean buffer.")
+
   ;; ;; Every day clean the buffer
   ;; (setq clean-buffer-list-delay-general 1)
 
   ;; Clean the buffer-list every 2hr
-  (setq clean-buffer-list-delay-special (* 2 3600))
+  (setq clean-buffer-list-delay-special clean-buffer-delay-time)
 
   ;; Kill anything, clean-buffer-list is very intelligent
   ;; at not killing unsaved buffer.
-  (setq clean-buffer-list-kill-regexps '(".*"))
+  (setq clean-buffer-list-kill-regexps '("^.*$"))
 
-  (run-at-time t (* 4 3600) 'clean-buffer-list)
+  ;; After clean-buffer-delay-time, clean the buffer.
+  (run-at-time t clean-buffer-delay-time 'clean-buffer-list)
 
 
   ;; keep these buffer untouched prevent append multiple times
