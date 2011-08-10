@@ -12,9 +12,7 @@
 
 
 (defun vim-mode-string ()
-  (let ((vim-string (substring vim:mode-string 1 2))
-	;;	(vim-string-face "white")
-	)
+  (let ((vim-string (substring vim:mode-string 1 2)))
     (setq vim-string-face
 	  (cond
 	   ((string= "N" vim-string) 'mode-line-vim-string-N)
@@ -22,7 +20,6 @@
 	   ((string= "V" vim-string) 'mode-line-vim-string-V)
 	   ((string= "E" vim-string) 'mode-line-vim-string-E)
 	   ))
-
     (concat "<" (propertize vim-string 'face vim-string-face) ">")
     ))
 

@@ -72,7 +72,7 @@
 	       (ac-c-mode-setup))
 
 	     ;; Enable c-eldoc
-	     (setq c-eldoc-includes "`pkg-config gtk+-2.0 --cflags` -I./ -I../")
+	     (setq c-eldoc-includes "`pkg-config gtk+-2.0 opencv --cflags` -I./ -I../")
 	     (when (require* 'c-eldoc)
 	       (c-turn-on-eldoc-mode))
 
@@ -85,10 +85,84 @@
 
 	     ))
 
+;;;; Keybindings
+(add-hook 'c-mode-hook
+	  '(lambda ()
+	     ;; Normal map
+	     (vim:local-nmap (kbd ",o") 'ff-find-other-file)
+	     (vim:local-nmap (kbd ",h") 'ff-find-related-file)
+	     ;; Insert map
+	     (vim:local-imap (kbd "M-i") 'c-mode:insert-inc-or-if) ; insert "#include <>" or "if () {...}"
+	     (vim:local-imap (kbd "M-d") 'c-mode:insert-do-while)  ; insert "do {...} while()"
+	     (vim:local-imap (kbd "M-m") 'c-mode:insert-main-function) ; insert "int main () {...}"
+	     ))
+
+
+
+
+
 ;;;;;;;; make cedet integrated with c
 (when (require 'cedet)
   (semantic-add-system-include "/usr/include" 'c-mode)
   )
+
+
+;;;; Other Settings
+(setq c-mode:include-dirs		; Setting include directories
+      '(
+	"/usr/include"
+	))
+
+
+;;;; Functions
+
+;; insert yasnippet
+(defun c-mode:insert-inc-or-if ()
+  "If at the start of line. add `inc' and expand it,
+else add `if' and expand it."
+  (interactive)
+  (let* ((current (point))
+	 (begin (line-beginning-position)))
+    (if (eq current begin)
+	(progn
+	  (c-mode:insert-include)
+	  (newline-and-indent))
+      (progn
+	(insert "if")
+	(yas/expand)))))
+
+;; FIXME: We don't want directories also show in completion
+(define-skeleton c-mode:insert-include
+  "generate include<>" ""
+  > "#include <"
+  (completing-read "Enter include file："
+		   (mapcar #'(lambda (f) (list f ))
+			   (apply 'append
+				  (mapcar
+				   #'(lambda (dir)
+				       (directory-files dir))
+				   c-mode:include-dirs
+				   ))))
+  ">")
+
+
+
+
+(defun c-mode:insert-do-while ()
+  "insert do{...} while()."
+  (interactive)
+  (insert "do")
+  (yas/expand))
+
+(defun c-mode:insert-main-function ()
+  "insert main()."
+  (interactive)
+  (let* ((current (point))
+	 (begin (line-beginning-position)))
+    (if (equal current begin)
+	(insert "main"))
+    (yas/expand)))
+
 
 
 (provide 'coldnew-lang-c)

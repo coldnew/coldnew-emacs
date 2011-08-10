@@ -43,15 +43,24 @@
   (setq term-default-bg-color nil)
   (setq term-default-fg-color nil)
 
+  ;; (setq term-unbind-key-list '("C-c" "C-h"))
+  ;; (add-to-list 'term-bind-key-alist '("C-c" . term-interrupt-subjob))
+  ;; (setq term-bind-key-alist (delete '("C-c C-c" . term-interrupt-subjob)
+  ;;				    term-bind-key-alist))
+
   ;;;; Keybindings
   (add-hook 'term-mode-hook
 	    '(lambda ()
 	       ;; Add new key-map
 	       (define-key term-raw-map (kbd "<f4>") 'shell-pop)
 	       (define-key term-raw-map (kbd "M-x") 'anything-M-x)
+	       (define-key term-raw-map (kbd "C-g") 'term-interrupt-subjob)
+	       (define-key term-raw-map (kbd "C-n") 'term-send-down)
+	       (define-key term-raw-map (kbd "C-p") 'term-send-up)
+	       ;;	       (define-key term-raw-map (kbd "<enter>") 'term-send-input)
+	       ;;	       (define-key term-raw-map (kbd "<return>") 'term-send-raw)
 	       ))
   )
-
 ;;;;;;;; Comint mode
 ;;
 (when (require* 'comint)
@@ -117,6 +126,48 @@
       (vim:emacs-mode)
     (vim:normal-mode)
     ))
+
+
+
+;; ;;;;;;;; test
+;; (defvar emacs-unbind-global-keys-list '()
+;;   "A list to store unbind keyboardshortcuts in `current-global-moa' and other maps.
+;;    Each item looks like '(MAP KEY OLD-COMMAND).")
+
+;; (defun emacs-unset-global-key (map key-s)
+;;   "Sets to nil the associated command for the specified key in specified map.
+;;    It is like:
+
+;;        \(define-key map (kbd key-s) nil))
+;;    But it saves the old command associated with the specified key, so we can restore it
+;;    when function `emacs-resotre-global-keys' called."
+;;   (let (key oldcmd)
+;;     (setq key (edmacro-parse-keys key-s))
+;;     ;; get the old command associated with this key
+;;     (setq oldcmd (lookup-key map key))
+;;     ;; saves that shortcut in emacs-overridden-global-keys
+;;     (if oldcmd
+;;	(add-to-list 'emacs-unbind-global-keys-list (cons map (cons key-s (cons oldcmd nil)))))
+;;     ;; redefine the key in the emacs-keymap
+;;     (define-key map key nil)
+;;     )
+;;   )
+
+;; (defun emacs-resotre-global-keys ()
+;;   "Restore all keyboard shortcuts that were overitten by `emacs-unbind-global-key-list'."
+;;   (mapc (lambda (x)
+;;	  (define-key
+;;	    (car x)
+;;	    (edmacro-parse-keys (car (cdr x)))
+;;	    (car (cdr (cdr x))))
+;;	  )
+;;	emacs-unbind-global-keys-list)
+;;   ;; clear the list
+;;   (setq emacs-unbind-global-keys-list '())
+;;   )
+
+;; (emacs-unset-global-key (current-global-map) "C-c")
+
 
 
 (provide 'coldnew-terminal)

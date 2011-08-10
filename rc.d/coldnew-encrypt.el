@@ -24,5 +24,6 @@
 (setq epa-file-inhibit-auto-save nil)
 
 
+
 (provide 'coldnew-encrypt)
 ;; coldnew-encrypt.el ends here.

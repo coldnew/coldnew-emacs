@@ -17,7 +17,20 @@
   (setq woman-fill-column 100)
   )
 
+(when (require* 'info)
 
+  ;; Keybindings
+  (add-hook 'Info-mode-hook
+	    '(lambda ()
+	       (when (require* 'vim)
+		 (vim:nmap (kbd "j")  'Info-next)
+		 (vim:nmap (kbd "k") 'Info-prev)
+		 (vim:nmap (kbd "C-f") 'Info-scroll-up)
+		 (vim:nmap (kbd "C-b") 'Info-scroll-down)
+
+		 )
+	       ))
+  )
 
 (provide 'coldnew-help)
 ;; coldnew-help.el ends here.
