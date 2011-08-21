@@ -1,0 +1,21 @@
+\documentclass[11pt]{article}
+\usepackage[dvips]{graphicx}
+%\usepackage{pstricks,pst-grad,pst-slpe,pst-plot}
+\usepackage{pstricks,pst-slpe}
+\usepackage{amssymb,boxdims}
+%\usepackage{snapshot}
+%
+\addtolength{\textwidth}{2cm}
+\addtolength{\textheight}{3cm}
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\hoffset}{-0.5in}
+
+\newbox\graph
+\pagestyle{empty}
+\thispagestyle{empty}
+%
+\begin{document}
+  \noindent\vspace{2ex}\input{test.tex}\box\graph
+
+\end{document}

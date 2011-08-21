@@ -1,0 +1,130 @@
+
+THIS DIRECTORY contains a Makefile and test files for producing pdf
+via the MetaPost output of dpic.  They have been tested on Solaris and
+on a PC running Cygwin and MikTeX.
+
+0. With MikTeX, comment out the second MKDIM definition in the Makefile.
+
+1.  On a Unix-like system, typing "make" processes the examples file
+  and the diagrams it includes to produce examples.pdf.  Each diagram is
+  passed through m4, dpic, and MetaPost, and then is imported into
+  examples.tex by the \includegraphics macro.
+
+  Make sure that the LIBDIR definition in the makefile is correct:
+  LIBDIR = $$HOME/lib or equivalent.
+
+2.  To work on a single file, copy the source into test.m4 and
+  type "make tst".  The files test.mp, test.mps, and tst.pdf will be
+  created and test.mps imported into tst.tex.  The essential file is
+  test.mps, which can be included by pdflatex using the
+  \includegraphics command.  The command "make tst" creates and
+  processes test.mp twice, in case the boxdims macros are present.  If
+  boxdims is not being used, typing "make tst1" produces the same files
+  but creates and processes test.mp once only.
+
+PROCESSING SEQUENCE:
+  The steps required to include a circuit diagram in a pdf document
+  produced by pdflatex are as follows.
+
+  Suppose that the main source document is doc.tex, which requires a
+  circuit or other figure in source file fig1.m4.  Fig1.m4 is processed
+  by the equivalent of
+    m4 <path>mpost.m4 fig1.m4 | dpic -s > fig1.mp
+  The file mpost.m4 defines the HOMELIB_ macro so fig1.m4 can read the
+  library definitions it requires using lines such as
+    include(HOMELIB_`'libcct.m4).
+
+  The simplest diagrams, without labels, require steps 2, 3, 8, and 10
+  below.  If there are labels then steps 1-3, 8, and 10 are required.
+  If s_box labels or the boxdim macro is invoked, diagrams have to be
+  processed twice.
+
+  See the notes at the end of this file for simplified processing
+  alterantives.
+
+  1. If fig1.m4 contains text labels to be typeset, write appropriate
+    header lines into file fig1.mp.  The Makefile uses the following header:
+
+	verbatimtex
+    \documentclass[11pt]{article}
+    \usepackage{times,boxdims,graphicx}
+    \boxdimfile{tmp.dim}
+    \begin{document} etex
+
+  2. Append the MetaPost drawing commands produced by dpic -s:
+
+     m4 <path>/mpost.m4 fig1.m4 | dpic -s >> fig1.mp
+
+  3. Execute the MetaPost command "mpost --tex=latex fig1.mp end" to
+     produce files fig1.1 and tmp.dim.  Alternatively, append the line
+     "end" to fig1.mp and use the command "mpost --tex=latex fig1.mp".
+
+  4. If boxdims and s_box are not used in fig1.m4, go to 8.
+
+  5. Re-create fig1.mp by writing the header into it again or deleting
+      the lines after the header.
+
+  6. Append the MetaPost drawing commands produced by dpic -s, but this
+      time include the definitions in tmp.dim:
+
+     m4 <path>/mpost.m4 tmp.dim fig1.m4 | dpic -s >> fig1.mp
+
+  7. Execute MetaPost again with the command "mpost --tex=latex fig1.mp end".
+
+  8. Rename fig1.1 as fig1.mps.
+
+  9. Repeat 1 to 8 for all additional diagram source .m4 files, producing
+      the mps files fig1.mps, fig2.mps, ....
+
+  10. Now process the main document: "pdflatex doc.tex", which reads
+      fig1.mps, ... using \includegraphics{fig1} ... to produce
+      doc.pdf.
+
+  11. Stop unless one or more of fig1.m4, ... requires the typeset dimensions
+     of other files included in doc.pdf, say diag.pdf.  If these
+     dimensions are required, doc must contain the line \usepackage{boxdims}
+     and diag.pdf must be included via \boxdims{name}{\includegraphics{diag}},
+     causing the typeset dimensions of diag.pdf to be written into
+     doc.dim.  The file fig1.m4 contains the line sinclude(doc.dim) to
+     pull in the required typeset dimensions.
+
+  12. For all files requiring information in doc.dim, repeat steps 1 to 8.
+
+  13. Repeat step 10 and stop.
+
+NOTES: 
+  (a) Under MikTeX, MetaPost processes labels by executing LaTeX in a
+     temporary directory rather than the current directory, so an
+     absolute path name must be used to tell LaTeX where to write tmp.dim.
+     The header is modified to contain, for example,
+     \boxdimfile{c:/home/lib/examples/pdflatex/tmp.dim}
+     If you have difficulty, check that the \boxdimfile line is valid
+     in fig1.mp.
+     Recent LaTeX distributions refuse to write to absolute addresses
+     without a specific option being invoked, so the above may have to
+     be changed.
+
+  (b) The processing steps given above are suitable when a project management
+     facility such as "make" is available.  Processing can be simplified
+     somewhat by putting all diagram sources into a single file.m4 file with
+     the headerat the top, eg:
+
+     verbatimtex
+     ...
+     etex
+     .PS
+      diagram 1
+     .PE
+     .PS
+      diagram 2
+     ...
+     .PE
+     end
+
+     Then the command
+       m4 <path>/mpost.mp <.dim files> file.m4 | dpic -s > file.mp
+     followed by
+       mpost --tex=latex file.mp
+     will produce file.1 file.2 ... which can be renamed as .mps
+     files for inclusion by doc.tex.  As always, when .dim files
+     are required, processing must be repeated.

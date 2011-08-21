@@ -1,0 +1,33 @@
+%
+% boxdims.sty, for use with m4 preprocessors.  Last modified 30 Apr 2004.
+%
+% \boxdims{arg1}{arg2} expands to arg2, but writes into file \jobname.dim
+% the m4 definitions for macros arg1_h, arg1_w, arg1_d, the height, width
+% and depth of \hbox{arg2}.
+%
+% \defboxdim{arg1}{arg2} writes the definitions but expands to nothing.
+%
+% \boxdimfile{filename} sets the output file to filename, default \jobname.dim
+%
+\ProvidesPackage{boxdims}
+         [2004/04/30 v2.0 Macros: boxdimfile, boxdims, defboxdim (DA)]
+
+\newwrite\@dimensionfile
+\newif\if@dimfile
+\newbox\dimbox
+
+\def\boxdimfile#1{\immediate\openout\@dimensionfile=#1\global\@dimfiletrue%
+  \typeout{ boxdims.sty v2.0: Writing dimension file #1 }}%
+
+\def\boxdims#1#2{\defboxdim{#1}{#2}#2}
+
+\def\defboxdim#1#2{\if@dimfile\else%
+    \immediate\openout\@dimensionfile=\jobname.dim\global\@dimfiletrue%
+    \typeout{ boxdims.sty v2.0: Writing dimension file \jobname.dim }\fi%
+  \setbox\dimbox=\hbox{#2}%
+  \begingroup\@sanitize\edef\@tempa{\write\@dimensionfile{%
+  \@defboxdim{#1}}}\expandafter\endgroup\@tempa}
+\def\@defboxdim#1{%
+define(`#1_w',\the\wd\dimbox__)%
+define(`#1_h',\the\ht\dimbox__)%
+define(`#1_d',\the\dp\dimbox__)dnl}

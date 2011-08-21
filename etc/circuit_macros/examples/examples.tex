@@ -1,0 +1,37 @@
+% PSTricks examples.tex
+
+\documentclass[11pt]{article}
+\usepackage{times,boxdims,pstricks,pst-grad}
+\usepackage{rotating}
+\usepackage{graphicx}
+
+\input header
+
+\global\psttrue
+
+\begin{document}
+  \hfill
+  {\large\bf Examples:
+    \input{Version.tex}}
+  \hfill\break
+
+  This is a collection of diagrams the author has had occasion to
+  produce using m4 circuit macros and others, and gpic or dpic.  In
+  some cases, there are other or better m4 or pic constructs for
+  producing the same drawings, but the source-file names are shown for
+  reference.  Most of the examples can be processed using either
+  dpic~-p or gpic~-t, which has meant that in a few cases the source is
+  slightly more complicated than it would be if only one processor had
+  been assumed.
+
+% For some more examples in the context of a textbook, see
+% J. Dwight Aplevich, {\sl The Essentials of Linear State-Space
+% Systems,} New York, John Wiley \& Sons Inc., 2000.
+
+% To trick the html into inputting quick.m4
+% \input quick
+%\caption{The figure produced by <tt>quick.m4</tt>, as described in the manual.
+%    \src{ex01.m4}.}
+% \centerline works for both dpic -p and gpic -t:
+
+\input files

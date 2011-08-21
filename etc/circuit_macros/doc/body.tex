@@ -1,0 +1,2499 @@
+\newcommand{\bq}{}
+\newcommand{\pic}{{\bq pic}}
+\newcommand{\dvips}{{\bq dvips}}
+\newcommand{\Pic}{{\bq Pic}}
+\newcommand{\gpic}{{\bq gpic}}
+\newcommand{\Gpic}{{\bq Gpic}}
+\newcommand{\Dpic}{{\bq Dpic}}
+\newcommand{\tpic}{{\bq tpic}}
+\newcommand{\mfpic}{{\bq mfpic}}
+\newcommand{\groff}{{\bq groff}}
+\newcommand{\xfig}{{\bq xfig}}
+\newcommand{\Xfig}{{\bq Xfig}}
+\newcommand{\PSTricks}{{\bq PSTricks}}
+\newcommand{\MetaPost}{{\bq MetaPost}}
+\newcommand{\Postscript}{{\bq Postscript}}
+\newcommand{\dpic}{{\bq dpic}}
+\newcommand{\Mfour}{{\bq m4}}
+\newcommand{\TPGF}{{\bq Ti{\it k}z~PGF}}
+\newcommand{\SVG}{{\bq SVG}}
+\newcommand{\xection}[1]{\section[#1\ \dotfill]{#1}}
+\newcommand{\NVL}{\\\hspace*{\parindent}}
+%\newcommand{\lbrace}{{\tt\char123}}
+%\newcommand{\rbrace}{{\tt\char125)}
+%
+  \tableofcontents
+\enlargethispage{\baselineskip}
+%
+\xection{Introduction}
+   \begin{quotation}\noindent
+   Before every conference, I find Ph.D.s in on weekends running back
+   and forth from their offices to the printer.  It appears that people
+   who are unable to execute pretty pictures with pen and paper find it
+   gratifying to try with a computer~\cite{Landauer95}.
+   \end{quotation}
+
+This document describes a set of macros, written in the \Mfour\ macro
+language~\cite{KRm4}, for producing electric circuits and other
+diagrams in \LaTeX\ documents.  The macros evaluate to drawing commands
+in \pic, a line-drawing language~\cite{KRpic} that is simple to learn
+and readily available.  The result is a system with the
+advantages and disadvantages of \TeX\ itself, since it is macro-based
+and non-wysiwyg, and since it uses ordinary character input.  The book
+from which the above quotation is taken correctly points out that the
+payoff can be in quality of diagrams at the price of the time spent in
+learning how to draw them.
+
+A collection of basic components and conventions for their internal
+structure are described.  It is often convenient to customize elements
+or to package combinations of them for particular drawings, so macros
+such as these are only a starting point.
+
+\xection{Using the macros}
+This section describes the basic process of adding circuit diagrams to
+\LaTeX\ documents to produce postscript or pdf files.  On some operating
+systems, project management software with graphical interfaces can be used
+to automate the process but the steps can be performed by a script,
+makefile, or by hand for simple documents as described in
+Section~\ref{Quickstart:}.
+
+The diagram source file is preprocessed as illustrated in
+Figure~\ref{Flowdiag}.  The predefined macros, followed by the diagram
+source, are read by \Mfour.  The result is passed through a
+\pic\ interpreter to produce {\tt .tex} output that can be inserted
+into a {\tt .tex} document using the \verb|\input| command.
+
+\begin{figure}[hbt]
+   \input Flowdiag
+   \caption{Inclusion of figures and macros in the \LaTeX\ document.
+   Replacing \LaTeX\ with PDFlatex to produce pdf directly is also possible.}
+   \label{Flowdiag}
+   \end{figure}
+
+\noindent
+Depending on the \pic\ interpreter chosen, the choice of options,
+and the choice of \LaTeX\ or PDFlatex, the
+interpreter output may contain \tpic\ specials, \LaTeX\ graphics,
+\PSTricks~\cite{pstricks} commands, \TPGF\ commands, or other formats.
+These variations are described in Section~\ref{Alternative:}.
+
+There are two principal choices of \pic\ interpreter.  One is~\dpic,
+described later in this document.  An alternative \cite{gpic} is {\bq
+gpic -t} together with a printer driver that understands \tpic\ 
+specials, typically~\cite{dvips} {\bq dvips}.  In some installations,
+\gpic\ is simply named \pic, but make sure that GNU \pic~\cite{gpic}
+is being invoked rather than the older Unix \pic.
+\Pic\ processors contain basic macro facilities, so some of the
+concepts applied here require only a \pic\ processor.
+%
+By judicious use of macros, features of both \Mfour\ and \pic\ can be
+exploited.
+\iffalse
+The fastidious reader might observe that there are three
+languages being scrambled: \Mfour, \pic, and the \tpic, \TeX\ 
+or other output, not to mention the meta-language of the macros, and
+that this mixture might be a problem, but experience implies otherwise.
+\fi
+
+\subsection{Quick start}\label{Quickstart:}
+The contents of file {\tt quick.m4} and resulting diagram are shown in
+Figure~\ref{quick} to illustrate the language, to show several ways for
+placing circuit elements, and to provide sufficient information for producing
+basic labeled circuits.
+\begin{figure}[hbt]
+   \parbox{\textwidth}{\small\verbatiminput{quick.m4}}%
+   \hfill\llap{\raise-1.15in\hbox{\input quick }}
+   \vspace*{-\baselineskip}
+   \caption{The file {\tt quick.m4} and resulting diagram.}
+   \label{quick}
+   \end{figure}
+
+To process the file, make sure that the libraries {\tt libcct.m4} and
+{\tt libgen.m4} are installed and readable.  Verify that \Mfour\ is installed.
+Now there are at least two possibilities, described in the following
+subsections, with somewhat simpler usage to be given in
+Section~\ref{Simplified}.
+
+\subsubsection{\protect{Processing with \dpic\ and \PSTricks\ or \TPGF}}
+If you are using \dpic\  with \PSTricks,
+type the following commands or put them into a script:
+\begin{verbatim}
+  m4 <path>pstricks.m4 <path>libcct.m4 quick.m4 > quick.pic
+  dpic -p quick.pic > quick.tex
+\end{verbatim}
+where {\tt <path>} is the path to the {\tt libcct.m4} file.
+Put \verb|\usepackage{pstricks}| in the main \LaTeX\ source file header and
+the following in the body:
+\begin{verbatim}
+\begin{figure}[hbt]
+   \centering
+   \input quick
+   \caption{Customized caption for the figure.}
+   \label{Symbolic_label}
+\end{figure}
+\end{verbatim}
+This distribution is compatible with the \TPGF\ drawing commands, which have
+nearly the power of the \PSTricks\ package with the ability to produce 
+{\tt pdf} output by running the
+{\tt pdflatex} command instead of {\tt latex} on the input file.  The
+commands are modified to read \verb|pgf.m4| and invoke the
+\dpic~\verb|-g| option as follows:
+\begin{verbatim}
+  m4 <path>pgf.m4 <path>libcct.m4 quick.m4 > quick.pic
+  dpic -g quick.pic > quick.tex
+\end{verbatim}
+The \LaTeX\ header should contain \verb|\usepackage{tikz}|, but the inclusion
+statemensts are the same as for \PSTricks\ input.
+
+In all cases the essential line is \verb|\input quick|, which
+inserts the previously created file {\tt quick.tex}.
+Then \LaTeX\ the document, convert to postscript typically using \dvips,
+and print the result or view it using Ghostview.  The alternative
+for \TPGF\ output of \verb|dpic -g| is to invoke PDFlatex.
+
+\subsubsection{Processing with \gpic}
+If your printer driver understands \tpic\ specials and
+you are using \gpic\  (on some systems the \gpic\ command is {\tt pic}),
+the commands are
+\begin{verbatim}
+  m4 <path>libcct.m4 quick.m4 > quick.pic
+  gpic -t quick.pic > quick.tex
+\end{verbatim}
+The figure inclusion statements are as shown:
+\begin{verbatim}
+\begin{figure}[hbt]
+   \input quick
+   \centerline{\box\graph}
+   \caption{Customized caption for the figure.}
+   \label{Symbolic_label}
+   \end{figure}
+\end{verbatim}
+
+\subsubsection{Simplifications}\label{Simplified}
+\begin{itemize}
+\item
+These macros can be processed by \LaTeX-specific
+project software and by graphic applications such as Cirkuit\cite{KDEApps2009}.
+\item
+If appropriate
+{\tt include()} statements are placed at the top of the file {\tt quick.m4},
+then the \Mfour\ commands illustrated above can be shortened to
+
+\verb|m4 quick.m4 > quick.pic|
+
+\noindent
+For example, the following two lines can be inserted before or just after the
+{\tt .PS} line:
+
+{\tt include(<path>pstricks.m4)}\NVL
+{\tt include(<path>libcct.m4)}
+
+\noindent
+where {\tt <path>} is the path to the folder containing the libraries.
+Only the second line is necessary if \gpic\ is used or if the libraries
+were installed so that \PSTricks\ is assumed by default.
+Once one library file has been read, then the second and later include
+lines can invoke the {\tt HOMELIB\_} macro for the path, and the above
+two lines, for example, could be
+
+{\tt include(<path>pstricks.m4)}\NVL
+{\tt include(HOMELIB\_`'libcct.m4)}
+
+\item
+On some systems, setting the environment variable {\tt M4PATH} to
+the library folder allows the above lines to be simplified to
+
+{\tt include(pstricks.m4)}\NVL
+{\tt include(libcct.m4)}
+
+\item
+In the absence of a need to examine the file {\tt quick.pic},
+the commands for producing the {\tt .tex} file can be reduced
+(provided the above inclusions have been made) to
+
+\verb%m4 quick.m4 | dpic -p > quick.tex%
+
+\item
+When many files are to be processed, then a facility such as Unix ``make,''
+which is also available in several PC versions, can be employed
+to automate the commands given above.  On systems without such a
+facility, a scripting language can be used.
+\item  %Alternatively, you
+You
+can put
+several diagrams into a single source file so that they can be
+processed together.  Put each diagram in the body of a
+\LaTeX\ macro, as shown:
+
+\par
+\verb|\newcommand{\diaA}{%|\NVL
+\verb|.PS|\NVL
+{\sl drawing commands}\NVL
+\verb|.PE|\NVL
+\verb|\box\graph }%  \box\graph not required for dpic|\NVL
+\verb|\newcommand{\diaB}{%|\NVL
+\verb|.PS|\NVL
+{\sl drawing commands}\NVL
+\verb|.PE|\NVL
+\verb|\box\graph }%  \box\graph not required for dpic|\NVL
+\noindent Process the file using \Mfour\ and \dpic\ or \gpic\ to produce
+a {\tt.tex} file, insert this into the \LaTeX\ source using \verb|\input|, and 
+invoke the macros at the appropriate places.
+
+\item
+It may be desirable to invoke \Mfour\ and \dpic\ automatically from the
+document file, as shown:
+\begin{verbatim}
+\documentclass{article}
+\usepackage{tikz}
+\newcommand\mtopgf[1]{\immediate\write18{m4 <path>/pgf.m4 #1.m4 | dpic -g > #1.tex}}%
+\begin{document} 
+\mtopgf{PicA}
+\input{PicA.tex} \par
+\mtopgf{PicB}
+\input{PicB.tex}
+\end{document}
+\end{verbatim}
+
+The Unix-style path to \verb|pgf.m4| must be defined in this file,
+sources \verb|PicA.m4| and \verb|PicB.m4| must contain any required
+\verb|include| statements,
+and the document file should be processed using
+the command \verb|pdflatex -shell-escape| {\tt<}filename{\tt>}.
+Alternatively, the first file read by \Mfour\ in the above definition
+of \verb|\mtopgf| can be omitted but \verb|include(<path>pgf.m4)|
+must be the first line of each source file.
+This method processes each picture source every time \LaTeX\ is run, so for
+large documents containing many graphics, the \verb|\mtopgf|
+line could be commented out after debugging the corresponding graphic.
+\end{itemize}
+
+\subsection{The libraries}\label{Libraries}
+One of the following configuration files must be read first by \Mfour,
+depending on the output format (see Section~\ref{Alternative:}) and choice
+of either \dpic\ or \gpic\ as postprocessor:
+{\tt gpic.m4, mfpic.m4, mpost.m4, pgf.m4, postscript.m4, pstricks.m4, svg.m4,}
+or {\tt xfig.m4}. The usual case for producing circuit diagrams is to read
+{\tt pstricks.m4} or {\tt pgf.m4} first when \dpic\ is the postprocessor, and
+{\tt gpic.m4} for GNU \pic.
+Each of these files causes {\tt libgen.m4,} a collection of
+multipurpose macros, to be read, and sets the macro
+{\tt m4picprocessor} to the appropriate value.
+
+The elementary circuit macros are contained in {\tt libcct.m4,} which
+initially reads {\tt gpic.m4} unless the default has been otherwise set or
+unless {\tt m4picprocessor} has been defined.  Consequently,
+only {\tt libcct.m4} and the diagram source need be read by default.
+
+Elementary logic circuits are defined in {\tt liblog.m4}, which causes
+{\tt libcct.m4} to be read, so the latter need not be called explicitly
+when logic gates are drawn.
+
+Only the libraries necessary for a given diagram are required; thus,
+{\tt libcct.m4} need not be read if the diagram does not contain a
+circuit element.
+
+The library {\tt lib3D.m4} manipulates scalar triples for colour
+generation and three-dimensional projections.  The macros in file
+{\tt darrow.m4} define one way of drawing double lines and arrows.
+
+Some of the distributed example files contain other specialized macros,
+such as for flow charts and other purposes.  Diagrams
+in other domains than electric circuits could be drawn easily using
+similar macros, but the temptation to write them has been resisted in
+favour of attempting to treat one specialized area well.
+
+\xection{\Pic\ essentials}
+
+\Pic\ source is a sequence of lines in a file.
+The first line of a diagram begins with {\tt .PS} with optional following
+arguments, and the last line is normally {\tt .PE}.
+Lines outside of these pass through the \pic\ processor unchanged.
+
+The visible objects can be divided conveniently into two classes, the
+{\em linear} objects {\tt line, arrow, spline, arc,} and the
+{\em planar} objects {\tt box, circle, ellipse.}
+
+The object {\tt move} is linear but draws nothing.  A compound object,
+or {\tt block,} is planar and consists of a pair of square brackets enclosing
+other objects, as described in Section~\ref{Compound}.
+Objects can be placed using absolute coordinates or relative to other objects.
+
+\Pic\ allows the definition of real-valued variables, which are alphameric
+names beginning with lower-case letters, and computations using them.
+Objects or locations on the diagram can be given symbolic names
+beginning with an upper-case first letter.
+
+\subsection{Manuals}
+At the time of writing, the classic \pic\ manual~\cite{KRpic} can be obtained
+from URL:
+
+\verb|http://www.cs.bell-labs.com/10thEdMan/pic.pdf|
+
+A more complete manual~\cite{Raymond95} is included in the GNU \groff\ 
+package.  A compressed postscript version is available, at least
+temporarily, with these circuit files.
+
+In both of the above manuals, explicit use of {\tt *roff} string and font
+constructs should be replaced by their \LaTeX\ equivalents as necessary.
+Further explanation is available, for example, from the \gpic\ 
+``man'' page, part of the GNU \groff\  package.
+
+Examples of use of the circuit macros in an electronics
+course are available on the web~\cite{Clark99}.
+
+For a discussion of ``little languages'' for document production, and
+of \pic\ in particular, see Chapter~9 of \cite{Bentley88}.  Chapter~1
+of \cite{Goossens97} also contains a brief discussion of this and
+other languages.
+
+\subsection{The linear objects: {\tt line, arrow, spline, arc}}
+A line can be drawn as follows:
+
+{\tt line from} {\sl position} {\tt to} {\sl position}
+
+\noindent
+where {\sl position} is defined below or
+
+{\tt line} {\sl direction} {\sl distance}
+
+\noindent
+where {\sl direction} is one of {\tt up,} {\tt down,} {\tt left,}
+{\tt right.}  When used with the \Mfour\ macros described here, it is
+preferable to add an underscore: {\tt up\_,} {\tt down\_,} {\tt left\_,}
+{\tt right\_.}  The {\sl distance} is a number or expression
+and the units are inches, but the assignment
+
+{\tt scale = 25.4}
+
+\noindent
+has the effect of changing the units to millimetres,
+as described in Section~\ref{scaling:}.
+
+Lines can also be drawn to any distance in any direction.  The example,
+
+{\tt line up\_ 3/sqrt(2) right\_ 3/sqrt(2) dashed}
+
+\noindent
+draws a line 3 units long from the current location,
+at a $45^\circ$ angle above horizontal.
+Lines (and other objects) can be specified as {\tt dotted,} {\tt dashed,} or
+{\tt invisible,} as above.
+
+The construction
+
+{\tt line from A to B chop x}
+
+\noindent
+truncates the line at each end by {\tt x} (which may be negative)
+or, if {\tt x} is omitted, by
+the current circle radius, which is convenent when A and B are
+circular graph nodes, for example.  Otherwise
+
+{\tt line from A to B chop x chop y}
+
+\noindent
+truncates the line by {\tt x} at the start and {\tt y} at the end.
+
+Any of the above means of specifying line (or arrow) direction and length
+will be called a {\em linespec.}
+
+Lines can be concatenated.  For example, to draw a triangle:
+
+{\tt line up\_ sqrt(3) right\_ 1 then down\_ sqrt(3) right\_ 1 then left\_ 2}
+
+\subsection{Positions}
+A {\sl position} can be defined by a coordinate pair, e.g.\ {\tt 3,2.5},
+more generally using parentheses by {\tt (}{\sl expression, expression}{\tt )},
+as a sum or difference as
+{\tt{\sl position} $+$ ({\sl expression, expression})},
+or by the construction {\tt (}{\sl position, position}{\tt)},
+the latter taking the $x$-coordinate from the first
+position and the $y$-coordinate from the second.  A position can be
+given a symbolic name beginning with an upper-case letter,
+e.g.\ {\tt Top:~(0.5,4.5)}.  Such a definition does not affect the calculated
+figure boundaries.  The current position {\tt Here} is always defined and
+is equal to $(0,0)$ at the beginning of a diagram or block.
+The coordinates of a position are accessible, e.g.\ {\tt Top.x} and
+{\tt Top.y} can be used in expressions.  The center, start, and end of
+linear objects (and the defined points of other objects as described below)
+are predefined positions, as shown in the following example,
+which also illustrates how to refer to a previously drawn element if it has
+not been given a name:
+
+{\tt line from last line.start to 2nd last arrow.end then to 3rd line.center}
+
+Objects can be named (using a name commencing with an upper-case letter),
+for example:
+
+{\tt Bus23: line up right}
+
+\noindent
+after which, positions associated with the object can be referenced using the
+name; for example:
+
+{\tt arc cw from Bus23.start to Bus23.end with .center at Bus23.center}
+
+An arc is drawn by specifying its rotation, starting point, end point, and
+center, but sensible defaults are assumed if any of these are omitted.
+Note that
+
+{\tt arc cw from Bus23.start to Bus23.end}
+
+\noindent
+does {\em not} define the arc uniquely; there are two arcs that satisfy this
+specification.
+This distribution includes the \Mfour\ macros
+
+{\tt arcr( {\sl position, radius, start radians, end radians})
+\hfill\break\indent
+     arcd( {\sl position, radius, start degrees, end degrees})
+\hfill\break\indent
+     arca( {\sl chord linespec,} ccw|cw, {\sl radius, modifiers})}
+
+\noindent to draw uniquely defined arcs.  For example,
+
+{\tt arcd((1,1),2,0,-90) -> cw}
+
+\noindent draws a clockwise arc with centre at $(1,1),$ radius $2,$
+ from $(3,1)$ to $(1,-1),$ and
+
+{\tt arca(from (1,1) to (2,2),,1,->)}
+
+\noindent draws an acute-angled arc with arrowhead on the chord defined by the
+first argument.
+
+The linear objects can be given arrowheads at the start, end, or both ends,
+for example:
+
+{\tt line dashed <- right 0.5\hfill\break
+\hspace*{\parindent}%
+arc <-> height 0.06 width 0.03 ccw from Here to Here+(0.5,0)
+ \char92\hfill\break
+\hspace*{2\parindent}%
+   with .center at Here+(0.25,0)\hfill\break
+\hspace*{\parindent}%
+spline -> right 0.5 then down 0.2 left 0.3 then right 0.4}
+
+The arrowheads on the arc above have had their shape adjusted using the
+{\tt height} and {\tt width} parameters.
+
+\subsection{The planar objects: {\tt box, circle, ellipse}, and text}
+Planar objects are drawn by specifying the width, height, and position, thus:
+
+{\tt A: box ht 0.6 wid 0.8 at (1,1)}
+
+\noindent
+after which, in this example, the position {\tt A.center} is defined,
+and can be referenced simply as {\tt A}.  In addition, the
+compass corners {\tt A.n,} {\tt A.s,} {\tt A.e,} {\tt A.w,} {\tt A.ne,}
+{\tt A.se,} {\tt A.sw,} {\tt A.nw} are automatically defined, as are
+the dimensions {\tt A.height} and {\tt A.width.}
+Planar objects can also be placed by specifying the location of a defined
+point; for example, two touching circles can be drawn as shown:
+
+{\tt circle radius 0.2\hfill\break 
+\hspace*{\parindent}%
+circle diameter (last circle.width * 1.2) with .sw at last circle.ne}
+
+The planar objects can be filled with gray or colour. For example, the line
+
+{\tt box dashed fill}
+
+\noindent produces a dashed box filled with a medium gray by default.
+The gray density can be controlled using the \verb|fill_(|{\sl number}\verb|)|
+macro, where $0\leq \hbox{\sl number}\leq 1$, with $0$ corresponding to
+black and $1$ to white. 
+
+Basic colours for lines and fills are provided by \gpic\  and \dpic,
+but more elaborate line and fill styles can be incorporated, depending
+on the printing device, by inserting {\tt \char92 special} commands or
+other lines beginning with a backslash in the drawing code.  In fact,
+arbitrary lines can be inserted into the output using
+
+{\tt command "}{\sl string}{\tt "}
+
+\noindent where {\sl string} is one or more lines to be inserted.
+
+Arbitrary text strings, typically meant to be typeset by \LaTeX, are
+delimited by double-quote characters and occur in two ways.  The first
+way is illustrated by
+
+\verb|"\large Resonances of $C_{20}H_{42}$"|
+ \verb|wid |{\sl x}\verb| ht |{\sl y}\verb| at |{\sl position}
+
+\noindent
+which writes the typeset result, like a box, at {\sl position} and tells
+\pic\ its size.  The default size assumed by \pic\ is given by parameters
+{\tt textwid} and {\tt textht} if it is not specified as above.
+The exact typeset size of formatted text can be obtained
+as described in Section~\ref{Interaction:}.  The second occurrence
+associates one or more strings with an object, e.g., the following writes
+two words, one above the other, at the centre of an ellipse:
+
+\verb|ellipse "\bf Stop" "\bf here"|
+
+\noindent
+The C-like \pic\ function
+ {\tt sprintf("{\sl format string}",{\sl numerical arguments})}
+is equivalent to a string.
+
+\subsection{Compound objects}\label{Compound}
+A compound object is a group of statements enclosed in square
+brackets.  Such an object is placed by default as if it were a box, but
+it can also be placed by specifying the final position of a defined point.
+A defined point is the center or compass courner of the bounding box
+of the compound object or one of its internal objects.
+Consider the last line of the code fragment shown:
+
+\noindent%
+\verb|  Ands: [ right_|\\
+\verb|          And1: AND_gate|\\
+\verb|          And2: AND_gate at And1 - (0,And1.ht*3/2)|\\
+\verb|          |$\ldots$\\
+\verb|        ] with .And2.In1 at| {\sl position} % (K.x,IC5.Pin9.y)|
+
+The two gate macros evaluate to compound objects containing {\tt Out},
+{\tt In1}, and other locations.  The final positions of all objects
+between the square brackets are determined in the last line by
+specifying the position of {\tt In1} of gate {\tt And2}.
+
+\subsection{Other language facilities}
+
+All objects have default sizes, directions, and other characteristics,
+so part of the specification of an object can sometimes be profitably
+omitted.
+
+Another possibility for defining positions is 
+
+{\sl expression} {\tt of the way between} {\sl position}
+ {\tt and} {\sl position}
+
+\noindent%
+which is abbreviated as
+
+{\sl expression} {\tt <} {\sl position} {\tt ,} {\sl position} {\tt >}
+
+\noindent%
+but care has to be used in processing the latter construction with \Mfour,
+since the comma may have to be put within quotes, {\tt `,'} to distinguish it
+from the {\tt m4} argument separator.
+
+Positions can be calculated using expressions containing variables.
+The scope of a position is the current block.  Thus, for example,
+
+{\tt
+  theta = atan2(B.y-A.y,B.x-A.x)
+
+  line to Here+(3*cos(theta),3*sin(theta)).
+  }
+
+Expressions are the usual algebraic combinations of primary quantities:
+constants, environmental parameters such as {\tt scale,} variables,
+horizontal or vertical coordinates of terms such as
+{\sl position}{\tt.x} or {\sl position}{\tt.y},
+dimensions of \pic\ objects, e.g.\ {\tt last circle.rad}.
+The elementary algebraic operators are
+{\tt +, -, *, /, \%, =, +=, -=, *=, /=,} and {\tt \%=,}
+similar to the C language.
+
+The logical operators {\tt ==, !=, <=, >=, >,} and {\tt <} apply to
+expressions, and strings can be tested for equality or inequality.  A
+modest selection of numerical functions is also provided: the
+single-argument functions {\tt sin, cos, log, exp, sqrt, int}, where
+{\tt log} and {\tt exp} are base-10, the two-argument functions
+{\tt atan2, max, min,} and the random-number generator {\tt rand()}.
+Other functions are also provided using macros.
+
+A \pic\ manual should be consulted for details, more examples, and
+other facilities, such as the branching facility
+
+\verb|if |{\sl expression}\verb| then { |{\sl anything} 
+  \verb|} else { |{\sl anything}\verb| }|,
+
+\noindent%
+the looping facility
+
+\verb|for |{\sl variable}\verb| = |{\sl expression}\verb| to |% 
+{\sl expression}\verb| by |{\sl expression}\verb| do { |%
+{\sl anything}\verb| }|,
+
+\noindent%
+operating-system commands, \pic\ macros, and external file inclusion.
+
+\xection{Two-terminal circuit elements}\label{Basictwo}
+There is a fundamental difference between two-terminal elements, which
+are drawn as directed linear objects, and other elements, which are
+compound objects as described in Section~\ref{Compound}.  The
+two-terminal element macros follow a set of conventions described in
+this section, and other elements will be described in Section
+\ref{Other}.
+
+\subsection{Circuit and element basics}
+First, the arguments of all drawing macros have default values, so that
+only arguments that differ from these values need be specified.  The
+arguments are given in Section~\ref{defines}.
+
+Consider the resistor shown in Figure~\ref{BigResistor},
+which also serves as an example of \pic\ commands.
+The first part of the source file for this figure is as follows:
+
+{\small \input BigResistor1.verb }
+
+\begin{figure}[hbt]
+   \input BigResistor
+   \caption{Resistor named {\tt R1}, showing the size parameters,
+     enclosing block, and predefined positions.}
+   \label{BigResistor}
+   \end{figure}
+The lines of Figure~\ref{BigResistor}
+and the remaining source lines of the file are explained below:
+\begin{itemize}
+\item The first line invokes an almost-empty macro {\tt cct\_init} that
+   initializes local variables needed by some circuit-element macros.  This
+   macro can be customized to set line thicknesses, maximum page sizes, scale
+   parameters, or other global quantities as desired.
+\item The body dimensions of two-terminal elements are multiples of the macro
+   {\tt dimen\_}, which evaluates by default to {\tt linewid}, a
+   \pic\ environmental parameter with default value 0.5\,in.  The default
+   length of an element is {\tt elen\_}, which is {\tt dimen\_*3/2}.
+   Setting {\tt linewid} to 2.0 as in the example means that the default element
+   length becomes 3.0\,in.
+   For resistors, the length of the body is {\tt dimen\_/2,} and the
+   width is {\tt dimen\_/6.} All of these values can be customized.
+   Element scaling is discussed further in Section~\ref{scaling:}.
+\item The macro {\tt linethick\_} sets the default thickness of subsequent
+   lines (to 2.0\,pt in the example).
+   In the \Mfour\ language, macro arguments are written within parentheses
+   following the macro name, with no space between the name and the
+   opening parenthesis.  Lines can be broken before a macro argument
+   because \Mfour\ ignores white space immediately preceding arguments.
+\item The two-terminal element macros expand to sequences of drawing commands
+   that begin with {\tt `line invis {\sl linespec}'},
+   where {\tt\sl linespec} is the first argument of the macro if it
+   is non-blank, otherwise the line is drawn a distance
+   {\tt elen\_} in the current direction, which is to the right by
+   default. All this is handled by the macro {\tt eleminit\_},
+   which also calculates the length and angle of the invisible line for
+   later use.  The invisible line is first drawn, then the element is drawn
+   on top of it.
+   The element---rather the initial invisible line---can
+   be given a name, {\tt R1} in the example, so that positions
+   {\tt R1.start}, {\tt R1.centre}, and {\tt R1.end} are defined as shown.
+\item The element body is enclosed by a block, which can be
+   used to place labels around the element.  The block
+   corresponds to an invisible rectangle with horizontal top and bottom lines,
+   regardless of the direction in which the element is drawn.  A
+   dotted box has been drawn in the diagram to show the block boundaries.
+\item The last sub-element, identical to the first in two-terminal
+   elements, is an invisible line that can be referenced later to
+   place labels or other elements.  This might be over-kill.  If you create
+   your own macros you might choose simplicity over generality, and only
+   include visible lines.
+  \end{itemize}
+
+To produce Figure~\ref{BigResistor}, the following embellishments
+were added after the previously shown source:
+{\small \input BigResistor2.verb }
+
+\begin{itemize}
+\item The line thickness is set to the default thin value of \hbox{0.4\,pt},
+   and the box displaying the element body block is drawn.  Notice how the
+   width and height can be specified, and the box centre positioned at
+   the centre of the block.
+\item The next paragraph draws two objects, a spline with an arrowhead,
+   and a string left justified at the end of the spline.  Other
+   string-positioning modifiers than {\tt ljust} are {\tt rjust,}
+   {\tt above,} and {\tt below.} Lines to be read by \pic\ can be
+   continued by putting a backslash as the rightmost character. 
+
+\item The last paragraph invokes a macro for dimensioning diagrams.
+   \end{itemize}
+
+\subsection{The two-terminal elements}
+Figures~\ref{CctTable}--\ref{Switches} are tables of the two-terminal
+elements.  Several elements are included more than once to illustrate
+some of their arguments, which are listed in Section~\ref{defines}.
+\begin{figure}[b!]
+   \input CctTable
+   \caption{Two-terminal elements, showing some variations.}
+   \label{CctTable}
+    \end{figure}
+\begin{figure}[t!]
+   \input Sources
+   \caption{Sources and source-like elements.}
+   \label{Sources}
+   \end{figure}
+\begin{figure}[t!]
+   \input Diodes
+   \caption{Variants of
+     {\tt diode({\sl linespec},B|D|K|L|LE[R]|P[R]|S|T|V|Z,[R][E])}.}
+   \label{Diodes}
+   \end{figure}
+\begin{figure}[t!]
+   \input Fuses
+   \caption{The
+     {\tt fuse({\sl linespec}, A|dA|B|C|D|E|S|HB|HC, {\sl wid}, {\sl ht})}
+     and {\tt cbreaker({\sl linespec},L|R,D)} macros.}
+   \label{Fuses}
+   \end{figure}
+\begin{figure}[t!]
+   \input AmpTable
+   \caption{Amplifier, delay, and integrator.}
+   \label{AmpTable}
+   \end{figure}
+\begin{figure}[t!]
+   \input Switches
+   \caption{The basic
+     {\tt switch({\sl linespec},L|R,[O|C][D],B)}
+     macro and more elabourate
+     {\tt dswitch({\sl linespec},R,W[ud]B[K]{\sl chars})} macro, with
+     drawing direction {\tt right\_}.
+     Setting the second argument to {\tt R} produces a mirror
+     image with respect to the drawing direction.
+     The macro {\tt switch(,,,D)} is a wrapper for the comprehensive
+     {\tt dswitch} macro.}
+   \label{Switches}
+   \end{figure}
+
+The first argument of the two-terminal elements, if included, defines
+the invisible line along which the element is drawn.  The other
+arguments produce variants of the default elements.  Thus, for example,
+
+{\tt resistor(up\_ 1.25,7)}
+
+\noindent%
+draws a resistor 1.25 units long up from the current position, with $7$
+vertices per side.
+The macro {\tt up\_} evaluates to {\tt up} but also resets the current
+directional parameters to point up.
+%\pagebreak
+
+Most of the two-terminal elements are oriented; that is, they have
+a defined polarity.  Several element macros include an argument
+that reverses polarity, but there is also a more general mechanism.
+The first argument of the macro
+
+{\tt reversed(`}{\sl macro name}{\tt',}{\sl macro arguments}{\tt )}
+
+\noindent
+is the name of a two-terminal element in quotes, followed by the
+element arguments.  The element is drawn with reversed direction.
+Thus,
+
+{\tt diode(right\_ 0.4); reversed(`diode',right\_ 0.4)}
+
+\noindent
+draws two diodes to the right, but the second one points left.
+Similarly, the macro
+
+{\tt resized(}{\sl factor},`{\sl macro name}',{\sl macro arguments}{\tt )}
+
+\noindent
+can be used to resize the body of an element by temporarily multiplying
+the {\tt dimen\_} macro by {\sl factor}. More general resizing should be
+done by redefining {\tt dimen\_} as described in Section~\ref{Circuitscaling:}.
+These two macros can be nested; the following scales the above example
+by 1.8, for example
+
+{\tt resized(1.8,`diode',right\_ 0.4);}
+{\tt resized(1.8,`reversed',`diode',right\_ 0.4)}
+
+%\pagebreak
+Figure~\ref{Variable} shows some two-terminal elements with
+arrows or lines overlaid to indicate variability using the macro
+{\tt variable(`}{\sl element}{\tt',{\sl type},{\sl angle},{\sl length})},
+where {\sl type} is one of {\tt A, P, L, N,} with {\tt C} or {\tt S}
+optionally appended to indicate continuous or stepwise variation.
+Alternatively, this macro
+can be invoked similarly to the label macros in
+Section~\ref{Labels:} by specifying an empty first argument;
+thus, the following line draws the resistor in Figure~\ref{Variable}:
+
+   {\tt resistor(down\_ dimen\_); variable(,uN)}
+
+\begin{figure}[h!t]
+\vspace*{-\baselineskip}
+   \input Variable
+   \caption{Illustrating
+   {\tt variable(`{\sl element}',[A|P|L|[u]N][C|S],{\sl angle},{\sl length})}.
+   For example,\break {\tt variable(`capacitor(down\_ dimen\_)')} draws
+   the leftmost capacitor shown above, and {\tt variable(`resistor(down\_
+   dimen\_)',uN)} draws the resistor.  The default angle is
+   45${}^{\circ}$, regardless of the direction of the element.  The array
+   on the right shows the effect of the second argument.}
+   \label{Variable}
+   \end{figure}
+
+Figure~\ref{Emarrows} contains arrows for indicating
+radiation effects.
+\begin{figure}[h!t]
+   \input Emarrows
+   \caption{Radiation arrows: {\tt em\_arrows({\sl type, angle, length})}}
+   \label{Emarrows}
+   \end{figure}
+The arrow stems are named {\sl A1}, {\sl A2},
+and each pair is drawn in a \verb|[]| block, with
+the names {\sl Head} and {\sl Tail} defined to
+aid placement near another device.  The second argument specifies
+absolute angle in degrees (default 135 degrees).
+\enlargethispage{\baselineskip}
+
+\subsection{Branch-current arrows}
+Arrowheads and labels can be added to conductors using basic
+\pic\ statements.  For example, the following line adds a labeled
+arrowhead at a distance {\tt alpha} along a horizontal line that has
+just been drawn.  Many variations of this are possible:
+
+  \verb|arrow right arrowht from last line.start+(alpha,0) "$i_1$" above|
+
+Macros have been defined to simplify the labelling of two-terminal
+elements, as shown in Figure~\ref{currents}.
+The macro
+
+   {\tt b\_current({\sl label,} above\_|below\_, In|O[ut], Start|E[nd],
+   {\sl frac})}
+
+\noindent
+draws an arrow from the start of the last-drawn two-terminal element
+{\sl frac} of the way toward the body.
+\begin{figure}[h!t]
+   \input currents
+   \caption{Illustrating {\tt b\_current, larrow,} and {\tt rarrow}.
+      The drawing direction is to the right.}
+   \label{currents}
+   \end{figure}
+
+If the fourth argument is {\tt End},the arrow is drawn from the end
+toward the body.
+If the third element is {\tt Out}, the arrow is drawn outward from the body.
+The first argument is the desired label, of which the default position is
+the macro {\tt above\_,} which evaluates to {\tt above} if the current
+direction is right or to {\tt ljust, below, rjust} if the current
+direction is respectively down, left, up.  The label is assumed to be
+in math mode unless it begins with {\tt sprintf} or a double quote, in which
+case it is copied literally.  A non-blank second argument specifies the
+relative position of the label with respect to the arrow, for example
+{\tt below\_,} which places the label below with respect to the current
+direction.  Absolute positions, for example {\tt below} or {\tt ljust},
+also can be specified.
+
+For those who prefer a separate arrow to indicate the reference
+direction for current, the macros {\tt larrow({\sl label}, ->|<-,{\sl dist})}
+and {\tt rarrow({\sl label}, ->|<-,{\sl dist})} are provided.  The label is
+placed outside the arrow as shown in Figure~\ref{currents}.  The first
+argument is assumed to be in math mode unless
+it begins with {\tt sprintf} or a double
+quote, in which case the argument is copied literally.  The third argument
+specifies the separation from the element.
+%\begin{figure}[hbt]
+%   \input lrarrows
+%   \caption{The {\tt larrow} and {\tt rarrow} macros draw
+%    reference-direction arrows adjacent to the element.}
+%   \label{lrarrows}
+%   \end{figure}
+
+\subsection{Labels}\label{Labels:}
+   Macros for labeling two-terminal elements are included:
+\par
+{\tt
+   llabel(} {\sl arg1,arg2,arg3} {\tt )
+      \hfill\break\hspace*{\parindent}%
+   clabel(} {\sl arg1,arg2,arg3} {\tt )
+      \hfill\break\hspace*{\parindent}%
+   rlabel(} {\sl arg1,arg2,arg3} {\tt )
+      \hfill\break\hspace*{\parindent}%
+   dlabel(} {\sl long,lat,arg1,arg2,arg3} {\tt )
+   }
+
+The first macro places the three arguments, which are treated as math-mode
+strings, on the left side of the element block {\em with respect to the
+current direction:} {\tt up, down, left, right.}
+The second places the arguments along the centre, and the third along the
+right side.
+Thus a simple circuit example with labels is shown in Figure~\ref{Loop}.
+The macro {\tt dlabel} performs these functions for an
+obliquely drawn element, placing the three macro arguments at
+{\tt vec\_(-long,lat),} {\tt vec\_(0,lat),} and {\tt vec\_(long,lat)}
+respectively relative to the centre of the element.  Labels beginning
+with {\tt sprintf} or a double quote are copied literally rather than
+assumed to be in math mode.
+\begin{figure}[ht]
+   \vspace*{-\baselineskip}
+   \parbox{4in}{\small \verbatiminput{Loop.m4}}%
+   \hfill\raise-0.5in\hbox{\input Loop }
+   \vspace*{-\baselineskip}
+   \caption{A loop containing labeled elements, with its source code.}
+   \label{Loop}
+   \end{figure}
+
+\xection{Other circuit elements}\label{Other}
+Many basic elements are not two-terminal.  These elements are usually enclosed
+in a \verb|[ ]| block, and contain named interior locations and components.
+In some cases, an
+invisible line determining length and direction (but not position) can
+be specified by the first argument, as for the two-terminal elements.
+Instead of positioning by the first line, the enclosing block must be
+placed by using its compass corners, thus:
+  {\sl element} {\tt with} {\sl corner} {\tt at} {\sl position} 
+or, when the block contains a predefined location, thus:
+  {\sl element} {\tt with} {\sl location} {\tt at} {\sl position}.
+A few macros are positioned with the first argument;
+the {\tt ground} macro, for example:
+  {\tt ground(}{\tt at} {\sl position}{\tt ).} 
+
+Nearly all elements drawn within blocks can be customized by adding an
+extra argument, which is executed as the last item within the block.
+
+The macro {\tt
+   potentiometer({\sl linespec},{\sl cycles},{\sl fractional pos},{\sl length},$
+    \ldots$)},
+shown in Figure~\ref{Potentiometers},
+first draws a resistor along the specified line, then adds arrows for taps
+at fractional positions along the body, with default or specified length.
+A negative length draws the arrow from the right of the current drawing
+direction.
+\begin{figure}[ht!]
+   \input Potentiometers
+   \caption{Default and multiple-tap potentiometer.}
+   \label{Potentiometers}
+   \end{figure}
+
+The ground symbol is shown in Figure~\ref{Grounds}.
+The first argument specifies position; for example, the two lines shown
+have identical effect:
+
+{\tt move to (1.5,2); ground
+
+ground(at (1.5,2)) }
+
+\noindent The second argument truncates
+the stem, and the third defines the symbol type.
+The fourth argument specifies the angle at which the symbol is drawn,
+with D (down) the default.
+\begin{figure}[ht!]
+   \input Grounds
+   \caption{The 
+     {\tt ground( at }{\sl position}{\tt, T, N|F|S|L|P|E, U|D|L|R|angle )}
+     macro.}
+   \label{Grounds}
+   \end{figure}
+
+The arguments of the macro
+{\tt antenna( at }{\sl position}{\tt, T, A|L|T|S|D|P|F, U|D|L|R|angle )}\break
+shown in Figure~\ref{Antennas} are similar to those of {\tt ground}.
+\enlargethispage{\baselineskip}
+\begin{figure}[h!t]
+   \input Antennas
+   \caption{Antenna symbols, with macro arguments shown above and
+     terminal names below.}
+   \label{Antennas}
+   \end{figure}
+
+Figure~\ref{Opamp} illustrates the macro
+{\tt opamp({\sl linespec, - label, + label, size,} {\sl chars})}\label{OPAMP}.
+The element is enclosed in a block
+containing the predefined internal locations shown.
+These locations can be referenced in later
+commands, for example as `{\tt last [].Out}.'
+The first argument defines the direction and length of the opamp, but the
+position is determined either by the enclosing block of the opamp,
+or by a construction such as `{\tt opamp with .In1 at Here}', which places
+the internal position {\sl In1} at the specified location.
+There are optional second and third arguments for which the defaults
+are {\tt \char92{}scriptsize\$-\$} and {\tt \char92{}scriptsize\$+\$}
+respectively, and the fourth argument changes the size of the opamp.
+The fifth argument is a string of characters.  {\tt P}
+adds a power connection, {\tt R} exchanges the second and
+third entries, and {\tt T} truncates the opamp point.
+
+\begin{figure}[h!t]
+   \input Opamp
+   \caption{Operational amplifiers.  The {\tt P} option adds
+     power connections.  The second and third arguments can be used
+     to place and rotate arbitrary text at {\tt In1} and {\tt In2}.}
+   \label{Opamp}
+   \end{figure}
+
+Typeset text associated with circuit elements is not rotated by default,
+as illustrated by the second and third opamps in Figure~\ref{Opamp}.
+The {\tt opamp} labels can be rotated if necessary by 
+using postprocessor commands (for example \PSTricks\ \verb|\rput|)
+as second and third arguments.
+
+The code in Figure~\ref{oax} places an opamp with three connections.
+\begin{figure}[h!t]
+   \parbox{4in}{\small \verbatiminput{oaxbody.m4}}%
+   \quad\raise-0.2in\hbox{\input oax }%
+   \vspace{-\baselineskip}
+   \caption{A code fragment invoking the
+    {\tt opamp({\sl linespec},-,+,{\sl size},[R][P])} macro.}
+   \label{oax}
+   \end{figure}
+
+Figure~\ref{Xform} shows variants of the transformer macro,
+which has predefined internal locations
+{\sl P1,} {\sl P2,} {\sl S1,} {\sl S2,} {\sl TP,} and {\sl TS.}
+The first argument
+specifies the direction and distance from {\sl P1} to {\sl P2}, with
+position determined by the enclosing block as for opamps.  The second
+argument places the secondary side of the transformer to the left
+or right of the drawing direction.  The optional third and fifth arguments
+specifies the number of primary and secondary arcs respectively.
+If the fourth argument string contains an {\tt A}, the iron core
+is omitted, and if it contains a {\tt W}, wide windings are drawn.
+\begin{figure}[h!t]
+   \input Xform
+  \caption{The {\tt transformer({\sl linespec},L|R,{\sl np},[A][W|L],{\sl ns})}
+     macro (drawing direction {\tt down}), showing predefined terminal
+     and centre-tap points.}
+   \label{Xform}
+   \end{figure}
+\iffalse
+A transformer with four connections is illustrated
+in Figure~\ref{tran}.
+\begin{figure}[hbt]
+   \parbox{4in}{\small \verbatiminput{tranbody.m4}}%
+   \quad\raise-0.2in\hbox{\input tran }%
+   \vspace{-\baselineskip}
+   \caption{Showing the
+    {\tt transformer({\sl linespec},L|R,np,A,ns)} macro.}
+   \label{tran}
+   \end{figure}
+\fi
+
+Figure~\ref{Audio} shows some audio devices, defined in {\tt []} blocks,
+with predefined internal locations as shown.
+The first argument specifies the device orientation.
+Thus,
+
+{\tt S: speaker(U) with .In2 at Here}
+
+\noindent
+places an upward-facing speaker with input {\sl In2} at the
+current location.
+\begin{figure}[ht!]
+   \input Audio
+   \caption{Audio components:
+   {\tt speaker(U|D|L|R|{\sl degrees},{\sl size},{\sl type}),
+     bell, microphone, buzzer,
+     earphone}, with their internally named positions and components.}
+   \label{Audio}
+   \end{figure}
+
+The {\tt nport({\sl box specs {\tt[;} other commands{\tt]},
+  nw, nn, ne, ns, space ratio, pin lgth, style})}
+macro is shown in Figure~\ref{Nport}.
+The macro begins with the line \verb|define(`nport',`[Box: box `$1'|,
+so the first argument is a box specification, such as size or fill parameters,
+or text, possibly followed by other embellishments for the box, such as labels.
+The second to fifth arguments specify the number of ports
+(pin pairs) to be drawn respectively on the west, north, east, and south
+sides of the box.  The end of each pin has a name corresponding to the
+side, port number and $a$ or $b$ pin, as shown.
+The sixth argument
+specifies the ratio of port width to inter-port space, the seventh is
+the pin length, and setting the eighth argument to {\tt N} omits the pin
+dots.
+The macro ends with \verb|`$9']')|, so that a ninth argument can be used
+to add further customizations within the enclosing block.
+\begin{figure}[h!b]
+   \input Nport
+   \caption{The {\tt nport} macro draws a sequence of pairs of named pins
+     on each side of a box.  The pin names are shown.  The default is a twoport.
+     The {\tt nterm} macro draws single pins instead of pin pairs.}
+   \label{Nport}
+%\vspace*{-\baselineskip}
+   \end{figure}
+
+The {\tt nterm({\sl box specs, nw, nn, ne, ns, pin lgth, style})} macro
+illustrated in Figure~\ref{Nport} is similar to the {\tt nport} macro but
+has one fewer argument, draws single pins instead of pin pairs, and
+defaults to a 3-terminal box.
+
+Many custom labels or added elements may be required, particularly for
+2-ports\label{NPORTS}. These elements can be added using the first
+argument and the ninth of the {\tt nport} macro.
+For example, the following code adds a pair of labels to the box
+immediately after drawing it but within the enclosing block:
+
+{\tt nport(; {`"${}0$"' at Box.w ljust; `"$\infty$"' at Box.e rjust})}
+
+If this trick were to be used extensively, then the following custom wrapper
+would save typing, add the labels, and pass all arguments to
+{\tt nport}:
+
+\begin{verbatim}
+define(`nullor',`nport(`$1'
+  {`"${}0$"' at Box.w ljust
+   `"$\infty$"' at Box.e rjust},shift($@))')
+\end{verbatim}
+
+The above example and the related gyrator macro are illustrated in
+Figure~\ref{NLG}. 
+\begin{figure}[h!t]
+   \input NLG
+   \caption{The {\tt nullor} example and the {\tt gyrator}
+    macro are customizations of the {\tt nport} macro.}
+   \label{NLG}
+   \end{figure}
+
+\pagebreak
+A basic winding macro for magnetic-circuit sketches and similar figures
+is shown in Figure~\ref{Windings}.
+For simplicity, the complete spline
+is first drawn and then blanked in appropriate places using the background
+(core) color (\verb!lightgray! for example, default \verb!white!).
+\begin{figure}[h!]
+ \vspace{-\baselineskip}
+   \input Windings
+   \vspace{-1ex}
+   \caption{The {\tt winding(L|R, diam, pitch, turns, core wid, core color)}
+     macro draws a coil with axis along the current drawing direction.
+     Terminals {\tt T1} and {\tt T2} are defined.
+     Setting the first argument to {\tt R} draws a right-hand winding.}
+   \label{Windings}
+   \end{figure}
+\enlargethispage{\baselineskip}
+
+Figure~\ref{Relay} shows the macro {\tt contact(O|C, R)}
+which contains predefined locations {\sl P, C, O}
+for the armature and normally closed and normally
+open terminals.  The macro {\tt relay(}{\sl poles}{\tt, O|C, R)}
+defines coil terminals {\sl V1, V2} and contact
+terminals {\sl P$_i$, C$_i$, O$_i$.} 
+\begin{figure}[ht]
+   \input Relay
+   \vspace{-1ex}
+   \caption{The {\tt contact(O|C,R)} and {\tt relay(}{\sl poles}{\tt,O|C,R)}
+     macros (default direction right).}
+   \label{Relay}
+%\vspace{-\baselineskip}
+   \end{figure}
+
+Figure~\ref{Bip} shows the variants of bipolar transistor macro
+{\tt bi\_tr({\sl linespec},L|R,P,E)}
+which contains predefined internal locations {\sl E},
+{\sl B}, {\sl C}.
+\begin{figure}[b!]
+   \input Bip
+   \caption{Bipolar transistor variants (current direction upward).}
+   \label{Bip}
+   \end{figure}
+The first argument defines the distance and direction
+from {\sl E} to {\sl C,} with location determined by the enclosing
+block as for other elements, and the base placed to the left or right of the
+current drawing direction according to the second argument.  Setting the third
+argument to `{\tt P}' creates a PNP device instead of NPN, and setting the
+fourth to `{\tt E}' draws an envelope around the device.
+
+The code fragment example in Figure~\ref{bitr} places a bipolar transistor,
+connects a ground to the emitter, and connects a resistor to the collector.
+\begin{figure}[h!]
+\vspace*{-\baselineskip}
+   \quad\quad\parbox{4in}{\small \verbatiminput{bitrbody.m4}}%
+   \quad\raise-0.4in\hbox{\input bitr }%
+   \vspace{-\baselineskip}
+   \caption{The {\tt bi\_tr({\sl linespec},L|R,P,E)} macro.}
+   \label{bitr}
+   \end{figure}
+
+The {\tt bi\_tr} and {\tt igbt} macros are wrappers for
+the macro {\tt bi\_trans({\sl linespec}, L|R, {\sl chars}, E)}, which
+draws the components of the transistor according to the characters in its
+third argument.  For example, multiple emitters and collectors can be
+specified as shown in Figure~\ref{bi_trans}.
+\begin{figure}[h!]
+\vspace*{-0.5\baselineskip}
+   \input bi_trans
+   \caption{The {\tt bi\_trans({\sl linespec},L|R,{\sl chars},E)} macro.
+   The sub-elements are specified by the third argument.  The substring
+   {\tt E}{\sl n} creates multiple emitters {\sl E0} to {\sl En}.
+   Collectors are similar.}
+   \label{bi_trans}
+   \end{figure}
+
+A UJT macro with predefined internal locations {\sl B1,} {\sl B2,}
+and {\sl E} is shown in Figure~\ref{ujt},
+and a thyristor macro with predefined internal locations
+ {\sl G} and {\sl T1,} {\sl T2,} or
+ {\sl A,} {\sl K} is in Figure~\ref{thyristor}.
+\begin{figure}[h!]
+\vspace*{-0.5\baselineskip}
+   \input ujt
+   \caption{UJT devices, with current drawing direction up. }
+   \label{ujt}
+   \end{figure}
+\begin{figure}[h!]
+\vspace*{-0.5\baselineskip}
+   \input thyristor
+   \vspace*{-1ex}
+   \caption{The {\tt thyristor({\sl linespec, chars})} macro,
+    drawing direction down. The element is not two-terminal, so the
+    {\sl linespec} determines length and direction but not position.
+    The {\tt scr} macro places the thyristor as a two-terminal element.}
+   \label{thyristor}
+   \end{figure}
+Except for the {\sl G} terminal, a thyristor (the {\tt C} variant excluded)
+is much like an two-terminal element.  The wrapper macro
+{\tt scr({\sl linespec, chars, label})} draws a thyristor and places it
+using {\sl linespec} as for a two-terminal element,
+but requires a third argument for the label for the compound block; thus,
+
+{\tt scr(from A to B,UA,Q3); line right from Q3.G}
+
+\noindent
+draws the element from position {\sl A} to position {\sl B} with label
+{\sl Q3}, and draws a line from {\sl G}.
+
+The number of possible semiconductor symbols is very
+large, so these macros must be regarded as prototypes.
+Often an element is a minor modification of existing elements.  For example,
+the {\tt thyristor({\sl linespec}, {\sl chars})} macro illustrated in
+Figure~\ref{thyristor} is derived from the diode and bipolar transistor macros.
+Another example is the {\tt tgate} macro shown in Figure~\ref{Tgate}, which
+also shows a pass transistor.
+\enlargethispage{\baselineskip}%
+\begin{figure}[h!t]
+   \input Tgate
+   \caption{The {\tt tgate({\sl linespec,} [B][R|L])} element, derived from
+     a customized diode and {\tt ebox}, and the
+     {\tt ptrans({\sl linespec}, [R|L])} macro.
+     These are not two-terminal elements, so the {\sl linespec} argument
+     defines the direction and length of the line from $A$ to $B$ but not
+     the element position.}
+   \label{Tgate}
+   \end{figure}
+
+Some FETs with predefined internal locations {\sl S,} {\sl D,} and {\sl G} are
+also included, with similar arguments to those of {\tt bi\_tr,} as shown in
+Figure~\ref{fet}.
+In all cases the first argument is a linespec, and entering
+{\tt R} as the second argument orients the {\sl G} terminal to the right of the
+current drawing direction.
+The macros in the top three rows of the figure are wrappers for the
+general macro {\tt mosfet({\sl linespec},R,{\sl characters},E)}.
+The third argument of this macro is a subset of the characters
+$\{${\tt BDEFGLMQRSTXZ}$\}$, each letter corresponding to
+a diagram component as shown in the bottom row of the figure. 
+Preceding the characters {\tt B}, {\tt G}, and {\tt S} by {\tt u} or {\tt d}
+adds an up or down arrowhead to the pin, preceding {\tt T} by {\tt d}
+negates the pin, and preceding {\tt M} by {\tt u} or {\tt d} puts the pin
+at the drain or source end respectively of the gate.
+The obsolete letter {\tt L} is equivalent to {\tt dM} and has been kept
+temporarily for compatibility.
+This system allows considerable freedom in choosing or customizing components,
+as illustrated in Figure~\ref{fet}.
+\begin{figure}[ht]
+   \input fet
+   \caption{JFET, insulated-gate enhancement and depletion MOSFETs,
+     and simplified versions.
+     These macros are wrappers that invoke the {\tt mosfet}
+     macro as shown in the bottom row.
+     The two lower-right examples show custom devices, the first
+     defined by omitting the substrate connection, and the second
+     defined using a wrapper macro.}
+   \label{fet}
+   \end{figure}
+
+Some other non-two-terminal macros are {\tt dot}, which has an
+optional argument `{\tt at} {\sl location}', the line-thickness
+macros, the {\tt fill\_} macro, and {\tt crossover}, which is a useful if
+archaic method to show non-touching conductor crossovers, as in
+Figure~\ref{bistable}.
+\begin{figure}[h!t]
+   \input bistable
+   \vspace{-1ex}
+   \caption{Bipolar transistor circuit, illustrating {\tt crossover}
+      and colored elements.}
+   \label{bistable}
+   \end{figure}
+This figure also illustrates now elements and labels can be colored
+using the macro
+
+{\tt rgbdraw({\sl r}, {\sl g}, {\sl b}, {\sl drawing commands})}
+
+\noindent
+where the {\sl r, g, b} values are in the range 0 to 1 to specify the rgb color.
+This macro is a wrapper for the following, which may be more convenient
+if many elements are to be given the same color:
+
+   {\tt setrgb({\sl r}, {\sl g}, {\sl b})}
+      \hfill\break\hspace*{\parindent}%
+   {\sl drawing commands}
+      \hfill\break\hspace*{\parindent}%
+   {\tt resetrgb}
+
+A macro is also provided for colored fills:
+
+{\tt rgbfill({\sl r}, {\sl g}, {\sl b}, {\sl drawing commands})}
+
+\noindent%
+These macros depend heavily on the postprocessor and are intended only for 
+\PSTricks, \TPGF, \MetaPost, and the Postscript output of \dpic.
+
+
+\xection{Directions, looping, and corners\label{Directions}}
+Aside from its block-structure capabilities, looping, and macros, 
+\pic\ has a very useful concept of the current point and current direction,
+the latter unfortunately limited to {\tt up, down, left, right.}
+The circuit macros need to know the current direction, so
+whenever {\tt up, down, left, right} are used they should be written
+respectively as the macros {\tt up\_, down\_, left\_, right\_}.
+To allow drawing circuit objects in other than the standard four directions,
+a transformation matrix
+is applied at the macro level to generate the required \pic\ code.
+Potentially, the matrix can be used for other transformations.
+The macros {\tt Point\_(}{\sl degrees}{\tt ),}
+{\tt point\_(}{\sl radians}{\tt ),}
+and {\tt rpoint\_(}{\sl rel linespec}{\tt )} re-define the entries
+{\tt m4a\_}, {\tt m4b\_}, {\tt m4c\_}, {\tt m4d\_}
+of the matrix for the required rotation.
+
+The macro {\tt eleminit\_} in the two-terminal elements invokes
+{\tt rpoint\_} with a specified or default {\sl linespec}
+to establish element length and direction.
+As shown in Figure~\ref{Oblique},
+`{\tt Point\_(-30); resistor}' draws a resistor
+along a line with slope of~-30 degrees, and `{\tt rpoint\_(to Z)}' sets
+the current direction cosines to point from the current location to location Z.
+Macro {\tt vec\_(x,y)}
+evaluates to the position {\tt (x,y)} rotated as defined by the
+argument of the previous {\tt Point\_, point\_} or {\tt rpoint\_} command.
+The principal device used to define relative locations in the circuit macros
+is {\tt rvec\_(x,y)}, which evaluates to position {\tt Here + vec\_(x,y)}.
+Thus, {\tt line to rvec\_(x,0)} draws a line of length {\tt x} in the current
+direction.
+\begin{figure}[!ht]
+\vspace{-\baselineskip}
+   \parbox{4.5in}{\small \verbatiminput{Oblique.m4}}%
+   \hfill\raise-0.7in\llap{\hbox{\input Oblique }}%
+   \vspace{-\baselineskip}
+   \caption{Illustrating elements drawn at oblique angles.}
+   \label{Oblique}
+   \end{figure}
+
+Figure~\ref{Oblique} illustrates that some hand-placement of labels
+using {\tt dlabel} may be useful when elements are drawn obliquely.
+The figure also illustrates that any commas within \Mfour\ arguments must
+be treated specially because the arguments are separated by commas.
+Argument commas are protected either by parentheses as in
+{\tt inductor(from Cr to Cr+vec\_(elen\_,0))}, or by multiple single quotes
+as in {\tt `{}`,'{}',} as necessary.  Commas also may be avoided by writing
+{\tt 0.5 between L and T} instead of {\tt 0.5<L,T>.}
+
+Sequential actions can be performed using either the
+ \dpic
+
+{\tt for {\sl variable}={\sl expression} to {\sl expression}
+ by {\sl expression} do $\lbrace$ {\sl actions} $\rbrace$}
+
+command or at the
+\Mfour\ processing stage.  The {\tt libgen} library defines the macro
+
+{\tt for\_({\sl start}, {\sl end}, {\sl increment}, `{\sl actions}')}
+
+\noindent
+for this and other purposes.  Nested loops are allowed and the innermost loop
+index variable is {\tt m4x.}
+The first three arguments must be
+integers and the {\sl end} value must be reached exactly; for example,
+\verb|for_(1,3,2,`print In`'m4x')| prints locations {\sl In1} and {\sl In3},
+but \verb|for_(1,4,2,`print In`'m4x')| does not terminate since the
+index takes on values 1, 3, 5, $\ldots$.
+
+Repetetive actions can also be performed with the the {\tt libgen} macro
+
+{\tt Loopover\_(`{\sl variable}', {\sl actions}, {\sl value1}, {\sl value2},
+  $\ldots$)}
+
+\noindent
+which evaluates {\sl actions} for each instance of {\sl variable} set
+to {\sl value1, value2, $\ldots$}.
+
+\pagebreak
+If two straight lines meet at an angle, then depending on the postprocessor,
+the corner may not be mitred or rounded unless the two lines belong to
+a multisegment line, as illustrated in Figure~\ref{Corners}.  This is normally
+not an issue for circuit diagrams unless the figure is magnified or thick
+lines are drawn.  Rounded corners can be obtained by setting post-processor
+parameters, but the figure shows the effect of
+two macros {\tt corner} for right angles, and {\tt round},
+that may assist in some cases. Otherwise, a two-segment line can be overlaid
+at the corner to produce the same effect.
+\begin{figure}[ht]
+   \input Corners
+   \caption{Producing mitred angles and corners.}
+   \label{Corners}
+   \end{figure}
+
+\xection{Logic gates}
+Figure~\ref{Logic} shows the basic logic gates included in
+library {\tt liblog.m4}.
+Gate macros have an optional argument, an integer $N$ from $0$ to 16,
+defining locations {\tt In1,} $\ldots$ {\tt In}$N,$ as illustrated for
+the NOR gate in the figure.  
+By default $N=2,$ except for macros {\tt NOT\_gate} and {\tt
+BUFFER\_gate}, which have one input {\tt In1} unless they are given a
+first argument, which is treated as the line specification of a
+two-terminal element.
+
+Negated inputs or outputs are marked by circles drawn by the
+\verb|NOT_circle| macro.  The name marks the point at the outer edge of the
+circle and the circle itself has the same name prefixed by {\tt N\_}.
+For example, the output circle of a nand gate is named
+{\tt N\_Out} and the outermost point of the circle is named {\tt Out.}
+The macro {\tt IOdefs} creates a sequence of named outputs.
+\begin{figure}[t]
+   \input Logic
+   \caption{Basic logic gates.  The input and output locations of
+      a three-input NOR gate are shown.  Inputs are negated by
+      including an {\tt N} in the second argument letter sequence.  A {\tt B}
+      in the second argument produces a box shape as shown in the rightmost
+      column, where the second example has AND functionality and
+      the bottom two are examples of exclusive OR functions.}
+   \label{Logic}
+   \end{figure}
+
+Gates are typically not two-terminal elements and are normally drawn
+horizontally or vertically (although arbitrary directions may be set
+with e.g.\ {\tt Point\_({\sl degrees})}).
+Each gate is contained in a
+block of typical height {\tt 6*L\_unit} where {\tt L\_unit} is a macro
+intended to establish line separation for an imaginary grid on which
+the elements are superimposed.
+
+Including an \verb|N| in the second
+argument character sequence of any gate negates the inputs, and including
+\verb|B| in the second argument invokes the
+general macro {\tt BOX\_gate([P|N]...,[P|N],{\sl horiz size},{\sl
+vert size},{\sl label})}, which draws box gates.  Thus, {\tt
+BOX\_gate(PNP,N,,8,\char92 geq 1)} creates a gate of default width,
+eight {\tt L\_unit}s height, negated output, three inputs with the
+second negated, and internal label ``$\geq1$''.
+If the fifth argument begins with {\tt sprintf} or a double quote then
+the argument is copied literally; otherwise it is treated as scriptsize
+mathematics.
+
+Input locations retain their positions relative to the gate body
+regardless of gate orientation, as shown in Figure~\ref{FF}.
+Beyond a default number (6) of inputs, the
+gates are given wings as illustrated in Figure~\ref{exVIII}.
+\begin{figure}[h!t]
+   \vspace*{-\baselineskip}
+   \parbox{4.75in}{\small \verbatiminput{FF.m4}}%
+   \quad\input FF
+   \vspace*{-\baselineskip}
+   \caption{$SR$ flip-flop.}
+   \label{FF}
+   \end{figure}
+\begin{figure}[h!t]
+   \input mplex
+   \vspace*{-\baselineskip}
+   \caption{Eight-input multiplexer with
+    {\tt for\_} looping in the source, showing a gate with wings.}
+   \label{exVIII}
+   \end{figure}
+\begin{figure}[h!t]
+   \input FlipFlop
+   \caption{The {\tt FlipFlop} and {\tt Mux} macros, with variations.}
+   \label{FlipFlops}
+   \end{figure}
+
+Figure~\ref{FlipFlops} shows a multiplexer block with variations, and
+the macro {\tt FlipFlop(D|T|RS|JK, {\sl label, boxspec})}, which is a
+wrapper for the more specific {\tt FlipFlop6(}{\sl label, spec,
+boxspec}{\tt )} and {\tt FlipFlopJK(}{\sl label, spec, boxspec}{\tt )}
+macros.  Pins on the latter two can be omitted or negated according to
+their second argument.  The second argument of {\tt FlipFlop6}, for
+example, contains {\tt NQ, Q, CK, S, PR, CLR} to include these pins.
+Preceding any of these with {\tt n} negates the pin.  The substring
+{\tt lb} is included to write labels on the pins.  Any other substring
+applies to the top left pin, with {\tt .} equating to a blank.  Thus,
+the second argument can be used to customize the flip-flop.
+
+A good strategy for drawing complex logic circuits might be summarized
+as follows:
+\begin{itemize}
+\item Establish the absolute locations of gates and other major components
+  (e.g.\ chips) relative to a grid of mesh size commensurate with
+  {\tt L\_unit}, which is an absolute length.
+\item Draw minor components or blocks relative to the major ones, using
+   parametrized relative distances.
+\item Draw connecting lines relative to the components and previously drawn
+   lines.
+\item Write macros for repeated objects.
+\item Tune the diagram by making absolute locations relative, and by tuning
+   the parameters.
+   Some useful macros for this are the following, which are in units of
+  {\tt L\_unit}:
+   \begin{itemize}
+   \item[] {\tt AND\_ht, AND\_wd}: the height and width of basic AND and
+     OR gates
+   \item[] {\tt BUF\_ht, BUF\_wd}: the height and width of basic buffers
+   \item[] {\tt N\_diam}: the diameter of NOT circles
+   \end{itemize}
+   \end{itemize}
+In addition to the logic gates described here, some experimental
+IC chip diagrams are included with the distributed example files.
+
+Customized gates can be defined simply.
+For example, the following code defines the custom flip-flops in
+Figure~\ref{ShiftR}.
+\begin{verbatim}
+define(`customFF', `[ Chip: box wid 10*L_unit ht FF_ht*L_unit
+    ifelse(`$1',1,`lg_pin(Chip.se+svec_(0,int(FF_ht/4)),lg_bartxt(Q),PinNQ,e)')
+    lg_pin(Chip.ne-svec_(0,int(FF_ht/4)),Q,PinQ,e)
+    lg_pin(Chip.w,CK,PinCK,wEN)
+    lg_pin(Chip.n,PR,PinPR,nN)
+    lg_pin(Chip.s,CLR,PinCLR,sN)
+    lg_pin(Chip.sw+svec_(0,int(FF_ht/4)),R,PinR,w)
+    lg_pin(Chip.nw-svec_(0,int(FF_ht/4)),S,PinS,w) ]')
+\end{verbatim}
+This definition makes use of macros \verb|L_unit| and
+\verb|FF_ht| that predifine dimensions and the
+logic-pin macro \verb|lg_pin(|{\sl location, printed label, pin name,
+type}\verb|)|.  The pin $\overline{\hbox{\sf Q}}$ is drawn only if the
+macro argument is 1.
+\begin{figure}[h!b]
+   \input ShiftR
+   \caption{A 5-bit shift register.}
+   \label{ShiftR}
+   \end{figure}
+
+For hybrid applications, the \verb|dac| and \verb|adc| macros are
+illustrated in Figure~\ref{Dac}.
+The figure shows the default and predifined internal locations, the number
+of which can be specified as macro arguments.
+\begin{figure}[ht]
+   \input Dac
+   \caption{The {\tt dac({\sl width,height},nIn,nN,nOut,nS)}
+   and {\tt adc({\sl width,height},nIn,nN,nOut,nS)} macros.}
+   \label{Dac}
+   \end{figure}
+
+\iffalse
+A good strategy for drawing complex logic circuits might be summarized
+as follows:
+\begin{itemize}
+\item Establish the absolute locations of gates and other major components
+  (e.g.\ chips) relative to a grid of mesh size commensurate with
+  {\tt L\_unit}, which is an absolute length.
+\item Draw minor components or blocks relative to the major ones, using
+   parametrized relative distances.
+\item Draw connecting lines relative to the components and previously drawn
+   lines.
+\item Write macros for repeated objects.
+\item Tune the diagram by making absolute locations relative, and by tuning
+   the parameters.
+   Some useful macros for this are the following, which are in units of
+  {\tt L\_unit}:
+   \begin{itemize}
+   \item[] {\tt AND\_ht, AND\_wd}: the height and width of basic AND and
+     OR gates
+   \item[] {\tt BUF\_ht, BUF\_wd}: the height and width of basic buffers
+   \item[] {\tt N\_diam}: the diameter of NOT circles
+   \end{itemize}
+   \end{itemize}
+In addition to the logic gates described here, some experimental
+IC chip diagrams are included with the distributed example files.
+\fi
+
+
+\xection{Element and diagram scaling}\label{scaling:}
+
+There are several issues related to scale changes.  You may wish to use
+millimetres, for example, instead of the default inches.  You may wish
+to change the size of a complete diagram while keeping the relative
+proportions of objects within it.  You may wish to change the sizes or
+proportions of individual elements within a diagram.  You must take
+into account that line widths are scaled separately from drawn objects,
+and that the size of typeset text is independent of the \pic\ language.
+
+The scaling of circuit elements will be described first, then
+the \pic\ scaling facilities.
+
+\subsection{Circuit scaling}\label{Circuitscaling:}
+The circuit elements all have default dimensions
+that are multiples of the \pic\ environmental parameter {\tt linewid,}
+so changing this parameter changes default element dimensions.
+The scope of a \pic\ variable is the current block; therefore, a sequence
+such as
+
+\begin{verbatim}
+  resistor
+T: [linewid = linewid*1.5; up_; Q: bi_tr] with .Q.B at Here
+  ground(at T.Q.E)
+  resistor(up_ dimen_ from T.Q.C)
+\end{verbatim}
+
+\noindent%
+connects two resistors and a ground to an enlarged transistor.
+Alternatively, you may redefine the default length {\tt elen\_}
+or the body-size parameter {\tt dimen\_.}  For example, adding the line
+
+{\tt define(`dimen\_',dimen\_*1.2)}
+
+\noindent%
+after the {\tt cct\_init} line of {\tt quick.m4} produces slightly
+larger body sizes for all circuit elements.
+
+\subsection{Pic scaling}
+There are at least three kinds of graphical elements to be considered:
+\begin{enumerate}
+\item When generating final output after reading the {\tt.PE} line,
+  \pic\ processors divide distances and sizes by the value of the
+  environmental parameter {\tt scale}, which is 1 by default.  Therefore,
+  the effect of assigning a value to {\tt scale} at the beginning of the
+  diagram is to change the drawing unit (initially 1 inch) throughout
+  the figure.  For example, the file {\tt quick.m4} can be modified to
+  use millimetres as follows:
+  \begin{verbatim}
+  .PS                            # Pic input begins with .PS
+  scale = 25.4                   # mm
+  cct_init                       # Set defaults
+
+  elen = 19                      # Variables are allowed
+  ...
+  \end{verbatim}
+\vspace*{-1.5\baselineskip}
+  The default sizes of \pic\ objects
+  are redefined by assigning new values to the environmental parameters
+  {\tt arcrad,} {\tt arrowht,} {\tt arrowwid,} {\tt boxht,} {\tt boxrad,}
+  {\tt boxwid,} {\tt circlerad,} {\tt dashwid,} {\tt ellipseht,}
+  {\tt ellipsewid,} {\tt lineht,} {\tt linewid,} {\tt moveht,}
+  {\tt movewid,}
+  {\tt textht,} and {\tt textwid.}
+  The $\ldots${\tt ht} and $\ldots${\tt wid} parameters refer to the
+  default sizes of vertical and horizontal lines, moves, etc., except for
+  {\tt arrowht} and {\tt arrowwid}, which are arrowhead dimensions.
+  The {\tt boxrad} parameter can be used to put rounded corners on boxes.
+  Assigning a new value to {\tt scale} also multiplies all of these 
+  parameters except {\tt arrowht,} {\tt arrowwid,} {\tt textht,} and
+  {\tt textwid} by the new value of {\tt scale} (\gpic\ multiplies them all).
+  Therefore, objects drawn to default sizes are unaffected by changing
+  {\tt scale} at the beginning of the diagram.
+  To change default sizes, redefine the appropriate parameters explicitly.
+
+\item The {\tt .PS} line can be used to scale the entire drawing, regardless
+  of its interior.  Thus, for example, the line {\tt.PS 100/25.4}
+  scales the entire drawing to a width of 100$\,$mm.
+  Line thickness, text size, and \dpic\ arrowheads are unaffected by
+  this scaling.
+
+  If the final picture width exceeds {\tt maxpswid}, which
+  has a default value of 8.5, then the picture is scaled to this size.
+  Similarly, if the height exceeds {\tt maxpsht} (default 11), then the
+  picture is scaled to fit.  These parameters can be assigned
+  new values as necessary, for example, to accommodate landscape figures.
+
+\item The finished size of typeset text is independent of \pic\ variables,
+  but can be determined as in Section~\ref{Interaction:}.  Then,
+  {\tt "text" wid $x$ ht $y$} tells \pic\ the size of {\tt text},
+  once the printed width $x$ and height $y$ have been found.
+
+\item Line widths are independent of diagram and text scaling, and have
+  to be set explicitly.  For example,
+  the assignment {\tt linethick = 1.2} sets the default line width to 1.2\,pt.
+  The macro {\tt linethick\_({\sl points})} is also provided, together
+  with default macros {\tt thicklines\_} and {\tt thinlines\_}.
+
+\end{enumerate}
+
+\xection{Writing macros}\label{Writing:}
+The \Mfour\ language is quite simple and is
+described in numerous documents such as the original
+reference~\cite{KRm4} or in later manuals~\cite{Seindal94}.  If a new
+element is required, then modifying and renaming one of
+the library definitions or simply adding an option to it may
+suffice.  Hints for drawing general two-terminal elements are given in
+{\tt libcct.m4}.  However, if an element or block is to be drawn in
+only one orientation then most of the elaborations used for general
+two-terminal elements in Section~\ref{Basictwo} can be dropped.
+
+It may not be necessary to define your own macro if all that is needed is
+a small addition to an existing element that is defined in an enclosing
+\verb|[ ]| block.  After the element arguments are expanded,
+one argument beyond the normal list is automatically expanded before
+exiting the block, as mentioned near the beginning of Section~\ref{Other}.
+This extra argument can be used to embellish the element.  
+
+A macro is defined using quoted name and replacement text as follows:
+
+{\tt define(`}{\sl name}{\tt',`}{\sl replacement text}{\tt ')}
+
+After this line is read by the \Mfour\ processor, then whenever {\sl name}
+is encountered as a separate string, it is replaced by its replacement
+text, which may have multiple lines.  The quotation characters are used
+to defer macro expansion.  Macro arguments are referenced inside a
+macro by number; thus {\tt \$1} refers to the first argument.
+A few examples will be given.
+
+\noindent\hbox{}\\ {\bf Example 1:}
+Custom two-terminal elements can often be defined by writing a wrapper
+for an existing element.  For example, an enclosed thermal switch
+can be defined as shown in Figure~\ref{Thermal}.
+\begin{figure}[hbt]
+   \parbox{4in}{\tt define(`thermalsw',\hfill\break
+   \hbox{}\space`dswitch(`\$1',`\$2',WDdBT)\hfill\break
+   \hbox{}\space\space circle rad distance(M4T,last line.c) at last line.c') }%
+   \hfill\raise-0.15in\hbox{\input Thermal }
+   \caption{A custom thermal switch defined from the {\tt dswitch} macro.}
+   \label{Thermal}
+   \end{figure}
+
+\noindent {\bf Example 2:}
+In the following,
+two macros are defined to simplify the repeated drawing
+of a series resistor and series inductor, and the macro {\tt tsection} defines
+a subcircuit that is replicated several times to generate Figure~\ref{Tline}.
+{\small \verbatiminput{Tline.m4}}
+\begin{figure}[hbt]
+   \input Tline
+   \caption{A lumped model of a transmission line, illustrating the
+    use of custom macros.}
+   \label{Tline}
+   \end{figure}
+
+%\pagebreak
+\noindent {\bf Example 3:}
+Repeated subcircuits might have different orientations.
+Suppose that a simple opamp subcircuit might have to be drawn in any direction.
+The subcircuit will be placed in a {\tt [} {\tt ]} block, with
+internal points {\sl In}, {\sl Out}, and {\sl G}. 
+The macro interface could be something like the following:
+
+{\tt fbfilter( U|D|L|R|{\sl degrees}, [L|R], {\sl opamp label},
+  {\sl C label}, {\sl R label} )}
+
+\noindent The first argument specifies the drawing direction as for the
+{\tt antenna} macro, for example.  Setting the second argument to {\tt
+R} specifies right orientation with respect to the drawing direction,
+and the last three arguments are labels
+for three internal elements.  Two instances of this subcircuit are
+drawn and placed by the following code, with the result
+shown in Figure~\ref{fbfilter}.
+\begin{verbatim}
+F1: fbfilter(,,K_3,C_{24},R_4)
+  ground(at F1.G)
+  dot(at F1.In); line up_ elen_/4
+F2: fbfilter(L,R,K_2,C_{23},R_3) with .In at F1.In
+  ground(at F2.G)
+\end{verbatim}
+\begin{figure}[hbt]
+   \input fbfilter
+   \caption{Showing the result of two invocations of the {\tt fbfilter} macro,
+     with labels.}
+   \label{fbfilter}
+   \end{figure}
+A draft macro for the subcircuit follows:
+\begin{verbatim}
+define(`fbfilter',
+`[ direction_(ifelse(`$1',,0,`$1')) # Process arg 1, default to the right
+   eleminit_                        # Assign rp_ang, rp_len
+   tmpang = rp_ang                  # Save rp_ang 
+   hunit = elen_                    # Dimension parameters
+   vunit = ifinstr(`$2',R,-)elen_/2
+ K: opamp(,,,,`$2')
+   move to K.In`'ifinstr(`$2',R,2,1); line to rvec_(-hunit/4,0)
+ J: dot
+ R: resistor(to rvec_(-elen_,0)); point_(tmpang) # Reset rp_ang
+ In: Here
+   move to K.In`'ifinstr(`$2',R,1,2); line to rvec_(-hunit/4,0)
+ G: Here
+   dot(at K.Out)
+   { line to rvec_(hunit/4,0)
+ Out: Here } 
+   line to rvec_(0,vunit)
+ C: capacitor(to rvec_(-distance(K.Out,0.5 between J and G),0)); point_(tmpang)
+   line to J
+   ifelse(`$3',,,"$`$3'$" at K.C)   # Add the labels if non-blank.
+   ifelse(`$4',,,"$`$4'$" at C+vec_(0,-vunit/3))
+   ifelse(`$5',,,"$`$5'$" at R+vec_(0,-vunit/4))
+   ]')
+\end{verbatim}
+The drawing direction is unknown when the macro is defined, so the
+macros {\tt vec\_} and {\tt rvec\_} are used for drawing lines and
+elements.
+Thus, {\tt (vec\_({\sl x,y}))} is position {\tt ({\sl x,y})} rotated
+by angle {\tt rp\_ang}.
+A side effect of drawing a two-terminal element is to change the
+drawing direction (in conformity with the \pic\ language), so the angle must
+be saved and reset as needed. Normally, the {\tt fbfilter} block will be
+placed by specifying the position of one of its defined points; by
+default it will be placed as if it were a box.
+
+\xection{Interaction with \LaTeX}\label{Interaction:}
+The sizes of typeset labels and other \TeX\ boxes are generally unknown
+prior to processing the diagram by \LaTeX.
+Although they are not needed for many circuit diagrams,
+these sizes may be required explicitly for calculations or implicitly
+for determining the diagram bounding box.  For example, the 
+text sizes in the following example affect the total size of the diagram:
+
+\begin{verbatim}
+.PS
+B: box
+  "Left text" at B.w rjust
+  "Right text: $x^2$" at B.e ljust
+.PE
+\end{verbatim}
+
+The \pic\ interpreter cannot know the dimensions of the text to the left
+and right of the box, and the diagram is generated using
+default text dimensions.  One solution is to measure the text sizes by hand and
+include them literally, thus:\hfill\break
+\hbox{}\quad%
+\verb|"Left text" wid 38.47pt__ ht 7pt__ at B.w rjust|\hfill\break
+but this is tedious.
+
+A better solution to this problem is to process the diagram twice.  The
+diagram source is processed as usual by \Mfour\ and a \pic\ processor, and the
+main document source is \LaTeX{}ed to input the diagram and format the
+text, and also to write the required dimensions into a supplementary file.
+Then the diagram source is processed again, reading the required
+dimensions from the supplementary file and producing a diagram ready
+for final \LaTeX{}ing.  This hackery is summarized below, with an example
+in Figure~\ref{stringdim}.
+\enlargethispage{\baselineskip}
+\begin{itemize}
+\item Put \verb|\usepackage{boxdims}| into the document source.
+\item Insert the following at the beginning of the diagram source,
+ where {\sl jobname} is the name of the main \LaTeX\ file:\hfill\break
+ \quad{\tt sinclude({\sl jobname}.dim)\hfill\break
+ \quad s\_init({\sl unique name})}
+\item Use the macro {\tt s\_box({\sl text})} to produce
+ typeset text of known size as shown in Figure~\ref{stringdim};
+ alternatively, invoke the macros
+ \verb|\boxdims| and \verb|boxdim| described later.
+\end{itemize}
+\begin{figure}[h!t]
+   \parbox{3.5in}{\small\tt.PS\\
+     sinclude(CMman.dim)\\
+     s\_init(stringdims)\\
+     B: box\\
+       \hbox{}\quad s\_box(Left text) at B.w rjust\\
+       \hbox{}\quad s\_box(Right text:\ \$x\^{}{\%g}\$,2) at B.e ljust\\
+     .PE}%
+   \hfill\llap{\raise-0.25in\hbox{\input stringdims }}%
+   \caption{The macro {\tt s\_box} sets string dimensions automatically
+    when processed twice.  If two or more arguments are
+    given to {\tt s\_box}, they
+    are passed through {\tt sprintf}.  The dots show the figure bounding box.}
+   \label{stringdim}
+   \end{figure}
+
+\noindent The macro \verb|s_box(|{\sl text}\verb|)| evaluates initially to
+
+ \verb|"\boxdims{|{\sl name}\verb|}{|{\sl text}\verb|}"|
+  \verb|wid boxdim(|{\sl name}\verb|,w) ht boxdim(|{\sl name}\verb|,v)|
+
+\noindent
+On the second pass, this is equivalent to
+
+ {\tt "{\sl text}" wid {\sl x} ht {\sl y}}
+
+ \noindent
+ where {\sl x} and {\sl y} are the typeset dimensions of the
+ \LaTeX\ input text.  If {\tt s\_box} is given two or more arguments
+ as in Figure~\ref{stringdim}
+ then they are processed by {\tt sprintf}.
+
+The argument of {\tt s\_init}, which should be unique within {\tt{\sl
+jobname}.dim}, is used to generate a unique \verb|\boxdims| first
+argument for each invocation of \verb|s_box| in the current file.  If
+\verb|s_init| has been omitted, the symbols ``{\bf !!}'' are inserted
+into the text as a warning.  Be sure to quote any commas in the
+arguments.  Since the first argument of {\tt s\_box} is \LaTeX\ source,
+make a rule of quoting it to avoid comma and name-clash problems.  For
+convenience, the macros {\tt s\_ht}, {\tt s\_wd}, and {\tt s\_dp}
+evaluate to the dimensions of the most recent {\tt s\_box} string or to
+the dimensions of their argument names, if present.
+
+The file \verb|boxdims.sty| distributed with this package should be installed
+where \LaTeX\ can find it.
+The essential idea is to define a two-argument \LaTeX\ macro
+\verb|\boxdims| that writes out definitions for the width, height and
+depth of its typeset second argument into file {\sl jobname.}\verb|dim|,
+where {\sl jobname} is the name of the main source file.
+The first argument of \verb|\boxdims| is used to construct unique symbolic
+names for these dimensions. 
+Thus, the line
+
+{\tt box \verb|"\boxdims{Q}{\Huge Hi there!}"| }
+
+\noindent has the same effect as
+
+{\tt box \verb|"\Huge Hi there!"|}
+
+\noindent except that the line
+
+{\tt define(`Q\_w',77.6077pt\_\_)define(`Q\_h',17.27779pt\_\_)%
+define(`Q\_d',0.0pt\_\_)dnl}
+
+\noindent is written into file {\sl jobname.}\verb|dim|
+(and the numerical values depend on the current font).
+These definitions are required by the \verb|boxdim| macro
+described below.
+
+The \LaTeX\ macro
+
+\verb|\boxdimfile{|{\sl dimension file}\verb|}|
+
+\noindent is used to specify an alternative to {\sl jobname.}\verb|dim| as the
+dimension file to be written.  This simplifies cases where {\sl jobname}
+is not known in advance or where an absolute path name is required.
+
+Another simplification is available.  Instead of the
+{\tt sinclude({\sl dimension file})} line
+above, the dimension file can be read by \Mfour\ before reprocessing the source
+for the second time:
+
+{\tt m4 {\sl library files} {\sl dimension file} {\sl diagram source file} ...} 
+
+Objects can be tailored to their attached text by invoking
+\verb|\boxdims| and \verb|boxdim| explicitly.
+The small source file in Figure~\ref{boxdims}, for example,
+produces the box in the figure.
+\begin{figure}[hbt]
+   \parbox{4.2in}{\small \input eboxdims.verb }%
+   \hfill\llap{\raise-0.35in\hbox{\input eboxdims }}%
+   \vspace{-\baselineskip}
+   \caption{Fitting a box to typeset text.}
+   \label{boxdims}
+   \end{figure}
+
+The figure is processed twice, as described previously.
+The line \verb|sinclude(|{\sl jobname}\verb|.dim)| reads the named file
+if it exists.  The macro \verb|boxdim(|{\sl
+name,suffix,default}\verb|)| from {\tt libgen.m4} expands the
+expression \verb|boxdim(Q,w)| to the value of \verb|Q_w| if it is
+defined, else to its third argument if defined, else to 0, the latter
+two cases applying if {\sl jobname.}\verb|dim| doesn't exist yet.  The
+values of \verb|boxdim(Q,h)| and \verb|boxdim(Q,d)| are similarly
+defined and, for convenience, \verb|boxdim(Q,v)| evaluates to the sum
+of these.  Macro \verb|pt__| is defined as \verb|*scale/72.27| in {\tt
+libgen.m4}, to convert points to drawing coordinates.
+
+Sometimes a label needs a plain background in order to blank
+out previously drawn components overlapped by the label,
+as shown on the left of Figure~\ref{fbox}.
+\begin{figure}[hbt]
+   \input woodchips
+   \vspace{-0.5\baselineskip}
+   \caption{Illustrating the {\tt f\_box} macro.}
+   \label{fbox}
+   \end{figure}
+The technique illustrated in Figure~\ref{boxdims} is automated by the
+macro
+{\tt f\_box(}{\sl boxspecs}, {\sl label arguments}{\tt )}.
+For the special case of only one argument,
+e.g., {\tt f\_box(Wood chips),} this macro
+simply overwrites the label on a white box of identical size.
+Otherwise, the first argument specifes the box characteristics
+(except for size), and the macro evaluates to
+
+{\tt box }{\sl boxspecs} {\tt s\_box(}{\sl label arguments}{\tt)}.
+ 
+\noindent%
+For example, the result of the following command
+is shown on the right of Figure~\ref{fbox}.
+
+\verb|f_box(color "lightgray" thickness 2 rad 2pt__,"\huge$n^{%g}$",4-1)|
+
+More tricks can be played.  The example
+
+\verb|Picture: s_box(`\includegraphics{|{\it file}\verb|.eps}') with .sw at|
+{\sl location}
+
+\noindent shows a nice way of including eps graphics in a diagram.  The
+included picture (named {\tt Picture} in the example) has known position and
+dimensions, which can be used to add vector graphics or text to the
+picture.  To aid in overlaying objects, the macro {\tt boxcoord(}{\sl
+object name, x-fraction, y-fraction}{\tt)} evaluates to a position,
+with {\tt boxcoord(}{\sl object name}{\tt,0,0)} at the lower left
+corner of the object, and {\tt boxcoord(}{\sl object name}{\tt,1,1)} at
+its upper right.
+
+\xection{\PSTricks\ and other tricks}
+This section applies only to a \pic\ processor (\dpic) that is
+capable of producing output compatible with
+\PSTricks, \TPGF, or, in principle, other graphics postprocessors. 
+
+By using {\tt command} lines,
+or simply by inserting \LaTeX\ graphics directives along with strings to
+be formatted, one can mix
+arbitrary \PSTricks\ (or other) commands with \Mfour\ input
+to create complicated effects. 
+
+Some commonly required effects are particularly simple. For example,
+the rotation of text by \PSTricks\ postprocessing is illustrated by the file
+
+{\small \verbatiminput{Axes.m4}}
+
+\noindent%
+which contains both horizontal text and text rotated $90^\circ$ along the
+vertical line.
+This rotation of text is also implemented by the macro
+{\tt rs\_box}, which is similar
+to {\tt s\_box} but rotates its text argument by $90^\circ,$ a default angle
+that can be changed by preceding invocation with
+\verb|define(`text_ang',|{\sl degrees}{\tt )}.  The {\tt rs\_box} macro
+requires either \PSTricks\ or \TPGF\ and, like {\tt s\_box}, it calculates the
+size of the resulting text box but requires the diagram to be
+processed twice.
+
+Another common requirement is the filling of arbitrary shapes, as
+illustrated by the following lines within a {\tt .m4} file:
+
+\vspace{\parsep}
+\noindent%
+\verb|command "`\pscustom[fillstyle=solid,fillcolor=lightgray]{'"|
+\hfill\break
+{\sl drawing commands for an arbitrary closed curve}
+\hfill\break
+\verb|command "`}%'"|
+\vspace{\parsep}
+
+For colour printing or viewing, arbitrary
+colours can be chosen, as described in the \PSTricks\ manual.
+\PSTricks\ parameters can be set by inserting the line
+
+\vspace{\parsep}
+\noindent\verb|command "`\psset{|{\sl option=value,}$\;\ldots$\verb|}'"|
+\vspace{\parsep}
+
+\noindent%
+in the drawing commands or by using the macro
+{\tt psset\_(}{\sl PSTricks options}{\tt )}.
+
+The macros
+ {\tt shade(}{\sl gray value},{\sl closed line specs}{\tt )}
+and
+ {\tt rgbfill(}{\sl red value, green value, blue value, closed line specs}%
+ {\tt )}
+can be invoked to accomplish the same effect as the above fill example, but
+are not confined to use only with \PSTricks.
+
+Since arbitrary \LaTeX\ can be output, either in ordinary strings or by
+use of {\tt command} output, complex examples such as found in
+reference~\cite{Girou94}, for example, can be included.  The complications
+are twofold: \LaTeX\ and \dpic\ may not know the dimensions of the formatted
+result, and the code is generally unique to the postprocessor.
+Where postprocessors are capable of equivalent results, then
+macros such as {\tt rs\_box}, {\tt shade}, and {\tt rgbfill} mentioned
+previously can be used to hide code differences.
+
+\xection{Web documents, {\ttfamily pdf}, and alternative output formats}%
+\label{Alternative:}
+
+Circuit diagrams contain graphics and symbols, and the issues related to
+web publishing are similar to those for other mathematical documents.
+Here the important factor is that \gpic\ {\tt -t} generates output
+containing \tpic\ \verb|\special| commands, which must be converted
+to the desired output, whereas \dpic\ can generate several alternative
+formats, as shown in Figure~\ref{Workflow}.  One of the easiest methods
+for producing web documents is to generate postscript as usual and to
+convert the result to pdf format with Adobe
+Distiller\textregistered\ or equivalent.
+\begin{figure}[h!t]
+   \hskip-2em{ \input Workflow }
+   \caption{Output formats produced by \gpic\ {\tt -t} and \dpic.
+      SVG output can be read by Inkscape or used directly in web documents.}
+   \label{Workflow}
+   \end{figure}
+
+PDFlatex produces pdf without first creating a postscript file
+but does not handle \tpic\ \verb|\special|s, so \dpic\ must be
+installed.
+
+Most PDFLatex distributions are not directly compatible with \PSTricks, but
+the \TPGF\ output of \dpic\ is compatible with both \LaTeX\ and PDFLatex.
+Several alternative \dpic\ output formats such as
+\mfpic\ and \MetaPost\ also work well.
+To test \MetaPost, create a file {\sl filename}{\tt .mp}
+containing appropriate header lines, for example:
+
+\begin{verbatim}
+  verbatimtex
+  \documentclass[11pt]{article}
+  \usepackage{times,boxdims,graphicx}
+  \boxdimfile{tmp.dim}
+  \begin{document} etex
+\end{verbatim}
+Then append one or more diagrams by using the equivalent of
+
+{\tt m4 <}{\sl path}{\tt >mpost.m4 {\sl library files}
+  {\sl diagram}.m4 | dpic -s >> {\sl filename}.mp}
+
+The command ``{\tt mpost --tex=latex } {\sl filename}{\tt .mp end}''
+processes this file, formatting the diagram text by creating a
+temporary {\tt .tex} file, \LaTeX{}ing it, and recovering the {\tt .dvi}
+output to create {\sl filename}{\tt .1} and other files.  If the {\tt boxdims}
+macros are being invoked, this process must be repeated to handle
+formatted text correctly as described in Section~\ref{Interaction:}.
+In this case, either put {\tt sinclude(tmp.dim)} in the diagram {\tt .m4}
+source or read the {\tt .dim} file at the second invocation of
+\Mfour\ as follows:
+
+{\tt m4 <}{\sl path}{\tt >mpost.m4 {\sl library files} tmp.dim
+  {\sl diagram}.m4 | dpic -s >> {\sl filename}.mp}
+
+On some operating systems, the absolute path name for {\tt tmp.dim} has
+to be used to ensure that the correct dimension file is written and
+read.  This distribution includes a {\tt Makefile} that simplifies the
+process; otherwise a script can automate it.
+
+Having produced {\sl filename}{\tt .1}, rename it to {\sl filename}{\tt .mps}
+and, {\it voil\`a,} you can now run PDFlatex\ on a {\tt .tex} source
+that includes the diagram using
+\verb|\includegraphics{|{\sl filename}\verb|.mps}|
+as usual.
+
+The \dpic\ processor is capable of other output formats, as illustrated in
+Figure~\ref{Workflow} and in example files included with the distribution.
+The \LaTeX\ drawing commands alone or with {\tt eepic} or {\tt pict2e}
+extensions are suitable only for simple diagrams. 
+
+\xection{Developer's notes}
+Years ago in the course of writing a book, I took a few days off to
+write a \pic-like interpreter (\dpic) to automate the tedious
+coordinate calculations required by \LaTeX\ picture objects.  The
+macros in this distribution and the interpreter are the result of that
+effort, drawings I have had to produce since, and suggestions received from
+others.  The interpreter has been upgraded over time to generate
+\mfpic, \MetaPost~\cite{metapost}, raw \Postscript, \Postscript with
+{\tt psfrag} tags, and \PSTricks\ output, the latter my preference
+because of its quality and flexibility, including facilities for colour
+and rotations, together with simple font selection.
+Ti{\it k}Z
+PGF output, which combines the simplicity of \PSTricks\ with PDFlatex
+compatibility, has been added.
+\Xfig{}-compatible output was added early on to allow creating diagrams
+by both by programming and interactive graphics.
+Most recently, \SVG\ output has been added, and seems suitable for
+producing web diagrams directly and for further editing by the
+Inkscape interactive grapics editor.
+Instead of \pic\ macros, I preferred the equally simple
+but more powerful \Mfour\ macro processor, and therefore \Mfour\ is
+required here, although \dpic\  now supports \pic-like macros.  Free
+versions of \Mfour\ are available for Unix, Windows, and other
+operating systems.
+
+If starting over today would I not just use one of the other drawing
+packages available these days?  It would depend on the context, but
+\pic\ remains a good choice for line drawings since it is easy to learn
+and read but powerful enough for coding the geometrical calculations
+required for precise component sizing and placement. However, the main
+value of this distribution is
+not in the use of a specific language but in the element data encoded
+in the macros, which have been developed and
+refined over nearly two decades.  Some of them have become less readable
+as more options and flexibility have been added, and if starting over
+today, perhaps I would change some details.  No choice of tool is without
+compromise, and producing good graphics seems to be time-consuming, no matter
+how it is done.
+
+The \dpic\ interpreter has several output-format options that may be
+useful.  The {\tt eepicemu} and {\tt pict2e} extensions of the
+primitive \LaTeX\ picture objects are supported.  The \mfpic\ output
+allows the production of Metafont alphabets of circuit elements or
+other graphics, thereby essentially removing dependence on device
+drivers, but with the complication of treating every alphabetic
+component as a \TeX\ box.  The \xfig\ output allows elements to be
+precisely defined with \dpic\  and interactively placed with \xfig.
+Similarly, the SVG output can be read directly by the Inkscape graphics
+editor, but SVG can also be used directly for web pages.
+\Dpic\ will also generate low-level \MetaPost\ or \Postscript\ code, so
+that diagrams defined using \pic\ can be manipulated and combined with
+others.  The \Postscript\ output is compatible with
+CorelDraw\textregistered, and by extension to Adobe
+Illustrator\textregistered.  With raw \Postscript\ output the user is
+responsible for ensuring that the correct fonts are provided and for
+formatting labels.
+
+Many thanks to the people who continue to send comments, questions,
+and, occasionally, bug fixes. What began as a tool for my own use grew
+into a hobby that has persisted, thanks to your help and advice.
+
+\xection{Bugs}\label{Bugs:}
+The distributed macros are not written for maximum robustness.
+Arguments could be entered in a key--value style (for example, {\tt
+resistor(up\_ elen\_,style=N;cycles=8}) instead of by positional
+parameters.  Macro arguments could be tested for correctness and
+explanatory error messages could be written as necessary, but that
+would make the macros more difficult to read and to write.  You will
+have to read them when unexpected results are obtained or when you wish
+to modify them.
+
+In response to suggestions, some of the macros have been modified to
+allow easier customization to forms not originally anticipated, but
+these modifications are not complete.
+
+Here are some hints, gleaned from experience and from comments I have
+received.
+\begin{enumerate}
+
+\item {\bf Misconfiguration:} One of the following configuration files
+  {\em must} be read by \Mfour\ before any of the other files, depending on the
+  required form of \pic\ output:
+    {\tt gpic.m4, pstricks.m4,
+     postscript.m4,
+     pgf.m4,
+     mpost.m4, mfpic.m4, svg.m4,}
+    or {\tt xfig.m4.}
+  The package default is to read {\tt gpic.m4.}
+  The processor options must be set correspondly,
+  {\tt gpic -t} for {\tt gpic.m4} and, most often,
+  {\tt dpic -p} or {\tt dpic -g} when \dpic\ is employed.
+  For example, the pipeline for \PSTricks\ output from file {\tt circuit.m4} is
+
+  {\tt m4 <path>pstricks.m4 <path>libcct.m4 circuit.m4 | dpic -p > circuit.tex}
+
+  \noindent%
+  but for \TPGF\ processing, the configuration file and \dpic\ option have to
+  be changed:
+  
+  {\tt m4 <path>pgf.m4 <path>libcct.m4 circuit.m4 | dpic -g > circuit.tex}
+
+  Any non-default configuration file must
+  be processed explicitly as illustrated above.
+  To redefine the default behaviour, change the {\tt include}
+  statements near the top of the libraries.  The top-level makefile
+  automates these changes.
+
+\item 
+{\bf Initialization:}
+If the first element macro evaluated is not two-terminal or is within a
+\Pic\ block, then later macros evaluated outside the block may produce
+the error message
+
+{\tt there is no variable `rp\_ang'}
+
+\noindent because {\tt rp\_ang} is not defined in the outermost scope of the
+diagram.  To cure this problem, make sure that the line
+
+{\tt cct\_init}
+
+\noindent appears immediately after the .PS line or prior to the first block.
+It is entirely permissible to modify {\tt cct\_init} to include customized
+diagram initializations such as the {\tt thicklines\_} statement.
+For completeness, macros {\tt gen\_init,} {\tt log\_init,} {\tt darrow\_init}
+are also provided for cases where the circuit library is not needed.
+
+\item 
+{\bf Pic objects versus macros:}  A common error is to write something like
+
+{\tt line from A to B; resistor from B to C}
+
+\noindent when it should be
+
+{\tt line from A to B; resistor(from B to C)}
+
+\noindent This error is caused by an unfortunate inconsistency between the
+linear \pic\ objects and the way \Mfour\ passes macro arguments.
+
+\item 
+{\bf Commas:}
+Macro arguments are separated by commas, so any comma that is
+part of an argument must be protected by parentheses or quotes.  Thus,
+
+{\tt shadebox(box with .n at w,h)}
+
+\noindent produces an error, whereas
+
+{\tt shadebox(box with .n at w`,'h)}
+
+\noindent and
+
+{\tt shadebox(box with .n at (w,h))}
+
+\noindent do not.
+
+\item 
+{\bf Default directions and lengths:}
+The {\em linespec} argument of element
+macros requires both a direction and a length, and if either is omitted,
+a default value is used.  Writing
+
+{\tt source(up\_)}
+
+\noindent draws a source up a distance equal to the current
+{\tt lineht} value, which may cause confusion.
+Writing
+
+{\tt source(0.5)}
+
+\noindent draws a source of length 0.5 units
+in the current \pic\ default direction, which is one of
+{\tt right,} {\tt left,} {\tt up,} or {\tt down.}
+It is usually better
+to specify both the direction and length of an element, thus:
+
+{\tt source(up\_ elen\_).}
+
+The effect of a {\em linespec} argument is independent of any direction
+set using the {\tt Point\_} or similar macros. 
+To draw an element at an obtuse angle (see Section~\ref{Directions}) try,
+for example,
+
+{\tt Point\_(45); source(to rvec\_(0.5,0))}
+
+\item 
+{\bf Quotes:} Single quote characters are stripped in pairs by \Mfour,
+so the string
+
+{\tt "`{}`inverse'{}'"}
+
+\noindent will be typeset as if it were
+
+{\tt "`inverse'".}
+
+\noindent The cure is to add single quotes.
+
+  The only subtlety required in writing
+  \Mfour\ macros is deciding when to quote arguments.  In the context
+  of circuits it seemed best to assume that macro arguments would not
+  be protected by quotes at the level of macro invocation, but should
+  be quoted inside each macro.  There may be cases where this rule is
+  not optimal or where the quotes could be omitted.
+
+\item 
+{\bf Dollar signs:}
+The $i$-th argument of an \Mfour\ macro is {\tt \$}$i,$ where $i$ is
+an integer, so the following construction can cause an error when it
+is part of a macro,
+
+{\tt "\$0\$" rjust below}
+
+\noindent since {\tt \$0} expands to the name of the macro itself.
+To avoid this problem, put the string in quotes or write {\tt "\$`'0\$".}
+
+\item 
+{\bf Name conflicts:}  Using the name of a macro as part of
+a comment or string is a simple and common error.
+Thus,
+
+{\tt arrow right \verb|"$\dot x$"| above}
+
+\noindent produces an error message because {\tt dot} is a macro
+name.   Macro expansion can be avoided by adding quotes, as follows:
+
+{\tt arrow right `\verb|"$\dot x$"|' above}
+
+Library macros intended only for internal use have names that begin
+with {\tt m4} to avoid name clashes, but in addition, a good rule is to
+quote all \LaTeX\ in the diagram input.
+
+If extensive use of strings
+that conflict with macro names is required, then one possibility is
+to replace the strings by macros to be expanded by \LaTeX, for example
+the diagram
+
+{\tt
+.PS
+
+   \hspace*{\parindent} box \verb|"\stringA"|
+
+.PE
+}
+
+\noindent with the LaTeX macro
+
+{\tt
+  \verb|\newcommand{\stringA}{|%
+
+   \verb|Circuit containing planar inductor and capacitor}|
+}
+
+\item 
+{\bf Current direction:} Some macros, particularly those for labels, do
+unexpected things if care is not taken to preset the current direction
+using macros {\tt right\_,} {\tt left\_,} {\tt up\_,} {\tt down\_,}
+or {\tt rpoint\_($\cdot$).}
+Thus for two-terminal macros it is good practice to write, e.g.
+
+{\tt resistor(up\_ from A to B); rlabel(,R\_1)}
+
+\noindent%
+rather than 
+
+{\tt resistor(from A to B); rlabel(,R\_1),}
+
+\noindent%
+which produce different results if the last-defined drawing direction is not
+{\tt up}.  It might be possible to change the label macros to avoid this problem
+without sacrificing ease of use.
+
+\item {\bf Position of elements that are not 2-terminal:}
+  The {\sl linespec} argument of elements defined in {\tt[} {\tt]}
+  blocks must be understood as defining a direction and length, but
+  not the position of the resulting block.
+  In the \pic\ language, objects inside these brackets are placed by
+  default {\em as if the block were a box}.  Place the
+  element by its compass corners or defined interior points
+  as described in the first paragraph of Section~\ref{Other} on
+  page~\pageref{Other}, for example  
+  
+{\tt igbt(up\_ elen\_) with .E at (1,0)}
+
+\item {\bf Pic error messages:} Some errors are detected only after scanning
+  beyond the end of the line containing the error.  The semicolon
+  is a logical line end, so putting a semicolon at the end of lines may
+  assist in locating bugs. 
+
+\item {\bf Scaling:} \Pic\ and these macros provide several ways to scale
+  diagrams and elements within them, but subtle unanticipated effects
+  may appear.  The line {\tt.PS} $x$ provides a convenient way to force
+  the finished diagram to width $x.$  However if \gpic\ is the
+  \pic\ processor then all scaled parameters are affected, including those
+  for arrowheads and text parameters, which may not be the desired
+  result.  A good general rule is to use the {\tt scale} parameter for
+  global scaling unless the primary objective is to specify overall
+  dimensions.
+
+\item {\bf Buffer overflow:} For some \Mfour\ implementations,
+  the error message {\tt pushed back more than 4096 chars}
+  results from expanding large macros or macro arguments, and can be
+  avoided by enlarging the buffer.  For example, the option {\tt
+  -B16000} enlarges the buffer size to 16000 bytes.  However, this
+  error message could also result from a syntax error.
+
+\item {\bf \PSTricks\ anomaly:} If you are using \PSTricks\ and
+  you get the error message {\tt Graphics parameter `noCurrentPoint'
+  not defined..} then your version of \PSTricks\ is older than
+  August 2010.  You can try the following:
+  \begin{enumerate}
+  \item Update your \PSTricks\ package.
+  \item Instead, insert {\tt define(`M4PatchPSTricks',)} immediately after the
+   {\tt .PS} line of your diagram.
+  This change prevents the line
+  \verb|\psset{noCurrentPoint}| from being added to the {\tt .tex}
+  code for the diagram.  This line is a workaround for a ``feature''
+  of the current \PSTricks\ \verb|\psbezier| command that changes its
+  behaviour within the \verb|\pscustom| environment.  This situation
+  occurs rarely and so the line is unnecessary for most diagrams.
+  \item Comment out the second definition of {\tt M4PatchPSTricks} in
+  {\tt pstricks.m4}.  The first definition works for some older
+  \PSTricks\ distributions.
+  To disable the workaround totally, change the second definition
+  to be {\tt define(`M4PatchPSTricks',)}.
+  \end{enumerate}
+
+
+\end{enumerate}
+
+\xection{List of macros}
+\label{defines}
+The following table lists the macros in libraries
+darrow.m4, libcct.m4, liblog.m4, libgen.m4, and files gpic.m4, mfpic.m4,
+and pstricks.m4.  Some of the sources in the {\tt examples}
+directory contain additional macros, such as for flowcharts,
+Boolean logic, and binary trees.
+
+Internal macros defined within the libraries begin with the characters
+m4 or M4 and, for the most part, are not listed here.
+
+The library in which each macro is found is given, and a brief description.
+\input defines
+\endinput

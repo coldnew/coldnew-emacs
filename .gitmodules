@@ -34,3 +34,6 @@
 [submodule "lisp/anything-config"]
 	path = lisp/anything-config
 	url = git://repo.or.cz/anything-config.git
+[submodule "lisp/pymacs"]
+	path = lisp/pymacs
+	url = http://github.com/pinard/Pymacs.git

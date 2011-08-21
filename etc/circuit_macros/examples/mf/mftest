@@ -1,0 +1,42 @@
+#!/bin/sh
+# mftest -- script to test the mf version of a single picture file
+#
+# Usage: mftest file
+#
+# e.g. copy ex01.m4 here and type ./mftest ex01
+# Invokes m4 on file.m4, and builds the resulting picture in file.ps
+
+LIBS="$HOME/lib/mfpic.m4 $HOME/lib/libcct.m4 $HOME/lib/liblog.m4"
+MODE=ljfzzz
+
+echo "\documentclass{article}
+\usepackage{mfpic}
+&begin{document}
+\opengraphsfile{"$1"mfpic}
+%{This is a test of the -m option of dpic (mfpic output).}" \
+| tr '\046' '\134' > $1.tex
+
+m4 -B16000 $LIBS $1.m4 | dpic -m >> $1.tex
+
+echo "
+&closegraphsfile
+\end{document}" | tr '\046' '\134' >> $1.tex
+
+echo "
+latex "$1
+latex $1
+echo "
+mf \mode:=$MODE; scrollmode; input $1""mfpic < /dev/null"
+mf "\mode:="$MODE"; scrollmode; input "$1mfpic < /dev/null
+echo "
+gftopk:"
+ls $1mfpic.*gf | sed -e 's/^/gftopk /' \
+ -e "s/$1mfpic.\([0-9]*\)gf/$1mfpic.\1gf $1mfpic.\1pk/" | sh
+ls $1mfpic.*gf $1mfpic.*pk
+cp $1mfpic.*pk $1mfpic.pk
+echo "
+TEXFORMATS=.: TEXFONTS=.: latex $1"
+TEXFORMATS=.: TEXFONTS=.: latex $1
+echo "
+TEXPKS=.: dvips -M1 -P$MODE $1 -o"
+TEXPKS=.: dvips -M1 -P$MODE $1 -o

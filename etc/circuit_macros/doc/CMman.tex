@@ -1,0 +1,36 @@
+\input heading
+%\newbox\graph
+\addtolength{\textwidth}{3cm}
+\addtolength{\hoffset}{-1.5cm}
+\addtolength{\textheight}{4cm}
+\addtolength{\voffset}{-1in}
+\setcounter{topnumber}{3}
+
+% Left-justified captions
+\makeatletter
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{#1: #2}%
+  \ifdim \wd\@tempboxa >\hsize
+    #1: #2\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+\makeatother
+
+\begin{document}
+\title{M4 Macros for Electric Circuit Diagrams in \LaTeX\ Documents}
+\author{Dwight Aplevich}
+\date{%
+\input Version
+\vspace*{-\baselineskip}
+}
+\maketitle
+
+\input body
+
+\bibliographystyle{plain}
+\bibliography{CMman}
+   \end{document}

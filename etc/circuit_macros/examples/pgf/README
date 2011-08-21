@@ -1,0 +1,8 @@
+
+To test a single diagram, copy it into test.m4
+and type 'make tst'.  The file is processed through
+m4 and dpic -g to make test.tex which is then
+included by tst.tex.
+
+To produce examples.ps using pgf, type "make".
+To produce examples.pdf using pgf and pdflatex, type "make examples.pdf"

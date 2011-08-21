@@ -1,0 +1,202 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<!--meta http-equiv="Content-Script-Type" content="text/javascript"-->
+<TITLE>Examples: Circuit_macros Version XXX</TITLE>
+<style type="text/css">
+.svg{display:none}
+*>.svg{display:inline}
+</style>
+</HEAD>
+
+<BODY>
+<H2>Circuit_macro SVG examples, Version XXX</H2>
+<hr>
+
+<p>
+  These diagrams are in .svg format.
+  <A HREF="examples.pdf">Pdf</A>
+  and
+  <A HREF="examples.html">png</A>
+  versions are also available.
+  The Postcript equivalent can be found in examples.ps of the distribution.
+</p>
+ <p>
+  Click on the link to view the source of each diagram.
+</p>
+<hr>
+
+define(`cfig',`
+<p>
+
+<!--[if lte IE 8]><embed src="$1.svg" sinclude($1.siz)><![endif]-->
+
+<!--[if gte IE 9]>
+<object dx="4" data="$1.svg" sinclude($1.siz) type="image/svg+xml" class="img">
+  </object> <![endif]-->
+
+<!--[if !IE]><!-->
+<object data="$1.svg" sinclude($1.siz) type="image/svg+xml" class="img">
+  </object> <!--<![endif]-->
+
+<br>
+<a href="$1.txt" TYPE="text/plain" TARGET="_blank">$1.m4</a>
+</p>
+<hr>')
+
+<!--
+<embed pluginspage="http://www.adobe.com/svg/viewer/install/" />
+-->
+
+<p>
+These diagrams have been adapted from the Circuit_macros examples in
+order to test the <em>experimental</em> svg output of dpic.
+Generating the line art is relatively straightforward, but
+the labeling is not created by a text processor and therefore must be
+more basic.
+</p>
+<p>
+There are a number of issues:
+<ul>
+<li> Embedding .svg files in html documents with the &lt;embed&gt; or
+  &lt;object&gt; tag seems to be a perennial issue.
+<li> This file has been tested mainly by using the Firefox browser,
+ which works well except for a problem placing subscripts.
+ Internet Explorer versions 8 and lower are problematic.  Version 9 seems
+ to place text differently than other browsers. The Chrome
+ browser seems to work well with two issues detected to date:
+ a difference handling color fills and text links in svg.  Left and right
+ justified text is also different from Firefox.  Is there a definitive
+ list of differences somewhere?
+<li> The Adobe reader apparently requires a line of the form
+<br> &lt;embed src="figure.svg" width="x" height="y" type="image/svg+xml" /&gt;
+ This means that the html file has to contain dimension
+ information for each figure, whereas Firefox can
+ determine the figure size
+ from the &lt;svg ... object.  Currently, dpic includes a comment line
+ giving reasonable dimensions in pixels but this has to be insterted into
+ the &lt;embed or &lt;object line.  A makefile does it easily but
+ otherwise this could be tedious.
+<li> The font face is not specified by default in these diagrams but is
+ inherited from the enclosing document.  The default appearance of labels can
+ differ according to the browser.
+<li> The &lt;svg tag may require modification
+ from the default used for this test.  Dpic might be modified to
+ allow the generation of custom headers but that has not yet been done.
+<li> Diagrams such as these contain a considerable number of text labels
+ that have to be treated differently from the LaTeX-compatible versions.
+ Apparently there is no direct way to know the bounding box of arbitrary svg
+ text.
+ <!-- text, as discussed
+ <a href="http://www.aditus.nu/jpgraph/jpg_svg.php" TARGET="_blank">here,</a>
+ for example. -->
+ Consequently, text placement is approximate and may require
+ manual adjustment.
+ Rather than patch the original source files for svg production, edited copies
+ have been used.  The configuration file svg.m4 read by m4
+ prior to libcct.m4 contains the following macros defined for svg.
+ Others should be defined to exercise some of the media capabilties of svg.
+ They are subject to change:
+<br> svg_it: for italics
+<br> svg_norm: for normal text
+<br> svg_bf: for bold face
+<br> svg_small: to set a smaller text size, default 66%
+<br> svg_fsize: for setting larger or smaller text size
+<br> svg_sub: subscript
+<br> svg_sup: superscript
+<br> svgLink(URL,drawing object,[B]): link to external file using
+  &lt;a xlink:href=...&gt;...&lt;/a&gt; (default is target="_blank" unless
+  arg 3 = B)
+<br> svgLinkString as above but for strings attached to objects
+<li> Inkscape: It may be efficient to define elements by macro and to
+  place them using a wysiwyg graphics editor.  A draft page intended
+  for Inkscape is included.  A reasonable variety of elements is defined
+  but should be customized for particular applications.
+<li> Link experiments: Click on the resistor or source of quickSVG
+  to go to external
+ files in new windows.  Click on "n-port" in NportSVG to replace the diagram
+ and then "back" to return.
+<li> Some of the assumptions used to create this draft may be naive.  Comments
+ are welcome.
+</ul>
+<hr>
+
+cfig(quickSVG)
+cfig(CctTableSVG)
+cfig(DiodesSVG)
+cfig(EmarrowsSVG)
+cfig(SourcesSVG)
+cfig(VariableSVG)
+cfig(AmpTableSVG)
+cfig(SwitchesSVG)
+cfig(FusesSVG)
+cfig(GroundsSVG)
+cfig(AntennasSVG)
+cfig(AudioSVG)
+cfig(OpampSVG)
+cfig(XformSVG)
+cfig(RelaySVG)
+cfig(ujtSVG)
+cfig(fetSVG)
+cfig(thyristorSVG)
+cfig(BipSVG)
+cfig(TgateSVG)
+cfig(NportSVG)
+cfig(NLGSVG)
+cfig(WindingsSVG)
+cfig(ex01SVG)
+cfig(TimerSVG)
+cfig(SixpoleSVG)
+cfig(MCSVG)
+cfig(ex18SVG)
+cfig(ex19SVG)
+cfig(ex10SVG)
+cfig(bistableSVG)
+cfig(ThreeSVG)
+cfig(gparSVG)
+cfig(ex17SVG)
+cfig(ex12SVG)
+cfig(pwrsupplySVG)
+cfig(TTLnandSVG)
+cfig(I2LSVG)
+cfig(ex11SVG)
+cfig(CsourceSVG)
+cfig(DriveSVG)
+cfig(ex04SVG)
+cfig(lcctSVG)
+cfig(ex02SVG)
+cfig(ex16SVG)
+cfig(ex03SVG)
+cfig(sfgSVG)
+cfig(LogicSVG)
+cfig(ex08SVG)
+cfig(DecoderSVG)
+cfig(ex21SVG)
+cfig(ShiftRSVG)
+cfig(CanLogicSVG)
+cfig(paletteSVG)
+cfig(controlSVG)
+cfig(ex00SVG)
+cfig(ex07SVG)
+cfig(expSVG)
+cfig(GlobeSVG)
+cfig(graysurfSVG)
+cfig(ex09SVG)
+cfig(ex05SVG)
+cfig(ex06SVG)
+cfig(LoglogSVG)
+cfig(cscSVG)
+cfig(roseSVG)
+cfig(diamondSVG)
+cfig(wormSVG)
+cfig(SierpinskiSVG)
+cfig(recycleSVG)
+cfig(yinyangSVG)
+cfig(ex15SVG)
+cfig(BtreeSVG)
+cfig(FlowSVG)
+
+</BODY>
+</HTML>

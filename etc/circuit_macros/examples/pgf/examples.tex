@@ -1,0 +1,27 @@
+% pgf examples.tex
+
+\documentclass[11pt]{article}
+\usepackage{times,boxdims,tikz}
+\usepackage{rotating}
+
+\input ../header
+
+\global\pgftrue
+\addtolength{\textheight}{6ex}
+
+\begin{document}
+  \hfill
+  {\large\bf Examples:
+    \input{../../doc/Version.tex}
+    }
+  \hfill\break
+
+  In this directory the source files are processed with m4, dpic -g,
+  and TikZ PGF.
+  This is a collection of diagrams the author has had occasion to
+  produce using m4 circuit macros and others, and gpic or dpic.  The
+  source-file names are shown for reference.  There may be other or
+  better m4 or pic constructs for producing the same drawings in some
+  cases.
+
+\input ../files.tex

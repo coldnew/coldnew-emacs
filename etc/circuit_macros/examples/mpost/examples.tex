@@ -1,0 +1,20 @@
+% mpost examples.tex
+
+\documentclass[11pt]{article}
+\usepackage{times,boxdims,pstricks}
+\usepackage{rotating}
+\usepackage{graphicx}
+
+\input ../header
+
+\global\mposttrue
+\begin{document}
+  \hfill
+  {\large\bf Examples:
+    \input{../../doc/Version.tex}
+    }
+  \hfill\break
+  The source files have been processed with m4, dpic -s, and MetaPost to
+  produce this file.
+
+\input ../files.tex

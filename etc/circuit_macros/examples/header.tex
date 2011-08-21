@@ -1,0 +1,54 @@
+% header.tex
+% instead of \usepackage[cm]{fullpage} (letter size):
+  \setlength{\topmargin}{-29.59087pt}
+  \setlength{\headheight}{0pt}
+  \setlength{\headsep}{0pt}
+  \setlength{\textheight}{679.61174pt}
+  \setlength{\footskip}{30.0pt}
+  \setlength{\textwidth}{528.93675pt}
+  \setlength{\oddsidemargin}{-29.59087pt}
+  \setlength{\evensidemargin}{\oddsidemargin}
+
+% To test a new installation, all but one of the diagram inclusions
+% below might be commented out, and re-introduced one by one.
+
+\newcommand{\src}[1]{{\tt [#1]}}
+\newcommand{\makepic}{\box\graph} % Required only for gpic -t
+%\newcommand\scriptstack[2][c]{\hbox{\scriptsize\shortstack[#1]{#2}}}%
+\newbox\graph
+
+\newif\ifmpost
+\newif\ifpst
+\newif\ifpdfl
+\newif\ifpgf
+\newif\ifpostscript
+
+\newcommand{\getpic}[1]{%
+  \ifpst
+    \input #1 \makepic
+  \else\ifpgf
+    \input #1
+  \else\ifmpost
+    \includegraphics[trim=1 1 1 1]{#1.1}%
+  \else\ifpdfl
+    \includegraphics[trim=1 1 1 1]{#1}
+  \else\ifpostscript%
+    \includegraphics{#1.eps}%
+  \fi\fi\fi\fi\fi}
+
+% Left-justified captions to be used in parbox
+\makeatletter
+\def\caption#1{%
+  \vskip\abovecaptionskip
+  \refstepcounter{figure}
+  \sbox\@tempboxa{{Figure \arabic{figure}: #1}}%
+  \ifdim \wd\@tempboxa >\hsize
+    {Figure \arabic{figure}: #1}\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+\makeatother
+
+\newcommand{\bfig}[1]{\vspace{5ex}\noindent\parbox{\textwidth}{#1}}

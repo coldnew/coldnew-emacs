@@ -1,0 +1,7 @@
+\documentclass{article}
+\usepackage{times,pstricks,pst-eps,boxdims,graphicx,pst-grad}
+\pagestyle{empty}
+\thispagestyle{empty}
+\begin{document}
+\newbox\graph
+\begin{TeXtoEPS}

@@ -1,0 +1,33 @@
+% pdflatex examples.tex
+
+\documentclass[11pt]{article}
+\usepackage{times,boxdims}
+\usepackage{rotating}
+\usepackage{graphicx}
+\usepackage[pdftex]{hyperref}
+
+\input ../header
+
+\global\pdfltrue
+\addtolength{\textheight}{4ex}
+
+\begin{document}
+  \hfill
+  {\large\bf Examples:
+    \input{../../doc/Version.tex}
+    }
+  \hfill\break
+
+% This is the main examples file with a few diagrams omitted.
+  In this directory the source file are processed with m4, dpic -s,
+  and MetaPost. 
+  This is a collection of diagrams the author has had occasion to
+  produce using m4 circuit macros and others, and gpic or dpic.  In
+  some cases, there are other or better m4 or pic constructs for
+  producing the same drawings, but the source-file names are shown for
+  reference.
+
+  Click on the link to browse the source of each diagram and
+  read the manual CMman.pdf for a complete explanation.
+
+\input ../files.tex
