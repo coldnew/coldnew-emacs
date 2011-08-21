@@ -34,6 +34,7 @@
 (vim:nmap (kbd "<f1>") 'woman)
 (vim:nmap (kbd "K") 'anything-man-woman)
 (vim:nmap (kbd "C-x C-r") 'sudo-edit)
+(vim:nmap (kbd "M-g") 'goto-line)
 
 ;;;;;;;; Insert Map
 (vim:imap (kbd "C-x C-b") 'ibuffer)
@@ -49,7 +50,7 @@
 (vim:imap (kbd "C-x M-s") 'egg-status)
 (vim:imap (kbd "C-x M-l") 'egg-log)
 (vim:imap (kbd "<backspace>") 'hungry-delete-backward)
-(vim:imap (kbd "DEL") 'hungry-delete-forward)
+(vim:imap (kbd "<delete>") 'hungry-delete-forward)
 (vim:imap (kbd "C-n") 'auto-complete)
 (vim:imap (kbd "C-p") 'auto-complete)
 (vim:imap (kbd "C-x M-S") 'scratch-toggle)
@@ -57,7 +58,6 @@
 (vim:imap (kbd "<f1>") 'woman)
 (vim:imap (kbd "C-u") 'universal-argument)
 (vim:imap (kbd "C-x C-r") 'sudo-edit)
-
 
 ;;;;;;; Visual Map
 (vim:vmap (kbd "M-;") 'vim:visual-toggle-comment)
@@ -69,9 +69,17 @@
 (vim:wmap (kbd "C-w H") 'windmove-left-fullscreen)
 (vim:wmap (kbd "C-w L") 'windmove-right-fullscreen)
 (vim:wmap (kbd "C-w K") 'windmove-up-fullscreen)
+(vim:wmap (kbd "C-w s") 'split-window)
+(vim:wmap (kbd "C-w v") 'split-window-side-by-side)
 
-(vim:wmap (kbd "C-w C-s") 'sr-speedbar-toggle)
-(vim:wmap (kbd "C-w C-d") 'nav-toggle)
+(vim:wmap (kbd "C-w C-n") 'make-frame)
+(vim:wmap (kbd "C-w C-d") 'delete-frame)
+(vim:wmap (kbd "C-w C-o") 'other-frame)
+(vim:wmap (kbd "C-w C-a") 'delete-other-frames)
+
+;; (vim:wmap (kbd "C-w C-s") 'sr-speedbar-toggle)
+;; (vim:wmap (kbd "C-w C-d") 'nav-toggle)
+
 
 
 ;;;;;;;; Emacs Map
@@ -91,6 +99,7 @@
 (global-set-key (kbd "C-x M-S") 'scratch-toggle)
 (global-set-key (kbd "C-x M-i") 'ielm-toggle)
 (global-set-key (kbd "C-x C-r") 'sudo-edit)
+
 
 (provide 'coldnew-keybinding)
 ;; coldnew-keybinding.el ends here.
