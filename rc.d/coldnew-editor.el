@@ -8,7 +8,7 @@
 (require 'coldnew-variables)
 (require 'coldnew-complete)
 (require 'coldnew-snippets)
-
+(require 'coldnew-build)
 
 ;;;;;;;; Settings
 (setq line-spacing                    4 )
@@ -251,7 +251,7 @@
 			  (?$  . ?$) )))
 	(if (eq (cdr (assq (char-before) pair-alist)) (char-after))
 	    (and (char-after) (delete-char 1))
-	    )
+	  )
 	)
       )))
 
@@ -313,8 +313,8 @@
 	ad-do-it
 	(if (null ad-return-value)
 	    (autopair-mode 1)
-	    (autopair-mode 0)
-	    ))
+	  (autopair-mode 0)
+	  ))
       )
     ))
 

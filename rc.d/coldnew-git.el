@@ -55,11 +55,12 @@
       (kill-buffer egg-status-buffer)
       ad-do-it))
 
-  (defadvice egg-log-msg-done (around kill-egg-commit-buffer activate)
-    "Delete egg-commit-buffer after commit."
-    (let ((egg-commit-buffer (current-buffer)))
-      ad-do-it
-      (kill-buffer egg-commit-buffer)))
+  ;; FIXME:bug?
+  ;; (defadvice egg-log-msg-done (around kill-egg-commit-buffer activate)
+  ;;   "Delete egg-commit-buffer after commit."
+  ;;   (let ((egg-commit-buffer (current-buffer)))
+  ;;     ad-do-it
+  ;;     (kill-buffer egg-commit-buffer)))
   )
 
 

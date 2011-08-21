@@ -179,6 +179,7 @@
 	 "^\\*pomodoro\\*$"
 	 ;; "^"
 	 "^\\*.*\\(-preprocessed\\)\\>\\*"
+	 "^\\*ORG.*\\*"
 	 ))
 
   ;;;; Advice
@@ -187,12 +188,17 @@
     (setq ad-return-value (nreverse ad-return-value)))
 
   ;; Switching to ibuffer puts the cursor on the most recent buffer
-  (defadvice ibuffer (around ibuffer-point-to-most-recent) ()
+  ;; (defadvice ibuffer (around ibuffer-point-to-most-recent) ()
+  ;;   "Open ibuffer with cursor pointed to most recent buffer name"
+  ;;   (let ((recent-buffer-name (buffer-name)))
+  ;;     ad-do-it
+  ;;     (ibuffer-jump-to-buffer recent-buffer-name)))
+  ;; (ad-activate 'ibuffer)
+  (defadvice ibuffer (around ibuffer-point-to-most-recent activate)
     "Open ibuffer with cursor pointed to most recent buffer name"
     (let ((recent-buffer-name (buffer-name)))
       ad-do-it
       (ibuffer-jump-to-buffer recent-buffer-name)))
-  (ad-activate 'ibuffer)
 
   ;; Kill ibuffer after quit
   (defadvice ibuffer-quit (after kill-ibuffer activate)

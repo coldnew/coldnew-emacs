@@ -59,6 +59,12 @@
 ;; TODO: add face for numbers
 ;;(defface font-lock-number-face )
 
+;; (defface font-lock-successful-face
+;;   '((t (:foreground "green")))
+;;   ""
+;;   :group font-lock-)
+
+
 (defface mode-line-vim-face
   '((t (:inherit font-lock-keyword-face)))
   "face for vim-mode strig in mode-line"
