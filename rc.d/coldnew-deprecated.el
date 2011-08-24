@@ -15,10 +15,10 @@
 
 (defvar hexcolor-keywords
   '(("#[ABCDEFabcdef[:digit:]]\\{6\\}"
-      (0 (put-text-property (match-beginning 0)
-			    (match-end 0)
-			    ’face (list :background
-					 (match-string-no-properties 0)))))))
+     (0 (put-text-property (match-beginning 0)
+			   (match-end 0)
+			   ’face (list :background
+					(match-string-no-properties 0)))))))
 (defun hexcolor-add-to-font-lock ()
   (interactive)
   (font-lock-add-keywords nil hexcolor-keywords))
@@ -410,6 +410,18 @@ to browser. If a region is active (a phrase), lookup that phrase."
 ;;       ad-do-it)))
 
 
+;; (defadvice find-file (around find-file-set-trigger-variable protect activate)
+;;   "bind a variable so that history command can do special behavior for find-file"
+;;   (interactive (let (inside-find-file-command) (find-file-read-args "Find file: " nil)))
+;;   ad-do-it)
+
+;; (defadvice next-history-element (around next-history-element-special-behavior-for-find-file protect activate)
+;;   "when doing history for find-file, use the buffer-list as history"
+;;   (if (boundp 'inside-find-file-command)
+;;       (let ((find-file-history (delq nil (mapcar 'buffer-file-name (buffer-list))))
+;;             (minibuffer-history-variable 'find-file-history))
+;;         ad-do-it)
+;;     ad-do-it))
 
 
 (provide 'coldnew-deprecated)

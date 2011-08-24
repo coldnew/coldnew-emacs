@@ -149,7 +149,8 @@
 ;;
 (when (require* 'nav)
   ;; Ignore following regexp
-  (setq nav-boring-file-regexps '("\\.elc$"  "^[.].*$" "\\.pyc$" "\\.bak$" "\\.o$" "\\~$"))
+  (setq nav-boring-file-regexps '("\\.elc$"  "^[.].*$" "\\.pyc$" "\\.bak$" "\\.o$" "\\~$"
+				  "\\.out$"))
   )
 
 ;;;;;;;; pomodoro

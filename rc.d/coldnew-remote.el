@@ -8,6 +8,14 @@
 (require 'coldnew-variables)
 (require 'tramp)
 
+;; Deafult use ssh
+(setq tramp-default-method "ssh")
+
+;;FIXME: modify file-dir and file-name
+(setq tramp-persistency-file-name "~/.emacs.d/var/cache/tramp.cache")
+
+;; Make password-cache do not expire, that I only need type password once
+(setq password-cache-expiry nil)
 
 
 ;; (defun find-file-hook-root-header-warning ()
