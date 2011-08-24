@@ -16,7 +16,6 @@
 (setq-default auto-save-default           t )
 
 ;; ;;;; 檔案備份設定
-;; (defvar emacs-backup-directory emacs-backup-dir) ; 設定備份用資料夾位置
 ;; 如果備份用的資料夾不存在就建立他
 (if (not (file-exists-p emacs-backup-dir))
     (make-directory emacs-backup-dir t))

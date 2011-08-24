@@ -3,13 +3,13 @@
 
 ;;;;;;;; Packages Import
 (require 'coldnew-editor)
-(require 'geiser-install)
+;;(require 'geiser-install)
 (require 'quack)
 
 
 
 ;;;;;;;; Guile-lisp-mode extensions
-(add-to-list 'auto-mode-alist '("\\.gl$"  . scheme-mode))
+;;(add-to-list 'auto-mode-alist '("\\.gl$"  . scheme-mode))
 
 
 ;;;;;;;; Auto Complete Settings
@@ -50,17 +50,17 @@
 
 ;;;;;;;; Geiser
 ;;
-(when (require* 'geiser-install)
+;;(when (require* 'geiser-install)
 
   ;; Don't record duplicates history
-  (setq geiser-repl-history-no-dups-p nil)
+ ;; (setq geiser-repl-history-no-dups-p nil)
 
   ;; Setting history cache file
-  (setq geiser-repl-history-filename (concat emacs-cache-dir "geiser-history"))
+  ;;(setq geiser-repl-history-filename (concat emacs-cache-dir "geiser-history"))
 
   ;;
 
-  )
+  ;;)
 
 
 (provide 'coldnew-lang-guile)

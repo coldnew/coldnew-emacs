@@ -62,7 +62,7 @@
 	'(("default"
 	   ("*Buffer*" (or
 			(name . "^TAGS\\(<[0-9]+>\\)?$")
-			;;(name . "^\\**Loading Config Log\\*$")
+			(name . "^\\**Loading Config Log\\*$")
 			(name . "^\\**Loading Library Log\\*$")
 			(name . "^\\*Anything Log\\*$")
 			(name . "^\\*Backtrace\\*$")

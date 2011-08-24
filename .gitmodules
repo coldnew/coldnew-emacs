@@ -37,3 +37,12 @@
 [submodule "lisp/pymacs"]
 	path = lisp/pymacs
 	url = http://github.com/pinard/Pymacs.git
+[submodule "lisp/org2blog"]
+	path = lisp/org2blog
+	url = https://github.com/punchagan/org2blog.git
+[submodule "lisp/rainbow-mode"]
+	path = lisp/rainbow-mode
+	url = git://git.naquadah.org/rainbow.git
+[submodule "lisp/tea-time"]
+	path = lisp/tea-time
+	url = https://github.com/gabrielsaldana/tea-time.git
