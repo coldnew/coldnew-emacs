@@ -5,7 +5,7 @@
 
 ;;;### (autoloads (anything-other-buffer anything-at-point anything)
 ;;;;;;  "anything-config/anything" "anything-config/anything.el"
-;;;;;;  (20021 22151))
+;;;;;;  (20154 59011))
 ;;; Generated autoloads from anything-config/anything.el
 
 (autoload 'anything "anything-config/anything" "\
@@ -128,7 +128,7 @@ Simplified interface of `anything' with other `anything-buffer'
 ;;;;;;  anything-show-kill-ring anything-info-emacs anything-info-at-point
 ;;;;;;  anything-recentf anything-for-files anything-mini anything-configuration)
 ;;;;;;  "anything-config/anything-config" "anything-config/anything-config.el"
-;;;;;;  (20021 22151))
+;;;;;;  (20154 59013))
 ;;; Generated autoloads from anything-config/anything-config.el
 
 (autoload 'anything-configuration "anything-config/anything-config" "\
@@ -865,7 +865,7 @@ Useful when you have a old or corrupted `anything-c-adaptive-history-file'.
 
 ;;;### (autoloads (vassoc set-modified-alist modify-alist remove-alist
 ;;;;;;  set-alist del-alist put-alist) "apel/site-lisp/apel/alist"
-;;;;;;  "apel/site-lisp/apel/alist.el" (17099 15668))
+;;;;;;  "apel/site-lisp/apel/alist.el" (20154 59082))
 ;;; Generated autoloads from apel/site-lisp/apel/alist.el
 
 (autoload 'put-alist "apel/site-lisp/apel/alist" "\
@@ -914,7 +914,7 @@ See also `assoc'.
 
 ;;;### (autoloads (module-installed-p exec-installed-p file-installed-p
 ;;;;;;  get-latest-path add-latest-path add-path) "apel/site-lisp/apel/path-util"
-;;;;;;  "apel/site-lisp/apel/path-util.el" (17099 15668))
+;;;;;;  "apel/site-lisp/apel/path-util.el" (20154 59082))
 ;;; Generated autoloads from apel/site-lisp/apel/path-util.el
 
 (autoload 'add-path "apel/site-lisp/apel/path-util" "\
@@ -922,15 +922,15 @@ Add PATH to `load-path' if it exists under `default-load-path'
 directories and it does not exist in `load-path'.
 
 You can use following PATH styles:
-        load-path relative: \"PATH/\"
-                        (it is searched from `default-load-path')
-        home directory relative: \"~/PATH/\" \"~USER/PATH/\"
-        absolute path: \"/HOO/BAR/BAZ/\"
+	load-path relative: \"PATH/\"
+			(it is searched from `default-load-path')
+	home directory relative: \"~/PATH/\" \"~USER/PATH/\"
+	absolute path: \"/HOO/BAR/BAZ/\"
 
 You can specify following OPTIONS:
-        'all-paths	search from `load-path'
-                        instead of `default-load-path'
-        'append		add PATH to the last of `load-path'
+	'all-paths	search from `load-path'
+			instead of `default-load-path'
+	'append		add PATH to the last of `load-path'
 
 \(fn PATH &rest OPTIONS)" nil nil)
 
@@ -977,23 +977,23 @@ If PATHS is omitted, `load-path' is used.
 ;;;***
 
 ;;;### (autoloads (richtext-decode richtext-encode) "apel/site-lisp/emu/richtext"
-;;;;;;  "apel/site-lisp/emu/richtext.el" (17099 15669))
+;;;;;;  "apel/site-lisp/emu/richtext.el" (20154 59082))
 ;;; Generated autoloads from apel/site-lisp/emu/richtext.el
 
 (autoload 'richtext-encode "apel/site-lisp/emu/richtext" "\
-Not documented
+
 
 \(fn FROM TO)" nil nil)
 
 (autoload 'richtext-decode "apel/site-lisp/emu/richtext" "\
-Not documented
+
 
 \(fn FROM TO)" nil nil)
 
 ;;;***
 
 ;;;### (autoloads (ascii-off ascii-on ascii-display ascii-customize)
-;;;;;;  "ascii/ascii" "ascii/ascii.el" (19906 11018))
+;;;;;;  "ascii/ascii" "ascii/ascii.el" (20154 59344))
 ;;; Generated autoloads from ascii/ascii.el
 
 (autoload 'ascii-customize "ascii/ascii" "\
@@ -1024,7 +1024,7 @@ Turn off ASCII code display.
 ;;;***
 
 ;;;### (autoloads (turn-on-bib-cite bib-cite-minor-mode) "auctex/bib-cite"
-;;;;;;  "auctex/bib-cite.el" (18341 54637))
+;;;;;;  "auctex/bib-cite.el" (20154 59253))
 ;;; Generated autoloads from auctex/bib-cite.el
 
 (autoload 'bib-cite-minor-mode "auctex/bib-cite" "\
@@ -1043,7 +1043,7 @@ Unconditionally turn on Bib Cite mode.
 ;;;***
 
 ;;;### (autoloads (context-mode) "auctex/context" "auctex/context.el"
-;;;;;;  (19707 64211))
+;;;;;;  (20154 59259))
 ;;; Generated autoloads from auctex/context.el
 
 (defalias 'ConTeXt-mode 'context-mode)
@@ -1063,7 +1063,7 @@ of context-mode-hook.
 ;;;***
 
 ;;;### (autoloads (context-en-mode) "auctex/context-en" "auctex/context-en.el"
-;;;;;;  (19618 16518))
+;;;;;;  (20154 59260))
 ;;; Generated autoloads from auctex/context-en.el
 
 (autoload 'context-en-mode "auctex/context-en" "\
@@ -1081,7 +1081,7 @@ of context-mode-hook.
 ;;;***
 
 ;;;### (autoloads (context-nl-mode) "auctex/context-nl" "auctex/context-nl.el"
-;;;;;;  (19618 16529))
+;;;;;;  (20154 59253))
 ;;; Generated autoloads from auctex/context-nl.el
 
 (autoload 'context-nl-mode "auctex/context-nl" "\
@@ -1099,7 +1099,7 @@ of context-mode-hook.
 ;;;***
 
 ;;;### (autoloads (font-latex-setup) "auctex/font-latex" "auctex/font-latex.el"
-;;;;;;  (19906 11658))
+;;;;;;  (20154 59260))
 ;;; Generated autoloads from auctex/font-latex.el
 
 (autoload 'font-latex-setup "auctex/font-latex" "\
@@ -1110,7 +1110,7 @@ Setup this buffer for LaTeX font-lock.  Usually called from a hook.
 ;;;***
 
 ;;;### (autoloads (docTeX-mode TeX-latex-mode BibTeX-auto-store)
-;;;;;;  "auctex/latex" "auctex/latex.el" (19906 11658))
+;;;;;;  "auctex/latex" "auctex/latex.el" (20154 59254))
 ;;; Generated autoloads from auctex/latex.el
 
 (autoload 'BibTeX-auto-store "auctex/latex" "\
@@ -1148,11 +1148,11 @@ runs the hooks in `docTeX-mode-hook'.
 ;;;***
 
 ;;;### (autoloads (multi-prompt-key-value multi-prompt) "auctex/multi-prompt"
-;;;;;;  "auctex/multi-prompt.el" (18915 28236))
+;;;;;;  "auctex/multi-prompt.el" (20154 59254))
 ;;; Generated autoloads from auctex/multi-prompt.el
 
 (autoload 'multi-prompt "auctex/multi-prompt" "\
-Completing prompt for a list of strings.
+Completing prompt for a list of strings.  
 The first argument SEPARATOR should be the string (of length 1) to
 separate the elements in the list.  The second argument UNIQUE should
 be non-nil, if each element must be unique.  The remaining elements
@@ -1178,7 +1178,7 @@ The return value is the string as entered in the minibuffer.
 ;;;***
 
 ;;;### (autoloads (ams-tex-mode TeX-plain-tex-mode) "auctex/plain-tex"
-;;;;;;  "auctex/plain-tex.el" (19707 64159))
+;;;;;;  "auctex/plain-tex.el" (20154 59260))
 ;;; Generated autoloads from auctex/plain-tex.el
 
 (autoload 'TeX-plain-tex-mode "auctex/plain-tex" "\
@@ -1210,8 +1210,8 @@ of `AmS-TeX-mode-hook'.
 ;;;***
 
 ;;;### (autoloads (preview-report-bug LaTeX-preview-setup preview-install-styles)
-;;;;;;  "auctex/preview/preview" "auctex/preview/preview.el" (19772
-;;;;;;  31043))
+;;;;;;  "auctex/preview/preview" "auctex/preview/preview.el" (20154
+;;;;;;  59251))
 ;;; Generated autoloads from auctex/preview/preview.el
 
 (autoload 'preview-install-styles "auctex/preview/preview" "\
@@ -1244,7 +1244,7 @@ Report a bug in the preview-latex package.
 
 ;;;### (autoloads (TeX-submit-bug-report TeX-auto-generate-global
 ;;;;;;  TeX-auto-generate TeX-tex-mode) "auctex/tex" "auctex/tex.el"
-;;;;;;  (19906 11658))
+;;;;;;  (20154 59253))
 ;;; Generated autoloads from auctex/tex.el
 
 (autoload 'TeX-tex-mode "auctex/tex" "\
@@ -1286,7 +1286,7 @@ information about your AUCTeX version and AUCTeX configuration.
 ;;;***
 
 ;;;### (autoloads (LaTeX-install-toolbar TeX-install-toolbar) "auctex/tex-bar"
-;;;;;;  "auctex/tex-bar.el" (18580 49499))
+;;;;;;  "auctex/tex-bar.el" (20154 59253))
 ;;; Generated autoloads from auctex/tex-bar.el
 
 (autoload 'TeX-install-toolbar "auctex/tex-bar" "\
@@ -1301,8 +1301,8 @@ Install toolbar buttons for LaTeX mode.
 
 ;;;***
 
-;;;### (autoloads nil "auctex/tex-fold" "auctex/tex-fold.el" (19906
-;;;;;;  11658))
+;;;### (autoloads nil "auctex/tex-fold" "auctex/tex-fold.el" (20154
+;;;;;;  59259))
 ;;; Generated autoloads from auctex/tex-fold.el
 (autoload 'TeX-fold-mode "tex-fold" "Minor mode for hiding and revealing macros and environments." t)
 
@@ -1311,7 +1311,7 @@ Install toolbar buttons for LaTeX mode.
 ;;;***
 
 ;;;### (autoloads (tex-font-setup) "auctex/tex-font" "auctex/tex-font.el"
-;;;;;;  (18341 54636))
+;;;;;;  (20154 59253))
 ;;; Generated autoloads from auctex/tex-font.el
 
 (autoload 'tex-font-setup "auctex/tex-font" "\
@@ -1322,7 +1322,7 @@ Setup font lock support for TeX.
 ;;;***
 
 ;;;### (autoloads (TeX-texinfo-mode) "auctex/tex-info" "auctex/tex-info.el"
-;;;;;;  (19514 6672))
+;;;;;;  (20154 59259))
 ;;; Generated autoloads from auctex/tex-info.el
 
 (defalias 'Texinfo-mode 'texinfo-mode)
@@ -1341,7 +1341,7 @@ value of `Texinfo-mode-hook'.
 ;;;***
 
 ;;;### (autoloads (japanese-latex-mode japanese-plain-tex-mode) "auctex/tex-jp"
-;;;;;;  "auctex/tex-jp.el" (18768 5174))
+;;;;;;  "auctex/tex-jp.el" (20154 59254))
 ;;; Generated autoloads from auctex/tex-jp.el
 
 (autoload 'japanese-plain-tex-mode "auctex/tex-jp" "\
@@ -1359,7 +1359,7 @@ Set `japanese-TeX-mode' to t, and enter `TeX-latex-mode'.
 ;;;***
 
 ;;;### (autoloads (texmathp-match-switch texmathp) "auctex/texmathp"
-;;;;;;  "auctex/texmathp.el" (18489 3128))
+;;;;;;  "auctex/texmathp.el" (20154 59249))
 ;;; Generated autoloads from auctex/texmathp.el
 
 (autoload 'texmathp "auctex/texmathp" "\
@@ -1379,15 +1379,15 @@ Limit searched to BOUND.
 
 ;;;***
 
-;;;### (autoloads nil "auctex/toolbar-x" "auctex/toolbar-x.el" (18580
-;;;;;;  49487))
+;;;### (autoloads nil "auctex/toolbar-x" "auctex/toolbar-x.el" (20154
+;;;;;;  59255))
 ;;; Generated autoloads from auctex/toolbar-x.el
 (autoload 'toolbarx-install-toolbar "toolbar-x")
 
 ;;;***
 
 ;;;### (autoloads (diminished-modes diminish-undo diminish) "diminish/diminish"
-;;;;;;  "diminish/diminish.el" (20021 24437))
+;;;;;;  "diminish/diminish.el" (20154 59078))
 ;;; Generated autoloads from diminish/diminish.el
 
 (autoload 'diminish "diminish/diminish" "\
@@ -1433,7 +1433,7 @@ what diminished modes would be on the mode-line if they were still minor.
 ;;;***
 
 ;;;### (autoloads (egg-minor-mode-find-file-hook egg-minor-mode)
-;;;;;;  "egg/egg" "egg/egg.el" (19977 13972))
+;;;;;;  "egg/egg" "egg/egg.el" (20154 59337))
 ;;; Generated autoloads from egg/egg.el
 
 (autoload 'egg-minor-mode "egg/egg" "\
@@ -1462,7 +1462,7 @@ egg in current buffer.\\<egg-minor-mode-map>
 ;;;***
 
 ;;;### (autoloads (egg-grep egg-grep-mode egg-grep-process-setup)
-;;;;;;  "egg/egg-grep" "egg/egg-grep.el" (19839 7939))
+;;;;;;  "egg/egg-grep" "egg/egg-grep.el" (20154 59337))
 ;;; Generated autoloads from egg/egg-grep.el
 
 (autoload 'egg-grep-process-setup "egg/egg-grep" "\
@@ -1477,14 +1477,70 @@ Sets `compilation-last-buffer' and `compilation-window-height'.
 \(fn)" nil nil)
 
 (autoload 'egg-grep "egg/egg-grep" "\
-Not documented
+
 
 \(fn LEVEL)" t nil)
 
 ;;;***
 
+;;;### (autoloads (graphviz-dot-mode) "graphviz-dot-mode/graphviz-dot-mode"
+;;;;;;  "graphviz-dot-mode/graphviz-dot-mode.el" (20169 58741))
+;;; Generated autoloads from graphviz-dot-mode/graphviz-dot-mode.el
+
+(autoload 'graphviz-dot-mode "graphviz-dot-mode/graphviz-dot-mode" "\
+Major mode for the dot language. \\<graphviz-dot-mode-map> 
+TAB indents for graph lines. 
+
+\\[graphviz-dot-indent-graph]	- Indentaion function.
+\\[graphviz-dot-preview]	- Previews graph in a buffer.
+\\[graphviz-dot-view]	- Views graph in an external viewer.
+\\[graphviz-dot-indent-line]	- Indents current line of code.
+\\[graphviz-dot-complete-word]	- Completes the current word.
+\\[electric-graphviz-dot-terminate-line]	- Electric newline.
+\\[electric-graphviz-dot-open-brace]	- Electric open braces.
+\\[electric-graphviz-dot-close-brace]	- Electric close braces.
+\\[electric-graphviz-dot-semi]	- Electric semi colons.
+
+Variables specific to this mode:
+
+graphviz-dot-dot-program            (default `dot')
+Location of the dot program.
+graphviz-dot-view-command           (default `doted %s')
+Command to run when `graphviz-dot-view' is executed.
+graphviz-dot-view-edit-command      (default nil)
+If the user should be asked to edit the view command.
+graphviz-dot-save-before-view       (default t)
+Automatically save current buffer berore `graphviz-dot-view'.
+graphviz-dot-preview-extension      (default `png')
+File type to use for `graphviz-dot-preview'.
+graphviz-dot-auto-indent-on-newline (default t)
+Whether to run `electric-graphviz-dot-terminate-line' when 
+newline is entered.
+graphviz-dot-auto-indent-on-braces (default t)
+Whether to run `electric-graphviz-dot-open-brace' and
+`electric-graphviz-dot-close-brace' when braces are 
+entered.
+graphviz-dot-auto-indent-on-semi (default t)
+Whether to run `electric-graphviz-dot-semi' when semi colon
+is typed.
+graphviz-dot-toggle-completions  (default nil)
+If completions should be displayed in the buffer instead of a
+completion buffer when \\[graphviz-dot-complete-word] is
+pressed repeatedly.
+
+This mode can be customized by running \\[graphviz-dot-customize].
+
+Turning on Graphviz Dot mode calls the value of the variable 
+`graphviz-dot-mode-hook' with no args, if that value is non-nil.
+
+\(fn)" t nil)
+
+(add-to-list 'auto-mode-alist '("\\.dot\\'" . graphviz-dot-mode))
+
+;;;***
+
 ;;;### (autoloads (highlight-parentheses-mode) "highlight-parentheses/highlight-parentheses"
-;;;;;;  "highlight-parentheses/highlight-parentheses.el" (20021 24438))
+;;;;;;  "highlight-parentheses/highlight-parentheses.el" (20154 59337))
 ;;; Generated autoloads from highlight-parentheses/highlight-parentheses.el
 
 (autoload 'highlight-parentheses-mode "highlight-parentheses/highlight-parentheses" "\
@@ -1498,7 +1554,7 @@ Minor mode to highlight the surrounding parentheses.
 ;;;;;;  highlight-symbol-next-in-defun highlight-symbol-prev highlight-symbol-next
 ;;;;;;  highlight-symbol-remove-all highlight-symbol-at-point highlight-symbol-mode)
 ;;;;;;  "highlight-symbol/highlight-symbol" "highlight-symbol/highlight-symbol.el"
-;;;;;;  (20021 24441))
+;;;;;;  (20154 59156))
 ;;; Generated autoloads from highlight-symbol/highlight-symbol.el
 
 (autoload 'highlight-symbol-mode "highlight-symbol/highlight-symbol" "\
@@ -1548,7 +1604,7 @@ Jump to the previous location of the symbol at point within the defun.
 
 ;;;### (autoloads (turn-on-hungry-delete-mode hungry-delete-mode
 ;;;;;;  hungry-delete-backward hungry-delete-forward) "hungury-delete/hungry-delete"
-;;;;;;  "hungury-delete/hungry-delete.el" (20012 10420))
+;;;;;;  "hungury-delete/hungry-delete.el" (20154 59150))
 ;;; Generated autoloads from hungury-delete/hungry-delete.el
 
 (autoload 'hungry-delete-forward "hungury-delete/hungry-delete" "\
@@ -1579,8 +1635,8 @@ Turns on hungry delete mode if the buffer is appropriate.
 
 ;;;***
 
-;;;### (autoloads (iedit-mode) "iedit/iedit" "iedit/iedit.el" (19844
-;;;;;;  58740))
+;;;### (autoloads (iedit-mode) "iedit/iedit" "iedit/iedit.el" (20154
+;;;;;;  59029))
 ;;; Generated autoloads from iedit/iedit.el
 
 (autoload 'iedit-mode "iedit/iedit" "\
@@ -1615,7 +1671,7 @@ Commands:
 ;;;;;;  lusty-open-this lusty-highlight-previous-column lusty-highlight-next-column
 ;;;;;;  lusty-highlight-previous lusty-highlight-next lusty-buffer-explorer
 ;;;;;;  lusty-file-explorer) "lusty-explorer/lusty-explorer" "lusty-explorer/lusty-explorer.el"
-;;;;;;  (20021 24439))
+;;;;;;  (20154 59080))
 ;;; Generated autoloads from lusty-explorer/lusty-explorer.el
 
 (autoload 'lusty-file-explorer "lusty-explorer/lusty-explorer" "\
@@ -1671,7 +1727,7 @@ Launch dired at the current directory.
 ;;;***
 
 ;;;### (autoloads (multi-term) "multi-term/multi-term" "multi-term/multi-term.el"
-;;;;;;  (19842 19339))
+;;;;;;  (20154 59361))
 ;;; Generated autoloads from multi-term/multi-term.el
 
 (autoload 'multi-term "multi-term/multi-term" "\
@@ -1682,7 +1738,7 @@ Will prompt you shell name when you type `C-u' before this command.
 
 ;;;***
 
-;;;### (autoloads (nav) "nav/nav" "nav/nav.el" (19878 59256))
+;;;### (autoloads (nav) "nav/nav" "nav/nav.el" (20154 59150))
 ;;; Generated autoloads from nav/nav.el
 
 (autoload 'nav "nav/nav" "\
@@ -1695,7 +1751,7 @@ Run nav-mode in a narrow window on the left side.
 ;;;### (autoloads (org2blog/wp-preview-subtree-post org2blog/wp-preview-buffer-post
 ;;;;;;  org2blog/wp-track-subtree org2blog/wp-track-buffer org2blog/wp-post-subtree
 ;;;;;;  org2blog/wp-new-entry org2blog/wp-login org2blog/wp-mode)
-;;;;;;  "org2blog/org2blog" "org2blog/org2blog.el" (20047 29526))
+;;;;;;  "org2blog/org2blog" "org2blog/org2blog.el" (20154 59335))
 ;;; Generated autoloads from org2blog/org2blog.el
 
 (autoload 'org2blog/wp-mode "org2blog/org2blog" "\
@@ -1749,7 +1805,7 @@ Preview the present subtree in browser, if posted.
 ;;;***
 
 ;;;### (autoloads (paredit-mode) "paredit/paredit" "paredit/paredit.el"
-;;;;;;  (20021 24442))
+;;;;;;  (20154 59135))
 ;;; Generated autoloads from paredit/paredit.el
 
 (autoload 'paredit-mode "paredit/paredit" "\
@@ -1767,7 +1823,7 @@ fixing imbalanced parentheses instead.
 
 ;;;### (autoloads (global-pretty-lambda-mode pretty-lambda-mode pretty-lambda-for-modes
 ;;;;;;  pretty-lambda-auto-modes pretty-lambda) "pretty-lambdada/pretty-lambdada"
-;;;;;;  "pretty-lambdada/pretty-lambdada.el" (19840 59424))
+;;;;;;  "pretty-lambdada/pretty-lambdada.el" (20154 59340))
 ;;; Generated autoloads from pretty-lambdada/pretty-lambdada.el
 
 (let ((loads (get 'pretty-lambda 'custom-loads))) (if (member '"pretty-lambdada/pretty-lambdada" loads) nil (put 'pretty-lambda 'custom-loads (cons '"pretty-lambdada/pretty-lambdada" loads))))
@@ -1799,9 +1855,11 @@ or call the function `global-pretty-lambda-mode'.")
 (custom-autoload 'global-pretty-lambda-mode "pretty-lambdada/pretty-lambdada" nil)
 
 (autoload 'global-pretty-lambda-mode "pretty-lambdada/pretty-lambdada" "\
-Toggle Pretty-Lambda mode in every possible buffer.
-With prefix ARG, turn Global-Pretty-Lambda mode on if and only if
-ARG is positive.
+Toggle Pretty-Lambda mode in all buffers.
+With prefix ARG, enable Global-Pretty-Lambda mode if ARG is positive;
+otherwise, disable it.  If called from Lisp, enable the mode if
+ARG is omitted or nil.
+
 Pretty-Lambda mode is enabled in all buffers where
 `turn-on-pretty-lambda-mode' would do it.
 See `pretty-lambda-mode' for more information on Pretty-Lambda mode.
@@ -1811,7 +1869,7 @@ See `pretty-lambda-mode' for more information on Pretty-Lambda mode.
 ;;;***
 
 ;;;### (autoloads (svn-status svn-checkout) "psvn/psvn" "psvn/psvn.el"
-;;;;;;  (19878 53359))
+;;;;;;  (20154 59337))
 ;;; Generated autoloads from psvn/psvn.el
 
 (autoload 'svn-checkout "psvn/psvn" "\
@@ -1836,7 +1894,7 @@ If there is no .svn directory, examine if there is CVS and run
 ;;;***
 
 ;;;### (autoloads (pylookup-update-all pylookup-update pylookup-lookup)
-;;;;;;  "pylookup/pylookup" "pylookup/pylookup.el" (19840 56836))
+;;;;;;  "pylookup/pylookup" "pylookup/pylookup.el" (20154 59237))
 ;;; Generated autoloads from pylookup/pylookup.el
 
 (autoload 'pylookup-lookup "pylookup/pylookup" "\
@@ -1857,7 +1915,7 @@ Run pylookup-update for all sources and create the database at `pylookup-db-file
 ;;;***
 
 ;;;### (autoloads (doctest-mode doctest-register-mmm-classes) "python-mode/doctest-mode"
-;;;;;;  "python-mode/doctest-mode.el" (19878 53736))
+;;;;;;  "python-mode/doctest-mode.el" (20154 59261))
 ;;; Generated autoloads from python-mode/doctest-mode.el
 
 (autoload 'doctest-register-mmm-classes "python-mode/doctest-mode" "\
@@ -1931,7 +1989,7 @@ treated differently:
 ;;;***
 
 ;;;### (autoloads (py-shell python-mode) "python-mode/python-mode"
-;;;;;;  "python-mode/python-mode.el" (19878 53736))
+;;;;;;  "python-mode/python-mode.el" (20154 59261))
 ;;; Generated autoloads from python-mode/python-mode.el
 
 (autoload 'python-mode "python-mode/python-mode" "\
@@ -2003,7 +2061,7 @@ filter.
 ;;;***
 
 ;;;### (autoloads (rainbow-delimiters-mode) "rainbow-delimiters/rainbow-delimiters"
-;;;;;;  "rainbow-delimiters/rainbow-delimiters.el" (19925 4377))
+;;;;;;  "rainbow-delimiters/rainbow-delimiters.el" (20154 59080))
 ;;; Generated autoloads from rainbow-delimiters/rainbow-delimiters.el
 
 (autoload 'rainbow-delimiters-mode "rainbow-delimiters/rainbow-delimiters" "\
@@ -2014,7 +2072,7 @@ Color nested parentheses, brackets, and braces according to their depth.
 ;;;***
 
 ;;;### (autoloads (rainbow-mode) "rainbow-mode/rainbow-mode" "rainbow-mode/rainbow-mode.el"
-;;;;;;  (19843 28306))
+;;;;;;  (20154 59344))
 ;;; Generated autoloads from rainbow-mode/rainbow-mode.el
 
 (autoload 'rainbow-mode "rainbow-mode/rainbow-mode" "\
@@ -2026,7 +2084,7 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 ;;;***
 
 ;;;### (autoloads (scala-mode) "scala-mode/scala-mode" "scala-mode/scala-mode.el"
-;;;;;;  (19947 42031))
+;;;;;;  (20154 59359))
 ;;; Generated autoloads from scala-mode/scala-mode.el
 
 (autoload 'scala-mode "scala-mode/scala-mode" "\
@@ -2041,7 +2099,7 @@ When started, run `scala-mode-hook'.
 ;;;### (autoloads (scala-quit-interpreter scala-load-file scala-eval-buffer
 ;;;;;;  scala-eval-definition scala-eval-region scala-switch-to-interpreter
 ;;;;;;  scala-run-scala scala-interpreter-running-p-1) "scala-mode/scala-mode-inf"
-;;;;;;  "scala-mode/scala-mode-inf.el" (19947 42031))
+;;;;;;  "scala-mode/scala-mode-inf.el" (20154 59360))
 ;;; Generated autoloads from scala-mode/scala-mode-inf.el
 
 (autoload 'scala-interpreter-running-p-1 "scala-mode/scala-mode-inf" "\
@@ -2104,19 +2162,19 @@ Quit Scala interpreter.
 
 ;;;***
 
-;;;### (autoloads (smex-initialize) "smex/smex" "smex/smex.el" (19842
-;;;;;;  14351))
+;;;### (autoloads (smex-initialize) "smex/smex" "smex/smex.el" (20154
+;;;;;;  59336))
 ;;; Generated autoloads from smex/smex.el
 
 (autoload 'smex-initialize "smex/smex" "\
-Not documented
+
 
 \(fn)" t nil)
 
 ;;;***
 
 ;;;### (autoloads (turn-on-tempbuf-mode tempbuf-mode) "tempbuf/tempbuf"
-;;;;;;  "tempbuf/tempbuf.el" (19842 18616))
+;;;;;;  "tempbuf/tempbuf.el" (20154 59341))
 ;;; Generated autoloads from tempbuf/tempbuf.el
 
 (autoload 'tempbuf-mode "tempbuf/tempbuf" "\
@@ -2133,47 +2191,6 @@ Turn on tempbuf mode.
 See also function `tempbuf-mode'.
 
 \(fn)" nil nil)
-
-;;;***
-
-;;;### (autoloads nil nil ("ac-company/ac-company.el" "anything-complete/anything-complete.el"
-;;;;;;  "anything-include/anything-include.el" "anything-match-plugin/anything-match-plugin.el"
-;;;;;;  "anything-show-completion/anything-show-completion.el" "apel/site-lisp/apel/calist.el"
-;;;;;;  "apel/site-lisp/apel/filename.el" "apel/site-lisp/apel/install.el"
-;;;;;;  "apel/site-lisp/emu/apel-ver.el" "apel/site-lisp/emu/broken.el"
-;;;;;;  "apel/site-lisp/emu/emu.el" "apel/site-lisp/emu/inv-23.el"
-;;;;;;  "apel/site-lisp/emu/invisible.el" "apel/site-lisp/emu/mcharset.el"
-;;;;;;  "apel/site-lisp/emu/mcs-20.el" "apel/site-lisp/emu/mcs-e20.el"
-;;;;;;  "apel/site-lisp/emu/mule-caesar.el" "apel/site-lisp/emu/pccl-20.el"
-;;;;;;  "apel/site-lisp/emu/pccl.el" "apel/site-lisp/emu/pces-20.el"
-;;;;;;  "apel/site-lisp/emu/pces-e20.el" "apel/site-lisp/emu/pces.el"
-;;;;;;  "apel/site-lisp/emu/pcustom.el" "apel/site-lisp/emu/poe.el"
-;;;;;;  "apel/site-lisp/emu/poem-e20.el" "apel/site-lisp/emu/poem-e20_3.el"
-;;;;;;  "apel/site-lisp/emu/poem.el" "apel/site-lisp/emu/product.el"
-;;;;;;  "apel/site-lisp/emu/pym.el" "apel/site-lisp/emu/static.el"
-;;;;;;  "auctex/lpath.el" "auctex/preview/prv-emacs.el" "auctex/preview/prv-install.el"
-;;;;;;  "auctex/preview/prv-xemacs.el" "auctex/tex-mik.el" "auctex/tex-style.el"
-;;;;;;  "auctex/tex-wizard.el" "auto-complete-etags/auto-complete-etags.el"
-;;;;;;  "auto-complete-extension/auto-complete-extension.el" "auto-complete/auto-complete-config.el"
-;;;;;;  "auto-complete/auto-complete.el" "auto-complete/fuzzy.el"
-;;;;;;  "auto-complete/popup.el" "auto-pair+/auto-pair+.el" "autopair/autopair.el"
-;;;;;;  "c-eldoc/c-eldoc.el" "eldoc-extension/eldoc-extension.el"
-;;;;;;  "escreen-tab/escreen-tab.el" "escreen/escreen.el" "guess-offset/guess-offset.el"
-;;;;;;  "highlight-cl/highlight-cl.el" "ipython/ipython.el" "nav/nav-dev.el"
-;;;;;;  "nav/nav-test.el" "org2blog/metaweblog.el" "org2blog/org2blog-autoloads.el"
-;;;;;;  "popup-pos-tip/popup-pos-tip.el" "pymacs/pymacs.el" "python-mode/highlight-indentation.el"
-;;;;;;  "python-mode/pars-part-output.el" "python-mode/py-bug-numbered-tests.el"
-;;;;;;  "python-mode/pycomplete.el" "quack/quack.el" "scala-mode/scala-mode-auto.el"
-;;;;;;  "scala-mode/scala-mode-constants.el" "scala-mode/scala-mode-feature-electric.el"
-;;;;;;  "scala-mode/scala-mode-feature-speedbar.el" "scala-mode/scala-mode-feature-tags.el"
-;;;;;;  "scala-mode/scala-mode-feature.el" "scala-mode/scala-mode-fontlock.el"
-;;;;;;  "scala-mode/scala-mode-indent.el" "scala-mode/scala-mode-lib.el"
-;;;;;;  "scala-mode/scala-mode-navigation.el" "scala-mode/scala-mode-ui.el"
-;;;;;;  "scala-mode/scala-mode-variables.el" "scheme-complete/scheme-complete.el"
-;;;;;;  "sdcv/sdcv.el" "shell-pop/shell-pop.el" "showtip/showtip.el"
-;;;;;;  "sr-speedbar/sr-speedbar.el" "ssh-config/ssh-config.el" "tea-time/tea-time.el"
-;;;;;;  "undo-tree/undo-tree.el" "xcscope+/xcscope+.el" "xml-rpc-el/xml-rpc.el")
-;;;;;;  (20047 29527 71033))
 
 ;;;***
 

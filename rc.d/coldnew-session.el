@@ -8,7 +8,10 @@
 (require 'coldnew-variables)
 
 
-
+;;;;;;;; Minibuffer
+;;
+;; keep minibuffer history between session
+(savehist-mode t)
 
 ;;;;;;;; desktop
 ;;

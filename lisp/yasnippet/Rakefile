@@ -23,7 +23,12 @@ end
 
 desc "convert some textmate bundles to yasnippets"
 task :convert_bundles do
-  sh 'for bundle in html ruby rails css; do ./extras/textmate_import.rb -d extras/bundles/$bundle-tmbundle -o extras/imported/$bundle-mode -q ; done'
+  Dir.glob "extras/bundles/*-tmbundle" do |bundle_dir|
+    puts "Converting from #{bundle_dir}"
+    mode_prefix = File.basename(bundle_dir).match(/[^-]*/)[0]
+    raise "Couldn't guess mode name for #{bundle_dir}" unless mode_prefix
+    sh "./extras/textmate_import.rb -d #{bundle_dir} -o ./extras/imported/#{mode_prefix}-mode -q" 
+  end
 end
 
 desc "create a release package"
@@ -66,6 +71,24 @@ namespace :doc do
     FileUtils.mkdir_p(release_dir)
     sh "tar cjf pkg/yasnippet-doc-#{$version}.tar.bz2 " +
       "--exclude=doc/.svn --exclude=doc/images/.svn doc/*.html doc/images"
+  end
+
+  task :upload do
+    if File.exists? 'doc/gh-pages'
+      Dir.chdir 'doc/gh-pages' do
+        sh "git checkout gh-pages"
+      end
+      Dir.glob("doc/*.{html,css}").each do |file|
+        FileUtils.cp file, 'doc/gh-pages'
+      end
+      Dir.glob("doc/images/*").each do |file|
+        FileUtils.cp file, 'doc/gh-pages/images'
+      end
+      Dir.chdir 'doc/gh-pages' do
+        sh "git commit -a -m 'Automatic documentation update.'"
+        sh "git push"
+      end
+    end
   end
 end
 

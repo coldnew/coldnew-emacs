@@ -1,1 +1,0 @@
-(:name company :type elpa) 

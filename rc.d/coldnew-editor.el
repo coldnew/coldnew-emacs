@@ -21,13 +21,14 @@
 (setq require-final-newline           t )
 
 ;; Enable global font-lock
-(setq global-font-lock-mode           t )
+(global-font-lock-mode                t )
 
 ;; Auto revert file if file modified
-(setq global-auto-revert-mode         t )
+(global-auto-revert-mode              1 )
 
 ;; Use lisp-interaction-mode as default major mode
 (setq-default major-mode 'lisp-interaction-mode )
+
 
 
 ;;;;;;;; Programming Mode
@@ -179,61 +180,11 @@
   )
 
 
-;;;;;;;; cedet
-;; CEDET is a Collection of Emacs Development Environment Tools written with the
-;; end goal of creating an advanced development environment in Emacs.
-;;
-(when (require* 'cedet)
-  ;; loding libraries
-  (require* 'semantic/sb)
-
-  ;; Enable EDE (Project Management) features
-  (global-ede-mode 1)
-
-  ;; Enable Semantic feactures
-  (semantic-mode 1)
-
-  ;; Setting up Semantic-mode
-  (setq semantic-default-submodes
-	'(
-	  ;; Maintain tag database
-	  global-semanticdb-minor-mode
-	  ;; Reparse buffer when idle
-	  global-semantic-idle-scheduler-mode
-	  ;; Show summary of tag at point
-	  global-semantic-idle-summary-mode
-	  ;; Show completions when idle
-	  global-semantic-idle-completions-mode
-	  ;; Additional tag decorations
-	  global-semantic-decoration-mode
-	  ;; Highlight the current tag.
-	  global-semantic-highlight-func-mode
-	  ;; Show current fun in header line
-	  global-semantic-stickyfunc-mode
-	  ;; Provide `switch-to-buffer'-like keybinding for tag names.
-	  global-semantic-mru-bookmark-mode
-	  ))
-  )
-
-
-;;;;;;;; ECB
-;; ECB stands for "Emacs Code Browser". While Emacs already has good editing support for many modes,
-;; its browsing support is somewhat lacking. That's where ECB comes in: it displays a number of
-;; informational windows that allow for easy source code navigation and overview.
-;;
-(when (require* 'ecb)
-  (setq stack-trace-on-error t)
-  )
-
-
 ;;;;;;;; Speedbar
 (when (require* 'speedbar)
   (require* 'sr-speedbar)
   (setq sr-speedbar-right-side nil)
   )
-
-
-
 
 ;;;;;;;; Functions
 (defun use-hungry-delete ()
@@ -252,7 +203,7 @@
 			  (?$  . ?$) )))
 	(if (eq (cdr (assq (char-before) pair-alist)) (char-after))
 	    (and (char-after) (delete-char 1))
-	  )
+	    )
 	)
       )))
 
@@ -283,6 +234,7 @@
 (defun highlight-additional-keywords ()
   "Highlight additional keywords."
   (font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\):" 1 font-lock-warning-face t)))
+  (font-lock-add-keywords nil '(("\\<\\(NOTE\\):" 1 'org-todo t)))
   (font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
   (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t)))
   )
@@ -292,13 +244,15 @@
   (font-lock-add-keywords nil
 			  '(
 			    ;; hexadecimal
-			    ("\\<\\(0x[0-9a-fA-F]+\\)"       1 font-lock-constant-face)
+			    ;;		    ("\\<\\(0x[0-9a-fA-F]+\\)"       1 font-lock-constant-face)
+			    ("\\b\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face) ; hexa
 			    ;; float
-			    ("\\<\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
+			    ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face) ; float
+			    ;;		    ("\\<\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
 			    ;; int
-			    ("\\<\\([+-]?[0-9]+\\)\\b"       1 font-lock-constant-face)
+			    ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face) ; int
+			    ;;		    ("\\<\\([+-]?[0-9]+\\)\\b"       1 font-lock-constant-face)
 			    )))
-
 
 (defun use-autopair-mode ()
   "Enable autopair for all mode."
@@ -314,8 +268,8 @@
 	ad-do-it
 	(if (null ad-return-value)
 	    (autopair-mode 1)
-	  (autopair-mode 0)
-	  ))
+	    (autopair-mode 0)
+	    ))
       )
     ))
 

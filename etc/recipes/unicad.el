@@ -1,1 +1,0 @@
-(:name unicad :type emacswiki)

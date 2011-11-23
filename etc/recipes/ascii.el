@@ -1,2 +1,0 @@
-(:name ascii
-       :type emacswiki)

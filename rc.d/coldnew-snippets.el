@@ -9,10 +9,12 @@
 (defvar emacs-snippet-file-dir (expand-file-name "~/.emacs.d/etc/snippets"))
 
 ;;;;;;;; yasnippet
+;; Set my snippet-dirs, do not load original yasnippet-dir
+(setq yas/snippet-dirs emacs-snippet-file-dir)
 (when (require* 'yasnippet)
+  (require 'dropdown-list)
   (yas/initialize)
   (yas/load-directory emacs-snippet-file-dir)
-  ;;(yas/load-directory "~/.emacs.d/etc/snippets")
 
   (setq yas/prompt-functions
 	'(yas/dropdown-prompt

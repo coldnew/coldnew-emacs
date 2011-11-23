@@ -1,11 +1,11 @@
 ;;; quack.el --- enhanced support for editing and running Scheme code
 
-(defconst quack-copyright    "Copyright (C) 2002-2010 Neil Van Dyke")
+(defconst quack-copyright    "Copyright (C) 2002-2011 Neil Van Dyke")
 (defconst quack-copyright-2  "Portions Copyright (C) Free Software Foundation")
 ;; Emacs-style font-lock specs adapted from GNU Emacs 21.2 scheme.el.
 ;; Scheme Mode menu adapted from GNU Emacs 21.2 cmuscheme.el.
 
-(defconst quack-version      "0.40")
+(defconst quack-version      "0.42")
 (defconst quack-author-name  "Neil Van Dyke")
 (defconst quack-author-email "neil@neilvandyke.org")
 (defconst quack-web-page     "http://www.neilvandyke.org/quack/")
@@ -20,7 +20,7 @@ particular purpose.  See the GNU General Public License for more details.  See
 http://www.gnu.org/licenses/ for details.  For other licenses and consulting,
 please contact Neil Van Dyke.")
 
-(defconst quack-cvsid "$Id: quack.el,v 1.469 2010/12/23 00:01:33 neilpair Exp $")
+(defconst quack-cvsid "$Id: quack.el,v 1.472 2011/07/31 03:16:41 neilpair Exp $")
 
 ;;; Commentary:
 
@@ -37,14 +37,12 @@ please contact Neil Van Dyke.")
 
 ;; COMPATIBILITY:
 ;;
-;;     GNU Emacs 22 -- Yes.  Quack is now developed under GNU Emacs 22 on a
-;;     GNU/Linux system, which is the preferred platform for Quacksmokers.
-;;     Quack should work under GNU Emacs 22 on any Un*x-like OS.  Reportedly,
+;;     GNU Emacs 23 and 22 -- Yes.  Quack is now developed under GNU Emacs 23
+;;     on a GNU/Linux system, which is the preferred platform for Quacksmokers.
+;;     Quack should work under GNU Emacs 23 on any Un*x-like OS.  Reportedly,
 ;;     Quack also works with GNU Emacs 22 on Apple Mac OS X and Microsoft
 ;;     Windows (NT, 2000, XP), but the author has no means of testing on those
 ;;     platforms.
-;;
-;;     GNU Emacs 22 -- Yes.
 ;;
 ;;     GNU Emacs 21 -- Probably, but no longer tested.
 ;;
@@ -113,6 +111,12 @@ please contact Neil Van Dyke.")
 ;;     neil@neilvandyke.org to add you to the moderated `scheme-announce' list.
 
 ;; HISTORY:
+;;
+;;     Version 0.42 (2011-07-30):
+;;         * Added compile error regexp for "raco".
+;;
+;;     Version 0.41 (2011-06-04)
+;;         * Added `sxml-match' to `scheme-indent-function'.
 ;;
 ;;     Version 0.40 (2010-12-22)
 ;;         * Added indent rules for Racket `let:', `let*:', and `match'.  And
@@ -3203,6 +3207,7 @@ auto-mode-alist)
 (put 'receive            'scheme-indent-function 2)
 (put 'send*              'scheme-indent-function 1)
 (put 'sigaction          'scheme-indent-function 1)
+(put 'sxml-match         'scheme-indent-function 1)
 (put 'syntax-case        'scheme-indent-function 2)
 (put 'syntax/loc         'scheme-indent-function 1)
 (put 'unit               'scheme-indent-function 'defun)
@@ -4048,6 +4053,10 @@ beginning-of-defun
 (let ((m (make-marker))) (set-marker m 0) m)
 'quack-compile-no-line-number)))
 `(
+
+;; Racket 5.1.1 "raco" compile error (which can have multiple spaces):
+("^raco\\(?:cgc\\)?: +\\([^: ][^:]*\\):\\([0-9]+\\):\\([0-9]+\\):"
+1 2 3)
 
 ;; PLT MzScheme 4.1.4 "=== context ===" traceback when there is only file,
 ;; line, and column info, but potentially no following ":" and additional

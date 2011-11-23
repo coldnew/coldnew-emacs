@@ -42,6 +42,7 @@
 		 "   "
 		 (when (featurep 'vim)
 		   (:eval (vim-mode-string)))
+
 		 ;; "   "
 		 ;; (when (require* 'pomodoro)
 		 ;;   pomodoro-display-string)
@@ -53,9 +54,9 @@
 		 (:eval (mode-line-major-mode))
 
 		 ;; (:propertize mode-name
-		 ;;	      help-echo (format-mode-line minor-mode-alist)
-		 ;;	      face 'mode-line-mode-name-face)
-		 " (" minor-mode-alist " )"
+		 ;;           help-echo (format-mode-line minor-mode-alist)
+		 ;;           face 'mode-line-mode-name-face)
+		 " [" minor-mode-alist " ]"
 		 "   "
 		 mode-line-position
 		 "  "

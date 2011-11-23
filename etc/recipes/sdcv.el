@@ -1,1 +1,0 @@
-(:name sdcv :type emacswiki)

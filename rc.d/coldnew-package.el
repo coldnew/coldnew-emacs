@@ -12,7 +12,7 @@
 ;;
 (setq el-get-dir emacs-lisp-dir)
 (when (require* 'el-get)
-  (add-to-list 'el-get-recipe-path (concat emacs-etc-dir "recipes"))
+  ;; (add-to-list 'el-get-recipe-path (concat el-get-dir "el-get/recipes"))
   )
 
 ;;;;;;;; ELPA
@@ -20,6 +20,9 @@
 ;;
 (when (require* 'package)
   (setq package-user-dir (concat emacs-lisp-dir "elpa"))
+  (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
+			   ("gnu" . "http://elpa.gnu.org/packages/")
+			   ("marmalade" . "http://marmalade-repo.org/packages/")))
   )
 
 (provide 'coldnew-package)

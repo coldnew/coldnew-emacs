@@ -50,5 +50,21 @@
 	(bury-buffer)
 	ad-do-it)))
 
+
+
+(defadvice lusty-file-explorer (around lusty-buffer-explorer activate)
+  "temporary fix ecb bug"
+  (let ((ecb-active-p ecb-minor-mode))
+    (if ecb-active-p
+	(ecb-hide-ecb-windows))
+    ad-do-it
+    (if ecb-active-p
+	(ecb-show-ecb-windows)))
+  )
+
+
+
+
+
 (provide 'coldnew-advice)
 ;; coldnew-advice.el ends here.
