@@ -21,15 +21,6 @@
   ;; (setq anything-c-boring-buffer-regexp
   ;;	(concat anything-c-boring-buffer-regexp "\\|\\*tramp/sudo "))
 
-  (setq anything-c-boring-file-regexp
-	(rx (or
-	     ;; Boring directories
-	     (and "/" (or ".svn" "CVS" "_darcs" ".git" ".hg") (or "/" eol))
-	     ;; Boring files
-	     (and line-start  ".#")
-	     (and (or ".class" ".la" ".o" "~" ".elc" ".out" ".swp") eol))))
-
-
   ;; FIXME: Why follwoing can't use in lusty-file-explorer only?
   ;;  it returns error messages as following:
   ;;  return-from: No catch for tag: --cl-block-anything-completing-read-default--, #<buffer coldnew-dictionary.el>
