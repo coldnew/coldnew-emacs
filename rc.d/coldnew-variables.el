@@ -16,6 +16,10 @@
 (defvar emacs-lisp-dir   "~/.emacs.d/lisp/"
   "directory to place lisp package from internet.")
 
+(defvar emacs-recipes-dir (concat emacs-etc-dir "recipes/")
+  "directory to place local el-get recepies.")
+(defvar emacs-snippets-dir (concat emacs-etc-dir "snippets/")
+  "directory to place yasnippet files.")
 (defvar emacs-cache-dir  (concat emacs-var-dir "cache/")
   "cache file directory.")
 (defvar emacs-backup-dir (concat emacs-var-dir "backup/")
@@ -97,15 +101,10 @@
 
 
 
-
 ;; TODO: need to test this function
 (defvar new-file? (and (buffer-file-name)
 		       (not (file-exists-p (buffer-file-name)))
 		       (= (point-max) 1)))
-
-;; TODO: Remove one day
-(defvar emacs23? (equal emacs-major-version 23))
-(defvar emacs24? (equal emacs-major-version 24))
 
 
 (provide 'coldnew-variables)

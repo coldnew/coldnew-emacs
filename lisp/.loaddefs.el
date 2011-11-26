@@ -2269,7 +2269,7 @@ Display weather report.
 ;;;***
 
 ;;;### (autoloads (emms-cache-toggle emms-cache-disable emms-cache-enable)
-;;;;;;  "emms/lisp/emms-cache" "emms/lisp/emms-cache.el" (20172 46952))
+;;;;;;  "emms/lisp/emms-cache" "emms/lisp/emms-cache.el" (20176 38066))
 ;;; Generated autoloads from emms/lisp/emms-cache.el
 
 (autoload 'emms-cache-enable "emms/lisp/emms-cache" "\
@@ -2290,8 +2290,8 @@ Toggle caching of Emms track data.
 ;;;***
 
 ;;;### (autoloads (emms-lyrics-toggle emms-lyrics-disable emms-lyrics-enable)
-;;;;;;  "emms/lisp/emms-lyrics" "emms/lisp/emms-lyrics.el" (20172
-;;;;;;  46952))
+;;;;;;  "emms/lisp/emms-lyrics" "emms/lisp/emms-lyrics.el" (20176
+;;;;;;  38066))
 ;;; Generated autoloads from emms/lisp/emms-lyrics.el
 
 (autoload 'emms-lyrics-enable "emms/lisp/emms-lyrics" "\
@@ -2313,7 +2313,7 @@ Toggle displaying emms lyrics.
 
 ;;;### (autoloads (emms-mode-line-toggle emms-mode-line-disable emms-mode-line-enable)
 ;;;;;;  "emms/lisp/emms-mode-line" "emms/lisp/emms-mode-line.el"
-;;;;;;  (20172 46952))
+;;;;;;  (20176 38066))
 ;;; Generated autoloads from emms/lisp/emms-mode-line.el
 
 (autoload 'emms-mode-line-enable "emms/lisp/emms-mode-line" "\
@@ -2335,7 +2335,7 @@ Toggle `emms-mode-line'.
 
 ;;;### (autoloads (emms-player-mpd-show emms-player-mpd-connect emms-player-mpd-clear)
 ;;;;;;  "emms/lisp/emms-player-mpd" "emms/lisp/emms-player-mpd.el"
-;;;;;;  (20172 46952))
+;;;;;;  (20176 38066))
 ;;; Generated autoloads from emms/lisp/emms-player-mpd.el
 
 (autoload 'emms-player-mpd-clear "emms/lisp/emms-player-mpd" "\
@@ -2375,7 +2375,7 @@ rather than EMMS.
 
 ;;;### (autoloads (emms-playing-time-disable-display emms-playing-time-enable-display)
 ;;;;;;  "emms/lisp/emms-playing-time" "emms/lisp/emms-playing-time.el"
-;;;;;;  (20172 46952))
+;;;;;;  (20176 38066))
 ;;; Generated autoloads from emms/lisp/emms-playing-time.el
 
 (autoload 'emms-playing-time-enable-display "emms/lisp/emms-playing-time" "\
@@ -2392,7 +2392,7 @@ Remove playing time from mode line.
 
 ;;;### (autoloads (emms-playlist-limit-toggle emms-playlist-limit-disable
 ;;;;;;  emms-playlist-limit-enable) "emms/lisp/emms-playlist-limit"
-;;;;;;  "emms/lisp/emms-playlist-limit.el" (20172 46952))
+;;;;;;  "emms/lisp/emms-playlist-limit.el" (20176 38066))
 ;;; Generated autoloads from emms/lisp/emms-playlist-limit.el
 
 (autoload 'emms-playlist-limit-enable "emms/lisp/emms-playlist-limit" "\
@@ -2413,7 +2413,7 @@ Toggle emms playlist limit.
 ;;;***
 
 ;;;### (autoloads (emms-playlist-mode) "emms/lisp/emms-playlist-mode"
-;;;;;;  "emms/lisp/emms-playlist-mode.el" (20172 46952))
+;;;;;;  "emms/lisp/emms-playlist-mode.el" (20176 38066))
 ;;; Generated autoloads from emms/lisp/emms-playlist-mode.el
 
 (autoload 'emms-playlist-mode "emms/lisp/emms-playlist-mode" "\
@@ -2425,7 +2425,7 @@ A major mode for Emms playlists.
 ;;;***
 
 ;;;### (autoloads (emms-score-toggle emms-score-disable emms-score-enable)
-;;;;;;  "emms/lisp/emms-score" "emms/lisp/emms-score.el" (20172 46952))
+;;;;;;  "emms/lisp/emms-score" "emms/lisp/emms-score.el" (20176 38066))
 ;;; Generated autoloads from emms/lisp/emms-score.el
 
 (autoload 'emms-score-enable "emms/lisp/emms-score" "\
@@ -2447,7 +2447,7 @@ Toggle emms-score.
 
 ;;;### (autoloads (emms-default-players emms-devel emms-all emms-standard
 ;;;;;;  emms-minimalistic) "emms/lisp/emms-setup" "emms/lisp/emms-setup.el"
-;;;;;;  (20172 46952))
+;;;;;;  (20176 38066))
 ;;; Generated autoloads from emms/lisp/emms-setup.el
 
 (autoload 'emms-minimalistic "emms/lisp/emms-setup" "\
@@ -2489,7 +2489,7 @@ Set `emms-player-list' to `emms-setup-default-player-list'.
 
 ;;;### (autoloads (emms-locate emms-source-file-regex emms-source-file-directory-tree)
 ;;;;;;  "emms/lisp/emms-source-file" "emms/lisp/emms-source-file.el"
-;;;;;;  (20172 46952))
+;;;;;;  (20176 38066))
 ;;; Generated autoloads from emms/lisp/emms-source-file.el
 (autoload 'emms-play-file "emms-source-file" nil t)
 (autoload 'emms-add-file "emms-source-file" nil t)
@@ -2528,7 +2528,7 @@ Search for REGEXP and display the results in a locate buffer
 ;;;***
 
 ;;;### (autoloads nil "emms/lisp/emms-source-playlist" "emms/lisp/emms-source-playlist.el"
-;;;;;;  (20172 46952))
+;;;;;;  (20176 38066))
 ;;; Generated autoloads from emms/lisp/emms-source-playlist.el
 (autoload 'emms-play-playlist "emms-source-playlist" nil t)
 (autoload 'emms-add-playlist "emms-source-playlist" nil t)
@@ -2552,7 +2552,7 @@ Search for REGEXP and display the results in a locate buffer
 ;;;***
 
 ;;;### (autoloads (emms-streams) "emms/lisp/emms-streams" "emms/lisp/emms-streams.el"
-;;;;;;  (20172 46952))
+;;;;;;  (20176 38066))
 ;;; Generated autoloads from emms/lisp/emms-streams.el
 
 (autoload 'emms-streams "emms/lisp/emms-streams" "\
@@ -2564,7 +2564,7 @@ Opens the EMMS Streams interface.
 
 ;;;### (autoloads (emms-volume-mode-minus emms-volume-mode-plus emms-volume-lower
 ;;;;;;  emms-volume-raise) "emms/lisp/emms-volume" "emms/lisp/emms-volume.el"
-;;;;;;  (20172 46952))
+;;;;;;  (20176 38066))
 ;;; Generated autoloads from emms/lisp/emms-volume.el
 
 (autoload 'emms-volume-raise "emms/lisp/emms-volume" "\
@@ -2590,7 +2590,7 @@ Lower volume and enable or extend the `emms-volume-minor-mode' timeout.
 ;;;***
 
 ;;;### (autoloads (emms-volume-amixer-change) "emms/lisp/emms-volume-amixer"
-;;;;;;  "emms/lisp/emms-volume-amixer.el" (20172 46952))
+;;;;;;  "emms/lisp/emms-volume-amixer.el" (20176 38066))
 ;;; Generated autoloads from emms/lisp/emms-volume-amixer.el
 
 (autoload 'emms-volume-amixer-change "emms/lisp/emms-volume-amixer" "\
@@ -2600,8 +2600,8 @@ Change amixer master volume by AMOUNT.
 
 ;;;***
 
-;;;### (autoloads (tq-create) "emms/lisp/tq" "emms/lisp/tq.el" (20172
-;;;;;;  46952))
+;;;### (autoloads (tq-create) "emms/lisp/tq" "emms/lisp/tq.el" (20176
+;;;;;;  38066))
 ;;; Generated autoloads from emms/lisp/tq.el
 
 (autoload 'tq-create "emms/lisp/tq" "\
@@ -2795,6 +2795,52 @@ Commands:
 \\{iedit-mode-map}
 
 \(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (linum-update-window linum+-generate-linum-format
+;;;;;;  linum+-smart-format linum+-dynamic-format linum-format) "linum+/linum+"
+;;;;;;  "linum+/linum+.el" (20176 40316))
+;;; Generated autoloads from linum+/linum+.el
+
+(defvar linum-format 'smart "\
+Format used to display line numbers.
+
++ Either a format string like \"%7d\",
++ or `smart' to smart adapt the width by current max visible line number.
++ or `dynamic' to adapt the width as needed,
++ or a vector with one string element which uesed to generate
+line number format by `format' with argument max visible line number 
+of current buffer, see example `linum+-smart-format'
++ or a list with one string element which uesed to generate
+line number format by `format' with argument max line number of current buffer,
+see example `linum+-dynamic-format'
++ or a function that is called with a line number as its
+argument and should evaluate to a string to be shown on that line.
+
+See also `linum-before-numbering-hook'.")
+
+(custom-autoload 'linum-format "linum+/linum+" t)
+
+(defvar linum+-dynamic-format "%%%dd|" "\
+Format used to generate line number format when `linum-format' is `dynamic'.")
+
+(custom-autoload 'linum+-dynamic-format "linum+/linum+" t)
+
+(defvar linum+-smart-format "%%%dd|" "\
+Format used to generate line number format when `linum-format' is `smart'.")
+
+(custom-autoload 'linum+-smart-format "linum+/linum+" t)
+
+(autoload 'linum+-generate-linum-format "linum+/linum+" "\
+Generate line number format by FORMAT-TYPE, LIMIT is `window-end' of win.
+
+\(fn FORMAT-TYPE LIMIT)" nil nil)
+
+(autoload 'linum-update-window "linum+/linum+" "\
+Update line numbers for the portion visible in window WIN.
+
+\(fn WIN)" nil nil)
 
 ;;;***
 
@@ -3552,8 +3598,8 @@ Quit Scala interpreter.
 
 ;;;***
 
-;;;### (autoloads (smex-initialize) "smex/smex" "smex/smex.el" (20171
-;;;;;;  20476))
+;;;### (autoloads (smex-initialize) "smex/smex" "smex/smex.el" (20176
+;;;;;;  38485))
 ;;; Generated autoloads from smex/smex.el
 
 (autoload 'smex-initialize "smex/smex" "\
@@ -3601,21 +3647,7 @@ See also function `tempbuf-mode'.
 ;;;;;;  "emacs-w3m/w3m-hist.el" "emacs-w3m/w3m-image.el" "emacs-w3m/w3m-load.el"
 ;;;;;;  "emacs-w3m/w3m-mail.el" "emacs-w3m/w3m-proc.el" "emacs-w3m/w3m-rss.el"
 ;;;;;;  "emacs-w3m/w3m-tabmenu.el" "emacs-w3m/w3m-ucs.el" "emacs-w3m/w3m-util.el"
-;;;;;;  "emacs-w3m/w3m-xmas.el" "emacs-w3m/w3mhack.el" "emms/lisp/emms-auto.el"
-;;;;;;  "emms/lisp/emms-bookmarks.el" "emms/lisp/emms-browser.el"
-;;;;;;  "emms/lisp/emms-compat.el" "emms/lisp/emms-cue.el" "emms/lisp/emms-history.el"
-;;;;;;  "emms/lisp/emms-i18n.el" "emms/lisp/emms-info-libtag.el"
-;;;;;;  "emms/lisp/emms-info-metaflac.el" "emms/lisp/emms-info-mp3info.el"
-;;;;;;  "emms/lisp/emms-info-ogginfo.el" "emms/lisp/emms-info.el"
-;;;;;;  "emms/lisp/emms-last-played.el" "emms/lisp/emms-lastfm-client.el"
-;;;;;;  "emms/lisp/emms-lastfm-scrobbler.el" "emms/lisp/emms-maint.el"
-;;;;;;  "emms/lisp/emms-mark.el" "emms/lisp/emms-metaplaylist-mode.el"
-;;;;;;  "emms/lisp/emms-mode-line-icon.el" "emms/lisp/emms-player-mpg321-remote.el"
-;;;;;;  "emms/lisp/emms-player-mplayer.el" "emms/lisp/emms-player-simple.el"
-;;;;;;  "emms/lisp/emms-player-vlc.el" "emms/lisp/emms-player-xine.el"
-;;;;;;  "emms/lisp/emms-playlist-sort.el" "emms/lisp/emms-stream-info.el"
-;;;;;;  "emms/lisp/emms-tag-editor.el" "emms/lisp/emms-url.el" "emms/lisp/emms.el"
-;;;;;;  "emms/lisp/jack.el" "emms/lisp/later-do.el" "popup-kill-ring/popup-kill-ring.el"
+;;;;;;  "emacs-w3m/w3m-xmas.el" "emacs-w3m/w3mhack.el" "popup-kill-ring/popup-kill-ring.el"
 ;;;;;;  "vimpulse-surround/vimpulse-surround.el" "vimpulse/test-framework.el"
 ;;;;;;  "vimpulse/vimpulse-compatibility.el" "vimpulse/vimpulse-dependencies.el"
 ;;;;;;  "vimpulse/vimpulse-ex.el" "vimpulse/vimpulse-misc-keybindings.el"
@@ -3623,7 +3655,7 @@ See also function `tempbuf-mode'.
 ;;;;;;  "vimpulse/vimpulse-paren-matching.el" "vimpulse/vimpulse-test.el"
 ;;;;;;  "vimpulse/vimpulse-text-object-system.el" "vimpulse/vimpulse-utils.el"
 ;;;;;;  "vimpulse/vimpulse-viper-function-redefinitions.el" "vimpulse/vimpulse-visual-mode.el"
-;;;;;;  "vimpulse/vimpulse.el") (20172 47087 625611))
+;;;;;;  "vimpulse/vimpulse.el") (20176 40317 318019))
 
 ;;;***
 

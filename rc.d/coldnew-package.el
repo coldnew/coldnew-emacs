@@ -12,7 +12,7 @@
 ;;
 (setq el-get-dir emacs-lisp-dir)
 (when (require* 'el-get)
-  ;; (add-to-list 'el-get-recipe-path (concat el-get-dir "el-get/recipes"))
+  (add-to-list 'el-get-recipe-path emacs-recipes-dir)
   )
 
 ;;;;;;;; ELPA

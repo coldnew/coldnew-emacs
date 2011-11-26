@@ -22,15 +22,14 @@
   (require* 'color-theme-coldnew-day-old)
   (require* 'color-theme-coldnew-night)
 
-
   ;; Default theme use night.
   (cond
    (mac?   (progn
-	     (setq *color-mode* 'day)
-	     (color-theme-coldnew-day)))
+	    (setq *color-mode* 'day)
+	    (color-theme-coldnew-day)))
    (linux? (progn
-	     (setq *color-mode* 'night)
-	     (color-theme-coldnew-night))))
+	    (setq *color-mode* 'night)
+	    (color-theme-coldnew-night))))
 
 
   ;; Specified special color-theme according different modes
