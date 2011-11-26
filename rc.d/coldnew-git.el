@@ -28,6 +28,11 @@
 	       (vim:local-nmap (kbd "c") 'egg-commit-log-edit)
 	       (vim:local-nmap (kbd "l") 'egg-log)
 	       ))
+  (add-hook 'egg-commit-buffer-mode-hook
+	    '(lambda ()
+	       (vim:local-nmap (kbd "c") 'egg-log-msg-done)
+	       ))
+
   (add-hook 'egg-log-buffer-mode-hook
 	    '(lambda ()
 	       ;;;; Normal-map
