@@ -46,3 +46,6 @@
 [submodule "lisp/tea-time"]
 	path = lisp/tea-time
 	url = https://github.com/gabrielsaldana/tea-time.git
+[submodule "lisp/emms"]
+	path = lisp/emms
+	url = git://git.sv.gnu.org/emms.git
