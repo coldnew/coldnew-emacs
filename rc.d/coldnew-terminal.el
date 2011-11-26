@@ -6,6 +6,8 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
+(require 'coldnew-vim)
+
 
 
 ;;;;;;;; Ansi-Color
@@ -81,14 +83,12 @@
   ;;;; Keybindings
   (add-hook 'comint-mode-hook
 	    '(lambda ()
-	       (when (require* 'vim)
-		 ;; Normal map
-		 (vim:local-nmap (kbd "M-k") 'comint-previous-input)
-		 (vim:local-nmap (kbd "M-j") 'comint-previous-input)
-		 (vim:local-nmap (kbd "C-c C-r") 'comint-clear-region)
-		 ;; Insert map
-		 (vim:local-imap (kbd "RET") 'newline-and-indent)
-		 )
+	       ;; Normal map
+	       (vim:local-nmap (kbd "M-k") 'comint-previous-input)
+	       (vim:local-nmap (kbd "M-j") 'comint-previous-input)
+	       (vim:local-nmap (kbd "C-c C-r") 'comint-clear-region)
+	       ;; Insert map
+	       (vim:local-imap (kbd "RET") 'newline-and-indent)
 	       ))
   ;;;; Functions
   (defun comint-clear-region ()
@@ -110,13 +110,13 @@
   (interactive)
   (if (equal (buffer-name) shell-pop-internal-mode-buffer)
       (progn
-	(shell-pop-out)
-	(vim:normal-mode)
-	)
-    (progn
-      (shell-pop-up)
-      (vim:emacs-mode)
-      )))
+       (shell-pop-out)
+       (vim:normal-mode)
+       )
+      (progn
+       (shell-pop-up)
+       (vim:emacs-mode)
+       )))
 
 ;; ;; Use emacs-key instead of Vim-key in term-mode
 ;; ;; TODO: is there a better way to do this?
@@ -124,8 +124,8 @@
   "After switch-to-buffer, if tht buffer is term-mode, disable vim-mode."
   (if (equal major-mode 'term-mode)
       (vim:emacs-mode)
-    (vim:normal-mode)
-    ))
+      (vim:normal-mode)
+      ))
 
 
 

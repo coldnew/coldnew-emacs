@@ -9,6 +9,8 @@
 (require 'coldnew-complete)
 (require 'coldnew-snippets)
 (require 'coldnew-build)
+(require 'coldnew-vim)
+
 
 ;;;;;;;; Settings
 (setq line-spacing                    4 )
@@ -166,19 +168,6 @@
   )
 
 
-;;;;;;;; textmate
-;; TextMate has some very nice to use bindings on quotes, brackets,
-;; parentheses etc, which Emacs lacks out of the box.
-;; You can use skeleton-pairs to insert pairs, but what about deleting
-;; them? What if you (or a colleague) press the closing bracket key
-;; accidentally (muscle memory and all)?
-;; textmate-mode provides more sensible behaviour for the keys
-;; ", ', (, [, {, and their closing pairs.
-;;
-(when (require* 'textmate)
-  ;; (tm/initialize)
-  )
-
 
 ;;;;;;;; Speedbar
 (when (require* 'speedbar)
@@ -224,8 +213,7 @@
 
 (defun make-ret-newline-and-indent ()
   "Always make Enter key do newline-and-indent."
-  (when (require* 'vim)
-    (vim:local-imap (kbd "RET") 'newline-and-indent)))
+  (vim:local-imap (kbd "RET") 'newline-and-indent))
 
 (defun highlight-toolong-lines ()
   "If a line exist more than 100 chars, highlight this line."
@@ -280,34 +268,33 @@
     (when (require* 'eldoc)
       (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
     ;; Enable Paredit in vim-mode
-    (when (require* 'vim)
-      ;; Normal Map
-      (vim:local-nmap (kbd "C-9") 'paredit-forward)
-      (vim:local-nmap (kbd "C-0") 'paredit-backward)
-      (vim:local-nmap (kbd "C-(") 'paredit-forward-slurp-sexp)
-      (vim:local-nmap (kbd "M-(") 'paredit-backward-slurp-sexp)
-      (vim:local-nmap (kbd "C-)") 'paredit-forward-barf-sexp)
-      (vim:local-nmap (kbd "M-)") 'paredit-backward-barf-sexp)
-      ;; Insert Map
-      (vim:local-imap (kbd "(")  'paredit-open-round)
-      (vim:local-imap (kbd ")")  'paredit-close-round)
-      (vim:local-imap (kbd "[")  'paredit-open-square)
-      (vim:local-imap (kbd "]")  'paredit-close-square)
-      (vim:local-imap (kbd "{")  'paredit-open-curly)
-      (vim:local-imap (kbd "}")  'paredit-close-curly)
-      (vim:local-imap (kbd "\"") 'paredit-doublequote)
-      (vim:local-imap (kbd "M-(") 'paredit-wrap-sexp)
-      (vim:local-imap (kbd "C-(") 'paredit-splice-sexp)
-      (vim:local-imap (kbd "M-)") 'paredit-close-round-and-newline)
-      (vim:local-imap (kbd "C-)") 'paredit-split-sexp)
-      (vim:local-imap (kbd "C-j") 'paredit-join-sexps)
-      (vim:local-imap (kbd "M-\"") 'paredit-meta-doublequote)
-      (vim:local-imap (kbd "<delete>") 'paredit-forward-delete)
-      (vim:local-imap (kbd "C-d") 'paredit-forward-delete)
-      (vim:local-imap (kbd "<backspace>") 'paredit-backward-delete)
-      (vim:local-imap (kbd "C-l") 'paredit-backward-delete)
-      ))
-  )
+    ;; Normal Map
+    (vim:local-nmap (kbd "C-9") 'paredit-forward)
+    (vim:local-nmap (kbd "C-0") 'paredit-backward)
+    (vim:local-nmap (kbd "C-(") 'paredit-forward-slurp-sexp)
+    (vim:local-nmap (kbd "M-(") 'paredit-backward-slurp-sexp)
+    (vim:local-nmap (kbd "C-)") 'paredit-forward-barf-sexp)
+    (vim:local-nmap (kbd "M-)") 'paredit-backward-barf-sexp)
+    ;; Insert Map
+    (vim:local-imap (kbd "(")  'paredit-open-round)
+    (vim:local-imap (kbd ")")  'paredit-close-round)
+    (vim:local-imap (kbd "[")  'paredit-open-square)
+    (vim:local-imap (kbd "]")  'paredit-close-square)
+    (vim:local-imap (kbd "{")  'paredit-open-curly)
+    (vim:local-imap (kbd "}")  'paredit-close-curly)
+    (vim:local-imap (kbd "\"") 'paredit-doublequote)
+    (vim:local-imap (kbd "M-(") 'paredit-wrap-sexp)
+    (vim:local-imap (kbd "C-(") 'paredit-splice-sexp)
+    (vim:local-imap (kbd "M-)") 'paredit-close-round-and-newline)
+    (vim:local-imap (kbd "C-)") 'paredit-split-sexp)
+    (vim:local-imap (kbd "C-j") 'paredit-join-sexps)
+    (vim:local-imap (kbd "M-\"") 'paredit-meta-doublequote)
+    (vim:local-imap (kbd "<delete>") 'paredit-forward-delete)
+    (vim:local-imap (kbd "C-d") 'paredit-forward-delete)
+    (vim:local-imap (kbd "<backspace>") 'paredit-backward-delete)
+    (vim:local-imap (kbd "C-l") 'paredit-backward-delete)
+    ))
+
 
 
 ;;;;;;;; Functions

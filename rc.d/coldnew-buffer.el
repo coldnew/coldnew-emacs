@@ -6,6 +6,8 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
+(require 'coldnew-vim)
+
 
 
 ;;;;;;;; Uniquify
@@ -40,13 +42,11 @@
   ;; Keybindings
   (add-hook 'ibuffer-hook
 	    '(lambda ()
-	       (when (require* 'vim)
-		 (vim:local-nmap (kbd "d") 'ibuffer-do-delete)
-		 (vim:local-nmap (kbd "s") 'ibuffer-do-sort-by-size)
-		 (vim:local-imap (kbd "d") 'ibuffer-mark-for-delete)
-		 (vim:local-imap (kbd "u") 'ibuffer-unmark-all)
-		 (vim:local-imap (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
-		 )
+	       (vim:local-nmap (kbd "d") 'ibuffer-do-delete)
+	       (vim:local-nmap (kbd "s") 'ibuffer-do-sort-by-size)
+	       (vim:local-imap (kbd "d") 'ibuffer-mark-for-delete)
+	       (vim:local-imap (kbd "u") 'ibuffer-unmark-all)
+	       (vim:local-imap (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
 	       ))
 
 ;;;;;; Hooks
@@ -252,7 +252,7 @@
 	   dired-mode
 	   )))
     (dolist (tempbuf-hook tempbuf-mode-list)
-      (add-hook (intern (concat (symbol-name tempbuf-hook) "-hook")) 'turn-on-tempbuf-mode))))
+	    (add-hook (intern (concat (symbol-name tempbuf-hook) "-hook")) 'turn-on-tempbuf-mode))))
 
 ;;;;;;;; midnight
 ;; Midnight mode is a package that comes with Emacs for running configured

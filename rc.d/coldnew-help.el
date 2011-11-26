@@ -6,6 +6,8 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
+(require 'coldnew-vim)
+
 
 
 (when (require* 'woman)
@@ -22,13 +24,10 @@
   ;; Keybindings
   (add-hook 'Info-mode-hook
 	    '(lambda ()
-	       (when (require* 'vim)
-		 (vim:nmap (kbd "j")  'Info-next)
-		 (vim:nmap (kbd "k") 'Info-prev)
-		 (vim:nmap (kbd "C-f") 'Info-scroll-up)
-		 (vim:nmap (kbd "C-b") 'Info-scroll-down)
-
-		 )
+	       (vim:nmap (kbd "j")  'Info-next)
+	       (vim:nmap (kbd "k") 'Info-prev)
+	       (vim:nmap (kbd "C-f") 'Info-scroll-up)
+	       (vim:nmap (kbd "C-b") 'Info-scroll-down)
 	       ))
   )
 

@@ -7,6 +7,8 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
+(require 'coldnew-vim)
+
 
 
 (when (require* 'egg)
@@ -19,24 +21,20 @@
 ;;;;;;;; kyebindings
   (add-hook 'egg-status-buffer-mode-hook
 	    '(lambda ()
-	       (when (require* 'vim)
-		 (vim:local-nmap (kbd "j") 'egg-buffer-cmd-navigate-next)
-		 (vim:local-nmap (kbd "k") 'egg-buffer-cmd-navigate-prev)
-		 (vim:local-imap (kbd "j") 'vim:motion-down)
-		 (vim:local-imap (kbd "k") 'vim:motion-up)
-		 (vim:local-nmap (kbd "c") 'egg-commit-log-edit)
-		 (vim:local-nmap (kbd "l") 'egg-log)
-		 )
+	       (vim:local-nmap (kbd "j") 'egg-buffer-cmd-navigate-next)
+	       (vim:local-nmap (kbd "k") 'egg-buffer-cmd-navigate-prev)
+	       (vim:local-imap (kbd "j") 'vim:motion-down)
+	       (vim:local-imap (kbd "k") 'vim:motion-up)
+	       (vim:local-nmap (kbd "c") 'egg-commit-log-edit)
+	       (vim:local-nmap (kbd "l") 'egg-log)
 	       ))
   (add-hook 'egg-log-msg-mode-hook
 	    '(lambda ()
-	       (when (require* 'vim)
-		 (vim:local-nmap (kbd "c") 'egg-log-msg-done)
-		 ;; TODO: no use
-		 ;; (vim:local-nmap (kbd "U") 'egg-log-buffer-push-to-remote)
-		 ;; (vim:local-nmap (kbd "u") 'egg-log-buffer-push-to-local)
-		 ))
-	    )
+	       (vim:local-nmap (kbd "c") 'egg-log-msg-done)
+	       ;; TODO: no use
+	       ;; (vim:local-nmap (kbd "U") 'egg-log-buffer-push-to-remote)
+	       ;; (vim:local-nmap (kbd "u") 'egg-log-buffer-push-to-local)
+	       ))
 ;;;;;;;; Advice
 
   (defadvice egg-status (around goto-egg-status-buffer activate)

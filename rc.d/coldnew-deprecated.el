@@ -12,7 +12,6 @@
 (require 'coldnew-variables)
 
 
-
 (defvar hexcolor-keywords
   '(("#[ABCDEFabcdef[:digit:]]\\{6\\}"
      (0 (put-text-property (match-beginning 0)
@@ -38,7 +37,7 @@
      (lexical-let ,(->> args
 			(remove-if (partial equal '&rest))
 			(mapcar (lambda (arg) (list arg arg))))
-       ,@body)))
+		  ,@body)))
 
 					; load given package if directory exists
 (defmacro load-if-dir (dir-name &rest body)
@@ -59,9 +58,9 @@
 					; load given file if exists, and add dir to path
 (defmacro load-if-dir-and-file (dir-name file-name &rest body)
   `(progn
-     (load-if-dir ,dir-name)
-     (load-if-file (concat ,dir-name ,file-name))
-     ,@body))
+    (load-if-dir ,dir-name)
+    (load-if-file (concat ,dir-name ,file-name))
+    ,@body))
 
 
 
@@ -85,7 +84,7 @@
 (defun sequence (maybe-seq)
   "Returns the value wrapped in a sequence if it is not a sequence already."
   (if (sequencep maybe-seq) maybe-seq
-    (list maybe-seq)))
+      (list maybe-seq)))
 
 (defun random-elt (sequence)
   (elt sequence
@@ -100,7 +99,7 @@
 (defun string-empty-p (str)
   (if str
       (string= "" str)
-    t))
+      t))
 
 (defun string-not-empty-p (str)
   (not (string-empty-p str)))
@@ -108,7 +107,7 @@
 (defun string-blank-p (str)
   (if (string-empty-p str)
       t
-    (not (null (string-match "^\\(?:\s*\n\\)*$" str)))))
+      (not (null (string-match "^\\(?:\s*\n\\)*$" str)))))
 
 (defun string-not-blank-p (str)
   (not (string-blank-p str)))
@@ -135,20 +134,20 @@
   ;; only run on .h files
   (when (string-match "\\.h\\'" (buffer-file-name))
     (save-window-excursion
-      (save-excursion
-	(let* ((alist (append auto-mode-alist nil))  ;; use whatever auto-mode-alist has
-	       (ff-ignore-include t)                 ;; operate on buffer name only
-	       (src (ff-other-file-name))            ;; find the src file corresponding to .h
-	       re mode)
-	  ;; go through the association list
-	  ;; and find the mode associated with the source file
-	  ;; that is the mode we want to use for the .h file
-	  (while (and alist
-		      (setq mode (cdar alist))
-		      (setq re (caar alist))
-		      (not (string-match re src)))
-	    (setq alist (cdr alist)))
-	  (when mode (funcall mode)))))))
+     (save-excursion
+      (let* ((alist (append auto-mode-alist nil))  ;; use whatever auto-mode-alist has
+	     (ff-ignore-include t)                 ;; operate on buffer name only
+	     (src (ff-other-file-name))            ;; find the src file corresponding to .h
+	     re mode)
+	;; go through the association list
+	;; and find the mode associated with the source file
+	;; that is the mode we want to use for the .h file
+	(while (and alist
+		    (setq mode (cdar alist))
+		    (setq re (caar alist))
+		    (not (string-match re src)))
+	  (setq alist (cdr alist)))
+	(when mode (funcall mode)))))))
 
 
 ;; ;; 該資料夾內沒有 Tags 檔案時自動建立,若有時則更新 Tags 檔
@@ -218,14 +217,14 @@ to browser. If a region is active (a phrase), lookup that phrase."
     (setq myword
 	  (if (and transient-mark-mode mark-active)
 	      (buffer-substring-no-properties (region-beginning) (region-end))
-	    (thing-at-point 'symbol)))
+	      (thing-at-point 'symbol)))
 
     (setq myword (replace-regexp-in-string " " "_" myword))
     (setq myurl (concat "http://en.wikipedia.org/wiki/" myword))
     ;;(browse-url myurl)
     (if (featurep 'w3m)
 	(w3m-browse-url myurl)
-      (browse-url myurl))
+	(browse-url myurl))
     ))
 
 
@@ -265,33 +264,33 @@ to browser. If a region is active (a phrase), lookup that phrase."
   "Remove duplicate lines in a buffer"
   (interactive)
   (save-excursion
-    (let
-	((lines_hash (make-hash-table :test #'equal))
-	 (numlines (count-lines 1 (progn (end-of-buffer)(point)))))
+   (let
+       ((lines_hash (make-hash-table :test #'equal))
+	(numlines (count-lines 1 (progn (end-of-buffer)(point)))))
 
-      ;; Make a hash table with key=line
-      ;;     and value=the smallest line number that contains a line.
-      (loop for i from numlines downto 1 do
-	    (let ((line nil))
-	      (goto-line i)
-	      (setf line (get-current-line))
-	      ;; Want to store the smallest line number for
-	      ;;     a particular line.
-	      (setf (gethash line lines_hash) i)))
-      ;; If a line has a line number not equal to the smallest line, kill it.
-      (loop for i from numlines downto 1 do
-	    (let ((line nil))
-	      (goto-line i)
-	      (setf line (get-current-line))
-	      (beginning-of-line)
-	      (if (not (equal line ""))
-		  (if (not (=
-			    (let ((min-line (gethash line lines_hash)))
-			      (if (null min-line)
-				  -1
-				min-line))
-			    i))
-		      (kill-line 1))))))))
+     ;; Make a hash table with key=line
+     ;;     and value=the smallest line number that contains a line.
+     (loop for i from numlines downto 1 do
+	   (let ((line nil))
+	     (goto-line i)
+	     (setf line (get-current-line))
+	     ;; Want to store the smallest line number for
+	     ;;     a particular line.
+	     (setf (gethash line lines_hash) i)))
+     ;; If a line has a line number not equal to the smallest line, kill it.
+     (loop for i from numlines downto 1 do
+	   (let ((line nil))
+	     (goto-line i)
+	     (setf line (get-current-line))
+	     (beginning-of-line)
+	     (if (not (equal line ""))
+		 (if (not (=
+			   (let ((min-line (gethash line lines_hash)))
+			     (if (null min-line)
+				 -1
+				 min-line))
+			   i))
+		     (kill-line 1))))))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -422,6 +421,19 @@ to browser. If a region is active (a phrase), lookup that phrase."
 ;;             (minibuffer-history-variable 'find-file-history))
 ;;         ad-do-it)
 ;;     ad-do-it))
+
+;;;;;;;; textmate
+;; TextMate has some very nice to use bindings on quotes, brackets,
+;; parentheses etc, which Emacs lacks out of the box.
+;; You can use skeleton-pairs to insert pairs, but what about deleting
+;; them? What if you (or a colleague) press the closing bracket key
+;; accidentally (muscle memory and all)?
+;; textmate-mode provides more sensible behaviour for the keys
+;; ", ', (, [, {, and their closing pairs.
+;;
+;; (when (require* 'textmate)
+;;   ;; (tm/initialize)
+;;   )
 
 
 (provide 'coldnew-deprecated)

@@ -6,8 +6,10 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
-(require 'coldnew-vim)
+(require* 'coldnew-vim)
 
+
+;; (require 'popup-kill-ring)
 
 ;;;;;;;; Normal Map
 (vim:nmap (kbd "C-x C-b") 'ibuffer)

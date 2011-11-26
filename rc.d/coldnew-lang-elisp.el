@@ -122,12 +122,15 @@
 	     ;;;; Insert and expand by short-key
 	     ;; (define )
 	     (vim:local-imap-insert-expand (kbd "M-d") "defun")
+	     ;; (require* 'FEATURE) or (require 'FEATURE)
+	     (vim:local-imap-insert-expand (kbd "M-r") "require")
 	     ;; (lambda () )
 	     (vim:local-imap-insert-expand (kbd "M-l") "lambda")
 	     ;; (defmacro ())
 	     (vim:local-imap-insert-expand (kbd "M-D") "defmacro")
 
 	     ))
+
 ;;;;;;;; ielm
 ;; A nice little mode that acts like an interactive Lisp interpreter.
 ;; It doesn't do all the fancy shell stuff such as redirection
