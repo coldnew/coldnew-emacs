@@ -1,0 +1,39 @@
+;; Object gnome-mplayer-1.0.3/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "gnome-mplayer-1.0.3/"
+  :tables (list 
+   (semanticdb-table "Makefile.am"
+    :major-mode 'makefile-automake-mode
+    :tags 
+        '( ("SUBDIRS" variable (:default-value ("src" "po" "icons")) nil [81 104])
+            ("gnome_mplayerdocdir" variable (:default-value ("${docdir}")) nil [105 137])
+            ("gnome_mplayerdoc_DATA" variable (:default-value ("README" "COPYING" "AUTHORS" "ChangeLog" "INSTALL" "NEWS" "DOCS/keyboard_shortcuts.txt" "DOCS/tech/dbus.txt" "DOCS/tech/plugin-interaction.txt")) nil [137 309])
+            ("schemadir" variable (:default-value ("@GCONF_SCHEMA_FILE_DIR@")) nil [335 373])
+            ("schema_DATA" variable (:default-value ("gnome-mplayer.schemas")) nil [373 409])
+            ("desktopdir" variable (:default-value ("${prefix}/share/applications")) nil [416 458])
+            ("desktop_DATA" variable (:default-value ("gnome-mplayer.desktop")) nil [458 495])
+            ("prefappdir" variable (:default-value ("${prefix}/share/gnome-control-center/default-apps")) nil [496 559])
+            ("prefapp_DATA" variable (:default-value ("gnome-mplayer.xml")) nil [559 592])
+            ("manpagedir" variable (:default-value ("@mandir@/man1")) nil [594 621])
+            ("manpage_DATA" variable (:default-value ("gnome-mplayer.1")) nil [621 652])
+            ("EXTRA_DIST" variable (:default-value ("$(gnome_mplayerdoc_DATA)" "$(desktop_DATA)" "$(schema_DATA)" "$(manpage_DATA)" "$(prefapp_DATA)" "$(gsettings_SCHEMAS)" "gnome-mplayer.spec.in" "config.h.in")) nil [653 809])
+            ("dist-hook" function nil nil [875 995])
+            ("gtk_update_icon_cache" variable (:default-value ("gtk-update-icon-cache" "-f" "-t" "$(datadir)/icons/hicolor")) nil [996 1073])
+            ("update-icon-cache" function nil nil [1074 1162])
+            ("install-schemas" function (:arguments ("$(schema_DATA)")) nil [1163 1314])
+            ("install-data-hook" function (:arguments ("install-schemas" "update-icon-cache")) nil [1340 1393])
+            ("install-data-hook" function (:arguments ("update-icon-cache")) nil [1398 1435])
+            ("gsettings_ENUM_NAMESPACE" variable (:default-value ("apps.gnome-mplayer.preferences")) nil [1442 1500])
+            ("gsettings_ENUM_FILES" variable (:default-value ("$(top_srcdir)/src/*.h")) nil [1500 1545])
+            ("gsettings_SCHEMAS" variable (:default-value ("apps.gnome-mplayer.preferences.gschema.xml" "apps.gecko-mediaplayer.preferences.gschema.xml")) nil [1545 1655]))          
+    :file "Makefile.am"
+    :pointmax 1675
+    :fsize 1674
+    :lastmodtime '(19829 21546)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!tmp!gnome-mplayer-1.0.3!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

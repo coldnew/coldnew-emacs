@@ -1,0 +1,7 @@
+(:name adoc-mode
+       :website "http://code.google.com/p/adoc-mode/"
+       :description "A major-mode for editing AsciiDoc files in Emacs."
+       :type http
+       :url "http://sensorflo-emacs.googlecode.com/svn-history/r193/trunk/adoc-mode/adoc-mode.el"
+       :features "adoc-mode"
+       :compile nil)

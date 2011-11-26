@@ -1,0 +1,88 @@
+;; Object nbproject/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "nbproject/"
+  :tables (list 
+   (semanticdb-table "Makefile-impl.mk"
+    :major-mode 'makefile-gmake-mode
+    :tags 
+        '( ("SUB_no" variable (:default-value ("NO")) nil [599 609])
+            ("SUBPROJECTS" variable (:default-value ("${SUB_${SUB}}")) nil [609 635])
+            ("BUILD_SUBPROJECTS_" variable (:default-value (".build-subprojects")) nil [635 673])
+            ("BUILD_SUBPROJECTS_NO" variable nil nil [673 695])
+            ("BUILD_SUBPROJECTS" variable (:default-value ("${BUILD_SUBPROJECTS_${SUBPROJECTS}}")) nil [695 749])
+            ("CLEAN_SUBPROJECTS_" variable (:default-value (".clean-subprojects")) nil [749 787])
+            ("CLEAN_SUBPROJECTS_NO" variable nil nil [787 809])
+            ("CLEAN_SUBPROJECTS" variable (:default-value ("${CLEAN_SUBPROJECTS_${SUBPROJECTS}}")) nil [809 863])
+            ("PROJECTNAME" variable (:default-value ("test.X")) nil [880 899])
+            ("DEFAULTCONF" variable (:default-value ("default")) nil [923 943])
+            ("CONF" variable (:default-value ("${DEFAULTCONF}")) nil [943 963])
+            ("ALLCONFS" variable (:default-value ("default")) nil [985 1003])
+            (".build-impl" function (:arguments (".build-pre")) nil [1013 1118])
+            (".clean-impl" function (:arguments (".clean-pre")) nil [1128 1233])
+            (".depcheck-impl" function nil nil [1264 1280]))          
+    :file "Makefile-impl.mk"
+    :pointmax 1721
+    :fsize 1720
+    :lastmodtime '(20155 24616)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "Makefile-variables.mk"
+    :file "Makefile-variables.mk"
+    :fsize 411
+    :lastmodtime '(20155 24616)
+    )
+   (semanticdb-table "Makefile-default.mk"
+    :major-mode 'makefile-gmake-mode
+    :tags 
+        '( ("Makefile" include nil nil [294 311])
+            ("PATH" variable (:default-value ("/opt/microchip/mplabx/mplab_ide/mplab_ide/modules/../../bin/:$(PATH)")) nil [365 440])
+            ("MKDIR" variable (:default-value ("mkdir" "-p")) nil [440 455])
+            ("RM" variable (:default-value ("rm" "-f")) nil [455 465])
+            ("MV" variable (:default-value ("mv")) nil [465 472])
+            ("CP" variable (:default-value ("cp")) nil [472 479])
+            ("CND_CONF" variable (:default-value ("default")) nil [489 506])
+            ("IMAGE_TYPE" variable (:default-value ("debug")) nil [538 555])
+            ("FINAL_IMAGE" variable (:default-value ("dist/${CND_CONF}/${IMAGE_TYPE}/test.X.${IMAGE_TYPE}.cof")) nil [555 623])
+            ("IMAGE_TYPE" variable (:default-value ("production")) nil [628 650])
+            ("FINAL_IMAGE" variable (:default-value ("dist/${CND_CONF}/${IMAGE_TYPE}/test.X.${IMAGE_TYPE}.cof")) nil [650 718])
+            ("OBJECTDIR" variable (:default-value ("build/${CND_CONF}/${IMAGE_TYPE}")) nil [744 786])
+            ("DISTDIR" variable (:default-value ("dist/${CND_CONF}/${IMAGE_TYPE}")) nil [812 851])
+            ("OBJECTFILES_QUOTED_IF_SPACED" variable (:default-value ("${OBJECTDIR}/main.p1")) nil [884 934])
+            ("OBJECTFILES" variable (:default-value ("${OBJECTDIR}/main.p1")) nil [950 983])
+            ("CFLAGS" variable nil nil [985 993])
+            ("ASFLAGS" variable nil nil [993 1002])
+            ("LDLIBSOPTIONS" variable nil nil [1002 1017])
+            ("MP_JAVA_PATH" variable (:default-value ("\"/opt/sun-jdk-1.6.0.27/jre/bin/\"")) nil [1084 1130])
+            ("OS_CURRENT" variable (:default-value ("\"$(shell uname -s)\"")) nil [1130 1161])
+            ("MP_CC" variable (:default-value ("\"/opt/hitech/picc/9.82/bin/picc\"")) nil [1593 1632])
+            ("MP_AS" variable (:default-value ("\"/opt/hitech/picc/9.82/bin/picc\"")) nil [1655 1694])
+            ("MP_LD" variable (:default-value ("\"/opt/hitech/picc/9.82/bin/picc\"")) nil [1694 1733])
+            ("MP_AR" variable (:default-value ("\"/opt/hitech/picc/9.82/bin/picc\"")) nil [1733 1772])
+            ("DEP_GEN" variable (:default-value ("${MP_JAVA_PATH}java" "-jar" "\"/opt/microchip/mplabx/mplab_ide/mplab_ide/modules/../../bin/extractobjectdependencies.jar\"")) nil [1772 1898])
+            ("FIXDEPS" variable (:default-value ("fixDeps")) nil [1979 1995])
+            ("MP_CC_DIR" variable (:default-value ("\"/opt/hitech/picc/9.82/bin\"")) nil [1995 2033])
+            ("MP_AS_DIR" variable (:default-value ("\"/opt/hitech/picc/9.82/bin\"")) nil [2060 2098])
+            ("MP_LD_DIR" variable (:default-value ("\"/opt/hitech/picc/9.82/bin\"")) nil [2098 2136])
+            ("MP_AR_DIR" variable (:default-value ("\"/opt/hitech/picc/9.82/bin\"")) nil [2136 2174])
+            (".build-conf" function (:arguments ("${BUILD_SUBPROJECTS}")) nil [2202 2336])
+            ("MP_PROCESSOR_OPTION" variable (:default-value ("12F629")) nil [2337 2364])
+            ("${OBJECTDIR}" function (:arguments ("main.c" "nbproject/Makefile-${CND_CONF}.mk")) nil [2677 3837])
+            ("${OBJECTDIR}" function (:arguments ("main.c" "nbproject/Makefile-${CND_CONF}.mk")) nil [3842 4980])
+            ("dist/" function (:arguments ("${OBJECTFILES}" "nbproject/Makefile-${CND_CONF}.mk")) nil [5134 5995])
+            ("dist/" function (:arguments ("${OBJECTFILES}" "nbproject/Makefile-${CND_CONF}.mk")) nil [6000 6786])
+            (".build-subprojects" function nil nil [6808 6828])
+            (".clean-conf" function nil nil [6845 6905])
+            (".dep.inc" function (:arguments (".depcheck-impl")) nil [6935 6960])
+            ("DEPFILES" variable (:default-value ("$(wildcard $(addsuffix .d, ${OBJECTFILES}))")) nil [6961 7014])
+            ("${DEPFILES}" include nil nil [7035 7055]))          
+    :file "Makefile-default.mk"
+    :pointmax 7061
+    :fsize 7060
+    :lastmodtime '(20155 24616)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!coldnew!MPLABXProjects!test.X!nbproject!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

@@ -1,0 +1,30 @@
+;; Object Dijkstra/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "Dijkstra/"
+  :tables (list 
+   (semanticdb-table "main.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("stdio.h" include (:system-flag t) nil [3 21])
+            ("stdlib.h" include (:system-flag t) nil [22 41])
+            ("main" function
+               (:arguments 
+                  ( ("argc" variable (:type "int") (reparse-symbol arg-sub-list) [52 61])
+                    ("argv" variable
+                       (:pointer 1
+                        :dereference 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [62 75]))                  
+                :type "int")
+                nil [43 98]))          
+    :file "main.c"
+    :pointmax 133
+    :fsize 124
+    :lastmodtime '(20169 62560)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!coldnew!Workspace!homework!Dijkstra!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

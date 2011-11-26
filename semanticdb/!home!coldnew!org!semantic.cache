@@ -1,0 +1,111 @@
+;; Object org/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "org/"
+  :tables (list 
+   (semanticdb-table "debian_proftp.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("Proftp on debian" section nil nil [247 2160])
+            ("><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = " code-highlighted ";
+     elem.className   = " code-highlighted ";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->" section nil nil [2160 2794])
+            ("Proftp on debian" section (:members 
+              ( ("Proftp on debian" section (:members 
+                  ( ("Table of Contents" section (:members 
+                      ( ("1 Install program" anchor nil nil [3025 3028])
+                        ("1.1 sudo apt-get install proftpd" anchor nil nil [3083 3086])
+                        ("1.2 Select Standalone" anchor nil nil [3151 3154])
+                        ("2 Change proftpd Configuration ( /etc/proftpd/proftpd.conf )" anchor nil nil [3235 3238])
+                        ("2.1 Disable IPv6" anchor nil nil [3336 3339])
+                        ("2.2 change Server name" anchor nil nil [3388 3391])
+                        ("2.3 Disable RootLogin" anchor nil nil [3446 3449])
+                        ("2.4 Make all user jailed in their home" anchor nil nil [3503 3506])
+                        ("2.5 Do not use Valid Shell" anchor nil nil [3577 3580])
+                        ("2.6 Change Port to 5368" anchor nil nil [3639 3642]))                      ) nil [2946 3803])
+                    ("1" section (:members 
+                      ( ("1.1" section nil nil [3988 4660])
+                        ("1.2" section nil nil [4660 5478]))                      ) nil [3803 5478])
+                    ("2" section (:members 
+                      ( ("2.1" section nil nil [5707 5964])
+                        ("2.2" section nil nil [5964 6243])
+                        ("2.3" section nil nil [6243 6507])
+                        ("2.4" section nil nil [6507 6789])
+                        ("2.5" section nil nil [6789 7067])
+                        ("2.6" section (:members 
+                          ( ("Validate XHTML 1.0" anchor nil nil [7494 7497]))                          ) nil [7067 7599]))                      ) nil [5478 7599]))                  ) nil [2868 7599]))              ) nil [2794 7599]))          
+    :file "debian_proftp.html"
+    :pointmax 7599
+    :fsize 7822
+    :lastmodtime '(20146 2326)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "debian_upgrade.html"
+    :major-mode 'html-mode
+    :tags 
+        '( ("How to upgrade Debian" section nil nil [247 2152])
+            ("><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->" section nil nil [2152 2786])
+            ("How to upgrade Debian" section (:members 
+              ( ("How to upgrade Debian" section (:members 
+                  ( ("Table of Contents" section (:members 
+                      ( ("1 Update program database" anchor nil nil [3022 3025])
+                        ("1.1 sudo apt-get update" anchor nil nil [3088 3091])
+                        ("1.2 sudo apt-get upgrade" anchor nil nil [3147 3150])
+                        ("2 Upgrade version (lenny -&gt; Squeeze)" anchor nil nil [3234 3237])
+                        ("2.1 Change /etc/apt/sources.list" anchor nil nil [3314 3317])
+                        ("2.2 Update database" anchor nil nil [3382 3385])
+                        ("2.3 Update distribution version" anchor nil nil [3437 3440]))                      ) nil [2943 3609])
+                    ("1" section (:members 
+                      ( ("1.1" section nil nil [3802 5661])
+                        ("1.2" section nil nil [5661 6029]))                      ) nil [3609 6029])
+                    ("2" section (:members 
+                      ( ("2.1" section nil nil [6236 6629])
+                        ("2.2" section nil nil [6629 6903])
+                        ("2.3" section (:members 
+                          ( ("Validate XHTML 1.0" anchor nil nil [7348 7351]))                          ) nil [6903 7453]))                      ) nil [6029 7453]))                  ) nil [2860 7453]))              ) nil [2786 7453]))          
+    :file "debian_upgrade.html"
+    :pointmax 7453
+    :fsize 7664
+    :lastmodtime '(20146 4982)
+    :unmatched-syntax 'nil
+    )
+    )
+  :file "!home!coldnew!org!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

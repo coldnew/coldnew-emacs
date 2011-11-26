@@ -1,0 +1,89 @@
+;; Object videodump/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "videodump/"
+  :tables (list 
+   (semanticdb-table "main.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("videodump.h" include nil nil [2 24])
+            ("main" function
+               (:arguments 
+                  ( ("argc" variable (:type "int") (reparse-symbol arg-sub-list) [36 45])
+                    ("argv" variable
+                       (:pointer 1
+                        :dereference 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [46 59]))                  
+                :type "int")
+                nil [27 318]))          
+    :file "main.c"
+    :pointmax 109
+    :fsize 344
+    :lastmodtime '(20109 17460)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "videodump.h"
+    :major-mode 'c-mode
+    :tags 
+        '( ("__VIDEODUMP_H__" variable (:constant-flag t) nil [33 48])
+            ("stdio.h" include (:system-flag t) nil [70 88])
+            ("stdlib.h" include (:system-flag t) nil [89 108])
+            ("gtk/gtk.h" include (:system-flag t) nil [109 129])
+            ("cv.h" include (:system-flag t) nil [130 145])
+            ("highgui.h" include (:system-flag t) nil [146 166])
+            ("glib.h" include (:system-flag t) nil [167 184]))          
+    :file "videodump.h"
+    :pointmax 245
+    :fsize 244
+    :lastmodtime '(20109 17450)
+    :unmatched-syntax 'nil
+    :lexical-table 
+        '(("__VIDEODUMP_H__")
+          )
+
+    )
+   (semanticdb-table "videodump.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("videodump.h" include nil nil [2 24])
+            ("videodump" function
+               (:arguments 
+                  ( ("filename" variable
+                       (:pointer 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [40 55]))                  
+                :type "int")
+                nil [26 1475]))          
+    :file "videodump.c"
+    :pointmax 1527
+    :fsize 1535
+    :lastmodtime '(20109 17431)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "dump.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("stdio.h" include (:system-flag t) nil [1 19])
+            ("stdlib.h" include (:system-flag t) nil [20 39])
+            ("cv.h" include (:system-flag t) nil [40 55])
+            ("highgui.h" include (:system-flag t) nil [56 76])
+            ("main" function
+               (:arguments 
+                  ( ("argc" variable (:type "int") (reparse-symbol arg-sub-list) [88 97])
+                    ("argv" variable
+                       (:pointer 2
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [98 111]))                  
+                :type "int")
+                nil [78 1697]))          
+    :file "dump.c"
+    :pointmax 1725
+    :fsize 1724
+    :lastmodtime '(20109 14011)
+    :unmatched-syntax 'nil
+    )
+     )
+  :file "!home!coldnew!Workspace!videodump!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

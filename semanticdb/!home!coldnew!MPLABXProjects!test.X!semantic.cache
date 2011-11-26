@@ -1,0 +1,67 @@
+;; Object test.X/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "test.X/"
+  :tables (list 
+   (semanticdb-table "main.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("htc.h" include (:system-flag t) nil [85 101])
+            ("__PICCPRO__" variable (:constant-flag t) nil [111 122])
+            ("__CONFIG" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("MCLRE_OFF" variable
+                       (:reference 1
+                        :type ("WDTE_OFF" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [228 251])
+                    ("" variable (:type ("FOSC_INTRCIO" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [252 265]))                  
+                :type "int")
+                nil [219 266])
+            ("_XTAL_FREQ" variable (:constant-flag t) nil [429 439])
+            ("main" function (:type "int") nil [460 651]))          
+    :file "main.c"
+    :pointmax 652
+    :fsize 661
+    :lastmodtime '(20175 90)
+    :unmatched-syntax '((punctuation 250 . 251))
+    :lexical-table 
+        '(("_XTAL_FREQ" . ((number "4000000" 440 . 447)))
+          ("__PICCPRO__")
+          )
+
+    )
+   (semanticdb-table "Makefile"
+    :major-mode 'makefile-gmake-mode
+    :tags 
+        '( ("MKDIR" variable (:default-value ("mkdir")) nil [2188 2200])
+            ("CP" variable (:default-value ("cp")) nil [2200 2206])
+            ("CCADMIN" variable (:default-value ("CCadmin")) nil [2206 2222])
+            ("RANLIB" variable (:default-value ("ranlib")) nil [2222 2236])
+            ("build" function (:arguments (".build-post")) nil [2246 2265])
+            (".build-pre" function nil nil [2266 2278])
+            (".build-post" function (:arguments (".build-impl")) nil [2315 2340])
+            ("clean" function (:arguments (".clean-post")) nil [2387 2406])
+            (".clean-pre" function nil nil [2407 2419])
+            (".clean-post" function (:arguments (".clean-impl")) nil [2456 2481])
+            ("clobber" function (:arguments (".clobber-post")) nil [2530 2553])
+            (".clobber-pre" function nil nil [2554 2568])
+            (".clobber-post" function (:arguments (".clobber-impl")) nil [2607 2636])
+            ("all" function (:arguments (".all-post")) nil [2683 2698])
+            (".all-pre" function nil nil [2699 2709])
+            (".all-post" function (:arguments (".all-impl")) nil [2744 2765])
+            ("help" function (:arguments (".help-post")) nil [2809 2826])
+            (".help-pre" function nil nil [2827 2838])
+            (".help-post" function (:arguments (".help-impl")) nil [2874 2897])
+            ("nbproject/Makefile-impl.mk" include nil nil [2978 3013])
+            ("nbproject/Makefile-variables.mk" include nil nil [3047 3087]))          
+    :file "Makefile"
+    :pointmax 3087
+    :fsize 3086
+    :lastmodtime '(20149 25534)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!coldnew!MPLABXProjects!test.X!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

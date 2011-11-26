@@ -1,0 +1,21 @@
+;; Object 22x22/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "22x22/"
+  :tables (list 
+   (semanticdb-table "Makefile.am"
+    :major-mode 'makefile-automake-mode
+    :tags 
+        '( ("icondir" variable (:default-value ("$(datadir)/icons/hicolor/22x22/apps")) nil [1 47])
+            ("icon_DATA" variable (:default-value ("gnome-mplayer.png")) nil [47 77])
+            ("EXTRA_DIST" variable (:default-value ("$(icon_DATA)")) nil [78 105]))          
+    :file "Makefile.am"
+    :pointmax 105
+    :fsize 104
+    :lastmodtime '(19186 60000)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!tmp!gnome-mplayer-1.0.3!icons!22x22!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

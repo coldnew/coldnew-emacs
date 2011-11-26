@@ -1,0 +1,43 @@
+;; Object src/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "src/"
+  :tables (list 
+   (semanticdb-table "gui.c"
+    :major-mode 'c-mode
+    :tags nil
+    :file "gui.c"
+    :pointmax 317323
+    :fsize 317368
+    :lastmodtime '(19885 42137)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "Makefile.am"
+    :major-mode 'makefile-automake-mode
+    :tags 
+        '( ("SUBDIRS" variable (:default-value ("libgmtk" "libgmlib")) nil [81 108])
+            ("INCLUDES" variable (:default-value ("-DPACKAGE_LOCALE_DIR=\\\"\"$(prefix)/$(DATADIRNAME)/locale\"\\\"" "-DPACKAGE_SRC_DIR=\\\"\"$(srcdir)\"\\\"" "-DPACKAGE_DATA_DIR=\\\"\"$(datadir)\"\\\"" "-I../pixmaps" "$(GTK_CFLAGS)" "$(GIO_CFLAGS)" "$(DBUS_CFLAGS)" "$(GCONF_CFLAGS)" "$(ALSA_CFLAGS)" "$(PULSE_CFLAGS)" "$(NOTIFY_CFLAGS)" "$(GPOD_CFLAGS)" "$(MUSICBRAINZ_CFLAGS)" "$(XSCRNSAVER_CFLAGS)")) nil [109 485])
+            ("AM_CFLAGS" variable (:default-value ("-Wall" "-g" "$(GTK2_12_DEFINES)" "$(GLIB2_14_DEFINES)" "$(GIO_DEFINES)" "$(ALSA_DEFINES)" "$(GCONF_DEFINES)" "$(NOTIFY_DEFINES)" "$(GPOD_DEFINES)" "$(MUSICBRAINZ_DEFINES)")) nil [486 703])
+            ("bin_PROGRAMS" variable (:default-value ("gnome-mplayer")) nil [761 791])
+            ("gnome_mplayer_SOURCES" variable (:default-value ("../config.h" "gui.c" "gui.h" "playlist.c" "playlist.h" "support.c" "support.h" "mntent_compat.h" "mntent_compat.c" "main.c" "dbus-interface.c" "dbus-interface.h" "thread.h" "thread.c" "common.h" "../pixmaps/gnome_mplayer.xpm" "../pixmaps/media-playback-pause.xpm" "../pixmaps/media-playback-start.xpm" "../pixmaps/media-playback-stop.xpm" "../pixmaps/media-seek-backward.xpm" "../pixmaps/media-seek-forward.xpm" "../pixmaps/media-skip-backward.xpm" "../pixmaps/media-skip-forward.xpm" "../pixmaps/view-fullscreen.xpm" "langlist.h")) nil [792 1373])
+            ("gnome_mplayer_LDFLAGS" variable nil nil [1375 1400])
+            ("gnome_mplayer_LDADD" variable (:default-value ("libgmtk/libgmtk.a" "libgmlib/libgmlib.a" "-lm" "$(X11_LIBS)" "$(GTK_LIBS)" "$(GIO_LIBS)" "$(DBUS_LIBS)" "$(GCONF_LIBS)" "$(ALSA_LIBS)" "$(PULSE_LIBS)" "$(NOTIFY_LIBS)" "$(GPOD_LIBS)" "$(MUSICBRAINZ_LIBS)" "$(XSCRNSAVER_LIBS)")) nil [1401 1703])
+            ("nautilusdir" variable (:default-value ("$(NAUTILUSDIR)")) nil [1722 1751])
+            ("nautilus_PROGRAMS" variable (:default-value ("libgnome-mplayer-properties-page.so")) nil [1751 1807])
+            ("libgnome_mplayer_properties_page_so_SOURCES" variable (:default-value ("../config.h" "mime_types.h" "nautilus_property_page.c")) nil [1808 1922])
+            ("libgnome_mplayer_properties_page_so_CFLAGS" variable (:default-value ("-fPIC" "$(NAUTILUS_CFLAGS)" "$(GTK_CFLAGS)" "$(GIO_CFLAGS)" "$(AM_CFLAGS)")) nil [1923 2055])
+            ("libgnome_mplayer_properties_page_so_LDFLAGS" variable (:default-value ("-shared")) nil [2060 2114])
+            ("libgnome_mplayer_properties_page_so_LDADD" variable (:default-value ("$(NAUTILUS_LIBS)" "$(GTK_LIBS)" "$(GIO_LIBS)")) nil [2115 2209])
+            ("EXTRA_DIST" variable nil nil [2232 2246])
+            ("indent" function nil nil [2248 2327])
+            ("cppcheck" function nil nil [2327 2367]))          
+    :file "Makefile.am"
+    :pointmax 2367
+    :fsize 2366
+    :lastmodtime '(19878 1646)
+    :unmatched-syntax '((shell-command 2366 . 2366) (bol 2365 . 2365) (shell-command 2247 . 2247) (bol 2246 . 2246) (ENDIF 2210 . 2215) (bol 2210 . 2210) (bol 2055 . 2055) (bol 737 . 737) (bol 703 . 703))
+    )
+   )
+  :file "!tmp!gnome-mplayer-1.0.3!src!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

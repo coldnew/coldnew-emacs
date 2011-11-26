@@ -1,0 +1,557 @@
+;; Object Dijkstra/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "Dijkstra/"
+  :tables (list 
+   (semanticdb-table "dijkstra.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("dijkstra.h" include nil nil [1 22])
+            ("heap.h" include nil nil [23 40])
+            ("math.h" include (:system-flag t) nil [41 58])
+            ("stdlib.h" include (:system-flag t) nil [59 78])
+            ("stdio.h" include (:system-flag t) nil [79 97])
+            ("distances" variable
+               (:pointer 1
+                :type "double")
+                nil [99 117])
+            ("compare" function
+               (:arguments 
+                  ( ("g" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [131 140])
+                    ("i" variable (:type "unsigned int") (reparse-symbol arg-sub-list) [141 156])
+                    ("j" variable (:type "unsigned int") (reparse-symbol arg-sub-list) [157 172]))                  
+                :type "int")
+                nil [119 336])
+            ("dijkstra" function
+               (:arguments 
+                  ( ("g" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [352 361])
+                    ("source" variable (:type "unsigned int") (reparse-symbol arg-sub-list) [362 382]))                  
+                :type "void")
+                nil [338 1190]))          
+    :file "dijkstra.c"
+    :pointmax 1191
+    :fsize 1190
+    :lastmodtime '(20169 54540)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "graph.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("graph.h" include nil nil [1 19])
+            ("math.h" include (:system-flag t) nil [20 37])
+            ("stdlib.h" include (:system-flag t) nil [38 57])
+            ("stdio.h" include (:system-flag t) nil [58 76])
+            ("stdbool.h" include (:system-flag t) nil [77 97])
+            ("INFINITY" variable (:constant-flag t) nil [107 115])
+            ("graph_make" function
+               (:pointer 1
+                :type ("graph" type (:type "class") nil nil))
+                nil [123 285])
+            ("graph_is_full" function
+               (:arguments 
+                  ( ("g" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [306 315]))                  
+                :type "bool")
+                nil [287 366])
+            ("graph_enlarge" function
+               (:arguments 
+                  ( ("g" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [388 397]))                  
+                :type "void")
+                nil [369 554])
+            ("graph_add_node" function
+               (:arguments 
+                  ( ("g" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [576 585])
+                    ("c" variable
+                       (:pointer 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [586 594]))                  
+                :type "void")
+                nil [556 994])
+            ("graph_add_edge" function
+               (:arguments 
+                  ( ("g" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1017 1026])
+                    ("i" variable (:type "unsigned int") (reparse-symbol arg-sub-list) [1027 1043])
+                    ("j" variable (:type "unsigned int") (reparse-symbol arg-sub-list) [1044 1059])
+                    ("weight" variable (:type "double") (reparse-symbol arg-sub-list) [1060 1074]))                  
+                :type "void")
+                nil [997 1594])
+            ("graph_destroy" function
+               (:arguments 
+                  ( ("g" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1616 1625]))                  
+                :type "void")
+                nil [1597 1831])
+            ("graph_dump" function
+               (:arguments 
+                  ( ("g" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1850 1859])
+                    ("highlight_destination" variable (:type "int") (reparse-symbol arg-sub-list) [1860 1886]))                  
+                :type "void")
+                nil [1834 3318]))          
+    :file "graph.c"
+    :pointmax 3319
+    :fsize 3318
+    :lastmodtime '(20169 54562)
+    :unmatched-syntax 'nil
+    :lexical-table 
+        '(("INFINITY" . ((number "999.9" 116 . 121)))
+          )
+
+    )
+   (semanticdb-table "Makefile"
+    :major-mode 'makefile-gmake-mode
+    :tags 
+        '( ("CC" variable (:default-value ("gcc")) nil [1 10])
+            ("CFLAGS" variable (:default-value ("-ansi" "-pedantic" "-Wall" "-Wextra" "-Wfatal-errors" "-O3")) nil [10 68])
+            ("RM" variable (:default-value ("rm")) nil [68 76])
+            ("COMPILE" variable (:default-value ("${CC}" "${CFLAGS}")) nil [76 102])
+            ("all" function (:arguments ("dijkstra")) nil [103 117])
+            ("dijkstra" function (:arguments ("graph.o" "heap.o" "dijkstra.o" "main.c")) nil [118 218])
+            ("heap.o" function (:arguments ("heap.h" "heap.c" "graph.h")) nil [219 271])
+            ("graph.o" function (:arguments ("graph.c" "graph.h")) nil [272 320])
+            ("dijkstra.o" function (:arguments ("graph.h" "dijkstra.h" "dijkstra.c")) nil [321 389])
+            ("clean" function nil nil [389 442]))          
+    :file "Makefile"
+    :pointmax 443
+    :fsize 442
+    :lastmodtime '(20169 54307)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "dijkstra.h"
+    :major-mode 'c-mode
+    :tags 
+        '( ("DIJKSTRA_H" variable (:constant-flag t) nil [28 38])
+            ("graph.h" include nil nil [39 57])
+            ("dijkstra" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [74 81])
+                    ("" variable (:type "unsigned int") (reparse-symbol arg-sub-list) [82 95]))                  
+                :type "void")
+                nil [60 96]))          
+    :file "dijkstra.h"
+    :pointmax 105
+    :fsize 104
+    :lastmodtime '(20169 54638)
+    :unmatched-syntax 'nil
+    :lexical-table 
+        '(("DIJKSTRA_H")
+          )
+
+    )
+   (semanticdb-table "heap.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("heap.h" include nil nil [1 18])
+            ("stdlib.h" include (:system-flag t) nil [19 38])
+            ("stdio.h" include (:system-flag t) nil [39 57])
+            ("heap_make" function
+               (:pointer 1
+                :arguments 
+                  ( ("cmp" variable
+                       (:pointer 1
+                        :type ("heap_compare" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [75 93])
+                    ("g" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [94 103]))                  
+                :type ("heap" type (:type "class") nil nil))
+                nil [59 425])
+            ("heap_is_full" function
+               (:arguments 
+                  ( ("h" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [445 459]))                  
+                :type "bool")
+                nil [427 496])
+            ("heap_enlarge" function
+               (:arguments 
+                  ( ("h" variable
+                       (:pointer 1
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [516 524]))                  
+                :type "void")
+                nil [498 656])
+            ("heap_heapify_up" function
+               (:arguments 
+                  ( ("h" variable
+                       (:pointer 1
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [679 687])
+                    ("key" variable (:type "unsigned int") (reparse-symbol arg-sub-list) [688 705]))                  
+                :type "void")
+                nil [658 1137])
+            ("heap_heapify_down" function
+               (:arguments 
+                  ( ("h" variable
+                       (:pointer 1
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1162 1170]))                  
+                :type "void")
+                nil [1139 2008])
+            ("heap_insert" function
+               (:arguments 
+                  ( ("h" variable
+                       (:pointer 1
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [2027 2035])
+                    ("key" variable
+                       (:constant-flag t
+                        :type "unsigned int")
+                        (reparse-symbol arg-sub-list) [2036 2059]))                  
+                :type "void")
+                nil [2010 2246])
+            ("heap_find_min" function
+               (:arguments 
+                  ( ("h" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [2275 2289]))                  
+                :type "unsigned int")
+                nil [2248 2317])
+            ("heap_delete_min" function
+               (:arguments 
+                  ( ("h" variable
+                       (:pointer 1
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [2349 2357]))                  
+                :type "unsigned int")
+                nil [2320 2576])
+            ("heap_dump" function
+               (:arguments 
+                  ( ("h" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [2593 2607])
+                    ("from" variable
+                       (:constant-flag t
+                        :type "unsigned int")
+                        (reparse-symbol arg-sub-list) [2608 2632]))                  
+                :type "void")
+                nil [2578 3268])
+            ("heap_destroy" function
+               (:arguments 
+                  ( ("h" variable
+                       (:pointer 1
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3288 3296]))                  
+                :type "void")
+                nil [3270 3371])
+            ("heap_is_empty" function
+               (:arguments 
+                  ( ("h" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [3392 3406]))                  
+                :type "bool")
+                nil [3373 3436]))          
+    :file "heap.c"
+    :pointmax 3437
+    :fsize 3436
+    :lastmodtime '(20169 54667)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "graph.h"
+    :major-mode 'c-mode
+    :tags 
+        '( ("GRAPH_H" variable (:constant-flag t) nil [25 32])
+            ("node" type
+               (:prototype t
+                :type "struct")
+                nil [34 46])
+            ("edge" type
+               (:typedef ("" type
+                     (:members 
+                        ( ("source" variable (:type "unsigned int") (reparse-symbol classsubparts) [69 89])
+                          ("destination" variable (:type "unsigned int") (reparse-symbol classsubparts) [94 119])
+                          ("weight" variable (:type "double") (reparse-symbol classsubparts) [124 138]))                        
+                      :type "struct")
+                      nil nil)
+                :type "typedef")
+                nil [48 146])
+            ("node" type
+               (:typedef ("node" type (:type "struct") nil nil)
+                :superclasses "node"
+                :type "typedef")
+                nil [150 331])
+            ("node" type
+               (:members 
+                  ( ("edges" variable
+                       (:pointer 1
+                        :type ("edge" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [176 188])
+                    ("edge_count" variable (:type "unsigned int") (reparse-symbol classsubparts) [193 217])
+                    ("edge_space" variable (:type "unsigned int") (reparse-symbol classsubparts) [222 246])
+                    ("value" variable
+                       (:pointer 1
+                        :type "char")
+                        (reparse-symbol classsubparts) [251 263])
+                    ("distance" variable (:type "double") (reparse-symbol classsubparts) [269 285])
+                    ("heap_index" variable (:type "int") (reparse-symbol classsubparts) [290 305])
+                    ("previous" variable (:type "int") (reparse-symbol classsubparts) [310 323]))                  
+                :type "struct")
+                nil [150 331])
+            ("graph" type
+               (:typedef ("" type
+                     (:members 
+                        ( ("nodes" variable
+                             (:pointer 1
+                              :type ("node" type (:type "class") nil nil))
+                              (reparse-symbol classsubparts) [355 367])
+                          ("node_count" variable (:type "unsigned int") (reparse-symbol classsubparts) [372 396])
+                          ("node_space" variable (:type "unsigned int") (reparse-symbol classsubparts) [401 425]))                        
+                      :type "struct")
+                      nil nil)
+                :type "typedef")
+                nil [334 434])
+            ("graph_make" function
+               (:prototype-flag t
+                :pointer 1
+                :type ("graph" type (:type "class") nil nil))
+                nil [437 457])
+            ("graph_add_node" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [479 486])
+                    ("" variable
+                       (:pointer 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [487 493]))                  
+                :type "void")
+                nil [459 494])
+            ("graph_add_edge" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [515 522])
+                    ("" variable (:type "unsigned int") (reparse-symbol arg-sub-list) [523 536])
+                    ("" variable (:type "unsigned int") (reparse-symbol arg-sub-list) [537 550])
+                    ("" variable (:type "double") (reparse-symbol arg-sub-list) [551 558]))                  
+                :type "void")
+                nil [495 559])
+            ("graph_destroy" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [579 586]))                  
+                :type "void")
+                nil [560 587])
+            ("graph_dump" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [604 611])
+                    ("" variable (:type "int") (reparse-symbol arg-sub-list) [612 616]))                  
+                :type "void")
+                nil [588 617]))          
+    :file "graph.h"
+    :pointmax 637
+    :fsize 636
+    :lastmodtime '(20169 54712)
+    :unmatched-syntax 'nil
+    :lexical-table 
+        '(("GRAPH_H")
+          )
+
+    )
+   (semanticdb-table "heap.h"
+    :major-mode 'c-mode
+    :tags 
+        '( ("HEAP_H" variable (:constant-flag t) nil [24 30])
+            ("stdbool.h" include (:system-flag t) nil [31 51])
+            ("graph.h" include nil nil [52 70])
+            ("HEAP_LEFT" variable (:constant-flag t) nil [145 154])
+            ("HEAP_RIGHT" variable (:constant-flag t) nil [187 197])
+            ("HEAP_PARENT" variable (:constant-flag t) nil [230 241])
+            ("heap" type
+               (:typedef ("" type
+                     (:members 
+                        ( ("nodes" variable
+                             (:pointer 1
+                              :type "unsigned int")
+                              (reparse-symbol classsubparts) [290 310])
+                          ("space" variable (:type "unsigned int") (reparse-symbol classsubparts) [319 338])
+                          ("count" variable (:type "unsigned int") (reparse-symbol classsubparts) [347 366])
+                          ("compare" variable
+                             (:pointer 1
+                              :type ("heap_compare" type (:type "class") nil nil))
+                              (reparse-symbol classsubparts) [375 397])
+                          ("g" variable
+                             (:pointer 1
+                              :type ("graph" type (:type "class") nil nil))
+                              (reparse-symbol classsubparts) [406 415]))                        
+                      :type "struct")
+                      nil nil)
+                :type "typedef")
+                nil [265 423])
+            ("heap_make" function
+               (:prototype-flag t
+                :pointer 1
+                :arguments 
+                  ( ("" variable
+                       (:pointer 1
+                        :type ("heap_compare" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [442 456])
+                    ("" variable
+                       (:pointer 1
+                        :type ("graph" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [457 464]))                  
+                :type ("heap" type (:type "class") nil nil))
+                nil [426 465])
+            ("heap_insert" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable
+                       (:pointer 1
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [483 489])
+                    ("" variable
+                       (:constant-flag t
+                        :type "unsigned int")
+                        (reparse-symbol arg-sub-list) [490 509]))                  
+                :type "void")
+                nil [466 510])
+            ("heap_find_min" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [538 550]))                  
+                :type "unsigned int")
+                nil [511 551])
+            ("heap_delete_min" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable
+                       (:pointer 1
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [581 587]))                  
+                :type "unsigned int")
+                nil [552 588])
+            ("heap_dump" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [605 617])
+                    ("" variable
+                       (:constant-flag t
+                        :type "unsigned int")
+                        (reparse-symbol arg-sub-list) [618 637]))                  
+                :type "void")
+                nil [590 638])
+            ("heap_destroy" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable
+                       (:pointer 1
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [658 664]))                  
+                :type "void")
+                nil [640 665])
+            ("heap_is_empty" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable
+                       (:pointer 1
+                        :constant-flag t
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [686 698]))                  
+                :type "bool")
+                nil [667 699])
+            ("heap_heapify_up" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable
+                       (:pointer 1
+                        :type ("heap" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [722 728])
+                    ("" variable (:type "unsigned int") (reparse-symbol arg-sub-list) [729 742]))                  
+                :type "void")
+                nil [701 743]))          
+    :file "heap.h"
+    :pointmax 759
+    :fsize 758
+    :lastmodtime '(20169 54754)
+    :unmatched-syntax '((punctuation 134 . 135) (semantic-list 98 . 134) (semantic-list 84 . 98) (INT 80 . 83) (TYPEDEF 72 . 79) (punctuation 134 . 135) (semantic-list 98 . 134) (semantic-list 84 . 98) (INT 80 . 83) (TYPEDEF 72 . 79))
+    :lexical-table 
+        '(("HEAP_RIGHT" (spp-arg-list ("nodo") 197 . 203) . ((semantic-list "((nodo)+(nodo)+2)" 204 . 221)))
+          ("HEAP_LEFT" (spp-arg-list ("nodo") 154 . 160) . ((semantic-list "((nodo)+(nodo)+1)" 161 . 178)))
+          ("HEAP_H")
+          ("HEAP_PARENT" (spp-arg-list ("nodo") 241 . 247) . ((semantic-list "(((nodo)-1)>>1)" 248 . 263)))
+          )
+
+    )
+   (semanticdb-table "main.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("stdio.h" include (:system-flag t) nil [1 19])
+            ("stdbool.h" include (:system-flag t) nil [20 40])
+            ("string.h" include (:system-flag t) nil [41 60])
+            ("stdlib.h" include (:system-flag t) nil [61 80])
+            ("graph.h" include nil nil [82 100])
+            ("dijkstra.h" include nil nil [101 122])
+            ("heap.h" include nil nil [123 140])
+            ("main" function
+               (:arguments 
+                  ( ("argc" variable (:type "int") (reparse-symbol arg-sub-list) [151 160])
+                    ("argv" variable
+                       (:pointer 1
+                        :dereference 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [161 174]))                  
+                :type "int")
+                nil [142 1438]))          
+    :file "main.c"
+    :pointmax 1439
+    :fsize 1438
+    :lastmodtime '(20169 61280)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!coldnew!Workspace!Dijkstra!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )
