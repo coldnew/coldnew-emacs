@@ -4,7 +4,7 @@
 ;;;;;;; Packages Import
 (require 'coldnew-editor)
 (require 'cc-mode)
-;;(require 'cperl)
+(require 'cperl-mode)
 
 
 ;;;;;;;; perl-mode extensions
@@ -17,9 +17,9 @@
 	     (setq cperl-indent-level 8)
 	     (setq cperl-continued-statement-offset 0)
 	     (setq cperl-extra-newline-before-brace t)
-	     ;; hook for cpp-mode
-	     ;; (programming-common-hook)  ; programming common hook
-	     ;; (insert-equal-char-smart)  ; insert `=' more easily
+
+	     ;; Use global programming mode
+	     (programming-mode)
 	     ))
 
 

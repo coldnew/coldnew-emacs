@@ -7,9 +7,20 @@
     :tags nil
     :file "a.c"
     :pointmax 158
+    :fsize 157
+    :lastmodtime '(20174 28236)
     :unmatched-syntax '((semantic-list 92 . 95) (WHILE 87 . 92) (semantic-list 75 . 87) (DO 72 . 74) (semantic-list 75 . 87) (DO 72 . 74))
     )
-     )
+   (semanticdb-table "cc.c"
+    :major-mode 'c-mode
+    :tags nil
+    :file "cc.c"
+    :pointmax 27
+    :fsize 26
+    :lastmodtime '(20176 42830)
+    :unmatched-syntax 'nil
+    )
+   )
   :file "!tmp!semantic.cache"
   :semantic-tag-version "2.0"
   :semanticdb-version "2.0"
