@@ -1,0 +1,5 @@
+(:name linum+
+       :description "Extension of linum"
+       :type emacswiki
+       :features linum+)
+
