@@ -6,14 +6,14 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
-(require* 'coldnew-vim)
-
+(require 'coldnew-vim)
+(require 'coldnew-anything)
 
 ;; (require 'popup-kill-ring)
 
 ;;;;;;;; Normal Map
 (vim:nmap (kbd "C-x C-b") 'ibuffer)
-(vim:nmap (kbd "C-x f") 'anything-find-file)
+(vim:nmap (kbd "C-x f") 'anything-find-files)
 (vim:nmap (kbd "C-x C-f") 'lusty-file-explorer)
 (vim:nmap (kbd "M-x") 'anything-M-x)
 (vim:nmap (kbd "C-M-X") 'smex)

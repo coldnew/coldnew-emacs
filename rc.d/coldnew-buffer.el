@@ -41,147 +41,148 @@
 
   ;; Keybindings
   (add-hook 'ibuffer-hook
-	    '(lambda ()
-	       (vim:local-nmap (kbd "d") 'ibuffer-do-delete)
-	       (vim:local-nmap (kbd "s") 'ibuffer-do-sort-by-size)
-	       (vim:local-imap (kbd "d") 'ibuffer-mark-for-delete)
-	       (vim:local-imap (kbd "u") 'ibuffer-unmark-all)
-	       (vim:local-imap (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
-	       ))
+            '(lambda ()
+               (vim:local-nmap (kbd "d") 'ibuffer-do-delete)
+               (vim:local-nmap (kbd "s") 'ibuffer-do-sort-by-size)
+               (vim:local-imap (kbd "d") 'ibuffer-mark-for-delete)
+               (vim:local-imap (kbd "u") 'ibuffer-unmark-all)
+               (vim:local-imap (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
+               ))
 
 ;;;;;; Hooks
   (add-hook 'ibuffer-mode-hook
-	    '(lambda ()
-	       (hl-line-mode)		; Enable highlight-line
-	       (ibuffer-switch-to-saved-filter-groups "default")
-	       (ibuffer-do-sort-by-filename/process)
-	       ))
+            '(lambda ()
+               (hl-line-mode)		; Enable highlight-line
+               (ibuffer-switch-to-saved-filter-groups "default")
+               (ibuffer-do-sort-by-filename/process)
+               ))
 
 ;;;;;; Buffer lists
   (setq ibuffer-saved-filter-groups
-	'(("default"
-	   ("*Buffer*" (or
-			(name . "^TAGS\\(<[0-9]+>\\)?$")
-			(name . "^\\**Loading Config Log\\*$")
-			(name . "^\\**Loading Library Log\\*$")
-			(name . "^\\*Anything Log\\*$")
-			(name . "^\\*Backtrace\\*$")
-			(name . "^\\*Buffer List\\*$")
-			(name . "^\\*CEDET Global\\*$")
-			(name . "^\\*Compile-Log\\*$")
-			(name . "^\\*Completions\\*$")
-			(name . "^\\*EGG:*")
-			(name . "^\\*Kill Ring\\*$")
-			(name . "^\\*Occur\\*$")
-			(name . "^\\*Process List\\*$")
-			(name . "^\\*Shell Command Output\\*")
-			(name . "^\\*Warnings\\*$")
-			(name . "^\\*anything for\\*$")
-			(name . "^\\*anything*")
-			(name . "^\\*compilation\\*$")
-			(name . "^\\*el-get*")
-			(name . "^\\*grep\\*$")
-			(name . "^\\*gud\\*$")
-			(name . "^\\*ielm\\*")
-			(name . "^\\*im.bitlbee.org\\*$")
-			(name . "^\\*irc*")
-			(name . "^\\*scratch\\*$")
-			(name . "^\\*tramp")
-			(name . "^\\*wclock\\*$")
-			(name . "^ipa*")
-			(name . "^loaddefs.el$")
-			(name . "^\\*Messages\\*$")
-			(name . "^\\*WoMan-Log\\*$")
-			))
-	   ("Version Control" (or (mode . svn-status-mode)
-				  (mode . svn-log-edit-mode)
-				  (name . "^\\*svn*\\*")
-				  (name . "^\\*vc*\\*$")
-				  (name . "^\\*Annotate")
-				  (name . "^\\*git-*")
-				  (name . "^\\*cvs*")
-				  (name . "^\\*vc-*")
-				  (mode . egg-status-buffer-mode)
-				  (mode . egg-log-buffer-mode)
-				  (mode . egg-commit-buffer-mode)
-				  ))
-	   ("Help" (or (mode . woman-mode)
-		       (mode . man-mode)
-		       (mode . info-mode)
-		       (mode . help-mode)
-		       (name . "\\*Help\\*$")
-		       (name . "\\*info\\*$")
-		       ))
-	   ("Dired" (or (mode . dired-mode)
-			(mode . nav-mode)
-			))
-	   ("IRC"   (or (mode . erc-mode)
-			(mode . rcirc-mode)
-			))
-	   ("Terminal" (or (mode . eshell-mode)
-			   (mode . term-mode)
-			   (mode . inferior-python-mode)
-			   (mode . comint-mode)
-			   (name . "\\*scheme\\*$")
-			   ))
-	   ("Config" (name . "*.conf$"))
-	   ("Text" (or (mode . text-mode)
-		       (name . "*.txt$")
-		       ))
-	   ("w3m"   (or (mode . w3m-mode)
-			(name . "^\\*w3m*")
-			))
-	   ("Org"   (mode . org-mode))
-	   ("LaTEX" (or (mode . latex-mode)
-			(name . "*.tex$")))
-	   ("Verilog" (mode . verilog-mode))
-	   ("Shell Script" (or (mode . shell-mode)
-			       (mode . perl-mode)
-			       (mode . ruby-mode)
-			       ))
-	   ("Python" (or (mode . python-mode)
-			 (mode . ipython-mode)
-			 ))
-	   ("Octave" (or (mode . octave-mode)
-			 (mode . inferior-octave-mode)))
-	   ("Scala" (or (mode . scala-mode)
-			(name . "\\*inferior-scala\\*$")))
-	   ("C++ . C#" (or (mode . c++-mode)
-			   (mode . csharpmode)
-			   ))
-	   ("C"          (mode . c-mode))
-	   ("Object-C"   (mode . objc-mode))
-	   ("Snippet" (or (mode . snippet-mode)
-			  (name . "*.yas$")
-			  ))
-	   ("newLisp"  (mode . newlisp-mode))
-	   ("Common Lisp"   (mode . slime-mode))
-	   ("Scheme"  (or (mode . scheme-mode)
-			  (mode . gambit-mode)))
-	   ("Emacs recipes" (name . "*.rcp$"))
-	   ("Emacs" (or (mode . emacs-lisp-mode)
-			(mode . lisp-interaction-mode)
-			))
-	   )))
+        '(("default"
+           ("*Buffer*" (or
+                        (name . "^TAGS\\(<[0-9]+>\\)?$")
+                        (name . "^\\**Loading Config Log\\*$")
+                        (name . "^\\**Loading Library Log\\*$")
+                        (name . "^\\*Anything Log\\*$")
+                        (name . "^\\*Backtrace\\*$")
+                        (name . "^\\*Buffer List\\*$")
+                        (name . "^\\*CEDET Global\\*$")
+                        (name . "^\\*Compile-Log\\*$")
+                        (name . "^\\*Completions\\*$")
+                        (name . "^\\*EGG:*")
+                        (name . "^\\*Kill Ring\\*$")
+                        (name . "^\\*Occur\\*$")
+                        (name . "^\\*Process List\\*$")
+                        (name . "^\\*Shell Command Output\\*")
+                        (name . "^\\*Warnings\\*$")
+                        (name . "^\\*anything for\\*$")
+                        (name . "^\\*anything*")
+                        (name . "^\\*compilation\\*$")
+                        (name . "^\\*el-get*")
+                        (name . "^\\*grep\\*$")
+                        (name . "^\\*gud\\*$")
+                        (name . "^\\*ielm\\*")
+                        (name . "^\\*im.bitlbee.org\\*$")
+                        (name . "^\\*irc*")
+                        (name . "^\\*scratch\\*$")
+                        (name . "^\\*tramp")
+                        (name . "^\\*wclock\\*$")
+                        (name . "^ipa*")
+                        (name . "^loaddefs.el$")
+                        (name . "^\\*Messages\\*$")
+                        (name . "^\\*WoMan-Log\\*$")
+                        ))
+           ("Version Control" (or (mode . svn-status-mode)
+                                  (mode . svn-log-edit-mode)
+                                  (name . "^\\*svn*\\*")
+                                  (name . "^\\*vc*\\*$")
+                                  (name . "^\\*Annotate")
+                                  (name . "^\\*git-*")
+                                  (name . "^\\*cvs*")
+                                  (name . "^\\*vc-*")
+                                  (mode . egg-status-buffer-mode)
+                                  (mode . egg-log-buffer-mode)
+                                  (mode . egg-commit-buffer-mode)
+                                  ))
+           ("Help" (or (mode . woman-mode)
+                       (mode . man-mode)
+                       (mode . info-mode)
+                       (mode . help-mode)
+                       (name . "\\*Help\\*$")
+                       (name . "\\*info\\*$")
+                       ))
+           ("Dired" (or (mode . dired-mode)
+                        (mode . nav-mode)
+                        ))
+           ("IRC"   (or (mode . erc-mode)
+                        (mode . rcirc-mode)
+                        ))
+           ("Terminal" (or (mode . eshell-mode)
+                           (mode . term-mode)
+                           (mode . inferior-python-mode)
+                           (mode . comint-mode)
+                           (name . "\\*scheme\\*$")
+                           ))
+           ("Config" (name . "*.conf$"))
+           ("Text" (or (mode . text-mode)
+                       (name . "*.txt$")
+                       ))
+           ("w3m"   (or (mode . w3m-mode)
+                        (name . "^\\*w3m*")
+                        ))
+           ("Org"   (mode . org-mode))
+           ("LaTEX" (or (mode . latex-mode)
+                        (name . "*.tex$")))
+           ("Verilog" (mode . verilog-mode))
+           ("Shell Script" (or (mode . shell-mode)
+                               (mode . perl-mode)
+                               (mode . ruby-mode)
+                               ))
+           ("Python" (or (mode . python-mode)
+                         (mode . ipython-mode)
+                         ))
+           ("Octave" (or (mode . octave-mode)
+                         (mode . inferior-octave-mode)))
+           ("Scala" (or (mode . scala-mode)
+                        (name . "\\*inferior-scala\\*$")))
+           ("C++ . C#" (or (mode . c++-mode)
+                           (mode . csharpmode)
+                           ))
+           ("C"          (mode . c-mode))
+           ("Object-C"   (mode . objc-mode))
+           ("Snippet" (or (mode . snippet-mode)
+                          (name . "*.yas$")
+                          ))
+           ("newLisp"  (mode . newlisp-mode))
+           ("Common Lisp"   (mode . slime-mode))
+           ("Scheme"  (or (mode . scheme-mode)
+                          (mode . gambit-mode)))
+           ("Emacs recipes" (name . "*.rcp$"))
+           ("Emacs" (or (mode . emacs-lisp-mode)
+                        (mode . lisp-interaction-mode)
+                        ))
+           )))
 
   ;; Following buffer will not show in iBuffer
   (setq ibuffer-never-show-predicates
-	(list
-	 "^\\*Buffer List\\*$"
-	 "^\\*CEDET Global\\*$"
-	 "^\\*MiniBuf-*"
-	 "^\\*Egg:Select Action\\*$"
-	 "^\\*Ido Completions\\*$"
-	 "^\\*SPEEDBAR\\*$"
-	 "^\\*nav\\*$"
-	 "^\\*RE-Builder\\*$"
-	 "^\\*anything\\*$"
-	 "^\\*anything complete\\*$"
-	 "^\\*pomodoro\\*$"
-	 ;; "^"
-	 "^\\*.*\\(-preprocessed\\)\\>\\*"
-	 "^\\*ORG.*\\*"
-	 ))
+        (list
+         "^\\*Buffer List\\*$"
+         "^\\*CEDET Global\\*$"
+         "^\\*MiniBuf-*"
+         "^\\*Egg:Select Action\\*$"
+         "^\\*Ido Completions\\*$"
+         "^\\*SPEEDBAR\\*$"
+         "^\\*nav\\*$"
+         "^\\*RE-Builder\\*$"
+         "^\\*anything\\*$"
+         "^\\*anything complete\\*$"
+         "^\\*pomodoro\\*$"
+         ;; "^"
+         "^\\*.*\\(-preprocessed\\)\\>\\*"
+         "^\\*ORG.*\\*"
+         "^\\*ac-mode-*"
+         ))
 
   ;;;; Advice
   ;; Reverse group list
@@ -218,18 +219,18 @@
   ;; integrate ibuffer with git
   (when (require* 'ibuffer-git)
     (setq ibuffer-formats
-	  '((mark modified read-only git-status-mini " "
-		  (name 23 23 :left :elide)
-		  " "
-		  (size-h 9 -1 :right)
-		  "  "
-		  (mode 16 16 :left :elide)
-		  "   "
-		  ;; (eproject 16 16 :left :elide)
-		  ;; " "
-		  (git-status 8 8 :left)
-		  "      "
-		  filename-and-process))))
+          '((mark modified read-only git-status-mini " "
+                  (name 23 23 :left :elide)
+                  " "
+                  (size-h 9 -1 :right)
+                  "  "
+                  (mode 16 16 :left :elide)
+                  "   "
+                  ;; (eproject 16 16 :left :elide)
+                  ;; " "
+                  (git-status 8 8 :left)
+                  "      "
+                  filename-and-process))))
 
   )
 
@@ -243,17 +244,17 @@
 (when (require* 'tempbuf)
   ;; Take following mode as temp buffer
   (let ((tempbuf-mode-list
-	 '(custom-mode
-	   w3-mode
-	   w3m-mode
-	   Man-mode
-	   woman-mode
-	   help-mode
-	   view-mode
-	   dired-mode
-	   )))
+         '(custom-mode
+           w3-mode
+           w3m-mode
+           Man-mode
+           woman-mode
+           help-mode
+           view-mode
+           dired-mode
+           )))
     (dolist (tempbuf-hook tempbuf-mode-list)
-	    (add-hook (intern (concat (symbol-name tempbuf-hook) "-hook")) 'turn-on-tempbuf-mode))))
+            (add-hook (intern (concat (symbol-name tempbuf-hook) "-hook")) 'turn-on-tempbuf-mode))))
 
 ;;;;;;;; midnight
 ;; Midnight mode is a package that comes with Emacs for running configured
@@ -285,9 +286,9 @@
 
   ;; append to *-init instead of itself
   (setq clean-buffer-list-kill-never-buffer-names
-	(append
-	 '("*Messages*" "*cmd*" "*scratch*" "*w3m*" "*w3m-cache*" "*Inferior Octave*")
-	 clean-buffer-list-kill-never-buffer-names-init))
+        (append
+         '("*Messages*" "*cmd*" "*scratch*" "*w3m*" "*w3m-cache*" "*Inferior Octave*")
+         clean-buffer-list-kill-never-buffer-names-init))
 
   ;; Prevent to kill buffers if match rules.
   (defvar clean-buffer-list-kill-never-regexps-init
@@ -296,16 +297,16 @@
 
   ;; append to *-init instead of itself
   (setq clean-buffer-list-kill-never-regexps
-	(append
-	 '("^\\*EMMS Playlist\\*.*$"
-	   ".*irc\\.freenode\\.net.*"
-	   ".*irc\\.debian\\.org.*"
-	   ".*im\\.bitlbee\\.org.*"
-	   "^\\*ansi-term*"
-	   "^\\*terminal*"
-	   "^\\*Inferior*"
-	   )
-	 clean-buffer-list-kill-never-regexps-init))
+        (append
+         '("^\\*EMMS Playlist\\*.*$"
+           ".*irc\\.freenode\\.net.*"
+           ".*irc\\.debian\\.org.*"
+           ".*im\\.bitlbee\\.org.*"
+           "^\\*ansi-term*"
+           "^\\*terminal*"
+           "^\\*Inferior*"
+           )
+         clean-buffer-list-kill-never-regexps-init))
 
   )
 

@@ -12,7 +12,7 @@
 (add-to-list 'auto-mode-alist '("\\.\\([pP][Llm]\\|al\\)\\'" . cperl-mode))
 (add-to-list 'interpreter-mode-alist '("perl" . cperl-mode))
 
-;; Keybindings
+;;;;;;;; Keybindings
 (add-hook 'cperl-mode-hook
 	  '(lambda ()
 	     (when (require 'perl-completion)
@@ -23,12 +23,12 @@
 	       (vim:local-imap (kbd "M-h") 'plcmp-cmd-complete-hashes)
 	       (vim:local-imap (kbd "M-f") 'plcmp-cmd-complete-functions)
 	       (vim:local-imap (kbd "M-m") 'plcmp-cmd-complete-methods)
-	       (vim:local-imap (kbd "M-i") 'plcmp-cmd-complete-modules)
+	       (vim:local-imap (kbd "M-i") 'perl-mode:insert-modules)
 
 	       )
 	     ))
 
-;; Hooks
+;;;;;;;; Hooks
 (add-hook 'cperl-mode-hook
 	  '(lambda ()
 	     (setq cperl-indent-level 8)
@@ -42,6 +42,15 @@
 	       (perl-completion-mode t))
 	     ))
 
+;;;;;;;; Functions
+(defun perl-mode:insert-modules ()
+  "Call perl-completion to complete perl-modules when use it."
+  (interactive)
+  (insert "use ")
+  (when (featurep 'perl-completion)
+    (plcmp-cmd-complete-modules)
+    (insert ";")
+    (newline)))
 
 
 (provide 'coldnew-lang-perl)

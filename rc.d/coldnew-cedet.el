@@ -8,7 +8,7 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
-(require* 'cedet)
+(require 'cedet)
 
 ;;
 ;; loding libraries

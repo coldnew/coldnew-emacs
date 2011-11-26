@@ -128,7 +128,6 @@
 	     (vim:local-imap-insert-expand (kbd "M-l") "lambda")
 	     ;; (defmacro ())
 	     (vim:local-imap-insert-expand (kbd "M-D") "defmacro")
-
 	     ))
 
 ;;;;;;;; ielm

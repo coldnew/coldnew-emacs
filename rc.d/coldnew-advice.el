@@ -65,6 +65,5 @@
 
 
 
-
 (provide 'coldnew-advice)
 ;; coldnew-advice.el ends here.

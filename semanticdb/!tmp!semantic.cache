@@ -27,14 +27,16 @@
             ("slib.h" include (:system-flag t) nil [23 40])
             ("a" variable (:type "int") nil [43 54])
             ("ber" variable (:type "int") nil [55 72])
-            ("var" variable (:type "int") nil [75 106])
-            ("variable_is_kinda_long" variable (:type "int") nil [107 138])
-            ("var_is_less_long" variable (:type "int") nil [139 170]))          
+            ("stdio.h" include (:system-flag t) nil [73 91])
+            ("gtk" include (:system-flag t) nil [92 106])
+            ("var" variable (:type "int") nil [109 140])
+            ("variable_is_kinda_long" variable (:type "int") nil [141 172])
+            ("var_is_less_long" variable (:type "int") nil [173 204]))          
     :file "aa.c"
-    :pointmax 194
-    :fsize 168
-    :lastmodtime '(20176 48541)
-    :unmatched-syntax '((number 65 . 71) (punctuation 63 . 64) (symbol 59 . 62) (INT 55 . 58) (number 136 . 142) (punctuation 134 . 135) (symbol 130 . 133) (INT 126 . 129))
+    :pointmax 228
+    :fsize 212
+    :lastmodtime '(20176 60727)
+    :unmatched-syntax 'nil
     )
    )
   :file "!tmp!semantic.cache"

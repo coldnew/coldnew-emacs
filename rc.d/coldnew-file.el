@@ -28,7 +28,8 @@
   ;;;; Keybindings
   (add-hook 'lusty-setup-hook
 	    '(lambda ()
-	       (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name))))
+	       (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
+  )
 
 
 

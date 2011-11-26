@@ -12,6 +12,7 @@
 
 
 (when (require* 'egg)
+
   ;; do not auto-update egg-status on file save
   (setq egg-auto-update nil)
 
@@ -28,6 +29,7 @@
 	       (vim:local-nmap (kbd "c") 'egg-commit-log-edit)
 	       (vim:local-nmap (kbd "l") 'egg-log)
 	       ))
+
   (add-hook 'egg-commit-buffer-mode-hook
 	    '(lambda ()
 	       (vim:local-nmap (kbd "c") 'egg-log-msg-done)
