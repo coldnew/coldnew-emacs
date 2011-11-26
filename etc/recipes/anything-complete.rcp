@@ -1,0 +1,6 @@
+(:name anything-complete
+       :description "completion with anything"
+       :website ""
+       :type emacswiki
+       :features anything-complete
+       )
