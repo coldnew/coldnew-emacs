@@ -4,14 +4,31 @@
 ;;;;;;; Packages Import
 (require 'coldnew-editor)
 (require 'cc-mode)
-(require 'cperl-mode)
+(require* 'cperl-mode)
+
 
 
 ;;;;;;;; perl-mode extensions
 (add-to-list 'auto-mode-alist '("\\.\\([pP][Llm]\\|al\\)\\'" . cperl-mode))
 (add-to-list 'interpreter-mode-alist '("perl" . cperl-mode))
 
+;; Keybindings
+(add-hook 'cperl-mode-hook
+	  '(lambda ()
+	     (when (require 'perl-completion)
+	       ;;
+	       (vim:local-imap (kbd "M-a") 'plcmp-cmd-complete-arrays)
+	       (vim:local-imap (kbd "M-A") 'plcmp-cmd-complete-all)
+	       (vim:local-imap (kbd "M-v") 'plcmp-cmd-complete-variables)
+	       (vim:local-imap (kbd "M-h") 'plcmp-cmd-complete-hashes)
+	       (vim:local-imap (kbd "M-f") 'plcmp-cmd-complete-functions)
+	       (vim:local-imap (kbd "M-m") 'plcmp-cmd-complete-methods)
+	       (vim:local-imap (kbd "M-i") 'plcmp-cmd-complete-modules)
 
+	       )
+	     ))
+
+;; Hooks
 (add-hook 'cperl-mode-hook
 	  '(lambda ()
 	     (setq cperl-indent-level 8)
@@ -20,6 +37,9 @@
 
 	     ;; Use global programming mode
 	     (programming-mode)
+
+	     (when (require* 'perl-completion)
+	       (perl-completion-mode t))
 	     ))
 
 
