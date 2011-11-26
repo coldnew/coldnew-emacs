@@ -1,0 +1,4 @@
+;; This file may be safely deleted.
+;;
+;; Its only purpose was to remove the old version of this file that existed
+;; prior to debview.el's move to the package `debian-el'.

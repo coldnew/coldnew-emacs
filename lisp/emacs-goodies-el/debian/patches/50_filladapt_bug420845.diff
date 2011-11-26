@@ -1,0 +1,27 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 50_filladapt_bug420845.dpatch by  <psg@mixed.dyndns.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad emacs-goodies-el~/elisp/emacs-goodies-el/filladapt.el emacs-goodies-el/elisp/emacs-goodies-el/filladapt.el
+--- emacs-goodies-el~/elisp/emacs-goodies-el/filladapt.el	2003-04-04 15:16:01.000000000 -0500
++++ emacs-goodies-el/elisp/emacs-goodies-el/filladapt.el	2007-05-14 19:41:02.000000000 -0400
+@@ -72,7 +72,7 @@
+ 
+ (provide 'filladapt)
+ 
+-(defvar filladapt-version "2.12"
++(defvar filladapt-version "2.12debian"
+   "Version string for filladapt.")
+ 
+ ;; BLOB to make custom stuff work even without customize
+@@ -620,6 +620,7 @@
+ 
+ (defun turn-on-filladapt-mode ()
+   "Unconditionally turn on Filladapt mode in the current buffer."
++  (interactive)
+   (filladapt-mode 1))
+ 
+ (defun turn-off-filladapt-mode ()

@@ -1,0 +1,7 @@
+The content of the package debview has been moved to the package debian-el.
+
+This package ensures that debian-el is installed during upgrades and
+should thereafter be removed.
+
+The contents are in the public domain.
+Peter S Galbraith <psg@debian.org>

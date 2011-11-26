@@ -1,0 +1,87 @@
+This package was first debianized by Roland Mas <lolando@debian.org>
+It is currently maintained by Peter S Galbraith <psg@debian.org>
+
+  This collection of files was assembled by Roland Mas <lolando@debian.org>
+from various messages posted on the gnu.emacs.sources newsgroup, as well as
+from various collections of Emacs Lisp files found on the web.  Some
+authors contacted Roland directly, some users sent me the files by email.
+Most of them are covered by the GNU GPL, but the individual licences can
+vary.  Here is a list of excerpts of the included files covering this
+matter.
+
+  The text of the GNU GPL can be found in /usr/share/common-licenses.
+
+Copyright info for files in dpkg-dev-el
+---------------------------------------
+
+Author/copyright info for debian-bts-control.el
+,-
+| ;; Copyright (C) 2003 Peter S Galbraith
+| ;;
+| ;; This file is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+| ;;
+| ;; debian-bts-mode.el is distributed in the hope that it will be useful,
+| ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+| ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+| ;; GNU General Public License for more details.
+`-
+
+
+Author/copyright info for debian-changelog-mode.el:
+,----
+| Copyright (C) 1996 Ian Jackson
+| Copyright (C) 1997 Klee Dienes
+| Copyright (C) 1999 Chris Waters
+| Copyright (C) 2000 Peter S Galbraith
+| 
+| It is free software; you can redistribute it and/or modify
+| it under the terms of the GNU General Public License as published by
+| the Free Software Foundation; either version 2, or (at your option)
+| any later version.
+`----
+
+
+Author/copyright info for debian-control-mode.el:
+,----
+| ;;; debian-control-mode.el --- major mode for Debian control files
+| 
+| ;; Copyright (C) 2001 Free Software Foundation, Inc.
+| 
+| ;; Author: Colin Walters <walters@debian.org>
+| ;; Maintainer: Colin Walters <walters@debian.org>
+| [...]
+| ;; This file is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for debian-copyright.el
+,-
+| ;; Copyright 2002, 2003 Junichi Uekawa.
+| 
+| ;; This file is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+| ;;
+| ;; debian-copyright.el is distributed in the hope that it will be useful,
+| ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+| ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+| ;; GNU General Public License for more details.
+`-
+
+
+Author/copyright info for readme-debian.el:
+,----
+| ;; Copyright 2002 Junichi Uekawa.
+| 
+| ;; This file is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----

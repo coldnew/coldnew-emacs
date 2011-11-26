@@ -1,0 +1,82 @@
+This is a checklist for adding files to the emacs-goodies-el package.
+
+- Make sure the upstream file can be used and customized using only the
+  custom interface.  Users should not have to edit ~/.emacs themselves.
+
+- copy the file to elisp/emacs-goodies-el/ and add them to CVS.
+
+  $ cvs add elisp/emacs-goodies-el/minibuf-electric.el
+  $ cvs commit -m "New files."  elisp/emacs-goodies-el/minibuf-electric.el
+
+- When files are maintained by us, do it in CVS.
+  When files have an upstream maintainer, submit patches upstream.  If not
+  responsive, handle them by creating a new "quilt" patch in debian/patches.
+
+- Make sure all interactive commands that are entry points into the file
+  have autoload cookies.
+
+ (This following step is no longer done, as the emacs-goodies-loaddefs.el
+  file is generated at install time now:
+#
+#  Update the `emacs-goodies-loaddefs.el' file by running:
+#
+#  $ debian/rules patch
+#  $ cd elisp/emacs-goodies-el
+#  $ sh emacs-goodies-loaddefs.make 
+#  $ cd -
+#  $ debian/rules unpatch
+ )
+
+- Update `emacs-goodies-custom.el' by adding a modified copy of the file's
+  defgroup.  Add lines for `:load' and a `:group 'emacs-goodies-el'.
+
+- Add whatever required startup and setup code that doesn't fit in the
+  above files to `emacs-goodies-el.el'.  This gets loaded at Emacs startup.
+
+- Add documentation in alphabetical order to `emacs-goodies-el.texi'
+  Then from the Texinfo menu, invoke `Update Every Node' and
+  `Create Master Menu'.  Then fill-in a description in the top menu for the
+  added entry.
+
+  Test it:
+
+    mkdir info
+    makeinfo emacs-goodies-el
+    info -f info/emacs-goodies-el
+    rm -fR info
+
+Debian Files
+~~~~~~~~~~~~
+
+ README.Debian - add a short description of the new file.
+
+ control - add a one-line file description.
+
+ changelog - close the wishlist bug, if any.
+
+ emacs-goodies-el.copyright - add a boxquote'd blurb for the file.
+
+ emacs-goodies-el.emacsen-install.in - add exclusions for incompatible
+  flavors of Emacs.
+
+ emacs-goodies-el.install - add a one-line entry to install the file
+
+
+Testing the Package
+~~~~~~~~~~~~~~~~~~~
+
+ $ ./make-orig.sh
+ $ cd ../build_25.1-1/emacs-goodies-el
+ $ fakeroot debian/rules binary
+  or
+ $ dpkg-buildpackage -rfakeroot
+
+
+Releasing the package
+~~~~~~~~~~~~~~~~~~~~~
+
+ - Set the distribution to "unstable"
+ - See "Testing the Package" to build.
+ - Tag the files in CVS, e.g. for version 25.1-1 :
+
+   $ cvs tag debian_version_25_1-1

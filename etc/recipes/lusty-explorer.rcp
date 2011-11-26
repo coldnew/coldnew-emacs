@@ -1,0 +1,7 @@
+(:name lusty-explorer
+       :description ""
+       :website ""
+       :type git
+       :url "https://github.com/emacsmirror/lusty-explorer.git"
+       :features lusty-explorer
+       )

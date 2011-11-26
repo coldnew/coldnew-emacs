@@ -1,0 +1,35 @@
+  This file is an introductory starter for the various goodies included in
+dpkg-dev-el.  It does not intend to replace reading the documentation that
+is made available in the files themselves (or not available at all, except
+insofar as code is self-documenting).
+
+To customize all files in this package, use:
+
+ M-x customize-group [RET] dpkg-dev-el [RET]
+
+Introduction to files in dpkg-dev-el
+------------------------------------
+
+debian-bts-control.el provides an interface for composing email messages to
+the Debian BTS control interface (control@bugs.debian.org).  Tab completions
+works for all possible commands and their options.
+
+debian-changelog-mode.el provides a mode for editing debian/changelog
+files.  This mode adds colouring, a few commands to manipulate
+changelog entries and bug reports, and a nice filling function.  This
+mode can also be used to add colours to buffers visiting the
+changelogs in /usr/share/doc/<package>/changelog.Debian files.
+
+debian-copyright.el provides a mode for editing debian/copyright files.
+This mode adds a bit of colouring and if `goto-addr' is loaded, it will
+make the URLs clickable.
+
+debian-control-mode.el provides a mode for editing debian/control
+files.  This mode adds a bit of colouring, a working filling function
+(bound to "M-q" by default), tab-completion for adding fields (bound
+to "C-c C-a" by default), and viewing bugs (bound to "C-c C-b").
+
+readme-debian.el provides readme-debian-mode, a major mode to
+highlight README.Debian files.
+
+ -- Peter S Galbraith <psg@debian.org>, Mon Oct 24 21:08:04 2005

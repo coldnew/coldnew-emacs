@@ -1,0 +1,5 @@
+#!/bin/sh -e
+# /usr/lib/emacsen-common/packages/remove/debian-el
+
+FLAVOR=$1
+PACKAGE=debian-el

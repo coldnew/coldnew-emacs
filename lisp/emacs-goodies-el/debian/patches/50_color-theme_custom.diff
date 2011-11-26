@@ -1,0 +1,31 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 50_color-theme_custom.dpatch by Peter S Galbraith <psg@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+--- a/elisp/emacs-goodies-el/color-theme.el
++++ b/elisp/emacs-goodies-el/color-theme.el
+@@ -221,7 +221,9 @@
+ (defcustom color-theme-libraries (directory-files 
+                                   (concat 
+                                    (file-name-directory (locate-library "color-theme"))
+-                                   "/themes") t "^color-theme")
++;;; Debian doesn't use the "/themes" subdirectory and uses the prefix
++;;; "^color-theme-" instead of simply "^color-theme" to accomodate this.
++                                   "") t "^color-theme-")
+   "A list of files, which will be loaded in color-theme-initialize depending
+ on `color-theme-load-all-themes' value. 
+ This allows a user to prune the default color-themes (which can take a while
+--- a/elisp/emacs-goodies-el/color-theme-library.el
++++ b/elisp/emacs-goodies-el/color-theme-library.el
+@@ -30,6 +30,8 @@
+ (eval-when-compile
+   (require 'color-theme))
+ 
++(require 'info)
++
+ (defun color-theme-gnome ()
+   "Wheat on darkslategrey scheme.
+ From one version of Emacs in RH6 and Gnome, modified by Jonadab."

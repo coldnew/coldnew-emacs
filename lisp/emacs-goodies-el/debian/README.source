@@ -1,0 +1,12 @@
+This package uses quilt to manage all modifications. See
+
+  /usr/share/doc/quilt/quilt.pdf.gz
+
+to get more information on how to use it.
+
+To apply and unppaly all patches, you can run:
+
+ debian/rules patch
+ debian/rules unpatch
+
+ -- Peter S Galbraith <psg@debian.org>, Mon,  5 Apr 2010 16:30:13 -0400

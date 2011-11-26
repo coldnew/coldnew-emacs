@@ -1,0 +1,38 @@
+#!/bin/sh -e
+## 52_gnus-pers.dpatch by Elias Oltmanns <oltmanns@uni-bonn.de>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Verify gnus-newsgroup-name is set before using it (See bug #384402)
+
+if [ $# -ne 1 ]; then
+    echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+    exit 1
+fi
+
+[ -f debian/patches/00patch-opts ] && . debian/patches/00patch-opts
+patch_opts="${patch_opts:--f --no-backup-if-mismatch}"
+
+case "$1" in
+       -patch) patch $patch_opts -p1 < $0;;
+       -unpatch) patch $patch_opts -p1 -R < $0;;
+        *)
+                echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+                exit 1;;
+esac
+
+exit 0
+
+@DPATCH@
+diff -urNad /home/psg/emacs/emacs-goodies-el/emacs-goodies-el/elisp/gnus-bonus-el/gnus-pers.el emacs-goodies-el/elisp/gnus-bonus-el/gnus-pers.el
+--- /home/psg/emacs/emacs-goodies-el/emacs-goodies-el/elisp/gnus-bonus-el/gnus-pers.el	2004-08-16 20:49:16.000000000 -0400
++++ emacs-goodies-el/elisp/gnus-bonus-el/gnus-pers.el	2004-08-16 20:51:59.000000000 -0400
+@@ -868,7 +868,8 @@
+ 	     (retval (nthcdr 2 split))
+ 	     partial regexp)
+ 	;; Check to see if it's a "gnus-newsgroup-name" split
+-	(if (equal ",gnus-newsgroup-name" (cdr (assq field gnus-personality-split-abbrev-alist)))
++	(if (and gnus-newsgroup-name
++		 (equal ",gnus-newsgroup-name" (cdr (assq field gnus-personality-split-abbrev-alist))))
+ 	    (let ((groupname gnus-newsgroup-name))
+ 	      (if (string-match value groupname)
+ 		  retval))

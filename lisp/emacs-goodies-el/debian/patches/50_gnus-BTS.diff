@@ -1,0 +1,192 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 50_gnus-BTS.dpatch by Peter S Galbraith <psg@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad --exclude=CVS --exclude=.svn ./elisp/debian-el/gnus-BTS.el /tmp/dpep-work.XVQhTr/emacs-goodies-el/elisp/debian-el/gnus-BTS.el
+--- ./elisp/debian-el/gnus-BTS.el	2005-09-15 21:38:07.000000000 -0400
++++ /tmp/dpep-work.XVQhTr/emacs-goodies-el/elisp/debian-el/gnus-BTS.el	2005-09-19 18:54:07.000000000 -0400
+@@ -33,42 +33,74 @@
+ ;; references to the Bug Tracking system in them. It expects to see
+ ;; Bug references in the form of (for example): "#48273", "closes:
+ ;; 238742" or similar.
++;;
++;; Use `M-x' `gnus-dbts-browse-debpkg-or-bug' over the bug number.
+ 
++;;; Change log:
++;; 2005-08-20  Jari Aalto  <jari aalto A T cante net>
++;; 
++;; 	* gnus-BTS.el:
++;; 	(top level): Changed all variable and function names to use common
++;; 	prefix `gnus-dbts-'. This makes package namespace clean. Converted
++;; 	all lambda forms to real functions. Cleaned up
++;; 	`gnus-select-article-hook' setting.
++;; 	Changed all 'setq' to 'defvar'.
++;; 	(gnus-dbts-gnus-install): New.
++;; 	(gnus-dbts-gnus-select-article-hook): New.
++;; 	(gnus-dbts-buttonize): New.
++;; 	(eval-after-load): New. Install at point when Gnus is being loaded.
++;; 
++;; 2005-09-19 Peter S Galbraith <psg@debian.org>
++;;
++;;      Minor bug fix: gnus-dbts-gnus-install missing brackets.
++;;      
+ ;;; Code:
+ 
+ 
+-(setq anti-bug-special-keywords "reassign\\|merge")
+-(setq anti-bug-keywords (concat
+-			 "tags\\|severity\\|retitle\\|close\\|closes:\\|Merged\\|reopen\\|Bug\\|"
+-			 anti-bug-special-keywords))
++;; gnus-dbts = Gnus inerface to Debian Bug Tracking System
+ 
+-(setq anti-bug-prefix " *#?\\|Bugs?\\|#")
+-(setq anti-bug-number " *\\([0-9]+\\)")
+-(setq anti-bug-special " +\\([0-9]+\\|[-.A-Za-z0-9]+\\)")
++(autoload 'thing-at-point "thingatpt")
+ 
+-(setq anti-gnus-debian-bug-regexp (concat
+-				   "\\("
+-				   "\\("
+-				   anti-bug-keywords
+-				   "\\)"
+-				   anti-bug-prefix
+-				   "\\)"
+-				   anti-bug-number))
++(defvar gnus-dbts-in-debian-group-p nil)
+ 
+-(setq anti-gnus-debian-reassign-or-merge-regexp
+-      (concat
+-       "\\("
+-       anti-bug-special-keywords
+-       "\\)"
+-       anti-bug-number
+-       anti-bug-special))
++(defvar gnus-dbts-in-debian-devel-announce-group-p nil)
+ 
+-(setq anti-gnus-debian-reassign-regexp "reassigned from package `\\([^']*\\)' to `\\([^']*\\)'")
+-(setq anti-gnus-debian-bug-BTS-regexp "^ *\\([0-9]+\\)")
++(defvar gnus-dbts-bug-special-keywords "reassign\\|merge")
+ 
+-(defun anti-browse-debpkg-or-bug (thing)
++(defvar gnus-dbts-bug-keywords
++  (concat
++   "tags\\|severity\\|retitle\\|close\\|closes:\\|Merged\\|reopen\\|Bug\\|"
++   gnus-dbts-bug-special-keywords))
++
++(defvar gnus-dbts-bug-prefix " *#?\\|Bugs?\\|#")
++(defvar gnus-dbts-bug-number " *\\([0-9]+\\)")
++(defvar gnus-dbts-bug-special " +\\([0-9]+\\|[-.A-Za-z0-9]+\\)")
++
++(defvar gnus-dbts-debian-bug-regexp
++  (concat
++   "\\("
++   "\\("
++   gnus-dbts-bug-keywords
++   "\\)"
++   gnus-dbts-bug-prefix
++   "\\)"
++   gnus-dbts-bug-number))
++
++(defvar gnus-dbts-debian-reassign-or-merge-regexp
++  (concat
++   "\\("
++   gnus-dbts-bug-special-keywords
++   "\\)"
++   gnus-dbts-bug-number
++   gnus-dbts-bug-special))
++
++(defvar gnus-dbts-debian-reassign-regexp
++  "reassigned from package `\\([^']*\\)' to `\\([^']*\\)'")
++
++(defvar gnus-dbts-debian-bug-regexp "^ *\\([0-9]+\\)")
++
++(defun gnus-dbts-browse-debpkg-or-bug (thing)
+   (interactive "i")
+-  (require 'thingatpt)
+   (let* ((the-thing (if (null thing)
+ 			(thing-at-point 'sexp)
+ 		      thing))
+@@ -80,45 +112,48 @@
+ 			   the-thing))
+ 	 (url (if bugp
+ 		  "http://bugs.debian.org/cgi-bin/bugreport.cgi?bug="
+-		"http://cgi.debian.org/cgi-bin/search_packages.pl?&searchon=names&version=all&release=all&keywords=")))
++		(concat
++		 "http://cgi.debian.org/cgi-bin/search_packages.pl"
++		 "?&searchon=names&version=all&release=all&keywords="))))
+     (browse-url (concat url bug-or-feature))))
+ 
+-(defvar in-debian-group-p nil)
+-(add-hook 'gnus-select-article-hook
+-	  (lambda ()
+-	    (setq in-debian-group-p (string-match "debian"
+-						  (gnus-group-real-name
+-						   gnus-newsgroup-name)))))
+-
+-(defvar in-debian-devel-announce-group-p nil)
+-(add-hook 'gnus-select-article-hook
+-	  (lambda ()
+-	    (setq in-debian-devel-announce-group-p
+-		  (string-match "debian.devel.announce"
+-				(gnus-group-real-name
+-				 gnus-newsgroup-name)))))
+-
+-(defun anti-buttonize-debian (regexp num predicate)
++(defun gnus-dbts-buttonize-debian (regexp num predicate)
+   (add-to-list 'gnus-button-alist
+ 	       (list regexp
+ 		     num
+ 		     predicate
+-		     'anti-browse-debpkg-or-bug
++		     'gnus-dbts-browse-debpkg-or-bug
+ 		     num)))
+ 
+-(add-hook
+- 'gnus-article-mode-hook    ; only run once, as soon as the article buffer has been created.
+- (lambda ()
+-   (anti-buttonize-debian anti-gnus-debian-bug-regexp 3
+-			  'in-debian-group-p)
+-   (anti-buttonize-debian anti-gnus-debian-reassign-or-merge-regexp 3
+-			  'in-debian-group-p)
+-   (anti-buttonize-debian anti-gnus-debian-bug-BTS-regexp 1
+-			  'in-debian-devel-announce-group-p)
+-   
+-   (anti-buttonize-debian anti-gnus-debian-reassign-regexp 1
+-			  'in-debian-group-p)
+-   (anti-buttonize-debian anti-gnus-debian-reassign-regexp 2
+-			  'in-debian-group-p)))
++(defun gnus-dbts-buttonize ()
++  (gnus-dbts-buttonize-debian gnus-dbts-debian-bug-regexp 3
++			      'gnus-dbts-in-debian-group-p)
++  (gnus-dbts-buttonize-debian gnus-dbts-debian-reassign-or-merge-regexp 3
++			      'gnus-dbts-in-debian-group-p)
++  (gnus-dbts-buttonize-debian gnus-dbts-debian-bug-regexp 1
++			      'gnus-dbts-in-debian-devel-announce-group-p)
++  (gnus-dbts-buttonize-debian gnus-dbts-debian-reassign-regexp 1
++			      'gnus-dbts-in-debian-group-p)
++  (gnus-dbts-buttonize-debian gnus-dbts-debian-reassign-regexp 2
++				 'gnus-dbts-in-debian-group-p))
++
++(defun gnus-dbts-gnus-select-article-hook ()
++  (setq gnus-dbts-in-debian-group-p
++	(string-match "debian"
++		      (gnus-group-real-name
++		       gnus-newsgroup-name)))
++  (setq gnus-dbts-in-debian-devel-announce-group-p
++	(string-match "debian.devel.announce"
++		      (gnus-group-real-name
++		       gnus-newsgroup-name))))
++
++(defun gnus-dbts-gnus-install ()
++  (add-hook 'gnus-select-article-hook 'gnus-dbts-gnus-select-article-hook)
++   ;; only run once, as soon as the article buffer has been created.
++  (add-hook 'gnus-article-mode-hook 'gnus-dbts-buttonize))
++
++(eval-after-load "gnus" '(progn (gnus-dbts-gnus-install)))
+ 
+ (provide 'gnus-BTS)
++
++;; End of file

@@ -1,0 +1,8 @@
+elisp/debian-el/apt-sources.el /usr/share/emacs/site-lisp/debian-el/
+elisp/debian-el/apt-utils.el /usr/share/emacs/site-lisp/debian-el/
+elisp/debian-el/deb-view.el /usr/share/emacs/site-lisp/debian-el/
+elisp/debian-el/debian-bug.el /usr/share/emacs/site-lisp/debian-el/
+elisp/debian-el/debian-el.el /usr/share/emacs/site-lisp/debian-el/
+elisp/debian-el/debian-el-loaddefs.el /usr/share/emacs/site-lisp/debian-el/
+elisp/debian-el/gnus-BTS.el /usr/share/emacs/site-lisp/debian-el/
+elisp/debian-el/preseed.el /usr/share/emacs/site-lisp/debian-el/

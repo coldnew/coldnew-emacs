@@ -1,0 +1,110 @@
+
+eval included_here=\$$(echo INCLUDED_$FLAVOR | tr - _)
+eval excluded_here=\$$(echo EXCLUDED_$FLAVOR | tr - _)
+eval sourceonly_here=\$$(echo SOURCEONLY_$FLAVOR | tr - _)
+
+included_all=$(for i in ${!INCLUDED_*} ; do
+    eval echo \$$i
+    done | sort -u)
+
+excluded_all=$(for i in ${!EXCLUDED_*} ; do
+    eval echo \$$i
+    done | sort -u)
+
+sourceonly_all=$(for i in ${!SOURCEONLY_*} ; do
+    eval echo \$$i
+    done | sort -u)
+
+if [ ${FLAVOR} = emacs ]; then exit 0; fi
+
+# Install-info-altdir does not actually exist. 
+# Maybe somebody will write it.
+if test -x /usr/sbin/install-info-altdir; then
+    echo install/${PACKAGE}: install Info links for ${FLAVOR}
+    install-info-altdir --quiet --section "" "" --dirname=${FLAVOR} /usr/info/${PACKAGE}.info.gz
+fi
+
+LOG=`tempfile -pelc_ -s.log -m644`
+ELDIR=/usr/share/emacs/site-lisp/${PACKAGE}
+ELCDIR=/usr/share/${FLAVOR}/site-lisp/${PACKAGE}
+if test -e "${ELCDIR}/${STAMPFILE}"; then
+    echo "${PACKAGE} files already compiled in ${ELCDIR}."
+    rm -f ${LOG}
+    exit
+fi
+echo install/${PACKAGE}: Handling ${FLAVOR}, logged in ${LOG}
+
+if [ -z "$FLAGS" ] ; then
+    FLAGS="-q -no-site-file --no-site-file -batch -l path.el -f batch-byte-compile"
+fi
+
+install -m 755 -d ${ELCDIR}
+cd ${ELDIR}
+
+# Now to compute the list of files to install...
+
+FILES=$(ls -1 *.el)
+# Here we have all of them
+
+PATTERN=""
+for i in $included_all $excluded_all $sourceonly_all; do
+    [ ! -z "$PATTERN" ] && PATTERN="${PATTERN}\|"
+    PATTERN="${PATTERN}^$i\$"
+done
+FILES2=$FILES
+if [ ! -z "$PATTERN" ] ; then
+    FILES=$(for i in $FILES2 ; do echo $i | grep -v $PATTERN || true ; done)
+fi
+# Here we only have those not explicitly included or excluded by any flavour
+
+FILES="$FILES $included_here"
+# Here we also have those included for the current flavour
+
+for i in $excluded_all ; do
+    include_i="yes"
+    for j in $excluded_here ; do
+	[ $i = $j ] && include_i="no"
+    done
+    [ $include_i = "yes" ] && FILES="$FILES $i"
+done
+# And now we have those excluded by other flavours but not the current one
+
+FILES=$(for i in $FILES ; do echo $i ; done | sort -u)
+# And now for my last trick...  The list is now uniquified!
+
+# Symlinks instead of copying...
+cd ${ELCDIR}
+for i in $FILES $sourceonly_all; do
+    ln -fs /usr/share/emacs/site-lisp/${PACKAGE}/$i
+done
+
+# Prepare the flavour specific autoload file
+if [ ${PACKAGE} = emacs-goodies-el ]; then
+   echo Building autoloads for ${FLAVOR} in ${ELCDIR}
+   if [ $FLAVOR != xemacs21 ]; then
+      echo ";;; emacs-goodies-loaddefs.el" > emacs-goodies-loaddefs.el
+      echo ";;  autoloads generated upon installation of the emacs-goodies-el package" >> emacs-goodies-loaddefs.el
+   fi
+   echo ${FLAVOR} -batch --no-site-file --multibyte --eval '(setq load-path (cons "." load-path))' -l autoload --eval '(setq generated-autoload-file (expand-file-name "emacs-goodies-loaddefs.el"))' --eval '(setq make-backup-files nil)' -f batch-update-autoloads . >> ${LOG}
+   cd ${ELCDIR}
+   "${FLAVOR}" -batch --no-site-file --multibyte --eval '(setq load-path (cons "." load-path))' -l autoload --eval '(setq generated-autoload-file (expand-file-name "emacs-goodies-loaddefs.el"))' --eval '(setq make-backup-files nil)' -f batch-update-autoloads . >> ${LOG}  2>&1
+   echo "(provide 'emacs-goodies-loaddefs)" >> emacs-goodies-loaddefs.el
+fi
+
+cat << EOF > path.el
+(setq load-path (cons "." load-path) byte-compile-warnings nil)
+EOF
+if test "${APPEND_LOAD_PATH}" != ""
+then
+	cat << EOF >> path.el
+(setq load-path (append ${APPEND_LOAD_PATH} load-path))
+EOF
+fi
+
+echo ${FLAVOR} ${FLAGS} ${FILES} >> ${LOG}
+"${FLAVOR}" ${FLAGS} ${FILES} >> ${LOG} 2>&1
+egrep -s -e "While compiling|\*\*" ${LOG} || /bin/true
+echo install/${PACKAGE}: Deleting ${LOG}
+rm -f path.el ${LOG}
+
+exit 0

@@ -1,0 +1,35 @@
+  The file you're currently reading is mostly meant as an introductory
+starter for the various goodies included in debian-el.  Consult the Info
+node `debian-el' for more complete information.
+
+To customize all files in this package, use:
+
+ M-x customize-group [RET] debian-el [RET]
+
+
+Introduction to files in debian-el
+----------------------------------
+
+apt-sources.el provides apt-sources-mode, a major mode to help the
+edition of /etc/apt/sources.list (and suchlike) files.  To use it,
+either open a file named sources.list and it will be autoloaded, or
+add a local variables section to the end of your file to specify the
+mode to be "apt-sources".
+
+apt-utils.el provides an interface to APT. Start things off using e.g.:
+M-x apt-utils-show-package RET emacs21 RET
+
+debian-bug.el provides M-x debian-bug (and variants), to submit bugs
+to the Debian bug tracking system.
+
+deb-view.el presents the contents of debian package archive files for
+viewing (similar to tar-mode).
+
+gnus-BTS.el makes bug numbers clickable in messages viewed in Gnus.
+It expects to see bug references in the form of (for example):
+"#48273", "closes: 238742" or similar.  To use, add the following to
+your .gnus: "(require 'gnus-BTS)".
+
+preseed.el is a major mode for editing debian-installer preseed files.
+
+ -- Peter S Galbraith <psg@debian.org>, Mon Oct 24 21:10:25 2005

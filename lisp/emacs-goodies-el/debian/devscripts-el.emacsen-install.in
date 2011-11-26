@@ -1,0 +1,23 @@
+#! /bin/bash -e
+# /usr/lib/emacsen-common/packages/install/devscripts-el
+
+# Written by Jim Van Zandt <jrv@vanzandt.mv.com>, borrowing heavily
+# from the install scripts for gettext by Santiago Vila
+# <sanvila@ctv.es> and octave by Dirk Eddelbuettel <edd@debian.org>.
+#
+# Patched by Roland Mas <lolando@debian.org> to add support for lists
+# of flavor-dependently included/excluded files
+
+FLAVOR=$1
+STAMPFILE=devscripts.elc
+# We need elserv, flim, apel, etc.  So use full Debian setup of packages
+FLAGS="-q -batch -l path.el -f batch-byte-compile"
+PACKAGE=devscripts-el
+
+# INCLUDED_emacs20=""
+# INCLUDED_emacs21=""
+# INCLUDED_xemacs21=""
+
+# EXCLUDED_emacs20=""
+# EXCLUDED_emacs21=""
+# EXCLUDED_xemacs21=""

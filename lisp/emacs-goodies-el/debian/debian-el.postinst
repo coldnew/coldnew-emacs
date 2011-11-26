@@ -1,0 +1,21 @@
+#!/bin/sh
+# Remove old /etc/50debian-el file that may still be on systems from
+# previous versions of debian-el
+set -e
+
+case "$1" in
+    configure)
+
+        if [ -f /etc/emacs/site-start.d/50debian-el ]; then 
+            rm -f /etc/emacs/site-start.d/50debian-el
+        fi
+        ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+        ;;
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        ;;
+esac
+
+#DEBHELPER#

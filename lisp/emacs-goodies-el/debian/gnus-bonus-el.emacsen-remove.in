@@ -1,0 +1,5 @@
+#!/bin/sh -e
+# /usr/lib/emacsen-common/packages/remove/gnus-bonus-el
+
+FLAVOR=$1
+PACKAGE=gnus-bonus-el

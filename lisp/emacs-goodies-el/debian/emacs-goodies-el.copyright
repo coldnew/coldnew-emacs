@@ -1,0 +1,1205 @@
+This package was first debianized by Roland Mas <lolando@debian.org>
+It is currently maintained by Peter S Galbraith <psg@debian.org>
+
+  This collection of files was assembled by Roland Mas <lolando@debian.org>
+from various messages posted on the gnu.emacs.sources newsgroup, as well as
+from various collections of Emacs Lisp files found on the web.  Some
+authors contacted Roland directly, some users sent me the files by email.
+Most of them are covered by the GNU GPL, but the individual licences can
+vary.  Here is a list of excerpts of the included files covering this
+matter.
+
+  The text of the GNU GPL can be found in /usr/share/common-licenses.
+
+Copyright info for files in emacs-goodies-el
+--------------------------------------------
+
+Author/copyright info for align-string.el:
+,----
+| ;; Copyright (c) 2001 Markus Bjartveit Krüger
+|
+| ;; Author:   Markus Bjartveit Krüger <markusk@pvv.org>
+| [...]
+| ;; X-URL:    http://www.pvv.org/~markusk/align-string.el
+|
+| ;; This is free software; you can redistribute it and/or modify it
+| ;; under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for all.el:
+,----
+| ;;; all.el --- Edit all lines matching a given regexp.
+|
+| ;; Copyright (C) 1985, 1986, 1987, 1992, 1994 Free Software Foundation, Inc.
+| ;; Copyright (C) 1994 Per Abrahamsen
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for apache-mode.el
+from http://www.emacswiki.org/elisp/apache-mode.el
+,----
+| ;;; apache-mode.el --- major mode for editing Apache configuration files
+|
+| ;; Author:    Jonathan Marten  <jonathan.marten@uk.sun.com>
+| ;; Author:    Karl Chen <quarl@nospam.quarl.org>
+| [...]
+| ;;
+| ;; It is free software; you can redistribute it and/or modify it
+| ;; under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for ascii.el:
+,----
+| ;;; ascii --- ASCII code display.
+| 
+| ;; Copyright (C) 1999, 2000, 2001 Vinicius Jose Latorre
+| 
+| ;; This program is free software; you can redistribute it and/or modify it
+| ;; under the terms of the GNU General Public License as published by the Free
+| ;; Software Foundation; either version 2, or (at your option) any later
+| ;; version.
+`----
+
+
+Author/copyright info for auto-fill-inhibit.el:
+,----
+| ;;; auto-fill-mode-inhibit -- finer grained control over
+| ;;;     auto-fill-mode (de)activation
+| ;;; Copyright (c) 2001 Michael Weber <michaelw@debian.org>
+| [...]
+| ;;; This program is free software; you can redistribute it and/or
+| ;;; modify it under the terms of the GNU General Public License
+| ;;; version 2 as published by the Free Software Foundation.
+| [...]
+| ;;; NO-VIRUS CLAUSE:
+| ;;; The intent of this license is to protect free redistribution and
+| ;;; reuse of the source of the licensed distribution, not to prejudice
+| ;;; the authorship rights of programmers of other code to control
+| ;;; their original inventions.
+| ;;;
+| ;;; No portion of this license is to be interpreted as forbidding the
+| ;;; reuse of this code or its constituent parts, algorithms, or
+| ;;; inventions in commercial products.
+| ;;;
+| ;;; Nor shall such inclusion be construed to require the GPLing or
+| ;;; disclosure of any portions of said commercial products other than
+| ;;; those falling under the copyright of the licensed distribution.
+`----
+
+
+Author/copyright info for bar-cursor.el:
+,----
+| ;;; @(#) bar-cursor.el -- package used to switch block cursor to a bar
+| [...]
+| ;; Copyright (C) 2001 by Joseph L. Casadonte Jr.
+| ;; Author:          Joe Casadonte (emacs@northbound-train.com)
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+Author/copyright info for bm.el:
+,----
+| ;; Copyrigth (C) 2000-2010  Jo Odland
+| 
+| ;; Author: Jo Odland <jo.odland(at)gmail.com>
+| 
+| ;; Portions Copyright (C) 2002 by Ben Key
+| ;; Updated by Ben Key <bkey1(at)tampabay.rr.com> on 2002-12-05
+| ;; to add support for XEmacs
+| 
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2, or (at
+| ;; your option) any later version.
+`----
+
+
+Author/copyright info for boxquote.el:
+,----
+| ;;; boxquote.el --- Quote text with a semi-box.
+| ;; Copyright 1999-2009 by Dave Pearson <davep@davep.org>
+| ;; $Revision: 1.37 $
+| 
+| ;; boxquote.el is free software distributed under the terms of the GNU
+| ;; General Public Licence, version 2 or (at your option) any later version.
+`----
+
+
+Author/copyright info for browse-huge-tar.el:
+,----
+| ;;; browse-huge-tar.el --- Browse files in a tarball memory-efficiently.
+| ;; (c) Gareth Owen 1999 (hey I just typed `space' 1999.  Ho ho.)
+| 
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for browse-kill-ring.el:
+,----
+| ;;; browse-kill-ring.el --- interactively insert items from kill-ring
+|
+| ;; Copyright (C) 2001 Colin Walters
+| [...]
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2, or (at
+| ;; your option) any later version.
+`----
+
+
+Author/copyright info for cfengine.el
+http://www.loveshack.ukfsn.org/emacs/cfengine.el
+,----
+;;; cfengine.el --- mode for editing Cfengine files
+|
+|;; Copyright (C) 2003, 2004, 2005  Free Software Foundation, Inc.
+|
+|;; Author: Dave Love <fx@gnu.org>
+|
+|;; GNU Emacs is free software; you can redistribute it and/or modify
+|;; it under the terms of the GNU General Public License as published by
+|;; the Free Software Foundation; either version 2, or (at your option)
+|;; any later version.
+`----
+
+
+Author/copyright info for clipper.el:
+,----
+| ;;; clipper.el --- save strings of data for further use.
+|
+| ;; Copyright (C) 1997-2000 Free Software Foundation, Inc.
+|
+| ;; Author: Kevin A. Burton (burton@openprivacy.org)
+| ;; Maintainer: Kevin A. Burton (burton@openprivacy.org)
+| ;; Location: http://relativity.yi.org
+| [...]
+| ;; This file is [not yet] part of GNU Emacs.
+|
+| ;; This program is free software; you can redistribute it and/or modify it under
+| ;; the terms of the GNU General Public License as published by the Free Software
+| ;; Foundation; either version 2 of the License, or any later version.
+`----
+
+
+Author/copyright info for csv-mode.el:
+ http://centaur.maths.qmul.ac.uk/Emacs/
+ http://centaur.maths.qmul.ac.uk/Emacs/files/csv-mode.el
+,----
+| ;;; csv-mode.el --- major mode for editing comma-separated value files
+| 
+| ;; Copyright (C) 2003, 2004 Francis J. Wright
+| 
+| ;; Author: Francis J. Wright <F.J.Wright at qmul.ac.uk>
+| [...]
+| ;; This package is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for ctypes.el:
+,----
+| ;;; ctypes.el --- Enhanced Font lock support for custom defined types.
+| 
+| ;; Copyright (C) 1997, 1999 Anders Lindgren.
+| 
+| ;; Author: Anders Lindgren <andersl@andersl.com>
+| [...]
+| ;; CTypes is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for coffee.el:
+,----
+| ;;; coffee.el --- Submit a BREW request to an RFC2324-compliant coffee device
+| ;;;
+| ;;; Author: Eric Marsden <emarsden@mail.dotcom.fr>
+| ;;; Version: 0.3
+| ;;; Copyright: (C) 1999, 2003 Eric Marsden
+| ;;; Keywords: coffee brew kitchen-sink can't
+| ;;
+| ;;
+| ;;     This program is free software; you can redistribute it and/or
+| ;;     modify it under the terms of the GNU General Public License as
+| ;;     published by the Free Software Foundation; either version 2 of
+| ;;     the License, or (at your option) any later version.
+`----
+
+
+Author/copyright info for color-theme.el
+,----
+| ;;; color-theme.el --- install color themes
+| 
+| ;; Copyright (C) 1999, 2000  Jonadab the Unsightly One <jonadab@bright.net>
+| ;; Copyright (C) 2000, 2001, 2002, 2003  Alex Schroeder <alex@gnu.org>
+| ;; Copyright (C) 2003, 2004  Xavier Maillard <zedek@gnu-rox.org>
+| 
+| ;; Author: Jonadab the Unsightly One <jonadab@bright.net>
+| ;; Maintainer: Xavier Maillard <zedek@gnu-rox.org>
+| ;; URL: http://www.emacswiki.org/cgi-bin/wiki.pl?ColorTheme
+| 
+| ;; This is free software; you can redistribute it and/or modify it under
+| ;; the terms of the GNU General Public License as published by the Free
+| ;; Software Foundation; either version 2, or (at your option) any later
+| ;; version.
+`----
+
+
+Author/copyright info for dedicated.el:
+,----
+| ;;; dedicated.el --- A very simple minor mode for dedicated buffers
+| 
+| ;; Copyright (C) 2000 Eric Crampton <eric@atdesk.com>
+| 
+| ;; This is free software; you can redistribute it and/or modify it under
+| ;; the terms of the GNU General Public License as published by the Free
+| ;; Software Foundation; either version 2, or (at your option) any later
+| ;; version.
+`----
+
+
+Author/copyright info for df.el:
+,----
+| ;;; df.el --- Hack to display in the mode line space left on devices
+|
+| ;; Copyright (C) 1999 by Association April
+|
+| ;; Author: Benjamin Drieu <bdrieu@april.org>
+| [...]
+| ;; GNU Emacs as this program are free software; you can redistribute
+| ;; them and/or modify them under the terms of the GNU General Public
+| ;; License as published by the Free Software Foundation; either
+| ;; version 2, or (at your option) any later version.
+`----
+
+
+Author/copyright info for dict.el:
+,----
+| ;; dict.el - Emacs interface to dict client
+| ;;
+|
+| ;; Copyright (c) 2002 Max Vasin
+| ;;
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License
+| ;; as published by the Free Software Foundation; either version 2
+| ;; of the License, or (at your option) any later version.
+`----
+
+
+Author/copyright info for diminish.el:
+,----
+| ;; Copyright (C) 1998 Free Software Foundation, Inc.
+|
+| ;; Author: Will Mengarini <seldon@eskimo.com>
+| ;; URL: <http://www.eskimo.com/~seldon>
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for dir-locals.el
+,----
+| ;; Copyright (C) 2005, 2006  Free Software Foundation, Inc.
+| 
+| ;; Author: Dave Love <fx@gnu.org>
+| ;; Keywords: files
+| ;; $Revision: 1.37 $
+| ;; URL: http://www.loveshack.ukfsn.org/emacs
+| 
+| ;; This file is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+| 
+| ;; This file is distributed in the hope that it will be useful,
+| ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+| ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+| ;; GNU General Public License for more details.
+`----
+
+
+Author/copyright info for edit-env.el:
+,----
+| ;;; edit-env.el --- display and edit environment variables
+| 
+| ;; Copyright (C) 2001 Benjamin Rutt
+| 
+| ;; This file is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published
+| ;; by the Free Software Foundation; either version 2, or (at your
+| ;; option) any later version.
+`----
+
+
+Author/copyright info for egocentric.el:
+,----
+| ;;; @(#) egocentric.el --- highlight your name inside emacs buffers
+| [...]
+| ;; Copyright (C) 2001 by Benjamin Drieu
+| ;; Author:	 Benjamin Drieu <bdrieu@april.org>
+| ;; Maintainer:	 Benjamin Drieu <bdrieu@april.org>
+| [...]
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2, or (at
+| ;; your option) any later version.
+`----
+
+Author/copyright info for eproject.el:
+,----
+| ;;; eproject.el --- assign files to projects, programatically
+| ;;
+| ;; Copyright (C) 2008, 2009 Jonathan Rockway <jon@jrock.us>
+| ;;
+| ;; Author: Jonathan Rockway <jon@jrock.us>
+| ;; Maintainer: Jonathan Rockway <jon@jrock.us>
+| [...]
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2 of
+| ;; the License, or (at your option) any later version.
+`----
+
+Author/copyright info for eproject-extras.el
+,----
+| ;;; eproject-extras.el --- various utilities that make eproject more enjoyable
+| 
+| ;; Copyright (C) 2009  Jonathan Rockway
+| 
+| ;; Author: Jonathan Rockway <jon@jrock.us>
+| ;; Keywords: eproject
+| 
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation, either version 3 of the License, or
+| ;; (at your option) any later version.
+`----
+
+
+Author/copyright info for ff-paths.el:
+,----
+| ;;; ff-paths.el - find-file-using-paths searches certain paths to find files.
+|
+| ;; Copyright (C) 1994-2001 Peter S. Galbraith
+|
+| ;; Author:    Peter S. Galbraith <GalbraithP@dfo-mpo.gc.ca>
+| ;;                               <psg@debian.org>
+| [...]
+| ;; This package is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for filladapt.el:
+,----
+| ;;; Adaptive fill
+| ;;; Copyright (C) 1989, 1995-1998 Kyle E. Jones
+| ;;;
+| ;;; This program is free software; you can redistribute it and/or modify
+| ;;; it under the terms of the GNU General Public License as published by
+| ;;; the Free Software Foundation; either version 2, or (at your option)
+| ;;; any later version.
+`----
+
+
+Author/copyright info for floatbg.el:
+,----
+| ;;; floatbg.el --- slowly modify background color
+| ;; Copyright (C) 2001 John Paul Wallington
+| [...]
+| ;; Author:  John Paul Wallington <jpw@shootybangbang.com>
+| [...]
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2, or (at
+| ;; your option) any later version.
+`----
+
+
+Author/copyright info for folding.el
+ http://cvs.sourceforge.net/viewcvs.py/tiny-tools/tiny-tools/lisp/other/
+,----
+| ;;; folding.el --- A folding-editor-like minor mode.
+| ;; Copyright (C) 1994-2004
+| ;;           Jari Aalto, Anders Lindgren, All rights reserved.
+| ;; Copyright (C) 1992, 1993
+| ;;           Jamie Lokier, All rights reserved.
+| [...]
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2 of the
+| ;; License, or (at your option) any later version.
+`----
+
+
+Author/copyright info for framepop.el
+,----
+| ;; Copyright (C) 1993, 1995 Free Software Foundation, Inc.
+| ;; Copyright (C) 2003 Peter S Galbraith
+|
+| ;; Author: David Smith <D.M.Smith@lancaster.ac.uk>
+| ;; Maintainer: Peter S Galbraith <psg@debian.org>
+| [...]
+| ;; This file is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for graphviz-dot-mode.el
+,----
+| ;;; graphviz-dot-mode.el --- Mode for the dot-language used by graphviz (att).
+| 
+| ;; Copyright (C) 2002 - 2005 Pieter Pareit <pieter.pareit@scarlet.be>
+| 
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2 of
+| ;; the License, or (at your option) any later version.
+| [...]
+| ;; Authors: Pieter Pareit <pieter.pareit@scarlet.be>
+| ;;          Rubens Ramos <rubensr AT users.sourceforge.net>
+| ;; Maintainer: Pieter Pareit <pieter.pareit@planetinternet.be>
+`----
+
+
+Author/copyright info for highlight-beyond-fill-column.el:
+,----
+| ;;; highlight-beyond-fill-column.el --- font-lock-add-keywords aid for Emacs
+|
+| ;; Copyright (C) 1985, 1986, 1987, 1992 Free Software Foundation, Inc.
+|
+| ;; Author: Sandip Chitale (sandip.chitale@blazesoft.com)
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for highlight-completion.el:
+,----
+| ;;; highlight-completion.el --- completion with highlighted provisional text
+| ;; Copyright (c) 1991-1996 Mark Haiman, Nick Reingold, John Palmieri
+| ;; Copyright (c) 1997-2001 John Palmieri
+| ;;
+| ;; Author: John Palmieri <palmieri@math.washington.edu>
+| [...]
+| ;; This package is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for highlight-current-line.el:
+,----
+| ;; Copyright (c) 1997 Christoph Conrad
+|
+| ;; Author: Christoph Conrad <Christoph.Conrad@post.rwth-aachen.de>
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for home-end.el:
+,----
+| ;;; home-end.el --- Alternative Home and End commands.
+| ;; Copyright 1996 Kai Grossjohann and Toby Speight
+| ;; Copyright 2002 Toby Speight
+| 
+| ;; home-end.el is free software distributed under the terms of the GNU
+| ;; General Public Licence, version 3.
+`----
+
+
+Author/copyright info for htmlize.el:
+,----
+| ;; Copyright (C) 1997,1998,1999,2000 Hrvoje Niksic
+|
+| ;; Author: Hrvoje Niksic <hniksic@xemacs.org>
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for initsplit.el:
+,----
+| ;;; initsplit --- code to split customizations into different files
+|
+| ;; Copyright (C) 2000, 2001 John Wiegley
+|
+| ;; Author: John Wiegley <johnw@gnu.org>
+| [...]
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2, or (at
+| ;; your option) any later version.
+`----
+
+
+Author/copyright info for joc-toggle-buffer.el (eenamed from toggle-buffer.el)
+,----
+| ;;; @(#) toggle-buffer.el --- flips back and forth between two buffers
+| [...]
+| ;; Copyright (C) 2001 by Joseph L. Casadonte Jr.
+|
+| ;; Author:          Joe Casadonte (emacs@northbound-train.com)
+| ;; Maintainer:      Joe Casadonte (emacs@northbound-train.com)
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for joc-toggle-case.el (renamed from toggle-case.el):
+,----
+| ;;; **************************************************************************
+| ;; @(#) toggle-case.el -- toggles case at poitn like ~ in vi
+| [...]
+| ;; Copyright (C) 2001 by Joseph L. Casadonte Jr.
+| ;; Author:          Joe Casadonte (emacs@northbound-train.com)
+| ;; Maintainer:      Joe Casadonte (emacs@northbound-train.com)
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for keydef.el:
+,----
+| ;;; keydef.el --- a simpler way to define keys, with kbd syntax
+|
+| ;; Emacs Lisp Archive Entry
+| ;; Filename: keydef.el
+| ;; Author: Michael John Downes <mjd@ams.org>
+| [...]
+| ;; This program was placed in the public domain on 2001/01/18 by the
+| ;; Author. The program is distributed in the hope that it will be
+| ;; useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+| ;; of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+`----
+
+
+Author/copyright info for keywiz.el:
+,----
+| ;;; keywiz.el --- Emacs key sequence quiz
+|
+| ;; Copyright (C) 2002 Jesper Harder
+|
+| ;; Author: Jesper Harder <harder@ifa.au.dk>
+| [...]
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2 of
+| ;; the License, or (at your option) any later version.
+`----
+
+
+Author/copyright info for lcomp.el
+,----
+| ;;; lcomp.el --- list-completion hacks!
+| 
+| ;; Copyright (C) 2002 by Taiki SUGAWARA <taiki.s@cityfujisawa.ne.jp>
+| 
+| ;; Author: Taiki SUGAWARA <taiki.s@cityfujisawa.ne.jp>
+| 
+| ;; This file is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for maplev.el and maplev.texi
+,----
+| ;;; maplev.el --- Maple mode for GNU Emacs
+| ;; Copyright (C) 2001,2003 Joseph S. Riel
+| 
+| ;; Authors:    Joseph S. Riel <joer@k-online.com>
+| ;;             and Roland Winkler <Roland.Winkler@physik.uni-erlangen.de>
+| ;; X-URL:      http://www.k-online.com/~joer/maplev/maplev.html
+| 
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2 of the
+| ;; License, or (at your option) any later version.
+`----
+
+
+Author/copyright info for map-lines.el:
+,----
+| ;; Copyright (C) 2002  Andreas Fuchs <asf@void.at>
+|
+| ;; Author: Andreas Fuchs <asf@void.at>
+| [...]
+| ;; This file is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for matlab.el
+,----
+| ;; Copyright (C) 1997-1999 Eric M. Ludlam
+| ;; Copyright (C) 1991-1997 Matthew R. Wette
+| ;;
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for markdown-mode.el:
+,----
+| ;; Author: Jason Blevins <jrblevin@sdf.lonestar.org>
+| ;; Created: May 24, 2007
+| ;; $Id: emacs-goodies-el.copyright,v 1.37 2011-08-16 16:12:50 psg Exp $
+| ;; Keywords: Markdown major mode
+| ;;
+| ;; Copyright (C) 2007 Jason Blevins
+| ;;
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for marker-visit.el:
+,----
+| ;;; marker-visit.el --- navigate through a buffer's marks in order
+| 
+| ;; Copyright (C) 2001 Benjamin Rutt
+| 
+| ;; This file is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published
+| ;; by the Free Software Foundation; either version 2, or (at your
+| ;; option) any later version.
+`----
+
+
+Author/copyright info for minibuf-electric.el
+,----
+| ;; Extracted from minibuf.el --- Minibuffer functions for XEmacs
+| ;; Copyright (C) 1992, 1993, 1994, 1997 Free Software Foundation, Inc.
+| ;; Copyright (C) 1995 Tinker Systems.
+| ;; Copyright (C) 1995, 1996, 2000 Ben Wing.
+| 
+| ;; Modified by Karl Hegbloom for GNU Emacs.
+| ;; GPL
+`----
+
+
+Author/copyright info for minibuffer-complete-cycle.el
+,----
+| ;; Copyright © 1997,1998,2000,2003 Kevin Rodgers
+|
+| ;; Author: Kevin Rodgers <ihs_4664@yahoo.com>
+| [...]
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2 of
+| ;; the License, or (at your option) any later version.
+`----
+
+Author/copyright info for miniedit.el
+,----
+| ;; Copyright (C) 2001, 2002 Free Software Foundation, Inc.
+| ;; Author(s): Deepak Goel <deego3@gmail.com>,
+| ;;            Christoph Conrad < christoph.conrad@gmx.de>
+| 
+| ;; This is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for mutt-alias.el:
+,----
+| ;;; mutt-alias.el --- Lookup/insert mutt mail aliases.
+| ;; Copyright 1999,2000 by Dave Pearson <davep@davep.org>
+| [...]
+| ;; mutt-alias is free software distributed under the terms of the GNU
+| ;; General Public Licence, version 2. For details see the file COPYING.
+`----
+
+
+Author/copyright info for muttrc-mode.el:
+,----
+| ;;; muttrc-mode.el --- Major mode to edit muttrc under Emacs
+|
+| ;;; Copyright (C) 2000, 2001, 2002 Laurent Pelecq
+| ;;;
+| ;;; Author: Laurent Pelecq <laurent.pelecq@soleil.org>
+|
+| ;;; This program is free software; you can redistribute it and/or modify
+| ;;; it under the terms of the GNU General Public License as published by
+| ;;; the Free Software Foundation; either version 2, or (at your option)
+| ;;; any later version.
+`----
+
+
+Author/copyright info for obfusurl.el:
+,----
+| ;; Copyright 2001-2008 by Dave Pearson <davep@davep.org>
+| ;; $Revision: 1.37 $
+| 
+| ;; obfusurl.el is free software distributed under the terms of the GNU
+| ;; General Public Licence, version 2 or (at your option) any later version.
+`----
+
+
+Author/copyright info for pack-windows.el
+,----
+| ;;; pack-windows.el --- Resize all windows to display as much info as possible.
+| 
+| ;; Copyright (C) 2000 Michel Schinz
+|           
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2 of
+| ;; the License, or (at your option) any later version.
+`----
+
+
+Author/copyright info for perldoc.el:
+,----
+| ;;; perldoc.el --- Show help for Perl functions, builtins, and modules.
+|
+| ;;
+| ;; Copyright (C) 2000-2002 Steve Kemp <skx@tardis.ed.ac.uk>
+| ;; Copyright (C) 2003, 2005 Peter S Galbraith <psg@debian.org>
+| ;; Copyright (C) 2008-2009 Ben Voui <intrigeri@boum.org>
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for pp-c-l.el:
+,----
+| ;; Filename: pp-c-l.el
+| ;; Description: Display Control-l characters in a buffer in a pretty way
+| ;; Author: Drew Adams
+| ;; Maintainer: Drew Adams
+| ;; Copyright (C) 2007-2010, Drew Adams, all rights reserved.
+| [...]
+| ;; URL: http://www.emacswiki.org/cgi-bin/wiki/pp-c-l.el
+| [...]
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2, or
+| ;; (at your option) any later version.
+`----
+
+
+Author/copyright info for pod-mode.el:
+,----
+| ;;; pod-mode.el --- Major mode for editing .pod-files
+|
+| ;;; Copyright 2003-2005 Steffen Schwigon
+|
+| ;;; Author: Steffen Schwigon <schwigon@webit.de>
+| ;;; Version: 0.4
+| ;;; CVS Version: $Id: emacs-goodies-el.copyright,v 1.37 2011-08-16 16:12:50 psg Exp $
+| ;;; Keywords: perl pod
+| ;;; X-URL: http://search.cpan.org/~schwigon/pod-mode/
+|
+| ;;; This program is free software; you can redistribute it and/or modify
+| ;;; it under the terms of the GNU General Public License as published by
+| ;;; the Free Software Foundation; either version 2, or (at your option)
+| ;;; any later version.
+`----
+
+
+Author/copyright info for projects.el:
+,----
+| ;;; projects.el -- Project-based buffer name management
+|
+| ;; Copyright 1998 Naggum Software
+|
+| ;; Author: Erik Naggum <erik@naggum.no>
+| ;; Keywords: internal
+|
+| ;; This file is not part of GNU Emacs, but distributed under the same
+| ;; conditions as GNU Emacs, and is useless without GNU Emacs.
+|
+| ;; GNU Emacs is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for protbuf.el:
+,----
+| ;;; protbuf.el --- protect buffers from accidental killing
+|
+| ;; Copyright (C) 1994, 1999 Noah S. Friedman
+|
+| ;; Author: Noah Friedman <friedman@splode.com>
+| ;; Maintainer: friedman@splode.com
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for protocols.el:
+,----
+| ;;; protocols.el --- Protocol database access functions.
+| ;; Copyright 2000-2008 by Dave Pearson <davep@davep.org>
+| ;; $Revision: 1.37 $
+| 
+| ;; protocols.el is free software distributed under the terms of the GNU
+| ;; General Public Licence, version 2 or (at your option) any later version.
+| ;; For details see the file COPYING.
+`----
+
+Author/copyright info for quack.el:
+
+,----
+| ;;; quack.el --- Enhanced support for editing and running Scheme code
+| ;; Copyright 2002-2009 by Neil Van Dyke <neil@neilvandyke.org>
+| [...]
+| ;; This is free software; you can redistribute it and/or modify it under the
+| ;; terms of the GNU General Public License as published by the Free Software
+| ;; Foundation; either version 2, or (at your option) any later version.
+`----
+
+Author/copyright info for rfcview.el:
+,----
+| ;;; rfcview.el -- view IETF RFCs with readability-improved formatting
+| 
+| ;; Copyright (C) 2001-2002 Neil W. Van Dyke
+| 
+| ;; Author:   Neil W. Van Dyke <neil@neilvandyke.org>
+| 
+| ;; This is free software; you can redistribute it and/or modify it under the
+| ;; terms of the GNU General Public License as published by the Free Software
+| ;; Foundation; either version 2, or (at your option) any later version.
+`----
+
+
+Author/copyright info for services.el:
+,----
+| ;;; services.el --- Services database access functions.
+| ;; Copyright 2000-2008 by Dave Pearson <davep@davep.org>
+| ;; $Revision: 1.37 $
+| 
+| ;; services.el is free software distributed under the terms of the GNU
+| ;; General Public Licence, version 2 or (at your option) any later version.
+`----
+
+
+Author/copyright info for session.el
+,----
+| ;;; session.el --- use variables, registers and buffer places across sessions
+|
+| ;; Copyright 1996-1999, 2001-2003 Free Software Foundation, Inc.
+| ;;
+| ;; Author: Christoph Wedler <wedler@users.sourceforge.net>
+| ;; X-URL: http://emacs-session.sourceforge.net/
+|
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for setnu.el:
+,----
+| ;;; vi-style line number mode for Emacs
+| ;;; (requires Emacs 19.29 or later, or XEmacs 19.14 or later)
+| ;;; Copyright (C) 1994, 1995, 1997 Kyle E. Jones
+| ;;;
+| ;;; This program is free software; you can redistribute it and/or modify
+| ;;; it under the terms of the GNU General Public License as published by
+| ;;; the Free Software Foundation; either version 2, or (at your option)
+| ;;; any later version.
+`----
+
+
+Author/copyright info for shell-command.el:
+,----
+| ;;; shell-command.el --- enabling (tab)completion for shell-command
+| 
+| ;; Copyright (C) 1998-2003 TSUCHIYA Masatoshi <tsuchiya@namazu.org>
+| 
+| ;; Author: TSUCHIYA Masatoshi <tsuchiya@namazu.org>
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for show-wspace.el:
+,----
+| ;;; show-wspace.el --- Highlight whitespace of various kinds.
+|
+| ;; Author: Peter Steiner <unistein@isbe.ch>, Drew Adams
+| ;; Maintainer: Drew Adams
+| ;; Copyright (C) 2000-2007, Drew Adams, all rights reserved.
+| ;; [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`---
+
+
+Author/copyright info for silly-mail.el:
+,----
+| ;;; silly-mail.el --- generate bozotic mail headers
+|
+| ;; Compilation Copyright (C) 1993, 94, 95, 96, 97, 98, 99, 2000 Noah S. Friedman
+|
+| ;; Contributors: Noah Friedman, Jamie Zawinski, Jim Blandy,
+| ;;               Thomas Bushnell, Roland McGrath,
+| ;;               and a cast of dozens.
+| ;; Maintainer: Noah Friedman <friedman@splode.com>
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for slang-mode.el
+ http://home.mchsi.com/~jmrobert5/files/slang-mode.el
+,----
+| ;;; slang-mode.el --- a major-mode for editing slang scripts
+| 
+| ;; Copyright (C) 1993, 1994, 1995 Free Software Foundation, Inc.
+| 
+| ;; Modified By: Joe Robertson <jmrobert@sbcs.com>
+| ;; Modified From: tcl-mode.el
+| ;; 
+| ;; Original Author: Gregor Schmid <schmid@fb3-s7.math.tu-berlin.de>
+| ;; Keywords: languages, processes, tools
+| 
+| ;; This file is part of GNU Emacs.
+| 
+| ;; GNU Emacs is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for tabbar.el:
+,----
+| ;;; tabbar.el --- Display a tab bar in the header line
+| 
+| ;; Copyright (C) 2003 David Ponce
+| 
+| ;; Author: David Ponce <david@dponce.com>
+| ;; Maintainer: David Ponce <david@dponce.com>
+| [...]
+| ;; This file is not part of GNU Emacs.
+| 
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2, or (at
+| ;; your option) any later version.
+`----
+
+
+Author/copyright info for tail.el:
+,----
+| ;;; tail.el --- Tail files within Emacs
+|
+| ;; Copyright (C) 2000 by Benjamin Drieu
+|
+| ;; Author: Benjamin Drieu <bdrieu@april.org>
+| [...]
+| ;; This program as GNU Emacs are free software; you can redistribute
+| ;; them and/or modify them under the terms of the GNU General Public
+| ;; License as published by the Free Software Foundation; either
+| ;; version 2, or (at your option) any later version.
+`----
+
+
+Author/copyright info for tc.el:
+,----
+| ;; trivial-cite -- cite text with proper filling
+| [...]
+| ;; This program is copyright (c) 1998 Lars R. Clausen
+| [...]
+| ;; Author: Lars R. Clausen <lrclause@cs.uiuc.edu>
+| [...]
+| ;; trivial-cite is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for tlc.el
+,----
+| ;; Copyright (c) 1997, 1998 by The MathWorks, Inc.
+| ;;
+| ;; This program is derived from free software; you can redistribute it
+| ;; and/or modify it under the terms of the GNU General Public License
+| ;; as published by the Free Software Foundation; either version 2, or
+| ;; (at your option) any later version.
+`----
+
+
+Author/copyright info for thinks.el:
+,----
+| ;;; thinks.el --- Insert text in a think bubble.
+| ;; Copyright 2000-2008 by Dave Pearson <davep@davep.org>
+| ;; $Revision: 1.37 $
+| 
+| ;; thinks.el is free software distributed under the terms of the GNU General
+| ;; Public Licence, version 2 or (at your option) any later version. For
+| ;; details see the file COPYING.
+`----
+
+
+Author/copyright info for tld.el:
+,----
+| ;;; tld.el --- TLD lookup tool.
+| ;; Copyright 2000-2008 by Dave Pearson <davep@davep.org>
+| ;; $Revision: 1.37 $
+| 
+| ;; tld.el is free software distributed under the terms of the GNU General
+| ;; Public Licence, version 2 or (at your option) any later version. For
+| ;; details see the file COPYING.
+`----
+
+
+Author/copyright info for todoo.el:
+,----
+| ;; todoo.el -- Major mode for editing TODO files
+|
+| ;; Copyright (C) 1999 Daniel Lundin <daniel@codefactory.se>
+| [...]
+| ;; This is free software; you can redistribute it and/or modify it
+| ;; under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for toggle-option.el:
+,----
+| ;;; toggle-option.el --- easily toggle frequently toggled options
+|
+| ;; Copyright (C) 2001 Cyprian Laskowski
+|
+| ;; Author: Cyprian Laskowski <swagbelly@yahoo.com>
+| [...]
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2, or (at
+| ;; your option) any later version.
+`----
+
+
+Author/copyright info for twiddle.el:
+,----
+| ;;; twiddle.el --- mode-line display hack
+|
+| ;; Copyright (C) 1997 Noah S. Friedman
+|
+| ;; Author: Noah Friedman <friedman@prep.ai.mit.edu>
+| ;; Maintainer: friedman@prep.ai.mit.edu
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for under.el:
+,----
+| ;; Copyright (C) 1998 by Benjamin Drieu
+| ;; Author:	 Benjamin Drieu <bdrieu@april.org>
+| ;; Maintainer:	 Benjamin Drieu <bdrieu@april.org>
+| [...]
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2, or (at
+| ;; your option) any later version.
+`----
+
+Author/copyright info for upstart-mode.el:
+,----
+| ;;; upstart-mode.el --- Syntax highlighting for upstart
+| ;;;
+| ;;; Copyright © 2010 Stig Sandbeck Mathisen <ssm@debian.org>
+| 
+| ;;; This program is free software; you can redistribute it and/or
+| ;;; modify it under the terms of the GNU General Public License as
+| ;;; published by the Free Software Foundation; either version 2 of the
+| ;;; License, or (at your option) any later version.
+`----
+
+Author/copyright info for xrdb-mode.el:
+,----
+| ;;; xrdb-mode.el --- mode for editing X resource database files
+|
+| ;; Copyright (C) 1998,1999,2000 Free Software Foundation, Inc.
+|
+| ;; Author:        1994-2002 Barry A. Warsaw
+| ;; Maintainer:    barry@python.org
+| [...]
+| ;; This program is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License
+| ;; as published by the Free Software Foundation; either version 2
+| ;; of the License, or (at your option) any later version.
+`----

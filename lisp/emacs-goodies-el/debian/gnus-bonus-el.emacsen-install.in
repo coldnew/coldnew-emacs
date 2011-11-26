@@ -1,0 +1,27 @@
+#! /bin/bash -e
+# /usr/lib/emacsen-common/packages/install/gnus-bonus-el
+
+# Written by Jim Van Zandt <jrv@vanzandt.mv.com>, borrowing heavily
+# from the install scripts for gettext by Santiago Vila
+# <sanvila@ctv.es> and octave by Dirk Eddelbuettel <edd@debian.org>.
+
+FLAVOR=$1
+PACKAGE=gnus-bonus-el
+STAMPFILE=gnus-junk.elc
+APPEND_LOAD_PATH="'(\"/usr/share/emacs/site-lisp/gnus/lisp/\")"
+
+# INCLUDED_emacs20=""
+# INCLUDED_emacs21=""
+# INCLUDED_xemacs21=""
+
+# EXCLUDED_emacs20=""
+# EXCLUDED_emacs21=""
+# EXCLUDED_xemacs21=""
+EXCLUDED_emacs_snapshot="nnnil.el spam-stat.el"
+EXCLUDED_emacs22="nnnil.el spam-stat.el"
+EXCLUDED_emacs23="nnnil.el spam-stat.el"
+
+if [ ${FLAVOR} = emacs20 ]; then 
+    echo "Skipping byte-compilation for emacs20"
+    exit 0;
+fi

@@ -1,0 +1,41 @@
+#!/bin/sh -e
+## 50_gnus-filterhist.dpatch by Jaakko Kangasharju <ashar@iki.fi>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Set font before turning buffer read-only (Fixes #331234)
+
+if [ $# -ne 1 ]; then
+    echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+    exit 1
+fi
+
+[ -f debian/patches/00patch-opts ] && . debian/patches/00patch-opts
+patch_opts="${patch_opts:--f --no-backup-if-mismatch}"
+
+case "$1" in
+       -patch) patch $patch_opts -p1 < $0;;
+       -unpatch) patch $patch_opts -p1 -R < $0;;
+        *)
+                echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+                exit 1;;
+esac
+
+exit 0
+
+@DPATCH@
+diff -urNad ../emacs-goodies-el/elisp/gnus-bonus-el/gnus-filterhist.el emacs-goodies-el/elisp/gnus-bonus-el/gnus-filterhist.el
+--- ../emacs-goodies-el/elisp/gnus-bonus-el/gnus-filterhist.el	2003-10-17 23:20:53.000000000 +0300
++++ emacs-goodies-el/elisp/gnus-bonus-el/gnus-filterhist.el	2005-10-13 20:59:18.000000000 +0300
+@@ -188,9 +188,9 @@
+ 				)
+ 			    )))
+ 		      (setq nnmail-session-split-history my-session-split-history)
+-		  ))))
+-	(add-text-properties (point-min) (point-max)
+-			     '(face gnus-filterhist-face-1))
++		  ))
++		(add-text-properties (point-min) (point-max)
++				     '(face gnus-filterhist-face-1))))
+ 	(switch-to-buffer buf)
+ 	(if gnus-filter-history-popup
+ 	    (pop-to-buffer "*Filter History*")

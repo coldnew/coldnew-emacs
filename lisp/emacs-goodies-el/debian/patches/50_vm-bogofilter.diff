@@ -1,0 +1,225 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 50_vm-bogofilter.dpatch by  <psg@mixed>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad emacs-goodies-el~/elisp/vm-bonus-el/vm-bogofilter.el emacs-goodies-el/elisp/vm-bonus-el/vm-bogofilter.el
+--- emacs-goodies-el~/elisp/vm-bonus-el/vm-bogofilter.el	2009-11-14 13:25:59.000000000 -0500
++++ emacs-goodies-el/elisp/vm-bonus-el/vm-bogofilter.el	2009-11-14 13:28:12.000000000 -0500
+@@ -1,6 +1,4 @@
+-;;; vm-bogofilter.el version 1.1.4
+-;;
+-;; An interface between the VM mail reader and the bogofilter spam filter.
++;;; vm-bogofilter.el --- Interfaces VM with the bogofilter spam filter.
+ ;;
+ ;; Copyright (C) 2003-2006 by Bjorn Knutsson
+ ;;
+@@ -26,7 +24,13 @@
+ ;; along with this program; if not, write to the Free Software
+ ;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ ;;
+-;;; Version history:
++;;; History:
++;; 
++;; v 1.1.5: Peter S. Galbraith <psg@debian.org>
++;;        * checkdoc clean.
++;;        * autoload tag for `vm-bogofilter-setup'
++;;        * Don't invoke `vm-bogofilter-setup' upon loading as that is against
++;;          coding convention.
+ ;; v 1.1.4: Change in the way bogofilter is called
+ ;;        * No longer uses formail to process mails
+ ;;        * Slightly improved error handling
+@@ -39,7 +43,7 @@
+ ;;          Automatically called on loading, but can be called again
+ ;;          to re-initialize the vm-bogofilter setup
+ ;; v 1.1.2: Borg assimilation version (12-Sep-2003)
+-;;        * Great minds think alike. Olivier Cappe independently 
++;;        * Great minds think alike. Olivier Cappe independently
+ ;;          created his own version of vm-bogofilter.el based on
+ ;;          vm-spamassassin.el with the same basic functions.
+ ;;          He submitted a patch to my version to harmonize them.
+@@ -69,14 +73,15 @@
+ ;; v 1.0: initial release
+ ;;        * First release, based on Markus Mohnen's vm-spamassassin
+ ;;
+-;;
++;;; Commentary:
++;; 
+ ;; To use this program, you need reasonably recent versions of VM from
+ ;; http://www.wonderworks.com/vm) and bogofilter from
+ ;; http://sourceforge.net/projects/bogofilter/
+ ;;
+ ;; This version of the interface has been developed for, and tested
+ ;; with, VM version 7.17 and later, and bogofilter version 0.17.4 and
+-;; later. Some features used /require/ bogofilter version 0.15.0 and
++;; later.  Some features used /require/ bogofilter version 0.15.0 and
+ ;; later but no testing of versions earlier than 0.17.4 has been done.
+ ;; It has been tested with bogofilter versions up to 0.93.2
+ ;;
+@@ -88,6 +93,7 @@
+ ;;  ~/.vm startup file
+ ;;
+ ;;      (require 'vm-bogofilter)
++;;      (vm-bogofilter-setup)
+ ;;
+ ;;
+ ;;; Usage:
+@@ -193,43 +199,44 @@
+   :type 'string)
+ 
+ (defcustom vm-bogofilter-program-options "-u -p -e"
+-  "*Options for the bogofilter program. Since we use bogofilter as a
+-filter, '-p' must be one of the options, while '-e' tells bogofilter
+-that it is embedded, and thus should not signal spam/ham with return
+-values.
++  "*Bogofilter program options.
++Since we use bogofilter as a filter, '-p' must be one of the
++options, while '-e' tells bogofilter that it is embedded, and
++thus should not signal spam/ham with return values.
+ * The flag '-u' controls if bogofilter automatically learns from its own
+-classification. You may not want to use this flag if bogofilter still is
++classification.  You may not want to use this flag if bogofilter still is
+ learning to classify, or if you do not have the discipline to correct every
+ mis-classification."
+   :group 'vm-bogofilter
+   :type 'string)
+ 
+ (defcustom vm-bogofilter-program-mbox "-M"
+-  "*Options for the bogofilter program. This flags tells bogofilter
+-how to process mailboxes, i.e., multiple messages."
++  "*Bogofilter program mailbox option.
++This flags tells bogofilter how to process mailboxes, i.e., multiple messages."
+   :group 'vm-bogofilter
+   :type 'string)
+ 
+ (defcustom vm-bogofilter-program-options-unspam "-Sn"
+-  "*Options for the bogofilter program when declaring a spam-marked
+-message as clean. The default, '-Sn', assumes that bogofilter already
+-has trained itself on the message, e.g. by running it with '-u' during
+-classification. If this is the initial training, use '-n' instead."
++  "*Bogofilter program option for declaring a spam-marked message as clean.
++The default, '-Sn', assumes that bogofilter already has trained
++itself on the message, e.g. by running it with '-u' during
++classification.  If this is the initial training, use '-n'
++instead."
+   :group 'vm-bogofilter
+   :type 'string)
+ 
+ (defcustom vm-bogofilter-program-options-spam "-Ns"
+-  "*Options for the bogofilter program when declaring a clean-marked
+-message as spam. The default, '-Ns', assumes that bogofilter already
+-has trained itself on the message, e.g. by running it with '-u' during
+-classification. If this is the initial training, use '-s' instead."
++  "*Bogofilter program option for declaring a clean-marked message as spam.
++The default, '-Ns', assumes that bogofilter already has trained
++itself on the message, e.g. by running it with '-u' during
++classification.  If this is the initial training, use '-s'
++instead."
+   :group 'vm-bogofilter
+   :type 'string)
+ 
+ (defcustom vm-bogofilter-program-options-reclassify "-p -e"
+-  "*Options for the bogofilter program when declaring a clean-marked
+-message as spam.
+-*See vm-bogofilter-program-options for a discussion of the options."
++  "*Bogofilter program option for declaring a clean-marked message as spam.
++See vm-bogofilter-program-options for a discussion of the options."
+   :group 'vm-bogofilter
+   :type 'string)
+ 
+@@ -239,18 +246,20 @@
+   :type 'string)
+ 
+ (defcustom vm-bogofilter-formail-program-options "-s"
+-  "*Options for the 'vm-bogofilter-formail-program'. After this
+-arguments, the name of the bogofilter program will be passed."
++  "*Options for the 'vm-bogofilter-formail-program'.
++After this arguments, the name of the bogofilter program will be passed."
+   :group 'vm-bogofilter
+   :type 'string)
+ 
+ (defcustom vm-bogofilter-invoke-through-vm t
+-  "*When true, bogofilter will be invoked through the
+-vm-retrieved-spooled-mail-hook. If you have procmail or some other
+-MTA configured to filter through bogofilter already, then set this to
+-nil to speed vm-startup.
+-*NOTE: This variable is only consulted on startup, so if you change
+-it, it will take effect the next time vm-bogofilter is loaded, or
++  "*Whether to invoke bogofilter through vm-retrieved-spooled-mail-hook.
++When true, bogofilter will be invoked through the
++vm-retrieved-spooled-mail-hook.  If you have procmail or some other MTA
++configured to filter through bogofilter already, then set this to nil to
++speed vm-startup.
++
++*NOTE: This variable is only consulted on startup, so if you change it,
++it will take effect the next time vm-bogofilter is loaded, or
+ vm-bogofilter-setup is called."
+   :group 'vm-bogofilter
+   :type 'boolean)
+@@ -263,8 +272,8 @@
+   :type 'boolean)
+ 
+ (defun vm-bogofilter-arrived-message ()
+-  "The function used to do the actual filtering. It is used as a value for
+-vm-retrieved-spooled-mail-hook."
++  "Function used to do the actual filtering.
++It is used as a value for vm-retrieved-spooled-mail-hook."
+   (save-excursion
+     (vm-save-restriction
+      (let ((tail-cons (vm-last vm-message-list))
+@@ -295,7 +304,7 @@
+   )
+ 
+ (defun vm-bogofilter-is-spam-old ()
+-  "Declare that a clean-marked message is spam"
++  "Declare that a clean-marked message is spam."
+   (interactive)
+   (vm-follow-summary-cursor)
+   (vm-pipe-message-to-command
+@@ -303,7 +312,7 @@
+   )
+ 
+ (defun vm-bogofilter-is-clean-old ()
+-  "Declare that a spam-marked message is clean"
++  "Declare that a spam-marked message is clean."
+   (interactive)
+   (vm-follow-summary-cursor)
+   (vm-pipe-message-to-command
+@@ -311,15 +320,15 @@
+   )
+ 
+ (defun vm-bogofilter-is-spam ()
+-  "Declare that a clean-marked message is spam, and re-tag message"
++  "Declare that a clean-marked message is spam, and re-tag message."
+   (interactive)
+   (vm-bogofilter-retag "spam" vm-bogofilter-program-options-reclassify vm-bogofilter-program-options-spam)
+   (if vm-bogofilter-delete-spam
+-      (vm-delete-message 1)) 
++      (vm-delete-message 1))
+   )
+ 
+ (defun vm-bogofilter-is-clean ()
+-  "Declare that a spam-marked message is clean, and re-tag message"
++  "Declare that a spam-marked message is clean, and re-tag message."
+   (interactive)
+   (vm-bogofilter-retag "clean" vm-bogofilter-program-options-reclassify vm-bogofilter-program-options-unspam)
+   )
+@@ -374,15 +383,13 @@
+ 	)))))
+ 
+ ;;; Hooking into VM
+-
++;;;###autoload
+ (defun vm-bogofilter-setup ()
+   "Initialize vm-bogofilter."
+   (interactive)
+   (if vm-bogofilter-invoke-through-vm
+       (add-hook 'vm-retrieved-spooled-mail-hook 'vm-bogofilter-arrived-message)
+       (remove-hook 'vm-retrieved-spooled-mail-hook 'vm-bogofilter-arrived-message)))
+-
+-(vm-bogofilter-setup)
+   
+ (provide 'vm-bogofilter)
+ 

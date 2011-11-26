@@ -1,0 +1,186 @@
+#!/bin/sh -e
+## 3_bar-cursor-customize.dpatch by Peter S Galbraith <psg@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+if [ $# -ne 1 ]; then
+    echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+    exit 1
+fi
+
+[ -f debian/patches/00patch-opts ] && . debian/patches/00patch-opts
+patch_opts="${patch_opts:--f --no-backup-if-mismatch}"
+
+case "$1" in
+       -patch) patch $patch_opts -p1 < $0;;
+       -unpatch) patch $patch_opts -p1 -R < $0;;
+        *)
+                echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+                exit 1;;
+esac
+
+exit 0
+
+@DPATCH@
+diff -urNad /home/psg/emacs/emacs-goodies-el/emacs-goodies-el/elisp/emacs-goodies-el/bar-cursor.el emacs-goodies-el/elisp/emacs-goodies-el/bar-cursor.el
+--- /home/psg/emacs/emacs-goodies-el/emacs-goodies-el/elisp/emacs-goodies-el/bar-cursor.el	2003-10-05 15:12:44.000000000 -0400
++++ emacs-goodies-el/elisp/emacs-goodies-el/bar-cursor.el	2003-10-05 15:14:54.000000000 -0400
+@@ -3,7 +3,7 @@
+ 
+ ;; This file is not part of Emacs
+ 
+-;; Copyright (C) 2001 by Joseph L. Casadonte Jr.
++;; Copyright (C) 2001, 2003 by Joseph L. Casadonte Jr.
+ ;; Author:          Joe Casadonte (emacs@northbound-train.com)
+ ;; Maintainer:      Joe Casadonte (emacs@northbound-train.com)
+ ;; Created:         July 1, 2001
+@@ -44,13 +44,17 @@
+ ;;
+ ;;  To add a directory to your load-path, use something like the following:
+ ;;
+-;;      (add-to-list 'load-path (expand-file-name "/some/load/path"))
++;;     (add-to-list 'load-path (expand-file-name "/some/load/path"))
+ 
+ ;;; Usage:
+ ;;
+ ;;  M-x `bar-cursor-mode'
+ ;;      Toggles bar-cursor-mode on & off.  Optional arg turns
+-;;      bar-cursor-mode on iff arg is a positive integer.
++;;      bar-cursor-mode on if arg is a positive integer.
++;;
++;;  You may also use the custom interface to enable or disable it:
++;;
++;;  M-x customize-variable [RET] bar-cursor-mode [RET]
+ 
+ ;;; To Do:
+ ;;
+@@ -60,6 +64,9 @@
+ ;;
+ ;;  The basis for this code comes from Steve Kemp by way of the
+ ;;  NTEmacs mailing list.
++;;
++;;  Peter S. Galbraith <psg@debian.org> contributed a patch making
++;;  bar-cursor-mode customizable.
+ 
+ ;;; Comments:
+ ;;
+@@ -85,7 +92,9 @@
+ (eval-when-compile
+   ;; silence the old byte-compiler
+   (defvar byte-compile-dynamic nil)
+-  (set (make-local-variable 'byte-compile-dynamic) t))
++  (set (make-local-variable 'byte-compile-dynamic) t)
++  (require 'advice)
++  (defvar bar-cursor-mode))
+ 
+ ;;; **************************************************************************
+ ;;; ***** version related routines
+@@ -109,43 +118,43 @@
+ ;;; **************************************************************************
+ ;;; ***** real functions
+ ;;; **************************************************************************
+-(defvar bar-cursor-mode nil "Non-nil if 'bar-cursor-mode' is enabled.")
+ 
+-;;; --------------------------------------------------------------------------
+ ;;;###autoload
+ (defun bar-cursor-mode (&optional arg)
+-  "Toggle use of 'bar-cursor-mode'.
+-
++  "Toggle use of variable `bar-cursor-mode'.
+ This quasi-minor mode changes cursor to a bar cursor in insert mode,
+ and a block cursor in overwrite mode.  It may only be turned on and
+ off globally, not on a per-buffer basis (hence the quasi- designation).
+ 
+-Optional ARG turns mode on iff ARG is a positive integer."
++Optional ARG turns mode on if ARG is a positive integer."
+   (interactive "P")
+ 
+   ;; toggle on and off
+   (let ((old-mode bar-cursor-mode))
+-	(setq bar-cursor-mode
+-		  (if arg (or (listp arg)
+-					  (> (prefix-numeric-value arg) 0))
+-			(not bar-cursor-mode)))
++    (setq bar-cursor-mode
++          (if arg (or (listp arg)
++                      (> (prefix-numeric-value arg) 0))
++            (not bar-cursor-mode)))
++    
++    (when (not (equal old-mode bar-cursor-mode))
++      (bar-cursor-change))))
+ 
+-	(when (not (equal old-mode bar-cursor-mode))
+-	  ;; enable/disable advice
+-	  (if bar-cursor-mode
+-		  (ad-enable-advice 'overwrite-mode 'after 'bar-cursor-overwrite-mode-ad)
+-		(ad-disable-advice 'overwrite-mode 'after 'bar-cursor-overwrite-mode-ad))
++;;;###autoload
++(defun bar-cursor-change ()
++  "Enable or disable advice based on value of variable `bar-cursor-mode'."
++  (if bar-cursor-mode
++      (ad-enable-advice 'overwrite-mode 'after 'bar-cursor-overwrite-mode-ad)
++    (ad-disable-advice 'overwrite-mode 'after 'bar-cursor-overwrite-mode-ad))
+ 
+-	  (ad-activate 'overwrite-mode)
++  (ad-activate 'overwrite-mode)
+ 
+-	  ;; set the initial cursor type now
+-	  (bar-cursor-set-cursor)
++  ;; set the initial cursor type now
++  (bar-cursor-set-cursor)
+ 
+-	  ;; add or remove to frame hook
+-	  (if bar-cursor-mode
+-		  (add-hook 'after-make-frame-functions 'bar-cursor-set-cursor)
+-		(remove-hook 'after-make-frame-functions 'bar-cursor-set-cursor))
+-	  )))
++  ;; add or remove to frame hook
++  (if bar-cursor-mode
++      (add-hook 'after-make-frame-functions 'bar-cursor-set-cursor)
++    (remove-hook 'after-make-frame-functions 'bar-cursor-set-cursor)))
+ 
+ ;;;--------------------------------------------------------------------------
+ (defadvice overwrite-mode (after bar-cursor-overwrite-mode-ad disable)
+@@ -154,7 +163,7 @@
+ 
+ ;;;--------------------------------------------------------------------------
+ (defun bar-cursor-set-cursor-type (cursor &optional frame)
+-  "Set the cursor-type for the named frame.
++  "Set the `cursor-type' for the named frame.
+ 
+ CURSOR is the name of the cursor to use (bar or block -- any others?).
+ FRAME is optional frame to set the cursor for; current frame is used
+@@ -169,7 +178,7 @@
+ 
+ ;;; --------------------------------------------------------------------------
+ (defun bar-cursor-set-cursor (&optional frame)
+-  "Set the cursor-type according to the insertion mode.
++  "Set the `cursor-type' according to the insertion mode.
+ 
+ FRAME is optional frame to set the cursor for; current frame is used
+ if not passed in."
+@@ -177,6 +186,23 @@
+ 	  (bar-cursor-set-cursor-type 'bar frame)
+ 	(bar-cursor-set-cursor-type 'block frame)))
+ 
++;;; --------------------------------------------------------------------------
++(defgroup bar-cursor nil
++  "switch block cursor to a bar."
++  :group 'convenience)
++
++(defcustom bar-cursor-mode nil
++  "*Non-nil means to convert the block cursor into a bar cursor.
++In overwrite mode, the bar cursor changes back into a block cursor.
++This is a quasi-minor mode, meaning that it can be turned on & off easily
++though only globally (hence the quasi-)"
++  :type 'boolean
++  :group 'bar-cursor
++  :require 'bar-cursor
++  :set (lambda (symbol value)
++         (set-default symbol value)
++         (bar-cursor-change)))
++
+ ;;; **************************************************************************
+ ;;; ***** we're done
+ ;;; **************************************************************************

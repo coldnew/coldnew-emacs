@@ -1,0 +1,111 @@
+This is an introductory starter for the various goodies included in
+vm-bonus-el.
+
+You may customize files in this package by using:
+
+ M-x customize-group [RET] vm-bonus-el [RET]
+
+------------------------------------
+Introduction to files in vm-bonus-el
+------------------------------------
+
+vm-bogofilter.el
+----------------
+
+Installation:
+
+ Put this file on your Emacs-Lisp load path and add following into your
+ ~/.vm startup file
+
+     (require 'vm-bogofilter)
+     (vm-bogofilter-setup)
+
+ Or, alternatively on Debian, customize `vm-bogofilter-setup' to t:
+
+  M-x customize-variable [RET] vm-bogofilter-setup [RET]
+
+Usage:
+
+Whenever you get new mail bogofilter will be invoked on them. Mail
+detected as spam will be tagged by bogofilter, and you can use
+existing mechanisms to dispose of them.
+
+For example, if you append this line to your .vm (or modify your
+existing auto-folder-alist), you could then have messages tagged as
+spam automatically saved in a separate 'spam' folder:
+
+(setq vm-auto-folder-alist '(("^X-Bogosity: " ("Yes," . "spam"))))
+
+If you want your auto-folder to be used every time you've received
+new mail, just add the following to your .vm:
+
+(add-hook 'vm-arrived-messages-hook 'vm-auto-archive-messages)
+
+You can also set (setq 'vm-delete-after-archiving t) to make VM
+automatically delete archived spams from the main folder.
+
+
+If a message is tagged as spam incorrectly, you can re-train
+bogofilter by calling the function vm-bogofilter-is-clean on that
+message. Similarly, calling vm-bogofilter-is-spam will re-train
+bogofilter to recognize a clean-marked message as spam.
+
+These functions can be bound to keys in your .vm, for example:
+
+(define-key vm-mode-map "K" 'vm-bogofilter-is-spam)
+(define-key vm-mode-map "C" 'vm-bogofilter-is-clean)
+
+would define K (shift-k) as the key to declare the current message
+as spam, while C (shift-c) as the key to declare the current
+message as clean.
+
+Re-training with the old functions (still available) would not
+re-tag messages, while the new ones will. Re-training may or may
+not change the spam-status of a message. Because of the way
+bogofilter works, even a message explicitly declared as spam may
+not be tagged as spam if there are enough similar non-spam
+messages. Remember, bogofilter is not trained to recognize
+individual messages, but rather patterns. You may have to train
+bogofilter on a number of spam messages before it recognizes any of
+them as spam. See the documentation for bogofilter. Notice also
+that even if the tag changes, this will not undo actions previously
+taken based on the tag, e.g. moving spam to a spamfolder with
+auto-folders.
+
+If you have a small database, running bogofilter without '-u' may
+be better in the beginning. If you want to run without '-u', it
+can easily be accomplished. Just:
+
+M-x customize<return> vm-bogofilter<return>
+
+Then change the Program Options to just '-p -e' and the Unspam to
+'-n' and Spam to '-s'.
+
+Now, bogofilter will not auto-train, and you must instead use the
+vm-bogofilter-is-spam and vm-bogofilter-is-clean to manually tag
+messages. (If you've bound them to keys, it will be quite simple.)
+
+BUGS:
+
+One know bug is that formail will not like it if the input is not
+in the format it expects and knows. Even though it's supposed to
+know BABYL, this does not work.
+
+A related problem is that if you have the wrong folder type
+selected, then sometimes, VM will merge messages. You can check the
+raw folder to see if you have a blank line before the "From "-line
+separating messages. See the documentation for vm-default-folder-type
+
+vm-bogofilter is not very smart about errors. If an error occurs
+during any operation that tags or re-tags messages, the message(s)
+being processed will be *lost*. If errors occur during initial
+processing, the lost mails can sometimes be recovered since VM will
+save the folder *after* receiving new mails, but *before*
+processing hooks, e.g. vm-bogofilter. If you notice the errors
+before saving the folder, you can copy the old file, close VM,
+rename your copy to the original folder name and then start VM
+again. Naturally, anything that happened to the folder after
+fetching new mail will be lost, e.g. bogofilter tagging etc.
+
+
+ -- Peter S Galbraith <psg@debian.org>, Sat, 14 Nov 2009 13:49:02 -0500

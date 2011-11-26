@@ -1,0 +1,21 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 50_maplev_bug528868.dpatch by Peter S Galbraith <psg@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+--- a/elisp/emacs-goodies-el/maplev.texi
++++ b/elisp/emacs-goodies-el/maplev.texi
+@@ -11,6 +11,11 @@
+ 
+ @include version.texi
+ 
++@dircategory Emacs
++@direntry
++* maplev: (maplev). Emacs major mode for Maple V
++@end direntry
++
+ @iftex
+ @tolerance 10000
+ @end iftex

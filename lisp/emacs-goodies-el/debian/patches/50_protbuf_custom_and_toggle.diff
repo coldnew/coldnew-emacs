@@ -1,0 +1,185 @@
+#!/bin/sh -e
+## 50_protbuf_custom_and_toggle.dpatch by Peter S Galbraith <psg@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: protbuf - custom support + true toggles.
+
+if [ $# -ne 1 ]; then
+    echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+    exit 1
+fi
+
+[ -f debian/patches/00patch-opts ] && . debian/patches/00patch-opts
+patch_opts="${patch_opts:--f --no-backup-if-mismatch}"
+
+case "$1" in
+       -patch) patch $patch_opts -p1 < $0;;
+       -unpatch) patch $patch_opts -p1 -R < $0;;
+        *)
+                echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+                exit 1;;
+esac
+
+exit 0
+
+@DPATCH@
+diff -urNad /home/psg/emacs/emacs-goodies-el/emacs-goodies-el/elisp/emacs-goodies-el/protbuf.el emacs-goodies-el/elisp/emacs-goodies-el/protbuf.el
+--- /home/psg/emacs/emacs-goodies-el/emacs-goodies-el/elisp/emacs-goodies-el/protbuf.el	2003-10-07 19:18:26.000000000 -0400
++++ emacs-goodies-el/elisp/emacs-goodies-el/protbuf.el	2003-10-07 21:20:08.000000000 -0400
+@@ -29,24 +29,49 @@
+ 
+ ;; This package allows you to make it harder to kill buffers accidentally,
+ ;; e.g. by being too trigger happy selecting items in the buffer menu.
+-;; protect-process-buffer-from-kill-mode is perhaps the more useful of the
+-;; two, making it harder to accidentally kill shell buffers without
++;;
++;; The commands are:
++;;
++;; `protect-buffer-from-kill-mode'
++;;   Toggle kill-buffer protection on current buffer.
++;;
++;; `protect-process-buffer-from-kill-mode'
++;;   Toggle kill-buffer protection on current buffer with active process.
++;;   Protection only applies as long as the buffer has an active process.
++;;
++;; `protect-process-buffer-from-kill-mode' is perhaps the more useful of
++;; the two, making it harder to accidentally kill shell buffers without
+ ;; terminating the process in them first.
+ 
++;;; History:
++;;
++;; 2003-10-07 Peter S Galbraith <psg@debian.org>
++;;  - custom interface support.
++;;  - make interactive commands toggle the minor-mode.
++;;  - some checkdoc changes.
++
+ ;;; Code:
+ 
+-(defvar protect-buffer-verbose t
+-  "*If non-nil, print a message when attempting to kill a protected buffer.")
++(defgroup protect-buffer nil
++  "Protect buffers from accidental killing."
++  :group 'killing)
+ 
+-(defvar protect-buffer-bury-p t
++(defcustom protect-buffer-verbose t
++  "*If non-nil, print a message when attempting to kill a protected buffer."
++  :type 'boolean
++  :group 'protect-buffer)
++
++(defcustom protect-buffer-bury-p t
+   "*If non-nil, bury buffer when attempting to kill it.
+ This only has an effect if the buffer to be killed is the one
+-visible in the selected window.")
++visible in the selected window."
++  :type 'boolean
++  :group 'protect-buffer)
+ 
+ 
+ ;;;###autoload
+ (defvar protect-buffer-from-kill-mode nil
+-  "*If non-`nil', then prevent buffer from being accidentally killed.
++  "*If non-nil, then prevent buffer from being accidentally killed.
+ This variable is local to all buffers.")
+ (progn
+   (make-variable-buffer-local 'protect-buffer-from-kill-mode)
+@@ -57,7 +82,7 @@
+ 
+ ;;;###autoload
+ (defvar protect-process-buffer-from-kill-mode nil
+-  "*If non-`nil', then protect buffer with live process from being killed.
++  "*If non-nil, then protect buffer with live process from being killed.
+ This variable is local to all buffers.")
+ (progn
+   (make-variable-buffer-local 'protect-process-buffer-from-kill-mode)
+@@ -84,32 +109,26 @@
+ 
+ ;;;###autoload
+ (defun protect-buffer-from-kill-mode (&optional prefix buffer)
+-  "Protect buffer from being killed.
+-To remove this protection, call this command with a negative prefix argument."
++  "Toggle `kill-buffer' protection on current buffer.
++Optionally, set a PREFIX argument to set or unset protection, and specify
++alternate BUFFER."
+   (interactive "P")
+-  (or buffer (setq buffer (current-buffer)))
+   (save-excursion
+-    ;; Each cond does its own set-buffer *after* comparing prefix just in
+-    ;; case there's a buffer-local variable `prefix' to screw up the works.
+-    (cond
+-     ((null prefix)
+-      (set-buffer buffer)
+-      (setq protect-buffer-from-kill-mode
+-            (not protect-buffer-from-kill-mode)))
+-     ((>= prefix 0)
+-      (set-buffer buffer)
+-      (setq protect-buffer-from-kill-mode t))
+-     (t
+-      (set-buffer buffer)
+-      (setq protect-buffer-from-kill-mode nil)))
++    (if buffer
++        (set-buffer buffer))
++    (set (make-local-variable 'protect-buffer-from-kill-mode)
++         (if prefix
++             (> (prefix-numeric-value prefix) 0)
++           (not protect-buffer-from-kill-mode)))
+     ;; This is always done because kill-buffer-query-functions might have
+     ;; been buffer-local when this package was initially loaded, leaving
+     ;; the global value unchanged.
+     (add-hook 'kill-buffer-query-functions 'protect-buffer-from-kill)))
+ 
+-;; This function is listed in kill-buffer-query-functions; it should return
+-;; nil if the buffer should not be killed, t otherwise.
+ (defun protect-buffer-from-kill ()
++  "Implements protection from buffer killing.
++This function is listed in `kill-buffer-query-functions'; it should return
++nil if the buffer should not be killed, t otherwise."
+   (cond
+    (protect-buffer-from-kill-mode
+     (and protect-buffer-verbose
+@@ -125,32 +144,27 @@
+ 
+ ;;;###autoload
+ (defun protect-process-buffer-from-kill-mode (&optional prefix buffer)
+-  "Protect buffer from being killed as long as it has an active process.
+-To remove this protection, call this command with a negative prefix argument."
++  "Toggle `kill-buffer' protection on current buffer with active process.
++Protection only applies as long as the buffer has an active process.
++Optionally, set a PREFIX argument to set or unset protection, and specify
++alternate BUFFER."
+   (interactive "P")
+-  (or buffer (setq buffer (current-buffer)))
+   (save-excursion
+-    ;; Each cond does its own set-buffer *after* comparing prefix just in
+-    ;; case there's a buffer-local variable `prefix' to screw up the works.
+-    (cond
+-     ((null prefix)
+-      (set-buffer buffer)
+-      (setq protect-process-buffer-from-kill-mode
+-            (not protect-process-buffer-from-kill-mode)))
+-     ((>= prefix 0)
+-      (set-buffer buffer)
+-      (setq protect-process-buffer-from-kill-mode t))
+-     (t
+-      (set-buffer buffer)
+-      (setq protect-process-buffer-from-kill-mode nil)))
++    (if buffer
++        (set-buffer buffer))
++    (set (make-local-variable 'protect-process-buffer-from-kill-mode)
++         (if prefix
++             (> (prefix-numeric-value prefix) 0)
++           (not protect-process-buffer-from-kill-mode)))
+     ;; This is always done because kill-buffer-query-functions might have
+     ;; been buffer-local when this package was initially loaded, leaving
+     ;; the global value unchanged.
+     (add-hook 'kill-buffer-query-functions 'protect-process-buffer-from-kill)))
+ 
+-;; This function is listed in kill-buffer-query-functions; it should return
+-;; nil if the buffer should be protected, t if buffer should be killed.
+ (defun protect-process-buffer-from-kill ()
++  "Implements protection from buffer killing.
++This function is listed in `kill-buffer-query-functions'; it should return
++nil if the buffer should be protected, t if buffer should be killed."
+   (cond
+    ((not protect-process-buffer-from-kill-mode) t)
+    ((or (and (boundp 'protect-process-buffer-from-kill-preserve-function)

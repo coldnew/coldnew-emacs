@@ -1,0 +1,35 @@
+#!/bin/sh -e
+## 51_session_autoload.dpatch by Peter S Galbraith <psg@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Remove a defmacro autoload tag.
+
+if [ $# -ne 1 ]; then
+    echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+    exit 1
+fi
+
+[ -f debian/patches/00patch-opts ] && . debian/patches/00patch-opts
+patch_opts="${patch_opts:--f --no-backup-if-mismatch}"
+
+case "$1" in
+       -patch) patch $patch_opts -p1 < $0;;
+       -unpatch) patch $patch_opts -p1 -R < $0;;
+        *)
+                echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+                exit 1;;
+esac
+
+exit 0
+
+@DPATCH@
+--- a/elisp/emacs-goodies-el/session.el
++++ b/elisp/emacs-goodies-el/session.el
+@@ -1717,7 +1717,6 @@
+   :require 'session
+   :set 'session-initialize-and-set)
+ 
+-;;;###autoload
+ (defun session-initialize ()
+   "Initialize package session and read previous session file.
+ Setup hooks and load `session-save-file', see variable `session-initialize'.  At

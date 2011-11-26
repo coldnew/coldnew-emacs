@@ -1,0 +1,35 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 52_todoo_bug414781.dpatch by  <psg@mixed.dyndns.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad emacs-goodies-el~/elisp/emacs-goodies-el/todoo.el emacs-goodies-el/elisp/emacs-goodies-el/todoo.el
+--- emacs-goodies-el~/elisp/emacs-goodies-el/todoo.el	2007-05-14 19:17:52.000000000 -0400
++++ emacs-goodies-el/elisp/emacs-goodies-el/todoo.el	2007-05-14 19:20:51.000000000 -0400
+@@ -57,6 +57,11 @@
+ 
+ ;;; ChangeLog:
+ 
++;; 2007-05-14 Peter S Galbraith <psg@debian.org>
++;;  Comment out clobbering of outline-mode-menu-bar-map key entries.
++;;  This is far too aggressive.  A much better fix would be to undefine the
++;;  keys for todoo-mode-map.  Thanks to Simon Pepping (Closes #144781).
++
+ ;; 2004-11-24 Peter S Galbraith <psg@debian.org>
+ ;;  Debian bug 267637 fix: changes to outline-regexp should be buffer-local.
+ ;;  Thanks to Daniel Skarda <0rfelyus@hobitin.ucw.cz> for pointing it out.
+@@ -524,9 +529,9 @@
+ 
+   (outline-minor-mode 1)
+ 
+-  (define-key outline-mode-menu-bar-map [headings] 'undefined)
+-  (define-key outline-mode-menu-bar-map [hide] 'undefined)
+-  (define-key outline-mode-menu-bar-map [show] 'undefined)
++  ;;(define-key outline-mode-menu-bar-map [headings] 'undefined)
++  ;;(define-key outline-mode-menu-bar-map [hide] 'undefined)
++  ;;(define-key outline-mode-menu-bar-map [show] 'undefined)
+ 
+   (if todoo-collapse-items
+       (hide-body))

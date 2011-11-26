@@ -1,0 +1,27 @@
+#! /bin/bash -e
+# /usr/lib/emacsen-common/packages/install/emacs-goodies-el
+
+# Written by Jim Van Zandt <jrv@vanzandt.mv.com>, borrowing heavily
+# from the install scripts for gettext by Santiago Vila
+# <sanvila@ctv.es> and octave by Dirk Eddelbuettel <edd@debian.org>.
+#
+# Patched by Roland Mas <lolando@debian.org> to add support for lists
+# of flavor-dependently included/excluded files
+
+FLAVOR=$1
+STAMPFILE=emacs-goodies-el.elc
+PACKAGE=emacs-goodies-el
+
+# INCLUDED_emacs20=""
+# INCLUDED_emacs21=""
+# INCLUDED_xemacs21=""
+
+EXCLUDED_emacs20="tabbar.el session.el csv-mode.el maplev.el"
+EXCLUDED_emacs21="pod-mode.el"
+EXCLUDED_xemacs21="csv-mode.el minibuf-electric.el pp-c-l.el tabbar.el todoo.el rfcview.el upstart-mode.el "
+#EXCLUDED_emacs_snapshot="cua.el cfengine.el ibuffer.el ido.el newsticker.el table.el "
+#EXCLUDED_emacs22="cua.el cfengine.el ibuffer.el ido.el newsticker.el table.el "
+#EXCLUDED_emacs23="cua.el cfengine.el ibuffer.el ido.el newsticker.el table.el  "
+
+# Skip byte-compilation here if necessary:
+#SOURCEONLY_all="emacs-goodies-el.el emacs-goodies-loaddefs.el"

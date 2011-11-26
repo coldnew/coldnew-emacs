@@ -1,0 +1,173 @@
+#!/bin/sh -e
+## 50_gnus-pers.dpatch by Peter S Galbraith <psg@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+if [ $# -ne 1 ]; then
+    echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+    exit 1
+fi
+
+[ -f debian/patches/00patch-opts ] && . debian/patches/00patch-opts
+patch_opts="${patch_opts:--f --no-backup-if-mismatch}"
+
+case "$1" in
+       -patch) patch $patch_opts -p1 < $0;;
+       -unpatch) patch $patch_opts -p1 -R < $0;;
+        *)
+                echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+                exit 1;;
+esac
+
+exit 0
+
+@DPATCH@
+diff -urNad /home/psg/emacs/emacs-goodies-el/emacs-goodies-el/elisp/gnus-bonus-el/gnus-pers.el emacs-goodies-el/elisp/gnus-bonus-el/gnus-pers.el
+--- /home/psg/emacs/emacs-goodies-el/emacs-goodies-el/elisp/gnus-bonus-el/gnus-pers.el	2004-01-15 16:48:11.000000000 -0500
++++ emacs-goodies-el/elisp/gnus-bonus-el/gnus-pers.el	2004-01-28 19:46:16.000000000 -0500
+@@ -1,4 +1,4 @@
+-;;; gnus-pers.el --- an alternative to gnus-posting-styles
++;;; gnus-pers.el --- implements personalities for gnus Message mode
+ ;; Copyright (C) 1999 BrYan P. Johnson
+ 
+ ;; Author: BrYan P. Johnson <bilko@onebabyzebra.com>
+@@ -20,14 +20,28 @@
+ 
+ ;;; Commentary:
+ 
+-;; in your .gnus file:
+-
+-;; (require 'gnus-pers)
+-;; (gnus-personality-init)
++;; gnus-pers implements personalities for Message mode.
++;;
++;; It allows you to define a personality with any e-mail address, extra
++;; headers and signature you like, either as strings, functions or variables
++;; (signatures may also be files). Then it will chose a personality for you
++;; based on header info, gnus-newsgroup-name or group
++;; parameter. Additionally, you can change a personality in the middle of
++;; writing a message. This is intended to be an alternative to
++;; gnus-posting-styles, which only sets personalities (posting styles) based
++;; on which group you are in. Also, gnus-posting-styles must be defined by
++;; editing a your .gnus whereas gnus-pers uses Xemacs customize facility.
+ 
+-;; Then just M-x customize Personality
++;; To use, add this to your .gnus file:
++;;
++;;  (require 'gnus-pers)
++;;  (gnus-personality-init)
++;;
++;; Then setup and customize with:
++;;
++;;  M-x customize-group Personality'
+ 
+-; History:
++;;; History:
+ 
+ ; 1.0
+ ; + Added check for personality group parameter. Use it to designate a
+@@ -49,6 +63,12 @@
+ ; + Stole message-insert-signature and changed a tad to fix the extra newline in signature when switching personalities bug. see gnus-pers-insert-signature
+ ; + Added ability to use gnus-newsgroup-name as an electric criteria.
+ 
++; 1.2 Peter S. Galbraith <psg@debian.org>
++; + Use functionp instead of message-functionp since gnus no longer defines it.
++; + Copy replace-in-string from XEmacs, name it
++;   `gnus-personalities-replace-in-string' after removing the calls to
++;   check-argument-type.  This was listed in the Todo list.
++
+ ;Todo:
+ ; + redo x-tra headers to be a repeat list of two parts, header name
+ ; and header data. Then allow either to be a function.
+@@ -57,23 +77,6 @@
+ ; + BBDB integration
+ ; + Have from and extra headers possibly be files as well.
+ ; + Electric rescan buffer
+-; + maybe fix replace-in-string call.
+-;From: Christoph Conrad <Christoph.Conrad@post.rwth-aachen.de>
+-;    BrYan> `replace-in-string' is a compiled Lisp function
+-;    BrYan> -- loaded from
+-;    BrYan> "/usr/src/bs/BUILD/xemacs-21.1.2/building/i386-linux/lisp/subr.elc"
+-
+-
+-;    BrYan> Hrm. I don't use emacs, don't think I even have it
+-;    BrYan> installed. I'll poke around and see if there's something
+-;    BrYan> similar in emacs.
+-
+-;I didn't found anything similiar, so i took the original function and
+-;eliminated the two first statements with
+-
+-;;;;  (check-argument-type 'stringp str)
+-;;;;  (check-argument-type 'stringp newtext)
+-
+ 
+ ;;; Code:
+ 
+@@ -303,6 +306,39 @@
+ 
+ (define-key message-mode-map "\C-c\C-p" 'gnus-personality-choose)
+ 
++(defun gnus-personality-replace-in-string (str regexp newtext &optional literal)
++  "Replace all matches in STR for REGEXP with NEWTEXT string,
++ and returns the new string.
++Optional LITERAL non-nil means do a literal replacement.
++Otherwise treat `\\' in NEWTEXT as special:
++  `\\&' in NEWTEXT means substitute original matched text.
++  `\\N' means substitute what matched the Nth `\\(...\\)'.
++       If Nth parens didn't match, substitute nothing.
++  `\\\\' means insert one `\\'.
++  `\\u' means upcase the next character.
++  `\\l' means downcase the next character.
++  `\\U' means begin upcasing all following characters.
++  `\\L' means begin downcasing all following characters.
++  `\\E' means terminate the effect of any `\\U' or `\\L'.
++
++This is mostly copied from XEmacs' replace-in-string because Emacs doesn't
++have that function."
++  (if (> (length str) 50)
++      (let ((cfs case-fold-search))
++	(with-temp-buffer
++          (setq case-fold-search cfs)
++	  (insert str)
++	  (goto-char 1)
++	  (while (re-search-forward regexp nil t)
++	    (replace-match newtext t literal))
++	  (buffer-string)))
++  (let ((start 0) newstr)
++    (while (string-match regexp str start)
++      (setq newstr (replace-match newtext t literal str)
++	    start (+ (match-end 0) (- (length newstr) (length str)))
++	    str newstr))
++    str)))
++
+ (defun gnus-personality-use (&optional personality)
+   "Use a personality defined in gnus-personalities."
+   (interactive)
+@@ -470,7 +506,7 @@
+ 	      (message-goto-cc) ;; Yes, yes. This inserts a Cc: if there's nothing there. No worries.
+ 	      (beginning-of-line)
+ 	      (let ((beg (point))
+-		    (email (replace-in-string from "\"" "")))
++		    (email (gnus-personality-replace-in-string from "\"" "")))
+ 		(end-of-line)
+ 		(narrow-to-region beg (point))
+ 	      (goto-char (point-min))
+@@ -618,7 +654,7 @@
+ 	      (message-goto-cc) ;; Yes, yes. This inserts a Cc: if there's nothing there. No worries.
+ 	      (beginning-of-line)
+ 	      (let ((beg (point))
+-		    (email (replace-in-string from "\"" "")))
++		    (email (gnus-personality-replace-in-string from "\"" "")))
+ 		(end-of-line)
+ 		(narrow-to-region beg (point))
+ 	      (goto-char (point-min))
+@@ -698,7 +734,7 @@
+ 	   ((and (null message-signature)
+ 		 force)
+ 	    t)
+-	   ((message-functionp message-signature)
++	   ((functionp message-signature)
+ 	    (funcall message-signature))
+ 	   ((listp message-signature)
+ 	    (eval message-signature))

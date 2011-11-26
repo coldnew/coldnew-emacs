@@ -1,0 +1,94 @@
+This package was first debianized by Roland Mas <lolando@debian.org>
+It is currently maintained by Peter S Galbraith <psg@debian.org>
+
+  This collection of files was assembled by Roland Mas <lolando@debian.org>
+from various messages posted on the gnu.emacs.sources newsgroup, as well as
+from various collections of Emacs Lisp files found on the web.  Some
+authors contacted Roland directly, some users sent me the files by email.
+Most of them are covered by the GNU GPL, but the individual licences can
+vary.  Here is a list of excerpts of the included files covering this
+matter.
+
+  The text of the GNU GPL can be found in /usr/share/common-licenses.
+
+Copyright info for files in debian-el
+-------------------------------------
+
+Author/copyright info for apt-sources.el:
+,----
+| ;;; apt-sources.el --- Mode for editing apt source.list file
+| [...]
+| ;; Author: Dr. Rafael Sepúlveda. <drs@gnulinux.org.mx>
+| ;; Mantainer: Dr. Rafael Sepúlveda. <drs@gnulinux.org.mx>
+| 
+| ;; Copyright (C) 2001-2002, Dr. Rafael Sepúlveda <drs@gnulinux.org.mx>
+| 
+| ;;   This program is free software; you can redistribute it and/or modify
+| ;;   it under the terms of the GNU General Public License as published by
+| ;;   the Free Software Foundation.
+`----
+
+
+Author/copyright info for apt-utils.el:
+,-
+| ;;; Copyright (C) 2002, 03 Matthew P. Hodges
+| 
+| ;; apt-utils.el is free software; you can redistribute it and/or
+| ;; modify it under the terms of the GNU General Public License as
+| ;; published by the Free Software Foundation; either version 2, or (at
+| ;; your option) any later version.
+| 
+| ;; apt-utils.el is distributed in the hope that it will be useful, but
+| ;; WITHOUT ANY WARRANTY; without even the implied warranty of
+| ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+| ;; General Public License for more details.
+`-
+
+
+Author/copyright info for debian-bug.el:
+,----
+| ;; Copyright (C) 1998, 1999 Free Software Foundation, Inc.
+| ;; Copyright (C) 2001, 2002 Peter S Galbraith <psg@debian.org>
+| 
+| ;; Author (Up to version 1.7):           Francesco Potortì <pot@gnu.org>
+| ;; Maintainer from version 1.8 onwards:  Peter S Galbraith <psg@debian.org>
+| ;; Keywords: debian, bug, reporter
+| 
+| ;; debian-bug.el is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for deb-view.el
+,----
+| ;; Author:  Rick Macdonald (rickm@vsl.com)
+| 
+| ;; deb-view is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for gnus-BTS.el:
+,----
+| ;; Copyright (C) 2001 Andreas Fuchs <asf@acm.org>
+| [...]
+| ;; gnus-BTS.el is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for preseed.el
+,----
+| ;; Copyright (C) 2004 W. Borgert <debacle@debian.org>
+| 
+| ;; This package is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----

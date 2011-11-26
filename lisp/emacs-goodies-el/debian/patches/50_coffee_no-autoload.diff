@@ -1,0 +1,36 @@
+#!/bin/sh -e
+## 50_coffee_no-autoload.dpatch by Peter S Galbraith <psg@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+if [ $# -ne 1 ]; then
+    echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+    exit 1
+fi
+
+[ -f debian/patches/00patch-opts ] && . debian/patches/00patch-opts
+patch_opts="${patch_opts:--f --no-backup-if-mismatch}"
+
+case "$1" in
+       -patch) patch $patch_opts -p1 < $0;;
+       -unpatch) patch $patch_opts -p1 -R < $0;;
+        *)
+                echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+                exit 1;;
+esac
+
+exit 0
+
+@DPATCH@
+diff -urNad /home/psg/emacs/emacs-goodies-el/emacs-goodies-el/elisp/emacs-goodies-el/coffee.el emacs-goodies-el/elisp/emacs-goodies-el/coffee.el
+--- /home/psg/emacs/emacs-goodies-el/emacs-goodies-el/elisp/emacs-goodies-el/coffee.el	2004-01-15 16:22:57.000000000 -0500
++++ emacs-goodies-el/elisp/emacs-goodies-el/coffee.el	2004-01-15 16:25:46.000000000 -0500
+@@ -69,7 +69,6 @@
+     ("Sweetener" . ,coffee-sweetener-types)
+     ("Alcohol"   . ,coffee-alcohol-types)))
+ 
+-;;;###autoload
+ (defun coffee ()
+   "Submit a BREW request to an RFC2324-compliant coffee device"
+   (interactive)

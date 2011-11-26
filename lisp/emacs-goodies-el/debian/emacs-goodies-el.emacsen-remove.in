@@ -1,0 +1,5 @@
+#!/bin/sh -e
+# /usr/lib/emacsen-common/packages/remove/emacs-goodies-el
+
+FLAVOR=$1
+PACKAGE=emacs-goodies-el

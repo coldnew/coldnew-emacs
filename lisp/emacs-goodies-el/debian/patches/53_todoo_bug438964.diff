@@ -1,0 +1,55 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 53_todoo_bug438964.dpatch by Peter S Galbraith <psg@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad emacs-goodies-el~/elisp/emacs-goodies-el/todoo.el emacs-goodies-el/elisp/emacs-goodies-el/todoo.el
+--- emacs-goodies-el~/elisp/emacs-goodies-el/todoo.el	2007-10-23 20:27:08.000000000 -0400
++++ emacs-goodies-el/elisp/emacs-goodies-el/todoo.el	2007-10-23 20:27:56.000000000 -0400
+@@ -57,6 +57,12 @@
+ 
+ ;;; ChangeLog:
+ 
++;; 2007-08-29 Peter S Galbraith <psg@debian.org>
++
++;;  outline-font-lock-level is void, so define a similar one to historical
++;;  version from outline.el.  Call it todoo-outline-font-lock-level.
++;;  (Closes #438964)
++
+ ;; 2007-05-14 Peter S Galbraith <psg@debian.org>
+ ;;  Comment out clobbering of outline-mode-menu-bar-map key entries.
+ ;;  This is far too aggressive.  A much better fix would be to undefine the
+@@ -389,11 +395,21 @@
+   (backward-char))
+ 
+ 
++(defun todoo-outline-font-lock-level ()
++  (let ((count 1))
++    (save-excursion
++      (outline-back-to-heading t)
++      (while (and (not (bobp))
++		  (not (eq (funcall outline-level) 1)))
++	(outline-up-heading 1)
++	(setq count (1+ count)))
++      count)))
++
+ (defun todoo-insert-sub-item () 
+   "Insert a new todoo-sub-item."
+   (interactive)
+   (goto-char (- (todoo-item-end) 1))
+-  (insert (concat "\n" (make-string (* (- (outline-font-lock-level) 2)
++  (insert (concat "\n" (make-string (* (- (todoo-outline-font-lock-level) 2)
+ 			       todoo-indent-column) ? )
+ 		  todoo-sub-item-marker " \n"))
+   (backward-char))
+@@ -404,7 +420,7 @@
+   (interactive)
+   (beginning-of-line)
+ 
+-  (let ((indent-column (* (- (outline-font-lock-level) 1)
++  (let ((indent-column (* (- (todoo-outline-font-lock-level) 1)
+ 			  todoo-indent-column)))
+     (if (eq (point) (point-at-eol))
+ 	(insert (make-string indent-column ? )))

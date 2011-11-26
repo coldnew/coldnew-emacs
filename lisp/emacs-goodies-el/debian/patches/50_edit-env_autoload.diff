@@ -1,0 +1,36 @@
+#!/bin/sh -e
+## 50_edit-env_autoload.dpatch by Peter S Galbraith <psg@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Add autoload.
+
+if [ $# -ne 1 ]; then
+    echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+    exit 1
+fi
+
+[ -f debian/patches/00patch-opts ] && . debian/patches/00patch-opts
+patch_opts="${patch_opts:--f --no-backup-if-mismatch}"
+
+case "$1" in
+       -patch) patch $patch_opts -p1 < $0;;
+       -unpatch) patch $patch_opts -p1 -R < $0;;
+        *)
+                echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+                exit 1;;
+esac
+
+exit 0
+
+@DPATCH@
+diff -urNad /home/psg/emacs/emacs-goodies-el/newfiles/emacs-goodies-el/elisp/emacs-goodies-el/edit-env.el emacs-goodies-el/elisp/emacs-goodies-el/edit-env.el
+--- /home/psg/emacs/emacs-goodies-el/newfiles/emacs-goodies-el/elisp/emacs-goodies-el/edit-env.el	2003-11-12 20:17:21.000000000 -0500
++++ emacs-goodies-el/elisp/emacs-goodies-el/edit-env.el	2003-11-14 15:00:01.000000000 -0500
+@@ -111,6 +111,7 @@
+ 	       (list (widget-get widget 'environment-variable-name)
+ 		     widget)))
+   
++;;;###autoload
+ (defun edit-env ()
+   "Display, edit, delete and add environment variables."
+   (interactive)

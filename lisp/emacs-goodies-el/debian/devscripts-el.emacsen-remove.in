@@ -1,0 +1,5 @@
+#!/bin/sh -e
+# /usr/lib/emacsen-common/packages/remove/devscripts-el
+
+FLAVOR=$1
+PACKAGE=devscripts-el

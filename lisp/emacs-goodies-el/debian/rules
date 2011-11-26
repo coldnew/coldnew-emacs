@@ -1,0 +1,67 @@
+#!/usr/bin/make -f
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+include /usr/share/quilt/quilt.make
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	touch configure-stamp
+
+#build: patch configure-stamp build-stamp
+build: configure-stamp build-stamp
+build-stamp:
+	dh_testdir
+	dh_quilt_patch
+	for i in debian/*.emacsen-install.in ; do cat $$i debian/emacsen-install.template > debian/$$(basename $$i .in) ; done
+	for i in debian/*.emacsen-remove.in ; do cat $$i debian/emacsen-remove.template > debian/$$(basename $$i .in) ; done
+	install -d info
+	makeinfo elisp/emacs-goodies-el/emacs-goodies-el.texi
+	makeinfo elisp/debian-el/debian-el.texi
+	makeinfo elisp/emacs-goodies-el/maplev.texi
+	mv -f maplev info/
+	touch build-stamp
+
+#clean: unpatch
+clean:
+	dh_testdir
+	dh_testroot
+	dh_quilt_unpatch
+#	if [ -d debian/patched ] ; then rmdir debian/patched ; fi
+	rm -f build-stamp configure-stamp
+	for i in debian/*.emacsen-install.in ; do rm -f debian/$$(basename $$i .in) ; done
+	for i in debian/*.emacsen-remove.in ; do rm -f debian/$$(basename $$i .in) ; done
+	rm -fR info
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+	dh_install
+
+binary-arch:
+
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installdocs
+	dh_installemacsen
+	(cd debian/debian-el/etc/emacs/site-start.d; mv 50debian-el.el 51debian-el.el)
+	dh_installinfo -p emacs-goodies-el info/emacs-goodies-el* info/maplev
+	dh_installinfo -p debian-el info/debian-el
+	dh_installchangelogs
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep
+.PHONY: build clean binary-indep binary-arch binary install configure patch unpatch

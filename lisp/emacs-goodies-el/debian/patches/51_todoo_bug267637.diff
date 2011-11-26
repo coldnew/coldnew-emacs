@@ -1,0 +1,55 @@
+#!/bin/sh -e
+## 51_todoo_bug267637.dpatch by Peter S Galbraith <psg@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+if [ $# -ne 1 ]; then
+    echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+    exit 1
+fi
+
+[ -f debian/patches/00patch-opts ] && . debian/patches/00patch-opts
+patch_opts="${patch_opts:--f --no-backup-if-mismatch}"
+
+case "$1" in
+       -patch) patch $patch_opts -p1 < $0;;
+       -unpatch) patch $patch_opts -p1 -R < $0;;
+        *)
+                echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+                exit 1;;
+esac
+
+exit 0
+
+@DPATCH@
+diff -urNad /home/psg/emacs/emacs-goodies-el/emacs-goodies-el/elisp/emacs-goodies-el/todoo.el emacs-goodies-el/elisp/emacs-goodies-el/todoo.el
+--- /home/psg/emacs/emacs-goodies-el/emacs-goodies-el/elisp/emacs-goodies-el/todoo.el	2004-11-25 21:51:26.000000000 -0500
++++ emacs-goodies-el/elisp/emacs-goodies-el/todoo.el	2004-11-25 21:56:39.000000000 -0500
+@@ -57,6 +57,10 @@
+ 
+ ;;; ChangeLog:
+ 
++;; 2004-11-24 Peter S Galbraith <psg@debian.org>
++;;  Debian bug 267637 fix: changes to outline-regexp should be buffer-local.
++;;  Thanks to Daniel Skarda <0rfelyus@hobitin.ucw.cz> for pointing it out.
++
+ ;; 1.2 - Fixed bug in menu (todoo-show->todoo)
+ ;;       Fixed bug when deleting window in todoo-save-and-exit
+ ;;       Added early sub-item support (might be buggy, but still
+@@ -512,10 +516,11 @@
+   (make-local-variable 'font-lock-defaults)
+   (setq font-lock-defaults '(todoo-font-lock-keywords t))
+ 
+-  (setq outline-regexp (concat "^\\(" (regexp-quote todoo-item-marker) " \\|"
+-			       (regexp-quote todoo-item-marker-assigned) 
+-			       " \\|[ ]*" (regexp-quote todoo-sub-item-marker)
+-			       " \\)"))
++  (set (make-local-variable 'outline-regexp)
++        (concat "^\\(" (regexp-quote todoo-item-marker) " \\|"
++                (regexp-quote todoo-item-marker-assigned) 
++                " \\|[ ]*" (regexp-quote todoo-sub-item-marker)
++                " \\)"))
+ 
+   (outline-minor-mode 1)
+ 

@@ -1,0 +1,6 @@
+(:name anything-show-completion
+       :description "Show selection in buffer for anything completion"
+       :website ""
+       :type emacswiki
+       :features anything-show-completion
+       )

@@ -1,0 +1,36 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 55_gnus-pers_bug263371.dpatch by  <psg@mixed.dyndns.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad emacs-goodies-el~/elisp/gnus-bonus-el/gnus-pers.el emacs-goodies-el/elisp/gnus-bonus-el/gnus-pers.el
+--- emacs-goodies-el~/elisp/gnus-bonus-el/gnus-pers.el	2007-09-18 21:34:19.000000000 -0400
++++ emacs-goodies-el/elisp/gnus-bonus-el/gnus-pers.el	2007-09-18 21:35:32.000000000 -0400
+@@ -73,6 +73,13 @@
+ ;; Reported and fixed Debian bug #384209
+ ;; `Cc-fix feature in gnus-pers is horribly broken'
+ 
++;; 1.4  Bruce Stephens <bruce@cenderis.demon.co.uk> and
++;;      Elias Oltmanns <oltmanns@uni-bonn.de>
++;;
++;; When in a group which has a personality setting (I set a general one in
++;; my top-level topic) gnus-personality-choose doesn't allow me to change
++;; personality. (Closes #263371)
++
+ ;Todo:
+ ; + redo x-tra headers to be a repeat list of two parts, header name
+ ; and header data. Then allow either to be a function.
+@@ -380,9 +387,8 @@
+ 
+ 
+   ; if group has a personality parameter, use it.
+-  (when gnus-newsgroup-name
+-    (let* ((group (or gnus-newsgroup-name ""))
+-	   (tmp-pers (gnus-group-find-parameter group 'personality t)))
++  (when (and (not personality) gnus-newsgroup-name)
++    (let ((tmp-pers (gnus-group-find-parameter gnus-newsgroup-name 'personality t)))
+       (when tmp-pers
+ 	(setq personality tmp-pers))))
+ 

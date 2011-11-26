@@ -1,0 +1,7 @@
+elisp/dpkg-dev-el/debian-bts-control.el /usr/share/emacs/site-lisp/dpkg-dev-el/
+elisp/dpkg-dev-el/debian-changelog-mode.el /usr/share/emacs/site-lisp/dpkg-dev-el/
+elisp/dpkg-dev-el/debian-control-mode.el /usr/share/emacs/site-lisp/dpkg-dev-el/
+elisp/dpkg-dev-el/debian-copyright.el /usr/share/emacs/site-lisp/dpkg-dev-el/
+elisp/dpkg-dev-el/dpkg-dev-el-loaddefs.el /usr/share/emacs/site-lisp/dpkg-dev-el/
+elisp/dpkg-dev-el/dpkg-dev-el.el /usr/share/emacs/site-lisp/dpkg-dev-el/
+elisp/dpkg-dev-el/readme-debian.el /usr/share/emacs/site-lisp/dpkg-dev-el/

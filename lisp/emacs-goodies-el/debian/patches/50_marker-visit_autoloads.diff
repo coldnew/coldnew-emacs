@@ -1,0 +1,52 @@
+#!/bin/sh -e
+## 50_marker-visit_autoloads.dpatch by Peter S Galbraith <psg@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Add autoloads.
+
+if [ $# -ne 1 ]; then
+    echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+    exit 1
+fi
+
+[ -f debian/patches/00patch-opts ] && . debian/patches/00patch-opts
+patch_opts="${patch_opts:--f --no-backup-if-mismatch}"
+
+case "$1" in
+       -patch) patch $patch_opts -p1 < $0;;
+       -unpatch) patch $patch_opts -p1 -R < $0;;
+        *)
+                echo >&2 "`basename $0`: script expects -patch|-unpatch as argument"
+                exit 1;;
+esac
+
+exit 0
+
+@DPATCH@
+diff -urNad /home/psg/emacs/emacs-goodies-el/newfiles/emacs-goodies-el/elisp/emacs-goodies-el/marker-visit.el emacs-goodies-el/elisp/emacs-goodies-el/marker-visit.el
+--- /home/psg/emacs/emacs-goodies-el/newfiles/emacs-goodies-el/elisp/emacs-goodies-el/marker-visit.el	2001-05-22 02:13:48.000000000 -0400
++++ emacs-goodies-el/elisp/emacs-goodies-el/marker-visit.el	2003-11-16 21:30:42.000000000 -0500
+@@ -87,6 +87,7 @@
+   (message error-message)
+   (beep))
+ 
++;;;###autoload
+ (defun marker-visit-prev ()
+   "From point, visit the nearest mark earlier in the buffer."
+   (interactive)
+@@ -102,6 +103,7 @@
+ 	  (goto-char dest-mark)
+ 	(marker-visit-warn "No previous mark to visit")))))
+ 
++;;;###autoload
+ (defun marker-visit-next ()
+   "From point, visit the nearest mark later in the buffer."
+   (interactive)
+@@ -121,6 +123,7 @@
+ 	  (goto-char dest-mark)
+ 	(marker-visit-warn "No next mark to visit")))))
+ 
++;;;###autoload
+ (defun marker-visit-truncate-mark-ring ()
+   "Truncate the `mark-ring'."
+   (interactive)

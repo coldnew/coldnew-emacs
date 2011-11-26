@@ -1,0 +1,40 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 51_gnus-BTS_bug363161.dpatch by  <psg@mixed.dyndns.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad emacs-goodies-el~/elisp/debian-el/gnus-BTS.el emacs-goodies-el/elisp/debian-el/gnus-BTS.el
+--- emacs-goodies-el~/elisp/debian-el/gnus-BTS.el	2007-09-18 21:19:47.000000000 -0400
++++ emacs-goodies-el/elisp/debian-el/gnus-BTS.el	2007-09-18 21:20:47.000000000 -0400
+@@ -53,6 +53,11 @@
+ ;; 2005-09-19 Peter S Galbraith <psg@debian.org>
+ ;;
+ ;;      Minor bug fix: gnus-dbts-gnus-install missing brackets.
++;;
++;; 2007-09-17 Peter S Galbraith <psg@debian.org>
++;;
++;;      Wrong regexp part of gnus-dbts-debian-bug-regexp called by
++;;      gnus-dbts-buttonize-debian (Closes #363161, #442438).
+ ;;      
+ ;;; Code:
+ 
+@@ -97,8 +102,6 @@
+ (defvar gnus-dbts-debian-reassign-regexp
+   "reassigned from package `\\([^']*\\)' to `\\([^']*\\)'")
+ 
+-(defvar gnus-dbts-debian-bug-regexp "^ *\\([0-9]+\\)")
+-
+ (defun gnus-dbts-browse-debpkg-or-bug (thing)
+   (interactive "i")
+   (let* ((the-thing (if (null thing)
+@@ -130,7 +133,7 @@
+ 			      'gnus-dbts-in-debian-group-p)
+   (gnus-dbts-buttonize-debian gnus-dbts-debian-reassign-or-merge-regexp 3
+ 			      'gnus-dbts-in-debian-group-p)
+-  (gnus-dbts-buttonize-debian gnus-dbts-debian-bug-regexp 1
++  (gnus-dbts-buttonize-debian gnus-dbts-debian-bug-regexp 3
+ 			      'gnus-dbts-in-debian-devel-announce-group-p)
+   (gnus-dbts-buttonize-debian gnus-dbts-debian-reassign-regexp 1
+ 			      'gnus-dbts-in-debian-group-p)

@@ -1,0 +1,159 @@
+This package was first debianized by Roland Mas <lolando@debian.org>
+It is currently maintained by Peter S Galbraith <psg@debian.org>
+
+  This collection of files was assembled by Roland Mas <lolando@debian.org>
+from various messages posted on the gnu.emacs.sources newsgroup, as well as
+from various collections of Emacs Lisp files found on the web.  Some
+authors contacted Roland directly, some users sent me the files by email.
+Most of them are covered by the GNU GPL, but the individual licences can
+vary.  Here is a list of excerpts of the included files covering this
+matter.
+
+  The text of the GNU GPL can be found in /usr/share/common-licenses.
+
+
+Copyright info for files in gnus-bonus-el
+-----------------------------------------
+
+Author/copyright info for gnus-eyecandy.el:
+,----
+| ;;; gnus-eyecandy.el --- add some eyecandy to Gnus
+| 
+| ;; Copyright (C) 1999 BrYan P. Johnson
+| 
+| ;; Modified 2003-10-15 to work with GNU Emacs
+| ;; by Johan Bockgård <bojohan@dd.chalmers.se>
+| [...]
+| ;; gnus-eyecandy.el is free software; you can redistribute it and/or modify it
+| ;; under the terms of the GNU General Public License as published by the Free
+| ;; Software Foundation; either version 2, or (at your option) any later
+| ;; version.
+`----
+
+
+Author/copyright info for gnus-filterhist.el:
+,----
+| ;;; gnus-filterhist.el --- Gnus Filter Histories -- parse nnmail-split-history to provide reports of mail splits.
+| 
+| ;; Copyright (C) 1999 BrYan P. Johnson
+| [...]
+| ;; gnus-filterhist.el is free software; you can redistribute it and/or modify it
+| ;; under the terms of the GNU General Public License as published by the Free
+| ;; Software Foundation; either version 2, or (at your option) any later
+| ;; version.
+`----
+
+
+Author/copyright info for gnus-junk.el:
+,----
+| ;;; gnus-junk.el --- a response to junk e-mails
+| 
+| ;; Copyright (C) 1996,1997 Robert Bihlmeyer
+| 
+| ;; Author: Robert Bihlmeyer <robbe@orcus.priv.at>
+| [...]
+| ;; This program is free software; you can redistribute it and/or modify it
+| ;; under the terms of the GNU General Public License as published by the Free
+| ;; Software Foundation; either version 2, or (at your option) any later
+| ;; version.
+`----
+
+
+Author/copyright info for gnus-outlook-deuglify.el:
+,----
+| ;;; gnus-outlook-deuglify.el --- deuglify broken Outlook (Express) articles
+| 
+| ;; Copyright (C) 2001,2002 Raymond Scholz
+| 
+| ;; Author: Raymond Scholz <rscholz@zonix.de>
+| ;;         Thomas Steffen (unwrapping algorithm,
+| ;;                         based on an idea of Stefan Monnier)
+| [...]
+| ;; This file is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for gnus-pers.el:
+,----
+| ;;; gnus-pers.el --- an alternative to gnus-posting-styles
+| 
+| ;; Copyright (C) 1999 BrYan P. Johnson
+| 
+| ;; Author: BrYan P. Johnson <bilko@onebabyzebra.com>
+| [...]
+| ;; gnus-pers.el is free software; you can redistribute it and/or modify it
+| ;; under the terms of the GNU General Public License as published by the Free
+| ;; Software Foundation; either version 2, or (at your option) any later
+| ;; version.
+`----
+
+
+Author/copyright info for message-x.el:
+,----
+| ;; message-x.el -- customizable completion in message headers
+| ;; Copyright (C) 1998 Kai Großjohann
+| [...]
+| ;; Author: Kai Grossjohann <grossjohann@ls6.informatik.uni-dortmund.de>
+| ;; Keywords: news, mail, compose, completion
+| [...]
+| ;; This is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for nnnil.el:
+,----
+| ;;; nnnil.el: empty, read-only backend for Gnus              -*- emacs-lisp -*-
+| ;;; <URL:http://multivac.cwru.edu/gnus/#nnnil>
+| ;;; Written and placed in the public domain by Paul Jarc <prj@po.cwru.edu>.  
+`----
+
+
+Author/copyright info for nnir.el:
+,----
+| ;;; nnir.el --- search mail with various search engines -*- coding: iso-8859-1 -*-
+| ;; Copyright (C) 1998 Kai Großjohann
+| [...]
+| ;; Author: Kai Großjohann <grossjohann@ls6.cs.uni-dortmund.de>
+| [...]
+| ;; This is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for nntodo.el:
+,----
+| ;;; nntodo.el --- Manage todo items with Gnus
+| 
+| ;; Copyright (C) 1999 by Kai Grossjohann.
+| 
+| ;; Authors: Kai.Grossjohann@CS.Uni-Dortmund.DE,
+| ;;          John Wiegley <johnw@gnu.org>
+| [...]
+| ;; This file is free software; you can redistribute it and/or modify
+| ;; it under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
+
+
+Author/copyright info for spam-stat.el:
+,----
+| ;;; spam-stat.el --- detecting spam based on statistics
+| 
+| ;; Copyright (C) 2002  Alex Schroeder 
+| 
+| ;; Author: Alex Schroeder <alex@gnu.org>
+| [...]
+| ;; This is free software; you can redistribute it and/or modify it
+| ;; under the terms of the GNU General Public License as published by
+| ;; the Free Software Foundation; either version 2, or (at your option)
+| ;; any later version.
+`----
