@@ -158,6 +158,7 @@
 	   ("Common Lisp"   (mode . slime-mode))
 	   ("Scheme"  (or (mode . scheme-mode)
 			  (mode . gambit-mode)))
+	   ("Emacs recipes" (name . "*.rcp$"))
 	   ("Emacs" (or (mode . emacs-lisp-mode)
 			(mode . lisp-interaction-mode)
 			))

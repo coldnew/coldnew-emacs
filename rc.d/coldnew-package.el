@@ -13,6 +13,8 @@
 (setq el-get-dir emacs-lisp-dir)
 (when (require* 'el-get)
   (add-to-list 'el-get-recipe-path emacs-recipes-dir)
+  ;; Make el-get recipes in emacs-lisp-mode
+  (add-to-list 'auto-mode-alist '("\\.rcp$" . emacs-lisp-mode))
   )
 
 ;;;;;;;; ELPA
