@@ -1,0 +1,28 @@
+;; Object anything/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "anything/"
+  :tables (list 
+   (semanticdb-table "Makefile"
+    :major-mode 'makefile-gmake-mode
+    :tags 
+        '( ("EMACS" variable (:default-value ("emacs" "-Q" "-batch")) nil [20 46])
+            ("LOADPATH" variable (:default-value ("-L" "." "-L" "extensions")) nil [75 106])
+            ("EL" variable (:default-value ("$(filter-out anything-startup.el, $(wildcard anything*.el) $(wildcard extensions/*.el))")) nil [126 222])
+            ("ELC" variable (:default-value ("$(EL:.el=.elc)")) nil [240 264])
+            (".PHONY" function (:arguments ("clean" "batch-compile")) nil [265 293])
+            ("all" function (:arguments ("clean" "batch-compile")) nil [294 319])
+            ("$(ELC)" function (:arguments ("%.elc:" "%.el")) nil [320 387])
+            ("compile" function (:arguments ("$(ELC)")) nil [411 427])
+            ("batch-compile" function nil nil [456 521])
+            ("clean" function nil nil [551 572]))          
+    :file "Makefile"
+    :pointmax 572
+    :fsize 571
+    :lastmodtime '(20177 13812)
+    :unmatched-syntax '((shell-command 559 . 571) (bol 558 . 558))
+    )
+   )
+  :file "!home!coldnew!.emacs.d!lisp!anything!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )
