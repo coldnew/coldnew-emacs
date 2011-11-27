@@ -79,11 +79,11 @@ Also returns nil if pid is nil."
   )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;; Conversion (Math)
-(defun digit->hex (digit)
-  "Convert digit number or string to hex-number."
+(defun decimal->hex (decimal)
+  "Convert decimal to hex-number."
   (let ((hexstr))
-    (if (stringp digit)
-	(setq digit (string-to-number digit 10)))
+    (if (stringp decimal)
+	(setq decimal (string-to-number decimal 10)))
     (cond
      ;; Use #x as hex prefix (elisp, ....)
      ((or (eq major-mode 'emacs-lisp-mode)
@@ -92,9 +92,9 @@ Also returns nil if pid is nil."
      ((eq major-mode 'css-mode) (setq hexstr "#"))
      ;; otherwise use 0x as hexprefix (C, Perl...)
      (t (setq hexstr "0x")))
-    (format "%s%02X" hexstr digit)))
+    (format "%s%02X" hexstr decimal)))
 
-(defun hex->digit (hex)
+(defun hex->decimal (hex)
   "Convert hex number or string to digit-number."
   (if (stringp hex)
       (let ((case-fold-search nil) )
