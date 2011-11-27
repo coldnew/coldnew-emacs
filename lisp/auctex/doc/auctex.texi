@@ -13,7 +13,7 @@ This manual is for @AUCTeX{}
 a sophisticated TeX environment for Emacs.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 2001, 2002, 2004, 2005,
-2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+2006, 2007, 2008, 2009, 2010, 2011 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -321,6 +321,7 @@ indenting and filling and for navigating through the document.
 * Environments::                Inserting Environment Templates
 * Mathematics::                 Entering Mathematics
 * Completion::                  Completion of macros
+* Marking::                     Marking Environments, Sections, or Texinfo Nodes
 * Commenting::                  Commenting text
 * Indenting::                   Reflecting syntactic constructs with whitespace
 * Filling::                     Automatic and manual line breaking
@@ -1050,6 +1051,85 @@ completion to work, parsing must be enabled as described in
 the Bib@TeX{} files have been saved at least once after you enabled
 automatic parsing on save, and that the basename of the Bib@TeX{} file
 does not conflict with the basename of one of @TeX{} files.
+
+@node Marking
+@section Marking Environments, Sections, or Texinfo Nodes
+
+You can mark the current environment by typing @kbd{C-c .}, or the
+current section by typing @kbd{C-c *}.
+
+In Texinfo documents you can type @kbd{M-C-h} to mark the current node.
+
+When the region is set, the point is moved to its beginning and the mark
+to its end.
+
+@menu
+* Marking (LaTeX):: LaTeX Commands for Marking Environments and Sections
+* Marking (Texinfo):: Texinfo Commands for Marking Environments, Sections, and Nodes
+@end menu
+
+@node Marking (LaTeX)
+@subsection LaTeX Commands for Marking Environments and Sections
+
+@deffn Command LaTeX-mark-section
+@kindex C-c *
+(@kbd{C-c *}) Set mark at end of current logical section, and point at
+top.
+
+With a non-nil prefix argument, mark only the region from the current
+section start to the next sectioning command.  Thereby subsections are
+not being marked.  Otherwise, any included subsections are also marked
+along with current section.
+@end deffn
+
+@deffn Command LaTeX-mark-environment
+@kindex C-c .
+(@kbd{C-c .}) Set mark to the end of the current environment and point
+to the matching beginning.
+
+If a prefix argument is given, mark the respective number of enclosing
+environments.  The command will not work properly if there are
+unbalanced begin-end pairs in comments and verbatim environments.
+@end deffn
+
+@node Marking (Texinfo)
+@subsection Texinfo Commands for Marking Environments and Sections
+
+@deffn Command Texinfo-mark-section
+@kindex C-c *
+(@kbd{C-c *}) Mark the current section, with inclusion of any containing
+node.
+
+The current section is detected as starting by any of the structuring
+commands matched by the regular expression in the variable
+@code{outline-regexp} which in turn is a regular expression matching any
+element of the variable @code{texinfo-section-list}.
+
+With a non-nil prefix argument, mark only the region from the current
+section start to the next sectioning command.  Thereby subsections are
+not being marked.  Otherwise, any included subsections are also marked
+
+Note that when the current section is starting immediately after a node
+command, then the node command is also marked as part of the section.
+@end deffn
+
+@deffn Command Texinfo-mark-environment
+@kindex C-c .
+(@kbd{C-c .}) Set mark to the end of the current environment and point
+to the matching beginning.
+
+If a prefix argument is given, mark the respective number of enclosing
+environments.  The command will not work properly if there are
+unbalanced begin-end pairs in comments and verbatim environments.
+@end deffn
+
+@deffn Command Texinfo-mark-node
+@kindex M-C-h
+(@kbd{M-C-h}) Mark the current node.  This is the node in which point is
+located.  It is starting at the previous occurrence of the keyword
+@code{@@node} and ending at next occurrence of the keywords
+@code{@@node} or @code{@@bye}.
+@end deffn
 
 @node Commenting
 @section Commenting
@@ -3780,7 +3860,10 @@ You can use the following types of specifiers for arguments:
 Use the string as a prompt to prompt for the argument.
 
 @item number
-Insert that many braces, leave point inside the first.
+Insert that many braces, leave point inside the first.  0 and -1 are
+special.  0 means that no braces are inserted.  -1 means that braces are
+inserted around the macro and an active region (e.g. @samp{@{\tiny
+foo@}}).  If there is no active region, no braces are inserted.
 
 @item nil
 Insert empty braces.

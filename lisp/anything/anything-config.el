@@ -440,7 +440,7 @@
 ;; `anything-c-browse-code-regexp-python'
 ;; Default Value: "\\<def\\>\\|\\<class\\>"
 ;; `anything-c-browse-code-regexp-alist'
-
+;; Default Value:	((lisp-interaction-mode . "^ *(def\\(un\\|subst\\|macro\\|face\\|alias\\|a [...]
 ;; `anything-c-external-programs-associations'
 ;; Default Value: nil
 ;; `anything-ff-auto-update-initial-value'
@@ -9683,7 +9683,7 @@ See documentation of `completing-read' and `all-completions' for details."
         (unwind-protect
              (progn
                (ac-mode -1)
-               (call-interactively current-command))
+               (apply completing-read-function def-args))
           (ac-mode 1))))
     ;; If we use now `completing-read' we MUST turn off `ac-mode'
     ;; to avoid infinite recursion and CRASH. It will be reenabled on exit.
@@ -9757,11 +9757,11 @@ See documentation of `completing-read' and `all-completions' for details."
       (setq def-com 'incompatible))
     (when (eq def-com 'ido) (setq def-com 'ido-read-file-name))
     (unless (or (not entry) def-com)
-      (return-from anything-completing-read-default
+      (return-from anything-generic-read-file-name
         (unwind-protect
              (progn
                (ac-mode -1)
-               (call-interactively current-command))
+               (apply read-file-name-function def-args))
           (ac-mode 1))))
     ;; If we use now `read-file-name' we MUST turn off `ac-mode'
     ;; to avoid infinite recursion and CRASH. It will be reenabled on exit.
@@ -11998,8 +11998,8 @@ It is `anything' replacement of regular `M-x' `execute-extended-command'."
                     . (lambda ()
                         (with-current-buffer (anything-candidate-buffer 'global)
                           (goto-char (point-min))
-                          (loop 
-                                for sym in (all-completions "" obarray 'commandp)
+                          (loop for sym in
+                                (all-completions "" obarray 'commandp)
                                 do (insert (concat sym "\n"))))))
                    (persistent-action . pers-help)
                    (persistent-help . "Describe this command")
@@ -12007,6 +12007,7 @@ It is `anything' replacement of regular `M-x' `execute-extended-command'."
                    (candidates-in-buffer)
                    (action . identity)))
                 :resume 'noresume
+                :prompt "M-x "
                 :history 'anything-M-x-input-history
                 :buffer "*anything M-x*")
                (keyboard-quit)))

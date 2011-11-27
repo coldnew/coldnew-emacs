@@ -32,19 +32,24 @@
 	    (color-theme-coldnew-night))))
 
 
-  ;; Specified special color-theme according different modes
+  ;; ;; Specified special color-theme according different modes
   (if linux?
       (add-hook 'post-command-hook
 		'(lambda ()
 		   (cond
 		    ;; When enter w3m, change color to color-thme-day.
 		    ((derived-mode-p 'w3m-mode) (color-theme-coldnew-day))
-		    ;; We don't want to change color iwhen enter minibuffer.
+		    ;; We don't want to change color when enter minibuffer.
 		    ;; This is the default option and might set in the end.
 		    ((not (minibufferp))
 		     (case *color-mode*
 		       ('night (color-theme-coldnew-night))
-		       ('day   (color-theme-coldnew-day))))))))
+		       ('day   (color-theme-coldnew-day)))))
+		   ;; FIXME: I wish to change modeline if current buffer is read-only
+		   ;; derived-mode-p can't use here, why?
+		   (if (derived-mode-p 'view-mode)
+		       (set-face-attribute 'modeline nil :box '(:color "red")))
+		   )))
 
   )
 

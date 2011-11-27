@@ -3165,6 +3165,7 @@ space does not end a sentence, so don't break a line there."
 				    ((string= match-string "$$") "$$")
 				    (t (concat TeX-esc "]")))
 			      (point-max) t)
+			     (skip-chars-forward "^ \n")
 			     (point))
 			   (line-beginning-position))
 			fill-column)))

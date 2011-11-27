@@ -1,7 +1,7 @@
 ;;; tex-info.el --- Support for editing Texinfo source.
 
-;; Copyright (C) 1993, 1994, 1997, 2000, 2001,
-;;               2004, 2005, 2006 Free Software Foundation, Inc.
+;; Copyright (C) 1993, 1994, 1997, 2000, 2001, 2004, 2005, 2006, 2011
+;;   Free Software Foundation, Inc.
 
 ;; Maintainer: auctex-devel@gnu.org
 ;; Keywords: tex
@@ -160,6 +160,135 @@ With optional ARG, modify current environment."
 	  (goto-char (match-beginning 0))
 	(error "Can't locate start of current environment")))))
 
+(defun Texinfo-mark-environment (&optional count)
+  "Set mark to end of current environment and point to the matching begin.
+If prefix argument COUNT is given, mark the respective number of
+enclosing environments.  The command will not work properly if
+there are unbalanced begin-end pairs in comments and verbatim
+environments."
+  ;; TODO:
+  ;; This is identical to the LaTeX counterpart but for the find begin/end
+  ;; functions. So some day the implemenation should be factorized.
+  (interactive "p")
+  (setq count (if count (abs count) 1))
+  (let ((cur (point)) beg end)
+    ;; Only change point and mark after beginning and end were found.
+    ;; Point should not end up in the middle of nowhere if the search fails.
+    (save-excursion
+      (dotimes (c count)
+	(Texinfo-find-env-end))
+      (setq end (line-beginning-position 2))
+      (goto-char cur)
+      (dotimes (c count)
+	(Texinfo-find-env-start)
+	(unless (= (1+ c) count)
+	  (beginning-of-line 0)))
+      (setq beg (point)))
+    (set-mark end)
+    (goto-char beg)
+    (TeX-activate-region)))
+
+(defun Texinfo-mark-section (&optional no-subsection)
+  "Mark current section, with inclusion of any containing node.
+
+The current section is detected as starting by any of the
+structuring commands matched by regexp in variable
+`outline-regexp' which in turn is a regexp matching any element
+of variable `texinfo-section-list'.
+
+If optional argument NO-SUBSECTION is set to any integer or is a
+non nil empty argument (i.e. `C-u \\[Texinfo-mark-section]'),
+then mark the current section with exclusion of any subsections.
+
+Otherwise, any included subsections are also marked along with
+current section.
+
+Note that when current section is starting immediatley after a
+node commande, then the node command is also marked as part as
+the section."
+  (interactive "P")
+  (let (beg end is-beg-section is-end-section
+	    (section-re (concat "^\\s-*" outline-regexp)))
+    (if (and (consp no-subsection) (eq (car no-subsection) 4))
+	;; section with exclusion of any subsection
+	(setq beg (save-excursion
+		    (unless (looking-at section-re)
+		      (end-of-line))
+		    (re-search-backward section-re nil t))
+	      is-beg-section t
+	      end (save-excursion
+		    (beginning-of-line)
+		    (when
+			(re-search-forward (concat section-re
+						   "\\|^\\s-*@bye\\_>" ) nil t)
+		      (save-match-data
+			(beginning-of-line)
+			(point))))
+	      is-end-section (match-string 1))
+      ;; full section without exclusion of any subsection
+      (let (section-command-level)
+	(setq beg
+	      (save-excursion
+		(end-of-line)
+		(re-search-backward section-re nil t)))
+	(when beg
+	  (setq is-beg-section t
+		section-command-level
+		(cadr (assoc (match-string 1) texinfo-section-list))
+		end
+		(save-excursion
+		  (beginning-of-line)
+		  (while
+		      (and (re-search-forward
+			    (concat section-re "\\|^\\s-*@bye\\_>" ) nil t)
+			   (or (null (setq is-end-section  (match-string 1)))
+			       (> (cadr (assoc is-end-section
+					       texinfo-section-list))
+				  section-command-level))))
+		  (when (match-string 0)
+		    (beginning-of-line)
+		    (point)))))));  (if ...)
+    (when (and beg end)
+      ;; now take also enclosing node of beg and end
+      (dolist
+	  (boundary '(beg end))
+	(when (symbol-value (intern (concat "is-" (symbol-name boundary)
+					    "-section")))
+	  (save-excursion
+	    (goto-char (symbol-value boundary))
+	    (while
+		(and
+		 (null (bobp))
+		 (progn
+		   (beginning-of-line 0)
+		   (looking-at "^\\s-*\\($\\|@\\(c\\|comment\\)\\_>\\)"))))
+	    (when  (looking-at "^\\s-*@node\\_>")
+	      (set boundary (point))))))
+
+      (set-mark end)
+      (goto-char beg)
+      (TeX-activate-region) )))
+
+(defun Texinfo-mark-node ()
+  "Mark the current node.  \
+This is the node in which the pointer is.  It is starting at
+previous beginning of keyword `@node' and ending at next
+beginning of keyword `@node' or `@bye'."
+  (interactive)
+  (let ((beg (save-excursion
+	       (unless (looking-at "^\\s-*@\\(?:node\\)\\_>")
+		 (end-of-line))
+	       (re-search-backward "^\\s-*@\\(?:node\\)\\_>" nil t )))
+	(end (save-excursion
+	       (beginning-of-line)
+	       (and (re-search-forward "^\\s-*@\\(?:node\\|bye\\)\\_>" nil t )
+		    (progn (beginning-of-line) (point))))))
+
+    (when (and beg end)
+      (set-mark end)
+      (goto-char beg)
+      (TeX-activate-region) )))
+
 (defun Texinfo-insert-node ()
   "Insert a Texinfo node in the current buffer.
 That means, insert the string `@node' and prompt for current,
@@ -231,6 +360,9 @@ for @node."
 
     ;; Simulating LaTeX-mode
     (define-key map "\C-c\C-e" 'Texinfo-environment)
+    (define-key map "\C-c." 'Texinfo-mark-environment)
+    (define-key map "\C-c*" 'Texinfo-mark-section)
+    (define-key map "\M-\C-h" 'Texinfo-mark-node)
     (define-key map "\C-c\n"   'texinfo-insert-@item)
     (or (key-binding "\e\r")
 	(define-key map "\e\r" 'texinfo-insert-@item)) ;*** Alias

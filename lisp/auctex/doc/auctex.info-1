@@ -1,10 +1,10 @@
 This is auctex.info, produced by makeinfo version 4.13 from auctex.texi.
 
-This manual is for AUCTeX (version 2011-05-01 from 2011-05-01), a
+This manual is for AUCTeX (version 2011-09-18 from 2011-09-18), a
 sophisticated TeX environment for Emacs.
 
    Copyright (C) 1992, 1993, 1994, 1995, 2001, 2002, 2004, 2005, 2006,
-2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+2007, 2008, 2009, 2010, 2011 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -1412,6 +1412,7 @@ by indenting and filling and for navigating through the document.
 * Environments::                Inserting Environment Templates
 * Mathematics::                 Entering Mathematics
 * Completion::                  Completion of macros
+* Marking::                     Marking Environments, Sections, or Texinfo Nodes
 * Commenting::                  Commenting text
 * Indenting::                   Reflecting syntactic constructs with whitespace
 * Filling::                     Automatic and manual line breaking
@@ -1937,7 +1938,7 @@ enable this feature, set the variable
      If non-nil, insert braces after typing <^> and <_> in math mode.
 
 
-File: auctex.info,  Node: Completion,  Next: Commenting,  Prev: Mathematics,  Up: Editing
+File: auctex.info,  Node: Completion,  Next: Marking,  Prev: Mathematics,  Up: Editing
 
 2.6 Completion
 ==============
@@ -2029,9 +2030,91 @@ after you enabled automatic parsing on save, and that the basename of
 the BibTeX file does not conflict with the basename of one of TeX files.
 
 
-File: auctex.info,  Node: Commenting,  Next: Indenting,  Prev: Completion,  Up: Editing
+File: auctex.info,  Node: Marking,  Next: Commenting,  Prev: Completion,  Up: Editing
 
-2.7 Commenting
+2.7 Marking Environments, Sections, or Texinfo Nodes
+====================================================
+
+You can mark the current environment by typing `C-c .', or the current
+section by typing `C-c *'.
+
+   In Texinfo documents you can type `M-C-h' to mark the current node.
+
+   When the region is set, the point is moved to its beginning and the
+mark to its end.
+
+* Menu:
+
+* Marking (LaTeX):: LaTeX Commands for Marking Environments and Sections
+* Marking (Texinfo):: Texinfo Commands for Marking Environments, Sections, and Nodes
+
+
+File: auctex.info,  Node: Marking (LaTeX),  Next: Marking (Texinfo),  Up: Marking
+
+2.7.1 LaTeX Commands for Marking Environments and Sections
+----------------------------------------------------------
+
+ -- Command: LaTeX-mark-section
+     (`C-c *') Set mark at end of current logical section, and point at
+     top.
+
+     With a non-nil prefix argument, mark only the region from the
+     current section start to the next sectioning command.  Thereby
+     subsections are not being marked.  Otherwise, any included
+     subsections are also marked along with current section.
+
+ -- Command: LaTeX-mark-environment
+     (`C-c .') Set mark to the end of the current environment and point
+     to the matching beginning.
+
+     If a prefix argument is given, mark the respective number of
+     enclosing environments.  The command will not work properly if
+     there are unbalanced begin-end pairs in comments and verbatim
+     environments.
+
+
+File: auctex.info,  Node: Marking (Texinfo),  Prev: Marking (LaTeX),  Up: Marking
+
+2.7.2 Texinfo Commands for Marking Environments and Sections
+------------------------------------------------------------
+
+ -- Command: Texinfo-mark-section
+     (`C-c *') Mark the current section, with inclusion of any
+     containing node.
+
+     The current section is detected as starting by any of the
+     structuring commands matched by the regular expression in the
+     variable `outline-regexp' which in turn is a regular expression
+     matching any element of the variable `texinfo-section-list'.
+
+     With a non-nil prefix argument, mark only the region from the
+     current section start to the next sectioning command.  Thereby
+     subsections are not being marked.  Otherwise, any included
+     subsections are also marked
+
+     Note that when the current section is starting immediately after a
+     node command, then the node command is also marked as part of the
+     section.
+
+ -- Command: Texinfo-mark-environment
+     (`C-c .') Set mark to the end of the current environment and point
+     to the matching beginning.
+
+     If a prefix argument is given, mark the respective number of
+     enclosing environments.  The command will not work properly if
+     there are unbalanced begin-end pairs in comments and verbatim
+     environments.
+
+ -- Command: Texinfo-mark-node
+     (`M-C-h') Mark the current node.  This is the node in which point
+     is located.  It is starting at the previous occurrence of the
+     keyword `@node' and ending at next occurrence of the keywords
+     `@node' or `@bye'.
+
+
+File: auctex.info,  Node: Commenting,  Next: Indenting,  Prev: Marking,  Up: Editing
+
+2.8 Commenting
 ==============
 
 It is often necessary to comment out temporarily a region of TeX or
@@ -2059,7 +2142,7 @@ or remove a single `%' respectively.
 
 File: auctex.info,  Node: Indenting,  Next: Filling,  Prev: Commenting,  Up: Editing
 
-2.8 Indenting
+2.9 Indenting
 =============
 
 Indentation means the addition of whitespace at the beginning of lines
@@ -2181,8 +2264,8 @@ to indenting with a small summary in each case:
 
 File: auctex.info,  Node: Filling,  Prev: Indenting,  Up: Editing
 
-2.9 Filling
-===========
+2.10 Filling
+============
 
 Filling deals with the insertion of line breaks to prevent lines from
 becoming wider than what is specified in `fill-column'.  The linebreaks
@@ -4342,7 +4425,11 @@ a `tref' you will be prompted for a label and no more.
      Use the string as a prompt to prompt for the argument.
 
 `number'
-     Insert that many braces, leave point inside the first.
+     Insert that many braces, leave point inside the first.  0 and -1
+     are special.  0 means that no braces are inserted.  -1 means that
+     braces are inserted around the macro and an active region (e.g.
+     `{\tiny foo}').  If there is no active region, no braces are
+     inserted.
 
 `nil'
      Insert empty braces.
@@ -4732,11 +4819,11 @@ A.1 Copying this Manual
 
 The copyright notice for this manual is:
 
-   This manual is for AUCTeX (version 2011-05-01 from 2011-05-01), a
+   This manual is for AUCTeX (version 2011-09-18 from 2011-09-18), a
 sophisticated TeX environment for Emacs.
 
    Copyright (C) 1992, 1993, 1994, 1995, 2001, 2002, 2004, 2005, 2006,
-2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+2007, 2008, 2009, 2010, 2011 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -6469,6 +6556,10 @@ Key Index
 * <LFD>:                                 Indenting.           (line  72)
 * <TAB>:                                 Indenting.           (line  69)
 * C-c %:                                 Commenting.          (line  23)
+* C-c * <1>:                             Marking (Texinfo).   (line   7)
+* C-c *:                                 Marking (LaTeX).     (line   7)
+* C-c . <1>:                             Marking (Texinfo).   (line  25)
+* C-c .:                                 Marking (LaTeX).     (line  16)
 * C-c ;:                                 Commenting.          (line  15)
 * C-c <LFD>:                             Itemize-like.        (line  10)
 * C-c ?:                                 Documentation.       (line   7)
@@ -6530,6 +6621,7 @@ Key Index
 * C-c ~:                                 Mathematics.         (line  12)
 * C-j:                                   Indenting.           (line  81)
 * M-<TAB>:                               Completion.          (line  20)
+* M-C-h:                                 Marking (Texinfo).   (line  34)
 * M-q:                                   Filling.             (line  89)
 
 
@@ -6564,6 +6656,8 @@ Function Index
 * LaTeX-indent-line:                     Indenting.           (line  69)
 * LaTeX-insert-environment:              Adding Environments. (line  70)
 * LaTeX-insert-item:                     Itemize-like.        (line  10)
+* LaTeX-mark-environment:                Marking (LaTeX).     (line  16)
+* LaTeX-mark-section:                    Marking (LaTeX).     (line   7)
 * LaTeX-math-mode:                       Mathematics.         (line  12)
 * LaTeX-section:                         Sectioning.          (line  23)
 * LaTeX-section-heading:                 Sectioning.          (line  85)
@@ -6573,32 +6667,32 @@ Function Index
 * LaTeX-section-toc:                     Sectioning.          (line  92)
 * TeX-add-style-hook:                    Simple Style.        (line  33)
 * TeX-add-symbols:                       Adding Macros.       (line  25)
-* TeX-arg-cite:                          Adding Macros.       (line 105)
-* TeX-arg-conditional:                   Adding Macros.       (line  82)
-* TeX-arg-coordinate:                    Adding Macros.       (line 168)
-* TeX-arg-corner:                        Adding Macros.       (line 146)
-* TeX-arg-counter:                       Adding Macros.       (line 108)
-* TeX-arg-define-cite:                   Adding Macros.       (line 137)
-* TeX-arg-define-counter:                Adding Macros.       (line 140)
-* TeX-arg-define-environment:            Adding Macros.       (line 133)
-* TeX-arg-define-label:                  Adding Macros.       (line 125)
-* TeX-arg-define-macro:                  Adding Macros.       (line 129)
-* TeX-arg-define-savebox:                Adding Macros.       (line 143)
-* TeX-arg-environment:                   Adding Macros.       (line 102)
-* TeX-arg-eval:                          Adding Macros.       (line  93)
-* TeX-arg-file:                          Adding Macros.       (line 114)
-* TeX-arg-free:                          Adding Macros.       (line  90)
-* TeX-arg-input-file:                    Adding Macros.       (line 118)
-* TeX-arg-label:                         Adding Macros.       (line  96)
-* TeX-arg-literal:                       Adding Macros.       (line  86)
-* TeX-arg-lr:                            Adding Macros.       (line 149)
-* TeX-arg-macro:                         Adding Macros.       (line  99)
-* TeX-arg-pagestyle:                     Adding Macros.       (line 155)
-* TeX-arg-pair:                          Adding Macros.       (line 161)
-* TeX-arg-savebox:                       Adding Macros.       (line 111)
-* TeX-arg-size:                          Adding Macros.       (line 165)
-* TeX-arg-tb:                            Adding Macros.       (line 152)
-* TeX-arg-verb:                          Adding Macros.       (line 158)
+* TeX-arg-cite:                          Adding Macros.       (line 109)
+* TeX-arg-conditional:                   Adding Macros.       (line  86)
+* TeX-arg-coordinate:                    Adding Macros.       (line 172)
+* TeX-arg-corner:                        Adding Macros.       (line 150)
+* TeX-arg-counter:                       Adding Macros.       (line 112)
+* TeX-arg-define-cite:                   Adding Macros.       (line 141)
+* TeX-arg-define-counter:                Adding Macros.       (line 144)
+* TeX-arg-define-environment:            Adding Macros.       (line 137)
+* TeX-arg-define-label:                  Adding Macros.       (line 129)
+* TeX-arg-define-macro:                  Adding Macros.       (line 133)
+* TeX-arg-define-savebox:                Adding Macros.       (line 147)
+* TeX-arg-environment:                   Adding Macros.       (line 106)
+* TeX-arg-eval:                          Adding Macros.       (line  97)
+* TeX-arg-file:                          Adding Macros.       (line 118)
+* TeX-arg-free:                          Adding Macros.       (line  94)
+* TeX-arg-input-file:                    Adding Macros.       (line 122)
+* TeX-arg-label:                         Adding Macros.       (line 100)
+* TeX-arg-literal:                       Adding Macros.       (line  90)
+* TeX-arg-lr:                            Adding Macros.       (line 153)
+* TeX-arg-macro:                         Adding Macros.       (line 103)
+* TeX-arg-pagestyle:                     Adding Macros.       (line 159)
+* TeX-arg-pair:                          Adding Macros.       (line 165)
+* TeX-arg-savebox:                       Adding Macros.       (line 115)
+* TeX-arg-size:                          Adding Macros.       (line 169)
+* TeX-arg-tb:                            Adding Macros.       (line 156)
+* TeX-arg-verb:                          Adding Macros.       (line 162)
 * TeX-auto-generate:                     Automatic Private.   (line  24)
 * TeX-clean:                             Cleaning.            (line   7)
 * TeX-command-buffer:                    Starting a Command.  (line  35)
@@ -6644,4 +6738,7 @@ Function Index
 * TeX-toggle-debug-warnings:             Debugging.           (line  23)
 * TeX-view <1>:                          I/O Correlation.     (line  20)
 * TeX-view:                              Starting Viewers.    (line  12)
+* Texinfo-mark-environment:              Marking (Texinfo).   (line  25)
+* Texinfo-mark-node:                     Marking (Texinfo).   (line  34)
+* Texinfo-mark-section:                  Marking (Texinfo).   (line   7)
 

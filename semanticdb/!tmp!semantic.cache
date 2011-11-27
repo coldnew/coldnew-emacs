@@ -2,41 +2,14 @@
 ;; SEMANTICDB Tags save file
 (semanticdb-project-database-file "tmp/"
   :tables (list 
-   (semanticdb-table "a.c"
+     (semanticdb-table "aa.c"
     :major-mode 'c-mode
     :tags nil
-    :file "a.c"
-    :pointmax 158
-    :fsize 157
-    :lastmodtime '(20174 28236)
-    :unmatched-syntax '((semantic-list 92 . 95) (WHILE 87 . 92) (semantic-list 75 . 87) (DO 72 . 74) (semantic-list 75 . 87) (DO 72 . 74))
-    )
-   (semanticdb-table "cc.c"
-    :major-mode 'c-mode
-    :tags nil
-    :file "cc.c"
-    :pointmax 27
-    :fsize 26
-    :lastmodtime '(20176 42830)
-    :unmatched-syntax 'nil
-    )
-   (semanticdb-table "aa.c"
-    :major-mode 'c-mode
-    :tags 
-        '( ("stdio.h" include (:system-flag t) nil [3 21])
-            ("slib.h" include (:system-flag t) nil [23 40])
-            ("a" variable (:type "int") nil [43 54])
-            ("ber" variable (:type "int") nil [55 72])
-            ("stdio.h" include (:system-flag t) nil [73 91])
-            ("gtk" include (:system-flag t) nil [92 106])
-            ("var" variable (:type "int") nil [109 140])
-            ("variable_is_kinda_long" variable (:type "int") nil [141 172])
-            ("var_is_less_long" variable (:type "int") nil [173 204]))          
     :file "aa.c"
-    :pointmax 228
-    :fsize 212
-    :lastmodtime '(20176 60727)
-    :unmatched-syntax 'nil
+    :pointmax 152
+    :fsize 151
+    :lastmodtime '(20178 1978)
+    :unmatched-syntax '((number 84 . 86) (number 78 . 82) (number 72 . 76) (semantic-list 78 . 90) (number 72 . 76) (semantic-list 72 . 84))
     )
    )
   :file "!tmp!semantic.cache"

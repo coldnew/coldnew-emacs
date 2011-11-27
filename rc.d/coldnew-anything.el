@@ -18,21 +18,13 @@
   (setq anything-c-adaptive-history-file (concat emacs-cache-dir "anything.cache"))
   ;; Maximum number of candidates stored for a source.
   (setq anything-c-adaptive-history-length 300)
-  ;; (setq anything-c-boring-buffer-regexp
-  ;;	(concat anything-c-boring-buffer-regexp "\\|\\*tramp/sudo "))
-
-  ;; FIXME: Why follwoing can't use in lusty-file-explorer only?
-  ;;  it returns error messages as following:
-  ;;  return-from: No catch for tag: --cl-block-anything-completing-read-default--, #<buffer coldnew-dictionary.el>
-  (add-to-list 'anything-completing-read-handlers-alist '(lusty-file-explorer . nil))
-  ;; NOTE: temporarily use follwoing to fix problem = =
-  ;; (defadvice lusty-file-explorer (around lusty-buffer-explorer activate)
-  ;;   "temporary fix ecb bug"
-  ;;   (ac-mode -1)
-  ;;   ad-do-it
-  ;;   (ac-mode 1))
 
   (anything-completion-mode)
+
+  ;; Make lusty-explorer use it's own completion, not anything-completion
+  (when (require* 'lusty-explorer)
+    (add-to-list 'anything-completing-read-handlers-alist '(lusty-file-explorer . nil))
+    (add-to-list 'anything-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
 
   (setq anything-sources
 	(list
@@ -43,16 +35,6 @@
 	 anything-c-source-info-pages
 	 ;; anything-c-source-include
 	 ))
-
-
-  (setq anything-for-files-prefered-list
-	'(anything-c-source-ffap-line
-	  anything-c-source-ffap-guesser
-	  anything-c-source-recentf
-	  anything-c-source-bookmarks
-	  anything-c-source-file-cache
-	  anything-c-source-files-in-current-dir+
-	  anything-c-source-locate))
 
 
   )

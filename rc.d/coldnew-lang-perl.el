@@ -23,7 +23,7 @@
 	       (vim:local-imap (kbd "M-h") 'plcmp-cmd-complete-hashes)
 	       (vim:local-imap (kbd "M-f") 'plcmp-cmd-complete-functions)
 	       (vim:local-imap (kbd "M-m") 'plcmp-cmd-complete-methods)
-	       (vim:local-imap (kbd "M-i") 'perl-mode:insert-modules)
+	       (vim:local-imap (kbd "M-u") 'perl-mode:insert-modules)
 
 	       )
 	     ))

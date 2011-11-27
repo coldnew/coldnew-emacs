@@ -12,6 +12,7 @@
 (when (require* 'auto-complete)
   (defun ac-emacs-lisp-mode-setup ()
     "auto-complete settings for emacs-lisp-mode"
+    ;; (make-variable-buffer-local 'ac-sources)
     (setq ac-sources
 	  '(ac-source-dictionary
 	    ac-source-symbols
@@ -85,7 +86,6 @@
 	     ;; Highlight differnet parentheses
 	     (when (require* 'highlight-parentheses)
 	       (highlight-parentheses-mode))
-
 	     ;; Enable eldoc
 	     (when (require* 'eldoc)
 	       ;; Add extension for eldoc

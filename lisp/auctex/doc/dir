@@ -13,3 +13,9 @@ File: dir,	Node: Top	This is the top of the INFO tree
   to select it.
 
 * Menu:
+
+Emacs
+* AUCTeX: (auctex).             A sophisticated TeX environment for Emacs.
+
+TeX
+* AUCTeX: (auctex).             A sophisticated TeX environment for Emacs.

@@ -79,8 +79,6 @@
   (when (featurep 'auto-complete)
     (diminish 'auto-complete-mode ""))
 
-  ;;(when (require* 'textmate)
-  ;;  (diminish 'textmate-mode ""))
   )
 
 

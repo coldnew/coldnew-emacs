@@ -453,9 +453,9 @@ string."
     ("%dS" TeX-source-specials-view-expand-options)
     ("%cS" TeX-source-specials-view-expand-client)
     ("%(outpage)" (lambda ()
-		    (if TeX-source-correlate-output-page-function
-			(funcall TeX-source-correlate-output-page-function)
-		      "1")))
+		    (or (when TeX-source-correlate-output-page-function
+			  (funcall TeX-source-correlate-output-page-function))
+			"1")))
     ;; `file' means to call `TeX-master-file' or `TeX-region-file'
     ("%s" file nil t)
     ("%t" file t t)
@@ -1017,7 +1017,7 @@ The following built-in predicates are available:
 ;;       ("displayline" "displayline %n %o %b")
 ;;       ("open" "open %o")))
    (t
-    '(("xdvi" ("%(o?)xdvi"
+    `(("xdvi" ("%(o?)xdvi"
 	       (mode-io-correlate " -sourceposition \"%n %b\" -editor \"%cS\"")
 	       ((paper-a4 paper-portrait) " -paper a4")
 	       ((paper-a4 paper-landscape) " -paper a4r")
@@ -1031,7 +1031,13 @@ The following built-in predicates are available:
       ("dvips and gv" "%(o?)dvips %d -o && gv %f")
       ("gv" "gv %o")
       ("xpdf" ("xpdf -remote %s -raise %o" (mode-io-correlate " %(outpage)")))
-      ("Evince" ("evince" (mode-io-correlate " -p %(outpage)") " %o"))
+      ("Evince" ("evince" (mode-io-correlate
+			   ;; With evince 3, -p N opens the page *labeled* N,
+			   ;; and -i,--page-index the physical page N.
+			   ,(if (string-match "--page-index"
+					      (shell-command-to-string "evince --help"))
+				" -i %(outpage)"
+			      " -p %(outpage)")) " %o"))
       ("Okular" ("okular --unique %o" (mode-io-correlate "#src:%n%b")))
       ("xdg-open" "xdg-open %o"))))
   "Alist of built-in viewer specifications.
@@ -1225,7 +1231,9 @@ predicates are true, nil otherwise."
 (defvar TeX-engine-alist-builtin
   '((default "Default" TeX-command LaTeX-command ConTeXt-engine)
     (xetex "XeTeX" "xetex" "xelatex" "xetex")
-    (luatex "LuaTeX" "luatex" "lualatex" "luatex")
+    ;; Some lualatex versions before 0.71 would use "texput" as file
+    ;; name if --jobname were not supplied
+    (luatex "LuaTeX" "luatex" "lualatex --jobname=%s" "luatex")
     (omega "Omega" TeX-Omega-command LaTeX-Omega-command ConTeXt-Omega-engine))
   "Alist of built-in TeX engines and associated commands.
 For a description of the format see `TeX-engine-alist'.")
@@ -1413,13 +1421,25 @@ If this is nil, an empty string will be returned."
   "Keymap for `TeX-source-correlate-mode'.
 You could use this for unusual mouse bindings.")
 
-(defun TeX-source-correlate-sync-source (file linecol)
+(defun TeX-source-correlate-sync-source (file linecol &rest ignored)
   "Show TeX FILE with point at LINECOL.
 This function is called when emacs receives a SyncSource signal
-emitted from the Evince document viewer."
-  ;; FILE is actually given as relative path to the TeX-master root document,
-  ;; so we need to strip the directory part to match the buffer name.
-  (let ((buf (get-buffer (file-name-nondirectory file)))
+emitted from the Evince document viewer.  IGNORED absorbs an
+unused id field accompanying the DBUS signal sent by Evince-3.0.0
+or newer."
+  ;; FILE may be given as relative path to the TeX-master root document or as
+  ;; absolute file:// URL.  In the former case, the tex file has to be already
+  ;; opened.
+  (let ((buf (let ((f (condition-case nil
+			  (progn
+			    (require 'url-parse)
+			    (aref (url-generic-parse-url file) 6))
+			;; For Emacs 21 compatibility, which doesn't have the
+			;; url package.
+			(file-error (replace-regexp-in-string "^file://" "" file)))))
+	       (if (file-name-absolute-p f)
+		   (find-file f)
+		 (get-buffer (file-name-nondirectory file)))))
         (line (car linecol))
         (col (cadr linecol)))
     (if (null buf)
@@ -1569,8 +1589,8 @@ returned."
 (defvar TeX-synctex-tex-flags "--synctex=1"
   "Extra flags to pass to TeX commands to enable SyncTeX.")
 
-(defun TeX-synctex-output-page ()
-  "Return the page corresponding to the current source position.
+(defun TeX-synctex-output-page-1 (file)
+  "Return the page corresponding to the current position in FILE.
 This method assumes that the document was compiled with SyncTeX
 enabled and the `synctex' binary is available."
   (let ((synctex-output
@@ -1578,16 +1598,29 @@ enabled and the `synctex' binary is available."
 	   (call-process "synctex" nil (list standard-output nil) nil "view"
 			 "-i" (format "%s:%s:%s" (line-number-at-pos)
 				      (current-column)
-				      ;; The file name relative to the
-				      ;; directory of the master file.
-				      (file-relative-name
-				       (buffer-file-name)
-				       (file-name-directory
-					(TeX-active-master))))
+				      file)
 			 "-o" (TeX-active-master (TeX-output-extension))))))
-    (if (string-match "Page:\\([0-9]+\\)" synctex-output)
-	(match-string 1 synctex-output)
-      "1")))
+    (when (string-match "Page:\\([0-9]+\\)" synctex-output)
+      (match-string 1 synctex-output))))
+
+(defun TeX-synctex-output-page ()
+  "Return the page corresponding to the position in the current buffer.
+This method assumes that the document was compiled with SyncTeX
+enabled and the `synctex' binary is available."
+  (let* ((file (file-relative-name (buffer-file-name)
+				   (file-name-directory
+				    (TeX-active-master))))
+	 (abs-file (concat (expand-file-name (or (file-name-directory (TeX-active-master))
+						 (file-name-directory (buffer-file-name))))
+			   "./" file)))
+    ;; It's known that depending on synctex version one of
+    ;; /absolute/path/./foo/bar.tex, foo/bar.tex, or ./foo/bar.tex (relative to
+    ;; TeX-master, and the "." in the absolute path is important) are needed.
+    ;; So try all variants before falling back to page 1.
+    (or (TeX-synctex-output-page-1 abs-file)
+	(TeX-synctex-output-page-1 file)
+	(TeX-synctex-output-page-1 (concat "./" file))
+	"1")))
 
 ;;; Miscellaneous minor modes
 
@@ -3649,8 +3682,9 @@ non-nil, remove file extension."
 	       (delete "." dirs))
 	   (setq extensions (concat "\\." (regexp-opt extensions t) "\\'")
 		 result (apply #'append (mapcar (lambda (x)
-						  (directory-files
-						   x (not nodir) extensions))
+						  (when (file-readable-p x)
+						    (directory-files
+						     x (not nodir) extensions)))
 						dirs)))
 	   (if strip
 	       (mapcar (lambda(x)

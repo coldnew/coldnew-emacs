@@ -15,6 +15,13 @@
 	     (or (file-exists-p  (file-name-directory buffer-file-name))
 		 (make-directory (file-name-directory buffer-file-name) t))))
 
+;; When visit emacs-lisp-dir, change file to view mode
+;; this will avoid I change those plugins.
+(add-hook 'find-file-hook
+	  '(lambda ()
+	     (if (search (expand-file-name emacs-lisp-dir)
+			 (directory-file-name (buffer-file-name)))
+		 (view-mode))))
 
 ;;;;;;;; Lusty Explorer
 ;; LustyExplorer is a fast and responsive way to manage files and buffers.

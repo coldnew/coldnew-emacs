@@ -1,3 +1,78 @@
+2011-09-18  Ralf Angeli  <angeli@caeruleus.net>
+
+	* doc/auctex.texi (Marking): Make a few corrections throughout the
+	section.
+	(Adding Macros): Document special values for numbers used together
+	with `TeX-add-symbols'.
+
+2011-09-18  Vincent Belaïche  <vincentb1@users.sourceforge.net>
+
+	* doc/auctex.texi: Add documentation for functions
+	LaTeX-mark-section, LaTeX-mark-environment, Texinfo-mark-section,
+	Texinfo-mark-environment and Texinfo-mark-node.
+
+2011-08-24  Tassilo Horn  <tassilo@member.fsf.org>
+
+	* tex.el (TeX-synctex-output-page): TeXLive 2011's synctex wants
+	absolute file names with dot indicating the master, like
+	/foo/bar/./baz/chap1.tex.  So add this as another variant.
+	(TeX-view-program-list-builtin): Use evince's -i,--page-index
+	switch instead of -p,--page-label if that evince version supports
+	it (>=3.0.x).
+
+2011-08-07  Ralf Angeli  <angeli@caeruleus.net>
+
+	* latex.el (LaTeX-fill-move-to-break-point): Take characters after
+	closing dollar sign into account when deciding to break before
+	inline math.
+
+2011-07-12  Ralf Angeli  <angeli@caeruleus.net>
+
+	* tex.el (TeX-search-files-kpathsea): Check if directories are
+	accessible.
+
+2011-07-11  Vincent Belaïche  <vincentb1@users.sourceforge.net>
+
+	* tex-info.el (Texinfo-mark-environment, Texinfo-mark-section)
+	(Texinfo-mark-node): New defun.
+	(Texinfo-mode-map): added key bindings for
+	Texinfo-mark-environment, Texinfo-mark-section, and
+	Texinfo-mark-node.
+
+2011-06-19  Ralf Angeli  <angeli@caeruleus.net>
+
+	* tex.el (TeX-engine-alist-builtin): Add --jobname to luatex and
+	lualatex calls.
+	(TeX-engine-alist-builtin): Remove --jobname again for luatex but
+	not for lualatex.
+
+2011-06-05  Tassilo Horn  <tassilo@member.fsf.org>
+
+	* tex.el (TeX-source-correlate-sync-source): Restore Emacs 21
+	compatibility.
+
+2011-05-26  Tassilo Horn  <tassilo@member.fsf.org>
+
+	* tex.el (TeX-source-correlate-sync-source): Adapt to handle
+	file:// URLs.
+
+2011-05-15  Ralf Angeli  <angeli@caeruleus.net>
+
+	* Makefile.in (STYLESRC): Add style/setspace.el.
+
+	* tex.el (TeX-expand-list): Add a safeguard to the %(outpage)
+	expander for when an output page function returns nil.
+
+2011-05-09  Tassilo Horn  <tassilo@member.fsf.org>
+
+	* tex.el (TeX-synctex-output-page-1): New function for calling
+	synctex.
+	(TeX-synctex-output-page): Use it, and try relative file names
+	with and without leading ./ when calling synctex before falling
+	back to page 1.
+	(TeX-source-correlate-sync-source): Add &rest parameter, because
+	Evince 3 sends an additional (ignored) parameter via dbus.
+
 2011-05-01  Ralf Angeli  <angeli@caeruleus.net>
 
 	* tex.el (TeX-tree-expand): Use a different test to check for an

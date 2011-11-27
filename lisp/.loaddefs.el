@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (anything-other-buffer anything-at-point anything)
-;;;;;;  "anything/anything" "anything/anything.el" (20176 61109))
+;;;;;;  "anything/anything" "anything/anything.el" (20177 13812))
 ;;; Generated autoloads from anything/anything.el
 
 (autoload 'anything "anything/anything" "\
@@ -154,7 +154,7 @@ Call `anything' with only ANY-SOURCES and ANY-BUFFER as args.
 ;;;;;;  anything-etags-help anything-pdfgrep-help anything-grep-help
 ;;;;;;  anything-generic-file-help anything-read-file-name-help anything-ff-help
 ;;;;;;  anything-c-buffer-help anything-configuration) "anything/anything-config"
-;;;;;;  "anything/anything-config.el" (20176 61109))
+;;;;;;  "anything/anything-config.el" (20177 13812))
 ;;; Generated autoloads from anything/anything-config.el
 
 (autoload 'anything-configuration "anything/anything-config" "\
@@ -1154,7 +1154,7 @@ Turn off ASCII code display.
 ;;;***
 
 ;;;### (autoloads (turn-on-bib-cite bib-cite-minor-mode) "auctex/bib-cite"
-;;;;;;  "auctex/bib-cite.el" (20171 20344))
+;;;;;;  "auctex/bib-cite.el" (18341 54637))
 ;;; Generated autoloads from auctex/bib-cite.el
 
 (autoload 'bib-cite-minor-mode "auctex/bib-cite" "\
@@ -1193,7 +1193,7 @@ of context-mode-hook.
 ;;;***
 
 ;;;### (autoloads (context-en-mode) "auctex/context-en" "auctex/context-en.el"
-;;;;;;  (20171 20369))
+;;;;;;  (19618 16518))
 ;;; Generated autoloads from auctex/context-en.el
 
 (autoload 'context-en-mode "auctex/context-en" "\
@@ -1211,7 +1211,7 @@ of context-mode-hook.
 ;;;***
 
 ;;;### (autoloads (context-nl-mode) "auctex/context-nl" "auctex/context-nl.el"
-;;;;;;  (20171 20344))
+;;;;;;  (19618 16529))
 ;;; Generated autoloads from auctex/context-nl.el
 
 (autoload 'context-nl-mode "auctex/context-nl" "\
@@ -1229,7 +1229,7 @@ of context-mode-hook.
 ;;;***
 
 ;;;### (autoloads (font-latex-setup) "auctex/font-latex" "auctex/font-latex.el"
-;;;;;;  (20171 20368))
+;;;;;;  (19901 29725))
 ;;; Generated autoloads from auctex/font-latex.el
 
 (autoload 'font-latex-setup "auctex/font-latex" "\
@@ -1278,7 +1278,7 @@ runs the hooks in `docTeX-mode-hook'.
 ;;;***
 
 ;;;### (autoloads (multi-prompt-key-value multi-prompt) "auctex/multi-prompt"
-;;;;;;  "auctex/multi-prompt.el" (20171 20345))
+;;;;;;  "auctex/multi-prompt.el" (18915 28236))
 ;;; Generated autoloads from auctex/multi-prompt.el
 
 (autoload 'multi-prompt "auctex/multi-prompt" "\
@@ -1308,7 +1308,7 @@ The return value is the string as entered in the minibuffer.
 ;;;***
 
 ;;;### (autoloads (ams-tex-mode TeX-plain-tex-mode) "auctex/plain-tex"
-;;;;;;  "auctex/plain-tex.el" (20171 20369))
+;;;;;;  "auctex/plain-tex.el" (19707 64159))
 ;;; Generated autoloads from auctex/plain-tex.el
 
 (autoload 'TeX-plain-tex-mode "auctex/plain-tex" "\
@@ -1416,7 +1416,7 @@ information about your AUCTeX version and AUCTeX configuration.
 ;;;***
 
 ;;;### (autoloads (LaTeX-install-toolbar TeX-install-toolbar) "auctex/tex-bar"
-;;;;;;  "auctex/tex-bar.el" (20171 20344))
+;;;;;;  "auctex/tex-bar.el" (18580 49499))
 ;;; Generated autoloads from auctex/tex-bar.el
 
 (autoload 'TeX-install-toolbar "auctex/tex-bar" "\
@@ -1431,8 +1431,8 @@ Install toolbar buttons for LaTeX mode.
 
 ;;;***
 
-;;;### (autoloads nil "auctex/tex-fold" "auctex/tex-fold.el" (20171
-;;;;;;  20368))
+;;;### (autoloads nil "auctex/tex-fold" "auctex/tex-fold.el" (19887
+;;;;;;  15736))
 ;;; Generated autoloads from auctex/tex-fold.el
 (autoload 'TeX-fold-mode "tex-fold" "Minor mode for hiding and revealing macros and environments." t)
 
@@ -1441,7 +1441,7 @@ Install toolbar buttons for LaTeX mode.
 ;;;***
 
 ;;;### (autoloads (tex-font-setup) "auctex/tex-font" "auctex/tex-font.el"
-;;;;;;  (20171 20344))
+;;;;;;  (18341 54636))
 ;;; Generated autoloads from auctex/tex-font.el
 
 (autoload 'tex-font-setup "auctex/tex-font" "\
@@ -1452,7 +1452,7 @@ Setup font lock support for TeX.
 ;;;***
 
 ;;;### (autoloads (TeX-texinfo-mode) "auctex/tex-info" "auctex/tex-info.el"
-;;;;;;  (20171 20368))
+;;;;;;  (19994 65094))
 ;;; Generated autoloads from auctex/tex-info.el
 
 (defalias 'Texinfo-mode 'texinfo-mode)
@@ -1489,7 +1489,7 @@ Set `japanese-TeX-mode' to t, and enter `TeX-latex-mode'.
 ;;;***
 
 ;;;### (autoloads (texmathp-match-switch texmathp) "auctex/texmathp"
-;;;;;;  "auctex/texmathp.el" (20171 20340))
+;;;;;;  "auctex/texmathp.el" (18489 3128))
 ;;; Generated autoloads from auctex/texmathp.el
 
 (autoload 'texmathp "auctex/texmathp" "\
@@ -1509,8 +1509,8 @@ Limit searched to BOUND.
 
 ;;;***
 
-;;;### (autoloads nil "auctex/toolbar-x" "auctex/toolbar-x.el" (20171
-;;;;;;  20345))
+;;;### (autoloads nil "auctex/toolbar-x" "auctex/toolbar-x.el" (18580
+;;;;;;  49487))
 ;;; Generated autoloads from auctex/toolbar-x.el
 (autoload 'toolbarx-install-toolbar "toolbar-x")
 
@@ -6205,6 +6205,11 @@ See also function `tempbuf-mode'.
 ;;;;;;  "apel/site-lisp/emu/poem-e20.el" "apel/site-lisp/emu/poem-e20_3.el"
 ;;;;;;  "apel/site-lisp/emu/poem.el" "apel/site-lisp/emu/product.el"
 ;;;;;;  "apel/site-lisp/emu/pym.el" "apel/site-lisp/emu/static.el"
+;;;;;;  "auctex/auctex.el" "auctex/auto-loads.el" "auctex/lpath.el"
+;;;;;;  "auctex/preview/auto.el" "auctex/preview/preview-latex.el"
+;;;;;;  "auctex/preview/prv-emacs.el" "auctex/preview/prv-install.el"
+;;;;;;  "auctex/preview/prv-xemacs.el" "auctex/tex-buf.el" "auctex/tex-mik.el"
+;;;;;;  "auctex/tex-site.el" "auctex/tex-style.el" "auctex/tex-wizard.el"
 ;;;;;;  "emacs-goodies-el/elisp/debian-el/debian-el-loaddefs.el"
 ;;;;;;  "emacs-goodies-el/elisp/debian-el/debian-el.el" "emacs-goodies-el/elisp/debian-el/gnus-BTS.el"
 ;;;;;;  "emacs-goodies-el/elisp/devscripts-el/devscripts.el" "emacs-goodies-el/elisp/devscripts-el/pbuilder-log-view-mode.el"
@@ -6236,16 +6241,15 @@ See also function `tempbuf-mode'.
 ;;;;;;  "emacs-w3m/w3m-load.el" "emacs-w3m/w3m-mail.el" "emacs-w3m/w3m-proc.el"
 ;;;;;;  "emacs-w3m/w3m-rss.el" "emacs-w3m/w3m-tabmenu.el" "emacs-w3m/w3m-ucs.el"
 ;;;;;;  "emacs-w3m/w3m-util.el" "emacs-w3m/w3m-xmas.el" "emacs-w3m/w3mhack.el"
-;;;;;;  "lusty-explorer/lusty-ido.el" "perl-completion/perl-completion.el"
-;;;;;;  "popup-kill-ring/popup-kill-ring.el" "vimpulse-surround/vimpulse-surround.el"
-;;;;;;  "vimpulse/test-framework.el" "vimpulse/vimpulse-compatibility.el"
-;;;;;;  "vimpulse/vimpulse-dependencies.el" "vimpulse/vimpulse-ex.el"
-;;;;;;  "vimpulse/vimpulse-misc-keybindings.el" "vimpulse/vimpulse-modal.el"
-;;;;;;  "vimpulse/vimpulse-operator.el" "vimpulse/vimpulse-paren-matching.el"
-;;;;;;  "vimpulse/vimpulse-test.el" "vimpulse/vimpulse-text-object-system.el"
-;;;;;;  "vimpulse/vimpulse-utils.el" "vimpulse/vimpulse-viper-function-redefinitions.el"
-;;;;;;  "vimpulse/vimpulse-visual-mode.el" "vimpulse/vimpulse.el")
-;;;;;;  (20176 62382 236719))
+;;;;;;  "perl-completion/perl-completion.el" "popup-kill-ring/popup-kill-ring.el"
+;;;;;;  "vimpulse-surround/vimpulse-surround.el" "vimpulse/test-framework.el"
+;;;;;;  "vimpulse/vimpulse-compatibility.el" "vimpulse/vimpulse-dependencies.el"
+;;;;;;  "vimpulse/vimpulse-ex.el" "vimpulse/vimpulse-misc-keybindings.el"
+;;;;;;  "vimpulse/vimpulse-modal.el" "vimpulse/vimpulse-operator.el"
+;;;;;;  "vimpulse/vimpulse-paren-matching.el" "vimpulse/vimpulse-test.el"
+;;;;;;  "vimpulse/vimpulse-text-object-system.el" "vimpulse/vimpulse-utils.el"
+;;;;;;  "vimpulse/vimpulse-viper-function-redefinitions.el" "vimpulse/vimpulse-visual-mode.el"
+;;;;;;  "vimpulse/vimpulse.el") (20177 15377 551434))
 
 ;;;***
 

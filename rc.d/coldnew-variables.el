@@ -7,6 +7,8 @@
 (require 'coldnew-functions)
 
 ;;;;;;;; System Variables
+(defvar emacs-dir "~/.emacs.d/"
+  "The top-level emacs-configure directory.")
 (defvar emacs-config-dir "~/.emacs.d/rc.d/"
   "directory to place emacs configure.")
 (defvar emacs-etc-dir    "~/.emacs.d/etc/"
