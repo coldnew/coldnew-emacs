@@ -10,7 +10,7 @@
    For example: (map-define-key '(a b c d) 'function-name)."
   (mapc (lambda (k)
 	  (progn
-	    (define-key mode-map k fname)))
+	   (define-key mode-map k fname)))
 	keylist))
 
 (defun show-buffer-major-mode (buffer-or-string)
@@ -23,8 +23,8 @@ Also returns nil if pid is nil."
   (when pid
     (let ((attributes (process-attributes pid)) (cmd))
       (dolist (attr attributes)
-	(if (string= "comm" (car attr))
-	    (setq cmd (cdr attr))))
+	      (if (string= "comm" (car attr))
+		  (setq cmd (cdr attr))))
       (if (and cmd (or (string= "emacs" cmd) (string= "emacs.exe" cmd))) t))))
 
 (defun get-current-line ()
@@ -50,7 +50,8 @@ Also returns nil if pid is nil."
 	 (day-index (nth 6 (decode-time (encode-time 0 0 0 day month year)))))
     (nth day-index day-names)))
 
-;;;;;;;; Convertion
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;; Convertion (File)
 (defun unix->dos (buf)
   "Convert buffer file from unix file to dos file."
   (let* (current-buf (current-buffer))
@@ -73,11 +74,37 @@ Also returns nil if pid is nil."
   "Convert file to string in buffer with quote."
   (when (file-readable-p file)
     (with-temp-buffer
-      (insert-file-contents file)
-      (buffer-string)))
+     (insert-file-contents file)
+     (buffer-string)))
   )
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;; Conversion (Math)
+(defun digit->hex (digit)
+  "Convert digit number or string to hex-number."
+  (let ((hexstr))
+    (if (stringp digit)
+	(setq digit (string-to-number digit 10)))
+    (cond
+     ;; Use #x as hex prefix (elisp, ....)
+     ((or (eq major-mode 'emacs-lisp-mode)
+	  (eq major-mode 'lisp-interaction-mode)) (setq hexstr "#x"))
+     ;; Use # as hex prefix (CSS, ....)
+     ((eq major-mode 'css-mode) (setq hexstr "#"))
+     ;; otherwise use 0x as hexprefix (C, Perl...)
+     (t (setq hexstr "0x")))
+    (format "%s%02X" hexstr digit)))
 
+(defun hex->digit (hex)
+  "Convert hex number or string to digit-number."
+  (if (stringp hex)
+      (let ((case-fold-search nil) )
+	(setq hex (replace-regexp-in-string "^0x" "" hex )) ; C, Perl
+	(setq hex (replace-regexp-in-string "^#x" "" hex )) ; elisp
+	(setq hex (replace-regexp-in-string "^#"  "" hex )) ; CSS
+	(setq hex (string-to-number hex 16))))
+  (format "%d" hex))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;; System
 (defun font-exist? (fontname)
   "test if this font is exist or not."
@@ -118,9 +145,9 @@ Also returns nil if pid is nil."
   "Returns a list of buffers where their major-mode is equal to MODE"
   (let ((buffer-mode-matches '()))
     (dolist (buf (buffer-list))
-      (with-current-buffer buf
-	(if (eq mode major-mode)
-	    (add-to-list 'buffer-mode-matches buf))))
+	    (with-current-buffer buf
+				 (if (eq mode major-mode)
+				     (add-to-list 'buffer-mode-matches buf))))
     buffer-mode-matches))
 
 ;;;;;; TODO: Need to review
@@ -141,7 +168,7 @@ If a region is active (a phrase), lookup that phrase."
     (setq myword
 	  (if (and transient-mark-mode mark-active)
 	      (buffer-substring-no-properties (region-beginning) (region-end))
-	    (thing-at-point 'symbol)))
+	      (thing-at-point 'symbol)))
 
     (setq myword (replace-regexp-in-string " " "%20" myword))
     (setq myurl (concat url myword))
@@ -149,9 +176,6 @@ If a region is active (a phrase), lookup that phrase."
     (browse-url myurl)
     ;; (w3m-browse-url myurl) ;; if you want to browse using w3m
     ))
-
-
-
 
 
 (provide 'coldnew-functions)
