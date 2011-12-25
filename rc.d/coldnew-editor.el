@@ -10,6 +10,9 @@
 (require 'coldnew-snippets)
 (require 'coldnew-build)
 (require 'coldnew-vim)
+(require 'coldnew-cedet)
+(require 'cc-mode)
+
 
 
 ;;;;;;;; Settings
@@ -69,6 +72,9 @@
 
   ;; Show matching parentheses all the time
   (show-paren-mode t)
+
+  ;; Enable global-compilation setting
+  (global-compilation-hook)
 
   )
 

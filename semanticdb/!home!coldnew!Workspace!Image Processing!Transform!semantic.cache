@@ -1,0 +1,88 @@
+;; Object Transform/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "Transform/"
+  :tables (list 
+   (semanticdb-table "widget.h"
+    :major-mode 'c++-mode
+    :tags 
+        '( ("WIDGET_H" variable (:constant-flag t) nil [26 34])
+            ("QWidget" include (:system-flag t) nil [36 54])
+            ("Ui" type
+               (:members 
+                  ( ("Widget" type
+                       (:prototype t
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [75 88]))                  
+                :type "namespace")
+                nil [56 90])
+            ("Widget" type
+               (:superclasses 
+                  ( ("QWidget" type
+                       (:protection "public"
+                        :type "class")
+                        nil nil))                  
+                :members 
+                  ( ("public" label nil (reparse-symbol classsubparts) [138 145])
+                    ("Widget" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("parent" variable
+                               (:pointer 1
+                                :type ("QWidget" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [166 183]))                          
+                        :type ("explicit" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [150 187])
+                    ("Widget" function
+                       (:prototype-flag t
+                        :destructor-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [192 202])
+                    ("private" label nil (reparse-symbol classsubparts) [204 212])
+                    ("ui" variable
+                       (:pointer 1
+                        :type ("Ui::Widget" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [217 232]))                  
+                :type "class")
+                nil [92 235]))          
+    :file "widget.h"
+    :pointmax 256
+    :fsize 255
+    :lastmodtime '(20196 18512)
+    :unmatched-syntax '((number 184 . 185) (punctuation 182 . 183) (symbol 128 . 136))
+    :lexical-table 
+        '(("WIDGET_H")
+          )
+
+    )
+   (semanticdb-table "widget.cpp"
+    :major-mode 'c++-mode
+    :tags 
+        '( ("widget.h" include nil nil [1 20])
+            ("ui_widget.h" include nil nil [21 43])
+            ("Widget" function
+               (:constructor-flag t
+                :parent "Widget"
+                :arguments 
+                  ( ("parent" variable
+                       (:pointer 1
+                        :type ("QWidget" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [60 76]))                  
+                :type ("Widget" type (:type "class") nil nil))
+                nil [45 149])
+            ("Widget" function
+               (:destructor-flag t
+                :parent "Widget"
+                :type "void")
+                nil [151 187]))          
+    :file "widget.cpp"
+    :pointmax 188
+    :fsize 187
+    :lastmodtime '(20196 18512)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!coldnew!Workspace!Image Processing!Transform!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

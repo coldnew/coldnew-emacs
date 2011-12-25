@@ -1,0 +1,77 @@
+;; Object lab4-4.X/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "lab4-4.X/"
+  :tables (list 
+   (semanticdb-table "main.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("pic18.h" include (:system-flag t) nil [85 103])
+            ("htc.h" include (:system-flag t) nil [104 120])
+            ("__CONFIG" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type ("FOSC_HS" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [134 142]))                  
+                :type "int")
+                nil [122 143])
+            ("__CONFIG" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type ("WDT_OFF" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [156 164]))                  
+                :type "int")
+                nil [144 165])
+            ("__CONFIG" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("PBADEN_OFF" variable
+                       (:reference 1
+                        :type ("MCLRE_ON" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [178 200]))                  
+                :type "int")
+                nil [166 201])
+            ("__CONFIG" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("LVP_OFF" variable
+                       (:reference 1
+                        :type ("DEBUG_OFF" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [214 234]))                  
+                :type "int")
+                nil [202 235])
+            ("Timer1_init" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [255 260]))                  
+                :type "void")
+                nil [238 261])
+            ("isr_timer1" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [288 293]))                  
+                :type ("interrupt" type (:type "class") nil nil))
+                nil [267 294])
+            ("main" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [305 310]))                  
+                :type "int")
+                nil [296 507])
+            ("Timer1_init" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [526 531]))                  
+                :type "void")
+                nil [509 779])
+            ("isr_timer1" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [807 812]))                  
+                :type ("interrupt" type (:type "class") nil nil))
+                nil [786 1012]))          
+    :file "main.c"
+    :pointmax 1013
+    :fsize 1022
+    :lastmodtime '(20211 55714)
+    :unmatched-syntax '((VOID 781 . 785) (VOID 262 . 266) (number 211 . 212) (number 175 . 176) (number 153 . 154) (number 131 . 132))
+    )
+   )
+  :file "!home!coldnew!MPLABXProjects!lab4-4.X!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

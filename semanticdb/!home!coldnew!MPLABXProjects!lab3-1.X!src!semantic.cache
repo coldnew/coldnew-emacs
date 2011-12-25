@@ -1,0 +1,43 @@
+;; Object src/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "src/"
+  :tables (list 
+   (semanticdb-table "main.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("htc.h" include (:system-flag t) nil [85 101])
+            ("pic18.h" include (:system-flag t) nil [102 120])
+            ("__CONFIG" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type ("FOSC_HS" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [134 142]))                  
+                :type "int")
+                nil [122 143])
+            ("__CONFIG" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type ("WDT_OFF" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [156 164]))                  
+                :type "int")
+                nil [144 165])
+            ("__CONFIG" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type ("MCLRE_OFF" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [178 188]))                  
+                :type "int")
+                nil [166 189])
+            ("main" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [202 207]))                  
+                :type "int")
+                nil [193 231]))          
+    :file "main.c"
+    :pointmax 232
+    :fsize 241
+    :lastmodtime '(20201 4984)
+    :unmatched-syntax '((number 175 . 176) (number 153 . 154) (number 131 . 132))
+    )
+   )
+  :file "!home!coldnew!MPLABXProjects!lab3-1.X!src!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

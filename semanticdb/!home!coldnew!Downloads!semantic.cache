@@ -1,0 +1,87 @@
+;; Object Downloads/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "Downloads/"
+  :tables (list 
+   (semanticdb-table "fft.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("stdio.h" include (:system-flag t) nil [1 18])
+            ("stdlib.h" include (:system-flag t) nil [19 37])
+            ("math.h" include (:system-flag t) nil [38 54])
+            ("fft.h" include nil nil [55 70])
+            ("real" variable (:type "int") nil [1337 1382])
+            ("imag" variable (:type "int") nil [1386 1431])
+            ("free" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type ("real" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [2097 2102]))                  
+                :type "int")
+                nil [2092 2103])
+            ("free" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type ("imag" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [2112 2117]))                  
+                :type "int")
+                nil [2107 2118])
+            ("FFT2D" function
+               (:arguments 
+                  ( ("c" variable
+                       (:pointer 1
+                        :type ("COMPLEX" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [388 399])
+                    ("nx" variable (:type "int") (reparse-symbol arg-sub-list) [399 406])
+                    ("ny" variable (:type "int") (reparse-symbol arg-sub-list) [406 413])
+                    ("dir" variable (:type "int") (reparse-symbol arg-sub-list) [413 421]))                  
+                :type "int")
+                nil [378 2138])
+            ("l2" variable (:type "long") nil [3022 3050])
+            ("l1" variable (:type "long") nil [3022 3050])
+            ("l" variable (:type "long") nil [3022 3050])
+            ("i2" variable (:type "long") nil [3022 3050])
+            ("k" variable (:type "long") nil [3022 3050])
+            ("j" variable (:type "long") nil [3022 3050])
+            ("i1" variable (:type "long") nil [3022 3050])
+            ("i" variable (:type "long") nil [3022 3050])
+            ("nn" variable (:type "long") nil [3022 3050])
+            ("z" variable (:type "double") nil [3054 3087])
+            ("u2" variable (:type "double") nil [3054 3087])
+            ("u1" variable (:type "double") nil [3054 3087])
+            ("t2" variable (:type "double") nil [3054 3087])
+            ("t1" variable (:type "double") nil [3054 3087])
+            ("ty" variable (:type "double") nil [3054 3087])
+            ("tx" variable (:type "double") nil [3054 3087])
+            ("c2" variable (:type "double") nil [3054 3087])
+            ("c1" variable (:type "double") nil [3054 3087])
+            ("nn" variable (:type "int") nil [3132 3139])
+            ("j" variable (:type "int") nil [3226 3232])
+            ("c1" variable (:type "int") nil [3538 3548])
+            ("c2" variable (:type "int") nil [3552 3561])
+            ("l2" variable (:type "int") nil [3565 3572])
+            ("r" variable (:type "int") nil [4375 4384])
+            ("i" variable (:type "int") nil [4375 4384])
+            ("FALSE" variable (:type "int") nil [4408 4414])
+            ("r" variable (:type "int") nil [4420 4427])
+            ("i" variable (:type "int") nil [4429 4435])
+            ("m" variable
+               (:pointer 1
+                :type "int")
+                nil [4476 4483])
+            ("r" variable (:type "int") nil [4489 4495])
+            ("r" variable (:type "int") nil [4523 4531])
+            ("twopm" variable
+               (:pointer 1
+                :type "int")
+                nil [4533 4544])
+            ("TRUE" variable (:type "int") nil [4568 4573])
+            ("FALSE" variable (:type "int") nil [4589 4595]))          
+    :file "fft.c"
+    :pointmax 4283
+    :fsize 4791
+    :lastmodtime '(20189 55994)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!coldnew!Downloads!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

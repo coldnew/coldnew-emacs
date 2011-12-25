@@ -16,8 +16,11 @@
 
 (setq stack-trace-on-error t)
 
-;; Disable ecb tips-of-day
+;; Do not show ecb tips-of-day
 (setq ecb-tip-of-the-day nil)
+
+;; Do not check ecb options for compatibility across versions
+(setq ecb-auto-compatibility-check nil)
 
 (setq ecb-expand-methods-switch-off-auto-expand t)
 
@@ -28,6 +31,12 @@
 (add-hook 'ecb-activate-hook
 	  (lambda () (modify-all-frames-parameters '((width . 120)))))
 
+;; ;; smaller ecb windows
+;; (setq ecb-windows-width 0.25)
+
+;; ;; gdb should use many windows, to make it look like an IDE
+;; (setq gdb-many-windows t
+;;       gdb-max-frames 120)
 
 
 (provide 'coldnew-ecb)

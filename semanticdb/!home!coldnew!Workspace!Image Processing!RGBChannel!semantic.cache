@@ -1,0 +1,152 @@
+;; Object RGBChannel/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "RGBChannel/"
+  :tables (list 
+   (semanticdb-table "widget.cpp"
+    :major-mode 'c++-mode
+    :tags 
+        '( ("widget.h" include nil nil [1 20])
+            ("ui_widget.h" include nil nil [21 43])
+            ("Widget" function
+               (:constructor-flag t
+                :parent "Widget"
+                :arguments 
+                  ( ("parent" variable
+                       (:pointer 1
+                        :type ("QWidget" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [60 76]))                  
+                :type ("Widget" type (:type "class") nil nil))
+                nil [45 273])
+            ("Widget" function
+               (:destructor-flag t
+                :parent "Widget"
+                :type "void")
+                nil [275 349])
+            ("loadImage" function
+               (:parent "Widget"
+                :type "void")
+                nil [351 403])
+            ("loadImage" function
+               (:parent "Widget"
+                :arguments 
+                  ( ("image" variable
+                       (:pointer 1
+                        :type ("QImage" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [429 443]))                  
+                :type "void")
+                nil [405 950])
+            ("changeColorChannel" function
+               (:parent "Widget"
+                :type "void")
+                nil [953 1024])
+            ("changeColorChannel" function
+               (:parent "Widget"
+                :arguments 
+                  ( ("image" variable
+                       (:pointer 1
+                        :type ("QImage" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [1059 1073]))                  
+                :type "void")
+                nil [1026 2181]))          
+    :file "widget.cpp"
+    :pointmax 2182
+    :fsize 2181
+    :lastmodtime '(20214 56504)
+    :unmatched-syntax 'nil
+    )
+   (semanticdb-table "widget.h"
+    :major-mode 'c++-mode
+    :tags 
+        '( ("WIDGET_H" variable (:constant-flag t) nil [26 34])
+            ("QWidget" include (:system-flag t) nil [36 54])
+            ("QFileDialog" include (:system-flag t) nil [55 77])
+            ("QLabel" include (:system-flag t) nil [78 95])
+            ("Ui" type
+               (:members 
+                  ( ("Widget" type
+                       (:prototype t
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [116 129]))                  
+                :type "namespace")
+                nil [97 131])
+            ("Widget" type
+               (:superclasses 
+                  ( ("QWidget" type
+                       (:protection "public"
+                        :type "class")
+                        nil nil))                  
+                :members 
+                  ( ("public" label nil (reparse-symbol classsubparts) [179 186])
+                    ("Widget" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("parent" variable
+                               (:pointer 1
+                                :type ("QWidget" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [207 224]))                          
+                        :type ("explicit" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [191 228])
+                    ("Widget" function
+                       (:prototype-flag t
+                        :destructor-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [233 243])
+                    ("loadImage" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("image" variable
+                               (:pointer 1
+                                :type ("QImage" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [263 277]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [248 278])
+                    ("changeColorChannel" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("image" variable
+                               (:pointer 1
+                                :type ("QImage" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [307 321]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [283 322])
+                    ("private" label nil (reparse-symbol classsubparts) [323 337])
+                    ("loadImage" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [342 359])
+                    ("changeColorChannel" function
+                       (:prototype-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [364 390])
+                    ("private" label nil (reparse-symbol classsubparts) [392 400])
+                    ("ui" variable
+                       (:pointer 1
+                        :type ("Ui::Widget" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [405 420])
+                    ("imgSize" variable (:type ("QSize" type (:type "class") nil nil)) (reparse-symbol classsubparts) [425 439])
+                    ("srcImg" variable
+                       (:pointer 1
+                        :type ("QImage" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [444 459])
+                    ("outImg" variable
+                       (:pointer 1
+                        :type ("QImage" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [464 479]))                  
+                :type "class")
+                nil [133 483]))          
+    :file "widget.h"
+    :pointmax 504
+    :fsize 503
+    :lastmodtime '(20214 55459)
+    :unmatched-syntax 'nil
+    :lexical-table 
+        '(("WIDGET_H")
+          )
+
+    )
+   )
+  :file "!home!coldnew!Workspace!Image Processing!RGBChannel!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

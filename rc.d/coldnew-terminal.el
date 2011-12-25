@@ -42,8 +42,8 @@
 ;;;;;;;; Term
 ;;
 (when (require* 'term)
-  (setq term-default-bg-color nil)
-  (setq term-default-fg-color nil)
+  (setq-default term-default-bg-color nil)
+  (setq-default term-default-fg-color nil)
 
   ;; (setq term-unbind-key-list '("C-c" "C-h"))
   ;; (add-to-list 'term-bind-key-alist '("C-c" . term-interrupt-subjob))
@@ -126,7 +126,6 @@
       (vim:emacs-mode)
       (vim:normal-mode)
       ))
-
 
 
 ;; ;;;;;;;; test

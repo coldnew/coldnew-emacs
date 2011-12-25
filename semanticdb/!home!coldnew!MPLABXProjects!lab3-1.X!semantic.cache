@@ -1,0 +1,65 @@
+;; Object lab3-1.X/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "lab3-1.X/"
+  :tables (list 
+   (semanticdb-table "main.c"
+    :major-mode 'c-mode
+    :tags 
+        '( ("htc.h" include (:system-flag t) nil [86 102])
+            ("pic18.h" include (:system-flag t) nil [103 121])
+            ("_XTAL_FREQ" variable (:constant-flag t) nil [172 182])
+            ("__CONFIG" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type ("FOSC_HS" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [205 214]))                  
+                :type "int")
+                nil [193 215])
+            ("__CONFIG" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("" variable (:type ("WDT_OFF" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [228 236]))                  
+                :type "int")
+                nil [216 237])
+            ("__CONFIG" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("PBADEN_OFF" variable
+                       (:reference 1
+                        :type ("MCLRE_ON" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [250 272]))                  
+                :type "int")
+                nil [238 273])
+            ("__CONFIG" function
+               (:prototype-flag t
+                :arguments 
+                  ( ("LVP_OFF" variable
+                       (:reference 1
+                        :type ("DEBUG_OFF" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [311 331]))                  
+                :type "int")
+                nil [299 332])
+            ("set7seg" function
+               (:arguments 
+                  ( ("digit" variable (:type "char") (reparse-symbol arg-sub-list) [989 1000]))                  
+                :type "void")
+                nil [976 1446])
+            ("main" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [1457 1462]))                  
+                :type "int")
+                nil [1448 4055]))          
+    :file "main.c"
+    :pointmax 4056
+    :fsize 4065
+    :lastmodtime '(20209 7091)
+    :unmatched-syntax 'nil
+    :lexical-table 
+        '(("_XTAL_FREQ" . ((number "25000000" 183 . 191)))
+          )
+
+    )
+   )
+  :file "!home!coldnew!MPLABXProjects!lab3-1.X!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

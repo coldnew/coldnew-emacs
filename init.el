@@ -21,23 +21,6 @@
 				     (insert (format "\t Loading %-20s\t \n" (concat init-folder config-file))))
 		)))
   ;; After loading allemacs config file, readauthorization file
-  ;; (if (file-exists-p authinfo-file) (load-file authinfo-file))
-  ;; (message "\t --- Loading All Emacs Confis Finish ---")
+  (if (file-exists-p authinfo-file) (load-file authinfo-file))
+  (message "\t --- Loading All Emacs Confis Finish ---")
   )
-
-
-
-;;(require 'coldnew-init)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ecb-options-version "2.40")
- '(quack-programs (quote ("gsc" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
