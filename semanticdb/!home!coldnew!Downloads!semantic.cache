@@ -2,82 +2,40 @@
 ;; SEMANTICDB Tags save file
 (semanticdb-project-database-file "Downloads/"
   :tables (list 
-   (semanticdb-table "fft.c"
+    (semanticdb-table "test_light.c"
     :major-mode 'c-mode
     :tags 
-        '( ("stdio.h" include (:system-flag t) nil [1 18])
-            ("stdlib.h" include (:system-flag t) nil [19 37])
-            ("math.h" include (:system-flag t) nil [38 54])
-            ("fft.h" include nil nil [55 70])
-            ("real" variable (:type "int") nil [1337 1382])
-            ("imag" variable (:type "int") nil [1386 1431])
-            ("free" function
-               (:prototype-flag t
-                :arguments 
-                  ( ("" variable (:type ("real" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [2097 2102]))                  
-                :type "int")
-                nil [2092 2103])
-            ("free" function
-               (:prototype-flag t
-                :arguments 
-                  ( ("" variable (:type ("imag" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [2112 2117]))                  
-                :type "int")
-                nil [2107 2118])
-            ("FFT2D" function
+        '( ("avr/io.h" include (:system-flag t) nil [1 20])
+            ("avr/pgmspace.h" include (:system-flag t) nil [91 116])
+            ("delay_ms" function
                (:arguments 
-                  ( ("c" variable
-                       (:pointer 1
-                        :type ("COMPLEX" type (:type "class") nil nil))
-                        (reparse-symbol arg-sub-list) [388 399])
-                    ("nx" variable (:type "int") (reparse-symbol arg-sub-list) [399 406])
-                    ("ny" variable (:type "int") (reparse-symbol arg-sub-list) [406 413])
-                    ("dir" variable (:type "int") (reparse-symbol arg-sub-list) [413 421]))                  
+                  ( ("ms" variable (:type "long int") (reparse-symbol arg-sub-list) [2187 2199]))                  
+                :type "void")
+                nil [2173 2478])
+            ("setup_for_measurement" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [2507 2512]))                  
+                :type "void")
+                nil [2480 2991])
+            ("log_base_root_2" function
+               (:arguments 
+                  ( ("num" variable (:type "long") (reparse-symbol arg-sub-list) [3300 3309]))                  
+                :type "unsigned char")
+                nil [3270 3615])
+            ("represent" function
+               (:arguments 
+                  ( ("n" variable (:type "unsigned char") (reparse-symbol arg-sub-list) [3915 3931]))                  
+                :type "unsigned char")
+                nil [3891 4111])
+            ("main" function
+               (:arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [4122 4127]))                  
                 :type "int")
-                nil [378 2138])
-            ("l2" variable (:type "long") nil [3022 3050])
-            ("l1" variable (:type "long") nil [3022 3050])
-            ("l" variable (:type "long") nil [3022 3050])
-            ("i2" variable (:type "long") nil [3022 3050])
-            ("k" variable (:type "long") nil [3022 3050])
-            ("j" variable (:type "long") nil [3022 3050])
-            ("i1" variable (:type "long") nil [3022 3050])
-            ("i" variable (:type "long") nil [3022 3050])
-            ("nn" variable (:type "long") nil [3022 3050])
-            ("z" variable (:type "double") nil [3054 3087])
-            ("u2" variable (:type "double") nil [3054 3087])
-            ("u1" variable (:type "double") nil [3054 3087])
-            ("t2" variable (:type "double") nil [3054 3087])
-            ("t1" variable (:type "double") nil [3054 3087])
-            ("ty" variable (:type "double") nil [3054 3087])
-            ("tx" variable (:type "double") nil [3054 3087])
-            ("c2" variable (:type "double") nil [3054 3087])
-            ("c1" variable (:type "double") nil [3054 3087])
-            ("nn" variable (:type "int") nil [3132 3139])
-            ("j" variable (:type "int") nil [3226 3232])
-            ("c1" variable (:type "int") nil [3538 3548])
-            ("c2" variable (:type "int") nil [3552 3561])
-            ("l2" variable (:type "int") nil [3565 3572])
-            ("r" variable (:type "int") nil [4375 4384])
-            ("i" variable (:type "int") nil [4375 4384])
-            ("FALSE" variable (:type "int") nil [4408 4414])
-            ("r" variable (:type "int") nil [4420 4427])
-            ("i" variable (:type "int") nil [4429 4435])
-            ("m" variable
-               (:pointer 1
-                :type "int")
-                nil [4476 4483])
-            ("r" variable (:type "int") nil [4489 4495])
-            ("r" variable (:type "int") nil [4523 4531])
-            ("twopm" variable
-               (:pointer 1
-                :type "int")
-                nil [4533 4544])
-            ("TRUE" variable (:type "int") nil [4568 4573])
-            ("FALSE" variable (:type "int") nil [4589 4595]))          
-    :file "fft.c"
-    :pointmax 4283
-    :fsize 4791
-    :lastmodtime '(20189 55994)
+                nil [4113 4726]))          
+    :file "test_light.c"
+    :pointmax 4727
+    :fsize 4726
+    :lastmodtime '(20221 9122)
     :unmatched-syntax 'nil
     )
    )

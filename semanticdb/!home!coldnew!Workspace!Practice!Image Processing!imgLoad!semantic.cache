@@ -1,0 +1,106 @@
+;; Object imgLoad/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "imgLoad/"
+  :tables (list 
+   (semanticdb-table "widget.h"
+    :major-mode 'c++-mode
+    :tags 
+        '( ("WIDGET_H" variable (:constant-flag t) nil [26 34])
+            ("QWidget" include (:system-flag t) nil [36 54])
+            ("QFileDialog" include (:system-flag t) nil [55 77])
+            ("Ui" type
+               (:members 
+                  ( ("Widget" type
+                       (:prototype t
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [98 111]))                  
+                :type "namespace")
+                nil [79 113])
+            ("Widget" type
+               (:superclasses 
+                  ( ("QWidget" type
+                       (:protection "public"
+                        :type "class")
+                        nil nil))                  
+                :members 
+                  ( ("public" label nil (reparse-symbol classsubparts) [161 168])
+                    ("Widget" function
+                       (:prototype-flag t
+                        :constructor-flag t
+                        :arguments 
+                          ( ("parent" variable
+                               (:pointer 1
+                                :type ("QWidget" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [189 206]))                          
+                        :type ("explicit" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [173 210])
+                    ("Widget" function
+                       (:prototype-flag t
+                        :destructor-flag t
+                        :type "void")
+                        (reparse-symbol classsubparts) [215 225])
+                    ("private" label nil (reparse-symbol classsubparts) [226 240])
+                    ("loadImage" function
+                       (:prototype-flag t
+                        :arguments 
+                          ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [261 266]))                          
+                        :type "void")
+                        (reparse-symbol classsubparts) [245 267])
+                    ("private" label nil (reparse-symbol classsubparts) [269 277])
+                    ("ui" variable
+                       (:pointer 1
+                        :type ("Ui::Widget" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [282 297])
+                    ("srcImg" variable
+                       (:pointer 1
+                        :type ("QImage" type (:type "class") nil nil))
+                        (reparse-symbol classsubparts) [302 317]))                  
+                :type "class")
+                nil [115 320]))          
+    :file "widget.h"
+    :pointmax 341
+    :fsize 340
+    :lastmodtime '(20215 4300)
+    :unmatched-syntax 'nil
+    :lexical-table 
+        '(("WIDGET_H")
+          )
+
+    )
+   (semanticdb-table "widget.cpp"
+    :major-mode 'c++-mode
+    :tags 
+        '( ("widget.h" include nil nil [1 20])
+            ("ui_widget.h" include nil nil [21 43])
+            ("Widget" function
+               (:constructor-flag t
+                :parent "Widget"
+                :arguments 
+                  ( ("parent" variable
+                       (:pointer 1
+                        :type ("QWidget" type (:type "class") nil nil))
+                        (reparse-symbol arg-sub-list) [60 76]))                  
+                :type ("Widget" type (:type "class") nil nil))
+                nil [45 325])
+            ("Widget" function
+               (:destructor-flag t
+                :parent "Widget"
+                :type "void")
+                nil [327 363])
+            ("loadImage" function
+               (:parent "Widget"
+                :arguments 
+                  ( ("" variable (:type "void") (reparse-symbol arg-sub-list) [389 394]))                  
+                :type "void")
+                nil [365 716]))          
+    :file "widget.cpp"
+    :pointmax 717
+    :fsize 716
+    :lastmodtime '(20215 3657)
+    :unmatched-syntax 'nil
+    )
+   )
+  :file "!home!coldnew!Workspace!Practice!Image Processing!imgLoad!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )

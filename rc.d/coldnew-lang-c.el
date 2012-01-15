@@ -18,7 +18,7 @@
   (defun ac-c-mode-setup ()
     "auto-complete settings for c-mode."
     (setq ac-sources '(
-		       ;;ac-source-clang
+		       ac-source-clang
 		       ac-source-dictionary
 		       ac-source-abbrev
 		       ac-source-semantic
