@@ -1,6 +1,5 @@
 
-
-;; Load Path Setting
+;;;; Load Path Setting
 (let* ((emacs-dir "~/.emacs.d/")
        (lisp-dir '("lisp/" "local-lisp/" "rc.d/" "theme/")))
   (dolist (lisp-path lisp-dir)

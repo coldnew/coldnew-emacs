@@ -9,8 +9,12 @@
 (require 'coldnew-vim)
 (require 'epa-file)
 
+;; use local gpg instaed of system's gpg
+;; only work under linux
+(if linux?
+    (setq epg-gpg-program (concat emacs-usr-dir "bin/gpg")))
 
-(setenv "GPG_AGENT_INFO" nil)
+;; (setenv "GPG_AGENT_INFO" nil)
 
 ;; Control whether or not to pop up the key selection dialog.
 (setq epa-file-select-keys 0)

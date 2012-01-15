@@ -98,7 +98,7 @@
                 :type "void")
                 nil [452 1680]))          
     :file "mainwindow.cpp"
-    :pointmax 1680
+    :pointmax 1681
     :fsize 1680
     :lastmodtime '(20242 40306)
     :unmatched-syntax 'nil

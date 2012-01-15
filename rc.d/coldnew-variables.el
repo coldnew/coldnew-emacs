@@ -9,13 +9,15 @@
 ;;;;;;;; System Variables
 (defvar emacs-dir "~/.emacs.d/"
   "The top-level emacs-configure directory.")
-(defvar emacs-config-dir "~/.emacs.d/rc.d/"
+(defvar emacs-config-dir (concat emacs-dir "rc.d/")
   "directory to place emacs configure.")
-(defvar emacs-etc-dir    "~/.emacs.d/etc/"
+(defvar emacs-etc-dir    (concat emacs-dir "etc/")
   "directory to place other stuff.")
-(defvar emacs-var-dir    "~/.emacs.d/var/"
+(defvar emacs-usr-dir    (concat emacs-dir "usr/")
+  "directory to place binary staff.")
+(defvar emacs-var-dir    (concat emacs-dir "var/")
   "directory to place cache and backup files.")
-(defvar emacs-lisp-dir   "~/.emacs.d/lisp/"
+(defvar emacs-lisp-dir   (concat emacs-dir "lisp/")
   "directory to place lisp package from internet.")
 
 (defvar emacs-recipes-dir (concat emacs-etc-dir "recipes/")
