@@ -173,13 +173,19 @@
   ;;  (pomodoro)
   )
 
-
-
 ;;;;;;;; Speedbar
 (when (require* 'speedbar)
   (require* 'sr-speedbar)
   (setq sr-speedbar-right-side nil)
   )
+
+;;;;;;;; Wrap-region
+;; Wrap Region is a minor mode for Emacs that wraps a region with punctuations.
+;; For "tagged" markup modes, such as HTML and XML, it wraps with tags.
+;;
+(when (require* 'wrap-region)
+  ;; Enable wrap-region by default.
+  (wrap-region-mode t))
 
 ;;;;;;;; Functions
 (defun use-hungry-delete ()
@@ -219,7 +225,7 @@
 
 (defun make-ret-newline-and-indent ()
   "Always make Enter key do newline-and-indent."
-  (vim:local-imap (kbd "RET") 'newline-and-indent))
+  (define-key evil-insert-state-local-map (kbd "RET") 'newline-and-indent))
 
 (defun highlight-toolong-lines ()
   "If a line exist more than 100 chars, highlight this line."
@@ -275,30 +281,30 @@
       (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
     ;; Enable Paredit in vim-mode
     ;; Normal Map
-    (vim:local-nmap (kbd "C-9") 'paredit-forward)
-    (vim:local-nmap (kbd "C-0") 'paredit-backward)
-    (vim:local-nmap (kbd "C-(") 'paredit-forward-slurp-sexp)
-    (vim:local-nmap (kbd "M-(") 'paredit-backward-slurp-sexp)
-    (vim:local-nmap (kbd "C-)") 'paredit-forward-barf-sexp)
-    (vim:local-nmap (kbd "M-)") 'paredit-backward-barf-sexp)
+    (define-key evil-normal-state-local-map (kbd "C-9") 'paredit-forward)
+    (define-key evil-normal-state-local-map (kbd "C-0") 'paredit-backward)
+    (define-key evil-normal-state-local-map (kbd "C-(") 'paredit-forward-slurp-sexp)
+    (define-key evil-normal-state-local-map (kbd "M-(") 'paredit-backward-slurp-sexp)
+    (define-key evil-normal-state-local-map (kbd "C-)") 'paredit-forward-barf-sexp)
+    (define-key evil-normal-state-local-map (kbd "M-)") 'paredit-backward-barf-sexp)
     ;; Insert Map
-    (vim:local-imap (kbd "(")  'paredit-open-round)
-    (vim:local-imap (kbd ")")  'paredit-close-round)
-    (vim:local-imap (kbd "[")  'paredit-open-square)
-    (vim:local-imap (kbd "]")  'paredit-close-square)
-    (vim:local-imap (kbd "{")  'paredit-open-curly)
-    (vim:local-imap (kbd "}")  'paredit-close-curly)
-    (vim:local-imap (kbd "\"") 'paredit-doublequote)
-    (vim:local-imap (kbd "M-(") 'paredit-wrap-sexp)
-    (vim:local-imap (kbd "C-(") 'paredit-splice-sexp)
-    (vim:local-imap (kbd "M-)") 'paredit-close-round-and-newline)
-    (vim:local-imap (kbd "C-)") 'paredit-split-sexp)
-    (vim:local-imap (kbd "C-j") 'paredit-join-sexps)
-    (vim:local-imap (kbd "M-\"") 'paredit-meta-doublequote)
-    (vim:local-imap (kbd "<delete>") 'paredit-forward-delete)
-    (vim:local-imap (kbd "C-d") 'paredit-forward-delete)
-    (vim:local-imap (kbd "<backspace>") 'paredit-backward-delete)
-    (vim:local-imap (kbd "C-l") 'paredit-backward-delete)
+    (define-key evil-insert-state-local-map (kbd "(")  'paredit-open-round)
+    (define-key evil-insert-state-local-map (kbd ")")  'paredit-close-round)
+    (define-key evil-insert-state-local-map (kbd "[")  'paredit-open-square)
+    (define-key evil-insert-state-local-map (kbd "]")  'paredit-close-square)
+    (define-key evil-insert-state-local-map (kbd "{")  'paredit-open-curly)
+    (define-key evil-insert-state-local-map (kbd "}")  'paredit-close-curly)
+    (define-key evil-insert-state-local-map (kbd "\"") 'paredit-doublequote)
+    (define-key evil-insert-state-local-map (kbd "M-(") 'paredit-wrap-sexp)
+    (define-key evil-insert-state-local-map (kbd "C-(") 'paredit-splice-sexp)
+    (define-key evil-insert-state-local-map (kbd "M-)") 'paredit-close-round-and-newline)
+    (define-key evil-insert-state-local-map (kbd "C-)") 'paredit-split-sexp)
+    (define-key evil-insert-state-local-map (kbd "C-j") 'paredit-join-sexps)
+    (define-key evil-insert-state-local-map (kbd "M-\"") 'paredit-meta-doublequote)
+    (define-key evil-insert-state-local-map (kbd "<delete>") 'paredit-forward-delete)
+    (define-key evil-insert-state-local-map (kbd "C-d") 'paredit-forward-delete)
+    (define-key evil-insert-state-local-map (kbd "<backspace>") 'paredit-backward-delete)
+    (define-key evil-insert-state-local-map (kbd "C-l") 'paredit-backward-delete)
     ))
 
 

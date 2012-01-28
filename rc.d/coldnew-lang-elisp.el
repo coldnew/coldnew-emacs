@@ -121,13 +121,13 @@
 
 	     ;;;; Insert and expand by short-key
 	     ;; (define )
-	     (vim:local-imap-insert-expand (kbd "M-d") "defun")
-	     ;; (require* 'FEATURE) or (require 'FEATURE)
-	     (vim:local-imap-insert-expand (kbd "M-r") "require")
-	     ;; (lambda () )
-	     (vim:local-imap-insert-expand (kbd "M-l") "lambda")
-	     ;; (defmacro ())
-	     (vim:local-imap-insert-expand (kbd "M-D") "defmacro")
+	     ;; (vim:local-imap-insert-expand (kbd "M-d") "defun")
+	     ;; ;; (require* 'FEATURE) or (require 'FEATURE)
+	     ;; (vim:local-imap-insert-expand (kbd "M-r") "require")
+	     ;; ;; (lambda () )
+	     ;; (vim:local-imap-insert-expand (kbd "M-l") "lambda")
+	     ;; ;; (defmacro ())
+	     ;; (vim:local-imap-insert-expand (kbd "M-D") "defmacro")
 	     ))
 
 ;;;;;;;; ielm

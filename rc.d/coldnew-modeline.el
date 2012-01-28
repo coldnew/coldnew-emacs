@@ -11,17 +11,17 @@
 ;; https://github.com/ZaneA/Dotfiles/blob/master/.emacs#L206
 
 
-(defun vim-mode-string ()
-  (let ((vim-string (substring vim:mode-string 1 2)))
-    (setq vim-string-face
-	  (cond
-	   ((string= "N" vim-string) 'mode-line-vim-string-N)
-	   ((string= "I" vim-string) 'mode-line-vim-string-I)
-	   ((string= "V" vim-string) 'mode-line-vim-string-V)
-	   ((string= "E" vim-string) 'mode-line-vim-string-E)
-	   ))
-    (concat "<" (propertize vim-string 'face vim-string-face) ">")
-    ))
+;; (defun vim-mode-string ()
+;;   (let ((vim-string (substring vim:mode-string 1 2)))
+;;     (setq vim-string-face
+;;	  (cond
+;;	   ((string= "N" vim-string) 'mode-line-vim-string-N)
+;;	   ((string= "I" vim-string) 'mode-line-vim-string-I)
+;;	   ((string= "V" vim-string) 'mode-line-vim-string-V)
+;;	   ((string= "E" vim-string) 'mode-line-vim-string-E)
+;;	   ))
+;;     (concat "<" (propertize vim-string 'face vim-string-face) ">")
+;;     ))
 
 
 (defun mode-line-major-mode ()
@@ -40,8 +40,8 @@
 		 mode-line-frame-identification
 		 mode-line-buffer-identification
 		 "   "
-		 (when (featurep 'vim)
-		   (:eval (vim-mode-string)))
+		 ;; (when (featurep 'vim)
+		 ;;   (:eval (vim-mode-string)))
 
 		 ;; "   "
 		 ;; (when (require* 'pomodoro)
@@ -78,7 +78,6 @@
     (diminish 'highlight-parentheses-mode ""))
   (when (featurep 'auto-complete)
     (diminish 'auto-complete-mode ""))
-
   )
 
 

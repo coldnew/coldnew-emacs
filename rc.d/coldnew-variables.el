@@ -30,6 +30,9 @@
   "directory to back up files.")
 (defvar emacs-log-dir (concat emacs-var-dir "log/")
   "log file directory.")
+(defvar emacs-bin-dir (concat emacs-usr-dir "bin/")
+  "directory to place binary staff.")
+
 
 (defvar emacs-default-shell "/bin/bash"
   "Default shell for cemacs.")

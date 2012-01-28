@@ -98,11 +98,11 @@
 (add-hook 'c-mode-hook
 	  '(lambda ()
 	     ;; Normal map
-	     (vim:local-nmap (kbd "C-x C-o") 'ff-find-other-file)
+	     (define-key evil-normal-state-local-map (kbd "C-x C-o") 'ff-find-other-file)
 	     ;; Insert map
-	     (vim:local-imap (kbd "M-i") 'c-mode:insert-inc-or-if) ; insert "#include <>" or "if () {...}"
-	     (vim:local-imap (kbd "M-d") 'c-mode:insert-do-while)  ; insert "do {...} while()"
-	     (vim:local-imap (kbd "M-m") 'c-mode:insert-main-function) ; insert "int main () {...}"
+	     (define-key evil-insert-state-local-map (kbd "M-i") 'c-mode:insert-inc-or-if) ; insert "#include <>" or "if () {...}"
+	     (define-key evil-insert-state-local-map (kbd "M-d") 'c-mode:insert-do-while)  ; insert "do {...} while()"
+	     (define-key evil-insert-state-local-map (kbd "M-m") 'c-mode:insert-main-function) ; insert "int main () {...}"
 	     ))
 
 

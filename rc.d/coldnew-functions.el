@@ -9,9 +9,9 @@
   "Like define-key but the key arg is a list that should be mapped over.
    For example: (map-define-key '(a b c d) 'function-name)."
   (mapc (lambda (k)
-	  (progn
-	   (define-key mode-map k fname)))
-	keylist))
+          (progn
+           (define-key mode-map k fname)))
+        keylist))
 
 (defun show-buffer-major-mode (buffer-or-string)
   "Returns the major mode associated with a buffer."
@@ -23,19 +23,19 @@ Also returns nil if pid is nil."
   (when pid
     (let ((attributes (process-attributes pid)) (cmd))
       (dolist (attr attributes)
-	      (if (string= "comm" (car attr))
-		  (setq cmd (cdr attr))))
+              (if (string= "comm" (car attr))
+                  (setq cmd (cdr attr))))
       (if (and cmd (or (string= "emacs" cmd) (string= "emacs.exe" cmd))) t))))
 
 (defun get-current-line ()
   "Current line string"
   (buffer-substring (save-excursion (beginning-of-line) (point))
-		    (save-excursion (end-of-line) (point))))
+                    (save-excursion (end-of-line) (point))))
 
 (defun line-length ()
   "Length of a line in number of characters"
   (length (buffer-substring (save-excursion (beginning-of-line) (point))
-			    (save-excursion (end-of-line) (point)))))
+                            (save-excursion (end-of-line) (point)))))
 
 ;;;;;;;; Date and time
 (defun day-of-week (year month day)
@@ -46,8 +46,8 @@ Also returns nil if pid is nil."
 (defun day-of-week-in-string (year month day)
   "Return the day of the week as day name."
   (let* ((day-names '("Sunday" "Monday" "Tuesday" "Wednesday"
-		      "Thursday" "Friday" "Saturday"))
-	 (day-index (nth 6 (decode-time (encode-time 0 0 0 day month year)))))
+                      "Thursday" "Friday" "Saturday"))
+         (day-index (nth 6 (decode-time (encode-time 0 0 0 day month year)))))
     (nth day-index day-names)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -56,7 +56,7 @@ Also returns nil if pid is nil."
   "Convert buffer file from unix file to dos file."
   (let* (current-buf (current-buffer))
     (if (not (eq current-buf buf))
-	(switch-to-buffer buf))
+        (switch-to-buffer buf))
     (goto-char(point-min))
     (while (search-forward "\n" nil t) (replace-match "\r\n")))
   )
@@ -65,7 +65,7 @@ Also returns nil if pid is nil."
   "Convert buffer file from dos file to unix file."
   (let* (current-buf (current-buffer))
     (if (not (eq current-buf buf))
-	(switch-to-buffer buf))
+        (switch-to-buffer buf))
     (goto-char(point-min))
     (while (search-forward "\r" nil t) (replace-match "")))
   )
@@ -83,11 +83,11 @@ Also returns nil if pid is nil."
   "Convert decimal to hex-number."
   (let ((hexstr))
     (if (stringp decimal)
-	(setq decimal (string-to-number decimal 10)))
+        (setq decimal (string-to-number decimal 10)))
     (cond
      ;; Use #x as hex prefix (elisp, ....)
      ((or (eq major-mode 'emacs-lisp-mode)
-	  (eq major-mode 'lisp-interaction-mode)) (setq hexstr "#x"))
+          (eq major-mode 'lisp-interaction-mode)) (setq hexstr "#x"))
      ;; Use # as hex prefix (CSS, ....)
      ((eq major-mode 'css-mode) (setq hexstr "#"))
      ;; otherwise use 0x as hexprefix (C, Perl...)
@@ -98,11 +98,13 @@ Also returns nil if pid is nil."
   "Convert hex number or string to digit-number."
   (if (stringp hex)
       (let ((case-fold-search nil) )
-	(setq hex (replace-regexp-in-string "^0x" "" hex )) ; C, Perl
-	(setq hex (replace-regexp-in-string "^#x" "" hex )) ; elisp
-	(setq hex (replace-regexp-in-string "^#"  "" hex )) ; CSS
-	(setq hex (string-to-number hex 16))))
+        (setq hex (replace-regexp-in-string "^0x" "" hex )) ; C, Perl
+        (setq hex (replace-regexp-in-string "^#x" "" hex )) ; elisp
+        (setq hex (replace-regexp-in-string "^#"  "" hex )) ; CSS
+        (setq hex (string-to-number hex 16))))
   (format "%d" hex))
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;; System
@@ -134,9 +136,9 @@ Also returns nil if pid is nil."
   ""
   (let ((buffer (concat "*" prg "*")))
     (when (not (and use-existing
-		    (let ((buf (get-buffer buffer)))
-		      (and buf (buffer-name (switch-to-buffer buffer)))
-		      )))
+                    (let ((buf (get-buffer buffer)))
+                      (and buf (buffer-name (switch-to-buffer buffer)))
+                      )))
       (ansi-term prg prg))))
 
 
@@ -145,9 +147,9 @@ Also returns nil if pid is nil."
   "Returns a list of buffers where their major-mode is equal to MODE"
   (let ((buffer-mode-matches '()))
     (dolist (buf (buffer-list))
-	    (with-current-buffer buf
-				 (if (eq mode major-mode)
-				     (add-to-list 'buffer-mode-matches buf))))
+            (with-current-buffer buf
+                                 (if (eq mode major-mode)
+                                     (add-to-list 'buffer-mode-matches buf))))
     buffer-mode-matches))
 
 ;;;;;; TODO: Need to review
@@ -166,9 +168,9 @@ Also returns nil if pid is nil."
 If a region is active (a phrase), lookup that phrase."
   (let (myword myurl)
     (setq myword
-	  (if (and transient-mark-mode mark-active)
-	      (buffer-substring-no-properties (region-beginning) (region-end))
-	      (thing-at-point 'symbol)))
+          (if (and transient-mark-mode mark-active)
+              (buffer-substring-no-properties (region-beginning) (region-end))
+              (thing-at-point 'symbol)))
 
     (setq myword (replace-regexp-in-string " " "%20" myword))
     (setq myurl (concat url myword))

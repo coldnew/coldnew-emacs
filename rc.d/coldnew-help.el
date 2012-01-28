@@ -24,10 +24,10 @@
   ;; Keybindings
   (add-hook 'Info-mode-hook
 	    '(lambda ()
-	       (vim:nmap (kbd "j")  'Info-next)
-	       (vim:nmap (kbd "k") 'Info-prev)
-	       (vim:nmap (kbd "C-f") 'Info-scroll-up)
-	       (vim:nmap (kbd "C-b") 'Info-scroll-down)
+	       (define-key evil-normal-state-local-map (kbd "j")  'Info-next)
+	       (define-key evil-normal-state-local-map (kbd "k") 'Info-prev)
+	       (define-key evil-normal-state-local-map (kbd "C-f") 'Info-scroll-up)
+	       (define-key evil-normal-state-local-map (kbd "C-b") 'Info-scroll-down)
 	       ))
   )
 

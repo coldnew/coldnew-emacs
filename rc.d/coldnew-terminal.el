@@ -84,11 +84,11 @@
   (add-hook 'comint-mode-hook
 	    '(lambda ()
 	       ;; Normal map
-	       (vim:local-nmap (kbd "M-k") 'comint-previous-input)
-	       (vim:local-nmap (kbd "M-j") 'comint-previous-input)
-	       (vim:local-nmap (kbd "C-c C-r") 'comint-clear-region)
+	       (define-key evil-normal-state-local-map (kbd "M-k") 'comint-previous-input)
+	       (define-key evil-normal-state-local-map (kbd "M-j") 'comint-previous-input)
+	       (define-key evil-normal-state-local-map (kbd "C-c C-r") 'comint-clear-region)
 	       ;; Insert map
-	       (vim:local-imap (kbd "RET") 'newline-and-indent)
+	       (define-key evil-insert-state-local-map (kbd "RET") 'newline-and-indent)
 	       ))
   ;;;; Functions
   (defun comint-clear-region ()
@@ -105,27 +105,27 @@
 ;; use emacs-key instead of vim-mode
 ;; TODO: use advice to rewrite this function.
 ;;
-(defun shell-pop ()
-  "Toggle vim-mode between shell-pop-up and shell-pop-down."
-  (interactive)
-  (if (equal (buffer-name) shell-pop-internal-mode-buffer)
-      (progn
-       (shell-pop-out)
-       (vim:normal-mode)
-       )
-      (progn
-       (shell-pop-up)
-       (vim:emacs-mode)
-       )))
+;; (defun shell-pop ()
+;;   "Toggle vim-mode between shell-pop-up and shell-pop-down."
+;;   (interactive)
+;;   (if (equal (buffer-name) shell-pop-internal-mode-buffer)
+;;       (progn
+;;        (shell-pop-out)
+;;        (vim:normal-mode)
+;;        )
+;;       (progn
+;;        (shell-pop-up)
+;;        (vim:emacs-mode)
+;;        )))
 
 ;; ;; Use emacs-key instead of Vim-key in term-mode
 ;; ;; TODO: is there a better way to do this?
-(defadvice switch-to-buffer (after switch-to-buffer activate)
-  "After switch-to-buffer, if tht buffer is term-mode, disable vim-mode."
-  (if (equal major-mode 'term-mode)
-      (vim:emacs-mode)
-      (vim:normal-mode)
-      ))
+;; (defadvice switch-to-buffer (after switch-to-buffer activate)
+;;   "After switch-to-buffer, if tht buffer is term-mode, disable vim-mode."
+;;   (if (equal major-mode 'term-mode)
+;;       (vim:emacs-mode)
+;;       (vim:normal-mode)
+;;       ))
 
 
 ;; ;;;;;;;; test

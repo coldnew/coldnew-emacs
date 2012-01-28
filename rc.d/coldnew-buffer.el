@@ -46,11 +46,11 @@
   ;; Keybindings
   (add-hook 'ibuffer-hook
 	    '(lambda ()
-	       (vim:local-nmap (kbd "d") 'ibuffer-do-delete)
-	       (vim:local-nmap (kbd "s") 'ibuffer-do-sort-by-size)
-	       (vim:local-imap (kbd "d") 'ibuffer-mark-for-delete)
-	       (vim:local-imap (kbd "u") 'ibuffer-unmark-all)
-	       (vim:local-imap (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
+	       (define-key evil-normal-state-local-map (kbd "d") 'ibuffer-do-delete)
+	       (define-key evil-normal-state-local-map (kbd "s") 'ibuffer-do-sort-by-size)
+	       (define-key evil-insert-state-local-map (kbd "d") 'ibuffer-mark-for-delete)
+	       (define-key evil-insert-state-local-map (kbd "u") 'ibuffer-unmark-all)
+	       (define-key evil-insert-state-local-map (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
 	       ))
 
 ;;;;;; Hooks

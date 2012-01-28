@@ -9,10 +9,10 @@
 (require 'coldnew-vim)
 (require 'epa-file)
 
-;; use local gpg instaed of system's gpg
+;; use local gpg program instaed of system one
 ;; only work under linux
 (if linux?
-    (setq epg-gpg-program (concat emacs-usr-dir "bin/gpg")))
+    (setq epg-gpg-program (concat emacs-bin-dir "gpg")))
 
 ;; (setenv "GPG_AGENT_INFO" nil)
 

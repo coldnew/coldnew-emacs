@@ -84,31 +84,31 @@
 (add-hook 'scheme-mode-hook
 	  '(lambda ()
 	       ;;;; Normal map
-	     (vim:local-nmap (kbd "C-x C-e") 'scheme-send-last-sexp)
-	     (vim:local-nmap (kbd "C-c C-z") 'switch-to-scheme-toggle)
+	     (define-key evil-normal-state-local-map (kbd "C-x C-e") 'scheme-send-last-sexp)
+	     (define-key evil-normal-state-local-map (kbd "C-c C-z") 'switch-to-scheme-toggle)
 
 	       ;;;; Insert map
-	     (vim:local-imap (kbd "C-x C-e") 'scheme-send-last-sexp)
-	     (vim:local-imap (kbd "C-c C-z") 'switch-to-scheme-toggle)
+	     (define-key evil-insert-state-local-map (kbd "C-x C-e") 'scheme-send-last-sexp)
+	     (define-key evil-insert-state-local-map (kbd "C-c C-z") 'switch-to-scheme-toggle)
 
-	       ;;;; Insert and expand by short-key
-	     ;; (define )
-	     (vim:local-imap-insert-expand (kbd "M-d") "define")
-	     ;; (lambda () )
-	     (vim:local-imap-insert-expand (kbd "M-l") "lambda")
-	     ;; (begin )
-	     (vim:local-imap-insert-expand (kbd "M-b") "begin")
-	     ;; (define-macro ())
-	     (vim:local-imap-insert-expand (kbd "M-D") "define-macro")
+	     ;;   ;;;; Insert and expand by short-key
+	     ;; ;; (define )
+	     ;; (define-key evil-insert-state-local-map-insert-expand (kbd "M-d") "define")
+	     ;; ;; (lambda () )
+	     ;; (define-key evil-insert-state-local-map-insert-expand (kbd "M-l") "lambda")
+	     ;; ;; (begin )
+	     ;; (define-key evil-insert-state-local-map-insert-expand (kbd "M-b") "begin")
+	     ;; ;; (define-macro ())
+	     ;; (define-key evil-insert-state-local-map-insert-expand (kbd "M-D") "define-macro")
 	     ))
 
 (add-hook 'inferior-scheme-mode-hook
 	  '(lambda ()
 	       ;;;; Normal map
-	     (vim:local-nmap (kbd "C-c C-z") 'switch-to-scheme-toggle)
+	     (define-key evil-normal-state-local-map (kbd "C-c C-z") 'switch-to-scheme-toggle)
 
 	       ;;;; Insert map
-	     (vim:local-imap (kbd "C-c C-z") 'switch-to-scheme-toggle)
+	     (define-key evil-insert-state-local-map (kbd "C-c C-z") 'switch-to-scheme-toggle)
 
 	     ))
 

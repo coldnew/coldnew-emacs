@@ -60,12 +60,12 @@
 (add-hook 'verilog-mode-hook
 	  '(lambda ()
 
-	     (vim:local-nmap (kbd "C-x C-s") 'verilog-mode:save-buffer-always)
-	     (vim:local-imap (kbd "C-x C-s") 'verilog-mode:save-buffer-always)
+	     (define-key evil-normal-state-local-map (kbd "C-x C-s") 'verilog-mode:save-buffer-always)
+	     (define-key evil-insert-state-local-map (kbd "C-x C-s") 'verilog-mode:save-buffer-always)
 
-	     (vim:local-imap (kbd "M-[") 'verilog-insert-block)
-	     (vim:local-imap (kbd "M-a") 'verilog-sk-always)
-	     (vim:local-imap (kbd "M-c") 'verilog-sk-case)
+	     (define-key evil-insert-state-local-map (kbd "M-[") 'verilog-insert-block)
+	     (define-key evil-insert-state-local-map (kbd "M-a") 'verilog-sk-always)
+	     (define-key evil-insert-state-local-map (kbd "M-c") 'verilog-sk-case)
 	     ))
 
 

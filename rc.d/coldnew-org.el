@@ -10,8 +10,11 @@
 (require 'org-latex)
 (require 'xml-rpc)
 (require 'org2blog)
+
 ;;;;;;;; org-mode extensions
+(add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
 
 ;;;;;;;; Configure
 
@@ -39,19 +42,19 @@
 ;;;;;;;; Keybindings
 (add-hook 'org-mode-hook
 	  '(lambda ()
-	     (vim:local-nmap (kbd "TAB") 'org-cycle)
-	     (vim:local-nmap (kbd "C-t") 'org-tod)
-	     (vim:local-nmap (kbd "C-k") 'outline-previous-visible-heading)
-	     (vim:local-nmap (kbd "C-j") 'outline-next-visible-heading)
-	     (vim:local-nmap (kbd "C-l") 'org-forward-same-level)
-	     (vim:local-nmap (kbd "C-h") 'org-backward-same-level)
-	     (vim:local-nmap (kbd "C-c k") 'org-shiftup)
-	     (vim:local-nmap (kbd "C-c j") 'org-shiftdown)
-	     (vim:local-nmap (kbd "C-c l") 'org-shiftright)
-	     (vim:local-nmap (kbd "C-c h") 'org-shiftleft)
+	     (define-key evil-normal-state-local-map (kbd "TAB") 'org-cycle)
+	     (define-key evil-normal-state-local-map (kbd "C-t") 'org-tod)
+	     (define-key evil-normal-state-local-map (kbd "C-k") 'outline-previous-visible-heading)
+	     (define-key evil-normal-state-local-map (kbd "C-j") 'outline-next-visible-heading)
+	     (define-key evil-normal-state-local-map (kbd "C-l") 'org-forward-same-level)
+	     (define-key evil-normal-state-local-map (kbd "C-h") 'org-backward-same-level)
+	     (define-key evil-normal-state-local-map (kbd "C-c k") 'org-shiftup)
+	     (define-key evil-normal-state-local-map (kbd "C-c j") 'org-shiftdown)
+	     (define-key evil-normal-state-local-map (kbd "C-c l") 'org-shiftright)
+	     (define-key evil-normal-state-local-map (kbd "C-c h") 'org-shiftleft)
 
-	     (vim:local-imap (kbd "M-d") 'org-deadline)
-	     (vim:local-imap (kbd "M-s") 'org-schedule)
+	     (define-key evil-insert-state-local-map (kbd "M-d") 'org-deadline)
+	     (define-key evil-insert-state-local-map (kbd "M-s") 'org-schedule)
 	     ))
 
 (setq org2blog/wp-blog-alist

@@ -21,38 +21,38 @@
 
 ;;;;;;;; Hooks
 (add-hook 'scala-mode-hook
-          '(lambda ()
+	  '(lambda ()
 
-             ;; ENSIME is the ENhanced Scala Interaction Mode for Emacs.
-             (when (require* 'ensime)
-               ensime-scala-mode-hook)
+	     ;; ENSIME is the ENhanced Scala Interaction Mode for Emacs.
+	     (when (require* 'ensime)
+	       ensime-scala-mode-hook)
 
-             ;; Enable Auto Complete
-             (when (require* 'auto-complete)
-               (ac-emacs-lisp-mode-setup))
+	     ;; Enable Auto Complete
+	     (when (require* 'auto-complete)
+	       (ac-emacs-lisp-mode-setup))
 
-             ;; Color nested parentheses, brackets, and braces according to their depth
-             (when (require* 'rainbow-delimiters)
-               (rainbow-delimiters-mode))
+	     ;; Color nested parentheses, brackets, and braces according to their depth
+	     (when (require* 'rainbow-delimiters)
+	       (rainbow-delimiters-mode))
 
-             ;; Use global programming mode
-             (programming-mode)
+	     ;; Use global programming mode
+	     (programming-mode)
 
-             ))
+	     ))
 
 ;;;;;;;; Keybinding
 (add-hook 'scala-mode-hook
-          '(lambda ()
+	  '(lambda ()
 
-             ;; Normal Map
+	     ;; Normal Map
 
-             ;; Insert Map
-             (vim:local-imap (kbd "RET") 'scala-mode:newline-and-indent)
+	     ;; Insert Map
+	     ;; (vim:local-imap (kbd "RET") 'scala-mode:newline-and-indent)
 
-             ;;;; Insert and expand by short-key
-             (vim:local-imap-insert (kbd "M-i") "import ")
+	     ;;;; Insert and expand by short-key
+	     ;; (vim:local-imap-insert (kbd "M-i") "import ")
 
-             ))
+	     ))
 
 
 ;;;;;;;; Functions

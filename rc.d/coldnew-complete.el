@@ -100,17 +100,6 @@
     )
 
 
-  ;;;;;;;; vim-mode
-  ;; vim-mode is a VIM-emulation for Emacs
-  ;;
-  ;; (when (require* 'vim)
-  ;;   (defun vim:ac-stop()
-  ;;     (interactive)
-  ;;     (ac-stop)
-  ;;     (vim:intercept-ESC))
-
-  ;;   ;; if use vim-modei, make ESC-key can exit ac-menu and back to normal mode
-  ;;   (define-key ac-menu-map (kbd "ESC") 'vim:ac-stop))
   )
 
 
