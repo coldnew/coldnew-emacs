@@ -6,7 +6,7 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
-(require 'coldnew-vim)
+(require 'coldnew-evil)
 
 
 

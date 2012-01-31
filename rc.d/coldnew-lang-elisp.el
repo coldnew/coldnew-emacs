@@ -112,23 +112,18 @@
 	     ))
 
 ;;;;;;;; Keybindings
-(add-hook 'emacs-lisp-mode-hook
-	  '(lambda ()
-
-	     ;; Normal Map
-
-	     ;; Insert Map
-
-	     ;;;; Insert and expand by short-key
-	     ;; (define )
-	     ;; (vim:local-imap-insert-expand (kbd "M-d") "defun")
-	     ;; ;; (require* 'FEATURE) or (require 'FEATURE)
-	     ;; (vim:local-imap-insert-expand (kbd "M-r") "require")
-	     ;; ;; (lambda () )
-	     ;; (vim:local-imap-insert-expand (kbd "M-l") "lambda")
-	     ;; ;; (defmacro ())
-	     ;; (vim:local-imap-insert-expand (kbd "M-D") "defmacro")
-	     ))
+;;;; Insert and expand by short-key
+(when (featurep 'evil)
+  ;;;; Insert Map
+  ;; (define )
+  (evil-define-key-insert 'insert emacs-lisp-mode-map (kbd "M-d") "defun")
+  ;; (require* 'FEATURE) or (require 'FEATURE)
+  (evil-define-key-insert 'insert emacs-lisp-mode-map (kbd "M-r") "require")
+  ;; (lambda () )
+  (evil-define-key-insert 'insert emacs-lisp-mode-map (kbd "M-l") "lambda")
+  ;; (defmacro ())
+  (evil-define-key-insert 'insert emacs-lisp-mode-map (kbd "M-D") "defmacro")
+  )
 
 ;;;;;;;; ielm
 ;; A nice little mode that acts like an interactive Lisp interpreter.

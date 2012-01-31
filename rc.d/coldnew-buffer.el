@@ -6,7 +6,7 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
-(require 'coldnew-vim)
+(require 'coldnew-evil)
 
 ;;;;;;;; *scratch*
 ;;
@@ -44,14 +44,17 @@
   (setq ibuffer-always-show-last-buffer      nil )
 
   ;; Keybindings
-  (add-hook 'ibuffer-hook
-	    '(lambda ()
-	       (define-key evil-normal-state-local-map (kbd "d") 'ibuffer-do-delete)
-	       (define-key evil-normal-state-local-map (kbd "s") 'ibuffer-do-sort-by-size)
-	       (define-key evil-insert-state-local-map (kbd "d") 'ibuffer-mark-for-delete)
-	       (define-key evil-insert-state-local-map (kbd "u") 'ibuffer-unmark-all)
-	       (define-key evil-insert-state-local-map (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
-	       ))
+  (when (featurep 'evil)
+    ;; Normal map
+    (evil-define-key 'normal ibuffer-mode-map (kbd "d") 'ibuffer-do-delete)
+    (evil-define-key 'normal ibuffer-mode-map (kbd "s") 'ibuffer-do-sort-by-size)
+    (evil-define-key 'normal ibuffer-mode-map (kbd "RET") 'ibuffer-visit-buffer)
+    ;; Insert map
+    (evil-define-key 'insert ibuffer-mode-map (kbd "d") 'ibuffer-mark-for-delete)
+    (evil-define-key 'insert ibuffer-mode-map (kbd "u") 'ibuffer-unmark-all)
+    (evil-define-key 'insert ibuffer-mode-map (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
+    (evil-define-key 'insert ibuffer-mode-map (kbd "RET") 'ibuffer-visit-buffer)
+    )
 
 ;;;;;; Hooks
   (add-hook 'ibuffer-mode-hook

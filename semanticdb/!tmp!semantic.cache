@@ -2,78 +2,13 @@
 ;; SEMANTICDB Tags save file
 (semanticdb-project-database-file "tmp/"
   :tables (list 
-    (semanticdb-table "fft-1.h"
+    (semanticdb-table "a.c"
     :major-mode 'c-mode
     :tags 
-        '( ("FFT_H" variable (:constant-flag t) nil [23 28])
-            ("COMPLEX_STRUCT" type
-               (:members 
-                  ( ("real" variable (:type "double") (reparse-symbol classsubparts) [57 69])
-                    ("imag" variable (:type "double") (reparse-symbol classsubparts) [73 85]))                  
-                :type "struct")
-                nil [30 88])
-            ("COMPLEX" type
-               (:typedef ("COMPLEX_STRUCT" type
-                     (:prototype t
-                      :type "struct")
-                      nil nil)
-                :superclasses "COMPLEX_STRUCT"
-                :type "typedef")
-                nil [89 127])
-            ("TRUE" variable (:constant-flag t) nil [137 141])
-            ("FALSE" variable (:constant-flag t) nil [152 157])
-            ("Powerof2" function
-               (:prototype-flag t
-                :arguments 
-                  ( ("nx" variable (:type "int") (reparse-symbol arg-sub-list) [174 181])
-                    ("m" variable
-                       (:pointer 1
-                        :type "int")
-                        (reparse-symbol arg-sub-list) [182 189])
-                    ("twopm" variable
-                       (:pointer 1
-                        :type "int")
-                        (reparse-symbol arg-sub-list) [190 201]))                  
-                :type "int")
-                nil [161 202])
-            ("FFT" function
-               (:prototype-flag t
-                :arguments 
-                  ( ("dir" variable (:type "int") (reparse-symbol arg-sub-list) [212 220])
-                    ("m" variable (:type "int") (reparse-symbol arg-sub-list) [220 226])
-                    ("x" variable
-                       (:pointer 1
-                        :type "double")
-                        (reparse-symbol arg-sub-list) [226 236])
-                    ("y" variable
-                       (:pointer 1
-                        :type "double")
-                        (reparse-symbol arg-sub-list) [236 246]))                  
-                :type "int")
-                nil [204 247])
-            ("FFT2D" function
-               (:prototype-flag t
-                :arguments 
-                  ( ("c" variable
-                       (:pointer 1
-                        :type ("COMPLEX" type (:type "class") nil nil))
-                        (reparse-symbol arg-sub-list) [258 269])
-                    ("nx" variable (:type "int") (reparse-symbol arg-sub-list) [269 276])
-                    ("ny" variable (:type "int") (reparse-symbol arg-sub-list) [276 283])
-                    ("dir" variable (:type "int") (reparse-symbol arg-sub-list) [283 291]))                  
-                :type "int")
-                nil [248 292]))          
-    :file "fft-1.h"
-    :pointmax 313
-    :fsize 331
-    :lastmodtime '(20189 55965)
+        '( ("a.h" include (:system-flag t) nil [72 86]))          
+    :file "a.c"
+    :pointmax 150
     :unmatched-syntax 'nil
-    :lexical-table 
-        '(("FFT_H")
-          ("TRUE" . ((number "1" 142 . 143)))
-          ("FALSE" . ((number "0" 158 . 159)))
-          )
-
     )
    )
   :file "!tmp!semantic.cache"

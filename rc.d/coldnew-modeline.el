@@ -10,7 +10,6 @@
 ;;;;see
 ;; https://github.com/ZaneA/Dotfiles/blob/master/.emacs#L206
 
-
 ;; (defun vim-mode-string ()
 ;;   (let ((vim-string (substring vim:mode-string 1 2)))
 ;;     (setq vim-string-face
@@ -56,12 +55,12 @@
 		 ;; (:propertize mode-name
 		 ;;           help-echo (format-mode-line minor-mode-alist)
 		 ;;           face 'mode-line-mode-name-face)
-		 " [" minor-mode-alist " ]"
+		 ;; " [" minor-mode-alist " ]"
 		 "   "
 		 mode-line-position
 		 "  "
-		 display-time-string
-		 " "
+		 ;; display-time-string
+		 ;; " "
 		 )))
 
 ;;;; Remove or shrink some mode-line strings

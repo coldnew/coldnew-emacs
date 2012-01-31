@@ -30,6 +30,8 @@
 		   )
 	     ;;(setq org-latex-to-pdf-process '("texi2dvi --pdf --clean --verbose --batch %f"))
 	     (setq org-src-window-setup 'current-window)
+
+	     (setq org-src-fontify-natively t)
 	     ))
 ;;;;;;;; Hooks
 (add-hook 'org-mode-hook

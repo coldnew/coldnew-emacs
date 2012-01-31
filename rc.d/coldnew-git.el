@@ -7,7 +7,7 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
-(require 'coldnew-vim)
+(require 'coldnew-evil)
 
 
 
@@ -20,36 +20,30 @@
   (setq egg-switch-to-buffer t)
 
 ;;;;;;;; kyebindings
-  (add-hook 'egg-status-buffer-mode-hook
-	    '(lambda ()
-	       (define-key evil-normal-state-local-map(kbd "j") 'egg-buffer-cmd-navigate-next)
-	       (define-key evil-normal-state-local-map (kbd "k") 'egg-buffer-cmd-navigate-prev)
-	       ;; (define-key evil-insert-state-local-map (kbd "j") 'vim:motion-down)
-	       ;; (define-key evil-insert-state-local-map (kbd "k") 'vim:motion-up)
-	       (define-key evil-normal-state-local-map (kbd "c") 'egg-commit-log-edit)
-	       (define-key evil-normal-state-local-map (kbd "l") 'egg-log)
-	       ))
+  ;; egg status buffer
+  (evil-define-key 'normal egg-status-buffer-mode-map (kbd "j") 'egg-buffer-cmd-navigate-next)
+  (evil-define-key 'normal egg-status-buffer-mode-map (kbd "k") 'egg-buffer-cmd-navigate-prev)
+  (evil-define-key 'normal egg-status-buffer-mode-map (kbd "c") 'egg-commit-log-edit)
+  (evil-define-key 'normal egg-status-buffer-mode-map (kbd "l") 'egg-log)
+  (evil-define-key 'insert egg-status-buffer-mode-map (kbd "j") 'evil-next-line)
+  (evil-define-key 'insert egg-status-buffer-mode-map (kbd "k") 'evil-previous-line)
 
+  ;; egg commit buffer
   (add-hook 'egg-commit-buffer-mode-hook
 	    '(lambda ()
-	       (define-key evil-normal-state-local-map (kbd "c") 'egg-log-msg-done)
-	       ))
+	       (define-key evil-normal-state-local-map (kbd "c") 'egg-log-msg-done)))
+  ;; egg log buffer mode
+  (evil-define-key 'normal egg-log-buffer-mode-map (kbd "c") 'egg-log-msg-done)
+  (evil-define-key 'normal egg-log-buffer-mode-map (kbd "j") 'egg-log-buffer-next-ref)
+  (evil-define-key 'normal egg-log-buffer-mode-map (kbd "k") 'egg-log-buffer-prev-ref)
+  (evil-define-key 'normal egg-log-buffer-mode-map (kbd "h") 'evil-backward-char)
+  (evil-define-key 'normal egg-log-buffer-mode-map (kbd "l") 'evil-forward-char)
+  (evil-define-key 'normal egg-log-buffer-mode-map (kbd "U") 'egg-log-buffer-push-to-remote)
+  (evil-define-key 'normal egg-log-buffer-mode-map (kbd "u") 'egg-log-buffer-push-to-local)
+  (evil-define-key 'normal egg-log-buffer-mode-map (kbd "s") 'egg-status)
+  (evil-define-key 'insert egg-log-buffer-mode-map (kbd "j") 'evil-next-line)
+  (evil-define-key 'insert egg-log-buffer-mode-map (kbd "k") 'evil-previous-line)
 
-  (add-hook 'egg-log-buffer-mode-hook
-	    '(lambda ()
-	       ;;;; Normal-map
-	       (define-key evil-normal-state-local-map (kbd "c") 'egg-log-msg-done)
-	       (define-key evil-normal-state-local-map (kbd "j") 'egg-log-buffer-next-ref)
-	       (define-key evil-normal-state-local-map (kbd "k") 'egg-log-buffer-prev-ref)
-	       ;; (define-key evil-normal-state-local-map (kbd "h") 'vim:motion-left)
-	       ;; (define-key evil-normal-state-local-map (kbd "l") 'vim:motion-right)
-	       (define-key evil-normal-state-local-map (kbd "U") 'egg-log-buffer-push-to-remote)
-	       (define-key evil-normal-state-local-map (kbd "u") 'egg-log-buffer-push-to-local)
-	       (define-key evil-normal-state-local-map (kbd "s") 'egg-status)
-	       ;;;; Insert-map
-	       ;; (define-key evil-insert-state-local-map (kbd "j") 'vim:motion-down)
-	       ;; (define-key evil-insert-state-local-map (kbd "k") 'vim:motion-up)
-	       ))
 ;;;;;;;; Advice
 
   (defadvice egg-status (around goto-egg-status-buffer activate)

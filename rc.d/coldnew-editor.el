@@ -9,7 +9,7 @@
 (require 'coldnew-complete)
 (require 'coldnew-snippets)
 (require 'coldnew-build)
-(require 'coldnew-vim)
+(require 'coldnew-evil)
 (require 'coldnew-cedet)
 (require 'cc-mode)
 
@@ -120,6 +120,12 @@
   (setq linum+-smart-format   "%%%dd")
   )
 
+;;;;;;;; linum-relative
+;; display relative line number in the left margin
+;;
+(when (require 'linum-relative)
+  (setq linum-relative-current-symbol "->")
+  )
 
 ;;;;;;;; rainbow-mode
 ;; Displays color names with colored background.
@@ -347,6 +353,9 @@
 
 ;;;;;;;; a
 (require 'ascii)
+
+
+
 
 (provide 'coldnew-editor)
 ;; coldnew-editor.el ends here.
