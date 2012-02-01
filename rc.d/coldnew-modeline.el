@@ -6,22 +6,23 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
+(require 'coldnew-evil)
+
 
 ;;;;see
 ;; https://github.com/ZaneA/Dotfiles/blob/master/.emacs#L206
 
-;; (defun vim-mode-string ()
-;;   (let ((vim-string (substring vim:mode-string 1 2)))
-;;     (setq vim-string-face
-;;	  (cond
-;;	   ((string= "N" vim-string) 'mode-line-vim-string-N)
-;;	   ((string= "I" vim-string) 'mode-line-vim-string-I)
-;;	   ((string= "V" vim-string) 'mode-line-vim-string-V)
-;;	   ((string= "E" vim-string) 'mode-line-vim-string-E)
-;;	   ))
-;;     (concat "<" (propertize vim-string 'face vim-string-face) ">")
-;;     ))
-
+(defun evil-mode-string ()
+  (let ((evil-state-string (substring evil-mode-line-tag 2 3)))
+    (setq evil-state-string-face
+	  (cond
+	   ((string= "N" evil-state-string) 'mode-line-evil-state-string-N)
+	   ((string= "I" evil-state-string) 'mode-line-evil-state-string-I)
+	   ((string= "V" evil-state-string) 'mode-line-evil-state-string-V)
+	   ((string= "E" evil-state-string) 'mode-line-evil-state-string-E)
+	   ))
+    (concat "<" (propertize evil-state-string 'face evil-state-string-face) ">")
+    ))
 
 (defun mode-line-major-mode ()
   "Get major-mode name with << >>."
@@ -35,49 +36,50 @@
 (setq-default mode-line-format
 	      '((" "
 		 mode-line-mule-info
-		 mode-line-modified
-		 mode-line-frame-identification
-		 mode-line-buffer-identification
+		 ;; read-only or modified status
+		 (:eval
+		  (cond (buffer-read-only
+			 (propertize "RO" 'face 'mode-line-read-only-face))
+			((buffer-modified-p)
+			 (propertize "**" 'face 'mode-line-modified-face))
+			(t "--")))
 		 "   "
-		 ;; (when (featurep 'vim)
-		 ;;   (:eval (vim-mode-string)))
+		 ;;		 mode-line-modified
+		 ;;	 mode-line-frame-identification
+		 (when (featurep 'evil)
+		   (:eval (evil-mode-string)))
+		 "   "
+		 mode-line-buffer-identification
+		 " "
+		 ;; line and column
+		 "("
+		 (:eval (propertize "%02l" 'face 'font-lock-type-face))
+		 ","
+		 (:eval (propertize "%02c" 'face 'font-lock-type-face))
+		 ")"
+		 "   "
 
+		 ;; major-mode name
+		 (:eval (mode-line-major-mode))
+
+		 "   "
+		 (vc-mode vc-mode)
+		 "   "
+		 ;; relative position, size of file
+		 "["
+		 (:eval (propertize "%p" 'face 'font-lock-constant-face)) ;; % above top
+		 "/"
+		 (:eval (propertize "%I" 'face 'font-lock-constant-face)) ;; size
+		 "] "
+		 s
 		 ;; "   "
 		 ;; (when (require* 'pomodoro)
 		 ;;   pomodoro-display-string)
-		 "   "
-		 (which-func-mode ("" which-func-format ""))
-		 (vc-mode vc-mode)
-		 "   "
-		 ;;; major-mode name
-		 (:eval (mode-line-major-mode))
-
-		 ;; (:propertize mode-name
-		 ;;           help-echo (format-mode-line minor-mode-alist)
-		 ;;           face 'mode-line-mode-name-face)
-		 ;; " [" minor-mode-alist " ]"
-		 "   "
-		 mode-line-position
-		 "  "
+		 ;; (which-func-mode ("" which-func-format ""))
+		 ;; mode-line-position
 		 ;; display-time-string
-		 ;; " "
 		 )))
 
-;;;; Remove or shrink some mode-line strings
-(when (require* 'diminish)
-  (when (featurep 'yasnippet)
-    (diminish 'yas/minor-mode ""))
-  (when (featurep 'egg)
-    (diminish 'egg-minor-mode ""))
-  (when (featurep 'eldoc)
-    (diminish 'eldoc-mode ""))
-  (when (featurep 'undo-tree)
-    (diminish 'undo-tree-mode ""))
-  (when (featurep 'highlight-parentheses)
-    (diminish 'highlight-parentheses-mode ""))
-  (when (featurep 'auto-complete)
-    (diminish 'auto-complete-mode ""))
-  )
 
 
 (provide 'coldnew-modeline)

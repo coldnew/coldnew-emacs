@@ -11,6 +11,8 @@
   "The top-level emacs-configure directory.")
 (defvar emacs-config-dir (concat emacs-dir "rc.d/")
   "directory to place emacs configure.")
+(defvar emacs-theme-dir (concat emacs-dir "theme/")
+  "directory to place emacs theme.")
 (defvar emacs-etc-dir    (concat emacs-dir "etc/")
   "directory to place other stuff.")
 (defvar emacs-usr-dir    (concat emacs-dir "usr/")
@@ -50,7 +52,6 @@
   "Return nil if OS is not CygWin.")
 (defvar windows? (eq system-type 'windows-nt)
   "Return nil if OS is not Windows.")
-
 (defvar root? (zerop (user-real-uid))
   "Return nil if user is not root user.")
 
@@ -76,9 +77,15 @@
 ;;   :group font-lock-)
 
 
-(defface mode-line-vim-face
-  '((t (:inherit font-lock-keyword-face)))
-  "face for vim-mode strig in mode-line"
+
+(defface mode-line-read-only-face
+  '((t (:foreground "#C82829" :bold t)))
+  "face for mode-name-string in modeline."
+  :group 'mode-line)
+
+(defface mode-line-modified-face
+  '((t (:inherit 'font-lock-function-name-face :bolt t)))
+  "face for mode-name-string in modeline."
   :group 'mode-line)
 
 (defface mode-line-mode-name-face
@@ -86,26 +93,30 @@
   "face for mode-name-string in modeline."
   :group 'mode-line)
 
-(defface mode-line-vim-string-N
+(defface mode-line-evil-state-string-N
   '((t (:inherit font-lock-function-name-face)))
   "face for vim-string in normal-map on mode-line."
   :group 'mode-line)
 
-(defface mode-line-vim-string-I
+(defface mode-line-evil-state-string-I
   '((t (:inherit font-lock-constant-face)))
   "face for vim-string in insert-map on mode-line."
   :group 'mode-line)
 
-(defface mode-line-vim-string-V
+(defface mode-line-evil-state-string-V
   '((t (:inherit font-lock-variable-name-face)))
   "face for vim-string in visual-map on mode-line."
   :group 'mode-line)
 
-(defface mode-line-vim-string-E
+(defface mode-line-evil-state-string-E
   '((t (:inherit font-lock-string-face)))
   "face for vim-string in emacs-map on mode-line."
   :group 'mode-line)
 
+(defface font-lock-escape-char-face
+  '((((class color)) (:foreground "seagreen2")))
+  "highlight c escapes char like vim"
+  :group 'font-lock-faces)
 
 
 ;; TODO: need to test this function

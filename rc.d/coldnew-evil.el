@@ -14,10 +14,15 @@
   (evil-mode 1)
 
   ;; Modes that should come up in Emacs state.
-  (setq evil-emacs-state-modes nil)
+  (setq evil-emacs-state-modes
+	'(comint-mode
+	  term-mode
+	  slime-repl-mode))
+
+  (setq evil-insert-state-modes nil)
 
   (defmacro evil-define-key-insert (state map key name)
-    "insert string in vim:local-imap."
+    "insert string in evil-mode."
     `(evil-define-key ,state ,map ,key
 		      '(lambda ()
 			 (interactive) (insert ,name) (if (featurep 'yasnippet) (yas/expand))))

@@ -20,8 +20,8 @@
   ;; Disable fuzzy match
   (setq ac-use-fuzzy nil)
 
-  ;; Enable auto-start
-  (setq ac-auto-start t)
+  ;; Start auto-complete after insert 2 or more key.
+  (setq ac-auto-start 2)
 
   ;; Ignore case if completion target string doesn't include upper characters
   (setq ac-ignore-case 'smart)

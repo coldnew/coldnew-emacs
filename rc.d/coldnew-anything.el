@@ -8,12 +8,17 @@
 (require 'coldnew-variables)
 (require* 'linkd)
 
-
+(setq-default anything-M-x-requires-pattern 5)
 (when (require* 'anything-config)
+  (require* 'anything-match-plugin)
 
+
+  ;; (setq anything-mp-matching-method 'multi2)
+  ;;  (setq anything-mp-highlight-threshold 10)
   ;; Predefined configurations for `anything.el'
   (setq anything-config t)
 
+  (ac-mode 1)
   ;; Path of file where history information is stored.
   (setq anything-c-adaptive-history-file (concat emacs-cache-dir "anything.cache"))
 
@@ -49,79 +54,10 @@
   ;; Eldoc will show info in mode-line during this delay if user is idle.
   (setq anything-c-show-info-in-mode-line-delay 5)
 
+  ;; Value of requires-pattern for `anything-M-x'
+  (setq anything-M-x-requires-pattern 0)
+
   )
-
-
-;; Make lusty-explorer use it's own completion, not anything-completion
-(when (require* 'lusty-explorer)
-  (add-to-list 'anything-completing-read-handlers-alist '(lusty-file-explorer . nil))
-  (add-to-list 'anything-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
-
-
-
-
-;; (setq anything-candidate-number-limit 1000)
-
-;; (setq anything-quick-update t)
-
-
-;; Path of anything's history
-
-;; Maximum number of candidates stored for a source.
-
-;; (anything-completion-mode)
-
-
-;; (setq anything-sources
-;;       (list
-;;        anything-c-source-emacs-commands
-;;        anything-c-source-buffers
-;;        anything-c-source-files-in-current-dir
-;;        anything-c-source-recentf
-;;        anything-c-source-info-pages
-;;        ;; anything-c-source-include
-;;        ))
-
-
-
-  ;;;; anything-match-plugin
-;; Humane match plug-in for anything
-;;
-;;(when (require* 'anything-match-plugin)
-					;)
-
-  ;;;; anything-show-completion
-;; Show selection in buffer for anything completion
-;;
-;;(when (require* 'anything-show-completion)
-					;)
-
-  ;;;; anything-include
-;; For C C++, Anything-source made maintenance of history of #include and reusable.
-;;
-;;(when (require* 'anything-include)
-;;(setq anything-include-save-file (concat emacs-cache-dir "anything-include.dat"))
-;;(setq anything-include-max-saved-items 300)
-;;)
-  ;;;; anything-complete
-;; Complete with anything
-;;
-;;(when (require* 'anything-complete)
-;; Automatically collect symbols by 100 secs
-;;(anything-lisp-complete-symbol-set-timer 100)
-;; Replace completion commands with anything
-;;(anything-read-string-mode 1)
-;;)
-
-
-  ;;;; Settings
-
-
-
-;;(setq anything-c-yas-display-key-on-candidate t)
-
-
-
 
 
 

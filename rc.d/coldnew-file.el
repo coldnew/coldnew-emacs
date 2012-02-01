@@ -11,17 +11,17 @@
 
 ;; If save a newfile to nonexist directory, create the directory before save.
 (add-hook 'before-save-hook
-          '(lambda ()
-             (or (file-exists-p  (file-name-directory buffer-file-name))
-                 (make-directory (file-name-directory buffer-file-name) t))))
+	  '(lambda ()
+	     (or (file-exists-p  (file-name-directory buffer-file-name))
+		 (make-directory (file-name-directory buffer-file-name) t))))
 
 ;; When visit emacs-lisp-dir, change file to view mode
 ;; this will avoid I change those plugins.
 (add-hook 'find-file-hook
-          '(lambda ()
-             (if (search (expand-file-name emacs-lisp-dir)
-                         (directory-file-name (buffer-file-name)))
-                 (view-mode))))
+	  '(lambda ()
+	     (if (search (expand-file-name emacs-lisp-dir)
+			 (directory-file-name (buffer-file-name)))
+		 (view-mode))))
 
 ;;;;;;;; Lusty Explorer
 ;; LustyExplorer is a fast and responsive way to manage files and buffers.
@@ -34,8 +34,13 @@
 (when (require* 'lusty-explorer)
   ;;;; Keybindings
   (add-hook 'lusty-setup-hook
-            '(lambda ()
-               (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
+	    '(lambda ()
+	       (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
+
+  ;; Make lusty-explorer use it's own completion, not anything-completion
+  (when (featurep 'anything)
+    (add-to-list 'anything-completing-read-handlers-alist '(lusty-file-explorer . nil))
+    (add-to-list 'anything-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
   )
 
 

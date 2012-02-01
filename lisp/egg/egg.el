@@ -4,11 +4,11 @@
 ;; Copyright (C) 2008  Linh Dang
 ;; Copyright (C) 2008  Marius Vollmer
 ;; Copyright (C) 2009  Tim Moore
-;; Copyright (C) 2011  byplayer
 ;; Copyright (C) 2010  Alexander Prusov
+;; Copyright (C) 2011  byplayer
 ;;
 ;; Special Thanks to
-;;   Antoine Levitt
+;;   Antoine Levitt, Bogolisk
 ;;
 ;; Egg is free software; you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by
@@ -615,7 +615,7 @@ Return the output lines as a list of strings."
 (defsubst egg-buf-git-name (&optional buf)
   "return the repo-relative name of the file visited by BUF.
 if BUF was nil then use current-buffer"
-  (egg-file-git-name (buffer-file-name buf)))
+  (egg-file-git-name (file-truename (buffer-file-name buf))))
 
 (defsubst egg-files-git-name (files)
   "return the repo-relative name for each file in the list of files FILES."
@@ -747,8 +747,10 @@ END-RE is the regexp to match the end of a record."
 
 (defun egg-read-git-dir ()
   "call GIT to read the git directory of default-directory."
-  (let ((dir (egg-git-to-string "rev-parse" "--git-dir")))
-    (if (stringp dir) 
+  (let* ((dotgit-parent (and (buffer-file-name) (locate-dominating-file (buffer-file-name) ".git")))
+         (dir (or (and dotgit-parent (concat dotgit-parent "/.git"))
+                  (egg-git-to-string "rev-parse" "--git-dir"))))
+    (if (stringp dir)
         (expand-file-name dir))))
 
 (defsubst egg-read-dir-git-dir (dir)

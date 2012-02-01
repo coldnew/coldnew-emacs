@@ -2,12 +2,24 @@
 ;; SEMANTICDB Tags save file
 (semanticdb-project-database-file "tmp/"
   :tables (list 
-    (semanticdb-table "a.c"
+   (semanticdb-table "a.c"
     :major-mode 'c-mode
     :tags 
-        '( ("a.h" include (:system-flag t) nil [72 86]))          
+        '( ("stdio.h" include (:system-flag t) nil [3 21])
+            ("main" function
+               (:arguments 
+                  ( ("argc" variable (:type "int") (reparse-symbol arg-sub-list) [33 42])
+                    ("argv" variable
+                       (:pointer 1
+                        :dereference 1
+                        :type "char")
+                        (reparse-symbol arg-sub-list) [43 56]))                  
+                :type "int")
+                nil [24 110]))          
     :file "a.c"
-    :pointmax 150
+    :pointmax 134
+    :fsize 133
+    :lastmodtime '(20264 61372)
     :unmatched-syntax 'nil
     )
    )

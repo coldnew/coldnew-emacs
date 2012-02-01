@@ -4,12 +4,11 @@
 ;;;;;;;; Packages Import
 (require 'coldnew-editor)
 
-
 ;;;;;;;; Emacs-lisp-mode extensions
 (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 
 ;;;;;;;; Auto Complete Settings
-(when (require* 'auto-complete)
+(when (featurep 'auto-complete)
   (defun ac-emacs-lisp-mode-setup ()
     "auto-complete settings for emacs-lisp-mode"
     ;; (make-variable-buffer-local 'ac-sources)
@@ -26,6 +25,25 @@
 	    ac-source-files-in-current-dir
 	    ac-source-words-in-same-mode-buffers
 	    ))))
+
+;;;;;;;; Anything Setting
+(when (featurep 'anything)
+  (defun elisp-mode:anything-info ()
+    ""
+    (interactive)
+    (anything
+     :prompt "Info about: "
+     :candidate-number-limit 5
+     :sources
+     '( anything-c-source-emacs-functions
+	anything-c-source-emacs-variables
+	anything-c-source-info-elisp
+	anything-c-source-emacs-source-defun
+	anything-c-source-emacs-lisp-expectations
+	anything-c-source-emacs-lisp-toplevels
+	anything-c-source-emacs-functions-with-abbrevs
+	anything-c-source-info-emacs)))
+  )
 
 ;;;;;;;; Hooks
 (add-hook 'emacs-lisp-mode-hook
@@ -123,7 +141,13 @@
   (evil-define-key-insert 'insert emacs-lisp-mode-map (kbd "M-l") "lambda")
   ;; (defmacro ())
   (evil-define-key-insert 'insert emacs-lisp-mode-map (kbd "M-D") "defmacro")
+
+  (when (featurep 'anything)
+    (evil-define-key 'normal emacs-lisp-mode-map (kbd "K") 'elisp-mode:anything-info)
+    )
   )
+
+
 
 ;;;;;;;; ielm
 ;; A nice little mode that acts like an interactive Lisp interpreter.
