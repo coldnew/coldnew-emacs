@@ -6,6 +6,8 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
+(require 'coldnew-project)
+
 
 (defun global-compilation-hook ()
   "Global compilation setting."
@@ -40,7 +42,17 @@
 
 (add-to-list 'compilation-finish-functions 'notify-compilation-result)
 
-
+;;;;;;;; Emacs
+;; ignore byte-compile warnings
+(setq byte-compile-warnings '(not nresolved
+				  free-vars
+				  callargs
+				  redefine
+				  obsolete
+				  noruntime
+				  cl-functions
+				  interactive-only
+				  ))
 
 
 

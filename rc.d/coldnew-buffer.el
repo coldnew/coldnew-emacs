@@ -49,11 +49,14 @@
     (evil-define-key 'normal ibuffer-mode-map (kbd "d") 'ibuffer-do-delete)
     (evil-define-key 'normal ibuffer-mode-map (kbd "s") 'ibuffer-do-sort-by-size)
     (evil-define-key 'normal ibuffer-mode-map (kbd "RET") 'ibuffer-visit-buffer)
+    (evil-define-key 'normal ibuffer-mode-map (kbd "D") 'ibuffer-mark-for-delete)
+    (evil-define-key 'normal ibuffer-mode-map (kbd "u") 'ibuffer-unmark-all)
+    (evil-define-key 'normal ibuffer-mode-map (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
     ;; Insert map
-    (evil-define-key 'insert ibuffer-mode-map (kbd "d") 'ibuffer-mark-for-delete)
-    (evil-define-key 'insert ibuffer-mode-map (kbd "u") 'ibuffer-unmark-all)
-    (evil-define-key 'insert ibuffer-mode-map (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
-    (evil-define-key 'insert ibuffer-mode-map (kbd "RET") 'ibuffer-visit-buffer)
+    ;; (evil-define-key 'insert ibuffer-mode-map (kbd "d") 'ibuffer-mark-for-delete)
+    ;; (evil-define-key 'insert ibuffer-mode-map (kbd "u") 'ibuffer-unmark-all)
+    ;; (evil-define-key 'insert ibuffer-mode-map (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
+    ;; (evil-define-key 'insert ibuffer-mode-map (kbd "RET") 'ibuffer-visit-buffer)
     )
 
 ;;;;;; Hooks
@@ -177,10 +180,14 @@
 	 "^\\*anything\\*$"
 	 "^\\*anything complete\\*$"
 	 "^\\*pomodoro\\*$"
+	 "^\\*Project Buffers\\*$"
+	 "^eproject$"
 	 ;; "^"
 	 "^\\*.*\\(-preprocessed\\)\\>\\*"
 	 "^\\*ORG.*\\*"
 	 "^\\*ac-mode-*"
+	 ".loaddefs.el$"
+	 "^loaddefs.el$"
 	 ))
 
   ;;;; Advice
@@ -189,12 +196,6 @@
     (setq ad-return-value (nreverse ad-return-value)))
 
   ;; Switching to ibuffer puts the cursor on the most recent buffer
-  ;; (defadvice ibuffer (around ibuffer-point-to-most-recent) ()
-  ;;   "Open ibuffer with cursor pointed to most recent buffer name"
-  ;;   (let ((recent-buffer-name (buffer-name)))
-  ;;     ad-do-it
-  ;;     (ibuffer-jump-to-buffer recent-buffer-name)))
-  ;; (ad-activate 'ibuffer)
   (defadvice ibuffer (around ibuffer-point-to-most-recent activate)
     "Open ibuffer with cursor pointed to most recent buffer name"
     (let ((recent-buffer-name (buffer-name)))
@@ -205,7 +206,6 @@
   (defadvice ibuffer-quit (after kill-ibuffer activate)
     "Kill the ibuffer buffer on exit."
     (kill-buffer "*Ibuffer*"))
-  (ad-activate 'ibuffer-quit)
 
   ;; Use human readable Size column instead of original one
   (define-ibuffer-column size-h
@@ -224,12 +224,29 @@
 		  (size-h 9 -1 :right)
 		  "  "
 		  (mode 16 16 :left :elide)
-		  "   "
-		  ;; (eproject 16 16 :left :elide)
-		  ;; " "
+		  " "
 		  (git-status 8 8 :left)
+		  "    "
+		  (eproject 16 16 :left :elide)
 		  "      "
 		  filename-and-process))))
+
+  ;; (require 'ibuffer-vc)
+
+  ;; (setq ibuffer-formats
+  ;;	'((mark modified read-only vc-status-mini " "
+  ;;		(name 23 23 :left :elide)
+  ;;		" "
+  ;;		(size-h 9 -1 :right)
+  ;;		" "
+  ;;		(mode 16 16 :left :elide)
+  ;;		" "
+  ;;		(git-status 8 8 :left)
+  ;;		" "
+  ;;		;; (vc-status 16 16 :left)
+  ;;		" "
+  ;;		filename-and-process)))
+
 
   )
 

@@ -6,13 +6,13 @@
 (require 'coldnew-functions)
 (require 'coldnew-variables)
 (require 'coldnew-commands)
-(require 'emms-setup)
+;; (require 'emms-setup)
 
-;;;;;;;; Other Packages for this mode
-(require* 'emms-i18n)
+;; ;;;;;;;; Other Packages for this mode
+;; (require* 'emms-i18n)
 
 
-(emms-devel)
+;; (emms-devel)
 
 
 

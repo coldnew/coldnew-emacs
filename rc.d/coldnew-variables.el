@@ -44,40 +44,27 @@
   "Make popup shell window at buttom by default.")
 
 ;;;;;;;; Variables
-(defvar mac?     (eq system-type 'darwin)
+(defvar mac-p     (eq system-type 'darwin)
   "Return nil if OS is not Mac.")
-(defvar linux?   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
+(defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
   "Return nil if OS is not Linux.")
-(defvar cygwin?  (eq system-type 'cygwin)
+(defvar cygwin-p  (eq system-type 'cygwin)
   "Return nil if OS is not CygWin.")
-(defvar windows? (eq system-type 'windows-nt)
+(defvar windows-p (eq system-type 'windows-nt)
   "Return nil if OS is not Windows.")
-(defvar root? (zerop (user-real-uid))
+(defvar root-p (zerop (user-real-uid))
   "Return nil if user is not root user.")
 
-(defvar 1280x800?   (and (= (display-pixel-width) 1280)
-			 (= (display-pixel-height) 800))
+(defvar 1280x800-p   (and (= (display-pixel-width) 1280) (= (display-pixel-height) 800))
   "Return nil if current display's resolution is not 1280x800")
 
-(defvar 1280x1024?  (and (= (display-pixel-width) 1280)
-			 (= (display-pixel-height) 1024))
+(defvar 1280x1024-p  (and (= (display-pixel-width) 1280) (= (display-pixel-height) 1024))
   "Return nil if current display's resolution is not 1280x1024")
 
-(defvar 1920x1080?  (and (= (display-pixel-width) 1920)
-			 (= (display-pixel-height) 1080))
+(defvar 1920x1080-p  (and (= (display-pixel-width) 1920) (= (display-pixel-height) 1080))
   "Return nil if current display's resolution is not 1920x1080")
 
 ;;;;;;;; Face
-;; TODO: add face for numbers
-;;(defface font-lock-number-face )
-
-;; (defface font-lock-successful-face
-;;   '((t (:foreground "green")))
-;;   ""
-;;   :group font-lock-)
-
-
-
 (defface mode-line-read-only-face
   '((t (:foreground "#C82829" :bold t)))
   "face for mode-name-string in modeline."
@@ -123,7 +110,6 @@
 (defvar new-file? (and (buffer-file-name)
 		       (not (file-exists-p (buffer-file-name)))
 		       (= (point-max) 1)))
-
 
 (provide 'coldnew-variables)
 ;; coldnew-variables.el ends here.

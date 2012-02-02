@@ -8,12 +8,16 @@
 (require 'coldnew-variables)
 (require 'coldnew-evil)
 (require 'coldnew-anything)
+(require 'coldnew-buffer)
+(require 'coldnew-project)
+(require 'coldnew-editor)
 
-;; (require 'popup-kill-ring)
 
 ;;;;;;;; Normal Map
 (when (featurep 'evil)
   (define-key evil-normal-state-map (kbd "C-x C-b") 'ibuffer)
+  (when (featurep 'eproject)
+    (define-key evil-normal-state-map (kbd "C-c C-b") 'eproject-ibuffer))
   (define-key evil-normal-state-map (kbd "C-x f") 'anything-find-files)
   (define-key evil-normal-state-map (kbd "C-x C-f") 'lusty-file-explorer)
   (define-key evil-normal-state-map (kbd "M-x") 'anything-M-x)
@@ -37,10 +41,20 @@
   (define-key evil-normal-state-map (kbd "K") 'anything-man-woman)
   (define-key evil-normal-state-map (kbd "C-x C-r") 'sudo-edit)
   (define-key evil-normal-state-map (kbd "M-g") 'goto-line)
+  (when (require 'buffer-toggle)
+    (define-key evil-normal-state-map (kbd "C-6") 'buffer-toggle))
+  (when (featurep 'ace-jump-mode)
+    (define-key evil-normal-state-map (kbd "M-l") 'ace-jump-line-mode)
+    (define-key evil-normal-state-map (kbd "M-w") 'ace-jump-word-mode)
+    (define-key evil-normal-state-map (kbd "M-c") 'ace-jump-char-mode)
+    (define-key evil-normal-state-map (kbd "M-f") 'ace-jump-char-smae-line-mode))
   )
+
 ;;;;;;;; Insert Map
 (when (featurep 'evil)
   (define-key evil-insert-state-map (kbd "C-x C-b") 'ibuffer)
+  (when (featurep 'eproject)
+    (define-key evil-insert-state-map (kbd "C-c C-b") 'eproject-ibuffer))
   (define-key evil-insert-state-map (kbd "C-x C-f") 'lusty-file-explorer)
   (define-key evil-insert-state-map (kbd "M-x") 'anything-M-x)
   (define-key evil-insert-state-map (kbd "C-c C-e") 'eval-and-replace)
@@ -48,7 +62,7 @@
   (define-key evil-insert-state-map (kbd "C-=") 'text-scale-increase)
   (define-key evil-insert-state-map (kbd "C-+") 'text-scale-increase)
   (define-key evil-insert-state-map (kbd "C--") 'text-scale-decrease)
-  (define-key evil-insert-state-map (kbd "<f4>") 'shell-pop)
+
   (define-key evil-insert-state-map (kbd "C-x <f4>") 'switch-to-terminal)
   (define-key evil-insert-state-map (kbd "C-x M-s") 'egg-status)
   (define-key evil-insert-state-map (kbd "C-x M-l") 'egg-log)
@@ -62,9 +76,11 @@
   (define-key evil-insert-state-map (kbd "C-u") 'universal-argument)
   (define-key evil-insert-state-map (kbd "C-x C-r") 'sudo-edit)
   )
+
 ;;;;;;; Visual Map
 (when (featurep 'evil)
-  (define-key evil-visual-state-map (kbd "C-;") 'iedit-mode)
+  (when (featurep 'iedit)
+    (define-key evil-visual-state-map (kbd "C-;") 'iedit-mode))
   (when (featurep 'wrap-region)
     (define-key evil-visual-state-map (kbd "<") 'wrap-region-trigger)
     (define-key evil-visual-state-map (kbd "[") 'wrap-region-trigger)
@@ -89,6 +105,13 @@
   (define-key evil-window-map  (kbd "C-o") 'other-frame)
   (define-key evil-window-map  (kbd "C-a") 'delete-other-frames)
   (define-key evil-window-map  (kbd "C-s") 'sr-speedbar-toggle)
+  )
+
+;;;;;;;; Replace Map
+(when (featurep 'evil)
+  (define-key evil-replace-state-map (kbd "M-l") 'downcase-word)
+  (define-key evil-replace-state-map (kbd "M-u") 'upcase-word)
+  (define-key evil-replace-state-map (kbd "M-c") 'capitalize-word)
   )
 
 ;;;;;;;; Emacs Map

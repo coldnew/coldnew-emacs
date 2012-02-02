@@ -1,0 +1,5 @@
+(:name eproject
+       :description ""
+       :type git
+       :url "https://github.com/jrockway/eproject.git"
+       :features eproject)

@@ -124,13 +124,13 @@
   )
 
 ;;;;;;;; Functions
-(defun switch-to-scheme-toggle ()
-  (interactive)
-  "Toggle between scheme-inferior-shell and currentwindows"
-  (if (equal (current-buffer) (get-buffer-name "*scheme*"))
-      (switch-to-buffer (other-buffer))
-      (switch-to-scheme))
-  )
+;; (defun switch-to-scheme-toggle ()
+;;   (interactive)
+;;   "Toggle between scheme-inferior-shell and currentwindows"
+;;   (if (equal (current-buffer) (get-buffer-name "*scheme*"))
+;;       (switch-to-buffer (other-buffer))
+;;       (switch-to-scheme))
+;;   )
 
 
 (provide 'coldnew-lang-scheme)

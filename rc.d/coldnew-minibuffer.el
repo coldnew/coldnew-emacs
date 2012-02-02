@@ -12,6 +12,7 @@
 	  '(lambda ()
 	     (local-set-key (kbd "C-b")   'backward-kill-word)
 	     (local-set-key (kbd "C-w")   'kill-word)
+	     (local-set-key (kbd "C-u")   '(lambda () (interactive) (kill-line 0)))
 	     (local-set-key (kbd "M-J")   'next-matching-history-element)
 	     (local-set-key (kbd "M-K")   'previous-matching-history-element)
 	     (local-set-key (kbd "M-b")   'backward-word)
@@ -22,6 +23,7 @@
 	     (local-set-key (kbd "M-l")   'forward-char)
 	     (local-set-key (kbd "M-w")   'forward-word)
 	     ))
+
 
 ;; ;; Abort the minibuffer when using mouse
 ;; (add-hook 'mouse-leave-buffer-hook
@@ -43,7 +45,8 @@
   (smex-initialize)
 
   ;; File that svae smex state
-  (setq smex-save-file "~/.emacs.d/var/cache/smex.cache")
+  ;;(setq smex-save-file "~/.emacs.d/var/cache/smex.cache")
+  (setq smex-save-file (concat emacs-cache-dir "smex.cache"))
 
   ;; (defadvice smex (around make-aything-do-not-fighting-with activate)
   ;;   "Make anything won't conflict with smex."

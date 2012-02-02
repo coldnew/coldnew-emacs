@@ -104,6 +104,20 @@
 
 
 
+;;;;;;;; Predictive Completion
+(when (require 'predictive)
+  ;;(add-to-list 'load-path "~/.emacs.d/etc/predivctive/")
+  (load-file "~/.emacs.d/etc/predictive/dict-cpp.el")
+  (load-file "~/.emacs.d/etc/predictive/dict-english.el")
+
+  ;;(dictree-load 'dict-elisp)
+  ;; (set-default 'predictive-auto-add-to-dict t)
+  ;; (setq predictive-main-dict 'dict-default
+  ;;	predictive-auto-learn t
+  ;;	predictive-add-to-dict-ask nil
+  ;;	predictive-use-auto-learn-cache nil
+  )
+
 
 (provide 'coldnew-complete)
 ;; coldnew-complete.el ends here.

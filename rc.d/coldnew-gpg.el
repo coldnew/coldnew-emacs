@@ -11,7 +11,7 @@
 
 ;; use local gpg program instaed of system one
 ;; only work under linux
-(if linux?
+(if linux-p
     (setq epg-gpg-program (concat emacs-bin-dir "gpg")))
 
 ;; (setenv "GPG_AGENT_INFO" nil)

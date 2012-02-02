@@ -25,7 +25,6 @@
 ;;          (setq *color-mode* 'night)
 ;;          (color-theme-coldnew-night))))
 
-
 ;;   ;; ;; Specified special color-theme according different modes
 ;;   (if linux?
 ;;       (add-hook 'post-command-hook

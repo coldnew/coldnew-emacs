@@ -82,5 +82,37 @@
 
 
 
+;; (defun vimpulse-set-mode-line-face ()
+;;   (unless (minibufferp (current-buffer))
+;;     (set-face-background 'mode-line
+;;                          (cdr (assq viper-current-state
+;;                                     '((vi-state       . "Black")
+;;                                       (insert-state   . "Red")
+;;                                       (emacs-state    . "Wheat")
+;;                                       (operator-state . "Green")
+;;                                       (visual-state   . "Blue")))))))
+
+;; (add-hook 'viper-vi-state-hook    'vimpulse-set-mode-line-face)
+;; (setq visible-bell nil)
+;; (add-hook 'viper-insert-state-hook      'vimpulse-set-mode-line-face)
+;; (add-hook 'viper-emacs-state-hook       'vimpulse-set-mode-line-face)
+;; (add-hook 'vimpulse-operator-state-hook 'vimpulse-set-mode-line-face)
+;; (add-hook 'vimpulse-visual-state-hook   'vimpulse-set-mode-line-face)
+;; (defadvice set-buffer (after vimpulse-mode-line-face activate)
+;;   (vimpulse-set-mode-line-face))
+;; (defadvice find-file (after vimpulse-mode-line-face activate)
+;;   (vimpulse-set-mode-line-face))
+;; (defadvice kill-buffer (after vimpulse-mode-line-face activate)
+;;   (vimpulse-set-mode-line-face))
+;; (defadvice switch-to-buffer (after vimpulse-mode-line-face activate)
+;;   (vimpulse-set-mode-line-face))
+;; (defadvice select-window (after vimpulse-mode-line-face activate)
+;;   (vimpulse-set-mode-line-face))
+;; (defadvice delete-window (after vimpulse-mode-line-face activate)
+;;   (vimpulse-set-mode-line-face))
+;; http://d.hatena.ne.jp/mizchi/20110224/1298520369
+
+
+
 (provide 'coldnew-modeline)
 ;; coldnew-modeline.el ends here.

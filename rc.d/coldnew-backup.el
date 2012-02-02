@@ -1,4 +1,4 @@
-;
+					;
 (eval-when-compile (require 'cl))
 
 ;;;;;;;; Packages Import
@@ -42,9 +42,9 @@
 (setq auto-save-file-name-transforms
       `((".*" ,emacs-auto-save-list-directory t)))
 
-;;;;;;;; Backup kill-ring
-(when (require* 'savekill)
-  (setq save-kill-file-name (concat emacs-cache-dir "kill-ring.cache")))
+;; ;;;;;;;; Backup kill-ring
+;; (when (require* 'savekill)
+;;   (setq save-kill-file-name (concat emacs-cache-dir "kill-ring.cache")))
 
 
 

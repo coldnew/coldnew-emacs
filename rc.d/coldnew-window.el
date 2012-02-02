@@ -12,7 +12,7 @@
 ;;;;;;;; Modified window size according resolution
 (cond
  ;; Resolution is 1920x1080
- (1920x1080?
+ (1920x1080-p
   (setq default-frame-alist
 	(append (list
 		 '(width  . 134)
@@ -21,7 +21,7 @@
 		 '(left   . 500))
 		default-frame-alist)))
  ;; Resolution is 1280x1024
- (1280x1024?
+ (1280x1024-p
   (setq default-frame-alist
 	(append (list
 		 '(width  . 114)
@@ -30,7 +30,7 @@
 		 '(left   . 300))
 		default-frame-alist)))
  ;; Resolution is 1280x800
- (1280x800?
+ (1280x800-p
   (setq default-frame-alist
 	(append (list
 		 '(width  . 114)

@@ -7,19 +7,22 @@
 (require 'coldnew-commands)
 (require 'coldnew-variables)
 
-(setq evil-default-cursor '("white" box))
+;;(setq evil-default-cursor '("white" box))
+(setq evil-default-cursor '(:background (face-attribute 'cursor :background)
+					box))
 
 (when (require* 'evil)
   ;; Auto strat evil-mode
   (evil-mode 1)
+
+  (setq evil-insert-state-modes nil)
+  (setq evil-motion-state-modes nil)
 
   ;; Modes that should come up in Emacs state.
   (setq evil-emacs-state-modes
 	'(comint-mode
 	  term-mode
 	  slime-repl-mode))
-
-  (setq evil-insert-state-modes nil)
 
   (defmacro evil-define-key-insert (state map key name)
     "insert string in evil-mode."

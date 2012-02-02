@@ -11,6 +11,7 @@
 ;;;;;;;; Minibuffer
 ;;
 ;; keep minibuffer history between session
+(setq savehist-file (concat emacs-cache-dir "savehist.dat"))
 (savehist-mode t)
 
 ;;;;;;;; desktop

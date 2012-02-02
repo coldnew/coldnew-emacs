@@ -4,7 +4,8 @@
 ;;;;;;; Packages Import
 (require 'coldnew-editor)
 (require 'cc-mode)
-(require* 'cperl-mode)
+(require 'cperl-mode)
+(require 'perl-completion)
 
 
 
@@ -13,20 +14,15 @@
 (add-to-list 'interpreter-mode-alist '("perl" . cperl-mode))
 
 ;;;;;;;; Keybindings
-(add-hook 'cperl-mode-hook
-	  '(lambda ()
-	     (when (require 'perl-completion)
-	       ;;
-	       (define-key evil-insert-state-local-map (kbd "M-a") 'plcmp-cmd-complete-arrays)
-	       (define-key evil-insert-state-local-map (kbd "M-A") 'plcmp-cmd-complete-all)
-	       (define-key evil-insert-state-local-map (kbd "M-v") 'plcmp-cmd-complete-variables)
-	       (define-key evil-insert-state-local-map (kbd "M-h") 'plcmp-cmd-complete-hashes)
-	       (define-key evil-insert-state-local-map (kbd "M-f") 'plcmp-cmd-complete-functions)
-	       (define-key evil-insert-state-local-map (kbd "M-m") 'plcmp-cmd-complete-methods)
-	       (define-key evil-insert-state-local-map (kbd "M-u") 'perl-mode:insert-modules)
-
-	       )
-	     ))
+(when (featurep 'perl-completion)
+  (evil-define-key 'insert cperl-mode-map (kbd "M-a") 'plcmp-cmd-complete-arrays)
+  (evil-define-key 'insert cperl-mode-map (kbd "M-A") 'plcmp-cmd-complete-all)
+  (evil-define-key 'insert cperl-mode-map (kbd "M-v") 'plcmp-cmd-complete-variables)
+  (evil-define-key 'insert cperl-mode-map (kbd "M-h") 'plcmp-cmd-complete-hashes)
+  (evil-define-key 'insert cperl-mode-map (kbd "M-f") 'plcmp-cmd-complete-functions)
+  (evil-define-key 'insert cperl-mode-map (kbd "M-m") 'plcmp-cmd-complete-methods)
+  (evil-define-key 'insert cperl-mode-map (kbd "M-u") 'perl-mode:insert-modules)
+  )
 
 ;;;;;;;; Hooks
 (add-hook 'cperl-mode-hook
@@ -38,7 +34,7 @@
 	     ;; Use global programming mode
 	     (programming-mode)
 
-	     (when (require* 'perl-completion)
+	     (when (featurep 'perl-completion)
 	       (perl-completion-mode t))
 	     ))
 
