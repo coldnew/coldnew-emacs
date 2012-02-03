@@ -39,6 +39,17 @@
 	    )))
     ))
 
+
+;;;;;;;; Flymake
+(defun flymake-cpp-init ()
+  (flymake-generic-init-makefile "g++" '("-Wall" "-Wextra" "-pedantic" "-fsyntax-only")))
+
+(add-to-list 'flymake-allowed-file-name-masks
+	     '(".+\\cpp$"
+	       flymake-cpp-init
+	       flymake-simple-cleanup
+	       flymake-get-real-file-name))
+
 ;;;;;;;; Coding-Style Setting
 (add-hook 'c++-mode-hook
 	  '(lambda ()

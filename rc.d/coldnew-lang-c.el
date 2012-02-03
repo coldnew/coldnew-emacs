@@ -12,29 +12,37 @@
 
 
 ;;;;;;;; Auto Complete Settings
-(when (require* 'auto-complete)
-  (require* 'auto-complete-clang)
-  ;; Setting my c-mode auto-complete source
-  (defun ac-c-mode-setup ()
-    "auto-complete settings for c-mode."
-    (setq ac-sources '(
-		       ac-source-clang
-		       ac-source-dictionary
-		       ac-source-abbrev
-		       ac-source-semantic
-		       ac-source-filename
-		       ac-source-files-in-current-dir
-		       ac-source-words-in-same-mode-buffers
-		       ))
-    ;; Default clang completion flags
-    ;;    (setq clang-completion-flags
-    (setq ac-clang-flags
-	  (split-string
-	   (concat
-	    "-pthread -I./ -I../ "
-	    (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0")
-	    )))
-    ))
+;; Setting my c-mode auto-complete source
+(defun ac-c-mode-setup ()
+  "auto-complete settings for c-mode."
+  (setq ac-sources '(
+		     ac-source-clang
+		     ac-source-dictionary
+		     ac-source-abbrev
+		     ac-source-semantic
+		     ac-source-filename
+		     ac-source-files-in-current-dir
+		     ac-source-words-in-same-mode-buffers
+		     ))
+  ;; Default clang completion flags
+  ;;    (setq clang-completion-flags
+  (setq ac-clang-flags
+	(split-string
+	 (concat
+	  "-pthread -I./ -I../ "
+	  (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0")
+	  )))
+  )
+
+;;;;;;;; Flymake
+(defun flymake-c-init ()
+  (flymake-generic-init-makefile "gcc" '("-Wall" "-Wextra" "-pedantic" "-fsyntax-only")))
+
+(add-to-list 'flymake-allowed-file-name-masks
+	     '(".+\\c$"
+	       flymake-c-init
+	       flymake-simple-cleanup
+	       flymake-get-real-file-name))
 
 ;;;;;;;; Coding-Style Setting
 (add-hook 'c-mode-hook
@@ -77,8 +85,7 @@
 	  '(lambda ()
 
 	     ;; Enable Auto Complete
-	     (when (require* 'auto-complete)
-	       (ac-c-mode-setup))
+	     (ac-c-mode-setup)
 
 	     ;; Enable c-eldoc
 	     (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")

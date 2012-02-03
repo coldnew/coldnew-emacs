@@ -8,42 +8,51 @@
 (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 
 ;;;;;;;; Auto Complete Settings
-(when (featurep 'auto-complete)
-  (defun ac-emacs-lisp-mode-setup ()
-    "auto-complete settings for emacs-lisp-mode"
-    ;; (make-variable-buffer-local 'ac-sources)
-    (setq ac-sources
-	  '(ac-source-dictionary
-	    ac-source-symbols
-	    ac-source-variables
-	    ac-source-functions
-	    ac-source-features
-	    ac-source-company-elisp
-	    ac-source-abbrev
-	    ac-source-semantic
-	    ac-source-filename
-	    ac-source-files-in-current-dir
-	    ac-source-words-in-same-mode-buffers
-	    ))))
+(defun ac-emacs-lisp-mode-setup ()
+  "auto-complete settings for emacs-lisp-mode"
+  ;; (make-variable-buffer-local 'ac-sources)
+  (setq ac-sources
+	'(ac-source-dictionary
+	  ac-source-symbols
+	  ac-source-variables
+	  ac-source-functions
+	  ac-source-features
+	  ;;        ac-source-company-elisp
+	  ac-source-abbrev
+	  ac-source-semantic
+	  ac-source-filename
+	  ac-source-files-in-current-dir
+	  ac-source-words-in-same-mode-buffers
+	  )))
 
-;;;;;;;; Anything Setting
-(when (featurep 'anything)
-  (defun elisp-mode:anything-info ()
-    ""
-    (interactive)
-    (anything
-     :prompt "Info about: "
-     :candidate-number-limit 5
-     :sources
-     '( anything-c-source-emacs-functions
-	anything-c-source-emacs-variables
-	anything-c-source-info-elisp
-	anything-c-source-emacs-source-defun
-	anything-c-source-emacs-lisp-expectations
-	anything-c-source-emacs-lisp-toplevels
-	anything-c-source-emacs-functions-with-abbrevs
-	anything-c-source-info-emacs)))
-  )
+;;;;;;;; Flymake
+;; (defun flymake-elisp-init ()
+;;   (flymake-generic-init "elisplint"))
+
+;; (add-to-list 'flymake-allowed-file-name-masks
+;;	     '(".+\\el$"
+;;	       flymake-elisp-init
+;;	       flymake-simple-cleanup
+;;	       flymake-get-real-file-name))
+
+;; ;;;;;;;; Anything Setting
+;; (when (featurep 'anything)
+;;   (defun elisp-mode:anything-info ()
+;;     ""
+;;     (interactive)
+;;     (anything
+;;      :prompt "Info about: "
+;;      :candidate-number-limit 5
+;;      :sources
+;;      '( anything-c-source-emacs-functions
+;;      anything-c-source-emacs-variables
+;;      anything-c-source-info-elisp
+;;      anything-c-source-emacs-source-defun
+;;      anything-c-source-emacs-lisp-expectations
+;;      anything-c-source-emacs-lisp-toplevels
+;;      anything-c-source-emacs-functions-with-abbrevs
+;;      anything-c-source-info-emacs)))
+;;   )
 
 ;;;;;;;; Hooks
 (add-hook 'emacs-lisp-mode-hook

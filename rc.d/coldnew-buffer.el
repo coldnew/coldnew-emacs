@@ -227,8 +227,8 @@
 		  " "
 		  (git-status 8 8 :left)
 		  "    "
-		  (eproject 16 16 :left :elide)
-		  "      "
+		  ;; (eproject 16 16 :left :elide)
+		  ;; "      "
 		  filename-and-process))))
 
   ;; (require 'ibuffer-vc)

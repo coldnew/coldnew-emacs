@@ -21,6 +21,8 @@
 
 (setq ede-project-placeholder-cache-file (concat emacs-cache-dir "ede-project.cache"))
 
+(ede-enable-generic-projects)
+
 ;; Enable Semantic feactures
 (semantic-mode 1)
 

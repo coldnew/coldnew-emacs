@@ -10,10 +10,10 @@
 (require 'coldnew-anything)
 (require 'coldnew-complete)
 (require 'coldnew-snippets)
-(require 'coldnew-build)
 (require 'coldnew-evil)
 (require 'coldnew-cedet)
 (require 'coldnew-project)
+(require 'coldnew-build)
 
 
 ;;;;;;;; Settings
@@ -40,6 +40,9 @@
 ;;;;;;;; Programming Mode
 (defun programming-mode ()
   "Programming mode is use for all programming languages."
+
+  ;; Enable flymake
+  (flymake-mode t)
 
   ;; Enable line-number
   (linum-mode)
@@ -215,6 +218,12 @@
 	(error "[AceJump] Non-printable char")))
   )
 
+;;;;;;;; ASCII code display.
+;; This package provides a way to display ASCII code on a window, that is,
+;; display in another window an ASCII table highlighting the current character
+;; code.
+;;
+(require 'ascii)
 
 
 ;;;;;;;; Functions
@@ -383,8 +392,6 @@
 ;; (defvar tags-completion-table-file \\\"~/.emacs.d/tags-completion-table\\\")
 ;; (load-tags-cache tags-completion-table-file)
 
-;;;;;;;; a
-(require 'ascii)
 
 
 

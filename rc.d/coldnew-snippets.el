@@ -23,7 +23,7 @@
   (add-to-list 'auto-mode-alist '("\\.yasnippet\\'" . snippet-mode))
   (add-to-list 'auto-mode-alist '("\\.yas\\'" . snippet-mode))
 
-  ;; Auto add HEADER in new file
+  ;; ;; Auto add HEADER in new file
   (add-hook 'find-file-hook
 	    '(lambda ()
 	       (when (and (buffer-file-name)
@@ -33,7 +33,8 @@
 		   (insert header-snippet)
 		   ;; if can't expand snippet, delete insert string
 		   (if (not (yas/expand))
-		       (backward-delete-char (1+ (length header-snippet)))))))))
+		       (backward-delete-char (1+ (length header-snippet))))))))
+  )
 
 
 ;;;; Functions

@@ -16,8 +16,8 @@
 ;;;;;;;; Normal Map
 (when (featurep 'evil)
   (define-key evil-normal-state-map (kbd "C-x C-b") 'ibuffer)
-  (when (featurep 'eproject)
-    (define-key evil-normal-state-map (kbd "C-c C-b") 'eproject-ibuffer))
+  ;; (when (featurep 'eproject)
+  ;;   (define-key evil-normal-state-map (kbd "C-c C-b") 'eproject-ibuffer))
   (define-key evil-normal-state-map (kbd "C-x f") 'anything-find-files)
   (define-key evil-normal-state-map (kbd "C-x C-f") 'lusty-file-explorer)
   (define-key evil-normal-state-map (kbd "M-x") 'anything-M-x)

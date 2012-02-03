@@ -10,16 +10,16 @@
 (require 'coldnew-buffer)
 
 
-(require 'eproject)
-(require 'eproject-extras)
-(require 'eproject-anything)
-(require 'eproject-tags)
+;; (require 'eproject)
+;; (require 'eproject-extras)
+;; (require 'eproject-anything)
+;; (require 'eproject-tags)
 
 
-(define-project-type emacs-config (generic)
-  (look-for "init.el")
-  :project-name "emacs-config"
-  :relevant-files ("\\.el$" "\\.org$" "\\.gpg$"))
+;; (define-project-type emacs-config (generic)
+;;   (look-for "init.el")
+;;   :project-name "emacs-config"
+;;   :relevant-files ("\\.el$" "\\.org$" "\\.gpg$"))
 
 ;; (add-hook 'emacs-config-project-file-visit-hook '(lambda ()
 ;;						   (ignore-errors

@@ -15,7 +15,7 @@
   "directory to place emacs theme.")
 (defvar emacs-etc-dir    (concat emacs-dir "etc/")
   "directory to place other stuff.")
-(defvar emacs-usr-dir    (concat emacs-dir "usr/")
+(defvar emacs-bin-dir    (concat emacs-dir "bin/")
   "directory to place binary staff.")
 (defvar emacs-var-dir    (concat emacs-dir "var/")
   "directory to place cache and backup files.")
@@ -32,8 +32,6 @@
   "directory to back up files.")
 (defvar emacs-log-dir (concat emacs-var-dir "log/")
   "log file directory.")
-(defvar emacs-bin-dir (concat emacs-usr-dir "bin/")
-  "directory to place binary staff.")
 
 
 (defvar emacs-default-shell "/bin/bash"
@@ -108,8 +106,8 @@
 
 ;; TODO: need to test this function
 (defvar new-file? (and (buffer-file-name)
-		       (not (file-exists-p (buffer-file-name)))
-		       (= (point-max) 1)))
+                       (not (file-exists-p (buffer-file-name)))
+                       (= (point-max) 1)))
 
 (provide 'coldnew-variables)
 ;; coldnew-variables.el ends here.
