@@ -21,3 +21,4 @@ var/
 *.pl
 .authinfo.gpg
 .#*
+swank/

@@ -52,7 +52,7 @@
 	     (programming-mode)
 
 	     ;; Use paredit in elisp
-	     (use-paredit-mode)
+	     ;;	     (use-paredit-mode)
 
 	     ))
 

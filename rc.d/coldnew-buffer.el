@@ -159,7 +159,8 @@
 	   ("Common Lisp"   (mode . slime-mode))
 	   ("Scheme"  (or (mode . scheme-mode)
 			  (mode . gambit-mode)))
-	   ("Calculator" (mode . calculator-mode))
+	   ("Clojure" (or (mode . clojure-mode)
+			  (name . "\\*slime-repl clojure\\*")))
 	   ("Emacs recipes" (name . "*.rcp$"))
 	   ("Emacs" (or (mode . emacs-lisp-mode)
 			(mode . lisp-interaction-mode)
@@ -176,6 +177,8 @@
 	 "^\\*Ido Completions\\*$"
 	 "^\\*SPEEDBAR\\*$"
 	 "^\\*nav\\*$"
+	 "^\\*swank\\*$"
+	 "^\\*slime-events\\*$"
 	 "^\\*RE-Builder\\*$"
 	 "^\\*anything\\*$"
 	 "^\\*anything complete\\*$"

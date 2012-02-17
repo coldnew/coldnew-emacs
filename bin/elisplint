@@ -1,0 +1,13 @@
+#!/usr/bin/emacs --script
+;;:;: '-*-emacs-lisp-*-'
+;;;:; exec emacs -Q --batch --load "$0" "$@"
+(dolist (file command-line-args-left)
+  (with-temp-buffer
+    (insert-file-contents file)
+    (condition-case data
+        (scan-sexps (point-min) (point-max))
+      (scan-error (goto-char (nth 2 data))
+                  (princ (format "%s:%s: error: Unmatched bracket or quote\n"
+                                 file
+                                 (line-number-at-pos)))))))
+

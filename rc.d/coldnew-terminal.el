@@ -28,37 +28,36 @@
   ;;  (shell-pop-set-internal-mode "multi-term")
   (shell-pop-set-internal-mode-shell emacs-default-shell)
   (shell-pop-set-window-height emacs-popup-shell-window-height)
-  (shell-pop-set-window-position emacs-popup-shell-window-position)
-  )
+  (shell-pop-set-window-position emacs-popup-shell-window-position))
 
 ;;;;;;;; Multi-term
 ;;
 (when (require* 'multi-term)
-  (setq multi-term-program emacs-default-shell)
-  )
+  (setq multi-term-program emacs-default-shell))
 
 ;;;;;;;; Term
 ;;
 (when (require* 'term)
+  ;; Remove term-mode default color
   (setq-default term-default-bg-color nil)
   (setq-default term-default-fg-color nil)
 
   ;; (setq term-unbind-key-list '("C-c" "C-h"))
   ;; (add-to-list 'term-bind-key-alist '("C-c" . term-interrupt-subjob))
   ;; (setq term-bind-key-alist (delete '("C-c C-c" . term-interrupt-subjob)
-  ;;				    term-bind-key-alist))
+  ;;                    term-bind-key-alist))
 
   ;;;; Keybindings
   ;; (add-hook 'term-mode-hook
-  ;;	    '(lambda ()
+  ;;        '(lambda ()
   ;; Add new key-map
   (define-key term-raw-map (kbd "<f4>") 'shell-pop)
   (define-key term-raw-map (kbd "M-x") 'anything-M-x)
   (define-key term-raw-map (kbd "C-g") 'term-interrupt-subjob)
   (define-key term-raw-map (kbd "C-n") 'term-send-down)
   (define-key term-raw-map (kbd "C-p") 'term-send-up)
-  ;;	       (define-key term-raw-map (kbd "<enter>") 'term-send-input)
-  ;;	       (define-key term-raw-map (kbd "<return>") 'term-send-raw)
+  (define-key term-raw-map (kbd "<enter>") 'term-send-input)
+  ;;           (define-key term-raw-map (kbd "<return>") 'term-send-raw)
   ;; ))
   )
 ;;;;;;;; Comint mode

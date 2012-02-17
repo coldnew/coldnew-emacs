@@ -3,6 +3,8 @@
 
 ;;;;;;;; Packages Import
 (require 'coldnew-editor)
+(require 'coldnew-lang-c)
+
 
 ;;;;;;;; c++-mode extensions
 (add-to-list 'auto-mode-alist '("\\.hpp$" . c++-mode))

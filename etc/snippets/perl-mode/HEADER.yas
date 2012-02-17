@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# contributor : coldnew <coldnew.tw@gmil.com>
+# name : Header file
+# key: HEADER
+# --
+#!/usr/bin/env perl
+
+use strict;
+use warnings;

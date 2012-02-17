@@ -1,0 +1,7 @@
+
+
+(:name auto-complete-clang
+       :description "Auto Completion source for clang for GNU Emacs"
+       :type git
+       :url "https://github.com/brianjcj/auto-complete-clang.git"
+       :features auto-complete-clang)

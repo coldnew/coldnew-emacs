@@ -5,18 +5,12 @@
 ;;
 (eval-when-compile (require 'cl))
 
-;;;;;;;; Packages Import
-;; (require 'coldnew-macro)
-;; (require 'coldnew-functions)
-;; (require 'coldnew-commands)
-;; (require 'coldnew-variables)
-
 
 ;; (defvar hexcolor-keywords
 ;;   '(("#[ABCDEFabcdef[:digit:]]\\{6\\}"
 ;;      (0 (put-text-property (match-beginning 0)
-;;			   (match-end 0)
-;;			   ’face (list :background
+;;                         (match-end 0)
+;;                         ’face (list :background
 ;;					(match-string-no-properties 0)))))))
 ;; (defun hexcolor-add-to-font-lock ()
 ;;   (interactive)
@@ -37,23 +31,23 @@
 ;;      (lexical-let ,(->> args
 ;;			(remove-if (partial equal '&rest))
 ;;			(mapcar (lambda (arg) (list arg arg))))
-;;		  ,@body)))
+;;                ,@body)))
 
 ;;					; load given package if directory exists
 ;; (defmacro load-if-dir (dir-name &rest body)
 ;;   (let ((path-to-load (make-symbol "path-to-load")))
 ;;     `(let ((,path-to-load ,dir-name))
 ;;        (when (file-directory-p ,path-to-load)
-;;	 (add-to-list 'load-path ,path-to-load)
-;;	 ,@body))))
+;;       (add-to-list 'load-path ,path-to-load)
+;;       ,@body))))
 
 ;;					; load given file if exists
 ;; (defmacro load-if-file (file-name &rest body)
 ;;   (let ((file-to-load (make-symbol "file-to-load")))
 ;;     `(let ((,file-to-load ,file-name))
 ;;        (when (file-readable-p ,file-to-load)
-;;	 (load ,file-to-load)
-;;	 ,@body))))
+;;       (load ,file-to-load)
+;;       ,@body))))
 
 ;;					; load given file if exists, and add dir to path
 ;; (defmacro load-if-dir-and-file (dir-name file-name &rest body)
@@ -92,7 +86,7 @@
 
 ;; (defun seq-difference (lseq rseq)
 ;;   (remove-if (lambda (element) (find element rseq :test 'equal))
-;;	     lseq))
+;;           lseq))
 
 ;; ;; Strings
 
@@ -122,7 +116,7 @@
 ;; (defun alist-remove (alist key)
 ;;   "Doesn't change the original alist, returns a new one instead."
 ;;   (remove-if (lambda (x) (equal key (car x)))
-;;	     alist))
+;;           alist))
 
 ;; (defun alist-set (alist key value)
 ;;   "Doesn't change the original alist, returns a new one instead."
@@ -136,17 +130,17 @@
 ;;     (save-window-excursion
 ;;      (save-excursion
 ;;       (let* ((alist (append auto-mode-alist nil))  ;; use whatever auto-mode-alist has
-;;	     (ff-ignore-include t)                 ;; operate on buffer name only
-;;	     (src (ff-other-file-name))            ;; find the src file corresponding to .h
-;;	     re mode)
+;;           (ff-ignore-include t)                 ;; operate on buffer name only
+;;           (src (ff-other-file-name))            ;; find the src file corresponding to .h
+;;           re mode)
 ;;	;; go through the association list
 ;;	;; and find the mode associated with the source file
 ;;	;; that is the mode we want to use for the .h file
 ;;	(while (and alist
-;;		    (setq mode (cdar alist))
-;;		    (setq re (caar alist))
-;;		    (not (string-match re src)))
-;;	  (setq alist (cdr alist)))
+;;                  (setq mode (cdar alist))
+;;                  (setq re (caar alist))
+;;                  (not (string-match re src)))
+;;        (setq alist (cdr alist)))
 ;;	(when mode (funcall mode)))))))
 
 
@@ -157,8 +151,8 @@
 ;; ;;   ;; tagfile doesn't exist?
 ;; ;;   (if (not (= 0 (call-process "global" nil nil nil " -p")))
 ;; ;;       (let ((olddir default-directory)
-;; ;;	    (topdir (read-directory-name
-;; ;;		     "gtags: top of source tree:" default-directory)))
+;; ;;       (topdir (read-directory-name
+;; ;;                "gtags: top of source tree:" default-directory)))
 ;; ;;	(cd topdir)
 ;; ;;	(shell-command "gtags && echo 'created tagfile'")
 ;; ;;	(cd olddir)) ; restore
@@ -194,10 +188,10 @@
 ;;   (interactive)
 ;;   (beginning-of-line)
 ;;   (let* ((file (buffer-substring (point)
-;;				 (save-excursion (end-of-line) (point))))
-;;	 (file-dir (file-name-directory file))
-;;	 (file-true-dir (file-truename file-dir))
-;;	 (file-name (file-name-nondirectory file)))
+;;                               (save-excursion (end-of-line) (point))))
+;;       (file-dir (file-name-directory file))
+;;       (file-true-dir (file-truename file-dir))
+;;       (file-name (file-name-nondirectory file)))
 ;;     (delete-region (point) (save-excursion (end-of-line) (point)))
 ;;     (insert (concat file-true-dir file-name))))
 
@@ -215,9 +209,9 @@
 ;;   (interactive)
 ;;   (let (myword myurl)
 ;;     (setq myword
-;;	  (if (and transient-mark-mode mark-active)
-;;	      (buffer-substring-no-properties (region-beginning) (region-end))
-;;	      (thing-at-point 'symbol)))
+;;        (if (and transient-mark-mode mark-active)
+;;            (buffer-substring-no-properties (region-beginning) (region-end))
+;;            (thing-at-point 'symbol)))
 
 ;;     (setq myword (replace-regexp-in-string " " "_" myword))
 ;;     (setq myurl (concat "http://en.wikipedia.org/wiki/" myword))
@@ -271,26 +265,26 @@
 ;;      ;; Make a hash table with key=line
 ;;      ;;     and value=the smallest line number that contains a line.
 ;;      (loop for i from numlines downto 1 do
-;;	   (let ((line nil))
-;;	     (goto-line i)
-;;	     (setf line (get-current-line))
-;;	     ;; Want to store the smallest line number for
-;;	     ;;     a particular line.
-;;	     (setf (gethash line lines_hash) i)))
+;;         (let ((line nil))
+;;           (goto-line i)
+;;           (setf line (get-current-line))
+;;           ;; Want to store the smallest line number for
+;;           ;;     a particular line.
+;;           (setf (gethash line lines_hash) i)))
 ;;      ;; If a line has a line number not equal to the smallest line, kill it.
 ;;      (loop for i from numlines downto 1 do
-;;	   (let ((line nil))
-;;	     (goto-line i)
-;;	     (setf line (get-current-line))
-;;	     (beginning-of-line)
-;;	     (if (not (equal line ""))
-;;		 (if (not (=
-;;			   (let ((min-line (gethash line lines_hash)))
-;;			     (if (null min-line)
-;;				 -1
-;;				 min-line))
-;;			   i))
-;;		     (kill-line 1))))))))
+;;         (let ((line nil))
+;;           (goto-line i)
+;;           (setf line (get-current-line))
+;;           (beginning-of-line)
+;;           (if (not (equal line ""))
+;;               (if (not (=
+;;                         (let ((min-line (gethash line lines_hash)))
+;;                           (if (null min-line)
+;;                               -1
+;;                               min-line))
+;;                         i))
+;;                   (kill-line 1))))))))
 
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -300,7 +294,7 @@
 ;; ;;;;;;;; 將指定目錄裡的東西全部加入清單
 ;; ;; (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
 ;; ;;     (let* ((my-lisp-dir "~/.emacs.d/")
-;; ;;	   (default-directory my-lisp-dir))
+;; ;;      (default-directory my-lisp-dir))
 ;; ;;       (setq load-path (cons my-lisp-dir load-path))
 ;; ;;       (normal-top-level-add-subdirs-to-load-path)))
 ;; ;;;
@@ -327,36 +321,36 @@
 ;; ;;   "When save, recompile it"
 ;; ;;   (make-local-variable 'after-save-hook)
 ;; ;;   (add-hook 'after-save-hook
-;; ;;	    (lambda ()
-;; ;;	      (if (buffer-file-name)
-;; ;;		  (byte-compile-file buffer-file-name)))))
+;; ;;       (lambda ()
+;; ;;         (if (buffer-file-name)
+;; ;;             (byte-compile-file buffer-file-name)))))
 ;; ;;;;
 ;; ;; (defun require* (feature &optional force)
 ;; ;;   (when (or force (not (featurep feature)))
 ;; ;;     (setq feature (symbol-name feature))
 ;; ;;     (let ((path load-path)
-;; ;;	  (found-filename nil)
-;; ;;	  head el-attribs elc-attribs)
+;; ;;     (found-filename nil)
+;; ;;     head el-attribs elc-attribs)
 ;; ;;       (while (and (not found-filename) path)
 ;; ;;	(setq head (pop path))
 ;; ;;	(let ((el-filename (format "%s/%s.el" head feature))
-;; ;;	      (elc-filename (format "%s/%s.elc" head feature)))
-;; ;;	  ;; if .el and .elc both exist, pick the newest
-;; ;;	  ;; otherwise pick the one that exists if any
-;; ;;	  (cond ((and (file-exists-p el-filename)
-;; ;;		      (file-exists-p elc-filename))
-;; ;;		 (if (file-newer-than-file-p el-filename elc-filename)
-;; ;;		     (setq found-filename el-filename)
-;; ;;		   (setq found-filename elc-filename)))
+;; ;;         (elc-filename (format "%s/%s.elc" head feature)))
+;; ;;     ;; if .el and .elc both exist, pick the newest
+;; ;;     ;; otherwise pick the one that exists if any
+;; ;;     (cond ((and (file-exists-p el-filename)
+;; ;;                 (file-exists-p elc-filename))
+;; ;;            (if (file-newer-than-file-p el-filename elc-filename)
+;; ;;                (setq found-filename el-filename)
+;; ;;              (setq found-filename elc-filename)))
 ;; ;;		((file-exists-p el-filename)
-;; ;;		 (setq found-filename el-filename))
+;; ;;            (setq found-filename el-filename))
 ;; ;;		((file-exists-p elc-filename)
-;; ;;		 (setq found-filename elc-filename)))
-;; ;;	  ;; load file if found
-;; ;;	  (when found-filename
-;; ;;	    (message (format "Found: [%s]" found-filename))
-;; ;;	    (let ((load-suffixes ()))
-;; ;;	      (load found-filename)))))
+;; ;;            (setq found-filename elc-filename)))
+;; ;;     ;; load file if found
+;; ;;     (when found-filename
+;; ;;       (message (format "Found: [%s]" found-filename))
+;; ;;       (let ((load-suffixes ()))
+;; ;;         (load found-filename)))))
 ;; ;;       (unless found-filename (error "Unable to find %s" feature)))))
 ;; ;;;
 ;; ;; (defcmd show-mode-line ()
@@ -371,41 +365,41 @@
 ;; ;;   (backward-kill-sexp)
 ;; ;;   (condition-case nil
 ;; ;;       (prin1 (eval (read (current-kill 0)))
-;; ;;	     (current-buffer))
+;; ;;        (current-buffer))
 ;; ;;     (error (message "Invalid expression")
-;; ;;	   (insert (current-kill 0)))))
+;; ;;      (insert (current-kill 0)))))
 
 ;; ;; BUG: when use sort-lines, this will prompt
 ;; ;; (defadvice kill-buffer (around my-kill-buffer-check activate)
 ;; ;;   "Prompt when a buffer is about to be killed."
 ;; ;;   (let* ((buffer-file-name (buffer-file-name))
-;; ;;	 backup-file)
+;; ;;    backup-file)
 ;; ;;     ;; see 'backup-buffer
 ;; ;;     (if (and (buffer-modified-p)
-;; ;;	     buffer-file-name
-;; ;;	     (file-exists-p buffer-file-name)
-;; ;;	     (setq backup-file (car (find-backup-file-name buffer-file-name))))
+;; ;;        buffer-file-name
+;; ;;        (file-exists-p buffer-file-name)
+;; ;;        (setq backup-file (car (find-backup-file-name buffer-file-name))))
 ;; ;;	(let ((answer (completing-read (format "Buffer modified %s, (d)iff, (s)ave, (k)ill? " (buffer-name))
-;; ;;				       '("d" "s" "k") nil t)))
-;; ;;	  (cond ((equal answer "d")
-;; ;;		 (set-buffer-modified-p nil)
-;; ;;		 (let ((orig-buffer (current-buffer))
-;; ;;		       (file-to-diff (if (file-newer-than-file-p buffer-file-name backup-file)
-;; ;;					 buffer-file-name
-;; ;;				       backup-file)))
-;; ;;		   (set-buffer (get-buffer-create
+;; ;;                                  '("d" "s" "k") nil t)))
+;; ;;     (cond ((equal answer "d")
+;; ;;            (set-buffer-modified-p nil)
+;; ;;            (let ((orig-buffer (current-buffer))
+;; ;;                  (file-to-diff (if (file-newer-than-file-p buffer-file-name backup-file)
+;; ;;                                    buffer-file-name
+;; ;;                                  backup-file)))
+;; ;;              (set-buffer (get-buffer-create
 ;; ;;				(format "%s last-revision" (file-name-nondirectory file-to-diff))))
-;; ;;		   (buffer-disable-undo)
-;; ;;		   (insert-file-contents file-to-diff nil nil nil t)
-;; ;;		   (set-buffer-modified-p nil)
-;; ;;		   (setq buffer-read-only t)
-;; ;;		   (ediff-buffers (current-buffer) orig-buffer)))
+;; ;;              (buffer-disable-undo)
+;; ;;              (insert-file-contents file-to-diff nil nil nil t)
+;; ;;              (set-buffer-modified-p nil)
+;; ;;              (setq buffer-read-only t)
+;; ;;              (ediff-buffers (current-buffer) orig-buffer)))
 ;; ;;		((equal answer "k")
-;; ;;		 (set-buffer-modified-p nil)
-;; ;;		 ad-do-it)
+;; ;;            (set-buffer-modified-p nil)
+;; ;;            ad-do-it)
 ;; ;;		(t
-;; ;;		 (save-buffer)
-;; ;;		 ad-do-it)))
+;; ;;            (save-buffer)
+;; ;;            ad-do-it)))
 ;; ;;       ad-do-it)))
 
 
@@ -462,17 +456,64 @@
 ;; ;; (defun emacs-resotre-global-keys ()
 ;; ;;   "Restore all keyboard shortcuts that were overitten by `emacs-unbind-global-key-list'."
 ;; ;;   (mapc (lambda (x)
-;; ;;	  (define-key
-;; ;;	    (car x)
-;; ;;	    (edmacro-parse-keys (car (cdr x)))
-;; ;;	    (car (cdr (cdr x))))
-;; ;;	  )
+;; ;;     (define-key
+;; ;;       (car x)
+;; ;;       (edmacro-parse-keys (car (cdr x)))
+;; ;;       (car (cdr (cdr x))))
+;; ;;     )
 ;; ;;	emacs-unbind-global-keys-list)
 ;; ;;   ;; clear the list
 ;; ;;   (setq emacs-unbind-global-keys-list '())
 ;; ;;   )
 
 ;; ;; (emacs-unset-global-key (current-global-map) "C-c")
+
+;; ;; semantic based find-definition.
+;; ;; etags must be loaded so we can use related tag rings for history.
+;; (require 'etags)
+;; (defun c5-find-definition (arg)
+;;     "Jump to the definition of the symbol, type or function at point.
+;; With prefix arg, find in other window."
+;;     (interactive "P")
+;;     (let* ((tag (or (semantic-idle-summary-current-symbol-info-context)
+;;                     (semantic-idle-summary-current-symbol-info-brutish)
+;;                     (error "No known tag at point")))
+;;            (pos (or (semantic-tag-start tag)
+;;                     (error "Tag definition not found")))
+;;            (file (semantic-tag-file-name tag)))
+;;       (ring-insert find-tag-marker-ring (point-marker))
+;;       (if file
+;;           (if arg (find-file-other-window file) (find-file file))
+;;         (if arg (switch-to-buffer-other-window (current-buffer))))
+;;       (goto-char pos)
+;;       (ring-insert tags-location-ring (point-marker))))
+
+
+;; (defun c5-elisp-find-definition (name)
+;;   "Jump to the definition of the function (or variable) at point."
+;;   (interactive (list (thing-at-point 'symbol)))
+;;   (cond (name
+;;          (let ((symbol (intern-soft name))
+;;                (search (lambda (fun sym)
+;;                          (let* ((r (save-excursion (funcall fun sym)))
+;;                                 (buffer (car r))
+;;                                 (point (cdr r)))
+;;                            (cond ((not point)
+;;                                   (error "Found no definition for %s in %s"
+;;                                          name buffer))
+;;                                  (t
+;;                                   (switch-to-buffer buffer)
+;;                                   (goto-char point)
+;;                                   (recenter 1)))))))
+;;            (cond ((fboundp symbol)
+;;                   (ring-insert find-tag-marker-ring (point-marker))
+;;                   (funcall search 'find-function-noselect symbol))
+;;                  ((boundp symbol)
+;;                   (ring-insert find-tag-marker-ring (point-marker))
+;;                   (funcall search 'find-variable-noselect symbol))
+;;                  (t
+;;                   (message "Symbol not bound: %S" symbol)))))
+;;   (t (message "No symbol at point"))))
 
 
 (provide 'coldnew-deprecated)

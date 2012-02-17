@@ -35,8 +35,6 @@
 ;; Use lisp-interaction-mode as default major mode
 (setq-default major-mode 'lisp-interaction-mode )
 
-
-
 ;;;;;;;; Programming Mode
 (defun programming-mode ()
   "Programming mode is use for all programming languages."
@@ -74,8 +72,14 @@
   ;; Highlight escape char in string
   (highlight-escape-char)
 
-  ;; Use auto-pair
-  (use-autopair-mode)
+  ;; ;; Use auto-pair
+  ;; (use-autopair-mode)
+
+  ;; Use electric-pair-mode
+  (electric-pair-mode)
+
+  ;; Use electric-indent-mode
+  (electric-indent-mode)
 
   ;; Show matching parentheses all the time
   (show-paren-mode t)
@@ -83,7 +87,16 @@
   ;; Enable global-compilation setting
   (global-compilation-hook)
 
+  ;; Enable highlight-symbol
+  (highlight-symbol-mode)
+
   )
+
+;;;;;;;; Highlight-symbol
+;; automatic and manual symbol highlighting;
+;;
+(when (require* 'highlight-symbol))
+
 
 
 ;;;;;;;; cua
@@ -139,20 +152,19 @@
 ;;
 (when (require* 'rainbow-mode)
   ;; ;; Auto enable rainbow-mode if the file is emacs's color-theme and any css file.
-  ;; (add-hook 'find-file-hook
-  ;;	    '(lambda ()
-  ;;	       ;; On following situation will enable rainbow-mode automatically
-  ;;	       ;; if rainbow-mode does not start yet.
-  ;;	       (if (and (not (rainbow-mode))
-  ;;			(or
-  ;;			 ;; Emacs's color-theme file
-  ;;			 (string-match "color-theme-\\w*\\.el" (buffer-file-name))
-  ;;			 ;; CSS file
-  ;;			 (equal major-mode 'css-mode)))
-  ;;		   ;; Enable rainbow-mode
-  ;;		   (rainbow-mode))
-  ;;	       ))
-  )
+  (add-hook 'find-file-hook
+	    '(lambda ()
+	       ;; On following situation will enable rainbow-mode automatically
+	       ;; if rainbow-mode does not start yet.
+	       (if (and (not (rainbow-mode))
+			(or
+			 ;; Emacs's color-theme file
+			 (string-match "\\w*-theme.el" (buffer-file-name))
+			 ;; CSS file
+			 (equal major-mode 'css-mode)))
+		   ;; Enable rainbow-mode
+		   (rainbow-mode))
+	       )))
 
 ;;;;;;;; iedit-mode
 ;; This package provides a more intuitive way of replace-string operation
@@ -218,6 +230,10 @@
 	(error "[AceJump] Non-printable char")))
   )
 
+;;;;;;;; Hungry-delete
+;;
+(require* 'hungry-delete)
+
 ;;;;;;;; ASCII code display.
 ;; This package provides a way to display ASCII code on a window, that is,
 ;; display in another window an ASCII table highlighting the current character
@@ -227,6 +243,7 @@
 
 
 ;;;;;;;; Functions
+;; FIXME: remove this unuse function
 (defun use-hungry-delete ()
   "Use hungry delete mode"
   (when (require* 'hungry-delete)
@@ -301,77 +318,116 @@
   )
 
 
-(defun use-autopair-mode ()
-  "Enable autopair for all mode."
-  (when (require* 'autopair)
-    ;; Use auto-pair+ for more functions
-    (require* 'auto-pair+)
-    ;; Enable autopair-mode
-    (autopair-mode 1)
-    ;; Make autopair work with paredit-mode
-    (when (require* 'paredit)
-      (defadvice paredit-mode (around disable-autopairs-around (arg) activate)
-	"Disable autopairs mode if paredit-mode is turned on"
-	ad-do-it
-	(if (null ad-return-value)
-	    (autopair-mode 1)
-	    (autopair-mode 0)
-	    ))
-      )
-    ))
+;; (defun use-autopair-mode ()
+;;   "Enable autopair for all mode."
+;;   (when (require* 'autopair)
+;;     ;; Use auto-pair+ for more functions
+;;     (require* 'auto-pair+)
+;;     ;; Enable autopair-mode
+;;     (autopair-mode 1)
+;;     ;; Make autopair work with paredit-mode
+;;     (when (require* 'paredit)
+;;       (defadvice paredit-mode (around disable-autopairs-around (arg) activate)
+;;         "Disable autopairs mode if paredit-mode is turned on"
+;;         ad-do-it
+;;         (if (null ad-return-value)
+;;             (autopair-mode 1)
+;;             (autopair-mode 0)
+;;             ))
+;;       )
+;;     ))
 
-(defun use-paredit-mode ()
-  "Enable paredit-mode and rebind the keybinding to vim-mode when use it."
-  (when (require* 'paredit)
-    ;; Make eldoc work with Paredit
-    (when (require* 'eldoc)
-      (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
-    ;; Enable Paredit in vim-mode
-    ;; Normal Map
-    (define-key evil-normal-state-local-map (kbd "C-9") 'paredit-forward)
-    (define-key evil-normal-state-local-map (kbd "C-0") 'paredit-backward)
-    (define-key evil-normal-state-local-map (kbd "C-(") 'paredit-forward-slurp-sexp)
-    (define-key evil-normal-state-local-map (kbd "M-(") 'paredit-backward-slurp-sexp)
-    (define-key evil-normal-state-local-map (kbd "C-)") 'paredit-forward-barf-sexp)
-    (define-key evil-normal-state-local-map (kbd "M-)") 'paredit-backward-barf-sexp)
-    ;; Insert Map
-    (define-key evil-insert-state-local-map (kbd "(")  'paredit-open-round)
-    (define-key evil-insert-state-local-map (kbd ")")  'paredit-close-round)
-    (define-key evil-insert-state-local-map (kbd "[")  'paredit-open-square)
-    (define-key evil-insert-state-local-map (kbd "]")  'paredit-close-square)
-    (define-key evil-insert-state-local-map (kbd "{")  'paredit-open-curly)
-    (define-key evil-insert-state-local-map (kbd "}")  'paredit-close-curly)
-    (define-key evil-insert-state-local-map (kbd "\"") 'paredit-doublequote)
-    (define-key evil-insert-state-local-map (kbd "M-(") 'paredit-wrap-sexp)
-    (define-key evil-insert-state-local-map (kbd "C-(") 'paredit-splice-sexp)
-    (define-key evil-insert-state-local-map (kbd "M-)") 'paredit-close-round-and-newline)
-    (define-key evil-insert-state-local-map (kbd "C-)") 'paredit-split-sexp)
-    (define-key evil-insert-state-local-map (kbd "C-j") 'paredit-join-sexps)
-    (define-key evil-insert-state-local-map (kbd "M-\"") 'paredit-meta-doublequote)
-    (define-key evil-insert-state-local-map (kbd "<delete>") 'paredit-forward-delete)
-    (define-key evil-insert-state-local-map (kbd "C-d") 'paredit-forward-delete)
-    (define-key evil-insert-state-local-map (kbd "<backspace>") 'paredit-backward-delete)
-    (define-key evil-insert-state-local-map (kbd "C-l") 'paredit-backward-delete)
-    ))
+
+(when (require* 'paredit)
+  ;; Make eldoc work with Paredit
+  (when (require* 'eldoc)
+    (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
+  ;; Enable Paredit in vim-mode
+  (define-minor-mode use-paredit-mode
+    "Enable paredit mode."
+    :keymap (make-sparse-keymap))
+  ;; Normal Map
+  (evil-define-key 'normal use-paredit-mode-map (kbd "C-9") 'paredit-forward)
+  (evil-define-key 'normal use-paredit-mode-map (kbd "C-0") 'paredit-backward)
+  (evil-define-key 'normal use-paredit-mode-map (kbd "C-(") 'paredit-forward-slurp-sexp)
+  (evil-define-key 'normal use-paredit-mode-map (kbd "M-(") 'paredit-backward-slurp-sexp)
+  (evil-define-key 'normal use-paredit-mode-map (kbd "C-)") 'paredit-forward-barf-sexp)
+  (evil-define-key 'normal use-paredit-mode-map (kbd "M-)") 'paredit-backward-barf-sexp)
+  ;; Insert Map
+  (evil-define-key 'insert use-paredit-mode-map (kbd "(")  'paredit-open-round)
+  (evil-define-key 'insert use-paredit-mode-map (kbd ")")  'paredit-close-round)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "[")  'paredit-open-square)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "]")  'paredit-close-square)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "{")  'paredit-open-curly)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "}")  'paredit-close-curly)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "\"") 'paredit-doublequote)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "M-(") 'paredit-wrap-sexp)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "C-(") 'paredit-splice-sexp)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "M-)") 'paredit-close-round-and-newline)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "C-)") 'paredit-split-sexp)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "C-j") 'paredit-join-sexps)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "M-\"") 'paredit-meta-doublequote)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "<delete>") 'paredit-forward-delete)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "C-d") 'paredit-forward-delete)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "<backspace>") 'paredit-backward-delete)
+  (evil-define-key 'insert use-paredit-mode-map (kbd "C-l") 'paredit-backward-delete)
+  )
+
+
+(defadvice paredit-backward-delete (around paredit-backward-delete activate)
+  "Intergrated paredit-backward-delete with hungry-delete."
+  ad-do-it
+  (when (featurep 'hungry-delete)
+    (if (eq (char-before) ?\ )
+	(hungry-delete-backward))))
+
+
+(defadvice paredit-forward-delete (around paredit-forward-delete activate)
+  "Intergrated paredit-forward-delete with hungry-delete."
+  ad-do-it
+  (when (featurep 'hungry-delete)
+    (if (eolp)
+	(hungry-delete-forward))))
+
+
+;; (defun use-paredit-mode ()
+;;   "Enable paredit-mode and rebind the keybinding to vim-mode when use it."
+;;   (when (require* 'paredit)
+;;     ;; Make eldoc work with Paredit
+;;     (when (require* 'eldoc)
+;;       (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
+;;     ;; Enable Paredit in vim-mode
+;;     ;; Normal Map
+;;     (define-key evil-normal-state-local-map (kbd "C-9") 'paredit-forward)
+;;     (define-key evil-normal-state-local-map (kbd "C-0") 'paredit-backward)
+;;     (define-key evil-normal-state-local-map (kbd "C-(") 'paredit-forward-slurp-sexp)
+;;     (define-key evil-normal-state-local-map (kbd "M-(") 'paredit-backward-slurp-sexp)
+;;     (define-key evil-normal-state-local-map (kbd "C-)") 'paredit-forward-barf-sexp)
+;;     (define-key evil-normal-state-local-map (kbd "M-)") 'paredit-backward-barf-sexp)
+;;     ;; Insert Map
+;;     (define-key evil-insert-state-local-map (kbd "(")  'paredit-open-round)
+;;     (define-key evil-insert-state-local-map (kbd ")")  'paredit-close-round)
+;;     (define-key evil-insert-state-local-map (kbd "[")  'paredit-open-square)
+;;     (define-key evil-insert-state-local-map (kbd "]")  'paredit-close-square)
+;;     (define-key evil-insert-state-local-map (kbd "{")  'paredit-open-curly)
+;;     (define-key evil-insert-state-local-map (kbd "}")  'paredit-close-curly)
+;;     (define-key evil-insert-state-local-map (kbd "\"") 'paredit-doublequote)
+;;     (define-key evil-insert-state-local-map (kbd "M-(") 'paredit-wrap-sexp)
+;;     (define-key evil-insert-state-local-map (kbd "C-(") 'paredit-splice-sexp)
+;;     (define-key evil-insert-state-local-map (kbd "M-)") 'paredit-close-round-and-newline)
+;;     (define-key evil-insert-state-local-map (kbd "C-)") 'paredit-split-sexp)
+;;     (define-key evil-insert-state-local-map (kbd "C-j") 'paredit-join-sexps)
+;;     (define-key evil-insert-state-local-map (kbd "M-\"") 'paredit-meta-doublequote)
+;;     (define-key evil-insert-state-local-map (kbd "<delete>") 'paredit-forward-delete)
+;;     (define-key evil-insert-state-local-map (kbd "C-d") 'paredit-forward-delete)
+;;     (define-key evil-insert-state-local-map (kbd "<backspace>") 'paredit-backward-delete)
+;;     (define-key evil-insert-state-local-map (kbd "C-l") 'paredit-backward-delete)
+;;     ))
 
 
 
 ;;;;;;;; Functions
 
-(defadvice paredit-backward-delete (after paredit-backward-delete activate)
-  "Intergrated paredit-backward-delete with hungry-delete."
-  ad-do-it
-  (when (require* 'hungry-delete)
-    (if (eq (char-before) ?\ )
-	(hungry-delete-backward))))
-
-
-(defadvice paredit-forward-delete (after paredit-forward-delete activate)
-  "Intergrated paredit-forward-delete with hungry-delete."
-  ad-do-it
-  (when (require* 'hungry-delete)
-    (if (eolp)
-	(hungry-delete-forward))))
 
 
 ;; (defun load-tags-cache (file)
@@ -393,6 +449,43 @@
 ;; (load-tags-cache tags-completion-table-file)
 
 
+
+;; (defun font-lock-system-command (&optional limit)
+;;   ""
+;;   (and  (search-forward-regexp "\\<[a-zA-Z\\-]+\\>" limit t)
+;;	(executable-find
+;;	 (buffer-substring-no-properties (car (bounds-of-thing-at-point 'word))
+;;					 (cdr (bounds-of-thing-at-point 'word)))
+;;	 )))
+
+
+
+;; ; (font-lock-add-keywords 'sh-mode
+;; ;;			'((font-lock-system-command . font-lock-type-face)))
+
+(defvar font-lock-system-command-face 'font-lock-system-command-face)
+
+(defface font-lock-system-command-face
+  '((((class color)) (:foreground "red")))
+  "I am comment"
+  :group 'font-lock-faces)
+
+
+(defun font-lock-system-command (&optional limit)
+  ""
+  (and  (search-forward-regexp "\\<[a-zA-Z\\-]+\\>" limit t)
+	(executable-find
+	 (buffer-substring-no-properties (car (bounds-of-thing-at-point 'word))
+					 (cdr (bounds-of-thing-at-point 'word)))
+	 )))
+
+(font-lock-add-keywords
+ 'sh-mode
+ '((font-lock-system-command . font-lock-system-command-face)))
+
+(font-lock-add-keywords
+ 'emacs-lisp-mode
+ '((font-lock-system-command . 'font-lock-system-command-face)))
 
 
 

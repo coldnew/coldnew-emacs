@@ -1,0 +1,6 @@
+(:name ascii
+       :description "ASCII code display."
+       :website ""
+       :type emacswiki
+       :features ascii
+       )

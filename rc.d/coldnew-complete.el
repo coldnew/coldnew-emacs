@@ -9,6 +9,7 @@
 (require 'coldnew-evil)
 ;; (require 'coldnew-anything)
 
+;;;;;;;; Loding Libraries
 (require 'auto-complete)
 (require 'auto-complete-config)
 (require 'auto-complete-clang)
@@ -53,6 +54,8 @@
 (define-key ac-menu-map (kbd "C-n") 'ac-next)
 (define-key ac-menu-map (kbd "C-p") 'ac-previous)
 (define-key ac-completing-map "\t" 'ac-complete)
+
+(define-key ac-complete-mode-map [tab] 'ac-expand)
 
 
 ;; ;; BUG: nouse?

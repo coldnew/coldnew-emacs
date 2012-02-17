@@ -13,12 +13,20 @@
 (add-to-list 'interpreter-mode-alist '("perl" . cperl-mode))
 
 ;;;;;;;; Coding Style
-(add-hook 'cperl-mode-hook
-	  '(lambda ()
-	     (setq cperl-indent-level 8)
-	     (setq cperl-brace-offset 0)
-	     ))
-
+(add-to-list 'cperl-style-alist
+	     '("coldnew"
+	       (cperl-auto-newline                         . t)
+	       (cperl-brace-offset                         . 0)
+	       (cperl-close-paren-offset                   . -4)
+	       (cperl-continued-brace-offset               . 0)
+	       (cperl-continued-statement-offset           . 4)
+	       (cperl-extra-newline-before-brace           . nil)
+	       (cperl-extra-newline-before-brace-multiline . nil)
+	       (cperl-indent-level                         . 8)
+	       (cperl-indent-parens-as-block               . t)
+	       (cperl-label-offset                         . -4)
+	       (cperl-merge-trailing-else                  . t)
+	       (cperl-tab-always-indent                    . t)))
 
 ;;;;;;;; Flymake
 (defvar flymake-perl-err-line-patterns '(("\\(.*\\) at \\([^ \n]+\\) line \\([0-9]+\\)[,.\n]" 2 3 nil 1)))
@@ -48,9 +56,12 @@
 ;;;;;;;; Hooks
 (add-hook 'cperl-mode-hook
 	  '(lambda ()
-	     (setq cperl-indent-level 8)
-	     (setq cperl-continued-statement-offset 0)
-	     (setq cperl-extra-newline-before-brace t)
+
+	     ;; Use my perl coding-styl
+	     (cperl-set-style "coldnew")
+	     ;; (setq cperl-indent-level 8)
+	     ;; (setq cperl-continued-statement-offset 0)
+	     ;; (setq cperl-extra-newline-before-brace t)
 
 	     ;; Use global programming mode
 	     (programming-mode)
@@ -72,6 +83,20 @@
     (insert ";")
     (newline)))
 
+;;					; perl tidy
+;; ; sudo aptitude install perltidy
+;; (defun perltidy-region ()
+;;   "Run perltidy on the current region."
+;;   (interactive)
+;;   (save-excursion
+;;     (shell-command-on-region (point) (mark) "perltidy -q" nil t)))
+;; (defun perltidy-defun ()
+;;   "Run perltidy on the current defun."
+;;   (interactive)
+;;   (save-excursion (mark-defun)
+;;                   (perltidy-region)))
+;; (global-set-key "\C-ct" 'perltidy-region)
+;; (global-set-key "\C-c\C-t" 'perltidy-defun)
 
 (provide 'coldnew-lang-perl)
 ;; coldnew-lang-perl.el ends here.

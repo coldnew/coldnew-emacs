@@ -1,0 +1,6 @@
+(:name rfringe
+       :description ""
+       :website ""
+       :type emacswiki
+       :features rfringe
+       )

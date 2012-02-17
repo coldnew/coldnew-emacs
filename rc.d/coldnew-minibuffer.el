@@ -45,15 +45,8 @@
   (smex-initialize)
 
   ;; File that svae smex state
-  ;;(setq smex-save-file "~/.emacs.d/var/cache/smex.cache")
   (setq smex-save-file (concat emacs-cache-dir "smex.cache"))
 
-  ;; (defadvice smex (around make-aything-do-not-fighting-with activate)
-  ;;   "Make anything won't conflict with smex."
-  ;;   (when (require* 'anything)
-  ;;     (anything-read-string-mode 0)
-  ;;     ad-do-it
-  ;;     ))
   )
 
 (provide 'coldnew-minibuffer)

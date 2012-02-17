@@ -20,7 +20,7 @@
 ;; font size setting
 (defvar emacs-english-font-size 12
   "Default English font size.")
-(defvar emacs-cjk-font-size 10
+(defvar emacs-cjk-font-size 12
   "Default CJK font size.")
 (defvar emacs-symbol-font-size 10
   "Default Symbol font size.")
@@ -55,8 +55,6 @@
 	       "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 11223344556677889900"
 	       "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 壹貳參肆伍陸柒捌玖零"
 	       ))
-
-
 
 (provide 'coldnew-fonts)
 ;; coldnew-fonts.el ends here.

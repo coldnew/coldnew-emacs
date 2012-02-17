@@ -10,18 +10,11 @@
 (require 'coldnew-variables)
 (require 'cedet)
 
-;;
-;; loding libraries
+;;;;;;;; Loding libraries
 (require 'semantic)
 (require 'semantic/sb)
 (require 'srecode)
 
-;; Enable EDE (Project Management) features
-(global-ede-mode 1)
-
-(setq ede-project-placeholder-cache-file (concat emacs-cache-dir "ede-project.cache"))
-
-(ede-enable-generic-projects)
 
 ;; Enable Semantic feactures
 (semantic-mode 1)

@@ -50,7 +50,7 @@
 	     (programming-mode)
 
 	     ;; Use paredit in scheme
-	     (use-paredit-mode)
+	     ;;	     (use-paredit-mode)
 
 	     ))
 
@@ -76,7 +76,7 @@
 	     (programming-mode)
 
 	     ;; Use paredit in scheme
-	     (use-paredit-mode)
+	     ;;	     (use-paredit-mode)
 
 	     ))
 
