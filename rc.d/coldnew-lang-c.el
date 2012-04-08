@@ -100,7 +100,6 @@
 	     ;; Use global programming mode
 	     (programming-mode)
 
-
 	     ))
 
 ;;;; Keybindings

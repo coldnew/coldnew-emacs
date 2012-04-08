@@ -33,7 +33,7 @@
 (setq ac-use-quick-help t)
 
 ;; After 0.01 sec, show help window
-(setq ac-quick-help-delay 0.01)
+(setq ac-quick-help-delay 0.5)
 
 ;; Add aditional dictionary
 (add-to-list 'ac-dictionary-directories (concat emacs-etc-dir "ac-dict"))
@@ -57,31 +57,29 @@
 
 (define-key ac-complete-mode-map [tab] 'ac-expand)
 
-
-;; ;; BUG: nouse?
-;; ;;
-;; (when (require* 'ac-anything)
-;;   (define-key ac-completing-map (kbd "C-o") 'ac-complete-with-anything)
-;;   )
+(define-key ac-mode-map (kbd "C-c h") 'ac-last-quick-help)
+(define-key ac-mode-map (kbd "C-c H") 'ac-last-help)
 
 
-;; Fix popup-tip's bug
-(when (require* 'popup-pos-tip)
-  (defadvice popup-tip
-    (around popup-pos-tip-wrapper (string &rest args) activate)
-    (if (eq window-system 'x)
-	(apply 'popup-pos-tip string args)
-	ad-do-it)))
+;; ;; Fix popup-tip's bug
+;; ;; (when (require* 'popup-pos-tip)
+;; ;;   (defadvice popup-tip
+;; ;;     (around popup-pos-tip-wrapper (string &rest args) activate)
+;; ;;     (if (eq window-system 'x)
+;; ;;      (apply 'popup-pos-tip string args)
+;; ;;      ad-do-it)))
 
-;; Default sources
-(setq-default ac-sources
-	      '(ac-source-dictionary
-		ac-source-abbrev
-		ac-source-semantic
-		ac-source-filename
-		ac-source-files-in-current-dir
-		ac-source-words-in-same-mode-buffers
-		))
+;; ;; Default sources
+;; (setq-default ac-sources
+;;	      '(ac-source-dictionary
+;;		ac-source-abbrev
+;;		ac-source-semantic
+;;		ac-source-filename
+;;		ac-source-files-in-current-dir
+;;		ac-source-words-in-same-mode-buffers
+;;		))
+
+
 
   ;;;;;; ac-company
 ;; Use Company Backends for Auto-Complete.
@@ -101,9 +99,6 @@
 ;;   (ac-company-define-source ac-source-company-nxml      company-nxml     (symbol . "s"))
 ;;   (ac-company-define-source ac-source-company-semantic  comapny-semactic (symbol . "s"))
 ;;   )
-
-
-
 
 
 ;;;;;;;; Predictive Completion

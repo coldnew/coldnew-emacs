@@ -4,6 +4,9 @@
 ;;;;;;;; Packages Import
 (require 'coldnew-editor)
 
+;;;;;;;; Loding libraries
+
+
 ;;;;;;;; Emacs-lisp-mode extensions
 (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 
@@ -12,18 +15,20 @@
   "auto-complete settings for emacs-lisp-mode"
   ;; (make-variable-buffer-local 'ac-sources)
   (setq ac-sources
-    '(ac-source-dictionary
-      ac-source-symbols
-      ac-source-variables
-      ac-source-functions
-      ac-source-features
-      ;;        ac-source-company-elisp
-      ac-source-abbrev
-      ac-source-semantic
-      ac-source-filename
-      ac-source-files-in-current-dir
-      ac-source-words-in-same-mode-buffers
-      )))
+	'(ac-source-dictionary
+	  ac-source-symbols
+	  ac-source-variables
+	  ac-source-functions
+	  ac-source-features
+	  ;;        ac-source-company-elisp
+	  ac-source-abbrev
+	  ac-source-semantic
+	  ac-source-filename
+	  ac-source-files-in-current-dir
+	  ac-source-words-in-same-mode-buffers
+	  ))
+  )
+
 
 ;;;;;;;; Flymake
 ;;(defun flymake-elisp-init ()
@@ -56,47 +61,46 @@
 
 ;;;;;;;; Hooks
 (add-hook 'emacs-lisp-mode-hook
-      '(lambda ()
+	  '(lambda ()
+	     ;; Enable Auto Complete
+	     (when (require* 'auto-complete)
+	       (ac-emacs-lisp-mode-setup))
 
-         ;; Enable Auto Complete
-         (when (require* 'auto-complete)
-           (ac-emacs-lisp-mode-setup))
+	     ;; TODO: whate's the defierence between highlight-parentheses and rainbow-delimiters?
+	     ;;
+	     ;; Highlight differnet parentheses
+	     ;; (when (require* 'highlight-parentheses)
+	     ;;   (highlight-parentheses-mode))
 
-         ;; TODO: whate's the defierence between highlight-parentheses and rainbow-delimiters?
-         ;;
-         ;; Highlight differnet parentheses
-         ;; (when (require* 'highlight-parentheses)
-         ;;   (highlight-parentheses-mode))
+	     ;; Color nested parentheses, brackets, and braces according to their depth
+	     (when (require* 'rainbow-delimiters)
+	       (rainbow-delimiters-mode))
 
-         ;; Color nested parentheses, brackets, and braces according to their depth
-         (when (require* 'rainbow-delimiters)
-           (rainbow-delimiters-mode))
+	     ;; Enable eldoc
+	     (when (require* 'eldoc)
+	       ;; Add extension for eldoc
+	       (require* 'eldoc-extension)
+	       (turn-on-eldoc-mode))
 
-         ;; Enable eldoc
-         (when (require* 'eldoc)
-           ;; Add extension for eldoc
-           (require* 'eldoc-extension)
-           (turn-on-eldoc-mode))
+	     ;; Use Greek character lambda instead of string
+	     (when (require* 'pretty-lambdada)
+	       (turn-on-pretty-lambda-mode))
 
-         ;; Use Greek character lambda instead of string
-         (when (require* 'pretty-lambdada)
-           (turn-on-pretty-lambda-mode))
-
-         ;; Highlight Common Lisp style functions
-         (when (require* 'highlight-cl)
-           (highlight-cl-add-font-lock-keywords))
+	     ;; Highlight Common Lisp style functions
+	     (when (require* 'highlight-cl)
+	       (highlight-cl-add-font-lock-keywords))
 
 
-         ;; Use global programming mode
-         (programming-mode)
+	     ;; Use global programming mode
+	     (programming-mode)
 
-         ;; Use paredit in elisp
-         (use-paredit-mode)
+	     ;; Use paredit in elisp
+	     (use-paredit-mode)
 
-         ;; After visit elisp file, remove .elc extension file.
-         (remove-elc-when-visit)
+	     ;; After visit elisp file, remove .elc extension file.
+	     (remove-elc-when-visit)
 
-         ))
+	     ))
 
 ;;;;;;;; Lisp-interaction mode
 ;; TODO: is there a more elegent way to achive following?
@@ -104,39 +108,39 @@
 ;; emacs-lisp-mode-hook
 ;;
 (add-hook 'lisp-interaction-mode-hook
-      '(lambda ()
+	  '(lambda ()
 
-         ;; Enable Auto Complete
-         (when (require* 'auto-complete)
-           (ac-emacs-lisp-mode-setup))
+	     ;; Enable Auto Complete
+	     (when (require* 'auto-complete)
+	       (ac-emacs-lisp-mode-setup))
 
-         ;; Highlight differnet parentheses
-         (when (require* 'highlight-parentheses)
-           (highlight-parentheses-mode))
-         ;; Enable eldoc
-         (when (require* 'eldoc)
-           ;; Add extension for eldoc
-           (require* 'eldoc-extension)
-           (turn-on-eldoc-mode))
+	     ;; Highlight differnet parentheses
+	     (when (require* 'highlight-parentheses)
+	       (highlight-parentheses-mode))
+	     ;; Enable eldoc
+	     (when (require* 'eldoc)
+	       ;; Add extension for eldoc
+	       (require* 'eldoc-extension)
+	       (turn-on-eldoc-mode))
 
-         ;; Use Greek character lambda instead of string
-         (when (require* 'pretty-lambdada)
-           (turn-on-pretty-lambda-mode))
+	     ;; Use Greek character lambda instead of string
+	     (when (require* 'pretty-lambdada)
+	       (turn-on-pretty-lambda-mode))
 
-         ;; Highlight Common Lisp style functions
-         (when (require* 'highlight-cl)
-           (highlight-cl-add-font-lock-keywords))
+	     ;; Highlight Common Lisp style functions
+	     (when (require* 'highlight-cl)
+	       (highlight-cl-add-font-lock-keywords))
 
-         ;; Use global programming mode
-         (programming-mode)
+	     ;; Use global programming mode
+	     (programming-mode)
 
-         ;; Use paredit in elisp
-         (use-paredit-mode)
+	     ;; Use paredit in elisp
+	     (use-paredit-mode)
 
-         ;; After visit elisp file, remove .elc extension file.
-         (remove-elc-when-visit)
+	     ;; After visit elisp file, remove .elc extension file.
+	     (remove-elc-when-visit)
 
-         ))
+	     ))
 
 ;;;;;;;; Keybindings
 ;;;; Insert and expand by short-key
@@ -164,34 +168,34 @@
 (when (require* 'ielm)
   ;;;; Hooks
   (add-hook 'ielm-mode-hook
-        '(lambda ()
+	    '(lambda ()
 
-           ;; Enable Auto Complete
-           (when (require* 'auto-complete)
-         (ac-emacs-lisp-mode-setup))
+	       ;; Enable Auto Complete
+	       (when (require* 'auto-complete)
+		 (ac-emacs-lisp-mode-setup))
 
-           ;; Highlight differnet parentheses
-           (when (require* 'highlight-parentheses)
-         (highlight-parentheses-mode))
+	       ;; Highlight differnet parentheses
+	       (when (require* 'highlight-parentheses)
+		 (highlight-parentheses-mode))
 
-           ;; Enable eldoc
-           (when (require* 'eldoc)
-         ;; Add extension for eldoc
-         (require* 'eldoc-extension)
-         (turn-on-eldoc-mode))
+	       ;; Enable eldoc
+	       (when (require* 'eldoc)
+		 ;; Add extension for eldoc
+		 (require* 'eldoc-extension)
+		 (turn-on-eldoc-mode))
 
-           ;; Use Greek character lambda instead of string
-           (when (require* 'pretty-lambdada)
-         (turn-on-pretty-lambda-mode))
+	       ;; Use Greek character lambda instead of string
+	       (when (require* 'pretty-lambdada)
+		 (turn-on-pretty-lambda-mode))
 
-           ;; Highlight Common Lisp style functions
-           (when (require* 'highlight-cl)
-         (highlight-cl-add-font-lock-keywords))
+	       ;; Highlight Common Lisp style functions
+	       (when (require* 'highlight-cl)
+		 (highlight-cl-add-font-lock-keywords))
 
-           ;; Use global programming mode
-           (programming-mode)
+	       ;; Use global programming mode
+	       (programming-mode)
 
-           ))
+	       ))
   )
 
 
@@ -201,10 +205,10 @@
   "After visit elisp file, remove .elc extension file."
   (make-local-variable 'find-file-hook)
   (add-hook 'find-file-hook
-        (lambda ()
-          (if (and (file-exists-p (concat buffer-file-name "c"))
-               (file-writable-p (concat buffer-file-name "c")))
-          (delete-file (concat buffer-file-name "c"))))))
+	    (lambda ()
+	      (if (and (file-exists-p (concat buffer-file-name "c"))
+		       (file-writable-p (concat buffer-file-name "c")))
+		  (delete-file (concat buffer-file-name "c"))))))
 
 
 

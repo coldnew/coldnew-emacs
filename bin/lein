@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export LEIN_VERSION="1.7.0"
+export LEIN_VERSION="1.7.1"
 
 case $LEIN_VERSION in
     *SNAPSHOT) SNAPSHOT="YES" ;;
@@ -141,7 +141,7 @@ if [ ! -r "$CLOJURE_JAR" ]; then
     CLOJURE_HASH="be088d20c078ce48d42afba05984f1ef7c02142b"
     mkdir -p "$(dirname $CLOJURE_JAR)"
     $HTTP_CLIENT $CLOJURE_JAR $CLOJURE_JAR_URL
-    if [ "`sha1sum $CLOJURE_JAR | cut -f 1 -d \" \"`" != "$CLOJURE_HASH" ]; then
+    if [ "`shasum -a 1 $CLOJURE_JAR | cut -f 1 -d \" \"`" != "$CLOJURE_HASH" ]; then
         echo "WARNING: Clojure jar failed to download from $CLOJURE_JAR_URL"
     fi
 fi
@@ -191,15 +191,16 @@ elif [ "$1" = "upgrade" ]; then
         echo "You do not have permission to upgrade the installation in $SCRIPT"
         exit 1
     else
-        echo "The script at $SCRIPT will be upgraded to the latest stable version."
+        TARGET_VERSION="${2:-"stable"}"
+        echo "The script at $SCRIPT will be upgraded to the latest $TARGET_VERSION version."
         echo -n "Do you want to continue [Y/n]? "
         read RESP
         case "$RESP" in
             y|Y|"")
                 echo
-                echo "Upgrading..."
+                echo "Upgrading from $LEIN_VERSION..."
                 TARGET="/tmp/lein-$$-upgrade"
-                LEIN_SCRIPT_URL="https://github.com/technomancy/leiningen/raw/stable/bin/lein"
+                LEIN_SCRIPT_URL="https://github.com/technomancy/leiningen/raw/$TARGET_VERSION/bin/lein"
                 $HTTP_CLIENT "$TARGET" "$LEIN_SCRIPT_URL" \
                     && mv "$TARGET" "$SCRIPT" \
                     && chmod +x "$SCRIPT" \

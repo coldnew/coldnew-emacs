@@ -6,11 +6,11 @@
 (require 'coldnew-functions)
 (require 'coldnew-commands)
 (require 'coldnew-variables)
-(require* 'linkd)
 
 ;;;;;;;; Loding Libraries
 (require 'anything-config)
 (require 'anything-match-plugin)
+(require* 'linkd)
 
 
 ;; (setq anything-mp-matching-method 'multi2)

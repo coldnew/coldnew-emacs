@@ -6,44 +6,45 @@
 (require 'coldnew-commands)
 (require 'coldnew-variables)
 
-;;;;;;;; yasnippet
+;;;;;;;; Loding libraries
+(require 'yasnippet)
+(require 'dropdown-list)
+
 ;; Set my snippet-dirs, do not load original yasnippet-dir
-(setq yas/snippet-dirs emacs-snippets-dir)
-(when (require* 'yasnippet)
-  (require 'dropdown-list)
-  (yas/initialize)
-  (yas/load-directory emacs-snippets-dir)
+(setq-default yas/snippet-dirs emacs-snippets-dir)
+(yas/initialize)
+(yas/load-directory emacs-snippets-dir)
 
-  (setq yas/prompt-functions
-	'(yas/dropdown-prompt
-	  yas/ido-prompt
-	  yas/completing-prompt))
+(setq yas/prompt-functions
+      '(yas/dropdown-prompt
+    yas/ido-prompt
+    yas/completing-prompt))
 
-  ;; TODO: ???
-  (setq yas/buffer-local-condition
-	'(or (not (or (string= "font-lock-comment-face"
-			       (get-char-property (point) 'face))
-		      (string= "font-lock-string-face"
-			       (get-char-property (point) 'face))))
-	     '(require-snippet-condition . force-in-comment)))
+;; ;; TODO: ???
+;; (setq yas/buffer-local-condition
+;;	'(or (not (or (string= "font-lock-comment-face"
+;;                 (get-char-property (point) 'face))
+;;            (string= "font-lock-string-face"
+;;                 (get-char-property (point) 'face))))
+;;       '(require-snippet-condition . force-in-comment)))
 
 
-  ;; TODO: After finish, move this two line to lang-snippet
-  (add-to-list 'auto-mode-alist '("\\.yasnippet\\'" . snippet-mode))
-  (add-to-list 'auto-mode-alist '("\\.yas\\'" . snippet-mode))
+;; TODO: After finish, move this two line to lang-snippet
+(add-to-list 'auto-mode-alist '("\\.yasnippet\\'" . snippet-mode))
+(add-to-list 'auto-mode-alist '("\\.yas\\'" . snippet-mode))
 
-  ;; ;; Auto add HEADER in new file
-  (add-hook 'find-file-hook
-	    '(lambda ()
-	       (when (and (buffer-file-name)
-			  (not (file-exists-p (buffer-file-name)))
-			  (= (point-max) 1))
-		 (let ((header-snippet "HEADER"))
-		   (insert header-snippet)
-		   ;; if can't expand snippet, delete insert string
-		   (if (not (yas/expand))
-		       (backward-delete-char (1+ (length header-snippet))))))))
-  )
+;; FIXME: How to remove the annoying message `progn: end of buffer'. ?
+;; Auto add HEADER in new file
+(add-hook 'find-file-hook
+      '(lambda ()
+         (when (and (buffer-file-name)
+            (not (file-exists-p (buffer-file-name)))
+            (= (point-max) 1))
+           (let ((header-snippet "HEADER"))
+         (insert header-snippet)
+         ;; if can't expand snippet, delete insert string
+         (if (not (yas/expand))
+             (backward-delete-char (1+ (length header-snippet))))))))
 
 
 ;;;; Functions

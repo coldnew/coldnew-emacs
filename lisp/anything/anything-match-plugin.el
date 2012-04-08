@@ -117,14 +117,28 @@
 ;;
 ;; Below are complete command list:
 ;;
+;;  `anything-mp-toggle-match-plugin'
+;;    Turn on/off multiple regexp matching in anything.
 ;;
 ;;; Customizable Options:
 ;;
 ;; Below are customizable option list:
 ;;
+;;  `anything-mp-matching-method'
+;;    Matching method for anything match plugin.
+;;    default = (quote multi3)
+;;  `anything-mp-highlight-delay'
+;;    Highlight matches with `anything-match' face after this many seconds.
+;;    default = 0.7
+;;  `anything-mp-highlight-threshold'
+;;    Minimum length of pattern to highlight.
+;;    default = 2
 ;;  `anything-grep-candidates-fast-directory-regexp'
 ;;    *Directory regexp where a RAM disk (or tmpfs) is mounted.
 ;;    default = nil
+;;  `anything-grep-candidates-requires-pattern'
+;;    *Required length of input to grep search.
+;;    default = 2
 
 ;; A query of multiple regexp match is space-delimited string.
 ;; Anything displays candidates which matches all the regexps.
@@ -565,6 +579,13 @@ ex. (setq anything-grep-candidates-fast-directory-regexp \"^/tmp/\")"
   :type 'string
   :group 'anything)
 
+(defcustom anything-grep-candidates-requires-pattern 2
+  "*Required length of input to grep search.
+
+The greater this value is, the faster grep-candidates works."
+  :type 'integer
+  :group 'anything)
+
 (defun agp-candidates (&optional filter)
   "Normal version of grep-candidates candidates function.
 Grep is run by asynchronous process."
@@ -599,7 +620,7 @@ If (direct-insert-match) is in the source, this function is used."
     (with-temp-buffer
       (when search-from-end
         (insert "tac " allfiles))
-      (if (string= query "")
+      (if (< (length query) anything-grep-candidates-requires-pattern)
           (unless search-from-end
             (insert "cat " allfiles))
         (when search-from-end (insert " | "))

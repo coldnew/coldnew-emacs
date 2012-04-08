@@ -1,5 +1,9 @@
 # Egg (Emacs Got Git).
 
+## v1.0.2
+- fixed window kill when finish commit or cancel commit
+- fixed don't work when .git directory is symlink
+
 ## v1.0.1
 - add feature to stage selected area on egg-status Thanks for jedbrown and mooz
 

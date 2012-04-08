@@ -26,6 +26,8 @@
 
 	     (ac-octave-mode-setup)
 
+	     (setq octave-comment-char ?%)
+
 	     (programming-mode)
 	     ))
 

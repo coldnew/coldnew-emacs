@@ -61,7 +61,7 @@
   (make-ret-newline-and-indent)
 
   ;; Highlight toolong lines
-  (highlight-toolong-lines)
+  ;;  (highlight-toolong-lines)
 
   ;; Highlight spicial keywords like TODO, BUG
   (highlight-additional-keywords)
@@ -75,8 +75,11 @@
   ;; ;; Use auto-pair
   ;; (use-autopair-mode)
 
-  ;; Use electric-pair-mode
-  (electric-pair-mode)
+  ;; ;; Use electric-pair-mode
+  ;; (electric-pair-mode)
+
+  ;; Use paredit in elisp
+  (use-paredit-mode)
 
   ;; Use electric-indent-mode
   (electric-indent-mode)
@@ -143,9 +146,9 @@
 ;;;;;;;; linum-relative
 ;; display relative line number in the left margin
 ;;
-(when (require 'linum-relative)
-  (setq linum-relative-current-symbol "->")
-  )
+;; (when (require 'linum-relative)
+;;   (setq linum-relative-current-symbol "->")
+;;   )
 
 ;;;;;;;; rainbow-mode
 ;; Displays color names with colored background.
@@ -454,9 +457,9 @@
 ;;   ""
 ;;   (and  (search-forward-regexp "\\<[a-zA-Z\\-]+\\>" limit t)
 ;;	(executable-find
-;;	 (buffer-substring-no-properties (car (bounds-of-thing-at-point 'word))
-;;					 (cdr (bounds-of-thing-at-point 'word)))
-;;	 )))
+;;   (buffer-substring-no-properties (car (bounds-of-thing-at-point 'word))
+;;                   (cdr (bounds-of-thing-at-point 'word)))
+;;   )))
 
 
 

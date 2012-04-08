@@ -51,6 +51,13 @@
 			   (1 font-lock-keyword-face)
 			   (2 font-lock-constant-face nil t))))
 
+
+
+
+(defmacro comment (&rest body)
+  "Comment out one or more s-expressions.")
+
+
 ;;;;;;;; Functions
 
 

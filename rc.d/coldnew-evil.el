@@ -32,6 +32,15 @@
 		       (interactive) (insert ,name) (if (featurep 'yasnippet) (yas/expand)))))
 
 
+;;;;;;;; evil Plugins
+
+;;;; surround
+;; This package emulates surround.vim by Tim Pope.
+;;
+(when (require* 'surround)
+  (global-surround-mode 1))
+
+
 
 (provide 'coldnew-evil)
 ;; coldnew-evil.el ends here.

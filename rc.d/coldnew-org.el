@@ -60,6 +60,7 @@
 ;; Insert
 (evil-define-key 'insert org-mode-map (kbd "M-d") 'org-deadline)
 (evil-define-key 'insert org-mode-map (kbd "M-s") 'org-schedule)
+(evil-define-key 'insert org-mode-map (kbd "M-<return>") 'org-insert-heading-respect-content)
 
 
 ;; ;; Article class for electric circuit lab

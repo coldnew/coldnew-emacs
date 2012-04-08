@@ -35,11 +35,11 @@
        (list (line-beginning-position)
 	     (line-beginning-position 2)))))
 
-;; Change all fundamental-mode buffer to lisp-interaction-mode.
-(defadvice switch-to-buffer (after switch-to-buffer activate)
-  "After switch-to-buffer, if tht buffer is Fundamental-mode, change it to lisp-interaction-mode"
-  (if (equal major-mode 'fundamental-mode)
-      (lisp-interaction-mode)))
+;; ;; Change all fundamental-mode buffer to lisp-interaction-mode.
+;; (defadvice switch-to-buffer (after switch-to-buffer activate)
+;;   "After switch-to-buffer, if tht buffer is Fundamental-mode, change it to lisp-interaction-mode"
+;;   (if (equal major-mode 'fundamental-mode)
+;;       (lisp-interaction-mode)))
 
 ;; Prevent to kill *scratch* and *Ibuffer*
 (defadvice kill-buffer (around kill-buffer-around-advice activate)

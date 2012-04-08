@@ -2,7 +2,7 @@
        :website "http://code.google.com/p/yasnippet/"
        :description "YASnippet is a template system for Emacs."
        :type svn
-       :url "https://github.com/capitaomorte/yasnippet.git"
+       :url "http://yasnippet.googlecode.com/svn/trunk/"
        :features "yasnippet"
        :prepare (lambda ()                      
                       ;; Set up the default snippets directory
