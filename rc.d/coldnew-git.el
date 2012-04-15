@@ -8,8 +8,7 @@
 (require 'coldnew-commands)
 (require 'coldnew-variables)
 (require 'coldnew-evil)
-
-
+(require 'coldnew-diff)
 
 (when (require* 'egg)
 
