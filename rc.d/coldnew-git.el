@@ -67,6 +67,7 @@
   ;;   (let ((egg-commit-buffer (current-buffer)))
   ;;     ad-do-it
   ;;     (kill-buffer egg-commit-buffer)))
+
   )
 
 

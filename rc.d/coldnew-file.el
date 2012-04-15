@@ -43,6 +43,27 @@
     (add-to-list 'anything-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
   )
 
+;;;;;;;; openwith
+;;
+;;
+;; (require 'openwith)
+;; ;; (when (eq system-type 'windows-nt)
+;; ;;   (require'w32-shell-execute)
+;; ;;   )
+
+;; ;; http://jixiuf.github.com/emacs/open-with.html
+;; ;;  enable openth-mode globally
+;; ;(openwith-mode t)
+;; (cond (linux-p
+;;        (setq openwith-associations
+;;              '(("\\.pdf$" "okular" (file))
+;;                ("\\.")
+;;                ("\\.mov\\|\\.RM$\\|\\.RMVB$\\|\\.avi$\\|\\.AVI$\\|\\.flv$\\|\\.mp4\\|\\.mkv$\\|\\.rmvb$" "mplayer" (file) )
+;;                ));; (when (eq system-type 'windows-nt)
+
+;;        ))
+
+
 
 
 (provide 'coldnew-file)

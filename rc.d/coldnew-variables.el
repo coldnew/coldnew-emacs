@@ -53,6 +53,12 @@
 (defvar root-p (zerop (user-real-uid))
   "Return nil if user is not root user.")
 
+(defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
+  "Return nil if OS is not 64-bit linux.")
+
+(defvar linux-32bit-p (and (string-match (rx bos "x86-") system-configuration) linux-p)
+  "Return nil if OS is not 32-bit linux.")
+
 (defvar 1280x800-p   (and (= (display-pixel-width) 1280) (= (display-pixel-height) 800))
   "Return nil if current display's resolution is not 1280x800")
 
@@ -106,8 +112,8 @@
 
 ;; TODO: need to test this function
 (defvar new-file? (and (buffer-file-name)
-                       (not (file-exists-p (buffer-file-name)))
-                       (= (point-max) 1)))
+		       (not (file-exists-p (buffer-file-name)))
+		       (= (point-max) 1)))
 
 (provide 'coldnew-variables)
 ;; coldnew-variables.el ends here.

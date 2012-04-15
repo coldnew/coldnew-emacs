@@ -25,6 +25,10 @@
 ;;
 ;;
 
+;;
+;; Happy Coding !!
+;;
+
 ;;; Usage:
 ;; Put this file into your load-path and the following into your ~/.emacs:
 ;;   (require 'highlight-system-commands)
@@ -39,12 +43,23 @@
   :group 'faces
   :group 'matching)
 
+(defcustom highlight-system-commands-modes
+  '(sh-mode
+    shell-mode)
+  "Major modes `highlight-system-commands-mode' can run on."
+  :group 'highlight-system-commands
+  :type '(repeat symbol))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar highlight-system-commands-overlays nil
   "This buffers currently active overlays."
   (make-variable-buffer-local 'highlight-system-commands-overlays))
 
+(defvar highlight-system-commands-last-point 0
+  "The last point for which system-commands were highlighted.
+This is used to prevent analyzing the same context over and over."
+  (make-variable-buffer-local 'highlight-system-commands-last-point))
 
 
 (defun highlight-system-commands-highlight ()
@@ -73,7 +88,10 @@
 
 (defvar font-lock-system-command-face 'font-lock-system-command-face)
 
+;;;; Overlays
 
+;; (defun highlight-system-commands-overlays ()
+;;   (let (fg highlight-system-commands-)))
 
 
 

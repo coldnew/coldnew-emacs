@@ -85,6 +85,18 @@
  ;;;; Diff
  '(diff-added ((t (:foreground "#95E454"))))
  '(diff-removed ((t (:foreground "#E52210"))))
+ '(diff-header ((t (:background "#0B0B0E"))))
+ '(diff-hunk-header ((t (:foreground "yellow"))))
+ '(diff-function ((t :foreground "green")))
+ '(diff-file-header ((t (:foreground "aquamarine1" :slant italic :weight bold))))
+ '(diff-header ((t (:foreground "VioletRed1"))))
+ ;;;;;;
+ '(diff-index ((t (:foreground "yellow"))))
+ '(diff-context ((t (:inherit font-lock-comment))))
+ '(diff-refine-change ((t (:background "#0B0B0E" :foreground "#DCDCDC"))))
+
+ ;;;; ediff
+
 
  ;;;; Auto-Complete
  '(ac-candidate-face ((t (:background "#424242" :foreground "white"))))

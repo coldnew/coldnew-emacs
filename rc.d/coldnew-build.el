@@ -8,6 +8,7 @@
 (require 'coldnew-variables)
 (require 'coldnew-project)
 
+;;;;;;;; Loding libraries
 (require 'flymake)
 (require 'flymake-cursor)
 (require 'rfringe)

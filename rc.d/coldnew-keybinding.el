@@ -27,6 +27,7 @@
 (define-key evil-normal-state-map (kbd "C-+") 'text-scale-increase)
 (define-key evil-normal-state-map (kbd "C--") 'text-scale-decrease)
 (define-key evil-normal-state-map (kbd "<f4>") 'shell-pop)
+(define-key evil-normal-state-map (kbd "<f2>") 'multi-term)
 (define-key evil-normal-state-map (kbd "C-x <f4>") 'switch-to-terminal)
 (define-key evil-normal-state-map (kbd "C-x M-s") 'egg-status)
 (define-key evil-normal-state-map (kbd "C-x M-l") 'egg-log)
@@ -40,7 +41,7 @@
 (define-key evil-normal-state-map (kbd "K") 'anything-man-woman)
 (define-key evil-normal-state-map (kbd "C-x C-r") 'sudo-edit)
 (define-key evil-normal-state-map (kbd "M-g") 'goto-line)
-(when (require 'buffer-toggle)
+(when (require* 'buffer-toggle)
   (define-key evil-normal-state-map (kbd "C-6") 'buffer-toggle))
 (when (featurep 'ace-jump-mode)
   (define-key evil-normal-state-map (kbd "M-l") 'ace-jump-line-mode)
@@ -70,6 +71,8 @@
 (define-key evil-insert-state-map (kbd "C-x M-S") 'scratch-toggle)
 (define-key evil-insert-state-map (kbd "C-x M-i") 'ielm-toggle)
 (define-key evil-insert-state-map (kbd "<f1>") 'info)
+(define-key evil-insert-state-map (kbd "<f2>") 'multi-term)
+(define-key evil-insert-state-map (kbd "<f3>") 'shell-pop)
 (define-key evil-insert-state-map (kbd "C-u") 'universal-argument)
 (define-key evil-insert-state-map (kbd "C-x C-r") 'sudo-edit)
 
@@ -98,6 +101,8 @@
 (define-key evil-window-map  (kbd "C-o") 'other-frame)
 (define-key evil-window-map  (kbd "C-a") 'delete-other-frames)
 (define-key evil-window-map  (kbd "C-s") 'sr-speedbar-toggle)
+(define-key evil-window-map  (kbd ".") 'winner-undo)
+(define-key evil-window-map  (kbd ",") 'winner-redo)
 
 ;;;;;;;; Replace Map
 (define-key evil-replace-state-map (kbd "M-l") 'downcase-word)
@@ -107,6 +112,7 @@
 ;;;;;;;; Emacs Map
 (define-key evil-emacs-state-map (kbd "C-x C-f") 'lusty-file-explorer)
 (define-key evil-emacs-state-map (kbd "<f1>") 'woman)
+(define-key evil-emacs-state-map (kbd "<f2>") 'multi-term)
 (define-key evil-emacs-state-map (kbd "<f4>") 'shell-pop)
 (define-key evil-emacs-state-map (kbd "C-x <f4>") 'switch-to-terminal)
 (define-key evil-emacs-state-map (kbd "C-+") 'text-scale-increase)
@@ -143,6 +149,8 @@
 (define-key evil-emacs-state-map  (kbd "C-w C-o") 'other-frame)
 (define-key evil-emacs-state-map  (kbd "C-w C-a") 'delete-other-frames)
 (define-key evil-emacs-state-map  (kbd "C-w C-s") 'sr-speedbar-toggle)
+(define-key evil-emacs-state-map  (kbd "C-w .") 'winner-undo)
+(define-key evil-emacs-state-map  (kbd "C-w ,") 'winner-redo)
 
 (provide 'coldnew-keybinding)
 ;; coldnew-keybinding.el ends here.
