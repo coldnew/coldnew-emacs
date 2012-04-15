@@ -20,7 +20,6 @@
 (define-key evil-normal-state-map (kbd "C-x f") 'anything-find-files)
 (define-key evil-normal-state-map (kbd "C-x C-f") 'lusty-file-explorer)
 (define-key evil-normal-state-map (kbd "M-x") 'anything-M-x)
-(define-key evil-normal-state-map (kbd "M-X") 'smex)
 (define-key evil-normal-state-map (kbd "C-c C-e") 'eval-and-replace)
 (define-key evil-normal-state-map (kbd "C-x C-s") 'save-buffer-always)
 (define-key evil-normal-state-map (kbd "C-=") 'text-scale-increase)
@@ -118,7 +117,6 @@
 (define-key evil-emacs-state-map (kbd "C-+") 'text-scale-increase)
 (define-key evil-emacs-state-map (kbd "C--") 'text-scale-decrease)
 (define-key evil-emacs-state-map (kbd "C-=") 'text-scale-increase)
-(define-key evil-emacs-state-map (kbd "C-M-X") 'smex)
 (define-key evil-emacs-state-map (kbd "C-c C-e") 'eval-and-replace)
 (define-key evil-emacs-state-map (kbd "C-x C-b") 'ibuffer)
 (define-key evil-emacs-state-map (kbd "C-x C-s") 'save-buffer-always)
@@ -151,6 +149,11 @@
 (define-key evil-emacs-state-map  (kbd "C-w C-s") 'sr-speedbar-toggle)
 (define-key evil-emacs-state-map  (kbd "C-w .") 'winner-undo)
 (define-key evil-emacs-state-map  (kbd "C-w ,") 'winner-redo)
+
+
+(global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
+
+
 
 (provide 'coldnew-keybinding)
 ;; coldnew-keybinding.el ends here.

@@ -39,15 +39,6 @@
   (when (active-minibuffer-window)
     (select-window (active-minibuffer-window))))
 
-;;;;;;;; Smex
-(when (require* 'smex)
-  ;; initialize smex
-  (smex-initialize)
-
-  ;; File that svae smex state
-  (setq smex-save-file (concat emacs-cache-dir "smex.cache"))
-
-  )
 
 (provide 'coldnew-minibuffer)
 ;; coldnew-minibuffer.el ends here.
