@@ -1,0 +1,468 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+	<style type="text/css">
+	    body {
+	    font-family: Arial, sans-serif;
+	    font-size: 11pt
+	    }
+
+	    h1 {
+	    font-family: Arial, sans-serif;
+	    background-color: #d4d4d4;
+	    font-weight: bold;
+	    font-size: 18pt
+	    }
+
+	    h2 {
+	    font-style: italic;
+	    font-family: Arial, sans-serif;
+	    margin-bottom: 1px;
+	    font-size: 18pt;
+	    border-bottom-color: black;
+	    border-bottom-style: solid;
+	    border-bottom-width: thin
+	    }
+
+	    div.code {
+	    font-family: "Courier New", serif;
+	    font-size: 10pt;
+	    background-color: #d4d4d4;
+	    border-color: black;
+	    border-width: 1px;
+	    border-style: dotted;
+	    #            margin-right: 100%;
+	    margin-left: 20pt;
+	    margin-top: 5pt;
+	    margin-bottom: 5pt;
+	    }
+
+	    div.code pre {
+	    margin-top: 5pt;
+	    margin-bottom: 5pt;
+	    margin-left: 10pt;
+	    margin-right: 10pt;
+	    }
+
+	    li {
+	    margin-bottom: 2.5%;
+	    }
+
+	    ul {
+	    line-height: 1em;
+	    }
+
+	    div.component li {
+	    margin-bottom: 0pt;
+	    }            
+	</style>
+	<title>Installing JDEE</title>
+    </head>
+    <body>
+	<h1>Installing JDEE</h1>
+
+	This is a guide that not only tries to explain the process to compile
+	JDEE, but also how to install it (separate step if you download the
+	binaries).
+
+
+	<h2>Dependencies</h2>
+
+	There are Emacs Lisp runtime dependencies you have to install before
+	you can use JDEE.  In addition, there are compile time dependencies.
+
+
+	<h3>Compile Time Dependencies</h3>
+
+	To build the JDEE, you have to first install the Ant.  If you just want
+	to use JDEE and not build the code from source, you can <a
+	href="#install-elib-dep">skip</a> this step.
+
+	<p>
+	    Download Ant 1.7 and the contrib library from <a
+	    href="https://sourceforge.net/projects/jdee/files/">here</a>.
+	    Follow the instructions to installing both.
+	</p>
+
+	<p>
+	    <i><font color="red"><font size="-1">In place ant installation
+	    documents here would be nice</font></font></i>
+	</p>
+
+
+	<h3>Run time Dependencies</h3>
+	<a name="install-elib-dep"/>
+
+	Download CEDET <a
+	href="https://sourceforge.net/projects/jdee/files/">here</a>.  Follow
+	the instructions to installing the library.  Note that you'll refer to
+	this path in the configuration stage.
+
+
+	<h2>Installing from Binaries</h2>
+
+	After <a
+	href="https://sourceforge.net/projects/jdee/files/">downloading</a> the
+	install binaries, either unzip or untar/gzip the files on your file
+	system:
+	<div class="code">
+<pre>
+gzip -cd jde-<i>version</i>-tar.gz
+</pre>
+	</div>
+	Skip right to the <a href="#config">Emacs configuration</a> step.
+	
+
+
+	<h2>Compiling JDEE</h2>
+	<a name="compile-jdee"/>
+
+	Even though Ant is used to build and install JDEE, the build uses
+	old automake/make conventions.  Building the source is a two step
+	process:
+
+	<ol>
+	    <li>
+		First, get a feel for what the build does and doesn't do
+		by printing the targets:
+		<div class="code">
+<pre>
+ant -p
+</pre>
+		</div>
+
+		You don't need to specify the <tt>build.xml</tt> as you should
+		be in the root source directory, which contains the build
+		file.  Most of the targets that are important are given here.
+		The utility targets aren't documented and don't show in this
+		output.
+	    </li>
+
+	    <li>
+		First configure the project, which is much like <tt>./configure
+		--prefix=...</tt>.  In this step, the file
+		<tt>build.properties</tt> is generated and is analogous to
+		<tt>config.h</tt>, which is the settings to use for the build.
+		This file is never added to subversion and it contains very
+		specific per build settings.  The intention is to make
+		modifications to this file so you <b>don't have to modify
+		build.xml</b>.
+
+		<ol>
+		    <li>
+			Before creating the file, if you are developer or will be
+			building and updating from trunk often, you can create a
+			<tt>~/.jdee-config.properties</tt> file, which is used to
+			create the initial properties in
+			<tt>build.properties</tt>.
+			<p>
+			    <b>Note:</b> Ant looks for the
+			    file in the <tt>user.home</tt> property, which under
+			    windows (i.e. XP), is in:
+<div class="code"><pre>
+C:/Documents and Settings/<i>user name</i>/.jdee-config.properties
+</pre></div>
+			</p>
+		    </li>
+
+		    <li>
+			To create the <tt>build.properties</tt> file, invoke:
+			<div class="code">
+<pre>
+ant configure
+</pre>
+			</div>
+			After running this, the file is generated and looks something
+			like:
+			<div class="code">
+<pre>
+#user editable build configuration parameters
+#Wed Aug 05 23:18:22 CDT 2009
+cedet.dir=/usr/local/share/emacs/cedet
+elib.dir=/usr/local/share/emacs/elib
+build.bin.emacs=/Users/landes/Applications/Emacs.app/Contents/MacOS/Emacs
+config.time=2009/08/05 23\:18
+prefix.dir=/usr/local/jdee
+</pre>
+			</div>
+		    </li>
+
+		    <li>
+			Once the <tt>build.properties</tt> is created, edit it
+			if you didn't create a
+			<tt>~/.jdee-config.properties</tt>.  When editing this
+			or the <tt>~/.jdee-config.properties</tt> file, refer
+			to <a href="#config-build">Project Build
+			Configuration</a> for more information on the properties
+			themselves.
+		    </li>
+		</ol>
+	    </li>
+
+	    <li>
+		If you create the <tt>~/.jdee-config.properties</tt> file, you
+		might want to do a complete clean (cleans all derived objects
+		<em>and</em> the <tt>build.properties</tt>), then regenerate
+		by using the <tt>configure</tt> target once more:
+		<div class="code">
+<pre>
+ant clean-all
+<i>edit ~/.jdee-config.properties</i>
+ant configure
+cat build.properties
+</pre>
+		</div>
+
+		<p>
+		    <b>Note:</b> The <tt>clean</tt> target doesn't remove the
+		    (generated) <tt>build.properties</tt> file.
+		</p>
+
+		<p>
+		    Spending just a little time on this step could really save
+		    a lot of time during the build step.
+		</p>
+	    </li>
+
+	    <li>
+		Once you get the configuration set, build the project with:
+		<div class="code">
+<pre>
+ant build
+</pre>
+		</div>
+		This step compiles the both the Java and Emacs Lisp code.  It
+		also does a few other steps of generating autoload files etc.
+	    </li>
+
+	    <li>
+
+		<p>
+		    To create the distribution:
+		<div class="code">
+<pre>
+ant dist
+</pre>
+		</div>
+		This has everything with which the binaries are released.
+
+		If you are developer, you might want to set your
+		<i>load-path</i> Emacs variable to load JDEE from
+		<tt>dist/lisp</tt> so you can develop, build, test quickly.
+
+		</p>
+	    </li>
+
+	    <li>
+		To install the distribution to a directory of your choosing
+		(the <a href="#config-build">prefix.dir</a> property).
+		<div class="code">
+<pre>
+ant install
+</pre>
+		</div>
+	    </li>
+	</ol>
+
+
+	<h2>Emacs Configuration</h2>
+	<a name="config"/>
+
+	Once the dependencies and JDEE is installed, add the libraries to your
+	~/.emacs file:
+
+	<div class="code">
+<pre>
+(add-to-list 'load-path "<i>path to cedet's lisp directory here</i>")
+(add-to-list 'load-path "<i>path to JDEE's lisp directory here</i>")
+
+;; load autoloads file
+(load "jde-autoload")
+</pre>
+	</div>
+
+
+	<h2>Project Build Configuration</h2>
+	<a name="config-build"/>
+
+	The properties in <tt>~/.jdee-config.properties</tt> and
+	<tt>build.properties</tt> mean:
+
+	<ul>
+	    <li>
+		<b>third.party.lib.dir:</b> This isn't a property that is
+		needed, but I suggest you create it and defined the other Emacs
+		library variables in terms of it.  For example:
+		<div class="code">
+<pre>
+third.party.lib.dir=${user.home}/opt/lib/emacs
+cedet.dir=${third.party.lib.dir}/cedet-1.0beta3b
+</pre>
+		</div>
+	    </li>
+
+	    <li>
+		<b>prefix.dir:</b> Path to where the project installs.
+	    </li>
+
+	    <li>
+		<b>cedet.dir:</b> The directory where the
+		<a href="https://sourceforge.net/projects/jdee/files/jdee/Dependencies/cedet-1.0beta3b.tar.gz/download">CEDET</a>
+		library exists on the file system.
+	    </li>
+
+	    <li>
+		<b>elib.dir:</b> The directory where the
+		<a href="https://sourceforge.net/projects/jdee/files/jdee/Dependencies/elib.tar.gz/download">elib</a>
+		library exists on the file system.
+
+		<p>
+		    <b>Note:</b> This property and need for elib will soon be
+		    going away.
+		</p>
+	    </li>
+	</ul>
+
+
+	<h2>Known Working Configurations</h2>
+
+	<i>Thanks to Edwin Helbert Aponte Angarita for this.</i>
+
+	<h4>Environment:</h4>
+	    
+	<ul style="line-height: .1em;">
+	  <li>openSUSE 12.1</li>
+	  <li>Emacs 23.3.1</li>
+	  <li>CEDET-1.0pre7</li>
+	  <li>elib 1.0</li>
+	  <li>Oracle JDK-1.7.0 (not the default that comes with the distribution </li>
+	  <li>i.e. IcedTea and GJC)</li>
+	  <li>ant-1.8.2</li>
+	</ul>
+
+
+	<h4>Install Steps Followed</h4>
+	<ol>
+	  <li>Install elib</li>
+
+	  <li>
+	      Install CEDET-1.0pre7 from
+	      <a href="http://sourceforge.net/projects/cedet/files/cedet/">http://sourceforge.net/projects/cedet/files/cedet/</a>
+	      Installation of CEDET is quite straightforward. Just 
+
+	      <ol>
+		  <li>download</li>
+		  <li>unpack to an appropriate directory, such as ~/opt/lib/</li>
+
+		  <li>cd to directory where CEDET was unpacked</li>
+		  <li>make</li>
+
+		  <li>add this to your ~/.emacs file.
+		  <div class="code">
+<pre>
+(load-file "/home/edwinh/opt/lib/lisp/cedet-1.0pre7/common/cedet.el") 
+(semantic-load-enable-guady-code-helpers)
+</pre>
+		  </div>
+		  </li>
+	      </ol>
+	  </li>
+
+	  <li>
+	      Install JDEE.
+	      <ol>
+		  <li>
+		      Download from the SVN repository using
+		  <div class="code">
+<pre>
+svn co https://jdee.svn.sourceforge.net/svnroot/jdee/trunk jdee
+cd jdee
+</pre>
+		  </div>
+		  (I followed the instructions in the file
+		  jdee/jdee/doc/flat/install.html)
+		  </li>
+
+		  <li>Configure (check the paths in your system)
+		  <div class="code">
+<pre>
+env CLASSPATH=/usr/share/java/ant-contrib-1.0b2.jar
+           JAVA_HOME=/path/to/jdk1.7.0_02/ ant configure
+</pre>
+		  </div>
+		  </li>
+
+		  <li>
+		      Edit directly the file build.properties just created or
+		      copy it to
+		  <br/>
+		  ~/.jdee-config.properties
+		  <br/>
+		  and edit it (see jdee/jdee/doc/flat/install.html) so that:
+		  <div class="code">
+		      <pre>
+cedet.dir=/path/to/cedet-1.0pre7/
+elib.dir=/path/to/elib/ 
+prefix.dir=/path/where/jdee/will/be/installed/
+build.bin.emacs=emacs
+</pre>
+		  </div>
+		  </li>
+
+		  <li>
+		  Configure again.
+		  <div class="code">
+<pre>
+env CLASSPATH=/usr/share/java/ant-contrib-1.0b2.jar
+           JAVA_HOME=/path/to/jdk1.7.0_02/ ant configure
+</pre>
+		  </div>
+		  </li>
+
+		  <li>Build
+		  <div class="code">
+<pre>
+env CLASSPATH=/usr/share/java/ant-contrib-1.0b2.jar
+           JAVA_HOME=/path/to/jdk1.7.0_02/ ant build
+</pre>
+		  </div>
+		  </li>
+
+		  <li>Create the distribution
+		  <div class="code">
+<pre>
+env CLASSPATH=/usr/share/java/ant-contrib-1.0b2.jar
+           JAVA_HOME=/path/to/jdk1.7.0_02/ ant bindist
+</pre>
+		  </div>
+		  </li>
+
+		  <li>
+		      Install
+		  <div class="code">
+<pre>
+env CLASSPATH=/usr/share/java/ant-contrib-1.0b2.jar
+           JAVA_HOME=/path/to/jdk1.7.0_02/ ant install
+</pre>
+		  </div>
+
+		  <li>
+		      Load into Emacs by adding the following to ~/.emacs file (after
+		      having loaded CEDET)
+		  <div class="code">
+<pre>
+(add-to-list 'load-path "/path/to/jdee/lisp/") 
+(load "jde-autoload")
+</pre>
+		  </div>
+		  </li>
+		  </li>
+	      </ol>
+	  </li>
+	</ol>
+
+	<hr></hr>
+	<i>Paul Landes</i>
+	<!-- Created: Aug 05 22:58:21 CDT 2009 -->
+    </body>
+</html>

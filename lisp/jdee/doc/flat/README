@@ -1,0 +1,82 @@
+Welcome to the Java IDE for Emacs, an Emacs-based integrated development
+environment for developing Java applications. Features include:
+
+  * source code editing with syntax highlighting and
+    auto indendation
+
+  * compilation with automatic jump from error messages
+    to responsible line in the source code.
+
+  * run Java application in an interactive (comint)
+    Emacs buffer
+
+  * integrated debugging with interactive debug
+    command buffer and automatic display of
+    current source file/line when stepping through code
+
+  * browse JDK doc, using the browser of your choice
+
+  * browse your source code, using the Emacs etags
+    facility or a tree-structured speedbar.
+
+  * supports latest version of JavaSoft's Java Development
+    Kit
+
+  * runs on any platform supported by Emacs and Sun's
+    Java SDK (e.g., Win95/NT and Solaris)
+
+  * easily and infinitely customizable
+
+  * works with FSF Emacs and XEmacs
+
+The IDE integrates several Emacs program
+development packages (cc-mode, gud, and
+compile) with JavaSoft's JDK.
+
+This package includes:
+
+   -- jde.el
+
+   -- jde-run.el
+
+   -- jde-db.el 
+
+   -- speedbar.el
+
+   -- shell script that tags java files,
+      using the etags program. This script
+      comes in two versions, one for 
+      csh and the other for bash shells.
+
+It requires:
+
+   -- latest version of cc-mode.el
+
+      (available from
+       ftp://ftp.python.org/pub/emacs/cc-mode.tar.gz)
+
+   -- andersl-java-font-lock.el
+
+      (available from
+       http:\\www.csd.uu.se\~andersl\emacs.shtml
+       ftp:\\ftp.csd.uu.se\pub\users\andersl\emacs\)
+
+      This is required for syntax highlighting.
+
+   -- Java Development Kit (jdk) 
+     
+      (available from
+        http://java.sun.com/javase/downloads/index.jsp)
+
+   -- Web browser
+
+      (e.g., Netscape or Internet Explorer)
+
+   -- Unix-style shell for Windows 95 or Windows/NT
+
+      I recommend bash, available from www.cygnus.com.
+
+To install, please read install.html in this directory.
+
+Paul Kinnucan (original author and contributor)
+Paul Landes (current maintainer)
