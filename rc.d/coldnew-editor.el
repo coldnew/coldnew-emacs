@@ -393,6 +393,11 @@
 	(hungry-delete-forward))))
 
 
+;;;;;;;; expand-region
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+
 ;; (defun use-paredit-mode ()
 ;;   "Enable paredit-mode and rebind the keybinding to vim-mode when use it."
 ;;   (when (require* 'paredit)
