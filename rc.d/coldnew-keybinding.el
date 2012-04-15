@@ -135,7 +135,6 @@
 (define-key evil-emacs-state-map  (kbd "C-w k") 'windmove-up)
 (define-key evil-emacs-state-map  (kbd "C-w l") 'windmove-right)
 
-(define-key evil-emacs-state-map  (kbd "C-w C-f") 'fullscreen-window)
 (define-key evil-emacs-state-map  (kbd "C-w C-j") 'windmove-down-fullscreen)
 (define-key evil-emacs-state-map  (kbd "C-w C-h") 'windmove-left-fullscreen)
 (define-key evil-emacs-state-map  (kbd "C-w C-l") 'windmove-right-fullscreen)
@@ -150,8 +149,12 @@
 (define-key evil-emacs-state-map  (kbd "C-w .") 'winner-undo)
 (define-key evil-emacs-state-map  (kbd "C-w ,") 'winner-redo)
 
-
+;; pure emacs-key-binding
 (global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+
+
 
 
 
