@@ -15,7 +15,20 @@
   (add-to-list 'el-get-recipe-path emacs-recipes-dir)
   ;; Make el-get recipes in emacs-lisp-mode
   (add-to-list 'auto-mode-alist '("\\.rcp$" . emacs-lisp-mode))
+
+  ;;;TODO: remove one day
+
+  (defun force-git-add-after-el-get (package-path)
+    (let* ((git-executable (el-get-executable-find "git"))
+	   (name (format "*git add subdir %s*" package)) )
+      (message (format "cd %s && %s add %s/" el-get-dir git-executable package-path))
+      (shell-command (format "cd %s && %s add %s/" el-get-dir git-executable package-path))))
+
+
+  (add-hook 'el-get-post-install-hooks 'force-git-add-after-el-get)
+  (add-hook 'el-get-post-update-hooks 'force-git-add-after-el-get)
   )
+
 
 ;;;;;;;; ELPA
 ;; Simple package system for Emacs
