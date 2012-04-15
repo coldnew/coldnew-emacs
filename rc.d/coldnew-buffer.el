@@ -237,24 +237,6 @@
 		  ;; (eproject 16 16 :left :elide)
 		  ;; "      "
 		  filename-and-process))))
-
-  ;; (require 'ibuffer-vc)
-
-  ;; (setq ibuffer-formats
-  ;;	'((mark modified read-only vc-status-mini " "
-  ;;		(name 23 23 :left :elide)
-  ;;		" "
-  ;;		(size-h 9 -1 :right)
-  ;;		" "
-  ;;		(mode 16 16 :left :elide)
-  ;;		" "
-  ;;		(git-status 8 8 :left)
-  ;;		" "
-  ;;		;; (vc-status 16 16 :left)
-  ;;		" "
-  ;;		filename-and-process)))
-
-
   )
 
 ;;;;;;;; tempbuf
