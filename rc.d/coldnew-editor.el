@@ -393,6 +393,22 @@
 	(hungry-delete-forward))))
 
 
+;;;;;;;; expand-region
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+
+;;;;;;;; add for emacs setting
+(defun insert-empty-line ()
+  "Insert an empty line after current line and position cursor on newline."
+  (interactive)
+  (move-end-of-line nil)
+  (open-line 1)
+  (next-line 1))
+
+(global-set-key [(shift return)] 'insert-empty-line)
+
+
 ;; (defun use-paredit-mode ()
 ;;   "Enable paredit-mode and rebind the keybinding to vim-mode when use it."
 ;;   (when (require* 'paredit)

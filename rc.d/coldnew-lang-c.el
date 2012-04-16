@@ -19,22 +19,22 @@
 (defun ac-c-mode-setup ()
   "auto-complete settings for c-mode."
   (setq ac-sources '(
-                     ac-source-clang
-                     ac-source-dictionary
-                     ac-source-abbrev
-                     ac-source-semantic
-                     ac-source-filename
-                     ac-source-files-in-current-dir
-                     ac-source-words-in-same-mode-buffers
-                     ))
+		     ac-source-clang
+		     ac-source-dictionary
+		     ac-source-abbrev
+		     ac-source-semantic
+		     ac-source-filename
+		     ac-source-files-in-current-dir
+		     ac-source-words-in-same-mode-buffers
+		     ))
   ;; Default clang completion flags
   ;;    (setq clang-completion-flags
   (setq ac-clang-flags
-        (split-string
-         (concat
-          "-pthread -I./ -I../ "
-          (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0")
-          )))
+	(split-string
+	 (concat
+	  "-pthread -I./ -I../ "
+	  (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0")
+	  )))
   )
 
 ;;;;;;;; Flymake
@@ -42,10 +42,10 @@
   (flymake-generic-init-makefile "gcc" '("-Wall" "-Wextra" "-pedantic" "-fsyntax-only")))
 
 (add-to-list 'flymake-allowed-file-name-masks
-             '(".+\\c$"
-               flymake-c-init
-               flymake-simple-cleanup
-               flymake-get-real-file-name))
+	     '(".+\\c$"
+	       flymake-c-init
+	       flymake-simple-cleanup
+	       flymake-get-real-file-name))
 
 
 ;;;;;;;; Coding-Style Setting
@@ -82,26 +82,26 @@
 
 ;;;;;;;; Hooks
 (add-hook 'c-mode-hook
-          '(lambda ()
+	  '(lambda ()
 
-             ;; Use linux-kernel style
-             (c-set-style "linux")
+	     ;; Use linux-kernel style
+	     (c-set-style "linux")
 
-             ;; Enable Auto Complete
-             (ac-c-mode-setup)
+	     ;; Enable Auto Complete
+	     (ac-c-mode-setup)
 
-             ;; Enable c-eldoc
-             (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
-             (when (require* 'c-eldoc)
-               (c-turn-on-eldoc-mode))
+	     ;; Enable c-eldoc
+	     (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
+	     (when (require* 'c-eldoc)
+	       (c-turn-on-eldoc-mode))
 
-             ;; Automatically determine c-basic-offset
-             (when (require* 'guess-offset))
+	     ;; Automatically determine c-basic-offset
+	     (when (require* 'guess-offset))
 
-             ;; Use global programming mode
-             (programming-mode)
+	     ;; Use global programming mode
+	     (programming-mode)
 
-             ))
+	     ))
 
 ;;;; Keybindings
 
@@ -123,8 +123,8 @@
 ;;;; Other Settings
 (setq c-mode:include-dirs		; Setting include directories
       '(
-        "/usr/include"
-        ))
+	"/usr/include"
+	))
 
 
 ;;;; Functions
@@ -135,27 +135,27 @@
 else add `if' and expand it."
   (interactive)
   (let* ((current (point))
-         (begin (line-beginning-position)))
+	 (begin (line-beginning-position)))
     (if (eq current begin)
-        (progn
-         (c-mode:insert-include)
-         (newline-and-indent))
-        (progn
-         (insert "if")
-         (yas/expand)))))
+	(progn
+	 (c-mode:insert-include)
+	 (newline-and-indent))
+	(progn
+	 (insert "if")
+	 (yas/expand)))))
 
 ;; FIXME: We don't want directories also show in completion
 (define-skeleton c-mode:insert-include
   "generate include<>" ""
   > "#include <"
   (completing-read "Enter include file："
-                   (mapcar #'(lambda (f) (list f ))
-                           (apply 'append
-                                  (mapcar
-                                   #'(lambda (dir)
-                                       (directory-files dir))
-                                   c-mode:include-dirs
-                                   ))))
+		   (mapcar #'(lambda (f) (list f ))
+			   (apply 'append
+				  (mapcar
+				   #'(lambda (dir)
+				       (directory-files dir))
+				   c-mode:include-dirs
+				   ))))
   ">")
 
 
@@ -171,9 +171,9 @@ else add `if' and expand it."
   "insert main()."
   (interactive)
   (let* ((current (point))
-         (begin (line-beginning-position)))
+	 (begin (line-beginning-position)))
     (if (equal current begin)
-        (insert "main"))
+	(insert "main"))
     (yas/expand)))
 
 
@@ -183,11 +183,11 @@ else add `if' and expand it."
   (let ((search-result))
     (save-excursion
      (setq search-result (or (and (search-forward "*/" (point-at-eol) t)
-                                  (search-backward "/*" (point-at-bol) t))
-                             (search-backward "//" (point-at-bol) t))))
+				  (search-backward "/*" (point-at-bol) t))
+			     (search-backward "//" (point-at-bol) t))))
     (if search-result
-        (newline-and-indent)
-        (c-indent-new-comment-line))))
+	(newline-and-indent)
+	(c-indent-new-comment-line))))
 
 
 (provide 'coldnew-lang-c)

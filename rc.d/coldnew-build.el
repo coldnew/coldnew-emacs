@@ -125,6 +125,11 @@
 ;;       (setq count (1- count)))))
 
 
+;;;;;;;; qmake
+;;(require 'qmake-mode)
+;;(add-to-list 'auto-mode-alist '("\\.pro$" . qmake-mode))
+
+
 
 (provide 'coldnew-build)
 ;; coldnew-build.el ends here.

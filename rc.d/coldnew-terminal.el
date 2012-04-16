@@ -83,7 +83,8 @@
 	     (programming-mode)
 	     ))
 
-  ;;;; Keybindings
+;;;; Keybindings
+(define-key comint-mode-map (kbd "C-g") 'comint-interrupt-subjob)
 ;; (when (featurep 'evil)
 ;;   ;; Normal map
 ;;   (evil-define-key 'normal comint-mode-map (kbd "M-k") 'comint-previous-input)
