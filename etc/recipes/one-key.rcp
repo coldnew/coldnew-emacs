@@ -1,0 +1,6 @@
+(:name one-key
+       :description "OneKey is designed to help you remember keybindings. It saves you time and frees up your head!"
+       :website ""
+       :type emacswiki
+       :features ascii
+       )
