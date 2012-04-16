@@ -10,6 +10,9 @@
 (require 'coldnew-evil)
 (require 'coldnew-diff)
 
+;; do not make egg have prefix
+(setq-default egg-mode-key-prefix "")
+
 (when (require* 'egg)
 
   ;; do not auto-update egg-status on file save
@@ -17,6 +20,7 @@
 
   ;; do not switch to the status buffer in the same window
   (setq egg-switch-to-buffer t)
+
 
 ;;;;;;;; kyebindings
   ;; egg status buffer

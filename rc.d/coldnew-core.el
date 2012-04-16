@@ -31,6 +31,7 @@
 ;; Remove menu-bar
 (menu-bar-mode -1)
 
+(setq initial-major-mode 'text-mode)
 
 (setq warning-suppress-types nil)
 

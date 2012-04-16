@@ -80,8 +80,6 @@
 		 ;; display-time-string
 		 )))
 
-
-
 ;; (defun vimpulse-set-mode-line-face ()
 ;;   (unless (minibufferp (current-buffer))
 ;;     (set-face-background 'mode-line

@@ -153,6 +153,7 @@
 	   ("Scala" (or (mode . scala-mode)
 			(name . "\\*inferior-scala\\*$")))
 	   ("Diff" (mode . diff-mode))
+	   ("Project" (mode . qmake-mode))
 	   ("C++ . C#" (or (mode . c++-mode)
 			   (mode . csharpmode)))
 	   ("C"          (mode . c-mode))
