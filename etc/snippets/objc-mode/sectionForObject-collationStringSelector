@@ -1,4 +1,0 @@
-#name : sectionForObject:collationStringSelector
-#group : UILocalizedIndexedCollation
-# --
-sectionForObject:${1:(id)object} collationStringSelector:${2:(SEL)selector}

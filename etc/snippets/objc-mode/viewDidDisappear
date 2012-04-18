@@ -1,4 +1,0 @@
-#name : viewDidDisappear
-#group : UIViewController
-# --
-viewDidDisappear:${1:(BOOL)animated}

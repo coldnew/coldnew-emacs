@@ -1,4 +1,0 @@
-#name : newCacheNodeForManagedObject
-#group : NSAtomicStore
-# --
-newCacheNodeForManagedObject:${1:(NSManagedObject *)managedObject}

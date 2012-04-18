@@ -1,4 +1,0 @@
-#name : respondsToSelector
-#group : NSProxy
-# --
-respondsToSelector:${1:(SEL)aSelector}

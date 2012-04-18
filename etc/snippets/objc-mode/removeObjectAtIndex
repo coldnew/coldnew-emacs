@@ -1,4 +1,0 @@
-#name : removeObjectAtIndex
-#group : NSArray
-# --
-removeObjectAtIndex:${1:(NSUInteger)index}

@@ -1,4 +1,0 @@
-#name : regularExpressionCheckingResultWithRanges:count:regularExpression
-#group : NSTextCheckingResult
-# --
-regularExpressionCheckingResultWithRanges:${1:(NSRangePointer)ranges} count:${2:(NSUInteger)count} regularExpression:${3:(NSRegularExpression *)regularExpression}

@@ -1,4 +1,0 @@
-#name : enumerateGroupsWithTypes:usingBlock:failureBlock
-#group : ALAssetsLibrary
-# --
-enumerateGroupsWithTypes:${1:(ALAssetsGroupType)types} usingBlock:${2:(ALAssetsLibraryGroupsEnumerationResultsBlock)enumerationBlock} failureBlock:${3:(ALAssetsLibraryAccessFailureBlock)failureBlock}

@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# contributor : coldnew <coldnew.tw@gmil.com>
-# name : require
-# key: require
-# --
-(require`(if (equal (buffer-name) "003-dependency.el")
-	     (insert "*"))
-	` '${1:FEATURE})
-$0

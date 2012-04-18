@@ -1,4 +1,0 @@
-#name : insertTimeRange:ofTrack:atTime:error
-#group : AVCompositionTrack
-# --
-insertTimeRange:${1:(CMTimeRange)timeRange} ofTrack:${2:(AVAssetTrack *)track} atTime:${3:(CMTime)startTime} error:${4:(NSError **)error}

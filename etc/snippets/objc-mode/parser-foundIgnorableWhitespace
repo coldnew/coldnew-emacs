@@ -1,4 +1,0 @@
-#name : parser:foundIgnorableWhitespace
-#group : NSXMLParser
-# --
-parser:${1:(NSXMLParser *)parser} foundIgnorableWhitespace:${2:(NSString *)whitespaceString}

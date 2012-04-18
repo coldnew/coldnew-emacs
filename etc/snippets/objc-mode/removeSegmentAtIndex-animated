@@ -1,4 +1,0 @@
-#name : removeSegmentAtIndex:animated
-#group : UISegmentedControl
-# --
-removeSegmentAtIndex:${1:(NSUInteger)segment} animated:${2:(BOOL)animated}

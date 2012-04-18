@@ -1,4 +1,0 @@
-#name : setSecondaryGroupingSize
-#group : NSNumberFormatter
-# --
-setSecondaryGroupingSize:${1:(NSUInteger)number}

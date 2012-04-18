@@ -1,4 +1,0 @@
-#name : connection:canAuthenticateAgainstProtectionSpace
-#group : NSURLConnection
-# --
-connection:${1:(NSURLConnection *)connection} canAuthenticateAgainstProtectionSpace:${2:(NSURLProtectionSpace *)protectionSpace}

@@ -1,4 +1,0 @@
-#name : textRangeFromPosition:toPosition
-#group : UITextInput
-# --
-textRangeFromPosition:${1:(UITextPosition *)fromPosition} toPosition:${2:(UITextPosition *)toPosition}

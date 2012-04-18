@@ -1,4 +1,0 @@
-#name : initWithFrame:style
-#group : UITableView
-# --
-initWithFrame:${1:(CGRect)frame} style:${2:(UITableViewStyle)style}

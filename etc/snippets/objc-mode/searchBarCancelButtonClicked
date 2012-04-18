@@ -1,4 +1,0 @@
-#name : searchBarCancelButtonClicked
-#group : UISearchBar
-# --
-searchBarCancelButtonClicked:${1:(UISearchBar *)searchBar}

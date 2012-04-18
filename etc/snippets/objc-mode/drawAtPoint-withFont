@@ -1,4 +1,0 @@
-#name : drawAtPoint:withFont
-#group : UIStringDrawing
-# --
-drawAtPoint:${1:(CGPoint)point} withFont:${2:(UIFont *)font}

@@ -1,4 +1,0 @@
-#name : setResourceData
-#group : NSURL
-# --
-setResourceData:${1:(NSData *)data}

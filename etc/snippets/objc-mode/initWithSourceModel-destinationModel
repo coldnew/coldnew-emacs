@@ -1,4 +1,0 @@
-#name : initWithSourceModel:destinationModel
-#group : NSMigrationManager
-# --
-initWithSourceModel:${1:(NSManagedObjectModel *)sourceModel} destinationModel:${2:(NSManagedObjectModel *)destinationModel}

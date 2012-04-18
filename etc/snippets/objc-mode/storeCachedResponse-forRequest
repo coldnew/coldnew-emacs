@@ -1,4 +1,0 @@
-#name : storeCachedResponse:forRequest
-#group : NSURLCache
-# --
-storeCachedResponse:${1:(NSCachedURLResponse *)cachedResponse} forRequest:${2:(NSURLRequest *)request}

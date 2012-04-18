@@ -1,4 +1,0 @@
-#name : recordForDuration
-#group : AVAudioRecorder
-# --
-recordForDuration:${1:(NSTimeInterval)duration}

@@ -1,4 +1,0 @@
-#name : setStatusBarHidden:withAnimation
-#group : UIApplication
-# --
-setStatusBarHidden:${1:(BOOL)hidden} withAnimation:${2:(UIStatusBarAnimation)animation}

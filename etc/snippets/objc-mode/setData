@@ -1,4 +1,0 @@
-#name : setData
-#group : NSData
-# --
-setData:${1:(NSData *)data}

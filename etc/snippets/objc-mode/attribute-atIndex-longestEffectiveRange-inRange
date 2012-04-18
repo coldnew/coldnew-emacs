@@ -1,4 +1,0 @@
-#name : attribute:atIndex:longestEffectiveRange:inRange
-#group : NSAttributedString
-# --
-attribute:${1:(NSString *)attrName} atIndex:${2:(NSUInteger)location} longestEffectiveRange:${3:(NSRangePointer)range} inRange:${4:(NSRange)rangeLimit}

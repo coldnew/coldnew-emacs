@@ -1,4 +1,0 @@
-#name : setPositiveFormat
-#group : NSNumberFormatter
-# --
-setPositiveFormat:${1:(NSString *)format}

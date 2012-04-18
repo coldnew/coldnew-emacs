@@ -1,4 +1,0 @@
-#name : getBytes:maxLength:usedLength:encoding:options:range:remainingRange
-#group : NSString
-# --
-getBytes:${1:(void *)buffer} maxLength:${2:(NSUInteger)maxBufferCount} usedLength:${3:(NSUInteger *)usedBufferCount} encoding:${4:(NSStringEncoding)encoding} options:${5:(NSStringEncodingConversionOptions)options} range:${6:(NSRange)range} remainingRange:${7:(NSRangePointer)leftover}

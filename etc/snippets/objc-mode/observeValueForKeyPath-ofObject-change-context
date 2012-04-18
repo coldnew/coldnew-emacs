@@ -1,4 +1,0 @@
-#name : observeValueForKeyPath:ofObject:change:context
-#group : NSKeyValueObserving
-# --
-observeValueForKeyPath:${1:(NSString *)keyPath} ofObject:${2:(id)object} change:${3:(NSDictionary *)change} context:${4:(void *)context}

@@ -1,4 +1,0 @@
-#name : decimalNumberByMultiplyingByPowerOf10
-#group : NSDecimalNumber
-# --
-decimalNumberByMultiplyingByPowerOf10:${1:(short)power}

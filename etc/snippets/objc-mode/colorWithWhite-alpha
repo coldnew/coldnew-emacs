@@ -1,4 +1,0 @@
-#name : colorWithWhite:alpha
-#group : UIColor
-# --
-colorWithWhite:${1:(CGFloat)white} alpha:${2:(CGFloat)alpha}

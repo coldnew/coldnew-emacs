@@ -1,4 +1,0 @@
-#name : setProcessName
-#group : NSProcessInfo
-# --
-setProcessName:${1:(NSString *)newName}

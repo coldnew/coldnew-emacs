@@ -1,4 +1,0 @@
-#name : thumbRectForBounds:trackRect:value
-#group : UISlider
-# --
-thumbRectForBounds:${1:(CGRect)bounds} trackRect:${2:(CGRect)rect} value:${3:(float)value}

@@ -1,4 +1,0 @@
-#name : initWithFileDescriptor
-#group : NSFileHandle
-# --
-initWithFileDescriptor:${1:(int)fd}

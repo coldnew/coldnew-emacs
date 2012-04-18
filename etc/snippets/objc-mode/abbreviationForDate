@@ -1,4 +1,0 @@
-#name : abbreviationForDate
-#group : NSTimeZone
-# --
-abbreviationForDate:${1:(NSDate *)aDate}

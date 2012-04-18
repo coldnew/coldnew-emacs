@@ -1,4 +1,0 @@
-(:name slime
-       :description "Major mode for editing Slim file"
-       :features slime
-       :type elpa)

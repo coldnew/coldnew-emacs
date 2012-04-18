@@ -1,4 +1,0 @@
-#name : parser:didStartElement:namespaceURI:qualifiedName:attributes
-#group : NSXMLParser
-# --
-parser:${1:(NSXMLParser *)parser} didStartElement:${2:(NSString *)elementName} namespaceURI:${3:(NSString *)namespaceURI} qualifiedName:${4:(NSString *)qName} attributes:${5:(NSDictionary *)attributeDict}

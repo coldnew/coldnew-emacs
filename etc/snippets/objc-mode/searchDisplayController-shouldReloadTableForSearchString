@@ -1,4 +1,0 @@
-#name : searchDisplayController:shouldReloadTableForSearchString
-#group : UISearchDisplayController
-# --
-searchDisplayController:${1:(UISearchDisplayController *)controller} shouldReloadTableForSearchString:${2:(NSString *)searchString}

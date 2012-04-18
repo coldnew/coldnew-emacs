@@ -1,4 +1,0 @@
-#name : trackRectForBounds
-#group : UISlider
-# --
-trackRectForBounds:${1:(CGRect)bounds}

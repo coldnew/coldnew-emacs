@@ -1,4 +1,0 @@
-#name : stringByReplacingOccurrencesOfString:withString
-#group : NSString
-# --
-stringByReplacingOccurrencesOfString:${1:(NSString *)target} withString:${2:(NSString *)replacement}

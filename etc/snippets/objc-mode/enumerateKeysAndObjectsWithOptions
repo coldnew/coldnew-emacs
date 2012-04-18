@@ -1,4 +1,0 @@
-#name : enumerateKeysAndObjectsWithOptions
-#group : NSDictionary
-# --
-enumerateKeysAndObjectsWithOptions:${1:(NSEnumerationOptions)opts}

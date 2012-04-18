@@ -1,4 +1,0 @@
-#name : colorWithAlphaComponent
-#group : UIColor
-# --
-colorWithAlphaComponent:${1:(CGFloat)alpha}

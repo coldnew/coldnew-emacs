@@ -1,4 +1,0 @@
-#name : sendAction:to:from:forEvent
-#group : UIApplication
-# --
-sendAction:${1:(SEL)action} to:${2:(id)target} from:${3:(id)sender} forEvent:${4:(UIEvent *)event}

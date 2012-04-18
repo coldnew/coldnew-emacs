@@ -1,4 +1,0 @@
-#name : getTransformRampForTime:startTransform:endTransform:timeRange
-#group : AVVideoComposition
-# --
-getTransformRampForTime:${1:(CMTime)time} startTransform:${2:(CGAffineTransform *)startTransform} endTransform:${3:(CGAffineTransform *)endTransform} timeRange:${4:(CMTimeRange *)timeRange}

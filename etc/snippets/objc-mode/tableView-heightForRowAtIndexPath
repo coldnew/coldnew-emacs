@@ -1,4 +1,0 @@
-#name : tableView:heightForRowAtIndexPath
-#group : UITableView
-# --
-tableView:${1:(UITableView *)tableView} heightForRowAtIndexPath:${2:(NSIndexPath *)indexPath}

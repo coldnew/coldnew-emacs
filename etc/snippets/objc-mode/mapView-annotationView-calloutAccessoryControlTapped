@@ -1,4 +1,0 @@
-#name : mapView:annotationView:calloutAccessoryControlTapped
-#group : MKMapView
-# --
-mapView:${1:(MKMapView *)mapView} annotationView:${2:(MKAnnotationView *)view} calloutAccessoryControlTapped:${3:(UIControl *)control}

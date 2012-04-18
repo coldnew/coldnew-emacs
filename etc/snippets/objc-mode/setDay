@@ -1,4 +1,0 @@
-#name : setDay
-#group : NSCalendar
-# --
-setDay:${1:(NSInteger)v}

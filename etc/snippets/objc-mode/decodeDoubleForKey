@@ -1,4 +1,0 @@
-#name : decodeDoubleForKey
-#group : NSKeyedArchiver
-# --
-decodeDoubleForKey:${1:(NSString *)key}

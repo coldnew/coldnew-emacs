@@ -1,4 +1,0 @@
-#name : linkItemAtURL:toURL:error
-#group : NSFileManager
-# --
-linkItemAtURL:${1:(NSURL *)srcURL} toURL:${2:(NSURL *)dstURL} error:${3:(NSError **)error}

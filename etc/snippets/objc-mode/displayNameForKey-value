@@ -1,4 +1,0 @@
-#name : displayNameForKey:value
-#group : NSLocale
-# --
-displayNameForKey:${1:(id)key} value:${2:(id)value}

@@ -1,4 +1,0 @@
-#name : initWithUnsignedShort
-#group : NSValue
-# --
-initWithUnsignedShort:${1:(unsigned short)value}

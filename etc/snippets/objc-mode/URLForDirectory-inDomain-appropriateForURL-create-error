@@ -1,4 +1,0 @@
-#name : URLForDirectory:inDomain:appropriateForURL:create:error
-#group : NSFileManager
-# --
-URLForDirectory:${1:(NSSearchPathDirectory)directory} inDomain:${2:(NSSearchPathDomainMask)domain} appropriateForURL:${3:(NSURL *)url} create:${4:(BOOL)shouldCreate} error:${5:(NSError **)error}

@@ -1,4 +1,0 @@
-#name : sendDataToAllPeers:withDataMode:error
-#group : GKSession
-# --
-sendDataToAllPeers:${1:(NSData *)data} withDataMode:${2:(GKSendDataMode)mode} error:${3:(NSError **)error}

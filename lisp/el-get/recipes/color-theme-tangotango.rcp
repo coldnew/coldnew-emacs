@@ -1,0 +1,7 @@
+(:name color-theme-tangotango
+       :description "Another color theme based on the Tango palette."
+       :type github
+       :pkgname "juba/color-theme-tangotango"
+       :depends color-theme
+       :prepare (autoload 'color-theme-tangotango "color-theme-tangotango"
+                  "color-theme: tangotango" t))

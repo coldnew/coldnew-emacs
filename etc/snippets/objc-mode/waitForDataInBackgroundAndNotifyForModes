@@ -1,4 +1,0 @@
-#name : waitForDataInBackgroundAndNotifyForModes
-#group : NSFileHandle
-# --
-waitForDataInBackgroundAndNotifyForModes:${1:(NSArray *)modes}

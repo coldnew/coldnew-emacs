@@ -1,4 +1,0 @@
-#name : canAddInput
-#group : AVCaptureSession
-# --
-canAddInput:${1:(AVCaptureInput *)input}

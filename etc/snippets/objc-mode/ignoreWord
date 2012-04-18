@@ -1,4 +1,0 @@
-#name : ignoreWord
-#group : UITextChecker
-# --
-ignoreWord:${1:(NSString *)wordToIgnore}

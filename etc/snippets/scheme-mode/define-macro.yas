@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# contributor : coldnew <coldnew.tw@gmil.com>
-# name: define-macro
-# key: define-macro
-# --
-(define-macro ($0))

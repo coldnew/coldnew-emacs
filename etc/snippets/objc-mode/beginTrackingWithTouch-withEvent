@@ -1,4 +1,0 @@
-#name : beginTrackingWithTouch:withEvent
-#group : UIControl
-# --
-beginTrackingWithTouch:${1:(UITouch *)touch} withEvent:${2:(UIEvent *)event}

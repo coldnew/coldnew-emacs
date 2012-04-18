@@ -1,6 +1,0 @@
-(:name linkd
-       :description "Make hypertext with active links in any buffer"
-       :website ""
-       :type emacswiki
-       :features linkd
-       )

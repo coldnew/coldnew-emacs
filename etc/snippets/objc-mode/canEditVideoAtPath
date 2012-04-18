@@ -1,4 +1,0 @@
-#name : canEditVideoAtPath
-#group : UIVideoEditorController
-# --
-canEditVideoAtPath:${1:(NSString *)videoPath}

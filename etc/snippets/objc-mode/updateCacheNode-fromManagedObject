@@ -1,4 +1,0 @@
-#name : updateCacheNode:fromManagedObject
-#group : NSAtomicStore
-# --
-updateCacheNode:${1:(NSAtomicStoreCacheNode *)node} fromManagedObject:${2:(NSManagedObject *)managedObject}

@@ -1,5 +1,0 @@
-(:name expand-region
-       :description "Expand region increases the selected region by semantic units. Just keep pressing the key until it selects what you want."
-       :type git
-       :url "https://github.com/magnars/expand-region.el.git"
-       :features expand-region)

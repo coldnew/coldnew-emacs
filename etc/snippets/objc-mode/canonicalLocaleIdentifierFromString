@@ -1,4 +1,0 @@
-#name : canonicalLocaleIdentifierFromString
-#group : NSLocale
-# --
-canonicalLocaleIdentifierFromString:${1:(NSString *)string}

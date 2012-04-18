@@ -1,4 +1,0 @@
-#name : classNamed
-#group : NSBundle
-# --
-classNamed:${1:(NSString *)className}

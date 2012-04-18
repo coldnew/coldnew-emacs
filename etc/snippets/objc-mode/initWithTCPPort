@@ -1,4 +1,0 @@
-#name : initWithTCPPort
-#group : NSPort
-# --
-initWithTCPPort:${1:(unsigned short)port}

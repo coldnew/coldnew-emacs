@@ -1,4 +1,0 @@
-#name : findMatchForRequest
-#group : GKMatchmaker
-# --
-findMatchForRequest:${1:(GKMatchRequest *)request}

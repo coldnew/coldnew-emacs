@@ -1,4 +1,0 @@
-#name : leftViewRectForBounds
-#group : UITextField
-# --
-leftViewRectForBounds:${1:(CGRect)bounds}

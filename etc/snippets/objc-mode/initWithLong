@@ -1,4 +1,0 @@
-#name : initWithLong
-#group : NSValue
-# --
-initWithLong:${1:(long)value}

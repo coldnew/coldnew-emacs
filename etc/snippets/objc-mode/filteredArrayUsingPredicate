@@ -1,4 +1,0 @@
-#name : filteredArrayUsingPredicate
-#group : NSPredicate
-# --
-filteredArrayUsingPredicate:${1:(NSPredicate *)predicate}

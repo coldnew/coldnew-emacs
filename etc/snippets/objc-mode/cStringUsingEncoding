@@ -1,4 +1,0 @@
-#name : cStringUsingEncoding
-#group : NSString
-# --
-cStringUsingEncoding:${1:(NSStringEncoding)encoding}

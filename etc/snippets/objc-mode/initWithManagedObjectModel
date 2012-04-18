@@ -1,4 +1,0 @@
-#name : initWithManagedObjectModel
-#group : NSPersistentStoreCoordinator
-# --
-initWithManagedObjectModel:${1:(NSManagedObjectModel *)model}

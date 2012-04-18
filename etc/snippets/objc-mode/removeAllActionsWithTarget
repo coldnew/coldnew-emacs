@@ -1,4 +1,0 @@
-#name : removeAllActionsWithTarget
-#group : NSUndoManager
-# --
-removeAllActionsWithTarget:${1:(id)target}

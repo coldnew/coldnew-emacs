@@ -1,4 +1,0 @@
-#name : initWithArray:copyItems
-#group : NSArray
-# --
-initWithArray:${1:(NSArray *)array} copyItems:${2:(BOOL)flag}

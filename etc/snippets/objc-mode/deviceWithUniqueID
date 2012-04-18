@@ -1,4 +1,0 @@
-#name : deviceWithUniqueID
-#group : AVCaptureDevice
-# --
-deviceWithUniqueID:${1:(NSString *)deviceUniqueID}

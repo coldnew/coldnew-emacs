@@ -1,4 +1,0 @@
-#name : maximumRangeOfUnit
-#group : NSCalendar
-# --
-maximumRangeOfUnit:${1:(NSCalendarUnit)unit}

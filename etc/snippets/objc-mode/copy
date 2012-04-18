@@ -1,4 +1,0 @@
-#name : copy
-#group : UIResponder
-# --
-copy:${1:(id)sender}

@@ -1,4 +1,0 @@
-#name : maximumLengthOfBytesUsingEncoding
-#group : NSString
-# --
-maximumLengthOfBytesUsingEncoding:${1:(NSStringEncoding)enc}

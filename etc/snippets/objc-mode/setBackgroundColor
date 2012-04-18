@@ -1,4 +1,0 @@
-#name : setBackgroundColor
-#group : MPMoviePlayerController
-# --
-setBackgroundColor:${1:(UIColor *)backgroundColor}

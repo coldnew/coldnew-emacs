@@ -1,4 +1,0 @@
-#name : initWithString:relativeToURL
-#group : NSURL
-# --
-initWithString:${1:(NSString *)URLString} relativeToURL:${2:(NSURL *)baseURL}

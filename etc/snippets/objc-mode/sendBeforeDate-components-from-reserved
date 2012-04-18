@@ -1,4 +1,0 @@
-#name : sendBeforeDate:components:from:reserved
-#group : NSPort
-# --
-sendBeforeDate:${1:(NSDate *)limitDate} components:${2:(NSMutableArray *)components} from:${3:(NSPort *)receivePort} reserved:${4:(NSUInteger)headerSpaceReserved}

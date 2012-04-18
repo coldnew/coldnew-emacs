@@ -1,4 +1,0 @@
-#name : sizeWithFont:minFontSize:actualFontSize:forWidth:lineBreakMode
-#group : UIStringDrawing
-# --
-sizeWithFont:${1:(UIFont *)font} minFontSize:${2:(CGFloat)minFontSize} actualFontSize:${3:(CGFloat *)actualFontSize} forWidth:${4:(CGFloat)width} lineBreakMode:${5:(UILineBreakMode)lineBreakMode}

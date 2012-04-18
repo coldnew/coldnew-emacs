@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# contributor : coldnew <coldnew.tw@gmil.com>
-# name: defun
-# key: defun
-# --
-(defun $0)

@@ -1,4 +1,0 @@
-#name : captureStillImageAsynchronouslyFromConnection
-#group : AVCaptureOutput
-# --
-captureStillImageAsynchronouslyFromConnection:${1:(AVCaptureConnection *)connection}

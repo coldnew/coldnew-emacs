@@ -1,4 +1,0 @@
-#name : errorWithDomain:code:userInfo
-#group : NSError
-# --
-errorWithDomain:${1:(NSString *)domain} code:${2:(NSInteger)code} userInfo:${3:(NSDictionary *)dict}

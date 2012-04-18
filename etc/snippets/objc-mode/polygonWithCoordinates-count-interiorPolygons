@@ -1,4 +1,0 @@
-#name : polygonWithCoordinates:count:interiorPolygons
-#group : MKPolygon
-# --
-polygonWithCoordinates:${1:(CLLocationCoordinate2D *)coords} count:${2:(NSUInteger)count} interiorPolygons:${3:(NSArray *)interiorPolygons}

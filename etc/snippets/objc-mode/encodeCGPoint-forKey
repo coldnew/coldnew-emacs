@@ -1,4 +1,0 @@
-#name : encodeCGPoint:forKey
-#group : UIGeometry
-# --
-encodeCGPoint:${1:(CGPoint)point} forKey:${2:(NSString *)key}

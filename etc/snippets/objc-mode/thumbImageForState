@@ -1,4 +1,0 @@
-#name : thumbImageForState
-#group : UISlider
-# --
-thumbImageForState:${1:(UIControlState)state}

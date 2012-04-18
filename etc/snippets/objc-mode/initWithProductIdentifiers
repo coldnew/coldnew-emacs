@@ -1,4 +1,0 @@
-#name : initWithProductIdentifiers
-#group : SKProductsRequest
-# --
-initWithProductIdentifiers:${1:(NSSet *)productIdentifiers}

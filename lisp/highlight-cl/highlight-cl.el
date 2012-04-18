@@ -49,89 +49,89 @@
 
 
 (defgroup highlight-cl nil
-"Highlighting `cl' functions."
-:group 'faces)
+  "Highlighting `cl' functions."
+  :group 'faces)
 
 (defface highlight-cl
-'((t (:underline "red")))
-"Face for highlighting `cl' functions."
-:group 'highlight-cl)
+  '((t (:underline "red")))
+  "Face for highlighting `cl' functions."
+  :group 'highlight-cl)
 (defface highlight-cl-macro
-'((t (:underline "steel blue")))
-"Face for highlighting `cl' macros."
-:group 'highlight-cl)
+  '((t (:underline "steel blue")))
+  "Face for highlighting `cl' macros."
+  :group 'highlight-cl)
 (defface highlight-cl-and-other
-'((t :underline t))
-"Face for highlighting `cl' functions but also defined other packages."
-:group 'highlight-cl)
+  '((t :underline t))
+  "Face for highlighting `cl' functions but also defined other packages."
+  :group 'highlight-cl)
 
 (eval-and-compile
-(defun highlight-cl-cl-function-p (sym)
-"Return non-nil If SYM is defined in cl-* package."
-(and (fboundp sym)
-(symbol-file sym)
-(let ((file (file-name-sans-extension
-(file-name-nondirectory 
-(symbol-file sym)))))
-(string-match "^cl\\(-.+\\)?$" file))))
+  (defun highlight-cl-cl-function-p (sym)
+    "Return non-nil If SYM is defined in cl-* package."
+    (and (fboundp sym)
+	 (symbol-file sym)
+	 (let ((file (file-name-sans-extension
+		      (file-name-nondirectory 
+		       (symbol-file sym)))))
+	   (string-match "^cl\\(-.+\\)?$" file))))
 
-(defun highlight-cl-macro-p (sym)
-"Return non-nil If SYM is macro."
-(let ((def (symbol-function sym)))
-(or (eq (car-safe def) 'macro)
-(and (eq (car-safe def) 'autoload)
-(memq (nth 4 def) '(macro t)))))))
-
+  (defun highlight-cl-macro-p (sym)
+    "Return non-nil If SYM is macro."
+    (let ((def (symbol-function sym)))
+      (or (eq (car-safe def) 'macro)
+	  (and (eq (car-safe def) 'autoload)
+	       (memq (nth 4 def) '(macro t)))))))
+  
 (eval-when-compile
-(defmacro highlight-cl-define-keywords-alist (var docstring)
-"define `cl' function keywods alist at compile time."
-(let (base-keywods)
-;; collect non `cl' keywods
-(mapatoms
-(lambda (x)
-(when (and (fboundp x)
-;; runtime workaround
-(not (highlight-cl-cl-function-p x)))
-(push x base-keywods))))
-;; load cl functions
-(require 'cl)
-;; collect `cl' keywods and define constant.
-`(defconst ,var
-,(let (cl-keywords cl-macro-keywords cl-and-other-keywords)
-(mapatoms
-(lambda (x)
-(when (highlight-cl-cl-function-p x)
-(cond ((memq x base-keywods)
-(push (symbol-name x) cl-and-other-keywords))
-((highlight-cl-macro-p x)
-(push (symbol-name x) cl-macro-keywords))
-(t
-(push (symbol-name x) cl-keywords))))))
-(list 'quote
-(list (cons 'cl cl-keywords)
-(cons 'cl-macro cl-macro-keywords)
-(cons 'cl-and-other cl-and-other-keywords))))
-,docstring))))
+  (defmacro highlight-cl-define-keywords-alist (var docstring)
+    "define `cl' function keywods alist at compile time."
+    (let (base-keywods)
+      ;; collect non `cl' keywods
+      (mapatoms
+       (lambda (x)
+	 (when (and (fboundp x)
+		    ;; runtime workaround
+		    (not (highlight-cl-cl-function-p x)))
+	   (push x base-keywods))))
+      ;; load cl functions
+      (require 'cl)
+      ;; collect `cl' keywods and define constant.
+      `(defconst ,var
+	 ,(let (cl-keywords cl-macro-keywords cl-and-other-keywords)
+	    (mapatoms
+	     (lambda (x)
+	       (when (highlight-cl-cl-function-p x)
+		 (cond ((memq x base-keywods)
+			(push (symbol-name x) cl-and-other-keywords))
+		       ((highlight-cl-macro-p x)
+			(push (symbol-name x) cl-macro-keywords))
+		       (t
+			(push (symbol-name x) cl-keywords))))))
+	    (list 'quote
+		  (list (cons 'cl cl-keywords)
+			(cons 'cl-macro cl-macro-keywords)
+			(cons 'cl-and-other cl-and-other-keywords))))
+	 ,docstring))))
 
 (highlight-cl-define-keywords-alist
-highlight-cl-keywords-alist
-"`cl' function keywords alist.")
+ highlight-cl-keywords-alist
+ "`cl' function keywords alist.")
 
 (defun highlight-cl-add-font-lock-keywords ()
-"Add `cl' function keywords to `font-lock-keywords'."
-(font-lock-add-keywords 
-nil 
-(mapcar
-(lambda (x)
-(list
-(format
-"(%s\\>"
-(regexp-opt (cdr (assq (car x) highlight-cl-keywords-alist)) t))
-1 (list 'quote (cdr x)) 'append))
-'((cl . highlight-cl)
-(cl-macro . highlight-cl-macro)
-(cl-and-other . highlight-cl-and-other)))
-'add))
+  "Add `cl' function keywords to `font-lock-keywords'."
+  (font-lock-add-keywords 
+   nil 
+   (mapcar
+    (lambda (x)
+      (list
+       (format
+	"(%s\\>"
+	(regexp-opt (cdr (assq (car x) highlight-cl-keywords-alist)) t))
+       1 (list 'quote (cdr x)) 'append))
+    '((cl . highlight-cl)
+      (cl-macro . highlight-cl-macro)
+      (cl-and-other . highlight-cl-and-other)))
+   'add))
 
 (provide 'highlight-cl)
 ;;; highlight-cl.el ends here

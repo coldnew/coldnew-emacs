@@ -1,4 +1,0 @@
-#name : deselectRowAtIndexPath:animated
-#group : UITableView
-# --
-deselectRowAtIndexPath:${1:(NSIndexPath *)indexPath} animated:${2:(BOOL)animated}

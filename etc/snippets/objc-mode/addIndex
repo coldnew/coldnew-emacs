@@ -1,4 +1,0 @@
-#name : addIndex
-#group : NSIndexSet
-# --
-addIndex:${1:(NSUInteger)value}

@@ -1,4 +1,0 @@
-#name : countByEnumeratingWithState:objects:count
-#group : NSEnumerator
-# --
-countByEnumeratingWithState:${1:(NSFastEnumerationState *)state} objects:${2:(id *)stackbuf} count:${3:(NSUInteger)len}

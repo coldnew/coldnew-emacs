@@ -1,4 +1,0 @@
-#name : removeCharactersInRange
-#group : NSCharacterSet
-# --
-removeCharactersInRange:${1:(NSRange)aRange}

@@ -1,4 +1,0 @@
-#name : valueForHTTPHeaderField
-#group : NSURLRequest
-# --
-valueForHTTPHeaderField:${1:(NSString *)field}

@@ -1,4 +1,0 @@
-#name : setMemoryCapacity
-#group : NSURLCache
-# --
-setMemoryCapacity:${1:(NSUInteger)memoryCapacity}

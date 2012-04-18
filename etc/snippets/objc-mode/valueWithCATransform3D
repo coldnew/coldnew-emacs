@@ -1,4 +1,0 @@
-#name : valueWithCATransform3D
-#group : CATransform3D
-# --
-valueWithCATransform3D:${1:(CATransform3D)t}

@@ -1,4 +1,0 @@
-#name : addObserver:toObjectsAtIndexes:forKeyPath:options:context
-#group : NSKeyValueObserving
-# --
-addObserver:${1:(NSObject *)observer} toObjectsAtIndexes:${2:(NSIndexSet *)indexes} forKeyPath:${3:(NSString *)keyPath} options:${4:(NSKeyValueObservingOptions)options} context:${5:(void *)context}

@@ -1,4 +1,0 @@
-#name : removeFileAtPath:handler
-#group : NSFileManager
-# --
-removeFileAtPath:${1:(NSString *)path} handler:${2:(id)handler}

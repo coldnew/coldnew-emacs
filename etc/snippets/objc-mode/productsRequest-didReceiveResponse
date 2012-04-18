@@ -1,4 +1,0 @@
-#name : productsRequest:didReceiveResponse
-#group : SKProductsRequest
-# --
-productsRequest:${1:(SKProductsRequest *)request} didReceiveResponse:${2:(SKProductsResponse *)response}

@@ -1,4 +1,0 @@
-#name : linkPath:toPath:handler
-#group : NSFileManager
-# --
-linkPath:${1:(NSString *)src} toPath:${2:(NSString *)dest} handler:${3:(id)handler}

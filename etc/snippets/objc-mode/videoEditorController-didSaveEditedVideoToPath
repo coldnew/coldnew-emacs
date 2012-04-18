@@ -1,4 +1,0 @@
-#name : videoEditorController:didSaveEditedVideoToPath
-#group : UIVideoEditorController
-# --
-videoEditorController:${1:(UIVideoEditorController *)editor} didSaveEditedVideoToPath:${2:(NSString *)editedVideoPath}

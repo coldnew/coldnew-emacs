@@ -1,0 +1,10 @@
+(:name eclim
+       :website "https://github.com/senny/emacs-eclim/"
+       :description "This project brings some of the great eclipse features to emacs developers."
+       :type github
+       :pkgname "senny/emacs-eclim"
+       :load-path ("." "vendor")
+       :features eclim
+       :post-init (progn
+                    (setq eclim-auto-save t)
+                    (global-eclim-mode -1)))

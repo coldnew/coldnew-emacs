@@ -1,4 +1,0 @@
-#name : sizeFromBannerContentSizeIdentifier
-#group : ADBannerView
-# --
-sizeFromBannerContentSizeIdentifier:${1:(NSString *)contentSizeIdentifier}

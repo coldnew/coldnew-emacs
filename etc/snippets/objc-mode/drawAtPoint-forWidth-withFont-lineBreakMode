@@ -1,4 +1,0 @@
-#name : drawAtPoint:forWidth:withFont:lineBreakMode
-#group : UIStringDrawing
-# --
-drawAtPoint:${1:(CGPoint)point} forWidth:${2:(CGFloat)width} withFont:${3:(UIFont *)font} lineBreakMode:${4:(UILineBreakMode)lineBreakMode}

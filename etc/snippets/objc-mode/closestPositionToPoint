@@ -1,4 +1,0 @@
-#name : closestPositionToPoint
-#group : UITextInput
-# --
-closestPositionToPoint:${1:(CGPoint)point}

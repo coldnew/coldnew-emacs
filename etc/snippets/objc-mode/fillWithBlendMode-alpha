@@ -1,4 +1,0 @@
-#name : fillWithBlendMode:alpha
-#group : UIBezierPath
-# --
-fillWithBlendMode:${1:(CGBlendMode)blendMode} alpha:${2:(CGFloat)alpha}

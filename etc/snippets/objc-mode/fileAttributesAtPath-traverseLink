@@ -1,4 +1,0 @@
-#name : fileAttributesAtPath:traverseLink
-#group : NSFileManager
-# --
-fileAttributesAtPath:${1:(NSString *)path} traverseLink:${2:(BOOL)yorn}

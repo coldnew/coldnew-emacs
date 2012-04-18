@@ -1,4 +1,0 @@
-#name : getObjectValue:forString:range:error
-#group : NSNumberFormatter
-# --
-getObjectValue:${1:(out id *)obj} forString:${2:(NSString *)string} range:${3:(inout NSRange *)rangep} error:${4:(out NSError **)error}

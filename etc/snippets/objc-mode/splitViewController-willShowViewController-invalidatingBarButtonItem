@@ -1,4 +1,0 @@
-#name : splitViewController:willShowViewController:invalidatingBarButtonItem
-#group : UISplitViewController
-# --
-splitViewController:${1:(UISplitViewController*)svc} willShowViewController:${2:(UIViewController *)aViewController} invalidatingBarButtonItem:${3:(UIBarButtonItem *)barButtonItem}

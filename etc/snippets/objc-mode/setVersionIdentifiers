@@ -1,4 +1,0 @@
-#name : setVersionIdentifiers
-#group : NSManagedObjectModel
-# --
-setVersionIdentifiers:${1:(NSSet *)identifiers}

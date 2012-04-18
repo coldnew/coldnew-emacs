@@ -1,4 +1,0 @@
-#name : presentModalViewController:animated
-#group : UIViewController
-# --
-presentModalViewController:${1:(UIViewController *)modalViewController} animated:${2:(BOOL)animated}

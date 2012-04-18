@@ -1,4 +1,0 @@
-#name : initWithFormat:arguments
-#group : NSString
-# --
-initWithFormat:${1:(NSString *)format} arguments:${2:(va_list)argList}

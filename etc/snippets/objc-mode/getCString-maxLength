@@ -1,4 +1,0 @@
-#name : getCString:maxLength
-#group : NSString
-# --
-getCString:${1:(char *)bytes} maxLength:${2:(NSUInteger)maxLength}

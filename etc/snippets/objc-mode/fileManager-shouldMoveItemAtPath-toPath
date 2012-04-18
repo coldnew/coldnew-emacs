@@ -1,4 +1,0 @@
-#name : fileManager:shouldMoveItemAtPath:toPath
-#group : NSFileManager
-# --
-fileManager:${1:(NSFileManager *)fileManager} shouldMoveItemAtPath:${2:(NSString *)srcPath} toPath:${3:(NSString *)dstPath}

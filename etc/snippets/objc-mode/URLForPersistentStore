@@ -1,4 +1,0 @@
-#name : URLForPersistentStore
-#group : NSPersistentStoreCoordinator
-# --
-URLForPersistentStore:${1:(NSPersistentStore *)store}

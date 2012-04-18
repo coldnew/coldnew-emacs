@@ -1,4 +1,0 @@
-#name : notificationWithName:object
-#group : NSNotification
-# --
-notificationWithName:${1:(NSString *)aName} object:${2:(id)anObject}

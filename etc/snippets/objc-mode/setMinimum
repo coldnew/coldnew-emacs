@@ -1,4 +1,0 @@
-#name : setMinimum
-#group : NSNumberFormatter
-# --
-setMinimum:${1:(NSDecimalNumber *)aMinimum}

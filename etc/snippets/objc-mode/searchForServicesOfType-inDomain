@@ -1,4 +1,0 @@
-#name : searchForServicesOfType:inDomain
-#group : NSNetServices
-# --
-searchForServicesOfType:${1:(NSString *)type} inDomain:${2:(NSString *)domainString}

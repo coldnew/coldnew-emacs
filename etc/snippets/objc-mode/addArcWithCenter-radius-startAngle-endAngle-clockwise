@@ -1,4 +1,0 @@
-#name : addArcWithCenter:radius:startAngle:endAngle:clockwise
-#group : UIBezierPath
-# --
-addArcWithCenter:${1:(CGPoint)center} radius:${2:(CGFloat)radius} startAngle:${3:(CGFloat)startAngle} endAngle:${4:(CGFloat)endAngle} clockwise:${5:(BOOL)clockwise}

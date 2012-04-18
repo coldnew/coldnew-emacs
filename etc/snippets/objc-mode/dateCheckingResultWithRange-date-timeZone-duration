@@ -1,4 +1,0 @@
-#name : dateCheckingResultWithRange:date:timeZone:duration
-#group : NSTextCheckingResult
-# --
-dateCheckingResultWithRange:${1:(NSRange)range} date:${2:(NSDate *)date} timeZone:${3:(NSTimeZone *)timeZone} duration:${4:(NSTimeInterval)duration}

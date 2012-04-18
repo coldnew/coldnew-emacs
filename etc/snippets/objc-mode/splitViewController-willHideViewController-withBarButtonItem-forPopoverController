@@ -1,4 +1,0 @@
-#name : splitViewController:willHideViewController:withBarButtonItem:forPopoverController
-#group : UISplitViewController
-# --
-splitViewController:${1:(UISplitViewController*)svc} willHideViewController:${2:(UIViewController *)aViewController} withBarButtonItem:${3:(UIBarButtonItem*)barButtonItem} forPopoverController:${4:(UIPopoverController*)pc}

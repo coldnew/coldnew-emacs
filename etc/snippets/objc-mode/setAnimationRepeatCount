@@ -1,4 +1,0 @@
-#name : setAnimationRepeatCount
-#group : UIView
-# --
-setAnimationRepeatCount:${1:(float)repeatCount}

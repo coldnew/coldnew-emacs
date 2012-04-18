@@ -1,0 +1,5 @@
+(:name rust-mode
+       :type github
+       :pkgname "marijnh/rust-mode"
+       :description "Emacs mode for Rust"
+       :features rust-mode)

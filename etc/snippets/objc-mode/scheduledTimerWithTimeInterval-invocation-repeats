@@ -1,4 +1,0 @@
-#name : scheduledTimerWithTimeInterval:invocation:repeats
-#group : NSTimer
-# --
-scheduledTimerWithTimeInterval:${1:(NSTimeInterval)ti} invocation:${2:(NSInvocation *)invocation} repeats:${3:(BOOL)yesOrNo}

@@ -1,4 +1,0 @@
-#name : addAttribute:value:range
-#group : NSAttributedString
-# --
-addAttribute:${1:(NSString *)name} value:${2:(id)value} range:${3:(NSRange)range}

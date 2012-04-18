@@ -1,4 +1,0 @@
-#name : searchBarShouldBeginEditing
-#group : UISearchBar
-# --
-searchBarShouldBeginEditing:${1:(UISearchBar *)searchBar}

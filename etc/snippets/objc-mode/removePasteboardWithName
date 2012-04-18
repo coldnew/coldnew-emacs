@@ -1,4 +1,0 @@
-#name : removePasteboardWithName
-#group : UIPasteboard
-# --
-removePasteboardWithName:${1:(NSString *)pasteboardName}

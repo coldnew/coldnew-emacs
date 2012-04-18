@@ -1,4 +1,0 @@
-#name : valueWithCGAffineTransform
-#group : UIGeometry
-# --
-valueWithCGAffineTransform:${1:(CGAffineTransform)transform}

@@ -1,4 +1,0 @@
-#name : phoneNumberCheckingResultWithRange:phoneNumber
-#group : NSTextCheckingResult
-# --
-phoneNumberCheckingResultWithRange:${1:(NSRange)range} phoneNumber:${2:(NSString *)phoneNumber}

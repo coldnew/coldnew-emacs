@@ -1,4 +1,0 @@
-#name : dataWithContentsOfURL
-#group : NSData
-# --
-dataWithContentsOfURL:${1:(NSURL *)url}

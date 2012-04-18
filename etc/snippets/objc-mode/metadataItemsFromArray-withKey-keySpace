@@ -1,4 +1,0 @@
-#name : metadataItemsFromArray:withKey:keySpace
-#group : AVMetadataItem
-# --
-metadataItemsFromArray:${1:(NSArray *)array} withKey:${2:(id)key} keySpace:${3:(NSString *)keySpace}

@@ -1,4 +1,0 @@
-#name : initWithCharacters:length
-#group : NSString
-# --
-initWithCharacters:${1:(const unichar *)characters} length:${2:(NSUInteger)length}

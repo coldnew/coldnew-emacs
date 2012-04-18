@@ -1,4 +1,0 @@
-#name : scanHexFloat
-#group : NSScanner
-# --
-scanHexFloat:${1:(float *)result}

@@ -1,4 +1,0 @@
-#name : propertyListWithData:options:format:error
-#group : NSPropertyList
-# --
-propertyListWithData:${1:(NSData *)data} options:${2:(NSPropertyListReadOptions)opt} format:${3:(NSPropertyListFormat *)format} error:${4:(NSError **)error}

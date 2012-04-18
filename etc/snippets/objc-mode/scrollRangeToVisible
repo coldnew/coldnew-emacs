@@ -1,4 +1,0 @@
-#name : scrollRangeToVisible
-#group : UITextView
-# --
-scrollRangeToVisible:${1:(NSRange)range}

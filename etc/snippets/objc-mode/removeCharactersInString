@@ -1,4 +1,0 @@
-#name : removeCharactersInString
-#group : NSCharacterSet
-# --
-removeCharactersInString:${1:(NSString *)aString}

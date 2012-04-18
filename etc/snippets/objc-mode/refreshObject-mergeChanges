@@ -1,4 +1,0 @@
-#name : refreshObject:mergeChanges
-#group : NSManagedObjectContext
-# --
-refreshObject:${1:(NSManagedObject *)object} mergeChanges:${2:(BOOL)flag}

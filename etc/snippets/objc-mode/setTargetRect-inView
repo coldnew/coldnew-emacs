@@ -1,4 +1,0 @@
-#name : setTargetRect:inView
-#group : UIMenuController
-# --
-setTargetRect:${1:(CGRect)targetRect} inView:${2:(UIView *)targetView}

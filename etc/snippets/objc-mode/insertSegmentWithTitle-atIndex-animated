@@ -1,4 +1,0 @@
-#name : insertSegmentWithTitle:atIndex:animated
-#group : UISegmentedControl
-# --
-insertSegmentWithTitle:${1:(NSString *)title} atIndex:${2:(NSUInteger)segment} animated:${3:(BOOL)animated}

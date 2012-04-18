@@ -1,5 +1,7 @@
 (:name color-theme-ir-black
        :description "IR Black Color Theme for Emacs."
-       :type git 
-       :url "https://github.com/burke/color-theme-ir-black.git"
-       :depends color-theme)
+       :type github
+       :pkgname "burke/color-theme-ir-black"
+       :depends color-theme
+       :prepare (autoload 'color-theme-ir-black "color-theme-ir-black"
+                  "color-theme: ir-black" t)))

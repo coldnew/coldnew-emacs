@@ -1,3 +1,0 @@
-(:name evil-surround
-       :type git 
-       :url "https://github.com/timcharper/evil-surround.git")

@@ -1,4 +1,0 @@
-#name : actionSheetCancel
-#group : UIActionSheet
-# --
-actionSheetCancel:${1:(UIActionSheet *)actionSheet}

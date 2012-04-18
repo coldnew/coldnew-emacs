@@ -1,4 +1,0 @@
-#name : initWithCStringNoCopy:length:freeWhenDone
-#group : NSString
-# --
-initWithCStringNoCopy:${1:(char *)bytes} length:${2:(NSUInteger)length} freeWhenDone:${3:(BOOL)freeBuffer}

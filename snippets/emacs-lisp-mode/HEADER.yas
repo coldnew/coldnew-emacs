@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor : coldnew <coldnew.tw@gmail.com>
+# name: Header file
+# key: HEADER
+# type: command
+# --
+
+;; snippet for ~/.emacs.d/rc.d/
+(if (search (expand-file-name emacs-config-dir) (directory-file-name (buffer-file-name)))
+    (yas/expand-snippet
+     (concat
+      ";;; `(yas/file)` ---                                                     \n"
+      "(eval-when-compile (require 'cl))                                        \n"
+      "                                                                         \n"
+      "                                                                         \n"
+      "$0                                                                       \n"
+      "                                                                         \n"
+      "                                                                         \n"
+      "(provide '`(yas/file-sans)`)                                             \n"
+      ";; `(yas/file)` ends here.                                               \n"
+      )))

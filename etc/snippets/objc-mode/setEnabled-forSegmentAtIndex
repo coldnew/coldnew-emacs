@@ -1,4 +1,0 @@
-#name : setEnabled:forSegmentAtIndex
-#group : UISegmentedControl
-# --
-setEnabled:${1:(BOOL)enabled} forSegmentAtIndex:${2:(NSUInteger)segment}

@@ -1,4 +1,0 @@
-#name : dateByAddingTimeInterval
-#group : NSDate
-# --
-dateByAddingTimeInterval:${1:(NSTimeInterval)ti}

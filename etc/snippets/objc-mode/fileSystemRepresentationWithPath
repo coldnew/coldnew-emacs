@@ -1,4 +1,0 @@
-#name : fileSystemRepresentationWithPath
-#group : NSFileManager
-# --
-fileSystemRepresentationWithPath:${1:(NSString *)path}

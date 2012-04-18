@@ -1,4 +1,0 @@
-#name : initWithName
-#group : NSTimeZone
-# --
-initWithName:${1:(NSString *)tzName}

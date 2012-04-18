@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# contributor : coldnew <coldnew.tw@gmil.com>
-# name: format
-# key: f
-# key: format
-# --
-(format "${1:STRING}" ${2:&rest OBJECTS})
-$0

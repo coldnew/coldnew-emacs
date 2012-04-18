@@ -1,4 +1,0 @@
-#name : presentOptionsMenuFromBarButtonItem:animated
-#group : UIDocumentInteractionController
-# --
-presentOptionsMenuFromBarButtonItem:${1:(UIBarButtonItem *)item} animated:${2:(BOOL)animated}

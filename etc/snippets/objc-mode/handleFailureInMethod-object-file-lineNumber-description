@@ -1,4 +1,0 @@
-#name : handleFailureInMethod:object:file:lineNumber:description
-#group : NSException
-# --
-handleFailureInMethod:${1:(SEL)selector} object:${2:(id)object} file:${3:(NSString *)fileName} lineNumber:${4:(NSInteger)line} description:${5:(NSString *)format}

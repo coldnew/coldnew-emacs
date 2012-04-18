@@ -1,4 +1,0 @@
-#name : compatibleTrackForCompositionTrack
-#group : AVAsset
-# --
-compatibleTrackForCompositionTrack:${1:(AVCompositionTrack *)compositionTrack}

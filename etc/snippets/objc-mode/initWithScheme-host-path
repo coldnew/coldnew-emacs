@@ -1,4 +1,0 @@
-#name : initWithScheme:host:path
-#group : NSURL
-# --
-initWithScheme:${1:(NSString *)scheme} host:${2:(NSString *)host} path:${3:(NSString *)path}

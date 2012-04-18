@@ -1,4 +1,0 @@
-#name : parser:foundCharacters
-#group : NSXMLParser
-# --
-parser:${1:(NSXMLParser *)parser} foundCharacters:${2:(NSString *)string}

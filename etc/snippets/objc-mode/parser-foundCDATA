@@ -1,4 +1,0 @@
-#name : parser:foundCDATA
-#group : NSXMLParser
-# --
-parser:${1:(NSXMLParser *)parser} foundCDATA:${2:(NSData *)CDATABlock}

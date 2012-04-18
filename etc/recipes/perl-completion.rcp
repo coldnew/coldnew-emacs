@@ -1,5 +1,0 @@
-(:name perl-completion
-       :description "minor mode provides useful features for editing perl codes"
-       :website "http://www.emacswiki.org/emacs/PerlCompletion"
-       :type emacswiki
-       )

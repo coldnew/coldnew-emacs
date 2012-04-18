@@ -1,4 +1,0 @@
-#name : instancesRespondToSelector
-#group : NSObject
-# --
-instancesRespondToSelector:${1:(SEL)aSelector}

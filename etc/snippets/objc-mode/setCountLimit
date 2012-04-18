@@ -1,4 +1,0 @@
-#name : setCountLimit
-#group : NSCache
-# --
-setCountLimit:${1:(NSUInteger)lim}

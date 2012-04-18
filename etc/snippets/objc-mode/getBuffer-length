@@ -1,4 +1,0 @@
-#name : getBuffer:length
-#group : NSStream
-# --
-getBuffer:${1:(uint8_t **)buffer} length:${2:(NSUInteger *)len}

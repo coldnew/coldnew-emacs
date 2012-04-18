@@ -1,4 +1,0 @@
-#name : initWithLeftExpression:rightExpression:modifier:type:options
-#group : NSComparisonPredicate
-# --
-initWithLeftExpression:${1:(NSExpression *)lhs} rightExpression:${2:(NSExpression *)rhs} modifier:${3:(NSComparisonPredicateModifier)modifier} type:${4:(NSPredicateOperatorType)type} options:${5:(NSUInteger)options}

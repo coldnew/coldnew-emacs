@@ -1,4 +1,0 @@
-#name : initWithContentsOfMappedFile
-#group : NSData
-# --
-initWithContentsOfMappedFile:${1:(NSString *)path}

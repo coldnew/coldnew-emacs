@@ -1,6 +1,0 @@
-(:name flymake-cursor
-       :description ""
-       :website ""
-       :type emacswiki
-       :features flymake-cursor
-       )

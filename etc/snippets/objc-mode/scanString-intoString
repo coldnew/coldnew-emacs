@@ -1,4 +1,0 @@
-#name : scanString:intoString
-#group : NSScanner
-# --
-scanString:${1:(NSString *)string} intoString:${2:(NSString **)value}

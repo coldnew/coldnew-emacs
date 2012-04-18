@@ -1,4 +1,0 @@
-#name : attemptRecoveryFromError:optionIndex
-#group : NSError
-# --
-attemptRecoveryFromError:${1:(NSError *)error} optionIndex:${2:(NSUInteger)recoveryOptionIndex}

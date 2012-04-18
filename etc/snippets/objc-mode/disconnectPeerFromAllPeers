@@ -1,4 +1,0 @@
-#name : disconnectPeerFromAllPeers
-#group : GKSession
-# --
-disconnectPeerFromAllPeers:${1:(NSString *)peerID}

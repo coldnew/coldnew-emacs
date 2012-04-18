@@ -1,4 +1,0 @@
-#name : tracksWithMediaType
-#group : AVAsset
-# --
-tracksWithMediaType:${1:(NSString *)mediaType}

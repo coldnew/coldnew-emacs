@@ -87,73 +87,73 @@
 (defvar shell-pop-internal-mode-shell "/bin/bash")
 
 (defvar shell-pop-internal-mode-list
-(list
-; mode, buffer, function
-'("shell"     "*shell*"     '(lambda () (shell)))
-'("terminal"  "*terminal*"  '(lambda () (term shell-pop-internal-mode-shell)))
-'("ansi-term" "*ansi-term*" '(lambda () (ansi-term shell-pop-internal-mode-shell)))
-'("eshell"    "*eshell*"    '(lambda () (eshell)))))
+  (list
+    ; mode, buffer, function
+    '("shell"     "*shell*"     '(lambda () (shell)))
+    '("terminal"  "*terminal*"  '(lambda () (term shell-pop-internal-mode-shell)))
+    '("ansi-term" "*ansi-term*" '(lambda () (ansi-term shell-pop-internal-mode-shell)))
+    '("eshell"    "*eshell*"    '(lambda () (eshell)))))
 
 (defun shell-pop-set-window-height (number)
-(interactive "nInput the number for the percentage of \
+  (interactive "nInput the number for the percentage of \
 selected window height (10-100): ")
-(setq shell-pop-window-height number))
+  (setq shell-pop-window-height number))
 
 (defun shell-pop-set-window-position (position)
-(interactive "sInput the position for shell-pop (top|bottom): ")
-(setq shell-pop-window-position position))
+  (interactive "sInput the position for shell-pop (top|bottom): ")
+  (setq shell-pop-window-position position))
 
 (defun shell-pop-set-internal-mode (mode)
-(interactive "sInput your favorite mode (shell|terminal|ansi-term|eshell): ")
-(if (catch 'found
-(dolist (l shell-pop-internal-mode-list)
-(if (string-match mode (car l))
-(progn
-(setq shell-pop-internal-mode-buffer (nth 1 l))
-(setq shell-pop-internal-mode-func (nth 2 l))
-(throw 'found t)))))
-t
-nil))
+  (interactive "sInput your favorite mode (shell|terminal|ansi-term|eshell): ")
+  (if (catch 'found
+        (dolist (l shell-pop-internal-mode-list)
+          (if (string-match mode (car l))
+              (progn
+                (setq shell-pop-internal-mode-buffer (nth 1 l))
+                (setq shell-pop-internal-mode-func (nth 2 l))
+                (throw 'found t)))))
+      t
+    nil))
 
 (defun shell-pop-set-internal-mode-shell (shell)
-(interactive (list (read-from-minibuffer "Input your favorite shell:"
-shell-pop-internal-mode-shell)))
-(setq shell-pop-internal-mode-shell shell))
+  (interactive (list (read-from-minibuffer "Input your favorite shell:"
+                                           shell-pop-internal-mode-shell)))
+  (setq shell-pop-internal-mode-shell shell))
 
 (defun shell-pop ()
-(interactive)
-(if (equal (buffer-name) shell-pop-internal-mode-buffer)
-(shell-pop-out)
-(shell-pop-up)))
+  (interactive)
+  (if (equal (buffer-name) shell-pop-internal-mode-buffer)
+      (shell-pop-out)
+    (shell-pop-up)))
 
 (defun shell-pop-up ()
-(let ((w (get-buffer-window shell-pop-internal-mode-buffer)))
-(if w
-(select-window w)
-(progn
-; save shell-pop-last-buffer and shell-pop-last-window to return
-(setq shell-pop-last-buffer (buffer-name))
-(setq shell-pop-last-window (selected-window))
-(if (not (eq shell-pop-window-height 100))
-(progn
-(split-window (selected-window)
-(if (string= shell-pop-window-position "bottom")
-(round (* (window-height)
-(/ (- 100 shell-pop-window-height) 100.0)))
-(round (* (window-height) (/ shell-pop-window-height 100.0)))))
-(if (string= shell-pop-window-position "bottom")
-(other-window 1))))
-(if (not (get-buffer shell-pop-internal-mode-buffer))
-(funcall (eval shell-pop-internal-mode-func))
-(switch-to-buffer shell-pop-internal-mode-buffer))))))
+  (let ((w (get-buffer-window shell-pop-internal-mode-buffer)))
+    (if w
+        (select-window w)
+      (progn
+        ; save shell-pop-last-buffer and shell-pop-last-window to return
+          (setq shell-pop-last-buffer (buffer-name))
+          (setq shell-pop-last-window (selected-window))
+          (if (not (eq shell-pop-window-height 100))
+              (progn
+                (split-window (selected-window)
+                              (if (string= shell-pop-window-position "bottom")
+                                  (round (* (window-height)
+                                            (/ (- 100 shell-pop-window-height) 100.0)))
+                                (round (* (window-height) (/ shell-pop-window-height 100.0)))))
+                (if (string= shell-pop-window-position "bottom")
+                    (other-window 1))))
+          (if (not (get-buffer shell-pop-internal-mode-buffer))
+              (funcall (eval shell-pop-internal-mode-func))
+            (switch-to-buffer shell-pop-internal-mode-buffer))))))
 
 (defun shell-pop-out ()
-(if (not (eq shell-pop-window-height 100))
-(progn
-(delete-window)
-(if (string= shell-pop-window-position "bottom")
-(select-window shell-pop-last-window))))
-(switch-to-buffer shell-pop-last-buffer))
+  (if (not (eq shell-pop-window-height 100))
+      (progn
+        (delete-window)
+        (if (string= shell-pop-window-position "bottom")
+            (select-window shell-pop-last-window))))
+  (switch-to-buffer shell-pop-last-buffer))
 
 (provide 'shell-pop)
 

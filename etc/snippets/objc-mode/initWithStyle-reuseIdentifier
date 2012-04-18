@@ -1,4 +1,0 @@
-#name : initWithStyle:reuseIdentifier
-#group : UITableViewCell
-# --
-initWithStyle:${1:(UITableViewCellStyle)style} reuseIdentifier:${2:(NSString *)reuseIdentifier}

@@ -1,4 +1,0 @@
-#name : removeObjectsForKeys
-#group : NSDictionary
-# --
-removeObjectsForKeys:${1:(NSArray *)keyArray}

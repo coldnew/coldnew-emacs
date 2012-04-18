@@ -1,4 +1,0 @@
-#name : queuePlayerWithItems
-#group : AVPlayer
-# --
-queuePlayerWithItems:${1:(NSArray *)items}

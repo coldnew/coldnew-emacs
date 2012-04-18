@@ -1,4 +1,0 @@
-#name : addOutput
-#group : AVCaptureSession
-# --
-addOutput:${1:(AVCaptureOutput *)output}

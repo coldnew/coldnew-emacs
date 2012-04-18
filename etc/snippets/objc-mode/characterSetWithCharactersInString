@@ -1,4 +1,0 @@
-#name : characterSetWithCharactersInString
-#group : NSCharacterSet
-# --
-characterSetWithCharactersInString:${1:(NSString *)aString}

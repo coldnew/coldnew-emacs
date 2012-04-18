@@ -1,4 +1,0 @@
-#name : formIntersectionWithCharacterSet
-#group : NSCharacterSet
-# --
-formIntersectionWithCharacterSet:${1:(NSCharacterSet *)otherSet}

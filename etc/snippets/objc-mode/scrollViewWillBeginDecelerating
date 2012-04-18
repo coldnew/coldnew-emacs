@@ -1,4 +1,0 @@
-#name : scrollViewWillBeginDecelerating
-#group : UIScrollView
-# --
-scrollViewWillBeginDecelerating:${1:(UIScrollView *)scrollView}

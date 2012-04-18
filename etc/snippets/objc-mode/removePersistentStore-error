@@ -1,4 +1,0 @@
-#name : removePersistentStore:error
-#group : NSPersistentStoreCoordinator
-# --
-removePersistentStore:${1:(NSPersistentStore *)store} error:${2:(NSError **)error}

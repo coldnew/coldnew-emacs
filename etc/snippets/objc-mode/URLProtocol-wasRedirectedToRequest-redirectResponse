@@ -1,4 +1,0 @@
-#name : URLProtocol:wasRedirectedToRequest:redirectResponse
-#group : NSURLProtocol
-# --
-URLProtocol:${1:(NSURLProtocol *)protocol} wasRedirectedToRequest:${2:(NSURLRequest *)request} redirectResponse:${3:(NSURLResponse *)redirectResponse}

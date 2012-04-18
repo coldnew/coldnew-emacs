@@ -1,4 +1,0 @@
-#name : setTitleColor:forState
-#group : UIButton
-# --
-setTitleColor:${1:(UIColor *)color} forState:${2:(UIControlState)state}

@@ -1,4 +1,0 @@
-#name : initWithExpressionType
-#group : NSExpression
-# --
-initWithExpressionType:${1:(NSExpressionType)type}

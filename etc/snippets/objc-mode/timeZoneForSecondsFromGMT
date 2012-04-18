@@ -1,4 +1,0 @@
-#name : timeZoneForSecondsFromGMT
-#group : NSTimeZone
-# --
-timeZoneForSecondsFromGMT:${1:(NSInteger)seconds}

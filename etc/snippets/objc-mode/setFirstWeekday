@@ -1,4 +1,0 @@
-#name : setFirstWeekday
-#group : NSCalendar
-# --
-setFirstWeekday:${1:(NSUInteger)weekday}

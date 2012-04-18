@@ -1,35 +1,45 @@
-
+;;; init.el --- configuration entry point.
 (eval-when-compile (require 'cl))
 
-;; (defvar *emacs-load-start* (current-time))
+(message "Emacs is powering up... Be patient, Master %s!" (getenv "USER"))
 
-;;;; Load Path Setting
+;; add directories to emacs's `load-path' recursively.
 (let* ((emacs-dir "~/.emacs.d/")
-       (lisp-dir '("lisp/" "local-lisp/" "rc.d/")))
+       (lisp-dir '("lisp/" "local-lisp/" "config/")))
   (dolist (lisp-path lisp-dir)
-          (let* ((load-dir (concat emacs-dir lisp-path))
-                 (default-directory load-dir))
-            (setq load-path (cons load-dir load-path))
-            (normal-top-level-add-subdirs-to-load-path))))
+    (let* ((load-dir (concat emacs-dir lisp-path))
+	   (default-directory load-dir))
+      (setq load-path (cons load-dir load-path))
+      (normal-top-level-add-subdirs-to-load-path))))
 
-;;;; Loading emacs configures
-(let* ((emacs-dir "~/.emacs.d/")
-       (init-folder (concat emacs-dir "rc.d/"))
-       (authinfo-file (concat emacs-dir ".authinfo.gpg")))
-  (if (file-readable-p init-folder)
-      (dolist (config-file (directory-files init-folder t ".*\.elc?$"))
-              (let* ((feature (file-name-sans-extension (file-name-nondirectory config-file)))
-                     (loading-result (require (intern feature) nil 'noerror)))
-                (with-current-buffer (get-buffer-create "*Loading Config Log*")
-                                     (insert (format "\t Loading %-20s\t \n" (concat init-folder config-file))))
-                )))
+;; load the core stuff
+(require 'coldnew-core)
 
-  ;; Show about how many time we waste on open emacs
-  ;; (message "All .emacs config loadded in %ds"
-  ;;       (destructuring-bind (hi lo ms) (current-time)
-  ;;                           (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
+;; config changes made through the customize UI will be store here
+(setq custom-file emacs-custom-file)
 
-  ;; After loading allemacs config file, readauthorization file
-  (if (file-exists-p authinfo-file) (load-file authinfo-file))
-  (message "\t --- Loading All Emacs Confis Finish ---")
-  )
+;; loading all emacs configures
+(if (file-readable-p emacs-config-dir)
+    (with-current-buffer (get-buffer-create "*Loading Log*")
+      ;; header file
+      (insert (concat "\n" (make-string 80 ?=)))
+      (insert (propertize "\n Loading emacs config status \n" 'face '(:foreground "gold2")))
+      (insert (concat (make-string 80 ?=) "\n"))
+      ;; loading file and test status
+      (dolist (config-file (directory-files emacs-config-dir t "^[^#].*el$"))
+	(let* ((feature (file-name-sans-extension (file-name-nondirectory config-file)))
+	       (config-file-name (file-name-nondirectory config-file))
+	       (loading-result (require (intern feature) nil 'noerror))
+	       (loading-status (if loading-result "LOADED" "FAILED")))
+
+	  (insert (format " %-20s %s\t\t [ " config-file-name
+			  (make-string (- 30 (length config-file-name)) ? )
+			  ))
+	  (insert (propertize loading-status 'face  `(:foreground ,(if loading-result "green" "red"))))
+	  (insert " ]\n")))))
+
+
+
+
+(message "Emacs is ready to serve you, Master %s!" (getenv "USER"))
+

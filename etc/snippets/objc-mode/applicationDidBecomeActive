@@ -1,4 +1,0 @@
-#name : applicationDidBecomeActive
-#group : UIApplication
-# --
-applicationDidBecomeActive:${1:(UIApplication *)application}

@@ -1,4 +1,0 @@
-#name : setWeekday
-#group : NSCalendar
-# --
-setWeekday:${1:(NSInteger)v}

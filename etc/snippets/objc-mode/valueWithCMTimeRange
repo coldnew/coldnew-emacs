@@ -1,4 +1,0 @@
-#name : valueWithCMTimeRange
-#group : AVTime
-# --
-valueWithCMTimeRange:${1:(CMTimeRange)timeRange}

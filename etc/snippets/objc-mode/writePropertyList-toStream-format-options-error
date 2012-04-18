@@ -1,4 +1,0 @@
-#name : writePropertyList:toStream:format:options:error
-#group : NSPropertyList
-# --
-writePropertyList:${1:(id)plist} toStream:${2:(NSOutputStream *)stream} format:${3:(NSPropertyListFormat)format} options:${4:(NSPropertyListWriteOptions)opt} error:${5:(NSError **)error}

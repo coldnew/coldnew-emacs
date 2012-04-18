@@ -1,4 +1,0 @@
-#name : compositionTrackSegmentWithURL:trackID:sourceTimeRange:targetTimeRange
-#group : AVCompositionTrackSegment
-# --
-compositionTrackSegmentWithURL:${1:(NSURL *)URL} trackID:${2:(CMPersistentTrackID)trackID} sourceTimeRange:${3:(CMTimeRange)sourceTimeRange} targetTimeRange:${4:(CMTimeRange)targetTimeRange}

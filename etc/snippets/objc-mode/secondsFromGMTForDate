@@ -1,4 +1,0 @@
-#name : secondsFromGMTForDate
-#group : NSTimeZone
-# --
-secondsFromGMTForDate:${1:(NSDate *)aDate}

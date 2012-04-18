@@ -1,4 +1,0 @@
-#name : dateCheckingResultWithRange:date
-#group : NSTextCheckingResult
-# --
-dateCheckingResultWithRange:${1:(NSRange)range} date:${2:(NSDate *)date}

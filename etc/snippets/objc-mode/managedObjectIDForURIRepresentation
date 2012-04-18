@@ -1,4 +1,0 @@
-#name : managedObjectIDForURIRepresentation
-#group : NSPersistentStoreCoordinator
-# --
-managedObjectIDForURIRepresentation:${1:(NSURL *)url}

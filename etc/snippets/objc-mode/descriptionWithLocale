@@ -1,4 +1,0 @@
-#name : descriptionWithLocale
-#group : NSValue
-# --
-descriptionWithLocale:${1:(id)locale}

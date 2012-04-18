@@ -1,4 +1,0 @@
-#name : resolveClassMethod
-#group : NSObject
-# --
-resolveClassMethod:${1:(SEL)sel}

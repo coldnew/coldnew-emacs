@@ -1,4 +1,0 @@
-#name : peerPickerController:sessionForConnectionType
-#group : GKPeerPickerController
-# --
-peerPickerController:${1:(GKPeerPickerController *)picker} sessionForConnectionType:${2:(GKPeerPickerConnectionType)type}

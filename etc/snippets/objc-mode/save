@@ -1,4 +1,0 @@
-#name : save
-#group : NSManagedObjectContext
-# --
-save:${1:(NSError **)error}

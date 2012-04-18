@@ -1,4 +1,0 @@
-#name : copyCGImageAtTime:actualTime:error
-#group : AVAssetImageGenerator
-# --
-copyCGImageAtTime:${1:(CMTime)requestedTime} actualTime:${2:(CMTime *)actualTime} error:${3:(NSError **)outError}

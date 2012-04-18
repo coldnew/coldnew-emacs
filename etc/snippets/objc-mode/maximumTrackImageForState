@@ -1,4 +1,0 @@
-#name : maximumTrackImageForState
-#group : UISlider
-# --
-maximumTrackImageForState:${1:(UIControlState)state}

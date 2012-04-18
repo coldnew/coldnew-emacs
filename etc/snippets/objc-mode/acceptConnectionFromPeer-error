@@ -1,4 +1,0 @@
-#name : acceptConnectionFromPeer:error
-#group : GKSession
-# --
-acceptConnectionFromPeer:${1:(NSString *)peerID} error:${2:(NSError **)error}

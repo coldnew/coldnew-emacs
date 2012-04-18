@@ -1,4 +1,0 @@
-#name : convertRect:toLayer
-#group : CALayer
-# --
-convertRect:${1:(CGRect)r} toLayer:${2:(CALayer *)l}

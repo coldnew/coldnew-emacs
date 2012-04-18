@@ -1,4 +1,0 @@
-#name : unarchiver:didDecodeObject
-#group : NSKeyedArchiver
-# --
-unarchiver:${1:(NSKeyedUnarchiver *)unarchiver} didDecodeObject:${2:(id)object}

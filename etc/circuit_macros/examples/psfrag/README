@@ -1,6 +1,0 @@
-
-To test out a single diagram, copy it into test.m4
-and type 'make tst'.  The file is processed through
-m4 and dpic -f to make test.eps containing psfrag
-embedded labels.  This file is read by tst.tex
-using the \includegraphics command.

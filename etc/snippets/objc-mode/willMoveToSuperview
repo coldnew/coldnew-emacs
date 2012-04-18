@@ -1,4 +1,0 @@
-#name : willMoveToSuperview
-#group : UIView
-# --
-willMoveToSuperview:${1:(UIView *)newSuperview}

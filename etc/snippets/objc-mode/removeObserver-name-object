@@ -1,4 +1,0 @@
-#name : removeObserver:name:object
-#group : NSNotification
-# --
-removeObserver:${1:(id)observer} name:${2:(NSString *)aName} object:${3:(id)anObject}

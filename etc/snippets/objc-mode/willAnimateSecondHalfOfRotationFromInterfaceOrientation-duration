@@ -1,4 +1,0 @@
-#name : willAnimateSecondHalfOfRotationFromInterfaceOrientation:duration
-#group : UIViewController
-# --
-willAnimateSecondHalfOfRotationFromInterfaceOrientation:${1:(UIInterfaceOrientation)fromInterfaceOrientation} duration:${2:(NSTimeInterval)duration}

@@ -1,4 +1,0 @@
-#name : initWithImage:style:target:action
-#group : UIBarButtonItem
-# --
-initWithImage:${1:(UIImage *)image} style:${2:(UIBarButtonItemStyle)style} target:${3:(id)target} action:${4:(SEL)action}

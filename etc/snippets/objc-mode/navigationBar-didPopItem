@@ -1,4 +1,0 @@
-#name : navigationBar:didPopItem
-#group : UINavigationBar
-# --
-navigationBar:${1:(UINavigationBar *)navigationBar} didPopItem:${2:(UINavigationItem *)item}

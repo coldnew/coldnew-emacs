@@ -1,4 +1,0 @@
-#name : setByAddingObject
-#group : NSSet
-# --
-setByAddingObject:${1:(id)anObject}

@@ -1,4 +1,0 @@
-#name : existingObjectWithID:error
-#group : NSManagedObjectContext
-# --
-existingObjectWithID:${1:(NSManagedObjectID*)objectID} error:${2:(NSError**)error}

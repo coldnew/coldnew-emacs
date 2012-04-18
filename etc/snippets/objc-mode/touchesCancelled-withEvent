@@ -1,4 +1,0 @@
-#name : touchesCancelled:withEvent
-#group : UIResponder
-# --
-touchesCancelled:${1:(NSSet *)touches} withEvent:${2:(UIEvent *)event}

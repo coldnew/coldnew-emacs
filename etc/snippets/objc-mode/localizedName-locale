@@ -1,4 +1,0 @@
-#name : localizedName:locale
-#group : NSTimeZone
-# --
-localizedName:${1:(NSTimeZoneNameStyle)style} locale:${2:(NSLocale *)locale}

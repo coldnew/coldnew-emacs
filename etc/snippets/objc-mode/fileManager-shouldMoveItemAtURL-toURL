@@ -1,4 +1,0 @@
-#name : fileManager:shouldMoveItemAtURL:toURL
-#group : NSFileManager
-# --
-fileManager:${1:(NSFileManager *)fileManager} shouldMoveItemAtURL:${2:(NSURL *)srcURL} toURL:${3:(NSURL *)dstURL}
