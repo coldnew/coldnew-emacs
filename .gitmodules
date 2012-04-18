@@ -1,0 +1,6 @@
+[submodule "lisp/fuzzy"]
+	path = lisp/fuzzy
+	url = http://github.com/m2ym/fuzzy-el.git
+[submodule "lisp/popup"]
+	path = lisp/popup
+	url = http://github.com/m2ym/popup-el.git
