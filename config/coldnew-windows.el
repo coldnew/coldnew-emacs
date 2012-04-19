@@ -55,6 +55,49 @@
 (winner-mode t)
 
 
+;;;; ---------------------------------------------------------------------------
+;;;; Commands
+;;;; ---------------------------------------------------------------------------
+
+(defun fullscreen-window ()
+  "Make the window full-screen."
+  (interactive)
+  (let ((current-value (frame-parameter nil 'fullscreen))
+	(old-value nil))
+    (set-frame-parameter nil 'fullscreen
+			 (if (equal 'fullboth current-value)
+			     'old-value
+			   (progn
+			     (setq old-value current-value)
+			     'fullboth)
+			   ))))
+
+(defun windmove-down-fullscreen ()
+  "Select window below current one and make it fullscreen."
+  (interactive)
+  (if (windmove-down)
+      (delete-other-windows)))
+
+(defun windmove-up-fullscreen ()
+  "Select window above the current one and make it fullscreen."
+  (interactive)
+  (if (windmove-up)
+      (delete-other-windows)))
+
+(defun windmove-left-fullscreen ()
+  "Select window left to current one and make it fullscreen."
+  (interactive)
+  (if (windmove-left)
+      (delete-other-windows)))
+
+(defun windmove-right-fullscreen ()
+  "Select window right to current one and make it fullscreen."
+  (interactive)
+  (if (windmove-right)
+      (delete-other-windows)))
+
+
+
 
 
 (provide 'coldnew-windows)

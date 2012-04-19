@@ -6,10 +6,6 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; minor-mode
 ;;;; ---------------------------------------------------------------------------
-(define-globalized-minor-mode global-coldnew-editor-mode coldnew-editor-mode coldnew-editor-on)
-
-(defun coldnew-editor-on  () (coldnew-editor-mode   t))
-(defun coldnew-editor-off () (coldnew-editor-mode nil))
 
 (defun coldnew-editor-mode-hook () "Hooks for coldnew-editor-mode.")
 
@@ -18,16 +14,14 @@
     map)
   "Keymap for coldnew-editor-mode.")
 
-;;;###autoload
 (define-minor-mode coldnew-editor-mode
   "Minor mode for coldnew's editor."
   :init-value t
   :lighter " coldnew-editor"
-  :global t
+  ;;  :global t
   :keymap coldnew-editor-mode-map
   (if coldnew-editor-mode
-      (run-hooks 'coldnew-editor-mode-hook)
-    (coldnew-editor-off)))
+      (run-hooks 'coldnew-editor-mode-hook)))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
@@ -48,8 +42,6 @@
 (show-paren-mode t)
 ;; Enable auto-complete-mode
 (global-auto-complete-mode t)
-;; Enable coldnew-editor-minor-mode
-(global-coldnew-editor-mode t)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Hooks
@@ -128,6 +120,9 @@
 ;;;; lisp common setting
 (defun coldnew-lisp-common-setting ()
   "coldnew's common setting for lisp-like mode"
+
+  ;; Use coldnew's editor mode
+  (coldnew-editor-mode)
 
   ;; Use Greek character lambda insteda of string
   (turn-on-pretty-lambda-mode)

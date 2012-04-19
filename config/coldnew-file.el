@@ -18,37 +18,49 @@
 ;; this will avoid I change those plugins.
 ;; FIXME: this will cause .loaddef.el become readonly
 ;; (add-hook 'find-file-hook
-;; 	  '(lambda ()
-;; 	     (if (search (expand-file-name emacs-lisp-dir)
-;; 			 (directory-file-name (buffer-file-name)))
-;; 		 (view-mode))))
+;;	  '(lambda ()
+;;	     (if (search (expand-file-name emacs-lisp-dir)
+;;			 (directory-file-name (buffer-file-name)))
+;;		 (view-mode))))
 
 ;; Auto add HEADER in new file
 (add-hook 'find-file-hook
-      '(lambda ()
-         (when (and (buffer-file-name)
-            (not (file-exists-p (buffer-file-name)))
-            (= (point-max) 1))
-           (let ((header-snippet "HEADER"))
-         (insert header-snippet)
-         ;; if can't expand snippet, clear whole buffer
-         (if (not (yas/expand))
-	     (delete-region (point-min) (point-max)))))))
+	  '(lambda ()
+	     (when (and (buffer-file-name)
+			(not (file-exists-p (buffer-file-name)))
+			(= (point-max) 1))
+	       (let ((header-snippet "HEADER"))
+		 (insert header-snippet)
+		 ;; if can't expand snippet, clear whole buffer
+		 (if (not (yas/expand))
+		     (delete-region (point-min) (point-max)))))))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; lusty-explorer
 ;;;; ---------------------------------------------------------------------------
 (require 'lusty-explorer)
   ;;;; Keybindings
-  (add-hook 'lusty-setup-hook
-	    '(lambda ()
-(define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
+(add-hook 'lusty-setup-hook
+	  '(lambda ()
+	     (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
 
-  ;; Make lusty-explorer use it's own completion, not anything-completion
-  ;;(when (featurep 'anything)
-    ;;(add-to-list 'anything-completing-read-handlers-alist '(lusty-file-explorer . nil))
-    ;;(add-to-list 'anything-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
-  
+;; Make lusty-explorer use it's own completion, not anything-completion
+;;(when (featurep 'anything)
+;;(add-to-list 'anything-completing-read-handlers-alist '(lusty-file-explorer . nil))
+;;(add-to-list 'anything-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
+
+;;;; ---------------------------------------------------------------------------
+;;;; Commands
+;;;; ---------------------------------------------------------------------------
+
+(defun sudo-edit (&optional arg)
+  "Edit file with sudo in emacs"
+  (interactive "p")
+  (if (or arg (not buffer-file-name))
+      ;; (find-file (concat "/sudo:root@localhost:" (anything-read-file-name "File: ")))
+      (find-file (concat "/sudo:root@localhost:" (read-file-name "File: ")))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
 
 (provide 'coldnew-file)
 ;; coldnew-file.el ends here.

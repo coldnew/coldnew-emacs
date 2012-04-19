@@ -369,6 +369,27 @@ See `pretty-lambda-mode' for more information on Pretty-Lambda mode.
 
 ;;;***
 
+;;;### (autoloads (turn-on-tempbuf-mode tempbuf-mode) "tempbuf/tempbuf"
+;;;;;;  "tempbuf/tempbuf.el" (20367 41004))
+;;; Generated autoloads from tempbuf/tempbuf.el
+
+(autoload 'tempbuf-mode "tempbuf/tempbuf" "\
+Toggle tempbuf mode.
+
+With prefix ARG, turn the mode on if ARG is positive.
+After mode activation, `tempbuf-mode-hook' is run.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'turn-on-tempbuf-mode "tempbuf/tempbuf" "\
+Turn on tempbuf mode.
+
+See also function `tempbuf-mode'.
+
+\(fn)" nil nil)
+
+;;;***
+
 ;;;### (autoloads (global-undo-tree-mode undo-tree-mode) "undo-tree/undo-tree"
 ;;;;;;  "undo-tree/undo-tree.el" (20366 41326))
 ;;; Generated autoloads from undo-tree/undo-tree.el
@@ -466,10 +487,10 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "el-get/el-get-core.el" "el-get/el-get-custom.el" "el-get/el-get-dependencies.el"
 ;;;;;;  "el-get/el-get-install.el" "el-get/el-get-methods.el" "el-get/el-get-notify.el"
 ;;;;;;  "el-get/el-get-recipes.el" "el-get/el-get-status.el" "eldoc-extension/eldoc-extension.el"
-;;;;;;  "fuzzy/fuzzy.el" "highlight-cl/highlight-cl.el" "popup/popup-test.el"
-;;;;;;  "popup/popup.el" "shell-pop/shell-pop.el" "yasnippet/dropdown-list.el"
+;;;;;;  "highlight-cl/highlight-cl.el" "ibuffer-git/ibuffer-git.el"
+;;;;;;  "one-key/one-key.el" "shell-pop/shell-pop.el" "yasnippet/dropdown-list.el"
 ;;;;;;  "yasnippet/yasnippet-debug.el" "yasnippet/yasnippet-tests.el")
-;;;;;;  (20366 64367 940391))
+;;;;;;  (20367 41004 639267))
 
 ;;;***
 

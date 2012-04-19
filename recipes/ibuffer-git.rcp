@@ -1,0 +1,5 @@
+(:name ibuffer-git
+       :description "show git status in ibuffer"
+       :type git
+       :url "git://github.com/jrockway/ibuffer-git"
+       :features ibuffer-git)

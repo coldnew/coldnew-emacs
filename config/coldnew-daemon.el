@@ -3,7 +3,7 @@
 
 
 ;; start server for emacsclient
-(when (require* 'server)
+(when (require 'server)
   (unless (server-running-p) (server-start)))
 
 

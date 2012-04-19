@@ -31,6 +31,41 @@
 	  (kill-buffer (buffer-name))
 	  (shell-pop-out)))))
 
+;;;; ---------------------------------------------------------------------------
+;;;; multi-term
+;;;; ---------------------------------------------------------------------------
+(require 'multi-term)
+(setq multi-term-program emacs-default-shell)
+
+
+;;;; ---------------------------------------------------------------------------
+;;;; term
+;;;; ---------------------------------------------------------------------------
+(require 'term)
+;; ;; Remove term-mode default color
+(setq-default term-default-bg-color nil)
+(setq-default term-default-fg-color nil)
+
+;;;; keybindings
+;; (define-key term-raw-map (kbd "<f4>") 'shell-pop)
+(define-key term-raw-map (kbd "M-x") 'execute-extended-command)
+(define-key term-raw-map (kbd "C-g") 'term-interrupt-subjob)
+(define-key term-raw-map (kbd "C-n") 'term-send-down)
+(define-key term-raw-map (kbd "C-p") 'term-send-up)
+(define-key term-raw-map (kbd "<enter>") 'term-send-input)
+
+;;;; ---------------------------------------------------------------------------
+;;;; comint
+;;;; ---------------------------------------------------------------------------
+(require 'comint)
+;; Do not show password in comint-mode
+(setq comint-output-filter-functions  '(comint-watch-for-password-prompt))
+(setq comint-password-prompt-regexp
+      "\\(\\([Oo]ld \\|[Nn]ew \\|^\\)[Pp]assword\\|Enter password\\):\\s *\\'")
+
+;;;; Keybindings
+(define-key comint-mode-map (kbd "C-g") 'comint-interrupt-subjob)
+
 
 
 (provide 'coldnew-terminal)

@@ -20,6 +20,8 @@
 		   (:name highlight-symbol :description "Quickly highlight a symbol throughout the buffer and cycle through its locations." :type http :url "http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el" :features "highlight-symbol"))
  (hungry-delete status "installed" recipe
 		(:name hungry-delete :description "hungry delete minor mode" :website "https://github.com/nflath/hungry-delete" :type git :url "https://github.com/nflath/hungry-delete.git" :features hungry-delete))
+ (ibuffer-git status "installed" recipe
+	      (:name ibuffer-git :description "show git status in ibuffer" :type git :url "git://github.com/jrockway/ibuffer-git" :features ibuffer-git))
  (iedit status "installed" recipe
 	(:name iedit :description "Edit multiple regions with the same content simultaneously." :type emacswiki :features iedit))
  (linum+ status "installed" recipe
@@ -28,12 +30,17 @@
 		 (:name lusty-explorer :type emacswiki :description "LustyExplorer is a fast and responsive way to manage files and buffers"))
  (multi-term status "installed" recipe
 	     (:name multi-term :description "A mode based on term.el, for managing multiple terminal buffers in Emacs." :type emacswiki :features multi-term))
+ (one-key status "installed" recipe
+	  (:name one-key :description "OneKey is designed to help you remember keybindings. It saves you time and frees up your head!" :website "" :type emacswiki :features one-key))
  (popup status "installed" recipe
 	(:name popup :website "https://github.com/m2ym/popup-el" :description "Visual Popup Interface Library for Emacs" :type github :pkgname "m2ym/popup-el" :features popup))
  (pretty-lambdada status "installed" recipe
 		  (:name pretty-lambdada :description "Show the word `lambda' as the Greek letter." :website "" :type emacswiki :features pretty-lambdada))
+ (session status "removed" recipe nil)
  (shell-pop status "installed" recipe
 	    (:name shell-pop :description "Helps you pop up and pop out shell buffer easily." :website "http://www.emacswiki.org/emacs/ShellPop" :type emacswiki :features "shell-pop"))
+ (tempbuf status "installed" recipe
+	  (:name tempbuf :description "" :website "" :type emacswiki :features tempbuf))
  (undo-tree status "installed" recipe
 	    (:name undo-tree :description "Treat undo history as a tree" :type git :url "http://www.dr-qubit.org/git/undo-tree.git" :prepare
 		   (progn

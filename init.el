@@ -33,7 +33,7 @@
 	       (loading-status (if loading-result "LOADED" "FAILED")))
 
 	  (insert (format " %-20s %s\t\t [ " config-file-name
-			  (make-string (- 30 (length config-file-name)) ? )
+			  (make-string (- 40 (length config-file-name)) ? )
 			  ))
 	  (insert (propertize loading-status 'face  `(:foreground ,(if loading-result "green" "red"))))
 	  (insert " ]\n")))))

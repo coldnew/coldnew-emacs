@@ -87,8 +87,5 @@
 
 
 
-
-
-
 (provide 'coldnew-core)
 ;; coldnew-core.el ends here.
