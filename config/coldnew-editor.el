@@ -114,6 +114,11 @@
 (require 'pretty-lambdada)
 
 ;;;; ---------------------------------------------------------------------------
+;;;; rainbow-delimiters
+;;;; ---------------------------------------------------------------------------
+(require 'rainbow-delimiters)
+
+;;;; ---------------------------------------------------------------------------
 ;;;; Common language setting
 ;;;; ---------------------------------------------------------------------------
 
@@ -126,6 +131,8 @@
 
   ;; Use Greek character lambda insteda of string
   (turn-on-pretty-lambda-mode)
+  ;; Color nested parentheses, brackets, and braces according to their dept
+  (rainbow-delimiters-mode)
   )
 
 
