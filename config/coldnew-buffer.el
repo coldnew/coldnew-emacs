@@ -179,7 +179,6 @@
 		      (name . "^\\*gud\\*$")
 		      (name . "^\\*ielm\\*")
 		      (name . "^\\*im.bitlbee.org\\*$")
-		      (name . "^\\*irc*")
 		      (name . "^\\*scratch\\*$")
 		      (name . "^\\*tramp")
 		      (name . "^\\*wclock\\*$")
