@@ -19,6 +19,12 @@
 (global-set-key (kbd "C-=")      'text-scale-increase)
 (global-set-key (kbd "C--")      'text-scale-decrease)
 (global-set-key (kbd "C-x C-d")  'dired)
+(global-set-key (kbd "C-x C-r")  'sudo-edit)
+(global-set-key (kbd "C-x ,") 'undo-tree-undo)
+(global-set-key (kbd "C-x .") 'undo-tree-redo)
+(global-set-key (kbd "C-w")   'kill-word)
+(global-set-key (kbd "M-w")   'backward-kill-word)
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; one-key

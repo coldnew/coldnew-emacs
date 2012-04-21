@@ -8,7 +8,7 @@
 (require 'one-key)
 
 ;;;; Initial Setting
-(setq one-key-popup-window t)
+(setq one-key-popup-window nil)
 
 ;; ------------------------------
 ;; window

@@ -1,6 +1,7 @@
 ;;; coldnew-session.el ---
 (eval-when-compile (require 'cl))
 
+(require 'coldnew-functions)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; savehist
@@ -60,6 +61,7 @@
 	      "^\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
 	      "\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
 	      "\\)$"))
+
 (add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
 (add-to-list 'desktop-modes-not-to-save 'dired-mode)
 (add-to-list 'desktop-modes-not-to-save 'Info-mode)

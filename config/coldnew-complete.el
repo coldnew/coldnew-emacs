@@ -1,5 +1,5 @@
-;;; coldnew-complete.el ---                                                     
-(eval-when-compile (require 'cl))                                        
+;;; coldnew-complete.el ---
+(eval-when-compile (require 'cl))
 
 
 ;;;; ---------------------------------------------------------------------------
@@ -46,9 +46,24 @@
 (define-key ac-completing-map "\t" 'ac-complete)
 (define-key ac-complete-mode-map [tab] 'ac-expand)
 
+;;;; ---------------------------------------------------------------------------
+;;;; anything
+;;; ---------------------------------------------------------------------------
+(require 'anything-config)
+(require 'anything-match-plugin)
+
+;; Use predefined configurations for `anything.el'
+(setq anything-config t)
+
+;; Enable anything globally
+;;(ac-mode 1)
+
+;; Path of file where history information is stored.
+(setq anything-c-adaptive-history-file (concat emacs-cache-dir "anything.cache"))
 
 
 
 
-(provide 'coldnew-complete)                                             
-;; coldnew-complete.el ends here.                                               
+
+(provide 'coldnew-complete)
+;; coldnew-complete.el ends here.

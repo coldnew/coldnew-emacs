@@ -14,6 +14,9 @@
 
 ;; load the core stuff
 (require 'coldnew-core)
+(require 'coldnew-variables)
+(require 'coldnew-functions)
+(require 'coldnew-editor)
 
 ;; config changes made through the customize UI will be store here
 (setq custom-file emacs-custom-file)
@@ -36,10 +39,15 @@
 			  (make-string (- 40 (length config-file-name)) ? )
 			  ))
 	  (insert (propertize loading-status 'face  `(:foreground ,(if loading-result "green" "red"))))
-	  (insert " ]\n")))))
+	  (insert " ]\n"))))
+
+  ;; After loading allemacs config file, readauthorization fil
+  (if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
+
+  (message "\t --- Loading All Emacs Confis Finish ---")
+  )
 
 
 
 
 (message "Emacs is ready to serve you, Master %s!" (getenv "USER"))
-

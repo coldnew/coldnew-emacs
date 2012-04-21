@@ -7,9 +7,11 @@
 ;;;; minor-mode
 ;;;; ---------------------------------------------------------------------------
 
-(defun coldnew-editor-mode-hook () "Hooks for coldnew-editor-mode.")
+(defun coldnew-editor-hook () "Hooks for coldnew-editor-mode.")
 
-(defvar coldnew-editor-mode-map
+(defvar coldnew-editor-enable-vim-keybinding t "setting for default keybinding")
+
+(defvar coldnew-editor-map
   (let ((map (make-sparse-keymap)))
     map)
   "Keymap for coldnew-editor-mode.")
@@ -19,9 +21,13 @@
   :init-value t
   :lighter " coldnew-editor"
   ;;  :global t
-  :keymap coldnew-editor-mode-map
+  :keymap coldnew-editor-map
   (if coldnew-editor-mode
-      (run-hooks 'coldnew-editor-mode-hook)))
+      (progn
+	(run-hooks 'coldnew-editor-hook)
+	(if (and (featurep 'evil) coldnew-editor-enable-vim-keybinding)
+	    (evil-local-mode t)
+	  ))))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
@@ -42,35 +48,50 @@
 (show-paren-mode t)
 ;; Enable auto-complete-mode
 (global-auto-complete-mode t)
+;; Enable delete-selection-mode
+(delete-selection-mode t)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Hooks
 ;;;; ---------------------------------------------------------------------------
-
 ;; After save buffer, indent whole file.
-(add-hook 'coldnew-editor-mode-hook 'indent-file-after-save)
+(add-hook 'coldnew-editor-hook 'indent-file-after-save)
 ;; Before save buffer, cleanup whitespace
-(add-hook 'coldnew-editor-mode-hook 'cleanup-whitespace-before-save)
+(add-hook 'coldnew-editor-hook 'cleanup-whitespace-before-save)
 ;; Enable line-number
-(add-hook 'coldnew-editor-mode-hook 'linum-mode)
-;; Enable highlight-symbol-mode
-(add-hook 'coldnew-editor-mode-hook 'highlight-symbol-mode)
-;; Enable hungry-delete-mode
-(add-hook 'coldnew-editor-mode-hook 'hungry-delete-mode)
+(add-hook 'coldnew-editor-hook 'linum-mode)
 ;; use electric-indent-mode
-(add-hook 'coldnew-editor-mode-hook 'electric-indent-mode)
+(add-hook 'coldnew-editor-hook 'electric-indent-mode)
 ;; highlight special keywords like TODO, BUF
-(add-hook 'coldnew-editor-mode-hook 'highlight-additional-keywords)
+(add-hook 'coldnew-editor-hook 'highlight-additional-keywords)
 ;; highlight fontify numbers and constant
-(add-hook 'coldnew-editor-mode-hook 'highlight-fontify-numbers)
+(add-hook 'coldnew-editor-hook 'highlight-fontify-numbers)
 ;; highlight escape char in string
-(add-hook 'coldnew-editor-mode-hook 'highlight-escape-char)
+(add-hook 'coldnew-editor-hook 'highlight-escape-char)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybindings
 ;;;; ---------------------------------------------------------------------------
+(define-key coldnew-editor-map (kbd "C-0") 'universal-argument)
+
+;;;; ---------------------------------------------------------------------------
+;;;; paredit
+;;;; ---------------------------------------------------------------------------
+(require 'paredit)
 
 
+;;;; ---------------------------------------------------------------------------
+;;;; dtrt-indent
+;;;; ---------------------------------------------------------------------------
+(require 'dtrt-indent)
+(add-hook 'coldnew-editor-hook '(lambda () (dtrt-indent-mode t)))
+
+;;;; ---------------------------------------------------------------------------
+;;;; cua
+;;;; ---------------------------------------------------------------------------
+(require 'cua-base)
+(setq cua-enable-cua-keys nil)		; don't add C-x, C-c, C-v
+(cua-mode t)				; Enable cua-mode
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; unicad
@@ -78,14 +99,17 @@
 (require 'unicad)
 
 ;;;; ---------------------------------------------------------------------------
+
 ;;;; hungry-delete
 ;;;; ---------------------------------------------------------------------------
 (require 'hungry-delete)
+(add-hook 'coldnew-editor-hook 'hungry-delete-mode)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; highlight-symbol
 ;;;; ---------------------------------------------------------------------------
 (require 'highlight-symbol)
+(add-hook 'coldnew-editor-hook 'highlight-symbol-mode)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; undo-tree
@@ -93,6 +117,8 @@
 (require 'undo-tree)
 ;; Enable undo-tree globally
 (global-undo-tree-mode)
+;; keybinding
+(define-key undo-tree-map (kbd "C-g") 'undo-tree-visualizer-quit)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; iedit
@@ -119,6 +145,12 @@
 (require 'rainbow-delimiters)
 
 ;;;; ---------------------------------------------------------------------------
+;;;; doxymacs
+;;;; ---------------------------------------------------------------------------
+(require 'doxymacs)
+
+
+;;;; ---------------------------------------------------------------------------
 ;;;; Common language setting
 ;;;; ---------------------------------------------------------------------------
 
@@ -131,8 +163,21 @@
 
   ;; Use Greek character lambda insteda of string
   (turn-on-pretty-lambda-mode)
+
   ;; Color nested parentheses, brackets, and braces according to their dept
   (rainbow-delimiters-mode)
+  )
+
+;;;; cc-mode common setting
+(defun coldnew-cc-mode-common-setting ()
+  "coldnew's common setting for cc-mode"
+
+  ;; Color nested parentheses, brackets, and braces according to their dept
+  (rainbow-delimiters-mode)
+
+  ;; enable doxygen
+  (doxymacs-mode t)
+  (doxymacs-font-lock)
   )
 
 

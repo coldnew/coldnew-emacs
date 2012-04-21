@@ -52,6 +52,8 @@
   "cache file directory.")
 (defvar emacs-backup-dir (concat emacs-dir "backup/")
   "directory to backup files.")
+(defvar emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")
+  "file that save secret")
 
 ;; (defvar emacs-log-dir (concat emacs-var-dir "log/")
 ;;   "log file directory."
@@ -63,7 +65,6 @@
   "Window hight of popup shell.")
 (defvar emacs-popup-shell-window-position "bottom"
   "Make popup shell window at buttom by default.")
-
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Environment setting

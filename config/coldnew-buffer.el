@@ -168,6 +168,7 @@
 		      (name . "^\\*EGG:*")
 		      (name . "^\\*Kill Ring\\*$")
 		      (name . "^\\*Occur\\*$")
+		      (name . "^\\*Customize*")
 		      (name . "^\\*Process List\\*$")
 		      (name . "^\\*Shell Command Output\\*")
 		      (name . "^\\*Warnings\\*$")

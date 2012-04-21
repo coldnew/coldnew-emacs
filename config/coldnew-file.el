@@ -45,9 +45,9 @@
 	     (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
 
 ;; Make lusty-explorer use it's own completion, not anything-completion
-;;(when (featurep 'anything)
-;;(add-to-list 'anything-completing-read-handlers-alist '(lusty-file-explorer . nil))
-;;(add-to-list 'anything-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
+(when (featurep 'anything)
+  (add-to-list 'anything-completing-read-handlers-alist '(lusty-file-explorer . nil))
+  (add-to-list 'anything-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Commands

@@ -33,9 +33,9 @@
 
  ;;;; Modeline
  '(mode-line ((t (:background "#0C0C0C" :foreground "#B1C3D4"
-                              :box (:line-width 2 :color "#B184CB")))))
+			      :box (:line-width 2 :color "#B184CB")))))
  '(mode-line-inactive ((t (:background "#343434" :foreground "#7B8793"
-                                       :box (:line-width 2 :color "#565968")))))
+				       :box (:line-width 2 :color "#565968")))))
  '(mode-line-buffer-id ((t (:foreground "#CDCDCD":bold t :italic t))))
 
  ;;;; Fringe
@@ -81,6 +81,9 @@
 
  ;;;; Hl-line
  '(hl-line ((t :background "#444444")))
+
+ ;;;; selection
+ '(secondary-selection ((t (:background "#CAE682" :foreground "#0c0c0c"))))
 
  ;;;; Diff
  '(diff-added ((t (:foreground "#95E454"))))
