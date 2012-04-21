@@ -3,7 +3,6 @@
 
 (require 'android-mode)
 
-
 ;; Set my android-emulator-path
 (setq android-mode-sdk-dir "/opt/android-sdk-update-manager/")
 
