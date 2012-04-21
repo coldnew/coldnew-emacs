@@ -4,3 +4,6 @@
 [submodule "lisp/popup"]
 	path = lisp/popup
 	url = http://github.com/m2ym/popup-el.git
+[submodule "lisp/rainbow-delimiters"]
+	path = lisp/rainbow-delimiters
+	url = http://github.com/jlr/rainbow-delimiters.git
