@@ -29,7 +29,8 @@
 	     (when (and (buffer-file-name)
 			(not (file-exists-p (buffer-file-name)))
 			(= (point-max) 1))
-	       (let ((header-snippet "HEADER"))
+	       (let ((header-snippet "HEADER")
+		     (yas/fallback-behavior 'return-nil))
 		 (insert header-snippet)
 		 ;; if can't expand snippet, clear whole buffer
 		 (if (not (yas/expand))
@@ -42,7 +43,8 @@
   ;;;; Keybindings
 (add-hook 'lusty-setup-hook
 	  '(lambda ()
-	     (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
+	     (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)
+	     ))
 
 ;; Make lusty-explorer use it's own completion, not anything-completion
 (when (featurep 'anything)
