@@ -1,0 +1,6 @@
+(:name anything-traverse
+       :description "Use traverselisp within anything."
+       :type emacswiki
+       :depends traverselisp
+       :features anything-traverse
+       )
