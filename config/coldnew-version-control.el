@@ -39,11 +39,11 @@
   ad-do-it
   (delete-other-windows))
 
-(defadvice egg-commit-log-edit (around kill-egg-status-buffer activate)
-  "Delete egg-status buffer after visiting egg-commit-buffer."
-  (let ((egg-status-buffer (current-buffer)))
-    (kill-buffer egg-status-buffer)
-    ad-do-it))
+;; (defadvice egg-commit-log-edit (around kill-egg-status-buffer activate)
+;;   "Delete egg-status buffer after visiting egg-commit-buffer."
+;;   (let ((egg-status-buffer (current-buffer)))
+;;     (kill-buffer egg-status-buffer)
+;;     ad-do-it))
 
 
 
