@@ -52,7 +52,12 @@
 (define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
 
 
+;;;; ---------------------------------------------------------------------------
+;;;; Alias
+;;;; ---------------------------------------------------------------------------
 
+(defalias 'git-history 'egg-log)
+(defalias 'git-status 'egg-status)
 
 
 (provide 'coldnew-version-control)

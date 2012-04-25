@@ -1,5 +1,5 @@
 ;;; coldnew-evil.el ---
-;;; Time-stamp: <2012-04-26 04:32:54 (coldnew)>
+;;; Time-stamp: <2012-04-26 05:09:02 (coldnew)>
 (eval-when-compile (require 'cl))
 
 (require 'coldnew-global-keybindings)
@@ -14,6 +14,9 @@
 (setq evil-default-cursor '(:background (face-attribute 'cursor :background) box))
 
 (setq evil-want-visual-char-semi-exclusive t)
+
+(setq evil-emacs-state-mode '(git-branch-mode))
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybinding
