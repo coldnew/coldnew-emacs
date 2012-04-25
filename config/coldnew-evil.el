@@ -34,6 +34,7 @@
 (define-key evil-insert-state-map (kbd "C-x vv") 'egg-next-action)
 (define-key evil-insert-state-map (kbd "M-p") 'anything-show-kill-ring)
 
+
 ;;;;;;;; Emacs
 (define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
 (define-key evil-emacs-state-map (kbd "C-c C-t") 'my-anything-occur)

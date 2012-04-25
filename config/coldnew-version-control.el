@@ -22,11 +22,11 @@
    ((memq :file-is-modified desc)         :stage-file)
    ((memq :has-staged-changes desc)       :commit)
    ((memq :file-is-unmerged desc)         :stage-file)
-   ((memq :wdir-has-merged-conflict desc) :quit)
+   ((memq :wdir-has-merged-conflict desc) :status)
    ((memq :wdir-has-unmerged-files  desc) :stage-all)
    ((memq :wdir-is-modified desc)         :stage-all)
    ((memq :rebase-in-progress desc)       :rebase-continue)
-   (t                                     :quit)))
+   (t                                     :sync)))
 
 ;;;;;;;; Advice
 (defadvice egg-status (around goto-egg-status-buffer activate)
