@@ -1,5 +1,5 @@
 ;;; coldnew-buffer.el ---
-;;; Time-stamp: <2012-04-25 20:57:47 (coldnew)>
+;;; Time-stamp: <2012-04-26 05:31:10 (coldnew)>
 (eval-when-compile (require 'cl))
 
 ;;;; ---------------------------------------------------------------------------
@@ -281,6 +281,7 @@
        "^\\*ac-mode-*"
        ".loaddefs.el$"
        "^loaddefs.el$"
+       "^\\*magit*"
        ))
 
 
