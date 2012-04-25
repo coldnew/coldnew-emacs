@@ -56,7 +56,7 @@
 ;;;; Alias
 ;;;; ---------------------------------------------------------------------------
 
-(defalias 'git-history 'egg-log)
+(defalias 'git-log 'egg-log)
 (defalias 'git-status 'egg-status)
 
 
