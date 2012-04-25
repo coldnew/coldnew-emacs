@@ -12,12 +12,29 @@ Also returns nil if pid is nil."
 	    (setq cmd (cdr attr))))
       (if (and cmd (or (string= "emacs" cmd) (string= "emacs.exe" cmd))) t))))
 
-
-
 (defun get-ip-address (&optional dev)
   "get the IP-address for device DEV (default: eth0)"
   (let ((dev (if dev dev "eth0")))
     (format-network-address (car (network-interface-info dev)) t)))
+
+;;;; ---------------------------------------------------------------------------
+;;;; date
+;;;; ---------------------------------------------------------------------------
+(defun current-date-time ()
+  "return current date in `%Y-%m-%d' format, ex:`2012-04-25'."
+  (let ((system-time-locale "en_US")
+	(format "%Y-%m-%d"))
+    (format-time-string "%Y-%m-%d")))
+
+
+;;;; ---------------------------------------------------------------------------
+;;;; Advice
+;;;; ---------------------------------------------------------------------------
+
+(defadvice kill-emacs (around recompile-emacs-config activate)
+  "Before exit emacs, recompile emacs-config"
+  (let ((config-dir emacs-config-dir))
+    (byte-recompile-directory config-dir 0) ad-do-it))
 
 
 

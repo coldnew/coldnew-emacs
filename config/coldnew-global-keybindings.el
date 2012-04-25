@@ -24,12 +24,17 @@
 (global-set-key (kbd "C-x .") 'undo-tree-redo)
 (global-set-key (kbd "C-w")   'kill-word)
 (global-set-key (kbd "M-w")   'backward-kill-word)
+(global-set-key (kbd "C-g")   'keyboard-quit)
+(global-set-key (kbd "C-c C-f") 'my-anything-filelist)
+(global-set-key (kbd "<escape>") 'evil-mode)
 
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; one-key
 ;;;; --------------------------------------------------------------------------
 (global-set-key (kbd "C-x M-w") 'one-key-menu-window-navigation)
+
+(global-set-key (kbd "C-w") 'one-key-menu-window-navigation)
 (global-set-key (kbd "C-x M-f") 'one-key-menu-file-handle)
 
 

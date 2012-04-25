@@ -4,6 +4,8 @@
 (require 'coldnew-snippets)
 
 
+
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; hooks
 ;;;; ---------------------------------------------------------------------------
@@ -35,6 +37,9 @@
 		 ;; if can't expand snippet, clear whole buffer
 		 (if (not (yas/expand))
 		     (delete-region (point-min) (point-max)))))))
+
+;; Automatically update timestamp
+(add-hook 'write-file-hooks 'time-stamp)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; lusty-explorer

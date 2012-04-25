@@ -10,6 +10,7 @@
     (yas/expand-snippet
      (concat
       ";;; `(yas/file)` ---                                                     \n"
+      ";;; Time-stamp: <>                                                       \n"
       "(eval-when-compile (require 'cl))                                        \n"
       "                                                                         \n"
       "                                                                         \n"

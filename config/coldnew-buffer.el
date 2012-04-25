@@ -1,6 +1,6 @@
 ;;; coldnew-buffer.el ---
+;;; Time-stamp: <2012-04-25 20:57:47 (coldnew)>
 (eval-when-compile (require 'cl))
-
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; *scratch*

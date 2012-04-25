@@ -17,6 +17,7 @@
 (require 'coldnew-variables)
 (require 'coldnew-functions)
 (require 'coldnew-editor)
+(require 'coldnew-evil)
 
 ;; config changes made through the customize UI will be store here
 (setq custom-file emacs-custom-file)

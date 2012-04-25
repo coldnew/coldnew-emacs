@@ -1,4 +1,6 @@
-((anything status "installed" recipe
+((android-mode status "installed" recipe
+	       (:name android-mode :website "https://github.com/remvee/android-mode" :description "Emacs minor mode for Android application development" :type github :pkgname "remvee/android-mode"))
+ (anything status "installed" recipe
 	   (:name anything :website "http://www.emacswiki.org/emacs/Anything" :description "Open anything / QuickSilver-like candidate-selection framework" :type git :url "http://repo.or.cz/r/anything-config.git" :shallow nil :load-path
 		  ("." "extensions" "contrib")
 		  :features anything))
@@ -12,6 +14,9 @@
 				      (expand-file-name "dict"))
 			 (require 'auto-complete-config)
 			 (ac-config-default))))
+ (auto-complete-clang status "installed" recipe
+		      (:name auto-complete-clang :website "https://github.com/brianjcj/auto-complete-clang" :description "Auto-complete sources for Clang. Combine the power of AC, Clang and Yasnippet." :type github :pkgname "brianjcj/auto-complete-clang"))
+ (auto-complete-emacs-lisp status "removed" recipe nil)
  (doxymacs status "installed" recipe
 	   (:name doxymacs :website "http://doxymacs.sourceforge.net/" :description "Doxymacs is Doxygen + {X}Emacs." :type git :url "git://doxymacs.git.sourceforge.net/gitroot/doxymacs/doxymacs" :load-path
 		  ("./lisp")
@@ -21,6 +26,10 @@
  (dtrt-indent status "installed" recipe
 	      (:name dtrt-indent :website "http://savannah.nongnu.org/projects/dtrt-indent/" :description "A minor mode that guesses the indentation offset originally used for creating source code files and transparently adjusts the corresponding settings in Emacs, making it more convenient to edit foreign files." :type git :url "git://git.savannah.nongnu.org/dtrt-indent.git" :features dtrt-indent :post-init
 		     (dtrt-indent-mode 1)))
+ (egg status "installed" recipe
+      (:name egg :description "Egg is an Emacs interface to git. It's a suite composed of a minor-mode and various special-buffers presenting different UIs to help the user performing many git operations." :type github :pkgname "byplayer/egg" :load-path
+	     (".")
+	     :compile nil :features egg))
  (el-get status "installed" recipe
 	 (:name el-get :website "https://github.com/dimitri/el-get#readme" :description "Manage the external elisp bits and pieces you depend upon." :type github :branch "3.stable" :pkgname "dimitri/el-get" :features el-get :load "el-get.el"))
  (eldoc-extension status "installed" recipe
@@ -43,6 +52,13 @@
 	 (:name linum+ :description "Extension of linum" :type emacswiki :features linum+))
  (lusty-explorer status "installed" recipe
 		 (:name lusty-explorer :type emacswiki :description "LustyExplorer is a fast and responsive way to manage files and buffers"))
+ (magit status "installed" recipe
+	(:name magit :website "https://github.com/magit/magit#readme" :description "It's Magit! An Emacs mode for Git." :type github :pkgname "magit/magit" :info "." :build
+	       ("make all")
+	       :build/darwin
+	       `(,(concat "PATH="
+			  (shell-quote-argument invocation-directory)
+			  ":$PATH make all"))))
  (multi-term status "installed" recipe
 	     (:name multi-term :description "A mode based on term.el, for managing multiple terminal buffers in Emacs." :type emacswiki :features multi-term))
  (one-key status "installed" recipe
@@ -55,6 +71,8 @@
 		  (:name pretty-lambdada :description "Show the word `lambda' as the Greek letter." :website "" :type emacswiki :features pretty-lambdada))
  (rainbow-delimiters status "installed" recipe
 		     (:name rainbow-delimiters :website "https://github.com/jlr/rainbow-delimiters#readme" :description "Color nested parentheses, brackets, and braces according to their depth." :type github :pkgname "jlr/rainbow-delimiters" :features rainbow-delimiters))
+ (recentf-ext status "installed" recipe
+	      (:name recentf-ext :description "Recentf extensions" :type emacswiki :features "recentf-ext"))
  (session status "removed" recipe nil)
  (shell-pop status "installed" recipe
 	    (:name shell-pop :description "Helps you pop up and pop out shell buffer easily." :website "http://www.emacswiki.org/emacs/ShellPop" :type emacswiki :features "shell-pop"))

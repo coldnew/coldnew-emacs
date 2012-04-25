@@ -1,6 +1,6 @@
 ;;; coldnew-menu.el ---
+;;; Time-stamp: <2012-04-25 21:04:55 (coldnew)>
 (eval-when-compile (require 'cl))
-
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; one-key
@@ -45,8 +45,6 @@
    '((("w"   . "Write File")                 . write-file)
      (("s"   . "Sudo Edit")                  . sudo-edit)
      )))
-
-
 
 
 (provide 'coldnew-menu)

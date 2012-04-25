@@ -3,6 +3,17 @@
 ;;; Code:
 
 
+;;;### (autoloads (android-mode) "android-mode/android-mode" "android-mode/android-mode.el"
+;;;;;;  (20370 51184))
+;;; Generated autoloads from android-mode/android-mode.el
+
+(autoload 'android-mode "android-mode/android-mode" "\
+Android application development minor mode.
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
 ;;;### (autoloads (anything-other-buffer anything-at-point anything)
 ;;;;;;  "anything/anything" "anything/anything.el" (20369 33698))
 ;;; Generated autoloads from anything/anything.el
@@ -1122,6 +1133,57 @@ use either \\[customize] or the function `dtrt-indent-mode'.")
 
 ;;;***
 
+;;;### (autoloads (egg-minor-mode-find-file-hook egg-minor-mode)
+;;;;;;  "egg/egg" "egg/egg.el" (20375 63460))
+;;; Generated autoloads from egg/egg.el
+
+(autoload 'egg-minor-mode "egg/egg" "\
+Turn-on egg-minor-mode which would enable key bindings for
+egg in current buffer.\\<egg-minor-mode-map>
+\\[egg-start-new-branch] start a new branch from the current HEAD.
+\\[egg-status] shows the repo's current status
+\\[egg-commit-log-edit] start editing the commit message for the current staged changes.
+\\[egg-file-stage-current-file] stage new changes of the current file 
+\\[egg-log] shows repo's history 
+\\[egg-file-checkout-other-version] checkout another version of the current file 
+\\[egg-file-cancel-modifications] delete unstaged modifications in the current file
+\\[egg-next-action] perform the next logical action
+\\[egg-file-diff] compare file with index or other commits
+\\[egg-file-version-other-window] show other version of the current file.
+
+\\{egg-minor-mode-map}
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'egg-minor-mode-find-file-hook "egg/egg" "\
+
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (egg-grep egg-grep-mode egg-grep-process-setup)
+;;;;;;  "egg/egg-grep" "egg/egg-grep.el" (20375 63460))
+;;; Generated autoloads from egg/egg-grep.el
+
+(autoload 'egg-grep-process-setup "egg/egg-grep" "\
+Setup compilation variables and buffer for `egg-grep'.
+Set up `compilation-exit-message-function' and run `egg-grep-setup-hook'.
+
+\(fn)" nil nil)
+
+(autoload 'egg-grep-mode "egg/egg-grep" "\
+Sets `compilation-last-buffer' and `compilation-window-height'.
+
+\(fn)" nil nil)
+
+(autoload 'egg-grep "egg/egg-grep" "\
+
+
+\(fn LEVEL)" t nil)
+
+;;;***
+
 ;;;### (autoloads (el-get-checksum el-get-make-recipes el-get-cd
 ;;;;;;  el-get-self-update el-get-update-all el-get-version) "el-get/el-get"
 ;;;;;;  "el-get/el-get.el" (20366 24294))
@@ -1436,6 +1498,90 @@ Launch dired at the current directory.
 
 ;;;***
 
+;;;### (autoloads (magit-status) "magit/magit" "magit/magit.el" (20370
+;;;;;;  51412))
+;;; Generated autoloads from magit/magit.el
+
+(autoload 'magit-status "magit/magit" "\
+Open a Magit status buffer for the Git repository containing
+DIR.  If DIR is not within a Git repository, offer to create a
+Git repository in DIR.
+
+Interactively, a prefix argument means to ask the user which Git
+repository to use even if `default-directory' is under Git control.
+Two prefix arguments means to ignore `magit-repo-dirs' when asking for
+user input.
+
+\(fn DIR)" t nil)
+
+;;;***
+
+;;;### (autoloads (turn-on-magit-stgit magit-stgit-mode) "magit/magit-stgit"
+;;;;;;  "magit/magit-stgit.el" (20370 51412))
+;;; Generated autoloads from magit/magit-stgit.el
+
+(autoload 'magit-stgit-mode "magit/magit-stgit" "\
+StGit support for Magit
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'turn-on-magit-stgit "magit/magit-stgit" "\
+Unconditionally turn on `magit-stgit-mode'.
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (turn-on-magit-svn magit-svn-mode) "magit/magit-svn"
+;;;;;;  "magit/magit-svn.el" (20370 51412))
+;;; Generated autoloads from magit/magit-svn.el
+
+(autoload 'magit-svn-mode "magit/magit-svn" "\
+SVN support for Magit
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'turn-on-magit-svn "magit/magit-svn" "\
+Unconditionally turn on `magit-svn-mode'.
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (turn-on-magit-topgit magit-topgit-mode) "magit/magit-topgit"
+;;;;;;  "magit/magit-topgit.el" (20370 51412))
+;;; Generated autoloads from magit/magit-topgit.el
+
+(autoload 'magit-topgit-mode "magit/magit-topgit" "\
+Topgit support for Magit
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'turn-on-magit-topgit "magit/magit-topgit" "\
+Unconditionally turn on `magit-topgit-mode'.
+
+\(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (rebase-mode) "magit/rebase-mode" "magit/rebase-mode.el"
+;;;;;;  (20370 51412))
+;;; Generated autoloads from magit/rebase-mode.el
+
+(autoload 'rebase-mode "magit/rebase-mode" "\
+Major mode for editing of a Git rebase file.
+
+Rebase files are generated when you run 'git rebase -i' or run
+`magit-interactive-rebase'.  They describe how Git should perform
+the rebase.  See the documentation for git-rebase (e.g., by
+running 'man git-rebase' at the command line) for details.
+
+\(fn)" t nil)
+
+(add-to-list 'auto-mode-alist '("git-rebase-todo" . rebase-mode))
+
+;;;***
+
 ;;;### (autoloads (multi-term) "multi-term/multi-term" "multi-term/multi-term.el"
 ;;;;;;  (20366 64367))
 ;;; Generated autoloads from multi-term/multi-term.el
@@ -1514,7 +1660,7 @@ See `pretty-lambda-mode' for more information on Pretty-Lambda mode.
 
 ;;;### (autoloads (global-rainbow-delimiters-mode rainbow-delimiters-mode-enable
 ;;;;;;  rainbow-delimiters-mode) "rainbow-delimiters/rainbow-delimiters"
-;;;;;;  "rainbow-delimiters/rainbow-delimiters.el" (20369 33511))
+;;;;;;  "rainbow-delimiters/rainbow-delimiters.el" (20370 21912))
 ;;; Generated autoloads from rainbow-delimiters/rainbow-delimiters.el
 
 (autoload 'rainbow-delimiters-mode "rainbow-delimiters/rainbow-delimiters" "\
@@ -1667,10 +1813,10 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "anything/contrib/anything-multi-sources.el" "anything/contrib/anything-startup.el"
 ;;;;;;  "anything/extensions/anything-complete.el" "anything/extensions/anything-gtags.el"
 ;;;;;;  "anything/extensions/anything-obsolete.el" "anything/extensions/anything-show-completion.el"
-;;;;;;  "auto-complete/auto-complete-config.el" "auto-complete/auto-complete-pkg.el"
-;;;;;;  "auto-complete/auto-complete.el" "dtrt-indent/dtrt-indent-diag.el"
-;;;;;;  "dtrt-indent/dtrt-indent-test.el" "el-get/el-get-autoloads.el"
-;;;;;;  "el-get/el-get-build.el" "el-get/el-get-byte-compile.el"
+;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete/auto-complete-config.el"
+;;;;;;  "auto-complete/auto-complete-pkg.el" "auto-complete/auto-complete.el"
+;;;;;;  "dtrt-indent/dtrt-indent-diag.el" "dtrt-indent/dtrt-indent-test.el"
+;;;;;;  "el-get/el-get-autoloads.el" "el-get/el-get-build.el" "el-get/el-get-byte-compile.el"
 ;;;;;;  "el-get/el-get-core.el" "el-get/el-get-custom.el" "el-get/el-get-dependencies.el"
 ;;;;;;  "el-get/el-get-install.el" "el-get/el-get-methods.el" "el-get/el-get-notify.el"
 ;;;;;;  "el-get/el-get-recipes.el" "el-get/el-get-status.el" "eldoc-extension/eldoc-extension.el"
@@ -1679,9 +1825,11 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "evil/evil-maps.el" "evil/evil-pkg.el" "evil/evil-repeat.el"
 ;;;;;;  "evil/evil-search.el" "evil/evil-states.el" "evil/evil-tests.el"
 ;;;;;;  "evil/evil-types.el" "evil/evil-vars.el" "evil/evil.el" "highlight-cl/highlight-cl.el"
-;;;;;;  "ibuffer-git/ibuffer-git.el" "one-key/one-key.el" "shell-pop/shell-pop.el"
+;;;;;;  "ibuffer-git/ibuffer-git.el" "magit/50magit.el" "magit/magit-bisect.el"
+;;;;;;  "magit/magit-key-mode.el" "magit/magit-pkg.el" "magit/magit-wip.el"
+;;;;;;  "one-key/one-key.el" "recentf-ext/recentf-ext.el" "shell-pop/shell-pop.el"
 ;;;;;;  "yasnippet/dropdown-list.el" "yasnippet/yasnippet-debug.el"
-;;;;;;  "yasnippet/yasnippet-tests.el") (20370 20474 499978))
+;;;;;;  "yasnippet/yasnippet-tests.el") (20375 63461 314097))
 
 ;;;***
 

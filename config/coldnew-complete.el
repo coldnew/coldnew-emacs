@@ -7,6 +7,7 @@
 ;;;; ---------------------------------------------------------------------------
 (require 'auto-complete)
 (require 'auto-complete-config)
+(require 'auto-complete-clang)
 
 ;; use default config
 (ac-config-default)
@@ -56,12 +57,32 @@
 (setq anything-config t)
 
 ;; Enable anything globally
-;;(ac-mode 1)
+(ac-mode 1)
 
 ;; Path of file where history information is stored.
 (setq anything-c-adaptive-history-file (concat emacs-cache-dir "anything.cache"))
 
 
+;;;; ---------------------------------------------------------------------------
+;;;; Commands
+;;;; ---------------------------------------------------------------------------
+
+(defun my-anything-filelist ()
+  "Preconfigured `anything' to open files/buffers/bookmarks instantly.
+
+This is a replacement for `anything-for-files'.
+See `anything-c-filelist-file-name' docstring for usage."
+  (interactive)
+  (anything
+   :prompt "Switch to: "
+   :source
+   '(anything-c-source-ffap-line
+     anything-c-source-ffap-guesser
+     anything-c-source-buffers-list
+     anything-c-source-recentf
+     anything-c-source-bookmarks
+     anything-c-source-file-cache
+     anything-c-source-filelist)))
 
 
 

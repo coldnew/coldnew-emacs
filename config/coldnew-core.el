@@ -1,8 +1,6 @@
 ;;; coldnew-core.el --- core defun and variables setting
-
+;;; Time-stamp: <2012-04-25 20:54:48 (coldnew)>
 (eval-when-compile (require 'cl))
-
-
 
 ;;;; ------------------------------------------------------------------------------
 ;;;;   Initial User-Interface setting
@@ -23,6 +21,11 @@
 (setq scroll-conservatively      100000 )
 (setq scroll-preserve-screen-position 1 )
 
+;; timestamp
+
+(setq time-stamp-active      t ) ; do enable time-stamps
+(setq time-stamp-line-limit 10 ) ; check first 10 buffer lines for Time-stamp:
+(setq time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S (%u)") ; date format
 
 
 ;;;; -------------------------------------------------------------------------------
@@ -65,6 +68,9 @@
   "Window hight of popup shell.")
 (defvar emacs-popup-shell-window-position "bottom"
   "Make popup shell window at buttom by default.")
+
+
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Environment setting

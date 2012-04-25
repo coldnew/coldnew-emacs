@@ -118,7 +118,7 @@
 ;; Enable undo-tree globally
 (global-undo-tree-mode)
 ;; keybinding
-(define-key undo-tree-map (kbd "C-g") 'undo-tree-visualizer-quit)
+(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; iedit
@@ -171,6 +171,9 @@
 ;;;; cc-mode common setting
 (defun coldnew-cc-mode-common-setting ()
   "coldnew's common setting for cc-mode"
+
+  ;; Use coldnew's editor mode
+  (coldnew-editor-mode)
 
   ;; Color nested parentheses, brackets, and braces according to their dept
   (rainbow-delimiters-mode)

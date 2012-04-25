@@ -1,5 +1,5 @@
 ;;; coldnew-minibuffer.el --- minibuffer setting
-(eval-when-compile (require 'cl)
+(eval-when-compile (require 'cl))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; initial setting
@@ -13,9 +13,11 @@
 ;;;; ---------------------------------------------------------------------------
 (define-key minibuffer-local-map (kbd "M-w") 'backward-kill-word)
 (define-key minibuffer-local-map (kbd "C-w") 'kill-word)
-(define-key minibuffer-local-map (kbd "C-u") '(lambda() (interactive) (kill-line 0))))
+(define-key minibuffer-local-map (kbd "C-u") '(lambda() (interactive) (kill-line 0)))
 (define-key minibuffer-local-map (kbd "M-p") 'previous-history-element)
 (define-key minibuffer-local-map (kbd "M-n") 'next-history-element)
+(define-key minibuffer-local-map (kbd "C-g") 'minibuffer-keyboard-quit)
+
 
 
 

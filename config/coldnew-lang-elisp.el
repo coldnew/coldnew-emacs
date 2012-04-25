@@ -1,5 +1,7 @@
 ;;; coldnew-lang-elisp.el ---
+
 (eval-when-compile (require 'cl))
+
 
 (require 'coldnew-editor)
 
@@ -15,6 +17,10 @@
 
 ;; use my lisp-common-setting
 (add-hook 'emacs-lisp-mode-hook 'coldnew-lisp-common-setting)
+
+;; my auto-complete for elisp
+;;(require 'auto-complete-emacs-lisp)
+(add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
 
 ;; use eldoc
 (require 'eldoc)
@@ -32,6 +38,21 @@
 ;;;; ---------------------------------------------------------------------------
 (define-key emacs-lisp-mode-map (kbd "C-c i") 'elisp-mode:anything-info-search)
 
+;;;; ---------------------------------------------------------------------------
+;;;; Autocomplete
+;;;; ---------------------------------------------------------------------------
+
+(defun ac-emacs-lisp-mode-setup ()
+  "auto-complete settings for emacs-lisp-mode"
+  (setq ac-sources
+	'(ac-source-symbols
+	  ac-source-variables
+	  ac-source-functions
+	  ac-source-features
+	  ac-source-filename
+	  ac-source-files-in-current-dir
+	  ac-source-words-in-same-mode-buffers
+	  )))
 ;;;; ---------------------------------------------------------------------------
 ;;;; Functions
 ;;;; ---------------------------------------------------------------------------
