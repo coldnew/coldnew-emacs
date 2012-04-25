@@ -39,20 +39,13 @@
   ad-do-it
   (delete-other-windows))
 
-;; (defadvice egg-commit-log-edit (around kill-egg-status-buffer activate)
-;;   "Delete egg-status buffer after visiting egg-commit-buffer."
-;;   (let ((egg-status-buffer (current-buffer)))
-;;     (kill-buffer egg-status-buffer)
-;;     ad-do-it))
-
-
 
 ;;;;;;;; Magit
-;;(require 'magit)
+(require 'magit)
 ;; if use magit, do not use vc-git to handle Git interface.
 ;; (when (featurep 'magit)
 ;;   (setq vc-handled-backends (remq 'Git vc-handled-backends)))
-;; (require 'git-emacs)
+(require 'git-emacs)
 ;;   ;; disable git-emacs's advice
 ;;   (ad-disable-advice 'vc-next-action 'around 'git--vc-git-next-action)
 ;;   (ad-activate 'vc-next-action)
