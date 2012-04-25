@@ -26,7 +26,7 @@
    ((memq :wdir-has-unmerged-files  desc) :stage-all)
    ((memq :wdir-is-modified desc)         :stage-all)
    ((memq :rebase-in-progress desc)       :rebase-continue)
-   (t                                     :sync)))
+   (t                                     :quit)))
 
 ;;;;;;;; Advice
 (defadvice egg-status (around goto-egg-status-buffer activate)
