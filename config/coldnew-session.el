@@ -4,6 +4,20 @@
 (require 'coldnew-functions)
 
 ;;;; ---------------------------------------------------------------------------
+;;;; filecache
+;;;; ---------------------------------------------------------------------------
+(require 'filecache)
+;; setup file-cache-filter-regexps
+(setq file-cache-filter-regexps
+      '("~$" "\\.o$" "\\.exe$" "\\.a$" "\\.out$"  "\\.elc$"
+	"\\.output$" "\\.$" "#$" "\\.class$" "\\.pyc$" "\\.png$" "\\.jpg$" "\\.gif$"
+	"\\.svn$" "\\.svn-base$" "\\.git$" "\\.hg$"
+	))
+
+(file-cache-add-directory-list '("~/.emacs.d/config/" ))
+
+
+;;;; ---------------------------------------------------------------------------
 ;;;; savehist
 ;;;; ---------------------------------------------------------------------------
 (require 'savehist)
@@ -22,10 +36,12 @@
 ;;;; recentf
 ;;;; ---------------------------------------------------------------------------
 (require 'recentf)
+(require 'recentf-ext)
 ;; Setting cache file for recentf
 (setq recentf-save-file (concat emacs-cache-dir "recentf"))
 ;; Following file won;t contain in recentf
 (setq recentf-exclude '("\\.elc$" "\\.pyc$" "\\.recentd$" "^/tmp/"))
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; desktop
