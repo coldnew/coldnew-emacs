@@ -13,13 +13,13 @@
 ;;   (setq vc-handled-backends (remq 'Git vc-handled-backends)))
 
 ;;;;;;;; Egg
-(require 'egg)
-;; do not auto-update egg-status on file save
-(setq egg-auto-update nil)
-;; do not switch to the status buffer in the same window
-(setq egg-switch-to-buffer t)
+;; (require 'egg)
+;; ;; do not auto-update egg-status on file save
+;; (setq egg-auto-update nil)
+;; ;; do not switch to the status buffer in the same window
+;; (setq egg-switch-to-buffer t)
 
-
+(require 'git-emacs)
 
 (provide 'coldnew-version-control)
 ;; coldnew-version-control.el ends here.

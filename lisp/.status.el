@@ -4,6 +4,7 @@
 	   (:name anything :website "http://www.emacswiki.org/emacs/Anything" :description "Open anything / QuickSilver-like candidate-selection framework" :type git :url "http://repo.or.cz/r/anything-config.git" :shallow nil :load-path
 		  ("." "extensions" "contrib")
 		  :features anything))
+ (anything-traverse status "removed" recipe nil)
  (auto-complete status "installed" recipe
 		(:name auto-complete :website "http://cx4a.org/software/auto-complete/" :description "The most intelligent auto-completion extension." :type github :pkgname "m2ym/auto-complete" :depends
 		       (popup fuzzy)
@@ -38,6 +39,8 @@
        (:name evil :website "http://gitorious.org/evil/pages/Home" :description "Evil is an extensible vi layer for Emacs. It\n       emulates the main features of Vim, and provides facilities\n       for writing custom extensions." :type git :url "https://git.gitorious.org/evil/evil.git" :features evil :depends undo-tree))
  (fuzzy status "installed" recipe
 	(:name fuzzy :website "https://github.com/m2ym/fuzzy-el" :description "Fuzzy matching utilities for GNU Emacs" :type github :pkgname "m2ym/fuzzy-el" :features fuzzy))
+ (git-emacs status "installed" recipe
+	    (:name git-emacs :description "Yet another git emacs mode for newbies" :type github :pkgname "tsgates/git-emacs" :features git-emacs))
  (highlight-cl status "installed" recipe
 	       (:name highlight-cl :description "Highlighting `cl' functions." :website "" :type emacswiki :features highlight-cl))
  (highlight-symbol status "installed" recipe
@@ -78,6 +81,8 @@
 	    (:name shell-pop :description "Helps you pop up and pop out shell buffer easily." :website "http://www.emacswiki.org/emacs/ShellPop" :type emacswiki :features "shell-pop"))
  (tempbuf status "installed" recipe
 	  (:name tempbuf :description "" :website "" :type emacswiki :features tempbuf))
+ (traverselisp status "installed" recipe
+	       (:name traverselisp :description "walk through directories and perform actions on files." :type emacswiki :features traverselisp))
  (undo-tree status "installed" recipe
 	    (:name undo-tree :description "Treat undo history as a tree" :type git :url "http://www.dr-qubit.org/git/undo-tree.git" :prepare
 		   (progn

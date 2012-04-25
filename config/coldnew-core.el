@@ -1,5 +1,5 @@
 ;;; coldnew-core.el --- core defun and variables setting
-;;; Time-stamp: <2012-04-25 20:54:48 (coldnew)>
+;;; Time-stamp: <2012-04-26 01:21:32 (coldnew)>
 (eval-when-compile (require 'cl))
 
 ;;;; ------------------------------------------------------------------------------
@@ -20,6 +20,8 @@
 (setq scroll-margin                   0 )
 (setq scroll-conservatively      100000 )
 (setq scroll-preserve-screen-position 1 )
+(setq scroll-up-aggressively       0.01 )
+(setq scroll-down-aggressively     0.01 )
 
 ;; timestamp
 

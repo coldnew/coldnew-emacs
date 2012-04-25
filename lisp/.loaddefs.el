@@ -1240,6 +1240,24 @@ Display a list of packages.
 
 ;;;***
 
+;;;### (autoloads (git-reblame git-blame-mode) "git-emacs/git-blame"
+;;;;;;  "git-emacs/git-blame.el" (20376 21479))
+;;; Generated autoloads from git-emacs/git-blame.el
+
+(autoload 'git-blame-mode "git-emacs/git-blame" "\
+Toggle minor mode for displaying Git blame
+
+With prefix ARG, turn the mode on if ARG is positive.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'git-reblame "git-emacs/git-blame" "\
+Recalculate all blame information in the current buffer
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (highlight-symbol-query-replace highlight-symbol-prev-in-defun
 ;;;;;;  highlight-symbol-next-in-defun highlight-symbol-prev highlight-symbol-next
 ;;;;;;  highlight-symbol-remove-all highlight-symbol-at-point highlight-symbol-mode)
@@ -1717,6 +1735,89 @@ See also function `tempbuf-mode'.
 
 ;;;***
 
+;;;### (autoloads (traverse-count-files-in-dir traverse-toggle-split-window-h-v
+;;;;;;  traverse-dired-search-regexp-in-anything-at-point traverse-dired-find-in-marked-files
+;;;;;;  traverse-dired-search-in-archive traverse-dired-browse-archive
+;;;;;;  traverse-search-in-dired-file-at-point traverse-search-in-dired-dir-at-point
+;;;;;;  traverse-deep-rfind traverse-find-in-file) "traverselisp/traverselisp"
+;;;;;;  "traverselisp/traverselisp.el" (20376 6586))
+;;; Generated autoloads from traverselisp/traverselisp.el
+
+(autoload 'traverse-find-in-file "traverselisp/traverselisp" "\
+Traverse search regex in a single file.
+
+\(fn FNAME REGEXP &optional FULL-PATH)" t nil)
+
+(autoload 'traverse-deep-rfind "traverselisp/traverselisp" "\
+Search for regexp in all files of dirs and subdirs of current tree.
+Main function that call walk, if only is omitted it
+will be set as nil and search will be proceeded on all files
+except on files that are in `traverse-ignore-files'
+Called with prefix-argument (C-u) absolute path is displayed
+
+\(fn TREE REGEXP &optional ONLY)" t nil)
+
+(autoload 'traverse-search-in-dired-dir-at-point "traverselisp/traverselisp" "\
+Search for regexp in all files of directory at point in a dired buffer.
+
+\(fn REGEX &optional ONLY)" t nil)
+
+(autoload 'traverse-search-in-dired-file-at-point "traverselisp/traverselisp" "\
+Search for regexp in file at point in a dired buffer.
+
+\(fn REGEX)" t nil)
+
+(autoload 'traverse-dired-browse-archive "traverselisp/traverselisp" "\
+Open compressed archive at point in a dired buffer.
+This function use AVFS and FUSE, so be sure
+to have these programs and modules installed on your system.
+
+\(fn)" t nil)
+
+(autoload 'traverse-dired-search-in-archive "traverselisp/traverselisp" "\
+Search for regexp in compressed archive at point in a dired buffer.
+This function use AVFS and FUSE, so be sure
+to have these programs installed on your system and FUSE module
+enabled in your kernel.
+This function is disabled by default, enable it setting
+traverse-use-avfs to non--nil
+
+\(fn REGEXP &optional ONLY)" t nil)
+
+(autoload 'traverse-dired-find-in-marked-files "traverselisp/traverselisp" "\
+Search for regexp in all marked files of a dired buffer.
+if some of the marked files are directories ignore them
+if no marked files use file at point.
+
+\(fn REGEXP &optional FULL-PATH)" t nil)
+
+(autoload 'traverse-dired-search-regexp-in-anything-at-point "traverselisp/traverselisp" "\
+Use the right function in dired depending on context.
+Search in:
+file at point
+or
+marked files
+or
+directory at point (recursion)
+or
+in compressed archive at point if traverse-use-avfs is non--nil.
+
+\(fn REGEXP &optional ONLY)" t nil)
+
+(autoload 'traverse-toggle-split-window-h-v "traverselisp/traverselisp" "\
+From traverse buffer toggle split window horizontally or vertically ala ediff.
+
+\(fn)" t nil)
+
+(autoload 'traverse-count-files-in-dir "traverselisp/traverselisp" "\
+Count files in TREE.
+and return a message and the number of files.
+If `quiet' is non-nil don't send message.
+
+\(fn TREE &optional QUIET)" t nil)
+
+;;;***
+
 ;;;### (autoloads (global-undo-tree-mode undo-tree-mode) "undo-tree/undo-tree"
 ;;;;;;  "undo-tree/undo-tree.el" (20366 41326))
 ;;; Generated autoloads from undo-tree/undo-tree.el
@@ -1824,12 +1925,15 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "evil/evil-ex.el" "evil/evil-integration.el" "evil/evil-macros.el"
 ;;;;;;  "evil/evil-maps.el" "evil/evil-pkg.el" "evil/evil-repeat.el"
 ;;;;;;  "evil/evil-search.el" "evil/evil-states.el" "evil/evil-tests.el"
-;;;;;;  "evil/evil-types.el" "evil/evil-vars.el" "evil/evil.el" "highlight-cl/highlight-cl.el"
+;;;;;;  "evil/evil-types.el" "evil/evil-vars.el" "evil/evil.el" "git-emacs/git--test.el"
+;;;;;;  "git-emacs/git-emacs-autoloads.el" "git-emacs/git-emacs.el"
+;;;;;;  "git-emacs/git-global-keys.el" "git-emacs/git-log.el" "git-emacs/git-modeline.el"
+;;;;;;  "git-emacs/git-status.el" "highlight-cl/highlight-cl.el"
 ;;;;;;  "ibuffer-git/ibuffer-git.el" "magit/50magit.el" "magit/magit-bisect.el"
 ;;;;;;  "magit/magit-key-mode.el" "magit/magit-pkg.el" "magit/magit-wip.el"
 ;;;;;;  "one-key/one-key.el" "recentf-ext/recentf-ext.el" "shell-pop/shell-pop.el"
 ;;;;;;  "yasnippet/dropdown-list.el" "yasnippet/yasnippet-debug.el"
-;;;;;;  "yasnippet/yasnippet-tests.el") (20375 63461 314097))
+;;;;;;  "yasnippet/yasnippet-tests.el") (20376 21479 885555))
 
 ;;;***
 

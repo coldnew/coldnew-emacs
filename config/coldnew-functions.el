@@ -18,6 +18,18 @@ Also returns nil if pid is nil."
     (format-network-address (car (network-interface-info dev)) t)))
 
 ;;;; ---------------------------------------------------------------------------
+;;;; Buffer
+;;;; ---------------------------------------------------------------------------
+(defun get-buffers-matching-mode (mode)
+  "Returns a list of buffers where their major-mode is equal to MODE"
+  (let ((buffer-mode-matches '()))
+    (dolist (buf (buffer-list))
+      (with-current-buffer buf
+	(if (eq mode major-mode)
+	    (add-to-list 'buffer-mode-matches buf))))
+    buffer-mode-matches))
+
+;;;; ---------------------------------------------------------------------------
 ;;;; date
 ;;;; ---------------------------------------------------------------------------
 (defun current-date-time ()

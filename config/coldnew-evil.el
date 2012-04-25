@@ -26,6 +26,7 @@
 (define-key evil-normal-state-map (kbd "C-w") 'one-key-menu-window-navigation)
 (define-key evil-normal-state-map (kbd "M-p") 'anything-show-kill-ring)
 
+
 ;;;;;;;; Insert
 (define-key evil-insert-state-map (kbd "C-x C-n") 'auto-complete)
 (define-key evil-insert-state-map (kbd "C-c C-t") 'my-anything-occur)

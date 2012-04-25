@@ -61,7 +61,14 @@
 
 ;; Path of file where history information is stored.
 (setq anything-c-adaptive-history-file (concat emacs-cache-dir "anything.cache"))
+;; Setting ignore file regexp
+(setq anything-c-boring-file-regexp
+      (concat anything-c-boring-file-regexp
+	      (rx
+	       (and (or ".out" ".elc") eol))))
 
+;;;;;;;; keybinding
+(define-key anything-occur-map (kbd "C-r") 'anything-occur-run-query-replace-regexp)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Commands
@@ -83,6 +90,20 @@ See `anything-c-filelist-file-name' docstring for usage."
      anything-c-source-bookmarks
      anything-c-source-file-cache
      anything-c-source-filelist)))
+
+(defun my-anything-occur ()
+  "I don't like highlight when goto lines."
+  (interactive)
+  (let ((anything-match-line-overlay-face nil))
+    (anything-occur)))
+
+(defun anything-c-occur-get-line (s e)
+  "rewrite `anything-c-occur-get-line' to make it color on line-number."
+  (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
+	  (format ": %s" (buffer-substring s e))))
+
+
+
 
 
 

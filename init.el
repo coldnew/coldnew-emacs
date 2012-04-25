@@ -49,6 +49,4 @@
   )
 
 
-
-
 (message "Emacs is ready to serve you, Master %s!" (getenv "USER"))
