@@ -58,7 +58,7 @@
 
 (defalias 'git-log 'egg-log)
 (defalias 'git-status 'egg-status)
-
+(defalias 'git-rebase 'magit-rebase-step)
 
 (provide 'coldnew-version-control)
 ;; coldnew-version-control.el ends here.
