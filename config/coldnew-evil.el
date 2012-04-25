@@ -1,5 +1,5 @@
 ;;; coldnew-evil.el ---
-;;; Time-stamp: <2012-04-25 20:58:59 (coldnew)>
+;;; Time-stamp: <2012-04-26 03:29:57 (coldnew)>
 (eval-when-compile (require 'cl))
 
 (require 'coldnew-global-keybindings)
@@ -21,19 +21,24 @@
 
 ;;;;;;;; Normal
 (define-key evil-normal-state-map (kbd "C-c C-f") 'my-anything-filelist)
+(define-key evil-normal-state-map (kbd "C-c C-t") 'my-anything-occur)
+(define-key evil-normal-state-map (kbd "C-x vv") 'vc-next-action)
 (define-key evil-normal-state-map (kbd "C-w") 'one-key-menu-window-navigation)
 (define-key evil-normal-state-map (kbd "M-p") 'anything-show-kill-ring)
 
 ;;;;;;;; Insert
 (define-key evil-insert-state-map (kbd "C-x C-n") 'auto-complete)
+(define-key evil-insert-state-map (kbd "C-c C-t") 'my-anything-occur)
 (define-key evil-insert-state-map (kbd "C-c C-f") 'my-anything-filelist)
-(define-key evil-normal-state-map (kbd "M-p") 'anything-show-kill-ring)
+(define-key evil-insert-state-map (kbd "C-x vv") 'vc-next-action)
+(define-key evil-insert-state-map (kbd "M-p") 'anything-show-kill-ring)
 
 ;;;;;;;; Emacs
 (define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
-(define-key evil-emacs-state-map (kbd "C-[") 'evil-normal-state)
+(define-key evil-emacs-state-map (kbd "C-c C-t") 'my-anything-occur)
 (define-key evil-emacs-state-map (kbd "C-c C-f") 'my-anything-filelist)
-(define-key evil-normal-state-map (kbd "M-p") 'anything-show-kill-ring)
+(define-key evil-emacs-state-map (kbd "C-x vv") 'vc-next-action)
+(define-key evil-emacs-state-map (kbd "M-p") 'anything-show-kill-ring)
 
 
 ;;;; ---------------------------------------------------------------------------
@@ -63,6 +68,7 @@
   `(evil-define-key ,state ,map ,key
      '(lambda ()
 	(interactive) (insert ,name) (if (featurep 'yasnippet) (yas/expand)))))
+
 
 
 
