@@ -28,6 +28,23 @@
    ((memq :rebase-in-progress desc)       :rebase-continue)
    (t                                     :sync)))
 
+;;;;;;;; Advice
+(defadvice egg-status (around goto-egg-status-buffer activate)
+  "Delete other windows after visiting egg-status."
+  ad-do-it
+  (delete-other-windows))
+
+(defadvice egg-commit-log-edit (around goto-egg-commit-buffer activate)
+  "Delete other windows after visiting egg-commit-buffer."
+  ad-do-it
+  (delete-other-windows))
+
+(defadvice egg-commit-log-edit (around kill-egg-status-buffer activate)
+  "Delete egg-status buffer after visiting egg-commit-buffer."
+  (let ((egg-status-buffer (current-buffer)))
+    (kill-buffer egg-status-buffer)
+    ad-do-it))
+
 
 
 ;;;;;;;; Magit
