@@ -49,7 +49,7 @@
 ;;   ;; disable git-emacs's advice
 ;;   (ad-disable-advice 'vc-next-action 'around 'git--vc-git-next-action)
 ;;   (ad-activate 'vc-next-action)
-
+(define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
 
 
 
