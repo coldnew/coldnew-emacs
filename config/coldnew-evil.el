@@ -18,6 +18,7 @@
 (setq evil-want-visual-char-semi-exclusive t)
 
 (add-to-list 'evil-emacs-state-modes 'git-branch-mode)
+(add-to-list 'evil-emacs-state-modes 'egg-status-buffer-mode)
 (add-to-list 'evil-insert-state-modes 'egg-commit-buffer-mode)
 
 ;;;; ---------------------------------------------------------------------------
