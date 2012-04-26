@@ -19,3 +19,9 @@
 [submodule "lisp/magit"]
 	path = lisp/magit
 	url = http://github.com/magit/magit.git
+[submodule "lisp/ace-jump-mode"]
+	path = lisp/ace-jump-mode
+	url = http://github.com/winterTTr/ace-jump-mode.git
+[submodule "lisp/expand-region"]
+	path = lisp/expand-region
+	url = http://github.com/magnars/expand-region.el.git
