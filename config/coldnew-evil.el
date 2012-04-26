@@ -1,8 +1,6 @@
 ;;; coldnew-evil.el ---
 (eval-when-compile (require 'cl))
 
-(require 'coldnew-global-keybindings)
-
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; evil

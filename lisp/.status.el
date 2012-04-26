@@ -56,6 +56,9 @@
 	      (:name ibuffer-git :description "show git status in ibuffer" :type git :url "git://github.com/jrockway/ibuffer-git" :features ibuffer-git))
  (iedit status "installed" recipe
 	(:name iedit :description "Edit multiple regions with the same content simultaneously." :type emacswiki :features iedit))
+ (jump-char status "removed" recipe nil)
+ (key-chord status "installed" recipe
+	    (:name key-chord :description "map pairs of simultaneously pressed keys to commands" :type emacswiki :features key-chord))
  (linum+ status "installed" recipe
 	 (:name linum+ :description "Extension of linum" :type emacswiki :features linum+))
  (lusty-explorer status "installed" recipe
