@@ -1,5 +1,4 @@
 ;;; coldnew-command.el ---
-;;; Time-stamp: <2012-04-26 03:38:29 (coldnew)>
 (eval-when-compile (require 'cl))
 
 (require 'coldnew-functions)
@@ -23,7 +22,6 @@
    (get-buffers-matching-mode major-mode)
    (car (occur-read-primary-args)))
   (select-window (get-buffer-window "*Occur*")))
-
 
 
 
