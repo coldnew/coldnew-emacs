@@ -26,7 +26,7 @@
 (global-set-key (kbd "M-w")   'backward-kill-word)
 (global-set-key (kbd "C-g")   'keyboard-quit)
 (global-set-key (kbd "C-c C-f") 'my-anything-filelist)
-(global-set-key (kbd "<escape>") 'evil-local-mode)
+(global-set-key (kbd "<escape>") 'evil-mode)
 
 
 ;;;; ---------------------------------------------------------------------------

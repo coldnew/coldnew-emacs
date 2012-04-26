@@ -28,8 +28,6 @@
    ((memq :rebase-in-progress desc)       :rebase-continue)
    (t                                     :quit)))
 
-(add-hook 'egg-commit-buffer-mode 'coldnew-editor-mode)
-(add-hook 'egg-commit-buffer-mode 'evil-local-mode)
 ;;;;;;;; Advice
 (defadvice egg-status (around goto-egg-status-buffer activate)
   "Delete other windows after visiting egg-status."

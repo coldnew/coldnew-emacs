@@ -66,7 +66,6 @@
 		 "/"
 		 (:eval (propertize "%I" 'face 'font-lock-constant-face)) ;; size
 		 "] "
-		 s
 		 )))
 
 
