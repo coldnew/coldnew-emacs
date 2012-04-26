@@ -30,6 +30,8 @@
 (define-key evil-normal-state-map (kbd "C-x vv") 'egg-next-action)
 (define-key evil-normal-state-map (kbd "C-w") 'one-key-menu-window-navigation)
 (define-key evil-normal-state-map (kbd "M-p") 'anything-show-kill-ring)
+(define-key evil-normal-state-map (kbd "C-=") 'text-scale-increase)
+(define-key evil-normal-state-map (kbd "C--") 'text-scale-decrease)
 
 
 ;;;;;;;; Insert
@@ -46,6 +48,8 @@
 (define-key evil-emacs-state-map (kbd "C-c C-f") 'my-anything-filelist)
 (define-key evil-emacs-state-map (kbd "C-x vv") 'egg-next-action)
 (define-key evil-emacs-state-map (kbd "M-p") 'anything-show-kill-ring)
+(define-key evil-emacs-state-map (kbd "C-=") 'text-scale-increase)
+(define-key evil-emacs-state-map (kbd "C--") 'text-scale-decrease)
 
 
 ;;;; ---------------------------------------------------------------------------

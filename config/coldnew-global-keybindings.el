@@ -16,8 +16,6 @@
 (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
 (global-set-key (kbd "C-x C-b")  'ibuffer)
 (global-set-key (kbd "C-;")      'iedit-mode)
-(global-set-key (kbd "C-=")      'text-scale-increase)
-(global-set-key (kbd "C--")      'text-scale-decrease)
 (global-set-key (kbd "C-x C-d")  'dired)
 (global-set-key (kbd "C-x C-r")  'sudo-edit)
 (global-set-key (kbd "C-x ,") 'undo-tree-undo)
