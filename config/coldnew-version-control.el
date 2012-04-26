@@ -57,6 +57,14 @@
 ;;   (ad-activate 'vc-next-action)
 (define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
 
+;;;; ---------------------------------------------------------------------------
+;;;; Function
+;;;; ---------------------------------------------------------------------------
+
+(defun gitg ()
+  "Launch gitg in the current directory."
+  (interactive)
+  (start-process "gitg" nil "gitg"))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Alias
