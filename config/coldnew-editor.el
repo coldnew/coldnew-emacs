@@ -62,6 +62,10 @@
 (add-hook 'coldnew-editor-hook 'highlight-fontify-numbers)
 ;; highlight escape char in string
 (add-hook 'coldnew-editor-hook 'highlight-escape-char)
+;; Color nested parentheses, brackets, and braces according to their dept
+(add-hook 'coldnew-editor-hook 'rainbow-delimiters)
+;; Add spaces between Chinese and English character.
+(add-hook 'before-save-hook 'insert-space-between-english-chinese)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybindings
@@ -169,8 +173,8 @@
   ;; Use Greek character lambda insteda of string
   (turn-on-pretty-lambda-mode)
 
-  ;; Color nested parentheses, brackets, and braces according to their dept
-  (rainbow-delimiters-mode)
+  ;; ;; Color nested parentheses, brackets, and braces according to their dept
+  ;; (rainbow-delimiters-mode)
   )
 
 ;;;; cc-mode common setting
@@ -180,8 +184,8 @@
   ;; Use coldnew's editor mode
   (coldnew-editor-mode)
 
-  ;; Color nested parentheses, brackets, and braces according to their dept
-  (rainbow-delimiters-mode)
+  ;; ;; Color nested parentheses, brackets, and braces according to their dept
+  ;; (rainbow-delimiters-mode)
 
   ;; enable doxygen
   (doxymacs-mode t)
@@ -236,6 +240,21 @@
 			     0 'font-lock-escape-char-face prepend)
 			    )))
 
+(defun insert-space-between-english-chinese ()
+  "Insert a space between English words and Chinese charactors"
+  (save-excursion
+    (beginning-of-buffer)
+    (while (re-search-forward "\\(\\cc\\)\\([a-zA-Z0-9]\\)" nil t)
+      (replace-match "\\1 \\2" nil nil))
+    (beginning-of-buffer)
+    (while (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t)
+      (replace-match "\\1 \\2" nil nil))
+    (beginning-of-buffer)
+    (while (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
+      (replace-match "\\1\\2" nil nil))
+    (beginning-of-buffer)
+    (while (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t)
+      (replace-match "\\1\\2" nil nil))))
 
 
 (provide 'coldnew-editor)
