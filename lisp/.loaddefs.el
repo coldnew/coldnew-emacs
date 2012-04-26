@@ -3,8 +3,36 @@
 ;;; Code:
 
 
+;;;### (autoloads (ace-jump-mode) "ace-jump-mode/ace-jump-mode" "ace-jump-mode/ace-jump-mode.el"
+;;;;;;  (20377 7849))
+;;; Generated autoloads from ace-jump-mode/ace-jump-mode.el
+
+(autoload 'ace-jump-mode "ace-jump-mode/ace-jump-mode" "\
+AceJump mode is a minor mode for you to quick jump to a
+position in the curret view.
+   There is three submode now:
+     `ace-jump-char-mode'
+     `ace-jump-word-mode'
+     `ace-jump-line-mode'
+
+You can specify the sequence about which mode should enter
+by customize `ace-jump-mode-submode-list'.
+
+If you do not want to query char for word mode, you can change
+`ace-jump-word-mode-use-query-char' to nil.
+
+If you don't like the default move keys, you can change it by
+setting `ace-jump-mode-move-keys'.
+
+You can constrol whether use the case sensitive via
+`ace-jump-mode-case-fold'.
+
+\(fn &optional PREFIX)" t nil)
+
+;;;***
+
 ;;;### (autoloads (android-mode) "android-mode/android-mode" "android-mode/android-mode.el"
-;;;;;;  (20370 51184))
+;;;;;;  (20377 6600))
 ;;; Generated autoloads from android-mode/android-mode.el
 
 (autoload 'android-mode "android-mode/android-mode" "\
@@ -1233,15 +1261,34 @@ Display a list of packages.
 
 ;;;***
 
-;;;### (autoloads nil "evil/evil-core" "evil/evil-core.el" (20369
-;;;;;;  41473))
+;;;### (autoloads nil "evil/evil-core" "evil/evil-core.el" (20376
+;;;;;;  57919))
 ;;; Generated autoloads from evil/evil-core.el
 (autoload 'evil-mode "evil")
 
 ;;;***
 
+;;;### (autoloads (er/expand-region) "expand-region/expand-region-core"
+;;;;;;  "expand-region/expand-region-core.el" (20377 7220))
+;;; Generated autoloads from expand-region/expand-region-core.el
+
+(autoload 'er/expand-region "expand-region/expand-region-core" "\
+Increase selected region by semantic units.
+Basically it runs all the mark-functions in `er/try-expand-list'
+and chooses the one that increases the size of the region while
+moving point or mark as little as possible.
+
+With prefix argument expands the region that many times.
+If prefix argument is negative calls `er/contract-region'.
+If prefix argument is 0 it resets point and mark to their state
+before calling `er/expand-region' for the first time.
+
+\(fn ARG)" t nil)
+
+;;;***
+
 ;;;### (autoloads (git-reblame git-blame-mode) "git-emacs/git-blame"
-;;;;;;  "git-emacs/git-blame.el" (20376 21479))
+;;;;;;  "git-emacs/git-blame.el" (20377 6687))
 ;;; Generated autoloads from git-emacs/git-blame.el
 
 (autoload 'git-blame-mode "git-emacs/git-blame" "\
@@ -1516,8 +1563,8 @@ Launch dired at the current directory.
 
 ;;;***
 
-;;;### (autoloads (magit-status) "magit/magit" "magit/magit.el" (20370
-;;;;;;  51412))
+;;;### (autoloads (magit-status) "magit/magit" "magit/magit.el" (20377
+;;;;;;  6732))
 ;;; Generated autoloads from magit/magit.el
 
 (autoload 'magit-status "magit/magit" "\
@@ -1535,7 +1582,7 @@ user input.
 ;;;***
 
 ;;;### (autoloads (turn-on-magit-stgit magit-stgit-mode) "magit/magit-stgit"
-;;;;;;  "magit/magit-stgit.el" (20370 51412))
+;;;;;;  "magit/magit-stgit.el" (20377 6732))
 ;;; Generated autoloads from magit/magit-stgit.el
 
 (autoload 'magit-stgit-mode "magit/magit-stgit" "\
@@ -1551,7 +1598,7 @@ Unconditionally turn on `magit-stgit-mode'.
 ;;;***
 
 ;;;### (autoloads (turn-on-magit-svn magit-svn-mode) "magit/magit-svn"
-;;;;;;  "magit/magit-svn.el" (20370 51412))
+;;;;;;  "magit/magit-svn.el" (20377 6732))
 ;;; Generated autoloads from magit/magit-svn.el
 
 (autoload 'magit-svn-mode "magit/magit-svn" "\
@@ -1567,7 +1614,7 @@ Unconditionally turn on `magit-svn-mode'.
 ;;;***
 
 ;;;### (autoloads (turn-on-magit-topgit magit-topgit-mode) "magit/magit-topgit"
-;;;;;;  "magit/magit-topgit.el" (20370 51412))
+;;;;;;  "magit/magit-topgit.el" (20377 6732))
 ;;; Generated autoloads from magit/magit-topgit.el
 
 (autoload 'magit-topgit-mode "magit/magit-topgit" "\
@@ -1583,7 +1630,7 @@ Unconditionally turn on `magit-topgit-mode'.
 ;;;***
 
 ;;;### (autoloads (rebase-mode) "magit/rebase-mode" "magit/rebase-mode.el"
-;;;;;;  (20370 51412))
+;;;;;;  (20377 6732))
 ;;; Generated autoloads from magit/rebase-mode.el
 
 (autoload 'rebase-mode "magit/rebase-mode" "\
@@ -1914,26 +1961,26 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "anything/contrib/anything-multi-sources.el" "anything/contrib/anything-startup.el"
 ;;;;;;  "anything/extensions/anything-complete.el" "anything/extensions/anything-gtags.el"
 ;;;;;;  "anything/extensions/anything-obsolete.el" "anything/extensions/anything-show-completion.el"
-;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete/auto-complete-config.el"
-;;;;;;  "auto-complete/auto-complete-pkg.el" "auto-complete/auto-complete.el"
-;;;;;;  "dtrt-indent/dtrt-indent-diag.el" "dtrt-indent/dtrt-indent-test.el"
-;;;;;;  "el-get/el-get-autoloads.el" "el-get/el-get-build.el" "el-get/el-get-byte-compile.el"
+;;;;;;  "auto-complete/auto-complete-config.el" "auto-complete/auto-complete-pkg.el"
+;;;;;;  "auto-complete/auto-complete.el" "dtrt-indent/dtrt-indent-diag.el"
+;;;;;;  "dtrt-indent/dtrt-indent-test.el" "el-get/el-get-autoloads.el"
+;;;;;;  "el-get/el-get-build.el" "el-get/el-get-byte-compile.el"
 ;;;;;;  "el-get/el-get-core.el" "el-get/el-get-custom.el" "el-get/el-get-dependencies.el"
 ;;;;;;  "el-get/el-get-install.el" "el-get/el-get-methods.el" "el-get/el-get-notify.el"
 ;;;;;;  "el-get/el-get-recipes.el" "el-get/el-get-status.el" "eldoc-extension/eldoc-extension.el"
-;;;;;;  "evil/evil-commands.el" "evil/evil-common.el" "evil/evil-digraphs.el"
-;;;;;;  "evil/evil-ex.el" "evil/evil-integration.el" "evil/evil-macros.el"
-;;;;;;  "evil/evil-maps.el" "evil/evil-pkg.el" "evil/evil-repeat.el"
-;;;;;;  "evil/evil-search.el" "evil/evil-states.el" "evil/evil-tests.el"
-;;;;;;  "evil/evil-types.el" "evil/evil-vars.el" "evil/evil.el" "git-emacs/git--test.el"
-;;;;;;  "git-emacs/git-emacs-autoloads.el" "git-emacs/git-emacs.el"
-;;;;;;  "git-emacs/git-global-keys.el" "git-emacs/git-log.el" "git-emacs/git-modeline.el"
-;;;;;;  "git-emacs/git-status.el" "highlight-cl/highlight-cl.el"
-;;;;;;  "ibuffer-git/ibuffer-git.el" "magit/50magit.el" "magit/magit-bisect.el"
-;;;;;;  "magit/magit-key-mode.el" "magit/magit-pkg.el" "magit/magit-wip.el"
-;;;;;;  "one-key/one-key.el" "recentf-ext/recentf-ext.el" "shell-pop/shell-pop.el"
-;;;;;;  "yasnippet/dropdown-list.el" "yasnippet/yasnippet-debug.el"
-;;;;;;  "yasnippet/yasnippet-tests.el") (20376 21479 885555))
+;;;;;;  "expand-region/clojure-mode-expansions.el" "expand-region/css-mode-expansions.el"
+;;;;;;  "expand-region/erlang-mode-expansions.el" "expand-region/expand-region-custom.el"
+;;;;;;  "expand-region/expand-region-pkg.el" "expand-region/expand-region.el"
+;;;;;;  "expand-region/feature-mode-expansions.el" "expand-region/html-mode-expansions.el"
+;;;;;;  "expand-region/js-mode-expansions.el" "expand-region/js2-mode-expansions.el"
+;;;;;;  "expand-region/jsp-expansions.el" "expand-region/latex-mode-expansions.el"
+;;;;;;  "expand-region/nxml-mode-expansions.el" "expand-region/org-mode-expansions.el"
+;;;;;;  "expand-region/python-el-expansions.el" "expand-region/python-el-fgallina-expansions.el"
+;;;;;;  "expand-region/python-mode-expansions.el" "expand-region/ruby-mode-expansions.el"
+;;;;;;  "expand-region/text-mode-expansions.el" "highlight-cl/highlight-cl.el"
+;;;;;;  "ibuffer-git/ibuffer-git.el" "one-key/one-key.el" "recentf-ext/recentf-ext.el"
+;;;;;;  "shell-pop/shell-pop.el" "yasnippet/dropdown-list.el" "yasnippet/yasnippet-debug.el"
+;;;;;;  "yasnippet/yasnippet-tests.el") (20377 7849 787575))
 
 ;;;***
 
