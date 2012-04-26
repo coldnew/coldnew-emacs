@@ -7,6 +7,9 @@
 		  ("." "extensions" "contrib")
 		  :features anything))
  (anything-traverse status "removed" recipe nil)
+ (ascii status "installed" recipe
+	(:name ascii :description "ASCII code display." :website "" :type emacswiki :features ascii))
+ (asciidoc status "removed" recipe nil)
  (auto-complete status "installed" recipe
 		(:name auto-complete :website "http://cx4a.org/software/auto-complete/" :description "The most intelligent auto-completion extension." :type github :pkgname "m2ym/auto-complete" :depends
 		       (popup fuzzy)
@@ -20,6 +23,8 @@
  (auto-complete-clang status "installed" recipe
 		      (:name auto-complete-clang :website "https://github.com/brianjcj/auto-complete-clang" :description "Auto-complete sources for Clang. Combine the power of AC, Clang and Yasnippet." :type github :pkgname "brianjcj/auto-complete-clang"))
  (auto-complete-emacs-lisp status "removed" recipe nil)
+ (bash-completion status "installed" recipe
+		  (:name bash-completion :description "" :website "" :type http :url "https://raw.github.com/szermatt/emacs-bash-completion/master/bash-completion.el" :features bash-completion))
  (doxymacs status "installed" recipe
 	   (:name doxymacs :website "http://doxymacs.sourceforge.net/" :description "Doxymacs is Doxygen + {X}Emacs." :type git :url "git://doxymacs.git.sourceforge.net/gitroot/doxymacs/doxymacs" :load-path
 		  ("./lisp")

@@ -1080,6 +1080,90 @@ i.e anything-match-plugin.
 
 ;;;***
 
+;;;### (autoloads (ascii-off ascii-on ascii-display ascii-customize)
+;;;;;;  "ascii/ascii" "ascii/ascii.el" (20377 29580))
+;;; Generated autoloads from ascii/ascii.el
+
+(autoload 'ascii-customize "ascii/ascii" "\
+Customize ASCII options.
+
+\(fn)" t nil)
+
+(autoload 'ascii-display "ascii/ascii" "\
+Toggle ASCII code display.
+
+If ARG is null, toggle ASCII code display.
+If ARG is a number and is greater than zero, turn on display; otherwise, turn
+off display.
+If ARG is anything else, turn on display.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'ascii-on "ascii/ascii" "\
+Turn on ASCII code display.
+
+\(fn)" t nil)
+
+(autoload 'ascii-off "ascii/ascii" "\
+Turn off ASCII code display.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (bash-completion-reset bash-completion-dynamic-complete
+;;;;;;  bash-completion-setup) "bash-completion/bash-completion"
+;;;;;;  "bash-completion/bash-completion.el" (20377 24147))
+;;; Generated autoloads from bash-completion/bash-completion.el
+
+(autoload 'bash-completion-setup "bash-completion/bash-completion" "\
+Register bash completion for the shell buffer and shell command line.
+
+This function adds `bash-completion-dynamic-complete' to the completion
+function list of shell mode, `shell-dynamic-complete-functions' and to the
+completion function list of shell-command, `shell-command-complete-functions'.
+
+This function is convenient, but it might not be the best way of enabling
+bash completion in your .emacs file because it forces you to load the module
+before it is needed. For an autoload version, add:
+
+\(autoload 'bash-completion-dynamic-complete \"bash-completion\"
+\"BASH completion hook\")
+\(add-hook 'shell-dynamic-complete-functions
+'bash-completion-dynamic-complete)
+\(add-hook 'shell-command-complete-functions
+'bash-completion-dynamic-complete))
+
+\(fn)" nil nil)
+
+(autoload 'bash-completion-dynamic-complete "bash-completion/bash-completion" "\
+Complete word at cursor using BASH completion.
+
+This function is meant to be added into
+`shell-dynamic-complete-functions' or
+`shell-command-complete-functions'.  It uses `comint' to figure
+out what the current command is and calls
+`comint-dynamic-simple-complete' to do the completion.
+
+If a match was found, it is displayed as is usual for comint
+completion.  Return nil if no match was found.
+
+\(fn)" nil nil)
+
+(autoload 'bash-completion-reset "bash-completion/bash-completion" "\
+Force the next completion command to start with a fresh BASH process.
+
+This function kills any existing BASH completion process.  This way, the
+next time BASH completion is requested, a new process will be created with
+the latest configuration.
+
+Call this method if you have updated your .bashrc or any bash init scripts
+and would like bash completion in Emacs to take these changes into account.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads nil "doxymacs/lisp/doxymacs" "doxymacs/lisp/doxymacs.el"
 ;;;;;;  (20369 38096))
 ;;; Generated autoloads from doxymacs/lisp/doxymacs.el
@@ -2018,7 +2102,7 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "expand-region/text-mode-expansions.el" "highlight-cl/highlight-cl.el"
 ;;;;;;  "ibuffer-git/ibuffer-git.el" "one-key/one-key.el" "recentf-ext/recentf-ext.el"
 ;;;;;;  "shell-pop/shell-pop.el" "yasnippet/dropdown-list.el" "yasnippet/yasnippet-debug.el"
-;;;;;;  "yasnippet/yasnippet-tests.el") (20377 9917 113668))
+;;;;;;  "yasnippet/yasnippet-tests.el") (20377 29580 872940))
 
 ;;;***
 
