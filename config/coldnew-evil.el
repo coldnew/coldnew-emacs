@@ -9,12 +9,14 @@
 ;;;; ---------------------------------------------------------------------------
 (require 'evil)
 
+(evil-mode t)
+
 ;; change default cursor face
 (setq evil-default-cursor '(:background (face-attribute 'cursor :background) box))
 
 (setq evil-want-visual-char-semi-exclusive t)
 
-;;(setq evil-emacs-state-mode '(git-branch-mode))
+(add-to-list 'evil-emacs-state-modes 'git-branch-mode)
 (add-to-list 'evil-insert-state-modes 'egg-commit-buffer-mode)
 
 ;;;; ---------------------------------------------------------------------------
