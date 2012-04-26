@@ -9,25 +9,21 @@
 
 (defun coldnew-editor-hook () "Hooks for coldnew-editor-mode.")
 
-(defvar coldnew-editor-enable-vim-keybinding t "setting for default keybinding")
-(defun coldnew-editor-mode () (coldnew-editor-hook) (evil-local-mode t))
-;; (defvar coldnew-editor-map
-;;   (let ((map (make-sparse-keymap)))
-;;     map)
-;;   "Keymap for coldnew-editor-mode.")
+(defvar coldnew-editor-map
+  (let ((map (make-sparse-keymap)))
+    map)
+  "Keymap for coldnew-editor-mode.")
 
-;; (define-minor-mode coldnew-editor-mode
-;;   "Minor mode for coldnew's editor."
-;;   :init-value t
-;;   :lighter " coldnew-editor"
-;;   ;;  :global t
-;;   :keymap coldnew-editor-map
-;;   (if coldnew-editor-mode
-;;       (progn
-;;	(run-hooks 'coldnew-editor-hook)
-;;	(if (and (featurep 'evil) coldnew-editor-enable-vim-keybinding)
-;;	    (evil-local-mode t)
-;;	  ))))
+(define-minor-mode coldnew-editor-mode
+  "Minor mode for coldnew's editor."
+  :init-value t
+  :lighter " coldnew-editor"
+  ;;  :global t
+  :keymap coldnew-editor-map
+  (if coldnew-editor-mode
+      (progn
+	(run-hooks 'coldnew-editor-hook)
+	(evil-local-mode 1))))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
@@ -155,32 +151,32 @@
 
 ;;;; lisp common setting
 (defun coldnew-lisp-common-setting ()
-"coldnew's common setting for lisp-like mode"
+  "coldnew's common setting for lisp-like mode"
 
-;; Use coldnew's editor mode
-(coldnew-editor-mode)
+  ;; Use coldnew's editor mode
+  (coldnew-editor-mode)
 
-;; Use Greek character lambda insteda of string
-(turn-on-pretty-lambda-mode)
+  ;; Use Greek character lambda insteda of string
+  (turn-on-pretty-lambda-mode)
 
-;; Color nested parentheses, brackets, and braces according to their dept
-(rainbow-delimiters-mode)
-)
+  ;; Color nested parentheses, brackets, and braces according to their dept
+  (rainbow-delimiters-mode)
+  )
 
 ;;;; cc-mode common setting
 (defun coldnew-cc-mode-common-setting ()
-"coldnew's common setting for cc-mode"
+  "coldnew's common setting for cc-mode"
 
-;; Use coldnew's editor mode
-(coldnew-editor-mode)
+  ;; Use coldnew's editor mode
+  (coldnew-editor-mode)
 
-;; Color nested parentheses, brackets, and braces according to their dept
-(rainbow-delimiters-mode)
+  ;; Color nested parentheses, brackets, and braces according to their dept
+  (rainbow-delimiters-mode)
 
-;; enable doxygen
-(doxymacs-mode t)
-(doxymacs-font-lock)
-)
+  ;; enable doxygen
+  (doxymacs-mode t)
+  (doxymacs-font-lock)
+  )
 
 
 ;;;; ---------------------------------------------------------------------------
@@ -188,47 +184,47 @@
 ;;;; ---------------------------------------------------------------------------
 
 (defun indent-file-after-save ()
-"Indent whole file after saved."
-(make-local-variable 'after-save-hook)
-(add-hook 'after-save-hook
-'(lambda ()
-(indent-region (point-min) (point-max) nil)
-(save-buffer))))
+  "Indent whole file after saved."
+  (make-local-variable 'after-save-hook)
+  (add-hook 'after-save-hook
+	    '(lambda ()
+	       (indent-region (point-min) (point-max) nil)
+	       (save-buffer))))
 
 (defun cleanup-whitespace-before-save ()
-"Cleanup whitespaces before save to a file."
-(make-local-variable 'before-save-hook)
-(add-hook 'before-save-hook
-'(lambda ()
-(whitespace-cleanup))))
+  "Cleanup whitespaces before save to a file."
+  (make-local-variable 'before-save-hook)
+  (add-hook 'before-save-hook
+	    '(lambda ()
+	       (whitespace-cleanup))))
 
 (defun highlight-additional-keywords ()
-"Highlight additional keywords."
-(font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\):" 1 font-lock-warning-face t)))
-(font-lock-add-keywords nil '(("\\<\\(NOTE\\):" 1 'org-todo t)))
-(font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
-(font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t)))
-)
+  "Highlight additional keywords."
+  (font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\):" 1 font-lock-warning-face t)))
+  (font-lock-add-keywords nil '(("\\<\\(NOTE\\):" 1 'org-todo t)))
+  (font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
+  (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t)))
+  )
 
 (defun highlight-fontify-numbers ()
-"Use this function as a hook to fontify numbers as constant"
-(font-lock-add-keywords nil
-'(
-;; hexadecimal
-("\\b\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
-;; float
-("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
-;; int
-("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
-)))
+  "Use this function as a hook to fontify numbers as constant"
+  (font-lock-add-keywords nil
+			  '(
+			    ;; hexadecimal
+			    ("\\b\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
+			    ;; float
+			    ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
+			    ;; int
+			    ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
+			    )))
 
 (defun highlight-escape-char ()
-"Use this function as a hook to fontify escape char."
-(font-lock-add-keywords nil
-'(
-("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
-0 'font-lock-escape-char-face prepend)
-)))
+  "Use this function as a hook to fontify escape char."
+  (font-lock-add-keywords nil
+			  '(
+			    ("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
+			     0 'font-lock-escape-char-face prepend)
+			    )))
 
 
 
