@@ -9,6 +9,7 @@
 ;;;; ---------------------------------------------------------------------------
 (require 'evil)
 
+;; Global enable evil-mode
 (evil-mode t)
 
 ;; change default cursor face
