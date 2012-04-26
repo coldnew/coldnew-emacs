@@ -23,7 +23,7 @@
   (if coldnew-editor-mode
       (progn
 	(run-hooks 'coldnew-editor-hook)
-	(evil-local-mode 1))))
+	(evil-local-mode t))))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting

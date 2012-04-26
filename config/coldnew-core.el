@@ -1,5 +1,5 @@
 ;;; coldnew-core.el --- core defun and variables setting
-;;; Time-stamp: <2012-04-26 01:21:32 (coldnew)>
+;;; Time-stamp: <2012-04-26 14:15:08 (coldnew)>
 (eval-when-compile (require 'cl))
 
 ;;;; ------------------------------------------------------------------------------

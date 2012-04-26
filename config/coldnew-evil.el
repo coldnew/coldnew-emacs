@@ -1,5 +1,5 @@
 ;;; coldnew-evil.el ---
-;;; Time-stamp: <2012-04-26 05:09:02 (coldnew)>
+;;; Time-stamp: <2012-04-26 15:55:39 (coldnew)>
 (eval-when-compile (require 'cl))
 
 (require 'coldnew-global-keybindings)
@@ -15,7 +15,7 @@
 
 (setq evil-want-visual-char-semi-exclusive t)
 
-(setq evil-emacs-state-mode '(git-branch-mode))
+;;(setq evil-emacs-state-mode '(git-branch-mode))
 
 
 ;;;; ---------------------------------------------------------------------------
