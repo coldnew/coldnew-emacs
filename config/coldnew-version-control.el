@@ -28,6 +28,13 @@
    ((memq :rebase-in-progress desc)       :rebase-continue)
    (t                                     :quit)))
 
+;;;;;;; Kyebinding
+(add-hook 'egg-commit-buffer-mode-hook
+	  '(lambda ()
+	     (key-chord-define evil-insert-state-local-map "cc" 'egg-log-msg-done)))
+
+;;(key-chord-define egg-log-buffer-mode-map "cc"  'egg-log-msg-mode)
+
 ;;;;;;;; Advice
 (defadvice egg-status (around goto-egg-status-buffer activate)
   "Delete other windows after visiting egg-status."
