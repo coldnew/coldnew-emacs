@@ -7,3 +7,15 @@
 [submodule "lisp/rainbow-delimiters"]
 	path = lisp/rainbow-delimiters
 	url = http://github.com/jlr/rainbow-delimiters.git
+[submodule "lisp/android-mode"]
+	path = lisp/android-mode
+	url = http://github.com/remvee/android-mode.git
+[submodule "lisp/auto-complete-clang"]
+	path = lisp/auto-complete-clang
+	url = http://github.com/brianjcj/auto-complete-clang.git
+[submodule "lisp/git-emacs"]
+	path = lisp/git-emacs
+	url = http://github.com/tsgates/git-emacs.git
+[submodule "lisp/magit"]
+	path = lisp/magit
+	url = http://github.com/magit/magit.git
