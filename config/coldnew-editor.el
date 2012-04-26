@@ -21,9 +21,7 @@
   ;;  :global t
   :keymap coldnew-editor-map
   (if coldnew-editor-mode
-      (progn
-	(run-hooks 'coldnew-editor-hook)
-	(evil-local-mode t))))
+      (run-hooks 'coldnew-editor-hook)))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting

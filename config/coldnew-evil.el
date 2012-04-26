@@ -15,7 +15,7 @@
 (setq evil-want-visual-char-semi-exclusive t)
 
 ;;(setq evil-emacs-state-mode '(git-branch-mode))
-
+(add-to-list 'evil-insert-state-modes 'egg-commit-buffer-mode)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybinding
