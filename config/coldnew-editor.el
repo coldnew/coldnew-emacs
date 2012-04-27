@@ -167,7 +167,6 @@
 ;;;; ---------------------------------------------------------------------------
 (require 'doxymacs)
 
-
 ;;;; ---------------------------------------------------------------------------
 ;;;; Common language setting
 ;;;; ---------------------------------------------------------------------------
@@ -182,8 +181,6 @@
   ;; Use Greek character lambda insteda of string
   (turn-on-pretty-lambda-mode)
 
-  ;; ;; Color nested parentheses, brackets, and braces according to their dept
-  ;; (rainbow-delimiters-mode)
   )
 
 ;;;; cc-mode common setting
@@ -192,9 +189,6 @@
 
   ;; Use coldnew's editor mode
   (coldnew-editor-mode)
-
-  ;; ;; Color nested parentheses, brackets, and braces according to their dept
-  ;; (rainbow-delimiters-mode)
 
   ;; enable doxygen
   (doxymacs-mode t)
