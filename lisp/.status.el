@@ -25,6 +25,8 @@
  (auto-complete-emacs-lisp status "removed" recipe nil)
  (bash-completion status "installed" recipe
 		  (:name bash-completion :description "" :website "" :type http :url "https://raw.github.com/szermatt/emacs-bash-completion/master/bash-completion.el" :features bash-completion))
+ (clojure-mode status "installed" recipe
+	       (:name clojure-mode :website "https://github.com/technomancy/clojure-mode" :description "Emacs support for the Clojure language." :type github :pkgname "technomancy/clojure-mode"))
  (doxymacs status "installed" recipe
 	   (:name doxymacs :website "http://doxymacs.sourceforge.net/" :description "Doxymacs is Doxygen + {X}Emacs." :type git :url "git://doxymacs.git.sourceforge.net/gitroot/doxymacs/doxymacs" :load-path
 		  ("./lisp")

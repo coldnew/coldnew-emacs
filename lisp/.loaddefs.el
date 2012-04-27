@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (ace-jump-mode) "ace-jump-mode/ace-jump-mode" "ace-jump-mode/ace-jump-mode.el"
-;;;;;;  (20377 7849))
+;;;;;;  (20377 59879))
 ;;; Generated autoloads from ace-jump-mode/ace-jump-mode.el
 
 (autoload 'ace-jump-mode "ace-jump-mode/ace-jump-mode" "\
@@ -32,7 +32,7 @@ You can constrol whether use the case sensitive via
 ;;;***
 
 ;;;### (autoloads (android-mode) "android-mode/android-mode" "android-mode/android-mode.el"
-;;;;;;  (20377 6600))
+;;;;;;  (20377 59844))
 ;;; Generated autoloads from android-mode/android-mode.el
 
 (autoload 'android-mode "android-mode/android-mode" "\
@@ -43,7 +43,7 @@ Android application development minor mode.
 ;;;***
 
 ;;;### (autoloads (anything-other-buffer anything-at-point anything)
-;;;;;;  "anything/anything" "anything/anything.el" (20369 33698))
+;;;;;;  "anything/anything" "anything/anything.el" (20377 59778))
 ;;; Generated autoloads from anything/anything.el
 
 (autoload 'anything "anything/anything" "\
@@ -195,7 +195,7 @@ Call `anything' with only ANY-SOURCES and ANY-BUFFER as args.
 ;;;;;;  anything-grep-help anything-generic-file-help anything-read-file-name-help
 ;;;;;;  anything-ff-help anything-c-buffer-help anything-configuration)
 ;;;;;;  "anything/anything-config" "anything/anything-config.el"
-;;;;;;  (20369 33698))
+;;;;;;  (20377 59778))
 ;;; Generated autoloads from anything/anything-config.el
 
 (autoload 'anything-configuration "anything/anything-config" "\
@@ -1069,7 +1069,7 @@ Preconfigured anything to describe commands, functions, variables and faces.
 ;;;***
 
 ;;;### (autoloads (anything-mp-toggle-match-plugin) "anything/anything-match-plugin"
-;;;;;;  "anything/anything-match-plugin.el" (20369 33698))
+;;;;;;  "anything/anything-match-plugin.el" (20377 59781))
 ;;; Generated autoloads from anything/anything-match-plugin.el
 
 (autoload 'anything-mp-toggle-match-plugin "anything/anything-match-plugin" "\
@@ -1081,7 +1081,7 @@ i.e anything-match-plugin.
 ;;;***
 
 ;;;### (autoloads (ascii-off ascii-on ascii-display ascii-customize)
-;;;;;;  "ascii/ascii" "ascii/ascii.el" (20377 29580))
+;;;;;;  "ascii/ascii" "ascii/ascii.el" (20377 59854))
 ;;; Generated autoloads from ascii/ascii.el
 
 (autoload 'ascii-customize "ascii/ascii" "\
@@ -1113,7 +1113,7 @@ Turn off ASCII code display.
 
 ;;;### (autoloads (bash-completion-reset bash-completion-dynamic-complete
 ;;;;;;  bash-completion-setup) "bash-completion/bash-completion"
-;;;;;;  "bash-completion/bash-completion.el" (20377 24147))
+;;;;;;  "bash-completion/bash-completion.el" (20377 59848))
 ;;; Generated autoloads from bash-completion/bash-completion.el
 
 (autoload 'bash-completion-setup "bash-completion/bash-completion" "\
@@ -1164,8 +1164,87 @@ and would like bash completion in Emacs to take these changes into account.
 
 ;;;***
 
+;;;### (autoloads (clojure-enable-slime-on-existing-buffers clojure-jack-in
+;;;;;;  clojure-mode) "clojure-mode/clojure-mode" "clojure-mode/clojure-mode.el"
+;;;;;;  (20378 8884))
+;;; Generated autoloads from clojure-mode/clojure-mode.el
+
+(autoload 'clojure-mode "clojure-mode/clojure-mode" "\
+Major mode for editing Clojure code - similar to Lisp mode.
+Commands:
+Delete converts tabs to spaces as it moves back.
+Blank lines separate paragraphs.  Semicolons start comments.
+\\{clojure-mode-map}
+Note that `run-lisp' may be used either to start an inferior Lisp job
+or to switch back to an existing one.
+
+Entry to this mode calls the value of `clojure-mode-hook'
+if that value is non-nil.
+
+\(fn)" t nil)
+
+(autoload 'clojure-jack-in "clojure-mode/clojure-mode" "\
+
+
+\(fn)" t nil)
+
+(autoload 'clojure-enable-slime-on-existing-buffers "clojure-mode/clojure-mode" "\
+
+
+\(fn)" t nil)
+
+(add-hook 'slime-connected-hook 'clojure-enable-slime-on-existing-buffers)
+
+(put 'clojure-test-ns-segment-position 'safe-local-variable 'integerp)
+
+(put 'clojure-mode-load-command 'safe-local-variable 'stringp)
+
+(put 'clojure-swank-command 'safe-local-variable 'stringp)
+
+(add-hook 'slime-connected-hook 'clojure-enable-slime-on-existing-buffers)
+
+(add-hook 'slime-indentation-update-hooks 'put-clojure-indent)
+
+(add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+
+(add-to-list 'interpreter-mode-alist '("jark" . clojure-mode))
+
+(add-to-list 'interpreter-mode-alist '("cake" . clojure-mode))
+
+;;;***
+
+;;;### (autoloads (clojure-test-mode) "clojure-mode/clojure-test-mode"
+;;;;;;  "clojure-mode/clojure-test-mode.el" (20378 8884))
+;;; Generated autoloads from clojure-mode/clojure-test-mode.el
+
+(autoload 'clojure-test-mode "clojure-mode/clojure-test-mode" "\
+A minor mode for running Clojure tests.
+
+\(fn &optional ARG)" t nil)
+
+(defun clojure-test-maybe-enable nil "\
+Enable clojure-test-mode if the current buffer contains a namespace
+with a \"test.\" bit on it." (let ((ns (clojure-find-package))) (when (and ns (string-match "test\\(\\.\\|$\\)" ns)) (save-window-excursion (clojure-test-mode t)))))
+
+(add-hook 'clojure-mode-hook 'clojure-test-maybe-enable)
+
+;;;***
+
+;;;### (autoloads (clojurescript-mode) "clojure-mode/clojurescript-mode"
+;;;;;;  "clojure-mode/clojurescript-mode.el" (20378 8884))
+;;; Generated autoloads from clojure-mode/clojurescript-mode.el
+
+(autoload 'clojurescript-mode "clojure-mode/clojurescript-mode" "\
+Major mode for ClojureScript
+
+\(fn)" t nil)
+
+(add-to-list 'auto-mode-alist '("\\.cljs$" . clojurescript-mode))
+
+;;;***
+
 ;;;### (autoloads nil "doxymacs/lisp/doxymacs" "doxymacs/lisp/doxymacs.el"
-;;;;;;  (20369 38096))
+;;;;;;  (20377 59831))
 ;;; Generated autoloads from doxymacs/lisp/doxymacs.el
 
 (or (assoc 'doxymacs-mode minor-mode-alist) (setq minor-mode-alist (cons '(doxymacs-mode " doxy") minor-mode-alist)))
@@ -1173,7 +1252,7 @@ and would like bash completion in Emacs to take these changes into account.
 ;;;***
 
 ;;;### (autoloads (xml-reformat-tags insert-xml read-xml) "doxymacs/lisp/xml-parse"
-;;;;;;  "doxymacs/lisp/xml-parse.el" (20369 38093))
+;;;;;;  "doxymacs/lisp/xml-parse.el" (20377 59830))
 ;;; Generated autoloads from doxymacs/lisp/xml-parse.el
 
 (autoload 'read-xml "doxymacs/lisp/xml-parse" "\
@@ -1215,7 +1294,7 @@ Note that this only works if the opening tag starts at column 0.
 ;;;***
 
 ;;;### (autoloads (dtrt-indent-mode dtrt-indent-mode) "dtrt-indent/dtrt-indent"
-;;;;;;  "dtrt-indent/dtrt-indent.el" (20369 38940))
+;;;;;;  "dtrt-indent/dtrt-indent.el" (20377 59849))
 ;;; Generated autoloads from dtrt-indent/dtrt-indent.el
 
 (defvar dtrt-indent-mode nil "\
@@ -1246,7 +1325,7 @@ use either \\[customize] or the function `dtrt-indent-mode'.")
 ;;;***
 
 ;;;### (autoloads (egg-minor-mode-find-file-hook egg-minor-mode)
-;;;;;;  "egg/egg" "egg/egg.el" (20375 63460))
+;;;;;;  "egg/egg" "egg/egg.el" (20377 59842))
 ;;; Generated autoloads from egg/egg.el
 
 (autoload 'egg-minor-mode "egg/egg" "\
@@ -1275,7 +1354,7 @@ egg in current buffer.\\<egg-minor-mode-map>
 ;;;***
 
 ;;;### (autoloads (egg-grep egg-grep-mode egg-grep-process-setup)
-;;;;;;  "egg/egg-grep" "egg/egg-grep.el" (20375 63460))
+;;;;;;  "egg/egg-grep" "egg/egg-grep.el" (20377 59842))
 ;;; Generated autoloads from egg/egg-grep.el
 
 (autoload 'egg-grep-process-setup "egg/egg-grep" "\
@@ -1298,7 +1377,7 @@ Sets `compilation-last-buffer' and `compilation-window-height'.
 
 ;;;### (autoloads (el-get-checksum el-get-make-recipes el-get-cd
 ;;;;;;  el-get-self-update el-get-update-all el-get-version) "el-get/el-get"
-;;;;;;  "el-get/el-get.el" (20366 24294))
+;;;;;;  "el-get/el-get.el" (20377 59880))
 ;;; Generated autoloads from el-get/el-get.el
 
 (autoload 'el-get-version "el-get/el-get" "\
@@ -1335,7 +1414,7 @@ Compute the checksum of the given package, and put it in the kill-ring
 ;;;***
 
 ;;;### (autoloads (el-get-list-packages) "el-get/el-get-list-packages"
-;;;;;;  "el-get/el-get-list-packages.el" (20366 24294))
+;;;;;;  "el-get/el-get-list-packages.el" (20377 59879))
 ;;; Generated autoloads from el-get/el-get-list-packages.el
 
 (autoload 'el-get-list-packages "el-get/el-get-list-packages" "\
@@ -1345,15 +1424,15 @@ Display a list of packages.
 
 ;;;***
 
-;;;### (autoloads nil "evil/evil-core" "evil/evil-core.el" (20376
-;;;;;;  57919))
+;;;### (autoloads nil "evil/evil-core" "evil/evil-core.el" (20377
+;;;;;;  59878))
 ;;; Generated autoloads from evil/evil-core.el
 (autoload 'evil-mode "evil")
 
 ;;;***
 
 ;;;### (autoloads (er/expand-region) "expand-region/expand-region-core"
-;;;;;;  "expand-region/expand-region-core.el" (20377 7220))
+;;;;;;  "expand-region/expand-region-core.el" (20377 59835))
 ;;; Generated autoloads from expand-region/expand-region-core.el
 
 (autoload 'er/expand-region "expand-region/expand-region-core" "\
@@ -1372,7 +1451,7 @@ before calling `er/expand-region' for the first time.
 ;;;***
 
 ;;;### (autoloads (git-reblame git-blame-mode) "git-emacs/git-blame"
-;;;;;;  "git-emacs/git-blame.el" (20377 6687))
+;;;;;;  "git-emacs/git-blame.el" (20377 59840))
 ;;; Generated autoloads from git-emacs/git-blame.el
 
 (autoload 'git-blame-mode "git-emacs/git-blame" "\
@@ -1393,7 +1472,7 @@ Recalculate all blame information in the current buffer
 ;;;;;;  highlight-symbol-next-in-defun highlight-symbol-prev highlight-symbol-next
 ;;;;;;  highlight-symbol-remove-all highlight-symbol-at-point highlight-symbol-mode)
 ;;;;;;  "highlight-symbol/highlight-symbol" "highlight-symbol/highlight-symbol.el"
-;;;;;;  (20366 41158))
+;;;;;;  (20377 59833))
 ;;; Generated autoloads from highlight-symbol/highlight-symbol.el
 
 (autoload 'highlight-symbol-mode "highlight-symbol/highlight-symbol" "\
@@ -1443,7 +1522,7 @@ Jump to the previous location of the symbol at point within the defun.
 
 ;;;### (autoloads (turn-on-hungry-delete-mode hungry-delete-mode
 ;;;;;;  hungry-delete-backward hungry-delete-forward) "hungry-delete/hungry-delete"
-;;;;;;  "hungry-delete/hungry-delete.el" (20366 55374))
+;;;;;;  "hungry-delete/hungry-delete.el" (20377 59844))
 ;;; Generated autoloads from hungry-delete/hungry-delete.el
 
 (autoload 'hungry-delete-forward "hungry-delete/hungry-delete" "\
@@ -1475,7 +1554,7 @@ Turns on hungry delete mode if the buffer is appropriate.
 ;;;***
 
 ;;;### (autoloads (iedit-rectangle-mode iedit-mode-on-function iedit-mode)
-;;;;;;  "iedit/iedit" "iedit/iedit.el" (20366 57108))
+;;;;;;  "iedit/iedit" "iedit/iedit.el" (20377 59777))
 ;;; Generated autoloads from iedit/iedit.el
 
 (autoload 'iedit-mode "iedit/iedit" "\
@@ -1543,7 +1622,7 @@ Toggle iedit-RECT mode.
 ;;;***
 
 ;;;### (autoloads (key-chord-define key-chord-define-global key-chord-mode)
-;;;;;;  "key-chord/key-chord" "key-chord/key-chord.el" (20377 9916))
+;;;;;;  "key-chord/key-chord" "key-chord/key-chord.el" (20377 59850))
 ;;; Generated autoloads from key-chord/key-chord.el
 
 (autoload 'key-chord-mode "key-chord/key-chord" "\
@@ -1582,7 +1661,7 @@ If COMMAND is nil, the key-chord is removed.
 
 ;;;### (autoloads (linum-update-window linum+-generate-linum-format
 ;;;;;;  linum+-smart-format linum+-dynamic-format linum-format) "linum+/linum+"
-;;;;;;  "linum+/linum+.el" (20366 41562))
+;;;;;;  "linum+/linum+.el" (20377 59840))
 ;;; Generated autoloads from linum+/linum+.el
 
 (defvar linum-format 'smart "\
@@ -1592,7 +1671,7 @@ Format used to display line numbers.
 + or `smart' to smart adapt the width by current max visible line number.
 + or `dynamic' to adapt the width as needed,
 + or a vector with one string element which uesed to generate
-  line number format by `format' with argument max visible line number
+  line number format by `format' with argument max visible line number 
   of current buffer, see example `linum+-smart-format'
 + or a list with one string element which uesed to generate
   line number format by `format' with argument max line number of current buffer,
@@ -1630,7 +1709,7 @@ Update line numbers for the portion visible in window WIN.
 ;;;;;;  lusty-open-this lusty-highlight-previous-column lusty-highlight-next-column
 ;;;;;;  lusty-highlight-previous lusty-highlight-next lusty-buffer-explorer
 ;;;;;;  lusty-file-explorer) "lusty-explorer/lusty-explorer" "lusty-explorer/lusty-explorer.el"
-;;;;;;  (20366 26770))
+;;;;;;  (20377 59791))
 ;;; Generated autoloads from lusty-explorer/lusty-explorer.el
 
 (autoload 'lusty-file-explorer "lusty-explorer/lusty-explorer" "\
@@ -1686,7 +1765,7 @@ Launch dired at the current directory.
 ;;;***
 
 ;;;### (autoloads (magit-status) "magit/magit" "magit/magit.el" (20377
-;;;;;;  6732))
+;;;;;;  59792))
 ;;; Generated autoloads from magit/magit.el
 
 (autoload 'magit-status "magit/magit" "\
@@ -1704,7 +1783,7 @@ user input.
 ;;;***
 
 ;;;### (autoloads (turn-on-magit-stgit magit-stgit-mode) "magit/magit-stgit"
-;;;;;;  "magit/magit-stgit.el" (20377 6732))
+;;;;;;  "magit/magit-stgit.el" (20377 59792))
 ;;; Generated autoloads from magit/magit-stgit.el
 
 (autoload 'magit-stgit-mode "magit/magit-stgit" "\
@@ -1720,7 +1799,7 @@ Unconditionally turn on `magit-stgit-mode'.
 ;;;***
 
 ;;;### (autoloads (turn-on-magit-svn magit-svn-mode) "magit/magit-svn"
-;;;;;;  "magit/magit-svn.el" (20377 6732))
+;;;;;;  "magit/magit-svn.el" (20377 59792))
 ;;; Generated autoloads from magit/magit-svn.el
 
 (autoload 'magit-svn-mode "magit/magit-svn" "\
@@ -1736,7 +1815,7 @@ Unconditionally turn on `magit-svn-mode'.
 ;;;***
 
 ;;;### (autoloads (turn-on-magit-topgit magit-topgit-mode) "magit/magit-topgit"
-;;;;;;  "magit/magit-topgit.el" (20377 6732))
+;;;;;;  "magit/magit-topgit.el" (20377 59792))
 ;;; Generated autoloads from magit/magit-topgit.el
 
 (autoload 'magit-topgit-mode "magit/magit-topgit" "\
@@ -1752,7 +1831,7 @@ Unconditionally turn on `magit-topgit-mode'.
 ;;;***
 
 ;;;### (autoloads (rebase-mode) "magit/rebase-mode" "magit/rebase-mode.el"
-;;;;;;  (20377 6732))
+;;;;;;  (20377 59792))
 ;;; Generated autoloads from magit/rebase-mode.el
 
 (autoload 'rebase-mode "magit/rebase-mode" "\
@@ -1770,7 +1849,7 @@ running 'man git-rebase' at the command line) for details.
 ;;;***
 
 ;;;### (autoloads (multi-term) "multi-term/multi-term" "multi-term/multi-term.el"
-;;;;;;  (20366 64367))
+;;;;;;  (20377 59878))
 ;;; Generated autoloads from multi-term/multi-term.el
 
 (autoload 'multi-term "multi-term/multi-term" "\
@@ -1782,7 +1861,7 @@ Will prompt you shell name when you type `C-u' before this command.
 ;;;***
 
 ;;;### (autoloads (paredit-mode) "paredit/paredit" "paredit/paredit.el"
-;;;;;;  (20370 20474))
+;;;;;;  (20377 59800))
 ;;; Generated autoloads from paredit/paredit.el
 
 (autoload 'paredit-mode "paredit/paredit" "\
@@ -1800,7 +1879,7 @@ fixing imbalanced parentheses instead.
 
 ;;;### (autoloads (global-pretty-lambda-mode pretty-lambda-mode pretty-lambda-for-modes
 ;;;;;;  pretty-lambda-auto-modes pretty-lambda) "pretty-lambdada/pretty-lambdada"
-;;;;;;  "pretty-lambdada/pretty-lambdada.el" (20366 49255))
+;;;;;;  "pretty-lambdada/pretty-lambdada.el" (20377 59848))
 ;;; Generated autoloads from pretty-lambdada/pretty-lambdada.el
 
 (let ((loads (get 'pretty-lambda 'custom-loads))) (if (member '"pretty-lambdada/pretty-lambdada" loads) nil (put 'pretty-lambda 'custom-loads (cons '"pretty-lambdada/pretty-lambdada" loads))))
@@ -1847,7 +1926,7 @@ See `pretty-lambda-mode' for more information on Pretty-Lambda mode.
 
 ;;;### (autoloads (global-rainbow-delimiters-mode rainbow-delimiters-mode-enable
 ;;;;;;  rainbow-delimiters-mode) "rainbow-delimiters/rainbow-delimiters"
-;;;;;;  "rainbow-delimiters/rainbow-delimiters.el" (20370 21912))
+;;;;;;  "rainbow-delimiters/rainbow-delimiters.el" (20377 61265))
 ;;; Generated autoloads from rainbow-delimiters/rainbow-delimiters.el
 
 (autoload 'rainbow-delimiters-mode "rainbow-delimiters/rainbow-delimiters" "\
@@ -1884,7 +1963,7 @@ See `rainbow-delimiters-mode' for more information on Rainbow-Delimiters mode.
 ;;;***
 
 ;;;### (autoloads (turn-on-tempbuf-mode tempbuf-mode) "tempbuf/tempbuf"
-;;;;;;  "tempbuf/tempbuf.el" (20367 41004))
+;;;;;;  "tempbuf/tempbuf.el" (20377 59848))
 ;;; Generated autoloads from tempbuf/tempbuf.el
 
 (autoload 'tempbuf-mode "tempbuf/tempbuf" "\
@@ -1909,7 +1988,7 @@ See also function `tempbuf-mode'.
 ;;;;;;  traverse-dired-search-in-archive traverse-dired-browse-archive
 ;;;;;;  traverse-search-in-dired-file-at-point traverse-search-in-dired-dir-at-point
 ;;;;;;  traverse-deep-rfind traverse-find-in-file) "traverselisp/traverselisp"
-;;;;;;  "traverselisp/traverselisp.el" (20376 6586))
+;;;;;;  "traverselisp/traverselisp.el" (20377 59841))
 ;;; Generated autoloads from traverselisp/traverselisp.el
 
 (autoload 'traverse-find-in-file "traverselisp/traverselisp" "\
@@ -1988,7 +2067,7 @@ If `quiet' is non-nil don't send message.
 ;;;***
 
 ;;;### (autoloads (global-undo-tree-mode undo-tree-mode) "undo-tree/undo-tree"
-;;;;;;  "undo-tree/undo-tree.el" (20366 41326))
+;;;;;;  "undo-tree/undo-tree.el" (20377 59793))
 ;;; Generated autoloads from undo-tree/undo-tree.el
 
 (autoload 'undo-tree-mode "undo-tree/undo-tree" "\
@@ -2035,7 +2114,7 @@ See `undo-tree-mode' for more information on Undo-Tree mode.
 ;;;***
 
 ;;;### (autoloads (yas/global-mode yas/minor-mode) "yasnippet/yasnippet"
-;;;;;;  "yasnippet/yasnippet.el" (20366 36971))
+;;;;;;  "yasnippet/yasnippet.el" (20377 59827))
 ;;; Generated autoloads from yasnippet/yasnippet.el
 
 (autoload 'yas/minor-mode "yasnippet/yasnippet" "\
@@ -2075,34 +2154,6 @@ Yas/Minor mode is enabled in all buffers where
 See `yas/minor-mode' for more information on Yas/Minor mode.
 
 \(fn &optional ARG)" t nil)
-
-;;;***
-
-;;;### (autoloads nil nil ("anything/contrib/anything-grep.el" "anything/contrib/anything-ipa.el"
-;;;;;;  "anything/contrib/anything-menu.el" "anything/contrib/anything-migemo.el"
-;;;;;;  "anything/contrib/anything-multi-sources.el" "anything/contrib/anything-startup.el"
-;;;;;;  "anything/extensions/anything-complete.el" "anything/extensions/anything-gtags.el"
-;;;;;;  "anything/extensions/anything-obsolete.el" "anything/extensions/anything-show-completion.el"
-;;;;;;  "auto-complete/auto-complete-config.el" "auto-complete/auto-complete-pkg.el"
-;;;;;;  "auto-complete/auto-complete.el" "dtrt-indent/dtrt-indent-diag.el"
-;;;;;;  "dtrt-indent/dtrt-indent-test.el" "el-get/el-get-autoloads.el"
-;;;;;;  "el-get/el-get-build.el" "el-get/el-get-byte-compile.el"
-;;;;;;  "el-get/el-get-core.el" "el-get/el-get-custom.el" "el-get/el-get-dependencies.el"
-;;;;;;  "el-get/el-get-install.el" "el-get/el-get-methods.el" "el-get/el-get-notify.el"
-;;;;;;  "el-get/el-get-recipes.el" "el-get/el-get-status.el" "eldoc-extension/eldoc-extension.el"
-;;;;;;  "expand-region/clojure-mode-expansions.el" "expand-region/css-mode-expansions.el"
-;;;;;;  "expand-region/erlang-mode-expansions.el" "expand-region/expand-region-custom.el"
-;;;;;;  "expand-region/expand-region-pkg.el" "expand-region/expand-region.el"
-;;;;;;  "expand-region/feature-mode-expansions.el" "expand-region/html-mode-expansions.el"
-;;;;;;  "expand-region/js-mode-expansions.el" "expand-region/js2-mode-expansions.el"
-;;;;;;  "expand-region/jsp-expansions.el" "expand-region/latex-mode-expansions.el"
-;;;;;;  "expand-region/nxml-mode-expansions.el" "expand-region/org-mode-expansions.el"
-;;;;;;  "expand-region/python-el-expansions.el" "expand-region/python-el-fgallina-expansions.el"
-;;;;;;  "expand-region/python-mode-expansions.el" "expand-region/ruby-mode-expansions.el"
-;;;;;;  "expand-region/text-mode-expansions.el" "highlight-cl/highlight-cl.el"
-;;;;;;  "ibuffer-git/ibuffer-git.el" "one-key/one-key.el" "recentf-ext/recentf-ext.el"
-;;;;;;  "shell-pop/shell-pop.el" "yasnippet/dropdown-list.el" "yasnippet/yasnippet-debug.el"
-;;;;;;  "yasnippet/yasnippet-tests.el") (20377 29580 872940))
 
 ;;;***
 
