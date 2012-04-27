@@ -1,4 +1,6 @@
-((ace-jump-mode status "installed" recipe
+((ac-slime status "installed" recipe
+	   (:name ac-slime :website "https://github.com/purcell/ac-slime" :description "Emacs auto-complete plugin for Slime symbols" :type github :pkgname "purcell/ac-slime"))
+ (ace-jump-mode status "installed" recipe
 		(:name ace-jump-mode :website "https://github.com/winterTTr/ace-jump-mode/wiki" :description "A quick cursor location minor mode for emacs" :type github :pkgname "winterTTr/ace-jump-mode" :features ace-jump-mode))
  (android-mode status "installed" recipe
 	       (:name android-mode :website "https://github.com/remvee/android-mode" :description "Emacs minor mode for Android application development" :type github :pkgname "remvee/android-mode"))
@@ -81,6 +83,27 @@
 	     (:name multi-term :description "A mode based on term.el, for managing multiple terminal buffers in Emacs." :type emacswiki :features multi-term))
  (one-key status "installed" recipe
 	  (:name one-key :description "OneKey is designed to help you remember keybindings. It saves you time and frees up your head!" :website "" :type emacswiki :features one-key))
+ (package status "installed" recipe
+	  (:name package :description "ELPA implementation (\"package.el\") from Emacs 24" :builtin 24 :type http :url "http://repo.or.cz/w/emacs.git/blob_plain/1a0a666f941c99882093d7bd08ced15033bc3f0c:/lisp/emacs-lisp/package.el" :shallow nil :features package :post-init
+		 (progn
+		   (setq package-user-dir
+			 (expand-file-name
+			  (convert-standard-filename
+			   (concat
+			    (file-name-as-directory default-directory)
+			    "elpa")))
+			 package-directory-list
+			 (list
+			  (file-name-as-directory package-user-dir)
+			  "/usr/share/emacs/site-lisp/elpa/"))
+		   (make-directory package-user-dir t)
+		   (unless
+		       (boundp 'package-subdirectory-regexp)
+		     (defconst package-subdirectory-regexp "^\\([^.].*\\)-\\([0-9]+\\(?:[.][0-9]+\\)*\\)$" "Regular expression matching the name of\n a package subdirectory. The first subexpression is the package\n name. The second subexpression is the version string."))
+		   (setq package-archives
+			 '(("ELPA" . "http://tromey.com/elpa/")
+			   ("gnu" . "http://elpa.gnu.org/packages/")
+			   ("marmalade" . "http://marmalade-repo.org/packages/"))))))
  (paredit status "installed" recipe
 	  (:name paredit :description "Minor mode for editing parentheses" :type http :url "http://mumble.net/~campbell/emacs/paredit.el" :features "paredit"))
  (popup status "installed" recipe
@@ -94,6 +117,8 @@
  (session status "removed" recipe nil)
  (shell-pop status "installed" recipe
 	    (:name shell-pop :description "Helps you pop up and pop out shell buffer easily." :website "http://www.emacswiki.org/emacs/ShellPop" :type emacswiki :features "shell-pop"))
+ (slime status "installed" recipe
+	(:name slime :description "Major mode for editing Slim file" :features slime :type elpa))
  (tempbuf status "installed" recipe
 	  (:name tempbuf :description "" :website "" :type emacswiki :features tempbuf))
  (traverselisp status "installed" recipe

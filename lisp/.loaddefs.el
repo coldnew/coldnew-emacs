@@ -3,6 +3,30 @@
 ;;; Code:
 
 
+;;;### (autoloads (set-up-slime-ac) "ac-slime/ac-slime" "ac-slime/ac-slime.el"
+;;;;;;  (20378 9213))
+;;; Generated autoloads from ac-slime/ac-slime.el
+
+(defface ac-slime-menu-face '((t (:inherit 'ac-candidate-face))) "\
+Face for slime candidate menu." :group (quote auto-complete))
+
+(defface ac-slime-selection-face '((t (:inherit 'ac-selection-face))) "\
+Face for the slime selected candidate." :group (quote auto-complete))
+
+(defvar ac-source-slime-fuzzy '((init . ac-slime-init) (candidates . ac-source-slime-fuzzy-candidates) (candidate-face . ac-slime-menu-face) (selection-face . ac-slime-selection-face) (prefix . slime-symbol-start-pos) (symbol . "l") (match lambda (prefix candidates) candidates) (document . ac-slime-documentation)) "\
+Source for fuzzy slime completion")
+
+(defvar ac-source-slime-simple '((init . ac-slime-init) (candidates . ac-source-slime-simple-candidates) (candidate-face . ac-slime-menu-face) (selection-face . ac-slime-selection-face) (prefix . slime-symbol-start-pos) (symbol . "l") (document . ac-slime-documentation)) "\
+Source for slime completion")
+
+(autoload 'set-up-slime-ac "ac-slime/ac-slime" "\
+Add an optionally-fuzzy slime completion source to the
+front of `ac-sources' for the current buffer.
+
+\(fn &optional FUZZY)" t nil)
+
+;;;***
+
 ;;;### (autoloads (ace-jump-mode) "ace-jump-mode/ace-jump-mode" "ace-jump-mode/ace-jump-mode.el"
 ;;;;;;  (20377 59879))
 ;;; Generated autoloads from ace-jump-mode/ace-jump-mode.el
@@ -1962,6 +1986,74 @@ See `rainbow-delimiters-mode' for more information on Rainbow-Delimiters mode.
 
 ;;;***
 
+;;;### (autoloads (slime-hyperspec-lookup slime-connect slime slime-mode
+;;;;;;  slime-lisp-mode-hook) "slime/slime" "slime/slime.el" (20378
+;;;;;;  9187))
+;;; Generated autoloads from slime/slime.el
+
+(defvar slime-lisp-modes '(lisp-mode))
+
+(defvar slime-setup-contribs nil)
+
+(defun slime-setup (&optional contribs) "\
+Setup Emacs so that lisp-mode buffers always use SLIME.
+CONTRIBS is a list of contrib packages to load." (when (member (quote lisp-mode) slime-lisp-modes) (add-hook (quote lisp-mode-hook) (quote slime-lisp-mode-hook))) (setq slime-setup-contribs contribs) (slime-setup-contribs))
+
+(autoload 'slime-lisp-mode-hook "slime/slime" "\
+
+
+\(fn)" nil nil)
+
+(autoload 'slime-mode "slime/slime" "\
+\\<slime-mode-map>SLIME: The Superior Lisp Interaction Mode for Emacs (minor-mode).
+
+Commands to compile the current buffer's source file and visually
+highlight any resulting compiler notes and warnings:
+\\[slime-compile-and-load-file]	- Compile and load the current buffer's file.
+\\[slime-compile-file]	- Compile (but not load) the current buffer's file.
+\\[slime-compile-defun]	- Compile the top-level form at point.
+
+Commands for visiting compiler notes:
+\\[slime-next-note]	- Goto the next form with a compiler note.
+\\[slime-previous-note]	- Goto the previous form with a compiler note.
+\\[slime-remove-notes]	- Remove compiler-note annotations in buffer.
+
+Finding definitions:
+\\[slime-edit-definition]	- Edit the definition of the function called at point.
+\\[slime-pop-find-definition-stack]	- Pop the definition stack to go back from a definition.
+
+Documentation commands:
+\\[slime-describe-symbol]	- Describe symbol.
+\\[slime-apropos]	- Apropos search.
+\\[slime-disassemble-symbol]	- Disassemble a function.
+
+Evaluation commands:
+\\[slime-eval-defun]	- Evaluate top-level from containing point.
+\\[slime-eval-last-expression]	- Evaluate sexp before point.
+\\[slime-pprint-eval-last-expression]	- Evaluate sexp before point, pretty-print result.
+
+Full set of commands:
+\\{slime-mode-map}
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'slime "slime/slime" "\
+Start an inferior^_superior Lisp and connect to its Swank server.
+
+\(fn &optional COMMAND CODING-SYSTEM)" t nil)
+
+(autoload 'slime-connect "slime/slime" "\
+Connect to a running Swank server. Return the connection.
+
+\(fn HOST PORT &optional CODING-SYSTEM)" t nil)
+
+(autoload 'slime-hyperspec-lookup "slime/slime" "\
+A wrapper for `hyperspec-lookup'
+
+\(fn SYMBOL-NAME)" t nil)
+
+;;;***
+
 ;;;### (autoloads (turn-on-tempbuf-mode tempbuf-mode) "tempbuf/tempbuf"
 ;;;;;;  "tempbuf/tempbuf.el" (20377 59848))
 ;;; Generated autoloads from tempbuf/tempbuf.el
@@ -2154,6 +2246,11 @@ Yas/Minor mode is enabled in all buffers where
 See `yas/minor-mode' for more information on Yas/Minor mode.
 
 \(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads nil nil ("slime/slime-autoloads.el" "slime/slime-pkg.el")
+;;;;;;  (20378 9214 36))
 
 ;;;***
 
