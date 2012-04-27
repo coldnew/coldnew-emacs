@@ -168,6 +168,22 @@
 (require 'doxymacs)
 
 ;;;; ---------------------------------------------------------------------------
+;;;; slime
+;;;; ---------------------------------------------------------------------------
+(require 'slime)
+(require 'ac-slime)
+;; Save REPL history to emacs-cache-dir
+(setq slime-repl-history-file (concat emacs-cache-dir "slime-hist.dat"))
+
+;; REPL history size set to 300
+(setq slime-repl-history-size 300)
+
+;; Use global programming mode
+(add-hook 'slime-repl-mode-hook 'programming-mode)
+(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+
+
+;;;; ---------------------------------------------------------------------------
 ;;;; Common language setting
 ;;;; ---------------------------------------------------------------------------
 
