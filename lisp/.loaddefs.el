@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (set-up-slime-ac) "ac-slime/ac-slime" "ac-slime/ac-slime.el"
-;;;;;;  (20378 9816))
+;;;;;;  (20378 9971))
 ;;; Generated autoloads from ac-slime/ac-slime.el
 
 (defface ac-slime-menu-face '((t (:inherit 'ac-candidate-face))) "\
@@ -1950,7 +1950,7 @@ See `pretty-lambda-mode' for more information on Pretty-Lambda mode.
 
 ;;;### (autoloads (global-rainbow-delimiters-mode rainbow-delimiters-mode-enable
 ;;;;;;  rainbow-delimiters-mode) "rainbow-delimiters/rainbow-delimiters"
-;;;;;;  "rainbow-delimiters/rainbow-delimiters.el" (20377 61265))
+;;;;;;  "rainbow-delimiters/rainbow-delimiters.el" (20378 9878))
 ;;; Generated autoloads from rainbow-delimiters/rainbow-delimiters.el
 
 (autoload 'rainbow-delimiters-mode "rainbow-delimiters/rainbow-delimiters" "\
@@ -2250,7 +2250,7 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;***
 
 ;;;### (autoloads nil nil ("slime/slime-autoloads.el" "slime/slime-pkg.el")
-;;;;;;  (20378 9816 408017))
+;;;;;;  (20378 9971 732098))
 
 ;;;***
 
