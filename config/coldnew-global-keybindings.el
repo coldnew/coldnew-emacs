@@ -32,10 +32,13 @@
 (define-key evil-insert-state-map (kbd "C-0") 'ace-jump-mode)
 
 (key-chord-define evil-insert-state-map "vv"  'er/expand-region)
+;; quickliy back-word and upcase/downcaseword
+(key-chord-define evil-insert-state-map "bu"  "\M-b\M-u")
+(key-chord-define evil-insert-state-map "bl"  "\M-b\M-l")
+(key-chord-define evil-insert-state-map "bc"  "\M-b\M-c")
 
 
-
-;;;;;;;; Emacs
+;;;;;;;; EMACS
 (define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
 (define-key evil-emacs-state-map (kbd "C-s") 'my-anything-occur)
 (define-key evil-emacs-state-map (kbd "C-c C-f") 'my-anything-filelist)
