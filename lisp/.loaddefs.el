@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (set-up-slime-ac) "ac-slime/ac-slime" "ac-slime/ac-slime.el"
-;;;;;;  (20378 9213))
+;;;;;;  (20378 9816))
 ;;; Generated autoloads from ac-slime/ac-slime.el
 
 (defface ac-slime-menu-face '((t (:inherit 'ac-candidate-face))) "\
@@ -2250,7 +2250,7 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;***
 
 ;;;### (autoloads nil nil ("slime/slime-autoloads.el" "slime/slime-pkg.el")
-;;;;;;  (20378 9214 36))
+;;;;;;  (20378 9816 408017))
 
 ;;;***
 
