@@ -47,16 +47,16 @@
 	  "                                                                                \n"
 	  "(provide '`(yas/file-sans)`)                                                    \n"
 	  ";; `(yas/file)` ends here.                                                      \n"
-	  )))
-  (yas/expand-snippet
-   (concat
-    ";;; `(yas/file)` ---                                                     \n"
-    "(eval-when-compile (require 'cl))                                        \n"
-    "                                                                         \n"
-    "                                                                         \n"
-    "$0                                                                       \n"
-    "                                                                         \n"
-    "                                                                         \n"
-    "(provide '`(yas/file-sans)`)                                             \n"
-    ";; `(yas/file)` ends here.                                               \n"
-    )))
+	  ))
+      (yas/expand-snippet
+       (concat
+	";;; `(yas/file)` ---                                                     \n"
+	"(eval-when-compile (require 'cl))                                        \n"
+	"                                                                         \n"
+	"                                                                         \n"
+	"$0                                                                       \n"
+	"                                                                         \n"
+	"                                                                         \n"
+	"(provide '`(yas/file-sans)`)                                             \n"
+	";; `(yas/file)` ends here.                                               \n"
+	))))

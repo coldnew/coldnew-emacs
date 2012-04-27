@@ -63,7 +63,7 @@
 ;; highlight escape char in string
 (add-hook 'coldnew-editor-hook 'highlight-escape-char)
 ;; Color nested parentheses, brackets, and braces according to their dept
-(add-hook 'coldnew-editor-hook 'rainbow-delimiters)
+(add-hook 'coldnew-editor-hook 'rainbow-delimiters-mode)
 ;; Add spaces between Chinese and English character.
 (add-hook 'before-save-hook 'insert-space-between-english-chinese)
 
