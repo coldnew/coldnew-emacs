@@ -30,7 +30,7 @@ Also returns nil if pid is nil."
     buffer-mode-matches))
 
 ;;;; ---------------------------------------------------------------------------
-;;;; date
+;;;; Date
 ;;;; ---------------------------------------------------------------------------
 (defun current-date-time ()
   "return current date in `%Y-%m-%d' format, ex:`2012-04-25'."
@@ -38,6 +38,13 @@ Also returns nil if pid is nil."
 	(format "%Y-%m-%d"))
     (format-time-string "%Y-%m-%d")))
 
+;;;; ---------------------------------------------------------------------------
+;;;; Testing
+;;;; ---------------------------------------------------------------------------
+(defun font-exist-p (fontname)
+  "test if this font is exist or not."
+  (if (not (x-list-fonts fontname))
+      nil t))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Advice
