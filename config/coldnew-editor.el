@@ -7,7 +7,8 @@
 ;;;; minor-mode
 ;;;; ---------------------------------------------------------------------------
 
-(defun coldnew-editor-hook () "Hooks for coldnew-editor-mode.")
+(defvar coldnew-editor-hook nil
+  "Hooks for coldnew-editor-mode.")
 
 (defvar coldnew-editor-map
   (let ((map (make-sparse-keymap)))
@@ -18,7 +19,6 @@
   "Minor mode for coldnew's editor."
   :init-value t
   :lighter " coldnew-editor"
-  ;;  :global t
   :keymap coldnew-editor-map
   (if coldnew-editor-mode
       (run-hooks 'coldnew-editor-hook)))
