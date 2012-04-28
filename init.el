@@ -1,7 +1,7 @@
 ;;; init.el --- configuration entry point.
 (eval-when-compile (require 'cl))
 
-(message "Emacs is powering up... Be patient, Master %s!" (getenv "USER"))
+(message "\n\nEmacs is powering up... Be patient, Master %s!\n\n" (getenv "USER"))
 
 ;; add directories to emacs's `load-path' recursively.
 (let* ((emacs-dir "~/.emacs.d/")
@@ -16,9 +16,9 @@
 (require 'coldnew-core)
 (require 'coldnew-variables)
 (require 'coldnew-functions)
+(require 'coldnew-packages)
 (require 'coldnew-editor)
 (require 'coldnew-evil)
-
 ;; config changes made through the customize UI will be store here
 (setq custom-file emacs-custom-file)
 
@@ -49,4 +49,4 @@
   )
 
 
-(message "Emacs is ready to serve you, Master %s!" (getenv "USER"))
+(message "\n\nEmacs is ready to serve you, Master %s!\n\n" (getenv "USER"))
