@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (set-up-slime-ac) "ac-slime/ac-slime" "ac-slime/ac-slime.el"
-;;;;;;  (20378 9971))
+;;;;;;  (20379 38591))
 ;;; Generated autoloads from ac-slime/ac-slime.el
 
 (defface ac-slime-menu-face '((t (:inherit 'ac-candidate-face))) "\
@@ -1190,7 +1190,7 @@ and would like bash completion in Emacs to take these changes into account.
 
 ;;;### (autoloads (clojure-enable-slime-on-existing-buffers clojure-jack-in
 ;;;;;;  clojure-mode) "clojure-mode/clojure-mode" "clojure-mode/clojure-mode.el"
-;;;;;;  (20378 8884))
+;;;;;;  (20379 48491))
 ;;; Generated autoloads from clojure-mode/clojure-mode.el
 
 (autoload 'clojure-mode "clojure-mode/clojure-mode" "\
@@ -1238,7 +1238,7 @@ if that value is non-nil.
 ;;;***
 
 ;;;### (autoloads (clojure-test-mode) "clojure-mode/clojure-test-mode"
-;;;;;;  "clojure-mode/clojure-test-mode.el" (20378 8884))
+;;;;;;  "clojure-mode/clojure-test-mode.el" (20379 48491))
 ;;; Generated autoloads from clojure-mode/clojure-test-mode.el
 
 (autoload 'clojure-test-mode "clojure-mode/clojure-test-mode" "\
@@ -1255,7 +1255,7 @@ with a \"test.\" bit on it." (let ((ns (clojure-find-package))) (when (and ns (s
 ;;;***
 
 ;;;### (autoloads (clojurescript-mode) "clojure-mode/clojurescript-mode"
-;;;;;;  "clojure-mode/clojurescript-mode.el" (20378 8884))
+;;;;;;  "clojure-mode/clojurescript-mode.el" (20379 48491))
 ;;; Generated autoloads from clojure-mode/clojurescript-mode.el
 
 (autoload 'clojurescript-mode "clojure-mode/clojurescript-mode" "\
@@ -1987,8 +1987,8 @@ See `rainbow-delimiters-mode' for more information on Rainbow-Delimiters mode.
 ;;;***
 
 ;;;### (autoloads (slime-hyperspec-lookup slime-connect slime slime-mode
-;;;;;;  slime-lisp-mode-hook) "slime/slime" "slime/slime.el" (20378
-;;;;;;  9187))
+;;;;;;  slime-lisp-mode-hook) "slime/slime" "slime/slime.el" (20379
+;;;;;;  38566))
 ;;; Generated autoloads from slime/slime.el
 
 (defvar slime-lisp-modes '(lisp-mode))
@@ -2249,8 +2249,8 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 
 ;;;***
 
-;;;### (autoloads nil nil ("slime/slime-autoloads.el" "slime/slime-pkg.el")
-;;;;;;  (20378 9971 732098))
+;;;### (autoloads nil nil ("xml-rpc-el/xml-rpc.el") (20379 64805
+;;;;;;  922453))
 
 ;;;***
 

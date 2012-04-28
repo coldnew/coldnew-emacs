@@ -131,6 +131,8 @@
  (unicad status "installed" recipe
 	 (:name unicad :description "" :type svn :url "http://unicad.googlecode.com/svn/trunk/"))
  (volatile-highlights status "removed" recipe nil)
+ (xml-rpc-el status "installed" recipe
+	     (:name xml-rpc-el :description "An elisp implementation of clientside XML-RPC" :type bzr :url "lp:xml-rpc-el"))
  (yasnippet status "installed" recipe
 	    (:name yasnippet :website "https://github.com/capitaomorte/yasnippet.git" :description "YASnippet is a template system for Emacs." :type github :pkgname "capitaomorte/yasnippet" :features "yasnippet" :pre-init
 		   (unless
