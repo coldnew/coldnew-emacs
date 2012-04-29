@@ -25,8 +25,30 @@
 
 
 
-;; TODO: move me to other files
-(add-hook 'occur-mode-hook 'hl-line-mode)
+;;;; ---------------------------------------------------------------------------
+;;;; Commands that define for key-chord
+;;;; ---------------------------------------------------------------------------
+(defun upcase-word-backward ()
+  "upcase word backward."
+  (interactive)
+  (backward-word)
+  (upcase-word))
+
+(defun downcase-word-backward ()
+  "downcase word backward."
+  (interactive)
+  (backward-word)
+  (downcase-word))
+
+(defun captialize-word-backward ()
+  "captialize word backward."
+  (interactive)
+  (backward-word)
+  (captialize-word))
+
+
+;; ;; TODO: move me to other files
+;; (add-hook 'occur-mode-hook 'hl-line-mode)
 
 (provide 'coldnew-command)
 ;; coldnew-command.el ends here.
