@@ -26,6 +26,7 @@
 (require 'eldoc)
 (require 'eldoc-extension)
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+;; make eldoc work with paredit
 (when (featurep 'paredit)
   (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
 
