@@ -50,8 +50,8 @@
 (defvar emacs-custom-file (concat emacs-dir "custom.el")
   "store customize UI config.")
 
-;; (defvar emacs-bin-dir    (concat emacs-dir "bin/")
-;;   "directory to place binary staff.")
+(defvar emacs-bin-dir    (concat emacs-dir "bin/")
+  "directory to place binary staff.")
 (defvar emacs-cache-dir  (concat emacs-dir "cache/")
   "cache file directory.")
 (defvar emacs-backup-dir (concat emacs-dir "backup/")
@@ -86,11 +86,21 @@
   "make capslock as control-key"
   (shell-command "setxkbmap -option ctrl:nocaps"))
 
-;; Swap control and Capslock in xwindow
+;; only disable capslock and make it as control
 (cond ((eq window-system 'x)
        ;; make caps lock a control key
        (make-caps-as-ctrl)))
 
+;; Set PATH
+;; TODO: make it work on every platform, now only has Linux support
+(setenv "PATH"
+	(concat
+	 emacs-bin-dir ":"
+	 "~/.lein/bin" ":"
+	 (getenv "PATH")
+	 ))
+
+(setq exec-path (cons emacs-bin-dir exec-path))
 
 
 
