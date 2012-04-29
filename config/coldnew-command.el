@@ -23,6 +23,20 @@
    (car (occur-read-primary-args)))
   (select-window (get-buffer-window "*Occur*")))
 
+;;;; ---------------------------------------------------------------------------
+;;;; Delete
+;;;; ---------------------------------------------------------------------------
+(defun delete-word (arg)
+  "Delete characters forward until encountering the end of a word.
+With argument, do this that many times."
+  (interactive "p")
+  (delete-region (point) (progn (forward-word arg) (point))))
+
+(defun backward-delete-word (arg)
+  "Delete characters backward until encountering the end of a word.
+With argument, do this that many times."
+  (interactive "p")
+  (delete-word (- arg)))
 
 
 ;;;; ---------------------------------------------------------------------------
@@ -31,20 +45,17 @@
 (defun upcase-word-backward ()
   "upcase word backward."
   (interactive)
-  (backward-word)
-  (upcase-word))
+  (upcase-word -1))
 
 (defun downcase-word-backward ()
   "downcase word backward."
   (interactive)
-  (backward-word)
-  (downcase-word))
+  (downcase-word -1))
 
-(defun captialize-word-backward ()
+(defun capitalize-word-backward ()
   "captialize word backward."
   (interactive)
-  (backward-word)
-  (captialize-word))
+  (capitalize-word -1))
 
 
 ;; ;; TODO: move me to other files

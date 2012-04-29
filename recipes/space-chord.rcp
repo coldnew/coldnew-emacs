@@ -1,0 +1,5 @@
+(:name space-chord
+       :description "key chord with Space"
+       :type emacswiki
+       :features space-chord
+       )
