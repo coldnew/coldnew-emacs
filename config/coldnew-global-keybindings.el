@@ -33,9 +33,9 @@
 
 (key-chord-define evil-insert-state-map "vv"  'er/expand-region)
 ;; quickliy back-word and upcase/downcaseword
-(key-chord-define evil-insert-state-map "bu"  "\M-b\M-u")
-(key-chord-define evil-insert-state-map "bl"  "\M-b\M-l")
-(key-chord-define evil-insert-state-map "bc"  "\M-b\M-c")
+(key-chord-define evil-insert-state-map "bu"  'upcase-word-backward)
+(key-chord-define evil-insert-state-map "bl"  'downcase-word-backward)
+(key-chord-define evil-insert-state-map "bc"  'captialize-word-backward)
 
 
 ;;;;;;;; EMACS
@@ -49,6 +49,21 @@
 (define-key evil-emacs-state-map (kbd "C-\'") 'er/expand-region)
 (define-key evil-emacs-state-map (kbd "C-0") 'ace-jump-mode)
 
+
+;;;; ---------------------------------------------------------------------------
+;;;; paredit-mode
+;;;; ---------------------------------------------------------------------------
+
+;; insert
+(evil-define-key 'insert evil-paredit-mode-map "(" 'paredit-open-round)
+(evil-define-key 'insert evil-paredit-mode-map ")" 'paredit-close-round)
+(evil-define-key 'insert evil-paredit-mode-map "[" 'paredit-open-square)
+(evil-define-key 'insert evil-paredit-mode-map "]" 'paredit-close-square)
+(evil-define-key 'insert evil-paredit-mode-map "{" 'paredit-open-curly)
+(evil-define-key 'insert evil-paredit-mode-map "}" 'paredit-close-curly)
+(evil-define-key 'insert use-paredit-mode-map (kbd "\"")  'paredit-doublequote)
+(evil-define-key 'insert evil-paredit-mode-map (kbd "<delete>") 'paredit-forward-delete)
+(evil-define-key 'insert evil-paredit-mode-map (kbd "<backspace>") 'paredit-backward-delete)
 
 
 
