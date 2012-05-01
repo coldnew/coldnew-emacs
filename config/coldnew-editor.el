@@ -20,8 +20,7 @@
   :init-value t
   :lighter " coldnew-editor"
   :keymap coldnew-editor-map
-  (if coldnew-editor-mode
-      (run-hooks 'coldnew-editor-hook)))
+  (run-hooks 'coldnew-editor-hook))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
@@ -83,6 +82,11 @@
 (key-chord-mode 1)
 
 ;;;; ---------------------------------------------------------------------------
+;;;; space-chord
+;;;; ---------------------------------------------------------------------------
+(require 'space-chord)
+
+;;;; ---------------------------------------------------------------------------
 ;;;; ace-jump
 ;;;; ---------------------------------------------------------------------------
 (require 'ace-jump-mode)
@@ -97,6 +101,8 @@
 ;;;; ---------------------------------------------------------------------------
 (require 'paredit)
 
+(defun paredit-blink-paren-match (another-line-p)
+  "redefine this function, i don't like paredit to blikn math paren")
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; dtrt-indent
@@ -197,7 +203,22 @@
   ;; Use Greek character lambda insteda of string
   (turn-on-pretty-lambda-mode)
 
+  ;; keybindings
+  (define-key evil-insert-state-local-map (kbd ";") 'paredit-semicolon)
+  (define-key evil-insert-state-local-map (kbd "M-;") 'paredit-comment-dwim)
+  (define-key evil-insert-state-local-map (kbd "C-j") 'paredit-newline)
+  (define-key evil-insert-state-local-map (kbd "M-9") 'paredit-wrap-round)
+  (define-key evil-insert-state-local-map (kbd "M-s") 'paredit-splice-sexp)
+  (key-chord-define evil-insert-state-local-map "bs"  'paredit-splice-sexp-killing-backward)
+  (key-chord-define evil-insert-state-local-map "fs"  'paredit-splice-sexp-killing-forward)
+  (define-key evil-insert-state-local-map (kbd "C-0") 'paredit-forward-slurp-sexp)
+  (define-key evil-insert-state-local-map (kbd "C-]") 'paredit-forward-barf-sexp)
+  (define-key evil-insert-state-local-map (kbd "C-9") 'paredit-backward-slurp-sexp)
+  (define-key evil-insert-state-local-map (kbd "C-[") 'paredit-backward-barf-sexp)
+  (key-chord-define evil-insert-state-local-map "ps"  'paredit-split-sexp)
+  (key-chord-define evil-insert-state-local-map "pj"  'paredit-join-sexp)
   )
+
 
 ;;;; cc-mode common setting
 (defun coldnew-cc-mode-common-setting ()
@@ -209,8 +230,16 @@
   ;; enable doxygen
   (doxymacs-mode t)
   (doxymacs-font-lock)
-  )
 
+  ;; gtags
+  (gtags-mode t)
+  (if-not (string-match "/usr/src/linux/" (expand-file-name default-directory))
+	  (gtags-create-or-update))
+
+  ;; keybindings
+  (define-key evil-normal-state-local-map (kbd "C-x C-o") 'ff-find-other-file)
+  (define-key evil-insert-state-local-map (kbd "C-x C-o") 'ff-find-other-file)
+  )
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Functions
