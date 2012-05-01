@@ -16,6 +16,7 @@
 (require 'coldnew-core)
 (require 'coldnew-variables)
 (require 'coldnew-macros)
+(require 'coldnew-depends)
 (require 'coldnew-functions)
 (require 'coldnew-packages)
 (require 'coldnew-evil)

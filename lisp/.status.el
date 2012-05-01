@@ -28,7 +28,7 @@
  (bash-completion status "installed" recipe
 		  (:name bash-completion :description "" :website "" :type http :url "https://raw.github.com/szermatt/emacs-bash-completion/master/bash-completion.el" :features bash-completion))
  (c-eldoc status "installed" recipe
-	  (:name c-eldoc :description "helpful description of the arguments to C functions" :website "" :type emacswiki :features c-eldoc))
+	  (:name c-eldoc :description "helpful description of the arguments to C functions" :website "" :type elpa :features c-eldoc))
  (cedet status "installed" recipe
 	(:name cedet :website "http://cedet.sourceforge.net/" :description "CEDET is a Collection of Emacs Development Environment Tools written with the end goal of creating an advanced development environment in Emacs." :type bzr :url "bzr://cedet.bzr.sourceforge.net/bzrroot/cedet/code/trunk" :build
 	       ("touch `find . -name Makefile`" "make")
@@ -36,8 +36,12 @@
 	       ("echo #!/bin/sh > tmp.sh & echo touch `/usr/bin/find . -name Makefile` >> tmp.sh & echo make FIND=/usr/bin/find >> tmp.sh" "sed 's/^M$//' tmp.sh  > tmp2.sh" "sh ./tmp2.sh" "rm ./tmp.sh ./tmp2.sh")
 	       :load-path
 	       ("./common" "speedbar")))
+ (cljdoc status "installed" recipe
+	 (:name cljdoc :description "eldoc mode for clojure" :type elpa))
  (clojure-mode status "installed" recipe
 	       (:name clojure-mode :website "https://github.com/technomancy/clojure-mode" :description "Emacs support for the Clojure language." :type github :pkgname "technomancy/clojure-mode"))
+ (ctypes status "installed" recipe
+	 (:name ctypes :description "Enhanced Font lock support for custom defined type" :type elpa))
  (doxymacs status "installed" recipe
 	   (:name doxymacs :website "http://doxymacs.sourceforge.net/" :description "Doxymacs is Doxygen + {X}Emacs." :type git :url "git://doxymacs.git.sourceforge.net/gitroot/doxymacs/doxymacs" :load-path
 		  ("./lisp")
@@ -47,6 +51,7 @@
  (dtrt-indent status "installed" recipe
 	      (:name dtrt-indent :website "http://savannah.nongnu.org/projects/dtrt-indent/" :description "A minor mode that guesses the indentation offset originally used for creating source code files and transparently adjusts the corresponding settings in Emacs, making it more convenient to edit foreign files." :type git :url "git://git.savannah.nongnu.org/dtrt-indent.git" :features dtrt-indent :post-init
 		     (dtrt-indent-mode 1)))
+ (ecb_snap status "removed" recipe nil)
  (egg status "installed" recipe
       (:name egg :description "Egg is an Emacs interface to git. It's a suite composed of a minor-mode and various special-buffers presenting different UIs to help the user performing many git operations." :type github :pkgname "byplayer/egg" :load-path
 	     (".")
@@ -62,6 +67,8 @@
 		       (autoload 'er/expand-region "expand-region" nil t)))
  (fuzzy status "installed" recipe
 	(:name fuzzy :website "https://github.com/m2ym/fuzzy-el" :description "Fuzzy matching utilities for GNU Emacs" :type github :pkgname "m2ym/fuzzy-el" :features fuzzy))
+ (gccsense status "installed" recipe
+	   (:name gccsense :description "Enhanced Font lock support for custom defined type" :type elpa))
  (git-emacs status "installed" recipe
 	    (:name git-emacs :description "Yet another git emacs mode for newbies" :type github :pkgname "tsgates/git-emacs" :features git-emacs))
  (highlight-cl status "installed" recipe
@@ -72,6 +79,7 @@
 		(:name hungry-delete :description "hungry delete minor mode" :website "https://github.com/nflath/hungry-delete" :type git :url "https://github.com/nflath/hungry-delete.git" :features hungry-delete))
  (ibuffer-git status "installed" recipe
 	      (:name ibuffer-git :description "show git status in ibuffer" :type git :url "git://github.com/jrockway/ibuffer-git" :features ibuffer-git))
+ (icicles status "required" recipe nil)
  (iedit status "installed" recipe
 	(:name iedit :description "Edit multiple regions with the same content simultaneously." :type emacswiki :features iedit))
  (jump-char status "removed" recipe nil)
@@ -128,6 +136,9 @@
 	    (:name shell-pop :description "Helps you pop up and pop out shell buffer easily." :website "http://www.emacswiki.org/emacs/ShellPop" :type emacswiki :features "shell-pop"))
  (slime status "installed" recipe
 	(:name slime :description "Major mode for editing Slim file" :features slime :type elpa))
+ (smex status "installed" recipe
+       (:name smex :description "M-x interface with Ido-style fuzzy matching." :type github :pkgname "nonsequitur/smex" :features smex :post-init
+	      (smex-initialize)))
  (space-chord status "installed" recipe
 	      (:name space-chord :description "key chord with Space" :type emacswiki :features space-chord))
  (tempbuf status "installed" recipe

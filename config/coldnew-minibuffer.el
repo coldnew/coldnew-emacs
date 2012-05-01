@@ -25,6 +25,11 @@
 (smex-initialize)
 (setq smex-save-file (concat emacs-cache-dir "smex.dat"))
 
+;;;; ---------------------------------------------------------------------------
+;;;; icicles
+;;;; ---------------------------------------------------------------------------
+;;(require 'icicles)
+
 
 (provide 'coldnew-minibuffer)
 ;; coldnew-minibuffer.el ends here.

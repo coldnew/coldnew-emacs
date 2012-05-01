@@ -22,6 +22,9 @@
 (setq-default ctypes-file-name (concat emacs-cache-dir "ctypes_std_c.dat"))
 (add-hook 'ctypes-load-hook 'my-ctypes-load-hook)
 
+
+(require 'gccsense)
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybindings
 ;;;; ---------------------------------------------------------------------------

@@ -92,6 +92,7 @@
 ;;;; Combination key
 ;;;; ---------------------------------------------------------------------------
 
+
 (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
 (global-set-key (kbd "C-x C-b")  'ibuffer)
 (global-set-key (kbd "C-;")      'iedit-mode)
@@ -105,6 +106,9 @@
 (global-set-key (kbd "C-c C-f") 'my-anything-filelist)
 (global-set-key (kbd "<escape>") 'evil-mode)
 
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "M-c") 'anything-M-x)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; one-key
