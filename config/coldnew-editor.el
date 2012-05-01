@@ -289,5 +289,7 @@
       (replace-match "\\1\\2" nil nil))))
 
 
+
+
 (provide 'coldnew-editor)
 ;; coldnew-editor.el ends here.
