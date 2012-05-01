@@ -2,14 +2,13 @@
 (eval-when-compile (require 'cl))
 
 
-(require 'ascii)
-(require 'ace-jump-mode)
-(require 'expand-region)
-(require 'unicad)
-(require 'iedit)
-(require 'rainbow-mode)
-(require 'smarter-compile)
-
+(require* 'ascii)
+(require* 'ace-jump-mode)
+(require* 'expand-region)
+(require* 'unicad)
+(require* 'iedit)
+(require* 'rainbow-mode)
+(require* 'smarter-compile)
 
 
 (provide 'coldnew-depends)
