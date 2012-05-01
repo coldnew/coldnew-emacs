@@ -18,7 +18,12 @@
 (define-key minibuffer-local-map (kbd "M-n") 'next-history-element)
 (define-key minibuffer-local-map (kbd "C-g") 'minibuffer-keyboard-quit)
 
-
+;;;; ---------------------------------------------------------------------------
+;;;; smex
+;;;; ---------------------------------------------------------------------------
+(require 'smex)
+(smex-initialize)
+(setq smex-save-file (concat emacs-cache-dir "smex.dat"))
 
 
 (provide 'coldnew-minibuffer)
