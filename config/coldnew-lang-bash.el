@@ -10,7 +10,7 @@
 ;;;; ---------------------------------------------------------------------------
 
 ;; use my editor-mode
-(add-hook 'shell-mode-hook 'coldnew-editor-mode)
+(add-hook 'shell-mode-hook '(lambda() (coldnew-editor-mode 1)))
 
 ;; auto-complete
 (add-hook 'shell-mode-hook 'ac-shell-script-mode-setup)

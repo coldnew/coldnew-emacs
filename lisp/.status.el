@@ -27,6 +27,15 @@
  (auto-complete-emacs-lisp status "removed" recipe nil)
  (bash-completion status "installed" recipe
 		  (:name bash-completion :description "" :website "" :type http :url "https://raw.github.com/szermatt/emacs-bash-completion/master/bash-completion.el" :features bash-completion))
+ (c-eldoc status "installed" recipe
+	  (:name c-eldoc :description "helpful description of the arguments to C functions" :website "" :type emacswiki :features c-eldoc))
+ (cedet status "installed" recipe
+	(:name cedet :website "http://cedet.sourceforge.net/" :description "CEDET is a Collection of Emacs Development Environment Tools written with the end goal of creating an advanced development environment in Emacs." :type bzr :url "bzr://cedet.bzr.sourceforge.net/bzrroot/cedet/code/trunk" :build
+	       ("touch `find . -name Makefile`" "make")
+	       :build/windows-nt
+	       ("echo #!/bin/sh > tmp.sh & echo touch `/usr/bin/find . -name Makefile` >> tmp.sh & echo make FIND=/usr/bin/find >> tmp.sh" "sed 's/^M$//' tmp.sh  > tmp2.sh" "sh ./tmp2.sh" "rm ./tmp.sh ./tmp2.sh")
+	       :load-path
+	       ("./common" "speedbar")))
  (clojure-mode status "installed" recipe
 	       (:name clojure-mode :website "https://github.com/technomancy/clojure-mode" :description "Emacs support for the Clojure language." :type github :pkgname "technomancy/clojure-mode"))
  (doxymacs status "installed" recipe
@@ -119,6 +128,8 @@
 	    (:name shell-pop :description "Helps you pop up and pop out shell buffer easily." :website "http://www.emacswiki.org/emacs/ShellPop" :type emacswiki :features "shell-pop"))
  (slime status "installed" recipe
 	(:name slime :description "Major mode for editing Slim file" :features slime :type elpa))
+ (space-chord status "installed" recipe
+	      (:name space-chord :description "key chord with Space" :type emacswiki :features space-chord))
  (tempbuf status "installed" recipe
 	  (:name tempbuf :description "" :website "" :type emacswiki :features tempbuf))
  (traverselisp status "installed" recipe

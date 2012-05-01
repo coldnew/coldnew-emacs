@@ -11,7 +11,7 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; setup keybindings
 ;;;; ---------------------------------------------------------------------------
-(define-key minibuffer-local-map (kbd "M-w") 'backward-kill-word)
+(define-key minibuffer-local-map (kbd "M-l") 'backward-kill-word)
 (define-key minibuffer-local-map (kbd "C-w") 'kill-word)
 (define-key minibuffer-local-map (kbd "C-u") '(lambda() (interactive) (kill-line 0)))
 (define-key minibuffer-local-map (kbd "M-p") 'previous-history-element)

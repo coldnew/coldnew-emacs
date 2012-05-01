@@ -2249,8 +2249,8 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 
 ;;;***
 
-;;;### (autoloads nil nil ("xml-rpc-el/xml-rpc.el") (20379 64805
-;;;;;;  922453))
+;;;### (autoloads nil nil ("c-eldoc/c-eldoc.el" "space-chord/space-chord.el"
+;;;;;;  "xml-rpc-el/xml-rpc.el") (20381 24004 891886))
 
 ;;;***
 

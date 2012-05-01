@@ -15,10 +15,13 @@
 ;; load the core stuff
 (require 'coldnew-core)
 (require 'coldnew-variables)
+(require 'coldnew-macros)
 (require 'coldnew-functions)
 (require 'coldnew-packages)
-(require 'coldnew-editor)
 (require 'coldnew-evil)
+(require 'coldnew-tags)
+(require 'coldnew-editor)
+
 ;; config changes made through the customize UI will be store here
 (setq custom-file emacs-custom-file)
 

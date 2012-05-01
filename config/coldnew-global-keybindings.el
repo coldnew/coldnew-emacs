@@ -22,6 +22,8 @@
 (define-key evil-insert-state-map (kbd "M-f") 'forward-word)
 (define-key evil-insert-state-map (kbd "M-b") 'backward-word)
 
+(define-key evil-insert-state-map (kbd "C-l") 'hungry-delete-backward)
+(define-key evil-insert-state-map (kbd "M-l") 'backward-delete-word)
 
 (define-key evil-insert-state-map (kbd "C-x C-n") 'auto-complete)
 (define-key evil-insert-state-map (kbd "C-s") 'my-anything-occur)
@@ -35,10 +37,9 @@
 ;; quickliy back-word and upcase/downcaseword
 (key-chord-define evil-insert-state-map "bu"  'upcase-word-backward)
 (key-chord-define evil-insert-state-map "bl"  'downcase-word-backward)
-(key-chord-define evil-insert-state-map "bc"  'captialize-word-backward)
+(key-chord-define evil-insert-state-map "bc"  'capitalize-word-backward)
+(key-chord-define evil-insert-state-map "ll"  'recenter-top-bottom)
 
-
-;;;;;;;; EMACS
 (define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
 (define-key evil-emacs-state-map (kbd "C-s") 'my-anything-occur)
 (define-key evil-emacs-state-map (kbd "C-c C-f") 'my-anything-filelist)
@@ -54,16 +55,29 @@
 ;;;; paredit-mode
 ;;;; ---------------------------------------------------------------------------
 
+
+
+
 ;; insert
-(evil-define-key 'insert evil-paredit-mode-map "(" 'paredit-open-round)
-(evil-define-key 'insert evil-paredit-mode-map ")" 'paredit-close-round)
-(evil-define-key 'insert evil-paredit-mode-map "[" 'paredit-open-square)
-(evil-define-key 'insert evil-paredit-mode-map "]" 'paredit-close-square)
-(evil-define-key 'insert evil-paredit-mode-map "{" 'paredit-open-curly)
-(evil-define-key 'insert evil-paredit-mode-map "}" 'paredit-close-curly)
-(evil-define-key 'insert use-paredit-mode-map (kbd "\"")  'paredit-doublequote)
-(evil-define-key 'insert evil-paredit-mode-map (kbd "<delete>") 'paredit-forward-delete)
-(evil-define-key 'insert evil-paredit-mode-map (kbd "<backspace>") 'paredit-backward-delete)
+(define-key evil-insert-state-map "(" 'paredit-open-round)
+(define-key evil-insert-state-map ")" 'paredit-close-round)
+(define-key evil-insert-state-map "[" 'paredit-open-square)
+(define-key evil-insert-state-map "]" 'paredit-close-square)
+(define-key evil-insert-state-map "{" 'paredit-open-curly)
+(define-key evil-insert-state-map "}" 'paredit-close-curly)
+(define-key evil-insert-state-map (kbd "\"")  'paredit-doublequote)
+(define-key evil-insert-state-map (kbd "<delete>") 'paredit-forward-delete)
+(define-key evil-insert-state-map (kbd "<backspace>") 'paredit-backward-delete)
+(define-key evil-insert-state-map (kbd "C-d") 'paredit-forward-delete)
+(define-key evil-insert-state-map (kbd "C-l") 'paredit-backward-delete)
+(define-key evil-insert-state-map (kbd "M-d") 'paredit-forward-kill-word)
+(define-key evil-insert-state-map (kbd "M-l") 'paredit-backward-kill-word)
+(define-key evil-insert-state-map (kbd "M-0") 'paredit-close-round-and-newline)
+(define-key evil-insert-state-map (kbd "M-\'") 'paredit-meta-doublequote)
+(define-key evil-insert-state-map (kbd "C-k") 'paredit-kill)
+
+(key-chord-define evil-insert-state-map "fp"  'paredit-forward)
+(key-chord-define evil-insert-state-map "bp"  'paredit-backward)
 
 
 
