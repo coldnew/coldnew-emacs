@@ -23,11 +23,12 @@
 (setq scroll-down-aggressively     0.01 )
 
 ;; timestamp
-
 (setq time-stamp-active      t ) ; do enable time-stamps
 (setq time-stamp-line-limit 10 ) ; check first 10 buffer lines for Time-stamp:
 (setq time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S (%u)") ; date format
 
+;; TODO: add comment
+(setq stack-trace-on-error t)
 
 ;;;; -------------------------------------------------------------------------------
 ;;;;   Global Variables Setting
