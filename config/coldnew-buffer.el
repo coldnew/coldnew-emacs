@@ -281,6 +281,9 @@
        ".loaddefs.el$"
        "^loaddefs.el$"
        "^\\*magit*"
+       "\\*GTAGS SELECT\\**"
+       "\\*Symref*"
+       "\\*cscope\\*"
        ))
 
 
