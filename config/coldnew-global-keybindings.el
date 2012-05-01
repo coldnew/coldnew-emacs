@@ -13,6 +13,9 @@
 (define-key evil-normal-state-map (kbd "C-\'") 'er/expand-region)
 (define-key evil-normal-state-map (kbd "C-0") 'ace-jump-mode)
 
+(define-key evil-normal-state-map (kbd "C-n") 'next-line)
+(define-key evil-normal-state-map (kbd "C-p") 'previous-line)
+
 
 ;;;;;;;; Insert
 (define-key evil-insert-state-map (kbd "C-n") 'next-line)
@@ -87,6 +90,9 @@
 (global-set-key (kbd "<f1>")     'woman)
 (global-set-key (kbd "<f2>")     'shell-pop)
 (global-set-key (kbd "C-x <f2>") 'multi-term)
+(global-set-key (kbd "<f3>")     'call-last-kbd-macro)
+(global-set-key (kbd "C-x <f3>") 'toggle-kbd-macro-recording-on)
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key
@@ -100,15 +106,24 @@
 (global-set-key (kbd "C-x C-r")  'sudo-edit)
 (global-set-key (kbd "C-x ,") 'undo-tree-undo)
 (global-set-key (kbd "C-x .") 'undo-tree-redo)
-(global-set-key (kbd "C-w")   'kill-word)
-(global-set-key (kbd "M-w")   'backward-kill-word)
+;; (global-set-key (kbd "C-w")   'kill-word)
+;; (global-set-key (kbd "M-w")   'backward-kill-word)
 (global-set-key (kbd "C-g")   'keyboard-quit)
 (global-set-key (kbd "C-c C-f") 'my-anything-filelist)
 (global-set-key (kbd "<escape>") 'evil-mode)
 
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "M-c") 'anything-M-x)
+(global-set-key (kbd "C-x M-x") 'anything-M-x)
+
+(global-set-key (kbd "M-1") 'delete-other-windows)
+(global-set-key (kbd "M-2") 'split-window-below)
+(global-set-key (kbd "M-3") 'split-window-right)
+(global-set-key (kbd "M-4") 'delete-window)
+(global-set-key (kbd "M-0") 'other-window)
+
+
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; one-key
