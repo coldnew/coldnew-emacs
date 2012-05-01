@@ -67,8 +67,7 @@
 		       (autoload 'er/expand-region "expand-region" nil t)))
  (fuzzy status "installed" recipe
 	(:name fuzzy :website "https://github.com/m2ym/fuzzy-el" :description "Fuzzy matching utilities for GNU Emacs" :type github :pkgname "m2ym/fuzzy-el" :features fuzzy))
- (gccsense status "installed" recipe
-	   (:name gccsense :description "Enhanced Font lock support for custom defined type" :type elpa))
+ (gccsense status "removed" recipe nil)
  (git-emacs status "installed" recipe
 	    (:name git-emacs :description "Yet another git emacs mode for newbies" :type github :pkgname "tsgates/git-emacs" :features git-emacs))
  (highlight-cl status "installed" recipe
@@ -79,7 +78,8 @@
 		(:name hungry-delete :description "hungry delete minor mode" :website "https://github.com/nflath/hungry-delete" :type git :url "https://github.com/nflath/hungry-delete.git" :features hungry-delete))
  (ibuffer-git status "installed" recipe
 	      (:name ibuffer-git :description "show git status in ibuffer" :type git :url "git://github.com/jrockway/ibuffer-git" :features ibuffer-git))
- (icicles status "required" recipe nil)
+ (icicles status "removed" recipe nil)
+ (icicles-install status "removed" recipe nil)
  (iedit status "installed" recipe
 	(:name iedit :description "Edit multiple regions with the same content simultaneously." :type emacswiki :features iedit))
  (jump-char status "removed" recipe nil)
@@ -129,6 +129,8 @@
 		  (:name pretty-lambdada :description "Show the word `lambda' as the Greek letter." :website "" :type emacswiki :features pretty-lambdada))
  (rainbow-delimiters status "installed" recipe
 		     (:name rainbow-delimiters :website "https://github.com/jlr/rainbow-delimiters#readme" :description "Color nested parentheses, brackets, and braces according to their depth." :type github :pkgname "jlr/rainbow-delimiters" :features rainbow-delimiters))
+ (rainbow-mode status "installed" recipe
+	       (:name rainbow-mode :description "Colorize color names in buffers" :type elpa))
  (recentf-ext status "installed" recipe
 	      (:name recentf-ext :description "Recentf extensions" :type emacswiki :features "recentf-ext"))
  (session status "removed" recipe nil)
@@ -136,6 +138,9 @@
 	    (:name shell-pop :description "Helps you pop up and pop out shell buffer easily." :website "http://www.emacswiki.org/emacs/ShellPop" :type emacswiki :features "shell-pop"))
  (slime status "installed" recipe
 	(:name slime :description "Major mode for editing Slim file" :features slime :type elpa))
+ (smart-compile status "required" recipe nil)
+ (smarter-compile status "installed" recipe
+		  (:name smarter-compile :description "an interface to `compile'" :features smarter-compile :type elpa))
  (smex status "installed" recipe
        (:name smex :description "M-x interface with Ido-style fuzzy matching." :type github :pkgname "nonsequitur/smex" :features smex :post-init
 	      (smex-initialize)))

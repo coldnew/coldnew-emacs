@@ -2099,6 +2099,18 @@ See `rainbow-delimiters-mode' for more information on Rainbow-Delimiters mode.
 
 ;;;***
 
+;;;### (autoloads (rainbow-mode) "rainbow-mode/rainbow-mode" "rainbow-mode/rainbow-mode.el"
+;;;;;;  (20383 43474))
+;;; Generated autoloads from rainbow-mode/rainbow-mode.el
+
+(autoload 'rainbow-mode "rainbow-mode/rainbow-mode" "\
+Colorize strings that represent colors.
+This will fontify with colors the string like \"#aabbcc\" or \"blue\".
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
 ;;;### (autoloads (slime-hyperspec-lookup slime-connect slime slime-mode
 ;;;;;;  slime-lisp-mode-hook) "slime/slime" "slime/slime.el" (20379
 ;;;;;;  38566))
@@ -2164,6 +2176,22 @@ Connect to a running Swank server. Return the connection.
 A wrapper for `hyperspec-lookup'
 
 \(fn SYMBOL-NAME)" t nil)
+
+;;;***
+
+;;;### (autoloads (smart-compile-select-compile-command) "smarter-compile/smarter-compile"
+;;;;;;  "smarter-compile/smarter-compile.el" (20383 44759))
+;;; Generated autoloads from smarter-compile/smarter-compile.el
+
+(autoload 'smart-compile-select-compile-command "smarter-compile/smarter-compile" "\
+The function that selects the `compile-command' for
+a buffer, given the `smart-compile-alist'.
+
+This is not to be called interactively.
+
+It does not call `compile'.
+
+\(fn)" nil nil)
 
 ;;;***
 
@@ -2381,9 +2409,10 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete/auto-complete-config.el"
 ;;;;;;  "auto-complete/auto-complete-pkg.el" "auto-complete/auto-complete.el"
 ;;;;;;  "cljdoc/cljdoc-autoloads.el" "cljdoc/cljdoc-pkg.el" "cljdoc/cljdoc.el"
-;;;;;;  "ctypes/ctypes-autoloads.el" "ctypes/ctypes-pkg.el" "gccsense/gccsense-autoloads.el"
-;;;;;;  "gccsense/gccsense-pkg.el" "gccsense/gccsense.el" "space-chord/space-chord.el"
-;;;;;;  "xml-rpc-el/xml-rpc.el") (20383 39909 515316))
+;;;;;;  "ctypes/ctypes-autoloads.el" "ctypes/ctypes-pkg.el" "rainbow-mode/rainbow-mode-autoloads.el"
+;;;;;;  "rainbow-mode/rainbow-mode-pkg.el" "smarter-compile/smarter-compile-autoloads.el"
+;;;;;;  "smarter-compile/smarter-compile-pkg.el" "space-chord/space-chord.el"
+;;;;;;  "xml-rpc-el/xml-rpc.el") (20383 44759 700977))
 
 ;;;***
 
