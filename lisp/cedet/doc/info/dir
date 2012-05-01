@@ -1,0 +1,31 @@
+This is the file .../info/dir, which contains the
+topmost node of the Info hierarchy, called (dir)Top.
+The first time you invoke Info you start off looking at this node.
+
+File: dir,	Node: Top	This is the top of the INFO tree
+
+  This (the Directory node) gives a menu of major topics.
+  Typing "q" exits, "?" lists all Info commands, "d" returns here,
+  "h" gives a primer for first-timers,
+  "mEmacs<Return>" visits the Emacs manual, etc.
+
+  In Emacs, you can click mouse button 2 on a menu item or cross reference
+  to select it.
+
+* Menu:
+
+Emacs
+* CEDET: (cedet).               Collection of Emacs Development Environment 
+                                  Tools
+* Semantic: (semantic).         Infrastructure for parser based text analysis.
+* Semantic Application Writer's guide: (semantic-appdev).
+* Semantic Grammar Framework: (grammar-fw).
+* Semantic Language Writer's guide: (semantic-langdev).
+* Semantic User's guide: (semantic-user).
+* Semantic Wisent parser development: (wisent).
+* Semantic bovine parser development: (bovine).
+* Speedbar: (speedbar).         File/Tag summarizing utility.
+* cogre: (cogre).               Graphs & UML for Emacs
+* ede: (ede).                   Project management for Emacs.
+* eieio: (eieio).               Objects for Emacs.
+* srecode: (srecode).           Template code generator

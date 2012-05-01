@@ -1,0 +1,6 @@
+(:name c-eldoc
+       :description "helpful description of the arguments to C functions"
+       :website ""
+       :type elpa
+       :features c-eldoc
+       )
