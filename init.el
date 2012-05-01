@@ -12,13 +12,16 @@
       (setq load-path (cons load-dir load-path))
       (normal-top-level-add-subdirs-to-load-path))))
 
+;; a shortcut to reload emacs setting
+(global-set-key (kbd "<f5>") '(lambda () (interactive) (load-file "~/.emacs.d/init.el") (desktop-revert) (delete-other-windows)))
+
 ;; load the core stuff
 (require 'coldnew-core)
 (require 'coldnew-variables)
+(require 'coldnew-packages)
 (require 'coldnew-macros)
 (require 'coldnew-depends)
 (require 'coldnew-functions)
-(require 'coldnew-packages)
 (require 'coldnew-evil)
 (require 'coldnew-tags)
 (require 'coldnew-editor)
