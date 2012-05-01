@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (customize-object) "eieio-custom" "eieio-custom.el"
-;;;;;;  (20381 41620))
+;;;;;;  (20383 64348))
 ;;; Generated autoloads from eieio-custom.el
 
 (autoload 'customize-object "eieio-custom" "\
@@ -17,7 +17,7 @@ Optional argument GROUP is the sub-group of slots to display.
 
 ;;;### (autoloads (eieio-describe-generic eieio-describe-constructor
 ;;;;;;  eieio-describe-class eieio-browse) "eieio-opt" "eieio-opt.el"
-;;;;;;  (20381 41620))
+;;;;;;  (20383 64348))
 ;;; Generated autoloads from eieio-opt.el
 
 (autoload 'eieio-browse "eieio-opt" "\
@@ -52,7 +52,7 @@ Also extracts information about all methods specific to this generic.
 
 ;;;***
 
-;;;### (autoloads nil "eieio-xml" "eieio-xml.el" (20381 41620))
+;;;### (autoloads nil "eieio-xml" "eieio-xml.el" (20383 64348))
 ;;; Generated autoloads from eieio-xml.el
 
 (defmethod object-write-xml ((this eieio-default-superclass) &optional comment) "\
@@ -74,7 +74,7 @@ this object.
 ;;;***
 
 ;;;### (autoloads (enable-visual-studio-bookmarks) "linemark" "linemark.el"
-;;;;;;  (20381 41620))
+;;;;;;  (20383 64348))
 ;;; Generated autoloads from linemark.el
 
 (autoload 'enable-visual-studio-bookmarks "linemark" "\
@@ -90,8 +90,8 @@ Bind the viss bookmark functions to F2 related keys.
 ;;;***
 
 ;;;### (autoloads nil nil ("chart.el" "eieio-base.el" "eieio-datadebug.el"
-;;;;;;  "eieio-doc.el" "eieio-speedbar.el" "eieio.el") (20381 41622
-;;;;;;  52771))
+;;;;;;  "eieio-doc.el" "eieio-speedbar.el" "eieio.el") (20383 64349
+;;;;;;  447890))
 
 ;;;***
 

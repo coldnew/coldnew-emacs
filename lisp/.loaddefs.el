@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (set-up-slime-ac) "ac-slime/ac-slime" "ac-slime/ac-slime.el"
-;;;;;;  (20383 44934))
+;;;;;;  (20383 44964))
 ;;; Generated autoloads from ac-slime/ac-slime.el
 
 (defface ac-slime-menu-face '((t (:inherit 'ac-candidate-face))) "\
@@ -1188,6 +1188,22 @@ and would like bash completion in Emacs to take these changes into account.
 
 ;;;***
 
+;;;### (autoloads (c-eldoc-print-current-symbol-info c-turn-on-eldoc-mode)
+;;;;;;  "c-eldoc/c-eldoc" "c-eldoc/c-eldoc.el" (20383 37768))
+;;; Generated autoloads from c-eldoc/c-eldoc.el
+
+(autoload 'c-turn-on-eldoc-mode "c-eldoc/c-eldoc" "\
+Enable c-eldoc-mode
+
+\(fn)" t nil)
+
+(autoload 'c-eldoc-print-current-symbol-info "c-eldoc/c-eldoc" "\
+Returns documentation string for the current symbol.
+
+\(fn)" nil nil)
+
+;;;***
+
 ;;;### (autoloads (clojure-enable-slime-on-existing-buffers clojure-jack-in
 ;;;;;;  clojure-mode) "clojure-mode/clojure-mode" "clojure-mode/clojure-mode.el"
 ;;;;;;  (20379 48491))
@@ -1461,6 +1477,64 @@ use either \\[customize] or the function `dtrt-indent-mode'.")
 
 ;;;***
 
+;;;### (autoloads (ecb-byte-compile ecb-minor-mode ecb-activate)
+;;;;;;  "ecb/ecb" "ecb/ecb.el" (19331 64932))
+;;; Generated autoloads from ecb/ecb.el
+
+(autoload 'ecb-activate "ecb/ecb" "\
+Activates ECB and creates the special buffers for the choosen layout.
+For the layout see `ecb-layout-name'. This function raises always the
+ECB-frame if called from another frame. This is the same as calling
+`ecb-minor-mode' with a positive argument.
+
+\(fn)" t nil)
+
+(autoload 'ecb-minor-mode "ecb/ecb" "\
+Toggle ECB minor mode.
+With prefix argument ARG, turn on if positive, otherwise off. Return non-nil
+if the minor mode is enabled.
+
+\\{ecb-mode-map}
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'ecb-byte-compile "ecb/ecb" "\
+Byte-compiles the ECB package.
+This is done for all lisp-files of ECB if FORCE-ALL is not nil or for each
+lisp-file FILE.el which is either newer than FILE.elc or if FILE.elc doesn't
+exist.
+
+\(fn &optional FORCE-ALL)" t nil)
+
+;;;***
+
+;;;### (autoloads (ecb-show-help) "ecb/ecb-help" "ecb/ecb-help.el"
+;;;;;;  (19008 47528))
+;;; Generated autoloads from ecb/ecb-help.el
+
+(autoload 'ecb-show-help "ecb/ecb-help" "\
+Shows the online help of ECB in Info or HTML-format.
+The format depends on the setting in `ecb-show-help-format'. If called with
+prefix argument, i.e. if FORMAT is not nil then the user is prompted to choose
+the format of the help (Info or Html).
+
+If an error about not finding the needed help-file occurs please take a look
+at the options `ecb-help-info-start-file' and `ecb-help-html-start-file'!
+
+Note: If you got ECB as a standard XEmacs-package maybe the
+HTML-online-documentation is not included.
+
+\(fn &optional FORMAT)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "ecb/ecb-util" "ecb/ecb-util.el" (19340 65139))
+;;; Generated autoloads from ecb/ecb-util.el
+
+(defconst ecb-running-xemacs (featurep 'xemacs))
+
+;;;***
+
 ;;;### (autoloads (egg-minor-mode-find-file-hook egg-minor-mode)
 ;;;;;;  "egg/egg" "egg/egg.el" (20377 59842))
 ;;; Generated autoloads from egg/egg.el
@@ -1561,6 +1635,72 @@ Display a list of packages.
 
 ;;;***
 
+;;;### (autoloads (eproject-compile eproject-eshell-cd-here eproject-multi-isearch-buffers
+;;;;;;  eproject-todo eproject-grep eproject-revisit-project eproject-kill-project-buffers
+;;;;;;  eproject-ibuffer eproject-find-file) "eproject/eproject-extras"
+;;;;;;  "eproject/eproject-extras.el" (20383 65134))
+;;; Generated autoloads from eproject/eproject-extras.el
+
+(autoload 'eproject-find-file "eproject/eproject-extras" "\
+Present the user with a list of files in the current project.
+to select from, open file when selected.
+
+\(fn)" t nil)
+
+(autoload 'eproject-ibuffer "eproject/eproject-extras" "\
+Open an IBuffer window showing all buffers in the current project, or named project if PREFIX arg is supplied.
+
+\(fn PREFIX)" t nil)
+
+(autoload 'eproject-kill-project-buffers "eproject/eproject-extras" "\
+Kill every buffer in the current project, including the current buffer.
+
+If PREFIX is specified, prompt for a project name and kill those
+buffers instead.
+
+\(fn PREFIX)" t nil)
+
+(autoload 'eproject-revisit-project "eproject/eproject-extras" "\
+Given a project name, visit the root directory.
+
+If PREFIX arg is supplied, run `eproject-find-file'.
+
+\(fn PREFIX)" t nil)
+
+(autoload 'eproject-grep "eproject/eproject-extras" "\
+Search all files in the current project for REGEXP.
+
+\(fn REGEXP)" t nil)
+
+(autoload 'eproject-todo "eproject/eproject-extras" "\
+Display a project TODO list.
+
+Customize `eproject-todo-expressions' to control what this function looks for.
+
+\(fn)" t nil)
+
+(autoload 'eproject-multi-isearch-buffers "eproject/eproject-extras" "\
+Do a `multi-isearch' on opened buffers in the current project.
+
+Run `eproject-open-all-project-files' first or just
+`eproject-grep' if you want to search all project files.
+
+\(fn)" t nil)
+
+(autoload 'eproject-eshell-cd-here "eproject/eproject-extras" "\
+If there is an EShell buffer, cd to the project root in that buffer.
+
+With the prefix arg LOOK-IN-INVISIBLE-BUFFERS looks in buffers that are not currently displayed.
+
+\(fn &optional LOOK-IN-INVISIBLE-BUFFERS)" t nil)
+
+(autoload 'eproject-compile "eproject/eproject-extras" "\
+Run `compile-command' in the project root.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads nil "evil/evil-core" "evil/evil-core.el" (20377
 ;;;;;;  59878))
 ;;; Generated autoloads from evil/evil-core.el
@@ -1584,6 +1724,21 @@ If prefix argument is 0 it resets point and mark to their state
 before calling `er/expand-region' for the first time.
 
 \(fn ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (flymake-shell-load) "flymake-shell/flymake-shell"
+;;;;;;  "flymake-shell/flymake-shell.el" (20384 1447))
+;;; Generated autoloads from flymake-shell/flymake-shell.el
+
+(autoload 'flymake-shell-load "flymake-shell/flymake-shell" "\
+Configure flymake mode to check the current buffer's shell-script syntax.
+
+This function is designed to be called in `sh-set-shell-hook'; it
+does not alter flymake's global configuration, so function
+`flymake-mode' alone will not suffice.
+
+\(fn)" t nil)
 
 ;;;***
 
@@ -2196,13 +2351,182 @@ It does not call `compile'.
 ;;;***
 
 ;;;### (autoloads (smex-initialize) "smex/smex" "smex/smex.el" (20383
-;;;;;;  33423))
+;;;;;;  49323))
 ;;; Generated autoloads from smex/smex.el
 
 (autoload 'smex-initialize "smex/smex" "\
 
 
 \(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (tabbar-mwheel-mode tabbar-mode tabbar-local-mode
+;;;;;;  tabbar-mwheel-switch-group tabbar-mwheel-switch-tab tabbar-mwheel-forward-tab
+;;;;;;  tabbar-mwheel-backward-tab tabbar-mwheel-forward-group tabbar-mwheel-backward-group
+;;;;;;  tabbar-mwheel-forward tabbar-mwheel-backward tabbar-press-scroll-right
+;;;;;;  tabbar-press-scroll-left tabbar-press-home tabbar-forward-tab
+;;;;;;  tabbar-backward-tab tabbar-forward-group tabbar-backward-group
+;;;;;;  tabbar-forward tabbar-backward) "tabbar/tabbar" "tabbar/tabbar.el"
+;;;;;;  (20384 2448))
+;;; Generated autoloads from tabbar/tabbar.el
+
+(autoload 'tabbar-backward "tabbar/tabbar" "\
+Select the previous available tab.
+Depend on the setting of the option `tabbar-cycle-scope'.
+
+\(fn)" t nil)
+
+(autoload 'tabbar-forward "tabbar/tabbar" "\
+Select the next available tab.
+Depend on the setting of the option `tabbar-cycle-scope'.
+
+\(fn)" t nil)
+
+(autoload 'tabbar-backward-group "tabbar/tabbar" "\
+Go to selected tab in the previous available group.
+
+\(fn)" t nil)
+
+(autoload 'tabbar-forward-group "tabbar/tabbar" "\
+Go to selected tab in the next available group.
+
+\(fn)" t nil)
+
+(autoload 'tabbar-backward-tab "tabbar/tabbar" "\
+Select the previous visible tab.
+
+\(fn)" t nil)
+
+(autoload 'tabbar-forward-tab "tabbar/tabbar" "\
+Select the next visible tab.
+
+\(fn)" t nil)
+
+(autoload 'tabbar-press-home "tabbar/tabbar" "\
+Press the tab bar home button.
+That is, simulate a mouse click on that button.
+A numeric prefix ARG value of 2, or 3, respectively simulates a
+mouse-2, or mouse-3 click.  The default is a mouse-1 click.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'tabbar-press-scroll-left "tabbar/tabbar" "\
+Press the tab bar scroll-left button.
+That is, simulate a mouse click on that button.
+A numeric prefix ARG value of 2, or 3, respectively simulates a
+mouse-2, or mouse-3 click.  The default is a mouse-1 click.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'tabbar-press-scroll-right "tabbar/tabbar" "\
+Press the tab bar scroll-right button.
+That is, simulate a mouse click on that button.
+A numeric prefix ARG value of 2, or 3, respectively simulates a
+mouse-2, or mouse-3 click.  The default is a mouse-1 click.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'tabbar-mwheel-backward "tabbar/tabbar" "\
+Select the previous available tab.
+EVENT is the mouse event that triggered this command.
+Mouse-enabled equivalent of the command `tabbar-backward'.
+
+\(fn EVENT)" t nil)
+
+(autoload 'tabbar-mwheel-forward "tabbar/tabbar" "\
+Select the next available tab.
+EVENT is the mouse event that triggered this command.
+Mouse-enabled equivalent of the command `tabbar-forward'.
+
+\(fn EVENT)" t nil)
+
+(autoload 'tabbar-mwheel-backward-group "tabbar/tabbar" "\
+Go to selected tab in the previous available group.
+If there is only one group, select the previous visible tab.
+EVENT is the mouse event that triggered this command.
+Mouse-enabled equivalent of the command `tabbar-backward-group'.
+
+\(fn EVENT)" t nil)
+
+(autoload 'tabbar-mwheel-forward-group "tabbar/tabbar" "\
+Go to selected tab in the next available group.
+If there is only one group, select the next visible tab.
+EVENT is the mouse event that triggered this command.
+Mouse-enabled equivalent of the command `tabbar-forward-group'.
+
+\(fn EVENT)" t nil)
+
+(autoload 'tabbar-mwheel-backward-tab "tabbar/tabbar" "\
+Select the previous visible tab.
+EVENT is the mouse event that triggered this command.
+Mouse-enabled equivalent of the command `tabbar-backward-tab'.
+
+\(fn EVENT)" t nil)
+
+(autoload 'tabbar-mwheel-forward-tab "tabbar/tabbar" "\
+Select the next visible tab.
+EVENT is the mouse event that triggered this command.
+Mouse-enabled equivalent of the command `tabbar-forward-tab'.
+
+\(fn EVENT)" t nil)
+
+(autoload 'tabbar-mwheel-switch-tab "tabbar/tabbar" "\
+Select the next or previous tab according to EVENT.
+
+\(fn EVENT)" t nil)
+
+(autoload 'tabbar-mwheel-switch-group "tabbar/tabbar" "\
+Select the next or previous group of tabs according to EVENT.
+
+\(fn EVENT)" t nil)
+
+(autoload 'tabbar-local-mode "tabbar/tabbar" "\
+Toggle local display of the tab bar.
+With prefix argument ARG, turn on if positive, otherwise off.
+Returns non-nil if the new state is enabled.
+When turned on, if a local header line is shown, it is hidden to show
+the tab bar.  The tab bar is locally hidden otherwise.  When turned
+off, if a local header line is hidden or the tab bar is locally
+hidden, it is shown again.  Signal an error if Tabbar mode is off.
+
+\(fn &optional ARG)" t nil)
+
+(defvar tabbar-mode nil "\
+Non-nil if Tabbar mode is enabled.
+See the command `tabbar-mode' for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `tabbar-mode'.")
+
+(custom-autoload 'tabbar-mode "tabbar/tabbar" nil)
+
+(autoload 'tabbar-mode "tabbar/tabbar" "\
+Toggle display of a tab bar in the header line.
+With prefix argument ARG, turn on if positive, otherwise off.
+Returns non-nil if the new state is enabled.
+
+\\{tabbar-mode-map}
+
+\(fn &optional ARG)" t nil)
+
+(defvar tabbar-mwheel-mode nil "\
+Non-nil if Tabbar-Mwheel mode is enabled.
+See the command `tabbar-mwheel-mode' for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `tabbar-mwheel-mode'.")
+
+(custom-autoload 'tabbar-mwheel-mode "tabbar/tabbar" nil)
+
+(autoload 'tabbar-mwheel-mode "tabbar/tabbar" "\
+Toggle use of the mouse wheel to navigate through tabs or groups.
+With prefix argument ARG, turn on if positive, otherwise off.
+Returns non-nil if the new state is enabled.
+
+\\{tabbar-mwheel-mode-map}
+
+\(fn &optional ARG)" t nil)
 
 ;;;***
 
@@ -2408,11 +2732,29 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "anything/extensions/anything-obsolete.el" "anything/extensions/anything-show-completion.el"
 ;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete/auto-complete-config.el"
 ;;;;;;  "auto-complete/auto-complete-pkg.el" "auto-complete/auto-complete.el"
-;;;;;;  "cljdoc/cljdoc-autoloads.el" "cljdoc/cljdoc-pkg.el" "cljdoc/cljdoc.el"
-;;;;;;  "ctypes/ctypes-autoloads.el" "ctypes/ctypes-pkg.el" "rainbow-mode/rainbow-mode-autoloads.el"
-;;;;;;  "rainbow-mode/rainbow-mode-pkg.el" "smarter-compile/smarter-compile-autoloads.el"
-;;;;;;  "smarter-compile/smarter-compile-pkg.el" "space-chord/space-chord.el"
-;;;;;;  "xml-rpc-el/xml-rpc.el") (20383 44934 655241))
+;;;;;;  "c-eldoc/c-eldoc-autoloads.el" "c-eldoc/c-eldoc-pkg.el" "cedet/cedet-build.el"
+;;;;;;  "cedet/cedet-devel-load.el" "cedet/cedet-ediff.el" "cedet/cedet-emacs-merge.el"
+;;;;;;  "cedet/cedet-remove-builtin.el" "cedet/cedet-update-changelog.el"
+;;;;;;  "cedet/cedet-update-version.el" "cljdoc/cljdoc-autoloads.el"
+;;;;;;  "cljdoc/cljdoc-pkg.el" "cljdoc/cljdoc.el" "ctypes/ctypes-autoloads.el"
+;;;;;;  "ctypes/ctypes-pkg.el" "ecb/ecb-advice-test.el" "ecb/ecb-analyse.el"
+;;;;;;  "ecb/ecb-autogen.el" "ecb/ecb-buffertab.el" "ecb/ecb-cedet-wrapper.el"
+;;;;;;  "ecb/ecb-common-browser.el" "ecb/ecb-compatibility.el" "ecb/ecb-compilation.el"
+;;;;;;  "ecb/ecb-create-layout.el" "ecb/ecb-cycle.el" "ecb/ecb-eshell.el"
+;;;;;;  "ecb/ecb-examples.el" "ecb/ecb-face.el" "ecb/ecb-file-browser.el"
+;;;;;;  "ecb/ecb-jde.el" "ecb/ecb-layout-defs.el" "ecb/ecb-layout.el"
+;;;;;;  "ecb/ecb-method-browser.el" "ecb/ecb-mode-line.el" "ecb/ecb-multiframe.el"
+;;;;;;  "ecb/ecb-navigate.el" "ecb/ecb-semantic-wrapper.el" "ecb/ecb-semantic.el"
+;;;;;;  "ecb/ecb-speedbar.el" "ecb/ecb-symboldef.el" "ecb/ecb-tod.el"
+;;;;;;  "ecb/ecb-upgrade.el" "ecb/ecb-winman-support.el" "ecb/silentcomp.el"
+;;;;;;  "ecb/tree-buffer.el" "eproject/eproject-tests.el" "eproject/eproject.el"
+;;;;;;  "eproject/lang/eproject-perl.el" "eproject/lang/eproject-ruby-on-rails.el"
+;;;;;;  "eproject/lang/eproject-ruby.el" "ide-skel/ide-skel.el" "projectile/projectile-autoloads.el"
+;;;;;;  "projectile/projectile-pkg.el" "projectile/projectile.el"
+;;;;;;  "rainbow-mode/rainbow-mode-autoloads.el" "rainbow-mode/rainbow-mode-pkg.el"
+;;;;;;  "smarter-compile/smarter-compile-autoloads.el" "smarter-compile/smarter-compile-pkg.el"
+;;;;;;  "space-chord/space-chord.el" "sr-speedbar/sr-speedbar.el"
+;;;;;;  "xml-rpc-el/xml-rpc.el") (20384 2995 455592))
 
 ;;;***
 

@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (ede-android-project ede-android-load) "android"
-;;;;;;  "android.el" (20381 41620))
+;;;;;;  "android.el" (20383 64348))
 ;;; Generated autoloads from android.el
 
 (autoload 'ede-android-load "android" "\
@@ -22,7 +22,7 @@ ROOTPROJ is nil, since there is only one project.
 ;;;***
 
 ;;;### (autoloads (ede-arduino-load ede-arduino-file ede-arduino-root)
-;;;;;;  "arduino" "arduino.el" (20381 41620))
+;;;;;;  "arduino" "arduino.el" (20383 64348))
 ;;; Generated autoloads from arduino.el
 
 (autoload 'ede-arduino-root "arduino" "\
@@ -56,8 +56,8 @@ ROOTPROJ is nil, sinc there is only one project for a directory tree.
 
 ;;;***
 
-;;;### (autoloads (ede-project-autoload) "auto" "auto.el" (20381
-;;;;;;  41620))
+;;;### (autoloads (ede-project-autoload) "auto" "auto.el" (20383
+;;;;;;  64348))
 ;;; Generated autoloads from auto.el
 
 (eieio-defclass-autoload 'ede-project-autoload 'nil "auto" "Class representing minimal knowledge set to run preliminary EDE functions.\nWhen more advanced functionality is needed from a project type, that projects\ntype is required and the load function used.")
@@ -65,7 +65,7 @@ ROOTPROJ is nil, sinc there is only one project for a directory tree.
 ;;;***
 
 ;;;### (autoloads (ede-cpp-root-project-root) "ede/cpp-root" "cpp-root.el"
-;;;;;;  (20381 41620))
+;;;;;;  (20383 64348))
 ;;; Generated autoloads from cpp-root.el
 
 (autoload 'ede-cpp-root-project-root "ede/cpp-root" "\
@@ -78,7 +78,7 @@ Get the root directory for DIR.
 ;;;***
 
 ;;;### (autoloads (ede-project-sort-targets ede-customize-current-target
-;;;;;;  ede-customize-project) "ede/custom" "custom.el" (20381 41620))
+;;;;;;  ede-customize-project) "ede/custom" "custom.el" (20383 64348))
 ;;; Generated autoloads from custom.el
 
 (autoload 'ede-customize-project "ede/custom" "\
@@ -103,7 +103,7 @@ Create a custom-like buffer for sorting targets of current project.
 ;;;***
 
 ;;;### (autoloads (ede-emacs-project-root) "ede/emacs" "emacs.el"
-;;;;;;  (20381 41620))
+;;;;;;  (20383 64348))
 ;;; Generated autoloads from emacs.el
 
 (autoload 'ede-emacs-project-root "ede/emacs" "\
@@ -115,7 +115,7 @@ Get the root directory for DIR.
 
 ;;;***
 
-;;;### (autoloads (ede-find-file) "ede/files" "files.el" (20381 41620))
+;;;### (autoloads (ede-find-file) "ede/files" "files.el" (20383 64348))
 ;;; Generated autoloads from files.el
 
 (autoload 'ede-find-file "ede/files" "\
@@ -128,7 +128,7 @@ the current EDE project.
 ;;;***
 
 ;;;### (autoloads (ede-enable-generic-projects) "ede/generic" "generic.el"
-;;;;;;  (20381 41620))
+;;;;;;  (20383 64348))
 ;;; Generated autoloads from generic.el
 
 (autoload 'ede-enable-generic-projects "ede/generic" "\
@@ -139,7 +139,7 @@ Enable generic project loaders.
 ;;;***
 
 ;;;### (autoloads (ede-enable-locate-on-project) "ede/locate" "locate.el"
-;;;;;;  (20381 41620))
+;;;;;;  (20383 64348))
 ;;; Generated autoloads from locate.el
 
 (autoload 'ede-enable-locate-on-project "ede/locate" "\
@@ -151,7 +151,7 @@ based on `ede-locate-setup-options'.
 
 ;;;***
 
-;;;### (autoloads (ede-m3-install) "ede/m3" "m3.el" (20381 41620))
+;;;### (autoloads (ede-m3-install) "ede/m3" "m3.el" (20383 64348))
 ;;; Generated autoloads from m3.el
 
 (autoload 'ede-m3-install "ede/m3" "\
@@ -161,8 +161,8 @@ based on `ede-locate-setup-options'.
 
 ;;;***
 
-;;;### (autoloads (ede-make-check-version) "ede/make" "make.el" (20381
-;;;;;;  41620))
+;;;### (autoloads (ede-make-check-version) "ede/make" "make.el" (20383
+;;;;;;  64348))
 ;;; Generated autoloads from make.el
 
 (autoload 'ede-make-check-version "ede/make" "\
@@ -177,7 +177,7 @@ If NOERROR is nil, then throw an error on failure.  Return t otherwise.
 ;;;***
 
 ;;;### (autoloads (ede-speedbar-file-setup) "ede/speedbar" "speedbar.el"
-;;;;;;  (20381 41620))
+;;;;;;  (20383 64348))
 ;;; Generated autoloads from speedbar.el
 
 (autoload 'ede-speedbar-file-setup "ede/speedbar" "\
@@ -189,7 +189,7 @@ Setup some keybindings in the Speedbar File display.
 
 ;;;### (autoloads (ede-vc-project-directory ede-upload-html-documentation
 ;;;;;;  ede-upload-distribution ede-edit-web-page ede-web-browse-home)
-;;;;;;  "ede/system" "system.el" (20381 41620))
+;;;;;;  "ede/system" "system.el" (20383 64348))
 ;;; Generated autoloads from system.el
 
 (autoload 'ede-web-browse-home "ede/system" "\
@@ -223,8 +223,8 @@ Run `vc-dir' on the current project.
 
 ;;;***
 
-;;;### (autoloads (ede-update-version) "ede/util" "util.el" (20381
-;;;;;;  41620))
+;;;### (autoloads (ede-update-version) "ede/util" "util.el" (20383
+;;;;;;  64348))
 ;;; Generated autoloads from util.el
 
 (autoload 'ede-update-version "ede/util" "\
@@ -236,7 +236,7 @@ Argument NEWVERSION is the version number to use in the current project.
 ;;;***
 
 ;;;### (autoloads (ede-linux-load ede-linux-project-root) "linux"
-;;;;;;  "linux.el" (20381 41620))
+;;;;;;  "linux.el" (20383 64348))
 ;;; Generated autoloads from linux.el
 
 (autoload 'ede-linux-project-root "linux" "\
@@ -259,7 +259,7 @@ ROOTPROJ is nil, since there is only one project.
 ;;;;;;  "proj-aux.el" "proj-comp.el" "proj-elisp.el" "proj-info.el"
 ;;;;;;  "proj-misc.el" "proj-obj.el" "proj-prog.el" "proj-scheme.el"
 ;;;;;;  "proj-shared.el" "proj.el" "project-am.el" "shell.el" "source.el"
-;;;;;;  "srecode.el") (20381 41624 251633))
+;;;;;;  "srecode.el") (20383 64351 240743))
 
 ;;;***
 

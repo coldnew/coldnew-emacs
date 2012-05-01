@@ -3,7 +3,7 @@
 ;; Copyright (C) 2005, 2007, 2008, 2009, 2010 Eric M. Ludlam
 
 ;; Author:  <coldnew@Fevia>
-;; Created: 2012-04-30 04:20:56+0800
+;; Created: 2012-05-01 23:04:10+0800
 ;; Keywords: syntax
 ;; X-RCS: $Id$
 

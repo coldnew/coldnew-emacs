@@ -200,4 +200,10 @@ return nil."
       (message "Exuberent CTags %s  - Good enough for CEDET." (car (semantic-ectags-version))))))
 
 (provide 'semantic/ectags/util)
+
+;; Local variables:
+;; generated-autoload-file: "../loaddefs.el"
+;; generated-autoload-load-name: "semantic/ectags/util"
+;; End:
+
 ;;; semantic/ectags/util.el ends here

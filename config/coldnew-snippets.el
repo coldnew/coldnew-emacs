@@ -13,6 +13,12 @@
 
 (setq yas/prompt-functions '(yas/dropdown-prompt yas/ido-prompt yas/completing-prompt))
 
+;;;;;;;; Hooks
+
+;; update snippets after save
+(add-hook 'after-save-hook 'coldnew/update-yasnippets-on-save)
+
+
 ;;;;;;;; Functions
 (defun yas/dir ()
   (file-name-directory (buffer-file-name)))
@@ -35,6 +41,10 @@
 (defun yas/user-nickname ()
   (insert user-nickname))
 
+(defun coldnew/update-yasnippets-on-save ()
+  "automatic reloadinf of ghanged snippets"
+  (when (string-match "/snippets/" buffer-file-name)
+    (yas/load-snippet-dirs)))
 
 
 (provide 'coldnew-snippets)

@@ -19,6 +19,11 @@
 (require 'bash-completion)
 (bash-completion-setup)
 
+;; use flymake-shell
+(require 'flymake-shell)
+(add-hook 'shell-mode-hook 'flymake-shell-load)
+
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybindings
 ;;;; ---------------------------------------------------------------------------

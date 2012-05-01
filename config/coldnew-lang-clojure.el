@@ -44,16 +44,47 @@
 							   "\u0192"
 							   'decompose-region)))))))
 
+(defun slime-java-describe (symbol-name)
+  "Get details on Java class/instance at point."
+  (interactive (list (slime-read-symbol-name "Java Class/instance: ")))
+  (when (not symbol-name)
+    (error "No symbol given"))
+  (save-excursion
+    (set-buffer (slime-output-buffer))
+    (unless (eq (current-buffer) (window-buffer))
+      (pop-to-buffer (current-buffer) t))
+    (goto-char (point-max))
+    (insert (concat "(clojure.contrib.repl-utils/show " symbol-name ")"))
+    (when symbol-name
+      (slime-repl-return)
+      (other-window 1))))
+
+(defun slime-javadoc (symbol-name)
+  "Get JavaDoc documentation on Java class at point."
+  (interactive (list (slime-read-symbol-name "JavaDoc info for: ")))
+  (when (not symbol-name)
+    (error "No symbol given"))
+  (set-buffer (slime-output-buffer))
+  (unless (eq (current-buffer) (window-buffer))
+    (pop-to-buffer (current-buffer) t))
+  (goto-char (point-max))
+  (insert (concat "(clojure.contrib.javadoc/javadoc " symbol-name ")"))
+  (when symbol-name
+    (slime-repl-return)
+    (other-window 1)))
+
+
+
+
+;;;; ---------------------------------------------------------------------------
+;;;; Commands
+;;;; ---------------------------------------------------------------------------
 (defun clojure-mode:define-function ()
   (interactive)
   (let ((name (symbol-at-point)))
     (backward-paragraph)
     (insert "\n(defn " (symbol-name name) "\n  [])\n")
     (backward-char 3)))
-
-;;;; ---------------------------------------------------------------------------
-;;;; Commands
-;;;; ---------------------------------------------------------------------------
 
 
 (provide 'coldnew-lang-clojure)

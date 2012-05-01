@@ -9,6 +9,7 @@
 		  ("." "extensions" "contrib")
 		  :features anything))
  (anything-traverse status "removed" recipe nil)
+ (apel status "required" recipe nil)
  (ascii status "installed" recipe
 	(:name ascii :description "ASCII code display." :website "" :type emacswiki :features ascii))
  (asciidoc status "removed" recipe nil)
@@ -33,9 +34,7 @@
 	(:name cedet :website "http://cedet.sourceforge.net/" :description "CEDET is a Collection of Emacs Development Environment Tools written with the end goal of creating an advanced development environment in Emacs." :type bzr :url "bzr://cedet.bzr.sourceforge.net/bzrroot/cedet/code/trunk" :build
 	       ("touch `find . -name Makefile`" "make")
 	       :build/windows-nt
-	       ("echo #!/bin/sh > tmp.sh & echo touch `/usr/bin/find . -name Makefile` >> tmp.sh & echo make FIND=/usr/bin/find >> tmp.sh" "sed 's/^M$//' tmp.sh  > tmp2.sh" "sh ./tmp2.sh" "rm ./tmp.sh ./tmp2.sh")
-	       :load-path
-	       ("./common" "speedbar")))
+	       ("echo #!/bin/sh > tmp.sh & echo touch `/usr/bin/find . -name Makefile` >> tmp.sh & echo make FIND=/usr/bin/find >> tmp.sh" "sed 's/^M$//' tmp.sh  > tmp2.sh" "sh ./tmp2.sh" "rm ./tmp.sh ./tmp2.sh")))
  (cljdoc status "installed" recipe
 	 (:name cljdoc :description "eldoc mode for clojure" :type elpa))
  (clojure-mode status "installed" recipe
@@ -51,6 +50,10 @@
  (dtrt-indent status "installed" recipe
 	      (:name dtrt-indent :website "http://savannah.nongnu.org/projects/dtrt-indent/" :description "A minor mode that guesses the indentation offset originally used for creating source code files and transparently adjusts the corresponding settings in Emacs, making it more convenient to edit foreign files." :type git :url "git://git.savannah.nongnu.org/dtrt-indent.git" :features dtrt-indent :post-init
 		     (dtrt-indent-mode 1)))
+ (ecb status "installed" recipe
+      (:name ecb :description "Emacs Code Browser" :type cvs :module "ecb" :url ":pserver:anonymous@ecb.cvs.sourceforge.net:/cvsroot/ecb" :build
+	     `(("make" "CEDET=" ,(concat "EMACS="
+					 (shell-quote-argument el-get-emacs))))))
  (ecb_snap status "removed" recipe nil)
  (egg status "installed" recipe
       (:name egg :description "Egg is an Emacs interface to git. It's a suite composed of a minor-mode and various special-buffers presenting different UIs to help the user performing many git operations." :type github :pkgname "byplayer/egg" :load-path
@@ -60,11 +63,18 @@
 	 (:name el-get :website "https://github.com/dimitri/el-get#readme" :description "Manage the external elisp bits and pieces you depend upon." :type github :branch "3.stable" :pkgname "dimitri/el-get" :features el-get :load "el-get.el"))
  (eldoc-extension status "installed" recipe
 		  (:name eldoc-extension :description "Some extension for eldoc" :website "" :type emacswiki :features eldoc-extension))
+ (elscreen status "required" recipe nil)
+ (eproject status "installed" recipe
+	   (:name eproject :description "File grouping (\"project\") extension for emacs" :type github :pkgname "jrockway/eproject" :load-path
+		  ("." "lang")
+		  :features eproject))
  (evil status "installed" recipe
        (:name evil :website "http://gitorious.org/evil/pages/Home" :description "Evil is an extensible vi layer for Emacs. It\n       emulates the main features of Vim, and provides facilities\n       for writing custom extensions." :type git :url "https://git.gitorious.org/evil/evil.git" :features evil :depends undo-tree))
  (expand-region status "installed" recipe
 		(:name expand-region :type github :pkgname "magnars/expand-region.el" :description "Expand region increases the selected region by semantic units. Just keep pressing the key until it selects what you want." :website "https://github.com/magnars/expand-region.el#readme" :prepare
 		       (autoload 'er/expand-region "expand-region" nil t)))
+ (flymake-shell status "installed" recipe
+		(:name flymake-shell :description "A flymake syntax-checker for shell script" :type git :url "https://github.com/purcell/flymake-shell.git" :features ibuffer-git))
  (fuzzy status "installed" recipe
 	(:name fuzzy :website "https://github.com/m2ym/fuzzy-el" :description "Fuzzy matching utilities for GNU Emacs" :type github :pkgname "m2ym/fuzzy-el" :features fuzzy))
  (gccsense status "removed" recipe nil)
@@ -80,6 +90,8 @@
 	      (:name ibuffer-git :description "show git status in ibuffer" :type git :url "git://github.com/jrockway/ibuffer-git" :features ibuffer-git))
  (icicles status "removed" recipe nil)
  (icicles-install status "removed" recipe nil)
+ (ide-skel status "installed" recipe
+	   (:name ide-skel :description "" :type emacswiki :depends tabbar :features ide-skel))
  (iedit status "installed" recipe
 	(:name iedit :description "Edit multiple regions with the same content simultaneously." :type emacswiki :features iedit))
  (jump-char status "removed" recipe nil)
@@ -127,6 +139,8 @@
 	(:name popup :website "https://github.com/m2ym/popup-el" :description "Visual Popup Interface Library for Emacs" :type github :pkgname "m2ym/popup-el" :features popup))
  (pretty-lambdada status "installed" recipe
 		  (:name pretty-lambdada :description "Show the word `lambda' as the Greek letter." :website "" :type emacswiki :features pretty-lambdada))
+ (projectile status "installed" recipe
+	     (:name projectile :description "Projectile is a project interaction library for Emacs" :features projectile :type elpa))
  (rainbow-delimiters status "installed" recipe
 		     (:name rainbow-delimiters :website "https://github.com/jlr/rainbow-delimiters#readme" :description "Color nested parentheses, brackets, and braces according to their depth." :type github :pkgname "jlr/rainbow-delimiters" :features rainbow-delimiters))
  (rainbow-mode status "installed" recipe
@@ -138,14 +152,19 @@
 	    (:name shell-pop :description "Helps you pop up and pop out shell buffer easily." :website "http://www.emacswiki.org/emacs/ShellPop" :type emacswiki :features "shell-pop"))
  (slime status "installed" recipe
 	(:name slime :description "Major mode for editing Slim file" :features slime :type elpa))
- (smart-compile status "required" recipe nil)
  (smarter-compile status "installed" recipe
 		  (:name smarter-compile :description "an interface to `compile'" :features smarter-compile :type elpa))
  (smex status "installed" recipe
        (:name smex :description "M-x interface with Ido-style fuzzy matching." :type github :pkgname "nonsequitur/smex" :features smex :post-init
 	      (smex-initialize)))
+ (smx status "removed" recipe nil)
  (space-chord status "installed" recipe
 	      (:name space-chord :description "key chord with Space" :type emacswiki :features space-chord))
+ (sr-speedbar status "installed" recipe
+	      (:name sr-speedbar :type emacswiki :description "Same frame speedbar" :post-init
+		     (require 'sr-speedbar)))
+ (tabbar status "installed" recipe
+	 (:name tabbar :type emacswiki :description "Display a tab bar in the header line" :lazy t :load-path "."))
  (tempbuf status "installed" recipe
 	  (:name tempbuf :description "" :website "" :type emacswiki :features tempbuf))
  (traverselisp status "installed" recipe

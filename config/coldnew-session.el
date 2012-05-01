@@ -50,6 +50,7 @@
 (setq desktop-path (list emacs-cache-dir))
 (setq desktop-dirname emacs-cache-dir)
 (setq desktop-base-file-name "desktop.dat")
+(setq desktop-missing-file-warning nil)
 
 ;; Enable desktop
 (desktop-save-mode t)

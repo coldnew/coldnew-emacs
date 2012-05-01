@@ -34,6 +34,20 @@
      (("r"     . "Redo")                     . winner-redo)
      )))
 
+
+;; ------------------------------
+;; project
+
+;; (defun one-key-menu-project-navigation ()
+;;   "The `one-key' menu for PROJECT-NAVIGATION."
+;;   (interactive)
+;;   (one-key-menu
+;;    "window-navigation"
+;;    '((("C-f"   . "Find File")                 . projectile-find-file)
+;;      (("C-p"   . "Upward")                   . windmove-up)
+;;      (("C-b"   . "Leftward")                 . windmove-left)
+;;      )))
+
 ;; ------------------------------
 ;; files
 (defun one-key-menu-file-handle ()

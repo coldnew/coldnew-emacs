@@ -46,15 +46,16 @@ With argument, do this that many times."
   (interactive)
   (define-key
     global-map
-    (events-to-keys (this-command-keys) t)
+    (this-command-keys)
     'toggle-kbd-macro-recording-off)
   (start-kbd-macro nil))
+
 (defun toggle-kbd-macro-recording-off ()
   "One-key keyboard macros: turn recording off."
   (interactive)
   (define-key
     global-map
-    (events-to-keys (this-command-keys) t)
+    (this-command-keys)
     'toggle-kbd-macro-recording-on)
   (end-kbd-macro))
 

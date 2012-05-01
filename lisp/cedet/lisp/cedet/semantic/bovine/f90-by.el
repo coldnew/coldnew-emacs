@@ -3,7 +3,7 @@
 ;; Copyright (C) 2010 Free Software Foundation
 
 ;; Author:  <coldnew@Fevia>
-;; Created: 2012-04-30 04:21:56+0800
+;; Created: 2012-05-01 23:05:05+0800
 ;; Keywords: syntax
 ;; X-RCS: $Id$
 

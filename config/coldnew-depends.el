@@ -9,7 +9,8 @@
 (require* 'iedit)
 (require* 'rainbow-mode)
 (require* 'smarter-compile)
-
+(require* 'sr-speedbar)
+(require* 'tabbar)
 
 (provide 'coldnew-depends)
 ;; coldnew-depends.el ends here.

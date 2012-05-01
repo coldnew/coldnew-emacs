@@ -30,7 +30,7 @@ nil "VimGolf interface for the One True Editor [source: github]" single])
 [(20090617)
 nil "a VC backend for darcs [source: darcs]" single])
 (undo-tree .
-[(20120429)
+[(20120501)
 nil "Treat undo history as a tree [source: git]" single])
 (twittering-mode .
 [(20120401)
@@ -213,7 +213,7 @@ nil "Emacs Prelude: XML editing configuration. [source: github]" single])
 (0 0 11)))
 "Emacs Prelude: A nice setup for Ruby (and Rails) devs. [source: github]" single])
 (prelude-programming .
-[(20120427)
+[(20120501)
 nil "Emacs Prelude: prog-mode configuration [source: github]" single])
 (prelude-perl .
 [(20120417)
@@ -442,7 +442,7 @@ nil "highlight surrounding parentheses [source: github]" single])
 (0 6)))
 "Helm integration for Projectile [source: github]" single])
 (helm .
-[(20120430)
+[(20120501)
 nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
 (haskell-mode .
 [(20120420)
@@ -475,7 +475,7 @@ nil "Minor mode for incremental blame for Git  -*- coding: utf-8 -*- [source: gi
 (0)))
 "Emacs integration for gist.github.com [source: github]" single])
 (gh .
-[(20120413)
+[(20120429)
 ((eieio
 (1 3))
 (pcache
@@ -632,7 +632,7 @@ nil "Swap buffers without typing C-x b on each window [source: wiki]" single])
 [(20100315)
 nil "interactively insert items from kill-ring -*- coding: utf-8 -*- [source: github]" single])
 (bookmark+ .
-[(20120429)
+[(20120501)
 nil "Bookmark+: extensions to standard library `bookmark.el'. [source: wiki]" tar])
 (bm .
 [(20120131)

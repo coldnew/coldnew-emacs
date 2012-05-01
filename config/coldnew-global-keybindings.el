@@ -41,7 +41,6 @@
 (key-chord-define evil-insert-state-map "bu"  'upcase-word-backward)
 (key-chord-define evil-insert-state-map "bl"  'downcase-word-backward)
 (key-chord-define evil-insert-state-map "bc"  'capitalize-word-backward)
-(key-chord-define evil-insert-state-map "ll"  'recenter-top-bottom)
 
 (define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
 (define-key evil-emacs-state-map (kbd "C-s") 'my-anything-occur)
@@ -92,6 +91,7 @@
 (global-set-key (kbd "C-x <f2>") 'multi-term)
 (global-set-key (kbd "<f3>")     'call-last-kbd-macro)
 (global-set-key (kbd "C-x <f3>") 'toggle-kbd-macro-recording-on)
+(global-set-key (kbd "<f4>")     'sr-speedbar-toggle)
 
 
 ;;;; ---------------------------------------------------------------------------
@@ -122,7 +122,7 @@
 (global-set-key (kbd "M-4") 'delete-window)
 (global-set-key (kbd "M-0") 'other-window)
 
-
+(global-set-key (kbd "C-x C-l") 'recenter-top-bottom)
 
 
 ;;;; ---------------------------------------------------------------------------
