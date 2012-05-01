@@ -236,12 +236,13 @@
   (make-local-variable 'before-save-hook)
   (add-hook 'before-save-hook
 	    '(lambda ()
-	       (whitespace-cleanup))))
+	       (whitespace-cleanup)
+	       (delete-trailing-whitespace))))
 
 (defun highlight-additional-keywords ()
   "Highlight additional keywords."
-  (font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\):" 1 font-lock-warning-face t)))
-  (font-lock-add-keywords nil '(("\\<\\(NOTE\\):" 1 'org-todo t)))
+  (font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)))
+  (font-lock-add-keywords nil '(("\\<\\(NOTE\\):" 1 'org-level-2 t)))
   (font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
   (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t)))
   )

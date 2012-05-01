@@ -7,7 +7,8 @@
 (require 'expand-region)
 (require 'unicad)
 (require 'iedit)
-
+(require 'rainbow-mode)
+(require 'smarter-compile)
 
 
 
