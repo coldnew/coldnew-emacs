@@ -9,6 +9,18 @@
 ;;;; Hooks
 ;;;; ---------------------------------------------------------------------------
 
+;; use my cc-mode-common-setting
+(add-hook 'c++-mode-hook 'coldnew-cc-mode-common-setting)
+
+;; Enable c-eldoc
+(require 'c-eldoc)
+(setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
+(c-turn-on-eldoc-mode)
+
+;; use ctypes
+(require 'ctypes)
+(setq-default ctypes-file-name (concat emacs-cache-dir "ctypes_std_c.dat"))
+(add-hook 'ctypes-load-hook 'my-ctypes-load-hook)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybindings
@@ -26,6 +38,8 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; Functions
 ;;;; ---------------------------------------------------------------------------
+(defun my-ctypes-load-hook ()
+  (ctypes-read-file ctypes-file-name nil t t))
 
 
 ;;;; ---------------------------------------------------------------------------
