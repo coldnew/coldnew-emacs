@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (set-up-slime-ac) "ac-slime/ac-slime" "ac-slime/ac-slime.el"
-;;;;;;  (20379 38591))
+;;;;;;  (20383 44934))
 ;;; Generated autoloads from ac-slime/ac-slime.el
 
 (defface ac-slime-menu-face '((t (:inherit 'ac-candidate-face))) "\
@@ -2412,7 +2412,7 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "ctypes/ctypes-autoloads.el" "ctypes/ctypes-pkg.el" "rainbow-mode/rainbow-mode-autoloads.el"
 ;;;;;;  "rainbow-mode/rainbow-mode-pkg.el" "smarter-compile/smarter-compile-autoloads.el"
 ;;;;;;  "smarter-compile/smarter-compile-pkg.el" "space-chord/space-chord.el"
-;;;;;;  "xml-rpc-el/xml-rpc.el") (20383 44759 700977))
+;;;;;;  "xml-rpc-el/xml-rpc.el") (20383 44934 655241))
 
 ;;;***
 

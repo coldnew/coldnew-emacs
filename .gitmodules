@@ -25,3 +25,9 @@
 [submodule "lisp/expand-region"]
 	path = lisp/expand-region
 	url = http://github.com/magnars/expand-region.el.git
+[submodule "lisp/ac-slime"]
+	path = lisp/ac-slime
+	url = http://github.com/purcell/ac-slime.git
+[submodule "lisp/smex"]
+	path = lisp/smex
+	url = http://github.com/nonsequitur/smex.git

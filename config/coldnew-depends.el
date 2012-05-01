@@ -12,6 +12,5 @@
 
 
 
-
 (provide 'coldnew-depends)
 ;; coldnew-depends.el ends here.
