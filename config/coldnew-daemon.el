@@ -1,9 +1,9 @@
 ;;; coldnew-daemon.el ---
 (eval-when-compile (require 'cl))
 
-
-;; start server for emacsclient
-(when (require 'server)
+;; Only start server mode if I'm not root
+(unless (string-equal "root" (getenv "USER"))
+  (require 'server)
   (unless (server-running-p) (server-start)))
 
 
