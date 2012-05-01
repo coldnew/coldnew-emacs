@@ -1,0 +1,5 @@
+(:name flymake-shell
+       :description "A flymake syntax-checker for shell script"
+       :type git
+       :url "https://github.com/purcell/flymake-shell.git"
+       :features flymake-shell)

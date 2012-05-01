@@ -1,0 +1,5 @@
+(:name ide-skel
+       :description ""
+       :type emacswiki
+       :depends tabbar
+       :features ide-skel)

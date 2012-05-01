@@ -163,6 +163,8 @@
  (sr-speedbar status "installed" recipe
 	      (:name sr-speedbar :type emacswiki :description "Same frame speedbar" :post-init
 		     (require 'sr-speedbar)))
+ (sunrise-commander status "removed" recipe nil)
+ (sunrise-x-tree status "removed" recipe nil)
  (tabbar status "installed" recipe
 	 (:name tabbar :type emacswiki :description "Display a tab bar in the header line" :lazy t :load-path "."))
  (tempbuf status "installed" recipe

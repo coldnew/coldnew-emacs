@@ -2361,6 +2361,18 @@ It does not call `compile'.
 
 ;;;***
 
+;;;### (autoloads (sr-tree-mode) "sunrise-x-tree/sunrise-x-tree"
+;;;;;;  "sunrise-x-tree/sunrise-x-tree.el" (20384 6642))
+;;; Generated autoloads from sunrise-x-tree/sunrise-x-tree.el
+
+(autoload 'sr-tree-mode "sunrise-x-tree/sunrise-x-tree" "\
+Tree view for the Sunrise Commander file manager.
+
+\(fn)" t nil)
+(eval-after-load 'sunrise-commander '(sr-extend-with 'sunrise-x-tree))
+
+;;;***
+
 ;;;### (autoloads (tabbar-mwheel-mode tabbar-mode tabbar-local-mode
 ;;;;;;  tabbar-mwheel-switch-group tabbar-mwheel-switch-tab tabbar-mwheel-forward-tab
 ;;;;;;  tabbar-mwheel-backward-tab tabbar-mwheel-forward-group tabbar-mwheel-backward-group
@@ -2754,7 +2766,7 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "rainbow-mode/rainbow-mode-autoloads.el" "rainbow-mode/rainbow-mode-pkg.el"
 ;;;;;;  "smarter-compile/smarter-compile-autoloads.el" "smarter-compile/smarter-compile-pkg.el"
 ;;;;;;  "space-chord/space-chord.el" "sr-speedbar/sr-speedbar.el"
-;;;;;;  "xml-rpc-el/xml-rpc.el") (20384 2995 455592))
+;;;;;;  "xml-rpc-el/xml-rpc.el") (20384 6832 462688))
 
 ;;;***
 

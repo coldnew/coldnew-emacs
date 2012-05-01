@@ -1,0 +1,4 @@
+(:name projectile
+       :description "Projectile is a project interaction library for Emacs"
+       :features projectile
+       :type elpa)
