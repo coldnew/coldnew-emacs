@@ -7,7 +7,7 @@
 ;;;; ---------------------------------------------------------------------------
 (require 'auto-complete)
 (require 'auto-complete-config)
-(require 'auto-complete-clang)
+(require* 'auto-complete-clang)
 
 ;; use default config
 (ac-config-default)

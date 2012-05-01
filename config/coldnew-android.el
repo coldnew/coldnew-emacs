@@ -1,7 +1,7 @@
 ;;; coldnew-android.el --- android development
 (eval-when-compile (require 'cl))
 
-(require 'android-mode)
+(require* 'android-mode)
 
 
 
