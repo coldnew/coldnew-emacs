@@ -6,7 +6,7 @@ nil "Provides zsh like completion for minibuffer [source: github]" single])
 [(20120427)
 nil "A low contrast color theme for Emacs. [source: github]" single])
 (yasnippet .
-[(20120429)
+[(20120502)
 nil "Yet another snippet extension for Emacs. [source: github]" tar])
 (yari .
 [(20110417)
@@ -50,9 +50,17 @@ nil "Textile markup editing major mode [source: github]" single])
 (tabulated-list .
 [(20120406)
 nil "generic major mode for tabulated lists. [source: github]" single])
+(sws-mode .
+[(20120501)
+nil "(S)ignificant (W)hite(S)pace mode [source: github]" single])
 (surround .
 [(20120327)
 nil "emulate surround.vim from Vim [source: github]" single])
+(stylus-mode .
+[(20120501)
+((sws-mode
+(0)))
+"Major mode for editing .jade files [source: github]" single])
 (starter-kit-ruby .
 [(20120128)
 ((inf-ruby
@@ -84,7 +92,7 @@ nil "Saner defaults and goodies: eshell tweaks [source: github]" single])
 (2 0 2)))
 "Saner defaults and goodies: bindings [source: github]" single])
 (starter-kit .
-[(20120316)
+[(20120501)
 ((paredit
 (22))
 (idle-highlight-mode
@@ -114,7 +122,7 @@ nil "Intelligent tab completion and indentation. [source: github]" single])
 [(20120403)
 nil "slime extensions for ritz [source: github]" single])
 (slime .
-[(20120423)
+[(20120501)
 nil "Superior Lisp Interaction Mode for Emacs [source: github]" single])
 (scss-mode .
 [(20120424)
@@ -176,10 +184,10 @@ nil "Highlight nested parens, brackets, braces a different color at each depth. 
 [(20120430)
 nil "Python's flying circus support for Emacs [source: github]" single])
 (pyregexp .
-[(20120430)
+[(20120502)
 nil "A Python regexp/replace command for Emacs with interactive visual feedback [source: github]" tar])
 (projectile .
-[(20120427)
+[(20120501)
 nil "Manage and navigate projects in Emacs easily [source: github]" single])
 (pretty-mode .
 [(20100804)
@@ -200,7 +208,7 @@ nil "Emacs Prelude: XML editing configuration. [source: github]" single])
 (1 0 0)))
 "Emacs Prelude: Some defaults for Scheme. [source: github]" single])
 (prelude-ruby .
-[(20120427)
+[(20120428)
 ((prelude-programming
 (1 0 0))
 (inf-ruby
@@ -357,7 +365,7 @@ nil "Emacs Major mode for Markdown-formatted text files [source: github]" single
 (1 2)))
 "Magit extensions for using GitHub [source: github]" single])
 (magit .
-[(20120421)
+[(20120501)
 nil "Control Git from Emacs. [source: github]" tar])
 (lua-mode .
 [(20120409)
@@ -395,6 +403,11 @@ nil "Run javascript in an inferior process window. [source: svn]" single])
 (jaunte .
 [(20120212)
 nil "No description available. [source: github]" single])
+(jade-mode .
+[(20120501)
+((sws-mode
+(0)))
+"Major mode for editing .jade files [source: github]" single])
 (jabber-mode .
 [(20120415)
 nil "No description available. [source: git]" tar])
@@ -442,7 +455,7 @@ nil "highlight surrounding parentheses [source: github]" single])
 (0 6)))
 "Helm integration for Projectile [source: github]" single])
 (helm .
-[(20120501)
+[(20120502)
 nil "Helm is an Emacs incremental and narrowing framework [source: github]" tar])
 (haskell-mode .
 [(20120420)
@@ -475,7 +488,7 @@ nil "Minor mode for incremental blame for Git  -*- coding: utf-8 -*- [source: gi
 (0)))
 "Emacs integration for gist.github.com [source: github]" single])
 (gh .
-[(20120429)
+[(20120502)
 ((eieio
 (1 3))
 (pcache

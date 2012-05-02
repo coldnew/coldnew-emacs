@@ -9,6 +9,7 @@
 (setq sr-speedbar-right-side nil)
 (setq sr-speedbar-refresh-turn-on t)
 
+(require* 'nav)
 
 (provide 'coldnew-speedbar)
 ;; coldnew-speedbar.el ends here.

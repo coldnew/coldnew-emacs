@@ -1913,6 +1913,478 @@ Toggle iedit-RECT mode.
 
 ;;;***
 
+;;;### (autoloads (jabber-info jabber-customize jabber-debug-keep-process-buffers
+;;;;;;  jabber-debug-log-xml jabber-default-priority jabber-default-status
+;;;;;;  jabber-default-show jabber-account-list) "jabber/jabber"
+;;;;;;  "jabber/jabber.el" (20385 22791))
+;;; Generated autoloads from jabber/jabber.el
+
+(defvar jabber-account-list nil "\
+List of Jabber accounts.
+Each element of the list is a cons cell describing a Jabber account,
+where the car is a JID and the CDR is an alist.
+
+JID is a full Jabber ID string (e.g. foo@bar.tld). You can also
+specify the resource (e.g. foo@bar.tld/emacs).
+The following keys can be present in the alist:
+:password is a string to authenticate ourself against the server.
+It can be empty.
+:network-server is a string identifying the address to connect to,
+if it's different from the server part of the JID.
+:port is the port to use (default depends on connection type).
+:connection-type is a symbol. Valid symbols are `starttls',
+`network' and `ssl'.
+
+Only JID is mandatory.  The rest can be guessed at run-time.
+
+Examples:
+
+Two accounts without any special configuration:
+\((\"foo@example.com\") (\"bar@example.net\"))
+
+One disabled account with a non-standard port:
+\((\"romeo@montague.net\" (:port . 5242) (:disabled . t)))
+
+If you don't have SRV and STARTTLS capabilities in your Emacs,
+configure a Google Talk account like this:
+\((\"username@gmail.com\" 
+  (:network-server . \"talk.google.com\")
+  (:connection-type . ssl)))")
+
+(custom-autoload 'jabber-account-list "jabber/jabber" t)
+
+(defvar jabber-default-show "" "\
+default show state")
+
+(custom-autoload 'jabber-default-show "jabber/jabber" t)
+
+(defvar jabber-default-status "" "\
+default status string")
+
+(custom-autoload 'jabber-default-status "jabber/jabber" t)
+
+(defvar jabber-default-priority 10 "\
+default priority")
+
+(custom-autoload 'jabber-default-priority "jabber/jabber" t)
+
+(defvar *jabber-current-status* nil "\
+the users current presence status")
+
+(defvar *jabber-current-show* nil "\
+the users current presence show")
+
+(defvar *jabber-current-priority* nil "\
+the user's current priority")
+
+(defvar jabber-debug-log-xml nil "\
+log all XML i/o in *-jabber-xml-log-JID-*")
+
+(custom-autoload 'jabber-debug-log-xml "jabber/jabber" t)
+
+(defvar jabber-debug-keep-process-buffers nil "\
+If nil, kill process buffers when the process dies.
+Contents of process buffers might be useful for debugging.")
+
+(custom-autoload 'jabber-debug-keep-process-buffers "jabber/jabber" t)
+
+(defconst jabber-presence-faces '(("" . jabber-roster-user-online) ("away" . jabber-roster-user-away) ("xa" . jabber-roster-user-xa) ("dnd" . jabber-roster-user-dnd) ("chat" . jabber-roster-user-chatty) ("error" . jabber-roster-user-error) (nil . jabber-roster-user-offline)) "\
+Mapping from presence types to faces")
+
+(autoload 'jabber-customize "jabber/jabber" "\
+customize jabber options
+
+\(fn)" t nil)
+
+(autoload 'jabber-info "jabber/jabber" "\
+open jabber.el manual
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (jabber-activity-mode) "jabber/jabber-activity"
+;;;;;;  "jabber/jabber-activity.el" (20385 22789))
+;;; Generated autoloads from jabber/jabber-activity.el
+
+(defvar jabber-activity-mode t "\
+Non-nil if Jabber-Activity mode is enabled.
+See the command `jabber-activity-mode' for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `jabber-activity-mode'.")
+
+(custom-autoload 'jabber-activity-mode "jabber/jabber-activity" nil)
+
+(autoload 'jabber-activity-mode "jabber/jabber-activity" "\
+Toggle display of activity in hidden jabber buffers in the mode line.
+
+With a numeric arg, enable this display if arg is positive.
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (jabber-autoaway-start) "jabber/jabber-autoaway"
+;;;;;;  "jabber/jabber-autoaway.el" (20385 22789))
+;;; Generated autoloads from jabber/jabber-autoaway.el
+
+(autoload 'jabber-autoaway-start "jabber/jabber-autoaway" "\
+Start autoaway timer.
+The IGNORED argument is there so you can put this function in
+`jabber-post-connect-hooks'.
+
+\(fn &optional IGNORED)" t nil)
+
+;;;***
+
+;;;### (autoloads (jabber-edit-bookmarks jabber-get-bookmarks-from-cache
+;;;;;;  jabber-get-bookmarks jabber-parse-conference-bookmark jabber-get-conference-data)
+;;;;;;  "jabber/jabber-bookmarks" "jabber/jabber-bookmarks.el" (20385
+;;;;;;  22789))
+;;; Generated autoloads from jabber/jabber-bookmarks.el
+
+(autoload 'jabber-get-conference-data "jabber/jabber-bookmarks" "\
+Get bookmark data for CONFERENCE-JID.
+KEY may be nil or one of :name, :autojoin, :nick and :password.
+If KEY is nil, a plist containing the above keys is returned.
+CONT is called when the result is available, with JC and the
+result as arguments.  If CONT is nil, return the requested data
+immediately, and return nil if it is not in the cache.
+
+\(fn JC CONFERENCE-JID CONT &optional KEY)" nil nil)
+
+(autoload 'jabber-parse-conference-bookmark "jabber/jabber-bookmarks" "\
+Convert a <conference/> tag into a plist.
+The plist may contain the keys :jid, :name, :autojoin,
+:nick and :password.
+
+\(fn NODE)" nil nil)
+
+(autoload 'jabber-get-bookmarks "jabber/jabber-bookmarks" "\
+Retrieve bookmarks (if needed) and call CONT.
+Arguments to CONT are JC and the bookmark list.  CONT will be
+called as the result of a filter function or a timer.
+If REFRESH is non-nil, always fetch bookmarks.
+
+\(fn JC CONT &optional REFRESH)" nil nil)
+
+(autoload 'jabber-get-bookmarks-from-cache "jabber/jabber-bookmarks" "\
+Return cached bookmarks for JC.
+If bookmarks have not yet been fetched by `jabber-get-bookmarks',
+return nil.
+
+\(fn JC)" nil nil)
+
+(autoload 'jabber-edit-bookmarks "jabber/jabber-bookmarks" "\
+Create a buffer for editing bookmarks interactively.
+
+\(fn JC)" t nil)
+
+;;;***
+
+;;;### (autoloads (jabber-chat-get-buffer) "jabber/jabber-chat" "jabber/jabber-chat.el"
+;;;;;;  (20385 22789))
+;;; Generated autoloads from jabber/jabber-chat.el
+
+(defvar jabber-chatting-with nil "\
+JID of the person you are chatting with")
+
+(autoload 'jabber-chat-get-buffer "jabber/jabber-chat" "\
+Return the chat buffer for chatting with CHAT-WITH (bare or full JID).
+Either a string or a buffer is returned, so use `get-buffer' or
+`get-buffer-create'.
+
+\(fn CHAT-WITH)" nil nil)
+
+;;;***
+
+;;;### (autoloads nil "jabber/jabber-chatbuffer" "jabber/jabber-chatbuffer.el"
+;;;;;;  (20385 22789))
+;;; Generated autoloads from jabber/jabber-chatbuffer.el
+
+(defvar jabber-buffer-connection nil "\
+The connection used by this buffer.")
+
+(make-variable-buffer-local 'jabber-buffer-connection)
+
+;;;***
+
+;;;### (autoloads (jabber-compose) "jabber/jabber-compose" "jabber/jabber-compose.el"
+;;;;;;  (20385 22789))
+;;; Generated autoloads from jabber/jabber-compose.el
+
+(autoload 'jabber-compose "jabber/jabber-compose" "\
+Create a buffer for composing a Jabber message.
+
+\(fn JC &optional RECIPIENT)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "jabber/jabber-core" "jabber/jabber-core.el"
+;;;;;;  (20385 22789))
+;;; Generated autoloads from jabber/jabber-core.el
+(autoload 'jabber-connect-all "jabber" "Connect to all configured Jabber accounts.\nSee `jabber-account-list'.\nIf no accounts are configured (or ARG supplied), call `jabber-connect' interactively." t)
+(autoload 'jabber-connect "jabber" "Connect to the Jabber server and start a Jabber XML stream.\nWith prefix argument, register a new account.\nWith double prefix argument, specify more connection details." t)
+
+;;;***
+
+;;;### (autoloads (jabber-import-roster jabber-export-roster) "jabber/jabber-export"
+;;;;;;  "jabber/jabber-export.el" (20385 22789))
+;;; Generated autoloads from jabber/jabber-export.el
+
+(autoload 'jabber-export-roster "jabber/jabber-export" "\
+Export roster for connection JC.
+
+\(fn JC)" t nil)
+
+(autoload 'jabber-import-roster "jabber/jabber-export" "\
+Create buffer for roster import for connection JC from FILE.
+
+\(fn JC FILE)" t nil)
+
+;;;***
+
+;;;### (autoloads (jabber-gmail-query jabber-gmail-subscribe) "jabber/jabber-gmail"
+;;;;;;  "jabber/jabber-gmail.el" (20385 22790))
+;;; Generated autoloads from jabber/jabber-gmail.el
+
+(autoload 'jabber-gmail-subscribe "jabber/jabber-gmail" "\
+Subscribe to gmail notifications.
+See http://code.google.com/apis/talk/jep_extensions/usersettings.html#4
+
+\(fn JC)" t nil)
+
+(autoload 'jabber-gmail-query "jabber/jabber-gmail" "\
+Request mail information from the Google Talk server (a.k.a. one shot query).
+See http://code.google.com/apis/talk/jep_extensions/gmail.html#requestmail
+
+\(fn JC)" t nil)
+
+;;;***
+
+;;;### (autoloads (jabber-whitespace-ping-start jabber-whitespace-ping-interval
+;;;;;;  jabber-keepalive-start jabber-keepalive-timeout jabber-keepalive-interval
+;;;;;;  jabber-keepalive) "jabber/jabber-keepalive" "jabber/jabber-keepalive.el"
+;;;;;;  (20385 22790))
+;;; Generated autoloads from jabber/jabber-keepalive.el
+
+(let ((loads (get 'jabber-keepalive 'custom-loads))) (if (member '"jabber/jabber-keepalive" loads) nil (put 'jabber-keepalive 'custom-loads (cons '"jabber/jabber-keepalive" loads))))
+
+(defvar jabber-keepalive-interval 600 "\
+Interval in seconds between connection checks.")
+
+(custom-autoload 'jabber-keepalive-interval "jabber/jabber-keepalive" t)
+
+(defvar jabber-keepalive-timeout 20 "\
+Seconds to wait for response from server.")
+
+(custom-autoload 'jabber-keepalive-timeout "jabber/jabber-keepalive" t)
+
+(autoload 'jabber-keepalive-start "jabber/jabber-keepalive" "\
+Activate keepalive.
+That is, regularly send a ping request to the server, and
+disconnect if it doesn't answer.  See `jabber-keepalive-interval'
+and `jabber-keepalive-timeout'.
+
+The JC argument makes it possible to add this function to
+`jabber-post-connect-hooks'; it is ignored.  Keepalive is activated
+for all accounts regardless of the argument.
+
+\(fn &optional JC)" t nil)
+
+(defvar jabber-whitespace-ping-interval 30 "\
+Send a space character to the server with this interval, in seconds.
+
+This is a traditional remedy for a number of problems: to keep NAT
+boxes from considering the connection dead, to have the OS discover
+earlier that the connection is lost, and to placate servers which rely
+on the client doing this, e.g. Openfire.
+
+If you want to verify that the server is able to answer, see
+`jabber-keepalive-start' for another mechanism.")
+
+(custom-autoload 'jabber-whitespace-ping-interval "jabber/jabber-keepalive" t)
+
+(autoload 'jabber-whitespace-ping-start "jabber/jabber-keepalive" "\
+Start sending whitespace pings at regular intervals.
+See `jabber-whitespace-ping-interval'.
+
+The JC argument is ignored; whitespace pings are enabled for all
+accounts.
+
+\(fn &optional JC)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "jabber/jabber-keymap" "jabber/jabber-keymap.el"
+;;;;;;  (20385 22790))
+;;; Generated autoloads from jabber/jabber-keymap.el
+
+(defvar jabber-global-keymap (let ((map (make-sparse-keymap))) (define-key map "" 'jabber-connect-all) (define-key map "" 'jabber-disconnect) (define-key map "" 'jabber-switch-to-roster-buffer) (define-key map "\n" 'jabber-chat-with) (define-key map "\f" 'jabber-activity-switch-to) (define-key map "" 'jabber-send-away-presence) (define-key map "" 'jabber-send-default-presence) (define-key map "" 'jabber-send-xa-presence) (define-key map "" 'jabber-send-presence) map) "\
+Global Jabber keymap (usually under C-x C-j)")
+
+(define-key ctl-x-map "\n" jabber-global-keymap)
+
+;;;***
+
+;;;### (autoloads (jabber-display-menu) "jabber/jabber-menu" "jabber/jabber-menu.el"
+;;;;;;  (20385 22790))
+;;; Generated autoloads from jabber/jabber-menu.el
+
+(defvar jabber-menu (let ((map (make-sparse-keymap "jabber-menu"))) (define-key map [jabber-menu-connect] '("Connect" . jabber-connect-all)) (define-key map [jabber-menu-disconnect] '("Disconnect" . jabber-disconnect)) (define-key map [jabber-menu-roster] '("Switch to roster" . jabber-switch-to-roster-buffer)) (define-key map [jabber-menu-customize] '("Customize" . jabber-customize)) (define-key map [jabber-menu-info] '("Help" . jabber-info)) (define-key map [jabber-menu-status] (cons "Set Status" (make-sparse-keymap "set-status"))) (define-key map [jabber-menu-status jabber-menu-status-chat] '("Chatty" lambda nil (interactive) (jabber-send-presence "chat" (jabber-read-with-input-method "status message: " *jabber-current-status* '*jabber-status-history*) *jabber-current-priority*))) (define-key map [jabber-menu-status jabber-menu-status-dnd] '("Do not Disturb" lambda nil (interactive) (jabber-send-presence "dnd" (jabber-read-with-input-method "status message: " *jabber-current-status* '*jabber-status-history*) *jabber-current-priority*))) (define-key map [jabber-menu-status jabber-menu-status-xa] '("Extended Away" . jabber-send-xa-presence)) (define-key map [jabber-menu-status jabber-menu-status-away] '("Away" . jabber-send-away-presence)) (define-key map [jabber-menu-status jabber-menu-status-online] '("Online" . jabber-send-default-presence)) map))
+
+(defvar jabber-display-menu 'maybe "\
+Decide whether the \"Jabber\" menu is displayed in the menu bar.
+If t, always display.
+If nil, never display.
+If maybe, display if any of `jabber-account-list' or `jabber-connections'
+is non-nil.")
+
+(custom-autoload 'jabber-display-menu "jabber/jabber-menu" t)
+
+(define-key-after (lookup-key global-map [menu-bar]) [jabber-menu] (list 'menu-item "Jabber" jabber-menu :visible '(or (eq jabber-display-menu t) (and (eq jabber-display-menu 'maybe) (or jabber-account-list (bound-and-true-p jabber-connections))))))
+
+;;;***
+
+;;;### (autoloads (jabber-muc-private-message-p jabber-muc-sender-p
+;;;;;;  jabber-muc-message-p jabber-muc-private-get-buffer jabber-muc-get-buffer
+;;;;;;  jabber-muc-autojoin jabber-muc-default-nicknames) "jabber/jabber-muc"
+;;;;;;  "jabber/jabber-muc.el" (20385 22790))
+;;; Generated autoloads from jabber/jabber-muc.el
+
+(defvar *jabber-active-groupchats* nil "\
+alist of groupchats and nicknames
+Keys are strings, the bare JID of the room.
+Values are strings.")
+
+(defvar jabber-muc-default-nicknames nil "\
+Default nickname for specific MUC rooms.")
+
+(custom-autoload 'jabber-muc-default-nicknames "jabber/jabber-muc" t)
+
+(defvar jabber-muc-autojoin nil "\
+List of MUC rooms to automatically join on connection.
+This list is saved in your Emacs customizations.  You can also store
+such a list on the Jabber server, where it is available to every
+client; see `jabber-edit-bookmarks'.")
+
+(custom-autoload 'jabber-muc-autojoin "jabber/jabber-muc" t)
+
+(defvar jabber-muc-printers 'nil "\
+List of functions that may be able to print part of a MUC message.
+This gets prepended to `jabber-chat-printers', which see.")
+
+(autoload 'jabber-muc-get-buffer "jabber/jabber-muc" "\
+Return the chat buffer for chatroom GROUP.
+Either a string or a buffer is returned, so use `get-buffer' or
+`get-buffer-create'.
+
+\(fn GROUP)" nil nil)
+
+(autoload 'jabber-muc-private-get-buffer "jabber/jabber-muc" "\
+Return the chat buffer for private chat with NICKNAME in GROUP.
+Either a string or a buffer is returned, so use `get-buffer' or
+`get-buffer-create'.
+
+\(fn GROUP NICKNAME)" nil nil)
+
+(autoload 'jabber-muc-message-p "jabber/jabber-muc" "\
+Return non-nil if MESSAGE is a groupchat message.
+That does not include private messages in a groupchat, but does
+include groupchat invites.
+
+\(fn MESSAGE)" nil nil)
+
+(autoload 'jabber-muc-sender-p "jabber/jabber-muc" "\
+Return non-nil if JID is a full JID of an MUC participant.
+
+\(fn JID)" nil nil)
+
+(autoload 'jabber-muc-private-message-p "jabber/jabber-muc" "\
+Return non-nil if MESSAGE is a private message in a groupchat.
+
+\(fn MESSAGE)" nil nil)
+
+;;;***
+
+;;;### (autoloads (jabber-muc-looks-like-personal-p) "jabber/jabber-muc-nick-completion"
+;;;;;;  "jabber/jabber-muc-nick-completion.el" (20385 22790))
+;;; Generated autoloads from jabber/jabber-muc-nick-completion.el
+
+(autoload 'jabber-muc-looks-like-personal-p "jabber/jabber-muc-nick-completion" "\
+Return non-nil if jabber MESSAGE is addresed to me.
+Optional argument GROUP to look.
+
+\(fn MESSAGE &optional GROUP)" nil nil)
+
+;;;***
+
+;;;### (autoloads (jabber-send-default-presence jabber-send-presence)
+;;;;;;  "jabber/jabber-presence" "jabber/jabber-presence.el" (20385
+;;;;;;  22790))
+;;; Generated autoloads from jabber/jabber-presence.el
+
+(autoload 'jabber-send-presence "jabber/jabber-presence" "\
+Set presence for all accounts.
+
+\(fn SHOW STATUS PRIORITY)" t nil)
+
+(autoload 'jabber-send-default-presence "jabber/jabber-presence" "\
+Send default presence.
+Default presence is specified by `jabber-default-show',
+`jabber-default-status', and `jabber-default-priority'.
+
+\(fn &optional IGNORE)" t nil)
+
+;;;***
+
+;;;### (autoloads (jabber-private-set jabber-private-get) "jabber/jabber-private"
+;;;;;;  "jabber/jabber-private.el" (20385 22790))
+;;; Generated autoloads from jabber/jabber-private.el
+
+(autoload 'jabber-private-get "jabber/jabber-private" "\
+Retrieve an item from private XML storage.
+The item to retrieve is identified by NODE-NAME (a symbol) and
+NAMESPACE (a string).
+
+On success, SUCCESS-CALLBACK is called with JC and the retrieved
+XML fragment.
+
+On error, ERROR-CALLBACK is called with JC and the entire IQ
+result.
+
+\(fn JC NODE-NAME NAMESPACE SUCCESS-CALLBACK ERROR-CALLBACK)" nil nil)
+
+(autoload 'jabber-private-set "jabber/jabber-private" "\
+Store FRAGMENT in private XML storage.
+SUCCESS-CALLBACK, SUCCESS-CLOSURE-DATA, ERROR-CALLBACK and
+ERROR-CLOSURE-DATA are used as in `jabber-send-iq'.
+
+\(fn JC FRAGMENT &optional SUCCESS-CALLBACK SUCCESS-CLOSURE-DATA ERROR-CALLBACK ERROR-CLOSURE-DATA)" nil nil)
+
+;;;***
+
+;;;### (autoloads (jabber-roster-update jabber-switch-to-roster-buffer)
+;;;;;;  "jabber/jabber-roster" "jabber/jabber-roster.el" (20385 22790))
+;;; Generated autoloads from jabber/jabber-roster.el
+
+(autoload 'jabber-switch-to-roster-buffer "jabber/jabber-roster" "\
+Switch to roster buffer.
+Optional JC argument is ignored; it's there so this function can
+be used in `jabber-post-connection-hooks'.
+
+\(fn &optional JC)" t nil)
+
+(autoload 'jabber-roster-update "jabber/jabber-roster" "\
+Update roster, in memory and on display.
+Add NEW-ITEMS, update CHANGED-ITEMS and remove DELETED-ITEMS, all
+three being lists of JID symbols.
+
+\(fn JC NEW-ITEMS CHANGED-ITEMS DELETED-ITEMS)" nil nil)
+
+;;;***
+
 ;;;### (autoloads (key-chord-define key-chord-define-global key-chord-mode)
 ;;;;;;  "key-chord/key-chord" "key-chord/key-chord.el" (20377 59850))
 ;;; Generated autoloads from key-chord/key-chord.el
@@ -2152,6 +2624,23 @@ Will prompt you shell name when you type `C-u' before this command.
 
 ;;;***
 
+;;;### (autoloads nil "nav/ack" "nav/ack.el" (20385 16490))
+;;; Generated autoloads from nav/ack.el
+
+(defvar ack-history nil)
+
+;;;***
+
+;;;### (autoloads (nav) "nav/nav" "nav/nav.el" (20385 16490))
+;;; Generated autoloads from nav/nav.el
+
+(autoload 'nav "nav/nav" "\
+Opens Nav in a new window to the left of the current one.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (paredit-mode) "paredit/paredit" "paredit/paredit.el"
 ;;;;;;  (20377 59800))
 ;;; Generated autoloads from paredit/paredit.el
@@ -2361,15 +2850,245 @@ It does not call `compile'.
 
 ;;;***
 
-;;;### (autoloads (sr-tree-mode) "sunrise-x-tree/sunrise-x-tree"
-;;;;;;  "sunrise-x-tree/sunrise-x-tree.el" (20384 6642))
-;;; Generated autoloads from sunrise-x-tree/sunrise-x-tree.el
+;;;### (autoloads (sr-term-cd-program sr-term-cd-newterm sr-term-cd
+;;;;;;  sr-term sunrise-cd sr-dired sunrise sr-virtual-mode sr-mode)
+;;;;;;  "sunrise-commander/sunrise-commander" "sunrise-commander/sunrise-commander.el"
+;;;;;;  (20385 20491))
+;;; Generated autoloads from sunrise-commander/sunrise-commander.el
 
-(autoload 'sr-tree-mode "sunrise-x-tree/sunrise-x-tree" "\
-Tree view for the Sunrise Commander file manager.
+(autoload 'sr-mode "sunrise-commander/sunrise-commander" "\
+Two-pane file manager for Emacs based on Dired and inspired by MC.
+The following keybindings are available:
+
+/, j .......... go to directory
+p, n .......... move cursor up/down
+M-p, M-n ...... move cursor up/down in passive pane
+^, J .......... go to parent directory
+M-^, M-J ...... go to parent directory in passive pane
+Tab ........... switch to other pane
+C-Tab.......... switch to viewer window
+C-c Tab ....... switch to viewer window (console compatible)
+RET, f ........ visit selected file/directory
+M-RET, M-f .... visit selected file/directory in passive pane
+C-c RET ....... visit selected in passive pane (console compatible)
+b ............. visit selected file/directory in default browser
+F ............. visit all marked files, each in its own window
+C-u F ......... visit all marked files in the background
+o,v ........... quick visit selected file (scroll with C-M-v, C-M-S-v)
+C-u o, C-u v .. kill quick-visited buffer (restores normal scrolling)
+X ............. execute selected file
+C-u X.......... execute selected file with arguments
+
++ ............. create new directory
+M-+ ........... create new empty file(s)
+C ............. copy marked (or current) files and directories
+R ............. rename marked (or current) files and directories
+D ............. delete marked (or current) files and directories
+S ............. soft-link selected file/directory to passive pane
+Y ............. do relative soft-link of selected file in passive pane
+H ............. hard-link selected file to passive pane
+K ............. clone selected files and directories into passive pane
+M-C ........... copy (using traditional dired-do-copy)
+M-R ........... rename (using traditional dired-do-rename)
+M-D ........... delete (using traditional dired-do-delete)
+M-S............ soft-link (using traditional dired-do-symlink)
+M-Y............ do relative soft-link (traditional dired-do-relsymlink)
+M-H............ hard-link selected file/directory (dired-do-hardlink)
+A ............. search marked files for regular expression
+Q ............. perform query-replace-regexp on marked files
+C-c s ......... start a \"sticky\" interactive search in the current pane
+
+M-a ........... move to beginning of current directory
+M-e ........... move to end of current directory
+M-y ........... go to previous directory in history
+M-u ........... go to next directory in history
+C-M-y ......... go to previous directory in history on passive pane
+C-M-u ......... go to next directory in history on passive pane
+
+g, C-c C-c .... refresh pane
+s ............. sort entries (by name, number, size, time or extension)
+r ............. reverse the order of entries in the active pane (sticky)
+C-o ........... show/hide hidden files (requires dired-omit-mode)
+C-Backspace ... hide/show file attributes in pane
+C-c Backspace . hide/show file attributes in pane (console compatible)
+y ............. show file type / size of selected files and directories.
+M-l ........... truncate/continue long lines in pane
+C-c v ......... put current panel in VIRTUAL mode
+C-c C-v ....... create new pure VIRTUAL buffer
+C-c C-w ....... browse directory tree using w3m
+
+M-t ........... transpose panes
+M-o ........... synchronize panes
+C-c C-s ....... change panes layout (vertical/horizontal/top-only)
+\[ ............. enlarges the right pane by 5 columns
+] ............. enlarges the left pane by 5 columns
+} ............. enlarges the panes vertically by 1 row
+C-} ........... enlarges the panes vertically as much as it can
+C-c } ......... enlarges the panes vertically as much as it can
+{ ............. shrinks the panes vertically by 1 row
+C-{ ........... shrinks the panes vertically as much as it can
+C-c { ......... shrinks the panes vertically as much as it can
+\\ ............. restores the size of all windows back to «normal»
+C-c C-z ....... enable/disable synchronized navigation
+
+C-= ........... smart compare files (ediff)
+C-c = ......... smart compare files (console compatible)
+= ............. fast smart compare files (plain diff)
+C-M-= ......... compare panes
+C-x = ......... compare panes (console compatible)
+
+C-c C-f ....... execute Find-dired in Sunrise VIRTUAL mode
+C-c C-n ....... execute find-Name-dired in Sunrise VIRTUAL mode
+C-c C-g ....... execute find-Grep-dired in Sunrise VIRTUAL mode
+C-u C-c C-g ... execute find-Grep-dired with additional grep options
+C-c C-l ....... execute Locate in Sunrise VIRTUAL mode
+C-c C-r ....... browse list of Recently visited files (requires recentf)
+C-c C-c ....... [after find, locate or recent] dismiss virtual buffer
+C-c / ......... narrow the contents of current pane using fuzzy matching
+C-c b ......... partial Branch view of selected items in current pane
+C-c p ......... Prune paths matching regular expression from current pane
+; ............. follow file (go to same directory as selected file)
+M-; ........... follow file in passive pane
+C-M-o ......... follow a projection of current directory in passive pane
+
+C-> ........... save named checkpoint (a.k.a. \"bookmark panes\")
+C-c > ......... save named checkpoint (console compatible)
+C-.    ........ restore named checkpoint
+C-c .  ........ restore named checkpoint
+
+C-x C-q ....... put pane in Editable Dired mode (commit with C-c C-c)
+@! ............ fast backup files (not dirs!), each to [filename].bak
+
+C-c t ......... open new terminal or switch to already open one
+C-c T ......... open terminal AND/OR change directory to current
+C-c C-t ....... open always a new terminal in current directory
+C-c M-t ....... open a new terminal using an alternative shell program
+q, C-x k ...... quit Sunrise Commander, restore previous window setup
+M-q ........... quit Sunrise Commander, don't restore previous windows
+
+Additionally, the following traditional commander-style keybindings are provided
+\(these may be disabled by customizing the `sr-use-commander-keys' option):
+
+F2 ............ go to directory
+F3 ............ quick visit selected file
+F4 ............ visit selected file
+F5 ............ copy marked (or current) files and directories
+F6 ............ rename marked (or current) files and directories
+F7 ............ create new directory
+F8 ............ delete marked (or current) files and directories
+F10 ........... quit Sunrise Commander
+C-F3 .......... sort contents of current pane by name
+C-F4 .......... sort contents of current pane by extension
+C-F5 .......... sort contents of current pane by time
+C-F6 .......... sort contents of current pane by size
+C-F7 .......... sort contents of current pane numerically
+S-F7 .......... soft-link selected file/directory to passive pane
+Insert ........ mark file
+C-PgUp ........ go to parent directory
+
+Any other dired keybinding (not overridden by any of the above) can be used in
+Sunrise, like G for changing group, M for changing mode and so on.
+
+Some more bindings are available in terminals opened using any of the Sunrise
+functions (i.e. one of: C-c t, C-c T, C-c C-t, C-c M-t):
+
+C-c Tab ....... switch focus to the active pane
+C-c t ......... cycle through all currently open terminals
+C-c T ......... cd to the directory in the active pane
+C-c C-t ....... open new terminal, cd to directory in the active pane
+C-c ; ......... follow the current directory in the active pane
+C-c { ......... shrink the panes vertically as much as possible
+C-c } ......... enlarge the panes vertically as much as possible
+C-c \\ ......... restore the size of all windows back to «normal»
+C-c C-j ....... put terminal in line mode
+C-c C-k ....... put terminal back in char mode
+
+The following bindings are available only in line mode (eshell is considered to
+be *always* in line mode):
+
+M-<up>, M-P ... move cursor up in the active pane
+M-<down>, M-N . move cursor down in the active pane
+M-Return ...... visit selected file/directory in the active pane
+M-J ........... go to parent directory in the active pane
+M-G ........... refresh active pane
+M-Tab ......... switch to passive pane (without leaving the terminal)
+M-M ........... mark selected file/directory in the active pane
+M-Backspace ... unmark previous file/directory in the active pane
+M-U ........... remove all marks from the active pane
+C-Tab ......... switch focus to the active pane
+
+In a terminal in line mode the following substitutions are also performed
+automatically:
+
+%f - expands to the currently selected file in the left pane
+%F - expands to the currently selected file in the right pane
+%m - expands to the list of paths of all marked files in the left pane
+%M - expands to the list of paths of all marked files in the right pane
+%n - expands to the list of names of all marked files in the left pane
+%N - expands to the list of names of all marked files in the right pane
+%d - expands to the current directory in the left pane
+%D - expands to the current directory in the right pane
+%a - expands to the list of paths of all marked files in the active pane
+%A - expands to the current directory in the active pane
+%p - expands to the list of paths of all marked files in the passive pane
+%P - expands to the current directory in the passive pane
+%% - inserts a single % sign.
 
 \(fn)" t nil)
-(eval-after-load 'sunrise-commander '(sr-extend-with 'sunrise-x-tree))
+
+(autoload 'sr-virtual-mode "sunrise-commander/sunrise-commander" "\
+Sunrise Commander Virtual Mode. Useful for reusing find and locate results.
+
+\(fn)" t nil)
+
+(autoload 'sunrise "sunrise-commander/sunrise-commander" "\
+Toggle the Sunrise Commander FM.
+If LEFT-DIRECTORY is given, the left window will display that
+directory (same for RIGHT-DIRECTORY). Specifying nil for any of
+these values uses the default, ie. $HOME.
+
+\(fn &optional LEFT-DIRECTORY RIGHT-DIRECTORY FILENAME)" t nil)
+
+(autoload 'sr-dired "sunrise-commander/sunrise-commander" "\
+Visit the given target (file or directory) in `sr-mode'.
+
+\(fn &optional TARGET SWITCHES)" t nil)
+
+(autoload 'sunrise-cd "sunrise-commander/sunrise-commander" "\
+Toggle the Sunrise Commander FM keeping the current file in focus.
+If Sunrise is off, enable it and focus the file displayed in the current buffer.
+If Sunrise is on, disable it and switch to the buffer currently displayed in the
+viewer window.
+
+\(fn)" t nil)
+(autoload 'sr-checkpoint-handler "sunrise-commander" "" t)
+
+(autoload 'sr-term "sunrise-commander/sunrise-commander" "\
+Run terminal in a new buffer or switch to an existing one.
+If the optional argument CD is non-nil, directory is changed to
+the current one in the active pane. A non-nil NEWTERM argument
+forces the creation of a new terminal. If PROGRAM is provided
+and exists in `exec-path', then it will be used instead of the
+default `sr-terminal-program'.
+
+\(fn &optional CD NEWTERM PROGRAM)" t nil)
+
+(autoload 'sr-term-cd "sunrise-commander/sunrise-commander" "\
+Run terminal in a new buffer or switch to an existing one.
+cd's to the current directory of the active pane.
+
+\(fn)" t nil)
+
+(autoload 'sr-term-cd-newterm "sunrise-commander/sunrise-commander" "\
+Open a NEW terminal (don't switch to an existing one).
+cd's to the current directory of the active pane.
+
+\(fn)" t nil)
+
+(autoload 'sr-term-cd-program "sunrise-commander/sunrise-commander" "\
+Open a NEW terminal using PROGRAM as the shell.
+
+\(fn &optional PROGRAM)" t nil)
 
 ;;;***
 
@@ -2568,7 +3287,7 @@ See also function `tempbuf-mode'.
 ;;;;;;  traverse-dired-search-in-archive traverse-dired-browse-archive
 ;;;;;;  traverse-search-in-dired-file-at-point traverse-search-in-dired-dir-at-point
 ;;;;;;  traverse-deep-rfind traverse-find-in-file) "traverselisp/traverselisp"
-;;;;;;  "traverselisp/traverselisp.el" (20377 59841))
+;;;;;;  "traverselisp/traverselisp.el" (20385 19305))
 ;;; Generated autoloads from traverselisp/traverselisp.el
 
 (autoload 'traverse-find-in-file "traverselisp/traverselisp" "\
@@ -2761,12 +3480,29 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "ecb/ecb-upgrade.el" "ecb/ecb-winman-support.el" "ecb/silentcomp.el"
 ;;;;;;  "ecb/tree-buffer.el" "eproject/eproject-tests.el" "eproject/eproject.el"
 ;;;;;;  "eproject/lang/eproject-perl.el" "eproject/lang/eproject-ruby-on-rails.el"
-;;;;;;  "eproject/lang/eproject-ruby.el" "ide-skel/ide-skel.el" "projectile/projectile-autoloads.el"
+;;;;;;  "eproject/lang/eproject-ruby.el" "ide-skel/ide-skel.el" "jabber/fsm.el"
+;;;;;;  "jabber/jabber-ahc-presence.el" "jabber/jabber-ahc.el" "jabber/jabber-alert.el"
+;;;;;;  "jabber/jabber-autoloads.el" "jabber/jabber-avatar.el" "jabber/jabber-awesome.el"
+;;;;;;  "jabber/jabber-browse.el" "jabber/jabber-chatstates.el" "jabber/jabber-conn.el"
+;;;;;;  "jabber/jabber-disco.el" "jabber/jabber-events.el" "jabber/jabber-feature-neg.el"
+;;;;;;  "jabber/jabber-festival.el" "jabber/jabber-ft-client.el"
+;;;;;;  "jabber/jabber-ft-common.el" "jabber/jabber-ft-server.el"
+;;;;;;  "jabber/jabber-history.el" "jabber/jabber-iq.el" "jabber/jabber-logon.el"
+;;;;;;  "jabber/jabber-modeline.el" "jabber/jabber-newdisco.el" "jabber/jabber-osd.el"
+;;;;;;  "jabber/jabber-ourversion.el" "jabber/jabber-pkg.el" "jabber/jabber-ratpoison.el"
+;;;;;;  "jabber/jabber-register.el" "jabber/jabber-sasl.el" "jabber/jabber-sawfish.el"
+;;;;;;  "jabber/jabber-screen.el" "jabber/jabber-search.el" "jabber/jabber-si-client.el"
+;;;;;;  "jabber/jabber-si-common.el" "jabber/jabber-si-server.el"
+;;;;;;  "jabber/jabber-socks5.el" "jabber/jabber-time.el" "jabber/jabber-truncate.el"
+;;;;;;  "jabber/jabber-util.el" "jabber/jabber-vcard-avatars.el"
+;;;;;;  "jabber/jabber-vcard.el" "jabber/jabber-version.el" "jabber/jabber-watch.el"
+;;;;;;  "jabber/jabber-widget.el" "jabber/jabber-wmii.el" "jabber/jabber-xmessage.el"
+;;;;;;  "jabber/jabber-xml.el" "jabber/srv.el" "nav/nav-dev.el" "projectile/projectile-autoloads.el"
 ;;;;;;  "projectile/projectile-pkg.el" "projectile/projectile.el"
 ;;;;;;  "rainbow-mode/rainbow-mode-autoloads.el" "rainbow-mode/rainbow-mode-pkg.el"
 ;;;;;;  "smarter-compile/smarter-compile-autoloads.el" "smarter-compile/smarter-compile-pkg.el"
 ;;;;;;  "space-chord/space-chord.el" "sr-speedbar/sr-speedbar.el"
-;;;;;;  "xml-rpc-el/xml-rpc.el") (20384 6832 462688))
+;;;;;;  "xml-rpc-el/xml-rpc.el") (20385 22799 782805))
 
 ;;;***
 

@@ -73,6 +73,7 @@
  (expand-region status "installed" recipe
 		(:name expand-region :type github :pkgname "magnars/expand-region.el" :description "Expand region increases the selected region by semantic units. Just keep pressing the key until it selects what you want." :website "https://github.com/magnars/expand-region.el#readme" :prepare
 		       (autoload 'er/expand-region "expand-region" nil t)))
+ (fastnav status "removed" recipe nil)
  (flymake-shell status "installed" recipe
 		(:name flymake-shell :description "A flymake syntax-checker for shell script" :type git :url "https://github.com/purcell/flymake-shell.git" :features ibuffer-git))
  (fuzzy status "installed" recipe
@@ -94,6 +95,8 @@
 	   (:name ide-skel :description "" :type emacswiki :depends tabbar :features ide-skel))
  (iedit status "installed" recipe
 	(:name iedit :description "Edit multiple regions with the same content simultaneously." :type emacswiki :features iedit))
+ (jabber status "installed" recipe
+	 (:name cljdocjabber:wq :description "eldoc mode for clojure" :type elpa))
  (jump-char status "removed" recipe nil)
  (key-chord status "installed" recipe
 	    (:name key-chord :description "map pairs of simultaneously pressed keys to commands" :type emacswiki :features key-chord))
@@ -110,6 +113,8 @@
 			  ":$PATH make all"))))
  (multi-term status "installed" recipe
 	     (:name multi-term :description "A mode based on term.el, for managing multiple terminal buffers in Emacs." :type emacswiki :features multi-term))
+ (nav status "installed" recipe
+      (:name nav :description "Emacs mode for filesystem navigation" :type hg :url "https://emacs-nav.googlecode.com/hg" :features nav))
  (one-key status "installed" recipe
 	  (:name one-key :description "OneKey is designed to help you remember keybindings. It saves you time and frees up your head!" :website "" :type emacswiki :features one-key))
  (package status "installed" recipe
@@ -163,7 +168,8 @@
  (sr-speedbar status "installed" recipe
 	      (:name sr-speedbar :type emacswiki :description "Same frame speedbar" :post-init
 		     (require 'sr-speedbar)))
- (sunrise-commander status "removed" recipe nil)
+ (sunrise-commander status "installed" recipe
+		    (:name sunrise-commander :description "Two-pane file manager for Emacs based on Dired and inspired by MC" :type emacswiki))
  (sunrise-x-tree status "removed" recipe nil)
  (tabbar status "installed" recipe
 	 (:name tabbar :type emacswiki :description "Display a tab bar in the header line" :lazy t :load-path "."))

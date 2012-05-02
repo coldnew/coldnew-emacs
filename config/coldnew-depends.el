@@ -12,5 +12,7 @@
 (require* 'sr-speedbar)
 (require* 'tabbar)
 
+
+
 (provide 'coldnew-depends)
 ;; coldnew-depends.el ends here.
