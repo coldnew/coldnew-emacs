@@ -16,6 +16,12 @@
 ;;; Make eshell prompt more colorful
 (add-to-list 'eshell-output-filter-functions 'coldnew/colorfy-eshell-prompt)
 
+;;;; key
+;; (define-key eshell-command-map (kbd "C-a") 'eshell-bol)
+(add-hook 'eshell-mode-hook
+	  '(lambda ()
+	     (define-key evil-insert-state-local-map (kbd "C-a") 'eshell-bol)
+	     ))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Functions
