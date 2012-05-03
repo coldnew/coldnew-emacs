@@ -3,9 +3,6 @@
 
 (require 'eshell)
 
-;; ;;; Use ANSI color in eshell
-;; (add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)
-
 ;;; Setup prompt function
 (setq eshell-prompt-function
       '(lambda ()
@@ -18,7 +15,6 @@
 	  )))
 ;;; Make eshell prompt more colorful
 (add-to-list 'eshell-output-filter-functions 'coldnew/colorfy-eshell-prompt)
-
 
 
 ;;;; ---------------------------------------------------------------------------
