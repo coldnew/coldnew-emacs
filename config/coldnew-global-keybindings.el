@@ -56,7 +56,7 @@
 (key-chord-define evil-insert-state-map "bl"  'downcase-word-backward)
 (key-chord-define evil-insert-state-map "bc"  'capitalize-word-backward)
 
-(key-chord-define evil-insert-state-map "df"  'zap-up-to-char)
+(key-chord-define evil-insert-state-map "dt"  'zap-up-to-char)
 (key-chord-define evil-insert-state-map "di"  'delete-between-pair)
 
 
