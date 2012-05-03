@@ -45,7 +45,7 @@
 (define-key evil-insert-state-map (kbd "M-p") 'anything-show-kill-ring)
 (define-key evil-insert-state-map (kbd "C-\'") 'er/expand-region)
 (define-key evil-insert-state-map (kbd "C-0") 'ace-jump-mode)
-(define-key evil-insert-state-map (kbd "M-s") 'ace-jump-mode)
+(define-key evil-insert-state-map (kbd "M-j") 'ace-jump-mode)
 
 (define-key evil-insert-state-map (kbd "%") 'match-paren)
 

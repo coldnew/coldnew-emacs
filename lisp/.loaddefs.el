@@ -1104,6 +1104,153 @@ i.e anything-match-plugin.
 
 ;;;***
 
+;;;### (autoloads (vassoc set-modified-alist modify-alist remove-alist
+;;;;;;  set-alist del-alist put-alist) "apel/alist" "apel/alist.el"
+;;;;;;  (20386 41846))
+;;; Generated autoloads from apel/alist.el
+
+(autoload 'put-alist "apel/alist" "\
+Set cdr of an element (KEY . ...) in ALIST to VALUE and return ALIST.
+If there is no such element, create a new pair (KEY . VALUE) and
+return a new alist whose car is the new pair and cdr is ALIST.
+
+\(fn KEY VALUE ALIST)" nil nil)
+
+(autoload 'del-alist "apel/alist" "\
+Delete an element whose car equals KEY from ALIST.
+Return the modified ALIST.
+
+\(fn KEY ALIST)" nil nil)
+
+(autoload 'set-alist "apel/alist" "\
+Set cdr of an element (KEY . ...) in the alist bound to SYMBOL to VALUE.
+
+\(fn SYMBOL KEY VALUE)" nil nil)
+
+(autoload 'remove-alist "apel/alist" "\
+Delete an element whose car equals KEY from the alist bound to SYMBOL.
+
+\(fn SYMBOL KEY)" nil nil)
+
+(autoload 'modify-alist "apel/alist" "\
+Store elements in the alist MODIFIER in the alist DEFAULT.
+Return the modified alist.
+
+\(fn MODIFIER DEFAULT)" nil nil)
+
+(autoload 'set-modified-alist "apel/alist" "\
+Store elements in the alist MODIFIER in an alist bound to SYMBOL.
+If SYMBOL is not bound, set it to nil at first.
+
+\(fn SYMBOL MODIFIER)" nil nil)
+
+(autoload 'vassoc "apel/alist" "\
+Search AVLIST for an element whose first element equals KEY.
+AVLIST is a list of vectors.
+See also `assoc'.
+
+\(fn KEY AVLIST)" nil nil)
+
+;;;***
+
+;;;### (autoloads (setenv) "apel/env" "apel/env.el" (20386 41846))
+;;; Generated autoloads from apel/env.el
+
+(autoload 'setenv "apel/env" "\
+Set the value of the environment variable named VARIABLE to VALUE.
+VARIABLE should be a string.  VALUE is optional; if not provided or is
+`nil', the environment variable VARIABLE will be removed.  
+
+Interactively, a prefix argument means to unset the variable.
+Interactively, the current value (if any) of the variable
+appears at the front of the history list when you type in the new value.
+
+This function works by modifying `process-environment'.
+
+\(fn VARIABLE &optional VALUE UNSET)" t nil)
+
+;;;***
+
+;;;### (autoloads (module-installed-p exec-installed-p file-installed-p
+;;;;;;  get-latest-path add-latest-path add-path) "apel/path-util"
+;;;;;;  "apel/path-util.el" (20386 41846))
+;;; Generated autoloads from apel/path-util.el
+
+(autoload 'add-path "apel/path-util" "\
+Add PATH to `load-path' if it exists under `default-load-path'
+directories and it does not exist in `load-path'.
+
+You can use following PATH styles:
+	load-path relative: \"PATH/\"
+			(it is searched from `default-load-path')
+	home directory relative: \"~/PATH/\" \"~USER/PATH/\"
+	absolute path: \"/HOO/BAR/BAZ/\"
+
+You can specify following OPTIONS:
+	'all-paths	search from `load-path'
+			instead of `default-load-path'
+	'append		add PATH to the last of `load-path'
+
+\(fn PATH &rest OPTIONS)" nil nil)
+
+(autoload 'add-latest-path "apel/path-util" "\
+Add latest path matched by PATTERN to `load-path'
+if it exists under `default-load-path' directories
+and it does not exist in `load-path'.
+
+If optional argument ALL-PATHS is specified, it is searched from all
+of load-path instead of default-load-path.
+
+\(fn PATTERN &optional ALL-PATHS)" nil nil)
+
+(autoload 'get-latest-path "apel/path-util" "\
+Return latest directory in default-load-path
+which is matched to regexp PATTERN.
+If optional argument ALL-PATHS is specified,
+it is searched from all of load-path instead of default-load-path.
+
+\(fn PATTERN &optional ALL-PATHS)" nil nil)
+
+(autoload 'file-installed-p "apel/path-util" "\
+Return absolute-path of FILE if FILE exists in PATHS.
+If PATHS is omitted, `load-path' is used.
+
+\(fn FILE &optional PATHS)" nil nil)
+
+(defvar exec-suffix-list '("") "\
+*List of suffixes for executable.")
+
+(autoload 'exec-installed-p "apel/path-util" "\
+Return absolute-path of FILE if FILE exists in PATHS.
+If PATHS is omitted, `exec-path' is used.
+If suffixes is omitted, `exec-suffix-list' is used.
+
+\(fn FILE &optional PATHS SUFFIXES)" nil nil)
+
+(autoload 'module-installed-p "apel/path-util" "\
+Return t if module is provided or exists in PATHS.
+If PATHS is omitted, `load-path' is used.
+
+\(fn MODULE &optional PATHS)" nil nil)
+
+;;;***
+
+;;;### (autoloads (richtext-decode richtext-encode) "apel/richtext"
+;;;;;;  "apel/richtext.el" (20386 41846))
+;;; Generated autoloads from apel/richtext.el
+
+(autoload 'richtext-encode "apel/richtext" "\
+
+
+\(fn FROM TO)" nil nil)
+
+(autoload 'richtext-decode "apel/richtext" "\
+
+
+\(fn FROM TO)" nil nil)
+
+;;;***
+
 ;;;### (autoloads (ascii-off ascii-on ascii-display ascii-customize)
 ;;;;;;  "ascii/ascii" "ascii/ascii.el" (20383 37766))
 ;;; Generated autoloads from ascii/ascii.el
@@ -1630,6 +1777,17 @@ Compute the checksum of the given package, and put it in the kill-ring
 
 (autoload 'el-get-list-packages "el-get/el-get-list-packages" "\
 Display a list of packages.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (elscreen-start) "elscreen/elscreen" "elscreen/elscreen.el"
+;;;;;;  (20386 42336))
+;;; Generated autoloads from elscreen/elscreen.el
+
+(autoload 'elscreen-start "elscreen/elscreen" "\
+
 
 \(fn)" t nil)
 
@@ -2755,6 +2913,23 @@ This will fontify with colors the string like \"#aabbcc\" or \"blue\".
 
 ;;;***
 
+;;;### (autoloads (sauron-start-hidden sauron-start) "sauron/sauron"
+;;;;;;  "sauron/sauron.el" (20386 39175))
+;;; Generated autoloads from sauron/sauron.el
+
+(autoload 'sauron-start "sauron/sauron" "\
+Start sauron. If the optional parameter HIDDEN is non-nil,
+don't show the sauron window.
+
+\(fn &optional HIDDEN)" t nil)
+
+(autoload 'sauron-start-hidden "sauron/sauron" "\
+Start sauron, but don't show the window.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (slime-hyperspec-lookup slime-connect slime slime-mode
 ;;;;;;  slime-lisp-mode-hook) "slime/slime" "slime/slime.el" (20379
 ;;;;;;  38566))
@@ -3461,6 +3636,21 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "anything/contrib/anything-multi-sources.el" "anything/contrib/anything-startup.el"
 ;;;;;;  "anything/extensions/anything-complete.el" "anything/extensions/anything-gtags.el"
 ;;;;;;  "anything/extensions/anything-obsolete.el" "anything/extensions/anything-show-completion.el"
+;;;;;;  "apel/apel-ver.el" "apel/atype.el" "apel/broken.el" "apel/calist.el"
+;;;;;;  "apel/emu-mule.el" "apel/emu.el" "apel/file-detect.el" "apel/filename.el"
+;;;;;;  "apel/install.el" "apel/inv-18.el" "apel/inv-19.el" "apel/inv-23.el"
+;;;;;;  "apel/inv-xemacs.el" "apel/invisible.el" "apel/localhook.el"
+;;;;;;  "apel/mcharset.el" "apel/mcs-20.el" "apel/mcs-e20.el" "apel/mcs-ltn1.el"
+;;;;;;  "apel/mcs-nemacs.el" "apel/mcs-om.el" "apel/mcs-xm.el" "apel/mcs-xmu.el"
+;;;;;;  "apel/mule-caesar.el" "apel/pccl-20.el" "apel/pccl-om.el"
+;;;;;;  "apel/pccl.el" "apel/pces-20.el" "apel/pces-e20.el" "apel/pces-e20_2.el"
+;;;;;;  "apel/pces-nemacs.el" "apel/pces-om.el" "apel/pces-raw.el"
+;;;;;;  "apel/pces-xfc.el" "apel/pces-xm.el" "apel/pces.el" "apel/pcustom.el"
+;;;;;;  "apel/poe-18.el" "apel/poe-xemacs.el" "apel/poe.el" "apel/poem-e20.el"
+;;;;;;  "apel/poem-e20_2.el" "apel/poem-e20_3.el" "apel/poem-ltn1.el"
+;;;;;;  "apel/poem-nemacs.el" "apel/poem-om.el" "apel/poem-xm.el"
+;;;;;;  "apel/poem.el" "apel/product.el" "apel/pym.el" "apel/static.el"
+;;;;;;  "apel/timezone.el" "apel/tinycustom.el" "apel/tinyrich.el"
 ;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete/auto-complete-config.el"
 ;;;;;;  "auto-complete/auto-complete-pkg.el" "auto-complete/auto-complete.el"
 ;;;;;;  "c-eldoc/c-eldoc-autoloads.el" "c-eldoc/c-eldoc-pkg.el" "cedet/cedet-build.el"
@@ -3500,9 +3690,11 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "jabber/jabber-xml.el" "jabber/srv.el" "nav/nav-dev.el" "projectile/projectile-autoloads.el"
 ;;;;;;  "projectile/projectile-pkg.el" "projectile/projectile.el"
 ;;;;;;  "rainbow-mode/rainbow-mode-autoloads.el" "rainbow-mode/rainbow-mode-pkg.el"
-;;;;;;  "smarter-compile/smarter-compile-autoloads.el" "smarter-compile/smarter-compile-pkg.el"
-;;;;;;  "space-chord/space-chord.el" "sr-speedbar/sr-speedbar.el"
-;;;;;;  "xml-rpc-el/xml-rpc.el") (20385 22799 782805))
+;;;;;;  "sauron/sauron-dbus.el" "sauron/sauron-erc.el" "sauron/sauron-notifications.el"
+;;;;;;  "sauron/sauron-org.el" "smarter-compile/smarter-compile-autoloads.el"
+;;;;;;  "smarter-compile/smarter-compile-pkg.el" "space-chord/space-chord.el"
+;;;;;;  "sr-speedbar/sr-speedbar.el" "xml-rpc-el/xml-rpc.el") (20386
+;;;;;;  42370 200075))
 
 ;;;***
 

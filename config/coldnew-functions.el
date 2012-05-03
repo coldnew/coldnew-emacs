@@ -18,6 +18,58 @@ Also returns nil if pid is nil."
     (format-network-address (car (network-interface-info dev)) t)))
 
 ;;;; ---------------------------------------------------------------------------
+;;;; Search
+;;;; ---------------------------------------------------------------------------
+
+(defun search-backward-to-char (chr)
+  "Search backwards to a character"
+  (while (not (= (char-after) chr))
+    (backward-char 1)))
+
+(defun search-forward-to-char (chr)
+  "Search forwards to a character"
+  (while (not (= (char-before) chr))
+    (forward-char 1)))
+
+;;;; ---------------------------------------------------------------------------
+;;;; Region
+;;;; ---------------------------------------------------------------------------
+(defun select-region-to-before-match (match &optional dir)
+  "Selects from point to the just before the first match of
+'match'.  The 'dir' controls direction, if nil or 'forwards then
+go forwards, if 'backwards go backwards."
+  (let ((start (point))
+	(end nil))
+
+    (transient-mark-mode 1)    ;; Transient mark
+    (push-mark)                ;; Mark the start, where point is now
+
+    (if (or (null dir)
+	    (equalp 'forwards dir))
+
+	;; Move forwards to the next match then back off
+	(progn
+	  (search-forward match)
+	  (backward-char))
+
+      ;; Or search backwards and move forwards
+      (progn
+	(search-backward match)
+	(forward-char)))
+
+    ;; Store, then hilight
+    (setq end (point))
+    (exchange-point-and-mark)
+
+    ;; And return, swap the start/end depending on direction we're going
+    (if (or (null dir)
+	    (equalp 'forwards dir))
+	(list start end)
+      (list end start))))
+
+
+
+;;;; ---------------------------------------------------------------------------
 ;;;; Buffer
 ;;;; ---------------------------------------------------------------------------
 (defun get-buffers-matching-mode (mode)

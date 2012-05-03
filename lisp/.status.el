@@ -9,7 +9,7 @@
 		  ("." "extensions" "contrib")
 		  :features anything))
  (anything-traverse status "removed" recipe nil)
- (apel status "required" recipe nil)
+ (apel status "removed" recipe nil)
  (ascii status "installed" recipe
 	(:name ascii :description "ASCII code display." :website "" :type emacswiki :features ascii))
  (asciidoc status "removed" recipe nil)
@@ -61,13 +61,18 @@
 	     :compile nil :features egg))
  (el-get status "installed" recipe
 	 (:name el-get :website "https://github.com/dimitri/el-get#readme" :description "Manage the external elisp bits and pieces you depend upon." :type github :branch "3.stable" :pkgname "dimitri/el-get" :features el-get :load "el-get.el"))
+ (el-index status "removed" recipe nil)
+ (el-kit status "removed" recipe nil)
+ (el-screen status "removed" recipe nil)
  (eldoc-extension status "installed" recipe
 		  (:name eldoc-extension :description "Some extension for eldoc" :website "" :type emacswiki :features eldoc-extension))
- (elscreen status "required" recipe nil)
+ (elscreen status "installed" recipe
+	   (:name elscreen :description "This is a fork of ElScreen updated for Emacs 24 and package.el. " :website "https://github.com/shosti/elscreen" :type github :pkgname "shosti/elscreen" :depends apel))
  (eproject status "installed" recipe
 	   (:name eproject :description "File grouping (\"project\") extension for emacs" :type github :pkgname "jrockway/eproject" :load-path
 		  ("." "lang")
 		  :features eproject))
+ (escreen status "removed" recipe nil)
  (evil status "installed" recipe
        (:name evil :website "http://gitorious.org/evil/pages/Home" :description "Evil is an extensible vi layer for Emacs. It\n       emulates the main features of Vim, and provides facilities\n       for writing custom extensions." :type git :url "https://git.gitorious.org/evil/evil.git" :features evil :depends undo-tree))
  (expand-region status "installed" recipe
@@ -152,6 +157,9 @@
 	       (:name rainbow-mode :description "Colorize color names in buffers" :type elpa))
  (recentf-ext status "installed" recipe
 	      (:name recentf-ext :description "Recentf extensions" :type emacswiki :features "recentf-ext"))
+ (sauron status "installed" recipe
+	 (:name sauron :description "enhanced tracking of the world inside and outside your emacs" :website "https://github.com/djcb/sauron" :type github :pkgname "djcb/sauron" :prepare
+		(autoload 'sauron-start "sauron" "Start sauron." t)))
  (session status "removed" recipe nil)
  (shell-pop status "installed" recipe
 	    (:name shell-pop :description "Helps you pop up and pop out shell buffer easily." :website "http://www.emacswiki.org/emacs/ShellPop" :type emacswiki :features "shell-pop"))
@@ -185,6 +193,7 @@
  (unicad status "installed" recipe
 	 (:name unicad :description "" :type svn :url "http://unicad.googlecode.com/svn/trunk/"))
  (volatile-highlights status "removed" recipe nil)
+ (winring status "removed" recipe nil)
  (xml-rpc-el status "installed" recipe
 	     (:name xml-rpc-el :description "An elisp implementation of clientside XML-RPC" :type bzr :url "lp:xml-rpc-el"))
  (yasnippet status "installed" recipe

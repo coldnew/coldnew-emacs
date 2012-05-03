@@ -7,7 +7,6 @@
 (require 'epa-file)
 
 
-
 ;; Control whether or not to pop up the key selection dialog.
 (setq epa-file-select-keys 0)
 
