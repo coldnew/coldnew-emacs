@@ -47,12 +47,18 @@
 (define-key evil-insert-state-map (kbd "C-0") 'ace-jump-mode)
 (define-key evil-insert-state-map (kbd "M-s") 'ace-jump-mode)
 
+(define-key evil-insert-state-map (kbd "%") 'match-paren)
+
 
 (key-chord-define evil-insert-state-map "vv"  'er/expand-region)
 ;; quickliy back-word and upcase/downcaseword
 (key-chord-define evil-insert-state-map "bu"  'upcase-word-backward)
 (key-chord-define evil-insert-state-map "bl"  'downcase-word-backward)
 (key-chord-define evil-insert-state-map "bc"  'capitalize-word-backward)
+
+(key-chord-define evil-insert-state-map "df"  'zap-up-to-char)
+(key-chord-define evil-insert-state-map "di"  'delete-between-pair)
+
 
 (define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
 (define-key evil-emacs-state-map (kbd "C-s") 'my-anything-occur)
@@ -64,11 +70,9 @@
 (define-key evil-emacs-state-map (kbd "C-\'") 'er/expand-region)
 (define-key evil-emacs-state-map (kbd "C-0") 'ace-jump-mode)
 
-
 ;;;; ---------------------------------------------------------------------------
 ;;;; paredit-mode
 ;;;; ---------------------------------------------------------------------------
-
 
 
 
