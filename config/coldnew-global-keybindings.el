@@ -46,6 +46,8 @@
 (define-key evil-insert-state-map (kbd "C-\'") 'er/expand-region)
 (define-key evil-insert-state-map (kbd "C-0") 'ace-jump-mode)
 (define-key evil-insert-state-map (kbd "M-j") 'ace-jump-mode)
+(define-key evil-insert-state-map (kbd "C-.") 'repeat)
+
 
 (define-key evil-insert-state-map (kbd "%") 'match-paren)
 
@@ -55,15 +57,18 @@
 (key-chord-define evil-insert-state-map "bu"  'upcase-word-backward)
 (key-chord-define evil-insert-state-map "bl"  'downcase-word-backward)
 (key-chord-define evil-insert-state-map "bc"  'capitalize-word-backward)
-
+;;; delete
 (key-chord-define evil-insert-state-map "dt"  'zap-up-to-char)
 (key-chord-define evil-insert-state-map "di"  'delete-between-pair)
+(key-chord-define evil-insert-state-map "dk"  'kill-whole-line)
+
+
 
 
 (define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
 (define-key evil-emacs-state-map (kbd "C-s") 'my-anything-occur)
 (define-key evil-emacs-state-map (kbd "C-c C-f") 'my-anything-filelist)
-(define-key evil-emacs-state-map (kbd "C-x vv") 'egg-next-action)
+
 (define-key evil-emacs-state-map (kbd "M-p") 'anything-show-kill-ring)
 (define-key evil-emacs-state-map (kbd "C-=") 'text-scale-increase)
 (define-key evil-emacs-state-map (kbd "C--") 'text-scale-decrease)
