@@ -120,8 +120,8 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; highlight-symbol
 ;;;; ---------------------------------------------------------------------------
-(require 'highlight-symbol)
-(add-hook 'coldnew-editor-hook 'highlight-symbol-mode)
+;; (require 'highlight-symbol)
+;; (add-hook 'coldnew-editor-hook 'highlight-symbol-mode)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; undo-tree
