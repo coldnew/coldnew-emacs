@@ -6,7 +6,6 @@
 ;; ;;; Use ANSI color in eshell
 ;; (add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)
 
-
 ;;; Setup prompt function
 (setq eshell-prompt-function
       '(lambda ()
@@ -17,6 +16,28 @@
 	    (eshell/pwd))
 	  (if (= (user-uid) 0) " # " " $ ")
 	  )))
+;;; Make eshell prompt more colorful
+(add-to-list 'eshell-output-filter-functions 'coldnew/colorfy-eshell-prompt)
+
+
+
+;;;; ---------------------------------------------------------------------------
+;;;; Functions
+;;;; ---------------------------------------------------------------------------
+(defun coldnew/colorfy-eshell-prompt ()
+  (interactive)
+  (let* ((mpoint)
+	 (user-string-regexp (concat "^" user-login-name "@" system-name)))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward (concat user-string-regexp ".*[$#]") (point-max) t)
+	(setq mpoint (point))
+	(overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "dodger blue")))
+      (goto-char (point-min))
+      (while (re-search-forward user-string-regexp (point-max) t)
+	(setq mpoint (point))
+	(overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "green3"))
+	))))
 
 
 
