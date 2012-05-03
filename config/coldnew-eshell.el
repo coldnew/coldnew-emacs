@@ -23,6 +23,31 @@
 	     (define-key evil-insert-state-local-map (kbd "C-a") 'eshell-bol)
 	     ))
 
+(eval-after-load "auto-complete"
+  `(progn
+     (ac-define-source eshell-pcomplete
+       '((candidates . pcomplete-completions)))
+
+     (add-to-list 'ac-modes 'eshell-mode)
+     ))
+
+;; (defun ac-complete-eshell-pcomplete ()
+;;   (interactive)
+;;   (auto-complete '(ac-source-eshell-pcomplete)))
+
+(defun my-eshell-mode-init ()
+  ;; swap <home> and C-a
+  (define-key eshell-mode-map (kbd "C-a") 'eshell-maybe-bol)
+  (define-key eshell-mode-map (kbd "<home>") 'eshell-maybe-bol)
+
+  (setq outline-regexp "^.* $")
+  (outline-minor-mode t)
+  (add-to-list 'ac-sources 'ac-source-files-in-current-dir)
+  (add-to-list 'ac-sources 'ac-source-eshell-pcomplete)
+  )
+
+(add-hook 'eshell-mode-hook 'my-eshell-mode-init)
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; Functions
 ;;;; ---------------------------------------------------------------------------
