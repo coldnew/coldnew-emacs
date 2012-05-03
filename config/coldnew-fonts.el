@@ -17,7 +17,7 @@
 ;; (defvar emacs-cjk-font-size 15
 (defvar emacs-cjk-font-size 13.5
   "Default CJK font size.")
-(defvar emacs-symbol-font-size 10
+(defvar emacs-symbol-font-size 16
   "Default Symbol font size.")
 
 
@@ -46,7 +46,6 @@
 	       "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 11223344556677889900"
 	       "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 壹貳參肆伍陸柒捌玖零"
 	       ))
-
 
 
 

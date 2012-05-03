@@ -12,5 +12,6 @@
 (require* 'tabbar)
 (require* 'sauron)
 
+
 (provide 'coldnew-depends)
 ;; coldnew-depends.el ends here.

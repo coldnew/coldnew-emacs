@@ -41,6 +41,7 @@
 	       (:name clojure-mode :website "https://github.com/technomancy/clojure-mode" :description "Emacs support for the Clojure language." :type github :pkgname "technomancy/clojure-mode"))
  (ctypes status "installed" recipe
 	 (:name ctypes :description "Enhanced Font lock support for custom defined type" :type elpa))
+ (dot-mode status "removed" recipe nil)
  (doxymacs status "installed" recipe
 	   (:name doxymacs :website "http://doxymacs.sourceforge.net/" :description "Doxymacs is Doxygen + {X}Emacs." :type git :url "git://doxymacs.git.sourceforge.net/gitroot/doxymacs/doxymacs" :load-path
 		  ("./lisp")

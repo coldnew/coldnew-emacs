@@ -329,7 +329,7 @@ nil "include a filesystem subtree into an org file [source: git]" single])
 [(20120503)
 nil "Emacs mode for filesystem navigation [source: hg]" tar])
 (mysql2sqlite .
-[(20120423)
+[(20120503)
 nil "Convert mysql databases into sqlite databases. [source: github]" single])
 (multi-web-mode .
 [(20110821)
@@ -570,7 +570,7 @@ nil "No description available. [source: svn]" tar])
 [(20120403)
 nil "Enclose cursor within punctuation pairs [source: github]" single])
 (emacs-setup .
-[(20120423)
+[(20120503)
 nil "Package for maintaining your emacs configuration. Clean up your .emacs! [source: github]" tar])
 (elscreen .
 [(20120413)
