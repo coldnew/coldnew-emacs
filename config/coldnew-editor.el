@@ -275,19 +275,18 @@
 (defun insert-space-between-english-chinese ()
   "Insert a space between English words and Chinese charactors"
   (save-excursion
-    (beginning-of-buffer)
+    (goto-char (point-min))
     (while (re-search-forward "\\(\\cc\\)\\([a-zA-Z0-9]\\)" nil t)
       (replace-match "\\1 \\2" nil nil))
-    (beginning-of-buffer)
+    (goto-char (point-min))
     (while (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t)
       (replace-match "\\1 \\2" nil nil))
-    (beginning-of-buffer)
+    (goto-char (point-min))
     (while (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
       (replace-match "\\1\\2" nil nil))
-    (beginning-of-buffer)
+    (goto-char (point-min))
     (while (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t)
       (replace-match "\\1\\2" nil nil))))
-
 
 
 (provide 'coldnew-editor)
