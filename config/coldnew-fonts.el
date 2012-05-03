@@ -2,20 +2,25 @@
 (eval-when-compile (require 'cl))
 
 ;; Font type setting
-(defvar emacs-english-font "Inconsolata"
+;; (defvar emacs-english-font "Inconsolata"
+(defvar emacs-english-font "Monaco"
   "The font name of English.")
-(defvar emacs-cjk-font "LiHei Pro"
+;; (defvar emacs-cjk-font "LiHei Pro"
+(defvar emacs-cjk-font "Hiragino Sans GB W3"
   "The font name for CJK.")
 (defvar emacs-symbol-font "Monaco"
   "The font name for Synbol.")
 
 ;; font size setting
-(defvar emacs-english-font-size 12
+(defvar emacs-english-font-size 11.5
   "Default English font size.")
-(defvar emacs-cjk-font-size 10
+;; (defvar emacs-cjk-font-size 15
+(defvar emacs-cjk-font-size 13.5
   "Default CJK font size.")
 (defvar emacs-symbol-font-size 10
   "Default Symbol font size.")
+
+
 
 ;; Use my defined font under X
 (cond ((eq window-system 'x)
@@ -41,6 +46,8 @@
 	       "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 11223344556677889900"
 	       "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 壹貳參肆伍陸柒捌玖零"
 	       ))
+
+
 
 
 (provide 'coldnew-fonts)
