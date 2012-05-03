@@ -213,6 +213,7 @@
 	 ("Terminal" (or (mode . eshell-mode)
 			 (mode . term-mode)
 			 (mode . inferior-python-mode)
+			 (mode . eshell-mode)
 			 (mode . comint-mode)
 			 (name . "\\*scheme\\*$")))
 	 ("Config" (name . "*.conf$"))
