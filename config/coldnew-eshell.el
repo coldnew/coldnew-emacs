@@ -2,6 +2,12 @@
 (eval-when-compile (require 'cl))
 
 (require 'eshell)
+(require 'em-dirs)
+(require 'em-hist)
+
+;;;; ---------------------------------------------------------------------------
+;;;; Config
+;;;; ---------------------------------------------------------------------------
 
 ;;; Setup prompt function
 (setq eshell-prompt-function
@@ -13,13 +19,30 @@
 	    (eshell/pwd))
 	  (if (= (user-uid) 0) " # " " $ ")
 	  )))
-;;; Make eshell prompt more colorful
-(add-to-list 'eshell-output-filter-functions 'coldnew/colorfy-eshell-prompt)
+
 
 (setq-default eshell-cmpl-cycle-completions nil)
 (setq-default pcomplete-cycle-completions nil)
 
-;;;; key
+;;; change history file path
+(setq eshell-last-dir-ring-file-name (concat emacs-cache-dir "eshell-lastdir"))
+(setq eshell-history-file-name (concat emacs-cache-dir "eshell-history"))
+
+;;;; ---------------------------------------------------------------------------
+;;;; Hooks
+;;;; ---------------------------------------------------------------------------
+
+;;; Make eshell prompt more colorful
+(add-to-list 'eshell-output-filter-functions 'coldnew/colorfy-eshell-prompt)
+
+;; my auto-complete for elisp
+(add-hook 'eshell-mode-hook 'auto-complete-mode)
+(add-hook 'eshell-mode-hook 'ac-eshell-mode-setup)
+
+;;;; ---------------------------------------------------------------------------
+;;;; Keybindings
+;;;; ---------------------------------------------------------------------------
+
 ;; (define-key eshell-command-map (kbd "C-a") 'eshell-bol)
 (add-hook 'eshell-mode-hook
 	  '(lambda ()
@@ -35,9 +58,6 @@
 	     (define-key evil-insert-state-local-map (kbd "M-l") 'backward-delete-char)
 	     ))
 
-;; my auto-complete for elisp
-(add-hook 'eshell-mode-hook 'auto-complete-mode)
-(add-hook 'eshell-mode-hook 'ac-eshell-mode-setup)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; eshell/command
