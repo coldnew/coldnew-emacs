@@ -41,9 +41,34 @@
 ;;;; ---------------------------------------------------------------------------
 
 ;; find-file
-(defun eshell/ef (file) (find-file file))
+;; (defun eshell/ef (file) (find-file file))
+(defun eshell/ef (&rest args) (eshell/emacs args))
+
 ;; ediff
 (defun eshell/ed (file1 file2) (ediff file1 file2))
+
+;; clear
+(defun eshell/clear ()
+  "Clears the shell buffer ala Unix's clear or DOS' cls"
+  (interactive)
+  ;; the shell prompts are read-only, so clear that for the duration
+  (let ((inhibit-read-only t))
+    ;; simply delete the region
+    (delete-region (point-min) (point-max))))
+
+
+(defun eshell/emacs (&rest args)
+  "Open a file in emacs. Some habits die hard."
+  (if (null args)
+      ;; If I just ran "emacs", I probably expect to be launching
+      ;; Emacs, which is rather silly since I'm already in Emacs.
+      ;; So just pretend to do what I ask.
+      (bury-buffer)
+    ;; We have to expand the file names or else naming a directory in an
+    ;; argument causes later arguments to be looked for in that directory,
+    ;; not the starting directory
+    (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
+
 
 
 ;;;; ---------------------------------------------------------------------------
