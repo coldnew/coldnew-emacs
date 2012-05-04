@@ -16,6 +16,9 @@
 ;;; Make eshell prompt more colorful
 (add-to-list 'eshell-output-filter-functions 'coldnew/colorfy-eshell-prompt)
 
+(setq-default eshell-cmpl-cycle-completions nil)
+(setq-default pcomplete-cycle-completions nil)
+
 ;;;; key
 ;; (define-key eshell-command-map (kbd "C-a") 'eshell-bol)
 (add-hook 'eshell-mode-hook
