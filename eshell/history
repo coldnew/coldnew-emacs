@@ -3,94 +3,6 @@ ls
 ls
 ls
 ls
-ls
-ls
-ls --color=yes
-ls
-ls
-ls
-ls
-ls
-cd ~
-ls
-ls
-ls ~
-sudo su
-ls
-ls ~
-ls
-ls
-ls
-ks
-cd ~
-ls
-ls
-cd ~
-ls
-cd -
-ls
-ls
-cd ~
-ls
-cd /
-ls
-ls
-cd ~
-ls
-cd /
-ls
-ks
-ls
-cd ~
-ls
-ls
-ls ~
-ls
-ls ~
-cd ~
-ls
-ls
-ls
-ls
-ls
-ls
-ls ~
-ls
-ls
-ls
-ls
-ls
-cd ~
-ls
-lllls
-ls
-ls
-ls
-ls
-ls
-ls
-ls
-ls
-ls
-ls
-ls
-ls
-coldnew
-ls
-ls
-lasdasd
-ls
-ls
-ls
-ls ~
-ls
-ls
-ls ~
-ls
-ls
-ls
-ls
-ls
 l
 ls
 ls
@@ -116,3 +28,101 @@ ls
 ls
 ls
 ls ~
+ls
+cd ~
+ls
+ls
+telnet 192.168.1.201
+ssh 192.168.1.201
+ssh root@192.168.1.201
+ls
+cd /tmp/
+ef aa
+ls
+cd /tmp
+ls
+touch d.c
+touch e.c
+echo 'asd' > d.c 	
+ed d.c e.c
+clear
+clear
+ls
+clear
+ls
+cd /tm
+cd /tmp/
+emacs aa.c d.c e.c 
+cd /tmp/
+ef a.c d.c 
+cd /tmp/
+ef a.c d.c 
+cd /tmp/
+ef a.c d.c
+ef
+ef
+cd /home/coldnew/Workspace/eMT3070A/eMT3070A-kernel-2.6.37/arch/arm/mach-omap2
+ef board-am3517crane.c
+ls
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+cd drivers/
+ls
+cd misc
+ls
+ls
+cd cd ..
+ls
+cd ..
+ls
+cd input/
+ls
+cd misc/
+ls
+ef pwm-beeper.c 
+ls
+ec s_test.sh 
+ef s_test.sh 
+git rm s_test.sh 
+ls
+ef fqa.sh 
+rm fqa.sh 
+ls
+ef common_setting.bk
+git rm fqa.sh 
+ls
+git rm config.sh 
+ls
+ef clean.sh 
+git rm clean.sh 
+ls
+ef runin_setting
+ef runin.sh 
+git rm runin_setting
+git rm runin.sh 
+ls
+ef update.sh 
+ef main-strict.sh
+gir rm main-strict.sh
+git rm main-strict.sh
+ls
+ef common_setting.bk
+git rm common_setting.bk
+ef common_setting 
+rm common_setting 
+ls
+git rm common_setting 
+git status
+git commit 
+cd ..
+ls
+cd cpu/
+ls
+cd nbench-byte-2.2.3/
+ls
+cd ..
+git add nbench-byte-2.2.3/
