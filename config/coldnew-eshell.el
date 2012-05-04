@@ -40,7 +40,9 @@
 ;;;; eshell/command
 ;;;; ---------------------------------------------------------------------------
 
+;; find-file
 (defun eshell/ef (file) (find-file file))
+;; ediff
 (defun eshell/ed (file1 file2) (ediff file1 file2))
 
 
