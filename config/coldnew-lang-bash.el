@@ -20,7 +20,7 @@
 (bash-completion-setup)
 
 ;; use flymake-shell
-(require 'flymake-shell)
+(require* 'flymake-shell)
 (add-hook 'shell-mode-hook 'flymake-shell-load)
 
 
@@ -32,10 +32,18 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; Auto Complete
 ;;;; ---------------------------------------------------------------------------
+
+;; define ac-source for pcomplete
+(ac-define-source pcomplete
+  '((candidates . pcomplete-completions)
+    (cache)
+    (symbol . "f")))
+
 (defun ac-shell-script-mode-setup ()
   "auto-complete settings for shell-script-mode"
   (setq ac-sources
-	'(ac-source-dictionary
+	'(ac-source-pcomplete
+	  ac-source-dictionary
 	  ac-source-filename
 	  ac-source-files-in-current-dir
 	  ac-source-words-in-same-mode-buffers
