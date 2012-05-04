@@ -1,7 +1,6 @@
 ;;; coldnew-depends.el --- some packages wglobay use and without config wi put here.
 (eval-when-compile (require 'cl))
 
-
 (require* 'ascii)
 (require* 'ace-jump-mode)
 (require* 'expand-region)
@@ -11,6 +10,8 @@
 (require* 'smarter-compile)
 (require* 'sr-speedbar)
 (require* 'tabbar)
+(require* 'sauron)
+
 
 (provide 'coldnew-depends)
 ;; coldnew-depends.el ends here.

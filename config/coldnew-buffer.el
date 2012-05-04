@@ -208,9 +208,12 @@
 		      (mode . nav-mode)))
 	 ("IRC"   (or (mode . erc-mode)
 		      (mode . rcirc-mode)))
+	 ("Jabber" (or (mode . jabber-roster-mode)
+		       (mode . jabber-chat-mode)))
 	 ("Terminal" (or (mode . eshell-mode)
 			 (mode . term-mode)
 			 (mode . inferior-python-mode)
+			 (mode . eshell-mode)
 			 (mode . comint-mode)
 			 (name . "\\*scheme\\*$")))
 	 ("Config" (name . "*.conf$"))
@@ -274,6 +277,7 @@
        "^\\*pomodoro\\*$"
        "^\\*Project Buffers\\*$"
        "^eproject$"
+       "\\*fsm-debug\\*$"
        ;; "^"
        "^\\*.*\\(-preprocessed\\)\\>\\*"
        "^\\*ORG.*\\*"

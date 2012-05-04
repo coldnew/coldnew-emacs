@@ -1,6 +1,7 @@
 ;;; coldnew-editor.el --- enhanced core editing experience.
 (eval-when-compile (require 'cl))
 
+(require 'misc)
 (require 'coldnew-complete)
 
 ;;;; ---------------------------------------------------------------------------
@@ -119,8 +120,8 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; highlight-symbol
 ;;;; ---------------------------------------------------------------------------
-(require 'highlight-symbol)
-(add-hook 'coldnew-editor-hook 'highlight-symbol-mode)
+;; (require 'highlight-symbol)
+;; (add-hook 'coldnew-editor-hook 'highlight-symbol-mode)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; undo-tree
@@ -191,13 +192,13 @@
   (define-key evil-insert-state-local-map (kbd "M-;") 'paredit-comment-dwim)
   (define-key evil-insert-state-local-map (kbd "C-j") 'paredit-newline)
   (define-key evil-insert-state-local-map (kbd "M-9") 'paredit-wrap-round)
-  (define-key evil-insert-state-local-map (kbd "M-s") 'paredit-splice-sexp)
+  ;; (define-key evil-insert-state-local-map (kbd "M-s") 'paredit-splice-sexp)
   (key-chord-define evil-insert-state-local-map "bs"  'paredit-splice-sexp-killing-backward)
   (key-chord-define evil-insert-state-local-map "fs"  'paredit-splice-sexp-killing-forward)
   (define-key evil-insert-state-local-map (kbd "C-0") 'paredit-forward-slurp-sexp)
   (define-key evil-insert-state-local-map (kbd "C-]") 'paredit-forward-barf-sexp)
   (define-key evil-insert-state-local-map (kbd "C-9") 'paredit-backward-slurp-sexp)
-  (define-key evil-insert-state-local-map (kbd "C-[") 'paredit-backward-barf-sexp)
+  ;; (define-key evil-insert-state-local-map (kbd "C-[") 'paredit-backward-barf-sexp)
   (key-chord-define evil-insert-state-local-map "ps"  'paredit-split-sexp)
   (key-chord-define evil-insert-state-local-map "pj"  'paredit-join-sexp)
   )
@@ -275,19 +276,70 @@
 (defun insert-space-between-english-chinese ()
   "Insert a space between English words and Chinese charactors"
   (save-excursion
-    (beginning-of-buffer)
-    (while (re-search-forward "\\(\\cc\\)\\([a-zA-Z0-9]\\)" nil t)
+    (goto-char (point-min))
+    (while (or (re-search-forward "\\(\\cc\\)\\([a-zA-Z0-9]\\)" nil t)
+	       (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
       (replace-match "\\1 \\2" nil nil))
-    (beginning-of-buffer)
-    (while (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t)
-      (replace-match "\\1 \\2" nil nil))
-    (beginning-of-buffer)
-    (while (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
-      (replace-match "\\1\\2" nil nil))
-    (beginning-of-buffer)
-    (while (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t)
+    (goto-char (point-min))
+    (while (or (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
+	       (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
       (replace-match "\\1\\2" nil nil))))
 
+;;;; ---------------------------------------------------------------------------
+;;;; Commands
+;;;; ---------------------------------------------------------------------------
+
+(defun select-forwards-to-before-match (match)
+  "Selects forwards to just before next match, uses
+select-region-to-before-match"
+  (interactive "MSelect forwards to just before: ")
+  (select-region-to-before-match match 'forwards))
+
+(defun select-backwards-to-before-match (match)
+  "Selects backwards to just before next match, uses
+select-region-to-before-match"
+  (interactive "MSelect backwards to just before: ")
+  (select-region-to-before-match match 'backwards))
+
+(defun kill-forwards-to-before-match (match)
+  "Selects forwards to just before next match, uses
+select-region-to-before-match, then kills that region."
+  (interactive "MKill forwards to just before: ")
+  (let* ((positions (select-region-to-before-match match 'forwards))
+	 (start (car positions))
+	 (end (cadr positions)))
+    (kill-region start end)))
+
+(defun kill-backwards-to-before-match (match)
+  "Selects backwards to just before next match, uses
+select-region-to-before-match, then kills that region."
+  (interactive "MKill backwards to just before: ")
+  (let* ((positions (select-region-to-before-match match 'backwards))
+	 (start (car positions))
+	 (end (cadr positions)))
+    (kill-region start end)))
+
+(defun match-paren (arg)
+  "Go to the matching paren if on a paren; otherwise insert %."
+  (interactive "p")
+  (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
+	((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+	(t (self-insert-command (or arg 1)))))
+
+(defun delete-between-pair (char)
+  "Delete in between the given pair"
+  (interactive "cDelete between char: ")
+  (let ((pair-char))
+    (search-backward-to-char char)
+    (forward-char 1)
+    (cond
+     ((char-equal char ?\() (setq pair-char ?\)))
+     ((char-equal char ?\") (setq pair-char ?\"))
+     ((char-equal char ?\') (setq pair-char ?\'))
+     ((char-equal char ?\[) (setq pair-char ?\]))
+     ((char-equal char ?\{) (setq pair-char ?\}))
+     ((char-equal char ?\<) (setq pair-char ?\>)))
+    (zap-up-to-char 1 pair-char)))
 
 
 

@@ -1,0 +1,3 @@
+(:name cljdocjabber:wq
+       :description "eldoc mode for clojure"
+       :type elpa)

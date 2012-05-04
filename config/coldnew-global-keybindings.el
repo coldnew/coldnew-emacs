@@ -24,6 +24,16 @@
 (define-key evil-insert-state-map (kbd "C-f") 'forward-char)
 (define-key evil-insert-state-map (kbd "M-f") 'forward-word)
 (define-key evil-insert-state-map (kbd "M-b") 'backward-word)
+(define-key evil-insert-state-map (kbd "M-e") 'forward-sentence)
+(define-key evil-insert-state-map (kbd "M-a") 'backward-sentence)
+(define-key evil-insert-state-map (kbd "C-e") 'move-end-of-line)
+(define-key evil-insert-state-map (kbd "C-a") 'move-beginning-of-line)
+(define-key evil-insert-state-map (kbd "C-v") 'scroll-up)
+(define-key evil-insert-state-map (kbd "M-v") 'scroll-down)
+(define-key evil-insert-state-map (kbd "C-M-v") 'traverse-scroll-down-other-window)
+(define-key evil-insert-state-map (kbd "C-M-V") 'traverse-scroll-up-other-window)
+
+
 
 (define-key evil-insert-state-map (kbd "C-l") 'hungry-delete-backward)
 (define-key evil-insert-state-map (kbd "M-l") 'backward-delete-word)
@@ -35,28 +45,39 @@
 (define-key evil-insert-state-map (kbd "M-p") 'anything-show-kill-ring)
 (define-key evil-insert-state-map (kbd "C-\'") 'er/expand-region)
 (define-key evil-insert-state-map (kbd "C-0") 'ace-jump-mode)
+(define-key evil-insert-state-map (kbd "M-j") 'ace-jump-mode)
+(define-key evil-insert-state-map (kbd "C-.") 'repeat)
+
+
+(define-key evil-insert-state-map (kbd "%") 'match-paren)
+
 
 (key-chord-define evil-insert-state-map "vv"  'er/expand-region)
 ;; quickliy back-word and upcase/downcaseword
 (key-chord-define evil-insert-state-map "bu"  'upcase-word-backward)
 (key-chord-define evil-insert-state-map "bl"  'downcase-word-backward)
 (key-chord-define evil-insert-state-map "bc"  'capitalize-word-backward)
+;;; delete
+(key-chord-define evil-insert-state-map "dt"  'zap-up-to-char)
+(key-chord-define evil-insert-state-map "di"  'delete-between-pair)
+(key-chord-define evil-insert-state-map "dk"  'kill-whole-line)
+
+
+
 
 (define-key evil-emacs-state-map (kbd "<escape>") 'evil-normal-state)
 (define-key evil-emacs-state-map (kbd "C-s") 'my-anything-occur)
 (define-key evil-emacs-state-map (kbd "C-c C-f") 'my-anything-filelist)
-(define-key evil-emacs-state-map (kbd "C-x vv") 'egg-next-action)
+
 (define-key evil-emacs-state-map (kbd "M-p") 'anything-show-kill-ring)
 (define-key evil-emacs-state-map (kbd "C-=") 'text-scale-increase)
 (define-key evil-emacs-state-map (kbd "C--") 'text-scale-decrease)
 (define-key evil-emacs-state-map (kbd "C-\'") 'er/expand-region)
 (define-key evil-emacs-state-map (kbd "C-0") 'ace-jump-mode)
 
-
 ;;;; ---------------------------------------------------------------------------
 ;;;; paredit-mode
 ;;;; ---------------------------------------------------------------------------
-
 
 
 
@@ -125,6 +146,12 @@
 (global-set-key (kbd "C-x C-l") 'recenter-top-bottom)
 
 
+;;;;;; Super
+(global-set-key (kbd "s-n") 'windmove-down)
+(global-set-key (kbd "s-p") 'windmove-up)
+(global-set-key (kbd "s-f") 'windmove-right)
+(global-set-key (kbd "s-b") 'windmove-left)
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; one-key
 ;;;; --------------------------------------------------------------------------
@@ -132,7 +159,6 @@
 
 (global-set-key (kbd "C-w") 'one-key-menu-window-navigation)
 (global-set-key (kbd "C-x M-f") 'one-key-menu-file-handle)
-
 
 
 (provide 'coldnew-global-keybindings)
