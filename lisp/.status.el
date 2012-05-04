@@ -68,7 +68,7 @@
  (eldoc-extension status "installed" recipe
 		  (:name eldoc-extension :description "Some extension for eldoc" :website "" :type emacswiki :features eldoc-extension))
  (elscreen status "installed" recipe
-	   (:name elscreen :description "This is a fork of ElScreen updated for Emacs 24 and package.el. " :website "https://github.com/shosti/elscreen" :type github :pkgname "shosti/elscreen" :depends apel))
+	   (:name elscreen :description "This is a fork of ElScreen updated for Emacs 24 and package.el. " :website "https://github.com/shosti/elscreen" :type github :pkgname "shosti/elscreen"))
  (eproject status "installed" recipe
 	   (:name eproject :description "File grouping (\"project\") extension for emacs" :type github :pkgname "jrockway/eproject" :load-path
 		  ("." "lang")
@@ -81,7 +81,7 @@
 		       (autoload 'er/expand-region "expand-region" nil t)))
  (fastnav status "removed" recipe nil)
  (flymake-shell status "installed" recipe
-		(:name flymake-shell :description "A flymake syntax-checker for shell script" :type git :url "https://github.com/purcell/flymake-shell.git" :features ibuffer-git))
+		(:name flymake-shell :description "A flymake syntax-checker for shell script" :type git :url "https://github.com/purcell/flymake-shell.git" :features flymake-shell))
  (fuzzy status "installed" recipe
 	(:name fuzzy :website "https://github.com/m2ym/fuzzy-el" :description "Fuzzy matching utilities for GNU Emacs" :type github :pkgname "m2ym/fuzzy-el" :features fuzzy))
  (gccsense status "removed" recipe nil)

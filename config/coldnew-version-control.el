@@ -70,9 +70,12 @@
 ;;;; Alias
 ;;;; ---------------------------------------------------------------------------
 
-(defalias 'git-log 'egg-log)
+(defalias 'git-log    'egg-log)
 (defalias 'git-status 'egg-status)
 (defalias 'git-rebase 'magit-rebase-step)
+(defalias 'git-push   'magit-push)
+(defalias 'git-commit 'egg-commit-log-edit)
+
 
 (provide 'coldnew-version-control)
 ;; coldnew-version-control.el ends here.

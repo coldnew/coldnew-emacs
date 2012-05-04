@@ -24,32 +24,79 @@
 (add-hook 'eshell-mode-hook
 	  '(lambda ()
 	     (define-key evil-insert-state-local-map (kbd "C-a") 'eshell-bol)
+	     (define-key evil-insert-state-local-map (kbd "C-b") 'eshell-backward-argument)
+	     (define-key evil-insert-state-local-map (kbd "C-e") 'eshell-show-maximum-output)
+	     (define-key evil-insert-state-local-map (kbd "C-f") 'eshell-forward-argument)
+	     (define-key evil-insert-state-local-map (kbd "C-o") 'eshell-kill-output)
+	     (define-key evil-insert-state-local-map (kbd "C-r") 'eshell-show-output)
+	     ;; (define-key evil-insert-state-local-map (kbd "C-t") 'eshell-truncate-buffer)
+	     (define-key evil-insert-state-local-map (kbd "C-u") 'eshell-kill-input)
+	     (define-key evil-insert-state-local-map (kbd "M-l") 'backward-kill-word)
+	     (define-key evil-insert-state-local-map (kbd "M-l") 'backward-delete-char)
 	     ))
 
-(eval-after-load "auto-complete"
-  `(progn
-     (ac-define-source eshell-pcomplete
-       '((candidates . pcomplete-completions)))
+;; my auto-complete for elisp
+(add-hook 'eshell-mode-hook 'auto-complete-mode)
+(add-hook 'eshell-mode-hook 'ac-eshell-mode-setup)
 
-     (add-to-list 'ac-modes 'eshell-mode)
-     ))
+;;;; ---------------------------------------------------------------------------
+;;;; eshell/command
+;;;; ---------------------------------------------------------------------------
 
-;; (defun ac-complete-eshell-pcomplete ()
-;;   (interactive)
-;;   (auto-complete '(ac-source-eshell-pcomplete)))
+;; find-file
+;; (defun eshell/ef (file) (find-file file))
+(defun eshell/ef (&rest args) (eshell/emacs args))
 
-(defun my-eshell-mode-init ()
-  ;; swap <home> and C-a
-  (define-key eshell-mode-map (kbd "C-a") 'eshell-maybe-bol)
-  (define-key eshell-mode-map (kbd "<home>") 'eshell-maybe-bol)
+;; ediff
+(defun eshell/ed (file1 file2) (ediff file1 file2))
 
-  (setq outline-regexp "^.* $")
-  (outline-minor-mode t)
-  (add-to-list 'ac-sources 'ac-source-files-in-current-dir)
-  (add-to-list 'ac-sources 'ac-source-eshell-pcomplete)
-  )
+;; clear
+(defun eshell/clear ()
+  "Clears the shell buffer ala Unix's clear or DOS' cls"
+  (interactive)
+  ;; the shell prompts are read-only, so clear that for the duration
+  (let ((inhibit-read-only t))
+    ;; simply delete the region
+    (delete-region (point-min) (point-max))))
 
-(add-hook 'eshell-mode-hook 'my-eshell-mode-init)
+
+(defun eshell/emacs (&rest args)
+  "Open a file in emacs. Some habits die hard."
+  (if (null args)
+      ;; If I just ran "emacs", I probably expect to be launching
+      ;; Emacs, which is rather silly since I'm already in Emacs.
+      ;; So just pretend to do what I ask.
+      (bury-buffer)
+    ;; We have to expand the file names or else naming a directory in an
+    ;; argument causes later arguments to be looked for in that directory,
+    ;; not the starting directory
+    (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
+
+
+
+;;;; ---------------------------------------------------------------------------
+;;;; Autocomplete
+;;;; ---------------------------------------------------------------------------
+
+;; define ac-source for eshell-pcomplete
+(ac-define-source eshell-pcomplete
+  '((candidates . pcomplete-completions)
+    (cache)
+    (symbol . "f")))
+
+(defun ac-eshell-mode-setup ()
+  "auto-complete settings for eshell-mode"
+  (setq ac-sources
+	'(
+	  ac-source-eshell-pcomplete
+	  ;; ac-source-symbols
+	  ;; ac-source-variables
+	  ;; ac-source-functions
+	  ;; ac-source-features
+	  ;; ac-source-filename
+	  ;; ac-source-files-in-current-dir
+	  ;; ac-source-words-in-same-mode-buffers
+	  )))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Functions
