@@ -1105,7 +1105,7 @@ i.e anything-match-plugin.
 ;;;***
 
 ;;;### (autoloads (ascii-off ascii-on ascii-display ascii-customize)
-;;;;;;  "ascii/ascii" "ascii/ascii.el" (20383 37766))
+;;;;;;  "ascii/ascii" "ascii/ascii.el" (20384 33731))
 ;;; Generated autoloads from ascii/ascii.el
 
 (autoload 'ascii-customize "ascii/ascii" "\
@@ -1189,7 +1189,7 @@ and would like bash completion in Emacs to take these changes into account.
 ;;;***
 
 ;;;### (autoloads (c-eldoc-print-current-symbol-info c-turn-on-eldoc-mode)
-;;;;;;  "c-eldoc/c-eldoc" "c-eldoc/c-eldoc.el" (20383 37768))
+;;;;;;  "c-eldoc/c-eldoc" "c-eldoc/c-eldoc.el" (20384 33732))
 ;;; Generated autoloads from c-eldoc/c-eldoc.el
 
 (autoload 'c-turn-on-eldoc-mode "c-eldoc/c-eldoc" "\
@@ -1285,8 +1285,8 @@ Major mode for ClojureScript
 
 ;;;### (autoloads (ctypes-read-file ctypes-auto-parse-mode ctypes-file
 ;;;;;;  ctypes-dir ctypes-tags ctypes-all-buffers ctypes-buffer ctypes-define-type-in-mode
-;;;;;;  ctypes-define-type) "ctypes/ctypes" "ctypes/ctypes.el" (20383
-;;;;;;  38745))
+;;;;;;  ctypes-define-type) "ctypes/ctypes" "ctypes/ctypes.el" (20384
+;;;;;;  33732))
 ;;; Generated autoloads from ctypes/ctypes.el
 
 (autoload 'ctypes-define-type "ctypes/ctypes" "\
@@ -1478,7 +1478,7 @@ use either \\[customize] or the function `dtrt-indent-mode'.")
 ;;;***
 
 ;;;### (autoloads (ecb-byte-compile ecb-minor-mode ecb-activate)
-;;;;;;  "ecb/ecb" "ecb/ecb.el" (19331 64932))
+;;;;;;  "ecb/ecb" "ecb/ecb.el" (20384 33732))
 ;;; Generated autoloads from ecb/ecb.el
 
 (autoload 'ecb-activate "ecb/ecb" "\
@@ -1509,7 +1509,7 @@ exist.
 ;;;***
 
 ;;;### (autoloads (ecb-show-help) "ecb/ecb-help" "ecb/ecb-help.el"
-;;;;;;  (19008 47528))
+;;;;;;  (20384 33732))
 ;;; Generated autoloads from ecb/ecb-help.el
 
 (autoload 'ecb-show-help "ecb/ecb-help" "\
@@ -1528,7 +1528,7 @@ HTML-online-documentation is not included.
 
 ;;;***
 
-;;;### (autoloads nil "ecb/ecb-util" "ecb/ecb-util.el" (19340 65139))
+;;;### (autoloads nil "ecb/ecb-util" "ecb/ecb-util.el" (20384 33732))
 ;;; Generated autoloads from ecb/ecb-util.el
 
 (defconst ecb-running-xemacs (featurep 'xemacs))
@@ -1638,7 +1638,7 @@ Display a list of packages.
 ;;;### (autoloads (eproject-compile eproject-eshell-cd-here eproject-multi-isearch-buffers
 ;;;;;;  eproject-todo eproject-grep eproject-revisit-project eproject-kill-project-buffers
 ;;;;;;  eproject-ibuffer eproject-find-file) "eproject/eproject-extras"
-;;;;;;  "eproject/eproject-extras.el" (20383 65134))
+;;;;;;  "eproject/eproject-extras.el" (20384 34303))
 ;;; Generated autoloads from eproject/eproject-extras.el
 
 (autoload 'eproject-find-file "eproject/eproject-extras" "\
@@ -1724,21 +1724,6 @@ If prefix argument is 0 it resets point and mark to their state
 before calling `er/expand-region' for the first time.
 
 \(fn ARG)" t nil)
-
-;;;***
-
-;;;### (autoloads (flymake-shell-load) "flymake-shell/flymake-shell"
-;;;;;;  "flymake-shell/flymake-shell.el" (20384 1447))
-;;; Generated autoloads from flymake-shell/flymake-shell.el
-
-(autoload 'flymake-shell-load "flymake-shell/flymake-shell" "\
-Configure flymake mode to check the current buffer's shell-script syntax.
-
-This function is designed to be called in `sh-set-shell-hook'; it
-does not alter flymake's global configuration, so function
-`flymake-mode' alone will not suffice.
-
-\(fn)" t nil)
 
 ;;;***
 
@@ -2255,7 +2240,7 @@ See `rainbow-delimiters-mode' for more information on Rainbow-Delimiters mode.
 ;;;***
 
 ;;;### (autoloads (rainbow-mode) "rainbow-mode/rainbow-mode" "rainbow-mode/rainbow-mode.el"
-;;;;;;  (20383 43474))
+;;;;;;  (20384 33732))
 ;;; Generated autoloads from rainbow-mode/rainbow-mode.el
 
 (autoload 'rainbow-mode "rainbow-mode/rainbow-mode" "\
@@ -2335,7 +2320,7 @@ A wrapper for `hyperspec-lookup'
 ;;;***
 
 ;;;### (autoloads (smart-compile-select-compile-command) "smarter-compile/smarter-compile"
-;;;;;;  "smarter-compile/smarter-compile.el" (20383 44759))
+;;;;;;  "smarter-compile/smarter-compile.el" (20384 33732))
 ;;; Generated autoloads from smarter-compile/smarter-compile.el
 
 (autoload 'smart-compile-select-compile-command "smarter-compile/smarter-compile" "\
@@ -2350,26 +2335,14 @@ It does not call `compile'.
 
 ;;;***
 
-;;;### (autoloads (smex-initialize) "smex/smex" "smex/smex.el" (20383
-;;;;;;  49323))
+;;;### (autoloads (smex-initialize) "smex/smex" "smex/smex.el" (20384
+;;;;;;  34220))
 ;;; Generated autoloads from smex/smex.el
 
 (autoload 'smex-initialize "smex/smex" "\
 
 
 \(fn)" t nil)
-
-;;;***
-
-;;;### (autoloads (sr-tree-mode) "sunrise-x-tree/sunrise-x-tree"
-;;;;;;  "sunrise-x-tree/sunrise-x-tree.el" (20384 6642))
-;;; Generated autoloads from sunrise-x-tree/sunrise-x-tree.el
-
-(autoload 'sr-tree-mode "sunrise-x-tree/sunrise-x-tree" "\
-Tree view for the Sunrise Commander file manager.
-
-\(fn)" t nil)
-(eval-after-load 'sunrise-commander '(sr-extend-with 'sunrise-x-tree))
 
 ;;;***
 
@@ -2380,7 +2353,7 @@ Tree view for the Sunrise Commander file manager.
 ;;;;;;  tabbar-press-scroll-left tabbar-press-home tabbar-forward-tab
 ;;;;;;  tabbar-backward-tab tabbar-forward-group tabbar-backward-group
 ;;;;;;  tabbar-forward tabbar-backward) "tabbar/tabbar" "tabbar/tabbar.el"
-;;;;;;  (20384 2448))
+;;;;;;  (20384 33732))
 ;;; Generated autoloads from tabbar/tabbar.el
 
 (autoload 'tabbar-backward "tabbar/tabbar" "\
@@ -2744,29 +2717,9 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "anything/extensions/anything-obsolete.el" "anything/extensions/anything-show-completion.el"
 ;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete/auto-complete-config.el"
 ;;;;;;  "auto-complete/auto-complete-pkg.el" "auto-complete/auto-complete.el"
-;;;;;;  "c-eldoc/c-eldoc-autoloads.el" "c-eldoc/c-eldoc-pkg.el" "cedet/cedet-build.el"
-;;;;;;  "cedet/cedet-devel-load.el" "cedet/cedet-ediff.el" "cedet/cedet-emacs-merge.el"
-;;;;;;  "cedet/cedet-remove-builtin.el" "cedet/cedet-update-changelog.el"
-;;;;;;  "cedet/cedet-update-version.el" "cljdoc/cljdoc-autoloads.el"
-;;;;;;  "cljdoc/cljdoc-pkg.el" "cljdoc/cljdoc.el" "ctypes/ctypes-autoloads.el"
-;;;;;;  "ctypes/ctypes-pkg.el" "ecb/ecb-advice-test.el" "ecb/ecb-analyse.el"
-;;;;;;  "ecb/ecb-autogen.el" "ecb/ecb-buffertab.el" "ecb/ecb-cedet-wrapper.el"
-;;;;;;  "ecb/ecb-common-browser.el" "ecb/ecb-compatibility.el" "ecb/ecb-compilation.el"
-;;;;;;  "ecb/ecb-create-layout.el" "ecb/ecb-cycle.el" "ecb/ecb-eshell.el"
-;;;;;;  "ecb/ecb-examples.el" "ecb/ecb-face.el" "ecb/ecb-file-browser.el"
-;;;;;;  "ecb/ecb-jde.el" "ecb/ecb-layout-defs.el" "ecb/ecb-layout.el"
-;;;;;;  "ecb/ecb-method-browser.el" "ecb/ecb-mode-line.el" "ecb/ecb-multiframe.el"
-;;;;;;  "ecb/ecb-navigate.el" "ecb/ecb-semantic-wrapper.el" "ecb/ecb-semantic.el"
-;;;;;;  "ecb/ecb-speedbar.el" "ecb/ecb-symboldef.el" "ecb/ecb-tod.el"
-;;;;;;  "ecb/ecb-upgrade.el" "ecb/ecb-winman-support.el" "ecb/silentcomp.el"
-;;;;;;  "ecb/tree-buffer.el" "eproject/eproject-tests.el" "eproject/eproject.el"
-;;;;;;  "eproject/lang/eproject-perl.el" "eproject/lang/eproject-ruby-on-rails.el"
-;;;;;;  "eproject/lang/eproject-ruby.el" "ide-skel/ide-skel.el" "projectile/projectile-autoloads.el"
-;;;;;;  "projectile/projectile-pkg.el" "projectile/projectile.el"
-;;;;;;  "rainbow-mode/rainbow-mode-autoloads.el" "rainbow-mode/rainbow-mode-pkg.el"
-;;;;;;  "smarter-compile/smarter-compile-autoloads.el" "smarter-compile/smarter-compile-pkg.el"
-;;;;;;  "space-chord/space-chord.el" "sr-speedbar/sr-speedbar.el"
-;;;;;;  "xml-rpc-el/xml-rpc.el") (20384 6832 462688))
+;;;;;;  "eproject/eproject-tests.el" "eproject/eproject.el" "eproject/lang/eproject-perl.el"
+;;;;;;  "eproject/lang/eproject-ruby-on-rails.el" "eproject/lang/eproject-ruby.el")
+;;;;;;  (20384 34304 243795))
 
 ;;;***
 
