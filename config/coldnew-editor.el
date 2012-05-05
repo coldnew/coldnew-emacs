@@ -47,7 +47,6 @@
 ;; Enable delete-selection-mode
 (delete-selection-mode t)
 
-
 ;;;; ---------------------------------------------------------------------------
 ;;;; Hooks
 ;;;; ---------------------------------------------------------------------------
@@ -117,9 +116,9 @@
 	    (if (key-chord-lookup-key res)
 		(progn
 		  (setq result (- (float-time) first-key-delay))
-		  (message (number-to-string result))
+		  ;;		  (message (number-to-string result))
 		  (if (eq first-char next-char) (setq result (- result 4e-05)))
-		  (if (< result 1.13e-05)
+		  (if (< result 1.3e-05)
 		      (progn
 			(setq key-chord-defining-kbd-macro
 			      (cons first-char key-chord-defining-kbd-macro))
@@ -134,6 +133,10 @@
     ;; else no key-chord keymap
     (setq key-chord-last-unmatched first-char)
     (list first-char)))
+
+
+
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; space-chord
