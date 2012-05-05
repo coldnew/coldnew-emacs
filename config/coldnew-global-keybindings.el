@@ -34,8 +34,7 @@
 (global-set-key (kbd "C-x .") 'undo-tree-redo)
 (global-set-key (kbd "C-x vv") 'egg-next-action)
 (global-set-key (kbd "C-x M-x") 'anything-M-x)
-
-
+(global-set-key (kbd "C-x o")   'switch-window)
 (global-set-key (kbd "C-c C-f") 'my-anything-filelist)
 (global-set-key (kbd "<escape>") 'evil-mode)
 
@@ -69,7 +68,7 @@
 (global-set-key (kbd "M-e") 'forward-sentence)
 (global-set-key (kbd "M-a") 'backward-sentence)
 (global-set-key (kbd "M-l") 'backward-delete-word)
-(global-set-key (kbd "M-p") 'anything-show-kill-ring)
+(global-set-key (kbd "M-y") 'anything-show-kill-ring)
 
 (global-set-key (kbd "C-x C-n") 'auto-complete)
 
