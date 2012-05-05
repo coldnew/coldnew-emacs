@@ -9,6 +9,13 @@
 (setq minibuffer-electric-default-mode t )
 
 ;;;; ---------------------------------------------------------------------------
+;;;; Hooks
+;;;; ---------------------------------------------------------------------------
+
+;; Abort the minibuffer when using the mouse
+(add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
+
+;;;; ---------------------------------------------------------------------------
 ;;;; setup keybindings
 ;;;; ---------------------------------------------------------------------------
 (define-key minibuffer-local-map (kbd "M-l") 'backward-kill-word)
@@ -24,6 +31,15 @@
 (require* 'smex)
 (smex-initialize)
 (setq smex-save-file (concat emacs-cache-dir "smex.dat"))
+
+;;;; ---------------------------------------------------------------------------
+;;;; Functions
+;;;; ---------------------------------------------------------------------------
+
+(defun stop-using-minibuffer ()
+  "kill the minibuffer"
+  (when (and (>= (recursion-depth) 1) (active-minibuffer-window))
+    (abort-recursive-edit)))
 
 
 (provide 'coldnew-minibuffer)
