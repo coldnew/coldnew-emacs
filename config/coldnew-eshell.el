@@ -5,6 +5,7 @@
 (require 'em-dirs)
 (require 'em-hist)
 
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; Config
 ;;;; ---------------------------------------------------------------------------
@@ -14,19 +15,24 @@
       '(lambda ()
 	 (concat
 	  user-login-name "@" system-name " "
-	  (if (string= (eshell/pwd) (directory-file-name (expand-file-name (getenv "HOME"))))
-	      "~"
+	  (if (search (directory-file-name (expand-file-name (getenv "HOME"))) (eshell/pwd))
+	      (replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
 	    (eshell/pwd))
 	  (if (= (user-uid) 0) " # " " $ ")
 	  )))
 
-;;; FIXME: remove one day
-(setq-default eshell-cmpl-cycle-completions nil)
-(setq-default pcomplete-cycle-completions nil)
-
 ;;; change history file path
 (setq eshell-last-dir-ring-file-name (concat emacs-cache-dir "eshell-lastdir"))
 (setq eshell-history-file-name (concat emacs-cache-dir "eshell-history"))
+
+;; other setting
+(setq eshell-save-history-on-exit t)
+(setq eshell-ask-to-save-last-dir nil)
+(setq eshell-history-size 512)
+(setq eshell-hist-ignoredups t)
+(setq eshell-cmpl-cycle-completions nil)
+(setq eshell-scroll-to-bottom-on-output t)
+(setq eshell-show-maximum-output t)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Hooks
@@ -79,6 +85,20 @@
     ;; simply delete the region
     (delete-region (point-min) (point-max))))
 
+
+(defun eshell/info (subject)
+  "Read the Info manual on SUBJECT."
+  (let ((buf (current-buffer)))
+    (Info-directory)
+    (let ((node-exists (ignore-errors (Info-menu subject))))
+      (if node-exists
+	  0
+	;; We want to switch back to *eshell* if the requested
+	;; Info manual doesn't exist.
+	(switch-to-buffer buf)
+	(eshell-print (format "There is no Info manual on %s.\n"
+			      subject))
+	1))))
 
 (defun eshell/emacs (&rest args)
   "Open a file in emacs. Some habits die hard."
