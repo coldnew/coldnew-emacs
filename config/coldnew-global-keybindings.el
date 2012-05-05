@@ -160,5 +160,7 @@
 (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
 
 
+
+
 (provide 'coldnew-global-keybindings)
 ;; coldnew-global-keybindings.el ends here.

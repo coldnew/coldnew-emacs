@@ -31,6 +31,10 @@
 (setq stack-trace-on-error t)
 (setq imenu-auto-scan t)
 
+;; xrelated srtting
+(setq x-select-enable-clipboard t)
+(setq select-active-regions t)
+
 ;;;; -------------------------------------------------------------------------------
 ;;;;   Global Variables Setting
 ;;;; -------------------------------------------------------------------------------

@@ -95,8 +95,10 @@ See `anything-c-filelist-file-name' docstring for usage."
 (defun my-anything-occur ()
   "I don't like highlight when goto lines."
   (interactive)
-  (let ((anything-match-line-overlay-face nil))
-    (anything-occur)))
+  (let ((anything-match-line-overlay-face nil)
+	(recenter-redisplay nil))
+    (anything-occur))
+  (recenter))
 
 (defun anything-c-occur-get-line (s e)
   "rewrite `anything-c-occur-get-line' to make it color on line-number."

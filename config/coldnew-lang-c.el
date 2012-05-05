@@ -23,7 +23,7 @@
 (add-hook 'ctypes-load-hook 'my-ctypes-load-hook)
 
 ;; use hide-if-def-mode
-(add-hook 'c-mode-hook 'hide-ifdef-mode)
+;;(add-hook 'c-mode-hook 'hide-ifdef-mode)
 
 (require 'gccsense)
 
