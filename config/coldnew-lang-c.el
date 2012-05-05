@@ -10,7 +10,7 @@
 ;;;; ---------------------------------------------------------------------------
 
 ;; use my cc-mode-common-setting
-(add-hook 'c++-mode-hook 'coldnew-cc-mode-common-setting)
+(add-hook 'c-mode-hook 'coldnew-cc-mode-common-setting)
 
 ;; Enable c-eldoc
 (require 'c-eldoc)
@@ -22,6 +22,8 @@
 (setq-default ctypes-file-name (concat emacs-cache-dir "ctypes_std_c.dat"))
 (add-hook 'ctypes-load-hook 'my-ctypes-load-hook)
 
+;; use hide-if-def-mode
+(add-hook 'c-mode-hook 'hide-ifdef-mode)
 
 (require 'gccsense)
 

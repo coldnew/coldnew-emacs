@@ -43,7 +43,7 @@
 ;;;; ---------------------------------------------------------------------------
 (require 'midnight)
 
-(defvar clean-buffer-delay-time (* 8 3600)
+(defvar clean-buffer-delay-time (* 5 8 3600)
   "Every delay time will clean buffer.")
 
 ;; Clean the buffer-list every 8hr
