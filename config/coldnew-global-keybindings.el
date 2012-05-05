@@ -36,15 +36,14 @@
 (global-set-key (kbd "C-x vv") 'egg-next-action)
 (global-set-key (kbd "C-x M-x") 'anything-M-x)
 (global-set-key (kbd "C-x o")   'switch-window)
+(global-set-key (kbd "C-x C-l") 'recenter-top-bottom)
+
+
+;;;; ---------------------------------------------------------------------------
+;;;; Combination key (Ctrl-c prefix)
+;;;; ---------------------------------------------------------------------------
 (global-set-key (kbd "C-c C-f") 'my-anything-filelist)
 (global-set-key (kbd "C-c C-s") 'save-buffer-always)
-
-
-;;;; ---------------------------------------------------------------------------
-;;;; Combination key (Ctrl-x prefix)
-;;;; ---------------------------------------------------------------------------
-
-(global-set-key (kbd "C-x C-l") 'recenter-top-bottom)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-Meta prefix)
