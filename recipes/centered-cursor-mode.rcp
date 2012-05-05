@@ -1,0 +1,6 @@
+(:name centered-cursor-mode
+       :description ""
+       :website ""
+       :type emacswiki
+       :features centered-cursor-mode
+       )

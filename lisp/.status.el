@@ -187,6 +187,8 @@
  (sunrise-commander status "installed" recipe
 		    (:name sunrise-commander :description "Two-pane file manager for Emacs based on Dired and inspired by MC" :type emacswiki))
  (sunrise-x-tree status "removed" recipe nil)
+ (switch-window status "installed" recipe
+		(:name switch-window :description "A *visual* way to choose a window to switch to" :type github :pkgname "dimitri/switch-window" :features switch-window))
  (tabbar status "installed" recipe
 	 (:name tabbar :type emacswiki :description "Display a tab bar in the header line" :lazy t :load-path "."))
  (tempbuf status "installed" recipe
