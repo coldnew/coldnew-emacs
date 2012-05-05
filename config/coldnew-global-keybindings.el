@@ -72,13 +72,14 @@
 (global-set-key (kbd "M-y") 'anything-show-kill-ring)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
+(global-set-key (kbd "M-v") 'er/expand-region)
+
 
 (global-set-key (kbd "C-x C-n") 'auto-complete)
-
 (global-set-key (kbd "C-c C-f") 'my-anything-filelist)
 
 
-(global-set-key (kbd "C-\'") 'er/expand-region)
+
 (global-set-key (kbd "C-0") 'ace-jump-mode)
 (global-set-key (kbd "M-j") 'ace-jump-mode)
 (global-set-key (kbd "C-.") 'repeat)
