@@ -31,7 +31,7 @@
 ;;;;;;; Kyebinding
 (add-hook 'egg-commit-buffer-mode-hook
 	  '(lambda ()
-	     (key-chord-define evil-insert-state-local-map "cc" 'egg-log-msg-done)))
+	     (key-chord-define global-map "cc" 'egg-log-msg-done)))
 
 
 ;;;;;;;; Advice
