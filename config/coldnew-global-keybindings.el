@@ -32,7 +32,6 @@
 (global-set-key (kbd "C-x C-d")  'dired)
 (global-set-key (kbd "C-x C-r")  'sudo-edit)
 (global-set-key (kbd "C-x ,") 'undo-tree-undo)
-(global-set-key (kbd "C-x .") 'undo-tree-redo)
 (global-set-key (kbd "C-x vv") 'egg-next-action)
 (global-set-key (kbd "C-x M-x") 'anything-M-x)
 (global-set-key (kbd "C-x o")   'switch-window)
@@ -44,6 +43,7 @@
 ;;;; ---------------------------------------------------------------------------
 (global-set-key (kbd "C-c C-f") 'my-anything-filelist)
 (global-set-key (kbd "C-c C-s") 'save-buffer-always)
+(global-set-key (kbd "C-c ,") 'undo-tree-redo)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-Meta prefix)
