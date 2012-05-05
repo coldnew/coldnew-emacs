@@ -21,7 +21,7 @@
 (global-set-key (kbd "C-f") 'forward-char)
 (global-set-key (kbd "C-l") 'hungry-delete-backward)
 (global-set-key (kbd "C-;") 'iedit-mode)
-(global-set-key (kbd "C-v") 'cua-set-rectangle-mark)
+(global-set-key (kbd "C-v") 'cua-set-mark)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-x prefix)
