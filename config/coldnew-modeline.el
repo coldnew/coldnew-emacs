@@ -25,13 +25,19 @@
 ;;     (concat "< " mode-line-state-string " >")))
 
 (defun mode-line-state ()
-  (let ((mode-line-state-string))
+  (let ((mode-line-state-string)
+	(propertize-string))
     (setq mode-line-state-string
 	  (cond
 	   (view-mode "View")
 	   (overwrite-mode "Overwrite")
 	   (t "Emacs")))
-    (concat "< " mode-line-state-string " >")))
+    (setq propertize-string
+	  (cond
+	   (view-mode 'mode-line-read-only-face)
+	   (t 'mode-line-normal-state-face)
+	   ))
+    (concat "< " (propertize mode-line-state-string 'face propertize-string) " >")))
 
 
 ;;;; ---------------------------------------------------------------------------

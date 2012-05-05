@@ -29,6 +29,10 @@
   "face for mode-name-string in modeline."
   :group 'mode-line)
 
+(defface mode-line-normal-state-face
+  '((t (:inherit font-lock-function-name-face)))
+  "face for emacs normal state")
+
 (defface font-lock-escape-char-face
   '((((class color)) (:foreground "seagreen2")))
   "highlight c escapes char like vim"
