@@ -404,6 +404,16 @@ select-region-to-before-match, then kills that region."
      ((char-equal char ?\<) (setq pair-char ?\>)))
     (zap-up-to-char 1 pair-char)))
 
+(defun cua-set-mark-or-rectangle-mark (&optional arg)
+  "toggle between cua-set-mark or cua-rectangle-mark"
+  (interactive "P")
+  (if (or (not mark-active) arg)
+      (cua-set-mark arg)
+    (cua-toggle-rectangle-mark)))
+
+
 
 (provide 'coldnew-editor)
 ;; coldnew-editor.el ends here.
+
+
