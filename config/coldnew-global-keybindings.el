@@ -55,8 +55,6 @@
 
 (global-set-key (kbd "C-e") 'move-end-of-line)
 (global-set-key (kbd "C-a") 'move-beginning-of-line)
-(global-set-key (kbd "C-v") 'scroll-up)
-(global-set-key (kbd "M-v") 'scroll-down)
 (global-set-key (kbd "C-M-v") 'traverse-scroll-down-other-window)
 (global-set-key (kbd "C-M-V") 'traverse-scroll-up-other-window)
 
