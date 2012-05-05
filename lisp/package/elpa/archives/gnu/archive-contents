@@ -69,7 +69,7 @@ nil "Minor mode to edit files via hex-dump format  -*- lexical-binding: t -*-" s
 [(0 3)
 nil "OAuth 2.0 Authorization Protocol" single])
 (org .
-[(20120503)
+[(20120504)
 nil "Outline-based notes management and organizer" tar])
 (quarter-plane .
 [(0 1)

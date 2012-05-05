@@ -35,12 +35,17 @@
 	       ("touch `find . -name Makefile`" "make")
 	       :build/windows-nt
 	       ("echo #!/bin/sh > tmp.sh & echo touch `/usr/bin/find . -name Makefile` >> tmp.sh & echo make FIND=/usr/bin/find >> tmp.sh" "sed 's/^M$//' tmp.sh  > tmp2.sh" "sh ./tmp2.sh" "rm ./tmp.sh ./tmp2.sh")))
+ (center-cursor-mode status "removed" recipe nil)
+ (centered-cursor-mode status "installed" recipe
+		       (:name centered-cursor-mode :description "" :website "" :type emacswiki :features centered-cursor-mode))
  (cljdoc status "installed" recipe
 	 (:name cljdoc :description "eldoc mode for clojure" :type elpa))
  (clojure-mode status "installed" recipe
 	       (:name clojure-mode :website "https://github.com/technomancy/clojure-mode" :description "Emacs support for the Clojure language." :type github :pkgname "technomancy/clojure-mode"))
  (ctypes status "installed" recipe
 	 (:name ctypes :description "Enhanced Font lock support for custom defined type" :type elpa))
+ (cursor-chg status "installed" recipe
+	     (:name cursor-chg :description "" :features cursor-chg :type elpa))
  (dot-mode status "removed" recipe nil)
  (doxymacs status "installed" recipe
 	   (:name doxymacs :website "http://doxymacs.sourceforge.net/" :description "Doxymacs is Doxygen + {X}Emacs." :type git :url "git://doxymacs.git.sourceforge.net/gitroot/doxymacs/doxymacs" :load-path
@@ -117,6 +122,8 @@
 	       `(,(concat "PATH="
 			  (shell-quote-argument invocation-directory)
 			  ":$PATH make all"))))
+ (minimap status "installed" recipe
+	  (:name minimap :type git :url "http://randomsample.de/minimap.git"))
  (multi-term status "installed" recipe
 	     (:name multi-term :description "A mode based on term.el, for managing multiple terminal buffers in Emacs." :type emacswiki :features multi-term))
  (nav status "installed" recipe

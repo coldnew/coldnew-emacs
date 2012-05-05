@@ -16,6 +16,24 @@
   "Get major-mode name with << >>."
   (concat "<< " (propertize mode-name 'face 'mode-line-mode-name-face) " >>"))
 
+;; (defun mode-line-state ()
+;;   (let ((mode-line-state-string "Emacs"))
+;;     (cond
+;;      (view-mode (setq mode-line-state-string "View"))
+;;      (overwrite-mode (setq mode-line-state-string "Overwrite"))
+;;      (t 'mode-line-state-string-E))
+;;     (concat "< " mode-line-state-string " >")))
+
+(defun mode-line-state ()
+  (let ((mode-line-state-string))
+    (setq mode-line-state-string
+	  (cond
+	   (view-mode "View")
+	   (overwrite-mode "Overwrite")
+	   (t "Emacs")))
+    (concat "< " mode-line-state-string " >")))
+
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; modeline User-Interfaced setting
 ;;;; ---------------------------------------------------------------------------
@@ -29,6 +47,8 @@
 			((buffer-modified-p)
 			 (propertize "**" 'face 'mode-line-modified-face))
 			(t "--")))
+		 "   "
+		 (:eval (mode-line-state))
 		 "   "
 		 mode-line-buffer-identification
 		 "   "

@@ -4,8 +4,8 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; jrockway/eproject
 ;;;; ---------------------------------------------------------------------------
-(require 'eproject)
-(require 'eproject-extras)
+;;(require 'eproject)
+;;(require 'eproject-extras)
 
 
 

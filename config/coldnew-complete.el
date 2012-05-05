@@ -83,10 +83,11 @@ See `anything-c-filelist-file-name' docstring for usage."
   (anything
    :prompt "Switch to: "
    :source
-   '(anything-c-source-ffap-line
+   '(
+     anything-c-source-recentf
+     anything-c-source-ffap-line
      anything-c-source-ffap-guesser
      ;; anything-c-source-buffers-list
-     anything-c-source-recentf
      anything-c-source-bookmarks
      anything-c-source-file-cache
      anything-c-source-filelist)))

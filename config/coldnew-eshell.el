@@ -20,7 +20,7 @@
 	  (if (= (user-uid) 0) " # " " $ ")
 	  )))
 
-
+;;; FIXME: remove one day
 (setq-default eshell-cmpl-cycle-completions nil)
 (setq-default pcomplete-cycle-completions nil)
 
@@ -44,19 +44,19 @@
 ;;;; ---------------------------------------------------------------------------
 
 ;; (define-key eshell-command-map (kbd "C-a") 'eshell-bol)
-(add-hook 'eshell-mode-hook
-	  '(lambda ()
-	     (define-key evil-insert-state-local-map (kbd "C-a") 'eshell-bol)
-	     (define-key evil-insert-state-local-map (kbd "C-b") 'eshell-backward-argument)
-	     (define-key evil-insert-state-local-map (kbd "C-e") 'eshell-show-maximum-output)
-	     (define-key evil-insert-state-local-map (kbd "C-f") 'eshell-forward-argument)
-	     (define-key evil-insert-state-local-map (kbd "C-o") 'eshell-kill-output)
-	     (define-key evil-insert-state-local-map (kbd "C-r") 'eshell-show-output)
-	     ;; (define-key evil-insert-state-local-map (kbd "C-t") 'eshell-truncate-buffer)
-	     (define-key evil-insert-state-local-map (kbd "C-u") 'eshell-kill-input)
-	     (define-key evil-insert-state-local-map (kbd "M-l") 'backward-kill-word)
-	     (define-key evil-insert-state-local-map (kbd "M-l") 'backward-delete-char)
-	     ))
+;; (add-hook 'eshell-mode-hook
+;;	  '(lambda ()
+;;	     (define-key evil-insert-state-local-map (kbd "C-a") 'eshell-bol)
+;;	     (define-key evil-insert-state-local-map (kbd "C-b") 'eshell-backward-argument)
+;;	     (define-key evil-insert-state-local-map (kbd "C-e") 'eshell-show-maximum-output)
+;;	     (define-key evil-insert-state-local-map (kbd "C-f") 'eshell-forward-argument)
+;;	     (define-key evil-insert-state-local-map (kbd "C-o") 'eshell-kill-output)
+;;	     (define-key evil-insert-state-local-map (kbd "C-r") 'eshell-show-output)
+;;	     ;; (define-key evil-insert-state-local-map (kbd "C-t") 'eshell-truncate-buffer)
+;;	     (define-key evil-insert-state-local-map (kbd "C-u") 'eshell-kill-input)
+;;	     (define-key evil-insert-state-local-map (kbd "M-l") 'backward-kill-word)
+;;	     (define-key evil-insert-state-local-map (kbd "M-l") 'backward-delete-char)
+;;	     ))
 
 
 ;;;; ---------------------------------------------------------------------------

@@ -5,8 +5,7 @@
 ;; ;;;; ---------------------------------------------------------------------------
 ;; ;;;; evil
 ;; ;;;; ---------------------------------------------------------------------------
-;; (require 'evil)
-
+(require 'evil)
 ;; ;; Global enable evil-mode
 ;; ;; (evil-mode t)
 
@@ -46,7 +45,7 @@
 ;;   "insert string in evil-mode."
 ;;   `(evil-define-key ,state ,map ,key
 ;;      '(lambda ()
-;; 	(interactive) (insert ,name) (if (featurep 'yasnippet) (yas/expand)))))
+;;	(interactive) (insert ,name) (if (featurep 'yasnippet) (yas/expand)))))
 
 
 
