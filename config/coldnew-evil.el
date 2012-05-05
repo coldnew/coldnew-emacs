@@ -9,8 +9,8 @@
 ;; ;; Global enable evil-mode
 ;; ;; (evil-mode t)
 
-;; ;; change default cursor face
-;; (setq evil-default-cursor '(:background (face-attribute 'cursor :background) box))
+;; change default cursor face
+(setq evil-default-cursor '(:background (face-attribute 'cursor :background) box))
 
 ;; (setq evil-want-visual-char-semi-exclusive t)
 
