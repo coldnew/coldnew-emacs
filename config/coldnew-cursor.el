@@ -13,7 +13,7 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; Hooks
 ;;;; ---------------------------------------------------------------------------
-;;(add-hook 'post-command-hook 'coldnew/set-cursor-according-mode)
+(add-hook 'post-command-hook 'coldnew/set-cursor-according-mode)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; cursor-chg
@@ -22,13 +22,32 @@
 (require* 'cursor-chg)
 ;; Turn on cursor change when Emacs is idle
 (toggle-cursor-type-when-idle 1)
-;; Turn on change for overwrite, read-only, and input mode
-;;(change-cursor-mode 1)
+;; ;; Turn on change for overwrite, read-only, and input mode
+;; (change-cursor-mode 1)
 (setq curchg-default-cursor-color emacs-normal-cursor-color)
+
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Functions
 ;;;; ---------------------------------------------------------------------------
+(defun coldnew/set-cursor-according-mode ()
+  "change cursor shap and color according mode"
+  (cond
+   (buffer-read-only
+    (set-cursor-type emacs-read-only-cursor-type)
+    (setq cursor-color emacs-read-only-cursor-color))
+   ;; (overwrite-mode
+   ;;   (set-cursor-color djcb-overwrite-color)
+   ;;   (setq cursor-type djcb-overwrite-cursor-type))
+   (t
+    (set-cursor-type emacs-normal-cursor-type)
+    (setq cursor-color emacs-normal-cursor-color))))
+
+
+
+
+
 
 
 (provide 'coldnew-cursor)
