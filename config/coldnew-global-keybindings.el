@@ -21,7 +21,9 @@
 (global-set-key (kbd "C-f") 'forward-char)
 (global-set-key (kbd "C-l") 'hungry-delete-backward)
 (global-set-key (kbd "C-;") 'iedit-mode)
-(global-set-key (kbd "C-v") 'cua-set-mark)
+(global-set-key (kbd "C-v") 'coldnew/set-mark-command)
+
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-x prefix)
@@ -151,6 +153,11 @@
 
 ;;(global-set-key (kbd "C-w") 'one-key-menu-window-navigation)
 (global-set-key (kbd "C-x M-f") 'one-key-menu-file-handle)
+
+;;;; ---------------------------------------------------------------------------
+;;;; Alias
+;;;; ---------------------------------------------------------------------------
+(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
 
 
 (provide 'coldnew-global-keybindings)
