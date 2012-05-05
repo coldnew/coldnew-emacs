@@ -36,6 +36,7 @@
 (global-set-key (kbd "C-x M-x") 'anything-M-x)
 (global-set-key (kbd "C-x o")   'switch-window)
 (global-set-key (kbd "C-c C-f") 'my-anything-filelist)
+(global-set-key (kbd "C-c C-s") 'save-buffer-always)
 
 
 ;;;; ---------------------------------------------------------------------------
