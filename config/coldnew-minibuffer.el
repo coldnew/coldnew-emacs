@@ -24,6 +24,7 @@
 (define-key minibuffer-local-map (kbd "M-p") 'previous-history-element)
 (define-key minibuffer-local-map (kbd "M-n") 'next-history-element)
 (define-key minibuffer-local-map (kbd "C-g") 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-map (kbd "C-r") 'resolve-sym-link)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; smex
@@ -40,6 +41,22 @@
   "kill the minibuffer"
   (when (and (>= (recursion-depth) 1) (active-minibuffer-window))
     (abort-recursive-edit)))
+
+;;;; ---------------------------------------------------------------------------
+;;;; Commands
+;;;; ---------------------------------------------------------------------------
+(defun resolve-sym-link ()
+  "Replace the string at the point with the true path."
+  (interactive)
+  (beginning-of-line)
+  (let* ((file (buffer-substring (point)
+				 (save-excursion (end-of-line) (point))))
+	 (file-dir (file-name-directory file))
+	 (file-true-dir (file-truename file-dir))
+	 (file-name (file-name-nondirectory file)))
+    (delete-region (point) (save-excursion (end-of-line) (point)))
+    (insert (concat file-true-dir file-name))))
+
 
 
 (provide 'coldnew-minibuffer)
