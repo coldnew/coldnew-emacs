@@ -98,6 +98,9 @@
  '(diff-context ((t (:inherit font-lock-comment))))
  '(diff-refine-change ((t (:background "#0B0B0E" :foreground "#DCDCDC"))))
 
+ ;;;; cua
+ '(cua-rectangle ((t (:background "#444444" :foreground "#DCDCDC"))))
+
  ;;;; ediff
 
 
