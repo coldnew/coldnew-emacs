@@ -26,13 +26,15 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
 ;;;; ---------------------------------------------------------------------------
-(setq indent-tabs-mode nil )		; don't use tabs to indent
-(setq tab-width          8 )		; default tab-width is 8
-(setq line-spacing       4 )		; Additional space between lines
-(setq fill-column      100 )		; column beyond which automatic line-wrapping shold happen
-(setq kill-ring-max    300 )		; Maximum lenght of kill-ring
-(setq major-mode 'org-mode )		; Use org-mode as default major-mode
-(setq require-final-newline t )		; Auto add a newline at the end of line
+(setq indent-tabs-mode nil )	      ; don't use tabs to indent
+(setq tab-width          8 )	      ; default tab-width is 8
+(setq line-spacing       4 )	      ; Additional space between lines
+(setq fill-column      100 ) ; column beyond which automatic line-wrapping shold happen
+(setq kill-ring-max    300 ) ; Maximum lenght of kill-ring
+(setq major-mode 'org-mode ) ; Use org-mode as default major-mode
+(setq require-final-newline  t ) ; Auto add a newline at the end of line
+(setq next-line-add-newlines t ) ;
+(setq shift-select-mode      t ) ; Enable shift-select mode
 
 ;; Enable global font-lock
 (global-font-lock-mode t)
@@ -44,6 +46,7 @@
 (global-auto-complete-mode t)
 ;; Enable delete-selection-mode
 (delete-selection-mode t)
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Hooks
@@ -70,6 +73,19 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybindings
 ;;;; ---------------------------------------------------------------------------
+
+;;;; ---------------------------------------------------------------------------
+;;;; center-cursor
+;;;; ---------------------------------------------------------------------------
+;;(require* 'centered-cursor-mode)
+;;(global-centered-cursor-mode +1)
+
+;;;; ---------------------------------------------------------------------------
+;;;; minimap
+;;;; ---------------------------------------------------------------------------
+;; minimap is really funny :)
+;;(require* 'minimap)
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; key-chord
@@ -285,6 +301,8 @@
 	       (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
       (replace-match "\\1\\2" nil nil))))
 
+
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; Commands
 ;;;; ---------------------------------------------------------------------------
@@ -340,8 +358,5 @@ select-region-to-before-match, then kills that region."
      ((char-equal char ?\{) (setq pair-char ?\}))
      ((char-equal char ?\<) (setq pair-char ?\>)))
     (zap-up-to-char 1 pair-char)))
-
-
-
 (provide 'coldnew-editor)
 ;; coldnew-editor.el ends here.

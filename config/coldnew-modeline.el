@@ -16,18 +16,6 @@
   "Get major-mode name with << >>."
   (concat "<< " (propertize mode-name 'face 'mode-line-mode-name-face) " >>"))
 
-(defun evil-mode-string ()
-  (let ((evil-state-string (substring evil-mode-line-tag 2 3)))
-    (setq evil-state-string-face
-	  (cond
-	   ((string= "N" evil-state-string) 'mode-line-evil-state-string-N)
-	   ((string= "I" evil-state-string) 'mode-line-evil-state-string-I)
-	   ((string= "V" evil-state-string) 'mode-line-evil-state-string-V)
-	   ((string= "E" evil-state-string) 'mode-line-evil-state-string-E)
-	   ))
-    (concat "<" (propertize evil-state-string 'face evil-state-string-face) ">")
-    ))
-
 ;;;; ---------------------------------------------------------------------------
 ;;;; modeline User-Interfaced setting
 ;;;; ---------------------------------------------------------------------------
@@ -41,9 +29,6 @@
 			((buffer-modified-p)
 			 (propertize "**" 'face 'mode-line-modified-face))
 			(t "--")))
-		 "   "
-		 (when (featurep 'evil)
-		   (:eval (evil-mode-string)))
 		 "   "
 		 mode-line-buffer-identification
 		 "   "

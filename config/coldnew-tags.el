@@ -7,11 +7,8 @@
 (require 'gtags)
 
 ;;;;;;;; Keybinding
-(evil-define-key 'normal gtags-mode-map (kbd "M-.") 'gtags-find-tag)
-(evil-define-key 'normal gtags-mode-map (kbd "M-,") 'gtags-find-rtag)
-
-(evil-define-key 'insert gtags-mode-map (kbd "M-.") 'gtags-find-tag)
-(evil-define-key 'insert gtags-mode-map (kbd "M-,") 'gtags-find-rtag)
+(define-key gtags-mode-map (kbd "M-.") 'gtags-find-tag)
+(define-key gtags-mode-map (kbd "M-,") 'gtags-find-rtag)
 
 ;;;;;;;; Functions
 (defun gtags-create-or-update ()
