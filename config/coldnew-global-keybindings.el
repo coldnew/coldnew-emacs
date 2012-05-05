@@ -70,6 +70,8 @@
 (global-set-key (kbd "M-a") 'backward-sentence)
 (global-set-key (kbd "M-l") 'backward-delete-word)
 (global-set-key (kbd "M-y") 'anything-show-kill-ring)
+(global-set-key (kbd "M-n") 'scroll-up)
+(global-set-key (kbd "M-p") 'scroll-down)
 
 (global-set-key (kbd "C-x C-n") 'auto-complete)
 
