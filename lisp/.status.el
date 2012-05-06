@@ -94,6 +94,8 @@
 	    (:name git-emacs :description "Yet another git emacs mode for newbies" :type github :pkgname "tsgates/git-emacs" :features git-emacs))
  (helm status "installed" recipe
        (:name helm :description "Emacs incremental and narrowing framework" :type github :pkgname "emacs-helm/helm" :features helm-config))
+ (helm-etags-plus status "installed" recipe
+		  (:name helm-etags-plus :type github :pkgname "jixiuf/helm-etags-plus" :features ctags-update helm-etags+))
  (highlight-cl status "installed" recipe
 	       (:name highlight-cl :description "Highlighting `cl' functions." :website "" :type emacswiki :features highlight-cl))
  (highlight-symbol status "installed" recipe

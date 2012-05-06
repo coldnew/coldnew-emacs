@@ -3,6 +3,66 @@
 ;;; Code:
 
 
+;;;### (autoloads (ctags-update-minor-mode ctags-update) "helm-etags-plus/ctags-update"
+;;;;;;  "helm-etags-plus/ctags-update.el" (20390 14825))
+;;; Generated autoloads from helm-etags-plus/ctags-update.el
+
+(autoload 'ctags-update "helm-etags-plus/ctags-update" "\
+update TAGS in parent directory using `exuberant-ctags' you
+can call this function directly , or enable
+`ctags-update-minor-mode' or with prefix `C-u' then you can
+generate a new TAGS file in directory
+
+\(fn &optional ARGS)" t nil)
+
+(autoload 'ctags-update-minor-mode "helm-etags-plus/ctags-update" "\
+auto update TAGS using `exuberant-ctags' in parent directory.
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads (helm-etags+-history helm-etags+-history-go-forward
+;;;;;;  helm-etags+-history-go-back helm-etags+-select-one-key helm-etags+-select-at-point
+;;;;;;  helm-etags+-select) "helm-etags-plus/helm-etags+" "helm-etags-plus/helm-etags+.el"
+;;;;;;  (20390 14825))
+;;; Generated autoloads from helm-etags-plus/helm-etags+.el
+
+(autoload 'helm-etags+-select "helm-etags-plus/helm-etags+" "\
+Tag jump using etags and `helm'.
+If SYMBOL-NAME is non-nil, jump tag position with SYMBOL-NAME.
+
+\(fn)" t nil)
+
+(autoload 'helm-etags+-select-at-point "helm-etags-plus/helm-etags+" "\
+Tag jump with current symbol using etags and `helm'.
+
+\(fn)" t nil)
+
+(autoload 'helm-etags+-select-one-key "helm-etags-plus/helm-etags+" "\
+you can bind this to `M-.'
+
+\(fn &optional ARGS)" t nil)
+
+(defvar helm-c-source-etags+-select '((name . "Etags+") (init . helm-etags+-get-available-tag-table-buffers) (candidates . helm-etags+-get-candidates-with-cache-support) (volatile) (pattern-transformer (lambda (helm-pattern) (setq helm-etags+-untransformed-helm-pattern helm-pattern) (regexp-quote (replace-regexp-in-string "\\\\_<\\|\\\\_>" "" helm-pattern)))) (requires-pattern . 3) (delayed) (action ("Goto the location" . helm-c-etags+-goto-location))))
+
+(autoload 'helm-etags+-history-go-back "helm-etags-plus/helm-etags+" "\
+Go Back.
+
+\(fn)" t nil)
+
+(autoload 'helm-etags+-history-go-forward "helm-etags-plus/helm-etags+" "\
+Go Forward.
+
+\(fn)" t nil)
+
+(autoload 'helm-etags+-history "helm-etags-plus/helm-etags+" "\
+show all tag historys using `helm'
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (helm-send-bug-report-from-helm helm-send-bug-report
 ;;;;;;  helm-follow-mode helm-kill-selection-and-quit helm-yank-selection
 ;;;;;;  helm-prev-visible-mark helm-next-visible-mark helm-display-all-visible-marks
@@ -1493,7 +1553,7 @@ Cancel the idle timer if no more minimaps are active.
 ;;;***
 
 ;;;### (autoloads nil nil ("helm/helm-pkg.el" "helm/helm-plugin.el"
-;;;;;;  "switch-window/switch-window.el") (20390 12789 415073))
+;;;;;;  "switch-window/switch-window.el") (20390 14825 429503))
 
 ;;;***
 
