@@ -110,7 +110,7 @@
 /home/coldnew/.emacs.d/config/coldnew-cursor.el,0
 
 /home/coldnew/.emacs.d/config/coldnew-global-keybindings.el,103
-(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)coldnew/set-mark-command176,7127
+(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)coldnew/set-mark-command176,7038
 
 /home/coldnew/.emacs.d/config/coldnew-editor.el,1621
 (defvar coldnew-editor-hook nilcoldnew-editor-hook11,319
@@ -118,22 +118,22 @@
 (define-minor-mode coldnew-editor-modecoldnew-editor-mode19,498
 (defun key-chord-input-method (first-char)key-chord-input-method97,3838
 (defun paredit-blink-paren-match (another-line-p)paredit-blink-paren-match154,6133
-(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map190,7606
-(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting238,9468
-(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting265,10788
-(defun indent-file-after-save ()indent-file-after-save289,11487
-(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save297,11720
-(defun highlight-additional-keywords ()highlight-additional-keywords305,11967
-(defun highlight-fontify-numbers ()highlight-fontify-numbers313,12345
-(defun highlight-escape-char ()highlight-escape-char325,12756
-(defun insert-space-between-english-chinese ()insert-space-between-english-chinese333,13014
-(defun select-forwards-to-before-match (match)select-forwards-to-before-match351,13798
-(defun select-backwards-to-before-match (match)select-backwards-to-before-match357,14032
-(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match363,14270
-(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match372,14625
-(defun match-paren (arg)match-paren381,14984
-(defun delete-between-pair (char)delete-between-pair388,15259
-(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark403,15795
+(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map191,7626
+(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting239,9488
+(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting266,10808
+(defun indent-file-after-save ()indent-file-after-save290,11507
+(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save298,11740
+(defun highlight-additional-keywords ()highlight-additional-keywords306,11987
+(defun highlight-fontify-numbers ()highlight-fontify-numbers314,12365
+(defun highlight-escape-char ()highlight-escape-char326,12776
+(defun insert-space-between-english-chinese ()insert-space-between-english-chinese334,13034
+(defun select-forwards-to-before-match (match)select-forwards-to-before-match352,13818
+(defun select-backwards-to-before-match (match)select-backwards-to-before-match358,14052
+(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match364,14290
+(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match373,14645
+(defun match-paren (arg)match-paren382,15004
+(defun delete-between-pair (char)delete-between-pair389,15279
+(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark404,15815
 
 /home/coldnew/.emacs.d/config/coldnew-org.el,0
 
@@ -291,18 +291,18 @@
 (defvar emacs-symbol-font-size 16emacs-symbol-font-size20,555
 
 /home/coldnew/.emacs.d/config/coldnew-evil.el,375
-(define-key evil-insert-state-mapevil-insert-state-map25,793
-(defun evil-undefine ()evil-undefine32,1059
-(defmacro evil-define-key-insert (state map key name)evil-define-key-insert49,1587
-(defmacro evil:global-set-key-map (state key name)evil:global-set-key-map55,1801
-(defmacro evil:nmap (key name)evil:nmap59,1893
-(defmacro evil:imap (key name)evil:imap63,1993
+(define-key evil-insert-state-mapevil-insert-state-map31,917
+(defun evil-undefine ()evil-undefine46,1425
+(defmacro evil-define-key-insert (state map key name)evil-define-key-insert63,1953
+(defmacro evil:global-set-key-map (state key name)evil:global-set-key-map69,2167
+(defmacro evil:nmap (key name)evil:nmap73,2259
+(defmacro evil:imap (key name)evil:imap77,2359
 
 /home/coldnew/.emacs.d/config/coldnew-gpg.el,0
 
-/home/coldnew/.emacs.d/config/coldnew-modeline.el,111
+/home/coldnew/.emacs.d/config/coldnew-modeline.el,110
 (defun mode-line-major-mode ()mode-line-major-mode15,528
-(defun evil-mode-string ()evil-mode-string42,1416
+(defun evil-mode-string ()evil-mode-string19,675
 
 /home/coldnew/.emacs.d/config/coldnew-backup.el,0
 
