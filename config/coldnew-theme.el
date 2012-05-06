@@ -38,6 +38,28 @@
   "highlight c escapes char like vim"
   :group 'font-lock-faces)
 
+(defface mode-line-evil-state-string-N
+  '((t (:inherit font-lock-function-name-face)))
+  "face for vim-string in normal-map on mode-line."
+  :group 'mode-line)
+
+(defface mode-line-evil-state-string-I
+  '((t (:inherit font-lock-constant-face)))
+  "face for vim-string in insert-map on mode-line."
+  :group 'mode-line)
+
+(defface mode-line-evil-state-string-V
+  '((t (:inherit font-lock-variable-name-face)))
+  "face for vim-string in visual-map on mode-line."
+  :group 'mode-line)
+
+(defface mode-line-evil-state-string-E
+  '((t (:inherit font-lock-string-face)))
+  "face for vim-string in emacs-map on mode-line."
+  :group 'mode-line)
+
+
+
 
 (provide 'coldnew-theme)
 ;; coldnew-theme.el ends here.

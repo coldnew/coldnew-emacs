@@ -25,6 +25,15 @@
 (global-set-key (kbd "C-/") 'undo-tree-undo)
 (global-set-key (kbd "C-0") 'ace-jump-mode)
 
+;;; evil-normal-map
+(evil:nmap (kbd "C-n") 'next-line)
+(evil:nmap (kbd "C-p") 'previous-line)
+(evil:nmap (kbd "C-;") 'iedit-mode)
+(evil:nmap (kbd "C-/") 'undo-tree-undo)
+(evil:nmap (kbd "C-0") 'ace-jump-mode)
+
+(global-set-key (kbd "<escape>") 'evil-mode)
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-x prefix)
 ;;;; ---------------------------------------------------------------------------

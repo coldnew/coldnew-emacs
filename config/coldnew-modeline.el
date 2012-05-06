@@ -24,20 +24,32 @@
 ;;      (t 'mode-line-state-string-E))
 ;;     (concat "< " mode-line-state-string " >")))
 
-(defun mode-line-state ()
-  (let ((mode-line-state-string)
-	(propertize-string))
-    (setq mode-line-state-string
+;; (defun mode-line-state ()
+;;   (let ((mode-line-state-string)
+;;	(propertize-string))
+;;     (setq mode-line-state-string
+;;	  (cond
+;;	   (view-mode "View")
+;;	   (overwrite-mode "Overwrite")
+;;	   (t "Emacs")))
+;;     (setq propertize-string
+;;	  (cond
+;;	   (view-mode 'mode-line-read-only-face)
+;;	   (t 'mode-line-normal-state-face)
+;;	   ))
+;;     (concat "< " (propertize mode-line-state-string 'face propertize-string) " >")))
+
+(defun evil-mode-string ()
+  (let ((evil-state-string (substring evil-mode-line-tag 2 3)))
+    (setq evil-state-string-face
 	  (cond
-	   (view-mode "View")
-	   (overwrite-mode "Overwrite")
-	   (t "Emacs")))
-    (setq propertize-string
-	  (cond
-	   (view-mode 'mode-line-read-only-face)
-	   (t 'mode-line-normal-state-face)
+	   ((string= "N" evil-state-string) 'mode-line-evil-state-string-N)
+	   ((string= "I" evil-state-string) 'mode-line-evil-state-string-I)
+	   ((string= "V" evil-state-string) 'mode-line-evil-state-string-V)
+	   ((string= "E" evil-state-string) 'mode-line-evil-state-string-E)
 	   ))
-    (concat "< " (propertize mode-line-state-string 'face propertize-string) " >")))
+    (concat "<" (propertize evil-state-string 'face evil-state-string-face) ">")
+    ))
 
 
 ;;;; ---------------------------------------------------------------------------
@@ -54,7 +66,9 @@
 			 (propertize "**" 'face 'mode-line-modified-face))
 			(t "--")))
 		 "   "
-		 (:eval (mode-line-state))
+		 ;;		 (:eval (mode-line-state))
+		 (when (featurep 'evil)
+		   (:eval (evil-mode-string)))
 		 "   "
 		 mode-line-buffer-identification
 		 "   "
