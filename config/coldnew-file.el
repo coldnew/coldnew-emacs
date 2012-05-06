@@ -56,6 +56,11 @@
   (add-to-list 'anything-completing-read-handlers-alist '(lusty-file-explorer . nil))
   (add-to-list 'anything-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
 
+;; Make lusty-explorer use it's own completion, not helm-completion
+(when (featurep 'helm)
+  (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
+  (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; Commands
 ;;;; ---------------------------------------------------------------------------
