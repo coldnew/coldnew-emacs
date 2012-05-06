@@ -23,7 +23,7 @@
 (global-set-key (kbd "C-;") 'iedit-mode)
 (global-set-key (kbd "C-v") 'coldnew/set-mark-command)
 (global-set-key (kbd "C-/") 'undo-tree-undo)
-
+(global-set-key (kbd "C-0") 'ace-jump-mode)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-x prefix)
@@ -37,7 +37,7 @@
 (global-set-key (kbd "C-x M-x") 'helm-M-x)
 (global-set-key (kbd "C-x o")   'switch-window)
 (global-set-key (kbd "C-x C-l") 'recenter-top-bottom)
-
+(global-set-key (kbd "C-x C-n") 'auto-complete)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-c prefix)
@@ -74,15 +74,21 @@
 (global-set-key (kbd "M-v") 'er/expand-region)
 (global-set-key (kbd "M-q") 'view-mode)
 (global-set-key (kbd "M-/") 'undo-tree-redo)
+(global-set-key (kbd "M-.") 'helm-etags+-select-one-key)
 
-(global-set-key "\M-." 'helm-etags+-select-one-key)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "M-1") 'delete-other-windows)
+(global-set-key (kbd "M-2") 'split-window-below)
+(global-set-key (kbd "M-3") 'split-window-right)
+(global-set-key (kbd "M-4") 'delete-window)
+(global-set-key (kbd "M-0") 'other-window)
 
-(global-set-key (kbd "C-x C-n") 'auto-complete)
-(global-set-key (kbd "C-c C-f") 'my-anything-filelist)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 
-(global-set-key (kbd "C-0") 'ace-jump-mode)
 (global-set-key (kbd "M-j") 'ace-jump-mode)
 (global-set-key (kbd "C-.") 'repeat)
 
@@ -100,16 +106,15 @@
 (key-chord-define coldnew-editor-map "di"  'delete-between-pair)
 (key-chord-define coldnew-editor-map "dl"  'kill-whole-line)
 ;; (key-chord-define coldnew-editor-map "da"  )
+;; delete pair
+(key-chord-define coldnew-editor-map "d9"  '(lambda () (interactive) (delete-between-pair ?\( )))
+(key-chord-define coldnew-editor-map "dq"  '(lambda () (interactive) (delete-between-pair ?\" )))
+(key-chord-define coldnew-editor-map "ds"  '(lambda () (interactive) (delete-between-pair ?\[ )))
+(key-chord-define coldnew-editor-map "dc"  '(lambda () (interactive) (delete-between-pair ?\{ )))
+(key-chord-define coldnew-editor-map "de" 'kill-line)
 
 
 
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "M-1") 'delete-other-windows)
-(global-set-key (kbd "M-2") 'split-window-below)
-(global-set-key (kbd "M-3") 'split-window-right)
-(global-set-key (kbd "M-4") 'delete-window)
-(global-set-key (kbd "M-0") 'other-window)
 
 
 
