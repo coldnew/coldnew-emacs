@@ -11,6 +11,8 @@
 (require* 'sr-speedbar)
 (require* 'tabbar)
 (require* 'sauron)
+(require* 'traverselisp)
+(require* 'helm)
 
 
 (provide 'coldnew-depends)
