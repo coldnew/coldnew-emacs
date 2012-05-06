@@ -107,17 +107,10 @@
 (defalias 'git-push   'magit-push)git-push75,2525
 (defalias 'git-commit 'egg-commit-log-edit)git-commit76,2560
 
-/home/coldnew/.emacs.d/config/coldnew-cursor.el,547
-(defvar emacs-normal-cursor-color "white")emacs-normal-cursor-color4,76
-(defvar emacs-normal-cursor-type 'bar)emacs-normal-cursor-type5,119
-(defvar emacs-read-only-cursor-color "gray")emacs-read-only-cursor-color7,159
-(defvar emacs-read-only-cursor-type 'box)emacs-read-only-cursor-type8,204
-(defvar emacs-overwrite-cursor-color "yellow")emacs-overwrite-cursor-color10,247
-(defvar emacs-overwrite-cursor-type 'hbar)emacs-overwrite-cursor-type11,294
-(defun coldnew/set-cursor-according-mode ()coldnew/set-cursor-according-mode34,1185
+/home/coldnew/.emacs.d/config/coldnew-cursor.el,0
 
 /home/coldnew/.emacs.d/config/coldnew-global-keybindings.el,103
-(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)coldnew/set-mark-command169,6868
+(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)coldnew/set-mark-command176,7127
 
 /home/coldnew/.emacs.d/config/coldnew-editor.el,1621
 (defvar coldnew-editor-hook nilcoldnew-editor-hook11,319
@@ -184,12 +177,16 @@
 
 /home/coldnew/.emacs.d/config/coldnew-speedbar.el,0
 
-/home/coldnew/.emacs.d/config/coldnew-theme.el,339
+/home/coldnew/.emacs.d/config/coldnew-theme.el,647
 (defface mode-line-read-only-facemode-line-read-only-face17,549
 (defface mode-line-modified-facemode-line-modified-face22,689
 (defface mode-line-mode-name-facemode-line-mode-name-face27,843
 (defface mode-line-normal-state-facemode-line-normal-state-face32,985
 (defface font-lock-escape-char-facefont-lock-escape-char-face36,1105
+(defface mode-line-evil-state-string-Nmode-line-evil-state-string-N41,1256
+(defface mode-line-evil-state-string-Imode-line-evil-state-string-I46,1418
+(defface mode-line-evil-state-string-Vmode-line-evil-state-string-V51,1575
+(defface mode-line-evil-state-string-Emode-line-evil-state-string-E56,1737
 
 /home/coldnew/.emacs.d/config/coldnew-core.el,1279
 (defvar emacs-dir "~/.emacs.d/"emacs-dir41,1741
@@ -293,13 +290,19 @@
 (defvar emacs-cjk-font-size 13.5emacs-cjk-font-size18,494
 (defvar emacs-symbol-font-size 16emacs-symbol-font-size20,555
 
-/home/coldnew/.emacs.d/config/coldnew-evil.el,0
+/home/coldnew/.emacs.d/config/coldnew-evil.el,375
+(define-key evil-insert-state-mapevil-insert-state-map25,793
+(defun evil-undefine ()evil-undefine32,1059
+(defmacro evil-define-key-insert (state map key name)evil-define-key-insert49,1587
+(defmacro evil:global-set-key-map (state key name)evil:global-set-key-map55,1801
+(defmacro evil:nmap (key name)evil:nmap59,1893
+(defmacro evil:imap (key name)evil:imap63,1993
 
 /home/coldnew/.emacs.d/config/coldnew-gpg.el,0
 
-/home/coldnew/.emacs.d/config/coldnew-modeline.el,108
+/home/coldnew/.emacs.d/config/coldnew-modeline.el,111
 (defun mode-line-major-mode ()mode-line-major-mode15,528
-(defun mode-line-state ()mode-line-state27,977
+(defun evil-mode-string ()evil-mode-string42,1416
 
 /home/coldnew/.emacs.d/config/coldnew-backup.el,0
 

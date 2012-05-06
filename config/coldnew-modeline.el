@@ -16,29 +16,6 @@
   "Get major-mode name with << >>."
   (concat "<< " (propertize mode-name 'face 'mode-line-mode-name-face) " >>"))
 
-;; (defun mode-line-state ()
-;;   (let ((mode-line-state-string "Emacs"))
-;;     (cond
-;;      (view-mode (setq mode-line-state-string "View"))
-;;      (overwrite-mode (setq mode-line-state-string "Overwrite"))
-;;      (t 'mode-line-state-string-E))
-;;     (concat "< " mode-line-state-string " >")))
-
-;; (defun mode-line-state ()
-;;   (let ((mode-line-state-string)
-;;	(propertize-string))
-;;     (setq mode-line-state-string
-;;	  (cond
-;;	   (view-mode "View")
-;;	   (overwrite-mode "Overwrite")
-;;	   (t "Emacs")))
-;;     (setq propertize-string
-;;	  (cond
-;;	   (view-mode 'mode-line-read-only-face)
-;;	   (t 'mode-line-normal-state-face)
-;;	   ))
-;;     (concat "< " (propertize mode-line-state-string 'face propertize-string) " >")))
-
 (defun evil-mode-string ()
   (let ((evil-state-string (substring evil-mode-line-tag 2 3)))
     (setq evil-state-string-face

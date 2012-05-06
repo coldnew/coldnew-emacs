@@ -134,22 +134,22 @@
 
 
 ;; insert
-(global-set-key "(" 'paredit-open-round)
-(global-set-key ")" 'paredit-close-round)
-(global-set-key "[" 'paredit-open-square)
-(global-set-key "]" 'paredit-close-square)
-(global-set-key "{" 'paredit-open-curly)
-(global-set-key "}" 'paredit-close-curly)
-(global-set-key (kbd "\"")  'paredit-doublequote)
-(global-set-key (kbd "<delete>") 'paredit-forward-delete)
-(global-set-key (kbd "<backspace>") 'paredit-backward-delete)
-(global-set-key (kbd "C-d") 'paredit-forward-delete)
-(global-set-key (kbd "C-l") 'paredit-backward-delete)
-(global-set-key (kbd "M-d") 'paredit-forward-kill-word)
-(global-set-key (kbd "M-l") 'paredit-backward-kill-word)
-(global-set-key (kbd "M-0") 'paredit-close-round-and-newline)
-(global-set-key (kbd "M-\'") 'paredit-meta-doublequote)
-(global-set-key (kbd "C-k") 'paredit-kill)
+(evil:imap "(" 'paredit-open-round)
+(evil:imap ")" 'paredit-close-round)
+(evil:imap "[" 'paredit-open-square)
+(evil:imap "]" 'paredit-close-square)
+(evil:imap "{" 'paredit-open-curly)
+(evil:imap "}" 'paredit-close-curly)
+(evil:imap (kbd "\"")  'paredit-doublequote)
+(evil:imap (kbd "<delete>") 'paredit-forward-delete)
+(evil:imap (kbd "<backspace>") 'paredit-backward-delete)
+(evil:imap (kbd "C-d") 'paredit-forward-delete)
+(evil:imap (kbd "C-l") 'paredit-backward-delete)
+(evil:imap (kbd "M-d") 'paredit-forward-kill-word)
+(evil:imap (kbd "M-l") 'paredit-backward-kill-word)
+(evil:imap (kbd "M-0") 'paredit-close-round-and-newline)
+(evil:imap (kbd "M-\'") 'paredit-meta-doublequote)
+(evil:imap (kbd "C-k") 'paredit-kill)
 
 ;; (key-chord-define evil-insert-state-map "fp"  'paredit-forward)
 ;; (key-chord-define evil-insert-state-map "bp"  'paredit-backward)
@@ -165,7 +165,7 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; one-key
 ;;;; --------------------------------------------------------------------------
-(global-set-key (kbd "C-x M-w") 'one-key-menu-window-navigation)
+(evil:nmap (kbd "C-w") 'one-key-menu-window-navigation)
 
 ;;(global-set-key (kbd "C-w") 'one-key-menu-window-navigation)
 (global-set-key (kbd "C-x M-f") 'one-key-menu-file-handle)

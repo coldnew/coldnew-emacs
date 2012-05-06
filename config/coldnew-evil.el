@@ -15,10 +15,16 @@
 
 (setq evil-want-visual-char-semi-exclusive t)
 
-;; (add-to-list 'evil-emacs-state-modes 'git-branch-mode)
-;; (add-to-list 'evil-emacs-state-modes 'term-mode)
-;; (add-to-list 'evil-emacs-state-modes 'egg-status-buffer-mode)
-;; (add-to-list 'evil-insert-state-modes 'egg-commit-buffer-mode)
+
+(add-to-list 'evil-emacs-state-modes 'git-branch-mode)
+(add-to-list 'evil-emacs-state-modes 'term-mode)
+(add-to-list 'evil-emacs-state-modes 'egg-status-buffer-mode)
+(add-to-list 'evil-insert-state-modes 'egg-commit-buffer-mode)
+
+;;; add all mode in emacs-state to insert state
+(dolist (mode evil-emacs-state-modes)
+  (add-to-list 'evil-insert-state-modes mode))
+
 
 ;; do not use evil-insert map keybinding, use emacs' keybinding
 (setcdr evil-insert-state-map nil)
@@ -26,7 +32,12 @@
   (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
 
 ;;; default state set to insert
-(setq evil-default-state 'insert)
+(setq evil-default-state 'normal)
+
+;;;; ---------------------------------------------------------------------------
+;;;; state
+;;;; ---------------------------------------------------------------------------
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Commands
@@ -67,9 +78,9 @@
   ""
   `(evil:global-set-key-map evil-insert-state-map ,key ,name))
 
+
+
 (evil:imap (kbd "<escape>") 'evil-normal-state)
-
-
 
 (provide 'coldnew-evil)
 ;; coldnew-evil.el ends here.

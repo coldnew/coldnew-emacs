@@ -164,6 +164,7 @@
 ;;;; cua
 ;;;; ---------------------------------------------------------------------------
 (require 'cua-base)
+(require 'cua-rect)
 (setq cua-enable-cua-keys nil)		; don't add C-x, C-c, C-v
 (cua-mode t)				; Enable cua-mode
 
@@ -406,7 +407,6 @@ select-region-to-before-match, then kills that region."
   (if (or (not mark-active) arg)
       (cua-set-mark arg)
     (cua-toggle-rectangle-mark)))
-
 
 
 (provide 'coldnew-editor)
