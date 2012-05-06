@@ -73,7 +73,7 @@
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
 (global-set-key (kbd "M-v") 'er/expand-region)
-
+(global-set-key (kbd "M-q") 'view-mode)
 
 (global-set-key (kbd "C-x C-n") 'auto-complete)
 (global-set-key (kbd "C-c C-f") 'my-anything-filelist)

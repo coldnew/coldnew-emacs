@@ -92,6 +92,8 @@
  (gccsense status "removed" recipe nil)
  (git-emacs status "installed" recipe
 	    (:name git-emacs :description "Yet another git emacs mode for newbies" :type github :pkgname "tsgates/git-emacs" :features git-emacs))
+ (helm status "installed" recipe
+       (:name helm :description "Emacs incremental and narrowing framework" :type github :pkgname "emacs-helm/helm" :features helm-config))
  (highlight-cl status "installed" recipe
 	       (:name highlight-cl :description "Highlighting `cl' functions." :website "" :type emacswiki :features highlight-cl))
  (highlight-symbol status "installed" recipe
@@ -195,6 +197,7 @@
 	  (:name tempbuf :description "" :website "" :type emacswiki :features tempbuf))
  (traverselisp status "installed" recipe
 	       (:name traverselisp :description "walk through directories and perform actions on files." :type emacswiki :features traverselisp))
+ (treverselisp status "removed" recipe nil)
  (undo-tree status "installed" recipe
 	    (:name undo-tree :description "Treat undo history as a tree" :type git :url "http://www.dr-qubit.org/git/undo-tree.git" :prepare
 		   (progn

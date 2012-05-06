@@ -4,7 +4,9 @@
 (require 'eshell)
 (require 'em-dirs)
 (require 'em-hist)
-
+     (require 'em-prompt)
+     (require 'em-term)
+     (require 'em-cmpl)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Config
@@ -33,6 +35,9 @@
 (setq eshell-cmpl-cycle-completions nil)
 (setq eshell-scroll-to-bottom-on-output t)
 (setq eshell-show-maximum-output t)
+
+
+(add-to-list 'eshell-visual-commands "htop")
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Hooks
