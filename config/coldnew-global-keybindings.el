@@ -22,7 +22,7 @@
 (global-set-key (kbd "C-l") 'hungry-delete-backward)
 (global-set-key (kbd "C-;") 'iedit-mode)
 (global-set-key (kbd "C-v") 'coldnew/set-mark-command)
-
+(global-set-key (kbd "C-/") 'undo-tree-undo)
 
 
 ;;;; ---------------------------------------------------------------------------
@@ -33,7 +33,6 @@
 (global-set-key (kbd "C-x C-b")  'ibuffer)
 (global-set-key (kbd "C-x C-d")  'dired)
 (global-set-key (kbd "C-x C-r")  'sudo-edit)
-(global-set-key (kbd "C-x ,") 'undo-tree-undo)
 (global-set-key (kbd "C-x vv") 'egg-next-action)
 (global-set-key (kbd "C-x M-x") 'helm-M-x)
 (global-set-key (kbd "C-x o")   'switch-window)
@@ -45,7 +44,7 @@
 ;;;; ---------------------------------------------------------------------------
 (global-set-key (kbd "C-c C-f") 'my-anything-filelist)
 (global-set-key (kbd "C-c C-s") 'save-buffer-always)
-(global-set-key (kbd "C-c ,") 'undo-tree-redo)
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-Meta prefix)
@@ -74,6 +73,7 @@
 (global-set-key (kbd "M-p") 'scroll-down)
 (global-set-key (kbd "M-v") 'er/expand-region)
 (global-set-key (kbd "M-q") 'view-mode)
+(global-set-key (kbd "M-/") 'undo-tree-redo)
 
 (global-set-key "\M-." 'helm-etags+-select-one-key)
 
