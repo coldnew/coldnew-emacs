@@ -122,9 +122,9 @@
 		      (progn
 			(setq key-chord-defining-kbd-macro
 			      (cons first-char key-chord-defining-kbd-macro))
-			(list 'key-chord first-char next-char)
-
-			)))
+			(list 'key-chord first-char next-char))
+		    ;; if not success, insert two char
+		    (insert (char-to-string first-char) (char-to-string next-char))))
 	      ;; else put back next-char and return first-char
 	      (setq unread-command-events (cons next-char unread-command-events))
 	      (if (eq first-char next-char)
@@ -133,10 +133,6 @@
     ;; else no key-chord keymap
     (setq key-chord-last-unmatched first-char)
     (list first-char)))
-
-
-
-
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; space-chord
