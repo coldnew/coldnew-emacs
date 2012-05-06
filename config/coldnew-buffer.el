@@ -288,6 +288,7 @@
        "\\*GTAGS SELECT\\**"
        "\\*Symref*"
        "\\*cscope\\*"
+       "\\*helm*"
        ))
 
 
