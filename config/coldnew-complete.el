@@ -82,6 +82,12 @@
 ;; Enable helm globally
 (helm-mode 1)
 
+(require 'helm-etags+)
+(require 'ctags-update)
+(ctags-update-minor-mode 1)
+
+
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; Commands
 ;;;; ---------------------------------------------------------------------------
@@ -105,19 +111,28 @@ See `anything-c-filelist-file-name' docstring for usage."
      anything-c-source-file-cache
      anything-c-source-filelist)))
 
-(defun my-anything-occur ()
+(defun coldnew/anything-occur ()
   "I don't like highlight when goto lines."
   (interactive)
-  (let ((anything-match-line-overlay-face nil)
-	(recenter-redisplay nil))
-    (anything-occur))
-  (recenter))
+  (let ((anything-match-line-overlay-face nil))
+    (anything-occur)))
+
+;; FIXME:how to kill the overlay color ?
+(defun coldnew/helm-occur ()
+  "I don't like highlight when goto lines."
+  (interactive)
+  (let ((helm-selection-line nil))
+    (helm-occur)))
 
 (defun anything-c-occur-get-line (s e)
   "rewrite `anything-c-occur-get-line' to make it color on line-number."
   (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
 	  (format ": %s" (buffer-substring s e))))
 
+(defun helm-c-occur-get-line (s e)
+  "rewrite `helm-c-occur-get-line' to make it color on line-number."
+  (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
+	  (format ": %s" (buffer-substring s e))))
 
 
 

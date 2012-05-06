@@ -35,7 +35,7 @@
 (global-set-key (kbd "C-x C-r")  'sudo-edit)
 (global-set-key (kbd "C-x ,") 'undo-tree-undo)
 (global-set-key (kbd "C-x vv") 'egg-next-action)
-(global-set-key (kbd "C-x M-x") 'anything-M-x)
+(global-set-key (kbd "C-x M-x") 'helm-M-x)
 (global-set-key (kbd "C-x o")   'switch-window)
 (global-set-key (kbd "C-x C-l") 'recenter-top-bottom)
 
@@ -63,13 +63,13 @@
 ;;;; Combination key (Meta prefix)
 ;;;; ---------------------------------------------------------------------------
 
-(global-set-key (kbd "M-s") 'my-anything-occur)
+(global-set-key (kbd "M-s") 'coldnew/anything-occur)
 (global-set-key (kbd "M-f") 'forward-word)
 (global-set-key (kbd "M-b") 'backward-word)
 (global-set-key (kbd "M-e") 'forward-sentence)
 (global-set-key (kbd "M-a") 'backward-sentence)
 (global-set-key (kbd "M-l") 'backward-delete-word)
-(global-set-key (kbd "M-y") 'anything-show-kill-ring)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
 (global-set-key (kbd "M-v") 'er/expand-region)
