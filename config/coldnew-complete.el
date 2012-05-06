@@ -71,8 +71,21 @@
 (define-key anything-occur-map (kbd "C-r") 'anything-occur-run-query-replace-regexp)
 
 ;;;; ---------------------------------------------------------------------------
+;;;; Helm
+;;;; ---------------------------------------------------------------------------
+(require* 'helm)
+(require 'helm-config)
+
+;; Use predefined configurations for `helm.el'
+(setq helm-config t)
+
+;; Enable helm globally
+(helm-mode 1)
+
+;;;; ---------------------------------------------------------------------------
 ;;;; Commands
 ;;;; ---------------------------------------------------------------------------
+
 
 (defun my-anything-filelist ()
   "Preconfigured `anything' to open files/buffers/bookmarks instantly.
