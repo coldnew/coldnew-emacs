@@ -189,16 +189,6 @@
 ;; keybinding
 (define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)
 
-
-;; ;;;; ---------------------------------------------------------------------------
-;; ;;;; linum+
-;; ;;;; ---------------------------------------------------------------------------
-;; (require 'linum+)
-;; ;; define line number format when `linum-format' is `dynamic'.
-;; (setq linum+-dynamic-format "%%%dd")
-;; ;; define line number format when `linum-format' is `smart'.
-;; (setq linum+-smart-format   "%%%dd")
-
 ;;;; ---------------------------------------------------------------------------
 ;;;; pretty-lambdada
 ;;;; ---------------------------------------------------------------------------
