@@ -116,24 +116,24 @@
 (defvar coldnew-editor-hook nilcoldnew-editor-hook11,319
 (defvar coldnew-editor-mapcoldnew-editor-map14,388
 (define-minor-mode coldnew-editor-modecoldnew-editor-mode19,498
-(defun key-chord-input-method (first-char)key-chord-input-method97,3838
-(defun paredit-blink-paren-match (another-line-p)paredit-blink-paren-match154,6133
-(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map191,7629
-(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting239,9491
-(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting266,10811
-(defun indent-file-after-save ()indent-file-after-save290,11510
-(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save298,11743
-(defun highlight-additional-keywords ()highlight-additional-keywords306,11990
-(defun highlight-fontify-numbers ()highlight-fontify-numbers314,12368
-(defun highlight-escape-char ()highlight-escape-char326,12779
-(defun insert-space-between-english-chinese ()insert-space-between-english-chinese334,13037
-(defun select-forwards-to-before-match (match)select-forwards-to-before-match352,13821
-(defun select-backwards-to-before-match (match)select-backwards-to-before-match358,14055
-(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match364,14293
-(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match373,14648
-(defun match-paren (arg)match-paren382,15007
-(defun delete-between-pair (char)delete-between-pair389,15282
-(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark404,15818
+(defun key-chord-input-method (first-char)key-chord-input-method96,3772
+(defun paredit-blink-paren-match (another-line-p)paredit-blink-paren-match153,6067
+(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map190,7563
+(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting238,9425
+(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting265,10745
+(defun indent-file-after-save ()indent-file-after-save289,11444
+(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save297,11677
+(defun highlight-additional-keywords ()highlight-additional-keywords305,11924
+(defun highlight-fontify-numbers ()highlight-fontify-numbers313,12302
+(defun highlight-escape-char ()highlight-escape-char325,12713
+(defun insert-space-between-english-chinese ()insert-space-between-english-chinese333,12971
+(defun select-forwards-to-before-match (match)select-forwards-to-before-match351,13755
+(defun select-backwards-to-before-match (match)select-backwards-to-before-match357,13989
+(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match363,14227
+(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match372,14582
+(defun match-paren (arg)match-paren381,14941
+(defun delete-between-pair (char)delete-between-pair388,15216
+(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark403,15752
 
 /home/coldnew/.emacs.d/config/coldnew-org.el,0
 
@@ -9422,7 +9422,7 @@ arduino_MISC=arduino-pde.srtarduino_MISC15,568
 VERSION=1.1VERSION16,597
 DISTDIR=$(top)srecode-$(VERSION)/templatesDISTDIR17,609
 
-/home/coldnew/.emacs.d/lisp/.loaddefs.el,5107
+/home/coldnew/.emacs.d/lisp/.loaddefs.el,5308
 (defface ac-slime-menu-face '((t (:inherit 'ac-candidate-face))) "\ac-slime-menu-face10,224
 (defface ac-slime-selection-face '((t (:inherit 'ac-selection-face))) "\ac-slime-selection-face13,355
 (defvar ac-source-slime-fuzzy '((init . ac-slime-init) (candidates . ac-source-slime-fuzzy-candidates) (candidate-face . ac-slime-menu-face) (selection-face . ac-slime-selection-face) (prefix . slime-symbol-start-pos) (symbol . "l") (match lambda (prefix candidates) candidates) (document . ac-slime-documentation)) "\ac-source-slime-fuzzy16,499
@@ -9445,6 +9445,9 @@ DISTDIR=$(top)srecode-$(VERSION)/templatesDISTDIR17,609
 (defvar helm-bookmark-mode-line-string '("Bookmark(s)" "\\<helm-c-bookmark-map>\\[helm-c-bookmark-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct") "\helm-bookmark-mode-line-string2340,73024
 (defvar helm-occur-mode-line "\\<helm-map>\\[helm-help]:Help \\<helm-occur-map>\\[helm-occur-run-query-replace-regexp]:Query replace regexp \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct")helm-occur-mode-line2343,73343
 (defvar helm-mode nil "\helm-mode2462,76707
+(defvar linum-format 'smart "\linum-format2728,84111
+(defvar linum+-dynamic-format "%%%dd|" "\linum+-dynamic-format2747,84928
+(defvar linum+-smart-format "%%%dd|" "\linum+-smart-format2752,85110
 
 /home/coldnew/.emacs.d/lisp/anything/Makefile,152
 EMACS		:= emacs -Q -batchEMACS26,923
@@ -15059,14 +15062,6 @@ EMACS_BATCH=emacs -Q --batch "$(VC_GIT_PATH)" -L .EMACS_BATCH10,474
 (defun git-log-view-revert ()git-log-view-revert274,11639
 (defun git-log-view-refresh ()git-log-view-refresh281,11887
 (defun git-log-view-tag (&optional tag-name)git-log-view-tag287,12101
-
-/home/coldnew/.emacs.d/lisp/linum+/linum+.el,383
-(defgroup linum+ nillinum+58,2042
-(defcustom linum-format 'smartlinum-format63,2131
-(defcustom linum+-dynamic-format "%%%dd|"linum+-dynamic-format85,2973
-(defcustom linum+-smart-format "%%%dd|"linum+-smart-format91,3144
-(defun linum+-generate-linum-format (format-type limit)linum+-generate-linum-format97,3311
-(defun linum-update-window (win)linum-update-window121,4364
 
 /home/coldnew/.emacs.d/lisp/unicad/lisp/unicad.el,18471
 (defvar unicad-version "Unicad v1.1.6-beta")unicad-version146,5740

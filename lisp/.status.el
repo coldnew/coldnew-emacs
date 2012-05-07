@@ -115,8 +115,7 @@
  (jump-char status "removed" recipe nil)
  (key-chord status "installed" recipe
 	    (:name key-chord :description "map pairs of simultaneously pressed keys to commands" :type emacswiki :features key-chord))
- (linum+ status "installed" recipe
-	 (:name linum+ :description "Extension of linum" :type emacswiki :features linum+))
+ (linum+ status "removed" recipe nil)
  (lusty-explorer status "installed" recipe
 		 (:name lusty-explorer :type emacswiki :description "LustyExplorer is a fast and responsive way to manage files and buffers"))
  (magit status "installed" recipe

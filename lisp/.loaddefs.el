@@ -2720,6 +2720,52 @@ http://www.emacswiki.org/emacs/download/yaoddmuse.el
 
 ;;;***
 
+;;;### (autoloads (linum-update-window linum+-generate-linum-format
+;;;;;;  linum+-smart-format linum+-dynamic-format linum-format) "linum+/linum+"
+;;;;;;  "linum+/linum+.el" (20366 41562))
+;;; Generated autoloads from linum+/linum+.el
+
+(defvar linum-format 'smart "\
+Format used to display line numbers.
+
++ Either a format string like \"%7d\",
++ or `smart' to smart adapt the width by current max visible line number.
++ or `dynamic' to adapt the width as needed,
++ or a vector with one string element which uesed to generate
+  line number format by `format' with argument max visible line number 
+  of current buffer, see example `linum+-smart-format'
++ or a list with one string element which uesed to generate
+  line number format by `format' with argument max line number of current buffer,
+  see example `linum+-dynamic-format'
++ or a function that is called with a line number as its
+  argument and should evaluate to a string to be shown on that line.
+
+See also `linum-before-numbering-hook'.")
+
+(custom-autoload 'linum-format "linum+/linum+" t)
+
+(defvar linum+-dynamic-format "%%%dd|" "\
+Format used to generate line number format when `linum-format' is `dynamic'.")
+
+(custom-autoload 'linum+-dynamic-format "linum+/linum+" t)
+
+(defvar linum+-smart-format "%%%dd|" "\
+Format used to generate line number format when `linum-format' is `smart'.")
+
+(custom-autoload 'linum+-smart-format "linum+/linum+" t)
+
+(autoload 'linum+-generate-linum-format "linum+/linum+" "\
+Generate line number format by FORMAT-TYPE, LIMIT is `window-end' of win.
+
+\(fn FORMAT-TYPE LIMIT)" nil nil)
+
+(autoload 'linum-update-window "linum+/linum+" "\
+Update line numbers for the portion visible in window WIN.
+
+\(fn WIN)" nil nil)
+
+;;;***
+
 ;;;### (autoloads (minimap-kill minimap-create) "minimap/minimap"
 ;;;;;;  "minimap/minimap.el" (20389 8546))
 ;;; Generated autoloads from minimap/minimap.el
@@ -2745,7 +2791,7 @@ Cancel the idle timer if no more minimaps are active.
 ;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete/auto-complete-config.el"
 ;;;;;;  "auto-complete/auto-complete-pkg.el" "auto-complete/auto-complete.el"
 ;;;;;;  "helm/helm-pkg.el" "helm/helm-plugin.el" "switch-window/switch-window.el")
-;;;;;;  (20391 30873 33780))
+;;;;;;  (20391 55337 836863))
 
 ;;;***
 
