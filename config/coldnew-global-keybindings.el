@@ -48,11 +48,12 @@
 (global-set-key (kbd "C-x C-l") 'recenter-top-bottom)
 (global-set-key (kbd "C-x C-n") 'auto-complete)
 (global-set-key (kbd "C-x C-s") 'save-buffer-always)
+(global-set-key (kbd "C-x C-g") 'my-anything-filelist)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-c prefix)
 ;;;; ---------------------------------------------------------------------------
-(global-set-key (kbd "C-c C-f") 'my-anything-filelist)
+;;(global-set-key (kbd "C-c C-f") 'my-anything-filelist)
 (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
 
 
