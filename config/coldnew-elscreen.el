@@ -13,7 +13,7 @@
 (setq elscreen-tab-display-kill-screen nil)
 
 ;;; Change elscreen prefix to
-(elscreen-set-prefix-key "\C-t")
+(elscreen-set-prefix-key "")
 
 ;;; Make elscreen create automatically
 (defmacro elscreen-create-automatically (ad-do-it)
@@ -31,6 +31,14 @@
 
 (defadvice elscreen-toggle (around elscreen-create-automatically activate)
   (elscreen-create-automatically ad-do-it))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; elscreen
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(evil:nmap (kbd "gt") 'elscreen-next)
+(evil:nmap (kbd "gT") 'elscreen-next)
 
 
 (provide 'coldnew-elscreen)

@@ -30,6 +30,7 @@
 ;; TODO: add comment
 (setq stack-trace-on-error t)
 (setq imenu-auto-scan t)
+;;(setq redisplay-dont-pause t)
 
 ;; xrelated srtting
 (setq x-select-enable-clipboard t)

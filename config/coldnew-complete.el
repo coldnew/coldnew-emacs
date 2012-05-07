@@ -2,9 +2,9 @@
 (eval-when-compile (require 'cl))
 
 
-;;;; ---------------------------------------------------------------------------
-;;;; auto complete
-;;;; ---------------------------------------------------------------------------
+ ;;;; ---------------------------------------------------------------------------
+ ;;;; auto complete
+ ;;;; ---------------------------------------------------------------------------
 (require 'auto-complete)
 (require 'auto-complete-config)
 (require* 'auto-complete-clang)
@@ -39,7 +39,7 @@
 ;; Enable ac-menu-map
 (setq ac-use-menu-map t)
 
-;;;; Keybindings
+ ;;;; Keybindings
 (define-key ac-menu-map (kbd "C-n") 'ac-next)
 (define-key ac-menu-map (kbd "C-p") 'ac-previous)
 (define-key ac-mode-map (kbd "C-c h") 'ac-last-quick-help)
@@ -47,9 +47,9 @@
 (define-key ac-completing-map "\t" 'ac-complete)
 (define-key ac-complete-mode-map [tab] 'ac-expand)
 
-;;;; ---------------------------------------------------------------------------
-;;;; anything
-;;; ---------------------------------------------------------------------------
+;; ;;;; ---------------------------------------------------------------------------
+;; ;;;; anything
+;; ;;; ---------------------------------------------------------------------------
 (require 'anything-config)
 (require 'anything-match-plugin)
 
@@ -67,12 +67,12 @@
 	      (rx
 	       (and (or ".out" ".elc") eol))))
 
-;;;;;;;; keybinding
+ ;;;;;;;; keybinding
 (define-key anything-occur-map (kbd "C-r") 'anything-occur-run-query-replace-regexp)
 
-;;;; ---------------------------------------------------------------------------
-;;;; Helm
-;;;; ---------------------------------------------------------------------------
+ ;;;; ---------------------------------------------------------------------------
+ ;;;; Helm
+ ;;;; ---------------------------------------------------------------------------
 (require* 'helm)
 (require 'helm-config)
 
@@ -88,16 +88,16 @@
 
 
 
-;;;; ---------------------------------------------------------------------------
-;;;; Commands
-;;;; ---------------------------------------------------------------------------
+;; ;;;; ---------------------------------------------------------------------------
+;; ;;;; Commands
+;; ;;;; ---------------------------------------------------------------------------
 
 
 (defun my-anything-filelist ()
   "Preconfigured `anything' to open files/buffers/bookmarks instantly.
 
-This is a replacement for `anything-for-files'.
-See `anything-c-filelist-file-name' docstring for usage."
+ This is a replacement for `anything-for-files'.
+ See `anything-c-filelist-file-name' docstring for usage."
   (interactive)
   (anything
    :prompt "Switch to: "

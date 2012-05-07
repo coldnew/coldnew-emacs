@@ -166,7 +166,7 @@
 (require 'cua-base)
 (require 'cua-rect)
 (setq cua-enable-cua-keys nil)		; don't add C-x, C-c, C-v
-(cua-mode t)				; Enable cua-mode
+;; (cua-mode t)				; Enable cua-mode
 
 
 ;;;; ---------------------------------------------------------------------------

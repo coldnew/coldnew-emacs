@@ -42,6 +42,18 @@
 (add-hook 'write-file-hooks 'time-stamp)
 
 ;;;; ---------------------------------------------------------------------------
+;;;; ido
+;;;; ---------------------------------------------------------------------------
+(require 'ido)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+(setq ido-use-filename-at-point 'guess)
+(setq ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".cfg" ".cnf"))
+(setq ido-ignore-extensions t)
+
+
+;;;; ---------------------------------------------------------------------------
 ;;;; lusty-explorer
 ;;;; ---------------------------------------------------------------------------
 (require 'lusty-explorer)

@@ -2,9 +2,9 @@
 
 (eval-when-compile (require 'cl))
 
-;;;; ---------------------------------------------------------------------------
-;;;; function-key
-;;;; ---------------------------------------------------------------------------
+ ;;;; ---------------------------------------------------------------------------
+ ;;;; function-key
+ ;;;; ---------------------------------------------------------------------------
 (global-set-key (kbd "<f1>")     'woman)
 (global-set-key (kbd "<f2>")     'shell-pop)
 (global-set-key (kbd "C-x <f2>") 'multi-term)
@@ -12,9 +12,9 @@
 (global-set-key (kbd "C-x <f3>") 'toggle-kbd-macro-recording-on)
 (global-set-key (kbd "<f4>")     'sr-speedbar-toggle)
 
-;;;; ---------------------------------------------------------------------------
-;;;; Combination key (Ctrl prefix)
-;;;; ---------------------------------------------------------------------------
+;; ;;;; ---------------------------------------------------------------------------
+;; ;;;; Combination key (Ctrl prefix)
+;; ;;;; ---------------------------------------------------------------------------
 (global-set-key (kbd "C-n") 'next-line)
 (global-set-key (kbd "C-p") 'previous-line)
 (global-set-key (kbd "C-b") 'backward-char)
@@ -72,14 +72,15 @@
 ;;;; ---------------------------------------------------------------------------
 
 (global-set-key (kbd "M-s") 'coldnew/anything-occur)
+
 (global-set-key (kbd "M-f") 'forward-word)
 (global-set-key (kbd "M-b") 'backward-word)
 (global-set-key (kbd "M-e") 'forward-sentence)
 (global-set-key (kbd "M-a") 'backward-sentence)
 (global-set-key (kbd "M-l") 'backward-delete-word)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-(global-set-key (kbd "M-n") 'scroll-up)
-(global-set-key (kbd "M-p") 'scroll-down)
+;; (global-set-key (kbd "M-n") 'scroll-up)
+;; (global-set-key (kbd "M-p") 'scroll-down)
 (global-set-key (kbd "M-v") 'er/expand-region)
 (global-set-key (kbd "M-q") 'view-mode)
 (global-set-key (kbd "M-/") 'undo-tree-redo)
@@ -93,12 +94,13 @@
 (global-set-key (kbd "M-4") 'delete-window)
 (global-set-key (kbd "M-0") 'other-window)
 
+(global-set-key (kbd "M-j") 'switch-window)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 
-(global-set-key (kbd "M-j") 'ace-jump-mode)
 (global-set-key (kbd "C-.") 'repeat)
 
 
@@ -124,7 +126,7 @@
 
 
 
-
+(evil:nmap (kbd "<SPC>") 'ace-jump-mode)
 
 
 ;;;; ---------------------------------------------------------------------------
@@ -156,11 +158,11 @@
 
 
 
-;;;;;; Super
-(global-set-key (kbd "s-n") 'windmove-down)
-(global-set-key (kbd "s-p") 'windmove-up)
-(global-set-key (kbd "s-f") 'windmove-right)
-(global-set-key (kbd "s-b") 'windmove-left)
+;; ;;;;;; Super
+;; (global-set-key (kbd "s-n") 'windmove-down)
+;; (global-set-key (kbd "s-p") 'windmove-up)
+;; (global-set-key (kbd "s-f") 'windmove-right)
+;; (global-set-key (kbd "s-b") 'windmove-left)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; one-key

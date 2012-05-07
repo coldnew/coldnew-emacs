@@ -6,6 +6,8 @@
 ;;;; ---------------------------------------------------------------------------
 (require 'gtags)
 
+
+
 ;;;;;;;; Keybinding
 (define-key gtags-mode-map (kbd "M-.") 'gtags-find-tag)
 (define-key gtags-mode-map (kbd "M-,") 'gtags-find-rtag)
@@ -24,7 +26,12 @@
     ;;  tagfile already exists; update it
     (shell-command "global -u && echo 'updated tagfile'")))
 
+;;;; ---------------------------------------------------------------------------
+;;;; etags
+;;;; ---------------------------------------------------------------------------
+(require 'etags)
 
+(setq tags-revert-without-query 1)
 
 (provide 'coldnew-tags)
 ;; coldnew-tags.el ends here.

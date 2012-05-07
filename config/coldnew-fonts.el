@@ -15,6 +15,7 @@
 (defvar emacs-english-font-size 11.5
   "Default English font size.")
 ;;(defvar emacs-cjk-font-size 15
+
 (defvar emacs-cjk-font-size 13.5
   "Default CJK font size.")
 (defvar emacs-symbol-font-size 16
