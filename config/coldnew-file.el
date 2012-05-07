@@ -52,7 +52,6 @@
 ;; (setq ido-file-extensions-order '(".org" ".txt" ".py" ".emacs" ".xml" ".el" ".ini" ".cfg" ".cnf"))
 ;; (setq ido-ignore-extensions t)
 
-
 ;;;; ---------------------------------------------------------------------------
 ;;;; lusty-explorer
 ;;;; ---------------------------------------------------------------------------
@@ -84,6 +83,7 @@
       ;; (find-file (concat "/sudo:root@localhost:" (anything-read-file-name "File: ")))
       (find-file (concat "/sudo:root@localhost:" (read-file-name "File: ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
 
 
 (provide 'coldnew-file)

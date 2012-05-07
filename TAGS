@@ -69,17 +69,18 @@
 /home/coldnew/.emacs.d/config/coldnew-lang-bash.el,72
 (defun ac-shell-script-mode-setup ()ac-shell-script-mode-setup42,1198
 
-/home/coldnew/.emacs.d/config/coldnew-command.el,630
+/home/coldnew/.emacs.d/config/coldnew-command.el,703
 (defun save-buffer-always ()save-buffer-always9,266
-(defun insert-date-time ()insert-date-time19,578
-(defun multi-occur-in-this-mode ()multi-occur-in-this-mode27,853
-(defun delete-word (arg)delete-word38,1289
-(defun backward-delete-word (arg)backward-delete-word44,1505
-(defun toggle-kbd-macro-recording-on ()toggle-kbd-macro-recording-on53,1871
-(defun toggle-kbd-macro-recording-off ()toggle-kbd-macro-recording-off62,2091
-(defun upcase-word-backward ()upcase-word-backward74,2508
-(defun downcase-word-backward ()downcase-word-backward79,2602
-(defun capitalize-word-backward ()capitalize-word-backward84,2702
+(defun toggle-selective-display (column)toggle-selective-display15,405
+(defun insert-date-time ()insert-date-time25,712
+(defun multi-occur-in-this-mode ()multi-occur-in-this-mode33,987
+(defun delete-word (arg)delete-word44,1423
+(defun backward-delete-word (arg)backward-delete-word50,1639
+(defun toggle-kbd-macro-recording-on ()toggle-kbd-macro-recording-on59,2005
+(defun toggle-kbd-macro-recording-off ()toggle-kbd-macro-recording-off68,2225
+(defun upcase-word-backward ()upcase-word-backward80,2642
+(defun downcase-word-backward ()downcase-word-backward85,2736
+(defun capitalize-word-backward ()capitalize-word-backward90,2836
 
 /home/coldnew/.emacs.d/config/coldnew-debug.el,0
 
@@ -109,31 +110,32 @@
 
 /home/coldnew/.emacs.d/config/coldnew-cursor.el,0
 
-/home/coldnew/.emacs.d/config/coldnew-global-keybindings.el,103
-(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)coldnew/set-mark-command178,7113
+/home/coldnew/.emacs.d/config/coldnew-global-keybindings.el,198
+(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)coldnew/set-mark-command179,7169
+(defalias 'coldnew/folding-toggle   'toggle-selective-display)coldnew/folding-toggle180,7238
 
-/home/coldnew/.emacs.d/config/coldnew-editor.el,1621
+/home/coldnew/.emacs.d/config/coldnew-editor.el,1622
 (defvar coldnew-editor-hook nilcoldnew-editor-hook11,319
 (defvar coldnew-editor-mapcoldnew-editor-map14,388
 (define-minor-mode coldnew-editor-modecoldnew-editor-mode19,498
-(defun key-chord-input-method (first-char)key-chord-input-method96,3772
-(defun paredit-blink-paren-match (another-line-p)paredit-blink-paren-match153,6067
-(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map190,7563
-(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting238,9425
-(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting265,10745
-(defun indent-file-after-save ()indent-file-after-save289,11444
-(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save297,11677
-(defun highlight-additional-keywords ()highlight-additional-keywords305,11924
-(defun highlight-fontify-numbers ()highlight-fontify-numbers313,12302
-(defun highlight-escape-char ()highlight-escape-char325,12713
-(defun insert-space-between-english-chinese ()insert-space-between-english-chinese333,12971
-(defun select-forwards-to-before-match (match)select-forwards-to-before-match351,13755
-(defun select-backwards-to-before-match (match)select-backwards-to-before-match357,13989
-(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match363,14227
-(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match372,14582
-(defun match-paren (arg)match-paren381,14941
-(defun delete-between-pair (char)delete-between-pair388,15216
-(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark403,15752
+(defun key-chord-input-method (first-char)key-chord-input-method108,4159
+(defun paredit-blink-paren-match (another-line-p)paredit-blink-paren-match165,6454
+(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map202,7950
+(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting240,9396
+(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting267,10716
+(defun indent-file-after-save ()indent-file-after-save291,11415
+(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save299,11648
+(defun highlight-additional-keywords ()highlight-additional-keywords307,11895
+(defun highlight-fontify-numbers ()highlight-fontify-numbers315,12273
+(defun highlight-escape-char ()highlight-escape-char327,12684
+(defun insert-space-between-english-chinese ()insert-space-between-english-chinese335,12942
+(defun select-forwards-to-before-match (match)select-forwards-to-before-match353,13726
+(defun select-backwards-to-before-match (match)select-backwards-to-before-match359,13960
+(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match365,14198
+(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match374,14553
+(defun match-paren (arg)match-paren383,14912
+(defun delete-between-pair (char)delete-between-pair390,15187
+(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark405,15723
 
 /home/coldnew/.emacs.d/config/coldnew-org.el,0
 
@@ -219,7 +221,7 @@
 /home/coldnew/.emacs.d/config/coldnew-jabber.el,0
 
 /home/coldnew/.emacs.d/config/coldnew-file.el,51
-(defun sudo-edit (&optional arg)sudo-edit80,2864
+(defun sudo-edit (&optional arg)sudo-edit79,2890
 
 /home/coldnew/.emacs.d/config/coldnew-tramp.el,0
 
@@ -291,13 +293,14 @@
 (defvar emacs-cjk-font-size 13.5emacs-cjk-font-size19,494
 (defvar emacs-symbol-font-size 16emacs-symbol-font-size21,555
 
-/home/coldnew/.emacs.d/config/coldnew-evil.el,375
+/home/coldnew/.emacs.d/config/coldnew-evil.el,429
 (define-key evil-insert-state-mapevil-insert-state-map31,917
 (defun evil-undefine ()evil-undefine46,1425
 (defmacro evil-define-key-insert (state map key name)evil-define-key-insert63,1953
-(defmacro evil:global-set-key-map (state key name)evil:global-set-key-map69,2167
-(defmacro evil:nmap (key name)evil:nmap73,2259
-(defmacro evil:imap (key name)evil:imap77,2359
+(defmacro evil:make-keymap (state key name)evil:make-keymap69,2167
+(defmacro evil:nmap (key name)evil:nmap73,2304
+(defmacro evil:imap (key name)evil:imap77,2430
+(defmacro evil:local-imap (keymap key name)evil:local-imap81,2556
 
 /home/coldnew/.emacs.d/config/coldnew-gpg.el,0
 
@@ -774,6 +777,22 @@
 (defun sunrise-commander-unload-function ()sunrise-commander-unload-function4180,151978
 (defmacro sr-rainbow (symbol spec regexp)sr-rainbow4186,152167
 (defface ,symbol '((t ,spec)) "Sunrise rainbow face" :group 'sunrise),symbol4188,152217
+
+/home/coldnew/.emacs.d/lisp/hideshowvis/hideshowvis-pkg.el,131
+(define-package "hideshowvis" "0.3" "Add markers to the fringe for regions foldable by hideshow.el" (quote nil))"hideshowvis"1,0
+
+/home/coldnew/.emacs.d/lisp/hideshowvis/hideshowvis.el,764
+(define-fringe-bitmap 'hideshowvis-hideable-marker [0 0 0 126 126 0 0 0])hideshowvis-hideable-marker68,2473
+(defconst hideshowvis-version "v0.2" "Version of hideshowvis minor mode")hideshowvis-version70,2548
+(defface hideshowvis-hidable-facehideshowvis-hidable-face72,2623
+(defcustom hideshowvis-ignore-same-line thideshowvis-ignore-same-line77,2754
+(defun hideshowvis-highlight-hs-regions-in-fringe (&optional start end old-text-length)hideshowvis-highlight-hs-regions-in-fringe83,2995
+(defun hideshowvis-click-fringe (event)hideshowvis-click-fringe121,4754
+(defvar hideshowvis-mode-maphideshowvis-mode-map135,5094
+(define-minor-mode hideshowvis-minor-mode ()hideshowvis-minor-mode143,5343
+(defun hideshowvis-enable ()hideshowvis-enable165,6158
+
+/home/coldnew/.emacs.d/lisp/hideshowvis/hideshowvis-autoloads.el,0
 
 /home/coldnew/.emacs.d/lisp/elpa/c-eldoc-20120430/c-eldoc-autoloads.el,0
 
@@ -9422,7 +9441,7 @@ arduino_MISC=arduino-pde.srtarduino_MISC15,568
 VERSION=1.1VERSION16,597
 DISTDIR=$(top)srecode-$(VERSION)/templatesDISTDIR17,609
 
-/home/coldnew/.emacs.d/lisp/.loaddefs.el,5308
+/home/coldnew/.emacs.d/lisp/.loaddefs.el,5107
 (defface ac-slime-menu-face '((t (:inherit 'ac-candidate-face))) "\ac-slime-menu-face10,224
 (defface ac-slime-selection-face '((t (:inherit 'ac-selection-face))) "\ac-slime-selection-face13,355
 (defvar ac-source-slime-fuzzy '((init . ac-slime-init) (candidates . ac-source-slime-fuzzy-candidates) (candidate-face . ac-slime-menu-face) (selection-face . ac-slime-selection-face) (prefix . slime-symbol-start-pos) (symbol . "l") (match lambda (prefix candidates) candidates) (document . ac-slime-documentation)) "\ac-source-slime-fuzzy16,499
@@ -9445,9 +9464,6 @@ DISTDIR=$(top)srecode-$(VERSION)/templatesDISTDIR17,609
 (defvar helm-bookmark-mode-line-string '("Bookmark(s)" "\\<helm-c-bookmark-map>\\[helm-c-bookmark-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct") "\helm-bookmark-mode-line-string2340,73024
 (defvar helm-occur-mode-line "\\<helm-map>\\[helm-help]:Help \\<helm-occur-map>\\[helm-occur-run-query-replace-regexp]:Query replace regexp \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct")helm-occur-mode-line2343,73343
 (defvar helm-mode nil "\helm-mode2462,76707
-(defvar linum-format 'smart "\linum-format2728,84111
-(defvar linum+-dynamic-format "%%%dd|" "\linum+-dynamic-format2747,84928
-(defvar linum+-smart-format "%%%dd|" "\linum+-smart-format2752,85110
 
 /home/coldnew/.emacs.d/lisp/anything/Makefile,152
 EMACS		:= emacs -Q -batchEMACS26,923
@@ -19133,6 +19149,22 @@ PACKAGE=auto-complete-${VERSION}PACKAGE2,70
 
 /home/coldnew/.emacs.d/lisp/package/elpa/smarter-compile-2012.4.9/smarter-compile-pkg.el,114
 (define-package "smarter-compile" "2012.4.9" "a smarter wrapper for `compile'" (quote nil))"smarter-compile"1,0
+
+/home/coldnew/.emacs.d/lisp/package/elpa/hideshowvis-0.3/hideshowvis-pkg.el,131
+(define-package "hideshowvis" "0.3" "Add markers to the fringe for regions foldable by hideshow.el" (quote nil))"hideshowvis"1,0
+
+/home/coldnew/.emacs.d/lisp/package/elpa/hideshowvis-0.3/hideshowvis.el,764
+(define-fringe-bitmap 'hideshowvis-hideable-marker [0 0 0 126 126 0 0 0])hideshowvis-hideable-marker68,2473
+(defconst hideshowvis-version "v0.2" "Version of hideshowvis minor mode")hideshowvis-version70,2548
+(defface hideshowvis-hidable-facehideshowvis-hidable-face72,2623
+(defcustom hideshowvis-ignore-same-line thideshowvis-ignore-same-line77,2754
+(defun hideshowvis-highlight-hs-regions-in-fringe (&optional start end old-text-length)hideshowvis-highlight-hs-regions-in-fringe83,2995
+(defun hideshowvis-click-fringe (event)hideshowvis-click-fringe121,4754
+(defvar hideshowvis-mode-maphideshowvis-mode-map135,5094
+(define-minor-mode hideshowvis-minor-mode ()hideshowvis-minor-mode143,5343
+(defun hideshowvis-enable ()hideshowvis-enable165,6158
+
+/home/coldnew/.emacs.d/lisp/package/elpa/hideshowvis-0.3/hideshowvis-autoloads.el,0
 
 /home/coldnew/.emacs.d/lisp/package/elpa/ecb_snap-20110605/make.bat,95
 set EMACS=C:/Programme/emacs-22.3/bin/emacs.exeEMACS47,2026

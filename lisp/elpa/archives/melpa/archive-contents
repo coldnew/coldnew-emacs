@@ -3,7 +3,7 @@
 [(20110826)
 nil "Provides zsh like completion for minibuffer [source: github]" single])
 (zf-mode .
-[(20120423)
+[(20120507)
 nil "A better PHP mode with Zend Framework 1 support. [source: github]" tar])
 (zenburn-theme .
 [(20120505)
@@ -198,6 +198,9 @@ nil "A Python regexp/replace command for Emacs with interactive visual feedback 
 (projectile .
 [(20120502)
 nil "Manage and navigate projects in Emacs easily [source: github]" single])
+(pretty-symbols-mode .
+[(20120507)
+nil "Draw tokens as Unicode glyphs. [source: github]" single])
 (pretty-mode .
 [(20100803)
 nil "redisplay parts of the buffer as pretty symbols [source: wiki]" single])
@@ -299,9 +302,6 @@ nil "Emacs Prelude: decent Perl coding settings. [source: github]" single])
 (popup .
 [(20120331)
 nil "Visual Popup User Interface [source: github]" single])
-(pony-mode .
-[(20120425)
-nil "No description available. [source: github]" tar])
 (pkgbuild-mode .
 [(20120214)
 nil "Interface to the ArchLinux package manager [source: github]" single])
@@ -380,7 +380,7 @@ nil "Emacs Major mode for Markdown-formatted text files [source: github]" single
 (1 2)))
 "Magit extensions for using GitHub [source: github]" single])
 (magit .
-[(20120504)
+[(20120507)
 nil "Control Git from Emacs. [source: github]" tar])
 (lua-mode .
 [(20120409)
@@ -448,7 +448,7 @@ nil "Use ido (nearly) everywhere. [source: github]" single])
 [(20110817)
 nil "highlight the word the point is on [source: github]" single])
 (icicles .
-[(20120506)
+[(20120507)
 nil "Minibuffer input completion and cycling. [source: wiki]" tar])
 (ibuffer-vc .
 [(20111221)
@@ -568,7 +568,7 @@ nil "increment/decrement numbers like in vim [source: github]" single])
 [(20111001)
 nil "No description available. [source: github]" single])
 (evil .
-[(20120506)
+[(20120507)
 ((undo-tree
 (0 3 0)))
 "Extensible Vi layer for Emacs. [source: git]" tar])
@@ -699,5 +699,8 @@ nil "a quick cursor location minor mode for emacs [source: github]" single])
 nil "An auto-complete source using slime completions [source: github]" single])
 (ac-dabbrev .
 [(20091116)
-nil "auto-complete.el source for dabbrev [source: wiki]" single]))
+nil "auto-complete.el source for dabbrev [source: wiki]" single])
+(pony-mode .
+[(20120425)
+nil "No description available. [source: github]" tar]))
 
