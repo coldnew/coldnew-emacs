@@ -66,18 +66,21 @@
      '(lambda ()
 	(interactive) (insert ,name) (if (featurep 'yasnippet) (yas/expand)))))
 
-(defmacro evil:global-set-key-map (state key name)
-  ""
+(defmacro evil:make-keymap (state key name)
+  "Creates a new keymap with a certain `parent' keymap."
   `(define-key ,state ,key ,name))
 
 (defmacro evil:nmap (key name)
-  ""
-  `(evil:global-set-key-map evil-normal-state-map ,key ,name))
+  "mapping in the normal-mode keymap"
+  `(evil:make-keymap evil-normal-state-map ,key ,name))
 
 (defmacro evil:imap (key name)
-  ""
-  `(evil:global-set-key-map evil-insert-state-map ,key ,name))
+  "mapping in the insert-mode keymap"
+  `(evil:make-keymap evil-insert-state-map ,key ,name))
 
+(defmacro evil:local-imap (keymap key name)
+  "mapping in the insert-mode local keymap"
+  `(evil-define-key 'insert ,keymap ,key ,name))
 
 
 (evil:imap (kbd "<escape>") 'evil-normal-state)

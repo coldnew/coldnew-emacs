@@ -47,12 +47,13 @@
 (global-set-key (kbd "C-x o")   'switch-window)
 (global-set-key (kbd "C-x C-l") 'recenter-top-bottom)
 (global-set-key (kbd "C-x C-n") 'auto-complete)
+(global-set-key (kbd "C-x C-s") 'save-buffer-always)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-c prefix)
 ;;;; ---------------------------------------------------------------------------
 (global-set-key (kbd "C-c C-f") 'my-anything-filelist)
-(global-set-key (kbd "C-c C-s") 'save-buffer-always)
+(global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
 
 
 ;;;; ---------------------------------------------------------------------------
@@ -169,14 +170,14 @@
 ;;;; --------------------------------------------------------------------------
 (evil:nmap (kbd "C-w") 'one-key-menu-window-navigation)
 
-;;(global-set-key (kbd "C-w") 'one-key-menu-window-navigation)
+;;(global-set-key (kbd "C-w") 'one-key-menu-window-navigatio)
 (global-set-key (kbd "C-x M-f") 'one-key-menu-file-handle)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Alias
 ;;;; ---------------------------------------------------------------------------
 (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
-
+(defalias 'coldnew/folding-toggle   'toggle-selective-display)
 
 
 

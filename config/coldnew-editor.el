@@ -84,6 +84,18 @@
 ;; minimap is really funny :)
 ;;(require* 'minimap)
 
+;;;; ---------------------------------------------------------------------------
+;;;; hideshow
+;;;; ---------------------------------------------------------------------------
+(require 'hideshow)
+(require* 'hideshowvis)
+
+;;; enable following mode to use hideshow
+(dolist (hook (list 'emacs-lisp-mode-hook
+		    'c++-mode-hook
+		    'c-mode-hook))
+  (add-hook hook 'hideshowvis-enable))
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; key-chord

@@ -63,13 +63,18 @@
 	     (local-set-key (kbd "C-c C-l") 'org-store-link)
 	     (local-set-key (kbd "C-c C-a") 'org-agenda)
 	     (local-set-key (kbd "C-c C-t") 'org-todo)
+	     (key-chord-define org-mode-map "cc"  'org-edit-special)
 	     ))
 
 
 (add-hook 'org-src-mode-hook
 	  '(lambda ()
 	     (local-set-key (kbd "C-c C-c") 'org-edit-src-exit)
+	     (key-chord-define org-src-mode-map "cc"  'org-edit-src-exit)
 	     ))
+
+
+
 
 (provide 'coldnew-org)
 ;; coldnew-org.el ends here.

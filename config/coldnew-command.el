@@ -12,6 +12,12 @@
   (set-buffer-modified-p t)
   (save-buffer))
 
+(defun toggle-selective-display (column)
+  (interactive "P")
+  (set-selective-display
+   (if selective-display nil (or column 1))))
+
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; Date
 ;;;; ---------------------------------------------------------------------------
