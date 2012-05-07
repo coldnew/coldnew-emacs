@@ -31,7 +31,6 @@
 (setq line-spacing       4 )	      ; Additional space between lines
 (setq fill-column      100 ) ; column beyond which automatic line-wrapping shold happen
 (setq kill-ring-max    300 ) ; Maximum lenght of kill-ring
-(setq major-mode 'org-mode ) ; Use org-mode as default major-mode
 (setq require-final-newline  t ) ; Auto add a newline at the end of line
 (setq next-line-add-newlines t ) ;
 (setq shift-select-mode      t ) ; Enable shift-select mode
