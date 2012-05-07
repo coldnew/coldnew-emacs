@@ -58,9 +58,9 @@
 /home/coldnew/.emacs.d/config/coldnew-daemon.el,0
 
 /home/coldnew/.emacs.d/config/coldnew-tags.el,220
-(define-key gtags-mode-map (kbd "M-.") 'gtags-find-tag)gtags-mode-map10,296
-(define-key gtags-mode-map (kbd "M-,") 'gtags-find-rtag)gtags-mode-map11,352
-(defun gtags-create-or-update ()gtags-create-or-update14,429
+(define-key gtags-mode-map (kbd "M-.") 'gtags-find-tag)gtags-mode-map12,298
+(define-key gtags-mode-map (kbd "M-,") 'gtags-find-rtag)gtags-mode-map13,354
+(defun gtags-create-or-update ()gtags-create-or-update16,431
 
 /home/coldnew/.emacs.d/config/coldnew-menu.el,147
 (defun one-key-menu-window-navigation ()one-key-menu-window-navigation15,353
@@ -110,7 +110,7 @@
 /home/coldnew/.emacs.d/config/coldnew-cursor.el,0
 
 /home/coldnew/.emacs.d/config/coldnew-global-keybindings.el,103
-(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)coldnew/set-mark-command176,7038
+(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)coldnew/set-mark-command178,7113
 
 /home/coldnew/.emacs.d/config/coldnew-editor.el,1621
 (defvar coldnew-editor-hook nilcoldnew-editor-hook11,319
@@ -118,22 +118,22 @@
 (define-minor-mode coldnew-editor-modecoldnew-editor-mode19,498
 (defun key-chord-input-method (first-char)key-chord-input-method97,3838
 (defun paredit-blink-paren-match (another-line-p)paredit-blink-paren-match154,6133
-(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map191,7626
-(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting239,9488
-(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting266,10808
-(defun indent-file-after-save ()indent-file-after-save290,11507
-(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save298,11740
-(defun highlight-additional-keywords ()highlight-additional-keywords306,11987
-(defun highlight-fontify-numbers ()highlight-fontify-numbers314,12365
-(defun highlight-escape-char ()highlight-escape-char326,12776
-(defun insert-space-between-english-chinese ()insert-space-between-english-chinese334,13034
-(defun select-forwards-to-before-match (match)select-forwards-to-before-match352,13818
-(defun select-backwards-to-before-match (match)select-backwards-to-before-match358,14052
-(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match364,14290
-(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match373,14645
-(defun match-paren (arg)match-paren382,15004
-(defun delete-between-pair (char)delete-between-pair389,15279
-(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark404,15815
+(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map191,7629
+(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting239,9491
+(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting266,10811
+(defun indent-file-after-save ()indent-file-after-save290,11510
+(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save298,11743
+(defun highlight-additional-keywords ()highlight-additional-keywords306,11990
+(defun highlight-fontify-numbers ()highlight-fontify-numbers314,12368
+(defun highlight-escape-char ()highlight-escape-char326,12779
+(defun insert-space-between-english-chinese ()insert-space-between-english-chinese334,13037
+(defun select-forwards-to-before-match (match)select-forwards-to-before-match352,13821
+(defun select-backwards-to-before-match (match)select-backwards-to-before-match358,14055
+(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match364,14293
+(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match373,14648
+(defun match-paren (arg)match-paren382,15007
+(defun delete-between-pair (char)delete-between-pair389,15282
+(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark404,15818
 
 /home/coldnew/.emacs.d/config/coldnew-org.el,0
 
@@ -189,23 +189,23 @@
 (defface mode-line-evil-state-string-Emode-line-evil-state-string-E56,1737
 
 /home/coldnew/.emacs.d/config/coldnew-core.el,1279
-(defvar emacs-dir "~/.emacs.d/"emacs-dir41,1741
-(defvar emacs-config-dir (concat emacs-dir "config/")emacs-config-dir43,1819
-(defvar emacs-themes-dir (concat emacs-dir "themes/")emacs-themes-dir45,1914
-(defvar emacs-lisp-dir   (concat emacs-dir "lisp/")emacs-lisp-dir47,2005
-(defvar emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")emacs-elpa-dir49,2110
-(defvar emacs-snippets-dir (concat emacs-dir "snippets/")emacs-snippets-dir51,2225
-(defvar emacs-recipes-dir (concat emacs-dir "recipes/")emacs-recipes-dir53,2324
-(defvar emacs-custom-file (concat emacs-dir "custom.el")emacs-custom-file56,2428
-(defvar emacs-bin-dir    (concat emacs-dir "bin/")emacs-bin-dir59,2518
-(defvar emacs-cache-dir  (concat emacs-dir "cache/")emacs-cache-dir61,2607
-(defvar emacs-backup-dir (concat emacs-dir "backup/")emacs-backup-dir63,2687
-(defvar emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")emacs-authinfo-file65,2773
-(defvar emacs-default-shell "/bin/bash"emacs-default-shell72,2966
-(defvar emacs-popup-shell-window-height 30emacs-popup-shell-window-height74,3037
-(defvar emacs-popup-shell-window-position "bottom"emacs-popup-shell-window-position76,3114
-(defun swap-ctrl-caps ()swap-ctrl-caps87,3437
-(defun make-caps-as-ctrl ()make-caps-as-ctrl91,3546
+(defvar emacs-dir "~/.emacs.d/"emacs-dir42,1773
+(defvar emacs-config-dir (concat emacs-dir "config/")emacs-config-dir44,1851
+(defvar emacs-themes-dir (concat emacs-dir "themes/")emacs-themes-dir46,1946
+(defvar emacs-lisp-dir   (concat emacs-dir "lisp/")emacs-lisp-dir48,2037
+(defvar emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")emacs-elpa-dir50,2142
+(defvar emacs-snippets-dir (concat emacs-dir "snippets/")emacs-snippets-dir52,2257
+(defvar emacs-recipes-dir (concat emacs-dir "recipes/")emacs-recipes-dir54,2356
+(defvar emacs-custom-file (concat emacs-dir "custom.el")emacs-custom-file57,2460
+(defvar emacs-bin-dir    (concat emacs-dir "bin/")emacs-bin-dir60,2550
+(defvar emacs-cache-dir  (concat emacs-dir "cache/")emacs-cache-dir62,2639
+(defvar emacs-backup-dir (concat emacs-dir "backup/")emacs-backup-dir64,2719
+(defvar emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")emacs-authinfo-file66,2805
+(defvar emacs-default-shell "/bin/bash"emacs-default-shell73,2998
+(defvar emacs-popup-shell-window-height 30emacs-popup-shell-window-height75,3069
+(defvar emacs-popup-shell-window-position "bottom"emacs-popup-shell-window-position77,3146
+(defun swap-ctrl-caps ()swap-ctrl-caps88,3469
+(defun make-caps-as-ctrl ()make-caps-as-ctrl92,3578
 
 /home/coldnew/.emacs.d/config/coldnew-directory.el,0
 
@@ -219,7 +219,7 @@
 /home/coldnew/.emacs.d/config/coldnew-jabber.el,0
 
 /home/coldnew/.emacs.d/config/coldnew-file.el,51
-(defun sudo-edit (&optional arg)sudo-edit68,2435
+(defun sudo-edit (&optional arg)sudo-edit80,2864
 
 /home/coldnew/.emacs.d/config/coldnew-tramp.el,0
 
@@ -243,11 +243,12 @@
 (defun font-exist-p (fontname)font-exist-p96,3162
 (defadvice kill-emacs (around recompile-emacs-config activate)kill-emacs105,3458
 
-/home/coldnew/.emacs.d/config/coldnew-lang-elisp.el,320
+/home/coldnew/.emacs.d/config/coldnew-lang-elisp.el,376
 (define-key emacs-lisp-mode-map (kbd "C-c i") 'elisp-mode:anything-info-search)emacs-lisp-mode-map40,1240
 (defun ac-emacs-lisp-mode-setup ()ac-emacs-lisp-mode-setup46,1502
 (defun remove-elc-when-visit ()remove-elc-when-visit61,1973
 (defun elisp-mode:anything-info-search ()elisp-mode:anything-info-search70,2318
+(defun ielm-auto-complete ()ielm-auto-complete91,2954
 
 /home/coldnew/.emacs.d/config/coldnew-tabbar.el,0
 
@@ -263,32 +264,32 @@
 /home/coldnew/.emacs.d/config/coldnew-packages.el,0
 
 /home/coldnew/.emacs.d/config/coldnew-complete.el,876
-(define-key ac-menu-map (kbd "C-n") 'ac-next)ac-menu-map43,989
-(define-key ac-menu-map (kbd "C-p") 'ac-previous)ac-menu-map44,1035
-(define-key ac-mode-map (kbd "C-c h") 'ac-last-quick-help)ac-mode-map45,1085
-(define-key ac-mode-map (kbd "C-c H") 'ac-last-help)ac-mode-map46,1144
-(define-key ac-completing-map "\t" 'ac-complete)ac-completing-map47,1197
-(define-key ac-complete-mode-map [tab] 'ac-expand)ac-complete-mode-map48,1246
-(define-key anything-occur-map (kbd "C-r") 'anything-occur-run-query-replace-regexp)anything-occur-map71,1969
-(defun my-anything-filelist ()my-anything-filelist96,2632
-(defun coldnew/anything-occur ()coldnew/anything-occur114,3153
-(defun coldnew/helm-occur ()coldnew/helm-occur121,3359
-(defun anything-c-occur-get-line (s e)anything-c-occur-get-line127,3503
-(defun helm-c-occur-get-line (s e)helm-c-occur-get-line132,3755
+(define-key ac-menu-map (kbd "C-n") 'ac-next)ac-menu-map43,993
+(define-key ac-menu-map (kbd "C-p") 'ac-previous)ac-menu-map44,1039
+(define-key ac-mode-map (kbd "C-c h") 'ac-last-quick-help)ac-mode-map45,1089
+(define-key ac-mode-map (kbd "C-c H") 'ac-last-help)ac-mode-map46,1148
+(define-key ac-completing-map "\t" 'ac-complete)ac-completing-map47,1201
+(define-key ac-complete-mode-map [tab] 'ac-expand)ac-complete-mode-map48,1250
+(define-key anything-occur-map (kbd "C-r") 'anything-occur-run-query-replace-regexp)anything-occur-map71,1983
+(defun my-anything-filelist ()my-anything-filelist96,2658
+(defun coldnew/anything-occur ()coldnew/anything-occur114,3181
+(defun coldnew/helm-occur ()coldnew/helm-occur121,3387
+(defun anything-c-occur-get-line (s e)anything-c-occur-get-line127,3531
+(defun helm-c-occur-get-line (s e)helm-c-occur-get-line132,3783
 
 /home/coldnew/.emacs.d/config/coldnew-elscreen.el,382
-(defmacro elscreen-create-automatically (ad-do-it)elscreen-create-automatically19,384
-(defadvice elscreen-next (around elscreen-create-automatically activate)elscreen-next26,646
-(defadvice elscreen-previous (around elscreen-create-automatically activate)elscreen-previous29,764
-(defadvice elscreen-toggle (around elscreen-create-automatically activate)elscreen-toggle32,886
+(defmacro elscreen-create-automatically (ad-do-it)elscreen-create-automatically19,380
+(defadvice elscreen-next (around elscreen-create-automatically activate)elscreen-next26,642
+(defadvice elscreen-previous (around elscreen-create-automatically activate)elscreen-previous29,760
+(defadvice elscreen-toggle (around elscreen-create-automatically activate)elscreen-toggle32,882
 
 /home/coldnew/.emacs.d/config/coldnew-fonts.el,379
 (defvar emacs-english-font "Monaco"emacs-english-font6,125
 (defvar emacs-cjk-font "Hiragino Sans GB W3"emacs-cjk-font9,230
 (defvar emacs-symbol-font "Monaco"emacs-symbol-font11,303
 (defvar emacs-english-font-size 11.5emacs-english-font-size15,391
-(defvar emacs-cjk-font-size 13.5emacs-cjk-font-size18,494
-(defvar emacs-symbol-font-size 16emacs-symbol-font-size20,555
+(defvar emacs-cjk-font-size 13.5emacs-cjk-font-size19,494
+(defvar emacs-symbol-font-size 16emacs-symbol-font-size21,555
 
 /home/coldnew/.emacs.d/config/coldnew-evil.el,375
 (define-key evil-insert-state-mapevil-insert-state-map31,917
@@ -773,6 +774,29 @@
 (defun sunrise-commander-unload-function ()sunrise-commander-unload-function4180,151978
 (defmacro sr-rainbow (symbol spec regexp)sr-rainbow4186,152167
 (defface ,symbol '((t ,spec)) "Sunrise rainbow face" :group 'sunrise),symbol4188,152217
+
+/home/coldnew/.emacs.d/lisp/elpa/c-eldoc-20120430/c-eldoc-autoloads.el,0
+
+/home/coldnew/.emacs.d/lisp/elpa/c-eldoc-20120430/c-eldoc-pkg.el,135
+(define-package "c-eldoc" "20120430" "helpful description of the arguments to C functions [source: github]" (quote nil))"c-eldoc"1,0
+
+/home/coldnew/.emacs.d/lisp/elpa/c-eldoc-20120430/c-eldoc.el,1163
+(defvar c-eldoc-cpp-macro-arguments "-dD -w -P")c-eldoc-cpp-macro-arguments125,4543
+(defvar c-eldoc-cpp-normal-arguments "-w -P")c-eldoc-cpp-normal-arguments126,4592
+(defvar c-eldoc-cpp-command "/usr/bin/cpp ")c-eldoc-cpp-command127,4638
+(defvar c-eldoc-includesc-eldoc-includes128,4683
+(defvar c-eldoc-reserved-wordsc-eldoc-reserved-words134,4911
+(defvar c-eldoc-buffer-regenerate-timec-eldoc-buffer-regenerate-time138,5045
+(defun c-eldoc-time-diff (t1 t2)c-eldoc-time-diff142,5139
+(defun c-eldoc-time-difference (old-time)c-eldoc-time-difference148,5398
+(defun call-c-eldoc-cleanup ()call-c-eldoc-cleanup152,5616
+(defun c-eldoc-cleanup (preprocessed-buffer)c-eldoc-cleanup156,5767
+(defvar c-eldoc-buffersc-eldoc-buffers159,5850
+(defun c-turn-on-eldoc-mode ()c-turn-on-eldoc-mode164,6045
+(defun c-eldoc-get-buffer (function-name)c-eldoc-get-buffer178,6498
+(defun c-eldoc-function-and-argument (&optional limit)c-eldoc-function-and-argument200,7747
+(defun c-eldoc-format-arguments-string (arguments index)c-eldoc-format-arguments-string227,8861
+(defun c-eldoc-print-current-symbol-info ()c-eldoc-print-current-symbol-info255,10172
 
 /home/coldnew/.emacs.d/lisp/centered-cursor-mode/centered-cursor-mode.el,1903
 (defgroup centered-cursor nilcentered-cursor98,3503
@@ -9398,22 +9422,29 @@ arduino_MISC=arduino-pde.srtarduino_MISC15,568
 VERSION=1.1VERSION16,597
 DISTDIR=$(top)srecode-$(VERSION)/templatesDISTDIR17,609
 
-/home/coldnew/.emacs.d/lisp/.loaddefs.el,3907
-(defvar helm-c-source-etags+-select '((name . "Etags+") (init . helm-etags+-get-available-tag-table-buffers) (candidates . helm-etags+-get-candidates-with-cache-support) (volatile) (pattern-transformer (lambda (helm-pattern) (setq helm-etags+-untransformed-helm-pattern helm-pattern) (regexp-quote (replace-regexp-in-string "\\\\_<\\|\\\\_>" "" helm-pattern)))) (requires-pattern . 3) (delayed) (action ("Goto the location" . helm-c-etags+-goto-location))))helm-c-source-etags+-select47,1520
-(define-prefix-command 'helm-command-prefix)helm-command-prefix519,15059
-(defvar helm-dired-mode "Enable helm completion in Dired functions.\nBindings affected are C, R, S, H.\nThis is deprecated for Emacs24+ users, use `helm-mode' instead." "\helm-dired-mode832,24190
-(defvar helm-mode-line-string "\\<helm-map>\\[helm-help]:Help \\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-mode-line-string1070,30922
-(defvar helm-buffer-mode-line-string '("Buffer(s)" "\\<helm-c-buffer-map>\\[helm-c-buffer-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "String displayed in mode-line in `helm-c-source-buffers-list'"))helm-buffer-mode-line-string1132,32318
-(defvar helm-ff-mode-line-string "\\<helm-find-files-map>\\[helm-ff-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-ff-mode-line-string1134,32627
-(defvar helm-read-file-name-mode-line-string "\\<helm-c-read-file-map>\\[helm-read-file-name-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-read-file-name-mode-line-string1137,32913
-(defvar helm-generic-file-mode-line-string "\\<helm-generic-files-map>\\[helm-generic-file-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-generic-file-mode-line-string1140,33224
-(defvar helm-grep-mode-line-string "\\<helm-c-grep-map>\\[helm-grep-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-grep-mode-line-string1143,33514
-(defvar helm-pdfgrep-mode-line-string "\\<helm-c-pdfgrep-map>\\[helm-pdfgrep-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-pdfgrep-mode-line-string1146,33789
-(defvar helm-etags-mode-line-string "\\<helm-c-etags-map>\\[helm-etags-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-etags-mode-line-string1149,34076
-(defvar helm-c-ucs-mode-line-string "\\<helm-c-ucs-map>\\[helm-c-ucs-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-c-ucs-mode-line-string1152,34361
-(defvar helm-bookmark-mode-line-string '("Bookmark(s)" "\\<helm-c-bookmark-map>\\[helm-c-bookmark-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct") "\helm-bookmark-mode-line-string1155,34633
-(defvar helm-occur-mode-line "\\<helm-map>\\[helm-help]:Help \\<helm-occur-map>\\[helm-occur-run-query-replace-regexp]:Query replace regexp \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct")helm-occur-mode-line1158,34952
-(defvar helm-mode nil "\helm-mode1277,38316
+/home/coldnew/.emacs.d/lisp/.loaddefs.el,5107
+(defface ac-slime-menu-face '((t (:inherit 'ac-candidate-face))) "\ac-slime-menu-face10,224
+(defface ac-slime-selection-face '((t (:inherit 'ac-selection-face))) "\ac-slime-selection-face13,355
+(defvar ac-source-slime-fuzzy '((init . ac-slime-init) (candidates . ac-source-slime-fuzzy-candidates) (candidate-face . ac-slime-menu-face) (selection-face . ac-slime-selection-face) (prefix . slime-symbol-start-pos) (symbol . "l") (match lambda (prefix candidates) candidates) (document . ac-slime-documentation)) "\ac-source-slime-fuzzy16,499
+(defvar ac-source-slime-simple '((init . ac-slime-init) (candidates . ac-source-slime-simple-candidates) (candidate-face . ac-slime-menu-face) (selection-face . ac-slime-selection-face) (prefix . slime-symbol-start-pos) (symbol . "l") (document . ac-slime-documentation)) "\ac-source-slime-simple19,855
+(defvar anything-command-map)anything-command-map230,10108
+(defvar anything-dired-mode "Enable anything completion in Dired functions.\nBindings affected are C, R, S, H.\nThis is deprecated for Emacs24+ users, use `ac-mode' instead." "\anything-dired-mode490,17328
+(defvar anything-completion-mode nil "\anything-completion-mode564,19810
+(defvar helm-c-source-etags+-select '((name . "Etags+") (init . helm-etags+-get-available-tag-table-buffers) (candidates . helm-etags+-get-candidates-with-cache-support) (volatile) (pattern-transformer (lambda (helm-pattern) (setq helm-etags+-untransformed-helm-pattern helm-pattern) (regexp-quote (replace-regexp-in-string "\\\\_<\\|\\\\_>" "" helm-pattern)))) (requires-pattern . 3) (delayed) (action ("Goto the location" . helm-c-etags+-goto-location))))helm-c-source-etags+-select1232,39911
+(define-prefix-command 'helm-command-prefix)helm-command-prefix1704,53450
+(defvar helm-dired-mode "Enable helm completion in Dired functions.\nBindings affected are C, R, S, H.\nThis is deprecated for Emacs24+ users, use `helm-mode' instead." "\helm-dired-mode2017,62581
+(defvar helm-mode-line-string "\\<helm-map>\\[helm-help]:Help \\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-mode-line-string2255,69313
+(defvar helm-buffer-mode-line-string '("Buffer(s)" "\\<helm-c-buffer-map>\\[helm-c-buffer-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "String displayed in mode-line in `helm-c-source-buffers-list'"))helm-buffer-mode-line-string2317,70709
+(defvar helm-ff-mode-line-string "\\<helm-find-files-map>\\[helm-ff-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-ff-mode-line-string2319,71018
+(defvar helm-read-file-name-mode-line-string "\\<helm-c-read-file-map>\\[helm-read-file-name-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-read-file-name-mode-line-string2322,71304
+(defvar helm-generic-file-mode-line-string "\\<helm-generic-files-map>\\[helm-generic-file-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-generic-file-mode-line-string2325,71615
+(defvar helm-grep-mode-line-string "\\<helm-c-grep-map>\\[helm-grep-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-grep-mode-line-string2328,71905
+(defvar helm-pdfgrep-mode-line-string "\\<helm-c-pdfgrep-map>\\[helm-pdfgrep-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-pdfgrep-mode-line-string2331,72180
+(defvar helm-etags-mode-line-string "\\<helm-c-etags-map>\\[helm-etags-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-etags-mode-line-string2334,72467
+(defvar helm-c-ucs-mode-line-string "\\<helm-c-ucs-map>\\[helm-c-ucs-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-c-ucs-mode-line-string2337,72752
+(defvar helm-bookmark-mode-line-string '("Bookmark(s)" "\\<helm-c-bookmark-map>\\[helm-c-bookmark-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct") "\helm-bookmark-mode-line-string2340,73024
+(defvar helm-occur-mode-line "\\<helm-map>\\[helm-help]:Help \\<helm-occur-map>\\[helm-occur-run-query-replace-regexp]:Query replace regexp \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct")helm-occur-mode-line2343,73343
+(defvar helm-mode nil "\helm-mode2462,76707
 
 /home/coldnew/.emacs.d/lisp/anything/Makefile,152
 EMACS		:= emacs -Q -batchEMACS26,923
@@ -9449,38 +9480,39 @@ ELC			:= $(EL:.el=.elc)ELC35,1066
 def ls(dir)ls36,1205
 def ls_first(dir)ls_first64,1774
 
-/home/coldnew/.emacs.d/lisp/anything/contrib/anything-grep.el,2249
+/home/coldnew/.emacs.d/lisp/anything/contrib/anything-grep.el,2316
 (defvar anything-grep-version "$Id: anything-grep.el,v 1.27 2010-03-21 11:31:04 rubikitch Exp $")anything-grep-version159,5200
 (defvar anything-grep-save-buffers-before-grep nilanything-grep-save-buffers-before-grep163,5335
 (defvar anything-grep-goto-hook nilanything-grep-goto-hook166,5450
 (defvar anything-grep-find-file-function 'find-fileanything-grep-find-file-function169,5554
 (defvar anything-grep-multiline tanything-grep-multiline173,5688
 (defvar anything-grep-fontify-file-name tanything-grep-fontify-file-name177,5813
-(defvar anything-grep-alistanything-grep-alist180,5919
-(defvar anything-grep-filter-command nilanything-grep-filter-command210,6875
-(defvar anything-grep-sources nilanything-grep-sources219,7177
-(defvar anything-grep-buffer-name nil)anything-grep-buffer-name221,7269
-(defun anything-grep-base (sources &optional bufname)anything-grep-base222,7308
-(defun agrep-source (command pwd)agrep-source235,8001
-(defun anything-compile-source--agrep-init (source)anything-compile-source--agrep-init251,8457
-(defun agrep-init ()agrep-init257,8632
-(defun agrep-real-to-display (file-line-content)agrep-real-to-display260,8726
-(defvar agrep-source-local nil)agrep-source-local268,9057
-(defvar agrep-waiting-source nilagrep-waiting-source269,9089
-(defun agrep-do-grep (command pwd)agrep-do-grep271,9183
-(defvar agrep-do-after-minibuffer-exit nil)agrep-do-after-minibuffer-exit290,10125
-(defun agrep-minibuffer-exit-hook ()agrep-minibuffer-exit-hook291,10169
-(defun agrep-show (func)agrep-show297,10410
-(defun agrep-sentinel (proc stat)agrep-sentinel303,10637
-(defun agrep-fontify ()agrep-fontify314,11073
-(defun agrep-create-buffer (command pwd)agrep-create-buffer334,11930
-(defun agrep-goto  (file-line-content)agrep-goto344,12535
-(defun anything-grep (command pwd)anything-grep356,13063
-(defun agrep-preprocess-command (command)agrep-preprocess-command373,13856
-(defvar agbn-last-name nilagbn-last-name387,14364
-(defun agrep-by-name-read-info (&rest kinds)agrep-by-name-read-info390,14444
-(defun anything-grep-by-name (&optional query name)anything-grep-by-name406,15168
-(defun anything-grep-by-name-reversed (&optional name query)anything-grep-by-name-reversed425,15995
+(defvar anything-grep-sh-programanything-grep-sh-program180,5919
+(defvar anything-grep-alistanything-grep-alist184,6014
+(defvar anything-grep-filter-command nilanything-grep-filter-command214,6970
+(defvar anything-grep-sources nilanything-grep-sources223,7272
+(defvar anything-grep-buffer-name nil)anything-grep-buffer-name225,7364
+(defun anything-grep-base (sources &optional bufname)anything-grep-base226,7403
+(defun agrep-source (command pwd)agrep-source239,8096
+(defun anything-compile-source--agrep-init (source)anything-compile-source--agrep-init255,8552
+(defun agrep-init ()agrep-init261,8727
+(defun agrep-real-to-display (file-line-content)agrep-real-to-display264,8821
+(defvar agrep-source-local nil)agrep-source-local272,9152
+(defvar agrep-waiting-source nilagrep-waiting-source273,9184
+(defun agrep-do-grep (command pwd)agrep-do-grep275,9278
+(defvar agrep-do-after-minibuffer-exit nil)agrep-do-after-minibuffer-exit294,10207
+(defun agrep-minibuffer-exit-hook ()agrep-minibuffer-exit-hook295,10251
+(defun agrep-show (func)agrep-show301,10492
+(defun agrep-sentinel (proc stat)agrep-sentinel307,10719
+(defun agrep-fontify ()agrep-fontify318,11155
+(defun agrep-create-buffer (command pwd)agrep-create-buffer338,12012
+(defun agrep-goto  (file-line-content)agrep-goto348,12617
+(defun anything-grep (command pwd)anything-grep360,13145
+(defun agrep-preprocess-command (command)agrep-preprocess-command377,13938
+(defvar agbn-last-name nilagbn-last-name391,14446
+(defun agrep-by-name-read-info (&rest kinds)agrep-by-name-read-info394,14526
+(defun anything-grep-by-name (&optional query name)anything-grep-by-name410,15250
+(defun anything-grep-by-name-reversed (&optional name query)anything-grep-by-name-reversed429,16077
 
 /home/coldnew/.emacs.d/lisp/anything/contrib/anything-ipa.el,512
 (defvar anything-ipa-version "$Id: anything-ipa.el,v 1.6 2009-03-01 22:52:44 rubikitch Exp $")anything-ipa-version84,2445
@@ -15035,29 +15067,6 @@ EMACS_BATCH=emacs -Q --batch "$(VC_GIT_PATH)" -L .EMACS_BATCH10,474
 (defcustom linum+-smart-format "%%%dd|"linum+-smart-format91,3144
 (defun linum+-generate-linum-format (format-type limit)linum+-generate-linum-format97,3311
 (defun linum-update-window (win)linum-update-window121,4364
-
-/home/coldnew/.emacs.d/lisp/c-eldoc/c-eldoc-autoloads.el,0
-
-/home/coldnew/.emacs.d/lisp/c-eldoc/c-eldoc-pkg.el,113
-(define-package "c-eldoc" "0.6" "helpful description of the arguments to C functions" (quote nil))"c-eldoc"1,0
-
-/home/coldnew/.emacs.d/lisp/c-eldoc/c-eldoc.el,1163
-(defvar c-eldoc-cpp-macro-arguments "-dD -w -P")c-eldoc-cpp-macro-arguments125,4541
-(defvar c-eldoc-cpp-normal-arguments "-w -P")c-eldoc-cpp-normal-arguments126,4590
-(defvar c-eldoc-cpp-command "/usr/bin/cpp ")c-eldoc-cpp-command127,4636
-(defvar c-eldoc-includesc-eldoc-includes128,4681
-(defvar c-eldoc-reserved-wordsc-eldoc-reserved-words134,4909
-(defvar c-eldoc-buffer-regenerate-timec-eldoc-buffer-regenerate-time138,5043
-(defun c-eldoc-time-diff (t1 t2)c-eldoc-time-diff142,5137
-(defun c-eldoc-time-difference (old-time)c-eldoc-time-difference148,5396
-(defun call-c-eldoc-cleanup ()call-c-eldoc-cleanup152,5614
-(defun c-eldoc-cleanup (preprocessed-buffer)c-eldoc-cleanup156,5765
-(defvar c-eldoc-buffersc-eldoc-buffers159,5848
-(defun c-turn-on-eldoc-mode ()c-turn-on-eldoc-mode164,6043
-(defun c-eldoc-get-buffer (function-name)c-eldoc-get-buffer178,6496
-(defun c-eldoc-function-and-argument (&optional limit)c-eldoc-function-and-argument200,7745
-(defun c-eldoc-format-arguments-string (arguments index)c-eldoc-format-arguments-string227,8859
-(defun c-eldoc-print-current-symbol-info ()c-eldoc-print-current-symbol-info255,10170
 
 /home/coldnew/.emacs.d/lisp/unicad/lisp/unicad.el,18471
 (defvar unicad-version "Unicad v1.1.6-beta")unicad-version146,5740
