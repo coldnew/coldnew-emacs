@@ -85,6 +85,19 @@
 ;;(require* 'minimap)
 
 ;;;; ---------------------------------------------------------------------------
+;;;; zone
+;;;; ---------------------------------------------------------------------------
+
+;; Uncomment this if you'd like your Emacs session to do amusing
+;; things after 3 minutes of idle time.  Hitting a key will stop the
+;; madness :^) .
+;;
+(require 'zone)
+(setq zone-idle (* 60 3))
+(zone-when-idle zone-idle)
+
+
+;;;; ---------------------------------------------------------------------------
 ;;;; hideshow
 ;;;; ---------------------------------------------------------------------------
 (require 'hideshow)
