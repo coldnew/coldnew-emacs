@@ -423,5 +423,13 @@ select-region-to-before-match, then kills that region."
     (cua-toggle-rectangle-mark)))
 
 
+;;FIXME: temp add, remove one day
+(defun hime-agent ()
+  ""
+  (interactive)
+  (start-process "hime-agent" nil "hime-agent"))
+
+
+
 (provide 'coldnew-editor)
 ;; coldnew-editor.el ends here.
