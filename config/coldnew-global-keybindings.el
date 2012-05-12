@@ -170,6 +170,7 @@
 ;;;; one-key
 ;;;; --------------------------------------------------------------------------
 (evil:nmap (kbd "C-w") 'one-key-menu-window-navigation)
+(evil:imap (kbd "C-w") 'one-key-menu-window-navigation)
 
 ;;(global-set-key (kbd "C-w") 'one-key-menu-window-navigatio)
 (global-set-key (kbd "C-x M-f") 'one-key-menu-file-handle)
