@@ -15,8 +15,8 @@
 ;; ;;;; ---------------------------------------------------------------------------
 ;; ;;;; Combination key (Ctrl prefix)
 ;; ;;;; ---------------------------------------------------------------------------
-(global-set-key (kbd "C-n") 'next-line)
-(global-set-key (kbd "C-p") 'previous-line)
+(global-set-key (kbd "C-n") 'coldnew/next-line)
+(global-set-key (kbd "C-p") 'coldnew/previous-line)
 (global-set-key (kbd "C-b") 'backward-char)
 (global-set-key (kbd "C-f") 'forward-char)
 (global-set-key (kbd "C-l") 'hungry-delete-backward)
@@ -173,12 +173,6 @@
 
 ;;(global-set-key (kbd "C-w") 'one-key-menu-window-navigatio)
 (global-set-key (kbd "C-x M-f") 'one-key-menu-file-handle)
-
-;;;; ---------------------------------------------------------------------------
-;;;; Alias
-;;;; ---------------------------------------------------------------------------
-(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
-(defalias 'coldnew/folding-toggle   'toggle-selective-display)
 
 
 
