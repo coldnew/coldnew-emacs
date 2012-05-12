@@ -2,6 +2,7 @@
 (eval-when-compile (require 'cl))
 
 (require 'org-install)
+(require 'org-table)
 ;;(require 'org-src)
 ;;;;;;;; org-mode extensions
 (add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
@@ -12,7 +13,18 @@
 
 ;; ;; Set MobileOrg file path
 ;; ;; (setq org-mobile-directroy "~/Dropbox/")
-
+;; (defun my-buffer-face-mode-variable ()
+;;   "Set font to a variable width (proportional) fonts in current buffer"
+;;   (interactive)
+;;   (setq buffer-face-mode-face '(:family "Hiragino Sans GB W3" :height 100))
+;;   ;; (setq buffer-face-mode-face '(:family "DejaVu Sans" :height 100 :width semi-condensed))
+;;   (buffer-face-mode))
+;; (defun aa ()
+;;   (interactive)
+;;   (setq variable-pitch '(:family "Hiragino Sans GB W3" ))
+;;   (variable-pitch-mode)
+;;   )
+;; (setq buffer-face-mode-face '(:family "DejaVu Sans" :height 100 :width semi-condensed))
 
 ;; do not show leading stars
 (setq org-hide-leading-stars t)
@@ -53,6 +65,7 @@
 	  '(lambda ()
 	     (define-key org-mode-map (kbd "C-c C-f") nil)
 	     ))
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybindings
 ;;;; ---------------------------------------------------------------------------
