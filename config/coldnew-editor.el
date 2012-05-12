@@ -93,7 +93,7 @@
 ;; madness :^) .
 ;;
 (require 'zone)
-(setq zone-idle (* 60 3))
+(setq zone-idle (* 60 300))
 (zone-when-idle zone-idle)
 
 
