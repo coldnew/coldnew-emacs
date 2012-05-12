@@ -22,7 +22,6 @@
 (require 'coldnew-macros)
 (require 'coldnew-depends)
 (require 'coldnew-functions)
-(require 'coldnew-alias)
 (require 'coldnew-evil)
 (require 'coldnew-tags)
 (require 'coldnew-editor)
