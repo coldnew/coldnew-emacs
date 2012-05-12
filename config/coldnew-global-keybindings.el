@@ -66,8 +66,13 @@
 
 (global-set-key (kbd "C-e") 'move-end-of-line)
 (global-set-key (kbd "C-a") 'move-beginning-of-line)
-(global-set-key (kbd "C-M-v") 'traverse-scroll-down-other-window)
-(global-set-key (kbd "C-M-V") 'traverse-scroll-up-other-window)
+
+(global-set-key (kbd "C-M-n") 'scroll-other-window)
+(global-set-key (kbd "C-M-p") 'scroll-other-window-down)
+
+;;; FIXME: remove one day
+(global-set-key (kbd "C-M-v") 'scroll-other-window)
+(global-set-key (kbd "C-M-S-v") 'scroll-other-window-down)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Meta prefix)
@@ -81,8 +86,8 @@
 (global-set-key (kbd "M-a") 'backward-sentence)
 (global-set-key (kbd "M-l") 'backward-delete-word)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-;; (global-set-key (kbd "M-n") 'scroll-up)
-;; (global-set-key (kbd "M-p") 'scroll-down)
+(global-set-key (kbd "M-n") 'scroll-up)
+(global-set-key (kbd "M-p") 'scroll-down)
 (global-set-key (kbd "M-v") 'er/expand-region)
 (global-set-key (kbd "M-q") 'view-mode)
 (global-set-key (kbd "M-/") 'undo-tree-redo)
