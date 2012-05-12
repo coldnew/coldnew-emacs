@@ -117,46 +117,46 @@
 (key-chord-mode 1)
 (setq key-chord-two-keys-delay 0.05)
 
-;; redefine key-chord function to get count two key's timinig
-(defun key-chord-input-method (first-char)
-  "Input method controlled by key bindings with the prefix `key-chord'."
-  (if (and (not (eq first-char key-chord-last-unmatched))
-	   (key-chord-lookup-key (vector 'key-chord first-char)))
-      (let ((delay (if (key-chord-lookup-key (vector 'key-chord first-char first-char))
-		       key-chord-one-key-delay
-		     ;; else
-		     key-chord-two-keys-delay)))
-	(if (if executing-kbd-macro
-		(not (memq first-char key-chord-in-last-kbd-macro))
-	      (sit-for delay 'no-redisplay))
-	    (progn
-	      (setq key-chord-last-unmatched nil)
-	      (list first-char))
-	  ;; else input-pending-p
-	  (let* ((first-key-delay (float-time))
-		 (input-method-function nil)
-		 (next-char (read-event))
-		 (res (vector 'key-chord first-char next-char)))
-	    (if (key-chord-lookup-key res)
-		(progn
-		  (setq result (- (float-time) first-key-delay))
-		  ;;		  (message (number-to-string result))
-		  (if (eq first-char next-char) (setq result (- result 4e-05)))
-		  (if (< result 1.250e-05)
-		      (progn
-			(setq key-chord-defining-kbd-macro
-			      (cons first-char key-chord-defining-kbd-macro))
-			(list 'key-chord first-char next-char))
-		    ;; if not success, insert two char
-		    (insert (char-to-string first-char) (char-to-string next-char))))
-	      ;; else put back next-char and return first-char
-	      (setq unread-command-events (cons next-char unread-command-events))
-	      (if (eq first-char next-char)
-		  (setq key-chord-last-unmatched first-char))
-	      (list first-char)))))
-    ;; else no key-chord keymap
-    (setq key-chord-last-unmatched first-char)
-    (list first-char)))
+;; ;; redefine key-chord function to get count two key's timinig
+;; (defun key-chord-input-method (first-char)
+;;   "Input method controlled by key bindings with the prefix `key-chord'."
+;;   (if (and (not (eq first-char key-chord-last-unmatched))
+;;	   (key-chord-lookup-key (vector 'key-chord first-char)))
+;;       (let ((delay (if (key-chord-lookup-key (vector 'key-chord first-char first-char))
+;;		       key-chord-one-key-delay
+;;		     ;; else
+;;		     key-chord-two-keys-delay)))
+;;	(if (if executing-kbd-macro
+;;		(not (memq first-char key-chord-in-last-kbd-macro))
+;;	      (sit-for delay 'no-redisplay))
+;;	    (progn
+;;	      (setq key-chord-last-unmatched nil)
+;;	      (list first-char))
+;;	  ;; else input-pending-p
+;;	  (let* ((first-key-delay (float-time))
+;;		 (input-method-function nil)
+;;		 (next-char (read-event))
+;;		 (res (vector 'key-chord first-char next-char)))
+;;	    (if (key-chord-lookup-key res)
+;;		(progn
+;;		  (setq result (- (float-time) first-key-delay))
+;;		  (message (number-to-string result))
+;;		  (if (eq first-char next-char) (setq result (- result 4e-05)))
+;;		  (if (< result 1.250e-05)
+;;		      (progn
+;;			(setq key-chord-defining-kbd-macro
+;;			      (cons first-char key-chord-defining-kbd-macro))
+;;			(list 'key-chord first-char next-char))
+;;		    ;; if not success, insert two char
+;;		    (insert (char-to-string first-char) (char-to-string next-char))))
+;;	      ;; else put back next-char and return first-char
+;;	      (setq unread-command-events (cons next-char unread-command-events))
+;;	      (if (eq first-char next-char)
+;;		  (setq key-chord-last-unmatched first-char))
+;;	      (list first-char)))))
+;;     ;; else no key-chord keymap
+;;     (setq key-chord-last-unmatched first-char)
+;;     (list first-char)))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; space-chord
