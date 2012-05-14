@@ -34,6 +34,20 @@
 (setq smex-save-file (concat emacs-cache-dir "smex.dat"))
 
 ;;;; ---------------------------------------------------------------------------
+;;;; ido
+;;;; ---------------------------------------------------------------------------
+(require 'ido)
+
+;;;; functions
+(defun coldnew/ido-setup-keybinding ()
+  ;; use C-f as ido-next-match
+  (define-key ido-completion-map (kbd "C-f") 'ido-next-match)
+  )
+
+;;;; hooks
+(add-hook 'ido-setup-hook 'coldnew/ido-setup-keybinding)
+
+;;;; ---------------------------------------------------------------------------
 ;;;; Functions
 ;;;; ---------------------------------------------------------------------------
 
