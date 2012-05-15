@@ -7,9 +7,13 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; minor-mode
 ;;;; ---------------------------------------------------------------------------
+;;(require* 'centered-cursor-mode)
 
 (defvar coldnew-editor-hook nil
   "Hooks for coldnew-editor-mode.")
+
+(defvar coldnew-editor-state "Emacs"
+  "default editor mode is view-mode")
 
 (defvar coldnew-editor-map
   (let ((map (make-sparse-keymap)))
@@ -23,12 +27,53 @@
   :keymap coldnew-editor-map
   (run-hooks 'coldnew-editor-hook))
 
+(defun coldnew/disable-mode-according-state ()
+  (cond
+   ((string= "View"  coldnew-editor-state) (coldnew/view-mode -1))
+   ((string= "Chord" coldnew-editor-state) (key-chord-mode -1))
+   ))
+
+(defun coldnew/switch-to-emacs-mode ()
+  (interactive)
+  ;; disable other state according mode
+  (coldnew/disable-mode-according-state)
+  (setq coldnew-editor-state "Emacs"))
+
+(defun coldnew/switch-to-view-mode ()
+  (interactive)
+  ;; disable other state according mode
+  (coldnew/disable-mode-according-state)
+  (setq coldnew-editor-state "View")
+  (coldnew/view-mode 1))
+
+(defvar coldnew/view-mode-map
+  (let ((map (make-sparse-keymap)))
+    (suppress-keymap map)
+    (define-key map "i" 'coldnew/switch-to-emacs-mode)
+    (define-key map "h" 'backward-char)
+    (define-key map "j" 'next-line)
+    (define-key map "k" 'previous-line)
+    (define-key map "l" 'forward-char)
+    (define-key map (kbd "C-f") 'View-scroll-page-forward)
+    (define-key map (kbd "C-b") 'View-scroll-page-backward)
+    map)
+  "Keymap for coldnew-editor-mode.")
+
+(define-minor-mode coldnew/view-mode
+  "Minor mode for coldnew's editor."
+  :init-value nil
+  :global t
+  :lighter " "
+  :keymap coldnew/view-mode-map
+  )
+
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
 ;;;; ---------------------------------------------------------------------------
-(setq indent-tabs-mode nil )	      ; don't use tabs to indent
-(setq tab-width          8 )	      ; default tab-width is 8
-(setq line-spacing       4 )	      ; Additional space between lines
+(setq indent-tabs-mode nil )          ; don't use tabs to indent
+(setq tab-width          8 )          ; default tab-width is 8
+(setq line-spacing       4 )          ; Additional space between lines
 (setq fill-column      100 ) ; column beyond which automatic line-wrapping shold happen
 (setq kill-ring-max    300 ) ; Maximum lenght of kill-ring
 (setq require-final-newline  t ) ; Auto add a newline at the end of line
@@ -73,6 +118,22 @@
 ;;;; ---------------------------------------------------------------------------
 
 ;;;; ---------------------------------------------------------------------------
+;;;; View-mode
+;;;; ---------------------------------------------------------------------------
+
+;;; view-mode is a `read-only' mode
+(setq view-read-only nil)
+
+(define-key view-mode-map "i" 'coldnew/switch-to-emacs-mode)
+(define-key view-mode-map "h" 'backward-char)
+(define-key view-mode-map "j" 'next-line)
+(define-key view-mode-map "k" 'previous-line)
+(define-key view-mode-map "l" 'forward-char)
+(define-key view-mode-map (kbd "C-f") 'View-scroll-page-forward)
+(define-key view-mode-map (kbd "C-b") 'View-scroll-page-backward)
+
+
+;;;; ---------------------------------------------------------------------------
 ;;;; center-cursor
 ;;;; ---------------------------------------------------------------------------
 ;;(require* 'centered-cursor-mode)
@@ -114,7 +175,7 @@
 ;;;; key-chord
 ;;;; ---------------------------------------------------------------------------
 (require 'key-chord)
-(key-chord-mode 1)
+;;(key-chord-mode 1)
 (setq key-chord-two-keys-delay 0.05)
 
 ;;;; ---------------------------------------------------------------------------
