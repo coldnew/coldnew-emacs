@@ -24,6 +24,9 @@
 (global-set-key (kbd "C-v") 'coldnew/set-mark-command)
 (global-set-key (kbd "C-/") 'undo-tree-undo)
 (global-set-key (kbd "C-0") 'ace-jump-mode)
+(global-set-key (kbd "C-e") 'move-end-of-line)
+(global-set-key (kbd "C-a") 'move-beginning-of-line)
+
 
 ;;; evil-normal-map
 (evil:nmap (kbd "C-n") 'next-line)
@@ -63,9 +66,6 @@
 (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
 (global-set-key (kbd "C-M-.") 'end-of-buffer)
 
-
-(global-set-key (kbd "C-e") 'move-end-of-line)
-(global-set-key (kbd "C-a") 'move-beginning-of-line)
 
 (global-set-key (kbd "C-M-n") 'scroll-other-window)
 (global-set-key (kbd "C-M-p") 'scroll-other-window-down)

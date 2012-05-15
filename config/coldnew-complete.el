@@ -16,7 +16,7 @@
 (setq ac-use-fuzzy nil)
 
 ;; start auto-complete after insert 2 or more-key
-(setq ac-auto-start )
+(setq ac-auto-start 3)
 
 ;; Ignore case if completion target string doesn't include upper characters
 (setq ac-ignore-case 'smart)
@@ -64,8 +64,8 @@
 ;; Setting ignore file regexp
 (setq anything-c-boring-file-regexp
       (concat anything-c-boring-file-regexp
-          (rx
-           (and (or ".out" ".elc") eol))))
+	      (rx
+	       (and (or ".out" ".elc") eol))))
 
  ;;;;;;;; keybinding
 (define-key anything-occur-map (kbd "C-r") 'anything-occur-run-query-replace-regexp)
@@ -127,12 +127,12 @@
 (defun anything-c-occur-get-line (s e)
   "rewrite `anything-c-occur-get-line' to make it color on line-number."
   (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
-      (format ": %s" (buffer-substring s e))))
+	  (format ": %s" (buffer-substring s e))))
 
 (defun helm-c-occur-get-line (s e)
   "rewrite `helm-c-occur-get-line' to make it color on line-number."
   (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
-      (format ": %s" (buffer-substring s e))))
+	  (format ": %s" (buffer-substring s e))))
 
 
 

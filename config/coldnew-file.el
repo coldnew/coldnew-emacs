@@ -72,6 +72,8 @@
   (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
   (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
 
+
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; Commands
 ;;;; ---------------------------------------------------------------------------
@@ -83,7 +85,6 @@
       ;; (find-file (concat "/sudo:root@localhost:" (anything-read-file-name "File: ")))
       (find-file (concat "/sudo:root@localhost:" (read-file-name "File: ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
-
 
 
 (provide 'coldnew-file)
