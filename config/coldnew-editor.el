@@ -13,7 +13,7 @@
   "Hooks for coldnew-editor-mode.")
 
 (defvar coldnew-editor-state "Emacs"
-  "default editor mode is view-mode")
+  "default editor mode is Emacs-mode")
 
 (defvar coldnew-editor-map
   (let ((map (make-sparse-keymap)))
@@ -29,7 +29,8 @@
 
 (defun coldnew/disable-mode-according-state ()
   (cond
-   ((string= "View"  coldnew-editor-state) (coldnew/view-mode -1))
+   ((string= "View"  coldnew-editor-state) (view-mode -1))
+   ((string= "Command"  coldnew-editor-state) (coldnew/command-mode -1))
    ((string= "Chord" coldnew-editor-state) (key-chord-mode -1))
    ))
 
@@ -39,14 +40,14 @@
   (coldnew/disable-mode-according-state)
   (setq coldnew-editor-state "Emacs"))
 
-(defun coldnew/switch-to-view-mode ()
+(defun coldnew/switch-to-command-mode ()
   (interactive)
   ;; disable other state according mode
   (coldnew/disable-mode-according-state)
-  (setq coldnew-editor-state "View")
-  (coldnew/view-mode 1))
+  (setq coldnew-editor-state "Command")
+  (coldnew/command-mode 1))
 
-(defvar coldnew/view-mode-map
+(defvar coldnew/command-mode-map
   (let ((map (make-sparse-keymap)))
     (suppress-keymap map)
     (define-key map "i" 'coldnew/switch-to-emacs-mode)
@@ -54,19 +55,35 @@
     (define-key map "j" 'next-line)
     (define-key map "k" 'previous-line)
     (define-key map "l" 'forward-char)
+    (define-key map "bl" 'beginning-of-line)
+    (define-key map "%" 'match-paren)
+    (define-key map "el" 'end-of-line)
+    (define-key map "dd" 'kill-whole-line)
+    (define-key map "." 'repeat)
     (define-key map (kbd "C-f") 'View-scroll-page-forward)
     (define-key map (kbd "C-b") 'View-scroll-page-backward)
     map)
   "Keymap for coldnew-editor-mode.")
 
-(define-minor-mode coldnew/view-mode
-  "Minor mode for coldnew's editor."
+(define-minor-mode coldnew/command-mode
+  "Minor mode like vi's normal mode"
   :init-value nil
   :global t
   :lighter " "
-  :keymap coldnew/view-mode-map
+  :keymap coldnew/command-mode-map
   )
 
+(add-hook 'post-command-hook 'coldnew/set-mode-according-state)
+(add-hook 'minibuffer-setup-hook 'coldnew/switch-to-emacs-mode)
+
+;; (defvar coldnew/emacs-mode-alist
+;;   '(minibuffer-))
+
+(defun coldnew/set-mode-according-state ()
+  (cond
+   ((string= "Command" coldnew-editor-state) (coldnew/switch-to-command-mode))
+   ((string= "Emacs"   coldnew-editor-state) (coldnew/switch-to-emacs-mode))
+   ))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
@@ -166,8 +183,8 @@
 
 ;;; enable following mode to use hideshow
 (dolist (hook (list 'emacs-lisp-mode-hook
-		    'c++-mode-hook
-		    'c-mode-hook))
+                    'c++-mode-hook
+                    'c-mode-hook))
   (add-hook hook 'hideshowvis-enable))
 
 
@@ -304,7 +321,7 @@
   ;; gtags
   (gtags-mode t)
   (if-not (string-match "/usr/src/linux/" (expand-file-name default-directory))
-	  (gtags-create-or-update))
+          (gtags-create-or-update))
 
   ;; keybindings
   (define-key evil-normal-state-local-map (kbd "C-x C-o") 'ff-find-other-file)
@@ -319,17 +336,17 @@
   "Indent whole file after saved."
   (make-local-variable 'after-save-hook)
   (add-hook 'after-save-hook
-	    '(lambda ()
-	       (indent-region (point-min) (point-max) nil)
-	       (save-buffer))))
+            '(lambda ()
+               (indent-region (point-min) (point-max) nil)
+               (save-buffer))))
 
 (defun cleanup-whitespace-before-save ()
   "Cleanup whitespaces before save to a file."
   (make-local-variable 'before-save-hook)
   (add-hook 'before-save-hook
-	    '(lambda ()
-	       (whitespace-cleanup)
-	       (delete-trailing-whitespace))))
+            '(lambda ()
+               (whitespace-cleanup)
+               (delete-trailing-whitespace))))
 
 (defun highlight-additional-keywords ()
   "Highlight additional keywords."
@@ -342,33 +359,33 @@
 (defun highlight-fontify-numbers ()
   "Use this function as a hook to fontify numbers as constant"
   (font-lock-add-keywords nil
-			  '(
-			    ;; hexadecimal
-			    ("\\b\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
-			    ;; float
-			    ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
-			    ;; int
-			    ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
-			    )))
+                          '(
+                            ;; hexadecimal
+                            ("\\b\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
+                            ;; float
+                            ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
+                            ;; int
+                            ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
+                            )))
 
 (defun highlight-escape-char ()
   "Use this function as a hook to fontify escape char."
   (font-lock-add-keywords nil
-			  '(
-			    ("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
-			     0 'font-lock-escape-char-face prepend)
-			    )))
+                          '(
+                            ("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
+                             0 'font-lock-escape-char-face prepend)
+                            )))
 
 (defun insert-space-between-english-chinese ()
   "Insert a space between English words and Chinese charactors"
   (save-excursion
     (goto-char (point-min))
     (while (or (re-search-forward "\\(\\cc\\)\\([a-zA-Z0-9]\\)" nil t)
-	       (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
+               (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
       (replace-match "\\1 \\2" nil nil))
     (goto-char (point-min))
     (while (or (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
-	       (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
+               (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
       (replace-match "\\1\\2" nil nil))))
 
 
@@ -394,8 +411,8 @@ select-region-to-before-match"
 select-region-to-before-match, then kills that region."
   (interactive "MKill forwards to just before: ")
   (let* ((positions (select-region-to-before-match match 'forwards))
-	 (start (car positions))
-	 (end (cadr positions)))
+         (start (car positions))
+         (end (cadr positions)))
     (kill-region start end)))
 
 (defun kill-backwards-to-before-match (match)
@@ -403,16 +420,16 @@ select-region-to-before-match, then kills that region."
 select-region-to-before-match, then kills that region."
   (interactive "MKill backwards to just before: ")
   (let* ((positions (select-region-to-before-match match 'backwards))
-	 (start (car positions))
-	 (end (cadr positions)))
+         (start (car positions))
+         (end (cadr positions)))
     (kill-region start end)))
 
 (defun match-paren (arg)
   "Go to the matching paren if on a paren; otherwise insert %."
   (interactive "p")
   (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
-	((looking-at "\\s\)") (forward-char 1) (backward-list 1))
-	(t (self-insert-command (or arg 1)))))
+        ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+        (t (self-insert-command (or arg 1)))))
 
 (defun delete-between-pair (char)
   "Delete in between the given pair"
@@ -443,6 +460,21 @@ select-region-to-before-match, then kills that region."
   (interactive)
   (start-process "hime-agent" nil "hime-agent"))
 
+(defadvice kill-ring-save (before slickcopy activate compile)
+  "When called interactively with no active region, copy a single line
+instead."
+  (interactive
+   (if mark-active (list (region-beginning) (region-end))
+     (list (line-beginning-position)
+           (line-beginning-position 2)))))
+
+(defadvice kill-region (before slickcut activate compile)
+  "When called interactively with no active region, kill a single line
+instead."
+  (interactive
+   (if mark-active (list (region-beginning) (region-end))
+     (list (line-beginning-position)
+           (line-beginning-position 2)))))
 
 
 (provide 'coldnew-editor)
