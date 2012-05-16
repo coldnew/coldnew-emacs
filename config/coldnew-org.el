@@ -31,6 +31,8 @@
 
 ;; do not fold every content
 (setq org-startup-folded nil)
+;; indent all at startup
+(setq org-startup-indented t)
 
 ;;; setting org-todo keywords
 (setq org-todo-keywords
