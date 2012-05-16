@@ -67,6 +67,7 @@
     (define-key map "bl" 'beginning-of-line)
     (define-key map "yy" 'kill-ring-save)
     (define-key map "x" 'delete-char)
+    ;; TODO: support region
     (define-key map "dd" 'kill-whole-line)
     (define-key map "u" 'undo-tree-undo)
     (define-key map (kbd "C-r") 'undo-tree-redo)
@@ -75,6 +76,8 @@
     (define-key map (kbd "C-b") 'View-scroll-page-backward)
     (define-key map (kbd "0") 'coldnew/beginning-of-line-or-digit-argument)
     (define-key map (kbd "$") 'end-of-line)
+    (define-key map "*" 'vjo-forward-current-word-keep-offset)
+    (define-key map "#" 'vjo-backward-current-word-keep-offset)
 
     ;; my keymap
     (define-key map (kbd "z") 'zap-up-to-char)
@@ -90,6 +93,13 @@
     (define-key map (kbd "d{")  '(lambda () (interactive) (delete-between-pair ?\{)))
     (define-key map (kbd "[") 'beginning-of-buffer)
     (define-key map (kbd "]") 'end-of-buffer)
+    ;; elscreen
+    ;; TODO: move to coldnew-elscreen
+    (define-key map "t0" 'elscreen-jump-0)
+    (define-key map "t9" 'elscreen-jump-9)
+    (define-key map "tc" 'elscreen-create)
+    (define-key map "tn" 'elscreen-next)
+    (define-key map "tp" 'elscreen-previous)
     map)
   "Keymap for coldnew-editor-Mode.")
 
@@ -101,9 +111,9 @@
   :keymap coldnew/command-mode-map
   (if coldnew/command-mode
       (progn
-	(key-chord-mode 1))
+	(setq input-method-function 'key-chord-input-method))
     (progn
-      (key-chord-mode -1))))
+      (setq input-method-function nil))))
 
 (add-hook 'post-command-hook 'coldnew/set-mode-according-state)
 
@@ -531,6 +541,68 @@ instead."
   (interactive "p\ncZap up to char backward: ")
   (zap-up-to-char (- arg) char))
 
+(defun go-to-char (arg char)
+  (interactive "p\ncGo to char: ")
+  (forward-char 1)
+  (if (if arg
+	  (search-forward (char-to-string char) nil nil arg)
+	(search-forward (char-to-string char)))
+      (backward-char 1)))
+
+(defun go-back-to-char (arg char)
+  (interactive "p\ncGo back to char: ")
+  (forward-char -1)
+  (if arg
+      (search-backward (char-to-string char) nil nil arg)
+    (search-backward (char-to-string char))))
+
+(defun vjo-forward-current-word-keep-offset ()
+  " (Vagn Johansen 1999)"
+  (interactive)
+  (let ((re-curword) (curword) (offset (point))
+	(old-case-fold-search case-fold-search) )
+    (setq curword (thing-at-point 'symbol))
+    (setq re-curword (concat "\\<" (thing-at-point 'symbol) "\\>") )
+    (beginning-of-thing 'symbol)
+    (setq offset (- offset (point)))	; offset from start of symbol/word
+    (setq offset (- (length curword) offset)) ; offset from end
+    (forward-char)
+    (setq case-fold-search nil)
+    (if (re-search-forward re-curword nil t)
+	(backward-char offset)
+      ;; else
+      (progn (goto-char (point-min))
+	     (if (re-search-forward re-curword nil t)
+		 (progn (message "Searching from top. %s" (what-line))
+			(backward-char offset))
+	       ;; else
+	       (message "Searching from top: Not found"))
+	     ))
+    (setq case-fold-search old-case-fold-search)
+    ))
+(defun vjo-backward-current-word-keep-offset ()
+  " (Vagn Johansen 2002)"
+  (interactive)
+  (let ((re-curword) (curword) (offset (point))
+	(old-case-fold-search case-fold-search) )
+    (setq curword (thing-at-point 'symbol))
+    (setq re-curword (concat "\\<" curword "\\>") )
+    (beginning-of-thing 'symbol)
+    (setq offset (- offset (point)))	; offset from start of symbol/word
+    (forward-char)
+    (setq case-fold-search nil)
+    (if (re-search-backward re-curword nil t)
+	(forward-char offset)
+      ;; else
+      (progn (goto-char (point-max))
+	     (if (re-search-backward re-curword nil t)
+		 (progn (message "Searching from bottom. %s" (what-line))
+			(forward-char offset))
+	       ;; else
+	       (message "Searching from bottom: Not found"))
+	     ))
+    (setq case-fold-search old-case-fold-search)
+    ))
 
 (provide 'coldnew-editor)
 ;; coldnew-editor.el ends here.
