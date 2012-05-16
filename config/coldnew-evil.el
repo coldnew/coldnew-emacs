@@ -82,8 +82,9 @@
   "mapping in the insert-mode local keymap"
   `(evil-define-key 'insert ,keymap ,key ,name))
 
-
 (evil:imap (kbd "<escape>") 'evil-normal-state)
+
+(evil:nmap (kbd "z") 'zap-up-to-char)
 
 (provide 'coldnew-evil)
 ;; coldnew-evil.el ends here.
