@@ -1193,7 +1193,7 @@ and would like bash completion in Emacs to take these changes into account.
 ;;;;;;  etags-select-highlight-delay etags-select-highlight-tag-after-jump
 ;;;;;;  etags-select-mode-hook etags-select-no-select-for-one-match
 ;;;;;;  etags-select-mode) "etags-select/etags-select" "etags-select/etags-select.el"
-;;;;;;  (20403 40924))
+;;;;;;  (20403 49224))
 ;;; Generated autoloads from etags-select/etags-select.el
 
 (let ((loads (get 'etags-select-mode 'custom-loads))) (if (member '"etags-select/etags-select" loads) nil (put 'etags-select-mode 'custom-loads (cons '"etags-select/etags-select" loads))))
@@ -1257,7 +1257,7 @@ to do.
 
 ;;;### (autoloads (etags-table-search-up-depth etags-table-alist
 ;;;;;;  etags-table) "etags-table/etags-table" "etags-table/etags-table.el"
-;;;;;;  (20403 40898))
+;;;;;;  (20403 49224))
 ;;; Generated autoloads from etags-table/etags-table.el
 
 (let ((loads (get 'etags-table 'custom-loads))) (if (member '"etags-table/etags-table" loads) nil (put 'etags-table 'custom-loads (cons '"etags-table/etags-table" loads))))
@@ -1292,6 +1292,175 @@ captured with \\(\\) in the key.
 *Max depth to search up for a tags file.  nil means don't search.")
 
 (custom-autoload 'etags-table-search-up-depth "etags-table/etags-table" t)
+
+;;;***
+
+;;;### (autoloads (fastnav-sprint-backward fastnav-sprint-forward
+;;;;;;  fastnav-delete-char-backward fastnav-delete-char-forward
+;;;;;;  fastnav-execute-at-char-backward fastnav-execute-at-char-forward
+;;;;;;  fastnav-insert-at-char-backward fastnav-insert-at-char-forward
+;;;;;;  fastnav-replace-char-backward fastnav-replace-char-forward
+;;;;;;  fastnav-zap-to-char-backward fastnav-zap-to-char-forward
+;;;;;;  fastnav-zap-up-to-char-backward fastnav-zap-up-to-char-forward
+;;;;;;  fastnav-mark-to-char-backward fastnav-mark-to-char-forward
+;;;;;;  fastnav-mark-up-to-char-xbackward fastnav-mark-up-to-char-forward
+;;;;;;  fastnav-jump-to-char-backward fastnav-jump-to-char-forward
+;;;;;;  fastnav-highlight-read-char-backward fastnav-highlight-read-char
+;;;;;;  fastnav-get-nth-chars fastnav-search-char-backward fastnav-search-char-forward)
+;;;;;;  "fastnav/fastnav" "fastnav/fastnav.el" (20403 51680))
+;;; Generated autoloads from fastnav/fastnav.el
+
+(autoload 'fastnav-search-char-forward "fastnav/fastnav" "\
+Moves to the arg-th occurrence of char forward (backward if N
+is negative).  If there isn't room, go as far as possible (no
+error).
+
+\(fn ARG CHAR)" nil nil)
+
+(autoload 'fastnav-search-char-backward "fastnav/fastnav" "\
+Moves to the arg-th occurrence of char backward (forward if N
+is negative).  If there isn't room, go as far as possible (no
+error).
+
+\(fn ARG CHAR)" nil nil)
+
+(autoload 'fastnav-get-nth-chars "fastnav/fastnav" "\
+Computes and returns the positions of the ARG'th occurrence of
+characters of the range 1 .. 255.
+
+\(fn ARG)" nil nil)
+
+(autoload 'fastnav-highlight-read-char "fastnav/fastnav" "\
+Highlights the ARG'th occurences of each character while
+querying one using message TEXT. Negative ARG means backward
+search of occurences.
+
+\(fn TEXT ARG FORWARDER BACKWARDER)" nil nil)
+
+(autoload 'fastnav-highlight-read-char-backward "fastnav/fastnav" "\
+Highlights the backward ARG'th occurences of each character
+while querying one using message TEXT.
+
+\(fn TEXT ARG FORWARDER BACKWARDER)" nil nil)
+
+(autoload 'fastnav-jump-to-char-forward "fastnav/fastnav" "\
+Jump to the ARG'th occurence of a character that is queried
+interactively while highlighting the possible positions.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-jump-to-char-backward "fastnav/fastnav" "\
+Jump backward to the ARG'th occurence of a character that is
+queried interactively while highlighting the possible positions.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-mark-up-to-char-forward "fastnav/fastnav" "\
+Set mark before the ARG'th occurence of a character queried
+interactively.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-mark-up-to-char-xbackward "fastnav/fastnav" "\
+Set mark backward after the ARG'th occurence of a character
+queried interactively.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-mark-to-char-forward "fastnav/fastnav" "\
+Set mark before the ARG'th occurence of a character queried
+interactively.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-mark-to-char-backward "fastnav/fastnav" "\
+Set mark backward after the ARG'th occurence of a character
+queried interactively.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-zap-up-to-char-forward "fastnav/fastnav" "\
+Kill text up to the ARG'th occurence of a character queried
+interactively.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-zap-up-to-char-backward "fastnav/fastnav" "\
+Kill text backward to the ARG'th occurence of a character
+queried interactively.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-zap-to-char-forward "fastnav/fastnav" "\
+Kill text up to and including the ARG'th occurence of a character queried
+interactively.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-zap-to-char-backward "fastnav/fastnav" "\
+Kill text backward to the ARG'th occurence of a character
+queried interactively.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-replace-char-forward "fastnav/fastnav" "\
+Interactively replaces the ARG'th occurence of a character.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-replace-char-backward "fastnav/fastnav" "\
+Interactively replaces the ARG'th backward occurence of a
+character.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-insert-at-char-forward "fastnav/fastnav" "\
+Queries for a character and a string that is insterted at
+the ARG'th occurence of the character.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-insert-at-char-backward "fastnav/fastnav" "\
+Queries for a character and a string that is insterted at
+the backward ARG'th occurence of the character.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-execute-at-char-forward "fastnav/fastnav" "\
+Queries for a character and a key sequence that is executed at
+the ARG'th occurence of the character.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-execute-at-char-backward "fastnav/fastnav" "\
+Queries for a character and a key sequence that is executed at
+the backward ARG'th occurence of the character.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-delete-char-forward "fastnav/fastnav" "\
+Deletes the ARG'th occurence of a character, which is queried
+interactively while highlighting the possible positions.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-delete-char-backward "fastnav/fastnav" "\
+Deletes the backward ARG'th occurence of a character, which is
+queried interactively while highlighting the possible positions.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-sprint-forward "fastnav/fastnav" "\
+Performs a sequence of jumping forward to the next character
+matching the keyboard event.
+
+\(fn ARG)" t nil)
+
+(autoload 'fastnav-sprint-backward "fastnav/fastnav" "\
+Performs a sequence of jumping backward to the next character
+matching the keyboard event.
+
+\(fn ARG)" t nil)
 
 ;;;***
 
@@ -2871,7 +3040,7 @@ Cancel the idle timer if no more minimaps are active.
 ;;;***
 
 ;;;### (autoloads (helm-projectile) "projectile/helm-projectile"
-;;;;;;  "projectile/helm-projectile.el" (20403 48058))
+;;;;;;  "projectile/helm-projectile.el" (20403 49382))
 ;;; Generated autoloads from projectile/helm-projectile.el
 
 (autoload 'helm-projectile "projectile/helm-projectile" "\
@@ -2882,7 +3051,7 @@ Use projectile with Helm instead of ido.
 ;;;***
 
 ;;;### (autoloads (projectile-mode projectile-global-mode) "projectile/projectile"
-;;;;;;  "projectile/projectile.el" (20403 48058))
+;;;;;;  "projectile/projectile.el" (20403 49382))
 ;;; Generated autoloads from projectile/projectile.el
 
 (defvar projectile-global-mode nil "\
@@ -2920,11 +3089,9 @@ Minor mode to assist project management and navigation.
 ;;;;;;  "anything/extensions/anything-obsolete.el" "anything/extensions/anything-show-completion.el"
 ;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete/auto-complete-config.el"
 ;;;;;;  "auto-complete/auto-complete-pkg.el" "auto-complete/auto-complete.el"
-;;;;;;  "etags-select/etags-select-autoloads.el" "etags-select/etags-select-pkg.el"
-;;;;;;  "etags-table/etags-table-autoloads.el" "etags-table/etags-table-pkg.el"
 ;;;;;;  "helm/helm-pkg.el" "helm/helm-plugin.el" "hideshowvis/hideshowvis-autoloads.el"
 ;;;;;;  "hideshowvis/hideshowvis-pkg.el" "switch-window/switch-window.el")
-;;;;;;  (20403 48059 209389))
+;;;;;;  (20403 51681 135893))
 
 ;;;***
 

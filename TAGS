@@ -120,26 +120,26 @@
 (defun coldnew/set-cursor-according-mode ()coldnew/set-cursor-according-mode34,1239
 
 /home/coldnew/.emacs.d/config/coldnew-global-keybindings.el,1688
-(define-key coldnew-editor-map "(" 'paredit-open-round)coldnew-editor-map147,5808
-(define-key coldnew-editor-map ")" 'paredit-close-round)coldnew-editor-map148,5864
-(define-key coldnew-editor-map "[" 'paredit-open-square)coldnew-editor-map149,5921
-(define-key coldnew-editor-map "]" 'paredit-close-square)coldnew-editor-map150,5978
-(define-key coldnew-editor-map "{" 'paredit-open-curly)coldnew-editor-map151,6036
-(define-key coldnew-editor-map "}" 'paredit-close-curly)coldnew-editor-map152,6092
-(define-key coldnew-editor-map (kbd "\"")  'paredit-doublequote)coldnew-editor-map153,6149
-(define-key coldnew-editor-map (kbd "<delete>") 'paredit-forward-delete)coldnew-editor-map154,6214
-(define-key coldnew-editor-map (kbd "<backspace>") 'paredit-backward-delete)coldnew-editor-map155,6287
-(define-key coldnew-editor-map (kbd "C-d") 'paredit-forward-delete)coldnew-editor-map156,6364
-(define-key coldnew-editor-map (kbd "C-l") 'paredit-backward-delete)coldnew-editor-map157,6432
-(define-key coldnew-editor-map (kbd "M-d") 'paredit-forward-kill-word)coldnew-editor-map158,6501
-(define-key coldnew-editor-map (kbd "M-l") 'paredit-backward-kill-word)coldnew-editor-map159,6572
-(define-key coldnew-editor-map (kbd "M-0") 'paredit-close-round-and-newline)coldnew-editor-map160,6644
-(define-key coldnew-editor-map (kbd "M-\'") 'paredit-meta-doublequote)coldnew-editor-map161,6721
-(define-key coldnew-editor-map (kbd "C-k") 'paredit-kill)coldnew-editor-map162,6792
-(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)coldnew/set-mark-command187,7781
-(defalias 'coldnew/folding-toggle   'toggle-selective-display)coldnew/folding-toggle188,7850
+(define-key coldnew-editor-map "(" 'paredit-open-round)coldnew-editor-map147,5858
+(define-key coldnew-editor-map ")" 'paredit-close-round)coldnew-editor-map148,5914
+(define-key coldnew-editor-map "[" 'paredit-open-square)coldnew-editor-map149,5971
+(define-key coldnew-editor-map "]" 'paredit-close-square)coldnew-editor-map150,6028
+(define-key coldnew-editor-map "{" 'paredit-open-curly)coldnew-editor-map151,6086
+(define-key coldnew-editor-map "}" 'paredit-close-curly)coldnew-editor-map152,6142
+(define-key coldnew-editor-map (kbd "\"")  'paredit-doublequote)coldnew-editor-map153,6199
+(define-key coldnew-editor-map (kbd "<delete>") 'paredit-forward-delete)coldnew-editor-map154,6264
+(define-key coldnew-editor-map (kbd "<backspace>") 'paredit-backward-delete)coldnew-editor-map155,6337
+(define-key coldnew-editor-map (kbd "C-d") 'paredit-forward-delete)coldnew-editor-map156,6414
+(define-key coldnew-editor-map (kbd "C-l") 'paredit-backward-delete)coldnew-editor-map157,6482
+(define-key coldnew-editor-map (kbd "M-d") 'paredit-forward-kill-word)coldnew-editor-map158,6551
+(define-key coldnew-editor-map (kbd "M-l") 'paredit-backward-kill-word)coldnew-editor-map159,6622
+(define-key coldnew-editor-map (kbd "M-0") 'paredit-close-round-and-newline)coldnew-editor-map160,6694
+(define-key coldnew-editor-map (kbd "M-\'") 'paredit-meta-doublequote)coldnew-editor-map161,6771
+(define-key coldnew-editor-map (kbd "C-k") 'paredit-kill)coldnew-editor-map162,6842
+(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)coldnew/set-mark-command187,7831
+(defalias 'coldnew/folding-toggle   'toggle-selective-display)coldnew/folding-toggle188,7900
 
-/home/coldnew/.emacs.d/config/coldnew-editor.el,3107
+/home/coldnew/.emacs.d/config/coldnew-editor.el,3227
 (defvar coldnew-editor-hook nilcoldnew-editor-hook13,375
 (defvar coldnew-editor-state "Emacs"coldnew-editor-state16,444
 (defvar coldnew-editor-mapcoldnew-editor-map19,521
@@ -148,38 +148,40 @@
 (defun coldnew/switch-to-emacs-mode ()coldnew/switch-to-emacs-mode37,1012
 (defun coldnew/switch-to-command-mode ()coldnew/switch-to-command-mode43,1188
 (defun coldnew/switch-to-emacs-mode-append ()coldnew/switch-to-emacs-mode-append50,1395
-(defun coldnew/switch-to-emacs-mode-local ()coldnew/switch-to-emacs-mode-local55,1525
-(defvar coldnew/command-mode-mapcoldnew/command-mode-map61,1677
-(define-minor-mode coldnew/command-modecoldnew/command-mode92,3259
-(defun coldnew/set-mode-according-state ()coldnew/set-mode-according-state108,3688
-(defun coldnew/beginning-of-line-or-digit-argument ()coldnew/beginning-of-line-or-digit-argument114,3902
-(define-key view-mode-map "i" 'coldnew/switch-to-emacs-mode)view-mode-map178,6769
-(define-key view-mode-map "h" 'backward-char)view-mode-map179,6830
-(define-key view-mode-map "j" 'next-line)view-mode-map180,6876
-(define-key view-mode-map "k" 'previous-line)view-mode-map181,6918
-(define-key view-mode-map "l" 'forward-char)view-mode-map182,6964
-(define-key view-mode-map (kbd "C-f") 'View-scroll-page-forward)view-mode-map183,7009
-(define-key view-mode-map (kbd "C-b") 'View-scroll-page-backward)view-mode-map184,7074
-(defun paredit-blink-paren-match (another-line-p)paredit-blink-paren-match249,9359
-(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map280,10578
-(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting318,12024
-(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting345,13344
-(defun indent-file-after-save ()indent-file-after-save369,14050
-(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save377,14304
-(defun highlight-additional-keywords ()highlight-additional-keywords385,14572
-(defun highlight-fontify-numbers ()highlight-fontify-numbers393,14950
-(defun highlight-escape-char ()highlight-escape-char405,15529
-(defun insert-space-between-english-chinese ()insert-space-between-english-chinese413,15871
-(defun select-forwards-to-before-match (match)select-forwards-to-before-match431,16669
-(defun select-backwards-to-before-match (match)select-backwards-to-before-match437,16903
-(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match443,17141
-(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match452,17510
-(defun match-paren (arg)match-paren461,17883
-(defun delete-between-pair (char)delete-between-pair468,18172
-(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark483,18708
-(defun hime-agent ()hime-agent492,18964
-(defadvice kill-ring-save (before slickcopy activate compile)kill-ring-save497,19056
-(defadvice kill-region (before slickcut activate compile)kill-region505,19353
+(defvar coldnew/command-mode-mapcoldnew/command-mode-map56,1545
+(define-minor-mode coldnew/command-modecoldnew/command-mode96,3374
+(defun coldnew/toggle-state ()coldnew/toggle-state110,3698
+(defvar coldnew/buffer-state-alistcoldnew/buffer-state-alist117,3916
+(defun coldnew/set-mode-according-state ()coldnew/set-mode-according-state122,4015
+(defun coldnew/beginning-of-line-or-digit-argument ()coldnew/beginning-of-line-or-digit-argument131,4341
+(define-key view-mode-map "i" 'coldnew/switch-to-emacs-mode)view-mode-map195,7201
+(define-key view-mode-map "h" 'backward-char)view-mode-map196,7262
+(define-key view-mode-map "j" 'next-line)view-mode-map197,7308
+(define-key view-mode-map "k" 'previous-line)view-mode-map198,7350
+(define-key view-mode-map "l" 'forward-char)view-mode-map199,7396
+(define-key view-mode-map (kbd "C-f") 'View-scroll-page-forward)view-mode-map200,7441
+(define-key view-mode-map (kbd "C-b") 'View-scroll-page-backward)view-mode-map201,7506
+(defun paredit-blink-paren-match (another-line-p)paredit-blink-paren-match266,9763
+(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map297,10982
+(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting335,12428
+(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting362,13748
+(defun indent-file-after-save ()indent-file-after-save386,14447
+(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save394,14680
+(defun highlight-additional-keywords ()highlight-additional-keywords402,14927
+(defun highlight-fontify-numbers ()highlight-fontify-numbers410,15305
+(defun highlight-escape-char ()highlight-escape-char422,15716
+(defun insert-space-between-english-chinese ()insert-space-between-english-chinese430,15974
+(defun select-forwards-to-before-match (match)select-forwards-to-before-match448,16758
+(defun select-backwards-to-before-match (match)select-backwards-to-before-match454,16992
+(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match460,17230
+(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match469,17585
+(defun match-paren (arg)match-paren478,17944
+(defun delete-between-pair (char)delete-between-pair485,18219
+(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark500,18755
+(defun hime-agent ()hime-agent509,19011
+(defadvice kill-ring-save (before slickcopy activate compile)kill-ring-save514,19103
+(defadvice kill-region (before slickcut activate compile)kill-region522,19393
+(defun zap-up-to-char-backward (arg char)zap-up-to-char-backward530,19679
 
 /home/coldnew/.emacs.d/config/coldnew-org.el,0
 
@@ -9548,22 +9550,22 @@ DISTDIR=$(top)srecode-$(VERSION)/templatesDISTDIR17,609
 (defvar etags-select-go-if-unambiguous nil "\etags-select-go-if-unambiguous1237,40587
 (defvar etags-table-alist nil "\etags-table-alist1265,41659
 (defvar etags-table-search-up-depth nil "\etags-table-search-up-depth1291,42510
-(defvar helm-c-source-etags+-select '((name . "Etags+") (init . helm-etags+-get-available-tag-table-buffers) (candidates . helm-etags+-get-candidates-with-cache-support) (volatile) (pattern-transformer (lambda (helm-pattern) (setq helm-etags+-untransformed-helm-pattern helm-pattern) (regexp-quote (replace-regexp-in-string "\\\\_<\\|\\\\_>" "" helm-pattern)))) (requires-pattern . 3) (delayed) (action ("Goto the location" . helm-c-etags+-goto-location))))helm-c-source-etags+-select1339,44156
-(define-prefix-command 'helm-command-prefix)helm-command-prefix1811,57695
-(defvar helm-dired-mode "Enable helm completion in Dired functions.\nBindings affected are C, R, S, H.\nThis is deprecated for Emacs24+ users, use `helm-mode' instead." "\helm-dired-mode2124,66825
-(defvar helm-mode-line-string "\\<helm-map>\\[helm-help]:Help \\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-mode-line-string2362,73557
-(defvar helm-buffer-mode-line-string '("Buffer(s)" "\\<helm-c-buffer-map>\\[helm-c-buffer-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "String displayed in mode-line in `helm-c-source-buffers-list'"))helm-buffer-mode-line-string2424,74953
-(defvar helm-ff-mode-line-string "\\<helm-find-files-map>\\[helm-ff-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-ff-mode-line-string2426,75262
-(defvar helm-read-file-name-mode-line-string "\\<helm-c-read-file-map>\\[helm-read-file-name-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-read-file-name-mode-line-string2429,75548
-(defvar helm-generic-file-mode-line-string "\\<helm-generic-files-map>\\[helm-generic-file-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-generic-file-mode-line-string2432,75859
-(defvar helm-grep-mode-line-string "\\<helm-c-grep-map>\\[helm-grep-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-grep-mode-line-string2435,76149
-(defvar helm-pdfgrep-mode-line-string "\\<helm-c-pdfgrep-map>\\[helm-pdfgrep-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-pdfgrep-mode-line-string2438,76424
-(defvar helm-etags-mode-line-string "\\<helm-c-etags-map>\\[helm-etags-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-etags-mode-line-string2441,76711
-(defvar helm-c-ucs-mode-line-string "\\<helm-c-ucs-map>\\[helm-c-ucs-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-c-ucs-mode-line-string2444,76996
-(defvar helm-bookmark-mode-line-string '("Bookmark(s)" "\\<helm-c-bookmark-map>\\[helm-c-bookmark-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct") "\helm-bookmark-mode-line-string2447,77268
-(defvar helm-occur-mode-line "\\<helm-map>\\[helm-help]:Help \\<helm-occur-map>\\[helm-occur-run-query-replace-regexp]:Query replace regexp \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct")helm-occur-mode-line2450,77587
-(defvar helm-mode nil "\helm-mode2569,80951
-(defvar projectile-global-mode nil "\projectile-global-mode2888,89836
+(defvar helm-c-source-etags+-select '((name . "Etags+") (init . helm-etags+-get-available-tag-table-buffers) (candidates . helm-etags+-get-candidates-with-cache-support) (volatile) (pattern-transformer (lambda (helm-pattern) (setq helm-etags+-untransformed-helm-pattern helm-pattern) (regexp-quote (replace-regexp-in-string "\\\\_<\\|\\\\_>" "" helm-pattern)))) (requires-pattern . 3) (delayed) (action ("Goto the location" . helm-c-etags+-goto-location))))helm-c-source-etags+-select1508,49692
+(define-prefix-command 'helm-command-prefix)helm-command-prefix1980,63231
+(defvar helm-dired-mode "Enable helm completion in Dired functions.\nBindings affected are C, R, S, H.\nThis is deprecated for Emacs24+ users, use `helm-mode' instead." "\helm-dired-mode2293,72361
+(defvar helm-mode-line-string "\\<helm-map>\\[helm-help]:Help \\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-mode-line-string2531,79093
+(defvar helm-buffer-mode-line-string '("Buffer(s)" "\\<helm-c-buffer-map>\\[helm-c-buffer-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "String displayed in mode-line in `helm-c-source-buffers-list'"))helm-buffer-mode-line-string2593,80489
+(defvar helm-ff-mode-line-string "\\<helm-find-files-map>\\[helm-ff-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-ff-mode-line-string2595,80798
+(defvar helm-read-file-name-mode-line-string "\\<helm-c-read-file-map>\\[helm-read-file-name-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-read-file-name-mode-line-string2598,81084
+(defvar helm-generic-file-mode-line-string "\\<helm-generic-files-map>\\[helm-generic-file-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-generic-file-mode-line-string2601,81395
+(defvar helm-grep-mode-line-string "\\<helm-c-grep-map>\\[helm-grep-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-grep-mode-line-string2604,81685
+(defvar helm-pdfgrep-mode-line-string "\\<helm-c-pdfgrep-map>\\[helm-pdfgrep-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-pdfgrep-mode-line-string2607,81960
+(defvar helm-etags-mode-line-string "\\<helm-c-etags-map>\\[helm-etags-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-etags-mode-line-string2610,82247
+(defvar helm-c-ucs-mode-line-string "\\<helm-c-ucs-map>\\[helm-c-ucs-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct" "\helm-c-ucs-mode-line-string2613,82532
+(defvar helm-bookmark-mode-line-string '("Bookmark(s)" "\\<helm-c-bookmark-map>\\[helm-c-bookmark-help]:Help \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct") "\helm-bookmark-mode-line-string2616,82804
+(defvar helm-occur-mode-line "\\<helm-map>\\[helm-help]:Help \\<helm-occur-map>\\[helm-occur-run-query-replace-regexp]:Query replace regexp \\<helm-map>\\[helm-select-action]:Act \\[helm-exit-minibuffer]/\\[helm-select-2nd-action-or-end-of-line]/\\[helm-select-3rd-action]:NthAct")helm-occur-mode-line2619,83123
+(defvar helm-mode nil "\helm-mode2738,86487
+(defvar projectile-global-mode nil "\projectile-global-mode3057,95372
 
 /home/coldnew/.emacs.d/lisp/anything/Makefile,152
 EMACS		:= emacs -Q -batchEMACS26,923
@@ -11227,6 +11229,33 @@ def ls_first(dir)ls_first64,1774
 (defun anything-show-completion-install (prefix-length-sexp)anything-show-completion-install228,7761
 (defun asc-point-at-upper-half-of-window-p (pt)asc-point-at-upper-half-of-window-p235,7980
 (defun asc-display-function (buf)asc-display-function244,8346
+
+/home/coldnew/.emacs.d/lisp/fastnav/fastnav.el,2103
+(defun fastnav-search-char-forward (arg char)fastnav-search-char-forward81,3596
+(defun fastnav-search-char-backward (arg char)fastnav-search-char-backward96,4133
+(defun fastnav-get-nth-chars (arg)fastnav-get-nth-chars103,4378
+(defun fastnav-highlight-read-char (text arg forwarder backwarder)fastnav-highlight-read-char134,5551
+(defun fastnav-highlight-read-char-backward (text arg forwarder backwarder)fastnav-highlight-read-char-backward188,7705
+(defun fastnav-jump-to-char-forward (arg)fastnav-jump-to-char-forward195,8020
+(defun fastnav-jump-to-char-backward (arg)fastnav-jump-to-char-backward204,8504
+(defun fastnav-mark-up-to-char-forward (arg)fastnav-mark-up-to-char-forward214,8986
+(defun fastnav-mark-up-to-char-xbackward (arg)fastnav-mark-up-to-char-xbackward226,9467
+(defun fastnav-mark-to-char-forward (arg)fastnav-mark-to-char-forward238,9995
+(defun fastnav-mark-to-char-backward (arg)fastnav-mark-to-char-backward252,10532
+(defun fastnav-zap-up-to-char-forward (arg)fastnav-zap-up-to-char-forward266,11121
+(defun fastnav-zap-up-to-char-backward (arg)fastnav-zap-up-to-char-backward279,11641
+(defun fastnav-zap-to-char-forward (arg)fastnav-zap-to-char-forward292,12205
+(defun fastnav-zap-to-char-backward (arg)fastnav-zap-to-char-backward309,12924
+(defun fastnav-replace-char-forward (arg)fastnav-replace-char-forward325,13633
+(defun fastnav-replace-char-backward (arg)fastnav-replace-char-backward338,14177
+(defun fastnav-insert-at-char-forward (arg)fastnav-insert-at-char-forward352,14768
+(defun fastnav-insert-at-char-backward (arg)fastnav-insert-at-char-backward364,15288
+(defun fastnav-execute-at-char-forward (arg)fastnav-execute-at-char-forward376,15847
+(defun fastnav-execute-at-char-backward (arg)fastnav-execute-at-char-backward389,16454
+(defun fastnav-delete-char-forward (arg)fastnav-delete-char-forward402,17100
+(defun fastnav-delete-char-backward (arg)fastnav-delete-char-backward414,17615
+(defun fastnav-sprint-forward (arg)fastnav-sprint-forward426,18171
+(defun fastnav-sprint-backward (arg)fastnav-sprint-backward441,18727
 
 /home/coldnew/.emacs.d/lisp/lusty-explorer/lusty-explorer.el,4998
 (defgroup lusty-explorer nillusty-explorer80,2572
@@ -16273,6 +16302,53 @@ EMACS_BATCH=emacs -Q --batch "$(VC_GIT_PATH)" -L .EMACS_BATCH10,474
 (defun tempbuf-post-command ()tempbuf-post-command291,9863
 (defun turn-on-tempbuf-mode ()turn-on-tempbuf-mode296,9981
 (defun turn-off-tempbuf-mode ()turn-off-tempbuf-mode309,10360
+
+/home/coldnew/.emacs.d/lisp/projectile/projectile.el,2678
+(defgroup projectile nil "Manage and navigate projects easily."projectile46,1514
+(defcustom projectile-enable-caching nilprojectile-enable-caching50,1618
+(defcustom projectile-keymap-prefix (kbd "C-c p")projectile-keymap-prefix55,1733
+(defvar projectile-project-root-files '(".git" ".hg" ".bzr" "_darcs" ".projectile")projectile-project-root-files62,1864
+(defvar projectile-ignored-files '("TAGS")projectile-ignored-files65,2012
+(defvar projectile-ignored-directories '(".idea")projectile-ignored-directories68,2100
+(defvar projectile-ignored-file-extensions '("class" "o" "so" "elc")projectile-ignored-file-extensions71,2201
+(defvar projectile-projects-cache (make-hash-table :test 'equal)projectile-projects-cache74,2325
+(defun projectile-invalidate-cache ()projectile-invalidate-cache77,2471
+(defun projectile-get-project-root ()projectile-get-project-root84,2773
+(defun projectile-get-project-name ()projectile-get-project-name90,3008
+(defun projectile-get-project-files (directory)projectile-get-project-files94,3152
+(defun projectile-string-suffix-p (string suffix)projectile-string-suffix-p121,4733
+(defun projectile-get-project-buffers ()projectile-get-project-buffers125,4902
+(defun projectile-get-project-buffer-names ()projectile-get-project-buffer-names131,5218
+(defun projectile-prepend-project-name (string)projectile-prepend-project-name135,5363
+(defun projectile-switch-to-buffer ()projectile-switch-to-buffer138,5471
+(defun projectile-multi-occur ()projectile-multi-occur146,5706
+(defun projectile-hashify-files (files-list)projectile-hashify-files152,5902
+(defun uniquify-file (filename)uniquify-file169,6754
+(defun projectile-ignored-p (file)projectile-ignored-p174,6965
+(defun projectile-ignored-directory-p (file)projectile-ignored-directory-p181,7261
+(defun projectile-ignored-file-p (file)projectile-ignored-file-p188,7500
+(defun projectile-ignored-extension-p (file)projectile-ignored-extension-p192,7620
+(defun projectile-find-file ()projectile-find-file197,7822
+(defun projectile-grep ()projectile-grep206,8278
+(defun projectile-regenerate-tags ()projectile-regenerate-tags219,8965
+(defun projectile-replace ()projectile-replace229,9299
+(defun projectile-kill-buffers ()projectile-kill-buffers238,9740
+(defvar projectile-mode-mapprojectile-mode-map250,10124
+(define-globalized-minor-mode projectile-global-mode projectile-mode projectile-on)projectile-global-mode287,11469
+(defun projectile-on ()projectile-on289,11554
+(defun projectile-off ()projectile-off294,11666
+(define-minor-mode projectile-mode "Minor mode to assist project management and navigation."projectile-mode299,11753
+
+/home/coldnew/.emacs.d/lisp/projectile/helm-projectile.el,400
+(defun helm-c-projectile-files-list ()helm-c-projectile-files-list47,1584
+(defvar helm-c-source-projectile-files-listhelm-c-source-projectile-files-list52,1744
+(defvar helm-c-source-projectile-buffers-listhelm-c-source-projectile-buffers-list66,2226
+(defun helm-projectile ()helm-projectile80,2728
+(define-key projectile-mode-map (kbd "C-c p h") 'helm-projectile)projectile-mode-map87,2980
+
+/home/coldnew/.emacs.d/lisp/projectile/test/projectile-test.el,0
+
+/home/coldnew/.emacs.d/lisp/projectile/test/test-helper.el,0
 
 /home/coldnew/.emacs.d/lisp/helm/helm-call-tree.el,1299
 (defvar helm-c-source-simple-call-tree-functions-callershelm-c-source-simple-call-tree-functions-callers28,1030

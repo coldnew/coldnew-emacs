@@ -31,7 +31,6 @@
 ;;;;;;; Kyebinding
 (add-hook 'egg-commit-buffer-mode-hook
 	  '(lambda ()
-	     (key-chord-mode 1)
 	     (key-chord-define (current-local-map) "cc" 'egg-log-msg-done)))
 
 ;;;;;;;; Advice

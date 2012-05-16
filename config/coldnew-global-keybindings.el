@@ -26,7 +26,7 @@
 (global-set-key (kbd "C-0") 'ace-jump-mode)
 (global-set-key (kbd "C-e") 'move-end-of-line)
 (global-set-key (kbd "C-a") 'move-beginning-of-line)
-
+(global-set-key (kbd "C-]") 'coldnew/toggle-state)
 
 ;; ;;; evil-normal-map
 ;; (evil:nmap (kbd "C-n") 'next-line)
