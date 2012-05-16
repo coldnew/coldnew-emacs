@@ -8,6 +8,7 @@
 ;;;; minor-mode
 ;;;; ---------------------------------------------------------------------------
 ;;(require* 'centered-cursor-mode)
+(require 'key-chord)
 
 (defvar coldnew-editor-hook nil
   "Hooks for coldnew-editor-mode.")
@@ -31,7 +32,6 @@
   (cond
    ((string= "View"  coldnew-editor-state) (view-mode -1))
    ((string= "Command"  coldnew-editor-state) (coldnew/command-mode -1))
-   ((string= "Chord" coldnew-editor-state) (key-chord-mode -1))
    ))
 
 (defun coldnew/switch-to-emacs-mode ()
@@ -47,10 +47,22 @@
   (setq coldnew-editor-state "Command")
   (coldnew/command-mode 1))
 
+(defun coldnew/switch-to-emacs-mode-append ()
+  (interactive)
+  (coldnew/switch-to-emacs-mode)
+  (unless (eolp) (forward-char)))
+
+(defun coldnew/switch-to-emacs-mode-local ()
+  (interactive)
+  (let ((coldnew-editor-state "Emacs"))
+    (coldnew/disable-mode-according-state)
+    ))
+
 (defvar coldnew/command-mode-map
   (let ((map (make-sparse-keymap)))
     (suppress-keymap map)
     (define-key map "i" 'coldnew/switch-to-emacs-mode)
+    (define-key map "a" 'coldnew/switch-to-emacs-mode-append)
     (define-key map "h" 'backward-char)
     (define-key map "j" 'next-line)
     (define-key map "k" 'previous-line)
@@ -58,10 +70,22 @@
     (define-key map "bl" 'beginning-of-line)
     (define-key map "%" 'match-paren)
     (define-key map "el" 'end-of-line)
-    (define-key map "dd" 'kill-whole-line)
+    (key-chord-define map "dd" 'kill-whole-line)
+    (define-key map "u" 'undo-tree-undo)
+    (define-key map (kbd "C-r") 'undo-tree-redo)
     (define-key map "." 'repeat)
     (define-key map (kbd "C-f") 'View-scroll-page-forward)
+    (define-key map (kbd "n") 'View-scroll-page-forward)
     (define-key map (kbd "C-b") 'View-scroll-page-backward)
+    (define-key map (kbd "p") 'View-scroll-page-backward)
+    (define-key map (kbd "0") 'coldnew/beginning-of-line-or-digit-argument)
+    (define-key map (kbd "$") 'end-of-line)
+    (define-key map (kbd "d(")  '(lambda () (interactive) (delete-between-pair ?\()))
+    (define-key map (kbd "d\"") '(lambda () (interactive) (delete-between-pair ?\")))
+    (key-chord-define map "d9"  '(lambda () (interactive) (delete-between-pair ?\( )))
+    (key-chord-define map "dq"  '(lambda () (interactive) (delete-between-pair ?\" )))
+    (key-chord-define map "ds"  '(lambda () (interactive) (delete-between-pair ?\[ )))
+    (key-chord-define map "dc"  '(lambda () (interactive) (delete-between-pair ?\{ )))
     map)
   "Keymap for coldnew-editor-mode.")
 
@@ -71,10 +95,12 @@
   :global t
   :lighter " "
   :keymap coldnew/command-mode-map
-  )
+  (if coldnew/command-mode
+      (key-chord-mode 1)
+    (key-chord-mode -1)))
 
 (add-hook 'post-command-hook 'coldnew/set-mode-according-state)
-(add-hook 'minibuffer-setup-hook 'coldnew/switch-to-emacs-mode)
+(add-hook 'minibuffer-setup-hook 'coldnew/switch-to-emacs-mode-local)
 
 ;; (defvar coldnew/emacs-mode-alist
 ;;   '(minibuffer-))
@@ -84,6 +110,14 @@
    ((string= "Command" coldnew-editor-state) (coldnew/switch-to-command-mode))
    ((string= "Emacs"   coldnew-editor-state) (coldnew/switch-to-emacs-mode))
    ))
+
+(defun coldnew/beginning-of-line-or-digit-argument ()
+  "Feeds a 0 count or moves the cursor to the beginning of the line."
+  (interactive)
+  (if (and current-prefix-arg
+           (not (zerop (prefix-numeric-value current-prefix-arg))))
+      (call-interactively 'digit-argument)
+    (call-interactively 'beginning-of-line)))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
