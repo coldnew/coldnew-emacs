@@ -15,18 +15,6 @@
 ;;;; ---------------------------------------------------------------------------
 (add-hook 'post-command-hook 'coldnew/set-cursor-according-mode)
 
-;; ;; ;;;; ---------------------------------------------------------------------------
-;; ;; ;;;; cursor-chg
-;; ;; ;;;; ---------------------------------------------------------------------------
-
-;; ;; (require* 'cursor-chg)
-;; ;; ;; Turn on cursor change when Emacs is idle
-;; ;; (toggle-cursor-type-when-idle 1)
-;; ;; ;; ;; Turn on change for overwrite, read-only, and input mode
-;; ;; ;; (change-cursor-mode 1)
-;; ;; (setq curchg-default-cursor-color emacs-normal-cursor-color)
-
-
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Functions
