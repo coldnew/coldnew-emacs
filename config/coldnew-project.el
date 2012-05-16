@@ -16,13 +16,20 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; ede
 ;;;; ---------------------------------------------------------------------------
+(require 'ede)
+
 (global-ede-mode t)
+(ede-enable-generic-projects)
+
 (setq ede-project-placeholder-cache-file (concat emacs-cache-dir "ede-project.el"))
 
 ;;; FIXME: why follwoing unuse ?
 (ede-emacs-project "coldnew-emacs"
 		   :file "/home/coldnew/.emacs.d/README"
 		   )
+
+
+
 
 
 
