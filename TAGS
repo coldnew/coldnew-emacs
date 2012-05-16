@@ -8,12 +8,22 @@
 (defun turn-off-evil-paredit-mode ()turn-off-evil-paredit-mode48,1404
 (define-globalized-minor-mode global-evil-paredit-modeglobal-evil-paredit-mode52,1521
 
+/home/coldnew/.emacs.d/local-lisp/mmr.c,40
+int ffi_test(int a, int b)ffi_test1,0
+
+/home/coldnew/.emacs.d/local-lisp/aa.scm,88
+(define libmmr (dynamic-link "./libmmr.so"))libmmr2,31
+(define ffi-testffi-test4,77
+
 /home/coldnew/.emacs.d/local-lisp/evil-paredit/evil-paredit.el,358
 (defconst evil-paredit-version "0.1")evil-paredit-version8,146
 (define-minor-mode evil-paredit-modeevil-paredit-mode39,1142
 (defun turn-on-evil-paredit-mode ()turn-on-evil-paredit-mode44,1290
 (defun turn-off-evil-paredit-mode ()turn-off-evil-paredit-mode48,1404
 (define-globalized-minor-mode global-evil-paredit-modeglobal-evil-paredit-mode52,1521
+
+/home/coldnew/.emacs.d/local-lisp/gcin-el-agent.scm,104
+(define libgcin-im-client (dynamic-link "/usr/lib/hime/libhime-im-client.so"))libgcin-im-client11,241
 
 /home/coldnew/.emacs.d/init.el,0
 
@@ -111,31 +121,31 @@
 /home/coldnew/.emacs.d/config/coldnew-cursor.el,0
 
 /home/coldnew/.emacs.d/config/coldnew-global-keybindings.el,198
-(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)coldnew/set-mark-command179,7169
-(defalias 'coldnew/folding-toggle   'toggle-selective-display)coldnew/folding-toggle180,7238
+(defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)coldnew/set-mark-command186,7394
+(defalias 'coldnew/folding-toggle   'toggle-selective-display)coldnew/folding-toggle187,7463
 
-/home/coldnew/.emacs.d/config/coldnew-editor.el,1622
+/home/coldnew/.emacs.d/config/coldnew-editor.el,1589
 (defvar coldnew-editor-hook nilcoldnew-editor-hook11,319
 (defvar coldnew-editor-mapcoldnew-editor-map14,388
 (define-minor-mode coldnew-editor-modecoldnew-editor-mode19,498
-(defun key-chord-input-method (first-char)key-chord-input-method108,4159
-(defun paredit-blink-paren-match (another-line-p)paredit-blink-paren-match165,6454
-(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map202,7950
-(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting240,9396
-(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting267,10716
-(defun indent-file-after-save ()indent-file-after-save291,11415
-(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save299,11648
-(defun highlight-additional-keywords ()highlight-additional-keywords307,11895
-(defun highlight-fontify-numbers ()highlight-fontify-numbers315,12273
-(defun highlight-escape-char ()highlight-escape-char327,12684
-(defun insert-space-between-english-chinese ()insert-space-between-english-chinese335,12942
-(defun select-forwards-to-before-match (match)select-forwards-to-before-match353,13726
-(defun select-backwards-to-before-match (match)select-backwards-to-before-match359,13960
-(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match365,14198
-(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match374,14553
-(defun match-paren (arg)match-paren383,14912
-(defun delete-between-pair (char)delete-between-pair390,15187
-(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark405,15723
+(defun paredit-blink-paren-match (another-line-p)paredit-blink-paren-match178,6941
+(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map215,8437
+(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting253,9883
+(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting280,11203
+(defun indent-file-after-save ()indent-file-after-save304,11902
+(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save312,12135
+(defun highlight-additional-keywords ()highlight-additional-keywords320,12382
+(defun highlight-fontify-numbers ()highlight-fontify-numbers328,12760
+(defun highlight-escape-char ()highlight-escape-char340,13171
+(defun insert-space-between-english-chinese ()insert-space-between-english-chinese348,13429
+(defun select-forwards-to-before-match (match)select-forwards-to-before-match366,14213
+(defun select-backwards-to-before-match (match)select-backwards-to-before-match372,14447
+(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match378,14685
+(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match387,15040
+(defun match-paren (arg)match-paren396,15399
+(defun delete-between-pair (char)delete-between-pair403,15674
+(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark418,16210
+(defun hime-agent ()hime-agent427,16466
 
 /home/coldnew/.emacs.d/config/coldnew-org.el,0
 
@@ -161,7 +171,7 @@
 (defun slime-javadoc (symbol-name)slime-javadoc62,2089
 (defun clojure-mode:define-function ()clojure-mode:define-function82,2774
 
-/home/coldnew/.emacs.d/config/coldnew-minibuffer.el,799
+/home/coldnew/.emacs.d/config/coldnew-minibuffer.el,875
 (define-key minibuffer-local-map (kbd "M-l") 'backward-kill-word)minibuffer-local-map21,876
 (define-key minibuffer-local-map (kbd "C-w") 'kill-word)minibuffer-local-map22,942
 (define-key minibuffer-local-map (kbd "C-u") '(lambda() (interactive) (kill-line 0)))minibuffer-local-map23,999
@@ -169,8 +179,9 @@
 (define-key minibuffer-local-map (kbd "M-n") 'next-history-element)minibuffer-local-map25,1157
 (define-key minibuffer-local-map (kbd "C-g") 'minibuffer-keyboard-quit)minibuffer-local-map26,1225
 (define-key minibuffer-local-map (kbd "C-r") 'resolve-sym-link)minibuffer-local-map27,1297
-(defun stop-using-minibuffer ()stop-using-minibuffer40,1806
-(defun resolve-sym-link ()resolve-sym-link48,2134
+(defun coldnew/ido-setup-keybinding ()coldnew/ido-setup-keybinding42,1830
+(defun stop-using-minibuffer ()stop-using-minibuffer54,2214
+(defun resolve-sym-link ()resolve-sym-link62,2542
 
 /home/coldnew/.emacs.d/config/coldnew-session.el,191
 (defadvice desktop-owner (after pry-from-cold-dead-hands activate)desktop-owner58,2041
@@ -211,6 +222,8 @@
 
 /home/coldnew/.emacs.d/config/coldnew-directory.el,0
 
+/home/coldnew/.emacs.d/config/coldnew-gnus.el,0
+
 /home/coldnew/.emacs.d/config/coldnew-windows.el,324
 (defun fullscreen-window ()fullscreen-window68,1737
 (defun windmove-down-fullscreen ()windmove-down-fullscreen81,2073
@@ -221,18 +234,18 @@
 /home/coldnew/.emacs.d/config/coldnew-jabber.el,0
 
 /home/coldnew/.emacs.d/config/coldnew-file.el,51
-(defun sudo-edit (&optional arg)sudo-edit79,2890
+(defun sudo-edit (&optional arg)sudo-edit81,2892
 
 /home/coldnew/.emacs.d/config/coldnew-tramp.el,0
 
 /home/coldnew/.emacs.d/config/coldnew-terminal.el,557
-(defadvice shell-pop (before kill-dead-term activate)shell-pop25,1029
-(define-key term-raw-map (kbd "M-x") 'execute-extended-command)term-raw-map51,1965
-(define-key term-raw-map (kbd "C-g") 'term-interrupt-subjob)term-raw-map52,2029
-(define-key term-raw-map (kbd "C-n") 'term-send-down)term-raw-map53,2090
-(define-key term-raw-map (kbd "C-p") 'term-send-up)term-raw-map54,2144
-(define-key term-raw-map (kbd "<enter>") 'term-send-input)term-raw-map55,2196
-(define-key comint-mode-map (kbd "C-g") 'comint-interrupt-subjob)comint-mode-map67,2696
+(defadvice shell-pop (before kill-dead-term activate)shell-pop26,1076
+(define-key term-raw-map (kbd "M-x") 'execute-extended-command)term-raw-map52,2024
+(define-key term-raw-map (kbd "C-g") 'term-interrupt-subjob)term-raw-map53,2088
+(define-key term-raw-map (kbd "C-n") 'term-send-down)term-raw-map54,2149
+(define-key term-raw-map (kbd "C-p") 'term-send-up)term-raw-map55,2203
+(define-key term-raw-map (kbd "<enter>") 'term-send-input)term-raw-map56,2255
+(define-key comint-mode-map (kbd "C-g") 'comint-interrupt-subjob)comint-mode-map68,2755
 
 /home/coldnew/.emacs.d/config/coldnew-functions.el,604
 (defun emacs-process-p (pid)emacs-process-p5,64
@@ -289,9 +302,9 @@
 (defvar emacs-english-font "Monaco"emacs-english-font6,125
 (defvar emacs-cjk-font "Hiragino Sans GB W3"emacs-cjk-font9,230
 (defvar emacs-symbol-font "Monaco"emacs-symbol-font11,303
-(defvar emacs-english-font-size 11.5emacs-english-font-size15,391
-(defvar emacs-cjk-font-size 13.5emacs-cjk-font-size19,494
-(defvar emacs-symbol-font-size 16emacs-symbol-font-size21,555
+(defvar emacs-english-font-size 11.5emacs-english-font-size16,431
+(defvar emacs-cjk-font-size 13.5emacs-cjk-font-size20,534
+(defvar emacs-symbol-font-size 16emacs-symbol-font-size23,631
 
 /home/coldnew/.emacs.d/config/coldnew-evil.el,429
 (define-key evil-insert-state-mapevil-insert-state-map31,917
