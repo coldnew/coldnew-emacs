@@ -3089,9 +3089,10 @@ Minor mode to assist project management and navigation.
 ;;;;;;  "anything/extensions/anything-obsolete.el" "anything/extensions/anything-show-completion.el"
 ;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete/auto-complete-config.el"
 ;;;;;;  "auto-complete/auto-complete-pkg.el" "auto-complete/auto-complete.el"
-;;;;;;  "helm/helm-pkg.el" "helm/helm-plugin.el" "hideshowvis/hideshowvis-autoloads.el"
-;;;;;;  "hideshowvis/hideshowvis-pkg.el" "switch-window/switch-window.el")
-;;;;;;  (20403 51681 135893))
+;;;;;;  "cursor-chg/cursor-chg-autoloads.el" "cursor-chg/cursor-chg-pkg.el"
+;;;;;;  "cursor-chg/cursor-chg.el" "helm/helm-pkg.el" "helm/helm-plugin.el"
+;;;;;;  "hideshowvis/hideshowvis-autoloads.el" "hideshowvis/hideshowvis-pkg.el"
+;;;;;;  "switch-window/switch-window.el") (20403 54199 243111))
 
 ;;;***
 
