@@ -92,24 +92,20 @@
 ;; ;;;; Commands
 ;; ;;;; ---------------------------------------------------------------------------
 
-
-(defun my-anything-filelist ()
+(defun coldnew/helm-filelist ()
   "Preconfigured `anything' to open files/buffers/bookmarks instantly.
-
  This is a replacement for `anything-for-files'.
  See `anything-c-filelist-file-name' docstring for usage."
   (interactive)
-  (anything
-   :prompt "Switch to: "
-   :source
-   '(
-     anything-c-source-recentf
-     anything-c-source-ffap-line
-     anything-c-source-ffap-guesser
-     ;; anything-c-source-buffers-list
-     anything-c-source-bookmarks
-     anything-c-source-file-cache
-     anything-c-source-filelist)))
+  (helm-other-buffer
+   '(helm-c-source-recentf
+     helm-c-source-ffap-line
+     helm-c-source-ffap-guesser
+     helm-c-source-bookmarks
+     helm-c-source-file-cache
+     helm-c-source-projectile-files-list
+     helm-c-source-files-in-current-dir)
+   "*coldnew/filelist*"))
 
 (defun coldnew/anything-occur ()
   "I don't like highlight when goto lines."
