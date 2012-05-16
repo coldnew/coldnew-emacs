@@ -30,8 +30,34 @@
 ;;;; etags
 ;;;; ---------------------------------------------------------------------------
 (require 'etags)
+(require* 'etags-table)
+(require* 'etags-select)
 
 (setq tags-revert-without-query 1)
+
+(setq tags-table-list '("~/.emacs.d/TAGS"))
+;; (setq etags-table-alist
+;;       (list
+;;        '("~/.emacs.d/tags/TAGS")))
+
+;;; FIXME: I disable eproject...
+(defun build-ctags ()
+  (interactive)
+  (message "building project tags")
+  (let ((root (eproject-root)))
+    (shell-command (concat "ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f " root "TAGS " root)))
+  (visit-project-tags)
+  (message "tags built successfully"))
+
+(defun visit-project-tags ()
+  (interactive)
+  (let ((tags-file (concat (eproject-root) "TAGS")))
+    (visit-tags-table tags-file)
+    (message (concat "Loaded " tags-file))))
+
+
+
+
 
 (provide 'coldnew-tags)
 ;; coldnew-tags.el ends here.

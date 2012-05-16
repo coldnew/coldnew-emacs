@@ -79,6 +79,10 @@
 		  ("." "lang")
 		  :features eproject))
  (escreen status "removed" recipe nil)
+ (etags-select status "installed" recipe
+	       (:name etags-select :description "" :type elpa))
+ (etags-table status "installed" recipe
+	      (:name etags-table :description "" :type elpa))
  (evil status "installed" recipe
        (:name evil :website "http://gitorious.org/evil/pages/Home" :description "Evil is an extensible vi layer for Emacs. It\n       emulates the main features of Vim, and provides facilities\n       for writing custom extensions." :type git :url "https://git.gitorious.org/evil/evil.git" :features evil :depends undo-tree))
  (expand-region status "installed" recipe
@@ -96,6 +100,7 @@
        (:name helm :description "Emacs incremental and narrowing framework" :type github :pkgname "emacs-helm/helm" :features helm-config))
  (helm-etags-plus status "installed" recipe
 		  (:name helm-etags-plus :type github :pkgname "jixiuf/helm-etags-plus" :features ctags-update helm-etags+))
+ (helm-projectile status "removed" recipe nil)
  (hideshowvis status "installed" recipe
 	      (:name hideshowvis :type elpa))
  (highlight-cl status "installed" recipe
@@ -162,7 +167,7 @@
  (pretty-lambdada status "installed" recipe
 		  (:name pretty-lambdada :description "Show the word `lambda' as the Greek letter." :website "" :type emacswiki :features pretty-lambdada))
  (projectile status "installed" recipe
-	     (:name projectile :description "Projectile is a project interaction library for Emacs" :features projectile :type elpa))
+	     (:name projectile :description "Projectile is a project interaction library for Emacs" :features projectile :type github :pkgname bbatsov/projectile))
  (rainbow-delimiters status "installed" recipe
 		     (:name rainbow-delimiters :website "https://github.com/jlr/rainbow-delimiters#readme" :description "Color nested parentheses, brackets, and braces according to their depth." :type github :pkgname "jlr/rainbow-delimiters" :features rainbow-delimiters))
  (rainbow-mode status "installed" recipe

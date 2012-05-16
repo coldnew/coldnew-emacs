@@ -582,11 +582,6 @@ nil "increment/decrement numbers like in vim [source: github]" single])
 (evil-leader .
 [(20111001)
 nil "No description available. [source: github]" single])
-(evil .
-[(20120514)
-((undo-tree
-(0 5 1)))
-"Extensible Vi layer for Emacs. [source: git]" tar])
 (ess .
 [(20120509)
 nil "No description available. [source: github]" tar])
@@ -597,7 +592,7 @@ nil "emacs window session manager [source: github]" single])
 [(20111207)
 nil "No description available. [source: github]" tar])
 (ergoemacs-keybindings .
-[(20120515)
+[(20120516)
 nil "No description available. [source: svn]" tar])
 (enclose .
 [(20120403)
@@ -725,5 +720,10 @@ nil "a quick cursor location minor mode for emacs [source: github]" single])
 nil "An auto-complete source using slime completions [source: github]" single])
 (ac-dabbrev .
 [(20091116)
-nil "auto-complete.el source for dabbrev [source: wiki]" single]))
+nil "auto-complete.el source for dabbrev [source: wiki]" single])
+(evil .
+[(20120514)
+((undo-tree
+(0 5 1)))
+"Extensible Vi layer for Emacs. [source: git]" tar]))
 

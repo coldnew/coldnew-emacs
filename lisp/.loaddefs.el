@@ -1105,7 +1105,7 @@ i.e anything-match-plugin.
 ;;;***
 
 ;;;### (autoloads (ascii-off ascii-on ascii-display ascii-customize)
-;;;;;;  "ascii/ascii" "ascii/ascii.el" (20403 29114))
+;;;;;;  "ascii/ascii" "ascii/ascii.el" (20403 29796))
 ;;; Generated autoloads from ascii/ascii.el
 
 (autoload 'ascii-customize "ascii/ascii" "\
@@ -1185,6 +1185,113 @@ Call this method if you have updated your .bashrc or any bash init scripts
 and would like bash completion in Emacs to take these changes into account.
 
 \(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (etags-select-find-tag etags-select-find-tag-at-point
+;;;;;;  etags-select-go-if-unambiguous etags-select-use-short-name-completion
+;;;;;;  etags-select-highlight-delay etags-select-highlight-tag-after-jump
+;;;;;;  etags-select-mode-hook etags-select-no-select-for-one-match
+;;;;;;  etags-select-mode) "etags-select/etags-select" "etags-select/etags-select.el"
+;;;;;;  (20403 40924))
+;;; Generated autoloads from etags-select/etags-select.el
+
+(let ((loads (get 'etags-select-mode 'custom-loads))) (if (member '"etags-select/etags-select" loads) nil (put 'etags-select-mode 'custom-loads (cons '"etags-select/etags-select" loads))))
+
+(defvar etags-select-no-select-for-one-match t "\
+*If non-nil, don't open the selection window if there is only one
+matching tag.")
+
+(custom-autoload 'etags-select-no-select-for-one-match "etags-select/etags-select" t)
+
+(defvar etags-select-mode-hook nil "\
+*List of functions to call on entry to etags-select-mode mode.")
+
+(custom-autoload 'etags-select-mode-hook "etags-select/etags-select" t)
+
+(defvar etags-select-highlight-tag-after-jump t "\
+*If non-nil, temporarily highlight the tag after you jump to it.")
+
+(custom-autoload 'etags-select-highlight-tag-after-jump "etags-select/etags-select" t)
+
+(defvar etags-select-highlight-delay 1.0 "\
+*How long to highlight the tag.")
+
+(custom-autoload 'etags-select-highlight-delay "etags-select/etags-select" t)
+
+(defface etags-select-highlight-tag-face '((t (:foreground "white" :background "cadetblue4" :bold t))) "\
+Font Lock mode face used to highlight tags." :group (quote etags-select-mode))
+
+(defvar etags-select-use-short-name-completion nil "\
+*Use short tag names during completion.  For example, say you
+have a function named foobar in several classes and you invoke
+`etags-select-find-tag'.  If this variable is nil, you would have
+to type ClassA::foo<TAB> to start completion.  Since avoiding
+knowing which class a function is in is the basic idea of this
+package, if you set this to t you can just type foo<TAB>.
+
+Only works with GNU Emacs.")
+
+(custom-autoload 'etags-select-use-short-name-completion "etags-select/etags-select" t)
+
+(defvar etags-select-go-if-unambiguous nil "\
+*If non-nil, jump by tag number if it is unambiguous.")
+
+(custom-autoload 'etags-select-go-if-unambiguous "etags-select/etags-select" t)
+
+(autoload 'etags-select-find-tag-at-point "etags-select/etags-select" "\
+Do a find-tag-at-point, and display all exact matches.  If only one match is
+found, see the `etags-select-no-select-for-one-match' variable to decide what
+to do.
+
+\(fn)" t nil)
+
+(autoload 'etags-select-find-tag "etags-select/etags-select" "\
+Do a find-tag, and display all exact matches.  If only one match is
+found, see the `etags-select-no-select-for-one-match' variable to decide what
+to do.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (etags-table-search-up-depth etags-table-alist
+;;;;;;  etags-table) "etags-table/etags-table" "etags-table/etags-table.el"
+;;;;;;  (20403 40898))
+;;; Generated autoloads from etags-table/etags-table.el
+
+(let ((loads (get 'etags-table 'custom-loads))) (if (member '"etags-table/etags-table" loads) nil (put 'etags-table 'custom-loads (cons '"etags-table/etags-table" loads))))
+
+(defvar etags-table-alist nil "\
+*Map filename to tag file(s)
+
+Example:
+
+\(setq etags-table-alist
+      (list
+       '(\"/home/me/Projects/foo/.*\\\\.[ch]$\" \"/home/me/Projects/lib1/TAGS\" \"/home/me/Projects/lib2/TAGS\")
+       '(\"/home/me/Projects/bar/.*\\\\.py$\" \"/home/me/Projects/python/common/TAGS\")
+       '(\".*\\\\.[ch]$\" \"/usr/local/include/TAGS\")
+       ))
+
+A file named, for example, \"/home/me/Projects/foo/main.c\" would set the
+`tags-table-list' to a list of:
+
+\"/home/me/Projects/lib1/TAGS\"
+\"/home/me/Projects/lib2/TAGS\"
+\"/usr/local/include/TAGS\"
+
+and possibly a local tags file at the head of the list if `etags-table-search-up-depth'
+is non-nil.  You can use \\&, \\1, etc. in the tag file names to substitute pieces
+captured with \\(\\) in the key.
+")
+
+(custom-autoload 'etags-table-alist "etags-table/etags-table" t)
+
+(defvar etags-table-search-up-depth nil "\
+*Max depth to search up for a tags file.  nil means don't search.")
+
+(custom-autoload 'etags-table-search-up-depth "etags-table/etags-table" t)
 
 ;;;***
 
@@ -2763,6 +2870,49 @@ Cancel the idle timer if no more minimaps are active.
 
 ;;;***
 
+;;;### (autoloads (helm-projectile) "projectile/helm-projectile"
+;;;;;;  "projectile/helm-projectile.el" (20403 48058))
+;;; Generated autoloads from projectile/helm-projectile.el
+
+(autoload 'helm-projectile "projectile/helm-projectile" "\
+Use projectile with Helm instead of ido.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads (projectile-mode projectile-global-mode) "projectile/projectile"
+;;;;;;  "projectile/projectile.el" (20403 48058))
+;;; Generated autoloads from projectile/projectile.el
+
+(defvar projectile-global-mode nil "\
+Non-nil if Projectile-Global mode is enabled.
+See the command `projectile-global-mode' for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `projectile-global-mode'.")
+
+(custom-autoload 'projectile-global-mode "projectile/projectile" nil)
+
+(autoload 'projectile-global-mode "projectile/projectile" "\
+Toggle Projectile mode in all buffers.
+With prefix ARG, enable Projectile-Global mode if ARG is positive;
+otherwise, disable it.  If called from Lisp, enable the mode if
+ARG is omitted or nil.
+
+Projectile mode is enabled in all buffers where
+`projectile-on' would do it.
+See `projectile-mode' for more information on Projectile mode.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'projectile-mode "projectile/projectile" "\
+Minor mode to assist project management and navigation.
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
 ;;;### (autoloads nil nil ("anything/contrib/anything-grep.el" "anything/contrib/anything-ipa.el"
 ;;;;;;  "anything/contrib/anything-menu.el" "anything/contrib/anything-migemo.el"
 ;;;;;;  "anything/contrib/anything-multi-sources.el" "anything/contrib/anything-startup.el"
@@ -2770,9 +2920,11 @@ Cancel the idle timer if no more minimaps are active.
 ;;;;;;  "anything/extensions/anything-obsolete.el" "anything/extensions/anything-show-completion.el"
 ;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete/auto-complete-config.el"
 ;;;;;;  "auto-complete/auto-complete-pkg.el" "auto-complete/auto-complete.el"
+;;;;;;  "etags-select/etags-select-autoloads.el" "etags-select/etags-select-pkg.el"
+;;;;;;  "etags-table/etags-table-autoloads.el" "etags-table/etags-table-pkg.el"
 ;;;;;;  "helm/helm-pkg.el" "helm/helm-plugin.el" "hideshowvis/hideshowvis-autoloads.el"
 ;;;;;;  "hideshowvis/hideshowvis-pkg.el" "switch-window/switch-window.el")
-;;;;;;  (20403 29115 597981))
+;;;;;;  (20403 48059 209389))
 
 ;;;***
 
