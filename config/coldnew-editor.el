@@ -107,6 +107,13 @@
 
 (add-hook 'post-command-hook 'coldnew/set-mode-according-state)
 
+(defun coldnew/toggle-state ()
+  (interactive)
+  (cond
+   ((string= "Command" coldnew-editor-state) (coldnew/switch-to-emacs-mode))
+   ((string= "Emacs"   coldnew-editor-state) (coldnew/switch-to-command-mode)) )
+  )
+
 (defvar coldnew/buffer-state-alist
   '((eshell-mode . "Emacs")
     (term-mode   . "Emacs")
