@@ -34,13 +34,12 @@
 (defun coldnew/set-cursor-according-mode ()
   "change cursor shap and color according mode"
   (cond
-   ((or (string= "View" coldnew-editor-state)
-	(string= "Command" coldnew-editor-state))
+   ((string= "Command" coldnew-editor-state)
     (setq cursor-type emacs-read-only-cursor-type)
     (setq cursor-color emacs-read-only-cursor-color))
-   ;; (buffer-read-only
-   ;;  (setq cursor-type emacs-read-only-cursor-type)
-   ;;  (setq cursor-color emacs-read-only-cursor-color))
+   (buffer-read-only
+    (setq cursor-type emacs-read-only-cursor-type)
+    (setq cursor-color emacs-read-only-cursor-color))
    ;; (overwrite-mode
    ;;   (set-cursor-color djcb-overwrite-color)
    ;;   (setq cursor-type djcb-overwrite-cursor-type))
