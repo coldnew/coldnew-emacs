@@ -124,28 +124,28 @@ int ffi_test(int a, int b)ffi_test1,0
 (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)coldnew/set-mark-command186,7394
 (defalias 'coldnew/folding-toggle   'toggle-selective-display)coldnew/folding-toggle187,7463
 
-/home/coldnew/.emacs.d/config/coldnew-editor.el,1589
+/home/coldnew/.emacs.d/config/coldnew-editor.el,1588
 (defvar coldnew-editor-hook nilcoldnew-editor-hook11,319
 (defvar coldnew-editor-mapcoldnew-editor-map14,388
 (define-minor-mode coldnew-editor-modecoldnew-editor-mode19,498
-(defun paredit-blink-paren-match (another-line-p)paredit-blink-paren-match178,6941
-(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map215,8437
-(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting253,9883
-(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting280,11203
-(defun indent-file-after-save ()indent-file-after-save304,11902
-(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save312,12135
-(defun highlight-additional-keywords ()highlight-additional-keywords320,12382
-(defun highlight-fontify-numbers ()highlight-fontify-numbers328,12760
-(defun highlight-escape-char ()highlight-escape-char340,13171
-(defun insert-space-between-english-chinese ()insert-space-between-english-chinese348,13429
-(defun select-forwards-to-before-match (match)select-forwards-to-before-match366,14213
-(defun select-backwards-to-before-match (match)select-backwards-to-before-match372,14447
-(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match378,14685
-(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match387,15040
-(defun match-paren (arg)match-paren396,15399
-(defun delete-between-pair (char)delete-between-pair403,15674
-(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark418,16210
-(defun hime-agent ()hime-agent427,16466
+(defun paredit-blink-paren-match (another-line-p)paredit-blink-paren-match137,5161
+(define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)undo-tree-visualizer-map174,6657
+(defun coldnew-lisp-common-setting ()coldnew-lisp-common-setting212,8103
+(defun coldnew-cc-mode-common-setting ()coldnew-cc-mode-common-setting239,9423
+(defun indent-file-after-save ()indent-file-after-save263,10122
+(defun cleanup-whitespace-before-save ()cleanup-whitespace-before-save271,10355
+(defun highlight-additional-keywords ()highlight-additional-keywords279,10602
+(defun highlight-fontify-numbers ()highlight-fontify-numbers287,10980
+(defun highlight-escape-char ()highlight-escape-char299,11391
+(defun insert-space-between-english-chinese ()insert-space-between-english-chinese307,11649
+(defun select-forwards-to-before-match (match)select-forwards-to-before-match325,12433
+(defun select-backwards-to-before-match (match)select-backwards-to-before-match331,12667
+(defun kill-forwards-to-before-match (match)kill-forwards-to-before-match337,12905
+(defun kill-backwards-to-before-match (match)kill-backwards-to-before-match346,13260
+(defun match-paren (arg)match-paren355,13619
+(defun delete-between-pair (char)delete-between-pair362,13894
+(defun cua-set-mark-or-rectangle-mark (&optional arg)cua-set-mark-or-rectangle-mark377,14430
+(defun hime-agent ()hime-agent386,14686
 
 /home/coldnew/.emacs.d/config/coldnew-org.el,0
 

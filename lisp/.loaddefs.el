@@ -1105,7 +1105,7 @@ i.e anything-match-plugin.
 ;;;***
 
 ;;;### (autoloads (ascii-off ascii-on ascii-display ascii-customize)
-;;;;;;  "ascii/ascii" "ascii/ascii.el" (20391 30863))
+;;;;;;  "ascii/ascii" "ascii/ascii.el" (20403 29114))
 ;;; Generated autoloads from ascii/ascii.el
 
 (autoload 'ascii-customize "ascii/ascii" "\
@@ -1137,7 +1137,7 @@ Turn off ASCII code display.
 
 ;;;### (autoloads (bash-completion-reset bash-completion-dynamic-complete
 ;;;;;;  bash-completion-setup) "bash-completion/bash-completion"
-;;;;;;  "bash-completion/bash-completion.el" (20391 30872))
+;;;;;;  "bash-completion/bash-completion.el" (20403 29114))
 ;;; Generated autoloads from bash-completion/bash-completion.el
 
 (autoload 'bash-completion-setup "bash-completion/bash-completion" "\
@@ -2772,7 +2772,7 @@ Cancel the idle timer if no more minimaps are active.
 ;;;;;;  "auto-complete/auto-complete-pkg.el" "auto-complete/auto-complete.el"
 ;;;;;;  "helm/helm-pkg.el" "helm/helm-plugin.el" "hideshowvis/hideshowvis-autoloads.el"
 ;;;;;;  "hideshowvis/hideshowvis-pkg.el" "switch-window/switch-window.el")
-;;;;;;  (20391 59642 899417))
+;;;;;;  (20403 29115 597981))
 
 ;;;***
 

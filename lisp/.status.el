@@ -100,8 +100,7 @@
 	      (:name hideshowvis :type elpa))
  (highlight-cl status "installed" recipe
 	       (:name highlight-cl :description "Highlighting `cl' functions." :website "" :type emacswiki :features highlight-cl))
- (highlight-symbol status "installed" recipe
-		   (:name highlight-symbol :description "Quickly highlight a symbol throughout the buffer and cycle through its locations." :type http :url "http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el" :features "highlight-symbol"))
+ (highlight-symbol status "removed" recipe nil)
  (hungry-delete status "installed" recipe
 		(:name hungry-delete :description "hungry delete minor mode" :website "https://github.com/nflath/hungry-delete" :type git :url "https://github.com/nflath/hungry-delete.git" :features hungry-delete))
  (ibuffer-git status "installed" recipe
