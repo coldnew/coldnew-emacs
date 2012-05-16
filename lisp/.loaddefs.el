@@ -131,15 +131,15 @@ History element should be a symbol.
 Of course, conventional arguments are supported, the two are same.
 
 \(anything :sources sources :input input :prompt prompt :resume resume
-           :preselect preselect :buffer buffer :keymap keymap :default default
-           :history history)
+	   :preselect preselect :buffer buffer :keymap keymap :default default
+	   :history history)
 \(anything sources input prompt resume preselect buffer keymap default history)
 
 Other keywords are interpreted as local variables of this anything session.
 The `anything-' prefix can be omitted.  For example,
 
 \(anything :sources 'anything-c-source-buffers
-           :buffer \"*buffers*\" :candidate-number-limit 10)
+	   :buffer \"*buffers*\" :candidate-number-limit 10)
 
 means starting anything session with `anything-c-source-buffers'
 source in *buffers* buffer and set variable `anything-candidate-number-limit'
@@ -1001,7 +1001,7 @@ Preconfigured anything for `anything-c-source-evaluation-result'.
 \(fn ARG)" t nil)
 
 (autoload 'anything-eval-expression-with-eldoc "anything/anything-config" "\
-Preconfigured anything for `anything-c-source-evaluation-result' with `eldoc' support. 
+Preconfigured anything for `anything-c-source-evaluation-result' with `eldoc' support.
 
 \(fn)" t nil)
 
@@ -1922,7 +1922,7 @@ Preconfigured helm for `helm-c-source-evaluation-result'.
 \(fn ARG)" t nil)
 
 (autoload 'helm-eval-expression-with-eldoc "helm/helm-eval" "\
-Preconfigured helm for `helm-c-source-evaluation-result' with `eldoc' support. 
+Preconfigured helm for `helm-c-source-evaluation-result' with `eldoc' support.
 
 \(fn)" t nil)
 

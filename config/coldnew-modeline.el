@@ -27,6 +27,14 @@
 	   ))
     (concat "<" (propertize evil-state-string 'face evil-state-string-face) ">")
     ))
+(defun coldnew-editor-mode-string ()
+  (let* ((mode-string-face
+	  (cond
+	   ((string= "Command" coldnew-editor-state) 'mode-line-evil-state-string-V)
+	   ((string= "View" coldnew-editor-state) 'mode-line-evil-state-string-N)
+	   (t 'mode-line-evil-state-string-E)
+	   )))
+    (concat "<" (propertize coldnew-editor-state 'face mode-string-face) ">")))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; modeline User-Interfaced setting
@@ -42,7 +50,9 @@
 			 (propertize "**" 'face 'mode-line-modified-face))
 			(t "--")))
 		 "   "
-		 ;;		 (:eval (mode-line-state))
+		 (:eval (coldnew-editor-mode-string))
+		 "   "
+		 ;;              (:eval (mode-line-state))
 		 (when (featurep 'evil)
 		   (:eval (evil-mode-string)))
 		 "   "

@@ -28,14 +28,14 @@
 (global-set-key (kbd "C-a") 'move-beginning-of-line)
 
 
-;;; evil-normal-map
-(evil:nmap (kbd "C-n") 'next-line)
-(evil:nmap (kbd "C-p") 'previous-line)
-(evil:nmap (kbd "C-;") 'iedit-mode)
-(evil:nmap (kbd "C-/") 'undo-tree-undo)
-(evil:nmap (kbd "C-0") 'ace-jump-mode)
+;; ;;; evil-normal-map
+;; (evil:nmap (kbd "C-n") 'next-line)
+;; (evil:nmap (kbd "C-p") 'previous-line)
+;; (evil:nmap (kbd "C-;") 'iedit-mode)
+;; (evil:nmap (kbd "C-/") 'undo-tree-undo)
+;; (evil:nmap (kbd "C-0") 'ace-jump-mode)
 
-(global-set-key (kbd "<escape>") 'evil-mode)
+(global-set-key (kbd "<escape>") 'coldnew/switch-to-command-mode)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-x prefix)
@@ -89,7 +89,7 @@
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
 (global-set-key (kbd "M-v") 'er/expand-region)
-(global-set-key (kbd "M-q") 'view-mode)
+(global-set-key (kbd "M-q") 'coldnew/switch-to-command-mode)
 (global-set-key (kbd "M-/") 'undo-tree-redo)
 (global-set-key (kbd "M-.") 'helm-etags+-select-one-key)
 
@@ -125,6 +125,7 @@
 (key-chord-define coldnew-editor-map "dl"  'kill-whole-line)
 ;; (key-chord-define coldnew-editor-map "da"  )
 ;; delete pair
+
 (key-chord-define coldnew-editor-map "d9"  '(lambda () (interactive) (delete-between-pair ?\( )))
 (key-chord-define coldnew-editor-map "dq"  '(lambda () (interactive) (delete-between-pair ?\" )))
 (key-chord-define coldnew-editor-map "ds"  '(lambda () (interactive) (delete-between-pair ?\[ )))
@@ -143,22 +144,22 @@
 
 
 ;; insert
-(evil:imap "(" 'paredit-open-round)
-(evil:imap ")" 'paredit-close-round)
-(evil:imap "[" 'paredit-open-square)
-(evil:imap "]" 'paredit-close-square)
-(evil:imap "{" 'paredit-open-curly)
-(evil:imap "}" 'paredit-close-curly)
-(evil:imap (kbd "\"")  'paredit-doublequote)
-(evil:imap (kbd "<delete>") 'paredit-forward-delete)
-(evil:imap (kbd "<backspace>") 'paredit-backward-delete)
-(evil:imap (kbd "C-d") 'paredit-forward-delete)
-(evil:imap (kbd "C-l") 'paredit-backward-delete)
-(evil:imap (kbd "M-d") 'paredit-forward-kill-word)
-(evil:imap (kbd "M-l") 'paredit-backward-kill-word)
-(evil:imap (kbd "M-0") 'paredit-close-round-and-newline)
-(evil:imap (kbd "M-\'") 'paredit-meta-doublequote)
-(evil:imap (kbd "C-k") 'paredit-kill)
+(define-key coldnew-editor-map "(" 'paredit-open-round)
+(define-key coldnew-editor-map ")" 'paredit-close-round)
+(define-key coldnew-editor-map "[" 'paredit-open-square)
+(define-key coldnew-editor-map "]" 'paredit-close-square)
+(define-key coldnew-editor-map "{" 'paredit-open-curly)
+(define-key coldnew-editor-map "}" 'paredit-close-curly)
+(define-key coldnew-editor-map (kbd "\"")  'paredit-doublequote)
+(define-key coldnew-editor-map (kbd "<delete>") 'paredit-forward-delete)
+(define-key coldnew-editor-map (kbd "<backspace>") 'paredit-backward-delete)
+(define-key coldnew-editor-map (kbd "C-d") 'paredit-forward-delete)
+(define-key coldnew-editor-map (kbd "C-l") 'paredit-backward-delete)
+(define-key coldnew-editor-map (kbd "M-d") 'paredit-forward-kill-word)
+(define-key coldnew-editor-map (kbd "M-l") 'paredit-backward-kill-word)
+(define-key coldnew-editor-map (kbd "M-0") 'paredit-close-round-and-newline)
+(define-key coldnew-editor-map (kbd "M-\'") 'paredit-meta-doublequote)
+(define-key coldnew-editor-map (kbd "C-k") 'paredit-kill)
 
 ;; (key-chord-define evil-insert-state-map "fp"  'paredit-forward)
 ;; (key-chord-define evil-insert-state-map "bp"  'paredit-backward)
@@ -174,8 +175,8 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; one-key
 ;;;; --------------------------------------------------------------------------
-(evil:nmap (kbd "C-w") 'one-key-menu-window-navigation)
-(evil:imap (kbd "C-w") 'one-key-menu-window-navigation)
+;; (evil:nmap (kbd "C-w") 'one-key-menu-window-navigation)
+;; (evil:imap (kbd "C-w") 'one-key-menu-window-navigation)
 
 ;;(global-set-key (kbd "C-w") 'one-key-menu-window-navigatio)
 (global-set-key (kbd "C-x M-f") 'one-key-menu-file-handle)

@@ -9,7 +9,7 @@
 		  ("." "extensions" "contrib")
 		  :features anything))
  (anything-traverse status "removed" recipe nil)
- (apel status "removed" recipe nil)
+ (apel status "required" recipe nil)
  (ascii status "installed" recipe
 	(:name ascii :description "ASCII code display." :website "" :type emacswiki :features ascii))
  (asciidoc status "removed" recipe nil)
@@ -35,6 +35,7 @@
 	       ("touch `find . -name Makefile`" "make")
 	       :build/windows-nt
 	       ("echo #!/bin/sh > tmp.sh & echo touch `/usr/bin/find . -name Makefile` >> tmp.sh & echo make FIND=/usr/bin/find >> tmp.sh" "sed 's/^M$//' tmp.sh  > tmp2.sh" "sh ./tmp2.sh" "rm ./tmp.sh ./tmp2.sh")))
+ (center-cursor status "removed" recipe nil)
  (center-cursor-mode status "removed" recipe nil)
  (centered-cursor-mode status "installed" recipe
 		       (:name centered-cursor-mode :description "" :website "" :type emacswiki :features centered-cursor-mode))
@@ -213,6 +214,7 @@
  (unicad status "installed" recipe
 	 (:name unicad :description "" :type svn :url "http://unicad.googlecode.com/svn/trunk/"))
  (volatile-highlights status "removed" recipe nil)
+ (wanderlust status "removed" recipe nil)
  (winring status "removed" recipe nil)
  (xml-rpc-el status "installed" recipe
 	     (:name xml-rpc-el :description "An elisp implementation of clientside XML-RPC" :type bzr :url "lp:xml-rpc-el"))
