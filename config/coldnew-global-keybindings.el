@@ -51,7 +51,7 @@
 (global-set-key (kbd "C-x C-l") 'recenter-top-bottom)
 (global-set-key (kbd "C-x C-n") 'auto-complete)
 (global-set-key (kbd "C-x C-s") 'save-buffer-always)
-(global-set-key (kbd "C-x C-g") 'my-anything-filelist)
+(global-set-key (kbd "C-x f") 'fullscreen-window)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-c prefix)
@@ -79,7 +79,7 @@
 ;;;; ---------------------------------------------------------------------------
 
 (global-set-key (kbd "M-s") 'coldnew/anything-occur)
-
+(global-set-key (kbd "M-o") 'coldnew/helm-filelist)
 (global-set-key (kbd "M-f") 'forward-word)
 (global-set-key (kbd "M-b") 'backward-word)
 (global-set-key (kbd "M-e") 'forward-sentence)

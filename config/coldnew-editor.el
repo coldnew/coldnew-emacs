@@ -67,6 +67,7 @@
     (define-key map "bl" 'beginning-of-line)
     (define-key map "yy" 'kill-ring-save)
     (define-key map "x" 'delete-char)
+    (define-key map "f" 'go-to-char)
     ;; TODO: support region
     (define-key map "dd" 'kill-whole-line)
     (define-key map "u" 'undo-tree-undo)
@@ -93,6 +94,7 @@
     (define-key map (kbd "d{")  '(lambda () (interactive) (delete-between-pair ?\{)))
     (define-key map (kbd "[") 'beginning-of-buffer)
     (define-key map (kbd "]") 'end-of-buffer)
+    (define-key map "g" 'ace-jump-line-mode)
     ;; elscreen
     ;; TODO: move to coldnew-elscreen
     (define-key map "t0" 'elscreen-jump-0)
@@ -127,6 +129,7 @@
 (defvar coldnew/buffer-state-alist
   '((eshell-mode . "Emacs")
     (term-mode   . "Emacs")
+    (ibuffer-mode . "Emacs")
     ))
 
 (defun coldnew/set-mode-according-state ()
