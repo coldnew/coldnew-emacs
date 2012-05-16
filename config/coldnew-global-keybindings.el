@@ -106,7 +106,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
+(global-set-key (kbd "<backspace>") 'hungry-delete-backward)
+(global-set-key (kbd "<delete>") 'hungry-delete-forward)
 
 (global-set-key (kbd "C-.") 'repeat)
 
@@ -141,8 +142,6 @@
 ;;;; paredit-mode
 ;;;; ---------------------------------------------------------------------------
 
-
-
 ;; insert
 (define-key coldnew-editor-map "(" 'paredit-open-round)
 (define-key coldnew-editor-map ")" 'paredit-close-round)
@@ -151,8 +150,6 @@
 (define-key coldnew-editor-map "{" 'paredit-open-curly)
 (define-key coldnew-editor-map "}" 'paredit-close-curly)
 (define-key coldnew-editor-map (kbd "\"")  'paredit-doublequote)
-(define-key coldnew-editor-map (kbd "<delete>") 'paredit-forward-delete)
-(define-key coldnew-editor-map (kbd "<backspace>") 'paredit-backward-delete)
 (define-key coldnew-editor-map (kbd "C-d") 'paredit-forward-delete)
 (define-key coldnew-editor-map (kbd "C-l") 'paredit-backward-delete)
 (define-key coldnew-editor-map (kbd "M-d") 'paredit-forward-kill-word)
