@@ -7,6 +7,17 @@
 ;;(require 'eproject)
 ;;(require 'eproject-extras)
 
+;;;; ---------------------------------------------------------------------------
+;;;; ede
+;;;; ---------------------------------------------------------------------------
+(global-ede-mode t)
+(setq ede-project-placeholder-cache-file (concat emacs-cache-dir "ede-project.el"))
+
+;;; FIXME: why follwoing unuse ?
+ede-emacs-project "coldnew-emacs"
+:file "/home/coldnew/.emacs.d/README"
+)
+
 
 
 

@@ -81,7 +81,7 @@ nil "Minor mode to edit files via hex-dump format" single])
 [(0 4)
 nil "OAuth 2.0 Authorization Protocol" single])
 (org .
-[(20120507)
+[(20120516)
 nil "Outline-based notes management and organizer" tar])
 (quarter-plane .
 [(0 1)
