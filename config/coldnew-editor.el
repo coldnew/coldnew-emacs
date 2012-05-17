@@ -651,9 +651,9 @@ instead."
 
 (defun linum-ace-jump (char)
   (interactive "cGo to char: ")
-  (if (rassoc char linum-ace-alist)
-      (goto-line (car (rassoc char linum-ace-alist)))))
-
+  (let ((line-number (car (rassoc char linum-ace-alist))))
+    (if line-number
+	(goto-line line-number))))
 
 
 (provide 'coldnew-editor)
