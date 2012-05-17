@@ -650,7 +650,7 @@ instead."
 (global-set-key (kbd "M-g") 'ace-jump-line-mode)
 
 (defun linum-ace-jump (char)
-  (interactive "cGo to char: ")
+  (interactive "cGo to Line: ")
   (let ((line-number (car (rassoc char linum-ace-alist))))
     (if line-number
 	(goto-line line-number))))
