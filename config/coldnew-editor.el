@@ -94,7 +94,7 @@
     (define-key map (kbd "d{")  '(lambda () (interactive) (delete-between-pair ?\{)))
     (define-key map (kbd "[") 'beginning-of-buffer)
     (define-key map (kbd "]") 'end-of-buffer)
-    (define-key map "g" 'ace-jump-line-mode)
+    (define-key map "g" 'linum-ace-jump)
     ;; elscreen
     ;; TODO: move to coldnew-elscreen
     (define-key map "t0" 'elscreen-jump-0)
@@ -388,8 +388,9 @@
 	  (gtags-create-or-update))
 
   ;; keybindings
-  (define-key evil-normal-state-local-map (kbd "C-x C-o") 'ff-find-other-file)
-  (define-key evil-insert-state-local-map (kbd "C-x C-o") 'ff-find-other-file)
+  (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
+  (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
+  (local-set-key (kbd "<f9>") 'smarter-compile)
   )
 
 ;;;; ---------------------------------------------------------------------------
@@ -606,6 +607,54 @@ instead."
 	     ))
     (setq case-fold-search old-case-fold-search)
     ))
+
+(setq linum-format 'linum-ace)
+
+(defvar linum-ace-alist nil)
+
+(defun linum-ace (line-number)
+  (let* ((linum-ace-char
+	  (if (assoc line-number linum-ace-alist)
+	      (cdr (assoc line-number linum-ace-alist))
+	    ?\ )))
+    (propertize (format "%2s " (char-to-string linum-ace-char ))
+		'face '((t :inherit linum :foreground "red" )))))
+;;(what-line)
+
+(defvar linum-ace-keys
+  (nconc (loop for i from ?a to ?z collect i)
+	 (loop for i from ?A to ?Z collect i)))
+
+(defun linum-ace-search-candidate( re-query-string &optional start-point end-point )
+  (let* ((current-window (selected-window))
+	 (start-point (window-start current-window))
+	 (end-point   (window-end   current-window)))
+    (save-excursion
+      (goto-char start-point)
+      (if (< (point) end-point)
+	  (let ((case-fold-search ace-jump-mode-case-fold))
+	    (loop while (search-forward-regexp re-query-string end-point t)
+		  for i from 0 to (length linum-ace-keys)
+		  collect (cons (line-number-at-pos (match-beginning 0)) (nth i linum-ace-keys))))))))
+
+(defadvice linum-update (around linum-ace-update activate)
+  ;; "This advice get the last position of linum."
+  (linum-ace-update)
+  ad-do-it)
+
+(defun linum-ace-update ()
+  (interactive)
+  (setq linum-ace-alist (linum-ace-search-candidate "^.")))
+
+(setq debug-on-error t)
+(global-set-key (kbd "M-g") 'ace-jump-line-mode)
+
+(defun linum-ace-jump (char)
+  (interactive "cGo to char: ")
+  (if (rassoc char linum-ace-alist)
+      (goto-line (car (rassoc char linum-ace-alist)))))
+
+
 
 (provide 'coldnew-editor)
 ;; coldnew-editor.el ends here.
