@@ -1,0 +1,5 @@
+(:name linum-ace
+       :description ""
+       :features linum-ace
+       :type github
+       :pkgname clodnew/linum-ace)
