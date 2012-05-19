@@ -56,7 +56,7 @@
   (let ((map (make-sparse-keymap)))
     (suppress-keymap map)
     ;; simulate vim keys
-    (define-key map "i" 'coldnew/switch-to-emacs-mode-append)
+    (define-key map "i" 'coldnew/switch-to-emacs-mode)
     (define-key map "h" 'backward-char)
     (define-key map "j" 'next-line)
     (define-key map "k" 'previous-line)
@@ -256,11 +256,6 @@
 (require 'key-chord)
 ;;(key-chord-mode 1)
 (setq key-chord-two-keys-delay 0.05)
-
-;;;; ---------------------------------------------------------------------------
-;;;; space-chord
-;;;; ---------------------------------------------------------------------------
-(require 'space-chord)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; projectile

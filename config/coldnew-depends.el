@@ -13,6 +13,7 @@
 (require* 'sauron)
 (require* 'traverselisp)
 (require* 'helm)
+(require* 'space-chord)
 
 
 (provide 'coldnew-depends)
