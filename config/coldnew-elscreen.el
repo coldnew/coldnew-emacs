@@ -32,14 +32,6 @@
 (defadvice elscreen-toggle (around elscreen-create-automatically activate)
   (elscreen-create-automatically ad-do-it))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; elscreen
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-(evil:nmap (kbd "gt") 'elscreen-next)
-(evil:nmap (kbd "gT") 'elscreen-next)
-
 
 (provide 'coldnew-elscreen)
 ;; coldnew-elscreen.el ends here.
