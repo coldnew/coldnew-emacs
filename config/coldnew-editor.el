@@ -113,7 +113,7 @@
   :keymap coldnew/command-mode-map
   (if coldnew/command-mode
       (progn
-        (setq input-method-function 'key-chord-input-method))
+	(setq input-method-function 'key-chord-input-method))
     (progn
       (setq input-method-function nil))))
 
@@ -134,7 +134,7 @@
 
 (defun coldnew/set-mode-according-state ()
   (let* ((mode major-mode)
-         (state (cdr-safe (assoc mode coldnew/buffer-state-alist))))
+	 (state (cdr-safe (assoc mode coldnew/buffer-state-alist))))
     (if (minibufferp) (setq state "Emacs"))
     (cond
      ((string= "Command" state) (coldnew/switch-to-command-mode))
@@ -145,7 +145,7 @@
   "Feeds a 0 count or moves the cursor to the beginning of the line."
   (interactive)
   (if (and current-prefix-arg
-           (not (zerop (prefix-numeric-value current-prefix-arg))))
+	   (not (zerop (prefix-numeric-value current-prefix-arg))))
       (call-interactively 'digit-argument)
     (call-interactively 'beginning-of-line)))
 
@@ -247,8 +247,8 @@
 
 ;;; enable following mode to use hideshow
 (dolist (hook (list 'emacs-lisp-mode-hook
-                    'c++-mode-hook
-                    'c-mode-hook))
+		    'c++-mode-hook
+		    'c-mode-hook))
   (add-hook hook 'hideshowvis-enable))
 
 
@@ -385,7 +385,7 @@
   ;; gtags
   (gtags-mode t)
   (if-not (string-match "/usr/src/linux/" (expand-file-name default-directory))
-          (gtags-create-or-update))
+	  (gtags-create-or-update))
 
   ;; keybindings
   (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
@@ -401,17 +401,17 @@
   "Indent whole file after saved."
   (make-local-variable 'after-save-hook)
   (add-hook 'after-save-hook
-            '(lambda ()
-               (indent-region (point-min) (point-max) nil)
-               (save-buffer))))
+	    '(lambda ()
+	       (indent-region (point-min) (point-max) nil)
+	       (save-buffer))))
 
 (defun cleanup-whitespace-before-save ()
   "Cleanup whitespaces before save to a file."
   (make-local-variable 'before-save-hook)
   (add-hook 'before-save-hook
-            '(lambda ()
-               (whitespace-cleanup)
-               (delete-trailing-whitespace))))
+	    '(lambda ()
+	       (whitespace-cleanup)
+	       (delete-trailing-whitespace))))
 
 (defun highlight-additional-keywords ()
   "Highlight additional keywords."
@@ -424,33 +424,33 @@
 (defun highlight-fontify-numbers ()
   "Use this function as a hook to fontify numbers as constant"
   (font-lock-add-keywords nil
-                          '(
-                            ;; hexadecimal
-                            ("\\b\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
-                            ;; float
-                            ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
-                            ;; int
-                            ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
-                            )))
+			  '(
+			    ;; hexadecimal
+			    ("\\b\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
+			    ;; float
+			    ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
+			    ;; int
+			    ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
+			    )))
 
 (defun highlight-escape-char ()
   "Use this function as a hook to fontify escape char."
   (font-lock-add-keywords nil
-                          '(
-                            ("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
-                             0 'font-lock-escape-char-face prepend)
-                            )))
+			  '(
+			    ("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
+			     0 'font-lock-escape-char-face prepend)
+			    )))
 
 (defun insert-space-between-english-chinese ()
   "Insert a space between English words and Chinese charactors"
   (save-excursion
     (goto-char (point-min))
     (while (or (re-search-forward "\\(\\cc\\)\\([a-zA-Z0-9]\\)" nil t)
-               (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
+	       (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
       (replace-match "\\1 \\2" nil nil))
     (goto-char (point-min))
     (while (or (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
-               (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
+	       (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
       (replace-match "\\1\\2" nil nil))))
 
 
@@ -476,8 +476,8 @@ select-region-to-before-match"
 select-region-to-before-match, then kills that region."
   (interactive "MKill forwards to just before: ")
   (let* ((positions (select-region-to-before-match match 'forwards))
-         (start (car positions))
-         (end (cadr positions)))
+	 (start (car positions))
+	 (end (cadr positions)))
     (kill-region start end)))
 
 (defun kill-backwards-to-before-match (match)
@@ -485,16 +485,16 @@ select-region-to-before-match, then kills that region."
 select-region-to-before-match, then kills that region."
   (interactive "MKill backwards to just before: ")
   (let* ((positions (select-region-to-before-match match 'backwards))
-         (start (car positions))
-         (end (cadr positions)))
+	 (start (car positions))
+	 (end (cadr positions)))
     (kill-region start end)))
 
 (defun match-paren (arg)
   "Go to the matching paren if on a paren; otherwise insert %."
   (interactive "p")
   (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
-        ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
-        (t (self-insert-command (or arg 1)))))
+	((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+	(t (self-insert-command (or arg 1)))))
 
 (defun delete-between-pair (char)
   "Delete in between the given pair"
@@ -531,7 +531,7 @@ instead."
   (interactive
    (if mark-active (list (region-beginning) (region-end))
      (list (line-beginning-position)
-           (line-beginning-position 2)))))
+	   (line-beginning-position 2)))))
 
 (defadvice kill-region (before slickcut activate compile)
   "When called interactively with no active region, kill a single line
@@ -539,7 +539,7 @@ instead."
   (interactive
    (if mark-active (list (region-beginning) (region-end))
      (list (line-beginning-position)
-           (line-beginning-position 2)))))
+	   (line-beginning-position 2)))))
 
 (defun zap-up-to-char-backward (arg char)
   (interactive "p\ncZap up to char backward: ")
@@ -549,8 +549,8 @@ instead."
   (interactive "p\ncGo to char: ")
   (forward-char 1)
   (if (if arg
-          (search-forward (char-to-string char) nil nil arg)
-        (search-forward (char-to-string char)))
+	  (search-forward (char-to-string char) nil nil arg)
+	(search-forward (char-to-string char)))
       (backward-char 1)))
 
 (defun go-back-to-char (arg char)
@@ -564,7 +564,7 @@ instead."
   " (Vagn Johansen 1999)"
   (interactive)
   (let ((re-curword) (curword) (offset (point))
-        (old-case-fold-search case-fold-search) )
+	(old-case-fold-search case-fold-search) )
     (setq curword (thing-at-point 'symbol))
     (setq re-curword (concat "\\<" (thing-at-point 'symbol) "\\>") )
     (beginning-of-thing 'symbol)
@@ -573,22 +573,22 @@ instead."
     (forward-char)
     (setq case-fold-search nil)
     (if (re-search-forward re-curword nil t)
-        (backward-char offset)
+	(backward-char offset)
       ;; else
       (progn (goto-char (point-min))
-             (if (re-search-forward re-curword nil t)
-                 (progn (message "Searching from top. %s" (what-line))
-                        (backward-char offset))
-               ;; else
-               (message "Searching from top: Not found"))
-             ))
+	     (if (re-search-forward re-curword nil t)
+		 (progn (message "Searching from top. %s" (what-line))
+			(backward-char offset))
+	       ;; else
+	       (message "Searching from top: Not found"))
+	     ))
     (setq case-fold-search old-case-fold-search)
     ))
 (defun vjo-backward-current-word-keep-offset ()
   " (Vagn Johansen 2002)"
   (interactive)
   (let ((re-curword) (curword) (offset (point))
-        (old-case-fold-search case-fold-search) )
+	(old-case-fold-search case-fold-search) )
     (setq curword (thing-at-point 'symbol))
     (setq re-curword (concat "\\<" curword "\\>") )
     (beginning-of-thing 'symbol)
@@ -596,84 +596,24 @@ instead."
     (forward-char)
     (setq case-fold-search nil)
     (if (re-search-backward re-curword nil t)
-        (forward-char offset)
+	(forward-char offset)
       ;; else
       (progn (goto-char (point-max))
-             (if (re-search-backward re-curword nil t)
-                 (progn (message "Searching from bottom. %s" (what-line))
-                        (forward-char offset))
-               ;; else
-               (message "Searching from bottom: Not found"))
-             ))
+	     (if (re-search-backward re-curword nil t)
+		 (progn (message "Searching from bottom. %s" (what-line))
+			(forward-char offset))
+	       ;; else
+	       (message "Searching from bottom: Not found"))
+	     ))
     (setq case-fold-search old-case-fold-search)
     ))
 
 (setq debug-on-error t)
 (global-set-key (kbd "M-g") 'linum-ace-jump)
 
-
+(require* 'linum-ace)
 (setq linum-format 'linum-ace)
 
-(defface linum-ace-face
-  '((t :inherit linum :foreground "red"))
-  "Face for displaying ace-jump-line-mode like character on linum."
-  :group 'linum)
-
-(defvar linum-ace-alist nil)
-
-(defun linum-ace (line-number)
-  (let* ((linum-ace-char
-          (or
-           (cdr-safe (assoc line-number linum-ace-alist))
-           ?\ )))
-    (propertize (format "%2s " (char-to-string linum-ace-char ))
-                'face 'linum-ace-face)))
-
-(defvar linum-ace-keys
-  (nconc (loop for i from ?a to ?z collect i)
-         (loop for i from ?A to ?Z collect i))
-  "The keys to show on left fringe for unempty lines,
-each key should only an printable character.
-
-By default, linum-ace use the same keys as ace-jump-mode, if you
-customized your ace-jump-mode-move-keys and want to make
-linum-ace show the same keys as ace-jump-mode, you can use
-   (setq linum-ace-keys ace-jump-mode-move-keys)
-you also can build your own keys if you only want to
-lower case character and digits
-   (setq linum-ace-keys (nconc (loop for i from ?a to ?z collect i)
-                               (loop for i from ?0 to ?9 collect i)) ")
-
-(defun linum-ace-search-candidate ()
-  ""
-  (let* ((start-point (window-start (selected-window) ))
-         (end-point   (window-end   (selected-window) t)))
-    (save-excursion
-      (goto-char start-point)
-      (loop while (search-forward-regexp "^." end-point t)
-            for i from 0 to (length linum-ace-keys)
-            collect (cons (line-number-at-pos (match-beginning 0)) (nth i linum-ace-keys))))))
-
-
-(defadvice linum-update (around linum-ace-update activate)
-  (linum-ace-update)
-  ad-do-it)
-
-(defun linum-ace-update ()
-  (setq linum-ace-alist (linum-ace-search-candidate)))
-
-
-(defun linum-ace-jump (char)
-  (interactive "cGo to Line: ")
-  (let ((line-number (car (rassoc char linum-ace-alist))))
-    (if line-number
-        (goto-line line-number))))
-
-(defun linum-ace-toggle ()
-  "Toggle between linum-ace or default linum-format."
-  (interactive)
-  (setq linum-format
-        (if (eq linum-format 'dynamic) 'linum-ace 'dynamic)))
 
 
 (provide 'coldnew-editor)
