@@ -614,8 +614,10 @@ instead."
 
 (setq linum-format 'linum-ace)
 
-
-
+(defface linum-ace-face
+  '((t :inherit linum :foreground "red"))
+  "Face for displaying ace-jump-line-mode like character on linum."
+  :group 'linum)
 
 (defvar linum-ace-alist nil)
 
@@ -625,7 +627,7 @@ instead."
            (cdr-safe (assoc line-number linum-ace-alist))
            ?\ )))
     (propertize (format "%2s " (char-to-string linum-ace-char ))
-                'face '((t :inherit linum :foreground "red")))))
+                'face 'linum-ace-face)))
 
 (defvar linum-ace-keys
   (nconc (loop for i from ?a to ?z collect i)
@@ -643,7 +645,7 @@ lower case character and digits
                                (loop for i from ?0 to ?9 collect i)) ")
 
 (defun linum-ace-search-candidate ()
-
+  ""
   (let* ((start-point (window-start (selected-window) ))
          (end-point   (window-end   (selected-window) t)))
     (save-excursion
