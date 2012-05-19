@@ -51,7 +51,6 @@
   (interactive)
   (coldnew/switch-to-emacs-mode)
   (unless (eolp) (forward-char)))
-(require* 'fastnav)
 
 (defvar coldnew/command-mode-map
   (let ((map (make-sparse-keymap)))
