@@ -35,7 +35,8 @@
 
 (setq tags-revert-without-query 1)
 
-(setq tags-table-list '("~/.emacs.d/TAGS"))
+;;;;(setq tags-table-list '("~/.emacs.d/TAGS"))
+(add-to-list 'tags-table-list "~/.emacs.d/TAGS")
 ;; (setq etags-table-alist
 ;;       (list
 ;;        '("~/.emacs.d/tags/TAGS")))

@@ -19,7 +19,7 @@
 (require 'ede)
 
 (global-ede-mode t)
-(ede-enable-generic-projects)
+;;(ede-enable-generic-projects)
 
 (setq ede-project-placeholder-cache-file (concat emacs-cache-dir "ede-project.el"))
 
@@ -27,7 +27,9 @@
 (ede-emacs-project "coldnew-emacs"
 		   :file "/home/coldnew/.emacs.d/README"
 		   )
-
+(defun my-semantic-hook ()
+  (imenu-add-to-menubar "TAGS"))
+(add-hook 'semantic-init-hooks 'my-semantic-hook)
 
 
 

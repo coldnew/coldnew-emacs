@@ -158,7 +158,7 @@
 	 ("*Buffer*" (or
 		      (name . "^TAGS\\(<[0-9]+>\\)?$")
 		      (name . "^\\**Loading Log\\*$")
-		      (name . "^\\*Anything Log\\*$")
+		      (name . "^\\*coldnew/filelist\\*$")
 		      (name . "^\\*Backtrace\\*$")
 		      (name . "^\\*Buffer List\\*$")
 		      (name . "^\\*CEDET Global\\*$")

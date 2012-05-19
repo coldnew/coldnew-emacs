@@ -13,7 +13,7 @@
 (setq elscreen-tab-display-kill-screen nil)
 
 ;;; Change elscreen prefix to
-(elscreen-set-prefix-key "")
+;;(elscreen-set-prefix-key nil)
 
 ;;; Make elscreen create automatically
 (defmacro elscreen-create-automatically (ad-do-it)

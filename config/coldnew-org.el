@@ -37,13 +37,13 @@
 ;;; setting org-todo keywords
 (setq org-todo-keywords
       '((sequence "TODO" "|" "DONE")
-	(sequence "FIXME" "BUG" "KNOWCAUSE" "|" "FIXED")))
+    (sequence "FIXME" "BUG" "KNOWCAUSE" "|" "FIXED")))
 
 ;;;;;;;TODO: need mode check
 ;; Latex Setting
 (setq org-latex-to-pdf-process
       '("xelatex -interaction nonstopmode -shell-escape %f"
-	"xelatex -interaction nonstopmode -shell-escape %f"))
+    "xelatex -interaction nonstopmode -shell-escape %f"))
 
 ;;(setq org-latex-to-pdf-process '("texi2dvi --pdf --clean --verbose --batch %f"))
 (setq org-src-window-setup 'current-window)
@@ -64,29 +64,29 @@
 ;;;; ---------------------------------------------------------------------------
 ;; remove builtin-define org-mode keybindings, this will prevent conflit
 (add-hook 'org-mode-hook
-	  '(lambda ()
-	     (define-key org-mode-map (kbd "C-c C-f") nil)
-	     ))
+      '(lambda ()
+         (define-key org-mode-map (kbd "C-c C-f") nil)
+         ))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybindings
 ;;;; ---------------------------------------------------------------------------
 (add-hook 'org-mode-hook
-	  '(lambda ()
-	     (local-set-key (kbd "C-c C-f") 'my-anything-filelist)
-	     (local-set-key (kbd "C-c C-c") 'org-edit-special)
-	     (local-set-key (kbd "C-c C-l") 'org-store-link)
-	     (local-set-key (kbd "C-c C-a") 'org-agenda)
-	     (local-set-key (kbd "C-c C-t") 'org-todo)
-	     (key-chord-define org-mode-map "cc"  'org-edit-special)
-	     ))
+      '(lambda ()
+         (local-set-key (kbd "C-c C-f") 'my-anything-filelist)
+         (local-set-key (kbd "C-c C-c") 'org-edit-special)
+         (local-set-key (kbd "C-c C-l") 'org-store-link)
+         (local-set-key (kbd "C-c C-a") 'org-agenda)
+         (local-set-key (kbd "C-c C-t") 'org-todo)
+         (key-chord-define org-mode-map "cc"  'org-edit-special)
+         ))
 
 
 (add-hook 'org-src-mode-hook
-	  '(lambda ()
-	     (local-set-key (kbd "C-c C-c") 'org-edit-src-exit)
-	     (key-chord-define org-src-mode-map "cc"  'org-edit-src-exit)
-	     ))
+      '(lambda ()
+         (local-set-key (kbd "C-c C-c") 'org-edit-src-exit)
+         (key-chord-define org-src-mode-map "cc"  'org-edit-src-exit)
+         ))
 
 
 
