@@ -614,9 +614,9 @@ instead."
 
 (defun linum-ace (line-number)
   (let* ((linum-ace-char
-	  (if (assoc line-number linum-ace-alist)
-	      (cdr (assoc line-number linum-ace-alist))
-	    ?\ )))
+	  (or
+	   (cdr-safe (assoc line-number linum-ace-alist))
+	   ?\ )))
     (propertize (format "%2s " (char-to-string linum-ace-char ))
 		'face '((t :inherit linum :foreground "red")))))
 ;;(what-line)
@@ -625,14 +625,13 @@ instead."
   (nconc (loop for i from ?a to ?z collect i)
 	 (loop for i from ?A to ?Z collect i)))
 
-(defun linum-ace-search-candidate (re-query-string)
+(defun linum-ace-search-candidate ()
   (let* ((current-window (selected-window))
-	 (start-point (window-start current-window))
-	 (end-point   (window-end   current-window)))
+	 (start-point (window-start current-window ))
+	 (end-point   (window-end   current-window t)))
     (save-excursion
-      (if (> (point) end-point) (setq end-point (point)))
       (goto-char start-point)
-      (loop while (search-forward-regexp re-query-string end-point t)
+      (loop while (search-forward-regexp "^." end-point t)
 	    for i from 0 to (length linum-ace-keys)
 	    collect (cons (line-number-at-pos (match-beginning 0)) (nth i linum-ace-keys))))))
 
@@ -643,8 +642,7 @@ instead."
   ad-do-it)
 
 (defun linum-ace-update ()
-  (interactive)
-  (setq linum-ace-alist (linum-ace-search-candidate "^.")))
+  (setq linum-ace-alist (linum-ace-search-candidate)))
 
 (setq debug-on-error t)
 
@@ -657,10 +655,6 @@ instead."
 	(goto-line line-number))))
 
 
-;;(add-hook 'pre-command-hook 'linum-ace-update)
-;;(add-hook 'post-command-hook 'linum-ace-update)
-
-
-
 (provide 'coldnew-editor)
 ;; coldnew-editor.el ends here.
+
