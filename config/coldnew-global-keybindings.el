@@ -56,7 +56,6 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-c prefix)
 ;;;; ---------------------------------------------------------------------------
-;;(global-set-key (kbd "C-c C-f") 'my-anything-filelist)
 (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
 
 
@@ -66,13 +65,9 @@
 (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
 (global-set-key (kbd "C-M-.") 'end-of-buffer)
 
-
 (global-set-key (kbd "C-M-n") 'scroll-other-window)
 (global-set-key (kbd "C-M-p") 'scroll-other-window-down)
 
-;;; FIXME: remove one day
-(global-set-key (kbd "C-M-v") 'scroll-other-window)
-(global-set-key (kbd "C-M-S-v") 'scroll-other-window-down)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Meta prefix)
