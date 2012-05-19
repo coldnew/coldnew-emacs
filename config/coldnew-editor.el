@@ -608,6 +608,10 @@ instead."
     (setq case-fold-search old-case-fold-search)
     ))
 
+(setq debug-on-error t)
+(global-set-key (kbd "M-g") 'linum-ace-jump)
+
+
 (setq linum-format 'linum-ace)
 
 (defvar linum-ace-alist nil)
@@ -619,16 +623,14 @@ instead."
 	   ?\ )))
     (propertize (format "%2s " (char-to-string linum-ace-char ))
 		'face '((t :inherit linum :foreground "red")))))
-;;(what-line)
 
 (defvar linum-ace-keys
   (nconc (loop for i from ?a to ?z collect i)
 	 (loop for i from ?A to ?Z collect i)))
 
 (defun linum-ace-search-candidate ()
-  (let* ((current-window (selected-window))
-	 (start-point (window-start current-window ))
-	 (end-point   (window-end   current-window t)))
+  (let* ((start-point (window-start (select-window) ))
+	 (end-point   (window-end   (select-window) t)))
     (save-excursion
       (goto-char start-point)
       (loop while (search-forward-regexp "^." end-point t)
@@ -637,16 +639,12 @@ instead."
 
 
 (defadvice linum-update (around linum-ace-update activate)
-  ;; "This advice get the last position of linum."
   (linum-ace-update)
   ad-do-it)
 
 (defun linum-ace-update ()
   (setq linum-ace-alist (linum-ace-search-candidate)))
 
-(setq debug-on-error t)
-
-(global-set-key (kbd "M-g") 'linum-ace-jump)
 
 (defun linum-ace-jump (char)
   (interactive "cGo to Line: ")
@@ -654,7 +652,12 @@ instead."
     (if line-number
 	(goto-line line-number))))
 
+(defun linum-ace-toggle ()
+  "Toggle between linum-ace or default linum-format."
+  (interactive)
+  (setq linum-format
+	(if (eq linum-format 'dynamic) 'linum-ace 'dynamic)))
+
 
 (provide 'coldnew-editor)
 ;; coldnew-editor.el ends here.
-
