@@ -201,7 +201,7 @@
 ;;;; ---------------------------------------------------------------------------
 
 ;;; view-mode is a `read-only' mode
-(setq view-read-only nil)
+(setq view-read-only t)
 
 (define-key view-mode-map "i" 'coldnew/switch-to-emacs-mode)
 (define-key view-mode-map "h" 'backward-char)
@@ -285,7 +285,6 @@
 (require 'cua-rect)
 (setq cua-enable-cua-keys nil)		; don't add C-x, C-c, C-v
 (cua-mode t)				; Enable cua-mode
-
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; hungry-delete

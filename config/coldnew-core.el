@@ -35,6 +35,7 @@
 ;; xrelated srtting
 (setq x-select-enable-clipboard t)
 (setq select-active-regions t)
+(setq x-gtk-use-system-tooltips nil)	; disable gtk-tooltip
 
 ;;;; -------------------------------------------------------------------------------
 ;;;;   Global Variables Setting

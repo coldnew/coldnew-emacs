@@ -88,10 +88,7 @@
  (expand-region status "installed" recipe
 		(:name expand-region :type github :pkgname "magnars/expand-region.el" :description "Expand region increases the selected region by semantic units. Just keep pressing the key until it selects what you want." :website "https://github.com/magnars/expand-region.el#readme" :prepare
 		       (autoload 'er/expand-region "expand-region" nil t)))
- (fastnav status "installed" recipe
-	  (:name fastnav :website "https://github.com/gleber/fastnav.el" :description "Fast navigation and editing routines." :type github :pkgname "gleber/fastnav.el" :load-path "." :post-init
-		 (progn
-		   (require 'fastnav))))
+ (fastnav status "removed" recipe nil)
  (flymake-shell status "installed" recipe
 		(:name flymake-shell :description "A flymake syntax-checker for shell script" :type git :url "https://github.com/purcell/flymake-shell.git" :features flymake-shell))
  (fuzzy status "installed" recipe
