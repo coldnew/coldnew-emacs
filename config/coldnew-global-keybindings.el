@@ -88,6 +88,7 @@
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 (global-set-key (kbd "M-n") 'scroll-up)
 (global-set-key (kbd "M-p") 'scroll-down)
+(global-set-key (kbd "M-g") 'linum-ace-jump)
 (global-set-key (kbd "M-v") 'er/expand-region)
 (global-set-key (kbd "M-q") 'coldnew/switch-to-command-mode)
 (global-set-key (kbd "M-/") 'undo-tree-redo)

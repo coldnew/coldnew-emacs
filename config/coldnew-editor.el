@@ -609,10 +609,10 @@ instead."
     ))
 
 (setq debug-on-error t)
-(global-set-key (kbd "M-g") 'linum-ace-jump)
 
 (require* 'linum-ace)
 (setq linum-format 'linum-ace)
+(global-set-key (kbd "M-g") 'linum-ace-jump)
 
 
 
