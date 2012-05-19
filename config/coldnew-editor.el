@@ -629,8 +629,9 @@ instead."
 	 (loop for i from ?A to ?Z collect i)))
 
 (defun linum-ace-search-candidate ()
-  (let* ((start-point (window-start (select-window) ))
-	 (end-point   (window-end   (select-window) t)))
+
+  (let* ((start-point (window-start (selected-window) ))
+	 (end-point   (window-end   (selected-window) t)))
     (save-excursion
       (goto-char start-point)
       (loop while (search-forward-regexp "^." end-point t)
