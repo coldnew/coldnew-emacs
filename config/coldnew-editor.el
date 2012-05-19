@@ -100,6 +100,7 @@
     (define-key map "t0" 'elscreen-jump-0)
     (define-key map "t9" 'elscreen-jump-9)
     (define-key map "tc" 'elscreen-create)
+    (define-key map "td" 'elscreen-kill)
     (define-key map "tn" 'elscreen-next)
     (define-key map "tp" 'elscreen-previous)
     map)
@@ -313,6 +314,12 @@
 ;;;; pretty-lambdada
 ;;;; ---------------------------------------------------------------------------
 (require 'pretty-lambdada)
+
+;;;; ---------------------------------------------------------------------------
+;;;; linum-ace
+;;;; ---------------------------------------------------------------------------
+(require* 'linum-ace)
+(setq linum-format 'linum-ace)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; rainbow-delimiters
@@ -584,6 +591,7 @@ instead."
 	     ))
     (setq case-fold-search old-case-fold-search)
     ))
+
 (defun vjo-backward-current-word-keep-offset ()
   " (Vagn Johansen 2002)"
   (interactive)
@@ -608,11 +616,6 @@ instead."
     (setq case-fold-search old-case-fold-search)
     ))
 
-(setq debug-on-error t)
-
-(require* 'linum-ace)
-(setq linum-format 'linum-ace)
-(global-set-key (kbd "M-g") 'linum-ace-jump)
 
 
 
