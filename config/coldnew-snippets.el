@@ -49,3 +49,11 @@
 
 (provide 'coldnew-snippets)
 ;; coldnew-snippets.el ends here.
+
+
+
+
+
+
+
+

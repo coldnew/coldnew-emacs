@@ -618,24 +618,24 @@ instead."
 	      (cdr (assoc line-number linum-ace-alist))
 	    ?\ )))
     (propertize (format "%2s " (char-to-string linum-ace-char ))
-		'face '((t :inherit linum :foreground "red" )))))
+		'face '((t :inherit linum :foreground "red")))))
 ;;(what-line)
 
 (defvar linum-ace-keys
   (nconc (loop for i from ?a to ?z collect i)
 	 (loop for i from ?A to ?Z collect i)))
 
-(defun linum-ace-search-candidate( re-query-string &optional start-point end-point )
+(defun linum-ace-search-candidate (re-query-string)
   (let* ((current-window (selected-window))
 	 (start-point (window-start current-window))
 	 (end-point   (window-end   current-window)))
     (save-excursion
+      (if (> (point) end-point) (setq end-point (point)))
       (goto-char start-point)
-      (if (< (point) end-point)
-	  (let ((case-fold-search ace-jump-mode-case-fold))
-	    (loop while (search-forward-regexp re-query-string end-point t)
-		  for i from 0 to (length linum-ace-keys)
-		  collect (cons (line-number-at-pos (match-beginning 0)) (nth i linum-ace-keys))))))))
+      (loop while (search-forward-regexp re-query-string end-point t)
+	    for i from 0 to (length linum-ace-keys)
+	    collect (cons (line-number-at-pos (match-beginning 0)) (nth i linum-ace-keys))))))
+
 
 (defadvice linum-update (around linum-ace-update activate)
   ;; "This advice get the last position of linum."
@@ -647,13 +647,19 @@ instead."
   (setq linum-ace-alist (linum-ace-search-candidate "^.")))
 
 (setq debug-on-error t)
-(global-set-key (kbd "M-g") 'ace-jump-line-mode)
+
+(global-set-key (kbd "M-g") 'linum-ace-jump)
 
 (defun linum-ace-jump (char)
   (interactive "cGo to Line: ")
   (let ((line-number (car (rassoc char linum-ace-alist))))
     (if line-number
 	(goto-line line-number))))
+
+
+;;(add-hook 'pre-command-hook 'linum-ace-update)
+;;(add-hook 'post-command-hook 'linum-ace-update)
+
 
 
 (provide 'coldnew-editor)
