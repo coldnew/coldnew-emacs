@@ -8,7 +8,7 @@
 ;;;; minor-mode
 ;;;; ---------------------------------------------------------------------------
 ;;(require* 'centered-cursor-mode)
-(require 'key-chord)
+
 
 (defvar coldnew-editor-hook nil
   "Hooks for coldnew-editor-mode.")
@@ -58,21 +58,13 @@
     (suppress-keymap map)
     ;; simulate vim keys
     (define-key map "i" 'coldnew/switch-to-emacs-mode)
-    ;;    (define-key map "h" 'backward-char)
-    ;;    (define-key map "j" 'next-line)
-    ;;    (define-key map "k" 'previous-line)
-    ;;    (define-key map "l" 'forward-char)
     (define-key map "%" 'match-paren)
-    (define-key map "yy" 'kill-ring-save)
     (define-key map "x" 'delete-char)
-    (define-key map "f" 'go-to-char)
+    ;;    (define-key map "f" 'go-to-char)
     ;; TODO: support region
-    (define-key map "dd" 'kill-whole-line)
     (define-key map "u" 'undo-tree-undo)
     (define-key map (kbd "C-r") 'undo-tree-redo)
     (define-key map "." 'repeat)
-    (define-key map (kbd "C-f") 'View-scroll-page-forward)
-    (define-key map (kbd "C-b") 'View-scroll-page-backward)
     (define-key map (kbd "0") 'coldnew/beginning-of-line-or-digit-argument)
     (define-key map (kbd "$") 'end-of-line)
     (define-key map "*" 'vjo-forward-current-word-keep-offset)
@@ -80,6 +72,7 @@
 
     ;; my keymap
     (define-key map "w" 'kill-region)
+    (define-key map "y" 'yank)
     (define-key map "z" 'zap-up-to-char)
     (define-key map "Z" 'zap-up-to-char-backward)
     (define-key map "a" 'beginning-of-line)
@@ -87,8 +80,9 @@
     (define-key map "g" 'linum-ace-jump)
     (define-key map "n" 'next-line)
     (define-key map "p" 'previous-line)
-    ;; (define-key map "n" 'View-scroll-page-forward)
-    ;; (define-key map "p" 'View-scroll-page-backward)
+    (define-key map "v" 'expand-region)
+    (define-key map "b" 'backward-char)
+    (define-key map "f" 'forward-char)
     (define-key map (kbd "<SPC>") 'ace-jump-mode)
     (define-key map (kbd "d(")  '(lambda () (interactive) (delete-between-pair ?\()))
     (define-key map (kbd "d\"") '(lambda () (interactive) (delete-between-pair ?\")))
@@ -150,7 +144,10 @@
   (if (and current-prefix-arg
 	   (not (zerop (prefix-numeric-value current-prefix-arg))))
       (call-interactively 'digit-argument)
-    (call-interactively 'beginning-of-line)))
+    ;;      (call-interactively 'beginning-of-line)
+    (call-interactively 'universal-argument)
+    (call-interactively 'digit-argument)
+    ))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
