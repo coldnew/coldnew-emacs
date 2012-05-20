@@ -59,6 +59,9 @@
 ;; Enable helm globally
 (helm-mode 1)
 
+;; Enable dired binding
+(helm-dired-bindings 1)
+
 (require 'helm-etags+)
 (require 'ctags-update)
 (ctags-update-minor-mode 1)
@@ -74,13 +77,16 @@
  See `anything-c-filelist-file-name' docstring for usage."
   (interactive)
   (helm-other-buffer
-   '(helm-c-source-recentf
+   '(
+     helm-c-source-buffers-list
+     helm-c-source-recentf
      helm-c-source-ffap-line
      helm-c-source-ffap-guesser
      helm-c-source-bookmarks
      helm-c-source-file-cache
      helm-c-source-projectile-files-list
-     helm-c-source-files-in-current-dir)
+     helm-c-source-files-in-current-dir
+     helm-c-source-locate)
    "*coldnew/filelist*"))
 
 
