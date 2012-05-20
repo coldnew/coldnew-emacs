@@ -48,16 +48,12 @@
   (setq coldnew-editor-state "Command")
   (coldnew/command-mode 1))
 
-
 (defvar coldnew/command-mode-map
   (let ((map (make-sparse-keymap)))
     (suppress-keymap map)
     ;; simulate vim keys
     (define-key map "i" 'coldnew/switch-to-emacs-mode)
     (define-key map "%" 'match-paren)
-    (define-key map "x" 'smex)
-    ;;    (define-key map "f" 'go-to-char)
-    ;; TODO: support region
     (define-key map "u" 'undo-tree-undo)
     (define-key map (kbd "C-r") 'undo-tree-redo)
     (define-key map "." 'repeat)
@@ -73,7 +69,10 @@
     (define-key map "a" 'backward-sentence)
     (define-key map "e" 'forward-sentence)
     (define-key map "g" 'linum-ace-jump)
-    (define-key map "v" 'er/expand-region)
+    (define-key map "x" 'smex)
+    (define-key map "q" 'quoted-insert)
+    ;; FIXME: I think this must change to vc-next-action
+    (define-key map "v" 'egg-next-action)
     (define-key map "f" 'coldnew/helm-filelist)
     (define-key map (kbd "<SPC>") 'ace-jump-mode)
     (define-key map (kbd "d(")  '(lambda () (interactive) (delete-between-pair ?\()))
@@ -101,10 +100,11 @@
   :keymap coldnew/command-mode-map
   (if coldnew/command-mode
       (progn
+	;; use key-chord
 	(setq input-method-function 'key-chord-input-method))
     (progn
-      (setq input-method-function nil)))
-  )
+      ;; disable keychord
+      (setq input-method-function nil))))
 
 (add-hook 'post-command-hook 'coldnew/set-mode-according-state)
 
@@ -138,6 +138,7 @@
       (call-interactively 'digit-argument)
     (call-interactively 'beginning-of-line)))
 
+;; FIXME: change to my own code one day
 (defun coldnew/evil-delay (condition form hook &optional append local name)
   "Execute FORM when CONDITION becomes true, checking with HOOK.
 NAME specifies the name of the entry added to HOOK. If APPEND is
@@ -165,7 +166,7 @@ the buffer-local value of HOOK is modified."
   )
 
 (global-set-key (kbd "C-o") 'coldnew/execute-in-command-mode)
-(setq max-lisp-eval-depth '40000)
+
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
 ;;;; ---------------------------------------------------------------------------
