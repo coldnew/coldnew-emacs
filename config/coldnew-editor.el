@@ -142,10 +142,33 @@
       (call-interactively 'digit-argument)
     (call-interactively 'beginning-of-line)))
 
-;; (defun coldnew/execute-in-command-mode ()
-;;   "Execute the next command in Command mode."
-;;   (interactive)
-;;   )
+(defun coldnew/evil-delay (condition form hook &optional append local name)
+  "Execute FORM when CONDITION becomes true, checking with HOOK.
+NAME specifies the name of the entry added to HOOK. If APPEND is
+non-nil, the entry is appended to the hook. If LOCAL is non-nil,
+the buffer-local value of HOOK is modified."
+  (if (and (not (booleanp condition)) (eval condition))
+      (eval form)
+    (let* ((name (or name (format "evil-delay-form-in-%s" hook)))
+	   (fun (make-symbol name))
+	   (condition (or condition t)))
+      (fset fun `(lambda (&rest args)
+		   (when ,condition
+		     (remove-hook ',hook #',fun ',local)
+		     ,form)))
+      (put fun 'permanent-local-hook t)
+      (add-hook hook fun append local))))
+
+(defun coldnew/execute-in-command-mode ()
+  "Execute the next command in Command mode."
+  (interactive)
+  (coldnew/evil-delay '(not (eq this-command #'coldnew/execute-in-command-mode))
+		      `(progn (coldnew/switch-to-emacs-mode))
+		      'post-command-hook)
+  (coldnew/switch-to-command-mode)
+  )
+
+(global-set-key (kbd "C-m") 'coldnew/execute-in-command-mode)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
