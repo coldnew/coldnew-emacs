@@ -23,17 +23,11 @@
 (global-set-key (kbd "C-;") 'iedit-mode)
 (global-set-key (kbd "C-v") 'coldnew/set-mark-command)
 (global-set-key (kbd "C-/") 'undo-tree-undo)
-(global-set-key (kbd "C-0") 'ace-jump-mode)
+;;(global-set-key (kbd "C-0") 'ace-jump-mode)
 (global-set-key (kbd "C-e") 'move-end-of-line)
 (global-set-key (kbd "C-a") 'move-beginning-of-line)
 (global-set-key (kbd "C-]") 'coldnew/toggle-state)
 
-;; ;;; evil-normal-map
-;; (evil:nmap (kbd "C-n") 'next-line)
-;; (evil:nmap (kbd "C-p") 'previous-line)
-;; (evil:nmap (kbd "C-;") 'iedit-mode)
-;; (evil:nmap (kbd "C-/") 'undo-tree-undo)
-;; (evil:nmap (kbd "C-0") 'ace-jump-mode)
 
 (global-set-key (kbd "<escape>") 'coldnew/switch-to-command-mode)
 
