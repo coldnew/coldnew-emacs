@@ -14,7 +14,7 @@
 (require* 'traverselisp)
 (require* 'helm)
 (require* 'space-chord)
-
+(require* 'smallurl)
 
 (provide 'coldnew-depends)
 ;; coldnew-depends.el ends here.
