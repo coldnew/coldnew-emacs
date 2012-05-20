@@ -2,6 +2,14 @@
 (eval-when-compile (require 'cl))
 
 
+(defun map-define-key (mode-map keylist fname)
+  "Like define-key but the key arg is a list that should be mapped over.
+   For example: (map-define-key '(a b c d) 'function-name)."
+  (mapc (lambda (k) (define-key mode-map k fname))
+	keylist))
+
+
+
 (defun emacs-process-p (pid)
   "If pid is the process ID of an emacs process, return t, else nil.
 Also returns nil if pid is nil."
