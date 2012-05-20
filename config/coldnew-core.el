@@ -38,7 +38,7 @@
 (setq x-gtk-use-system-tooltips nil)	; disable gtk-tooltip
 
 (setq debug-on-error t)
-
+(setq max-lisp-eval-depth '40000)
 ;;;; -------------------------------------------------------------------------------
 ;;;;   Global Variables Setting
 ;;;; -------------------------------------------------------------------------------
