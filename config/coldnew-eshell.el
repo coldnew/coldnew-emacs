@@ -36,9 +36,6 @@
 (setq eshell-scroll-to-bottom-on-output t)
 (setq eshell-show-maximum-output t)
 
-
-(add-to-list 'eshell-visual-commands "htop")
-
 ;;;; ---------------------------------------------------------------------------
 ;;;; Hooks
 ;;;; ---------------------------------------------------------------------------
