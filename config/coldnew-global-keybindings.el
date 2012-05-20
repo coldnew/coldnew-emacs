@@ -42,8 +42,8 @@
 ;;;; ---------------------------------------------------------------------------
 
 (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
-(global-set-key (kbd "C-x b")    'ibuffer)
-(global-set-key (kbd "C-x C-b")  'coldnew/helm-filelist)
+(global-set-key (kbd "C-x C-b")  'ibuffer)
+(global-set-key (kbd "C-x b")    'coldnew/helm-filelist)
 (global-set-key (kbd "C-x C-d")  'dired)
 (global-set-key (kbd "C-x C-r")  'sudo-edit)
 (global-set-key (kbd "C-x vv") 'egg-next-action)
