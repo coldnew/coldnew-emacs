@@ -522,12 +522,6 @@ select-region-to-before-match, then kills that region."
     (cua-toggle-rectangle-mark)))
 
 
-;;FIXME: temp add, remove one day
-(defun hime-agent ()
-  ""
-  (interactive)
-  (start-process "hime-agent" nil "hime-agent"))
-
 (defadvice kill-ring-save (before slickcopy activate compile)
   "When called interactively with no active region, copy a single line
 instead."
