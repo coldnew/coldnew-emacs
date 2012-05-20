@@ -8,8 +8,6 @@
   (mapc (lambda (k) (define-key mode-map k fname))
 	keylist))
 
-
-
 (defun emacs-process-p (pid)
   "If pid is the process ID of an emacs process, return t, else nil.
 Also returns nil if pid is nil."
@@ -97,6 +95,18 @@ go forwards, if 'backwards go backwards."
   (let ((system-time-locale "en_US")
 	(format "%Y-%m-%d"))
     (format-time-string "%Y-%m-%d")))
+
+(defun day-of-week (year month day)
+  "Returns the day of the week as an integer.
+   Monday is 1."
+  (nth 6 (decode-time (encode-time 0 0 0 day month year))))
+
+(defun day-of-week-in-string (year month day)
+  "Return the day of the week as day name."
+  (let* ((day-names '("Sunday" "Monday" "Tuesday" "Wednesday"
+		      "Thursday" "Friday" "Saturday"))
+	 (day-index (nth 6 (decode-time (encode-time 0 0 0 day month year)))))
+    (nth day-index day-names)))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Testing
