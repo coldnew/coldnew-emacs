@@ -55,7 +55,7 @@
     ;; simulate vim keys
     (define-key map "i" 'coldnew/switch-to-emacs-mode)
     (define-key map "%" 'match-paren)
-    (define-key map "x" 'delete-char)
+    (define-key map "x" 'smex)
     ;;    (define-key map "f" 'go-to-char)
     ;; TODO: support region
     (define-key map "u" 'undo-tree-undo)
@@ -65,20 +65,16 @@
     (define-key map (kbd "$") 'end-of-line)
     (define-key map "*" 'vjo-forward-current-word-keep-offset)
     (define-key map "#" 'vjo-backward-current-word-keep-offset)
-
     ;; my keymap
     (define-key map "w" 'kill-region)
     (define-key map "y" 'yank)
     (define-key map "z" 'zap-up-to-char)
     (define-key map "Z" 'zap-up-to-char-backward)
-    (define-key map "a" 'beginning-of-line)
-    (define-key map "e" 'end-of-line)
+    (define-key map "a" 'backward-sentence)
+    (define-key map "e" 'forward-sentence)
     (define-key map "g" 'linum-ace-jump)
-    (define-key map "n" 'next-line)
-    (define-key map "p" 'previous-line)
-    (define-key map "v" 'expand-region)
-    (define-key map "b" 'backward-char)
-    (define-key map "f" 'forward-char)
+    (define-key map "v" 'er/expand-region)
+    (define-key map "f" 'coldnew/helm-filelist)
     (define-key map (kbd "<SPC>") 'ace-jump-mode)
     (define-key map (kbd "d(")  '(lambda () (interactive) (delete-between-pair ?\()))
     (define-key map (kbd "d\"") '(lambda () (interactive) (delete-between-pair ?\")))
@@ -168,8 +164,8 @@ the buffer-local value of HOOK is modified."
   (coldnew/switch-to-command-mode)
   )
 
-(global-set-key (kbd "C-m") 'coldnew/execute-in-command-mode)
-
+(global-set-key (kbd "C-o") 'coldnew/execute-in-command-mode)
+(setq max-lisp-eval-depth '40000)
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
 ;;;; ---------------------------------------------------------------------------
