@@ -37,6 +37,8 @@
 (setq select-active-regions t)
 (setq x-gtk-use-system-tooltips nil)	; disable gtk-tooltip
 
+(setq debug-on-error t)
+
 ;;;; -------------------------------------------------------------------------------
 ;;;;   Global Variables Setting
 ;;;; -------------------------------------------------------------------------------
