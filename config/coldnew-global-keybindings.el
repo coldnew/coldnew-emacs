@@ -2,9 +2,15 @@
 
 (eval-when-compile (require 'cl))
 
- ;;;; ---------------------------------------------------------------------------
- ;;;; function-key
- ;;;; ---------------------------------------------------------------------------
+;;;; ---------------------------------------------------------------------------
+;;;; Unset key
+;;;; ---------------------------------------------------------------------------
+(global-unset-key (kbd "C-x e"))
+(global-unset-key (kbd "C-x d"))
+
+;;;; ---------------------------------------------------------------------------
+;;;; function-key
+;;;; ---------------------------------------------------------------------------
 (global-set-key (kbd "<f1>")     'woman)
 (global-set-key (kbd "<f2>")     'shell-pop)
 (global-set-key (kbd "C-x <f2>") 'multi-term)
@@ -46,6 +52,13 @@
 (global-set-key (kbd "C-x C-n") 'auto-complete)
 (global-set-key (kbd "C-x C-s") 'save-buffer-always)
 (global-set-key (kbd "C-x f") 'fullscreen-window)
+
+;; epa
+(global-set-key (kbd "C-x er") 'epa-encrypt-region)
+(global-set-key (kbd "C-x ef") 'epa-encrypt-file)
+(global-set-key (kbd "C-x dr") 'epa-decrypt-region)
+(global-set-key (kbd "C-x df") 'epa-decrypt-file)
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Combination key (Ctrl-c prefix)
