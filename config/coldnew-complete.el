@@ -87,7 +87,6 @@
 (ctags-update-minor-mode 1)
 
 
-
 ;; ;;;; ---------------------------------------------------------------------------
 ;; ;;;; Commands
 ;; ;;;; ---------------------------------------------------------------------------
@@ -113,12 +112,13 @@
   (let ((anything-match-line-overlay-face nil))
     (anything-occur)))
 
-;; FIXME:how to kill the overlay color ?
+
 (defun coldnew/helm-occur ()
   "I don't like highlight when goto lines."
   (interactive)
-  (let ((helm-selection-line nil))
-    (helm-occur)))
+  ;; FIXME: is there more elegent way to make temp face?
+  (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
+  (helm-occur))
 
 (defun anything-c-occur-get-line (s e)
   "rewrite `anything-c-occur-get-line' to make it color on line-number."
