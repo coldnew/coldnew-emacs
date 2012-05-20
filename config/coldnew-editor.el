@@ -99,11 +99,11 @@
   :global t
   :lighter " "
   :keymap coldnew/command-mode-map
-  ;; (if coldnew/command-mode
-  ;;     (progn
-  ;;	(setq input-method-function 'key-chord-input-method))
-  ;;   (progn
-  ;;     (setq input-method-function nil)))
+  (if coldnew/command-mode
+      (progn
+	(setq input-method-function 'key-chord-input-method))
+    (progn
+      (setq input-method-function nil)))
   )
 
 (add-hook 'post-command-hook 'coldnew/set-mode-according-state)
@@ -273,7 +273,7 @@ the buffer-local value of HOOK is modified."
 ;;;; key-chord
 ;;;; ---------------------------------------------------------------------------
 (require 'key-chord)
-(key-chord-mode 1)
+;;(key-chord-mode 1)
 (setq key-chord-two-keys-delay 0.05)
 
 ;;;; ---------------------------------------------------------------------------
