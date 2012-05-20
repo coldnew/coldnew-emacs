@@ -42,7 +42,8 @@
 ;;;; ---------------------------------------------------------------------------
 
 (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
-(global-set-key (kbd "C-x C-b")  'ibuffer)
+(global-set-key (kbd "C-x b")    'ibuffer)
+(global-set-key (kbd "C-x C-b")  'coldnew/helm-filelist)
 (global-set-key (kbd "C-x C-d")  'dired)
 (global-set-key (kbd "C-x C-r")  'sudo-edit)
 (global-set-key (kbd "C-x vv") 'egg-next-action)
@@ -58,6 +59,8 @@
 (global-set-key (kbd "C-x ef") 'epa-encrypt-file)
 (global-set-key (kbd "C-x dr") 'epa-decrypt-region)
 (global-set-key (kbd "C-x df") 'epa-decrypt-file)
+
+;; elscreen
 
 
 ;;;; ---------------------------------------------------------------------------
@@ -81,7 +84,6 @@
 ;;;; ---------------------------------------------------------------------------
 
 (global-set-key (kbd "M-s") 'coldnew/helm-occur)
-(global-set-key (kbd "M-o") 'coldnew/helm-filelist)
 (global-set-key (kbd "M-f") 'forward-word)
 (global-set-key (kbd "M-b") 'backward-word)
 (global-set-key (kbd "M-e") 'forward-sentence)
