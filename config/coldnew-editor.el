@@ -380,6 +380,11 @@
   (doxymacs-mode t)
   (doxymacs-font-lock)
 
+  ;; hide-if-def mode
+  (hide-ifdef-mode)
+  ;; use shadow
+  (setq hide-ifdef-shadow t)
+
   ;; gtags
   (gtags-mode t)
   (if-not (string-match "/usr/src/linux/" (expand-file-name default-directory))
@@ -606,6 +611,7 @@ instead."
 	     ))
     (setq case-fold-search old-case-fold-search)
     ))
+
 
 
 (provide 'coldnew-editor)
