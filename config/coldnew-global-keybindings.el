@@ -110,22 +110,11 @@
 (key-chord-define coldnew-editor-map "bu"  'upcase-word-backward)
 (key-chord-define coldnew-editor-map "bl"  'downcase-word-backward)
 (key-chord-define coldnew-editor-map "bc"  'capitalize-word-backward)
-;; ;;; delete
-(key-chord-define coldnew-editor-map "dt"  'zap-up-to-char)
-(key-chord-define coldnew-editor-map "di"  'delete-between-pair)
-(key-chord-define coldnew-editor-map "dl"  'kill-whole-line)
-;; (key-chord-define coldnew-editor-map "da"  )
-;; delete pair
-
-(key-chord-define coldnew-editor-map "d9"  '(lambda () (interactive) (delete-between-pair ?\( )))
-(key-chord-define coldnew-editor-map "dq"  '(lambda () (interactive) (delete-between-pair ?\" )))
-(key-chord-define coldnew-editor-map "ds"  '(lambda () (interactive) (delete-between-pair ?\[ )))
-(key-chord-define coldnew-editor-map "dc"  '(lambda () (interactive) (delete-between-pair ?\{ )))
-(key-chord-define coldnew-editor-map "de" 'kill-line)
 
 
 
-(evil:nmap (kbd "<SPC>") 'ace-jump-mode)
+
+
 
 
 ;;;; ---------------------------------------------------------------------------
