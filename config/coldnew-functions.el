@@ -117,6 +117,33 @@ go forwards, if 'backwards go backwards."
       nil t))
 
 ;;;; ---------------------------------------------------------------------------
+;;;; Conversion
+;;;; ---------------------------------------------------------------------------
+(defun unix->dos (buf)
+  "Convert buffer file from unix file to dos file."
+  (let* (current-buf (current-buffer))
+    (if (not (eq current-buf buf))
+	(switch-to-buffer buf))
+    (goto-char(point-min))
+    (while (search-forward "\n" nil t) (replace-match "\r\n"))))
+
+(defun dos->unix (buf)
+  "Convert buffer file from dos file to unix file."
+  (let* (current-buf (current-buffer))
+    (if (not (eq current-buf buf))
+	(switch-to-buffer buf))
+    (goto-char(point-min))
+    (while (search-forward "\r" nil t) (replace-match ""))))
+
+(defun file->string (file)
+  "Convert file to string in buffer with quote."
+  (when (file-readable-p file)
+    (with-temp-buffer
+      (insert-file-contents file)
+      (buffer-string))))
+
+
+;;;; ---------------------------------------------------------------------------
 ;;;; Advice
 ;;;; ---------------------------------------------------------------------------
 
