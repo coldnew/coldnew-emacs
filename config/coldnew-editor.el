@@ -48,10 +48,6 @@
   (setq coldnew-editor-state "Command")
   (coldnew/command-mode 1))
 
-(defun coldnew/switch-to-emacs-mode-append ()
-  (interactive)
-  (coldnew/switch-to-emacs-mode)
-  (unless (eolp) (forward-char)))
 
 (defvar coldnew/command-mode-map
   (let ((map (make-sparse-keymap)))
@@ -144,10 +140,12 @@
   (if (and current-prefix-arg
 	   (not (zerop (prefix-numeric-value current-prefix-arg))))
       (call-interactively 'digit-argument)
-    ;;      (call-interactively 'beginning-of-line)
-    (call-interactively 'universal-argument)
-    (call-interactively 'digit-argument)
-    ))
+    (call-interactively 'beginning-of-line)))
+
+;; (defun coldnew/execute-in-command-mode ()
+;;   "Execute the next command in Command mode."
+;;   (interactive)
+;;   )
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
@@ -608,8 +606,6 @@ instead."
 	     ))
     (setq case-fold-search old-case-fold-search)
     ))
-
-
 
 
 (provide 'coldnew-editor)
