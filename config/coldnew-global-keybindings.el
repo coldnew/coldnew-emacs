@@ -67,7 +67,7 @@
 ;;;; Combination key (Meta prefix)
 ;;;; ---------------------------------------------------------------------------
 
-(global-set-key (kbd "M-s") 'coldnew/anything-occur)
+(global-set-key (kbd "M-s") 'coldnew/helm-occur)
 (global-set-key (kbd "M-o") 'coldnew/helm-filelist)
 (global-set-key (kbd "M-f") 'forward-word)
 (global-set-key (kbd "M-b") 'backward-word)

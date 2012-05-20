@@ -171,8 +171,6 @@
 		      (name . "^\\*Process List\\*$")
 		      (name . "^\\*Shell Command Output\\*")
 		      (name . "^\\*Warnings\\*$")
-		      (name . "^\\*anything for\\*$")
-		      (name . "^\\*anything*")
 		      (name . "^\\*compilation\\*$")
 		      (name . "^\\*el-get*")
 		      (name . "^\\*grep\\*$")
@@ -272,8 +270,6 @@
        "^\\*swank\\*$"
        "^\\*slime-events\\*$"
        "^\\*RE-Builder\\*$"
-       "^\\*anything\\*$"
-       "^\\*anything complete\\*$"
        "^\\*pomodoro\\*$"
        "^\\*Project Buffers\\*$"
        "^eproject$"

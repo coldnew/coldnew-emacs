@@ -47,29 +47,6 @@
 (define-key ac-completing-map "\t" 'ac-complete)
 (define-key ac-complete-mode-map [tab] 'ac-expand)
 
-;; ;;;; ---------------------------------------------------------------------------
-;; ;;;; anything
-;; ;;; ---------------------------------------------------------------------------
-(require 'anything-config)
-(require 'anything-match-plugin)
-
-;; Use predefined configurations for `anything.el'
-(setq anything-config t)
-
-;; Enable anything globally
-(ac-mode 1)
-
-;; Path of file where history information is stored.
-(setq anything-c-adaptive-history-file (concat emacs-cache-dir "anything.cache"))
-;; Setting ignore file regexp
-(setq anything-c-boring-file-regexp
-      (concat anything-c-boring-file-regexp
-	      (rx
-	       (and (or ".out" ".elc") eol))))
-
- ;;;;;;;; keybinding
-(define-key anything-occur-map (kbd "C-r") 'anything-occur-run-query-replace-regexp)
-
  ;;;; ---------------------------------------------------------------------------
  ;;;; Helm
  ;;;; ---------------------------------------------------------------------------
@@ -106,12 +83,6 @@
      helm-c-source-files-in-current-dir)
    "*coldnew/filelist*"))
 
-(defun coldnew/anything-occur ()
-  "I don't like highlight when goto lines."
-  (interactive)
-  (let ((anything-match-line-overlay-face nil))
-    (anything-occur)))
-
 
 (defun coldnew/helm-occur ()
   "I don't like highlight when goto lines."
@@ -119,11 +90,6 @@
   ;; FIXME: is there more elegent way to make temp face?
   (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
   (helm-occur))
-
-(defun anything-c-occur-get-line (s e)
-  "rewrite `anything-c-occur-get-line' to make it color on line-number."
-  (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
-	  (format ": %s" (buffer-substring s e))))
 
 (defun helm-c-occur-get-line (s e)
   "rewrite `helm-c-occur-get-line' to make it color on line-number."

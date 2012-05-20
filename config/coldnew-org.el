@@ -75,7 +75,7 @@
 ;;;; ---------------------------------------------------------------------------
 (add-hook 'org-mode-hook
 	  '(lambda ()
-	     (local-set-key (kbd "C-c C-f") 'my-anything-filelist)
+	     ;; (local-set-key (kbd "C-c C-f") 'my-anything-filelist)
 	     (local-set-key (kbd "C-c C-c") 'org-edit-special)
 	     (local-set-key (kbd "C-c C-l") 'org-store-link)
 	     (local-set-key (kbd "C-c C-a") 'org-agenda)

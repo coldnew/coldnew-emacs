@@ -37,7 +37,7 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybindings
 ;;;; ---------------------------------------------------------------------------
-(define-key emacs-lisp-mode-map (kbd "C-c i") 'elisp-mode:anything-info-search)
+;; (define-key emacs-lisp-mode-map (kbd "C-c i") 'elisp-mode:anything-info-search)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Autocomplete
@@ -67,23 +67,23 @@
 		       (file-writable-p (concat buffer-file-name "c")))
 		  (delete-file (concat buffer-file-name "c"))))))
 
-(defun elisp-mode:anything-info-search ()
-  "search info for elisp"
-  (interactive)
-  (anything
-   :prompt "Info about: "
-   :candidate-number-limit 5
-   :source
-   '(anything-c-source-emacs-functions
-     anything-c-source-emacs-variables
-     anything-c-source-info-elisp
-     anything-c-source-emacs-commands
-     anything-c-source-emacs-source-defun
-     anything-c-source-emacs-lisp-expectations
-     anything-c-source-emacs-lisp-toplevels
-     anything-c-source-emacs-functions-with-abbrevs
-     anything-c-source-info-emacs
-     )))
+;; (defun elisp-mode:anything-info-search ()
+;;   "search info for elisp"
+;;   (interactive)
+;;   (anything
+;;    :prompt "Info about: "
+;;    :candidate-number-limit 5
+;;    :source
+;;    '(anything-c-source-emacs-functions
+;;      anything-c-source-emacs-variables
+;;      anything-c-source-info-elisp
+;;      anything-c-source-emacs-commands
+;;      anything-c-source-emacs-source-defun
+;;      anything-c-source-emacs-lisp-expectations
+;;      anything-c-source-emacs-lisp-toplevels
+;;      anything-c-source-emacs-functions-with-abbrevs
+;;      anything-c-source-info-emacs
+;;      )))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;TODO: add for ielm
