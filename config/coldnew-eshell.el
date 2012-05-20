@@ -4,9 +4,9 @@
 (require 'eshell)
 (require 'em-dirs)
 (require 'em-hist)
-     (require 'em-prompt)
-     (require 'em-term)
-     (require 'em-cmpl)
+(require 'em-prompt)
+(require 'em-term)
+(require 'em-cmpl)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Config
@@ -49,6 +49,14 @@
 ;; my auto-complete for elisp
 (add-hook 'eshell-mode-hook 'auto-complete-mode)
 (add-hook 'eshell-mode-hook 'ac-eshell-mode-setup)
+
+;; use helm to complete esehll
+(when (featurep 'helm)
+  (add-hook 'eshell-mode-hook
+	    #'(lambda ()
+		(define-key eshell-mode-map
+		  [remap pcomplete]
+		  'helm-esh-pcomplete))))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybindings
