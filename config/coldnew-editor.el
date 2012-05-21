@@ -60,9 +60,9 @@
     ;; my keymap
     (define-key map "w" 'kill-region)
     (define-key map "y" 'yank)
-    (define-key map "l" 'downcase-word-backward)
-    (define-key map "c" 'capitalize-word-backward)
-    (define-key map "u" 'upcase-word-backward)
+    (define-key map "L" 'downcase-word-backward)
+    (define-key map "C" 'capitalize-word-backward)
+    (define-key map "U" 'upcase-word-backward)
     (define-key map "z" 'zap-up-to-char)
     (define-key map "Z" 'zap-up-to-char-backward)
     (define-key map "a" 'backward-sentence)
