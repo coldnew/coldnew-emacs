@@ -634,7 +634,14 @@ instead."
 ;; (set-frame-size-according-to-resolution)
 ;;  (global-set-key (kbd "C-x 9") 'set-frame-size-according-to-resolution)
 
-
+(defun open-in-largest-window()
+  "Open current buffer in largest window"
+  (interactive)
+  (let ((oldbuf (current-buffer)))
+    (select-window (get-largest-window))
+    (switch-to-buffer oldbuf))
+  )
+;;(global-set-key (kbd "C-x 5") 'open-in-largest-window)
 
 
 
