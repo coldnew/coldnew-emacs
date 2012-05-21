@@ -3,9 +3,6 @@
 
 (require 'coldnew-snippets)
 
-
-
-
 ;;;; ---------------------------------------------------------------------------
 ;;;; hooks
 ;;;; ---------------------------------------------------------------------------
@@ -15,6 +12,7 @@
 	  '(lambda ()
 	     (or (file-exists-p  (file-name-directory buffer-file-name))
 		 (make-directory (file-name-directory buffer-file-name) t))))
+
 
 ;; When visit emacs-lisp-dir, change file to view mode
 ;; this will avoid I change those plugins.
@@ -56,7 +54,8 @@
 ;;;; lusty-explorer
 ;;;; ---------------------------------------------------------------------------
 (require 'lusty-explorer)
-  ;;;; Keybindings
+
+;;;; Keybindings
 (add-hook 'lusty-setup-hook
 	  '(lambda ()
 	     (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)

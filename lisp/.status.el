@@ -4,10 +4,7 @@
 		(:name ace-jump-mode :website "https://github.com/winterTTr/ace-jump-mode/wiki" :description "A quick cursor location minor mode for emacs" :type github :pkgname "winterTTr/ace-jump-mode" :features ace-jump-mode))
  (android-mode status "installed" recipe
 	       (:name android-mode :website "https://github.com/remvee/android-mode" :description "Emacs minor mode for Android application development" :type github :pkgname "remvee/android-mode"))
- (anything status "installed" recipe
-	   (:name anything :website "http://www.emacswiki.org/emacs/Anything" :description "Open anything / QuickSilver-like candidate-selection framework" :type git :url "http://repo.or.cz/r/anything-config.git" :shallow nil :load-path
-		  ("." "extensions" "contrib")
-		  :features anything))
+ (anything status "removed" recipe nil)
  (anything-traverse status "removed" recipe nil)
  (apel status "required" recipe nil)
  (ascii status "installed" recipe
@@ -182,6 +179,8 @@
 	    (:name shell-pop :description "Helps you pop up and pop out shell buffer easily." :website "http://www.emacswiki.org/emacs/ShellPop" :type emacswiki :features "shell-pop"))
  (slime status "installed" recipe
 	(:name slime :description "Major mode for editing Slim file" :features slime :type elpa))
+ (smallurl status "installed" recipe
+	   (:name smallurl :description "" :type http :url "http://repo.or.cz/w/ShellArchive.git/blob_plain/90c4e111279ed78ff871c660cff88af46e99c79c:/smallurl.el"))
  (smarter-compile status "installed" recipe
 		  (:name smarter-compile :description "an interface to `compile'" :features smarter-compile :type elpa))
  (smex status "installed" recipe
