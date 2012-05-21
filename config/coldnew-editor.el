@@ -75,12 +75,12 @@
     (define-key map "v" 'egg-next-action)
     (define-key map "f" 'coldnew/helm-filelist)
     (define-key map (kbd "<SPC>") 'ace-jump-mode)
-    (define-key map (kbd "d(")  '(lambda () (interactive) (delete-between-pair ?\()))
-    (define-key map (kbd "d\"") '(lambda () (interactive) (delete-between-pair ?\")))
-    (define-key map (kbd "d[")  '(lambda () (interactive) (delete-between-pair ?\[)))
-    (define-key map (kbd "d{")  '(lambda () (interactive) (delete-between-pair ?\{)))
-    (define-key map (kbd "[") 'beginning-of-buffer)
-    (define-key map (kbd "]") 'end-of-buffer)
+    (define-key map (kbd "(")  '(lambda () (interactive) (delete-between-pair ?\()))
+    (define-key map (kbd "\"") '(lambda () (interactive) (delete-between-pair ?\")))
+    (define-key map (kbd "[")  '(lambda () (interactive) (delete-between-pair ?\[)))
+    (define-key map (kbd "{")  '(lambda () (interactive) (delete-between-pair ?\{)))
+    ;; (define-key map (kbd "[") 'beginning-of-buffer)
+    ;; (define-key map (kbd "]") 'end-of-buffer)
     ;; elscreen
     ;; TODO: move to coldnew-elscreen
     (define-key map "t0" 'elscreen-jump-0)
@@ -166,6 +166,7 @@ the buffer-local value of HOOK is modified."
   )
 
 (global-set-key (kbd "C-o") 'coldnew/execute-in-command-mode)
+(global-set-key (kbd "C-j") 'linum-ace-jump)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Initial Editor Setting
