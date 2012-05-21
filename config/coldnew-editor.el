@@ -64,7 +64,7 @@
     (define-key map "y" 'yank)
     (define-key map "l" 'downcase-word-backward)
     (define-key map "c" 'capitalize-word-backward)
-    (deifne-key map "u" 'upcase-word-backward)
+    (define-key map "u" 'upcase-word-backward)
     (define-key map "z" 'zap-up-to-char)
     (define-key map "Z" 'zap-up-to-char-backward)
     (define-key map "a" 'backward-sentence)
@@ -74,7 +74,7 @@
     (define-key map "q" 'quoted-insert)
     ;; FIXME: I think this must change to vc-next-action
     (define-key map "v" 'egg-next-action)
-    (define-key map "f" 'coldnew/helm-filelist)
+    (define-key map "h" 'coldnew/helm-filelist)
     (define-key map (kbd "<SPC>") 'ace-jump-mode)
     (define-key map (kbd "(")  '(lambda () (interactive) (delete-between-pair ?\()))
     (define-key map (kbd "\"") '(lambda () (interactive) (delete-between-pair ?\")))
