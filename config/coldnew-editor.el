@@ -54,8 +54,6 @@
     ;; simulate vim keys
     (define-key map "i" 'coldnew/switch-to-emacs-mode)
     (define-key map "%" 'match-paren)
-    (define-key map "u" 'undo-tree-undo)
-    (define-key map (kbd "C-r") 'undo-tree-redo)
     (define-key map "." 'repeat)
     (define-key map (kbd "0") 'coldnew/beginning-of-line-or-digit-argument)
     (define-key map (kbd "$") 'end-of-line)
@@ -64,6 +62,9 @@
     ;; my keymap
     (define-key map "w" 'kill-region)
     (define-key map "y" 'yank)
+    (define-key map "l" 'downcase-word-backward)
+    (define-key map "c" 'capitalize-word-backward)
+    (deifne-key map "u" 'upcase-word-backward)
     (define-key map "z" 'zap-up-to-char)
     (define-key map "Z" 'zap-up-to-char-backward)
     (define-key map "a" 'backward-sentence)
@@ -79,8 +80,7 @@
     (define-key map (kbd "\"") '(lambda () (interactive) (delete-between-pair ?\")))
     (define-key map (kbd "[")  '(lambda () (interactive) (delete-between-pair ?\[)))
     (define-key map (kbd "{")  '(lambda () (interactive) (delete-between-pair ?\{)))
-    ;; (define-key map (kbd "[") 'beginning-of-buffer)
-    ;; (define-key map (kbd "]") 'end-of-buffer)
+    (define-key map (kbd "\'") '(lambda () (interactive) (delete-between-pair ?\')))
     ;; elscreen
     ;; TODO: move to coldnew-elscreen
     (define-key map "t0" 'elscreen-jump-0)
