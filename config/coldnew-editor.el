@@ -55,8 +55,6 @@
     (define-key map "i" 'coldnew/switch-to-emacs-mode)
     (define-key map "%" 'match-paren)
     (define-key map "." 'repeat)
-    (define-key map (kbd "0") 'coldnew/beginning-of-line-or-digit-argument)
-    (define-key map (kbd "$") 'end-of-line)
     (define-key map "*" 'vjo-forward-current-word-keep-offset)
     (define-key map "#" 'vjo-backward-current-word-keep-offset)
     ;; my keymap
@@ -129,14 +127,6 @@
      ((string= "Command" state) (coldnew/switch-to-command-mode))
      ((string= "Emacs"   state) (coldnew/switch-to-emacs-mode)) )
     ))
-
-(defun coldnew/beginning-of-line-or-digit-argument ()
-  "Feeds a 0 count or moves the cursor to the beginning of the line."
-  (interactive)
-  (if (and current-prefix-arg
-	   (not (zerop (prefix-numeric-value current-prefix-arg))))
-      (call-interactively 'digit-argument)
-    (call-interactively 'beginning-of-line)))
 
 ;; FIXME: change to my own code one day
 (defun coldnew/evil-delay (condition form hook &optional append local name)
