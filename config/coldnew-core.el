@@ -13,7 +13,7 @@
 (blink-cursor-mode            -1 ) ;; Disable bllink cursor
 (tool-bar-mode                -1 ) ;; Remove tool-bar
 (menu-bar-mode                -1 ) ;; Remove menu-bar
-(fset 'yes-or-no-p 'y-or-n-p )	  ;; Use y or n instead of yes and not
+(fset 'yes-or-no-p 'y-or-n-p )    ;; Use y or n instead of yes and not
 
 ;; nice scrolling
 (setq scroll-margin                   0 )
@@ -88,6 +88,14 @@
 ;;;; ---------------------------------------------------------------------------
 (require 'coldnew-variables)
 
+(defun change-mouse-to-left ()
+  (interactive)
+  (shell-command "xmodmap -e \"pointer = 3 2 1\""))
+
+(defun change-mouse-to-right ()
+  (interactive)
+  (shell-command "xmodmap -e \"pointer = 1 2 3\""))
+
 (defun swap-ctrl-caps ()
   "swap control and capslock"
   (shell-command "setxkbmap -option ctrl:swapcaps"))
@@ -99,19 +107,19 @@
 ;; only disable capslock and make it as control
 (cond ((eq window-system 'x)
        ;; make caps lock a control key
-       (make-caps-as-ctrl)))
+       (make-caps-as-ctrl)
+       (change-mouse-to-left)))
 
 ;; Set PATH
 ;; TODO: make it work on every platform, now only has Linux support
 (setenv "PATH"
-	(concat
-	 emacs-bin-dir ":"
-	 "~/.lein/bin" ":"
-	 (getenv "PATH")
-	 ))
+    (concat
+     emacs-bin-dir ":"
+     "~/.lein/bin" ":"
+     (getenv "PATH")
+     ))
 
 (setq exec-path (cons emacs-bin-dir exec-path))
-
 
 
 
