@@ -98,8 +98,8 @@
   :keymap coldnew/command-mode-map
   (if coldnew/command-mode
       (progn
-	;; use key-chord
-	(setq input-method-function 'key-chord-input-method))
+    ;; use key-chord
+    (setq input-method-function 'key-chord-input-method))
     (progn
       ;; disable keychord
       (setq input-method-function nil))))
@@ -121,7 +121,7 @@
 
 (defun coldnew/set-mode-according-state ()
   (let* ((mode major-mode)
-	 (state (cdr-safe (assoc mode coldnew/buffer-state-alist))))
+     (state (cdr-safe (assoc mode coldnew/buffer-state-alist))))
     (if (minibufferp) (setq state "Emacs"))
     (cond
      ((string= "Command" state) (coldnew/switch-to-command-mode))
@@ -137,12 +137,12 @@ the buffer-local value of HOOK is modified."
   (if (and (not (booleanp condition)) (eval condition))
       (eval form)
     (let* ((name (or name (format "evil-delay-form-in-%s" hook)))
-	   (fun (make-symbol name))
-	   (condition (or condition t)))
+       (fun (make-symbol name))
+       (condition (or condition t)))
       (fset fun `(lambda (&rest args)
-		   (when ,condition
-		     (remove-hook ',hook #',fun ',local)
-		     ,form)))
+           (when ,condition
+             (remove-hook ',hook #',fun ',local)
+             ,form)))
       (put fun 'permanent-local-hook t)
       (add-hook hook fun append local))))
 
@@ -150,8 +150,8 @@ the buffer-local value of HOOK is modified."
   "Execute the next command in Command mode."
   (interactive)
   (coldnew/evil-delay '(not (eq this-command #'coldnew/execute-in-command-mode))
-		      `(progn (coldnew/switch-to-emacs-mode))
-		      'post-command-hook)
+              `(progn (coldnew/switch-to-emacs-mode))
+              'post-command-hook)
   (coldnew/switch-to-command-mode)
   )
 
@@ -233,7 +233,7 @@ the buffer-local value of HOOK is modified."
 ;;;; minimap
 ;;;; ---------------------------------------------------------------------------
 ;; minimap is really funny :)
-;;(require* 'minimap)
+(require* 'minimap)
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; zone
@@ -256,8 +256,8 @@ the buffer-local value of HOOK is modified."
 
 ;;; enable following mode to use hideshow
 (dolist (hook (list 'emacs-lisp-mode-hook
-		    'c++-mode-hook
-		    'c-mode-hook))
+            'c++-mode-hook
+            'c-mode-hook))
   (add-hook hook 'hideshowvis-enable))
 
 
@@ -348,6 +348,35 @@ the buffer-local value of HOOK is modified."
 (add-hook 'slime-repl-mode-hook 'programming-mode)
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 
+;;;; ---------------------------------------------------------------------------
+;;;; compilation
+;;;; ---------------------------------------------------------------------------
+;; FIXME: move to other place
+(defun notify-compilation-result(buffer msg)
+  "Notify that the compilation is finished,
+   close the *compilation* buffer if the compilation is successful,
+   and set the focus back to Emacs frame"
+  (if (string-match "^finished" msg)
+      (progn
+    (delete-windows-on buffer)
+    (message (propertize "COMPILATION SUCCESSFUL :-) " 'face 'font-lock-warning-face))
+    ;;       (tooltip-show "\n Compilation Successful :-) \n ")
+    )
+    (tooltip-show "\n Compilation Failed :-( \n "))
+  ;; FIXME: When I use dualscreen, following functiokn will make error,
+  ;;        after compilation, current frame will jump to another DISPLAY
+  ;;  (setq current-frame (car (car (cdr (current-frame-configuration)))))
+  ;; (select-frame-set-input-focus current-frame)
+  )
+
+(add-to-list 'compilation-finish-functions 'notify-compilation-result)
+;; Make compilaction buffer always scrolls to follow output as it comes in.
+(setq compilation-scroll-output t)
+
+;; Auto jump to the first error.
+(setq compilation-auto-jump-to-first-error t)
+
+
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Common language setting
@@ -399,7 +428,7 @@ the buffer-local value of HOOK is modified."
   ;; gtags
   (gtags-mode t)
   (if-not (string-match "/usr/src/linux/" (expand-file-name default-directory))
-	  (gtags-create-or-update))
+      (gtags-create-or-update))
 
   ;; keybindings
   (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
@@ -415,17 +444,17 @@ the buffer-local value of HOOK is modified."
   "Indent whole file after saved."
   (make-local-variable 'after-save-hook)
   (add-hook 'after-save-hook
-	    '(lambda ()
-	       (indent-region (point-min) (point-max) nil)
-	       (save-buffer))))
+        '(lambda ()
+           (indent-region (point-min) (point-max) nil)
+           (save-buffer))))
 
 (defun cleanup-whitespace-before-save ()
   "Cleanup whitespaces before save to a file."
   (make-local-variable 'before-save-hook)
   (add-hook 'before-save-hook
-	    '(lambda ()
-	       (whitespace-cleanup)
-	       (delete-trailing-whitespace))))
+        '(lambda ()
+           (whitespace-cleanup)
+           (delete-trailing-whitespace))))
 
 (defun highlight-additional-keywords ()
   "Highlight additional keywords."
@@ -438,33 +467,33 @@ the buffer-local value of HOOK is modified."
 (defun highlight-fontify-numbers ()
   "Use this function as a hook to fontify numbers as constant"
   (font-lock-add-keywords nil
-			  '(
-			    ;; hexadecimal
-			    ("\\b\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
-			    ;; float
-			    ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
-			    ;; int
-			    ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
-			    )))
+              '(
+                ;; hexadecimal
+                ("\\b\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
+                ;; float
+                ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
+                ;; int
+                ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
+                )))
 
 (defun highlight-escape-char ()
   "Use this function as a hook to fontify escape char."
   (font-lock-add-keywords nil
-			  '(
-			    ("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
-			     0 'font-lock-escape-char-face prepend)
-			    )))
+              '(
+                ("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
+                 0 'font-lock-escape-char-face prepend)
+                )))
 
 (defun insert-space-between-english-chinese ()
   "Insert a space between English words and Chinese charactors"
   (save-excursion
     (goto-char (point-min))
     (while (or (re-search-forward "\\(\\cc\\)\\([a-zA-Z0-9]\\)" nil t)
-	       (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
+           (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
       (replace-match "\\1 \\2" nil nil))
     (goto-char (point-min))
     (while (or (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
-	       (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
+           (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
       (replace-match "\\1\\2" nil nil))))
 
 
@@ -490,8 +519,8 @@ select-region-to-before-match"
 select-region-to-before-match, then kills that region."
   (interactive "MKill forwards to just before: ")
   (let* ((positions (select-region-to-before-match match 'forwards))
-	 (start (car positions))
-	 (end (cadr positions)))
+     (start (car positions))
+     (end (cadr positions)))
     (kill-region start end)))
 
 (defun kill-backwards-to-before-match (match)
@@ -499,16 +528,16 @@ select-region-to-before-match, then kills that region."
 select-region-to-before-match, then kills that region."
   (interactive "MKill backwards to just before: ")
   (let* ((positions (select-region-to-before-match match 'backwards))
-	 (start (car positions))
-	 (end (cadr positions)))
+     (start (car positions))
+     (end (cadr positions)))
     (kill-region start end)))
 
 (defun match-paren (arg)
   "Go to the matching paren if on a paren; otherwise insert %."
   (interactive "p")
   (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
-	((looking-at "\\s\)") (forward-char 1) (backward-list 1))
-	(t (self-insert-command (or arg 1)))))
+    ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+    (t (self-insert-command (or arg 1)))))
 
 (defun delete-between-pair (char)
   "Delete in between the given pair"
@@ -539,7 +568,7 @@ instead."
   (interactive
    (if mark-active (list (region-beginning) (region-end))
      (list (line-beginning-position)
-	   (line-beginning-position 2)))))
+       (line-beginning-position 2)))))
 
 (defadvice kill-region (before slickcut activate compile)
   "When called interactively with no active region, kill a single line
@@ -547,7 +576,7 @@ instead."
   (interactive
    (if mark-active (list (region-beginning) (region-end))
      (list (line-beginning-position)
-	   (line-beginning-position 2)))))
+       (line-beginning-position 2)))))
 
 (defun zap-up-to-char-backward (arg char)
   (interactive "p\ncZap up to char backward: ")
@@ -557,8 +586,8 @@ instead."
   (interactive "p\ncGo to char: ")
   (forward-char 1)
   (if (if arg
-	  (search-forward (char-to-string char) nil nil arg)
-	(search-forward (char-to-string char)))
+      (search-forward (char-to-string char) nil nil arg)
+    (search-forward (char-to-string char)))
       (backward-char 1)))
 
 (defun go-back-to-char (arg char)
@@ -572,7 +601,7 @@ instead."
   " (Vagn Johansen 1999)"
   (interactive)
   (let ((re-curword) (curword) (offset (point))
-	(old-case-fold-search case-fold-search) )
+    (old-case-fold-search case-fold-search) )
     (setq curword (thing-at-point 'symbol))
     (setq re-curword (concat "\\<" (thing-at-point 'symbol) "\\>") )
     (beginning-of-thing 'symbol)
@@ -581,15 +610,15 @@ instead."
     (forward-char)
     (setq case-fold-search nil)
     (if (re-search-forward re-curword nil t)
-	(backward-char offset)
+    (backward-char offset)
       ;; else
       (progn (goto-char (point-min))
-	     (if (re-search-forward re-curword nil t)
-		 (progn (message "Searching from top. %s" (what-line))
-			(backward-char offset))
-	       ;; else
-	       (message "Searching from top: Not found"))
-	     ))
+         (if (re-search-forward re-curword nil t)
+         (progn (message "Searching from top. %s" (what-line))
+            (backward-char offset))
+           ;; else
+           (message "Searching from top: Not found"))
+         ))
     (setq case-fold-search old-case-fold-search)
     ))
 
@@ -597,7 +626,7 @@ instead."
   " (Vagn Johansen 2002)"
   (interactive)
   (let ((re-curword) (curword) (offset (point))
-	(old-case-fold-search case-fold-search) )
+    (old-case-fold-search case-fold-search) )
     (setq curword (thing-at-point 'symbol))
     (setq re-curword (concat "\\<" curword "\\>") )
     (beginning-of-thing 'symbol)
@@ -605,15 +634,15 @@ instead."
     (forward-char)
     (setq case-fold-search nil)
     (if (re-search-backward re-curword nil t)
-	(forward-char offset)
+    (forward-char offset)
       ;; else
       (progn (goto-char (point-max))
-	     (if (re-search-backward re-curword nil t)
-		 (progn (message "Searching from bottom. %s" (what-line))
-			(forward-char offset))
-	       ;; else
-	       (message "Searching from bottom: Not found"))
-	     ))
+         (if (re-search-backward re-curword nil t)
+         (progn (message "Searching from bottom. %s" (what-line))
+            (forward-char offset))
+           ;; else
+           (message "Searching from bottom: Not found"))
+         ))
     (setq case-fold-search old-case-fold-search)
     ))
 
@@ -622,14 +651,14 @@ instead."
   (interactive)
   (if window-system
       (progn
-	(if (> (x-display-pixel-width) 1500) ;; 1500 is the delimiter marging in px to consider the screen big
-	    (set-frame-width (selected-frame) 237) ;; on the big screen make the fram 237 columns big
-	  (set-frame-width (selected-frame) 177)) ;; on the small screen we use 177 columns
-	(setq my-height (/ (- (x-display-pixel-height) 150) ;; cut 150 px of the screen height and use the rest as height for the frame
-			   (frame-char-height)))
-	(set-frame-height (selected-frame) my-height)
-	(set-frame-position (selected-frame) 3 90) ;; position the frame 3 pixels left and 90 px down
-	)))
+    (if (> (x-display-pixel-width) 1500) ;; 1500 is the delimiter marging in px to consider the screen big
+        (set-frame-width (selected-frame) 237) ;; on the big screen make the fram 237 columns big
+      (set-frame-width (selected-frame) 177)) ;; on the small screen we use 177 columns
+    (setq my-height (/ (- (x-display-pixel-height) 150) ;; cut 150 px of the screen height and use the rest as height for the frame
+               (frame-char-height)))
+    (set-frame-height (selected-frame) my-height)
+    (set-frame-position (selected-frame) 3 90) ;; position the frame 3 pixels left and 90 px down
+    )))
 
 ;; (set-frame-size-according-to-resolution)
 ;;  (global-set-key (kbd "C-x 9") 'set-frame-size-according-to-resolution)
@@ -642,6 +671,8 @@ instead."
     (switch-to-buffer oldbuf))
   )
 ;;(global-set-key (kbd "C-x 5") 'open-in-largest-window)
+
+
 
 
 
