@@ -17,7 +17,7 @@
 ;;;; shell-pop
 ;;;; ---------------------------------------------------------------------------
 (require 'shell-pop)
-(shell-pop-set-internal-mode "ansi-term")
+(shell-pop-set-internal-mode "eshell")
 (shell-pop-set-internal-mode-shell emacs-default-shell)
 (shell-pop-set-window-height emacs-popup-shell-window-height)
 (shell-pop-set-window-position emacs-popup-shell-window-position)
@@ -36,7 +36,6 @@
 ;;;; ---------------------------------------------------------------------------
 (require 'multi-term)
 (setq multi-term-program emacs-default-shell)
-
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; term
