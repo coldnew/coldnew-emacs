@@ -31,20 +31,20 @@
 ;;; setting org-todo keywords
 (setq org-todo-keywords
       '((sequence "TODO" "STARTED" "WAITING" "|" "DONE" "CANCLED")
-	(sequence "FIXME" "BUG" "KNOWCAUSE" "|" "FIXED")))
+        (sequence "FIXME" "BUG" "KNOWCAUSE" "|" "FIXED")))
 
 (setq org-todo-keyword-faces '(("TODO" :foreground "red" :weight bold)
-			       ("STARTED" :foreground "green" :weight bold)
-			       ("WAITING" :foreground "orange" :weight bold)
-			       ("DONE" :foreground "forest green" :weight bold)
-			       ("CANCELLED" :foreground "forest green" :weight bold)
-			       ))
+                               ("STARTED" :foreground "green" :weight bold)
+                               ("WAITING" :foreground "orange" :weight bold)
+                               ("DONE" :foreground "forest green" :weight bold)
+                               ("CANCELLED" :foreground "forest green" :weight bold)
+                               ))
 
 ;;;;;;;TODO: need mode check
 ;; Latex Setting
 (setq org-latex-to-pdf-process
       '("xelatex -interaction nonstopmode -shell-escape %f"
-	"xelatex -interaction nonstopmode -shell-escape %f"))
+        "xelatex -interaction nonstopmode -shell-escape %f"))
 
 ;;(setq org-latex-to-pdf-process '("texi2dvi --pdf --clean --verbose --batch %f"))
 (setq org-src-window-setup 'current-window)
@@ -56,23 +56,23 @@
 (setq org-log-done t)
 
 (setq org-tag-alist '(
-		      (:startgroup . nil) ("Business" . ?b) ("School" . ?s) ("Weintek" . ?w) ("Personal" . ?p) (:endgroup . nil)
-		      ))
+                      (:startgroup . nil) ("Business" . ?b) ("School" . ?s) ("Weintek" . ?w) ("Personal" . ?p) (:endgroup . nil)
+                      ))
 
 ;; capture
 (setq org-default-notes-file (concat org-directory "TODO.org"))
 (setq org-capture-templates '(("t" "TODO" entry (file+headline "" "Tasks")
-			       "* TODO %?\n %i\n %a")
-			      ("f" "FIXME" entry (file+headline "" "Tasks")
-			       "* FIXME %?\n %i\n %a")
-			      ;; ("n" "NOTE" entry (file+headline "" "Notes To Refile")
-			      ;;  "* %?\n:PROPERTIES:\n :DateCreated: %T\n:END:\n#+begin_src\n%i\n#+end_src\n\n%a")
-			      ))
+                               "* TODO %?\n %i\n %a")
+                              ("f" "FIXME" entry (file+headline "" "Tasks")
+                               "* FIXME %?\n %i\n %a")
+                              ;; ("n" "NOTE" entry (file+headline "" "Notes To Refile")
+                              ;;  "* %?\n:PROPERTIES:\n :DateCreated: %T\n:END:\n#+begin_src\n%i\n#+end_src\n\n%a")
+                              ))
 
 (add-hook 'org-capture-mode-hook
-	  '(lambda ()
-	     (define-key coldnew/command-mode-map "c" 'org-capture-finalize)
-	     ))
+          '(lambda ()
+             (define-key coldnew/command-mode-map "c" 'org-capture-finalize)
+             ))
 
 ;; writegood-mode
 
@@ -89,39 +89,38 @@
 ;;;; ---------------------------------------------------------------------------
 ;; remove builtin-define org-mode keybindings, this will prevent conflit
 (add-hook 'org-mode-hook
-	  '(lambda ()
-	     (define-key org-mode-map (kbd "C-c C-f") nil)
-	     ))
+          '(lambda ()
+             (define-key org-mode-map (kbd "C-c C-f") nil)
+             ))
 
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybindings
 ;;;; ---------------------------------------------------------------------------
 (add-hook 'org-mode-hook
-	  '(lambda ()
+          '(lambda ()
+             (define-key coldnew/command-mode-map "c" 'org-edit-special)
+             ;; (local-set-key (kbd "C-c C-l") 'org-store-link)
+             ;; (local-set-key (kbd "C-c C-a") 'org-agenda)
+             ;; (local-set-key (kbd "C-c C-t") 'org-todo)
 
-	     (define-key coldnew/command-mode-map "c" 'org-edit-special)
-	     ;; (local-set-key (kbd "C-c C-l") 'org-store-link)
-	     ;; (local-set-key (kbd "C-c C-a") 'org-agenda)
-	     ;; (local-set-key (kbd "C-c C-t") 'org-todo)
+             (local-set-key (kbd "C-c b") 'org-metaleft)
+             (local-set-key (kbd "C-c f") 'org-metaright)
+             (local-set-key (kbd "C-c p") 'org-metaup)
+             (local-set-key (kbd "C-c n") 'org-metadown)
 
-	     (local-set-key (kbd "C-c b") 'org-metaleft)
-	     (local-set-key (kbd "C-c f") 'org-metaright)
-	     (local-set-key (kbd "C-c p") 'org-metaup)
-	     (local-set-key (kbd "C-c n") 'org-metadown)
-
-	     ))
+             ))
 
 
 (add-hook 'org-src-mode-hook
-	  '(lambda ()
-	     (define-key coldnew/command-mode-map "c" 'org-edit-src-exit)
-	     (local-set-key (kbd "C-c C-c") 'org-edit-src-exit)
-	     ))
+          '(lambda ()
+             (define-key coldnew/command-mode-map "c" 'org-edit-src-exit)
+             (local-set-key (kbd "C-c C-c") 'org-edit-src-exit)
+             ))
 
 (add-hook 'org-agenda-mode-hook
-	  '(lambda ()
-	     (local-set-key (kbd "C-g") 'org-agenda-exit)
-	     ))
+          '(lambda ()
+             (local-set-key (kbd "C-g") 'org-agenda-exit)
+             ))
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 
