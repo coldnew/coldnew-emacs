@@ -37,8 +37,9 @@
 (setq select-active-regions t)
 (setq x-gtk-use-system-tooltips nil)	; disable gtk-tooltip
 
-(setq debug-on-error t)
 (setq max-lisp-eval-depth '40000)
+(setq max-specpdl-size 5)  ; default is 1000, reduce the backtrace level
+(setq debug-on-error t)    ; now you should get a backtrace
 ;;;; -------------------------------------------------------------------------------
 ;;;;   Global Variables Setting
 ;;;; -------------------------------------------------------------------------------
@@ -113,11 +114,11 @@
 ;; Set PATH
 ;; TODO: make it work on every platform, now only has Linux support
 (setenv "PATH"
-    (concat
-     emacs-bin-dir ":"
-     "~/.lein/bin" ":"
-     (getenv "PATH")
-     ))
+	(concat
+	 emacs-bin-dir ":"
+	 "~/.lein/bin" ":"
+	 (getenv "PATH")
+	 ))
 
 (setq exec-path (cons emacs-bin-dir exec-path))
 
