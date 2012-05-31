@@ -1,7 +1,7 @@
 #+TITLE: coldnew emacs config
 #+AUTHOR: coldnew
 #+email: coldnew.tw at gmail.com
-#+OPTIONS: toc:nil num:nil ^:nil
+#+OPTIONS: H:2 num:nil toc:t
 
 * Basic Setup
 ** User-interface
