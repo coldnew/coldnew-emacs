@@ -40,6 +40,12 @@ function file
 * Editor
 This section contains my editor state
 
+* Mode
+
+** emacs-lisp-mode
+** c-mode
+** c++-mode
+** org-mode
 * Command
 All command file
 
