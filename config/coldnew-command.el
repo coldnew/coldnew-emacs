@@ -122,6 +122,10 @@ With argument, do this that many times."
   (interactive)
   (capitalize-word -1))
 
+(defun backward-kill-line (arg)
+  "Kill chars backward until encountering the end of a line."
+  (interactive "p")
+  (kill-line 0))
 
 ;; ;; TODO: move me to other files
 ;; (add-hook 'occur-mode-hook 'hl-line-mode)
