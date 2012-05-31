@@ -33,7 +33,7 @@
 (global-set-key (kbd "C-e") 'move-end-of-line)
 (global-set-key (kbd "C-a") 'move-beginning-of-line)
 (global-set-key (kbd "C-]") 'coldnew/toggle-state)
-
+(global-set-key (kbd "C-u") 'backward-kill-line)
 
 (global-set-key (kbd "<escape>") 'coldnew/switch-to-command-mode)
 
