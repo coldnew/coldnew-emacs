@@ -29,11 +29,12 @@
 (global-set-key (kbd "C-;") 'iedit-mode)
 (global-set-key (kbd "C-v") 'coldnew/set-mark-command)
 (global-set-key (kbd "C-/") 'undo-tree-undo)
-;;(global-set-key (kbd "C-0") 'ace-jump-mode)
 (global-set-key (kbd "C-e") 'move-end-of-line)
 (global-set-key (kbd "C-a") 'move-beginning-of-line)
 (global-set-key (kbd "C-]") 'coldnew/toggle-state)
-(global-set-key (kbd "C-u") 'backward-kill-line)
+;;(global-set-key (kbd "C-u") 'backward-kill-line)
+(global-set-key (kbd "C-d") 'hungry-delete-forward)
+
 
 (global-set-key (kbd "<escape>") 'coldnew/switch-to-command-mode)
 
@@ -108,6 +109,11 @@
 
 (global-set-key (kbd "M-j") 'switch-window)
 
+
+;;;; ---------------------------------------------------------------------------
+;;;; Combination key (Shift Prefix)
+;;;; ---------------------------------------------------------------------------
+(global-set-key [(shift return)] 'insert-empty-line)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
