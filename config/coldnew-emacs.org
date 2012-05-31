@@ -31,6 +31,18 @@ Disable scrollbar
   (if (featurep 'scroll-bar) (scroll-bar-mode -1))
 #+end_src
 
+* Macro
+macro file
+* Advice
+advice file
+* Function
+function file
+* Editor
+This section contains my editor state
+
+* Command
+All command file
+
 * End of file
 ** TODO remove one day
 #+begin_src emacs-lisp
