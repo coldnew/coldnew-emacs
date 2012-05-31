@@ -31,7 +31,8 @@
 ;;;;;;; Kyebinding
 (add-hook 'egg-commit-buffer-mode-hook
 	  '(lambda ()
-	     (key-chord-define (current-local-map) "cc" 'egg-log-msg-done)))
+	     (key-chord-define (current-local-map) "cc" 'egg-log-msg-done)
+	     (define-key coldnew/command-mode-map "c" 'egg-log-msg-done)))
 
 ;;;;;;;; Advice
 (defadvice egg-status (around goto-egg-status-buffer activate)
