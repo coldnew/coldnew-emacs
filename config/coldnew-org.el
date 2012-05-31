@@ -58,19 +58,6 @@
 (setq org-tag-alist '(
 		      (:startgroup . nil) ("Business" . ?b) ("School" . ?s) ("Weintek" . ?w) ("Personal" . ?p) (:endgroup . nil)
 		      ))
-;; remember
-
-;; ;; Load Org Remember Stuff
-;; (require 'remember)
-;; (org-remember-insinuate)
-
-;; ;; keep clock running
-;; (setq org-remember-clock-out-on-exit nil)
-;; (setq org-remember-templates
-;;       '(("TODO"  ?t "* TODO  %?\n %x\n %a" "~/Dropbox/Org/TODO.org"  "Tasks")
-;;	("FIXME" ?f "* FIXME %?\n %x\n %a" "~/Dropbox/Org/FIXME.org" "Tasks")
-;;	("IDEA"  ?i "* IDEA  %?\n %i\n %a" "~/Dropbox/Org/IDEA.org"  "Idea")
-;;	))
 
 ;; capture
 (setq org-default-notes-file (concat org-directory "TODO.org"))
