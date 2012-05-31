@@ -5,19 +5,35 @@
 
 * Basic Setup
 ** User-interface
-test
-** Remove start-message after startup
-test
+*** startup-message 
+Do not use startup messages.
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t)
 #+end_src
-** Remove default scratch-message
-test
+*** scratch-message
+Make scratch buffer contain nothing.
 #+begin_src emacs-lisp
   (setq initial-scratch-message "")
 #+end_src
+*** Visible bell
+Use visible bell instead of ring-bell.
+#+begin_src emacs-lisp
+  (setq visible-bell t)
+#+end_src
+*** Tool bar
+Disable toolbar
+#+begin_src emacs-lisp
+  (if (featurep 'tool-bar) (tool-bar-mode -1))
+#+end_src
+*** Scroll bar
+Disable scrollbar
+#+begin_src emacs-lisp
+  (if (featurep 'scroll-bar) (scroll-bar-mode -1))
+#+end_src
 
 * End of file
+** TODO remove one day
 #+begin_src emacs-lisp
   (provide 'coldnew-emacs)
 #+end_src
+
