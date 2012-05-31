@@ -127,6 +127,14 @@ With argument, do this that many times."
   (interactive "p")
   (kill-line 0))
 
+(defun insert-empty-line ()
+  "Insert an empty line after current line and position cursor on newline."
+  (interactive)
+  (move-end-of-line nil)
+  (open-line 1)
+  (next-line 1))
+
+
 ;; ;; TODO: move me to other files
 ;; (add-hook 'occur-mode-hook 'hl-line-mode)
 
