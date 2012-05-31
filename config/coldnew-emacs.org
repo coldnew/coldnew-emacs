@@ -5,7 +5,7 @@
 
 * Basic Setup
 ** User-interface
-*** startup-message 
+*** startup-message
 Do not use startup messages.
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t)
@@ -36,4 +36,3 @@ Disable scrollbar
 #+begin_src emacs-lisp
   (provide 'coldnew-emacs)
 #+end_src
-
