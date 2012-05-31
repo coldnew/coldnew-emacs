@@ -15,6 +15,14 @@
 ;; a shortcut to reload emacs setting
 (global-set-key (kbd "<f5>") '(lambda () (interactive) (load-file "~/.emacs.d/init.el") (desktop-revert) (delete-other-windows)))
 
+;; load up org-mode and org-babel
+(require 'org-install)
+(require 'ob-tangle)
+
+;; load up all literate org-mode files in config directory
+;;(mapc #'org-babel-load-file (directory-files "~/.emacs.d/config/" t "\\.org$"))
+(org-babel-load-file (expand-file-name "coldnew-emacs.org"))
+
 ;; load the core stuff
 (require 'coldnew-core)
 (require 'coldnew-variables)

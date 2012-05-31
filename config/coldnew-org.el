@@ -63,11 +63,11 @@
 (setq org-default-notes-file (concat org-directory "TODO.org"))
 (setq org-capture-templates '(("t" "TODO" entry (file+headline "" "Tasks")
 			       "* TODO %?\n %i\n %a")
+			      ("f" "FIXME" entry (file+headline "" "Tasks")
+			       "* FIXME %?\n %i\n %a")
 			      ;; ("n" "NOTE" entry (file+headline "" "Notes To Refile")
 			      ;;  "* %?\n:PROPERTIES:\n :DateCreated: %T\n:END:\n#+begin_src\n%i\n#+end_src\n\n%a")
 			      ))
-
-
 
 (add-hook 'org-capture-mode-hook
 	  '(lambda ()

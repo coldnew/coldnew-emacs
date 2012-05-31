@@ -35,7 +35,7 @@
 ;; xrelated srtting
 (setq x-select-enable-clipboard t)
 (setq select-active-regions t)
-(setq x-gtk-use-system-tooltips nil)	; disable gtk-tooltip
+(setq x-gtk-use-system-tooltips nil)    ; disable gtk-tooltip
 
 (setq max-lisp-eval-depth '40000)
 (setq max-specpdl-size 5)  ; default is 1000, reduce the backtrace level
@@ -44,42 +44,42 @@
 ;;;;   Global Variables Setting
 ;;;; -------------------------------------------------------------------------------
 (defvar emacs-dir "~/.emacs.d/"
-  "The top-level emacs-configure directory.")
+"The top-level emacs-configure directory.")
 (defvar emacs-config-dir (concat emacs-dir "config/")
-  "directory to place emacs configure.")
+"directory to place emacs configure.")
 (defvar emacs-themes-dir (concat emacs-dir "themes/")
-  "directory to place emacs theme.")
+"directory to place emacs theme.")
 (defvar emacs-lisp-dir   (concat emacs-dir "lisp/")
-  "directory to place lisp packages from internet.")
+"directory to place lisp packages from internet.")
 (defvar emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
-  "directory to place ELPA lisp packages from internet.")
+"directory to place ELPA lisp packages from internet.")
 (defvar emacs-snippets-dir (concat emacs-dir "snippets/")
-  "directory to place yasnippet files.")
+"directory to place yasnippet files.")
 (defvar emacs-recipes-dir (concat emacs-dir "recipes/")
-  "directory to place local el-get recepies.")
+"directory to place local el-get recepies.")
 
 (defvar emacs-custom-file (concat emacs-dir "custom.el")
-  "store customize UI config.")
+"store customize UI config.")
 
 (defvar emacs-bin-dir    (concat emacs-dir "bin/")
-  "directory to place binary staff.")
+"directory to place binary staff.")
 (defvar emacs-cache-dir  (concat emacs-dir "cache/")
-  "cache file directory.")
+"cache file directory.")
 (defvar emacs-backup-dir (concat emacs-dir "backup/")
-  "directory to backup files.")
+"directory to backup files.")
 (defvar emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")
-  "file that save secret")
+"file that save secret")
 
 ;; (defvar emacs-log-dir (concat emacs-var-dir "log/")
 ;;   "log file directory."
 
 ;;;; Shell setting
 (defvar emacs-default-shell "/bin/bash"
-  "Default shell for cemacs.")
+"Default shell for cemacs.")
 (defvar emacs-popup-shell-window-height 30
-  "Window hight of popup shell.")
+"Window hight of popup shell.")
 (defvar emacs-popup-shell-window-position "bottom"
-  "Make popup shell window at buttom by default.")
+"Make popup shell window at buttom by default.")
 
 
 
@@ -90,35 +90,35 @@
 (require 'coldnew-variables)
 
 (defun change-mouse-to-left ()
-  (interactive)
-  (shell-command "xmodmap -e \"pointer = 3 2 1\""))
+(interactive)
+(shell-command "xmodmap -e \"pointer = 3 2 1\""))
 
 (defun change-mouse-to-right ()
-  (interactive)
-  (shell-command "xmodmap -e \"pointer = 1 2 3\""))
+(interactive)
+(shell-command "xmodmap -e \"pointer = 1 2 3\""))
 
 (defun swap-ctrl-caps ()
-  "swap control and capslock"
-  (shell-command "setxkbmap -option ctrl:swapcaps"))
+"swap control and capslock"
+(shell-command "setxkbmap -option ctrl:swapcaps"))
 
 (defun make-caps-as-ctrl ()
-  "make capslock as control-key"
-  (shell-command "setxkbmap -option ctrl:nocaps"))
+"make capslock as control-key"
+(shell-command "setxkbmap -option ctrl:nocaps"))
 
 ;; only disable capslock and make it as control
 (cond ((eq window-system 'x)
-       ;; make caps lock a control key
-       (make-caps-as-ctrl)
-       (change-mouse-to-left)))
+;; make caps lock a control key
+(make-caps-as-ctrl)
+(change-mouse-to-left)))
 
 ;; Set PATH
 ;; TODO: make it work on every platform, now only has Linux support
 (setenv "PATH"
-	(concat
-	 emacs-bin-dir ":"
-	 "~/.lein/bin" ":"
-	 (getenv "PATH")
-	 ))
+(concat
+emacs-bin-dir ":"
+"~/.lein/bin" ":"
+(getenv "PATH")
+))
 
 (setq exec-path (cons emacs-bin-dir exec-path))
 

@@ -23,6 +23,8 @@
  (auto-complete-clang status "installed" recipe
 		      (:name auto-complete-clang :website "https://github.com/brianjcj/auto-complete-clang" :description "Auto-complete sources for Clang. Combine the power of AC, Clang and Yasnippet." :type github :pkgname "brianjcj/auto-complete-clang"))
  (auto-complete-emacs-lisp status "removed" recipe nil)
+ (auto-indent-mode status "installed" recipe
+		   (:name auto-indent-mode :website "https://github.com/mlf176f2/auto-indent-mode.el" :description "Automatically Indent  when pressing return, pasting, and other customizable features." :type github :pkgname "mlf176f2/auto-indent-mode.el"))
  (bash-completion status "installed" recipe
 		  (:name bash-completion :description "" :website "" :type http :url "https://raw.github.com/szermatt/emacs-bash-completion/master/bash-completion.el" :features bash-completion))
  (c-eldoc status "installed" recipe
@@ -136,6 +138,7 @@
       (:name nav :description "Emacs mode for filesystem navigation" :type hg :url "https://emacs-nav.googlecode.com/hg" :features nav))
  (one-key status "installed" recipe
 	  (:name one-key :description "OneKey is designed to help you remember keybindings. It saves you time and frees up your head!" :website "" :type emacswiki :features one-key))
+ (org-mode status "removed" recipe nil)
  (package status "installed" recipe
 	  (:name package :description "ELPA implementation (\"package.el\") from Emacs 24" :builtin 24 :type http :url "http://repo.or.cz/w/emacs.git/blob_plain/1a0a666f941c99882093d7bd08ced15033bc3f0c:/lisp/emacs-lisp/package.el" :shallow nil :features package :post-init
 		 (progn

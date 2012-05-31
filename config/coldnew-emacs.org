@@ -1,0 +1,23 @@
+#+TITLE: coldnew emacs config
+#+AUTHOR: coldnew
+#+email: coldnew.tw at gmail.com
+#+OPTIONS: toc:nil num:nil ^:nil
+
+* Basic Setup
+** User-interface
+test
+** Remove start-message after startup
+test
+#+begin_src emacs-lisp
+  (setq inhibit-startup-message t)
+#+end_src
+** Remove default scratch-message
+test
+#+begin_src emacs-lisp
+  (setq initial-scratch-message "")
+#+end_src
+
+* End of file
+#+begin_src emacs-lisp
+  (provide 'coldnew-emacs)
+#+end_src
