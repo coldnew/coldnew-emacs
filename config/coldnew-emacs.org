@@ -1,7 +1,8 @@
 #+TITLE: coldnew emacs config
 #+AUTHOR: coldnew
 #+email: coldnew.tw at gmail.com
-#+OPTIONS: H:2 num:nil toc:t
+#+STARTUP: content indent align 
+
 
 * Basic Setup
 ** User-interface
@@ -179,13 +180,16 @@ add comment for this section
 
 *** Resolution Testing
 #+begin_src emacs-lisp
-  (defvar display-1280x800-p   (and (= (display-pixel-width) 1280) (= (display-pixel-height) 800))
+  (defvar display-1280x800-p   (and (= (display-pixel-width) 1280)
+                                    (= (display-pixel-height) 800))
     "Return nil if current display's resolution is not 1280x800")
 
-  (defvar display-1280x1024-p  (and (= (display-pixel-width) 1280) (= (display-pixel-height) 1024))
+  (defvar display-1280x1024-p  (and (= (display-pixel-width) 1280)
+                                    (= (display-pixel-height) 1024))
     "Return nil if current display's resolution is not 1280x1024")
 
-  (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920) (= (display-pixel-height) 1080))
+  (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920)
+                                    (= (display-pixel-height) 1080))
     "Return nil if current display's resolution is not 1920x1080")
 #+end_src
 
@@ -227,11 +231,162 @@ This section contains my editor state
 ** c-mode
 ** c++-mode
 ** org-mode
+
+*** Conflict Fix
+some packages conflict with org-mode
+**** yasnippet
+#+begin_src emacs-lisp
+  (when (featurep 'yasnippet
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (org-set-local 'yas/trigger-key [tab])
+              (define-key yas/keymap [tab] 'yas/next-field-group)))))
+#+end_src
+
 * Command
 All command file
 
+* Alias
+#+begin_src emacs-lisp
+  (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
+  (defalias 'coldnew/folding-toggle   'toggle-selective-display)
+#+end_src
+* Global keybinding
+
+** Unset key
+#+begin_src emacs-lisp
+  (global-unset-key (kbd "C-x e"))
+  (global-unset-key (kbd "C-x d"))
+#+end_src
+
+** Function key prefix
+
+*** F1
+#+begin_src emacs-lisp
+  (global-set-key (kbd "<f1>")     'woman)
+#+end_src
+
+*** F2
+#+begin_src emacs-lisp
+  (global-set-key (kbd "<f2>")     'shell-pop)
+#+end_src
+
+*** F3
+#+begin_src emacs-lisp
+  (global-set-key (kbd "<f3>")     'call-last-kbd-macro)
+#+end_src
+
+*** F4
+#+begin_src emacs-lisp
+  (global-set-key (kbd "<f4>")     'sr-speedbar-toggle)
+#+end_src
+
+** Ctrl Prefix
+
+*** Default Emacs keybinding
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-n") 'next-line)
+  (global-set-key (kbd "C-p") 'previous-line)
+  (global-set-key (kbd "C-b") 'backward-char)
+  (global-set-key (kbd "C-f") 'forward-char)
+  (global-set-key (kbd "C-e") 'move-end-of-line)
+  (global-set-key (kbd "C-a") 'move-beginning-of-line)
+#+end_src
+
+*** Delete
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-l") 'hungry-delete-backward)
+  (global-set-key (kbd "C-d") 'hungry-delete-forward)
+  ;;(global-set-key (kbd "C-u") 'backward-kill-line)
+#+end_src
+
+*** Misc
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-;") 'iedit-mode)
+  (global-set-key (kbd "C-v") 'coldnew/set-mark-command)
+  (global-set-key (kbd "C-/") 'undo-tree-undo)
+  (global-set-key (kbd "C-]") 'coldnew/toggle-state)
+#+end_src
+
+** Ctrl-x Prefix
+
+*** Misc
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
+  (global-set-key (kbd "C-x C-b")  'ibuffer)
+  (global-set-key (kbd "C-x b")    'coldnew/helm-filelist)
+  (global-set-key (kbd "C-x C-d")  'dired)
+  (global-set-key (kbd "C-x C-r")  'sudo-edit)
+  (global-set-key (kbd "C-x vv") 'egg-next-action)
+  (global-set-key (kbd "C-x M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x o")   'switch-window)
+  (global-set-key (kbd "C-x C-l") 'recenter-top-bottom)
+  (global-set-key (kbd "C-x C-n") 'auto-complete)
+  (global-set-key (kbd "C-x C-s") 'save-buffer-always)
+  (global-set-key (kbd "C-x f") 'fullscreen-window)
+#+end_src
+
+** Ctrl-c prefix
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
+#+end_src
+
+** Ctrl-Meta Prefix
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
+  (global-set-key (kbd "C-M-.") 'end-of-buffer)
+  (global-set-key (kbd "C-M-n") 'scroll-other-window)
+  (global-set-key (kbd "C-M-p") 'scroll-other-window-down)
+#+end_src
+
+** Meta Prefix
+
+*** Default Emacs keybinding
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-f") 'forward-word)
+(global-set-key (kbd "M-b") 'backward-word)
+(global-set-key (kbd "M-e") 'forward-sentence)
+(global-set-key (kbd "M-a") 'backward-sentence)
+#+end_src
+
+*** Misc
+#+begin_src emacs-lisp
+  (global-set-key (kbd "M-s") 'coldnew/helm-occur)
+  (global-set-key (kbd "M-l") 'backward-delete-word)
+  (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+  (global-set-key (kbd "M-n") 'scroll-up)
+  (global-set-key (kbd "M-p") 'scroll-down)
+  (global-set-key (kbd "M-g") 'linum-ace-jump)
+  (global-set-key (kbd "M-v") 'er/expand-region)
+  (global-set-key (kbd "M-q") 'coldnew/switch-to-command-mode)
+  (global-set-key (kbd "M-/") 'undo-tree-redo)
+  (global-set-key (kbd "M-.") 'helm-etags+-select-one-key)
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  (global-set-key (kbd "M-1") 'delete-other-windows)
+  (global-set-key (kbd "M-2") 'split-window-below)
+  (global-set-key (kbd "M-3") 'split-window-right)
+  (global-set-key (kbd "M-4") 'delete-window)
+  (global-set-key (kbd "M-0") 'other-window)
+  (global-set-key (kbd "M-j") 'switch-window)
+#+end_src
+
+** Shift prefix
+#+begin_src emacs-lisp
+  (global-set-key [(shift return)] 'insert-empty-line)
+#+end_src
+
+** Other
+#+begin_src emacs-lisp
+  (global-set-key (kbd "<delete>") 'hungry-delete-forward)
+  (global-set-key (kbd "C-.") 'repeat)
+  (global-set-key (kbd "%") 'match-paren)
+#+end_src
 * End of file
 ** TODO remove one day
+test
 #+begin_src emacs-lisp
-  (provide 'coldnew-emacs)
+     (provide 'coldnew-emacs)
 #+end_src
+
+
