@@ -309,6 +309,12 @@ emacs 個人設定檔路徑
                              (1 font-lock-keyword-face)
                              (2 font-lock-constant-face nil t))))
 #+end_src
+** Custom File
+設定 custom-file 到其他檔案，這樣可以避免使用 *customize-UI* 時，會將設定寫入我的 init.el
+#+begin_src emacs-lisp
+  (setq custom-file emacs-custom-file)
+#+end_src
+
 ** Daemon
 #+begin_src emacs-lisp
   ;; Only start server mode if I'm not root
@@ -2933,6 +2939,7 @@ All command file
 ** Ctrl-c prefix
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
+  (global-set-key (kbd "C-c a") 'org-agenda)
 #+end_src
 
 ** Ctrl-Meta Prefix
