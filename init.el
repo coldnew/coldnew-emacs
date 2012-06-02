@@ -20,13 +20,11 @@
 (require 'ob-tangle)
 
 ;; load up all literate org-mode files in config directory
-;;(mapc #'org-babel-load-file (directory-files "~/.emacs.d/config/" t "\\.org$"))
-(org-babel-load-file (expand-file-name "coldnew-emacs.org"))
+(mapc #'org-babel-load-file (directory-files "~/.emacs.d/config/" t "\\.org$"))
+;;(org-babel-load-file (expand-file-name "coldnew-emacs.org"))
 
 ;; load the core stuff
 (require 'coldnew-core)
-(require 'coldnew-variables)
-(require 'coldnew-packages)
 (require 'coldnew-macros)
 (require 'coldnew-depends)
 (require 'coldnew-functions)
