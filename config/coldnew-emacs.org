@@ -167,19 +167,37 @@ emacs 個人設定檔路徑
 #+end_src
 
 *** Operation System Testing
+放置用於測試目前 emacs 執行在何種作業系統上的變數。
+**** MacOsx
 #+begin_src emacs-lisp
   (defvar mac-p     (eq system-type 'darwin)
     "Return nil if OS is not Mac.")
+#+end_src
+**** Linux
+***** all
+#+begin_src emacs-lisp
   (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
     "Return nil if OS is not Linux.")
-  (defvar cygwin-p  (eq system-type 'cygwin)
-    "Return nil if OS is not CygWin.")
-  (defvar windows-p (eq system-type 'windows-nt)
-    "Return nil if OS is not Windows.")
+#+end_src
+***** 32-bit
+#+begin_src emacs-lisp
+  (defvar linux-32bit-p (and (string-match (rx bos "x86-") system-configuration) linux-p)
+  "Return nil if OS is not 32-bit linux.")
+#+end_src
+***** 64-bit
+#+begin_src emacs-lisp
   (defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
     "Return nil if OS is not 64-bit linux.")
-    (defvar linux-32bit-p (and (string-match (rx bos "x86-") system-configuration) linux-p)
-    "Return nil if OS is not 32-bit linux.")
+#+end_src
+**** Cygwin
+#+begin_src emacs-lisp
+  (defvar cygwin-p  (eq system-type 'cygwin)
+    "Return nil if OS is not CygWin.")
+#+end_src
+**** Window$
+#+begin_src emacs-lisp
+  (defvar windows-p (eq system-type 'windows-nt)
+    "Return nil if OS is not Windows.")
 #+end_src
 
 *** User Testing
@@ -187,7 +205,6 @@ emacs 個人設定檔路徑
 (defvar root-p (zerop (user-real-uid))
   "Return nil if user is not root user.")
 #+end_src
-
 *** Resolution Testing
 放置測試螢幕解析度用的變數
 **** 1280x800
@@ -211,7 +228,6 @@ emacs 個人設定檔路徑
 
 *** Face
 #+begin_src emacs-lisp
-
     (defface mode-line-read-only-face
       '((t (:foreground "#C82829" :bold t)))
       "face for mode-name-string in modeline."
