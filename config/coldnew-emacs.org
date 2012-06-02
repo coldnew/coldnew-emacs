@@ -2986,9 +2986,3 @@ All command file
   (global-set-key (kbd "C-.") 'repeat)
   (global-set-key (kbd "%") 'match-paren)
 #+end_src
-* COMMENT File local variables
-# Local Variables:
-# revert-without-query: t
-# eval: (revert-buffer)
-#       (linum-mode -1)
-# End:
