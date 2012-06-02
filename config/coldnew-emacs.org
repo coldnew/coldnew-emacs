@@ -2986,17 +2986,6 @@ All command file
   (global-set-key (kbd "C-.") 'repeat)
   (global-set-key (kbd "%") 'match-paren)
 #+end_src
-* End of file
-** TODO remove one day
-test
-#+begin_src emacs-lisp
-
-     (provide 'coldnew-emacs)
-;; Local Variables:
-;; eval: (linum-mode -1)
-;; End:
-#+end_src
-
 * COMMENT File local variables
 # Local Variables:
 # revert-without-query: t
