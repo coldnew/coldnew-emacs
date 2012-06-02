@@ -8,7 +8,7 @@
        (lisp-dir '("lisp/" "local-lisp/" "config/")))
   (dolist (lisp-path lisp-dir)
     (let* ((load-dir (concat emacs-dir lisp-path))
-	   (default-directory load-dir))
+           (default-directory load-dir))
       (setq load-path (cons load-dir load-path))
       (normal-top-level-add-subdirs-to-load-path))))
 
@@ -24,7 +24,6 @@
 ;;(org-babel-load-file (expand-file-name "coldnew-emacs.org"))
 
 ;; load the core stuff
-(require 'coldnew-core)
 (require 'coldnew-macros)
 (require 'coldnew-depends)
 (require 'coldnew-functions)
@@ -44,16 +43,16 @@
       (insert (concat (make-string 80 ?=) "\n"))
       ;; loading file and test status
       (dolist (config-file (directory-files emacs-config-dir t "^[^#].*el$"))
-	(let* ((feature (file-name-sans-extension (file-name-nondirectory config-file)))
-	       (config-file-name (file-name-nondirectory config-file))
-	       (loading-result (require (intern feature) nil 'noerror))
-	       (loading-status (if loading-result "LOADED" "FAILED")))
+        (let* ((feature (file-name-sans-extension (file-name-nondirectory config-file)))
+               (config-file-name (file-name-nondirectory config-file))
+               (loading-result (require (intern feature) nil 'noerror))
+               (loading-status (if loading-result "LOADED" "FAILED")))
 
-	  (insert (format " %-20s %s\t\t [ " config-file-name
-			  (make-string (- 40 (length config-file-name)) ? )
-			  ))
-	  (insert (propertize loading-status 'face  `(:foreground ,(if loading-result "green" "red"))))
-	  (insert " ]\n"))))
+          (insert (format " %-20s %s\t\t [ " config-file-name
+                          (make-string (- 40 (length config-file-name)) ? )
+                          ))
+          (insert (propertize loading-status 'face  `(:foreground ,(if loading-result "green" "red"))))
+          (insert " ]\n"))))
 
   ;; After loading allemacs config file, readauthorization fil
   (if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
