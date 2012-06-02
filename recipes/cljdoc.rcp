@@ -1,3 +1,0 @@
-(:name cljdoc
-       :description "eldoc mode for clojure"
-       :type elpa)

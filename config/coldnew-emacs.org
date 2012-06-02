@@ -365,21 +365,40 @@ emacs 個人設定檔路徑
 
 #+end_src
 ** Package Manager
+emacs 套件管理的設定。
 *** el-get
+**** Init
+我不喜歡 el-get 預設使用 el-get 目錄，這裡根據我的 emacs-lisp-dir 重新設定。
 #+begin_src emacs-lisp
   (setq-default el-get-dir emacs-lisp-dir)
+#+end_src
+**** Depends
+#+begin_src emacs-lisp
   (require 'el-get)
+#+end_src
+**** Config
+#+begin_src emacs-lisp
   (add-to-list 'el-get-recipe-path emacs-recipes-dir)
 #+end_src
 **** Auto Mode Alist
+\\.rcp$ 為 el-get 的 recipes 副檔名。
 #+begin_src emacs-lisp
-  ;; Make el-get recipes in emacs-lisp-mode
   (add-to-list 'auto-mode-alist '("\\.rcp$" . emacs-lisp-mode))
 #+end_src
+**** TODO Recipes 轉移所有的 recipe 至此
 *** ELPA
+**** Init
+設定 elpa 安裝目錄到 emacs-elpa-dir
 #+begin_src emacs-lisp
   (setq-default package-user-dir emacs-elpa-dir)
+#+end_src
+**** Depends
+#+begin_src emacs-lisp
   (require 'package)
+#+end_src
+**** Config
+設定 elpa 所使用的套件庫
+#+begin_src emacs-lisp
   (setq package-archives
         '(("ELPA" . "http://tromey.com/elpa/")
           ("gnu" . "http://elpa.gnu.org/packages/")
