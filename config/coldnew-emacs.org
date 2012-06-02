@@ -1,7 +1,7 @@
 #+TITLE: coldnew emacs config
 #+AUTHOR: coldnew
 #+email: coldnew.tw at gmail.com
-#+STARTUP: content indent align
+#+STARTUP: overview indent align
 
 * Basic Setup
 ** User-interface
@@ -194,46 +194,46 @@ add comment for this section
 
 *** Face
 #+begin_src emacs-lisp
-    
+
     (defface mode-line-read-only-face
       '((t (:foreground "#C82829" :bold t)))
       "face for mode-name-string in modeline."
       :group 'mode-line)
-    
+
     (defface mode-line-modified-face
       '((t (:inherit 'font-lock-function-name-face :bolt t)))
       "face for mode-name-string in modeline."
       :group'mode-lin)
-    
+
     (defface mode-line-mode-name-face
       '((t (:inherit font-lock-keyword-face)))
       "face for mode-name-string in modeline."
       :group 'mode-line)
-    
+
     (defface mode-line-normal-state-face
       '((t (:inherit font-lock-function-name-face)))
       "face for emacs normal state")
-    
+
     (defface font-lock-escape-char-face
       '((((class color)) (:foreground "seagreen2")))
       "highlight c escapes char like vim"
       :group 'font-lock-faces)
-    
+
     (defface mode-line-evil-state-string-N
       '((t (:inherit font-lock-function-name-face)))
       "face for vim-string in normal-map on mode-line."
       :group 'mode-line)
-    
+
     (defface mode-line-evil-state-string-I
       '((t (:inherit font-lock-constant-face)))
       "face for vim-string in insert-map on mode-line."
       :group 'mode-line)
-    
+
     (defface mode-line-evil-state-string-V
       '((t (:inherit font-lock-variable-name-face)))
       "face for vim-string in visual-map on mode-line."
       :group 'mode-line)
-    
+
     (defface mode-line-evil-state-string-E
       '((t (:inherit font-lock-string-face)))
       "face for vim-string in emacs-map on mode-line."
@@ -294,7 +294,7 @@ add comment for this section
                    '(left   . 100))
                   default-frame-alist)))
    )
-  
+
 #+end_src
 ** Package Manager
 *** el-get
@@ -329,7 +329,7 @@ add comment for this section
        (if-not require-result (el-get-reinstall ,feature)
                ;; TODO: add require-result buffer
                )))
-  
+
   ;; add font-lock
   (font-lock-add-keywords 'emacs-lisp-mode
                           '(("(\\(require\*\\*\\)\\s [ \t']*\\(\\sw+\\)?"
@@ -345,7 +345,7 @@ add comment for this section
   (defmacro comment (&rest body)
     "Comment out one or more s-expressions."
     nil)
-  
+
   (defmacro -> (x &optional form &rest more)
     (cond ((not (null more))
            `(-> (-> ,x ,form) ,@more))
@@ -354,13 +354,13 @@ add comment for this section
                `(,(first form) ,x ,@(rest form))
              (list form x)))
           (t x)))
-  
+
   (defmacro ->> (x form &rest more)
     (cond ((not (null more)) `(->> (->> ,x ,form) ,@more))
           (t (if (sequencep form)
                  `(,(first form) ,@(rest form) ,x)
                (list form x)))))
-  
+
   (defmacro -?> (x form &rest more)
     (cond ((not (null more)) `(-?> (-?> ,x ,form) ,@more))
           (t (if (sequencep form)
@@ -368,7 +368,7 @@ add comment for this section
                     (,(first form) ,x ,@(rest form)))
                `(if (null ,x) nil
                   ,(list form x))))))
-  
+
   (defmacro -?>> (x form &rest more)
     (cond ((not (null more)) `(-?>> (-?>> ,x ,form) ,@more))
           (t (if (sequencep form)
@@ -376,7 +376,7 @@ add comment for this section
                     (,(first form) ,@(rest form) ,x))
                `(if (null ,x) nil
                   ,(list form x))))))
-  
+
   (defmacro if-not (test then &optional else)
     "Evaluates test. If logical false, evaluates and returns then expr,
     otherwise else expr, if supplied, else nil."
@@ -413,13 +413,13 @@ advice file
 * Function
 function file
 #+begin_src emacs-lisp
-  
+
   (defun map-define-key (mode-map keylist fname)
     "Like define-key but the key arg is a list that should be mapped over.
      For example: (map-define-key '(a b c d) 'function-name)."
     (mapc (lambda (k) (define-key mode-map k fname))
           keylist))
-  
+
   (defun emacs-process-p (pid)
     "If pid is the process ID of an emacs process, return t, else nil.
   Also returns nil if pid is nil."
@@ -429,26 +429,26 @@ function file
           (if (string= "comm" (car attr))
               (setq cmd (cdr attr))))
         (if (and cmd (or (string= "emacs" cmd) (string= "emacs.exe" cmd))) t))))
-  
+
   (defun get-ip-address (&optional dev)
     "get the IP-address for device DEV (default: eth0)"
     (let ((dev (if dev dev "eth0")))
       (format-network-address (car (network-interface-info dev)) t)))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Search
   ;;;; ---------------------------------------------------------------------------
-  
+
   (defun search-backward-to-char (chr)
     "Search backwards to a character"
     (while (not (= (char-after) chr))
       (backward-char 1)))
-  
+
   (defun search-forward-to-char (chr)
     "Search forwards to a character"
     (while (not (= (char-before) chr))
       (forward-char 1)))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Region
   ;;;; ---------------------------------------------------------------------------
@@ -458,35 +458,35 @@ function file
   go forwards, if 'backwards go backwards."
     (let ((start (point))
           (end nil))
-  
+
       (transient-mark-mode 1)    ;; Transient mark
       (push-mark)                ;; Mark the start, where point is now
-  
+
       (if (or (null dir)
               (equalp 'forwards dir))
-  
+
           ;; Move forwards to the next match then back off
           (progn
             (search-forward match)
             (backward-char))
-  
+
         ;; Or search backwards and move forwards
         (progn
           (search-backward match)
           (forward-char)))
-  
+
       ;; Store, then hilight
       (setq end (point))
       (exchange-point-and-mark)
-  
+
       ;; And return, swap the start/end depending on direction we're going
       (if (or (null dir)
               (equalp 'forwards dir))
           (list start end)
         (list end start))))
-  
-  
-  
+
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Buffer
   ;;;; ---------------------------------------------------------------------------
@@ -498,7 +498,7 @@ function file
           (if (eq mode major-mode)
               (add-to-list 'buffer-mode-matches buf))))
       buffer-mode-matches))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Date
   ;;;; ---------------------------------------------------------------------------
@@ -507,19 +507,19 @@ function file
     (let ((system-time-locale "en_US")
           (format "%Y-%m-%d"))
       (format-time-string "%Y-%m-%d")))
-  
+
   (defun day-of-week (year month day)
     "Returns the day of the week as an integer.
      Monday is 1."
     (nth 6 (decode-time (encode-time 0 0 0 day month year))))
-  
+
   (defun day-of-week-in-string (year month day)
     "Return the day of the week as day name."
     (let* ((day-names '("Sunday" "Monday" "Tuesday" "Wednesday"
                         "Thursday" "Friday" "Saturday"))
            (day-index (nth 6 (decode-time (encode-time 0 0 0 day month year)))))
       (nth day-index day-names)))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Testing
   ;;;; ---------------------------------------------------------------------------
@@ -527,7 +527,7 @@ function file
     "test if this font is exist or not."
     (if (not (x-list-fonts fontname))
         nil t))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Conversion
   ;;;; ---------------------------------------------------------------------------
@@ -538,7 +538,7 @@ function file
           (switch-to-buffer buf))
       (goto-char(point-min))
       (while (search-forward "\n" nil t) (replace-match "\r\n"))))
-  
+
   (defun dos->unix (buf)
     "Convert buffer file from dos file to unix file."
     (let* (current-buf (current-buffer))
@@ -546,19 +546,19 @@ function file
           (switch-to-buffer buf))
       (goto-char(point-min))
       (while (search-forward "\r" nil t) (replace-match ""))))
-  
+
   (defun file->string (file)
     "Convert file to string in buffer with quote."
     (when (file-readable-p file)
       (with-temp-buffer
         (insert-file-contents file)
         (buffer-string))))
-  
-  
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Advice
   ;;;; ---------------------------------------------------------------------------
-  
+
   (defadvice kill-emacs (around recompile-emacs-config activate)
     "Before exit emacs, recompile emacs-config"
     (let ((config-dir emacs-config-dir))
@@ -575,37 +575,37 @@ function file
     "The font name for CJK.")
   (defvar emacs-symbol-font "Monaco"
     "The font name for Synbol.")
-  
+
   ;; font size setting
   ;; (defvar emacs-english-font-size 11.5
   (defvar emacs-english-font-size 11.5
     "Default English font size.")
   ;;(defvar emacs-cjk-font-size 15
-  
+
   (defvar emacs-cjk-font-size 13.5
     ;; (defvar emacs-cjk-font-size 14
     "Default CJK font size.")
   (defvar emacs-symbol-font-size 16
     "Default Symbol font size.")
-  
+
   ;; Use my defined font under X
   (cond ((eq window-system 'x)
          ;; Setting English Fonts
          (if (font-exist-p emacs-english-font)
              (set-frame-font (format "%s-%s" (eval emacs-english-font) (eval emacs-english-font-size))))
-  
+
          ;; Setting Chinese Fonts
          (if (font-exist-p emacs-cjk-font)
              (set-fontset-font (frame-parameter nil 'font)
                                'han (format "%s-%s" (eval emacs-cjk-font) (eval emacs-cjk-font-size))))
-  
+
          ;; Setting Symbol Fonts
          (if (font-exist-p emacs-symbol-font)
              (set-fontset-font (frame-parameter nil 'font)
                                'symbol (format "%s-%s" (eval emacs-symbol-font) (eval emacs-symbol-font-size))))
          ))
-  
-  
+
+
   ;; list text sample
   (setq-default list-faces-sample-text
                 (concat
@@ -619,37 +619,37 @@ function file
   (require 'auto-complete)
   (require 'auto-complete-config)
   (require* 'auto-complete-clang)
-  
+
   ;; use default config
   (ac-config-default)
-  
+
   ;; desable fuzzy-match
   (setq ac-use-fuzzy nil)
-  
+
   ;; start auto-complete after insert 2 or more-key
   (setq ac-auto-start 3)
-  
+
   ;; Ignore case if completion target string doesn't include upper characters
   (setq ac-ignore-case 'smart)
-  
+
   ;; Enable auto-complete quick help
   (setq ac-use-quick-help t)
-  
+
   ;; After 0.01 sec, show help window
   (setq ac-quick-help-delay 0.5)
-  
+
   ;; Enable ac-comphist
   (setq ac-use-comphist t)
-  
+
   ;; Setting ac-comphist data
   (setq ac-comphist-file (concat emacs-cache-dir "auto-complete.dat"))
-  
+
   ;; Show menu
   (setq ac-auto-show-menu t)
-  
+
   ;; Enable ac-menu-map
   (setq ac-use-menu-map t)
-  
+
    ;;;; Keybindings
   (define-key ac-menu-map (kbd "C-n") 'ac-next)
   (define-key ac-menu-map (kbd "C-p") 'ac-previous)
@@ -669,21 +669,21 @@ dummy
 #+begin_src emacs-lisp
   ;;;; emacs-lisp-mode extensions
   (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Hooks
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;; when visit file, remove .elc extension file
 ;;  (add-hook 'emacs-lisp-mode-hook 'remove-elc-when-visit)
-  
+
   ;; use my lisp-common-setting
 ;;  (add-hook 'emacs-lisp-mode-hook 'coldnew-lisp-common-setting)
-  
+
   ;; my auto-complete for elisp
   ;;(require 'auto-complete-emacs-lisp)
   (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
-  
+
   ;; use eldoc
   (require 'eldoc)
   (require 'eldoc-extension)
@@ -691,20 +691,20 @@ dummy
   ;; make eldoc work with paredit
   (when (featurep 'paredit)
     (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
-  
+
   ;; highlight common lisp style functions
   (require 'highlight-cl)
   (add-hook 'emacs-lisp-mode-hook 'highlight-cl-add-font-lock-keywords)
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Keybindings
   ;;;; ---------------------------------------------------------------------------
   ;; (define-key emacs-lisp-mode-map (kbd "C-c i") 'elisp-mode:anything-info-search)
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Autocomplete
   ;;;; ---------------------------------------------------------------------------
-  
+
   (defun ac-emacs-lisp-mode-setup ()
     "auto-complete settings for emacs-lisp-mode"
     (setq ac-sources
@@ -719,7 +719,7 @@ dummy
   ;;;; ---------------------------------------------------------------------------
   ;;;; Functions
   ;;;; ---------------------------------------------------------------------------
-  
+
   (defun remove-elc-when-visit ()
     "After visit elisp file, remove .elc extension file."
     (make-local-variable 'find-file-hook)
@@ -728,10 +728,10 @@ dummy
                 (if (and (file-exists-p (concat buffer-file-name "c"))
                          (file-writable-p (concat buffer-file-name "c")))
                     (delete-file (concat buffer-file-name "c"))))))
-  
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;TODO: add for ielm
-  
+
   (defun ielm-auto-complete ()
     "Enables `auto-complete' support in \\[ielm]."
     (setq ac-sources '(ac-source-functions
@@ -746,19 +746,19 @@ dummy
 ** elscreen
 #+begin_src emacs-lisp
   (require* 'elscreen)
-  
+
   ;;; start elscreen
   (elscreen-start)
-  
+
   ;;; Make TAB show control ico
   (setq elscreen-tab-display-control t)
-  
+
   ;;; Make TAB do not display kill-screen icon
   (setq elscreen-tab-display-kill-screen nil)
-  
+
   ;;; Change elscreen prefix to
   ;;(elscreen-set-prefix-key nil)
-  
+
   ;;; Make elscreen create automatically
   (defmacro elscreen-create-automatically (ad-do-it)
     (` (if (not (elscreen-one-screen-p))
@@ -766,16 +766,16 @@ dummy
          (elscreen-create)
          (elscreen-notify-screen-modification 'force-immediately)
          (elscreen-message "New screen is automatically created"))))
-  
+
   (defadvice elscreen-next (around elscreen-create-automatically activate)
     (elscreen-create-automatically ad-do-it))
-  
+
   (defadvice elscreen-previous (around elscreen-create-automatically activate)
     (elscreen-create-automatically ad-do-it))
-  
+
   (defadvice elscreen-toggle (around elscreen-create-automatically activate)
     (elscreen-create-automatically ad-do-it))
-  
+
 #+end_src
 ** eshell
 #+begin_src emacs-lisp
@@ -785,11 +785,11 @@ dummy
   (require 'em-prompt)
   (require 'em-term)
   (require 'em-cmpl)
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Config
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;;; Setup prompt function
   (setq eshell-prompt-function
         '(lambda ()
@@ -800,11 +800,11 @@ dummy
               (eshell/pwd))
             (if (= (user-uid) 0) " # " " $ ")
             )))
-  
+
   ;;; change history file path
   (setq eshell-last-dir-ring-file-name (concat emacs-cache-dir "eshell-lastdir"))
   (setq eshell-history-file-name (concat emacs-cache-dir "eshell-history"))
-  
+
   ;; other setting
   (setq eshell-save-history-on-exit t)
   (setq eshell-ask-to-save-last-dir nil)
@@ -813,18 +813,18 @@ dummy
   (setq eshell-cmpl-cycle-completions nil)
   (setq eshell-scroll-to-bottom-on-output t)
   (setq eshell-show-maximum-output t)
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Hooks
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;;; Make eshell prompt more colorful
   (add-to-list 'eshell-output-filter-functions 'coldnew/colorfy-eshell-prompt)
-  
+
   ;; my auto-complete for elisp
   (add-hook 'eshell-mode-hook 'auto-complete-mode)
   (add-hook 'eshell-mode-hook 'ac-eshell-mode-setup)
-  
+
   ;; use helm to complete esehll
   (when (featurep 'helm)
     (add-hook 'eshell-mode-hook
@@ -832,24 +832,24 @@ dummy
                   (define-key eshell-mode-map
                     [remap pcomplete]
                     'helm-esh-pcomplete))))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Keybindings
   ;;;; ---------------------------------------------------------------------------
-  
-  
-  
+
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; eshell/command
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;; find-file
   ;; (defun eshell/ef (file) (find-file file))
   (defun eshell/ef (&rest args) (eshell/emacs args))
-  
+
   ;; ediff
   (defun eshell/ed (file1 file2) (ediff file1 file2))
-  
+
   ;; clear
   (defun eshell/clear ()
     "Clears the shell buffer ala Unix's clear or DOS' cls"
@@ -858,8 +858,8 @@ dummy
     (let ((inhibit-read-only t))
       ;; simply delete the region
       (delete-region (point-min) (point-max))))
-  
-  
+
+
   (defun eshell/info (subject)
     "Read the Info manual on SUBJECT."
     (let ((buf (current-buffer)))
@@ -873,7 +873,7 @@ dummy
           (eshell-print (format "There is no Info manual on %s.\n"
                                 subject))
           1))))
-  
+
   (defun eshell/emacs (&rest args)
     "Open a file in emacs. Some habits die hard."
     (if (null args)
@@ -885,19 +885,19 @@ dummy
       ;; argument causes later arguments to be looked for in that directory,
       ;; not the starting directory
       (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
-  
-  
-  
+
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Autocomplete
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;; define ac-source for eshell-pcomplete
   (ac-define-source eshell-pcomplete
     '((candidates . pcomplete-completions)
       (cache)
       (symbol . "f")))
-  
+
   (defun ac-eshell-mode-setup ()
     "auto-complete settings for eshell-mode"
     (setq ac-sources
@@ -911,7 +911,7 @@ dummy
             ;; ac-source-files-in-current-dir
             ;; ac-source-words-in-same-mode-buffers
             )))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Functions
   ;;;; ---------------------------------------------------------------------------
@@ -933,57 +933,57 @@ dummy
 ** c-mode
 dummy
 #+begin_src emacs-lisp
-  
+
   ;;;; c-mode extensions
   (add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
   (add-to-list 'auto-mode-alist '("\\.h$" . c-mode))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Hooks
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;; use my cc-mode-common-setting
 ;;  (add-hook 'c-mode-hook 'coldnew-cc-mode-common-setting)
-  
+
   ;; Enable c-eldoc
   (require 'c-eldoc)
   (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
   (c-turn-on-eldoc-mode)
-  
+
   ;; use ctypes
   (require 'ctypes)
   (setq-default ctypes-file-name (concat emacs-cache-dir "ctypes_std_c.dat"))
   (add-hook 'ctypes-load-hook 'my-ctypes-load-hook)
-  
+
   ;; use hide-if-def-mode
   ;;(add-hook 'c-mode-hook 'hide-ifdef-mode)
-  
+
   (require 'gccsense)
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Keybindings
   ;;;; ---------------------------------------------------------------------------
-  
-  
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Auto Complete
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Flymake
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Functions
   ;;;; ---------------------------------------------------------------------------
   (defun my-ctypes-load-hook ()
     (ctypes-read-file ctypes-file-name nil t t))
-  
-  
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Commands
   ;;;; ---------------------------------------------------------------------------
-  
+
   (defun c-mode:insert-inc-or-if ()
     "If at the start of line. add `inc' and expand it,
   else add `if' and expand it."
@@ -997,7 +997,7 @@ dummy
         (progn
           (insert "if")
           (yas/expand)))))
-  
+
   (defun c-mode:insert-main-function ()
     "insert main()."
     (interactive)
@@ -1010,7 +1010,7 @@ dummy
 ** c++-mode
 dummy
 #+begin_src emacs-lisp
-  
+
   ;;;; c++-mode extensions
   (add-to-list 'auto-mode-alist '("\\.hpp$" . c++-mode))
   (add-to-list 'auto-mode-alist '("\\.cpp$" . c++-mode))
@@ -1020,48 +1020,48 @@ dummy
                          (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
                                             magic-mode-regexp-match-limit t)))
                  . c++-mode))
-  
-  
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Hooks
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;; use my cc-mode-common-setting
   ;;(add-hook 'c++-mode-hook 'coldnew-cc-mode-common-setting)
-  
+
   ;; my auto-complete for cpp
   (add-hook 'c++-mode-hook 'ac-cpp-mode-setup)
-  
+
   ;; Enable c-eldoc
   (require 'c-eldoc)
   (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
   (c-turn-on-eldoc-mode)
-  
+
   ;;;; CodingStyle
   (add-hook 'c++-mode-hook
             '(lambda ()
-  
+
                ;; TODO: add comment here
                (setq c-macro-shrink-window-flag t)
                (setq c-macro-preprocessor "cpp")
                (setq c-macro-cppflags " ")
                (setq c-macro-prompt-flag t)
-  
+
                ;; Use linux-kernel style
                (c-set-style "linux")
-  
+
                ;; Setting indentation lvel
                (setq c-basic-offset 4)
-  
+
                ;; Make TAB equivilent to 4 spaces
                (setq tab-width 4)
-  
+
                ;; Use spaces to indent instead of tabs.
                (setq indent-tabs-mode nil)
-  
+
                ;; Indent the continuation by 2
                (setq c-continued-statement-offset 2)
-  
+
                ;; Brackets should be at same indentation level as the statements they open
                ;; for example:
                ;;                 if (0)        becomes        if (0)
@@ -1071,15 +1071,15 @@ dummy
                (c-set-offset 'substatement-open '0)
                ;; make open-braces after a case
                (c-set-offset 'case-label '+)
-  
+
                ))
-  
-  
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Keybindings
   ;;;; ---------------------------------------------------------------------------
-  
-  
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Auto Complete
   ;;;; ---------------------------------------------------------------------------
@@ -1103,35 +1103,35 @@ dummy
             "-pthread -I./ -I../ "
             (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0"))))
     )
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Flymake
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Functions
   ;;;; ---------------------------------------------------------------------------
-  
-  
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Commands
   ;;;; ---------------------------------------------------------------------------
-  
+
 #+end_src
 ** helm-mode
 #+begin_src emacs-lisp
   (require* 'helm)
   (require 'helm-config)
-  
+
   ;; Use predefined configurations for `helm.el'
   (setq helm-config t)
-  
+
   ;; Enable helm globally
   (helm-mode 1)
-  
+
   ;; Enable dired binding
   (helm-dired-bindings 1)
-  
+
   (require 'helm-etags+)
   (require 'ctags-update)
   (ctags-update-minor-mode 1)
@@ -1152,15 +1152,15 @@ dummy
        helm-c-source-files-in-current-dir
        helm-c-source-locate)
      "*coldnew/filelist*"))
-  
-  
+
+
   (defun coldnew/helm-occur ()
     "I don't like highlight when goto lines."
     (interactive)
     ;; FIXME: is there more elegent way to make temp face?
     (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
     (helm-occur))
-  
+
   (defun helm-c-occur-get-line (s e)
     "rewrite `helm-c-occur-get-line' to make it color on line-number."
     (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
@@ -1169,13 +1169,13 @@ dummy
 ** lusty-explorer
 #+begin_src emacs-lisp
   (require 'lusty-explorer)
-  
+
   ;;;; Keybindings
   (add-hook 'lusty-setup-hook
             '(lambda ()
                (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)
                ))
-  
+
   ;; Make lusty-explorer use it's own completion, not helm-completion
   (when (featurep 'helm)
     (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
@@ -1229,6 +1229,11 @@ dummy
             '(lambda ()
                (local-set-key (kbd "C-g") 'org-agenda-exit)))
 #+end_src
+*** Hooks
+**** Disable linum
+#+begin_src emacs-lisp
+;;  (add-to-list 'org-mode-hook '(lambda () (linum-mode -1)))
+#+end_src
 *** Conflict Fix
 some packages conflict with org-mode
 **** yasnippet
@@ -1277,14 +1282,14 @@ some packages conflict with org-mode
   (setq enable-recursive-minibuffers     t )
   (setq max-mini-window-height         .25 ) ; 2 lines high
   (setq minibuffer-electric-default-mode t )
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Hooks
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;; Abort the minibuffer when using the mouse
   (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; setup keybindings
   ;;;; ---------------------------------------------------------------------------
@@ -1298,12 +1303,12 @@ some packages conflict with org-mode
   ;;;; ---------------------------------------------------------------------------
   ;;;; Functions
   ;;;; ---------------------------------------------------------------------------
-  
+
   (defun stop-using-minibuffer ()
     "kill the minibuffer"
     (when (and (>= (recursion-depth) 1) (active-minibuffer-window))
       (abort-recursive-edit)))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Commands
   ;;;; ---------------------------------------------------------------------------
@@ -1318,13 +1323,13 @@ some packages conflict with org-mode
            (file-name (file-name-nondirectory file)))
       (delete-region (point) (save-excursion (end-of-line) (point)))
       (insert (concat file-true-dir file-name))))
-  
+
 #+end_src
 ** yasnippet
 *** Init
 #+begin_src emacs-lisp
   (setq-default yas/snippet-dirs emacs-snippets-dir)
-#+end_src 
+#+end_src
 *** Depends
 #+begin_src emacs-lisp
   (require 'yasnippet)
@@ -1508,7 +1513,7 @@ buffer list
                         (mode . lisp-interaction-mode)
                         ))
            )))
-  #+end_src
+#+end_src
 Following buffer will not show in iBuffer
 #+begin_src emacs-lisp
   (setq ibuffer-never-show-predicates
@@ -1546,14 +1551,14 @@ Following buffer will not show in iBuffer
   ;; Reverse group list
   (defadvice ibuffer-generate-filter-groups (after reverse-ibuffer-groups () activate)
     (setq ad-return-value (nreverse ad-return-value)))
-  
+
   ;; Switching to ibuffer puts the cursor on the most recent buffer
   (defadvice ibuffer (around ibuffer-point-to-most-recent activate)
     "Open ibuffer with cursor pointed to most recent buffer name"
     (let ((recent-buffer-name (buffer-name)))
       ad-do-it
       (ibuffer-jump-to-buffer recent-buffer-name)))
-  
+
   ;; Kill ibuffer after quit
   (defadvice ibuffer-quit (after kill-ibuffer activate)
     "Kill the ibuffer buffer on exit."
@@ -1590,7 +1595,7 @@ Following buffer will not show in iBuffer
   (setq winner-dont-bind-my-keys t)
   ;; Enable winner-mode
   (winner-mode t)
-  
+
 #+end_src
 ** speedbar
 #+begin_src emacs-lisp
@@ -1607,7 +1612,7 @@ Following buffer will not show in iBuffer
   (shell-pop-set-internal-mode-shell emacs-default-shell)
   (shell-pop-set-window-height emacs-popup-shell-window-height)
   (shell-pop-set-window-position emacs-popup-shell-window-position)
-  
+
   (defadvice shell-pop (before kill-dead-term activate)
     "If there is a stopped ansi-term, kill it and create a new one."
     (let ((running-p (term-check-proc (buffer-name)))
@@ -1628,7 +1633,7 @@ Following buffer will not show in iBuffer
   ;; ;; Remove term-mode default color
   (setq-default term-default-bg-color nil)
   (setq-default term-default-fg-color nil)
-  
+
   ;;;; keybindings
   ;; (define-key term-raw-map (kbd "<f4>") 'shell-pop)
   (define-key term-raw-map (kbd "M-x") 'execute-extended-command)
@@ -1655,51 +1660,51 @@ Following buffer will not show in iBuffer
   (setq comint-output-filter-functions  '(comint-watch-for-password-prompt))
   (setq comint-password-prompt-regexp
         "\\(\\([Oo]ld \\|[Nn]ew \\|^\\)[Pp]assword\\|Enter password\\):\\s *\\'")
-  
+
   ;;;; Keybindings
   (define-key comint-mode-map (kbd "C-g") 'comint-interrupt-subjob)
 #+end_src
 ** bash
 #+begin_src emacs-lisp
-  
+
   ;;;; sh-mode extensions
   (add-to-list 'auto-mode-alist '("\\.sh" . sh-mode))
   (add-to-list 'auto-mode-alist '("\\.bash" . sh-mode))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Hooks
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;; use my editor-mode
   (add-hook 'shell-mode-hook '(lambda() (coldnew-editor-mode 1)))
-  
+
   ;; auto-complete
   (add-hook 'shell-mode-hook 'ac-shell-script-mode-setup)
-  
+
   ;; bash-completion
   (require 'bash-completion)
   (bash-completion-setup)
-  
+
   ;; use flymake-shell
   (require* 'flymake-shell)
   (add-hook 'shell-mode-hook 'flymake-shell-load)
-  
-  
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Keybindings
   ;;;; ---------------------------------------------------------------------------
-  
-  
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Auto Complete
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;; define ac-source for pcomplete
   (ac-define-source pcomplete
     '((candidates . pcomplete-completions)
       (cache)
       (symbol . "f")))
-  
+
   (defun ac-shell-script-mode-setup ()
     "auto-complete settings for shell-script-mode"
     (setq ac-sources
@@ -1709,63 +1714,163 @@ Following buffer will not show in iBuffer
             ac-source-files-in-current-dir
             ac-source-words-in-same-mode-buffers
             )))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Flymake
   ;;;; ---------------------------------------------------------------------------
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Functions
   ;;;; ---------------------------------------------------------------------------
-  
-  
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Commands
   ;;;; ---------------------------------------------------------------------------
 #+end_src
+** undo-tree
+#+begin_src emacs-lisp
+  (require 'undo-tree)
+  ;; Enable undo-tree globally
+  (global-undo-tree-mode)
+  ;; keybinding
+  (define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)
+#+end_src
+** hungry-delete
+#+begin_src emacs-lisp
+  (require 'hungry-delete)
+  (add-hook 'coldnew-editor-hook 'turn-on-hungry-delete-mode)
+#+end_src
+** cua
+#+begin_src emacs-lisp
+  (require 'cua-base)
+  (require 'cua-rect)
+  ;; don't add C-x, C-c, C-v
+  (setq cua-enable-cua-keys nil)
+  (setq cua-rectangle-mark-key (kbd "C-c RET"))
+  ;; Enable cua-mode
+  (cua-mode t)
+#+end_src
+** paredit
+#+begin_src emacs-lisp
+  (require 'paredit)
+
+  (defun paredit-blink-paren-match (another-line-p)
+    "redefine this function, i don't like paredit to blikn math paren")
+
+  (defadvice paredit-backward-delete (around paredit-backward-delete activate)
+    "Intergrated paredit-backward-delete with hungry-delete."
+    ad-do-it
+    (when (featurep 'hungry-delete)
+      (if (eq (char-before) ?\s)
+          (hungry-delete-backward))))
+
+  (defadvice paredit-forward-delete (around paredit-forward-delete activate)
+    "Intergrated paredit-forward-delete with hungry-delete."
+    ad-do-it
+    (when (featurep 'hungry-delete)
+      (if (eolp)
+          (hungry-delete-forward))))
+#+end_src
+** projectile
+#+begin_src emacs-lisp
+  (require 'projectile)
+  (projectile-global-mode)
+  (setq projectile-enable-caching t)
+#+end_src
+** hideshow
+#+begin_src emacs-lisp
+  (require 'hideshow)
+  (require* 'hideshowvis)
+
+  ;;; enable following mode to use hideshow
+  (dolist (hook (list 'emacs-lisp-mode-hook
+                      'c++-mode-hook
+                      'c-mode-hook))
+    (add-hook hook 'hideshowvis-enable))
+#+end_src
+** slime
+#+begin_src emacs-lisp
+  (require 'slime)
+  (require 'ac-slime)
+  ;; Save REPL history to emacs-cache-dir
+  (setq slime-repl-history-file (concat emacs-cache-dir "slime-hist.dat"))
+
+  ;; REPL history size set to 300
+  (setq slime-repl-history-size 300)
+
+  ;; Use global programming mode
+  (add-hook 'slime-repl-mode-hook 'programming-mode)
+  (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+#+end_src
+** compilation
+#+begin_src emacs-lisp
+  ;; FIXME: move to other place
+  (defun notify-compilation-result(buffer msg)
+    "Notify that the compilation is finished,
+     close the *compilation* buffer if the compilation is successful,
+     and set the focus back to Emacs frame"
+    (if (string-match "^finished" msg)
+        (progn
+          (delete-windows-on buffer)
+          (message (propertize "COMPILATION SUCCESSFUL :-) " 'face 'font-lock-warning-face))
+          ;;       (tooltip-show "\n Compilation Successful :-) \n ")
+          )
+      (tooltip-show "\n Compilation Failed :-( \n "))
+    ;; FIXME: When I use dualscreen, following functiokn will make error,
+    ;;        after compilation, current frame will jump to another DISPLAY
+    ;;  (setq current-frame (car (car (cdr (current-frame-configuration)))))
+    ;; (select-frame-set-input-focus current-frame)
+    )
+
+  (add-to-list 'compilation-finish-functions 'notify-compilation-result)
+  ;; Make compilaction buffer always scrolls to follow output as it comes in.
+  (setq compilation-scroll-output t)
+
+  ;; Auto jump to the first error.
+  (setq compilation-auto-jump-to-first-error t)
+#+end_src
 * Editor
 This section contains my editor state
 #+begin_src emacs-lisp
-  
-  
   (defvar coldnew-editor-hook nil
     "Hooks for coldnew-editor-mode.")
-  
+
   (defvar coldnew-editor-state "Emacs"
     "default editor mode is Emacs-mode")
-  
+
   (defvar coldnew-editor-map
     (let ((map (make-sparse-keymap)))
       (define-key map (kbd "C-0") 'universal-argument)
       map)
     "Keymap for coldnew-editor-mode.")
-  
+
   (define-minor-mode coldnew-editor-mode
     "Minor mode for coldnew's editor."
     :init-value t
     :lighter " coldnew-editor"
     :keymap coldnew-editor-map
     (run-hooks 'coldnew-editor-hook))
-  
+
   (defun coldnew/disable-mode-according-state ()
     (cond
      ((string= "View"  coldnew-editor-state) (view-mode -1))
      ((string= "Command"  coldnew-editor-state) (coldnew/command-mode -1))
      ))
-  
+
   (defun coldnew/switch-to-emacs-mode ()
     (interactive)
     ;; disable other state according mode
     (coldnew/disable-mode-according-state)
     (setq coldnew-editor-state "Emacs"))
-  
+
   (defun coldnew/switch-to-command-mode ()
     (interactive)
     ;; disable other state according mode
     (coldnew/disable-mode-according-state)
     (setq coldnew-editor-state "Command")
     (coldnew/command-mode 1))
-  
+
   (defvar coldnew/command-mode-map
     (let ((map (make-sparse-keymap)))
       (suppress-keymap map)
@@ -1809,7 +1914,7 @@ This section contains my editor state
       (define-key map "tp" 'elscreen-previous)
       map)
     "Keymap for coldnew-editor-Mode.")
-  
+
   (define-minor-mode coldnew/command-mode
     "Minor mode like vi's normal mode"
     :init-value nil
@@ -1823,22 +1928,22 @@ This section contains my editor state
       (progn
         ;; disable keychord
         (setq input-method-function nil))))
-  
+
   (add-hook 'post-command-hook 'coldnew/set-mode-according-state)
-  
+
   (defun coldnew/toggle-state ()
     (interactive)
     (cond
      ((string= "Command" coldnew-editor-state) (coldnew/switch-to-emacs-mode))
      ((string= "Emacs"   coldnew-editor-state) (coldnew/switch-to-command-mode)) )
     )
-  
+
   (defvar coldnew/buffer-state-alist
     '((eshell-mode . "Emacs")
       (term-mode   . "Emacs")
       (ibuffer-mode . "Emacs")
       ))
-  
+
   (defun coldnew/set-mode-according-state ()
     (let* ((mode major-mode)
            (state (cdr-safe (assoc mode coldnew/buffer-state-alist))))
@@ -1847,7 +1952,7 @@ This section contains my editor state
        ((string= "Command" state) (coldnew/switch-to-command-mode))
        ((string= "Emacs"   state) (coldnew/switch-to-emacs-mode)) )
       ))
-  
+
   ;; FIXME: change to my own code one day
   (defun coldnew/evil-delay (condition form hook &optional append local name)
     "Execute FORM when CONDITION becomes true, checking with HOOK.
@@ -1865,7 +1970,7 @@ This section contains my editor state
                        ,form)))
         (put fun 'permanent-local-hook t)
         (add-hook hook fun append local))))
-  
+
   (defun coldnew/execute-in-command-mode ()
     "Execute the next command in Command mode."
     (interactive)
@@ -1874,10 +1979,10 @@ This section contains my editor state
                         'post-command-hook)
     (coldnew/switch-to-command-mode)
     )
-  
+
   (global-set-key (kbd "C-o") 'coldnew/execute-in-command-mode)
   (global-set-key (kbd "C-j") 'linum-ace-jump)
-  
+
 #+end_src
 #+begin_src emacs-lisp
   ;;;; ---------------------------------------------------------------------------
@@ -1891,7 +1996,7 @@ This section contains my editor state
   (setq require-final-newline  t ) ; Auto add a newline at the end of line
   (setq next-line-add-newlines t ) ;
   (setq shift-select-mode      t ) ; Enable shift-select mode
-  
+
   ;; Enable global font-lock
   (global-font-lock-mode t)
   ;; Revert buffers automatically when underlying files are changed externally
@@ -1903,6 +2008,92 @@ This section contains my editor state
   ;; Enable delete-selection-mode
   (delete-selection-mode t)
 #+end_src
+
+** hooks
+#+begin_src emacs-lisp
+     ;; After save buffer, indent whole file.
+     (add-hook 'coldnew-editor-hook 'indent-file-after-save)
+     ;; Before save buffer, cleanup whitespace
+     (add-hook 'coldnew-editor-hook 'cleanup-whitespace-before-save)
+     ;; Enable line-number
+     (require 'linum)
+    ;; (add-hook 'coldnew-editor-hook 'linum-mode)
+     ;; use electric-indent-mode
+     (add-hook 'coldnew-editor-hook 'electric-indent-mode)
+     ;; highlight special keywords like TODO, BUF
+     (add-hook 'coldnew-editor-hook 'highlight-additional-keywords)
+   ;; highlight fontify numbers and constant
+    (add-hook 'coldnew-editor-hook 'highlight-fontify-numbers)
+    ;; highlight escape char in string
+    (add-hook 'coldnew-editor-hook 'highlight-escape-char)
+  ;;   ;; Add spaces between Chinese and English character.
+    (add-hook 'before-save-hook 'insert-space-between-english-chinese)
+#+end_src
+
+** TODO conflict
+#+begin_src emacs-lisp
+  ;;   ;; Color nested parentheses, brackets, and braces according to their dept
+  ;;   (require 'rainbow-delimiters)
+  ;;   (add-hook 'coldnew-editor-hook 'rainbow-delimiters-mode)
+#+end_src
+** Functions
+#+begin_src emacs-lisp
+  (defun indent-file-after-save ()
+    "Indent whole file after saved."
+    (make-local-variable 'after-save-hook)
+    (add-hook 'after-save-hook
+              '(lambda ()
+                 (indent-region (point-min) (point-max) nil)
+                 (save-buffer))))
+
+  (defun cleanup-whitespace-before-save ()
+    "Cleanup whitespaces before save to a file."
+    (make-local-variable 'before-save-hook)
+    (add-hook 'before-save-hook
+              '(lambda ()
+                 (whitespace-cleanup)
+                 (delete-trailing-whitespace))))
+
+  (defun highlight-additional-keywords ()
+    "Highlight additional keywords."
+    (font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)))
+    (font-lock-add-keywords nil '(("\\<\\(NOTE\\):" 1 'org-level-2 t)))
+    (font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
+    (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t)))
+    )
+
+  (defun highlight-fontify-numbers ()
+    "Use this function as a hook to fontify numbers as constant"
+    (font-lock-add-keywords nil
+                            '(
+                              ;; hexadecimal
+                              ("\\b\\(0x[0-9a-fA-F]+\\)" 1 font-lock-constant-face)
+                              ;; float
+                              ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
+                              ;; int
+                              ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
+                              )))
+
+  (defun highlight-escape-char ()
+    "Use this function as a hook to fontify escape char."
+    (font-lock-add-keywords nil
+                            '(
+                              ("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
+                               0 'font-lock-escape-char-face prepend)
+                              )))
+
+  (defun insert-space-between-english-chinese ()
+    "Insert a space between English words and Chinese charactors"
+    (save-excursion
+      (goto-char (point-min))
+      (while (or (re-search-forward "\\(\\cc\\)\\([a-zA-Z0-9]\\)" nil t)
+                 (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
+        (replace-match "\\1 \\2" nil nil))
+      (goto-char (point-min))
+      (while (or (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
+                 (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
+        (replace-match "\\1\\2" nil nil))))
+#+end_src
 * Mode Line
 #+begin_src emacs-lisp
   ;;;; ---------------------------------------------------------------------------
@@ -1911,14 +2102,14 @@ This section contains my editor state
   (line-number-mode t)
   (column-number-mode t)
   (size-indication-mode t)
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Functions
   ;;;; ---------------------------------------------------------------------------
   (defun mode-line-major-mode ()
     "Get major-mode name with << >>."
     (concat "<< " (propertize mode-name 'face 'mode-line-mode-name-face) " >>"))
-  
+
   (defun coldnew-editor-mode-string ()
     (let* ((mode-string-face
             (cond
@@ -1927,7 +2118,7 @@ This section contains my editor state
              (t 'mode-line-evil-state-string-E)
              )))
       (concat "<" (propertize coldnew-editor-state 'face mode-string-face) ">")))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; modeline User-Interfaced setting
   ;;;; ---------------------------------------------------------------------------
@@ -1956,7 +2147,7 @@ This section contains my editor state
                    ","
                    (:eval (propertize "%02c" 'face 'font-lock-type-face))
                    ")"
-  
+
                    "   "
                    (vc-mode vc-mode)
                    "   "
@@ -1971,23 +2162,23 @@ This section contains my editor state
 * gpg
 #+begin_src emacs-lisp
   (require 'epa-file)
-  
+
   ;; use local gpg program instaed of system one
   ;; only work under linux
   (cond
    ;; (linux-32bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg-x86")))
    (linux-64bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg")))
    )
-  
+
   (setenv "GPG_AGENT_INFO" nil)
-  
-  
+
+
   ;; Control whether or not to pop up the key selection dialog.
   (setq epa-file-select-keys 0)
-  
+
   ;; Cache passphrase for symmetric encryption.
   (setq epa-file-cache-passphrase-for-symmetric-encryption t)
-  
+
 #+end_src
 * Command
 All command file
@@ -1996,7 +2187,7 @@ All command file
     "Launch gitg in the current directory."
     (interactive)
     (start-process "gitg" nil "gitg"))
-  
+
   (defun fullscreen-window ()
     "Make the window full-screen."
     (interactive)
@@ -2009,31 +2200,31 @@ All command file
                                (setq old-value current-value)
                                'fullboth)
                              ))))
-  
+
   (defun windmove-down-fullscreen ()
     "Select window below current one and make it fullscreen."
     (interactive)
     (if (windmove-down)
         (delete-other-windows)))
-  
+
   (defun windmove-up-fullscreen ()
     "Select window above the current one and make it fullscreen."
     (interactive)
     (if (windmove-up)
         (delete-other-windows)))
-  
+
   (defun windmove-left-fullscreen ()
     "Select window left to current one and make it fullscreen."
     (interactive)
     (if (windmove-left)
         (delete-other-windows)))
-  
+
   (defun windmove-right-fullscreen ()
     "Select window right to current one and make it fullscreen."
     (interactive)
     (if (windmove-right)
         (delete-other-windows)))
-  
+
   (defun sudo-edit (&optional arg)
     "Edit file with sudo in emacs"
     (interactive "p")
@@ -2041,7 +2232,7 @@ All command file
         ;; (find-file (concat "/sudo:root@localhost:" (anything-read-file-name "File: ")))
         (find-file (concat "/sudo:root@localhost:" (read-file-name "File: ")))
       (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Buffer
   ;;;; ---------------------------------------------------------------------------
@@ -2050,17 +2241,17 @@ All command file
     (interactive)
     (set-buffer-modified-p t)
     (save-buffer))
-  
+
   (defun toggle-selective-display (column)
     (interactive "P")
     (set-selective-display
      (if selective-display nil (or column 1))))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Insert
   ;;; ---------------------------------------------------------------------------
   (require 'mm-url)
-  
+
   (defun insert-tinyurl (url)
     "Insert a shortend URL at point by passed in URL"
     (interactive "sEnter url: " )
@@ -2073,16 +2264,16 @@ All command file
                 (kill-ring-save (point-min) (point-max))
                 (buffer-string)))))
       (insert tinyurl)))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Date
   ;;;; ---------------------------------------------------------------------------
-  
+
   (defun insert-date-time ()
     "Insert current-date."
     (interactive)
     (insert (current-date-time)))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Search
   ;;;; ---------------------------------------------------------------------------
@@ -2093,7 +2284,7 @@ All command file
      (get-buffers-matching-mode major-mode)
      (car (occur-read-primary-args)))
     (select-window (get-buffer-window "*Occur*")))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Delete
   ;;;; ---------------------------------------------------------------------------
@@ -2102,13 +2293,13 @@ All command file
   With argument, do this that many times."
     (interactive "p")
     (delete-region (point) (progn (forward-word arg) (point))))
-  
+
   (defun backward-delete-word (arg)
     "Delete characters backward until encountering the end of a word.
   With argument, do this that many times."
     (interactive "p")
     (delete-word (- arg)))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; key-macro
   ;;;; ---------------------------------------------------------------------------
@@ -2120,7 +2311,7 @@ All command file
       (this-command-keys)
       'toggle-kbd-macro-recording-off)
     (start-kbd-macro nil))
-  
+
   (defun toggle-kbd-macro-recording-off ()
     "One-key keyboard macros: turn recording off."
     (interactive)
@@ -2129,7 +2320,7 @@ All command file
       (this-command-keys)
       'toggle-kbd-macro-recording-on)
     (end-kbd-macro))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Convert
   ;;;; ---------------------------------------------------------------------------
@@ -2137,12 +2328,12 @@ All command file
     "Convert buffer file from unix file to dos file."
     (interactive)
     (unix->dos (current-buffer)))
-  
+
   (defun dos2unix ()
     "Convert buffer file from dos file to unix file."
     (interactive)
     (dos->unix (current-buffer)))
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Commands that define for key-chord
   ;;;; ---------------------------------------------------------------------------
@@ -2150,35 +2341,35 @@ All command file
     "upcase word backward."
     (interactive)
     (upcase-word -1))
-  
+
   (defun downcase-word-backward ()
     "downcase word backward."
     (interactive)
     (downcase-word -1))
-  
+
   (defun capitalize-word-backward ()
     "captialize word backward."
     (interactive)
     (capitalize-word -1))
-  
+
   (defun backward-kill-line (arg)
     "Kill chars backward until encountering the end of a line."
     (interactive "p")
     (kill-line 0))
-  
+
   (defun insert-empty-line ()
     "Insert an empty line after current line and position cursor on newline."
     (interactive)
     (move-end-of-line nil)
     (open-line 1)
     (next-line 1))
-  
+
 #+end_src
 * Alias
 #+begin_src emacs-lisp
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
   (defalias 'coldnew/folding-toggle   'toggle-selective-display)
-  
+
   (defalias 'git-log    'egg-log)
   (defalias 'git-status 'egg-status)
   (defalias 'git-rebase 'magit-rebase-step)
@@ -2190,16 +2381,16 @@ All command file
 *** egg
 #+begin_src emacs-lisp
   (require 'egg)
-  
+
   ;; do not auto-update egg-status on file save
   (setq egg-auto-update nil)
-  
+
   ;; do not switch to the status buffer in the same window
   (setq egg-switch-to-buffer t)
-  
+
   ;; make egg auto guess next action
   (setq egg-confirm-next-action nil)
-  
+
   ;; remodify next-action priority
   (defsubst egg-guess-next-action (desc)
     (cond
@@ -2212,18 +2403,18 @@ All command file
      ((memq :wdir-is-modified desc)         :stage-all)
      ((memq :rebase-in-progress desc)       :rebase-continue)
      (t                                     :quit)))
-  
+
   ;;;;;;; Kyebinding
   (add-hook 'egg-commit-buffer-mode-hook
             '(lambda ()
                (define-key coldnew/command-mode-map "c" 'egg-log-msg-done)))
-  
+
   ;;;;;;;; Advice
   (defadvice egg-status (around goto-egg-status-buffer activate)
     "Delete other windows after visiting egg-status."
     ad-do-it
     (delete-other-windows))
-  
+
   (defadvice egg-commit-log-edit (around goto-egg-commit-buffer activate)
     "Delete other windows after visiting egg-commit-buffer."
     ad-do-it
@@ -2279,18 +2470,18 @@ All command file
   (setq delete-by-moving-to-trash nil)    ; delete file don't use system's trash can
   (setq delete-auto-save-files      t)    ; delete auto-save file when bffer is saved or killed
   (setq auto-save-default    t)           ; auto-save of every file-visiting buffer
-  
+
   ;; if emacs-backup-dir does not exist, create it
   (if (not (file-exists-p emacs-backup-dir))
       (make-directory emacs-backup-dir t))
-  
+
   (setq backup-directory-alist `(("." . ,emacs-backup-dir)))
   (setq version-control      t )          ; enable version-control
   (setq backup-by-copying    t )          ; backup by copy
   (setq kept-old-versions   10 )          ; keep 10 old-version
   (setq kept-new-versions   20 )          ; keep 20 new-version
   (setq delete-old-versions  t )          ; delete non-of-above version
-  
+
   ;; change auto-save-list setting
   (setq auto-save-list-file-prefix (concat emacs-backup-dir "auto-saves-"))
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
@@ -2307,10 +2498,10 @@ All command file
           "\\.output$" "\\.$" "#$" "\\.class$" "\\.pyc$" "\\.png$" "\\.jpg$" "\\.gif$"
           "\\.svn$" "\\.svn-base$" "\\.git$" "\\.hg$"
           ))
-  
+
   (file-cache-add-directory-list '("~/.emacs.d/config/" ))
-  
-  
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; savehist
   ;;;; ---------------------------------------------------------------------------
@@ -2318,14 +2509,14 @@ All command file
   ;; keep minibuffer history between session
   (setq savehist-file (concat emacs-cache-dir "savehist.dat"))
   (savehist-mode 1)
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; saveplace
   ;;;; ---------------------------------------------------------------------------
   (require 'saveplace)
   (setq save-place-file (concat emacs-cache-dir "saveplace.dat"))
   (setq-default save-place t)
-  
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; recentf
   ;;;; ---------------------------------------------------------------------------
@@ -2335,8 +2526,8 @@ All command file
   (setq recentf-save-file (concat emacs-cache-dir "recentf"))
   ;; Following file won;t contain in recentf
   (setq recentf-exclude '("\\.elc$" "\\.pyc$" "\\.recentd$" "^/tmp/"))
-  
-  
+
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; desktop
   ;;;; ---------------------------------------------------------------------------
@@ -2345,40 +2536,76 @@ All command file
   (setq desktop-dirname emacs-cache-dir)
   (setq desktop-base-file-name "desktop.dat")
   (setq desktop-missing-file-warning nil)
-  
+
   ;; Enable desktop
   (desktop-save-mode t)
-  
+
   (defadvice desktop-owner (after pry-from-cold-dead-hands activate)
     "Don't allow dead emacsen to own the desktop file."
     (when (not (emacs-process-p ad-return-value))
       (setq ad-return-value nil)))
-  
+
   (defun desktop-in-use? ()
     (and (file-exists-p desktop-base-file-name) (file-exists-p desktop-base-lock-name)))
-  
+
   (defun autosave-desktop ()
     (if (desktop-in-use?) (desktop-save-in-desktop-dir)))
-  
+
   ;; auto save desktop
   (add-hook 'after-init-hook
             (lambda ()
               (setq *desktop-saver-timer*
                     (run-with-timer 5 300 'autosave-desktop))))
-  
+
   ;; Following modes are ignore and won't save to desktop
   (setq desktop-buffers-not-to-save
         (concat "\\("
                 "^\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
                 "\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
                 "\\)$"))
-  
+
   (add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
   (add-to-list 'desktop-modes-not-to-save 'dired-mode)
   (add-to-list 'desktop-modes-not-to-save 'Info-mode)
   (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
   (add-to-list 'desktop-modes-not-to-save 'w3m-mode)
   (add-to-list 'desktop-modes-not-to-save 'view-mode)
+#+end_src
+* Cursor
+#+begin_src emacs-lisp
+  (defvar emacs-normal-cursor-color "white")
+  (defvar emacs-normal-cursor-type 'bar)
+
+  (defvar emacs-read-only-cursor-color "gray")
+  (defvar emacs-read-only-cursor-type 'box)
+
+  (defvar emacs-overwrite-cursor-color "yellow")
+  (defvar emacs-overwrite-cursor-type 'hbar)
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Hooks
+  ;;;; ---------------------------------------------------------------------------
+  (add-hook 'post-command-hook 'coldnew/set-cursor-according-mode)
+
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Functions
+  ;;;; ---------------------------------------------------------------------------
+  (defun coldnew/set-cursor-according-mode ()
+    "change cursor shap and color according mode"
+    (cond
+     ((string= "Command" coldnew-editor-state)
+      (setq cursor-type emacs-read-only-cursor-type)
+      (setq cursor-color emacs-read-only-cursor-color))
+     (buffer-read-only
+      (setq cursor-type emacs-read-only-cursor-type)
+      (setq cursor-color emacs-read-only-cursor-color))
+     ;; (overwrite-mode
+     ;;   (set-cursor-color djcb-overwrite-color)
+     ;;   (setq cursor-type djcb-overwrite-cursor-type))
+     (t
+      (setq cursor-type emacs-normal-cursor-type)
+      (setq cursor-color emacs-normal-cursor-color))))
 #+end_src
 * Global keybinding
 
@@ -2515,9 +2742,16 @@ All command file
 ** TODO remove one day
 test
 #+begin_src emacs-lisp
+
      (provide 'coldnew-emacs)
+;; Local Variables:
+;; eval: (linum-mode -1)
+;; End:
 #+end_src
 
-
-
-
+* COMMENT File local variables
+# Local Variables:
+# revert-without-query: t
+# eval: (revert-buffer)
+#       (linum-mode -1)
+# End:
