@@ -407,6 +407,7 @@ add comment for this section
   (require* 'space-chord)
   (require* 'smallurl)
   (require* 'switch-window)
+  (require* 'pretty-lambdada)
 #+end_src
 * Advice
 advice file
@@ -2182,6 +2183,179 @@ This section contains my editor state
 #+end_src
 * Command
 All command file
+#+begin_src emacs-lisp
+
+  (defun select-forwards-to-before-match (match)
+    "Selects forwards to just before next match, uses
+  select-region-to-before-match"
+    (interactive "MSelect forwards to just before: ")
+    (select-region-to-before-match match 'forwards))
+
+  (defun select-backwards-to-before-match (match)
+    "Selects backwards to just before next match, uses
+  select-region-to-before-match"
+    (interactive "MSelect backwards to just before: ")
+    (select-region-to-before-match match 'backwards))
+
+  (defun kill-forwards-to-before-match (match)
+    "Selects forwards to just before next match, uses
+  select-region-to-before-match, then kills that region."
+    (interactive "MKill forwards to just before: ")
+    (let* ((positions (select-region-to-before-match match 'forwards))
+           (start (car positions))
+           (end (cadr positions)))
+      (kill-region start end)))
+
+  (defun kill-backwards-to-before-match (match)
+    "Selects backwards to just before next match, uses
+  select-region-to-before-match, then kills that region."
+    (interactive "MKill backwards to just before: ")
+    (let* ((positions (select-region-to-before-match match 'backwards))
+           (start (car positions))
+           (end (cadr positions)))
+      (kill-region start end)))
+
+  (defun match-paren (arg)
+    "Go to the matching paren if on a paren; otherwise insert %."
+    (interactive "p")
+    (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
+          ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+          (t (self-insert-command (or arg 1)))))
+
+  (defun delete-between-pair (char)
+    "Delete in between the given pair"
+    (interactive "cDelete between char: ")
+    (let ((pair-char))
+      (search-backward-to-char char)
+      (forward-char 1)
+      (cond
+       ((char-equal char ?\() (setq pair-char ?\)))
+       ((char-equal char ?\") (setq pair-char ?\"))
+       ((char-equal char ?\') (setq pair-char ?\'))
+       ((char-equal char ?\[) (setq pair-char ?\]))
+       ((char-equal char ?\{) (setq pair-char ?\}))
+       ((char-equal char ?\<) (setq pair-char ?\>)))
+      (zap-up-to-char 1 pair-char)))
+
+  (defun cua-set-mark-or-rectangle-mark (&optional arg)
+    "toggle between cua-set-mark or cua-rectangle-mark"
+    (interactive "P")
+    (if (or (not mark-active) arg)
+        (cua-set-mark arg)
+      (cua-toggle-rectangle-mark)))
+
+
+  (defadvice kill-ring-save (before slickcopy activate compile)
+    "When called interactively with no active region, copy a single line
+  instead."
+    (interactive
+     (if mark-active (list (region-beginning) (region-end))
+       (list (line-beginning-position)
+             (line-beginning-position 2)))))
+
+  (defadvice kill-region (before slickcut activate compile)
+    "When called interactively with no active region, kill a single line
+  instead."
+    (interactive
+     (if mark-active (list (region-beginning) (region-end))
+       (list (line-beginning-position)
+             (line-beginning-position 2)))))
+
+  (defun zap-up-to-char-backward (arg char)
+    (interactive "p\ncZap up to char backward: ")
+    (zap-up-to-char (- arg) char))
+
+  (defun go-to-char (arg char)
+    (interactive "p\ncGo to char: ")
+    (forward-char 1)
+    (if (if arg
+            (search-forward (char-to-string char) nil nil arg)
+          (search-forward (char-to-string char)))
+        (backward-char 1)))
+
+  (defun go-back-to-char (arg char)
+    (interactive "p\ncGo back to char: ")
+    (forward-char -1)
+    (if arg
+        (search-backward (char-to-string char) nil nil arg)
+      (search-backward (char-to-string char))))
+
+  (defun vjo-forward-current-word-keep-offset ()
+    " (Vagn Johansen 1999)"
+    (interactive)
+    (let ((re-curword) (curword) (offset (point))
+          (old-case-fold-search case-fold-search) )
+      (setq curword (thing-at-point 'symbol))
+      (setq re-curword (concat "\\<" (thing-at-point 'symbol) "\\>") )
+      (beginning-of-thing 'symbol)
+      (setq offset (- offset (point)))    ; offset from start of symbol/word
+      (setq offset (- (length curword) offset)) ; offset from end
+      (forward-char)
+      (setq case-fold-search nil)
+      (if (re-search-forward re-curword nil t)
+          (backward-char offset)
+        ;; else
+        (progn (goto-char (point-min))
+               (if (re-search-forward re-curword nil t)
+                   (progn (message "Searching from top. %s" (what-line))
+                          (backward-char offset))
+                 ;; else
+                 (message "Searching from top: Not found"))
+               ))
+      (setq case-fold-search old-case-fold-search)
+      ))
+
+  (defun vjo-backward-current-word-keep-offset ()
+    " (Vagn Johansen 2002)"
+    (interactive)
+    (let ((re-curword) (curword) (offset (point))
+          (old-case-fold-search case-fold-search) )
+      (setq curword (thing-at-point 'symbol))
+      (setq re-curword (concat "\\<" curword "\\>") )
+      (beginning-of-thing 'symbol)
+      (setq offset (- offset (point)))    ; offset from start of symbol/word
+      (forward-char)
+      (setq case-fold-search nil)
+      (if (re-search-backward re-curword nil t)
+          (forward-char offset)
+        ;; else
+        (progn (goto-char (point-max))
+               (if (re-search-backward re-curword nil t)
+                   (progn (message "Searching from bottom. %s" (what-line))
+                          (forward-char offset))
+                 ;; else
+                 (message "Searching from bottom: Not found"))
+               ))
+      (setq case-fold-search old-case-fold-search)
+      ))
+
+  ;; ;; FIXME: need to test
+  ;; (defun set-frame-size-according-to-resolution ()
+  ;;   (interactive)
+  ;;   (if window-system
+  ;;       (progn
+  ;;      (if (> (x-display-pixel-width) 1500) ;; 1500 is the delimiter marging in px to consider the screen big
+  ;;          (set-frame-width (selected-frame) 237) ;; on the big screen make the fram 237 columns big
+  ;;        (set-frame-width (selected-frame) 177)) ;; on the small screen we use 177 columns
+  ;;      (setq my-height (/ (- (x-display-pixel-height) 150) ;; cut 150 px of the screen height and use the rest as height for the frame
+  ;;                         (frame-char-height)))
+  ;;      (set-frame-height (selected-frame) my-height)
+  ;;      (set-frame-position (selected-frame) 3 90) ;; position the frame 3 pixels left and 90 px down
+  ;;      )))
+
+  ;; (set-frame-size-according-to-resolution)
+  ;;  (global-set-key (kbd "C-x 9") 'set-frame-size-according-to-resolution)
+
+  (defun open-in-largest-window()
+    "Open current buffer in largest window"
+    (interactive)
+    (let ((oldbuf (current-buffer)))
+      (select-window (get-largest-window))
+      (switch-to-buffer oldbuf))
+    )
+  ;;(global-set-key (kbd "C-x 5") 'open-in-largest-window)
+
+#+end_src
 #+begin_src emacs-lisp
   (defun gitg ()
     "Launch gitg in the current directory."
