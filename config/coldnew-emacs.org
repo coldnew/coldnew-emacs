@@ -4,7 +4,7 @@
 #+STARTUP: overview indent align
 
 * Basic Setup
-這邊放置的是 *初始化* 的設定，為了避免衝突，部份 Macro 和 Function 會放置於此
+這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此
 ** User-interface
 *** Startup Message
 Do not use startup messages.
@@ -189,15 +189,21 @@ emacs 個人設定檔路徑
 #+end_src
 
 *** Resolution Testing
+放置測試螢幕解析度用的變數
+**** 1280x800
 #+begin_src emacs-lisp
   (defvar display-1280x800-p   (and (= (display-pixel-width) 1280)
                                     (= (display-pixel-height) 800))
     "Return nil if current display's resolution is not 1280x800")
-
+#+end_src
+**** 1280x1024
+#+begin_src emacs-lisp
   (defvar display-1280x1024-p  (and (= (display-pixel-width) 1280)
                                     (= (display-pixel-height) 1024))
     "Return nil if current display's resolution is not 1280x1024")
-
+#+end_src
+**** 1920x1080
+#+begin_src emacs-lisp
   (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920)
                                     (= (display-pixel-height) 1080))
     "Return nil if current display's resolution is not 1920x1080")
