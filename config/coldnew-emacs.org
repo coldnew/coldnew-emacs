@@ -384,13 +384,7 @@ add comment for this section
 #+end_src
 
 * Depends
-#+begin_src emacs-lisp
-  (defun save-buffer-always ()
-    "Save the buffer even if it is not modified."
-    (interactive)
-    (set-buffer-modified-p t)
-    (save-buffer))
-#+end_src
+
 #+begin_src emacs-lisp
   (require* 'ascii)
   (require* 'ace-jump-mode)
@@ -408,6 +402,11 @@ add comment for this section
   (require* 'smallurl)
   (require* 'switch-window)
   (require* 'pretty-lambdada)
+#+end_src
+
+** Build-in
+#+begin_src emacs-lisp
+  (require 'misc)
 #+end_src
 * Advice
 advice file
@@ -665,85 +664,6 @@ function file
   ;; Set my android-emulator-path
   (setq android-mode-sdk-dir "/opt/android-sdk-update-manager/")
 #+end_src
-** emacs-lisp-mode
-dummy
-#+begin_src emacs-lisp
-  ;;;; emacs-lisp-mode extensions
-  (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Hooks
-  ;;;; ---------------------------------------------------------------------------
-
-  ;; when visit file, remove .elc extension file
-;;  (add-hook 'emacs-lisp-mode-hook 'remove-elc-when-visit)
-
-  ;; use my lisp-common-setting
-;;  (add-hook 'emacs-lisp-mode-hook 'coldnew-lisp-common-setting)
-
-  ;; my auto-complete for elisp
-  ;;(require 'auto-complete-emacs-lisp)
-  (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
-
-  ;; use eldoc
-  (require 'eldoc)
-  (require 'eldoc-extension)
-  (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-  ;; make eldoc work with paredit
-  (when (featurep 'paredit)
-    (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
-
-  ;; highlight common lisp style functions
-  (require 'highlight-cl)
-  (add-hook 'emacs-lisp-mode-hook 'highlight-cl-add-font-lock-keywords)
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Keybindings
-  ;;;; ---------------------------------------------------------------------------
-  ;; (define-key emacs-lisp-mode-map (kbd "C-c i") 'elisp-mode:anything-info-search)
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Autocomplete
-  ;;;; ---------------------------------------------------------------------------
-
-  (defun ac-emacs-lisp-mode-setup ()
-    "auto-complete settings for emacs-lisp-mode"
-    (setq ac-sources
-          '(ac-source-symbols
-            ac-source-variables
-            ac-source-functions
-            ac-source-features
-            ac-source-filename
-            ac-source-files-in-current-dir
-            ac-source-words-in-same-mode-buffers
-            )))
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Functions
-  ;;;; ---------------------------------------------------------------------------
-
-  (defun remove-elc-when-visit ()
-    "After visit elisp file, remove .elc extension file."
-    (make-local-variable 'find-file-hook)
-    (add-hook 'find-file-hook
-              (lambda ()
-                (if (and (file-exists-p (concat buffer-file-name "c"))
-                         (file-writable-p (concat buffer-file-name "c")))
-                    (delete-file (concat buffer-file-name "c"))))))
-
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;TODO: add for ielm
-
-  (defun ielm-auto-complete ()
-    "Enables `auto-complete' support in \\[ielm]."
-    (setq ac-sources '(ac-source-functions
-                       ac-source-variables
-                       ac-source-features
-                       ac-source-symbols
-                       ac-source-words-in-same-mode-buffers))
-    (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
-    (auto-complete-mode 1))
-  (add-hook 'ielm-mode-hook 'ielm-auto-complete)
-#+end_src
 ** elscreen
 #+begin_src emacs-lisp
   (require* 'elscreen)
@@ -930,194 +850,6 @@ dummy
           (setq mpoint (point))
           (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "green3"))
           ))))
-#+end_src
-** c-mode
-dummy
-#+begin_src emacs-lisp
-
-  ;;;; c-mode extensions
-  (add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
-  (add-to-list 'auto-mode-alist '("\\.h$" . c-mode))
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Hooks
-  ;;;; ---------------------------------------------------------------------------
-
-  ;; use my cc-mode-common-setting
-;;  (add-hook 'c-mode-hook 'coldnew-cc-mode-common-setting)
-
-  ;; Enable c-eldoc
-  (require 'c-eldoc)
-  (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
-  (c-turn-on-eldoc-mode)
-
-  ;; use ctypes
-  (require 'ctypes)
-  (setq-default ctypes-file-name (concat emacs-cache-dir "ctypes_std_c.dat"))
-  (add-hook 'ctypes-load-hook 'my-ctypes-load-hook)
-
-  ;; use hide-if-def-mode
-  ;;(add-hook 'c-mode-hook 'hide-ifdef-mode)
-
-  (require 'gccsense)
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Keybindings
-  ;;;; ---------------------------------------------------------------------------
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Auto Complete
-  ;;;; ---------------------------------------------------------------------------
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Flymake
-  ;;;; ---------------------------------------------------------------------------
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Functions
-  ;;;; ---------------------------------------------------------------------------
-  (defun my-ctypes-load-hook ()
-    (ctypes-read-file ctypes-file-name nil t t))
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Commands
-  ;;;; ---------------------------------------------------------------------------
-
-  (defun c-mode:insert-inc-or-if ()
-    "If at the start of line. add `inc' and expand it,
-  else add `if' and expand it."
-    (interactive)
-    (let* ((current (point))
-           (begin (line-beginning-position)))
-      (if (eq current begin)
-          (progn
-            (c-mode:insert-include)
-            (newline-and-indent))
-        (progn
-          (insert "if")
-          (yas/expand)))))
-
-  (defun c-mode:insert-main-function ()
-    "insert main()."
-    (interactive)
-    (let* ((current (point))
-           (begin (line-beginning-position)))
-      (if (equal current begin)
-          (insert "main"))
-      (yas/expand)))
-#+end_src
-** c++-mode
-dummy
-#+begin_src emacs-lisp
-
-  ;;;; c++-mode extensions
-  (add-to-list 'auto-mode-alist '("\\.hpp$" . c++-mode))
-  (add-to-list 'auto-mode-alist '("\\.cpp$" . c++-mode))
-  (add-to-list 'magic-mode-alist
-               `(,(lambda ()
-                    (and (string= (file-name-extension buffer-file-name) "h")
-                         (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
-                                            magic-mode-regexp-match-limit t)))
-                 . c++-mode))
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Hooks
-  ;;;; ---------------------------------------------------------------------------
-
-  ;; use my cc-mode-common-setting
-  ;;(add-hook 'c++-mode-hook 'coldnew-cc-mode-common-setting)
-
-  ;; my auto-complete for cpp
-  (add-hook 'c++-mode-hook 'ac-cpp-mode-setup)
-
-  ;; Enable c-eldoc
-  (require 'c-eldoc)
-  (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
-  (c-turn-on-eldoc-mode)
-
-  ;;;; CodingStyle
-  (add-hook 'c++-mode-hook
-            '(lambda ()
-
-               ;; TODO: add comment here
-               (setq c-macro-shrink-window-flag t)
-               (setq c-macro-preprocessor "cpp")
-               (setq c-macro-cppflags " ")
-               (setq c-macro-prompt-flag t)
-
-               ;; Use linux-kernel style
-               (c-set-style "linux")
-
-               ;; Setting indentation lvel
-               (setq c-basic-offset 4)
-
-               ;; Make TAB equivilent to 4 spaces
-               (setq tab-width 4)
-
-               ;; Use spaces to indent instead of tabs.
-               (setq indent-tabs-mode nil)
-
-               ;; Indent the continuation by 2
-               (setq c-continued-statement-offset 2)
-
-               ;; Brackets should be at same indentation level as the statements they open
-               ;; for example:
-               ;;                 if (0)        becomes        if (0)
-               ;;                     {                        {
-               ;;                        ;                         ;
-               ;;                     }                        }
-               (c-set-offset 'substatement-open '0)
-               ;; make open-braces after a case
-               (c-set-offset 'case-label '+)
-
-               ))
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Keybindings
-  ;;;; ---------------------------------------------------------------------------
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Auto Complete
-  ;;;; ---------------------------------------------------------------------------
-  (require 'auto-complete-clang)
-  (defun ac-cpp-mode-setup ()
-    "auto-complete settings for c-mode."
-    (setq ac-sources '(
-                       ac-source-clang
-                       ac-source-dictionary
-                       ac-source-abbrev
-                       ac-source-semantic
-                       ac-source-filename
-                       ac-source-files-in-current-dir
-                       ac-source-words-in-same-mode-buffers
-                       ))
-    ;; Default clang completion flags
-    ;;    (setq clang-completion-flags
-    (setq ac-clang-flags
-          (split-string
-           (concat
-            "-pthread -I./ -I../ "
-            (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0"))))
-    )
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Flymake
-  ;;;; ---------------------------------------------------------------------------
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Functions
-  ;;;; ---------------------------------------------------------------------------
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Commands
-  ;;;; ---------------------------------------------------------------------------
-
 #+end_src
 ** helm-mode
 #+begin_src emacs-lisp
@@ -1804,6 +1536,19 @@ Following buffer will not show in iBuffer
   (add-hook 'slime-repl-mode-hook 'programming-mode)
   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 #+end_src
+** ielm-mode
+#+begin_src emacs-lisp
+  (defun ielm-auto-complete ()
+    "Enables `auto-complete' support in \\[ielm]."
+    (setq ac-sources '(ac-source-functions
+                       ac-source-variables
+                       ac-source-features
+                       ac-source-symbols
+                       ac-source-words-in-same-mode-buffers))
+    (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
+    (auto-complete-mode 1))
+  (add-hook 'ielm-mode-hook 'ielm-auto-complete)
+#+end_src
 ** compilation
 #+begin_src emacs-lisp
   ;; FIXME: move to other place
@@ -1832,6 +1577,47 @@ Following buffer will not show in iBuffer
   (setq compilation-auto-jump-to-first-error t)
 #+end_src
 * Editor
+#+begin_src emacs-lisp
+    ;;;; lisp common setting
+  (defun coldnew-lisp-common-setting ()
+    "coldnew's common setting for lisp-like mode"
+
+    ;; Use coldnew's editor mode
+    (coldnew-editor-mode)
+
+    ;; Use Greek character lambda insteda of string
+    (turn-on-pretty-lambda-mode)
+
+    )
+
+
+  ;;;; cc-mode common setting
+  (defun coldnew-cc-mode-common-setting ()
+    "coldnew's common setting for cc-mode"
+
+    ;; Use coldnew's editor mode
+    (coldnew-editor-mode)
+
+    ;; enable doxygen
+  ;;  (doxymacs-mode t)
+  ;;  (doxymacs-font-lock)
+
+    ;; hide-if-def mode
+    (hide-ifdef-mode)
+    ;; use shadow
+    (setq hide-ifdef-shadow t)
+
+    ;; gtags
+  ;;  (gtags-mode t)
+  ;;  (if-not (string-match "/usr/src/linux/" (expand-file-name default-directory))
+  ;;        (gtags-create-or-update))
+
+    ;; keybindings
+    (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
+    (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
+    (local-set-key (kbd "<f9>") 'smarter-compile)
+    )
+#+end_src
 This section contains my editor state
 #+begin_src emacs-lisp
   (defvar coldnew-editor-hook nil
@@ -2095,6 +1881,247 @@ This section contains my editor state
                  (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
         (replace-match "\\1\\2" nil nil))))
 #+end_src
+* Programming Mode
+** emacs-lisp
+emacs-lisp 語言的設定
+*** Auto Mode Alist
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
+#+end_src
+*** Hooks
+**** eldoc
+#+begin_src emacs-lisp
+  (require 'eldoc)
+  (require 'eldoc-extension)
+  (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+  (when (featurep 'paredit)
+    (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
+#+end_src
+**** highlight-cl
+#+begin_src emacs-lisp
+  ;; highlight common lisp style functions
+  (require 'highlight-cl)
+  (add-hook 'emacs-lisp-mode-hook 'highlight-cl-add-font-lock-keywords)
+#+end_src
+**** Other
+#+begin_src emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook 'coldnew-lisp-common-setting)
+#+end_src
+*** Auto Complete Setting
+#+begin_src emacs-lisp
+    (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
+    (defun ac-emacs-lisp-mode-setup ()
+        "auto-complete settings for emacs-lisp-mode"
+        (setq ac-sources
+              '(ac-source-symbols
+                ac-source-variables
+                ac-source-functions
+                ac-source-features
+                ac-source-filename
+                ac-source-files-in-current-dir
+                ac-source-words-in-same-mode-buffers
+                )))
+#+end_src
+*** Functions
+#+begin_src emacs-lisp
+    (defun remove-elc-when-visit ()
+      "After visit elisp file, remove .elc extension file."
+      (make-local-variable 'find-file-hook)
+      (add-hook 'find-file-hook
+                (lambda ()
+                  (if (and (file-exists-p (concat buffer-file-name "c"))
+                           (file-writable-p (concat buffer-file-name "c")))
+                      (delete-file (concat buffer-file-name "c"))))))
+#+end_src
+** c-mode
+dummy
+#+begin_src emacs-lisp
+
+  ;;;; c-mode extensions
+  (add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
+  (add-to-list 'auto-mode-alist '("\\.h$" . c-mode))
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Hooks
+  ;;;; ---------------------------------------------------------------------------
+
+  ;; use my cc-mode-common-setting
+;;  (add-hook 'c-mode-hook 'coldnew-cc-mode-common-setting)
+
+  ;; Enable c-eldoc
+  (require 'c-eldoc)
+  (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
+  (c-turn-on-eldoc-mode)
+
+  ;; use ctypes
+  (require 'ctypes)
+  (setq-default ctypes-file-name (concat emacs-cache-dir "ctypes_std_c.dat"))
+  (add-hook 'ctypes-load-hook 'my-ctypes-load-hook)
+
+  ;; use hide-if-def-mode
+  ;;(add-hook 'c-mode-hook 'hide-ifdef-mode)
+
+  (require 'gccsense)
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Keybindings
+  ;;;; ---------------------------------------------------------------------------
+
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Auto Complete
+  ;;;; ---------------------------------------------------------------------------
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Flymake
+  ;;;; ---------------------------------------------------------------------------
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Functions
+  ;;;; ---------------------------------------------------------------------------
+  (defun my-ctypes-load-hook ()
+    (ctypes-read-file ctypes-file-name nil t t))
+
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Commands
+  ;;;; ---------------------------------------------------------------------------
+
+  (defun c-mode:insert-inc-or-if ()
+    "If at the start of line. add `inc' and expand it,
+  else add `if' and expand it."
+    (interactive)
+    (let* ((current (point))
+           (begin (line-beginning-position)))
+      (if (eq current begin)
+          (progn
+            (c-mode:insert-include)
+            (newline-and-indent))
+        (progn
+          (insert "if")
+          (yas/expand)))))
+
+  (defun c-mode:insert-main-function ()
+    "insert main()."
+    (interactive)
+    (let* ((current (point))
+           (begin (line-beginning-position)))
+      (if (equal current begin)
+          (insert "main"))
+      (yas/expand)))
+#+end_src
+** c++-mode
+dummy
+#+begin_src emacs-lisp
+
+  ;;;; c++-mode extensions
+  (add-to-list 'auto-mode-alist '("\\.hpp$" . c++-mode))
+  (add-to-list 'auto-mode-alist '("\\.cpp$" . c++-mode))
+  (add-to-list 'magic-mode-alist
+               `(,(lambda ()
+                    (and (string= (file-name-extension buffer-file-name) "h")
+                         (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
+                                            magic-mode-regexp-match-limit t)))
+                 . c++-mode))
+
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Hooks
+  ;;;; ---------------------------------------------------------------------------
+
+  ;; use my cc-mode-common-setting
+  ;;(add-hook 'c++-mode-hook 'coldnew-cc-mode-common-setting)
+
+  ;; my auto-complete for cpp
+  (add-hook 'c++-mode-hook 'ac-cpp-mode-setup)
+
+  ;; Enable c-eldoc
+  (require 'c-eldoc)
+  (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
+  (c-turn-on-eldoc-mode)
+
+  ;;;; CodingStyle
+  (add-hook 'c++-mode-hook
+            '(lambda ()
+
+               ;; TODO: add comment here
+               (setq c-macro-shrink-window-flag t)
+               (setq c-macro-preprocessor "cpp")
+               (setq c-macro-cppflags " ")
+               (setq c-macro-prompt-flag t)
+
+               ;; Use linux-kernel style
+               (c-set-style "linux")
+
+               ;; Setting indentation lvel
+               (setq c-basic-offset 4)
+
+               ;; Make TAB equivilent to 4 spaces
+               (setq tab-width 4)
+
+               ;; Use spaces to indent instead of tabs.
+               (setq indent-tabs-mode nil)
+
+               ;; Indent the continuation by 2
+               (setq c-continued-statement-offset 2)
+
+               ;; Brackets should be at same indentation level as the statements they open
+               ;; for example:
+               ;;                 if (0)        becomes        if (0)
+               ;;                     {                        {
+               ;;                        ;                         ;
+               ;;                     }                        }
+               (c-set-offset 'substatement-open '0)
+               ;; make open-braces after a case
+               (c-set-offset 'case-label '+)
+
+               ))
+
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Keybindings
+  ;;;; ---------------------------------------------------------------------------
+
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Auto Complete
+  ;;;; ---------------------------------------------------------------------------
+  (require 'auto-complete-clang)
+  (defun ac-cpp-mode-setup ()
+    "auto-complete settings for c-mode."
+    (setq ac-sources '(
+                       ac-source-clang
+                       ac-source-dictionary
+                       ac-source-abbrev
+                       ac-source-semantic
+                       ac-source-filename
+                       ac-source-files-in-current-dir
+                       ac-source-words-in-same-mode-buffers
+                       ))
+    ;; Default clang completion flags
+    ;;    (setq clang-completion-flags
+    (setq ac-clang-flags
+          (split-string
+           (concat
+            "-pthread -I./ -I../ "
+            (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0"))))
+    )
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Flymake
+  ;;;; ---------------------------------------------------------------------------
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Functions
+  ;;;; ---------------------------------------------------------------------------
+
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Commands
+  ;;;; ---------------------------------------------------------------------------
+
+#+end_src
+
 * Mode Line
 #+begin_src emacs-lisp
   ;;;; ---------------------------------------------------------------------------
@@ -2184,6 +2211,11 @@ This section contains my editor state
 * Command
 All command file
 #+begin_src emacs-lisp
+    (defun save-buffer-always ()
+      "Save the buffer even if it is not modified."
+      (interactive)
+      (set-buffer-modified-p t)
+      (save-buffer))
 
   (defun select-forwards-to-before-match (match)
     "Selects forwards to just before next match, uses
