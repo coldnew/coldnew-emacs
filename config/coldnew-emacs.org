@@ -1357,6 +1357,11 @@ some packages conflict with org-mode
 
 #+end_src
 ** ido
+*** Depends
+#+begin_src emacs-lisp
+  (require 'ido)
+#+end_src
+*** Keybindings
 #+begin_src emacs-lisp
   (add-hook 'ido-setup-hook
             '(lambda ()
