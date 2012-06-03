@@ -5,6 +5,11 @@
 
 * Basic Setup
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此
+** Init
+預先載入 cl 套件。
+#+begin_src emacs-lisp
+  (eval-when-compile (require 'cl))
+#+end_src
 ** User-interface
 *** Startup Message
 Do not use startup messages.
@@ -401,7 +406,7 @@ emacs 套件管理的設定。
           ("melpa" . "http://melpa.milkbox.net/packages/")))
 #+end_src
 
-* Macro
+* Macros                                                             :Macro:
 ** Clojure
 #+begin_src emacs-lisp
   (defmacro comment (&rest body)
@@ -470,7 +475,7 @@ emacs 套件管理的設定。
 #+begin_src emacs-lisp
   (require 'misc)
 #+end_src
-* Advice
+* Advice                                                             :Advice:
 advice file
 * Function
 function file
@@ -675,7 +680,7 @@ function file
                  "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 壹貳參肆伍陸柒捌玖零"
                  ))
 #+end_src
-* Theme
+* Theme                                                               :Theme:
 佈景主題的設置，包含我自訂的佈景主題以及路徑。
 ** Init
 設定佈景主題的位置。
@@ -686,6 +691,7 @@ function file
 :PROPERTIES:
 :comments: org
 :tangle:   ~/.emacs.d/themes/coldnew-night-theme.el
+:cache: yes
 :padline: no
 :END:
 
@@ -787,13 +793,15 @@ function file
   '(org-done ((t (:foreground "#4BC98A" :bold t))))
   '(org-link   ((t (:inherit (link)))))
 #+end_src
-**** TODO why this setting no use?
+**** org-level
 #+begin_src emacs-lisp
   '(org-level-1 ((t (:foreground "#8AC6F2" :bold t))))
   '(org-level-2 ((t (:foreground "#ee9a49"))))
   '(org-level-3 ((t (:foreground "#ff83fa"))))
-  '(org-level-4 ((t (:foreground "#ffa500"))))
+  '(org-level-4 ((t (:foreground "#efe500"))))
   '(org-level-5 ((t (:foreground "#ff4040"))))
+  '(org-level-6 ((t (:foreground "#afe04e"))))
+  '(org-level-7 ((t (:foreground "#0A4C64"))))
 #+end_src
 *** Other
 #+begin_src emacs-lisp
@@ -1261,6 +1269,21 @@ some packages conflict with org-mode
   (add-hook 'org-shiftright-final-hook 'windmove-right)
 #+end_src
 
+*** COMMENT remember the milk ?
+#+begin_src emacs-lisp
+  ;; (require org-feed)
+  ;; (setq org-feed-alist
+  ;;       '(("Remember The Milk"
+  ;;          "https://www.rememberthemilk.com/rss/jonnay/"
+  ;;          "~/org/GTD.org"
+  ;;          "Remember The Milk"
+  ;;          :template "* TODO %title\n  %a\n "
+  ;;          )))
+
+  ;; ;;* rtm feed timer
+  ;; (run-at-time 3600 3600 'org-feed-update-all)
+
+#+end_src
 ** smex
 #+begin_src emacs-lisp
   (require* 'smex)
@@ -1282,6 +1305,7 @@ some packages conflict with org-mode
   (require 'info)
 #+end_src
 ** minibuffer
+
 #+begin_src emacs-lisp
   ;;;; ---------------------------------------------------------------------------
   ;;;; initial setting
@@ -1331,6 +1355,14 @@ some packages conflict with org-mode
       (delete-region (point) (save-excursion (end-of-line) (point)))
       (insert (concat file-true-dir file-name))))
 
+#+end_src
+** ido
+#+begin_src emacs-lisp
+  (add-hook 'ido-setup-hook
+            '(lambda ()
+               (define-key ido-completion-map (kbd "C-f") 'ido-next-match)
+               (define-key ido-completion-map (kbd "C-b") 'ido-prev-match)
+               ))
 #+end_src
 ** yasnippet
 *** Init
