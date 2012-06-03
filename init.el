@@ -21,44 +21,9 @@
 
 ;; load up all literate org-mode files in config directory
 (mapc #'org-babel-load-file (directory-files "~/.emacs.d/config/" t "\\.org$"))
-;;(org-babel-load-file (expand-file-name "coldnew-emacs.org"))
 
-;; load the core stuff
-(require 'coldnew-macros)
-(require 'coldnew-depends)
-(require 'coldnew-functions)
-(require 'coldnew-evil)
-(require 'coldnew-tags)
-(require 'coldnew-editor)
-
-;; config changes made through the customize UI will be store here
-(setq custom-file emacs-custom-file)
-
-;; loading all emacs configures
-(if (file-readable-p emacs-config-dir)
-    (with-current-buffer (get-buffer-create "*Loading Log*")
-      ;; header file
-      (insert (concat "\n" (make-string 80 ?=)))
-      (insert (propertize "\n Loading emacs config status \n" 'face '(:foreground "gold2")))
-      (insert (concat (make-string 80 ?=) "\n"))
-      ;; loading file and test status
-      (dolist (config-file (directory-files emacs-config-dir t "^[^#].*el$"))
-        (let* ((feature (file-name-sans-extension (file-name-nondirectory config-file)))
-               (config-file-name (file-name-nondirectory config-file))
-               (loading-result (require (intern feature) nil 'noerror))
-               (loading-status (if loading-result "LOADED" "FAILED")))
-
-          (insert (format " %-20s %s\t\t [ " config-file-name
-                          (make-string (- 40 (length config-file-name)) ? )
-                          ))
-          (insert (propertize loading-status 'face  `(:foreground ,(if loading-result "green" "red"))))
-          (insert " ]\n"))))
-
-  ;; After loading allemacs config file, readauthorization fil
-  (if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
-
-  (message "\t --- Loading All Emacs Confis Finish ---")
-  )
+;; After loading allemacs config file, readauthorization fil
+(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
 
 
 (message "\n\nEmacs is ready to serve you, Master %s!\n\n" (getenv "USER"))
