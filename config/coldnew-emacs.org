@@ -12,12 +12,12 @@
 #+end_src
 ** User-interface
 *** Startup Message
-Do not use startup messages.
+不啟用 startup message (啟動 emacs 時出現的 GNU/Emacs 畫面)
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t)
 #+end_src
 *** Scratch Message
-Make scratch buffer contain nothing.
+清空 \*scratch\* buffer 的文字。
 #+begin_src emacs-lisp
   (setq initial-scratch-message "")
 #+end_src
@@ -27,7 +27,7 @@ Use visible bell instead of ring-bell.
   (setq visible-bell t)
 #+end_src
 *** Tool bar
-Disable toolbar
+關閉工具列。
 #+begin_src emacs-lisp
   (if (featurep 'tool-bar) (tool-bar-mode -1))
 #+end_src
@@ -41,8 +41,9 @@ Disable scrollbar
   (blink-cursor-mode -1)
 #+end_src
 *** Menu-Bar
+關閉選單列。
 #+begin_src emacs-lisp
-  (menu-bar-mode -1)
+  (if (featurep 'menu-bar) (menu-bar-mode -1))
 #+end_src
 *** Time Stamp
 #+begin_src emacs-lisp
@@ -51,7 +52,7 @@ Disable scrollbar
   (setq time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S (%u)") ; date format
 #+end_src
 *** TODO Misc
-add comment for this section
+回答問題時，使用 *y* 和 *n* 代替 *yes/no* 。
 #+begin_src emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
