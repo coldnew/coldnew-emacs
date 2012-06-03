@@ -407,7 +407,7 @@ emacs 套件管理的設定。
           ("melpa" . "http://melpa.milkbox.net/packages/")))
 #+end_src
 
-* Macros                                                             :Macro:
+* Macros                                                             :macro:
 ** Clojure
 #+begin_src emacs-lisp
   (defmacro comment (&rest body)
@@ -476,9 +476,9 @@ emacs 套件管理的設定。
 #+begin_src emacs-lisp
   (require 'misc)
 #+end_src
-* Advice                                                             :Advice:
+* Advice                                                             :advice:
 advice file
-* Function
+* Function                                                         :function:
 function file
 #+begin_src emacs-lisp
 
@@ -632,7 +632,7 @@ function file
     (let ((config-dir emacs-config-dir))
       (byte-recompile-directory config-dir 0) ad-do-it))
 #+end_src
-* Fonts
+* Fonts                                                                :font:
 #+begin_src emacs-lisp
   ;; Font type setting
   ;; (defvar emacs-english-font "Inconsolata"
@@ -681,7 +681,7 @@ function file
                  "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 壹貳參肆伍陸柒捌玖零"
                  ))
 #+end_src
-* Theme                                                               :Theme:
+* Theme                                                               :theme:
 佈景主題的設置，包含我自訂的佈景主題以及路徑。
 ** Init
 設定佈景主題的位置。
@@ -2524,7 +2524,7 @@ dummy
   (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
 #+end_src
-* Command
+* Command                                                           :command:
 All command file
 #+begin_src emacs-lisp
     (defun save-buffer-always ()
@@ -2887,7 +2887,7 @@ All command file
     (next-line 1))
 
 #+end_src
-* Alias
+* Alias                                                               :alias:
 #+begin_src emacs-lisp
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
   (defalias 'coldnew/folding-toggle   'toggle-selective-display)
@@ -2958,7 +2958,7 @@ All command file
   ;;   (ad-activate 'vc-next-action)
   (define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
 #+end_src
-* Hooks
+* Hooks                                                               :hooks:
 
 ** find-file-hook
 #+begin_src emacs-lisp
