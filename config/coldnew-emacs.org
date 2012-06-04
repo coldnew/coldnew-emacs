@@ -1228,10 +1228,10 @@ function file
 用於加密 org-mode 裡面具有 :encrypt: 這個 TAG 的區塊。
 注意到這需啟用 [[*Easy%20PG][Easy PG]] 才能夠使用。
 #+begin_src emacs-lisp
-  ;;(require 'org-crypt)
-  ;;(setq org-crypt-tag-matcher "encrypt")
-  ;;(org-crypt-use-before-save-magic)
-  ;;(setq org-tags-exclude-from-inheritance (quote ("encrypt")))
+  (require 'org-crypt)
+  (setq org-crypt-tag-matcher "encrypt")
+  (org-crypt-use-before-save-magic)
+  (setq org-tags-exclude-from-inheritance (quote ("encrypt")))
 #+end_src
 *** Keybinding
 **** org-mode
@@ -1293,10 +1293,10 @@ some packages conflict with org-mode
            "Remember The Milk"
            :template "* TODO %title\n  %a\n "
            )))
-  
+
   ;;* rtm feed timer
   (run-at-time 3600 3600 'org-feed-update-all)
-  #+end_src
+#+end_src
 ** smex
 #+begin_src emacs-lisp
   (require* 'smex)
@@ -3513,7 +3513,3 @@ cA==
   (global-set-key (kbd "C-.") 'repeat)
   (global-set-key (kbd "%") 'match-paren)
 #+end_src
-* COMMENT File local Variables
-# Local Variables:
-# eval: ;;(org-decrypt-entries)
-# End:
