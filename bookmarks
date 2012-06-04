@@ -4,7 +4,7 @@
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-capture-last-stored"
  (filename . "~/Dropbox/Org/TODO.org")
- (front-context-string . "** TODO C-b 關掉 c")
- (rear-context-string . "line][outline]]\n")
- (position . 834))
+ (front-context-string . "** TODO test\n \n ")
+ (rear-context-string . "::com_test ()]]\n")
+ (position . 993))
 )

@@ -27,9 +27,6 @@
 
 ;;(setq org-latex-to-pdf-process '("texi2dvi --pdf --clean --verbose --batch %f"))
 
-(setq org-tag-alist '(
-		      (:startgroup . nil) ("Business" . ?b) ("School" . ?s) ("Weintek" . ?w) ("Personal" . ?p) (:endgroup . nil)
-		      ))
 
 ;; capture
 (add-hook 'org-capture-mode-hook
