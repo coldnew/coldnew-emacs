@@ -2616,6 +2616,8 @@ dummy
 * Mode Line
 powerline is really funny
 https://github.com/jonathanchu/emacs-powerline
+
+e > buffer > major mode > vc  < line:col < % < ?k
 ** COMMENT take from powerline
 #+begin_src emacs-lisp :tangle no
   (defun arrow-right-xpm (color1 color2)
