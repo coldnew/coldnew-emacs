@@ -3262,6 +3262,9 @@ cA==
   (setq auto-save-list-file-prefix (concat emacs-backup-dir "auto-saves-"))
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
 #+end_src
+* EMMS
+使用 emacs 聽音樂。
+
 * Session
 #+begin_src emacs-lisp
   ;;;; ---------------------------------------------------------------------------
