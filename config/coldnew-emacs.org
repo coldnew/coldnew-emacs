@@ -366,6 +366,53 @@ emacs 個人設定檔路徑
    )
 
 #+end_src
+* Locale
+emacs 編碼設定，大部份都設定成 utf-8。
+** System
+系統編碼。
+#+begin_src emacs-lisp
+  (prefer-coding-system 'utf-8 )
+#+end_src
+** Language
+語言環境。
+#+begin_src emacs-lisp
+  (set-language-environment 'utf-8 )
+#+end_src
+** Buffer
+文件保存時的編碼設置
+#+begin_src emacs-lisp
+  (set-buffer-file-coding-system 'utf-8 )
+#+end_src
+** Kyeboard
+鍵盤編碼設定
+#+begin_src emacs-lisp
+  (set-keyboard-coding-system    'utf-8 )
+#+end_src
+** Terminal
+設定終端機的編碼
+#+begin_src emacs-lisp
+  (set-terminal-coding-system    'utf-8 )
+#+end_src
+** Selection
+選擇區域內編碼
+#+begin_src emacs-lisp
+  (set-selection-coding-system   'utf-8 )
+#+end_src
+** Clipboard
+剪貼簿編碼設定
+#+begin_src emacs-lisp
+  (set-clipboard-coding-system   'utf-8 )
+#+end_src
+** File Name
+使用 utf-8 編碼顯示文件名
+#+begin_src emacs-lisp
+  (set-file-name-coding-system   'utf-8 )
+#+end_src
+** System Time
+設定時間顯示使用英文
+#+begin_src emacs-lisp
+  (setq system-time-locale      "en_US" )
+#+end_src
 * Package Manager
 emacs 套件管理的設定。
 ** el-get
