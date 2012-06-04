@@ -3189,8 +3189,10 @@ cA==
   (add-hook 'egg-commit-buffer-mode-hook
 	    '(lambda ()
 	       (define-key coldnew/command-mode-map "c" 'egg-log-msg-done)))
-
-  ;;;;;;;; Advice
+#+end_src
+**** Advice                                                       :advice:
+當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window。
+#+begin_src emacs-lisp
   (defadvice egg-status (around goto-egg-status-buffer activate)
     "Delete other windows after visiting egg-status."
     ad-do-it
