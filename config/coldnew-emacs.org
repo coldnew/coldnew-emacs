@@ -1198,7 +1198,7 @@ function file
     (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
     (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
 #+end_src
-** org-mode
+** org-mode                                                            :org:
 *** Depends
 #+begin_src emacs-lisp
   (require 'org-install)
@@ -1223,6 +1223,13 @@ function file
   (setq org-CUA-compatible t)
   (setq org-src-window-setup 'current-window)
   (setq org-src-fontify-natively t)
+#+end_src
+**** Crypt
+用於加密 org-mode 特定區塊。注意到這需啟用 [[*Easy%20PG][Easy PG]] 才能夠使用。
+#+begin_src emacs-lisp
+  (require 'org-crypt)
+  (org-crypt-use-before-save-magic)
+  (setq org-tags-exclude-from-inheritance (quote ("crypt")))
 #+end_src
 *** Keybinding
 **** org-mode
@@ -1272,18 +1279,21 @@ some packages conflict with org-mode
 #+end_src
 
 *** COMMENT remember the milk ?
+:PROPERTIES:
+:tangle: no
+:END:
 #+begin_src emacs-lisp
-  ;; (require org-feed)
-  ;; (setq org-feed-alist
-  ;;       '(("Remember The Milk"
-  ;;          "https://www.rememberthemilk.com/rss/jonnay/"
-  ;;          "~/org/GTD.org"
-  ;;          "Remember The Milk"
-  ;;          :template "* TODO %title\n  %a\n "
-  ;;          )))
+  (require org-feed)
+  (setq org-feed-alist
+        '(("Remember The Milk"
+           "https://www.rememberthemilk.com/rss/jonnay/"
+           "~/org/GTD.org"
+           "Remember The Milk"
+           :template "* TODO %title\n  %a\n "
+           )))
 
-  ;; ;;* rtm feed timer
-  ;; (run-at-time 3600 3600 'org-feed-update-all)
+  ;;* rtm feed timer
+  (run-at-time 3600 3600 'org-feed-update-all)
 
 #+end_src
 ** smex
@@ -1898,6 +1908,32 @@ Following buffer will not show in iBuffer
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode))
   (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
+#+end_src
+** Easy PG
+*** Depends
+#+begin_src emacs-lisp
+  (require 'epa-file)
+#+end_src
+*** Config
+#+begin_src emacs-lisp
+
+  ;; use local gpg program instaed of system one
+  ;; only work under linux
+  (cond
+   ;; (linux-32bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg-x86")))
+   (linux-64bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg")))
+   )
+
+  (setenv "GPG_AGENT_INFO" nil)
+
+  (epa-file-enable)
+
+  ;; Control whether or not to pop up the key selection dialog.
+  (setq epa-file-select-keys 0)
+
+  ;; Cache passphrase for symmetric encryption.
+  (setq epa-file-cache-passphrase-for-symmetric-encryption t)
+
 #+end_src
 * Editor
 #+begin_src emacs-lisp
@@ -2514,31 +2550,6 @@ dummy
                    "] "
                    )))
 #+end_src
-* gpg
-** Depends
-#+begin_src emacs-lisp
-  (require 'epa-file)
-#+end_src
-** Config
-#+begin_src emacs-lisp
-
-  ;; use local gpg program instaed of system one
-  ;; only work under linux
-  (cond
-   ;; (linux-32bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg-x86")))
-   (linux-64bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg")))
-   )
-
-  (setenv "GPG_AGENT_INFO" nil)
-
-
-  ;; Control whether or not to pop up the key selection dialog.
-  (setq epa-file-select-keys 0)
-
-  ;; Cache passphrase for symmetric encryption.
-  (setq epa-file-cache-passphrase-for-symmetric-encryption t)
-
-#+end_src
 * Command                                                           :command:
 All command file
 #+begin_src emacs-lisp
@@ -2927,9 +2938,10 @@ All command file
 #+end_src
 * Tramp
 tramp config
-* IRC
-** erc
-*** Depends
+* Chat Client
+** IRC
+*** erc
+**** Depends
 #+begin_src emacs-lisp
   (require 'erc)
   (require 'erc-log)
@@ -2937,20 +2949,20 @@ tramp config
   (require 'erc-spelling)
   (require 'erc-autoaway)
 #+end_src
-*** Configs
-**** prompt
+**** Configs
+***** prompt
 設定 erc-prompt。
 #+begin_src emacs-lisp
   (setq erc-prompt ">>")
 #+end_src
-**** log
+***** log
 設定 erc 紀錄檔的位置。
-**** Coding
+***** Coding
 設定 erc 的編碼。
 #+begin_src emacs-lisp
   (setq erc-server-coding-system '(utf-8 . utf-8))
 #+end_src
-**** Misc
+***** Misc
 #+begin_src emacs-lisp
   ;; make sure to use wildcards for e.g. freenode as the actual server
   ;; name can be be a bit different, which would screw up autoconnect
@@ -2958,12 +2970,12 @@ tramp config
   (setq erc-autojoin-channels-alist
         '((".*\\.freenode.net" "#emacs"  "#clojure")
           ))
-  
+
   ;; check channels
   ;; exclude boring stuff from tracking
   (erc-track-mode t)
   (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
-  
+
                                   "324" "329" "332" "333" "353" "477"))
   ;; don't show any of this
   (setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK"))
@@ -2995,9 +3007,9 @@ tramp config
   (setq erc-autoaway-idle-seconds 600)
   (setq erc-autoaway-use-emacs-idle t)
 #+end_src
-*** Hooks
-*** Keybinding
-*** Commands
+**** Hooks
+**** Keybinding
+**** Commands
 #+begin_src emacs-lisp
   (defun i-wanna-be-social ()
     "Connect to IM networks using bitlbee."
@@ -3018,31 +3030,31 @@ tramp config
     (let ((command-args (append (list "CHANSERV") args)))
       (let ((chanserv-command (mapconcat #'identity command-args " ")))
         (erc-send-command chanserv-command))))
-  
+
   (defun erc-cmd-MS (&rest args)
     "Short alias for `/memoserv ARGS'."
     (let ((command-args (append (list "MEMOSERV") args)))
       (let ((memoserv-command (mapconcat #'identity command-args " ")))
         (erc-send-command memoserv-command))))
-  
+
   (defun erc-cmd-NS (&rest args)
     "Short alias for `/nickserv ARGS'."
     (let ((command-args (append (list "NICKSERV") args)))
       (let ((nickserv-command (mapconcat #'identity command-args " ")))
         (erc-send-command nickserv-command))))
 #+end_src
-*** Function
-** COMMENT rcirc
+**** Function
+*** COMMENT rcirc
 :PROPERTIES:
 :tangle: no
 :END:
 這邊是以前所使用的 rcirc 設定，由於我改用 erc 作為我的 irc client，這邊的設定將不輸出至
 我的 emacs 設定。
-*** Depends
+**** Depends
 #+begin_src emacs-lisp
   (require 'rcirc)
 #+end_src
-*** Config
+**** Config
 #+begin_src emacs-lisp
   ;; for debugging.
   (setq rcirc-debug-flag t)
@@ -3071,7 +3083,7 @@ tramp config
           ("irc.debian.org" :channels ("#dot"))
           ))
 #+end_src
-*** Hooks
+**** Hooks
 #+begin_src emacs-lisp
   (add-hook 'rcirc-mode-hook
             '(lambda ()
@@ -3081,7 +3093,7 @@ tramp config
                (rcirc-omit-mode)
                ))
 #+end_src
-*** Commands
+**** Commands
 #+begin_src emacs-lisp
   (defun-rcirc-command all (input)
     "Run the arguments as a command for all connections.
@@ -3101,13 +3113,29 @@ tramp config
         (let ((result (shell-command-to-string (concat "echo '" expr "' | bc ")))
               (when result (rcirc-send-message (concat expr " = " result))))))))
 #+end_src
-*** Fix
+**** Fix
 不顯示任何 /away 訊息。
 #+begin_src emacs-lisp
   (defun rcirc-handler-301 (process cmd sender args)
     "/away message handler.")
 #+end_src
 
+** Jabber
+*** Depends
+#+begin_src emacs-lisp
+  (require 'jabber)
+#+end_src
+*** Config
+
+** test                                                              :crypt:
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+jA0EAwMCoq7+oQBCa5VgyVGwlwdGEw27kQwTkRk0Hoo62iLCiKhbDIfatd2EWhYB
+kD4C3D2bpOgmcM407PHllHuagsCOypKrnkEMeZnGbZRrWUlwM07DWv3ZANnFjgYV
+NUI=
+=6SZt
+-----END PGP MESSAGE-----
 * Alias                                                               :alias:
 #+begin_src emacs-lisp
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
@@ -3428,9 +3456,13 @@ tramp config
 ** Ctrl-c prefix
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
-  (global-set-key (kbd "C-c a") 'org-agenda)
 #+end_src
 
+*** org-mode                                                          :org:
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c l") 'org-store-link)
+#+end_src
 ** Ctrl-Meta Prefix
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
@@ -3482,3 +3514,7 @@ tramp config
   (global-set-key (kbd "C-.") 'repeat)
   (global-set-key (kbd "%") 'match-paren)
 #+end_src
+* COMMENT File local Variables
+# Local Variables:
+# eval: ;;(org-decrypt-entries)
+# End:
