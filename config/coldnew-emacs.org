@@ -3460,15 +3460,18 @@ cA==
 =6ynf
 -----END PGP MESSAGE-----
 * Alias                                                               :alias:
+** git
 #+begin_src emacs-lisp
-  (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
-  (defalias 'coldnew/folding-toggle   'toggle-selective-display)
-
   (defalias 'git-log    'egg-log)
   (defalias 'git-status 'egg-status)
   (defalias 'git-rebase 'magit-rebase-step)
   (defalias 'git-push   'magit-push)
   (defalias 'git-commit 'egg-commit-log-edit)
+#+end_src
+** Misc
+#+begin_src emacs-lisp
+  (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
+  (defalias 'coldnew/folding-toggle   'toggle-selective-display)
 #+end_src
 * Version Control
 **  Git
