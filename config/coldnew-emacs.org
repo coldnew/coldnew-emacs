@@ -1243,6 +1243,10 @@ function file
 
   (setq org-use-speed-commands t)
 
+  (setq org-tag-alist '(
+                        (:startgroup . nil) ("Business" . ?b) ("School" . ?s) ("Weintek" . ?w) ("Personal" . ?p) (:endgroup . nil)
+                        ))
+
 #+end_src
 增加模版。
 #+begin_src emacs-lisp
@@ -1257,8 +1261,8 @@ function file
                                  "* TODO %?\n %i\n %a")
                                 ("f" "FIXME" entry (file+headline "" "Tasks")
                                  "* FIXME %?\n %i\n %a")
-                                ;; ("n" "NOTE" entry (file+headline "" "Notes To Refile")
-                                ;;  "* %?\n:PROPERTIES:\n :DateCreated: %T\n:END:\n#+begin_src\n%i\n#+end_src\n\n%a")
+                                ("w" "Weintek" entry (file+headline "" "Weintek")
+                                 "* TODO %?\n %i\n %a")
                                 ))
 
 #+end_src
