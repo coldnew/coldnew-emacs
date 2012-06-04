@@ -2,7 +2,7 @@
 #+AUTHOR: coldnew
 #+email: coldnew.tw at gmail.com
 #+STARTUP: overview indent align
-
+#+TAGS: macro
 * Basic Setup
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此
 ** Init
@@ -234,49 +234,50 @@ emacs 個人設定檔路徑
 
 *** Face
 #+begin_src emacs-lisp
-    (defface mode-line-read-only-face
-      '((t (:foreground "#C82829" :bold t)))
-      "face for mode-name-string in modeline."
-      :group 'mode-line)
+  (defface mode-line-read-only-face
+    '((t (:foreground "#C82829" :bold t)))
+    "face for mode-name-string in modeline."
+    :group 'mode-line)
 
-    (defface mode-line-modified-face
-      '((t (:inherit 'font-lock-function-name-face :bolt t)))
-      "face for mode-name-string in modeline."
-      :group'mode-lin)
+  (defface mode-line-modified-face
+    '((t (:inherit 'font-lock-function-name-face :bolt t)))
+    "face for mode-name-string in modeline."
+    :group'mode-line)
 
-    (defface mode-line-mode-name-face
-      '((t (:inherit font-lock-keyword-face)))
-      "face for mode-name-string in modeline."
-      :group 'mode-line)
+  (defface mode-line-mode-name-face
+    '((t (:inherit font-lock-keyword-face)))
+    "face for mode-name-string in modeline."
+    :group 'mode-line)
 
-    (defface mode-line-normal-state-face
-      '((t (:inherit font-lock-function-name-face)))
-      "face for emacs normal state")
+  (defface mode-line-normal-state-face
+    '((t (:inherit font-lock-function-name-face)))
+    "face for emacs normal state"
+    :group 'mode-line)
 
-    (defface font-lock-escape-char-face
-      '((((class color)) (:foreground "seagreen2")))
-      "highlight c escapes char like vim"
-      :group 'font-lock-faces)
+  (defface font-lock-escape-char-face
+    '((((class color)) (:foreground "seagreen2")))
+    "highlight c escapes char like vim"
+    :group 'font-lock-faces)
 
-    (defface mode-line-evil-state-string-N
-      '((t (:inherit font-lock-function-name-face)))
-      "face for vim-string in normal-map on mode-line."
-      :group 'mode-line)
+  (defface mode-line-evil-state-string-N
+    '((t (:inherit font-lock-function-name-face)))
+    "face for vim-string in normal-map on mode-line."
+    :group 'mode-line)
 
-    (defface mode-line-evil-state-string-I
-      '((t (:inherit font-lock-constant-face)))
-      "face for vim-string in insert-map on mode-line."
-      :group 'mode-line)
+  (defface mode-line-evil-state-string-I
+    '((t (:inherit font-lock-constant-face)))
+    "face for vim-string in insert-map on mode-line."
+    :group 'mode-line)
 
-    (defface mode-line-evil-state-string-V
-      '((t (:inherit font-lock-variable-name-face)))
-      "face for vim-string in visual-map on mode-line."
-      :group 'mode-line)
+  (defface mode-line-evil-state-string-V
+    '((t (:inherit font-lock-variable-name-face)))
+    "face for vim-string in visual-map on mode-line."
+    :group 'mode-line)
 
-    (defface mode-line-evil-state-string-E
-      '((t (:inherit font-lock-string-face)))
-      "face for vim-string in emacs-map on mode-line."
-      :group 'mode-line)
+  (defface mode-line-evil-state-string-E
+    '((t (:inherit font-lock-string-face)))
+    "face for vim-string in emacs-map on mode-line."
+    :group 'mode-line)
 #+end_src
 
 *** TODO Load theme
@@ -1888,6 +1889,16 @@ Following buffer will not show in iBuffer
   ;; Auto jump to the first error.
   (setq compilation-auto-jump-to-first-error t)
 #+end_src
+** cmake
+*** Depends
+#+begin_src emacs-lisp
+  (require* 'cmake-mode)
+#+end_src
+*** Mode List
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode))
+  (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
+#+end_src
 * Editor
 #+begin_src emacs-lisp
     ;;;; lisp common setting
@@ -2504,8 +2515,12 @@ dummy
                    )))
 #+end_src
 * gpg
+** Depends
 #+begin_src emacs-lisp
   (require 'epa-file)
+#+end_src
+** Config
+#+begin_src emacs-lisp
 
   ;; use local gpg program instaed of system one
   ;; only work under linux
@@ -2527,11 +2542,34 @@ dummy
 * Command                                                           :command:
 All command file
 #+begin_src emacs-lisp
-    (defun save-buffer-always ()
-      "Save the buffer even if it is not modified."
-      (interactive)
-      (set-buffer-modified-p t)
-      (save-buffer))
+  (defun swap-with (dir)
+    (interactive)
+    (let ((other-window (windmove-find-other-window dir)))
+      (when other-window
+        (let* ((this-window (selected-window))
+               (this-buffer (window-buffer this-window))
+               (other-buffer (window-buffer other-window))
+               (this-start (window-start this-window))
+               (other-start (window-start other-window)))
+          (set-window-buffer this-window other-buffer)
+          (set-window-buffer other-window this-buffer)
+          (set-window-start this-window other-start)
+          (set-window-start other-window this-start)))))
+
+  ;; (global-set-key (kbd "C-M-J") (lambda () (interactive) (swap-with 'down)))
+  ;; (global-set-key (kbd "C-M-K") (lambda () (interactive) (swap-with 'up)))
+  ;; (global-set-key (kbd "C-M-H") (lambda () (interactive) (swap-with 'left)))
+  ;; (global-set-key (kbd "C-M-L") (lambda () (interactive) (swap-with 'right)))
+
+  ;; (global-set-key (kbd "M-J") (lambda () (interactive) (enlarge-window 1)))
+  ;; (global-set-key (kbd "M-K") (lambda () (interactive) (enlarge-window -1)))
+  ;; (global-set-key (kbd "M-H") (lambda () (interactive) (enlarge-window -1 t)))
+  ;; (global-set-key (kbd "M-L") (lambda () (interactive) (enlarge-window 1 t)))
+  (defun save-buffer-always ()
+    "Save the buffer even if it is not modified."
+    (interactive)
+    (set-buffer-modified-p t)
+    (save-buffer))
 
   (defun select-forwards-to-before-match (match)
     "Selects forwards to just before next match, uses
@@ -2887,6 +2925,189 @@ All command file
     (next-line 1))
 
 #+end_src
+* Tramp
+tramp config
+* IRC
+** erc
+*** Depends
+#+begin_src emacs-lisp
+  (require 'erc)
+  (require 'erc-log)
+  (require 'erc-notify)
+  (require 'erc-spelling)
+  (require 'erc-autoaway)
+#+end_src
+*** Configs
+**** prompt
+設定 erc-prompt。
+#+begin_src emacs-lisp
+  (setq erc-prompt ">>")
+#+end_src
+**** log
+設定 erc 紀錄檔的位置。
+**** Coding
+設定 erc 的編碼。
+#+begin_src emacs-lisp
+  (setq erc-server-coding-system '(utf-8 . utf-8))
+#+end_src
+**** Misc
+#+begin_src emacs-lisp
+  ;; make sure to use wildcards for e.g. freenode as the actual server
+  ;; name can be be a bit different, which would screw up autoconnect
+  (erc-autojoin-mode t)
+  (setq erc-autojoin-channels-alist
+        '((".*\\.freenode.net" "#emacs"  "#clojure")
+          ))
+  
+  ;; check channels
+  ;; exclude boring stuff from tracking
+  (erc-track-mode t)
+  (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
+  
+                                  "324" "329" "332" "333" "353" "477"))
+  ;; don't show any of this
+  (setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK"))
+  ;; Interpret mIRC-style color commands in IRC chats
+  (setq erc-interpret-mirc-color t)
+  ;; The following are commented out by default, but users of other
+  ;; non-Emacs IRC clients might find them useful.
+  ;; Kill buffers for channels after /part
+  (setq erc-kill-buffer-on-part t)
+  ;; Kill buffers for private queries after quitting the server
+  (setq erc-kill-queries-on-quit t)
+  ;; Kill buffers for server messages after quitting the server
+  (setq erc-kill-server-buffer-on-quit t)
+  ;; open query buffers in the current window
+  (setq erc-query-display 'buffer)
+  ;; logging
+  (setq erc-log-channels-directory "~/.erc/logs/")
+  (if (not (file-exists-p erc-log-channels-directory))
+      (mkdir erc-log-channels-directory t))
+  (setq erc-save-buffer-on-part t)
+  (defadvice save-buffers-kill-emacs (before save-logs (arg) activate)
+    (save-some-buffers t (lambda () (when (eq major-mode 'erc-mode) t))))
+  ;; truncate long irc buffers
+  (erc-truncate-mode +1)
+  ;; enable spell checking
+  (erc-spelling-mode 1)
+  ;; autoaway setup
+  (setq erc-auto-discard-away t)
+  (setq erc-autoaway-idle-seconds 600)
+  (setq erc-autoaway-use-emacs-idle t)
+#+end_src
+*** Hooks
+*** Keybinding
+*** Commands
+#+begin_src emacs-lisp
+  (defun i-wanna-be-social ()
+    "Connect to IM networks using bitlbee."
+    (interactive)
+    (erc :server "localhost" :port 6667 :nick "user"))
+#+end_src
+#+begin_src emacs-lisp
+  (defun erc-cmd-WII (nick &rest ignore)
+    "`/WHOIS' command with extra user information."
+    (erc-send-command (mapconcat #'identity
+                                 (list "WHOIS" nick nick) " ")))
+  (defun erc-cmd-IDENTIFY (password &rest ignore)
+    "Short-hand alias for `/msg NickServ identify PASS'."
+    (erc-send-command (mapconcat #'identity
+                                 (list "identify" password) " ")))
+  (defun erc-cmd-CS (&rest args)
+    "Short alias for `/chanserv ARGS'."
+    (let ((command-args (append (list "CHANSERV") args)))
+      (let ((chanserv-command (mapconcat #'identity command-args " ")))
+        (erc-send-command chanserv-command))))
+  
+  (defun erc-cmd-MS (&rest args)
+    "Short alias for `/memoserv ARGS'."
+    (let ((command-args (append (list "MEMOSERV") args)))
+      (let ((memoserv-command (mapconcat #'identity command-args " ")))
+        (erc-send-command memoserv-command))))
+  
+  (defun erc-cmd-NS (&rest args)
+    "Short alias for `/nickserv ARGS'."
+    (let ((command-args (append (list "NICKSERV") args)))
+      (let ((nickserv-command (mapconcat #'identity command-args " ")))
+        (erc-send-command nickserv-command))))
+#+end_src
+*** Function
+** COMMENT rcirc
+:PROPERTIES:
+:tangle: no
+:END:
+這邊是以前所使用的 rcirc 設定，由於我改用 erc 作為我的 irc client，這邊的設定將不輸出至
+我的 emacs 設定。
+*** Depends
+#+begin_src emacs-lisp
+  (require 'rcirc)
+#+end_src
+*** Config
+#+begin_src emacs-lisp
+  ;; for debugging.
+  (setq rcirc-debug-flag t)
+  ;; Include date in time stamp.
+  (setq rcirc-time-format "%Y-%m-%d %H:%M ")
+  ;; Enable Logging rcirc
+  (setq rcirc-log-flag t)
+  ;; Put logs in this directory
+  (setq rcirc-log-directory "~/.emacs.d/var/log/rcirc/")
+  ;;
+  (setq rcirc-notify-open t)
+  ;;
+  (setq rcirc-notify-timeout 1)
+  ;;
+  (setq rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE"))
+  ;; Prompt Settings
+  (setq rcirc-prompt " %n  >> ")
+  ;; Do not show on modline
+  (setq rcirc-track-minor-mode nil)
+
+  ;; Join these channels at startup.
+  (setq rcirc-server-alist
+        '(
+          ("irc.freenode.net" :channels  ("#emacs" "#lisp" "##linux" "#gentoo"    ; english channel
+                                          "#tossug" "#gentoo-tw" "#python.tw" "#ubuntu-tw"))
+          ("irc.debian.org" :channels ("#dot"))
+          ))
+#+end_src
+*** Hooks
+#+begin_src emacs-lisp
+  (add-hook 'rcirc-mode-hook
+            '(lambda ()
+               ;; Keep input line at bottom.
+               (set (make-local-variable 'scroll-conservatively) 8192)
+               ;; Use Omit-mode
+               (rcirc-omit-mode)
+               ))
+#+end_src
+*** Commands
+#+begin_src emacs-lisp
+  (defun-rcirc-command all (input)
+    "Run the arguments as a command for all connections.
+       Example use: /all away food or /all quit zzzz."
+    (interactive "s")
+    (let ((buffers (mapcar 'process-buffer (rcirc-process-list))))
+      (dolist (buf buffers)
+        (with-current-buffer buf
+          (goto-char (point-max))
+          (insert "/" input)
+          (rcirc-send-input)))))
+
+  (defun-rcirc-command calc (input)
+    "calculate value of some expression using bc"
+    (let ((expr (mapconcat 'identity args " ")))
+      (when (length expr)
+        (let ((result (shell-command-to-string (concat "echo '" expr "' | bc ")))
+              (when result (rcirc-send-message (concat expr " = " result))))))))
+#+end_src
+*** Fix
+不顯示任何 /away 訊息。
+#+begin_src emacs-lisp
+  (defun rcirc-handler-301 (process cmd sender args)
+    "/away message handler.")
+#+end_src
+
 * Alias                                                               :alias:
 #+begin_src emacs-lisp
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
