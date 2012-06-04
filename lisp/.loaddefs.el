@@ -263,7 +263,7 @@ One disabled account with a non-standard port:
 
 If you don't have SRV and STARTTLS capabilities in your Emacs,
 configure a Google Talk account like this:
-\((\"username@gmail.com\" 
+\((\"username@gmail.com\"
   (:network-server . \"talk.google.com\")
   (:connection-type . ssl)))")
 
@@ -451,8 +451,8 @@ The connection used by this buffer.")
 ;;;### (autoloads nil "emacs-jabber/jabber-core" "emacs-jabber/jabber-core.el"
 ;;;;;;  (20428 28331))
 ;;; Generated autoloads from emacs-jabber/jabber-core.el
- (autoload 'jabber-connect-all "jabber" "Connect to all configured Jabber accounts.\nSee `jabber-account-list'.\nIf no accounts are configured (or ARG supplied), call `jabber-connect' interactively." t)
- (autoload 'jabber-connect "jabber" "Connect to the Jabber server and start a Jabber XML stream.\nWith prefix argument, register a new account.\nWith double prefix argument, specify more connection details." t)
+(autoload 'jabber-connect-all "jabber" "Connect to all configured Jabber accounts.\nSee `jabber-account-list'.\nIf no accounts are configured (or ARG supplied), call `jabber-connect' interactively." t)
+(autoload 'jabber-connect "jabber" "Connect to the Jabber server and start a Jabber XML stream.\nWith prefix argument, register a new account.\nWith double prefix argument, specify more connection details." t)
 
 ;;;***
 
@@ -1453,7 +1453,7 @@ Preconfigured helm for `helm-c-source-evaluation-result'.
 \(fn ARG)" t nil)
 
 (autoload 'helm-eval-expression-with-eldoc "helm/helm-eval" "\
-Preconfigured helm for `helm-c-source-evaluation-result' with `eldoc' support. 
+Preconfigured helm for `helm-c-source-evaluation-result' with `eldoc' support.
 
 \(fn)" t nil)
 
@@ -2427,7 +2427,7 @@ One disabled account with a non-standard port:
 
 If you don't have SRV and STARTTLS capabilities in your Emacs,
 configure a Google Talk account like this:
-\((\"username@gmail.com\" 
+\((\"username@gmail.com\"
   (:network-server . \"talk.google.com\")
   (:connection-type . ssl)))")
 
@@ -2990,8 +2990,9 @@ will ask you for the url at point, if any.
 ;;;;;;  "jabber/jabber-util.el" "jabber/jabber-vcard-avatars.el"
 ;;;;;;  "jabber/jabber-vcard.el" "jabber/jabber-version.el" "jabber/jabber-watch.el"
 ;;;;;;  "jabber/jabber-widget.el" "jabber/jabber-wmii.el" "jabber/jabber-xmessage.el"
-;;;;;;  "jabber/jabber-xml.el" "jabber/srv.el" "switch-window/switch-window.el"
-;;;;;;  "window-layout/window-layout.el") (20428 28346 791961))
+;;;;;;  "jabber/jabber-xml.el" "jabber/srv.el" "powerline/powerline.el"
+;;;;;;  "switch-window/switch-window.el" "window-layout/window-layout.el")
+;;;;;;  (20428 57276 728819))
 
 ;;;***
 

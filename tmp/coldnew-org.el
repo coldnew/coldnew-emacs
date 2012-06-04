@@ -5,12 +5,6 @@
 ;;;;;;;; Config
 
 (setq org-directory "~/Dropbox/Org/")
-;; FIXME: still buggy
-;; (setq org-mobile-inbox-for-pull "~/Dropbox/Org/TODO.org")
-;; (setq org-mobile-directroy (expand-file-name "~/Dropbox/MobileOrg/"))
-
-
-
 ;;; setting org-todo keywords
 (setq org-todo-keywords
       '((sequence "TODO" "STARTED" "WAITING" "|" "DONE" "CANCLED")
@@ -33,24 +27,11 @@
 
 ;;(setq org-latex-to-pdf-process '("texi2dvi --pdf --clean --verbose --batch %f"))
 
-(setq org-agenda-files (list "~/Dropbox/Org/"))
-
-(setq org-log-done t)
-
 (setq org-tag-alist '(
 		      (:startgroup . nil) ("Business" . ?b) ("School" . ?s) ("Weintek" . ?w) ("Personal" . ?p) (:endgroup . nil)
 		      ))
 
 ;; capture
-(setq org-default-notes-file (concat org-directory "TODO.org"))
-(setq org-capture-templates '(("t" "TODO" entry (file+headline "" "Tasks")
-			       "* TODO %?\n %i\n %a")
-			      ("f" "FIXME" entry (file+headline "" "Tasks")
-			       "* FIXME %?\n %i\n %a")
-			      ;; ("n" "NOTE" entry (file+headline "" "Notes To Refile")
-			      ;;  "* %?\n:PROPERTIES:\n :DateCreated: %T\n:END:\n#+begin_src\n%i\n#+end_src\n\n%a")
-			      ))
-
 (add-hook 'org-capture-mode-hook
 	  '(lambda ()
 	     (define-key coldnew/command-mode-map "c" 'org-capture-finalize)
@@ -78,21 +59,8 @@
 ;;;; ---------------------------------------------------------------------------
 ;;;; Keybindings
 ;;;; ---------------------------------------------------------------------------
-(add-hook 'org-mode-hook
-	  '(lambda ()
-	     ;; (local-set-key (kbd "C-c C-l") 'org-store-link)
-	     ;; (local-set-key (kbd "C-c C-a") 'org-agenda)
-	     ;; (local-set-key (kbd "C-c C-t") 'org-todo)
-	     ))
 
 
-(add-hook 'org-src-mode-hook
-	  '(lambda ()
-	     (define-key coldnew/command-mode-map "c" 'org-edit-src-exit)
-	     ))
-
-
-(global-set-key (kbd "C-c a") 'org-agenda)
 
 
 ;; ;; Set MobileOrg file path

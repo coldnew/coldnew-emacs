@@ -177,6 +177,7 @@
 	  (:name paredit :description "Minor mode for editing parentheses" :type http :url "http://mumble.net/~campbell/emacs/paredit.el" :features "paredit"))
  (popup status "installed" recipe
 	(:name popup :website "https://github.com/m2ym/popup-el" :description "Visual Popup Interface Library for Emacs" :type github :pkgname "m2ym/popup-el" :features popup))
+ (powerline status "removed" recipe nil)
  (pretty-lambda status "removed" recipe nil)
  (pretty-lambdada status "installed" recipe
 		  (:name pretty-lambdada :description "Show the word `lambda' as the Greek letter." :website "" :type emacswiki :features pretty-lambdada))
