@@ -28,7 +28,7 @@ nil "SOAP library to access debbugs servers" tar])
 (0 1 1))
 (heap
 (0 3)))
-"Dictionary data structure package" single])
+"Dictionary data structure" single])
 (djvu .
 [(0 5)
 nil "Edit and view Djvu files via djvused" single])
@@ -78,10 +78,10 @@ nil "Authoring and publishing tool" tar])
 [(0 1)
 nil "Minor mode to edit files via hex-dump format" single])
 (oauth2 .
-[(0 4)
+[(0 5)
 nil "OAuth 2.0 Authorization Protocol" single])
 (org .
-[(20120516)
+[(20120602)
 nil "Outline-based notes management and organizer" tar])
 (quarter-plane .
 [(0 1)
@@ -111,15 +111,13 @@ nil "Analog clock using Scalable Vector Graphics" single])
 "Tagged non-deterministic finite-state automata" single])
 (trie .
 [(0 2 5)
-((emacs
-(24 1))
-(tNFA
+((tNFA
 (0 1 1))
 (heap
 (0 3)))
 "Trie data structure" single])
 (undo-tree .
-[(0 4)
+[(0 5 2)
 nil "Treat undo history as a tree" single])
 (uni-confusables .
 [(0 1)

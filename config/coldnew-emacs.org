@@ -1224,13 +1224,14 @@ function file
   (setq org-src-window-setup 'current-window)
   (setq org-src-fontify-natively t)
 #+end_src
-**** Crypt
-用於加密 org-mode 裡面具有 :crypt: 這個 TAG 的區塊。
+*** Crypt                                                           :crypt:
+用於加密 org-mode 裡面具有 :encrypt: 這個 TAG 的區塊。
 注意到這需啟用 [[*Easy%20PG][Easy PG]] 才能夠使用。
 #+begin_src emacs-lisp
-  (require 'org-crypt)
-  (org-crypt-use-before-save-magic)
-  (setq org-tags-exclude-from-inheritance (quote ("crypt")))
+  ;;(require 'org-crypt)
+  ;;(setq org-crypt-tag-matcher "encrypt")
+  ;;(org-crypt-use-before-save-magic)
+  ;;(setq org-tags-exclude-from-inheritance (quote ("encrypt")))
 #+end_src
 *** Keybinding
 **** org-mode
@@ -1292,11 +1293,10 @@ some packages conflict with org-mode
            "Remember The Milk"
            :template "* TODO %title\n  %a\n "
            )))
-
+  
   ;;* rtm feed timer
   (run-at-time 3600 3600 'org-feed-update-all)
-
-#+end_src
+  #+end_src
 ** smex
 #+begin_src emacs-lisp
   (require* 'smex)
@@ -1910,14 +1910,13 @@ Following buffer will not show in iBuffer
   (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode))
   (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
 #+end_src
-** Easy PG
+** Easy PG                                                           :crypt:
 *** Depends
 #+begin_src emacs-lisp
   (require 'epa-file)
 #+end_src
 *** Config
 #+begin_src emacs-lisp
-
   ;; use local gpg program instaed of system one
   ;; only work under linux
   (cond
@@ -3128,14 +3127,13 @@ tramp config
 #+end_src
 *** Config
 
-** test                                                              :crypt:
+** test                                                              :encrypt:
 -----BEGIN PGP MESSAGE-----
 Version: GnuPG v1.4.11 (GNU/Linux)
 
-jA0EAwMCoq7+oQBCa5VgyVGwlwdGEw27kQwTkRk0Hoo62iLCiKhbDIfatd2EWhYB
-kD4C3D2bpOgmcM407PHllHuagsCOypKrnkEMeZnGbZRrWUlwM07DWv3ZANnFjgYV
-NUI=
-=6SZt
+jA0EAwMCLWMq/YbpVaNgySA80ye96L8unN43hv3FH1TJ3OQBTf5yh38xfntlQLUz
+cA==
+=6ynf
 -----END PGP MESSAGE-----
 * Alias                                                               :alias:
 #+begin_src emacs-lisp

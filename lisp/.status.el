@@ -8,7 +8,7 @@
  (anything-traverse status "removed" recipe nil)
  (apel status "required" recipe nil)
  (ascii status "installed" recipe
-	(:name ascii :description "ASCII code display." :website "" :type emacswiki :features ascii))
+	(:name ascii :type elpa :description "ASCII code display."))
  (asciidoc status "removed" recipe nil)
  (auto-complete status "installed" recipe
 		(:name auto-complete :website "http://cx4a.org/software/auto-complete/" :description "The most intelligent auto-completion extension." :type github :pkgname "m2ym/auto-complete" :depends
@@ -28,7 +28,7 @@
  (bash-completion status "installed" recipe
 		  (:name bash-completion :description "" :website "" :type http :url "https://raw.github.com/szermatt/emacs-bash-completion/master/bash-completion.el" :features bash-completion))
  (c-eldoc status "installed" recipe
-	  (:name c-eldoc :description "helpful description of the arguments to C functions" :website "" :type elpa :features c-eldoc))
+	  (:name c-eldoc :type elpa :description "helpful description of the arguments to C functions [source: github]"))
  (cedet status "installed" recipe
 	(:name cedet :website "http://cedet.sourceforge.net/" :description "CEDET is a Collection of Emacs Development Environment Tools written with the end goal of creating an advanced development environment in Emacs." :type bzr :url "bzr://cedet.bzr.sourceforge.net/bzrroot/cedet/code/trunk" :build
 	       ("touch `find . -name Makefile`" "make")
@@ -36,12 +36,18 @@
 	       ("echo #!/bin/sh > tmp.sh & echo touch `/usr/bin/find . -name Makefile` >> tmp.sh & echo make FIND=/usr/bin/find >> tmp.sh" "sed 's/^M$//' tmp.sh  > tmp2.sh" "sh ./tmp2.sh" "rm ./tmp.sh ./tmp2.sh")))
  (center-cursor status "removed" recipe nil)
  (center-cursor-mode status "removed" recipe nil)
- (centered-cursor-mode status "installed" recipe
-		       (:name centered-cursor-mode :description "" :website "" :type emacswiki :features centered-cursor-mode))
+ (centered-cursor-mode status "removed" recipe nil)
  (cljdoc status "installed" recipe
-	 (:name cljdoc :description "eldoc mode for clojure" :type elpa))
+	 (:name cljdoc :type elpa :description "eldoc mode for clojure"))
  (clojure-mode status "installed" recipe
 	       (:name clojure-mode :website "https://github.com/technomancy/clojure-mode" :description "Emacs support for the Clojure language." :type github :pkgname "technomancy/clojure-mode"))
+ (cmake-mode status "installed" recipe
+	     (:name cmake-mode :website "http://www.itk.org/Wiki/CMake_Editors_Support" :description "Provides syntax highlighting and indentation for CMakeLists.txt and *.cmake source files." :type http :url "http://www.cmake.org/CMakeDocs/cmake-mode.el" :features "cmake-mode" :post-init
+		    (progn
+		      (add-to-list 'auto-mode-alist
+				   '("CMakeLists\\.txt\\'" . cmake-mode))
+		      (add-to-list 'auto-mode-alist
+				   '("\\.cmake\\'" . cmake-mode)))))
  (ctypes status "installed" recipe
 	 (:name ctypes :description "Enhanced Font lock support for custom defined type" :type elpa))
  (cursor-chg status "removed" recipe nil)
@@ -55,6 +61,7 @@
  (dtrt-indent status "installed" recipe
 	      (:name dtrt-indent :website "http://savannah.nongnu.org/projects/dtrt-indent/" :description "A minor mode that guesses the indentation offset originally used for creating source code files and transparently adjusts the corresponding settings in Emacs, making it more convenient to edit foreign files." :type git :url "git://git.savannah.nongnu.org/dtrt-indent.git" :features dtrt-indent :post-init
 		     (dtrt-indent-mode 1)))
+ (e2wm status "removed" recipe nil)
  (ecb status "installed" recipe
       (:name ecb :description "Emacs Code Browser" :type cvs :module "ecb" :url ":pserver:anonymous@ecb.cvs.sourceforge.net:/cvsroot/ecb" :build
 	     `(("make" "CEDET=" ,(concat "EMACS="
@@ -73,6 +80,11 @@
 		  (:name eldoc-extension :description "Some extension for eldoc" :website "" :type emacswiki :features eldoc-extension))
  (elscreen status "installed" recipe
 	   (:name elscreen :description "This is a fork of ElScreen updated for Emacs 24 and package.el. " :website "https://github.com/shosti/elscreen" :type github :pkgname "shosti/elscreen"))
+ (emacs-jabber status "installed" recipe
+	       (:name emacs-jabber :description "A minimal jabber client" :type git :url "git://emacs-jabber.git.sourceforge.net/gitroot/emacs-jabber/emacs-jabber" :info "." :load-path
+		      (".")
+		      :features jabber-autoloads :build
+		      ("autoreconf -i" "./configure" "make" "mv jabber.info emacs-jabber.info")))
  (eproject status "installed" recipe
 	   (:name eproject :description "File grouping (\"project\") extension for emacs" :type github :pkgname "jrockway/eproject" :load-path
 		  ("." "lang")
@@ -116,11 +128,12 @@
  (iedit status "installed" recipe
 	(:name iedit :description "Edit multiple regions with the same content simultaneously." :type emacswiki :features iedit))
  (jabber status "installed" recipe
-	 (:name cljdocjabber:wq :description "eldoc mode for clojure" :type elpa))
+	 (:name jabber :type elpa :description "A Jabber client for Emacs."))
  (jump-char status "removed" recipe nil)
  (key-chord status "installed" recipe
 	    (:name key-chord :description "map pairs of simultaneously pressed keys to commands" :type emacswiki :features key-chord))
  (linum+ status "removed" recipe nil)
+ (linum-off status "removed" recipe nil)
  (lusty-explorer status "installed" recipe
 		 (:name lusty-explorer :type emacswiki :description "LustyExplorer is a fast and responsive way to manage files and buffers"))
  (magit status "installed" recipe
@@ -164,6 +177,7 @@
 	  (:name paredit :description "Minor mode for editing parentheses" :type http :url "http://mumble.net/~campbell/emacs/paredit.el" :features "paredit"))
  (popup status "installed" recipe
 	(:name popup :website "https://github.com/m2ym/popup-el" :description "Visual Popup Interface Library for Emacs" :type github :pkgname "m2ym/popup-el" :features popup))
+ (pretty-lambda status "removed" recipe nil)
  (pretty-lambdada status "installed" recipe
 		  (:name pretty-lambdada :description "Show the word `lambda' as the Greek letter." :website "" :type emacswiki :features pretty-lambdada))
  (projectile status "installed" recipe
@@ -195,13 +209,11 @@
  (sr-speedbar status "installed" recipe
 	      (:name sr-speedbar :type emacswiki :description "Same frame speedbar" :post-init
 		     (require 'sr-speedbar)))
- (sunrise-commander status "installed" recipe
-		    (:name sunrise-commander :description "Two-pane file manager for Emacs based on Dired and inspired by MC" :type emacswiki))
+ (sunrise-commander status "removed" recipe nil)
  (sunrise-x-tree status "removed" recipe nil)
  (switch-window status "installed" recipe
 		(:name switch-window :description "A *visual* way to choose a window to switch to" :type github :pkgname "dimitri/switch-window" :features switch-window))
- (tabbar status "installed" recipe
-	 (:name tabbar :type emacswiki :description "Display a tab bar in the header line" :lazy t :load-path "."))
+ (tabbar status "removed" recipe nil)
  (tempbuf status "installed" recipe
 	  (:name tempbuf :description "" :website "" :type emacswiki :features tempbuf))
  (traverselisp status "installed" recipe
@@ -216,6 +228,8 @@
 	 (:name unicad :description "" :type svn :url "http://unicad.googlecode.com/svn/trunk/"))
  (volatile-highlights status "removed" recipe nil)
  (wanderlust status "removed" recipe nil)
+ (window-layout status "installed" recipe
+		(:name window-layout :description "window layout manager" :website "https://github.com/kiwanami/emacs-window-layout" :type github :pkgname "kiwanami/emacs-window-layout" :features "window-layout"))
  (winring status "removed" recipe nil)
  (xml-rpc-el status "installed" recipe
 	     (:name xml-rpc-el :description "An elisp implementation of clientside XML-RPC" :type bzr :url "lp:xml-rpc-el"))
