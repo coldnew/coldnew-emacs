@@ -366,39 +366,53 @@ emacs 個人設定檔路徑
    )
 
 #+end_src
-** Package Manager
+* Package Manager
 emacs 套件管理的設定。
-*** el-get
-**** Init
+** el-get
+*** Init
 我不喜歡 el-get 預設使用 el-get 目錄，這裡根據我的 emacs-lisp-dir 重新設定。
 #+begin_src emacs-lisp
   (setq-default el-get-dir emacs-lisp-dir)
 #+end_src
-**** Depends
+*** Depends
 #+begin_src emacs-lisp
   (require 'el-get)
 #+end_src
-**** Config
+*** Config
 #+begin_src emacs-lisp
   (add-to-list 'el-get-recipe-path emacs-recipes-dir)
 #+end_src
-**** Auto Mode Alist
+*** Auto Mode Alist
 \\.rcp$ 為 el-get 的 recipes 副檔名。
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.rcp$" . emacs-lisp-mode))
 #+end_src
-**** TODO Recipes 轉移所有的 recipe 至此
-*** ELPA
-**** Init
+*** TODO Recipes 轉移所有的 recipe 至此
+***** Header
+#+begin_src emacs-lisp
+  (setq el-get-sources '(
+#+end_src
+***** TODO powerline remember to remove
+#+begin_src emacs-lisp
+  (:name powerline
+         :type github
+         :pkgname "jonathanchu/emacs-powerline")
+#+end_src
+***** End of config
+#+begin_src emacs-lisp
+  ))
+#+end_src
+** ELPA
+*** Init
 設定 elpa 安裝目錄到 emacs-elpa-dir
 #+begin_src emacs-lisp
   (setq-default package-user-dir emacs-elpa-dir)
 #+end_src
-**** Depends
+*** Depends
 #+begin_src emacs-lisp
   (require 'package)
 #+end_src
-**** Config
+*** Config
 設定 elpa 所使用的套件庫
 #+begin_src emacs-lisp
   (setq package-archives
@@ -790,7 +804,7 @@ function file
   '(org-agenda-date ((t (:foreground "#8AC6F2"))))
   '(org-agenda-date-weekend ((t (:bold t :foreground "#E65C00" :weight bold))))
   '(org-hide ((t (:foreground "#0B0B0E"))))
-  '(org-todo ((t (:foreground "#F6B3DF" :bold t))))
+  '(org-todo ((t (:foreground "#F43012" :bold t))))
   '(org-hide ((t (:foreground "#0B0B0E"))))
   '(org-done ((t (:foreground "#4BC98A" :bold t))))
   '(org-link   ((t (:inherit (link)))))
@@ -1213,6 +1227,7 @@ function file
 #+end_src
 *** Config
 #+begin_src emacs-lisp
+  (setq org-directory "~/Dropbox/Org/")
   ;; do not show leading stars
   (setq org-hide-leading-stars t)
   ;; do not fold every content
@@ -1223,6 +1238,11 @@ function file
   (setq org-CUA-compatible t)
   (setq org-src-window-setup 'current-window)
   (setq org-src-fontify-natively t)
+  (setq org-agenda-files (list "~/Dropbox/Org/"))
+  (setq org-log-done t)
+
+  (setq org-use-speed-commands t)
+
 #+end_src
 增加模版。
 #+begin_src emacs-lisp
@@ -1230,6 +1250,18 @@ function file
                '("E" "#+begin_src emacs-lisp\n?\n#+end_src"))
 #+end_src
 
+*** Capture
+#+begin_src emacs-lisp
+  (setq org-default-notes-file (concat org-directory "TODO.org"))
+  (setq org-capture-templates '(("t" "TODO" entry (file+headline "" "Tasks")
+                                 "* TODO %?\n %i\n %a")
+                                ("f" "FIXME" entry (file+headline "" "Tasks")
+                                 "* FIXME %?\n %i\n %a")
+                                ;; ("n" "NOTE" entry (file+headline "" "Notes To Refile")
+                                ;;  "* %?\n:PROPERTIES:\n :DateCreated: %T\n:END:\n#+begin_src\n%i\n#+end_src\n\n%a")
+                                ))
+
+#+end_src
 *** Agenda
 設定 Agenda 顯示在目前的 window 上。
 #+begin_src emacs-lisp
@@ -1262,13 +1294,23 @@ function file
 #+end_src
 *** Keybinding
 **** org-mode
+設定自定義的按鍵。
 #+begin_src emacs-lisp
   (add-hook 'org-mode-hook
             '(lambda ()
-               (local-set-key (kbd "C-c b") 'org-metaleft)
-               (local-set-key (kbd "C-c f") 'org-metaright)
-               (local-set-key (kbd "C-c p") 'org-metaup)
-               (local-set-key (kbd "C-c n") 'org-metadown)))
+               (define-key org-mode-map (kbd "C-c C-p") 'org-backward-same-level)
+               (define-key org-mode-map (kbd "C-c C-n") 'org-forward-same-level)
+               (define-key org-mode-map (kbd "C-c C-b") 'coldnew/org-up-parent)
+               (define-key org-mode-map (kbd "C-c C-f") 'coldnew/org-down-children)
+               ))
+#+end_src
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook
+            '(lambda ()
+               (define-key org-mode-map (kbd "C-c b") 'org-metaleft)
+               (define-key org-mode-map (kbd "C-c f") 'org-metaright)
+               (define-key org-mode-map (kbd "C-c p") 'org-metaup)
+               (define-key org-mode-map (kbd "C-c n") 'org-metadown)))
 #+end_src
 **** org-src-mode
 #+begin_src emacs-lisp
@@ -1301,6 +1343,45 @@ some packages conflict with org-mode
   (add-hook 'org-shiftright-final-hook 'windmove-right)
 #+end_src
 
+*** Commands
+#+begin_src emacs-lisp
+  (defun coldnew/org-up-parent ()
+    "Move to the parent of current point. If current is the parent heading,
+  move to the previous parent heading."
+    (interactive)
+    (let* ((level (funcall outline-level))
+           (point (point))
+           (point-to-move-to
+            (save-excursion
+              (outline-previous-visible-heading 1)
+              (if (or (<= (funcall outline-level) level)
+                      (eq point (point)))
+                  nil
+                t))))
+      (if point-to-move-to
+          (outline-back-to-heading)
+        (org-up-heading-safe)
+        )))
+
+  (defun coldnew/org-down-children ()
+    "Move to children of current heading. If current heading only has subtree,
+  expand the subtree."
+    (interactive)
+    (outline-back-to-heading)
+    (show-children)
+    (let* ((level (funcall outline-level))
+           (point-to-move-to
+            (save-excursion
+              (outline-next-visible-heading 1)
+              (if (= (funcall outline-level) level)
+                  nil
+                (point)))))
+      (if point-to-move-to
+          (goto-char point-to-move-to)
+        (show-subtree))))
+
+
+#+end_src
 *** COMMENT remember the milk ?
 :PROPERTIES:
 :tangle: no
@@ -1317,6 +1398,36 @@ some packages conflict with org-mode
 
   ;;* rtm feed timer
   (run-at-time 3600 3600 'org-feed-update-all)
+#+end_src
+** outline
+*** TODO C-f 展開 (show-children) 並跳入 children
+*** TODO C-b 關掉 chilren 並跳到 parent
+#+begin_src emacs-lisp
+  (defun outline-down-heding (arg)
+    (interactive "p")
+    (outline-back-to-heading)
+    (show-children)
+    (while (> arg 0)
+      (let ((point-to-move-to (save-excursion
+                                (outline-aa))))
+        (if point-to-move-to
+            (progn
+              (goto-char point-to-move-to)
+              (setq arg (1- arg)))
+          (progn
+            (setq arg 0)
+            (error "No following same-level heading"))))))
+
+  (defun outline-aa ()
+    "Move to next heading of the same level, and return point.
+        If there is no such heading, return nil."
+    (let ((level (funcall outline-level)))
+      (outline-next-visible-heading 1)
+      (while (and (not (eobp)) (<= (funcall outline-level) level))
+        (outline-next-visible-heading 1))
+      (if (or (eobp) (< (funcall outline-level) level))
+          nil
+        (point))))
 #+end_src
 ** smex
 #+begin_src emacs-lisp
@@ -2503,6 +2614,107 @@ dummy
 #+end_src
 
 * Mode Line
+powerline is really funny
+https://github.com/jonathanchu/emacs-powerline
+** COMMENT take from powerline
+#+begin_src emacs-lisp :tangle no
+  (defun arrow-right-xpm (color1 color2)
+    "Return an XPM right arrow string representing."
+    (format "/* XPM */
+    static char * arrow_right[] = {
+    \"12 18 2 1\",
+    \".     c %s\",
+    \"      c %s\",
+    \".           \",
+    \"..          \",
+    \"...         \",
+    \"....        \",
+    \".....       \",
+    \"......      \",
+    \".......     \",
+    \"........    \",
+    \".........   \",
+    \".........   \",
+    \"........    \",
+    \".......     \",
+    \"......      \",
+    \".....       \",
+    \"....        \",
+    \"...         \",
+    \"..          \",
+    \".           \"};"  color1 color2))
+
+  (defun arrow-left-xpm (color1 color2)
+    "Return an XPM right arrow string representing."
+    (format "/* XPM */
+    static char * arrow_right[] = {
+    \"12 18 2 1\",
+    \".     c %s\",
+    \"      c %s\",
+    \"           .\",
+    \"          ..\",
+    \"         ...\",
+    \"        ....\",
+    \"       .....\",
+    \"      ......\",
+    \"     .......\",
+    \"    ........\",
+    \"   .........\",
+    \"   .........\",
+    \"    ........\",
+    \"     .......\",
+    \"      ......\",
+    \"       .....\",
+    \"        ....\",
+    \"         ...\",
+    \"          ..\",
+    \"           .\"};"  color2 color1))
+
+
+  (defconst color1 "#999")
+  (defconst color2 "#555")
+  (defvar arrow-right-1 (create-image (arrow-right-xpm color1 color2) 'xpm t :ascent 'center))
+  (defvar arrow-right-2 (create-image (arrow-right-xpm color2 "None") 'xpm t :ascent 'center))
+  (defvar arrow-left-1  (create-image (arrow-left-xpm color2 color1) 'xpm t :ascent 'center))
+  (defvar arrow-left-2  (create-image (arrow-left-xpm "None" color2) 'xpm t :ascent 'center))
+  (setq-default mode-line-format
+                (list
+                 '(:eval (concat (propertize (coldnew-editor-mode-string) 'face 'mode-line-color-1)
+                                 (propertize " " 'display arrow-right-1)))
+                 '(:eval (concat (propertize " %b " 'face 'mode-line-color-1)
+                                 (propertize " " 'display arrow-right-1)))
+                 '(:eval (concat (propertize " %m " 'face 'mode-line-color-2)
+                                 (propertize " " 'display arrow-right-2)))
+
+                 ;; Justify right by filling with spaces to right fringe - 16
+                 ;; (16 should be computed rahter than hardcoded)
+                 '(:eval (propertize " " 'display '((space :align-to (- right-fringe 17)))))
+
+                 '(:eval (concat (propertize " " 'display arrow-left-2)
+                                 (propertize " %p " 'face 'mode-line-color-2)))
+                 '(:eval (concat (propertize " " 'display arrow-left-1)
+                                 (propertize "%4l:%2c  " 'face 'mode-line-color-1)))
+                 ))
+
+  (make-face 'mode-line-color-1)
+  (set-face-attribute 'mode-line-color-1 nil
+                      :foreground "#fff"
+                      :background color1)
+
+  (make-face 'mode-line-color-2)
+  (set-face-attribute 'mode-line-color-2 nil
+                      :foreground "#fff"
+                      :background color2)
+
+  ;; (set-face-attribute 'mode-line nil
+  ;;                     :foreground "#fff"
+  ;;                     :background "#000"
+  ;;                     :box nil)
+  ;; (set-face-attribute 'mode-line-inactive nil
+  ;;                     :foreground "#fff"
+  ;;                     :background "#000")
+#+end_src
+** TODO modify to powerline like
 #+begin_src emacs-lisp
   ;;;; ---------------------------------------------------------------------------
   ;;;; Initial modeline setting
@@ -2517,7 +2729,6 @@ dummy
   (defun mode-line-major-mode ()
     "Get major-mode name with << >>."
     (concat "<< " (propertize mode-name 'face 'mode-line-mode-name-face) " >>"))
-
   (defun coldnew-editor-mode-string ()
     (let* ((mode-string-face
             (cond
@@ -2526,7 +2737,6 @@ dummy
              (t 'mode-line-evil-state-string-E)
              )))
       (concat "<" (propertize coldnew-editor-state 'face mode-string-face) ">")))
-
   ;;;; ---------------------------------------------------------------------------
   ;;;; modeline User-Interfaced setting
   ;;;; ---------------------------------------------------------------------------
@@ -3486,6 +3696,8 @@ cA==
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c a") 'org-agenda)
   (global-set-key (kbd "C-c l") 'org-store-link)
+  (global-set-key (kbd "C-c C-l") 'org-insert-link)
+  (global-set-key (kbd "C-c o") 'org-iswitchb)
 #+end_src
 ** Ctrl-Meta Prefix
 #+begin_src emacs-lisp
@@ -3538,7 +3750,9 @@ cA==
   (global-set-key (kbd "C-.") 'repeat)
   (global-set-key (kbd "%") 'match-paren)
 #+end_src
+
 * COMMENT Local File Variable
 # Local Variables:
 # mode: org
+# org-confirm-babel-evaluate: nil
 # End:
