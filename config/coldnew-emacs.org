@@ -1229,6 +1229,11 @@ function file
 #+begin_src emacs-lisp
   (setq org-agenda-window-setup 'current-window)
 #+end_src
+**** Hooks
+啟用 hl-line
+#+begin_src emacs-lisp
+  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
+#+end_src
 **** Keybinding
 #+begin_src emacs-lisp
   (add-hook 'org-agenda-mode-hook
@@ -1266,7 +1271,7 @@ function file
 	       (local-set-key (kbd "C-c C-c") 'org-edit-src-exit)))
 #+end_src
 *** Hooks
-**** Disable linum
+**** TODO Disable linum
 #+begin_src emacs-lisp
 ;;  (add-to-list 'org-mode-hook '(lambda () (linum-mode -1)))
 #+end_src
@@ -3392,7 +3397,6 @@ cA==
       (setq cursor-color emacs-normal-cursor-color))))
 #+end_src
 * Global keybinding
-
 ** Unset key
 #+begin_src emacs-lisp
   (global-unset-key (kbd "C-x e"))
