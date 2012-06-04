@@ -3539,7 +3539,7 @@ cA==
   ;;   (ad-activate 'vc-next-action)
   (define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
 #+end_src
-* Hooks                                                               :hooks:
+* Hooks                                                               :hook:
 
 ** find-file-hook
 #+begin_src emacs-lisp
@@ -3721,24 +3721,19 @@ cA==
 #+end_src
 
 ** Function key prefix
+Function key 設置常用的命令。
 
-*** F1
+| Key | Command             |
+|-----+---------------------|
+| F1  | woman               |
+| F2  | shell-pop           |
+| F3  | call-last-kcd-macro |
+| F4  | sr-speedbar-toggle  |
+
 #+begin_src emacs-lisp
   (global-set-key (kbd "<f1>")     'woman)
-#+end_src
-
-*** F2
-#+begin_src emacs-lisp
   (global-set-key (kbd "<f2>")     'shell-pop)
-#+end_src
-
-*** F3
-#+begin_src emacs-lisp
   (global-set-key (kbd "<f3>")     'call-last-kbd-macro)
-#+end_src
-
-*** F4
-#+begin_src emacs-lisp
   (global-set-key (kbd "<f4>")     'sr-speedbar-toggle)
 #+end_src
 
