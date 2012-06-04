@@ -1401,21 +1401,24 @@ some packages conflict with org-mode
   move to the previous parent heading."
     (interactive)
     (let* ((level (funcall outline-level))
-           (point (point))
            (point-to-move-to
             (save-excursion
               (outline-previous-visible-heading 1)
-              (if (or (<= (funcall outline-level) level)
-                      (eq point (point)))
+              (if (<= (funcall outline-level) level)
                   nil
                 t))))
-      (if point-to-move-to
+      (if (and point-to-move-to
+               (save-excursion
+                 (outline-backward-same-level 1)
+                 (if (= (funcall outline-level) level)
+                     nil
+                   t)))
           (outline-back-to-heading)
         (org-up-heading-safe)
         )))
 
   (defun coldnew/org-down-children ()
-    "Move to children of current heading. If current heading only has subtree,
+          "Move to children of current heading. If current heading only has subtree,
   expand the subtree."
     (interactive)
     (outline-back-to-heading)
@@ -1430,7 +1433,6 @@ some packages conflict with org-mode
       (if point-to-move-to
           (goto-char point-to-move-to)
         (show-subtree))))
-
 
 #+end_src
 *** COMMENT remember the milk ?
