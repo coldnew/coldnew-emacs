@@ -2133,6 +2133,217 @@ Following buffer will not show in iBuffer
 
 #+end_src
 * Editor
+try to define my editor-mode , some function  or macros copy from evil :)
+#+begin_src emacs-lisp :tangle no
+  (defvar coldnew-global-keymaps-alist nil
+    "Association list of keymap variables.
+  Entries have the form (MODE . KEYMAP), where KEYMAP
+  is the variable containing the keymap for MODE.")
+
+  (defvar coldnew-local-keymaps-alist nil
+    "Association list of keymap variables that must be
+  reinitialized in each buffer. Entries have the form
+  \(MODE . KEYMAP), where KEYMAP is the variable containing
+  the keymap for MODE.")
+
+  (defmacro coldnew-define-local-var (symbol &optional initvalue docstring)
+    "Define SYMBOL as permanent buffer local variable, and return SYMBOL.
+  The parameters are the same as for `defvar', but the variable
+  SYMBOL is made permanent buffer local."
+    (declare (indent defun)
+             (debug (symbolp &optional form stringp)))
+    `(progn
+       (defvar ,symbol ,initvalue ,docstring)
+       (make-variable-buffer-local ',symbol)
+       (put ',symbol 'permanent-local t)))
+
+  (coldnew-define-local-var coldnew-editor-state nil
+    "The current coldnew-editor-state.
+  To change the state, use `coldnew-change-state'
+  or call the state function (e.g., `coldnew-editor-state').")
+
+  (coldnew-define-local-var coldnew-editor-previous-state nil
+    "The coldnew-editor-state being switched from.")
+
+  (coldnew-define-local-var coldnew-mode-line-tag nil
+    "Mode-Line indicator for the current state.")
+  (put 'coldnew-mode-line-tag 'risky-local-variable t)
+
+  (defun coldnew-add-to-alist (list-var key val &rest elements)
+    "Add the assocation of KEY and VAL to the value of LIST-VAR.
+  If the list already contains an entry for KEY, update that entry;
+  otherwise add at the end of the list."
+    (let ((tail (symbol-value list-var)))
+      (while (and tail (not (equal (car-safe (car-safe tail)) key)))
+        (setq tail (cdr tail)))
+      (if tail
+          (setcar tail (cons key val))
+        (set list-var (append (symbol-value list-var)
+                              (list (cons key val)))))
+      (if elements
+          (apply #'coldnew-add-to-alist list-var elements)
+        (symbol-value list-var))))
+
+
+
+  (defmacro coldnew/define-keymap (keymap doc &rest body)
+    "Define a keymap KEYMAP listed in `coldnew-mode-map-alist'.
+  That means it will have precedence over regular keymaps.
+
+  DOC is the documentation for the variable. BODY, if specified,
+  is executed after toggling the mode. Optional keyword arguments
+  may be specified before the body code:
+
+  :mode VAR       Mode variable. If unspecified, the variable
+                  is based on the keymap name.
+  :local BOOLEAN  Whether the keymap should be buffer-local, that is,
+                  reinitialized for each buffer.
+  :func BOOLEAN   Create a toggle function even if BODY is empty.
+
+  \(fn KEYMAP DOC [[KEY VAL]...] BODY...)"
+    (declare (indent defun)
+             (debug (&define name
+                             [&optional stringp]
+                             [&rest [keywordp sexp]]
+                             def-body)))
+    (let ((func t)
+          arg intercept key local mode overriding)
+      (while (keywordp (car-safe body))
+        (setq key (pop body)
+              arg (pop body))
+        (cond
+         ((eq key :mode)
+          (setq mode arg))
+         ((eq key :local)
+          (setq local arg))
+         ((eq key :func)
+          (setq func arg))
+         ((eq key :intercept)
+          (setq intercept arg))
+         ((eq key :overriding)
+          (setq overriding arg))))
+      (setq mode (or mode
+                     (intern (replace-regexp-in-string
+                              "\\(?:-\\(?:mode-\\)?\\(?:key\\)?map\\)?$"
+                              "-mode"
+                              (symbol-name keymap)))))
+      `(progn
+         (defvar ,keymap ,(unless local '(make-sparse-keymap)))
+         (unless (get ',keymap 'variable-documentation)
+           (put ',keymap 'variable-documentation ,doc))
+         (defvar ,mode nil)
+         (unless (get ',mode 'variable-documentation)
+           (put ',mode 'variable-documentation ,doc))
+         (make-variable-buffer-local ',mode)
+         (put ',mode 'permanent-local t)
+         (when ,intercept
+           (evil-make-intercept-map ,keymap))
+         (when ,overriding
+           (evil-make-overriding-map ,keymap))
+         ,@(if local
+               `((make-variable-buffer-local ',keymap)
+                 (put ',keymap 'permanent-local t)
+                 (coldnew-add-to-alist 'coldnew-local-keymaps-alist
+                                       ',mode ',keymap))
+             `((coldnew-add-to-alist 'coldnew-global-keymaps-alist
+                                     ',mode ',keymap)))
+         ,(when (or body func)
+            `(defun ,mode (&optional arg)
+               ,@(when doc `(,doc))
+               (interactive)
+               (cond
+                ((numberp arg)
+                 (setq ,mode (> arg 0)))
+                (t
+                 (setq ,mode (not ,mode))))
+               ,@body))
+         ',keymap)))
+
+  (defmacro coldnew/define-state (state doc &rest body)
+    "Define an coldnew-editor state STATE.
+  DOC is a general description and shows up in all docstrings;
+  the first line of the string should be the full name of the state.
+  Then follows one or more optional keywords:
+
+  :tag STRING             Mode line indicator.
+  :message STRING         Echo area message when changing to STATE.
+  :cursor SPEC            Cursor to use in STATE.
+  :entry-hook LIST        Hooks run when changing to STATE.
+  :exit-hook LIST         Hooks run when changing from STATE.
+  :suppress-keymap FLAG   If FLAG is non-nil, disabling bindings to
+                          `self-insert-command'."
+    (declare (indent defun)
+             (debug (&define name
+                             [&optional stringp]
+                             [&rest [keywordp sexp]]
+                             def-body)))
+    (let* ((name (and (string-match "^\\(.+\\)\\(\\(?:.\\|\n\\)*\\)" doc)
+                      (match-string 1 doc)))
+           (doc (match-string 2 doc))
+           (name (and (string-match "^\\(.+?\\)\\.?$" name)
+                      (match-string 1 name)))
+           (doc (if (or (null doc) (string= doc "")) ""
+                  (format "\n%s" doc)))
+           (toggle (intern (format "coldnew-%s" state)))
+           (major-mode (intern (format "%s-modes" toggle)))
+           (minor-mode (intern (format "%s-minor-mode" toggle)))
+           (keymap (intern (format "%s-map" toggle)))
+           (local (intern (format "%s-local-minor-mode" toggle)))
+           (local-keymap (intern (format "%s-local-map" toggle)))
+           (tag (intern (format "%s-tag" toggle)))
+           (message (intern (format "%s-message" toggle)))
+           (cursor (intern (format "%s-cursor" toggle)))
+           (entry-hook (intern (format "%s-entry-hook" toggle)))
+           (exit-hook (intern (format "%s-exit-hook" toggle)))
+           (predicate (intern (format "%s-p" toggle)))
+           arg cursor-value enable entry-hook-value exit-hook-value
+           input-method key message-value suppress-keymap tag-value)
+      ;; collect keywords
+      (while (keywordp (car-safe body))
+        (setq key (pop body)
+              arg (pop body))
+        (cond
+         ((eq key :tag)
+          (setq tag-value arg))
+         ((eq key :message)
+          (setq message-value arg))
+         ((eq key :cursor)
+          (setq cursor-value arg))
+         ((eq key :entry-hook)
+          (setq entry-hook-value arg)
+          (unless (listp entry-hook-value)
+            (setq entry-hook-value (list entry-hook-value))))
+         ((eq key :exit-hook)
+          (setq exit-hook-value arg)
+          (unless (listp exit-hook-value)
+            (setq exit-hook-value (list entry-hook-value))))
+         ((eq key :enable)
+          (setq enable arg))
+         ((eq key :input-method)
+          (setq input-method arg))
+         ((eq key :suppress-keymap)
+          (setq suppress-keymap arg))))
+      ;; macro expansion
+      `(progn
+         (defvar ,minor-mode nil
+           ,(format "Non-nil if %s is enabled.
+  Use the command `%s' to change this variable." name toggle))
+         (defvar ,major-mode nil
+           ,(format "Modes that should come up in %s." name))
+
+         )
+      ))
+
+  (coldnew/define-state test
+    "doc"
+    :tag "e"
+    )
+
+
+
+
+
+#+end_src
 #+begin_src emacs-lisp
     ;;;; lisp common setting
   (defun coldnew-lisp-common-setting ()
