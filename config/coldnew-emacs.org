@@ -955,20 +955,28 @@ function file
 #+end_src
 * Mode
 ** auto-complete
+*** Depends
 #+begin_src emacs-lisp
   (require 'auto-complete)
   (require 'auto-complete-config)
   (require* 'auto-complete-clang)
-
-  ;; use default config
+#+end_src
+*** Config
+**** 使用預設的設定。
+#+begin_src emacs-lisp
   (ac-config-default)
+#+end_src
 
-  ;; desable fuzzy-match
+**** 不使用 fuzzy-match
+#+begin_src emacs-lisp
   (setq ac-use-fuzzy nil)
-
-  ;; start auto-complete after insert 2 or more-key
+#+end_src
+**** 當輸入 3 個字母以上時，啟用自動補全。
+#+begin_src emacs-lisp
   (setq ac-auto-start 3)
+#+end_src
 
+#+begin_src emacs-lisp
   ;; Ignore case if completion target string doesn't include upper characters
   (setq ac-ignore-case 'smart)
 
@@ -989,12 +997,12 @@ function file
 
   ;; Enable ac-menu-map
   (setq ac-use-menu-map t)
-
-   ;;;; Keybindings
+#+end_src
+*** Keybinding
+auto-complete-mode 的按鍵設定。
+#+begin_src emacs-lisp
   (define-key ac-menu-map (kbd "C-n") 'ac-next)
   (define-key ac-menu-map (kbd "C-p") 'ac-previous)
-  (define-key ac-mode-map (kbd "C-c h") 'ac-last-quick-help)
-  (define-key ac-mode-map (kbd "C-c H") 'ac-last-help)
   (define-key ac-completing-map "\t" 'ac-complete)
   (define-key ac-complete-mode-map [tab] 'ac-expand)
 #+end_src
@@ -1010,22 +1018,27 @@ function file
   (setq android-mode-sdk-dir "/opt/android-sdk-update-manager/")
 #+end_src
 ** elscreen
+*** Depends
 #+begin_src emacs-lisp
   (require* 'elscreen)
-
-  ;;; start elscreen
+#+end_src
+*** Config
+**** 自動啟用 elscreen
+#+begin_src emacs-lisp
   (elscreen-start)
-
-  ;;; Make TAB show control ico
+#+end_src
+**** 分頁上顯示 *控制* 圖示
+#+begin_src emacs-lisp
   (setq elscreen-tab-display-control t)
-
-  ;;; Make TAB do not display kill-screen icon
+#+end_src
+**** 分頁上不顯示 *關閉* 圖示
+#+begin_src emacs-lisp
   (setq elscreen-tab-display-kill-screen nil)
-
-  ;;; Change elscreen prefix to
-  ;;(elscreen-set-prefix-key nil)
-
-  ;;; Make elscreen create automatically
+#+end_src
+*** Advice
+當目前只有一個 elscreen-tab 存在時，呼叫 *elscreen-next* 、 *elscreen-previous*
+或是 *elscreen-toggle* 會自動建立另外一個 elscreen-tab。
+#+begin_src emacs-lisp
   (defmacro elscreen-create-automatically (ad-do-it)
     (` (if (not (elscreen-one-screen-p))
            (, ad-do-it)
@@ -1041,7 +1054,6 @@ function file
 
   (defadvice elscreen-toggle (around elscreen-create-automatically activate)
     (elscreen-create-automatically ad-do-it))
-
 #+end_src
 ** eshell
 #+begin_src emacs-lisp
@@ -2349,7 +2361,7 @@ This section contains my editor state
      ;; highlight special keywords like TODO, BUF
      (add-hook 'coldnew-editor-hook 'highlight-additional-keywords)
    ;; highlight fontify numbers and constant
-    (add-hook 'coldnew-editor-hook 'highlight-fontify-numbers)
+;;    (add-hook 'coldnew-editor-hook 'highlight-fontify-numbers)
     ;; highlight escape char in string
     (add-hook 'coldnew-editor-hook 'highlight-escape-char)
   ;;   ;; Add spaces between Chinese and English character.
