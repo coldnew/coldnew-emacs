@@ -1956,23 +1956,18 @@ Following buffer will not show in iBuffer
     ;;;; lisp common setting
   (defun coldnew-lisp-common-setting ()
     "coldnew's common setting for lisp-like mode"
-
     ;; Use coldnew's editor mode
     (coldnew-editor-mode)
-
     ;; Use Greek character lambda insteda of string
     (turn-on-pretty-lambda-mode)
-
     )
 
 
   ;;;; cc-mode common setting
   (defun coldnew-cc-mode-common-setting ()
     "coldnew's common setting for cc-mode"
-
     ;; Use coldnew's editor mode
     (coldnew-editor-mode)
-
     ;; enable doxygen
   ;;  (doxymacs-mode t)
   ;;  (doxymacs-font-lock)
@@ -3531,4 +3526,3 @@ cA==
   (global-set-key (kbd "C-.") 'repeat)
   (global-set-key (kbd "%") 'match-paren)
 #+end_src
-* COMMENT File local Variables
