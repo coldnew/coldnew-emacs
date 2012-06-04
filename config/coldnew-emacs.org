@@ -2786,6 +2786,30 @@ e > buffer > major mode > vc  < line:col < % < ?k
 * Command                                                           :command:
 All command file
 #+begin_src emacs-lisp
+  (defun window-horizontal-to-vertical ()
+    "Switches from a horizontal split to a vertical split."
+    (interactive)
+    (let ((one-buf (window-buffer (selected-window)))
+          (buf-point (point)))
+      (other-window 1)
+      (delete-other-windows)
+      (split-window-horizontally)
+      (switch-to-buffer one-buf)
+      (goto-char buf-point)))
+
+  (defun window-vertical-to-horizontal ()
+    "Switches from a vertical split to a horizontal split."
+    (interactive)
+    (let ((one-buf (window-buffer (selected-window)))
+          (buf-point (point)))
+      (other-window 1)
+      (delete-other-windows)
+      (split-window-vertically)
+      (switch-to-buffer one-buf)
+      (goto-char buf-point)))
+#+end_src
+
+#+begin_src emacs-lisp
   (defun swap-with (dir)
     (interactive)
     (let ((other-window (windmove-find-other-window dir)))
