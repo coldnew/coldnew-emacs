@@ -1233,6 +1233,11 @@ function file
   (org-crypt-use-before-save-magic)
   (setq org-tags-exclude-from-inheritance (quote ("encrypt")))
 #+end_src
+設定 org-crypt-disable-auto-save 成 'encrypt 模式。
+此模式並不會停用 auto-save-mode，反之，當自動儲存時，解密過的區域將會加密回去。
+#+begin_src emacs-lisp
+  (setq org-crypt-disable-auto-save 'encrypt)
+#+end_src
 *** Keybinding
 **** org-mode
 #+begin_src emacs-lisp
@@ -1910,6 +1915,7 @@ Following buffer will not show in iBuffer
   (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode))
   (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
 #+end_src
+
 ** Easy PG                                                           :crypt:
 *** Depends
 #+begin_src emacs-lisp
