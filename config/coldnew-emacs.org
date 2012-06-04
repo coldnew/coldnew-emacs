@@ -1225,7 +1225,8 @@ function file
   (setq org-src-fontify-natively t)
 #+end_src
 **** Crypt
-用於加密 org-mode 特定區塊。注意到這需啟用 [[*Easy%20PG][Easy PG]] 才能夠使用。
+用於加密 org-mode 裡面具有 :crypt: 這個 TAG 的區塊。
+注意到這需啟用 [[*Easy%20PG][Easy PG]] 才能夠使用。
 #+begin_src emacs-lisp
   (require 'org-crypt)
   (org-crypt-use-before-save-magic)
