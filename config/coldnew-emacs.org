@@ -1393,7 +1393,6 @@ some packages conflict with org-mode
   (add-hook 'org-shiftdown-final-hook 'windmove-down)
   (add-hook 'org-shiftright-final-hook 'windmove-right)
 #+end_src
-
 *** Commands
 #+begin_src emacs-lisp
   (defun coldnew/org-up-parent ()
@@ -1402,28 +1401,28 @@ some packages conflict with org-mode
     (interactive)
     (let* ((level (funcall outline-level))
            (point-to-move-to
-            (save-excursion
-              (outline-previous-visible-heading 1)
-              (if (<= (funcall outline-level) level)
-                  nil
-                t))))
-      (if (and point-to-move-to
-               (save-excursion
-                 (outline-backward-same-level 1)
-                 (if (= (funcall outline-level) level)
-                     nil
-                   t)))
+            (and (save-excursion
+                   (outline-previous-visible-heading 1)
+                   (if (<= (funcall outline-level) level)
+                       nil
+                     t))
+                 (save-excursion
+                   (outline-backward-same-level 1)
+                   (if (= (funcall outline-level) level)
+                       nil
+                     t)))))
+      (if point-to-move-to
           (outline-back-to-heading)
         (org-up-heading-safe)
         )))
 
   (defun coldnew/org-down-children ()
-          "Move to children of current heading. If current heading only has subtree,
+        "Move to children of current heading. If current heading only has subtree,
   expand the subtree."
-    (interactive)
-    (outline-back-to-heading)
-    (show-children)
-    (let* ((level (funcall outline-level))
+        (interactive)
+        (outline-back-to-heading)
+        (show-children)
+        (let* ((level (funcall outline-level))
            (point-to-move-to
             (save-excursion
               (outline-next-visible-heading 1)
