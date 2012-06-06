@@ -542,6 +542,15 @@ emacs 套件管理的設定。
 advice file
 * Function                                                         :function:
 function file
+** List Processing
+#+begin_src emacs-lisp
+  (defun flatten (structure)
+    "Flatten the nesting in an arbitrary list of values."
+    (cond ((null structure) nil)
+          ((atom structure) `(,structure))
+          (t (mapcan #'flatten structure))))
+#+end_src
+** other
 #+begin_src emacs-lisp
   (defun list-to-string (char-list)
     "RETURN: A new string containing the characters in char-list."
@@ -4050,7 +4059,7 @@ cA==
       (setq cursor-color emacs-normal-cursor-color))))
 #+end_src
 * Global keybinding
-** COMMENT Unset key
+** Unset key
 #+begin_src emacs-lisp
   ;;(global-unset-key (kbd "C-x e"))
   ;;(global-unset-key (kbd "C-x d"))
@@ -4085,26 +4094,36 @@ cA==
 #+end_src
 
 #+begin_src emacs-lisp :tangle no
-(defun coldnew/test3 (s)
+  (defun coldnew/test3 (s)
     (let* ((char-list (string-to-list (replace-regexp-in-string " " "" s)))
            (result-list '()))
       (dolist (char char-list)
         ;;\A to \Z
-        (if (and (> char ?\^a) (< char ?\^z))
-            (dolist (new (string-to-list (concat
-                                          "Ctrl-"
-                                          (char-to-string (1- (+ char ?a)))
-                                          )))
-              (setq result-list (cons new result-list)))
-          (setq result-list (cons char result-list))
-          )
-        (setq result-list  (cons ?\s result-list))
+        ;; (if (and (> char ?\^a) (< char ?\^z))
+        ;;          (dolist (new (string-to-list (concat
+        ;;                                        "Ctrl-"
+        ;;                                        (char-to-string (1- (+ char ?a)))
+        ;;                                        )))
+        ;;            (setq result-list (cons new result-list)))
+        (if (assoc char coldnew/keymap-string-alist)
+            (setq char (reverse (string-to-list (cdr-safe (assoc char coldnew/keymap-string-alist))))))
+        (setq result-list (cons (list char) result-list))
+        (setq result-list  (cons (list ?\s) result-list))
         )
       ;;result-list
+      (setq result-list (flatten result-list))
       (list-to-string (nreverse (cdr-safe result-list)))
       ))
 
-  (coldnew/test3 (kbd "C-x e C-x y"))
+  (defvar coldnew/keymap-string-alist
+    (let ((result))
+      (dolist (char (number-sequence ?\^a ?\^z))
+        (add-to-list 'result (cons char (concat "Ctrl-" (char-to-string (1- (+ char ?a)))))))
+      result))
+
+
+
+  (coldnew/test3 (kbd "C-a e C-x y"))
 
   (defun list-to-string (char-list)
     "RETURN: A new string containing the characters in char-list."
