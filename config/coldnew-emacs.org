@@ -1961,25 +1961,22 @@ Following buffer will not show in iBuffer
   (setq multi-term-program emacs-default-shell)
 #+end_src
 ** term
-*** TODO ansi-color
-
-
+*** Depends
 #+begin_src emacs-lisp
   (require 'term)
+  (require 'ansi-color)
+#+end_src
+
+*** Config
+#+begin_src emacs-lisp
   ;; ;; Remove term-mode default color
   (setq term-default-bg-color nil)
-;;  (setq term-default-fg-color nil)
-
-  ;;;; keybindings
-  ;; (define-key term-raw-map (kbd "<f4>") 'shell-pop)
-  (define-key term-raw-map (kbd "M-x") 'execute-extended-command)
-  (define-key term-raw-map (kbd "C-g") 'term-interrupt-subjob)
-  (define-key term-raw-map (kbd "C-n") 'term-send-down)
-  (define-key term-raw-map (kbd "C-p") 'term-send-up)
-  (define-key term-raw-map (kbd "<enter>") 'term-send-input)
+  (setq term-default-fg-color nil)
 #+end_src
+
+**** Color
+重新設定 Ansi-Color，讓他和我的佈景主題配合。
 #+begin_src emacs-lisp
-  (require 'ansi-color)
   ;; reset ansi-color
   (setq-default ansi-color-names-vector
                 (vector (frame-parameter nil 'background-color)
@@ -1988,16 +1985,17 @@ Following buffer will not show in iBuffer
                 )
   (setq ansi-term-color-vector ansi-color-names-vector)
   ;; (setq ansi-color-map (ansi-color-make-color-map))
+#+end_src
 
-  ;; (setq-default ansi-term-color-vector
-  ;;               (vector (frame-parameter nil 'foreground-color)
-  ;;                       "#0B0B0E" "#CA3839" "#8ae234" "#edd400"
-  ;;                       "#729fcf" "#ad7fa8" "cyan3"   "#DCDCDC")
-  ;;               )
-
-  ;; (setq ansi-term-color-vector
-  ;;       [unspecified "#000000" "#963F3C" "#5FFB65" "#FFFD65"
-  ;;                    "#0082FF" "#FF2180" "#57DCDB" "#FFFFFF"])
+*** Keybindings
+#+begin_src emacs-lisp
+  ;;;; keybindings
+  ;; (define-key term-raw-map (kbd "<f4>") 'shell-pop)
+  (define-key term-raw-map (kbd "M-x") 'execute-extended-command)
+  (define-key term-raw-map (kbd "C-g") 'term-interrupt-subjob)
+  (define-key term-raw-map (kbd "C-n") 'term-send-down)
+  (define-key term-raw-map (kbd "C-p") 'term-send-up)
+  (define-key term-raw-map (kbd "<enter>") 'term-send-input)
 #+end_src
 
 ** comint
