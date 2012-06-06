@@ -537,10 +537,6 @@ parenface 可以將所有的圓括號上色。
 #+begin_src emacs-lisp :tangle no
   (require 'parenface)
   (set-face-foreground 'paren-face "green")
-
-
-
-
 #+end_src
 
 ** Build-in
