@@ -533,6 +533,15 @@ emacs 套件管理的設定。
   (require* 'switch-window)
   (require* 'pretty-lambdada)
 #+end_src
+parenface 可以將所有的圓括號上色。
+#+begin_src emacs-lisp :tangle no
+  (require 'parenface)
+  (set-face-foreground 'paren-face "green")
+
+
+
+
+#+end_src
 
 ** Build-in
 #+begin_src emacs-lisp
@@ -900,31 +909,46 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變承單一個 l
   '(org-level-6 ((t (:foreground "#afe04e"))))
   '(org-level-7 ((t (:foreground "#0A4C64"))))
 #+end_src
+*** rainbow-delimiters
+#+begin_src emacs-lisp
+  '(rainbow-delimiters-depth-1-face ((t (:foreground "green"))))
+  ;; '(rainbow-delimiters-depth-2-face ((t (:foreground  "yellow"))))
+  ;; '(rainbow-delimiters-depth-3-face ((t (:foreground  "blue"))))
+  ;; '(rainbow-delimiters-depth-4-face ((t (:foreground "purple"))))
+  ;; '(rainbow-delimiters-depth-5-face ((t (:foreground "orange"))))
+  ;; '(rainbow-delimiters-depth-6-face ((t (:foreground  "magenta"))))
+  ;; '(rainbow-delimiters-depth-7-face ((t (:foreground  "spring green"))))
+  ;; '(rainbow-delimiters-depth-8-face ((t (:foreground  "coral"))))
+  ;; '(rainbow-delimiters-depth-9-face ((t (:foreground  "dodger blue"))))
+  ;; '(rainbow-delimiters-depth-10-face ((t (:foreground "violet red"))))
+  ;; '(rainbow-delimiters-depth-11-face ((t (:foreground "DarkOrange1"))))
+  ;; '(rainbow-delimiters-depth-12-face ((t (:foreground "chartreuse2"))))
+#+end_src
 *** Other
 #+begin_src emacs-lisp
-   ;; Link
-   '(link ((t (:foreground "dodger blue" :underline t))))
-   ;; '(link-visited ((t (:foreground "#8b008b" :underline t))))
+  ;; Link
+  '(link ((t (:foreground "dodger blue" :underline t))))
+  ;; '(link-visited ((t (:foreground "#8b008b" :underline t))))
 
    ;;;; Show Paren
-   '(show-paren-match ((t (:background "#E65C00" :foreground "#CDCDCD" :bold t))))
-   '(show-paren-mismatch ((t (:background "#0C0C0C" :foreground "#E91303" :bold t))))
+  '(show-paren-match ((t (:background "#E65C00" :foreground "#CDCDCD" :bold t))))
+  '(show-paren-mismatch ((t (:background "#0C0C0C" :foreground "#E91303" :bold t))))
 
    ;;;; isearch
-   '(isearch ((t (:background "#F57900" :foreground "#7F6BFF"))))
-   '(lazy-highlight ((t (:background "#E9B96E" :foreground "#7F6BFF"))))
+  '(isearch ((t (:background "#F57900" :foreground "#7F6BFF"))))
+  '(lazy-highlight ((t (:background "#E9B96E" :foreground "#7F6BFF"))))
 
    ;;;; Comint
-   '(comint-highlight-prompt ((t (:foreground "#5D9AE4" :bold t))))
+  '(comint-highlight-prompt ((t (:foreground "#5D9AE4" :bold t))))
 
    ;;;; Hl-line
-   '(hl-line ((t :background "#444444")))
+  '(hl-line ((t :background "#444444")))
 
    ;;;; selection
-   '(secondary-selection ((t (:background "#CAE682" :foreground "#0c0c0c"))))
+  '(secondary-selection ((t (:background "#CAE682" :foreground "#0c0c0c"))))
 
    ;;;; Diff
-   '(diff-added ((t (:foreground "#95E454"))))
+  '(diff-added ((t (:foreground "#95E454"))))
   '(diff-removed ((t (:foreground "#E52210"))))
   '(diff-header ((t (:background "#0B0B0E"))))
   '(diff-hunk-header ((t (:foreground "yellow"))))
@@ -964,6 +988,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變承單一個 l
   '(elscreen-tab-control-face ((t (:foreground "white" :background "black" :weight extra-bold))))
   '(elscreen-tab-current-screen-face ((t (:background "#250628" :foreground "Gray90" :bold t))))
   '(elscreen-tab-other-screen-face ((t (:background "#1D1D1F" :foreground "Gray85" :bold t))))
+
 
    ;;;;
   ;; '(button ((t (:underline t))))
@@ -2367,15 +2392,15 @@ try to define my editor-mode , some function  or macros copy from evil :)
        (put ',symbol 'permanent-local t)))
 
   (coldnew-define-local-var coldnew-editor-state nil
-    "The current coldnew-editor-state.
+                            "The current coldnew-editor-state.
   To change the state, use `coldnew-change-state'
   or call the state function (e.g., `coldnew-editor-state').")
 
   (coldnew-define-local-var coldnew-editor-previous-state nil
-    "The coldnew-editor-state being switched from.")
+                            "The coldnew-editor-state being switched from.")
 
   (coldnew-define-local-var coldnew-mode-line-tag nil
-    "Mode-Line indicator for the current state.")
+                            "Mode-Line indicator for the current state.")
   (put 'coldnew-mode-line-tag 'risky-local-variable t)
 
   (defun coldnew-add-to-alist (list-var key val &rest elements)
@@ -2475,8 +2500,6 @@ try to define my editor-mode , some function  or macros copy from evil :)
 
 
 
-
-
 #+end_src
 #+begin_src emacs-lisp
     ;;;; lisp common setting
@@ -2486,6 +2509,8 @@ try to define my editor-mode , some function  or macros copy from evil :)
     (coldnew-editor-mode)
     ;; Use Greek character lambda insteda of string
     (turn-on-pretty-lambda-mode)
+    (require 'rainbow-delimiters)
+;;    (rainbow-delimiters-mode)
     )
 
 
@@ -2778,6 +2803,7 @@ This section contains my editor state
                  (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
         (replace-match "\\1\\2" nil nil))))
 #+end_src
+
 * Programming Mode
 ** emacs-lisp
 emacs-lisp 語言的設定
@@ -2822,6 +2848,39 @@ emacs-lisp 語言的設定
                 ac-source-files-in-current-dir
                 ac-source-words-in-same-mode-buffers
                 )))
+#+end_src
+*** Flymake
+#+begin_src emacs-lisp
+  (require 'flymake)
+  (defun flymake-elisp-init ()
+    (unless (string-match "^ " (buffer-name))
+      (let* ((temp-file   (flymake-init-create-temp-buffer-copy
+                           'flymake-create-temp-inplace))
+             (local-file  (file-relative-name
+                           temp-file
+                           (file-name-directory buffer-file-name))))
+        (list
+         (expand-file-name invocation-name invocation-directory)
+         (list
+          "-Q" "--batch" "--eval"
+          (prin1-to-string
+           (quote
+            (dolist (file command-line-args-left)
+              (with-temp-buffer
+                (insert-file-contents file)
+                (condition-case data
+                    (scan-sexps (point-min) (point-max))
+                  (scan-error
+                   (goto-char(nth 2 data))
+                   (princ (format "%s:%s: error: Unmatched bracket or quote\n"
+                                  file (line-number-at-pos)))))))
+            )
+           )
+          local-file)))))
+  (push '("\\.el$" flymake-elisp-init) flymake-allowed-file-name-masks)
+  (add-hook 'emacs-lisp-mode-hook
+            ;; workaround for (eq buffer-file-name nil)
+            '(lambda () (if buffer-file-name (flymake-mode t))))
 #+end_src
 *** Functions
 #+begin_src emacs-lisp
@@ -4122,6 +4181,11 @@ cA==
 
   (coldnew/parse-keymap (kbd "C-a e C-x y"))
   (coldnew/parse-keymap "\C-x e ")
+
+  (setq show-paren-delay 0)
+
+
+
 #+end_src
 
 #+results: global-unset-key
@@ -4268,6 +4332,14 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-.") 'repeat)
   (global-set-key (kbd "%") 'match-paren)
 #+end_src
+
+* Deprecated
+:PROPERTIES:
+:tangle: no
+:END:
+這邊放置的是不再使用的設定
+
+
 
 * COMMENT Local File Variable
 # Local Variables:
