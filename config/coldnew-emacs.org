@@ -543,6 +543,20 @@ advice file
 * Function                                                         :function:
 function file
 ** List Processing
+*** flatten a list
+flatten a list 是一種方法，可以用來將巢狀的 list 變承單一個 list。
+舉例來說，假如目前有這樣一個 list:
+
+#+begin_example
+(1 (2 3) (4 (5 6 (7))) 8 9)
+#+end_example
+
+則使用 flatten 這個 function 可以將上面的巢狀 list 變成:
+
+#+begin_example
+(1 2 3 4 5 6 7 8 9)
+#+end_example
+
 #+begin_src emacs-lisp
   (defun flatten (structure)
     "Flatten the nesting in an arbitrary list of values."
@@ -550,7 +564,8 @@ function file
           ((atom structure) `(,structure))
           (t (mapcan #'flatten structure))))
 #+end_src
-** other
+*** List to string
+將一個 list 變成字串回傳。
 #+begin_src emacs-lisp
   (defun list-to-string (char-list)
     "RETURN: A new string containing the characters in char-list."
@@ -561,6 +576,7 @@ function file
         (setq i (1+ i)))
       result))
 #+end_src
+** other
 #+begin_src emacs-lisp
   (defun map-define-key (mode-map keylist fname)
     "Like define-key but the key arg is a list that should be mapped over.
