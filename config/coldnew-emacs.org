@@ -534,7 +534,7 @@ emacs 套件管理的設定。
   (require* 'pretty-lambdada)
 #+end_src
 parenface 可以將所有的圓括號上色。
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (require 'parenface)
   (set-face-foreground 'paren-face "green")
 #+end_src
@@ -2815,6 +2815,7 @@ emacs-lisp 語言的設定
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
   (when (featurep 'paredit)
     (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
+
 #+end_src
 **** highlight-cl
 #+begin_src emacs-lisp
@@ -2845,8 +2846,8 @@ emacs-lisp 語言的設定
                 ac-source-words-in-same-mode-buffers
                 )))
 #+end_src
-*** Flymake
-#+begin_src emacs-lisp
+*** TODO Flymake
+#+begin_src emacs-lisp :tangle no
   (require 'flymake)
   (defun flymake-elisp-init ()
     (unless (string-match "^ " (buffer-name))
@@ -2877,6 +2878,8 @@ emacs-lisp 語言的設定
   (add-hook 'emacs-lisp-mode-hook
             ;; workaround for (eq buffer-file-name nil)
             '(lambda () (if buffer-file-name (flymake-mode t))))
+
+
 #+end_src
 *** Functions
 #+begin_src emacs-lisp
