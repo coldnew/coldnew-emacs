@@ -4077,9 +4077,6 @@ cA==
 * Global keybinding
 ** Unset key
 #+begin_src emacs-lisp
-  ;;(global-unset-key (kbd "C-x e"))
-  ;;(global-unset-key (kbd "C-x d"))
-
   (defmacro coldnew/global-unset-key (key &rest bindings)
     `(progn
        (let* ((keyf ,key)
@@ -4097,38 +4094,24 @@ cA==
              )
            (princ (buffer-string))
            ))))
-  (defun coldnew/parse-keymap (s)
-    "Parse keymap in (kbd) to string."
-    (let* ((char-list (string-to-list (replace-regexp-in-string " " "" s)))
-           (ss (car-safe char-list)))
-      ;; \A to \Z
-      (if (and (> ss 1) (< ss 26))
-          (concat  "Ctrl-" (char-to-string (1- (+ ss ?a))) " "
-                   (list-to-string (cdr-safe char-list)))
-        s)
-        ))
-#+end_src
 
-#+begin_src emacs-lisp :tangle no
-  (defun coldnew/test3 (s)
-    (let* ((char-list (string-to-list (replace-regexp-in-string " " "" s)))
-           (result-list '()))
+  (defun coldnew/parse-keymap (s)
+    "Parse \C-x to Ctrl-x, and return string."
+    (let ((char-list (string-to-list (replace-regexp-in-string " " "" s)))
+          (result-list))
       (dolist (char char-list)
         ;;\A to \Z
-        ;; (if (and (> char ?\^a) (< char ?\^z))
-        ;;          (dolist (new (string-to-list (concat
-        ;;                                        "Ctrl-"
-        ;;                                        (char-to-string (1- (+ char ?a)))
-        ;;                                        )))
-        ;;            (setq result-list (cons new result-list)))
-        (if (assoc char coldnew/keymap-string-alist)
-            (setq char (reverse (string-to-list (cdr-safe (assoc char coldnew/keymap-string-alist))))))
-        (setq result-list (cons (list char) result-list))
-        (setq result-list  (cons (list ?\s) result-list))
+        ;; set char to cdr of coldnew/keymap-string-alist if assoc succes
+        ;; else set char to char
+        (setq char (or (reverse (string-to-list (cdr-safe (assoc char coldnew/keymap-string-alist))))
+                       char))
+        (setq result-list (cons char result-list))
+        (setq result-list  (cons  ?\s result-list))
         )
       ;;result-list
-      (setq result-list (flatten result-list))
-      (list-to-string (nreverse (cdr-safe result-list)))
+      (list-to-string (nreverse
+                       (cdr-safe
+                        (flatten result-list))))
       ))
 
   (defvar coldnew/keymap-string-alist
@@ -4137,23 +4120,9 @@ cA==
         (add-to-list 'result (cons char (concat "Ctrl-" (char-to-string (1- (+ char ?a)))))))
       result))
 
-
-
-  (coldnew/test3 (kbd "C-a e C-x y"))
-
-  (defun list-to-string (char-list)
-    "RETURN: A new string containing the characters in char-list."
-    (let ((result (make-string (length char-list) 0))
-          (i 0))
-      (dolist (char char-list)
-        (aset result i char)
-        (setq i (1+ i)))
-      result))
-
+  (coldnew/parse-keymap (kbd "C-a e C-x y"))
+  (coldnew/parse-keymap "\C-x e ")
 #+end_src
-
-#+RESULTS:
-: coldnew/parse-keymap
 
 #+results: global-unset-key
 | unset key |
@@ -4170,7 +4139,7 @@ cA==
    (kbd "C-x e")
    (kbd "C-x d")
    "\C-x e"
-   "\C-c e"
+;;   "\C-c e"
    )
 #+end_src
 
