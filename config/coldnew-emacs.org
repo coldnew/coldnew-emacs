@@ -553,7 +553,6 @@ function file
       result))
 #+end_src
 #+begin_src emacs-lisp
-
   (defun map-define-key (mode-map keylist fname)
     "Like define-key but the key arg is a list that should be mapped over.
      For example: (map-define-key '(a b c d) 'function-name)."
@@ -3841,16 +3840,9 @@ cA==
 #+end_src
 **** Keybinding
 #+begin_src emacs-lisp
-    (defvar egg:command-mode
-      (lambda () (interactive)
-        (define-key coldnew/command-mode-map "c" 'egg-log-msg-done)))
-
-
   (add-hook 'egg-commit-buffer-mode-hook
             '(lambda ()
-               ;;(define-key coldnew/command-mode-map "c" 'egg-log-msg-done)
-               (set (make-local-variable 'egg:command-mode) t)
-               (call-interactively egg:command-mode)
+               (define-key coldnew/command-mode-map "c" 'egg-log-msg-done)
                ))
 
 #+end_src
@@ -4080,46 +4072,71 @@ cA==
              )
            (princ (buffer-string))
            ))))
-
   (defun coldnew/parse-keymap (s)
-    (let ((ss (car-safe (string-to-list s))))
-      (cond ((= ?\^x ss)
-             (concat  "Ctrl-x" (list-to-string (cdr-safe (string-to-list s)))))
-            )))
+    "Parse keymap in (kbd) to string."
+    (let* ((char-list (string-to-list (replace-regexp-in-string " " "" s)))
+           (ss (car-safe char-list)))
+      ;; \A to \Z
+      (if (and (> ss 1) (< ss 26))
+          (concat  "Ctrl-" (char-to-string (1- (+ ss ?a))) " "
+                   (list-to-string (cdr-safe char-list)))
+        s)
+        ))
+#+end_src
 
+#+begin_src emacs-lisp :tangle no
+(defun coldnew/test3 (s)
+    (let* ((char-list (string-to-list (replace-regexp-in-string " " "" s)))
+           (result-list '()))
+      (dolist (char char-list)
+        ;;\A to \Z
+        (if (and (> char ?\^a) (< char ?\^z))
+            (dolist (new (string-to-list (concat
+                                          "Ctrl-"
+                                          (char-to-string (1- (+ char ?a)))
+                                          )))
+              (setq result-list (cons new result-list)))
+          (setq result-list (cons char result-list))
+          )
+        (setq result-list  (cons ?\s result-list))
+        )
+      ;;result-list
+      (list-to-string (nreverse (cdr-safe result-list)))
+      ))
 
+  (coldnew/test3 (kbd "C-x e C-x y"))
 
-
-
-  (coldnew/parse-keymap "\C-x e")
-
-  (concat "C-x" (list-to-string (cdr (string-to-list "\C-x e"))))
-
-
-
+  (defun list-to-string (char-list)
+    "RETURN: A new string containing the characters in char-list."
+    (let ((result (make-string (length char-list) 0))
+          (i 0))
+      (dolist (char char-list)
+        (aset result i char)
+        (setq i (1+ i)))
+      result))
 
 #+end_src
 
 #+RESULTS:
-: C-x e
+: coldnew/parse-keymap
 
 #+results: global-unset-key
 | unset key |
 |-----------|
-| Ctrl-xe   |
-| Ctrl-xd   |
 | Ctrl-x e  |
-| nil       |
+| Ctrl-x d  |
+| Ctrl-x e  |
+| Ctrl-c e  |
 
 ** test
 #+name: global-unset-key
 #+begin_src emacs-lisp :results value raw
-          (coldnew/global-unset-key
-           (kbd "C-x e")
-           (kbd "C-x d")
-           "\C-x e"
-           "\C-c e"
-           )
+  (coldnew/global-unset-key
+   (kbd "C-x e")
+   (kbd "C-x d")
+   "\C-x e"
+   "\C-c e"
+   )
 #+end_src
 
 ** Function key prefix
