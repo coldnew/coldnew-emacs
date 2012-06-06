@@ -543,6 +543,16 @@ advice file
 * Function                                                         :function:
 function file
 #+begin_src emacs-lisp
+  (defun list-to-string (char-list)
+    "RETURN: A new string containing the characters in char-list."
+    (let ((result (make-string (length char-list) 0))
+          (i 0))
+      (dolist (char char-list)
+        (aset result i char)
+        (setq i (1+ i)))
+      result))
+#+end_src
+#+begin_src emacs-lisp
 
   (defun map-define-key (mode-map keylist fname)
     "Like define-key but the key arg is a list that should be mapped over.
@@ -1391,7 +1401,7 @@ auto-complete-mode 的按鍵設定。
 #+begin_src emacs-lisp
   (add-hook 'org-src-mode-hook
             '(lambda ()
-               (local-set-key (kbd "C-c C-c") 'org-edit-src-exit)
+               ;;(local-set-key (kbd "C-c C-c") 'org-edit-src-exit)
                (define-key coldnew/command-mode-map "c" 'org-edit-src-exit)
                ))
 #+end_src
@@ -1400,6 +1410,17 @@ auto-complete-mode 的按鍵設定。
 #+begin_src emacs-lisp
 ;;  (add-to-list 'org-mode-hook '(lambda () (linum-mode -1)))
 #+end_src
+#+begin_src emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '( (perl . t)
+      (ruby . t)
+      (sh . t)
+      (python . t)
+      (emacs-lisp . t)
+      ))
+#+end_src
+
 *** Conflict Fix
 some packages conflict with org-mode
 **** yasnippet
@@ -2209,6 +2230,29 @@ try to define my editor-mode , some function  or macros copy from evil :)
   the keymap for MODE.")
 #+end_src
 ** Macro
+#+begin_src emacs-lisp :tangle no
+  (defmacro coldnew/define-local-var (symbol &optional value doc &rest body)
+    "Define SYMBOL as perment buffer local variable, and return SYMBOL.
+  The parameters are the same as for `defvar', but the variable
+  SYMBOL is made `permanent' buffer local."
+    (declare (indent defun)
+             (debug (symbolp &optional form stringp [&rest [keywordp sexp]] def-body))
+             )
+    (let (key arg)
+      (if (keywordp (car-safe body))
+          (setq key (pop body)
+                arg (pop body)))
+      `(progn
+         (defvar ,symbol ,value ,doc)
+         (make-variable-buffer-local ',symbol)
+         ;; collect keywords
+         (if (eq key :permanent)
+             (put ',symbol 'permanent-local arg)))))
+
+  (coldnew/define-local-var aa "sd" :permanent nil)
+
+  sd
+#+end_src
 #+begin_src emacs-lisp
   (defmacro coldnew/define-state (state doc &rest body)
     "Define an coldnew-editor mode MODE.
@@ -3801,13 +3845,14 @@ cA==
       (lambda () (interactive)
         (define-key coldnew/command-mode-map "c" 'egg-log-msg-done)))
 
-  (make-variable-buffer-local 'egg:command-mode)
 
   (add-hook 'egg-commit-buffer-mode-hook
             '(lambda ()
                ;;(define-key coldnew/command-mode-map "c" 'egg-log-msg-done)
+               (set (make-local-variable 'egg:command-mode) t)
                (call-interactively egg:command-mode)
                ))
+
 #+end_src
 **** Advice                                                       :advice:
 當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window。
@@ -4013,10 +4058,68 @@ cA==
       (setq cursor-color emacs-normal-cursor-color))))
 #+end_src
 * Global keybinding
-** Unset key
+** COMMENT Unset key
 #+begin_src emacs-lisp
-  (global-unset-key (kbd "C-x e"))
-  (global-unset-key (kbd "C-x d"))
+  ;;(global-unset-key (kbd "C-x e"))
+  ;;(global-unset-key (kbd "C-x d"))
+
+  (defmacro coldnew/global-unset-key (key &rest bindings)
+    `(progn
+       (let* ((keyf ,key)
+              (bindings (list ,@bindings)))
+         (with-temp-buffer
+           ;;(with-current-buffer (get-buffer-create "tttmp")
+           (insert "| unset key ")
+           (newline)
+           (insert "|-")
+           (newline)
+           (while keyf
+             (global-unset-key keyf)
+             (insert (format "| %s \n" (coldnew/parse-keymap keyf)))
+             (setq keyf (pop bindings))
+             )
+           (princ (buffer-string))
+           ))))
+
+  (defun coldnew/parse-keymap (s)
+    (let ((ss (car-safe (string-to-list s))))
+      (cond ((= ?\^x ss)
+             (concat  "Ctrl-x" (list-to-string (cdr-safe (string-to-list s)))))
+            )))
+
+
+
+
+
+  (coldnew/parse-keymap "\C-x e")
+
+  (concat "C-x" (list-to-string (cdr (string-to-list "\C-x e"))))
+
+
+
+
+#+end_src
+
+#+RESULTS:
+: C-x e
+
+#+results: global-unset-key
+| unset key |
+|-----------|
+| Ctrl-xe   |
+| Ctrl-xd   |
+| Ctrl-x e  |
+| nil       |
+
+** test
+#+name: global-unset-key
+#+begin_src emacs-lisp :results value raw
+          (coldnew/global-unset-key
+           (kbd "C-x e")
+           (kbd "C-x d")
+           "\C-x e"
+           "\C-c e"
+           )
 #+end_src
 
 ** Function key prefix
