@@ -891,49 +891,49 @@ function file
 
    ;;;; Diff
    '(diff-added ((t (:foreground "#95E454"))))
-   '(diff-removed ((t (:foreground "#E52210"))))
-   '(diff-header ((t (:background "#0B0B0E"))))
-   '(diff-hunk-header ((t (:foreground "yellow"))))
-   '(diff-function ((t :foreground "green")))
-   '(diff-file-header ((t (:foreground "aquamarine1" :slant italic :weight bold))))
-   '(diff-header ((t (:foreground "VioletRed1"))))
+  '(diff-removed ((t (:foreground "#E52210"))))
+  '(diff-header ((t (:background "#0B0B0E"))))
+  '(diff-hunk-header ((t (:foreground "yellow"))))
+  '(diff-function ((t :foreground "green")))
+  '(diff-file-header ((t (:foreground "aquamarine1" :slant italic :weight bold))))
+  '(diff-header ((t (:foreground "VioletRed1"))))
    ;;;;;;
-   '(diff-index ((t (:foreground "yellow"))))
-   '(diff-context ((t (:inherit font-lock-comment))))
-   '(diff-refine-change ((t (:background "#0B0B0E" :foreground "#DCDCDC"))))
+  '(diff-index ((t (:foreground "yellow"))))
+  '(diff-context ((t (:inherit font-lock-comment))))
+  '(diff-refine-change ((t (:background "#0B0B0E" :foreground "#DCDCDC"))))
 
    ;;;; cua
-   '(cua-rectangle ((t (:background "#444444" :foreground "#DCDCDC"))))
+  '(cua-rectangle ((t (:background "#444444" :foreground "#DCDCDC"))))
 
    ;;;; iBuffer
-   '(ibuffer-deletion ((t (:foreground "#dfaf8f" :weight bold))))
-   '(ibuffer-help-buffer ((t (:inherit font-lock-comment))))
-   '(ibuffer-marked ((t (:foreground "#f0dfaf" :weight bold))))
-   '(ibuffer-special-buffer ((t (:inherit font-lock-doc))))
+  '(ibuffer-deletion ((t (:foreground "#dfaf8f" :weight bold))))
+  '(ibuffer-help-buffer ((t (:inherit font-lock-comment))))
+  '(ibuffer-marked ((t (:foreground "#f0dfaf" :weight bold))))
+  '(ibuffer-special-buffer ((t (:inherit font-lock-doc))))
 
    ;;;; iBuffer-git
-   '(ibuffer-git-add-face ((t (:inherit (diff-added)))))
-   '(ibuffer-git-del-face ((t (:inherit (diff-removed)))))
+  '(ibuffer-git-add-face ((t (:inherit (diff-added)))))
+  '(ibuffer-git-del-face ((t (:inherit (diff-removed)))))
 
 
    ;;;; ECB
-   '(ecb-default-highlight-face ((t (:background "#CAE682" :foreground "#0C0C0C" :bold t))))
+  '(ecb-default-highlight-face ((t (:background "#CAE682" :foreground "#0C0C0C" :bold t))))
 
    ;;;; Woman
-   '(woman-italic-face ((t (:slant italic :weight bold))))
-   '(woman-unknown ((t (:foreground "#EA0000" :weight bold))))
-   '(woman-addition ((t (:foreground "cadet blue"))))
-   '(woman-bold ((t (:inherit bold :foreground "CadetBlue3"))))
+  '(woman-italic-face ((t (:slant italic :weight bold))))
+  '(woman-unknown ((t (:foreground "#EA0000" :weight bold))))
+  '(woman-addition ((t (:foreground "cadet blue"))))
+  '(woman-bold ((t (:inherit bold :foreground "CadetBlue3"))))
 
   ;;;; ElScreen
-   '(elscreen-tab-background-face ((t (:background "#272729" ))))
-   '(elscreen-tab-control-face ((t (:foreground "white" :background "black" :weight extra-bold))))
-   '(elscreen-tab-current-screen-face ((t (:background "#250628" :foreground "Gray90" :bold t))))
-   '(elscreen-tab-other-screen-face ((t (:background "#1D1D1F" :foreground "Gray85" :bold t))))
+  '(elscreen-tab-background-face ((t (:background "#272729" ))))
+  '(elscreen-tab-control-face ((t (:foreground "white" :background "black" :weight extra-bold))))
+  '(elscreen-tab-current-screen-face ((t (:background "#250628" :foreground "Gray90" :bold t))))
+  '(elscreen-tab-other-screen-face ((t (:background "#1D1D1F" :foreground "Gray85" :bold t))))
 
    ;;;;
-   ;; '(button ((t (:underline t))))
-   ;; '(header-line ((t (:background "#e5e5e5" :foreground "#333333"))))
+  ;; '(button ((t (:underline t))))
+  ;; '(header-line ((t (:background "#e5e5e5" :foreground "#333333"))))
 #+end_src
 *** End of File
 #+begin_src emacs-lisp
@@ -1325,6 +1325,15 @@ auto-complete-mode 的按鍵設定。
                                 ))
 
 #+end_src
+
+**** Keybinding
+#+begin_src emacs-lisp
+  (add-hook 'org-capture-mode-hook
+            '(lambda ()
+               (define-key coldnew/command-mode-map "c" 'org-capture-finalize)
+               ))
+
+#+end_src
 *** Agenda
 設定 Agenda 顯示在目前的 window 上。
 #+begin_src emacs-lisp
@@ -1365,8 +1374,11 @@ auto-complete-mode 的按鍵設定。
                (define-key org-mode-map (kbd "C-c C-n") 'org-forward-same-level)
                (define-key org-mode-map (kbd "C-c C-b") 'coldnew/org-up-parent)
                (define-key org-mode-map (kbd "C-c C-f") 'coldnew/org-down-children)
+               (define-key coldnew/command-mode-map "c" 'org-edit-special)
                ))
 #+end_src
+
+
 #+begin_src emacs-lisp
   (add-hook 'org-mode-hook
             '(lambda ()
@@ -1379,7 +1391,9 @@ auto-complete-mode 的按鍵設定。
 #+begin_src emacs-lisp
   (add-hook 'org-src-mode-hook
             '(lambda ()
-               (local-set-key (kbd "C-c C-c") 'org-edit-src-exit)))
+               (local-set-key (kbd "C-c C-c") 'org-edit-src-exit)
+               (define-key coldnew/command-mode-map "c" 'org-edit-src-exit)
+               ))
 #+end_src
 *** Hooks
 **** TODO Disable linum
@@ -2134,7 +2148,55 @@ Following buffer will not show in iBuffer
 #+end_src
 * Editor
 try to define my editor-mode , some function  or macros copy from evil :)
+** Mode
 #+begin_src emacs-lisp :tangle no
+    (define-minor-mode coldnew-editor-local-mode
+      "Minor mode for setting up coldnew-editor in a single bufer."
+      :init-value nil
+      (cond
+       (load-in-progress)                   ; don't enable coldnew-editor in loading buffers
+       (coldnew-editor-local-mode
+        ;; restore the proper value of `major-mode' in Fundamental buffers
+        (when (eq major-mode 'turn-on-coldnew-editor-mode)
+          (setq major-mode 'fundamental-mode))
+
+        ;; determine and enable the initial state
+        ;; (unless coldnew-editor-state
+        ;;   (coldnew-editor-initialize-state)
+        ;;   ;; re-determine the initial state in `post-command-hook' since
+        ;;   ;; the major mode may not have been initialized yet
+        ;;   (add-hook 'post-command-hook #'coldnew-editor-initialize-state t t))
+        ;; TODO:remove
+        (run-hooks 'coldnew-editor-hook)
+        )
+       (t
+        ;; refresh mode-line
+        )))
+
+  (defun turn-on-coldnew-editor-mode (&optional arg)
+    "Turn on coldnew-editor in the current buffer."
+    (interactive)
+    (coldnew-editor-local-mode (or arg 1)))
+
+  (defun turn-off-coldnew-editor-mode (&optional arg)
+    "Turn off coldnew-editor in the current buffer."
+    (interactive)
+    (coldnew-editor-local-mode (or arg -1)))
+
+  (defun coldnew-editor-initialize ()
+    "Enable coldnew-editor in the current buffer, if appropriate.
+    To enable coldnew-editor globally, do `(coldnew-editor-mode 1)'."
+    (unless (minibufferp)
+      (coldnew-editor-local-mode 1)))
+
+    ;;;### autoload
+  (define-global-minor-mode coldnew-editor-mode
+    coldnew-editor-local-mode coldnew-editor-initialize)
+
+#+end_src
+
+** Variables
+#+begin_src emacs-lisp
   (defvar coldnew-global-keymaps-alist nil
     "Association list of keymap variables.
   Entries have the form (MODE . KEYMAP), where KEYMAP
@@ -2145,7 +2207,86 @@ try to define my editor-mode , some function  or macros copy from evil :)
   reinitialized in each buffer. Entries have the form
   \(MODE . KEYMAP), where KEYMAP is the variable containing
   the keymap for MODE.")
+#+end_src
+** Macro
+#+begin_src emacs-lisp
+  (defmacro coldnew/define-state (state doc &rest body)
+    "Define an coldnew-editor mode MODE.
+  DOC is a general description and shows up in all docstrings;
+  the first line of the string should be the full name of the state.
+  Then follows one or more optional keywords:
 
+  :tag STRING             Mode line indicator.
+  :message STRING         Echo area message when changing to STATE.
+  :cursor SPEC            Cursor to use in STATE.
+  :entry-hook LIST        Hooks run when changing to STATE.
+  :exit-hook LIST         Hooks run when changing from STATE.
+  :suppress-keymap FLAG   If FLAG is non-nil, disabling bindings to
+                          `self-insert-command'."
+    (declare (indent defun)
+             (debug (&define name
+                             [&optional stringp]
+                             [&rest [keywordp sexp]]
+                             def-body)))
+    (let* (
+           (name (intern (format "%s" state)))
+           (doc (if (or (null doc) (string= doc "")) ""
+                  (format "\n%s" doc)))
+           (toggle (intern (format "coldnew-%s" state)))
+           (major-mode (intern (format "%s-modes" toggle)))
+           (minor-mode (intern (format "%s-minor-mode" toggle)))
+           (keymap (intern (format "%s-map" toggle)))
+           (local (intern (format "%s-local-minor-mode" toggle)))
+           (local-keymap (intern (format "%s-local-map" toggle)))
+           (tag (intern (format "%s-tag" toggle)))
+           (message (intern (format "%s-message" toggle)))
+           (cursor (intern (format "%s-cursor" toggle)))
+           (entry-hook (intern (format "%s-entry-hook" toggle)))
+           (exit-hook (intern (format "%s-exit-hook" toggle)))
+           (predicate (intern (format "%s-p" toggle)))
+           arg cursor-value enable entry-hook-value exit-hook-value
+           input-method key message-value suppress-keymap tag-value)
+      ;; collect keywords
+      (while (keywordp (car-safe body))
+        (setq key (pop body)
+              arg (pop body))
+        (cond
+         ((eq key :tag)
+          (setq tag-value arg))
+         ((eq key :message)
+          (setq message-value arg))
+         ((eq key :cursor)
+          (setq cursor-value arg))
+         ((eq key :entry-hook)
+          (setq entry-hook-value arg)
+          (unless (listp entry-hook-value)
+            (setq entry-hook-value (list entry-hook-value))))
+         ((eq key :exit-hook)
+          (setq exit-hook-value arg)
+          (unless (listp exit-hook-value)
+            (setq exit-hook-value (list entry-hook-value))))
+         ;; ((eq key :enable)
+         ;;  (setq enable arg))
+         ((eq key :input-method)
+          (setq input-method arg))
+         ((eq key :suppress-keymap)
+          (setq suppress-keymap arg))))
+      ;; macro expansion
+      `(progn
+         (defvar ,minor-mode nil
+           ,(format "Non-nil if %s is enabled.
+                              Use the command `%s' to change this variable." name toggle))
+         (defvar ,major-mode nil
+           ,(format "Modes that should come up in %s." name))
+         ;; (defun ,predicate (&optional state)
+         ;;        ,(format "Whether the current `coldnew-editor' state is `%s'.)" name)
+         ;;        )
+         )
+      ))
+
+#+end_src
+** COMMENT Function
+#+begin_src emacs-lisp :tangle no
   (defmacro coldnew-define-local-var (symbol &optional initvalue docstring)
     "Define SYMBOL as permanent buffer local variable, and return SYMBOL.
   The parameters are the same as for `defvar', but the variable
@@ -2259,81 +2400,6 @@ try to define my editor-mode , some function  or macros copy from evil :)
                ,@body))
          ',keymap)))
 
-  (defmacro coldnew/define-state (state doc &rest body)
-    "Define an coldnew-editor state STATE.
-  DOC is a general description and shows up in all docstrings;
-  the first line of the string should be the full name of the state.
-  Then follows one or more optional keywords:
-
-  :tag STRING             Mode line indicator.
-  :message STRING         Echo area message when changing to STATE.
-  :cursor SPEC            Cursor to use in STATE.
-  :entry-hook LIST        Hooks run when changing to STATE.
-  :exit-hook LIST         Hooks run when changing from STATE.
-  :suppress-keymap FLAG   If FLAG is non-nil, disabling bindings to
-                          `self-insert-command'."
-    (declare (indent defun)
-             (debug (&define name
-                             [&optional stringp]
-                             [&rest [keywordp sexp]]
-                             def-body)))
-    (let* ((name (and (string-match "^\\(.+\\)\\(\\(?:.\\|\n\\)*\\)" doc)
-                      (match-string 1 doc)))
-           (doc (match-string 2 doc))
-           (name (and (string-match "^\\(.+?\\)\\.?$" name)
-                      (match-string 1 name)))
-           (doc (if (or (null doc) (string= doc "")) ""
-                  (format "\n%s" doc)))
-           (toggle (intern (format "coldnew-%s" state)))
-           (major-mode (intern (format "%s-modes" toggle)))
-           (minor-mode (intern (format "%s-minor-mode" toggle)))
-           (keymap (intern (format "%s-map" toggle)))
-           (local (intern (format "%s-local-minor-mode" toggle)))
-           (local-keymap (intern (format "%s-local-map" toggle)))
-           (tag (intern (format "%s-tag" toggle)))
-           (message (intern (format "%s-message" toggle)))
-           (cursor (intern (format "%s-cursor" toggle)))
-           (entry-hook (intern (format "%s-entry-hook" toggle)))
-           (exit-hook (intern (format "%s-exit-hook" toggle)))
-           (predicate (intern (format "%s-p" toggle)))
-           arg cursor-value enable entry-hook-value exit-hook-value
-           input-method key message-value suppress-keymap tag-value)
-      ;; collect keywords
-      (while (keywordp (car-safe body))
-        (setq key (pop body)
-              arg (pop body))
-        (cond
-         ((eq key :tag)
-          (setq tag-value arg))
-         ((eq key :message)
-          (setq message-value arg))
-         ((eq key :cursor)
-          (setq cursor-value arg))
-         ((eq key :entry-hook)
-          (setq entry-hook-value arg)
-          (unless (listp entry-hook-value)
-            (setq entry-hook-value (list entry-hook-value))))
-         ((eq key :exit-hook)
-          (setq exit-hook-value arg)
-          (unless (listp exit-hook-value)
-            (setq exit-hook-value (list entry-hook-value))))
-         ((eq key :enable)
-          (setq enable arg))
-         ((eq key :input-method)
-          (setq input-method arg))
-         ((eq key :suppress-keymap)
-          (setq suppress-keymap arg))))
-      ;; macro expansion
-      `(progn
-         (defvar ,minor-mode nil
-           ,(format "Non-nil if %s is enabled.
-  Use the command `%s' to change this variable." name toggle))
-         (defvar ,major-mode nil
-           ,(format "Modes that should come up in %s." name))
-
-         )
-      ))
-
   (coldnew/define-state test
     "doc"
     :tag "e"
@@ -2361,8 +2427,8 @@ try to define my editor-mode , some function  or macros copy from evil :)
     ;; Use coldnew's editor mode
     (coldnew-editor-mode)
     ;; enable doxygen
-  ;;  (doxymacs-mode t)
-  ;;  (doxymacs-font-lock)
+    ;;  (doxymacs-mode t)
+    ;;  (doxymacs-font-lock)
 
     ;; hide-if-def mode
     (hide-ifdef-mode)
@@ -2370,15 +2436,16 @@ try to define my editor-mode , some function  or macros copy from evil :)
     (setq hide-ifdef-shadow t)
 
     ;; gtags
-  ;;  (gtags-mode t)
-  ;;  (if-not (string-match "/usr/src/linux/" (expand-file-name default-directory))
-  ;;        (gtags-create-or-update))
+    ;;  (gtags-mode t)
+    ;;  (if-not (string-match "/usr/src/linux/" (expand-file-name default-directory))
+    ;;        (gtags-create-or-update))
 
     ;; keybindings
     (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
     (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
     (local-set-key (kbd "<f9>") 'smarter-compile)
     )
+
 #+end_src
 This section contains my editor state
 #+begin_src emacs-lisp
@@ -2390,7 +2457,6 @@ This section contains my editor state
 
   (defvar coldnew-editor-map
     (let ((map (make-sparse-keymap)))
-      (define-key map (kbd "C-0") 'universal-argument)
       map)
     "Keymap for coldnew-editor-mode.")
 
@@ -2431,6 +2497,7 @@ This section contains my editor state
       (define-key map "#" 'vjo-backward-current-word-keep-offset)
       ;; my keymap
       (define-key map "C" 'capitalize-word-backward)
+      (define-key map "c" 'capitalize-word-backward)
       (define-key map "L" 'downcase-word-backward)
       (define-key map "U" 'upcase-word-backward)
       (define-key map "Z" 'zap-up-to-char-backward)
@@ -3730,9 +3797,17 @@ cA==
 #+end_src
 **** Keybinding
 #+begin_src emacs-lisp
+    (defvar egg:command-mode
+      (lambda () (interactive)
+        (define-key coldnew/command-mode-map "c" 'egg-log-msg-done)))
+
+  (make-variable-buffer-local 'egg:command-mode)
+
   (add-hook 'egg-commit-buffer-mode-hook
             '(lambda ()
-               (define-key coldnew/command-mode-map "c" 'egg-log-msg-done)))
+               ;;(define-key coldnew/command-mode-map "c" 'egg-log-msg-done)
+               (call-interactively egg:command-mode)
+               ))
 #+end_src
 **** Advice                                                       :advice:
 當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window。
