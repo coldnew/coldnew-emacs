@@ -3638,10 +3638,6 @@ All command file
   ;;;; Date
   ;;;; ---------------------------------------------------------------------------
 
-  (defun insert-date-time ()
-    "Insert current-date."
-    (interactive)
-    (insert (current-date-time)))
 
   ;;;; ---------------------------------------------------------------------------
   ;;;; Search
@@ -3691,19 +3687,6 @@ All command file
     (end-kbd-macro))
 
   ;;;; ---------------------------------------------------------------------------
-  ;;;; Convert
-  ;;;; ---------------------------------------------------------------------------
-  (defun unix2dos ()
-    "Convert buffer file from unix file to dos file."
-    (interactive)
-    (unix->dos (current-buffer)))
-
-  (defun dos2unix ()
-    "Convert buffer file from dos file to unix file."
-    (interactive)
-    (dos->unix (current-buffer)))
-
-  ;;;; ---------------------------------------------------------------------------
   ;;;; Commands that define for key-chord
   ;;;; ---------------------------------------------------------------------------
   (defun upcase-word-backward ()
@@ -3733,6 +3716,29 @@ All command file
     (open-line 1)
     (next-line 1))
 
+#+end_src
+** Insert
+#+begin_src emacs-lisp
+  (defun insert-date-time ()
+    "Insert current-date."
+    (interactive)
+    (insert (current-date-time)))
+
+#+end_src
+** Convert
+*** unix2dos
+#+begin_src emacs-lisp
+  (defun unix2dos ()
+    "Convert buffer file from unix file to dos file."
+    (interactive)
+    (unix->dos (current-buffer)))
+#+end_src
+*** dos2unix
+#+begin_src emacs-lisp
+  (defun dos2unix ()
+    "Convert buffer file from dos file to unix file."
+    (interactive)
+    (dos->unix (current-buffer)))
 #+end_src
 * Tramp
 tramp config
@@ -3935,6 +3941,7 @@ cA==
 -----END PGP MESSAGE-----
 * Alias                                                               :alias:
 ** git
+和 git 相關的命令的 alias。
 #+begin_src emacs-lisp
   (defalias 'git-log    'egg-log)
   (defalias 'git-status 'egg-status)
@@ -4393,7 +4400,7 @@ Function key 設置常用的命令。
 :PROPERTIES:
 :tangle: no
 :END:
-這邊放置的是不再使用的設定
+這邊放置的是不再使用的設定,並且這邊的設定並不會輸出至我的 emacs-config 上。
 
 
 
