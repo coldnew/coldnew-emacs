@@ -1146,6 +1146,7 @@ auto-complete-mode 的按鍵設定。
     (elscreen-create-automatically ad-do-it))
 #+end_src
 ** eshell
+*** Depends
 #+begin_src emacs-lisp
   (require 'eshell)
   (require 'em-dirs)
@@ -1153,12 +1154,11 @@ auto-complete-mode 的按鍵設定。
   (require 'em-prompt)
   (require 'em-term)
   (require 'em-cmpl)
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Config
-  ;;;; ---------------------------------------------------------------------------
-
-  ;;; Setup prompt function
+#+end_src
+*** Config
+**** Prompt
+將 eshell 的 prompt 設定成和 bash 一樣，也就是　 username@system-name。
+#+begin_src emacs-lisp
   (setq eshell-prompt-function
         '(lambda ()
            (concat
@@ -1168,7 +1168,8 @@ auto-complete-mode 的按鍵設定。
               (eshell/pwd))
             (if (= (user-uid) 0) " # " " $ ")
             )))
-
+#+end_src
+#+begin_src emacs-lisp
   ;;; change history file path
   (setq eshell-last-dir-ring-file-name (concat emacs-cache-dir "eshell-lastdir"))
   (setq eshell-history-file-name (concat emacs-cache-dir "eshell-history"))
@@ -1201,16 +1202,29 @@ auto-complete-mode 的按鍵設定。
                     [remap pcomplete]
                     'helm-esh-pcomplete))))
 
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Keybindings
-  ;;;; ---------------------------------------------------------------------------
 
+  ;; define ac-source for eshell-pcomplete
+  (ac-define-source eshell-pcomplete
+    '((candidates . pcomplete-completions)
+      (cache)
+      (symbol . "f")))
 
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; eshell/command
-  ;;;; ---------------------------------------------------------------------------
-
+  (defun ac-eshell-mode-setup ()
+    "auto-complete settings for eshell-mode"
+    (setq ac-sources
+          '(
+            ac-source-eshell-pcomplete
+            ;; ac-source-symbols
+            ;; ac-source-variables
+            ;; ac-source-functions
+            ;; ac-source-features
+            ;; ac-source-filename
+            ;; ac-source-files-in-current-dir
+            ;; ac-source-words-in-same-mode-buffers
+            )))
+#+end_src
+*** Command
+#+begin_src emacs-lisp
   ;; find-file
   ;; (defun eshell/ef (file) (find-file file))
   (defun eshell/ef (&rest args) (eshell/emacs args))
@@ -1253,36 +1267,9 @@ auto-complete-mode 的按鍵設定。
       ;; argument causes later arguments to be looked for in that directory,
       ;; not the starting directory
       (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
-
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Autocomplete
-  ;;;; ---------------------------------------------------------------------------
-
-  ;; define ac-source for eshell-pcomplete
-  (ac-define-source eshell-pcomplete
-    '((candidates . pcomplete-completions)
-      (cache)
-      (symbol . "f")))
-
-  (defun ac-eshell-mode-setup ()
-    "auto-complete settings for eshell-mode"
-    (setq ac-sources
-          '(
-            ac-source-eshell-pcomplete
-            ;; ac-source-symbols
-            ;; ac-source-variables
-            ;; ac-source-functions
-            ;; ac-source-features
-            ;; ac-source-filename
-            ;; ac-source-files-in-current-dir
-            ;; ac-source-words-in-same-mode-buffers
-            )))
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Functions
-  ;;;; ---------------------------------------------------------------------------
+#+end_src
+*** Function
+#+begin_src emacs-lisp
   (defun coldnew/colorfy-eshell-prompt ()
     (interactive)
     (let* ((mpoint)
