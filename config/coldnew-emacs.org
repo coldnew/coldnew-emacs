@@ -80,7 +80,7 @@ Disable scrollbar
   (setq scroll-down-aggressively     0.01 )
 #+end_src
 
-** Variable
+** Variable                                                       :variable:
 *** Emacs Config Variables
 **** emacs-dir
 emacs 設定檔預設所在的資料夾
@@ -211,7 +211,7 @@ emacs 個人設定檔路徑
 (defvar root-p (zerop (user-real-uid))
   "Return nil if user is not root user.")
 #+end_src
-*** Resolution Testing
+*** Resolution Testing                                         :resolution:
 放置測試螢幕解析度用的變數
 **** 1280x800
 #+begin_src emacs-lisp
@@ -282,7 +282,7 @@ emacs 個人設定檔路徑
 
 *** TODO Load theme
 
-** Macros
+** Macros                                                            :macro:
 *** reauire*
 這個巨集用途和 require 類似，但是會忽略掉所有的錯誤。此外，如果 emacs 並沒有讀入這個 package
 則會呼叫 el-get 來安裝這個 package。
@@ -325,7 +325,7 @@ emacs 個人設定檔路徑
     (require 'server)
     (unless (server-running-p) (server-start)))
 #+end_src
-** Resolution
+** Resolution                                                   :resolution:
 根據目前螢幕的解析度調整 emacs 視窗的大小。
 *** Header
 #+begin_src emacs-lisp
@@ -561,10 +561,11 @@ parenface 可以將所有的圓括號上色。
 * Advice                                                             :advice:
 advice file
 * Function                                                         :function:
-function file
+我所自定義或是我的 emacs config 需要用到的 function。
 ** List Processing
+處理　 List 所用的 function。
 *** flatten a list
-flatten a list 是一種方法，可以用來將巢狀的 list 變承單一個 list。
+flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 list。
 舉例來說，假如目前有這樣一個 list:
 
 #+begin_example
@@ -596,6 +597,68 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變承單一個 l
         (setq i (1+ i)))
       result))
 #+end_src
+** Search
+搜尋相關的 function。
+*** search-backward-to-char
+向後搜尋一個字元。
+#+begin_src emacs-lisp
+  (defun search-backward-to-char (chr)
+    "Search backwards to a character"
+    (while (not (= (char-after) chr))
+      (backward-char 1)))
+#+end_src
+*** search-forward-to-char
+向前搜尋一個字元。
+#+begin_src emacs-lisp
+  (defun search-forward-to-char (chr)
+    "Search forwards to a character"
+    (while (not (= (char-before) chr))
+      (forward-char 1)))
+#+end_src
+** Testing
+測試用的 function，和測試用的變數很像，但是他允許參數的輸入。
+*** font-exist-p
+測試這個字體在系統內是否存在。
+#+begin_src emacs-lisp
+  (defun font-exist-p (fontname)
+    "test if this font is exist or not."
+    (if (not (x-list-fonts fontname))
+        nil t))
+#+end_src
+** Convert
+進行轉換用的 function。
+*** dos to unix
+將輸入的 buffer (DOS 格式)　轉換成 UNIX 格式。　
+#+begin_src emacs-lisp
+  (defun dos->unix (buf)
+    "Convert buffer file from dos file to unix file."
+    (let* (current-buf (current-buffer))
+      (if (not (eq current-buf buf))
+          (switch-to-buffer buf))
+      (goto-char(point-min))
+      (while (search-forward "\r" nil t) (replace-match ""))))
+#+end_src
+*** unix to dos
+將輸入的 buffer (UNIX 格式)　轉換成 DOS 格式。　
+#+begin_src emacs-lisp
+  (defun unix->dos (buf)
+    "Convert buffer file from unix file to dos file."
+    (let* (current-buf (current-buffer))
+      (if (not (eq current-buf buf))
+          (switch-to-buffer buf))
+      (goto-char(point-min))
+      (while (search-forward "\n" nil t) (replace-match "\r\n"))))
+#+end_src
+** System
+和系統相關的 function。
+*** get-ip-address
+取得目前的 IP 位置，預設為 eth0。（此 function 不能用於 windows 上）
+#+begin_src emacs-lisp
+  (defun get-ip-address (&optional dev)
+    "get the IP-address for device DEV (default: eth0)"
+    (let ((dev (if dev dev "eth0")))
+      (format-network-address (car (network-interface-info dev)) t)))
+#+end_src
 ** other
 #+begin_src emacs-lisp
   (defun map-define-key (mode-map keylist fname)
@@ -614,24 +677,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變承單一個 l
               (setq cmd (cdr attr))))
         (if (and cmd (or (string= "emacs" cmd) (string= "emacs.exe" cmd))) t))))
 
-  (defun get-ip-address (&optional dev)
-    "get the IP-address for device DEV (default: eth0)"
-    (let ((dev (if dev dev "eth0")))
-      (format-network-address (car (network-interface-info dev)) t)))
 
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Search
-  ;;;; ---------------------------------------------------------------------------
-
-  (defun search-backward-to-char (chr)
-    "Search backwards to a character"
-    (while (not (= (char-after) chr))
-      (backward-char 1)))
-
-  (defun search-forward-to-char (chr)
-    "Search forwards to a character"
-    (while (not (= (char-before) chr))
-      (forward-char 1)))
 
   ;;;; ---------------------------------------------------------------------------
   ;;;; Region
@@ -669,8 +715,6 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變承單一個 l
           (list start end)
         (list end start))))
 
-
-
   ;;;; ---------------------------------------------------------------------------
   ;;;; Buffer
   ;;;; ---------------------------------------------------------------------------
@@ -705,31 +749,8 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變承單一個 l
       (nth day-index day-names)))
 
   ;;;; ---------------------------------------------------------------------------
-  ;;;; Testing
-  ;;;; ---------------------------------------------------------------------------
-  (defun font-exist-p (fontname)
-    "test if this font is exist or not."
-    (if (not (x-list-fonts fontname))
-        nil t))
-
-  ;;;; ---------------------------------------------------------------------------
   ;;;; Conversion
   ;;;; ---------------------------------------------------------------------------
-  (defun unix->dos (buf)
-    "Convert buffer file from unix file to dos file."
-    (let* (current-buf (current-buffer))
-      (if (not (eq current-buf buf))
-          (switch-to-buffer buf))
-      (goto-char(point-min))
-      (while (search-forward "\n" nil t) (replace-match "\r\n"))))
-
-  (defun dos->unix (buf)
-    "Convert buffer file from dos file to unix file."
-    (let* (current-buf (current-buffer))
-      (if (not (eq current-buf buf))
-          (switch-to-buffer buf))
-      (goto-char(point-min))
-      (while (search-forward "\r" nil t) (replace-match ""))))
 
   (defun file->string (file)
     "Convert file to string in buffer with quote."
@@ -737,7 +758,6 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變承單一個 l
       (with-temp-buffer
         (insert-file-contents file)
         (buffer-string))))
-
 
   ;;;; ---------------------------------------------------------------------------
   ;;;; Advice
