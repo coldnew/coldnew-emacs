@@ -96,13 +96,6 @@ emacs 個人配置的檔案，也就是這個檔案。
     "File to place emacs configs.")
 #+end_src
 
-**** emacs-config-dir
-emacs 個人設定檔路徑
-***** TODO 目前我只使用 coldnew-emacs.org來管理 emacs 設定，是否移除這資料夾？
-#+begin_src emacs-lisp
-    (defvar emacs-config-dir (concat emacs-dir "config/")
-      "directory to place emacs configure.")
-#+end_src
 **** 其他，未整理
 #+begin_src emacs-lisp
   (defvar emacs-themes-dir (concat emacs-dir "themes/")
