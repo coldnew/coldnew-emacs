@@ -120,8 +120,9 @@ emacs 個人配置的檔案，也就是這個檔案。
     "directory to backup files.")
   (defvar emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")
     "file that save secret")
-
-  ;; (defvar emacs-log-dir (concat emacs-var-dir "log/")
+  (defvar emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
+    "File to save bookmarks")
+                                      ;; (defvar emacs-log-dir (concat emacs-var-dir "log/")
   ;;   "log file directory."
 #+end_src
 
@@ -2861,6 +2862,47 @@ This section contains my editor state
         (replace-match "\\1\\2" nil nil))))
 #+end_src
 
+* Cedet
+#+begin_src emacs-lisp
+  (require 'semantic)
+
+  ;; Enable Semantic features
+  (semantic-mode 1)
+
+  ;; Maintain tag database
+  (global-semanticdb-minor-mode 1)
+  ;; Reparse buffer when idle
+  (global-semantic-idle-scheduler-mode 1)
+  ;; Show completions when idle
+  (global-semantic-idle-completions-mode 1)
+  ;; Provide `switch-to-buffer'-like keybinding for tag names.
+  (global-semantic-mru-bookmark-mode 1)
+  ;; Show summary of tag at point
+  (global-semantic-idle-summary-mode 1)
+  ;;;; Disable
+  ;; Highlight the current tag.
+  (global-semantic-highlight-func-mode -1)
+  ;; Show current fun in header line
+  (global-semantic-stickyfunc-mode -1)
+  ;; Additional tag decorations
+  (global-semantic-decoration-mode -1)
+
+
+  ;;;; Enable support for GNU Global
+  (semanticdb-enable-gnu-global-databases 'c-mode)
+  (semanticdb-enable-gnu-global-databases 'c++-mode)
+
+  (setq semanticdb-default-save-directory (concat emacs-cache-dir "semanticdb"))
+  (set-default 'semantic-case-fold t)
+
+#+end_src
+* Bookmark
+C-x r m
+C-x r b
+C-x r l
+#+begin_src emacs-lisp
+  (setq bookmark-default-file emacs-bookmark-file)
+#+end_src
 * Programming Mode
 ** emacs-lisp
 emacs-lisp 語言的設定
