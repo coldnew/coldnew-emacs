@@ -566,7 +566,8 @@ advice file
   (defadvice kill-emacs (around recompile-emacs-config activate)
     "Before exit emacs, kill config.el which is generate by config.org."
     (let ((file-name (concat emacs-dir "config.el")))
-      (delete-file file-name nil)
+      (if (file-exists-p file-name)
+          (delete-file file-name nil))
       ad-do-it))
 #+end_src
 * Function                                                         :function:
