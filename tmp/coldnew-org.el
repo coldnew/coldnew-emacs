@@ -28,11 +28,6 @@
 ;;(setq org-latex-to-pdf-process '("texi2dvi --pdf --clean --verbose --batch %f"))
 
 
-;; capture
-(add-hook 'org-capture-mode-hook
-	  '(lambda ()
-	     (define-key coldnew/command-mode-map "c" 'org-capture-finalize)
-	     ))
 
 ;; writegood-mode
 

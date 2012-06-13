@@ -2883,7 +2883,7 @@ Cancel the idle timer if no more minimaps are active.
 ;;;***
 
 ;;;### (autoloads (helm-projectile) "projectile/helm-projectile"
-;;;;;;  "projectile/helm-projectile.el" (20403 49382))
+;;;;;;  "projectile/helm-projectile.el" (20438 4067))
 ;;; Generated autoloads from projectile/helm-projectile.el
 
 (autoload 'helm-projectile "projectile/helm-projectile" "\
@@ -2894,7 +2894,7 @@ Use projectile with Helm instead of ido.
 ;;;***
 
 ;;;### (autoloads (projectile-mode projectile-global-mode) "projectile/projectile"
-;;;;;;  "projectile/projectile.el" (20403 49382))
+;;;;;;  "projectile/projectile.el" (20438 4067))
 ;;; Generated autoloads from projectile/projectile.el
 
 (defvar projectile-global-mode nil "\
@@ -2942,6 +2942,50 @@ will ask you for the url at point, if any.
 
 ;;;***
 
+;;;### (autoloads (yas/global-mode yas/minor-mode) "yasnippet/yasnippet"
+;;;;;;  "yasnippet/yasnippet.el" (20440 12806))
+;;; Generated autoloads from yasnippet/yasnippet.el
+
+(autoload 'yas/minor-mode "yasnippet/yasnippet" "\
+Toggle YASnippet mode.
+
+When YASnippet mode is enabled, the `yas/trigger-key' key expands
+snippets of code depending on the mode.
+
+With no argument, this command toggles the mode.
+positive prefix argument turns on the mode.
+Negative prefix argument turns off the mode.
+
+You can customize the key through `yas/trigger-key'.
+
+Key bindings:
+\\{yas/minor-mode-map}
+
+\(fn &optional ARG)" t nil)
+
+(defvar yas/global-mode nil "\
+Non-nil if Yas/Global mode is enabled.
+See the command `yas/global-mode' for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `yas/global-mode'.")
+
+(custom-autoload 'yas/global-mode "yasnippet/yasnippet" nil)
+
+(autoload 'yas/global-mode "yasnippet/yasnippet" "\
+Toggle Yas/Minor mode in all buffers.
+With prefix ARG, enable Yas/Global mode if ARG is positive;
+otherwise, disable it.  If called from Lisp, enable the mode if
+ARG is omitted or nil.
+
+Yas/Minor mode is enabled in all buffers where
+`yas/minor-mode-on' would do it.
+See `yas/minor-mode' for more information on Yas/Minor mode.
+
+\(fn &optional ARG)" t nil)
+
+;;;***
+
 ;;;### (autoloads nil nil ("ascii/ascii-autoloads.el" "ascii/ascii-pkg.el"
 ;;;;;;  "auto-complete-clang/auto-complete-clang.el" "auto-complete/auto-complete-config.el"
 ;;;;;;  "auto-complete/auto-complete-pkg.el" "auto-complete/auto-complete.el"
@@ -2971,8 +3015,9 @@ will ask you for the url at point, if any.
 ;;;;;;  "emacs-jabber/jabber-vcard.el" "emacs-jabber/jabber-version.el"
 ;;;;;;  "emacs-jabber/jabber-watch.el" "emacs-jabber/jabber-widget.el"
 ;;;;;;  "emacs-jabber/jabber-wmii.el" "emacs-jabber/jabber-xmessage.el"
-;;;;;;  "emacs-jabber/jabber-xml.el" "emacs-jabber/srv.el" "helm/helm-pkg.el"
-;;;;;;  "helm/helm-plugin.el" "hideshowvis/hideshowvis-autoloads.el"
+;;;;;;  "emacs-jabber/jabber-xml.el" "emacs-jabber/srv.el" "guess-offset/guess-offset-autoloads.el"
+;;;;;;  "guess-offset/guess-offset-pkg.el" "guess-offset/guess-offset.el"
+;;;;;;  "helm/helm-pkg.el" "helm/helm-plugin.el" "hideshowvis/hideshowvis-autoloads.el"
 ;;;;;;  "hideshowvis/hideshowvis-pkg.el" "jabber/fsm.el" "jabber/jabber-ahc-presence.el"
 ;;;;;;  "jabber/jabber-ahc.el" "jabber/jabber-alert.el" "jabber/jabber-autoloads.el"
 ;;;;;;  "jabber/jabber-avatar.el" "jabber/jabber-awesome.el" "jabber/jabber-browse.el"
@@ -2990,9 +3035,10 @@ will ask you for the url at point, if any.
 ;;;;;;  "jabber/jabber-util.el" "jabber/jabber-vcard-avatars.el"
 ;;;;;;  "jabber/jabber-vcard.el" "jabber/jabber-version.el" "jabber/jabber-watch.el"
 ;;;;;;  "jabber/jabber-widget.el" "jabber/jabber-wmii.el" "jabber/jabber-xmessage.el"
-;;;;;;  "jabber/jabber-xml.el" "jabber/srv.el" "powerline/powerline.el"
-;;;;;;  "switch-window/switch-window.el" "window-layout/window-layout.el")
-;;;;;;  (20428 57276 728819))
+;;;;;;  "jabber/jabber-xml.el" "jabber/srv.el" "parenface/parenface.el"
+;;;;;;  "switch-window/switch-window.el" "window-layout/window-layout.el"
+;;;;;;  "yasnippet/dropdown-list.el" "yasnippet/yasnippet-debug.el"
+;;;;;;  "yasnippet/yasnippet-tests.el") (20440 15188 660210))
 
 ;;;***
 

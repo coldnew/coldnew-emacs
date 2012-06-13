@@ -107,11 +107,13 @@
  (gccsense status "removed" recipe nil)
  (git-emacs status "installed" recipe
 	    (:name git-emacs :description "Yet another git emacs mode for newbies" :type github :pkgname "tsgates/git-emacs" :features git-emacs))
+ (guess-offset status "installed" recipe
+	       (:name guess-offset :type elpa :description "Automatically determine c-basic-offset"))
  (helm status "installed" recipe
        (:name helm :description "Emacs incremental and narrowing framework" :type github :pkgname "emacs-helm/helm" :features helm-config))
  (helm-etags-plus status "installed" recipe
 		  (:name helm-etags-plus :type github :pkgname "jixiuf/helm-etags-plus" :features ctags-update helm-etags+))
- (helm-projectile status "removed" recipe nil)
+ (helm-projectile status "required" recipe nil)
  (hideshowvis status "installed" recipe
 	      (:name hideshowvis :type elpa))
  (highlight-cl status "installed" recipe
@@ -175,6 +177,8 @@
 			   ("marmalade" . "http://marmalade-repo.org/packages/"))))))
  (paredit status "installed" recipe
 	  (:name paredit :description "Minor mode for editing parentheses" :type http :url "http://mumble.net/~campbell/emacs/paredit.el" :features "paredit"))
+ (parenface status "installed" recipe
+	    (:name parenface :description "Provide a face for parens in lisp modes." :type http :url "http://www.davep.org/emacs/parenface.el" :features "parenface"))
  (popup status "installed" recipe
 	(:name popup :website "https://github.com/m2ym/popup-el" :description "Visual Popup Interface Library for Emacs" :type github :pkgname "m2ym/popup-el" :features popup))
  (powerline status "removed" recipe nil)
@@ -253,4 +257,5 @@
 				(concat el-get-dir
 					(file-name-as-directory "yasnippet")
 					"snippets")))))
-		   :compile nil :submodule nil)))
+		   :compile nil :submodule nil))
+ (yasnippet-bundle status "removed" recipe nil))

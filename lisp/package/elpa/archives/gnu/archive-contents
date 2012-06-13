@@ -6,7 +6,7 @@ nil "Smart line-wrapping with wrap-prefix" single])
 [(1 0)
 nil "Edit all lines matching a given regexp" single])
 (ampc .
-[(0 1 2)
+[(0 1 3)
 nil "Asynchronous Music Player Controller" single])
 (auctex .
 [(11 86)
@@ -77,11 +77,14 @@ nil "Authoring and publishing tool" tar])
 (nhexl-mode .
 [(0 1)
 nil "Minor mode to edit files via hex-dump format" single])
+(nlinum .
+[(1 0)
+nil "Show line numbers in the margin" single])
 (oauth2 .
 [(0 5)
 nil "OAuth 2.0 Authorization Protocol" single])
 (org .
-[(20120602)
+[(20120612)
 nil "Outline-based notes management and organizer" tar])
 (quarter-plane .
 [(0 1)
@@ -128,4 +131,3 @@ nil "Resize windows interactively" single])
 (xclip .
 [(1 0)
 nil "Emacs Interface to XClip" single]))
-
