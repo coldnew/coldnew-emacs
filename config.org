@@ -2887,7 +2887,6 @@ This section contains my editor state
   ;; Additional tag decorations
   (global-semantic-decoration-mode -1)
 
-
   ;;;; Enable support for GNU Global
   (semanticdb-enable-gnu-global-databases 'c-mode)
   (semanticdb-enable-gnu-global-databases 'c++-mode)
