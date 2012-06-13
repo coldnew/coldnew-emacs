@@ -4392,16 +4392,19 @@ Function key 設置常用的命令。
 
 * Register
 放置快速跳轉的捷徑命令。
-Registers allow you to jump to a file or other location quickly.
-To jump to a register, use C-x r j followed by the letter of the register.
+使用 Ctrl-x r j <char> 就可以進行快速跳轉至檔案，其中 <char> 為以下所設定。
 #+begin_src emacs-lisp
   (dolist
-      (r `((?e (file . ,(expand-file-name emacs-config-file)))
-           ;; (?o (file . "~/personal/organizer.org"))
+      (r `(
+           ;; emacs-config
+           (?e (file . ,(expand-file-name emacs-config-file)))
+           ;; TODO.org
+           (?t (file . "~/Dropbox/Org/TODO.org"))
            ;; (?b (file . "~/personal/business.org"))
            ))
     (set-register (car r) (cadr r)))
 #+end_src
+
 * Deprecated
 :PROPERTIES:
 :tangle: no
