@@ -568,6 +568,13 @@ parenface 可以將所有的圓括號上色。
 #+end_src
 * Advice                                                             :advice:
 advice file
+#+begin_src emacs-lisp
+  (defadvice kill-emacs (around recompile-emacs-config activate)
+    "Before exit emacs, kill config.el which is generate by config.org."
+    (let ((file-name (concat emacs-dir "config.el")))
+      (delete-file file-name nil)
+      ad-do-it))
+#+end_src
 * Function                                                         :function:
 我所自定義或是我的 emacs config 需要用到的 function。
 ** List Processing
@@ -771,10 +778,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
   ;;;; Advice
   ;;;; ---------------------------------------------------------------------------
 
-  (defadvice kill-emacs (around recompile-emacs-config activate)
-    "Before exit emacs, recompile emacs-config"
-    (let ((config-dir emacs-config-dir))
-      (byte-recompile-directory config-dir 0) ad-do-it))
+
 #+end_src
 * Fonts                                                                :font:
 #+begin_src emacs-lisp
