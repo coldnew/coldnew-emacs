@@ -5,7 +5,7 @@
 
 ;; add directories to emacs's `load-path' recursively.
 (let* ((emacs-dir "~/.emacs.d/")
-       (lisp-dir '("lisp/" "local-lisp/" "config/")))
+       (lisp-dir '("lisp/" "local-lisp/")))
   (dolist (lisp-path lisp-dir)
     (let* ((load-dir (concat emacs-dir lisp-path))
            (default-directory load-dir))
@@ -18,12 +18,13 @@
 ;; add safe local variable
 (add-to-list 'safe-local-variable-values '(org-confirm-babel-evaluate . nil))
 
+
 ;; load up org-mode and org-babel
 (require 'org-install)
 (require 'ob-tangle)
 
 ;; load up all literate org-mode files in config directory
-(mapc #'org-babel-load-file (directory-files "~/.emacs.d/config/" t "\\.org$"))
+(mapc #'org-babel-load-file (directory-files "~/.emacs.d/" t "\\.org$"))
 
 ;; After loading allemacs config file, readauthorization fil
 ;;(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
