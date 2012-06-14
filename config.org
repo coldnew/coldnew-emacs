@@ -1084,9 +1084,9 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 #+begin_src emacs-lisp
   (setq ac-use-fuzzy nil)
 #+end_src
-**** 當輸入 3 個字母以上時，啟用自動補全。
+**** 當輸入 4 個字母以上時，啟用自動補全。
 #+begin_src emacs-lisp
-  (setq ac-auto-start 3)
+  (setq ac-auto-start 4)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1522,7 +1522,6 @@ some packages conflict with org-mode
               (lambda ()
                 (org-set-local 'yas/trigger-key [tab])
                 (define-key yas/keymap [tab] 'yas/next-field-group))))
-
 #+end_src
 
 **** windmove
@@ -3000,6 +2999,22 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                            (file-writable-p (concat buffer-file-name "c")))
                       (delete-file (concat buffer-file-name "c"))))))
 #+end_src
+*** Keybinding
+#+begin_src emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook
+            '(lambda ()
+               (define-key emacs-lisp-mode-map (kbd "M-i r") '(lambda () (interactive) (insert "require") (yas/expand)))
+               ))
+#+end_src
+#+begin_src emacs-lisp
+
+  (add-hook 'emacs-lisp-mode-hook
+            '(lambda ()
+               (define-key emacs-lisp-mode-map (kbd "C-c C-b") 'backward-sexp)
+               ))
+
+#+end_src
+
 ** c-mode
 dummy
 *** Auto Mode Alist
@@ -4440,6 +4455,9 @@ Function key 設置常用的命令。
   (global-set-key (kbd "M-4") 'delete-window)
   (global-set-key (kbd "M-0") 'other-window)
   (global-set-key (kbd "M-j") 'switch-window)
+  ;;  (global-set-key (kbd "M-i") 'yas/expand)
+
+
 #+end_src
 
 ** Shift prefix
@@ -4510,7 +4528,19 @@ https://github.com/travisbhartwell/emacs-config/blob/master/HOME/_emacs.d/init-h
 http://doc.norang.ca/org-mode.html
 http://jixiuf.github.com/tags/@Emacs.html
 
-* COMMENT Local File Variable
+#+begin_src emacs-lisp
+  (defun run-rand (n times)
+    (defun run-rand-iter (k)
+      (cond ((= k times) (princ (concat (number-to-string (random n)) "\n")))
+            (t
+             (princ (concat (number-to-string (random n)) "\n"))
+             (run-rand-iter (+ k 1)))))
+    (run-rand-iter 0))
+
+#+end_src
+
+
+* Local File Variable
 # Local Variables:
 # mode: org
 # org-confirm-babel-evaluate: nil
