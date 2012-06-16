@@ -3033,9 +3033,11 @@ dummy
 *** Hooks
 **** c-eldoc
 #+begin_src emacs-lisp
-  (require 'c-eldoc)
-  (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
-  (c-turn-on-eldoc-mode)
+  (add-hook 'c-mode-hook
+            '(lambda ()
+               (require 'c-eldoc)
+               (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
+               (c-turn-on-eldoc-mode)))
 #+end_src
 #+begin_src emacs-lisp
   ;; use my cc-mode-common-setting
@@ -3083,7 +3085,6 @@ dummy
 *** Keybinding
 #+begin_src emacs-lisp
   (define-key c-mode-map (kbd "C-x C-o") 'ff-find-other-file)
-
 #+end_src
 *** Functions
 *** Commands
@@ -3111,23 +3112,9 @@ dummy
                  . c++-mode))
 #+end_src
 *** Config
+**** Codinf Style
 #+begin_src emacs-lisp
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Hooks
-  ;;;; ---------------------------------------------------------------------------
-
-  ;; use my cc-mode-common-setting
-  ;;(add-hook 'c++-mode-hook 'coldnew-cc-mode-common-setting)
-
-  ;; my auto-complete for cpp
-  (add-hook 'c++-mode-hook 'ac-cpp-mode-setup)
-
-  ;; Enable c-eldoc
-  (require 'c-eldoc)
-  (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
-  (c-turn-on-eldoc-mode)
-
-  ;;;; CodingStyle
+    ;;;; CodingStyle
   (add-hook 'c++-mode-hook
             '(lambda ()
 
@@ -3164,15 +3151,39 @@ dummy
 
                ))
 
+#+end_src
+#+begin_src emacs-lisp
+  ;; use my cc-mode-common-setting
+  ;;(add-hook 'c++-mode-hook 'coldnew-cc-mode-common-setting)
 
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Keybindings
-  ;;;; ---------------------------------------------------------------------------
-
-
-  ;;;; ---------------------------------------------------------------------------
   ;;;; Auto Complete
   ;;;; ---------------------------------------------------------------------------
+
+    ;; Default clang completion flags
+    ;;    (setq clang-completion-flags
+    (setq ac-clang-flags
+          (split-string
+           (concat
+            "-pthread -I./ -I../ "
+            (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0"))))
+    )
+
+#+end_src
+
+*** Hooks
+**** c-eldoc
+#+begin_src emacs-lisp
+  (add-hook 'c++-mode-hook
+            '(lambda ()
+               ;; Enable c-eldoc
+               (require 'c-eldoc)
+               (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
+               (c-turn-on-eldoc-mode)))
+#+end_src
+*** Auto Complete
+#+begin_src emacs-lisp
+  ;; my auto-complete for cpp
+  (add-hook 'c++-mode-hook 'ac-cpp-mode-setup)
   (require 'auto-complete-clang)
   (defun ac-cpp-mode-setup ()
     "auto-complete settings for c-mode."
@@ -3185,30 +3196,11 @@ dummy
                        ac-source-files-in-current-dir
                        ac-source-words-in-same-mode-buffers
                        ))
-    ;; Default clang completion flags
-    ;;    (setq clang-completion-flags
-    (setq ac-clang-flags
-          (split-string
-           (concat
-            "-pthread -I./ -I../ "
-            (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0"))))
-    )
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Flymake
-  ;;;; ---------------------------------------------------------------------------
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Functions
-  ;;;; ---------------------------------------------------------------------------
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Commands
-  ;;;; ---------------------------------------------------------------------------
-
 #+end_src
-
+*** Keybinding
+#+begin_src emacs-lisp
+  (define-key c++-mode-map (kbd "C-x C-o") 'ff-find-other-file)
+#+end_src
 * Mode Line
 powerline is really funny
 https://github.com/jonathanchu/emacs-powerline
