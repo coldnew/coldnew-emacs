@@ -834,6 +834,18 @@ captured with \\(\\) in the key.
 
 ;;;***
 
+;;;### (autoloads (org-google-weather) "google-weather/org-google-weather"
+;;;;;;  "google-weather/org-google-weather.el" (20444 44885))
+;;; Generated autoloads from google-weather/org-google-weather.el
+
+(autoload 'org-google-weather "google-weather/org-google-weather" "\
+Return Org entry with the weather for LOCATION in LANGUAGE.
+If LOCATION is not set, use org-google-weather-location.
+
+\(fn &optional LOCATION LANGUAGE)" nil nil)
+
+;;;***
+
 ;;;### (autoloads (ctags-update-minor-mode ctags-update) "helm-etags-plus/ctags-update"
 ;;;;;;  "helm-etags-plus/ctags-update.el" (20390 14825))
 ;;; Generated autoloads from helm-etags-plus/ctags-update.el
@@ -3023,30 +3035,30 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "emacs-jabber/jabber-vcard.el" "emacs-jabber/jabber-version.el"
 ;;;;;;  "emacs-jabber/jabber-watch.el" "emacs-jabber/jabber-widget.el"
 ;;;;;;  "emacs-jabber/jabber-wmii.el" "emacs-jabber/jabber-xmessage.el"
-;;;;;;  "emacs-jabber/jabber-xml.el" "emacs-jabber/srv.el" "guess-offset/guess-offset-autoloads.el"
-;;;;;;  "guess-offset/guess-offset-pkg.el" "guess-offset/guess-offset.el"
-;;;;;;  "helm/helm-pkg.el" "helm/helm-plugin.el" "hideshowvis/hideshowvis-autoloads.el"
-;;;;;;  "hideshowvis/hideshowvis-pkg.el" "jabber/fsm.el" "jabber/jabber-ahc-presence.el"
-;;;;;;  "jabber/jabber-ahc.el" "jabber/jabber-alert.el" "jabber/jabber-autoloads.el"
-;;;;;;  "jabber/jabber-avatar.el" "jabber/jabber-awesome.el" "jabber/jabber-browse.el"
-;;;;;;  "jabber/jabber-chatstates.el" "jabber/jabber-conn.el" "jabber/jabber-disco.el"
-;;;;;;  "jabber/jabber-events.el" "jabber/jabber-feature-neg.el"
-;;;;;;  "jabber/jabber-festival.el" "jabber/jabber-ft-client.el"
-;;;;;;  "jabber/jabber-ft-common.el" "jabber/jabber-ft-server.el"
-;;;;;;  "jabber/jabber-history.el" "jabber/jabber-iq.el" "jabber/jabber-logon.el"
-;;;;;;  "jabber/jabber-modeline.el" "jabber/jabber-newdisco.el" "jabber/jabber-osd.el"
-;;;;;;  "jabber/jabber-ourversion.el" "jabber/jabber-pkg.el" "jabber/jabber-ratpoison.el"
-;;;;;;  "jabber/jabber-register.el" "jabber/jabber-sasl.el" "jabber/jabber-sawfish.el"
-;;;;;;  "jabber/jabber-screen.el" "jabber/jabber-search.el" "jabber/jabber-si-client.el"
-;;;;;;  "jabber/jabber-si-common.el" "jabber/jabber-si-server.el"
-;;;;;;  "jabber/jabber-socks5.el" "jabber/jabber-time.el" "jabber/jabber-truncate.el"
-;;;;;;  "jabber/jabber-util.el" "jabber/jabber-vcard-avatars.el"
+;;;;;;  "emacs-jabber/jabber-xml.el" "emacs-jabber/srv.el" "google-weather/google-weather.el"
+;;;;;;  "guess-offset/guess-offset-autoloads.el" "guess-offset/guess-offset-pkg.el"
+;;;;;;  "guess-offset/guess-offset.el" "helm/helm-pkg.el" "helm/helm-plugin.el"
+;;;;;;  "hideshowvis/hideshowvis-autoloads.el" "hideshowvis/hideshowvis-pkg.el"
+;;;;;;  "jabber/fsm.el" "jabber/jabber-ahc-presence.el" "jabber/jabber-ahc.el"
+;;;;;;  "jabber/jabber-alert.el" "jabber/jabber-autoloads.el" "jabber/jabber-avatar.el"
+;;;;;;  "jabber/jabber-awesome.el" "jabber/jabber-browse.el" "jabber/jabber-chatstates.el"
+;;;;;;  "jabber/jabber-conn.el" "jabber/jabber-disco.el" "jabber/jabber-events.el"
+;;;;;;  "jabber/jabber-feature-neg.el" "jabber/jabber-festival.el"
+;;;;;;  "jabber/jabber-ft-client.el" "jabber/jabber-ft-common.el"
+;;;;;;  "jabber/jabber-ft-server.el" "jabber/jabber-history.el" "jabber/jabber-iq.el"
+;;;;;;  "jabber/jabber-logon.el" "jabber/jabber-modeline.el" "jabber/jabber-newdisco.el"
+;;;;;;  "jabber/jabber-osd.el" "jabber/jabber-ourversion.el" "jabber/jabber-pkg.el"
+;;;;;;  "jabber/jabber-ratpoison.el" "jabber/jabber-register.el"
+;;;;;;  "jabber/jabber-sasl.el" "jabber/jabber-sawfish.el" "jabber/jabber-screen.el"
+;;;;;;  "jabber/jabber-search.el" "jabber/jabber-si-client.el" "jabber/jabber-si-common.el"
+;;;;;;  "jabber/jabber-si-server.el" "jabber/jabber-socks5.el" "jabber/jabber-time.el"
+;;;;;;  "jabber/jabber-truncate.el" "jabber/jabber-util.el" "jabber/jabber-vcard-avatars.el"
 ;;;;;;  "jabber/jabber-vcard.el" "jabber/jabber-version.el" "jabber/jabber-watch.el"
 ;;;;;;  "jabber/jabber-widget.el" "jabber/jabber-wmii.el" "jabber/jabber-xmessage.el"
 ;;;;;;  "jabber/jabber-xml.el" "jabber/srv.el" "parenface/parenface.el"
 ;;;;;;  "switch-window/switch-window.el" "window-layout/window-layout.el"
 ;;;;;;  "yasnippet/dropdown-list.el" "yasnippet/yasnippet-debug.el"
-;;;;;;  "yasnippet/yasnippet-tests.el") (20444 43408 424417))
+;;;;;;  "yasnippet/yasnippet-tests.el") (20444 44885 743857))
 
 ;;;***
 

@@ -109,6 +109,9 @@
  (gccsense status "removed" recipe nil)
  (git-emacs status "installed" recipe
 	    (:name git-emacs :description "Yet another git emacs mode for newbies" :type github :pkgname "tsgates/git-emacs" :features git-emacs))
+ (google-weather status "installed" recipe
+		 (:name google-weather :description "Fetch Google Weather forecasts." :type git :url "git://git.naquadah.org/google-weather-el.git" :features
+			(google-weather org-google-weather)))
  (guess-offset status "installed" recipe
 	       (:name guess-offset :type elpa :description "Automatically determine c-basic-offset"))
  (helm status "installed" recipe

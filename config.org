@@ -1415,6 +1415,17 @@ auto-complete-mode 的按鍵設定。
   (require 'org-install)
   (require 'org-table)
 #+end_src
+
+google-weather 是提供　 emacs 連接 google-weathre 的 API，
+在 org 檔案裏面加入，則可以在 agenda view 裏面看到天氣
+#+begin_example
+  * Weather
+  %%(org-google-weather "New York")
+#+end_example
+#+begin_src emacs-lisp
+  (require* 'google-weather)
+  (require 'org-google-weather)
+#+end_src
 *** Auto Mode Alist
 #+begin_src emacs-lisp
   ;;;;;;;; org-mode extensions
@@ -2946,6 +2957,10 @@ C-x r b
 C-x r l
 #+begin_src emacs-lisp
   (setq bookmark-default-file emacs-bookmark-file)
+#+end_src
+
+#+begin_src emacs-lisp
+  (require* 'bm)
 #+end_src
 * Programming Mode
 ** emacs-lisp
@@ -4543,11 +4558,7 @@ Function key 設置常用的命令。
            ))
     (set-register (car r) (cadr r)))
 #+end_src
-* Bokmark
 
-#+begin_src emacs-lisp
-  (require* 'bm)
-#+end_src
 * Deprecated
 :PROPERTIES:
 :tangle: no
