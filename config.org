@@ -675,6 +675,36 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
       (goto-char(point-min))
       (while (search-forward "\n" nil t) (replace-match "\r\n"))))
 #+end_src
+** Buffer
+*** get-buffers-matching-mode
+取得 major-mode 和要求符合的所有 buffer，假如我們希望可以列出所有為
+emacs-lisp-mode 的 buffer，可以這樣做
+#+begin_src emacs-lisp :tangle no
+  (get-buffers-matching-mode 'emacs-lisp-mode)
+#+end_src
+
+#+begin_src emacs-lisp
+  (defun get-buffers-matching-mode (mode)
+    "Returns a list of buffers where their major-mode is equal to MODE"
+    (let ((buffer-mode-matches '()))
+      (dolist (buf (buffer-list))
+        (with-current-buffer buf
+          (if (eq mode major-mode)
+              (add-to-list 'buffer-mode-matches buf))))
+      buffer-mode-matches))
+#+end_src
+*** show-buffer-major-mode
+顯示 buffer 目前所處於的 major-mode
+
+#+begin_src emacs-lisp :tangle no
+  (show-buffer-major-mode "*scratch*")
+#+end_src
+
+#+begin_src emacs-lisp
+  (defun show-buffer-major-mode (buffer-or-string)
+    "Returns the major mode associated with a buffer."
+    (with-current-buffer buffer-or-string major-mode))
+#+end_src
 ** System
 和系統相關的 function。
 *** get-ip-address
@@ -740,18 +770,6 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
               (equalp 'forwards dir))
           (list start end)
         (list end start))))
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Buffer
-  ;;;; ---------------------------------------------------------------------------
-  (defun get-buffers-matching-mode (mode)
-    "Returns a list of buffers where their major-mode is equal to MODE"
-    (let ((buffer-mode-matches '()))
-      (dolist (buf (buffer-list))
-        (with-current-buffer buf
-          (if (eq mode major-mode)
-              (add-to-list 'buffer-mode-matches buf))))
-      buffer-mode-matches))
 
   ;;;; ---------------------------------------------------------------------------
   ;;;; Date
@@ -1649,6 +1667,7 @@ some packages conflict with org-mode
   (setq enable-recursive-minibuffers     t )
   (setq max-mini-window-height         .25 ) ; 2 lines high
   (setq minibuffer-electric-default-mode t )
+
 
   ;;;; ---------------------------------------------------------------------------
   ;;;; Hooks
@@ -3166,8 +3185,6 @@ dummy
            (concat
             "-pthread -I./ -I../ "
             (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0"))))
-    )
-
 #+end_src
 
 *** Hooks
@@ -3195,7 +3212,7 @@ dummy
                        ac-source-filename
                        ac-source-files-in-current-dir
                        ac-source-words-in-same-mode-buffers
-                       ))
+                       )))
 #+end_src
 *** Keybinding
 #+begin_src emacs-lisp
@@ -3369,6 +3386,25 @@ e > buffer > major mode > vc  < line:col < % < ?k
 #+end_src
 * Command                                                           :command:
 All command file
+** Buffer
+*** scratch-toggle
+跳轉目前 buffer 與 **scratch**，假如 **scratch** 不存在，
+則建立一個 major-mode 為 lisp-interaction-mode 的 **scratch**
+#+begin_src emacs-lisp
+  (defun scratch-toggle ()
+    "Toggle between *scratch* buffer and the current buffer.
+     If the *scratch* buffer does not exist, create it."
+    (interactive)
+    (let ((scratch-buffer-name (get-buffer-create "*scratch*")))
+      (if (equal (current-buffer) scratch-buffer-name)
+          (switch-to-buffer (other-buffer))
+        ;;        (previous-user-buffer)
+        (progn
+          (switch-to-buffer scratch-buffer-name)
+          (unless (equal major-mode 'lisp-interaction-mode)
+            (lisp-interaction-mode))))))
+#+end_src
+** Other
 #+begin_src emacs-lisp
   (defun window-horizontal-to-vertical ()
     "Switches from a horizontal split to a vertical split."
@@ -3614,6 +3650,7 @@ All command file
   ;;(global-set-key (kbd "C-x 5") 'open-in-largest-window)
 
 #+end_src
+** Window
 #+begin_src emacs-lisp
   (defun gitg ()
     "Launch gitg in the current directory."
@@ -4395,6 +4432,7 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x C-n") 'auto-complete)
   (global-set-key (kbd "C-x C-s") 'save-buffer-always)
   (global-set-key (kbd "C-x f") 'fullscreen-window)
+  (global-set-key (kbd "C-x s") 'shell-command)
 #+end_src
 
 ** Ctrl-c prefix
