@@ -27,6 +27,8 @@
 		   (:name auto-indent-mode :website "https://github.com/mlf176f2/auto-indent-mode.el" :description "Automatically Indent  when pressing return, pasting, and other customizable features." :type github :pkgname "mlf176f2/auto-indent-mode.el"))
  (bash-completion status "installed" recipe
 		  (:name bash-completion :description "" :website "" :type http :url "https://raw.github.com/szermatt/emacs-bash-completion/master/bash-completion.el" :features bash-completion))
+ (bm status "installed" recipe
+     (:name bm :type elpa :description "Visible bookmarks in buffer. [source: github]"))
  (c-eldoc status "installed" recipe
 	  (:name c-eldoc :type elpa :description "helpful description of the arguments to C functions [source: github]"))
  (cedet status "installed" recipe

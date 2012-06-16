@@ -2367,12 +2367,12 @@ neither do the elements of PARENTS."
          (major-mode-sym (or (and major-mode-name
                                   (intern major-mode-name))))
          (parents (when (file-readable-p parents-file-name)
-                         (mapcar #'intern
-                                 (split-string
-                                  (with-temp-buffer
-                                    (insert-file-contents parents-file-name)
-                                    (buffer-substring-no-properties (point-min)
-                                                                    (point-max))))))))
+		    (mapcar #'intern
+			    (split-string
+			     (with-temp-buffer
+			       (insert-file-contents parents-file-name)
+			       (buffer-substring-no-properties (point-min)
+							       (point-max))))))))
     (when major-mode-sym
       (cons major-mode-sym parents))))
 
@@ -2453,8 +2453,8 @@ With optional prefix argument KILL quit the window and buffer."
   (when kill
     (quit-window kill))
   (yas/message 3 "Snippet \"%s\" loaded for %s."
-           (yas/template-name yas/editing-template)
-           (yas/table-name (yas/template-table yas/editing-template))))
+	       (yas/template-name yas/editing-template)
+	       (yas/table-name (yas/template-table yas/editing-template))))
 
 
 (defun yas/tryout-snippet (&optional debug)
@@ -3562,11 +3562,11 @@ deleted."
     (dolist (field (yas/snippet-fields snippet))
       (when (and (<= (yas/field-start field) (yas/mirror-start mirror))
                  (<= (yas/mirror-end mirror) (yas/field-end field))
-               (< min (yas/field-start field))
-               (< (yas/field-end field) max))
-          (setq min (yas/field-start field)
-                max (yas/field-end field))
-          (setf (yas/mirror-parent-field mirror) field)))))
+		 (< min (yas/field-start field))
+		 (< (yas/field-end field) max))
+	(setq min (yas/field-start field)
+	      max (yas/field-end field))
+	(setf (yas/mirror-parent-field mirror) field)))))
 
 (defun yas/advance-end-maybe (fom newend)
   "Maybe advance FOM's end to NEWEND if it needs it.

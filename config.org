@@ -1514,6 +1514,12 @@ auto-complete-mode 的按鍵設定。
                (define-key org-mode-map (kbd "C-c C-f") 'coldnew/org-down-children)
                (define-key coldnew/command-mode-map "c" 'org-edit-special)
                ))
+
+(add-hook 'org-mode-hook
+          '(lambda ()
+             (define-key org-mode-map (kbd "C-\'") nil)
+             (define-key org-mode-map (kbd "C-,") nil)
+             ))
 #+end_src
 
 
@@ -2695,6 +2701,9 @@ This section contains my editor state
       (define-key map "q" 'quoted-insert)
       (define-key map "r" 'org-capture)
       (define-key map "w" 'kill-region)
+      (define-key map "\C-m" 'bm-toggle)
+      (define-key map "\C-n" 'bm-next)
+      (define-key map "\C-p" 'bm-previous)
       (define-key map "x" 'helm-M-x)
       (define-key map "y" 'yank)
       (define-key map "z" 'zap-up-to-char)
@@ -4534,7 +4543,11 @@ Function key 設置常用的命令。
            ))
     (set-register (car r) (cadr r)))
 #+end_src
+* Bokmark
 
+#+begin_src emacs-lisp
+  (require* 'bm)
+#+end_src
 * Deprecated
 :PROPERTIES:
 :tangle: no

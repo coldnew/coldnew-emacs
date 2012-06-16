@@ -182,6 +182,45 @@ and would like bash completion in Emacs to take these changes into account.
 
 ;;;***
 
+;;;### (autoloads (bm-previous-mouse bm-previous bm-next-mouse bm-next
+;;;;;;  bm-toggle-mouse bm-toggle) "bm/bm" "bm/bm.el" (20444 43404))
+;;; Generated autoloads from bm/bm.el
+
+(autoload 'bm-toggle "bm/bm" "\
+Toggle bookmark at point.
+
+\(fn)" t nil)
+
+(autoload 'bm-toggle-mouse "bm/bm" "\
+Toggle a bookmark with a mouse click.
+EV is the mouse event.
+
+\(fn EV)" t nil)
+
+(autoload 'bm-next "bm/bm" "\
+Goto next bookmark.
+
+\(fn)" t nil)
+
+(autoload 'bm-next-mouse "bm/bm" "\
+Go to the next bookmark with the scroll wheel.
+EV is the mouse event.
+
+\(fn EV)" t nil)
+
+(autoload 'bm-previous "bm/bm" "\
+Goto previous bookmark.
+
+\(fn)" t nil)
+
+(autoload 'bm-previous-mouse "bm/bm" "\
+Go to the previous bookmark with the scroll wheel.
+EV is the mouse event.
+
+\(fn EV)" t nil)
+
+;;;***
+
 ;;;### (autoloads (c-eldoc-print-current-symbol-info c-turn-on-eldoc-mode)
 ;;;;;;  "c-eldoc/c-eldoc" "c-eldoc/c-eldoc.el" (20383 37768))
 ;;; Generated autoloads from c-eldoc/c-eldoc.el
@@ -2912,7 +2951,7 @@ will ask you for the url at point, if any.
 ;;;***
 
 ;;;### (autoloads (yas/global-mode yas/minor-mode) "yasnippet/yasnippet"
-;;;;;;  "yasnippet/yasnippet.el" (20440 12806))
+;;;;;;  "yasnippet/yasnippet.el" (20441 22277))
 ;;; Generated autoloads from yasnippet/yasnippet.el
 
 (autoload 'yas/minor-mode "yasnippet/yasnippet" "\
@@ -2957,34 +2996,34 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 
 ;;;### (autoloads nil nil ("auto-complete-clang/auto-complete-clang.el"
 ;;;;;;  "auto-complete/auto-complete-config.el" "auto-complete/auto-complete-pkg.el"
-;;;;;;  "auto-complete/auto-complete.el" "c-eldoc/c-eldoc-autoloads.el"
-;;;;;;  "c-eldoc/c-eldoc-pkg.el" "cljdoc/cljdoc-autoloads.el" "cljdoc/cljdoc-pkg.el"
-;;;;;;  "cljdoc/cljdoc.el" "cmake-mode/cmake-mode.el" "emacs-jabber/fsm.el"
-;;;;;;  "emacs-jabber/jabber-ahc-presence.el" "emacs-jabber/jabber-ahc.el"
-;;;;;;  "emacs-jabber/jabber-alert.el" "emacs-jabber/jabber-autoloads.el"
-;;;;;;  "emacs-jabber/jabber-avatar.el" "emacs-jabber/jabber-awesome.el"
-;;;;;;  "emacs-jabber/jabber-browse.el" "emacs-jabber/jabber-chatstates.el"
-;;;;;;  "emacs-jabber/jabber-conn.el" "emacs-jabber/jabber-disco.el"
-;;;;;;  "emacs-jabber/jabber-events.el" "emacs-jabber/jabber-feature-neg.el"
-;;;;;;  "emacs-jabber/jabber-festival.el" "emacs-jabber/jabber-ft-client.el"
-;;;;;;  "emacs-jabber/jabber-ft-common.el" "emacs-jabber/jabber-ft-server.el"
-;;;;;;  "emacs-jabber/jabber-history.el" "emacs-jabber/jabber-iq.el"
-;;;;;;  "emacs-jabber/jabber-libnotify.el" "emacs-jabber/jabber-logon.el"
-;;;;;;  "emacs-jabber/jabber-modeline.el" "emacs-jabber/jabber-muc-nick-coloring.el"
-;;;;;;  "emacs-jabber/jabber-newdisco.el" "emacs-jabber/jabber-osd.el"
-;;;;;;  "emacs-jabber/jabber-ourversion.el" "emacs-jabber/jabber-ping.el"
-;;;;;;  "emacs-jabber/jabber-ratpoison.el" "emacs-jabber/jabber-register.el"
-;;;;;;  "emacs-jabber/jabber-sasl.el" "emacs-jabber/jabber-sawfish.el"
-;;;;;;  "emacs-jabber/jabber-screen.el" "emacs-jabber/jabber-search.el"
-;;;;;;  "emacs-jabber/jabber-si-client.el" "emacs-jabber/jabber-si-common.el"
-;;;;;;  "emacs-jabber/jabber-si-server.el" "emacs-jabber/jabber-socks5.el"
-;;;;;;  "emacs-jabber/jabber-time.el" "emacs-jabber/jabber-tmux.el"
-;;;;;;  "emacs-jabber/jabber-truncate.el" "emacs-jabber/jabber-util.el"
-;;;;;;  "emacs-jabber/jabber-vcard-avatars.el" "emacs-jabber/jabber-vcard.el"
-;;;;;;  "emacs-jabber/jabber-version.el" "emacs-jabber/jabber-watch.el"
-;;;;;;  "emacs-jabber/jabber-widget.el" "emacs-jabber/jabber-wmii.el"
-;;;;;;  "emacs-jabber/jabber-xmessage.el" "emacs-jabber/jabber-xml.el"
-;;;;;;  "emacs-jabber/srv.el" "guess-offset/guess-offset-autoloads.el"
+;;;;;;  "auto-complete/auto-complete.el" "bm/bm-autoloads.el" "bm/bm-pkg.el"
+;;;;;;  "c-eldoc/c-eldoc-autoloads.el" "c-eldoc/c-eldoc-pkg.el" "cljdoc/cljdoc-autoloads.el"
+;;;;;;  "cljdoc/cljdoc-pkg.el" "cljdoc/cljdoc.el" "cmake-mode/cmake-mode.el"
+;;;;;;  "emacs-jabber/fsm.el" "emacs-jabber/jabber-ahc-presence.el"
+;;;;;;  "emacs-jabber/jabber-ahc.el" "emacs-jabber/jabber-alert.el"
+;;;;;;  "emacs-jabber/jabber-autoloads.el" "emacs-jabber/jabber-avatar.el"
+;;;;;;  "emacs-jabber/jabber-awesome.el" "emacs-jabber/jabber-browse.el"
+;;;;;;  "emacs-jabber/jabber-chatstates.el" "emacs-jabber/jabber-conn.el"
+;;;;;;  "emacs-jabber/jabber-disco.el" "emacs-jabber/jabber-events.el"
+;;;;;;  "emacs-jabber/jabber-feature-neg.el" "emacs-jabber/jabber-festival.el"
+;;;;;;  "emacs-jabber/jabber-ft-client.el" "emacs-jabber/jabber-ft-common.el"
+;;;;;;  "emacs-jabber/jabber-ft-server.el" "emacs-jabber/jabber-history.el"
+;;;;;;  "emacs-jabber/jabber-iq.el" "emacs-jabber/jabber-libnotify.el"
+;;;;;;  "emacs-jabber/jabber-logon.el" "emacs-jabber/jabber-modeline.el"
+;;;;;;  "emacs-jabber/jabber-muc-nick-coloring.el" "emacs-jabber/jabber-newdisco.el"
+;;;;;;  "emacs-jabber/jabber-osd.el" "emacs-jabber/jabber-ourversion.el"
+;;;;;;  "emacs-jabber/jabber-ping.el" "emacs-jabber/jabber-ratpoison.el"
+;;;;;;  "emacs-jabber/jabber-register.el" "emacs-jabber/jabber-sasl.el"
+;;;;;;  "emacs-jabber/jabber-sawfish.el" "emacs-jabber/jabber-screen.el"
+;;;;;;  "emacs-jabber/jabber-search.el" "emacs-jabber/jabber-si-client.el"
+;;;;;;  "emacs-jabber/jabber-si-common.el" "emacs-jabber/jabber-si-server.el"
+;;;;;;  "emacs-jabber/jabber-socks5.el" "emacs-jabber/jabber-time.el"
+;;;;;;  "emacs-jabber/jabber-tmux.el" "emacs-jabber/jabber-truncate.el"
+;;;;;;  "emacs-jabber/jabber-util.el" "emacs-jabber/jabber-vcard-avatars.el"
+;;;;;;  "emacs-jabber/jabber-vcard.el" "emacs-jabber/jabber-version.el"
+;;;;;;  "emacs-jabber/jabber-watch.el" "emacs-jabber/jabber-widget.el"
+;;;;;;  "emacs-jabber/jabber-wmii.el" "emacs-jabber/jabber-xmessage.el"
+;;;;;;  "emacs-jabber/jabber-xml.el" "emacs-jabber/srv.el" "guess-offset/guess-offset-autoloads.el"
 ;;;;;;  "guess-offset/guess-offset-pkg.el" "guess-offset/guess-offset.el"
 ;;;;;;  "helm/helm-pkg.el" "helm/helm-plugin.el" "hideshowvis/hideshowvis-autoloads.el"
 ;;;;;;  "hideshowvis/hideshowvis-pkg.el" "jabber/fsm.el" "jabber/jabber-ahc-presence.el"
@@ -3007,7 +3046,7 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 ;;;;;;  "jabber/jabber-xml.el" "jabber/srv.el" "parenface/parenface.el"
 ;;;;;;  "switch-window/switch-window.el" "window-layout/window-layout.el"
 ;;;;;;  "yasnippet/dropdown-list.el" "yasnippet/yasnippet-debug.el"
-;;;;;;  "yasnippet/yasnippet-tests.el") (20440 16609 798281))
+;;;;;;  "yasnippet/yasnippet-tests.el") (20444 43408 424417))
 
 ;;;***
 
