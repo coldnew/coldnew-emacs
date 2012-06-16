@@ -4611,7 +4611,16 @@ http://jixiuf.github.com/tags/@Emacs.html
 
 #+end_src
 
-
+* Other
+** TODO 為 google-weather 增加編碼的設定
+#+begin_src emacs-lisp
+  (defun google-weather-build-url (location &optional language)
+    "Build URL to retrieve weather for LOCATION in LANGUAGE."
+    (concat "http" (when google-weather-use-https "s") "://" google-weather-url "?weather=" (url-hexify-string location)
+            (when language
+              (concat "&hl=" language))
+            (concat "&oe=" "utf8")))
+#+end_src
 * Local File Variable
 # Local Variables:
 # mode: org
