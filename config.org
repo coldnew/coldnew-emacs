@@ -436,10 +436,28 @@ emacs 套件管理的設定。
 #+begin_src emacs-lisp
   (setq-default el-get-dir emacs-lisp-dir)
 #+end_src
+
+如果 el-get 不存在的話，重新安裝 el-get
+#+begin_src emacs-lisp
+  (unless (require 'el-get nil t)
+    (setq el-get-install-branch "master")
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+      (end-of-buffer)
+      (eval-print-last-sexp)))
+#+end_src
+
+如果 elpa 的 recepies 不存在的話，自動建立他。
+#+begin_src emacs-lisp
+  (unless (file-exists-p el-get-recipe-path-elpa)
+    (el-get-elpa-build-local-recipies))
+#+end_src
 *** Depends
 #+begin_src emacs-lisp
   (require 'el-get)
 #+end_src
+
 *** Config
 #+begin_src emacs-lisp
   (add-to-list 'el-get-recipe-path emacs-recipes-dir)
@@ -2677,7 +2695,7 @@ This section contains my editor state
       (define-key map "q" 'quoted-insert)
       (define-key map "r" 'org-capture)
       (define-key map "w" 'kill-region)
-      (define-key map "x" 'smex)
+      (define-key map "x" 'helm-M-x)
       (define-key map "y" 'yank)
       (define-key map "z" 'zap-up-to-char)
       ;; FIXME: I think this must change to vc-next-action
