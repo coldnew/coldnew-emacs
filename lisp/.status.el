@@ -142,7 +142,7 @@
  (linum+ status "removed" recipe nil)
  (linum-off status "removed" recipe nil)
  (lusty-explorer status "installed" recipe
-		 (:name lusty-explorer :type emacswiki :description "LustyExplorer is a fast and responsive way to manage files and buffers"))
+		 (:name lusty-explorer :type github :pkgname sjbach/lusty-emacs :description "LustyExplorer is a fast and responsive way to manage files and buffers"))
  (magit status "installed" recipe
 	(:name magit :website "https://github.com/magit/magit#readme" :description "It's Magit! An Emacs mode for Git." :type github :pkgname "magit/magit" :info "." :build
 	       ("make all")
@@ -241,6 +241,8 @@
  (window-layout status "installed" recipe
 		(:name window-layout :description "window layout manager" :website "https://github.com/kiwanami/emacs-window-layout" :type github :pkgname "kiwanami/emacs-window-layout" :features "window-layout"))
  (winring status "removed" recipe nil)
+ (xcscope+ status "installed" recipe
+	   (:name xcscope+ :description "Providing an extension to xcscope." :type emacswiki))
  (xml-rpc-el status "installed" recipe
 	     (:name xml-rpc-el :description "An elisp implementation of clientside XML-RPC" :type bzr :url "lp:xml-rpc-el"))
  (yasnippet status "installed" recipe

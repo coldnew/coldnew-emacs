@@ -183,7 +183,7 @@ and would like bash completion in Emacs to take these changes into account.
 ;;;***
 
 ;;;### (autoloads (bm-previous-mouse bm-previous bm-next-mouse bm-next
-;;;;;;  bm-toggle-mouse bm-toggle) "bm/bm" "bm/bm.el" (20444 43404))
+;;;;;;  bm-toggle-mouse bm-toggle) "bm/bm" "bm/bm.el" (20444 46406))
 ;;; Generated autoloads from bm/bm.el
 
 (autoload 'bm-toggle "bm/bm" "\
@@ -234,6 +234,64 @@ Enable c-eldoc-mode
 Returns documentation string for the current symbol.
 
 \(fn)" nil nil)
+
+;;;***
+
+;;;### (autoloads (ecb-byte-compile ecb-minor-mode ecb-activate)
+;;;;;;  "ecb/ecb" "ecb/ecb.el" (19331 64932))
+;;; Generated autoloads from ecb/ecb.el
+
+(autoload 'ecb-activate "ecb/ecb" "\
+Activates ECB and creates the special buffers for the choosen layout.
+For the layout see `ecb-layout-name'. This function raises always the
+ECB-frame if called from another frame. This is the same as calling
+`ecb-minor-mode' with a positive argument.
+
+\(fn)" t nil)
+
+(autoload 'ecb-minor-mode "ecb/ecb" "\
+Toggle ECB minor mode.
+With prefix argument ARG, turn on if positive, otherwise off. Return non-nil
+if the minor mode is enabled.
+
+\\{ecb-mode-map}
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'ecb-byte-compile "ecb/ecb" "\
+Byte-compiles the ECB package.
+This is done for all lisp-files of ECB if FORCE-ALL is not nil or for each
+lisp-file FILE.el which is either newer than FILE.elc or if FILE.elc doesn't
+exist.
+
+\(fn &optional FORCE-ALL)" t nil)
+
+;;;***
+
+;;;### (autoloads (ecb-show-help) "ecb/ecb-help" "ecb/ecb-help.el"
+;;;;;;  (19008 47528))
+;;; Generated autoloads from ecb/ecb-help.el
+
+(autoload 'ecb-show-help "ecb/ecb-help" "\
+Shows the online help of ECB in Info or HTML-format.
+The format depends on the setting in `ecb-show-help-format'. If called with
+prefix argument, i.e. if FORMAT is not nil then the user is prompted to choose
+the format of the help (Info or Html).
+
+If an error about not finding the needed help-file occurs please take a look
+at the options `ecb-help-info-start-file' and `ecb-help-html-start-file'!
+
+Note: If you got ECB as a standard XEmacs-package maybe the
+HTML-online-documentation is not included.
+
+\(fn &optional FORMAT)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "ecb/ecb-util" "ecb/ecb-util.el" (19340 65139))
+;;; Generated autoloads from ecb/ecb-util.el
+
+(defconst ecb-running-xemacs (featurep 'xemacs))
 
 ;;;***
 
@@ -2885,6 +2943,65 @@ three being lists of JID symbols.
 
 ;;;***
 
+;;;### (autoloads (lusty-launch-dired lusty-select-current-name lusty-select-match
+;;;;;;  lusty-open-this lusty-highlight-previous-column lusty-highlight-next-column
+;;;;;;  lusty-highlight-previous lusty-highlight-next lusty-buffer-explorer
+;;;;;;  lusty-file-explorer) "lusty-explorer/lusty-explorer" "lusty-explorer/lusty-explorer.el"
+;;;;;;  (20444 48962))
+;;; Generated autoloads from lusty-explorer/lusty-explorer.el
+
+(autoload 'lusty-file-explorer "lusty-explorer/lusty-explorer" "\
+Launch the file/directory mode of LustyExplorer.
+
+\(fn)" t nil)
+
+(autoload 'lusty-buffer-explorer "lusty-explorer/lusty-explorer" "\
+Launch the buffer mode of LustyExplorer.
+
+\(fn)" t nil)
+
+(autoload 'lusty-highlight-next "lusty-explorer/lusty-explorer" "\
+Highlight the next match in *Lusty-Matches*.
+
+\(fn)" t nil)
+
+(autoload 'lusty-highlight-previous "lusty-explorer/lusty-explorer" "\
+Highlight the previous match in *Lusty-Matches*.
+
+\(fn)" t nil)
+
+(autoload 'lusty-highlight-next-column "lusty-explorer/lusty-explorer" "\
+Highlight the next column in *Lusty-Matches*.
+
+\(fn)" t nil)
+
+(autoload 'lusty-highlight-previous-column "lusty-explorer/lusty-explorer" "\
+Highlight the previous column in *Lusty-Matches*.
+
+\(fn)" t nil)
+
+(autoload 'lusty-open-this "lusty-explorer/lusty-explorer" "\
+Open the given file/directory/buffer, creating it if not already present.
+
+\(fn)" t nil)
+
+(autoload 'lusty-select-match "lusty-explorer/lusty-explorer" "\
+Activate the highlighted match in *Lusty-Matches* - recurse if dir, open if file/buffer.
+
+\(fn)" t nil)
+
+(autoload 'lusty-select-current-name "lusty-explorer/lusty-explorer" "\
+Open the given file/buffer or create a new buffer with the current name.
+
+\(fn)" t nil)
+
+(autoload 'lusty-launch-dired "lusty-explorer/lusty-explorer" "\
+Launch dired at the current directory.
+
+\(fn)" t nil)
+
+;;;***
+
 ;;;### (autoloads (minimap-kill minimap-create) "minimap/minimap"
 ;;;;;;  "minimap/minimap.el" (20389 8546))
 ;;; Generated autoloads from minimap/minimap.el
@@ -3008,57 +3125,68 @@ See `yas/minor-mode' for more information on Yas/Minor mode.
 
 ;;;### (autoloads nil nil ("auto-complete-clang/auto-complete-clang.el"
 ;;;;;;  "auto-complete/auto-complete-config.el" "auto-complete/auto-complete-pkg.el"
-;;;;;;  "auto-complete/auto-complete.el" "bm/bm-autoloads.el" "bm/bm-pkg.el"
-;;;;;;  "c-eldoc/c-eldoc-autoloads.el" "c-eldoc/c-eldoc-pkg.el" "cljdoc/cljdoc-autoloads.el"
-;;;;;;  "cljdoc/cljdoc-pkg.el" "cljdoc/cljdoc.el" "cmake-mode/cmake-mode.el"
-;;;;;;  "emacs-jabber/fsm.el" "emacs-jabber/jabber-ahc-presence.el"
-;;;;;;  "emacs-jabber/jabber-ahc.el" "emacs-jabber/jabber-alert.el"
-;;;;;;  "emacs-jabber/jabber-autoloads.el" "emacs-jabber/jabber-avatar.el"
-;;;;;;  "emacs-jabber/jabber-awesome.el" "emacs-jabber/jabber-browse.el"
-;;;;;;  "emacs-jabber/jabber-chatstates.el" "emacs-jabber/jabber-conn.el"
-;;;;;;  "emacs-jabber/jabber-disco.el" "emacs-jabber/jabber-events.el"
-;;;;;;  "emacs-jabber/jabber-feature-neg.el" "emacs-jabber/jabber-festival.el"
-;;;;;;  "emacs-jabber/jabber-ft-client.el" "emacs-jabber/jabber-ft-common.el"
-;;;;;;  "emacs-jabber/jabber-ft-server.el" "emacs-jabber/jabber-history.el"
-;;;;;;  "emacs-jabber/jabber-iq.el" "emacs-jabber/jabber-libnotify.el"
-;;;;;;  "emacs-jabber/jabber-logon.el" "emacs-jabber/jabber-modeline.el"
-;;;;;;  "emacs-jabber/jabber-muc-nick-coloring.el" "emacs-jabber/jabber-newdisco.el"
-;;;;;;  "emacs-jabber/jabber-osd.el" "emacs-jabber/jabber-ourversion.el"
-;;;;;;  "emacs-jabber/jabber-ping.el" "emacs-jabber/jabber-ratpoison.el"
-;;;;;;  "emacs-jabber/jabber-register.el" "emacs-jabber/jabber-sasl.el"
-;;;;;;  "emacs-jabber/jabber-sawfish.el" "emacs-jabber/jabber-screen.el"
-;;;;;;  "emacs-jabber/jabber-search.el" "emacs-jabber/jabber-si-client.el"
-;;;;;;  "emacs-jabber/jabber-si-common.el" "emacs-jabber/jabber-si-server.el"
-;;;;;;  "emacs-jabber/jabber-socks5.el" "emacs-jabber/jabber-time.el"
-;;;;;;  "emacs-jabber/jabber-tmux.el" "emacs-jabber/jabber-truncate.el"
-;;;;;;  "emacs-jabber/jabber-util.el" "emacs-jabber/jabber-vcard-avatars.el"
-;;;;;;  "emacs-jabber/jabber-vcard.el" "emacs-jabber/jabber-version.el"
-;;;;;;  "emacs-jabber/jabber-watch.el" "emacs-jabber/jabber-widget.el"
-;;;;;;  "emacs-jabber/jabber-wmii.el" "emacs-jabber/jabber-xmessage.el"
-;;;;;;  "emacs-jabber/jabber-xml.el" "emacs-jabber/srv.el" "google-weather/google-weather.el"
-;;;;;;  "guess-offset/guess-offset-autoloads.el" "guess-offset/guess-offset-pkg.el"
-;;;;;;  "guess-offset/guess-offset.el" "helm/helm-pkg.el" "helm/helm-plugin.el"
-;;;;;;  "hideshowvis/hideshowvis-autoloads.el" "hideshowvis/hideshowvis-pkg.el"
-;;;;;;  "jabber/fsm.el" "jabber/jabber-ahc-presence.el" "jabber/jabber-ahc.el"
-;;;;;;  "jabber/jabber-alert.el" "jabber/jabber-autoloads.el" "jabber/jabber-avatar.el"
-;;;;;;  "jabber/jabber-awesome.el" "jabber/jabber-browse.el" "jabber/jabber-chatstates.el"
-;;;;;;  "jabber/jabber-conn.el" "jabber/jabber-disco.el" "jabber/jabber-events.el"
-;;;;;;  "jabber/jabber-feature-neg.el" "jabber/jabber-festival.el"
-;;;;;;  "jabber/jabber-ft-client.el" "jabber/jabber-ft-common.el"
-;;;;;;  "jabber/jabber-ft-server.el" "jabber/jabber-history.el" "jabber/jabber-iq.el"
-;;;;;;  "jabber/jabber-logon.el" "jabber/jabber-modeline.el" "jabber/jabber-newdisco.el"
-;;;;;;  "jabber/jabber-osd.el" "jabber/jabber-ourversion.el" "jabber/jabber-pkg.el"
-;;;;;;  "jabber/jabber-ratpoison.el" "jabber/jabber-register.el"
-;;;;;;  "jabber/jabber-sasl.el" "jabber/jabber-sawfish.el" "jabber/jabber-screen.el"
-;;;;;;  "jabber/jabber-search.el" "jabber/jabber-si-client.el" "jabber/jabber-si-common.el"
-;;;;;;  "jabber/jabber-si-server.el" "jabber/jabber-socks5.el" "jabber/jabber-time.el"
-;;;;;;  "jabber/jabber-truncate.el" "jabber/jabber-util.el" "jabber/jabber-vcard-avatars.el"
+;;;;;;  "auto-complete/auto-complete.el" "c-eldoc/c-eldoc-autoloads.el"
+;;;;;;  "c-eldoc/c-eldoc-pkg.el" "cljdoc/cljdoc-autoloads.el" "cljdoc/cljdoc-pkg.el"
+;;;;;;  "cljdoc/cljdoc.el" "cmake-mode/cmake-mode.el" "ecb/ecb-advice-test.el"
+;;;;;;  "ecb/ecb-analyse.el" "ecb/ecb-autogen.el" "ecb/ecb-buffertab.el"
+;;;;;;  "ecb/ecb-cedet-wrapper.el" "ecb/ecb-common-browser.el" "ecb/ecb-compatibility.el"
+;;;;;;  "ecb/ecb-compilation.el" "ecb/ecb-create-layout.el" "ecb/ecb-cycle.el"
+;;;;;;  "ecb/ecb-eshell.el" "ecb/ecb-examples.el" "ecb/ecb-face.el"
+;;;;;;  "ecb/ecb-file-browser.el" "ecb/ecb-jde.el" "ecb/ecb-layout-defs.el"
+;;;;;;  "ecb/ecb-layout.el" "ecb/ecb-method-browser.el" "ecb/ecb-mode-line.el"
+;;;;;;  "ecb/ecb-multiframe.el" "ecb/ecb-navigate.el" "ecb/ecb-semantic-wrapper.el"
+;;;;;;  "ecb/ecb-semantic.el" "ecb/ecb-speedbar.el" "ecb/ecb-symboldef.el"
+;;;;;;  "ecb/ecb-tod.el" "ecb/ecb-upgrade.el" "ecb/ecb-winman-support.el"
+;;;;;;  "ecb/silentcomp.el" "ecb/tree-buffer.el" "emacs-jabber/fsm.el"
+;;;;;;  "emacs-jabber/jabber-ahc-presence.el" "emacs-jabber/jabber-ahc.el"
+;;;;;;  "emacs-jabber/jabber-alert.el" "emacs-jabber/jabber-autoloads.el"
+;;;;;;  "emacs-jabber/jabber-avatar.el" "emacs-jabber/jabber-awesome.el"
+;;;;;;  "emacs-jabber/jabber-browse.el" "emacs-jabber/jabber-chatstates.el"
+;;;;;;  "emacs-jabber/jabber-conn.el" "emacs-jabber/jabber-disco.el"
+;;;;;;  "emacs-jabber/jabber-events.el" "emacs-jabber/jabber-feature-neg.el"
+;;;;;;  "emacs-jabber/jabber-festival.el" "emacs-jabber/jabber-ft-client.el"
+;;;;;;  "emacs-jabber/jabber-ft-common.el" "emacs-jabber/jabber-ft-server.el"
+;;;;;;  "emacs-jabber/jabber-history.el" "emacs-jabber/jabber-iq.el"
+;;;;;;  "emacs-jabber/jabber-libnotify.el" "emacs-jabber/jabber-logon.el"
+;;;;;;  "emacs-jabber/jabber-modeline.el" "emacs-jabber/jabber-muc-nick-coloring.el"
+;;;;;;  "emacs-jabber/jabber-newdisco.el" "emacs-jabber/jabber-osd.el"
+;;;;;;  "emacs-jabber/jabber-ourversion.el" "emacs-jabber/jabber-ping.el"
+;;;;;;  "emacs-jabber/jabber-ratpoison.el" "emacs-jabber/jabber-register.el"
+;;;;;;  "emacs-jabber/jabber-sasl.el" "emacs-jabber/jabber-sawfish.el"
+;;;;;;  "emacs-jabber/jabber-screen.el" "emacs-jabber/jabber-search.el"
+;;;;;;  "emacs-jabber/jabber-si-client.el" "emacs-jabber/jabber-si-common.el"
+;;;;;;  "emacs-jabber/jabber-si-server.el" "emacs-jabber/jabber-socks5.el"
+;;;;;;  "emacs-jabber/jabber-time.el" "emacs-jabber/jabber-tmux.el"
+;;;;;;  "emacs-jabber/jabber-truncate.el" "emacs-jabber/jabber-util.el"
+;;;;;;  "emacs-jabber/jabber-vcard-avatars.el" "emacs-jabber/jabber-vcard.el"
+;;;;;;  "emacs-jabber/jabber-version.el" "emacs-jabber/jabber-watch.el"
+;;;;;;  "emacs-jabber/jabber-widget.el" "emacs-jabber/jabber-wmii.el"
+;;;;;;  "emacs-jabber/jabber-xmessage.el" "emacs-jabber/jabber-xml.el"
+;;;;;;  "emacs-jabber/srv.el" "guess-offset/guess-offset-autoloads.el"
+;;;;;;  "guess-offset/guess-offset-pkg.el" "guess-offset/guess-offset.el"
+;;;;;;  "helm/helm-pkg.el" "helm/helm-plugin.el" "hideshowvis/hideshowvis-autoloads.el"
+;;;;;;  "hideshowvis/hideshowvis-pkg.el" "jabber/fsm.el" "jabber/jabber-ahc-presence.el"
+;;;;;;  "jabber/jabber-ahc.el" "jabber/jabber-alert.el" "jabber/jabber-autoloads.el"
+;;;;;;  "jabber/jabber-avatar.el" "jabber/jabber-awesome.el" "jabber/jabber-browse.el"
+;;;;;;  "jabber/jabber-chatstates.el" "jabber/jabber-conn.el" "jabber/jabber-disco.el"
+;;;;;;  "jabber/jabber-events.el" "jabber/jabber-feature-neg.el"
+;;;;;;  "jabber/jabber-festival.el" "jabber/jabber-ft-client.el"
+;;;;;;  "jabber/jabber-ft-common.el" "jabber/jabber-ft-server.el"
+;;;;;;  "jabber/jabber-history.el" "jabber/jabber-iq.el" "jabber/jabber-logon.el"
+;;;;;;  "jabber/jabber-modeline.el" "jabber/jabber-newdisco.el" "jabber/jabber-osd.el"
+;;;;;;  "jabber/jabber-ourversion.el" "jabber/jabber-pkg.el" "jabber/jabber-ratpoison.el"
+;;;;;;  "jabber/jabber-register.el" "jabber/jabber-sasl.el" "jabber/jabber-sawfish.el"
+;;;;;;  "jabber/jabber-screen.el" "jabber/jabber-search.el" "jabber/jabber-si-client.el"
+;;;;;;  "jabber/jabber-si-common.el" "jabber/jabber-si-server.el"
+;;;;;;  "jabber/jabber-socks5.el" "jabber/jabber-time.el" "jabber/jabber-truncate.el"
+;;;;;;  "jabber/jabber-util.el" "jabber/jabber-vcard-avatars.el"
 ;;;;;;  "jabber/jabber-vcard.el" "jabber/jabber-version.el" "jabber/jabber-watch.el"
 ;;;;;;  "jabber/jabber-widget.el" "jabber/jabber-wmii.el" "jabber/jabber-xmessage.el"
-;;;;;;  "jabber/jabber-xml.el" "jabber/srv.el" "parenface/parenface.el"
-;;;;;;  "switch-window/switch-window.el" "window-layout/window-layout.el"
-;;;;;;  "yasnippet/dropdown-list.el" "yasnippet/yasnippet-debug.el"
-;;;;;;  "yasnippet/yasnippet-tests.el") (20444 44885 743857))
+;;;;;;  "jabber/jabber-xml.el" "jabber/srv.el" "lusty-explorer/lusty-ido.el"
+;;;;;;  "parenface/parenface.el" "switch-window/switch-window.el"
+;;;;;;  "window-layout/window-layout.el" "xcscope+/xcscope+.el" "yasnippet/dropdown-list.el"
+;;;;;;  "yasnippet/yasnippet-debug.el" "yasnippet/yasnippet-tests.el")
+;;;;;;  (20447 827 166472))
 
 ;;;***
 
