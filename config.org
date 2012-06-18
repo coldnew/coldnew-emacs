@@ -1399,16 +1399,19 @@ auto-complete-mode 的按鍵設定。
             (format ": %s" (buffer-substring s e))))
 #+end_src
 ** lusty-explorer
+*** Depends
 #+begin_src emacs-lisp
-  (require 'lusty-explorer)
-
-  ;;;; Keybindings
+  (require* 'lusty-explorer)
+#+end_src
+*** Keybinding
+#+begin_src emacs-lisp
   (add-hook 'lusty-setup-hook
             '(lambda ()
                (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)
                ))
-
-  ;; Make lusty-explorer use it's own completion, not helm-completion
+#+end_src
+*** Make lusty-explorer use it's own completion, not helm-completion
+#+begin_src emacs-lisp
   (when (featurep 'helm)
     (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
     (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
