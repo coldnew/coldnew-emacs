@@ -1429,6 +1429,7 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
   * Weather
   %%(org-google-weather "New York")
 #+end_example
+
 #+begin_src emacs-lisp
   (require* 'google-weather)
   (require 'org-google-weather)
@@ -1509,13 +1510,23 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
 *** Crypt                                                           :crypt:
 用於加密 org-mode 裡面具有 :encrypt: 這個 TAG 的區塊。
 注意到這需啟用 [[*Easy%20PG][Easy PG]] 才能夠使用。
+**** Depends
 #+begin_src emacs-lisp
   (require 'org-crypt)
+#+end_src
+**** 設定要加密的 tag 標籤為 *encrypt*
+#+begin_src emacs-lisp
   (setq org-crypt-tag-matcher "encrypt")
+#+end_src
+**** Add a hook to automatically encrypt entries before a file is saved to disk.
+#+begin_src emacs-lisp
   (org-crypt-use-before-save-magic)
+#+end_src
+**** 避免 encrypt 這個 tag 被子項目繼承
+#+begin_src emacs-lisp
   (setq org-tags-exclude-from-inheritance (quote ("encrypt")))
 #+end_src
-設定 org-crypt-disable-auto-save 成 'encrypt 模式。
+**** 設定 org-crypt-disable-auto-save 成 'encrypt 模式。
 此模式並不會停用 auto-save-mode，反之，當自動儲存時，解密過的區域將會加密回去。
 #+begin_src emacs-lisp
   (setq org-crypt-disable-auto-save 'encrypt)
