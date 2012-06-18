@@ -513,6 +513,11 @@ emacs 套件管理的設定。
 * Macros                                                             :macro:
 ** Clojure
 *** comment
+comment 只是用來註釋用，並不會解析裏面的東西。
+#+begin_example
+  (comment "I am comment.")
+#+end_example
+
 #+begin_src emacs-lisp
   (defmacro comment (&rest body)
     "Comment out one or more s-expressions."
