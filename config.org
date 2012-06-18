@@ -1594,6 +1594,12 @@ some packages conflict with org-mode
 #+end_src
 *** Commands
 #+begin_src emacs-lisp
+  (defun org-archive-done-tasks ()
+    "Make all DONE subtree to archive."
+    (interactive)
+    (org-map-entries 'org-archive-subtree "/DONE" 'file))
+#+end_src
+#+begin_src emacs-lisp
   (defun coldnew/org-up-parent ()
     "Move to the parent of current point. If current is the parent heading,
   move to the previous parent heading."
@@ -2894,7 +2900,7 @@ This section contains my editor state
         (replace-match "\\1\\2" nil nil))))
 #+end_src
 
-* Cedet
+* Cedet                                                                :cede:
 #+begin_src emacs-lisp
   (require 'semantic)
 
