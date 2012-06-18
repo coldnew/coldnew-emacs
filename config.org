@@ -1658,36 +1658,6 @@ some packages conflict with org-mode
   ;;* rtm feed timer
   (run-at-time 3600 3600 'org-feed-update-all)
 #+end_src
-** outline
-*** TODO C-f 展開 (show-children) 並跳入 children
-*** TODO C-b 關掉 chilren 並跳到 parent
-#+begin_src emacs-lisp
-  (defun outline-down-heding (arg)
-    (interactive "p")
-    (outline-back-to-heading)
-    (show-children)
-    (while (> arg 0)
-      (let ((point-to-move-to (save-excursion
-                                (outline-aa))))
-        (if point-to-move-to
-            (progn
-              (goto-char point-to-move-to)
-              (setq arg (1- arg)))
-          (progn
-            (setq arg 0)
-            (error "No following same-level heading"))))))
-
-  (defun outline-aa ()
-    "Move to next heading of the same level, and return point.
-        If there is no such heading, return nil."
-    (let ((level (funcall outline-level)))
-      (outline-next-visible-heading 1)
-      (while (and (not (eobp)) (<= (funcall outline-level) level))
-        (outline-next-visible-heading 1))
-      (if (or (eobp) (< (funcall outline-level) level))
-          nil
-        (point))))
-#+end_src
 ** smex
 *** Depends
 #+begin_src emacs-lisp
