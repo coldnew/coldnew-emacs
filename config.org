@@ -570,6 +570,32 @@ comment 只是用來註釋用，並不會解析裏面的東西。
     `(if (not ,test) ,then ,else))
 #+end_src
 
+** Other
+*** defclosure
+#+begin_example
+  (defclosure counter (&optional increment)
+    "Iseless and bizar counter"
+    ((one 0)
+     (two 1))
+    (incf two (incf one (or increment two))))
+
+(counter) => 2
+(counter) => 5
+#+end_example
+
+#+begin_src emacs-lisp
+  (defmacro defclosure (name arglist docstring bindings &rest body)
+    "Define NAME as a closure.
+
+          DOCSTRING is *not* optional.
+          BINDINGS is an alist of lexical bindings.
+          The definition is (lambda ARGLIST DOCSTRING BODY...)."
+    (declare (indent defun))
+    `(lexical-let (,@bindings)
+       (defun ,name (,@arglist)
+         ,docstring
+         ,@body)))
+#+end_src
 * Depends
 
 #+begin_src emacs-lisp
