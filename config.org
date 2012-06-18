@@ -1601,11 +1601,12 @@ some packages conflict with org-mode
     (interactive)
     (org-map-entries 'org-archive-subtree "/DONE" 'file))
 #+end_src
-**** TODO Other
+**** coldnew/org-up-parent
+跑到目前節點的父節點，並收起目前的結點。
 #+begin_src emacs-lisp
   (defun coldnew/org-up-parent ()
     "Move to the parent of current point. If current is the parent heading,
-          move to the previous parent heading."
+            move to the previous parent heading."
     (interactive)
     (if (not (org-on-heading-p))
         (outline-back-to-heading)
@@ -1617,8 +1618,12 @@ some packages conflict with org-mode
                   (outline-previous-visible-heading 1))
                 (point))))
         (if point-to-move-to
-            (goto-char point-to-move-to)))))
-
+            (goto-char point-to-move-to))))
+    (org-cycle))
+#+end_src
+**** coldnew/org-down-children
+跑到目前節點的子節點，並展開子節點。
+#+begin_src emacs-lisp
   (defun coldnew/org-down-children ()
     "Move to children of current heading. If current heading only has subtree,
           expand the subtree."
@@ -1629,13 +1634,12 @@ some packages conflict with org-mode
            (point-to-move-to
             (save-excursion
               (outline-next-visible-heading 1)
-              (if (= (funcall outline-level) level)
+              (if (<= (funcall outline-level) level)
                   nil
                         (point)))))
               (if point-to-move-to
                   (goto-char point-to-move-to)
                 (show-subtree))))
-
 #+end_src
 *** COMMENT remember the milk ?
 :PROPERTIES:
