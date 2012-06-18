@@ -2052,13 +2052,16 @@ Following buffer will not show in iBuffer
   (add-hook 'ibuffer-mode-hook 'ibuffer-do-sort-by-filename/process)
 #+end_src
 ** winner
+*** Depends
 #+begin_src emacs-lisp
   (require 'winner)
+#+end_src
+*** Cpnfig
+#+begin_src emacs-lisp
   ;; do not use default keybindings
   (setq winner-dont-bind-my-keys t)
   ;; Enable winner-mode
   (winner-mode t)
-
 #+end_src
 ** speedbar
 #+begin_src emacs-lisp
@@ -2069,8 +2072,12 @@ Following buffer will not show in iBuffer
   (setq sr-speedbar-refresh-turn-on t)
 #+end_src
 ** shell-pop
+*** Depends
 #+begin_src emacs-lisp
   (require 'shell-pop)
+#+end_src
+*** Config
+#+begin_src emacs-lisp
   (shell-pop-set-internal-mode "eshell")
   (shell-pop-set-internal-mode-shell emacs-default-shell)
   (shell-pop-set-window-height emacs-popup-shell-window-height)
@@ -2141,70 +2148,7 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   ;;;; Keybindings
   (define-key comint-mode-map (kbd "C-g") 'comint-interrupt-subjob)
 #+end_src
-** bash
-#+begin_src emacs-lisp
-
-  ;;;; sh-mode extensions
-  (add-to-list 'auto-mode-alist '("\\.sh" . sh-mode))
-  (add-to-list 'auto-mode-alist '("\\.bash" . sh-mode))
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Hooks
-  ;;;; ---------------------------------------------------------------------------
-
-  ;; use my editor-mode
-  (add-hook 'shell-mode-hook '(lambda() (coldnew-editor-mode 1)))
-
-  ;; auto-complete
-  (add-hook 'shell-mode-hook 'ac-shell-script-mode-setup)
-
-  ;; bash-completion
-  (require 'bash-completion)
-  (bash-completion-setup)
-
-  ;; use flymake-shell
-  (require* 'flymake-shell)
-  (add-hook 'shell-mode-hook 'flymake-shell-load)
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Keybindings
-  ;;;; ---------------------------------------------------------------------------
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Auto Complete
-  ;;;; ---------------------------------------------------------------------------
-
-  ;; define ac-source for pcomplete
-  (ac-define-source pcomplete
-    '((candidates . pcomplete-completions)
-      (cache)
-      (symbol . "f")))
-
-  (defun ac-shell-script-mode-setup ()
-    "auto-complete settings for shell-script-mode"
-    (setq ac-sources
-          '(ac-source-pcomplete
-            ac-source-dictionary
-            ac-source-filename
-            ac-source-files-in-current-dir
-            ac-source-words-in-same-mode-buffers
-            )))
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Flymake
-  ;;;; ---------------------------------------------------------------------------
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Functions
-  ;;;; ---------------------------------------------------------------------------
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Commands
-  ;;;; ---------------------------------------------------------------------------
-#+end_src
+*
 ** undo-tree
 #+begin_src emacs-lisp
   (require 'undo-tree)
@@ -3153,7 +3097,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 
 #+end_src
 
-** c-mode
+** c
 dummy
 *** Auto Mode Alist
 #+begin_src emacs-lisp
@@ -3248,7 +3192,7 @@ C-s s I             对目录中的相关文件建立列表并进行索引
           (insert "main"))
       (yas/expand)))
 #+end_src
-** c++-mode
+** c++
 dummy
 *** Auto Mode Alist
 #+begin_src emacs-lisp
@@ -3364,6 +3308,70 @@ C-c  I             对目录中的相关文件建立列表并进行索引
   (define-key c++-mode-map (kbd "C-c I") 'cscope-create-list-of-files-to-index)
  ;; remember to remove
   (define-key c++-mode-map (kbd "C-c f") 'cscope-find-this-file)
+#+end_src
+** bash
+*** Auto Mode Alist
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.sh" . sh-mode))
+  (add-to-list 'auto-mode-alist '("\\.bash" . sh-mode))
+#+end_src
+#+begin_src emacs-lisp
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Hooks
+  ;;;; ---------------------------------------------------------------------------
+
+  ;; use my editor-mode
+  (add-hook 'shell-mode-hook '(lambda() (coldnew-editor-mode 1)))
+
+  ;; auto-complete
+  (add-hook 'shell-mode-hook 'ac-shell-script-mode-setup)
+
+  ;; bash-completion
+  (require 'bash-completion)
+  (bash-completion-setup)
+
+  ;; use flymake-shell
+  (require* 'flymake-shell)
+  (add-hook 'shell-mode-hook 'flymake-shell-load)
+
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Keybindings
+  ;;;; ---------------------------------------------------------------------------
+
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Auto Complete
+  ;;;; ---------------------------------------------------------------------------
+
+  ;; define ac-source for pcomplete
+  (ac-define-source pcomplete
+    '((candidates . pcomplete-completions)
+      (cache)
+      (symbol . "f")))
+
+  (defun ac-shell-script-mode-setup ()
+    "auto-complete settings for shell-script-mode"
+    (setq ac-sources
+          '(ac-source-pcomplete
+            ac-source-dictionary
+            ac-source-filename
+            ac-source-files-in-current-dir
+            ac-source-words-in-same-mode-buffers
+            )))
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Flymake
+  ;;;; ---------------------------------------------------------------------------
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Functions
+  ;;;; ---------------------------------------------------------------------------
+
+
+  ;;;; ---------------------------------------------------------------------------
+  ;;;; Commands
+  ;;;; ---------------------------------------------------------------------------
 #+end_src
 * Mode Line
 powerline is really funny
@@ -3551,6 +3559,17 @@ All command file
           (unless (equal major-mode 'lisp-interaction-mode)
             (lisp-interaction-mode))))))
 #+end_src
+*** save-buffer-always
+預設的 save-buffer 在 buffer 沒有變動時，不會進行儲存，
+使用此命令可以使得在呼叫 save-buffer-always 時，將 buffer 變更為修改過，
+並進行儲存。
+#+begin_src emacs-lisp
+  (defun save-buffer-always ()
+    "Save the buffer even if it is not modified."
+    (interactive)
+    (set-buffer-modified-p t)
+    (save-buffer))
+#+end_src
 ** Other
 #+begin_src emacs-lisp
   (defun window-horizontal-to-vertical ()
@@ -3620,11 +3639,7 @@ All command file
   ;; (global-set-key (kbd "M-K") (lambda () (interactive) (enlarge-window -1)))
   ;; (global-set-key (kbd "M-H") (lambda () (interactive) (enlarge-window -1 t)))
   ;; (global-set-key (kbd "M-L") (lambda () (interactive) (enlarge-window 1 t)))
-  (defun save-buffer-always ()
-    "Save the buffer even if it is not modified."
-    (interactive)
-    (set-buffer-modified-p t)
-    (save-buffer))
+
 
   (defun select-forwards-to-before-match (match)
     "Selects forwards to just before next match, uses
