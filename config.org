@@ -914,7 +914,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
 *** Init
 #+begin_src emacs-lisp
   (deftheme coldnew-night
-    "")
+    "coldnew's dark theme.")
 
   (custom-theme-set-faces
    'coldnew-night
@@ -1003,6 +1003,13 @@ emacs-lisp-mode 的 buffer，可以這樣做
   '(lusty-directory-face ((t (:inherit font-lock-type-face))))
   '(lusty-file-face ((t (:inherit font-lock-string-face))))
 #+end_src
+*** woman
+#+begin_src emacs-lisp
+  '(woman-italic-face ((t (:slant italic :weight bold))))
+  '(woman-unknown ((t (:foreground "#EA0000" :weight bold))))
+  '(woman-addition ((t (:foreground "cadet blue"))))
+  '(woman-bold ((t (:inherit bold :foreground "CadetBlue3"))))
+#+end_src
 *** rainbow-delimiters
 #+begin_src emacs-lisp
   '(rainbow-delimiters-depth-1-face ((t (:foreground "green"))))
@@ -1067,26 +1074,19 @@ emacs-lisp-mode 的 buffer，可以這樣做
   '(ibuffer-git-add-face ((t (:inherit (diff-added)))))
   '(ibuffer-git-del-face ((t (:inherit (diff-removed)))))
 
-
    ;;;; ECB
   '(ecb-default-highlight-face ((t (:background "#CAE682" :foreground "#0C0C0C" :bold t))))
-
-   ;;;; Woman
-  '(woman-italic-face ((t (:slant italic :weight bold))))
-  '(woman-unknown ((t (:foreground "#EA0000" :weight bold))))
-  '(woman-addition ((t (:foreground "cadet blue"))))
-  '(woman-bold ((t (:inherit bold :foreground "CadetBlue3"))))
-
-  ;;;; ElScreen
-  '(elscreen-tab-background-face ((t (:background "#272729" ))))
-  '(elscreen-tab-control-face ((t (:foreground "white" :background "black" :weight extra-bold))))
-  '(elscreen-tab-current-screen-face ((t (:background "#250628" :foreground "Gray90" :bold t))))
-  '(elscreen-tab-other-screen-face ((t (:background "#1D1D1F" :foreground "Gray85" :bold t))))
-
 
    ;;;;
   ;; '(button ((t (:underline t))))
   ;; '(header-line ((t (:background "#e5e5e5" :foreground "#333333"))))
+#+end_src
+*** elscreen
+#+begin_src emacs-lisp
+  '(elscreen-tab-background-face ((t (:background "#272729" ))))
+  '(elscreen-tab-control-face ((t (:foreground "white" :background "black" :weight extra-bold))))
+  '(elscreen-tab-current-screen-face ((t (:background "#250628" :foreground "Gray90" :bold t))))
+  '(elscreen-tab-other-screen-face ((t (:background "#1D1D1F" :foreground "Gray85" :bold t))))
 #+end_src
 *** End of File
 #+begin_src emacs-lisp
