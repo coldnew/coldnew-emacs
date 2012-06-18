@@ -478,6 +478,14 @@ emacs 套件管理的設定。
          :type github
          :pkgname "jonathanchu/emacs-powerline")
 #+end_src
+***** lusty-emacs
+使用最新版本的 lusty-explorer
+#+begin_src emacs-lisp
+  (:name lusty-explorer
+         :type github
+         :pkgname sjbach/lusty-emacs
+         :description "LustyExplorer is a fast and responsive way to manage files and buffers")
+#+end_src
 ***** End of config
 #+begin_src emacs-lisp
   ))
@@ -584,7 +592,7 @@ advice file
 #+begin_src emacs-lisp
   (defadvice kill-emacs (around recompile-emacs-config activate)
     "Before exit emacs, kill config.el which is generate by config.org."
-    (let ((file-name (concat emacs-dir "config.el")))
+    (let ((file-name (expand-file-name (concat emacs-dir "config.el"))))
       (if (file-exists-p file-name)
           (delete-file file-name nil))
       ad-do-it))
@@ -693,6 +701,16 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
       (goto-char(point-min))
       (while (search-forward "\n" nil t) (replace-match "\r\n"))))
 #+end_src
+*** file to string
+將檔案變成字串，此 function 比較適用於該檔案只有一行（或少數幾行）的情況。
+#+begin_src emacs-lisp
+  (defun file->string (file)
+    "Convert file to string in buffer with quote."
+    (when (file-readable-p file)
+      (with-temp-buffer
+        (insert-file-contents file)
+        (buffer-string))))
+#+end_src
 ** Buffer
 *** get-buffers-matching-mode
 取得 major-mode 和要求符合的所有 buffer，假如我們希望可以列出所有為
@@ -733,6 +751,26 @@ emacs-lisp-mode 的 buffer，可以這樣做
     (let ((dev (if dev dev "eth0")))
       (format-network-address (car (network-interface-info dev)) t)))
 #+end_src
+** Date
+#+begin_src emacs-lisp
+  (defun current-date-time ()
+    "return current date in `%Y-%m-%d' format, ex:`2012-04-25'."
+    (let ((system-time-locale "en_US")
+          (format "%Y-%m-%d"))
+      (format-time-string "%Y-%m-%d")))
+
+  (defun day-of-week (year month day)
+    "Returns the day of the week as an integer.
+     Monday is 1."
+    (nth 6 (decode-time (encode-time 0 0 0 day month year))))
+
+  (defun day-of-week-in-string (year month day)
+    "Return the day of the week as day name."
+    (let* ((day-names '("Sunday" "Monday" "Tuesday" "Wednesday"
+                        "Thursday" "Friday" "Saturday"))
+           (day-index (nth 6 (decode-time (encode-time 0 0 0 day month year)))))
+      (nth day-index day-names)))
+#+end_src
 ** other
 #+begin_src emacs-lisp
   (defun map-define-key (mode-map keylist fname)
@@ -750,8 +788,6 @@ emacs-lisp-mode 的 buffer，可以這樣做
           (if (string= "comm" (car attr))
               (setq cmd (cdr attr))))
         (if (and cmd (or (string= "emacs" cmd) (string= "emacs.exe" cmd))) t))))
-
-
 
   ;;;; ---------------------------------------------------------------------------
   ;;;; Region
@@ -788,44 +824,6 @@ emacs-lisp-mode 的 buffer，可以這樣做
               (equalp 'forwards dir))
           (list start end)
         (list end start))))
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Date
-  ;;;; ---------------------------------------------------------------------------
-  (defun current-date-time ()
-    "return current date in `%Y-%m-%d' format, ex:`2012-04-25'."
-    (let ((system-time-locale "en_US")
-          (format "%Y-%m-%d"))
-      (format-time-string "%Y-%m-%d")))
-
-  (defun day-of-week (year month day)
-    "Returns the day of the week as an integer.
-     Monday is 1."
-    (nth 6 (decode-time (encode-time 0 0 0 day month year))))
-
-  (defun day-of-week-in-string (year month day)
-    "Return the day of the week as day name."
-    (let* ((day-names '("Sunday" "Monday" "Tuesday" "Wednesday"
-                        "Thursday" "Friday" "Saturday"))
-           (day-index (nth 6 (decode-time (encode-time 0 0 0 day month year)))))
-      (nth day-index day-names)))
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Conversion
-  ;;;; ---------------------------------------------------------------------------
-
-  (defun file->string (file)
-    "Convert file to string in buffer with quote."
-    (when (file-readable-p file)
-      (with-temp-buffer
-        (insert-file-contents file)
-        (buffer-string))))
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Advice
-  ;;;; ---------------------------------------------------------------------------
-
-
 #+end_src
 * Fonts                                                                :font:
 #+begin_src emacs-lisp
@@ -998,6 +996,12 @@ emacs-lisp-mode 的 buffer，可以這樣做
   '(org-level-5 ((t (:foreground "#ff4040"))))
   '(org-level-6 ((t (:foreground "#afe04e"))))
   '(org-level-7 ((t (:foreground "#0A4C64"))))
+#+end_src
+*** lusty-explorer
+#+begin_src emacs-lisp
+  '(lusty-match-face ((t (:inherit font-lock-function-name-face))))
+  '(lusty-directory-face ((t (:inherit font-lock-type-face))))
+  '(lusty-file-face ((t (:inherit font-lock-string-face))))
 #+end_src
 *** rainbow-delimiters
 #+begin_src emacs-lisp
@@ -2410,8 +2414,6 @@ try to define my editor-mode , some function  or macros copy from evil :)
              (put ',symbol 'permanent-local arg)))))
 
   (coldnew/define-local-var aa "sd" :permanent nil)
-
-  sd
 #+end_src
 #+begin_src emacs-lisp
   (defmacro coldnew/define-state (state doc &rest body)
@@ -2705,13 +2707,18 @@ This section contains my editor state
       (define-key map "L" 'downcase-word-backward)
       (define-key map "U" 'upcase-word-backward)
       (define-key map "Z" 'zap-up-to-char-backward)
-      (define-key map "a" 'backward-sentence)
-      (define-key map "e" 'forward-sentence)
+      (define-key map "e" 'ecb-toggle-ecb-windows)
+      ;; (define-key map "a" 'backward-sentence)
+      ;; (define-key map "e" 'forward-sentence)
       (define-key map "g" 'linum-ace-jump)
       (define-key map "o" 'org-ido-switchb)
       (define-key map "q" 'quoted-insert)
       (define-key map "r" 'org-capture)
       (define-key map "w" 'kill-region)
+      (define-key map "n" 'windmove-down)
+      (define-key map "p" 'windmove-up)
+      (define-key map "f" 'windmove-right)
+      (define-key map "b" 'windmove-left)
       (define-key map "\C-m" 'bm-toggle)
       (define-key map "\C-n" 'bm-next)
       (define-key map "\C-p" 'bm-previous)
@@ -2951,6 +2958,41 @@ This section contains my editor state
   (set-default 'semantic-case-fold t)
 
 #+end_src
+* ECB                                                                   :ecb:
+** Depends
+#+begin_src emacs-lisp
+  (require* 'ecb)
+#+end_src
+** Config
+*** Do not show tips-of-the-day
+不要顯示　 tips-of-the-day，感覺很煩人
+#+begin_src emacs-lisp
+  (setq ecb-tip-of-the-day nil)
+#+end_src
+*** Do not check ecb options for compatibility across versions
+不要自動檢查版本是否相容，很煩人...
+#+begin_src emacs-lisp
+  (setq ecb-auto-compatibility-check nil)
+#+end_src
+** Advice
+** Commands
+#+begin_src emacs-lisp
+  (defun ccc-toggle-ecb-mode ()
+    "Toggle ecb-minor-mode and resize window accordingly"
+    (interactive)
+    (if ecb-minor-mode
+        (progn
+          (let ((w (frame-width ecb-frame)))
+            (message "%i" w)
+            )
+          (ecb-minor-mode)
+          )
+      (progn
+        (message "%s" "turning on, make frame wider")
+        (ecb-minor-mode)
+        )
+      ))
+#+end_src
 * Bookmark
 C-x r m
 C-x r b
@@ -2961,6 +3003,16 @@ C-x r l
 
 #+begin_src emacs-lisp
   (require* 'bm)
+#+end_src
+* Cscope
+#+begin_src emacs-lisp
+  (require* 'xcscope)
+  (require* 'xcscope+)
+  (setq cscope-do-not-update-database t)
+#+end_src
+* Auto Compression Mode
+#+begin_src emacs-lisp
+  (auto-compression-mode 1)
 #+end_src
 * Programming Mode
 ** emacs-lisp
@@ -3092,9 +3144,11 @@ dummy
                (c-set-style "linux")))
 #+end_src
 *** Hooks
+**** prefix
 **** c-eldoc
+adeff
 #+begin_src emacs-lisp
-  (add-hook 'c-mode-hook
+    (add-hook 'c-mode-hook
             '(lambda ()
                (require 'c-eldoc)
                (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
@@ -3147,6 +3201,16 @@ dummy
 #+begin_src emacs-lisp
   (define-key c-mode-map (kbd "C-x C-o") 'ff-find-other-file)
 #+end_src
+*** Cscope
+C-c s s             序找符号
+C-c s g             寻找全局的定义
+C-c s c             看看指定函数被哪些函数所调用
+C-c s C             看看指定函数调用了哪些函数
+C-c s e             寻找正则表达式
+C-c s f             寻找文件
+C-c s i             看看指定的文件被哪些文件 include
+C-c s a             设定初始化的目录，一般是你代码的根目录
+C-s s I             对目录中的相关文件建立列表并进行索引
 *** Functions
 *** Commands
 #+begin_src emacs-lisp
@@ -3259,6 +3323,22 @@ dummy
 *** Keybinding
 #+begin_src emacs-lisp
   (define-key c++-mode-map (kbd "C-x C-o") 'ff-find-other-file)
+#+end_src
+C-c  s             序找符号
+C-c  g             寻找全局的定义
+C-c  c             看看指定函数被哪些函数所调用
+C-c  C             看看指定函数调用了哪些函数
+C-c  e             寻找正则表达式
+C-c  f             寻找文件
+C-c  i             看看指定的文件被哪些文件 include
+C-c  a             设定初始化的目录，一般是你代码的根目录
+C-c  I             对目录中的相关文件建立列表并进行索引
+#+begin_src emacs-lisp
+  (define-key c++-mode-map (kbd "C-c s") 'cscope-find-this-symbol)
+  (define-key c++-mode-map (kbd "C-c g") 'cscope-find-global-definition)
+  (define-key c++-mode-map (kbd "C-c I") 'cscope-create-list-of-files-to-index)
+ ;; remember to remove
+  (define-key c++-mode-map (kbd "C-c f") 'cscope-find-this-file)
 #+end_src
 * Mode Line
 powerline is really funny
@@ -4220,10 +4300,8 @@ cA==
 使用 emacs 聽音樂。
 
 * Session
+** filecache
 #+begin_src emacs-lisp
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; filecache
-  ;;;; ---------------------------------------------------------------------------
   (require 'filecache)
   ;; setup file-cache-filter-regexps
   (setq file-cache-filter-regexps
@@ -4232,38 +4310,32 @@ cA==
           "\\.svn$" "\\.svn-base$" "\\.git$" "\\.hg$"
           ))
 
-  (file-cache-add-directory-list '("~/.emacs.d/config/" ))
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; savehist
-  ;;;; ---------------------------------------------------------------------------
+  (file-cache-add-directory-list '("~/.emacs.d/" ))
+#+end_src
+** savehist
+#+begin_src emacs-lisp
   (require 'savehist)
   ;; keep minibuffer history between session
   (setq savehist-file (concat emacs-cache-dir "savehist.dat"))
   (savehist-mode 1)
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; saveplace
-  ;;;; ---------------------------------------------------------------------------
+#+end_src
+** saveplace
+#+begin_src emacs-lisp
   (require 'saveplace)
   (setq save-place-file (concat emacs-cache-dir "saveplace.dat"))
   (setq-default save-place t)
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; recentf
-  ;;;; ---------------------------------------------------------------------------
+#+end_src
+** recentf
+#+begin_src emacs-lisp
   (require 'recentf)
   (require 'recentf-ext)
   ;; Setting cache file for recentf
   (setq recentf-save-file (concat emacs-cache-dir "recentf"))
   ;; Following file won;t contain in recentf
   (setq recentf-exclude '("\\.elc$" "\\.pyc$" "\\.recentd$" "^/tmp/"))
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; desktop
-  ;;;; ---------------------------------------------------------------------------
+#+end_src
+** desktop
+#+begin_src emacs-lisp
   (require 'desktop)
   (setq desktop-path (list emacs-cache-dir))
   (setq desktop-dirname emacs-cache-dir)
@@ -4401,17 +4473,17 @@ cA==
 | Ctrl-x e  |
 | Ctrl-x d  |
 | Ctrl-x e  |
-| Ctrl-c e  |
 
 ** test
 #+name: global-unset-key
 #+begin_src emacs-lisp :results value raw
-  (coldnew/global-unset-key
-   (kbd "C-x e")
-   (kbd "C-x d")
-   "\C-x e"
-;;   "\C-c e"
-   )
+    (coldnew/global-unset-key
+     (kbd "C-x e")
+     (kbd "C-x d")
+     "\C-x e"
+  ;;   "\C-c e"
+     )
+
 #+end_src
 
 ** Function key prefix
@@ -4430,7 +4502,7 @@ Function key 設置常用的命令。
   (global-set-key (kbd "<f3>")     'call-last-kbd-macro)
   (global-set-key (kbd "<f4>")     'sr-speedbar-toggle)
 #+end_src
-
+ssda
 ** Ctrl Prefix
 
 *** Default Emacs keybinding
@@ -4498,7 +4570,6 @@ Function key 設置常用的命令。
 #+end_src
 
 ** Meta Prefix
-
 *** Default Emacs keybinding
 #+begin_src emacs-lisp
 (global-set-key (kbd "M-f") 'forward-word)
@@ -4521,20 +4592,45 @@ Function key 設置常用的命令。
   (global-set-key (kbd "M-.") 'helm-etags+-select-one-key)
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-  (global-set-key (kbd "M-1") 'delete-other-windows)
-  (global-set-key (kbd "M-2") 'split-window-below)
-  (global-set-key (kbd "M-3") 'split-window-right)
-  (global-set-key (kbd "M-4") 'delete-window)
-  (global-set-key (kbd "M-0") 'other-window)
-  (global-set-key (kbd "M-j") 'switch-window)
+
+  ;; (global-set-key (kbd "M-1") 'delete-other-windows)
+  ;; (global-set-key (kbd "M-2") 'split-window-below)
+  ;; (global-set-key (kbd "M-3") 'split-window-right)
+  ;; (global-set-key (kbd "M-4") 'delete-window)
+  ;; (global-set-key (kbd "M-0") 'other-window)
+  ;;  (global-set-key (kbd "M-j") 'switch-window)
   ;;  (global-set-key (kbd "M-i") 'yas/expand)
 
 
 #+end_src
 
+** Meta-j prefix
+*** ECB
+#+begin_src emacs-lisp
+;;  (global-set-key (kbd "C-0 e") 'ecb-toggle-ecb-windows)
+;;  (global-set-key (kbd "C-0 1") 'ecb-goto-window-edit1)
+;;  (global-set-key (kbd "C-0 2") 'ecb-goto-window-edit2)
+;;  (global-set-key (kbd "C-0 m") 'ecb-goto-window-methods)
+; ; (global-set-key (kbd "C-0 l") 'ecb-toggle-layout)
+#+end_src
+*** Window move
+#+begin_src emacs-lisp
+;;  (global-set-key (kbd "M-j n") 'windmove-down)
+;;  (global-set-key (kbd "M-j p") 'windmove-up)
+;;  (global-set-key (kbd "M-j b") 'windmove-left)
+;;  (global-set-key (kbd "M-j f") 'windmove-right)
+#+end_src
 ** Shift prefix
 #+begin_src emacs-lisp
   (global-set-key [(shift return)] 'insert-empty-line)
+#+end_src
+
+** Super prefix
+#+begin_src emacs-lisp
+  (global-set-key (kbd "s-n") 'windmove-down)
+  (global-set-key (kbd "s-p") 'windmove-up)
+  (global-set-key (kbd "s-b") 'windmove-left)
+  (global-set-key (kbd "s-f") 'windmove-right)
 #+end_src
 
 ** Other
@@ -4619,8 +4715,10 @@ http://jixiuf.github.com/tags/@Emacs.html
     (concat "http" (when google-weather-use-https "s") "://" google-weather-url "?weather=" (url-hexify-string location)
             (when language
               (concat "&hl=" language))
+            ;; add for encoding
             (concat "&oe=" "utf8")))
 #+end_src
+
 * Local File Variable
 # Local Variables:
 # mode: org
