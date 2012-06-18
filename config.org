@@ -2039,13 +2039,16 @@ Following buffer will not show in iBuffer
      (t (format "%8dB" (buffer-size)))))
 #+end_src
 *** Hooks
+**** enable highlight-line
 #+begin_src emacs-lisp
-  ;;;; Hooks
-  ;; enable highlight-line
   (add-hook 'ibuffer-mode-hook 'hl-line-mode)
-  ;; setting default group
+#+end_src
+**** setting default group
+#+begin_src emacs-lisp
   (add-hook 'ibuffer-mode-hook '(lambda () (ibuffer-switch-to-saved-filter-groups "default")))
-  ;; sort filename automatically
+#+end_src
+**** sort filename automatically
+#+begin_src emacs-lisp
   (add-hook 'ibuffer-mode-hook 'ibuffer-do-sort-by-filename/process)
 #+end_src
 ** winner
