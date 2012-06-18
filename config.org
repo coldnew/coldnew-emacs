@@ -1605,41 +1605,36 @@ some packages conflict with org-mode
 #+begin_src emacs-lisp
   (defun coldnew/org-up-parent ()
     "Move to the parent of current point. If current is the parent heading,
-  move to the previous parent heading."
+          move to the previous parent heading."
     (interactive)
-    (let* ((level (funcall outline-level))
-           (point-to-move-to
-            (and (save-excursion
-                   (outline-previous-visible-heading 1)
-                   (if (<= (funcall outline-level) level)
-                       nil
-                     t))
-                 (save-excursion
-                   (outline-backward-same-level 1)
-                   (if (= (funcall outline-level) level)
-                       nil
-                     t)))))
-      (if point-to-move-to
-          (outline-back-to-heading)
-        (org-up-heading-safe)
-        )))
+    (if (not (org-on-heading-p))
+        (outline-back-to-heading)
+      (let* ((level (funcall outline-level))
+             (point-to-move-to
+              (save-excursion
+                (outline-previous-visible-heading 1)
+                (while (>= (funcall outline-level) level)
+                  (outline-previous-visible-heading 1))
+                (point))))
+        (if point-to-move-to
+            (goto-char point-to-move-to)))))
 
   (defun coldnew/org-down-children ()
-        "Move to children of current heading. If current heading only has subtree,
-  expand the subtree."
-        (interactive)
-        (outline-back-to-heading)
-        (show-children)
-        (let* ((level (funcall outline-level))
+    "Move to children of current heading. If current heading only has subtree,
+          expand the subtree."
+    (interactive)
+    (outline-back-to-heading)
+    (show-children)
+    (let* ((level (funcall outline-level))
            (point-to-move-to
             (save-excursion
               (outline-next-visible-heading 1)
               (if (= (funcall outline-level) level)
                   nil
-                (point)))))
-      (if point-to-move-to
-          (goto-char point-to-move-to)
-        (show-subtree))))
+                        (point)))))
+              (if point-to-move-to
+                  (goto-char point-to-move-to)
+                (show-subtree))))
 
 #+end_src
 *** COMMENT remember the milk ?
