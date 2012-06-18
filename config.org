@@ -2139,11 +2139,16 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 #+end_src
 *
 ** undo-tree
+*** Depends
 #+begin_src emacs-lisp
   (require 'undo-tree)
-  ;; Enable undo-tree globally
+#+end_src
+*** Enable undo-tree globally
+#+begin_src emacs-lisp
   (global-undo-tree-mode)
-  ;; keybinding
+#+end_src
+*** Keybinding
+#+begin_src emacs-lisp
   (define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)
 #+end_src
 ** hungry-delete
@@ -4667,6 +4672,17 @@ ssda
   (global-set-key (kbd "<delete>") 'hungry-delete-forward)
   (global-set-key (kbd "C-.") 'repeat)
   (global-set-key (kbd "%") 'match-paren)
+
+#+end_src
+全域性設定 (）、 ""、 []、 {}具有自動補全功能
+#+begin_src emacs-lisp
+  (global-set-key (kbd "(") 'paredit-open-parenthesis)
+  (global-set-key (kbd ")") 'paredit-close-parenthesis)
+  (global-set-key (kbd "[") 'paredit-open-square)
+  (global-set-key (kbd "]") 'paredit-close-square)
+  (global-set-key (kbd "{") 'paredit-open-curly)
+  (global-set-key (kbd "}") 'paredit-close-curly)
+  (global-set-key (kbd "\"") 'paredit-doublequote)
 #+end_src
 
 * Register                                                         :register:
