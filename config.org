@@ -1593,12 +1593,15 @@ some packages conflict with org-mode
   (add-hook 'org-shiftright-final-hook 'windmove-right)
 #+end_src
 *** Commands
+**** org-archive-done-tasks
+將標記為 *DONE* 的結點收錄到 archive 裡。
 #+begin_src emacs-lisp
   (defun org-archive-done-tasks ()
     "Make all DONE subtree to archive."
     (interactive)
     (org-map-entries 'org-archive-subtree "/DONE" 'file))
 #+end_src
+**** TODO Other
 #+begin_src emacs-lisp
   (defun coldnew/org-up-parent ()
     "Move to the parent of current point. If current is the parent heading,
