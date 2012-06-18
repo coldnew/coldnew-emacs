@@ -512,11 +512,14 @@ emacs 套件管理的設定。
 
 * Macros                                                             :macro:
 ** Clojure
+*** comment
 #+begin_src emacs-lisp
   (defmacro comment (&rest body)
     "Comment out one or more s-expressions."
     nil)
-
+#+end_src
+*** ->
+#+begin_src emacs-lisp
   (defmacro -> (x &optional form &rest more)
     (cond ((not (null more))
            `(-> (-> ,x ,form) ,@more))
@@ -525,13 +528,17 @@ emacs 套件管理的設定。
                `(,(first form) ,x ,@(rest form))
              (list form x)))
           (t x)))
-
+#+end_src
+*** ->>
+#+begin_src emacs-lisp
   (defmacro ->> (x form &rest more)
     (cond ((not (null more)) `(->> (->> ,x ,form) ,@more))
           (t (if (sequencep form)
                  `(,(first form) ,@(rest form) ,x)
                (list form x)))))
-
+#+end_src
+*** -?>
+#+begin_src emacs-lisp
   (defmacro -?> (x form &rest more)
     (cond ((not (null more)) `(-?> (-?> ,x ,form) ,@more))
           (t (if (sequencep form)
@@ -539,7 +546,9 @@ emacs 套件管理的設定。
                     (,(first form) ,x ,@(rest form)))
                `(if (null ,x) nil
                   ,(list form x))))))
-
+#+end_src
+*** -?>>
+#+begin_src emacs-lisp
   (defmacro -?>> (x form &rest more)
     (cond ((not (null more)) `(-?>> (-?>> ,x ,form) ,@more))
           (t (if (sequencep form)
@@ -547,7 +556,9 @@ emacs 套件管理的設定。
                     (,(first form) ,@(rest form) ,x))
                `(if (null ,x) nil
                   ,(list form x))))))
-
+#+end_src
+*** if-not
+#+begin_src emacs-lisp
   (defmacro if-not (test then &optional else)
     "Evaluates test. If logical false, evaluates and returns then expr,
     otherwise else expr, if supplied, else nil."
