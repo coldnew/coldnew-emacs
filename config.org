@@ -3447,9 +3447,12 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 #+end_src
 *** Keybinding
 #+begin_src emacs-lisp
+(add-hook 'shell-mode-hook
+'(lambda ()
   (define-key sh-mode-map (kbd "}") 'self-insert-command)
   (define-key sh-mode-map (kbd "]") 'self-insert-command)
   (define-key sh-mode-map (kbd ")") 'self-insert-command)
+  ))
 #+end_src
 * Mode Line
 powerline is really funny
@@ -4188,6 +4191,13 @@ tramp config
         (erc-send-command nickserv-command))))
 #+end_src
 **** Function
+#+begin_src emacs-lisp
+(defun avoid-erc-oops (txt)
+  (when (member txt '("ls" "xb" "cd"))
+      (setq erc-send-this nil)))
+
+(add-to-list 'erc-send-pre-hook avoid-erc-oops)
+#+end_src
 *** COMMENT rcirc
 :PROPERTIES:
 :tangle: no
