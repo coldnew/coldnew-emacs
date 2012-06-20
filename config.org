@@ -1391,10 +1391,16 @@ auto-complete-mode 的按鍵設定。
           ))))
 #+end_src
 ** helm-mode
+*** Depends
 #+begin_src emacs-lisp
   (require* 'helm)
   (require 'helm-config)
-
+  (require 'helm-projectile)
+  (require 'helm-etags+)
+  (require 'ctags-update)
+#+end_src
+*** TODO Config this
+#+begin_src emacs-lisp
   ;; Use predefined configurations for `helm.el'
   (setq helm-config t)
 
@@ -1404,11 +1410,17 @@ auto-complete-mode 的按鍵設定。
   ;; Enable dired binding
   (helm-dired-bindings 1)
 
-  (require 'helm-projectile)
-
-  (require 'helm-etags+)
-  (require 'ctags-update)
   (ctags-update-minor-mode 1)
+#+end_src
+*** Function
+#+begin_src emacs-lisp
+  (defun helm-c-occur-get-line (s e)
+    "rewrite `helm-c-occur-get-line' to make it color on line-number."
+    (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
+            (format ": %s" (buffer-substring s e))))
+#+end_src
+*** Commands
+#+begin_src emacs-lisp
   (defun coldnew/helm-filelist ()
     "Preconfigured `anything' to open files/buffers/bookmarks instantly.
    This is a replacement for `anything-for-files'.
@@ -1426,8 +1438,6 @@ auto-complete-mode 的按鍵設定。
        helm-c-source-files-in-current-dir
        helm-c-source-locate)
      "*coldnew/filelist*"))
-
-
   (defun coldnew/helm-occur ()
     "I don't like highlight when goto lines."
     (interactive)
@@ -1435,11 +1445,8 @@ auto-complete-mode 的按鍵設定。
     (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
     (helm-occur))
 
-  (defun helm-c-occur-get-line (s e)
-    "rewrite `helm-c-occur-get-line' to make it color on line-number."
-    (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
-            (format ": %s" (buffer-substring s e))))
 #+end_src
+
 ** lusty-explorer
 *** Depends
 #+begin_src emacs-lisp
@@ -3010,6 +3017,55 @@ C-x r l
   (require* 'bm)
 #+end_src
 * Cscope
+** cscope 說明
+:PROPERTIES:
+:tangle:   no
+:END:
+
+*** 安裝 cscope
+**** Debian / Ubuntu
+#+begin_src sh
+  sudo apt-get install cscope
+#+end_src
+**** Gentoo
+#+begin_src sh
+  sudo emerge cscope
+#+end_src
+*** 使用 xcscope
+emacs 和 cscope相關的套件蠻多的，xcscope 包含在 cscope 的套件裡。
+將 xcscope.el 加入你的　 load-path 並載入他。
+#+begin_src emacs-lisp
+  (require 'xcscope)
+#+end_src
+*** 預設按鍵
+所有的預設按鍵都是以 Ctrl-c s 作為 prefix
+
+| 快捷鍵  | elisp function | 用途                                     |
+|---------+----------------+------------------------------------------|
+| C-c s s |                | Find symbol                              |
+| C-c s d |                | Find global definition                   |
+| C-c s g |                | Find global definition                   |
+| C-c s G |                | Find global definition without prompting |
+| C-c s c |                | Find finctions calling a function        |
+| C-c s C |                | Find caled functions                     |
+|         |                | (list functions called from a function)  |
+| C-c s t |                | Find text string                         |
+| C-c s e |                | Find egrep pattern                       |
+| C-c s f |                | Find a file                              |
+| C-c s i |                | Find files #including a file             |
+
+*** 搜索時切換用的快捷鍵
+| 快捷鍵  | elisp function | 用途                                  |
+|---------+----------------+---------------------------------------|
+| C-c s b |                | Display **cscope** buffer             |
+| C-c s B |                | Auto display **cscope** buffer toggle |
+| C-c s n |                | Next symbol                           |
+| C-c s N |                | Next file                             |
+| C-c s p |                | Previous symbol                       |
+| C-c s P |                | Previous file                         |
+| C-c s u |                | Pop mark                              |
+
+** 載入和 cscope 相關的 package
 #+begin_src emacs-lisp
   (require* 'xcscope)
   (require* 'xcscope+)
@@ -3372,11 +3428,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 
 
   ;;;; ---------------------------------------------------------------------------
-  ;;;; Keybindings
-  ;;;; ---------------------------------------------------------------------------
-
-
-  ;;;; ---------------------------------------------------------------------------
   ;;;; Auto Complete
   ;;;; ---------------------------------------------------------------------------
 
@@ -3395,19 +3446,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
             ac-source-files-in-current-dir
             ac-source-words-in-same-mode-buffers
             )))
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Flymake
-  ;;;; ---------------------------------------------------------------------------
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Functions
-  ;;;; ---------------------------------------------------------------------------
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Commands
-  ;;;; ---------------------------------------------------------------------------
 #+end_src
 * Mode Line
 powerline is really funny
