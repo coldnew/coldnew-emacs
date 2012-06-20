@@ -3040,30 +3040,30 @@ emacs 和 cscope相關的套件蠻多的，xcscope 包含在 cscope 的套件裡
 *** 預設按鍵
 所有的預設按鍵都是以 Ctrl-c s 作為 prefix
 
-| 快捷鍵  | elisp function | 用途                                     |
-|---------+----------------+------------------------------------------|
-| C-c s s |                | Find symbol                              |
-| C-c s d |                | Find global definition                   |
-| C-c s g |                | Find global definition                   |
-| C-c s G |                | Find global definition without prompting |
-| C-c s c |                | Find finctions calling a function        |
-| C-c s C |                | Find caled functions                     |
-|         |                | (list functions called from a function)  |
-| C-c s t |                | Find text string                         |
-| C-c s e |                | Find egrep pattern                       |
-| C-c s f |                | Find a file                              |
-| C-c s i |                | Find files #including a file             |
+| 快捷鍵  | elisp function                              | 用途                                     |
+|---------+---------------------------------------------+------------------------------------------|
+| C-c s s | cscope-find-this-symbol                     | Find symbol                              |
+| C-c s d | cscope-find-global-definition               | Find global definition                   |
+| C-c s g | cscope-find-global-definition               | Find global definition                   |
+| C-c s G | cscope-find-global-definition-no-prompting  | Find global definition without prompting |
+| C-c s c | cscope-find-functions-calling-this-function | Find finctions calling a function        |
+| C-c s C | cscope-find-called-functions                | Find caled functions                     |
+|         |                                             | (list functions called from a function)  |
+| C-c s t | cscope-find-this-text-string                | Find text string                         |
+| C-c s e | cscope-find-egrep-pattern                   | Find egrep pattern                       |
+| C-c s f | cscope-find-this-file                       | Find a file                              |
+| C-c s i | cscope-find-files-including-file            | Find files #including a file             |
 
 *** 搜索時切換用的快捷鍵
-| 快捷鍵  | elisp function | 用途                                  |
-|---------+----------------+---------------------------------------|
-| C-c s b |                | Display **cscope** buffer             |
-| C-c s B |                | Auto display **cscope** buffer toggle |
-| C-c s n |                | Next symbol                           |
-| C-c s N |                | Next file                             |
-| C-c s p |                | Previous symbol                       |
-| C-c s P |                | Previous file                         |
-| C-c s u |                | Pop mark                              |
+| 快捷鍵  | elisp function               | 用途                                  |
+|---------+------------------------------+---------------------------------------|
+| C-c s b | cscope-display-buffer        | Display **cscope** buffer             |
+| C-c s B | cosope-display-buffer-toggle | Auto display **cscope** buffer toggle |
+| C-c s n | cscope-next-symbol           | Next symbol                           |
+| C-c s N | cscope-next-file             | Next file                             |
+| C-c s p | cscope-prev-symbol           | Previous symbol                       |
+| C-c s P | cscope-prev-file             | Previous file                         |
+| C-c s u | cscope-pop-mark              | Pop mark                              |
 
 ** 載入和 cscope 相關的 package
 #+begin_src emacs-lisp
