@@ -3006,9 +3006,22 @@ This section contains my editor state
       ))
 #+end_src
 * Bookmark
-C-x r m
-C-x r b
-C-x r l
+** Bookmark 說明
+:PROPERTIES:
+:tangle:   no
+:END:
+
+*** 預設按鍵
+| 快捷鍵  | 命令                | 用途                                       |
+|---------+---------------------+--------------------------------------------|
+| C-x r m | bookmark-set        | 設置新的書籤                               |
+| C-x r l | bookmark-bmenu-list | 列出所有已設置的書籤                       |
+| C-x r b | bookmarj-jump       | 跳轉到書籤                                 |
+|         | bookmark-delete     | 刪除書籤                                   |
+|         | bookmark-load       | 讀取已儲存的書籤檔案                       |
+|         | bookmark-save       | 儲存書籤至 bookmark-default-file指定的地方 |
+
+** Config
 #+begin_src emacs-lisp
   (setq bookmark-default-file emacs-bookmark-file)
 #+end_src
