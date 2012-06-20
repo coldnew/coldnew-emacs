@@ -623,7 +623,10 @@ parenface 可以將所有的圓括號上色。
   (require 'parenface)
   (set-face-foreground 'paren-face "green")
 #+end_src
+#+begin_src emacs-lisp
+  (require* 'google-translate)
 
+#+end_src
 ** Build-in
 #+begin_src emacs-lisp
   (require 'misc)
@@ -2345,6 +2348,15 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 #+end_src
 * Editor
 try to define my editor-mode , some function  or macros copy from evil :)
+** electric-pair-mode
+#+begin_src emacs-lisp
+  (electric-pair-mode 1)
+  ;; setting for auto-close brackets for electric-pair-mode regardless of current major mode syntax table
+  (setq electric-pair-pairs '(
+                              (?\" . ?\")
+                              (?\{ . ?\})
+                              ) )
+#+end_src
 ** Mode
 #+begin_src emacs-lisp :tangle no
     (define-minor-mode coldnew-editor-local-mode
@@ -3460,12 +3472,12 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 #+end_src
 *** Keybinding
 #+begin_src emacs-lisp
-(add-hook 'shell-mode-hook
-'(lambda ()
-  (define-key sh-mode-map (kbd "}") 'self-insert-command)
-  (define-key sh-mode-map (kbd "]") 'self-insert-command)
-  (define-key sh-mode-map (kbd ")") 'self-insert-command)
-  ))
+  (add-hook 'sh-mode-hook
+            '(lambda ()
+               (local-set-key (kbd "}") 'self-insert-command)
+               (local-set-key (kbd "]") 'self-insert-command)
+               (local-set-key (kbd ")") 'self-insert-command)
+               ))
 #+end_src
 * Mode Line
 powerline is really funny
@@ -4209,7 +4221,7 @@ tramp config
   (when (member txt '("ls" "xb" "cd"))
       (setq erc-send-this nil)))
 
-(add-to-list 'erc-send-pre-hook avoid-erc-oops)
+(add-to-list 'erc-send-pre-hook 'avoid-erc-oops)
 #+end_src
 *** COMMENT rcirc
 :PROPERTIES:
@@ -4783,13 +4795,13 @@ ssda
 #+end_src
 全域性設定 (）、 ""、 []、 {}具有自動補全功能
 #+begin_src emacs-lisp
-  (global-set-key (kbd "(") 'paredit-open-parenthesis)
-  (global-set-key (kbd ")") 'paredit-close-parenthesis)
-  (global-set-key (kbd "[") 'paredit-open-square)
-  (global-set-key (kbd "]") 'paredit-close-square)
-  (global-set-key (kbd "{") 'paredit-open-curly)
-  (global-set-key (kbd "}") 'paredit-close-curly)
-  (global-set-key (kbd "\"") 'paredit-doublequote)
+  ;; (global-set-key (kbd "(") 'paredit-open-parenthesis)
+  ;; (global-set-key (kbd ")") 'paredit-close-parenthesis)
+  ;; (global-set-key (kbd "[") 'paredit-open-square)
+  ;; (global-set-key (kbd "]") 'paredit-close-square)
+  ;; (global-set-key (kbd "{") 'paredit-open-curly)
+  ;; (global-set-key (kbd "}") 'paredit-close-curly)
+  ;; (global-set-key (kbd "\"") 'paredit-doublequote)
 #+end_src
 
 * Register                                                         :register:
@@ -4869,6 +4881,215 @@ http://jixiuf.github.com/tags/@Emacs.html
               (concat "&hl=" language))
             ;; add for encoding
             (concat "&oe=" "utf8")))
+#+end_src
+
+* Local-lisp
+這邊放置我自己撰寫的 elisp package。
+** mixen
+:PROPERTIES:
+:comments: org
+# :tangle:   ~/.emacs.d/local-lisp/mixen/mixen.el
+:tangle:   no
+:cache: yes
+:padline: no
+:END:
+*** TODO make a new name
+提供兩種模式，一種是純粹增加空白在英文與中文的中間，但是不修改檔案
+一種是儲存時自動在英文與中文中間加入空白。
+*** Header
+#+begin_src emacs-lisp
+  ;;; mixen.el --- Add space between Chinese and English
+
+  ;; Copyright (C) 2012 coldnew.
+
+  ;; This file is free software: you can redistribute it and/or modify
+  ;; it under the terms of the GNU General Public License as published by
+  ;; the Free Software Foundation, either version 3 of the License, or
+  ;; (at your option) any later version.
+
+  ;; This file is distributed in the hope that it will be useful,
+  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ;; GNU General Public License for more details.
+
+  ;; You should have received a copy of the GNU General Public License
+  ;; along with GNU Emacs.  If not, see <http://www.gnu.org/licenses/>.
+
+  ;;; Code:
+#+end_src
+*** Custom Variables
+#+begin_src emacs-lisp
+(defcustom mixen-separator " "
+"String to be display between Chinese and English."
+:group 'mixen
+:type 'string
+:initialize 'custom-initialize-default)
+#+end_src
+*** Faces
+*** Local Variables
+**** mixen-timer
+#+begin_src emacs-lisp
+(defvar mixen-timer nil)
+#+end_src
+**** ch
+#+begin_src emacs-lisp
+  (defvar mixen-chinese-before-english-regexp
+    (rx  (group (not (in "[。，！？；：「」（）、]"))
+                (category chinese))
+         (group (in "a-zA-Z0-9")))
+    "Regexp to find weather chinese is before english ro not.")
+#+end_src
+
+#+RESULTS[4c41d511b0fefb661e56aa230ce068ae1518afc1]:
+: mixen-chinese-before-english-regexp
+
+**** TODO bug>? en
+#+begin_src emacs-lisp
+  (defvar mixen-chinese-after-english-regexp
+    (rx  (group (in "a-zA-Z0-9"))
+         (group (not (in "[。，！？；：「」（）、]"))
+                (category chinese)))
+    "Regexp to find weather chinese is after english ro not.")
+#+end_src
+
+#+RESULTS[98c4f0f0e310b3cbbc8a2c3a0c832f4418cd0243]:
+: mixen-chinese-after-english-regexp
+
+*** Functions
+**** mixen-overlay-p
+#+begin_src emacs-lisp
+  (defun mixen-overlay-p (ov)
+    "Determine whether overlay OV was created by space-between."
+    (and (overlayp ov) (overlay-get ov 'mixen-overlay)))
+#+end_src
+
+#+RESULTS[0ab4fce68e6e99510dc51aa2e0962992cb095fbd]:
+: mixen-overlay-p
+
+**** mixen-start-timer
+#+begin_src emacs-lisp
+  (defun mixen-start-timer ()
+    (setq mixen-timer (run-with-timer 1 5 'mixen-heck-buffer)))
+#+end_src
+
+#+RESULTS[460058f8db234706fd4ddf6515d45e634d455a5a]:
+: mixen-start-timer
+
+**** mixen-kill-timer
+#+begin_src emacs-lisp
+  (defun mixen-kill-timer ()
+    (cancel-timer mixen-timer))
+#+end_src
+**** mixen-check-buffer
+#+begin_src emacs-lisp
+  (defun mixen-check-buffer ()
+    "Insert a space between English words and Chinese charactors"
+    (interactive)
+    (mixen-delete-overlays)
+    (save-excursion
+      ;; (goto-char (point-min))
+      ;; (while (re-search-forward mixen-chinese-before-english-regexp nil t)
+       ;;  (let* ((o (mixen-make-overlay (match-beginning 1) (match-end 1))))
+        ;;   (overlay-put o 'after-string (concat " "))))
+
+      (goto-char (point-min))
+      (while (re-search-forward mixen-chinese-after-english-regexp nil t)
+        (let* ((o (mixen-make-overlay (match-beginning 1) (match-end 1))))
+          (overlay-put o 'after-string (concat "*"))))
+    ))
+#+end_src
+
+你 sn 你
+**** mixen-region-has-mixen-overlays
+#+begin_src emacs-lisp
+  (defun mixen-region-has-mixen-overlays (beg end)
+    "Check if region specified by BEG and END has overlay.
+    Return t if it has at least one mixen overlay, nil if no overlay."
+    (let ((ov (overlays-in beg end))
+          (has-mixen-overlays nil))
+      (while (consp ov)
+        (when (mixen-overlay-p (car ov))
+          (setq has-mixen-overlays t))
+        (setq ov (cdr ov))
+        has-mixen-overlays)))
+#+end_src
+
+#+RESULTS[6835878c6c755159365fa3e506a2696ee1f76cc3]:
+: mixen-region-has-mixen-overlays
+
+**** mixen-make-overlay
+#+begin_src emacs-lisp
+  (defun mixen-make-overlay (beg end)
+    "Allocate a mixen overlay in range."
+    (when (not (mixen-region-has-mixen-overlays beg end))
+      (let ((ov (make-overlay beg end nil t t)))
+        (overlay-put ov 'mixen-overlay t)
+        (overlay-put ov 'priority 100)
+        ov)))
+#+end_src
+
+#+RESULTS[d2026b8ada718fbd22bfef11c3770b577e8363b0]:
+: mixen-make-overlay
+
+*** Commands
+**** mixen-delete-overlays
+#+begin_src emacs-lisp
+  (defun mixen-delete-overlays ()
+    "Delete all mixen-overlays in BUFFER."
+    (interactive)
+    (dolist (ov (overlays-in (point-min) (point-max)))
+      (when (mixen-overlay-p ov)
+        (delete-overlay ov))))
+#+end_src
+
+#+RESULTS[19dabdfdec9df934f739b9bd5673e86adbf20a23]:
+: mixen-delete-overlays
+
+**** mixen-check-buffer
+#+begin_src emacs-lisp :tangle no
+  (defun insert-space-between-english-chinese ()
+    "Insert a space between English words and Chinese charactors"
+    (save-excursion
+      (goto-char (point-min))
+      (while (or (re-search-forward "\\(\\cc\\)\\([a-zA-Z0-9]\\)" nil t)
+                 (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
+        (replace-match "\\1 \\2" nil nil))
+      (goto-char (point-min))
+      (while (or (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
+                 (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
+        (replace-match "\\1\\2" nil nil))))
+#+end_src
+#+begin_src emacs-lisp
+  (defun mixen-check-buffer ()
+    (interactive)
+    (mixen-delete-overlays)
+    (save-excursion
+))
+#+end_src
+*** Hooks
+
+*** Minor-mode
+#+begin_src emacs-lisp
+  ;;;###autoload
+  (define-minor-mode mixen-mode
+    "Toggle mixen-mode"
+    :group 'mixen
+    :global t
+    :init-value nil
+    :lighter mixen
+    (if mixen-mode
+        (progn
+          (mixen-start-timer))
+      (progn
+        (mixen-kill-timer)
+        (mixen-delete-overlays)))
+    mixen-mode)
+
+#+end_src
+*** End of File
+#+begin_src emacs-lisp
+  (provide 'mixen)
+  ;;; mixen.el ends here
 #+end_src
 
 * Local File Variable
