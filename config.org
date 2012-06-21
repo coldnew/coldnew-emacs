@@ -4999,7 +4999,7 @@ http://jixiuf.github.com/tags/@Emacs.html
     ))
 #+end_src
 
-你 sn 你
+你sn你
 **** mixen-region-has-mixen-overlays
 #+begin_src emacs-lisp
   (defun mixen-region-has-mixen-overlays (beg end)
