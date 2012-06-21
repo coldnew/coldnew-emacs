@@ -11,13 +11,11 @@
   (eval-when-compile (require 'cl))
 #+end_src
 ** User-interface
-*** Startup Message
-不啟用 startup message (啟動 emacs 時出現的 GNU/Emacs 畫面)
+*** 不啟用 startup message (啟動 emacs 時出現的 GNU/Emacs 畫面)
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t)
 #+end_src
-*** Scratch Message
-清空 \*scratch\* buffer 的文字。
+*** 清空 **scratch** buffer 的文字。
 #+begin_src emacs-lisp
   (setq initial-scratch-message "")
 #+end_src
@@ -26,8 +24,7 @@ Use visible bell instead of ring-bell.
 #+begin_src emacs-lisp
   (setq visible-bell t)
 #+end_src
-*** Tool bar
-關閉工具列。
+*** 關閉工具列。
 #+begin_src emacs-lisp
   (if (featurep 'tool-bar) (tool-bar-mode -1))
 #+end_src
@@ -40,8 +37,7 @@ Disable scrollbar
 #+begin_src emacs-lisp
   (blink-cursor-mode -1)
 #+end_src
-*** Menu-Bar
-關閉選單列。
+*** 關閉選單列。
 #+begin_src emacs-lisp
   (if (featurep 'menu-bar) (menu-bar-mode -1))
 #+end_src
@@ -4999,7 +4995,7 @@ http://jixiuf.github.com/tags/@Emacs.html
     ))
 #+end_src
 
-你sn你
+你 sn 你
 **** mixen-region-has-mixen-overlays
 #+begin_src emacs-lisp
   (defun mixen-region-has-mixen-overlays (beg end)
