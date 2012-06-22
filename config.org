@@ -2,6 +2,7 @@
 #+AUTHOR: coldnew
 #+email: coldnew.tw at gmail.com
 #+STARTUP: overview indent align
+#+PROPERTY: noweb tangle
 #+TAGS: macro
 * Basic Setup
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此
@@ -3192,15 +3193,25 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                (define-key emacs-lisp-mode-map (kbd "M-i r") '(lambda () (interactive) (insert "require") (yas/expand)))
                ))
 #+end_src
+
 #+begin_src emacs-lisp
+  <<emacs-lisp-mode-hook-begin>>
 
-  (add-hook 'emacs-lisp-mode-hook
-            '(lambda ()
-               (define-key emacs-lisp-mode-map (kbd "C-c C-b") 'backward-sexp)
-               ))
+  (define-key emacs-lisp-mode-map (kbd "C-c C-b") 'backward-sexp)
 
+  <<emacs-lisp-mode-hook-end>>
 #+end_src
 
+#+name: emacs-lisp-mode-hook-begin
+#+begin_src emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook
+            '(lambda ()
+#+end_src
+
+#+name: emacs-lisp-mode-hook-end
+#+begin_src emacs-lisp
+))
+#+end_src
 ** c
 dummy
 *** Auto Mode Alist
@@ -4884,6 +4895,7 @@ http://jixiuf.github.com/tags/@Emacs.html
             (concat "&oe=" "utf8")))
 #+end_src
 
+
 * Local-lisp
 這邊放置我自己撰寫的 elisp package。
 ** mixen
@@ -4931,6 +4943,10 @@ http://jixiuf.github.com/tags/@Emacs.html
 **** mixen-timer
 #+begin_src emacs-lisp
 (defvar mixen-timer nil)
+#+end_src
+**** mixen-regexp
+#+begin_src emacs-lisp
+(defvar mixen-regexp (rx (and (group (not)))))
 #+end_src
 **** ch
 #+begin_src emacs-lisp
