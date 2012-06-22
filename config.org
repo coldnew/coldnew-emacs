@@ -379,48 +379,39 @@ emacs 個人配置的檔案，也就是這個檔案。
 #+end_src
 * Locale
 emacs 編碼設定，大部份都設定成 utf-8。
-** System
-系統編碼。
+** 系統編碼。
 #+begin_src emacs-lisp
   (prefer-coding-system 'utf-8 )
 #+end_src
-** Language
-語言環境。
+** 語言環境。
 #+begin_src emacs-lisp
   (set-language-environment 'utf-8 )
 #+end_src
-** Buffer
-文件保存時的編碼設置
+** 文件保存時的編碼設置
 #+begin_src emacs-lisp
   (set-buffer-file-coding-system 'utf-8 )
 #+end_src
-** Kyeboard
-鍵盤編碼設定
+** 鍵盤編碼設定
 #+begin_src emacs-lisp
   (set-keyboard-coding-system    'utf-8 )
 #+end_src
-** Terminal
-設定終端機的編碼
+** 設定終端機的編碼
 #+begin_src emacs-lisp
   (set-terminal-coding-system    'utf-8 )
 #+end_src
-** Selection
-選擇區域內編碼
+** 選擇區域內編碼
 #+begin_src emacs-lisp
   (set-selection-coding-system   'utf-8 )
 #+end_src
-** Clipboard
-剪貼簿編碼設定
+** 剪貼簿編碼設定
 #+begin_src emacs-lisp
   (set-clipboard-coding-system   'utf-8 )
 #+end_src
-** File Name
-使用 utf-8 編碼顯示文件名
+** 使用 utf-8 編碼顯示文件名
 #+begin_src emacs-lisp
   (set-file-name-coding-system   'utf-8 )
 #+end_src
-** System Time
-設定時間顯示使用英文
+** 設定時間顯示使用英文
 #+begin_src emacs-lisp
   (setq system-time-locale "en_US" )
 #+end_src
@@ -641,7 +632,7 @@ advice file
 * Function                                                         :function:
 我所自定義或是我的 emacs config 需要用到的 function。
 ** List Processing
-處理　 List 所用的 function。
+處理 List 所用的 function。
 *** flatten a list
 flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 list。
 舉例來說，假如目前有這樣一個 list:
@@ -3671,6 +3662,20 @@ All command file
     (interactive)
     (set-buffer-modified-p t)
     (save-buffer))
+#+end_src
+*** revert-all-buffer
+#+begin_src emacs-lisp
+(defun revert-all-buffers ()
+  "Revert all non-modified buffers associated with a file.
+This is to update existing buffers after a Git pull of their underlying files."
+  (interactive)
+  (save-current-buffer
+    (mapc (lambda (b)
+            (set-buffer b)
+            (unless (or (null (buffer-file-name)) (buffer-modified-p))
+              (revert-buffer t t)
+              (message "Reverted %s\n" (buffer-file-name))))
+          (buffer-list))))
 #+end_src
 ** Other
 #+begin_src emacs-lisp
