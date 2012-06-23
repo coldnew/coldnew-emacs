@@ -4,6 +4,9 @@
 #+STARTUP: overview indent align
 #+PROPERTY: noweb tangle
 #+TAGS: macro
+
+* Introduction
+這是我個人的 emacs 配置
 * Basic Setup
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此
 ** Init
