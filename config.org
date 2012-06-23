@@ -82,44 +82,44 @@ Disable scrollbar
 **** emacs-dir
 emacs 設定檔預設所在的資料夾
 #+begin_src emacs-lisp
-  (defvar emacs-dir "~/.emacs.d/"
+  (defconst emacs-dir "~/.emacs.d/"
     "The top-level emacs-configure directory.")
 #+end_src
 
 **** emacs-config-file
 emacs 個人配置的檔案，也就是這個檔案。
 #+begin_src emacs-lisp
-  (defvar emacs-config-file (concat emacs-dir "config.org")
+  (defconst emacs-config-file (concat emacs-dir "config.org")
     "File to place emacs configs.")
 #+end_src
 
 **** 其他，未整理
 #+begin_src emacs-lisp
-  (defvar emacs-themes-dir (concat emacs-dir "themes/")
+  (defconst emacs-themes-dir (concat emacs-dir "themes/")
     "directory to place emacs theme.")
-  (defvar emacs-lisp-dir   (concat emacs-dir "lisp/")
+  (defconst emacs-lisp-dir   (concat emacs-dir "lisp/")
     "directory to place lisp packages from internet.")
-  (defvar emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
+  (defconst emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
     "directory to place ELPA lisp packages from internet.")
-  (defvar emacs-snippets-dir (concat emacs-dir "snippets/")
+  (defconst emacs-snippets-dir (concat emacs-dir "snippets/")
     "directory to place yasnippet files.")
-  (defvar emacs-recipes-dir (concat emacs-dir "recipes/")
+  (defconst emacs-recipes-dir (concat emacs-dir "recipes/")
     "directory to place local el-get recepies.")
 
-  (defvar emacs-custom-file (concat emacs-dir "custom.el")
+  (defconst emacs-custom-file (concat emacs-dir "custom.el")
     "store customize UI config.")
 
-  (defvar emacs-bin-dir    (concat emacs-dir "bin/")
+  (defconst emacs-bin-dir    (concat emacs-dir "bin/")
     "directory to place binary staff.")
-  (defvar emacs-cache-dir  (concat emacs-dir "cache/")
+  (defconst emacs-cache-dir  (concat emacs-dir "cache/")
     "cache file directory.")
-  (defvar emacs-backup-dir (concat emacs-dir "backup/")
+  (defconst emacs-backup-dir (concat emacs-dir "backup/")
     "directory to backup files.")
-  (defvar emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")
+  (defconst emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")
     "file that save secret")
-  (defvar emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
+  (defconst emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
     "File to save bookmarks")
-                                      ;; (defvar emacs-log-dir (concat emacs-var-dir "log/")
+                                      ;; (defconst emacs-log-dir (concat emacs-var-dir "log/")
   ;;   "log file directory."
 #+end_src
 
@@ -611,10 +611,8 @@ parenface 可以將所有的圓括號上色。
   (require 'parenface)
   (set-face-foreground 'paren-face "green")
 #+end_src
-#+begin_src emacs-lisp
-  (require* 'google-translate)
 
-#+end_src
+
 ** Build-in
 #+begin_src emacs-lisp
   (require 'misc)
@@ -2869,7 +2867,7 @@ This section contains my editor state
     ;; highlight escape char in string
     (add-hook 'coldnew-editor-hook 'highlight-escape-char)
   ;;   ;; Add spaces between Chinese and English character.
-    (add-hook 'before-save-hook 'insert-space-between-english-chinese)
+   ;; (add-hook 'before-save-hook 'insert-space-between-english-chinese)
 #+end_src
 
 ** TODO conflict
@@ -3688,6 +3686,15 @@ This is to update existing buffers after a Git pull of their underlying files."
               (message "Reverted %s\n" (buffer-file-name))))
           (buffer-list))))
 #+end_src
+*** nuke-all-buffers
+關閉除了 **scratch** 以外的所有 buffer。
+#+begin_src emacs-lisp
+  (defun nuke-all-buffers ()
+    "Kill all buffers, leaving *scratch* only."
+    (interactive)
+    (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
+    (delete-other-windows))
+#+end_src
 ** Other
 #+begin_src emacs-lisp
   (defun window-horizontal-to-vertical ()
@@ -3982,6 +3989,7 @@ This is to update existing buffers after a Git pull of their underlying files."
         (find-file (concat "/sudo:root@localhost:" (read-file-name "File: ")))
       (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
+
   ;;;; ---------------------------------------------------------------------------
   ;;;; Buffer
   ;;;; ---------------------------------------------------------------------------
@@ -4015,11 +4023,6 @@ This is to update existing buffers after a Git pull of their underlying files."
       (insert tinyurl)))
 
   ;;;; ---------------------------------------------------------------------------
-  ;;;; Date
-  ;;;; ---------------------------------------------------------------------------
-
-
-  ;;;; ---------------------------------------------------------------------------
   ;;;; Search
   ;;;; ---------------------------------------------------------------------------
   (defun multi-occur-in-this-mode ()
@@ -4029,21 +4032,6 @@ This is to update existing buffers after a Git pull of their underlying files."
      (get-buffers-matching-mode major-mode)
      (car (occur-read-primary-args)))
     (select-window (get-buffer-window "*Occur*")))
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Delete
-  ;;;; ---------------------------------------------------------------------------
-  (defun delete-word (arg)
-    "Delete characters forward until encountering the end of a word.
-  With argument, do this that many times."
-    (interactive "p")
-    (delete-region (point) (progn (forward-word arg) (point))))
-
-  (defun backward-delete-word (arg)
-    "Delete characters backward until encountering the end of a word.
-  With argument, do this that many times."
-    (interactive "p")
-    (delete-word (- arg)))
 
   ;;;; ---------------------------------------------------------------------------
   ;;;; key-macro
@@ -4103,7 +4091,20 @@ This is to update existing buffers after a Git pull of their underlying files."
     "Insert current-date."
     (interactive)
     (insert (current-date-time)))
+#+end_src
+** Delete
+#+begin_src emacs-lisp
+  (defun delete-word (arg)
+    "Delete characters forward until encountering the end of a word.
+  With argument, do this that many times."
+    (interactive "p")
+    (delete-region (point) (progn (forward-word arg) (point))))
 
+  (defun backward-delete-word (arg)
+    "Delete characters backward until encountering the end of a word.
+  With argument, do this that many times."
+    (interactive "p")
+    (delete-word (- arg)))
 #+end_src
 ** Convert
 *** unix2dos
@@ -4119,6 +4120,29 @@ This is to update existing buffers after a Git pull of their underlying files."
     "Convert buffer file from dos file to unix file."
     (interactive)
     (dos->unix (current-buffer)))
+#+end_src
+* Google-translate
+google-translate 套件提供 emacs 透過google的API進行翻譯的動作。
+#+begin_src emacs-lisp
+    (require* 'google-translate)
+
+  (defun google-translate-en-zh ()
+    "Translate English to Tranditional Chinese by google-translate."
+    (interactive)
+    (let ((google-translate-default-source-language "en")
+          (google-translate-default-target-language "zh-TW"))
+      (google-translate-query-translate)))
+
+  (defun google-translate-zh-en ()
+    "Translate Tranditional Chinese to English by google-translate."
+    (interactive)
+    (let ((google-translate-default-source-language "zh-TW")
+          (google-translate-default-target-language "en"))
+      (google-translate-query-translate)))
+#+end_src
+#+begin_src emacs-lisp
+(setq google-translate-default-source-language "zh-TW")
+(setq google-translate-default-target-language "en")
 #+end_src
 * Tramp
 tramp config
@@ -4646,6 +4670,7 @@ cA==
      (kbd "C-x e")
      (kbd "C-x d")
      "\C-x e"
+"\C-x n"
   ;;   "\C-c e"
      )
 
@@ -4698,10 +4723,18 @@ ssda
 ** Ctrl-x Prefix
 
 *** Misc
+| 按鍵          | 命令                | 用途           |
+|---------------+---------------------+----------------|
+| Ctrl-x Ctrl-f | lusty-file-explorer | 查詢並打開檔案 |
+|               |                     |                |
+
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
+#+end_src
+
+#+begin_src emacs-lisp
   (global-set-key (kbd "C-x C-b")  'ibuffer)
-  (global-set-key (kbd "C-x b")    'coldnew/helm-filelist)
+;;  (global-set-key (kbd "C-x b")    'coldnew/helm-filelist)
   (global-set-key (kbd "C-x C-d")  'dired)
   (global-set-key (kbd "C-x C-r")  'sudo-edit)
   (global-set-key (kbd "C-x vv") 'egg-next-action)
@@ -4710,10 +4743,24 @@ ssda
   (global-set-key (kbd "C-x C-l") 'recenter-top-bottom)
   (global-set-key (kbd "C-x C-n") 'auto-complete)
   (global-set-key (kbd "C-x C-s") 'save-buffer-always)
-  (global-set-key (kbd "C-x f") 'fullscreen-window)
+  (global-set-key (kbd "C-x F") 'fullscreen-window)
   (global-set-key (kbd "C-x s") 'shell-command)
-#+end_src
 
+#+end_src
+*** 窗口移動
+| 按鍵     | 命令           | 用途             |
+|----------+----------------+------------------|
+| Ctrl-x n | windmove-down  | 移動到下面的窗口 |
+| Ctrl-x p | windmove-up    | 移動到上面的窗口 |
+| Ctrl-x b | windmove-left  | 移動到左邊的窗口 |
+| Ctrl-x f | windmove-right | 移動到右邊的窗口 |
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x n") 'windmove-down)
+  (global-set-key (kbd "C-x f") 'windmove-right)
+  (global-set-key (kbd "C-x b") 'windmove-left)
+  (global-set-key (kbd "C-x p") 'windmove-up)
+#+end_src
 ** Ctrl-c prefix
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
@@ -4741,6 +4788,10 @@ ssda
 (global-set-key (kbd "M-b") 'backward-word)
 (global-set-key (kbd "M-e") 'forward-sentence)
 (global-set-key (kbd "M-a") 'backward-sentence)
+#+end_src
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-r") 'query-replace-regexp)
 #+end_src
 
 *** Misc
@@ -4895,13 +4946,12 @@ http://jixiuf.github.com/tags/@Emacs.html
             (concat "&oe=" "utf8")))
 #+end_src
 
-
 * Local-lisp
 這邊放置我自己撰寫的 elisp package。
 ** mixen
 :PROPERTIES:
 :comments: org
-# :tangle:   ~/.emacs.d/local-lisp/mixen/mixen.el
+#:tangle:   ~/.emacs.d/local-lisp/mixen/mixen.el
 :tangle:   no
 :cache: yes
 :padline: no
@@ -5108,6 +5158,316 @@ http://jixiuf.github.com/tags/@Emacs.html
   (provide 'mixen)
   ;;; mixen.el ends here
 #+end_src
+
+* REGEXP
+** rx
+rx 為 emacs macro，可以幫助產生 emacs 的正規表達式
+rx is a Lisp macro in `rx.el'.
+
+(rx &rest REGEXPS)
+
+Translate regular expressions REGEXPS in sexp form to a regexp string.
+REGEXPS is a non-empty sequence of forms of the sort listed below.
+
+Note that `rx' is a Lisp macro; when used in a Lisp program being
+compiled, the translation is performed by the compiler.
+See `rx-to-string' for how to do such a translation at run-time.
+
+The following are valid subforms of regular expressions in sexp
+notation.
+
+STRING
+matches string STRING literally.
+
+CHAR
+matches character CHAR literally.
+
+`not-newline', `nonl'
+matches any character except a newline.
+
+`anything'
+matches any character
+
+`(any SET ...)'
+`(in SET ...)'
+`(char SET ...)'
+matches any character in SET ....  SET may be a character or string.
+Ranges of characters can be specified as `A-Z' in strings.
+Ranges may also be specified as conses like `(?A . ?Z)'.
+
+SET may also be the name of a character class: `digit',
+`control', `hex-digit', `blank', `graph', `print', `alnum',
+`alpha', `ascii', `nonascii', `lower', `punct', `space', `upper',
+`word', or one of their synonyms.
+
+`(not (any SET ...))'
+matches any character not in SET ...
+
+`line-start', `bol'
+matches the empty string, but only at the beginning of a line
+in the text being matched
+
+`line-end', `eol'
+is similar to `line-start' but matches only at the end of a line
+
+`string-start', `bos', `bot'
+matches the empty string, but only at the beginning of the
+string being matched against.
+
+`string-end', `eos', `eot'
+matches the empty string, but only at the end of the
+string being matched against.
+
+`buffer-start'
+matches the empty string, but only at the beginning of the
+buffer being matched against.  Actually equivalent to `string-start'.
+
+`buffer-end'
+matches the empty string, but only at the end of the
+buffer being matched against.  Actually equivalent to `string-end'.
+
+`point'
+matches the empty string, but only at point.
+
+`word-start', `bow'
+matches the empty string, but only at the beginning of a word.
+
+`word-end', `eow'
+matches the empty string, but only at the end of a word.
+
+`word-boundary'
+matches the empty string, but only at the beginning or end of a
+word.
+
+`(not word-boundary)'
+`not-word-boundary'
+matches the empty string, but not at the beginning or end of a
+word.
+
+`symbol-start'
+matches the empty string, but only at the beginning of a symbol.
+
+`symbol-end'
+matches the empty string, but only at the end of a symbol.
+
+`digit', `numeric', `num'
+matches 0 through 9.
+
+`control', `cntrl'
+matches ASCII control characters.
+
+`hex-digit', `hex', `xdigit'
+matches 0 through 9, a through f and A through F.
+
+`blank'
+matches space and tab only.
+
+`graphic', `graph'
+matches graphic characters--everything except ASCII control chars,
+space, and DEL.
+
+`printing', `print'
+matches printing characters--everything except ASCII control chars
+and DEL.
+
+`alphanumeric', `alnum'
+matches letters and digits.  (But at present, for multibyte characters,
+it matches anything that has word syntax.)
+
+`letter', `alphabetic', `alpha'
+matches letters.  (But at present, for multibyte characters,
+it matches anything that has word syntax.)
+
+`ascii'
+matches ASCII (unibyte) characters.
+
+`nonascii'
+matches non-ASCII (multibyte) characters.
+
+`lower', `lower-case'
+matches anything lower-case.
+
+`upper', `upper-case'
+matches anything upper-case.
+
+`punctuation', `punct'
+matches punctuation.  (But at present, for multibyte characters,
+it matches anything that has non-word syntax.)
+
+`space', `whitespace', `white'
+matches anything that has whitespace syntax.
+
+`word', `wordchar'
+matches anything that has word syntax.
+
+`not-wordchar'
+matches anything that has non-word syntax.
+
+`(syntax SYNTAX)'
+matches a character with syntax SYNTAX.  SYNTAX must be one
+of the following symbols, or a symbol corresponding to the syntax
+character, e.g. `\.' for `\s.'.
+
+`whitespace'		(\s- in string notation)
+`punctuation'		(\s.)
+`word'			(\sw)
+`symbol'			(\s_)
+`open-parenthesis'		(\s()
+`close-parenthesis'	(\s))
+`expression-prefix'	(\s')
+`string-quote'		(\s")
+`paired-delimiter'		(\s$)
+`escape'			(\s\)
+`character-quote'		(\s/)
+`comment-start'		(\s<)
+`comment-end'		(\s>)
+`string-delimiter'		(\s|)
+`comment-delimiter'	(\s!)
+
+`(not (syntax SYNTAX))'
+matches a character that doesn't have syntax SYNTAX.
+
+`(category CATEGORY)'
+matches a character with category CATEGORY.  CATEGORY must be
+either a character to use for C, or one of the following symbols.
+
+| consonant                        | (\c0 in string notation) |
+| base-vowel                       | (\c1)                    |
+| upper-diacritical-mark           | (\c2)                    |
+| lower-diacritical-mark           | (\c3)                    |
+| tone-mark                        | (\c4)                    |
+| symbol                           | (\c5)                    |
+| digit                            | (\c6)                    |
+| vowel-modifying-diacritical-mark | (\c7)                    |
+| vowel-sign                       | (\c8)                    |
+| semivowel-lower                  | (\c9)                    |
+| not-at-end-of-line               | (\c<)                    |
+| not-at-beginning-of-line         | (\c>)                    |
+| alpha-numeric-two-byte           | (\cA)                    |
+| chinse-two-byte                  | (\cC)                    |
+| greek-two-byte                   | (\cG)                    |
+| japanese-hiragana-two-byte       | (\cH)                    |
+| indian-tow-byte                  | (\cI)                    |
+| japanese-katakana-two-byte       | (\cK)                    |
+| korean-hangul-two-byte           | (\cN)                    |
+| cyrillic-two-byte                | (\cY)                    |
+| combining-diacritic              | (\c^)                    |
+| ascii                            | (\ca)                    |
+| arabic                           | (\cb)                    |
+| chinese                          | (\cc)                    |
+| ethiopic                         | (\ce)                    |
+| greek                            | (\cg)                    |
+| korean                           | (\ch)                    |
+| indian                           | (\ci)                    |
+| japanese                         | (\cj)                    |
+| japanese-katakana                | (\ck)                    |
+| latin                            | (\cl)                    |
+| lao                              | (\co)                    |
+| tibetan                          | (\cq)                    |
+| japanese-roman                   | (\cr)                    |
+| thai                             | (\ct)                    |
+| vietnamese                       | (\cv)                    |
+| hebrew                           | (\cw)                    |
+| cyrillic                         | (\cy)                    |
+
+| `can-break' | (\c | ) | ) |
+
+`(not (category CATEGORY))'
+matches a character that doesn't have categor CATEGORY.
+
+`(and SEXP1 SEXP2 ...)'
+`(: SEXP1 SEXP2 ...)'
+`(seq SEXP1 SEXP2 ...)'
+`(sequence SEXP1 SEXP2 ...)'
+matches what SEXP1 matches, followed by what EXP2 matches, etc.
+
+`(submatch SEXP1 SEXP2 ...)'
+`(group SEXP1 SEXP2 ...)'
+like `and', but makes the match accessible with `match-end',
+`match-beginning', and `match-string'.
+
+`(submatch-n N SEXP1 SEXP2 ...)'
+`(group-n N SEXP1 SEXP2 ...)'
+like `group', but make it an explicitly-numbered group with
+group number N.
+
+`(or SEXP1 SEXP2 ...)'
+`(| SEXP1 SEXP2 ...)'
+matches anything that matches SEXP1 or SEXP2, etc.  If all
+args are strings, use `regexp-opt' to optimize the resulting
+regular expression.
+
+`(minimal-match SEXP)'
+produce a non-greedy regexp for SEXP.  Normally, regexps matching
+zero or more occurrences of something are "greedy" in that they
+match as much as they can, as long as the overall regexp can
+still match.  A non-greedy regexp matches as little as possible.
+
+`(maximal-match SEXP)'
+produce a greedy regexp for SEXP.  This is the default.
+
+Below, `SEXP ...' represents a sequence of regexp forms, treated as if
+enclosed in `(and ...)'.
+
+`(zero-or-more SEXP ...)'
+`(0+ SEXP ...)'
+matches zero or more occurrences of what SEXP ... matches.
+
+`(* SEXP ...)'
+like `zero-or-more', but always produces a greedy regexp, independent
+of `rx-greedy-flag'.
+
+`(*? SEXP ...)'
+like `zero-or-more', but always produces a non-greedy regexp,
+independent of `rx-greedy-flag'.
+
+`(one-or-more SEXP ...)'
+`(1+ SEXP ...)'
+matches one or more occurrences of SEXP ...
+
+`(+ SEXP ...)'
+like `one-or-more', but always produces a greedy regexp.
+
+`(+? SEXP ...)'
+like `one-or-more', but always produces a non-greedy regexp.
+
+`(zero-or-one SEXP ...)'
+`(optional SEXP ...)'
+`(opt SEXP ...)'
+matches zero or one occurrences of A.
+
+`(? SEXP ...)'
+like `zero-or-one', but always produces a greedy regexp.
+
+`(?? SEXP ...)'
+like `zero-or-one', but always produces a non-greedy regexp.
+
+`(repeat N SEXP)'
+`(= N SEXP ...)'
+matches N occurrences.
+
+`(>= N SEXP ...)'
+matches N or more occurrences.
+
+`(repeat N M SEXP)'
+`(** N M SEXP ...)'
+matches N to M occurrences.
+
+`(backref N)'
+matches what was matched previously by submatch N.
+
+`(eval FORM)'
+evaluate FORM and insert result.  If result is a string,
+`regexp-quote' it.
+
+`(regexp REGEXP)'
+include REGEXP in string notation in the result.
+* Search
+** 基本按鍵
+| 按鍵   | 命令             | 用途     |
+|--------+------------------+----------|
+| Ctrl-s | isearch-forward  | 向前查找 |
+| Ctrl-r | isearch-backward | 向後查找 |
 
 * Local File Variable
 # Local Variables:
