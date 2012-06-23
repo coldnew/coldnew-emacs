@@ -4124,6 +4124,18 @@ This is to update existing buffers after a Git pull of their underlying files."
     (interactive)
     (dos->unix (current-buffer)))
 #+end_src
+*** eval-and-replace
+將前面的 elisp 刪除並進行eval。
+#+begin_src emacs-lisp
+(defun eval-and-replace ()
+  "Replace the preceding sexp with its value."
+  (interactive)
+  (backward-kill-sexp)
+  (condition-case nil
+      (prin1 (eval (read (current-kill 0))))
+    (error (message "Invalid expression")
+           (insert (current-kill 0)))))
+#+end_src
 * Google-translate
 google-translate 套件提供 emacs 透過google的API進行翻譯的動作。
 #+begin_src emacs-lisp
@@ -4748,7 +4760,7 @@ ssda
   (global-set-key (kbd "C-x C-s") 'save-buffer-always)
   (global-set-key (kbd "C-x F") 'fullscreen-window)
   (global-set-key (kbd "C-x s") 'shell-command)
-
+  (global-set-key (kbd "C-x e") 'eval-and-replace)
 #+end_src
 *** 窗口移動
 | 按鍵     | 命令           | 用途             |
