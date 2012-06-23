@@ -28,3 +28,6 @@ TAGS
 semanticdb/
 config/coldnew-emacs.el*
 themes/coldnew-night-theme.el
+config.el
+lisp/.loaddefs.el
+lisp/.status.el
