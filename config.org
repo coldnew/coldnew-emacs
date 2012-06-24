@@ -4842,6 +4842,21 @@ ssda
   (global-set-key (kbd "C-x g e") 'google-translate-zh-en)
   (global-set-key (kbd "C-x g t") 'google-translate-en-zh)
 #+end_src
+*** 轉換
+| 按鍵       | 命令                     | 用途                           |
+|------------+--------------------------+--------------------------------|
+| Ctrl-x c c | capitalize-word-backward | 將前面的 word 第一個字母大寫   |
+| Ctrl-x c l | downcase-word-backward   | 將前面的 word 變成小寫         |
+| Ctrl-x c u | upcase-word-backward     | 將前面的 word 變成大寫         |
+| Ctrl-x c x | dos2unix                 | 將目前的檔案轉換成unix檔案型式 |
+| Ctrl-x c d | unix2dos                 | 將目前的檔案轉換成dos檔案型式 |
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x c c") 'capitalize-word-backward)
+  (global-set-key (kbd "C-x c l") 'downcase-word-backward)
+  (global-set-key (kbd "C-x c u") 'upcase-word-backward)
+  (global-set-key (kbd "C-x c x") 'dos2unix)
+  (global-set-key (kbd "C-x c d") 'unix2dos)
+#+end_src
 ** Ctrl-c prefix
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
