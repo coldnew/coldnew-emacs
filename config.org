@@ -747,7 +747,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 #+end_src
 *** 十進位轉換成十六進位
 #+begin_src emacs-lisp
-  (defun decimal->hexadecimal (decimal)
+  (defun dec->hex (decimal)
     "Convert decimal to hexdecimal number."
     (let ((hexstr))
       (if (stringp decimal)
@@ -4428,9 +4428,6 @@ cA==
 #+begin_src emacs-lisp
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
   (defalias 'coldnew/folding-toggle   'toggle-selective-display)
-#+end_src
-#+begin_src emacs-lisp
-  (defalias 'dec->hex   'decimal->hexadecimal)
 #+end_src
 * Version Control
 **  Git
