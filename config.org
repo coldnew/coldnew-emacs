@@ -4187,6 +4187,13 @@ This is to update existing buffers after a Git pull of their underlying files."
       (error (message "Invalid expression")
              (insert (current-kill 0)))))
 #+end_src
+*** expand-last-sexp
+#+begin_src emacs-lisp
+  (defun expand-last-sexp ()
+    "Expand macro from sexp before point;print value in pp eval buffer"
+    (interactive)
+    (pp-eval-expression '(macroexpand (read (thing-at-point 'sexp)))))
+#+end_src
 * Google-translate
 google-translate 套件提供 emacs 透過google的API進行翻譯的動作。
 #+begin_src emacs-lisp
@@ -4787,7 +4794,6 @@ ssda
 #+end_src
 
 ** Ctrl-x Prefix
-
 *** Misc
 | 按鍵          | 命令                | 用途           |
 |---------------+---------------------+----------------|
