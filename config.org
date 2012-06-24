@@ -766,17 +766,19 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 #+begin_src emacs-lisp
   (defun hex->dec (hex)
     "Convert hexdecimal number or string to digit-number."
-    (let ((case-fold-search nil))
+    (let ((case-fold-search nil)
+          (hex-regexp (rx (or
+                           ;; elisp
+                           (group bol "#x")
+                           ;; C perl
+                           (group bol "0x")
+                           ;; CSS
+                           (group bol "#")))))
       (if (not (stringp hex))
           (setq hex (symbol-name hex)))
-      ;; Use #x as hex prefix (elisp, ...)
-      (setq hex (replace-regexp-in-string "^#x" "" hex))
-      ;; Use 0x as hex prefix (C, Perl)
-      (setq hex (replace-regexp-in-string "^0x" "" hex))
-      ;; Use # as hex prefix (CSS)
-      ;;      (setq hex (replace-regexp-in-string "^#"  "" hex ))
-      (setq hex (string-to-number hex 16))
-    hex))
+      (string-to-number
+       (replace-regexp-in-string hex-regexp "" hex)
+       16)))
 #+end_src
 ** Sort
 *** quicksort
