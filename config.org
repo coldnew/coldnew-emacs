@@ -745,6 +745,40 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
         (insert-file-contents file)
         (buffer-string))))
 #+end_src
+*** 十進位轉換成十六進位
+#+begin_src emacs-lisp
+  (defun decimal->hexadecimal (decimal)
+    "Convert decimal to hexdecimal number."
+    (let ((hexstr))
+      (if (stringp decimal)
+          (setq decimal (string-to-number decimal 10)))
+      (cond
+       ;; Use #x as hex prefix (elisp, ....)
+       ((or (eq major-mode 'emacs-lisp-mode)
+            (eq major-mode 'lisp-interaction-mode)) (setq hexstr "#x"))
+       ;; Use # as hex prefix (CSS, ....)
+       ((eq major-mode 'css-mode) (setq hexstr "#"))
+       ;; otherwise use 0x as hexprefix (C, Perl...)
+       (t (setq hexstr "0x")))
+      (format "%s%02X" hexstr decimal)))
+#+end_src
+*** 十六進位轉換成十進位
+#+begin_src emacs-lisp
+  (defun hexadecimal->decimal (hex)
+    "Convert hexdecimal number or string to digit-number."
+    (let ((case-fold-search nil)
+          (hexstr hex))
+      (if (stringp hexstr)
+          (progn
+            ;; Use #x as hex prefix (elisp, ...)
+            (setq hexstr (replace-regexp-in-string "^#x" "" hex ))
+            ;; Use 0x as hex prefix (C, Perl)
+            (setq hexstr (replace-regexp-in-string "^0x" "" hex ))
+            ;; Use # as hex prefix (CSS)
+            ;;      (setq hexstr (replace-regexp-in-string "^#"  "" hex ))
+            (setq hexstr (string-to-number hexstr 16))))
+      (format "%d" hexstr)))
+#+end_src
 ** Sort
 *** quicksort
 #+begin_src emacs-lisp
@@ -4395,6 +4429,10 @@ cA==
 #+begin_src emacs-lisp
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
   (defalias 'coldnew/folding-toggle   'toggle-selective-display)
+#+end_src
+#+begin_src emacs-lisp
+  (defalias 'dec->hex   'decimal->hexadecimal)
+  (defalias 'hex->dec   'hexadecimal->decimal)
 #+end_src
 * Version Control
 **  Git
