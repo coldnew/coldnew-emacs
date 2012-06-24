@@ -4827,6 +4827,15 @@ ssda
   (global-set-key (kbd "C-x b") 'windmove-left)
   (global-set-key (kbd "C-x p") 'windmove-up)
 #+end_src
+*** Google 相關
+| 按鍵       | 命令                   | 用途           |
+|------------+------------------------+----------------|
+| Ctrl-x g e | google-translate-zh-en | 中文翻譯成英文 |
+| Ctrl-x g t | google-translate-en-zh | 英文翻譯成中文 |
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x g e") 'google-translate-zh-en)
+  (global-set-key (kbd "C-x g t") 'google-translate-en-zh)
+#+end_src
 ** Ctrl-c prefix
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
