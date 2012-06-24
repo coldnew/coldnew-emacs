@@ -4175,7 +4175,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (dos->unix (current-buffer)))
 #+end_src
 *** eval-and-replace
-將前面的 elisp 刪除並進行eval。
+將前面的 sexp 刪除並進行 eval的動作，如果eval失敗則還原前面的sexp。
 #+begin_src emacs-lisp
   (defun eval-and-replace ()
     "Replace the preceding sexp with its value."
