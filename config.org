@@ -745,6 +745,20 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
         (insert-file-contents file)
         (buffer-string))))
 #+end_src
+** Sort
+*** quicksort
+#+begin_src emacs-lisp
+  (defun quicksort (lst)
+    "Implement the quicksort algorithm."
+    (if (null lst) nil
+      (let* ((spl (car lst))
+             (rst (cdr lst))
+             (smalp (lambda (x)
+                      (< x spl))))
+        (append (quicksort (remove-if-not smalp rst))
+                (list spl)
+                (quicksort (remove-if smalp rst))))))
+#+end_src
 ** Buffer
 *** get-buffers-matching-mode
 取得 major-mode 和要求符合的所有 buffer，假如我們希望可以列出所有為
