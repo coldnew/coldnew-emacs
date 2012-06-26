@@ -1522,7 +1522,8 @@ auto-complete-mode 的按鍵設定。
   (defun lusty-sudo-explorer ()
     "Launch the file/directory mode of LustyExplorer."
     (interactive)
-    (let ((lusty--active-mode :file-explorer))
+    (let ((lusty--active-mode :file-explorer)
+          (lusty-prompt "sudo: >>"))
       (lusty--define-mode-map)
       (let* ((lusty--ignored-extensions-regex
               (concat "\\(?:" (regexp-opt completion-ignored-extensions) "\\)$"))
@@ -3569,6 +3570,42 @@ C-c  I             对目录中的相关文件建立列表并进行索引
                (local-set-key (kbd "]") 'self-insert-command)
                (local-set-key (kbd ")") 'self-insert-command)
                ))
+#+end_src
+** python
+*** Auto Mode Alist
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.py" . python-mode))
+  (add-to-list 'interpreter-mode-alist '("python" . python-mode))
+#+end_src
+*** python-mode
+#+begin_src emacs-lisp
+(require* 'python-mode)
+#+end_src
+#+begin_src emacs-lisp
+  (add-hook 'python-mode-hook
+            '(lambda ()
+               (set-variable 'py-indent-offset 4)
+               (set-variable 'indent-tabs-mode nil)
+               ;;(smart-operator-mode-on)
+               ))
+
+#+end_src
+*** pymacs
+#+begin_src emacs-lisp
+  (require* 'pymacs)
+;;  (pymacs-load "ropemacs" "rope-")
+#+end_src
+*** ropemacs
+#+begin_src emacs-lisp
+(require* 'ropemacs)
+#+end_src
+*** ropemode
+#+begin_src emacs-lisp
+(require* 'ropemode)
+#+end_src
+*** Auto Complete
+#+begin_src emacs-lisp
+(require* 'ac-python)
 #+end_src
 * Mode Line                                                        :modeline:
 powerline is really funny
