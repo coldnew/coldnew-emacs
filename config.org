@@ -9,17 +9,19 @@
 這是我個人的 emacs 配置
 * Basic Setup
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此
-** Init
-預先載入 cl 套件。
+** 預先載入 cl 套件。
 #+begin_src emacs-lisp
   (eval-when-compile (require 'cl))
 #+end_src
-** User-interface
-*** 不啟用 startup message (啟動 emacs 時出現的 GNU/Emacs 畫面)
+** 使用者介面設定
+關閉一些 emacs 預設的 UI 設定。
+*** 不啟用 startup message
+啟動 emacs 時會出現的 GNU/Emacs 畫面，這裡將他關閉
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t)
 #+end_src
 *** 清空 **scratch** buffer 的文字。
+預設 **scratch** 裡面會有幾行文字，直接將他清空。
 #+begin_src emacs-lisp
   (setq initial-scratch-message "")
 #+end_src
