@@ -3112,9 +3112,9 @@ This section contains my editor state
 :END:
 
 *** 預設按鍵
-| 快捷鍵  | 命令                | 用途                                       |
+| 快捷鍵  | 命令                | 用途                                     |
 |---------+---------------------+--------------------------------------------|
-| C-x r m | bookmark-set        | 設置新的書籤                               |
+| C-x r m | bookmark-set        | 設置新的書籤                         |
 | C-x r l | bookmark-bmenu-list | 列出所有已設置的書籤                       |
 | C-x r b | bookmarj-jump       | 跳轉到書籤                                 |
 |         | bookmark-delete     | 刪除書籤                                   |
@@ -3999,6 +3999,38 @@ This is to update existing buffers after a Git pull of their underlying files."
 #+end_src
 ** Other
 #+begin_src emacs-lisp
+  (defun align-code (beg end &optional arg)
+    (interactive "rP")
+    (if (null arg)
+        (align beg end)
+      (let ((end-mark (copy-marker end)))
+        (indent-region beg end-mark nil)
+        (align beg end-mark))))
+#+end_src
+#+begin_src emacs-lisp
+  (defun mark-line (&optional arg)
+    (interactive "p")
+    (beginning-of-line)
+    (let ((here (point)))
+      (dotimes (i arg)
+        (end-of-line))
+      (set-mark (point))
+      (goto-char here)))
+  (defun mark-sentence (&optional arg)
+    (interactive "P")
+    (backward-sentence)
+    (mark-end-of-sentence arg))
+(defun delete-indentation-forward ()
+  (interactive)
+  (delete-indentation t))
+(defun delete-current-line (&optional arg)
+  (interactive "p")
+  (let ((here (point)))
+    (beginning-of-line)
+    (kill-line arg)
+    (goto-char here)))
+#+end_src
+#+begin_src emacs-lisp
   (defun utf8 ()
     "Sets the buffer-file-coding-system to UTF8."
     (interactive)
@@ -4266,6 +4298,13 @@ This is to update existing buffers after a Git pull of their underlying files."
                              (progn
                                (setq old-value current-value)
                                'fullboth)))))
+#+end_src
+#+begin_src emacs-lisp
+  (defun collapse-or-expand ()
+    (interactive)
+    (if (> (length (window-list)) 1)
+        (delete-other-windows)
+      (bury-buffer)))
 #+end_src
 #+begin_src emacs-lisp
   (defun gitg ()
@@ -4940,6 +4979,25 @@ cA==
       (setq cursor-color emacs-normal-cursor-color))))
 #+end_src
 * Global keybinding
+ Main keymaps for personal bindings are:
+
+ C-x <letter> primary map (has many defaults too)
+ C-c <letter> secondary map (not just for mode-specific)
+ C-. <letter> tertiary map
+
+ M-g <letter> goto map
+ M-s <letter> search map
+ M-o <letter> markup map (even if only temporarily)
+
+ C-<capital letter>
+ M-<capital letter>
+
+ A-<anything>
+ M-A-<anything>
+
+ Single-letter bindings still available:
+ C- ,'";:?<>|!#$%^&*`~ <tab>
+ M- ?#
 ** Unset key
 #+begin_src emacs-lisp
   (defmacro coldnew/global-unset-key (key &rest bindings)
