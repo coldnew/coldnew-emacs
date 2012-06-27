@@ -7,8 +7,8 @@
 
 * Introduction
 這是我個人的 emacs 配置
-* Basic Setup
-這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此
+* 基礎設置
+這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
 ** 預先載入 cl 套件。
 #+begin_src emacs-lisp
   (eval-when-compile (require 'cl))
@@ -25,8 +25,8 @@
 #+begin_src emacs-lisp
   (setq initial-scratch-message "")
 #+end_src
-*** Visible bell
-Use visible bell instead of ring-bell.
+*** 視覺響鈴
+使用 visible bell 代替電腦的蜂鳴器叫聲。
 #+begin_src emacs-lisp
   (setq visible-bell t)
 #+end_src
@@ -53,11 +53,13 @@ Disable scrollbar
   (setq time-stamp-line-limit 10 ) ; check first 10 buffer lines for Time-stamp:
   (setq time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S (%u)") ; date format
 #+end_src
-*** TODO Misc
-回答問題時，使用 *y* 和 *n* 代替 *yes/no* 。
+*** 回答問題時，使用 *y* 和 *n* 代替 *yes/no* 。
+預設要使用 *yse* 或是 *no* 來回答問題，這裡將他改成用 *y* 或 *n* 。
 #+begin_src emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
+*** TODO Misc
+
 #+begin_src emacs-lisp
   ;; TODO: add comment
   (setq stack-trace-on-error t)
@@ -383,7 +385,7 @@ emacs 個人配置的檔案，也就是這個檔案。
 #+begin_src emacs-lisp
   )
 #+end_src
-* Locale
+* 語言環境
 emacs 編碼設定，大部份都設定成 utf-8。
 ** 系統編碼。
 #+begin_src emacs-lisp
@@ -421,7 +423,7 @@ emacs 編碼設定，大部份都設定成 utf-8。
 #+begin_src emacs-lisp
   (setq system-time-locale "en_US" )
 #+end_src
-* Package Manager
+* 套件管理
 emacs 套件管理的設定。
 ** el-get
 *** Init
@@ -503,7 +505,7 @@ emacs 套件管理的設定。
           ("melpa" . "http://melpa.milkbox.net/packages/")))
 #+end_src
 
-* Macros                                                             :macro:
+* 巨集                                                                :macro:
 ** Clojure
 *** comment
 comment 只是用來註釋用，並不會解析裏面的東西。
@@ -3103,7 +3105,7 @@ This section contains my editor state
         )
       ))
 #+end_src
-* Bookmark
+* 書籤
 ** Bookmark 說明
 :PROPERTIES:
 :tangle:   no
@@ -4701,7 +4703,7 @@ cA==
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
   (defalias 'coldnew/folding-toggle   'toggle-selective-display)
 #+end_src
-* Version Control
+* 版本管理
 **  Git
 *** egg
 **** Depends
@@ -4797,7 +4799,7 @@ cA==
                (or (file-exists-p  (file-name-directory buffer-file-name))
                    (make-directory (file-name-directory buffer-file-name) t))))
 #+end_src
-* Backup
+* 檔案備份
 #+begin_src emacs-lisp
   (setq auto-save-interval  50)           ; Number of input events between auto-saves
   (setq auto-save-timeout   30)           ; Number of seconds idle time before auto-save
