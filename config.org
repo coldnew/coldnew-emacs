@@ -426,13 +426,12 @@ emacs 編碼設定，大部份都設定成 utf-8。
 * 套件管理
 emacs 套件管理的設定。
 ** el-get
-*** Init
+*** 設定 el-get-dir
 我不喜歡 el-get 預設使用 el-get 目錄，這裡根據我的 emacs-lisp-dir 重新設定。
 #+begin_src emacs-lisp
   (setq-default el-get-dir emacs-lisp-dir)
 #+end_src
-
-如果 el-get 不存在的話，重新安裝 el-get
+*** 如果 el-get 不存在的話，重新安裝 el-get
 #+begin_src emacs-lisp
   (unless (require 'el-get nil t)
     (setq el-get-install-branch "master")
@@ -442,18 +441,12 @@ emacs 套件管理的設定。
       (end-of-buffer)
       (eval-print-last-sexp)))
 #+end_src
-
-如果 elpa 的 recepies 不存在的話，自動建立他。
+*** 如果 elpa 的 recepies 不存在的話，自動建立他。
 #+begin_src emacs-lisp
   (unless (file-exists-p el-get-recipe-path-elpa)
     (el-get-elpa-build-local-recipies))
 #+end_src
-*** Depends
-#+begin_src emacs-lisp
-  (require 'el-get)
-#+end_src
-
-*** Config
+*** 將我的 recipes 加入 el-get-recipe-path
 #+begin_src emacs-lisp
   (add-to-list 'el-get-recipe-path emacs-recipes-dir)
 #+end_src
@@ -486,8 +479,7 @@ emacs 套件管理的設定。
   ))
 #+end_src
 ** ELPA
-*** Init
-設定 elpa 安裝目錄到 emacs-elpa-dir
+*** 設定 elpa 安裝目錄到 emacs-elpa-dir
 #+begin_src emacs-lisp
   (setq-default package-user-dir emacs-elpa-dir)
 #+end_src
@@ -495,8 +487,7 @@ emacs 套件管理的設定。
 #+begin_src emacs-lisp
   (require 'package)
 #+end_src
-*** Config
-設定 elpa 所使用的套件庫
+*** 設定 elpa 所使用的套件庫
 #+begin_src emacs-lisp
   (setq package-archives
         '(("ELPA" . "http://tromey.com/elpa/")
@@ -504,6 +495,28 @@ emacs 套件管理的設定。
           ("marmalade" . "http://marmalade-repo.org/packages/")
           ("melpa" . "http://melpa.milkbox.net/packages/")))
 #+end_src
+
+** 套件檢查
+為了避免有套件因為 *意外* 而不見，對套件進行檢查，若不存在則進行重新安裝的動作。
+*** emacs-package-list
+此變數用於存放系統裏面必須安裝的emacs 套件。
+**** TODO 將資訊存入檔案
+#+begin_src emacs-lisp
+  (defvar emacs-packages-list nil
+    "A list that store installed package information.")
+#+end_src
+*** coldnew/packages-installed-p
+檢查此套件是否有在 emacs-packages-list 裡面。
+#+begin_src emacs-lisp
+  (defun coldnew/packages-installed-p ()
+    (loop for p in emacs-packages-list
+          when (not (el-get-package-is-installed p)) do (return nil)
+          finally (return t)))
+#+end_src
+*** coldnew/reinstall-missing-packages
+當發現有套件存在 emacs-package-list 裡面，但是卻被 coldnew/packages-installed-p 回報為
+此套件不存在時，重心安裝此套件。
+**** TODO 完成此function
 
 * 巨集                                                                :macro:
 ** Clojure
