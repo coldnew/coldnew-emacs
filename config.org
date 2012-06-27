@@ -503,7 +503,7 @@ emacs 套件管理的設定。
 **** TODO 將資訊存入檔案
 #+begin_src emacs-lisp
   (defvar emacs-packages-list nil
-    "A list that store installed package information.")
+    "A list of packages to ensure are installed at launch.")
 #+end_src
 *** coldnew/packages-installed-p
 檢查此套件是否有在 emacs-packages-list 裡面。
