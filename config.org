@@ -988,20 +988,22 @@ emacs-lisp-mode 的 buffer，可以這樣做
 ** 設定顯示字體時的格式
 使用 *list-face-display* 可以看到所有的 face 顏色與字體。
 #+begin_src emacs-lisp
-  (setq-default list-faces-sample-text
-                (concat
-                 "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz\n"
-                 "11223344556677889900       壹貳參肆伍陸柒捌玖零"
-                 ))
+  (setq list-faces-sample-text
+        (concat
+         "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz\n"
+         "11223344556677889900       壹貳參肆伍陸柒捌玖零"
+         ))
 #+end_src
 * Theme                                                               :theme:
 佈景主題的設置，包含我自訂的佈景主題以及路徑。
-** Init
-設定佈景主題的位置。
+** 設定佈景主題的位置。
+佈景主題的路徑設定在 emacs-themes-dir 裡面。
 #+begin_src emacs-lisp
   (setq custom-theme-directory emacs-themes-dir)
 #+end_src
 ** coldnew-night
+我自己設計的暗色系佈景主題，會輸出成 ~/.emacs.d/themes/coldnew-night-theme.el
+
 :PROPERTIES:
 :comments: org
 :tangle:   ~/.emacs.d/themes/coldnew-night-theme.el
@@ -1039,12 +1041,12 @@ emacs-lisp-mode 的 buffer，可以這樣做
   (custom-theme-set-faces
    'coldnew-night
 #+end_src
-*** Default
+*** 背景與文字
 設定 emacs 的背景和文字顏色
 #+begin_src emacs-lisp
   '(default ((t (:background "#0B0B0E" :foreground "#DCDCDC"))))
 #+end_src
-*** Cursor
+*** 游標
 設定 emacs 的游標顏色
 #+begin_src emacs-lisp
   '(cursor ((t (:background "#C2C2C2" :foreground "#0B0B0E"))))
@@ -1221,8 +1223,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
   ;;; coldnew-night-theme.el  ends here
 #+end_src
 
-** Load theme
-設定預設讀取的佈景主題。
+** 設定預設讀取的佈景主題。
 #+begin_src emacs-lisp
   (load-theme 'coldnew-night t)
 #+end_src
@@ -4510,7 +4511,7 @@ This is to update existing buffers after a Git pull of their underlying files."
 * Google-translate
 google-translate 套件提供 emacs 透過google的API進行翻譯的動作。
 #+begin_src emacs-lisp
-    (require* 'google-translate)
+  (require* 'google-translate)
 
   (defun google-translate-en-zh ()
     "Translate English to Tranditional Chinese by google-translate."
