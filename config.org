@@ -385,7 +385,7 @@ emacs 個人配置的檔案，也就是這個檔案。
 #+begin_src emacs-lisp
   )
 #+end_src
-* 語言環境
+* 語言環境                                                           :locale:
 emacs 編碼設定，大部份都設定成 utf-8。
 ** 系統編碼。
 #+begin_src emacs-lisp
@@ -944,31 +944,31 @@ emacs-lisp-mode 的 buffer，可以這樣做
           (list start end)
         (list end start))))
 #+end_src
-* Fonts                                                                :font:
+* 字體                                                                 :font:
+** 英文字體
 #+begin_src emacs-lisp
-  ;; Font type setting
-  ;; (defvar emacs-english-font "Inconsolata"
   (defvar emacs-english-font "Monaco"
     "The font name of English.")
-  ;; (defvar emacs-cjk-font "LiHei Pro"
-  (defvar emacs-cjk-font "Hiragino Sans GB W3"
-    "The font name for CJK.")
-  (defvar emacs-symbol-font "Monaco"
-    "The font name for Synbol.")
-
-  ;; font size setting
-  ;; (defvar emacs-english-font-size 11.5
   (defvar emacs-english-font-size 11.5
     "Default English font size.")
-  ;;(defvar emacs-cjk-font-size 15
-
+#+end_src
+** 中文字體
+#+begin_src emacs-lisp
+  (defvar emacs-cjk-font "Hiragino Sans GB W3"
+    "The font name for CJK.")
   (defvar emacs-cjk-font-size 13.5
-    ;; (defvar emacs-cjk-font-size 14
     "Default CJK font size.")
+#+end_src
+** 符號字體
+*** TODO 不能使用，為什麼？
+#+begin_src emacs-lisp
+  (defvar emacs-symbol-font "Monaco"
+    "The font name for Synbol.")
   (defvar emacs-symbol-font-size 16
     "Default Symbol font size.")
-
-  ;; Use my defined font under X
+#+end_src
+** 在圖形介面下使用我所設定的字體
+#+begin_src emacs-lisp
   (cond ((eq window-system 'x)
          ;; Setting English Fonts
          (if (font-exist-p emacs-english-font)
@@ -984,13 +984,14 @@ emacs-lisp-mode 的 buffer，可以這樣做
              (set-fontset-font (frame-parameter nil 'font)
                                'symbol (format "%s-%s" (eval emacs-symbol-font) (eval emacs-symbol-font-size))))
          ))
-
-
-  ;; list text sample
+#+end_src
+** 設定顯示字體時的格式
+使用 *list-face-display* 可以看到所有的 face 顏色與字體。
+#+begin_src emacs-lisp
   (setq-default list-faces-sample-text
                 (concat
-                 "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 11223344556677889900"
-                 "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 壹貳參肆伍陸柒捌玖零"
+                 "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz\n"
+                 "11223344556677889900       壹貳參肆伍陸柒捌玖零"
                  ))
 #+end_src
 * Theme                                                               :theme:
@@ -3125,9 +3126,9 @@ This section contains my editor state
 :END:
 
 *** 預設按鍵
-| 快捷鍵  | 命令                | 用途                                     |
+| 快捷鍵  | 命令                | 用途                                       |
 |---------+---------------------+--------------------------------------------|
-| C-x r m | bookmark-set        | 設置新的書籤                         |
+| C-x r m | bookmark-set        | 設置新的書籤                               |
 | C-x r l | bookmark-bmenu-list | 列出所有已設置的書籤                       |
 | C-x r b | bookmarj-jump       | 跳轉到書籤                                 |
 |         | bookmark-delete     | 刪除書籤                                   |
@@ -5141,20 +5142,19 @@ ssda
 #+end_src
 
 #+begin_src emacs-lisp
-    (global-set-key (kbd "C-x C-b")  'ibuffer)
+  (global-set-key (kbd "C-x C-b")  'ibuffer)
   ;;  (global-set-key (kbd "C-x b")    'coldnew/helm-filelist)
-    (global-set-key (kbd "C-x C-d")  'dired)
-  ;;(global-set-key (kbd "C-x C-r")  'sudo-edit)
+  (global-set-key (kbd "C-x C-d")  'dired)
   (global-set-key (kbd "C-x C-r")  'lusty-sudo-explorer)
   (global-set-key (kbd "C-x vv") 'egg-next-action)
-    (global-set-key (kbd "C-x M-x") 'helm-M-x)
-    (global-set-key (kbd "C-x o")   'switch-window)
-    (global-set-key (kbd "C-x C-l") 'recenter-top-bottom)
-    (global-set-key (kbd "C-x C-n") 'auto-complete)
-    (global-set-key (kbd "C-x C-s") 'save-buffer-always)
-    (global-set-key (kbd "C-x F") 'fullscreen-window)
-    (global-set-key (kbd "C-x s") 'shell-command)
-    (global-set-key (kbd "C-x e") 'eval-and-replace)
+  (global-set-key (kbd "C-x M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x o")   'switch-window)
+  (global-set-key (kbd "C-x C-l") 'recenter-top-bottom)
+  (global-set-key (kbd "C-x C-n") 'auto-complete)
+  (global-set-key (kbd "C-x C-s") 'save-buffer-always)
+  (global-set-key (kbd "C-x F") 'fullscreen-window)
+  (global-set-key (kbd "C-x s") 'shell-command)
+  (global-set-key (kbd "C-x e") 'eval-and-replace)
 #+end_src
 *** 窗口移動
 | 按鍵     | 命令           | 用途             |
