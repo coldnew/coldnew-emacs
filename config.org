@@ -7,6 +7,26 @@
 
 * Introduction
 這是我個人的 emacs 配置
+* 筆記
+** 書籤管理
+*** 按鍵
+| 按鍵    | 命令                | 用途                     |
+|---------+---------------------+--------------------------|
+| C-x r m | bookmark-set        | 設置書籤                 |
+| C-x r b | bookmark-jump       | 跳轉到書籤               |
+| C-x r l | bookmark-bmenu-list | 開啟一個 buffer 列出書籤 |
+|         | bookmark-delete     | 刪除書籤                 |
+|         | bookmark-load       | 讀取已儲存的書籤檔案     |
+*** 配置
+| 變數名稱              | 預設值               | 用途           |
+|-----------------------+----------------------+----------------|
+| bookmark-default-file | ~/.emacs.d/bookmarks | 預設的書籤檔案 |
+| bookmark-save-flag    | t                    |                |
+** 正規表達式
+** TODO 未歸類的 emacs 筆記。
+*** C-x r N 添加數字序號
+(rectangle-number-lines START END START-AT &optional FORMAT)
+
 * 基礎設置
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
 ** 預先載入 cl 套件。
@@ -3206,7 +3226,7 @@ emacs 和 cscope相關的套件蠻多的，xcscope 包含在 cscope 的套件裡
 * Programming Mode
 ** emacs-lisp
 emacs-lisp 語言的設定
-*** Auto Mode Alist
+*** 設定 emacs-lisp 的副檔名
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 #+end_src
@@ -3329,7 +3349,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+end_src
 ** c
 dummy
-*** Auto Mode Alist
+*** 設定 C語言 的副檔名
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
   (add-to-list 'auto-mode-alist '("\\.h$" . c-mode))
@@ -3629,6 +3649,15 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 *** 自動補全
 #+begin_src emacs-lisp
 (require* 'ac-python)
+#+end_src
+** Verilog
+*** 設定 verilog 檔案的副檔名
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.v$" . verilog-mode))
+#+end_src
+*** 自動添加 *end //blockname* 註解
+#+begin_src emacs-lisp
+  (setq verilog-auto-endcomments t)
 #+end_src
 * Mode Line                                                        :modeline:
 powerline is really funny
