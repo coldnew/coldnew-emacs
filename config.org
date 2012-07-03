@@ -23,9 +23,319 @@
 | bookmark-default-file | ~/.emacs.d/bookmarks | 預設的書籤檔案 |
 | bookmark-save-flag    | t                    |                |
 ** 正規表達式
+*** 使用rx來製作正規表達式
+rx 為 emacs macro，可以幫助產生 emacs 的正規表達式
+**** TODO 理解並翻譯回中文
+rx is a Lisp macro in `rx.el'.
+
+(rx &rest REGEXPS)
+
+Translate regular expressions REGEXPS in sexp form to a regexp string.
+REGEXPS is a non-empty sequence of forms of the sort listed below.
+
+Note that `rx' is a Lisp macro; when used in a Lisp program being
+compiled, the translation is performed by the compiler.
+See `rx-to-string' for how to do such a translation at run-time.
+
+The following are valid subforms of regular expressions in sexp
+notation.
+
+STRING
+matches string STRING literally.
+
+CHAR
+matches character CHAR literally.
+
+`not-newline', `nonl'
+matches any character except a newline.
+
+`anything'
+matches any character
+
+`(any SET ...)'
+`(in SET ...)'
+`(char SET ...)'
+matches any character in SET ....  SET may be a character or string.
+Ranges of characters can be specified as `A-Z' in strings.
+Ranges may also be specified as conses like `(?A . ?Z)'.
+
+SET may also be the name of a character class: `digit',
+`control', `hex-digit', `blank', `graph', `print', `alnum',
+`alpha', `ascii', `nonascii', `lower', `punct', `space', `upper',
+`word', or one of their synonyms.
+
+`(not (any SET ...))'
+matches any character not in SET ...
+
+`line-start', `bol'
+matches the empty string, but only at the beginning of a line
+in the text being matched
+
+`line-end', `eol'
+is similar to `line-start' but matches only at the end of a line
+
+`string-start', `bos', `bot'
+matches the empty string, but only at the beginning of the
+string being matched against.
+
+`string-end', `eos', `eot'
+matches the empty string, but only at the end of the
+string being matched against.
+
+`buffer-start'
+matches the empty string, but only at the beginning of the
+buffer being matched against.  Actually equivalent to `string-start'.
+
+`buffer-end'
+matches the empty string, but only at the end of the
+buffer being matched against.  Actually equivalent to `string-end'.
+
+`point'
+matches the empty string, but only at point.
+
+`word-start', `bow'
+matches the empty string, but only at the beginning of a word.
+
+`word-end', `eow'
+matches the empty string, but only at the end of a word.
+
+`word-boundary'
+matches the empty string, but only at the beginning or end of a
+word.
+
+`(not word-boundary)'
+`not-word-boundary'
+matches the empty string, but not at the beginning or end of a
+word.
+
+`symbol-start'
+matches the empty string, but only at the beginning of a symbol.
+
+`symbol-end'
+matches the empty string, but only at the end of a symbol.
+
+`digit', `numeric', `num'
+matches 0 through 9.
+
+`control', `cntrl'
+matches ASCII control characters.
+
+`hex-digit', `hex', `xdigit'
+matches 0 through 9, a through f and A through F.
+
+`blank'
+matches space and tab only.
+
+`graphic', `graph'
+matches graphic characters--everything except ASCII control chars,
+space, and DEL.
+
+`printing', `print'
+matches printing characters--everything except ASCII control chars
+and DEL.
+
+`alphanumeric', `alnum'
+matches letters and digits.  (But at present, for multibyte characters,
+it matches anything that has word syntax.)
+
+`letter', `alphabetic', `alpha'
+matches letters.  (But at present, for multibyte characters,
+it matches anything that has word syntax.)
+
+`ascii'
+matches ASCII (unibyte) characters.
+
+`nonascii'
+matches non-ASCII (multibyte) characters.
+
+`lower', `lower-case'
+matches anything lower-case.
+
+`upper', `upper-case'
+matches anything upper-case.
+
+`punctuation', `punct'
+matches punctuation.  (But at present, for multibyte characters,
+it matches anything that has non-word syntax.)
+
+`space', `whitespace', `white'
+matches anything that has whitespace syntax.
+
+`word', `wordchar'
+matches anything that has word syntax.
+
+`not-wordchar'
+matches anything that has non-word syntax.
+
+`(syntax SYNTAX)'
+matches a character with syntax SYNTAX.  SYNTAX must be one
+of the following symbols, or a symbol corresponding to the syntax
+character, e.g. `\.' for `\s.'.
+
+`whitespace'		(\s- in string notation)
+`punctuation'		(\s.)
+`word'			(\sw)
+`symbol'			(\s_)
+`open-parenthesis'		(\s()
+`close-parenthesis'	(\s))
+`expression-prefix'	(\s')
+`string-quote'		(\s")
+`paired-delimiter'		(\s$)
+`escape'			(\s\)
+`character-quote'		(\s/)
+`comment-start'		(\s<)
+`comment-end'		(\s>)
+`string-delimiter'		(\s|)
+`comment-delimiter'	(\s!)
+
+`(not (syntax SYNTAX))'
+matches a character that doesn't have syntax SYNTAX.
+
+`(category CATEGORY)'
+matches a character with category CATEGORY.  CATEGORY must be
+either a character to use for C, or one of the following symbols.
+
+| consonant                        | (\c0 in string notation) |
+| base-vowel                       | (\c1)                    |
+| upper-diacritical-mark           | (\c2)                    |
+| lower-diacritical-mark           | (\c3)                    |
+| tone-mark                        | (\c4)                    |
+| symbol                           | (\c5)                    |
+| digit                            | (\c6)                    |
+| vowel-modifying-diacritical-mark | (\c7)                    |
+| vowel-sign                       | (\c8)                    |
+| semivowel-lower                  | (\c9)                    |
+| not-at-end-of-line               | (\c<)                    |
+| not-at-beginning-of-line         | (\c>)                    |
+| alpha-numeric-two-byte           | (\cA)                    |
+| chinse-two-byte                  | (\cC)                    |
+| greek-two-byte                   | (\cG)                    |
+| japanese-hiragana-two-byte       | (\cH)                    |
+| indian-tow-byte                  | (\cI)                    |
+| japanese-katakana-two-byte       | (\cK)                    |
+| korean-hangul-two-byte           | (\cN)                    |
+| cyrillic-two-byte                | (\cY)                    |
+| combining-diacritic              | (\c^)                    |
+| ascii                            | (\ca)                    |
+| arabic                           | (\cb)                    |
+| chinese                          | (\cc)                    |
+| ethiopic                         | (\ce)                    |
+| greek                            | (\cg)                    |
+| korean                           | (\ch)                    |
+| indian                           | (\ci)                    |
+| japanese                         | (\cj)                    |
+| japanese-katakana                | (\ck)                    |
+| latin                            | (\cl)                    |
+| lao                              | (\co)                    |
+| tibetan                          | (\cq)                    |
+| japanese-roman                   | (\cr)                    |
+| thai                             | (\ct)                    |
+| vietnamese                       | (\cv)                    |
+| hebrew                           | (\cw)                    |
+| cyrillic                         | (\cy)                    |
+
+| `can-break' | (\c | ) | ) |
+
+`(not (category CATEGORY))'
+matches a character that doesn't have categor CATEGORY.
+
+`(and SEXP1 SEXP2 ...)'
+`(: SEXP1 SEXP2 ...)'
+`(seq SEXP1 SEXP2 ...)'
+`(sequence SEXP1 SEXP2 ...)'
+matches what SEXP1 matches, followed by what EXP2 matches, etc.
+
+`(submatch SEXP1 SEXP2 ...)'
+`(group SEXP1 SEXP2 ...)'
+like `and', but makes the match accessible with `match-end',
+`match-beginning', and `match-string'.
+
+`(submatch-n N SEXP1 SEXP2 ...)'
+`(group-n N SEXP1 SEXP2 ...)'
+like `group', but make it an explicitly-numbered group with
+group number N.
+
+`(or SEXP1 SEXP2 ...)'
+`(| SEXP1 SEXP2 ...)'
+matches anything that matches SEXP1 or SEXP2, etc.  If all
+args are strings, use `regexp-opt' to optimize the resulting
+regular expression.
+
+`(minimal-match SEXP)'
+produce a non-greedy regexp for SEXP.  Normally, regexps matching
+zero or more occurrences of something are "greedy" in that they
+match as much as they can, as long as the overall regexp can
+still match.  A non-greedy regexp matches as little as possible.
+
+`(maximal-match SEXP)'
+produce a greedy regexp for SEXP.  This is the default.
+
+Below, `SEXP ...' represents a sequence of regexp forms, treated as if
+enclosed in `(and ...)'.
+
+`(zero-or-more SEXP ...)'
+`(0+ SEXP ...)'
+matches zero or more occurrences of what SEXP ... matches.
+
+`(* SEXP ...)'
+like `zero-or-more', but always produces a greedy regexp, independent
+of `rx-greedy-flag'.
+
+`(*? SEXP ...)'
+like `zero-or-more', but always produces a non-greedy regexp,
+independent of `rx-greedy-flag'.
+
+`(one-or-more SEXP ...)'
+`(1+ SEXP ...)'
+matches one or more occurrences of SEXP ...
+
+`(+ SEXP ...)'
+like `one-or-more', but always produces a greedy regexp.
+
+`(+? SEXP ...)'
+like `one-or-more', but always produces a non-greedy regexp.
+
+`(zero-or-one SEXP ...)'
+`(optional SEXP ...)'
+`(opt SEXP ...)'
+matches zero or one occurrences of A.
+
+`(? SEXP ...)'
+like `zero-or-one', but always produces a greedy regexp.
+
+`(?? SEXP ...)'
+like `zero-or-one', but always produces a non-greedy regexp.
+
+`(repeat N SEXP)'
+`(= N SEXP ...)'
+matches N occurrences.
+
+`(>= N SEXP ...)'
+matches N or more occurrences.
+
+`(repeat N M SEXP)'
+`(** N M SEXP ...)'
+matches N to M occurrences.
+
+`(backref N)'
+matches what was matched previously by submatch N.
+
+`(eval FORM)'
+evaluate FORM and insert result.  If result is a string,
+`regexp-quote' it.
+
+`(regexp REGEXP)'
+include REGEXP in string notation in the result.
+
 ** TODO 未歸類的 emacs 筆記。
 *** C-x r N 添加數字序號
 (rectangle-number-lines START END START-AT &optional FORMAT)
+*** C-M-W append-next-kill
+Quite useful, actually.  Normally, if you kill a couple of lines,
+move the cursor, and then kills some more lines, only the second
+batch of lines will be yanked with C-y.
+However, if you use append-next-kill before the second batch of
+kills, they will be appended to the first batch.﻿
 
 * 基礎設置
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
