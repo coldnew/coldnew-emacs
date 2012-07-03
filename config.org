@@ -4800,6 +4800,26 @@ This is to update existing buffers after a Git pull of their underlying files."
     (open-line 1)
     (next-line 1))
 #+end_src
+*** 多次貼上
+emacs 本身的 yank 命令是無法使用 universla-argument的，
+也就是說無法使用 C-u 80 C-y 來貼上複製的東西 80 次，
+而是貼上前幾次紀錄在kill-ring的資訊。
+
+yank-n-times 則可以重複的進行貼上。
+
+當沒有使用 universal-argument 指定要貼上多少次時，
+會使用prompt詢問貼上的次數。
+#+begin_src emacs-lisp
+  (defun yank-n-times (&optional arg)
+    "yank multiple times."
+    (interactive "P")
+    (let ((times (if (equal current-prefix-arg nil)
+		     (read-number "yank repet times: ")
+		   arg)))
+      (if (< times 1)
+	  (setq times 1)
+	(dotimes 'times (yank)))))
+#+end_src
 ** Delete
 
 #+begin_src emacs-lisp
@@ -5336,25 +5356,25 @@ cA==
       (setq cursor-color emacs-normal-cursor-color))))
 #+end_src
 * Global keybinding
- Main keymaps for personal bindings are:
+Main keymaps for personal bindings are:
 
- C-x <letter> primary map (has many defaults too)
- C-c <letter> secondary map (not just for mode-specific)
- C-. <letter> tertiary map
+C-x <letter> primary map (has many defaults too)
+C-c <letter> secondary map (not just for mode-specific)
+C-. <letter> tertiary map
 
- M-g <letter> goto map
- M-s <letter> search map
- M-o <letter> markup map (even if only temporarily)
+M-g <letter> goto map
+M-s <letter> search map
+M-o <letter> markup map (even if only temporarily)
 
- C-<capital letter>
- M-<capital letter>
+C-<capital letter>
+M-<capital letter>
 
- A-<anything>
- M-A-<anything>
+A-<anything>
+M-A-<anything>
 
- Single-letter bindings still available:
- C- ,'";:?<>|!#$%^&*`~ <tab>
- M- ?#
+Single-letter bindings still available:
+C- ,'";:?<>|!#$%^&*`~ <tab>
+M- ?#
 ** Unset key
 #+begin_src emacs-lisp
   (defmacro coldnew/global-unset-key (key &rest bindings)
@@ -5478,10 +5498,12 @@ ssda
 | 按鍵          | 命令                | 用途           |
 |---------------+---------------------+----------------|
 | Ctrl-x Ctrl-f | lusty-file-explorer | 查詢並打開檔案 |
+| Ctrl-x Ctrl-y | yank-n-times        | 多次貼上       |
 |               |                     |                |
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
+  (global-set-key (kbd "C-x C-y")  'yank-n-times)
 #+end_src
 
 #+begin_src emacs-lisp
