@@ -4976,6 +4976,13 @@ tramp config
   (add-to-list 'tramp-default-method-alist
 	       '("\\`localhost\\'" "\\`root\\'" "su"))
 #+end_src
+** Remote sudo access with tramp
+#+begin_src emacs-lisp
+  (add-to-list 'tramp-default-proxies-alist
+	       '(nil "\\`root\\'" "/ssh:%h:"))
+  (add-to-list 'tramp-default-proxies-alist
+	       '((regexp-quote (system-name)) nil nil))
+#+end_src
 * Chat Client
 ** IRC
 *** erc
