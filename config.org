@@ -3845,6 +3845,15 @@ common lisp 語言設置。
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.cl$" . lisp-mode))
 #+end_src
+** Clojure
+*** 載入相關套件
+#+begin_src emacs-lisp
+  (require* 'clojure-mode)
+#+end_src
+*** 設定 Clojure 檔案的副檔名與對應的模式
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+#+end_src
 ** Emacs Lisp
 emacs lisp 語言的設定
 *** 設定 emacs-lisp 的副檔名與對應的模式
