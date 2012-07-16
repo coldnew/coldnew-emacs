@@ -8,7 +8,7 @@
        (lisp-dir '("lisp/" "local-lisp/")))
   (dolist (lisp-path lisp-dir)
     (let* ((load-dir (concat emacs-dir lisp-path))
-           (default-directory load-dir))
+	   (default-directory load-dir))
       (setq load-path (cons load-dir load-path))
       (normal-top-level-add-subdirs-to-load-path))))
 
@@ -25,13 +25,10 @@
 
 ;; load up all literate org-mode files in config directory
 (mapc #'org-babel-load-file (directory-files "~/.emacs.d/" t "\\.org$"))
-;; (let* ((emacs-dir "~/.emacs.d/")
-;;        (emacs-config-file (expand-file-name (concat emacs-dir "config.org"))))
-;;   (org-babel-load-file emacs-config-file))
 
 
-;; After loading allemacs config file, readauthorization fil
-;;(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
+;; After loading allemacs config file, read authorization file
+(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
 
 
 (message "\n\nEmacs is ready to serve you, Master %s!\n\n" (getenv "USER"))
