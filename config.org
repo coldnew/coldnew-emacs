@@ -24,7 +24,7 @@
 | bookmark-save-flag    | t                    |                |
 ** 正規表達式
 *** 使用 rx 來製作正規表達式
-rx 為 emacs macro ，可以幫助產生 emacs 的正規表達式
+rx 為 emacs macro，可以幫助產生 emacs 的正規表達式
 **** TODO 理解並翻譯回中文
 rx is a Lisp macro in `rx.el'.
 
@@ -341,7 +341,7 @@ kills, they will be appended to the first batch.﻿
 http://epsilonvectorplusplus.wordpress.com/2012/04/27/a-functional-introduction-to-cedet-ede/
 
 *** 矩型操作
-emacs 以 C-x r 開頭的命令來進行矩形操作。先用 C-space 或者 C-@設一個 mark ，移動光標到另一點，用以下命令進行列操作：
+emacs 以 C-x r 開頭的命令來進行矩形操作。先用 C-space 或者 C-@設一個 mark，移動光標到另一點，用以下命令進行列操作：
 
 C-x r k 剪切一個矩形塊
 C-x r y 粘貼一個矩形塊
@@ -654,7 +654,7 @@ emacs 個人配置的檔案，也就是這個檔案。
 ** Macros                                                            :macro:
 *** reauire*
 這個巨集用途和 require 類似，但是會忽略掉所有的錯誤。此外，如果 emacs 並沒有讀入這個 package
-則會呼叫 el-get 來安裝這個 package 。
+則會呼叫 el-get 來安裝這個 package。
 **** TODO add require-result buffer
 **** TODO add function to handle if el-get return error
 #+begin_src emacs-lisp
@@ -668,15 +668,15 @@ emacs 個人配置的檔案，也就是這個檔案。
                  )))
 #+end_src
 ** Font-lock
-這邊的 font-lock 設定主要是為了讓自己設定的 macro （ require*) 具有和 require
+這邊的 font-lock 設定主要是為了讓自己設定的 macro（require*) 具有和 require
 一樣的顏色，僅添加於 emacs-lisp-mode 和 lisp-interaction-mode
 #+begin_src emacs-lisp
   (font-lock-add-keywords 'emacs-lisp-mode
-                          '(("(\\(require\*\\*\\)\\s [ \t']*\\(\\sw+\\)?"
+                          '(("(\\(require\*\\*\\)\\s[ \t']*\\(\\sw+\\)?"
                              (1 font-lock-keyword-face)
                              (2 font-lock-constant-face nil t))))
   (font-lock-add-keywords 'lisp-interaction-mode
-                          '(("(\\(require\*\\*\\)\\s [ \t']*\\(\\sw+\\)?"
+                          '(("(\\(require\*\\*\\)\\s[ \t']*\\(\\sw+\\)?"
                              (1 font-lock-keyword-face)
                              (2 font-lock-constant-face nil t))))
 #+end_src
@@ -687,7 +687,7 @@ emacs 個人配置的檔案，也就是這個檔案。
 #+end_src
 
 ** Daemon
-當啟用 emacs 時，啟動 emacs-server ，如果使用者是 root 或已啟用 server ，則忽略。
+當啟用 emacs 時，啟動 emacs-server，如果使用者是 root 或已啟用 server，則忽略。
 #+begin_src emacs-lisp
   ;; Only start server mode if I'm not root
   (unless (string-equal "root" (getenv "USER"))
@@ -749,7 +749,7 @@ emacs 個人配置的檔案，也就是這個檔案。
   )
 #+end_src
 * 語言環境                                                           :locale:
-emacs 編碼設定，大部份都設定成 utf-8 。
+emacs 編碼設定，大部份都設定成 utf-8。
 ** 系統編碼。
 #+begin_src emacs-lisp
   (prefer-coding-system 'utf-8 )
@@ -1033,11 +1033,11 @@ advice file
       ad-do-it))
 #+end_src
 * Function                                                         :function:
-我所自定義或是我的 emacs config 需要用到的 function 。
+我所自定義或是我的 emacs config 需要用到的 function。
 ** List Processing
-處理 List 所用的 function 。
+處理 List 所用的 function。
 *** flatten a list
-flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 list 。
+flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 list。
 舉例來說，假如目前有這樣一個 list:
 
 #+begin_example
@@ -1070,7 +1070,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
       result))
 #+end_src
 ** Search
-搜尋相關的 function 。
+搜尋相關的 function。
 *** search-backward-to-char
 向後搜尋一個字元。
 #+begin_src emacs-lisp
@@ -1103,7 +1103,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
           (coldnew/recursive-find-file file (expand-file-name ".." directory))))))
 #+end_src
 ** Testing
-測試用的 function ，和測試用的變數很像，但是他允許參數的輸入。
+測試用的 function，和測試用的變數很像，但是他允許參數的輸入。
 *** font-exist-p
 測試這個字體在系統內是否存在。
 #+begin_src emacs-lisp
@@ -1121,7 +1121,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     (nth 7 (file-attributes filename)))
 #+end_src
 ** Convert
-進行轉換用的 function 。
+進行轉換用的 function。
 *** 將輸入的 buffer (DOS 格式)　轉換成 UNIX 格式。　
 #+begin_src emacs-lisp
   (defun dos->unix (buf)
@@ -1202,8 +1202,8 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 #+end_src
 ** Buffer
 *** get-buffers-matching-mode
-取得 major-mode 和要求符合的所有 buffer ，假如我們希望可以列出所有為
-emacs-lisp-mode 的 buffer ，可以這樣做
+取得 major-mode 和要求符合的所有 buffer，假如我們希望可以列出所有為
+emacs-lisp-mode 的 buffer，可以這樣做
 #+begin_src emacs-lisp :tangle no
   (get-buffers-matching-mode 'emacs-lisp-mode)
 #+end_src
@@ -1231,9 +1231,9 @@ emacs-lisp-mode 的 buffer ，可以這樣做
     (with-current-buffer buffer-or-string major-mode))
 #+end_src
 ** System
-和系統相關的 function 。
+和系統相關的 function。
 *** get-ip-address
-取得目前的 IP 位置，預設為 eth0 。（此 function 不能用於 windows 上）
+取得目前的 IP 位置，預設為 eth0。（此 function 不能用於 windows 上）
 #+begin_src emacs-lisp
   (defun get-ip-address (&optional dev)
     "get the IP-address for device DEV (default: eth0)"
@@ -1648,7 +1648,7 @@ auto-complete-mode 的按鍵設定。
   (define-key ac-menu-map (kbd "C-n") 'ac-next)
   (define-key ac-menu-map (kbd "C-p") 'ac-previous)
   (define-key ac-completing-map "\t" 'ac-complete)
-  (define-key ac-complete-mode-map [tab] 'ac-expand)
+  (define-key ac-complete-mode-map[tab] 'ac-expand)
 #+end_src
 ** auto-indent
 *** Depends
@@ -1681,7 +1681,7 @@ auto-complete-mode 的按鍵設定。
 #+end_src
 *** Advice
 當目前只有一個 elscreen-tab 存在時，呼叫 *elscreen-next* 、 *elscreen-previous*
-或是 *elscreen-toggle* 會自動建立另外一個 elscreen-tab 。
+或是 *elscreen-toggle* 會自動建立另外一個 elscreen-tab。
 #+begin_src emacs-lisp
   (defmacro elscreen-create-automatically (ad-do-it)
     (` (if (not (elscreen-one-screen-p))
@@ -1711,7 +1711,7 @@ auto-complete-mode 的按鍵設定。
 #+end_src
 *** Config
 **** Prompt
-將 eshell 的 prompt 設定成和 bash 一樣，也就是　 username@system-name 。
+將 eshell 的 prompt 設定成和 bash 一樣，也就是　 username@system-name。
 #+begin_src emacs-lisp
   (setq eshell-prompt-function
         '(lambda ()
@@ -1947,7 +1947,7 @@ auto-complete-mode 的按鍵設定。
   (require 'org-table)
 #+end_src
 
-google-weather 是提供　 emacs 連接 google-weathre 的 API ，
+google-weather 是提供　 emacs 連接 google-weathre 的 API，
 在 org 檔案裏面加入，則可以在 agenda view 裏面看到天氣
 #+begin_example
   * Weather
@@ -2051,7 +2051,7 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API ，
   (setq org-tags-exclude-from-inheritance (quote ("encrypt")))
 #+end_src
 **** 設定 org-crypt-disable-auto-save 成 'encrypt 模式。
-此模式並不會停用 auto-save-mode ，反之，當自動儲存時，解密過的區域將會加密回去。
+此模式並不會停用 auto-save-mode，反之，當自動儲存時，解密過的區域將會加密回去。
 #+begin_src emacs-lisp
   (setq org-crypt-disable-auto-save 'encrypt)
 #+end_src
@@ -2116,8 +2116,8 @@ some packages conflict with org-mode
   (when (featurep 'yasnippet)
     (add-hook 'org-mode-hook
               (lambda ()
-                (org-set-local 'yas/trigger-key [tab])
-                (define-key yas/keymap [tab] 'yas/next-field-group))))
+                (org-set-local 'yas/trigger-key[tab])
+                (define-key yas/keymap[tab] 'yas/next-field-group))))
 #+end_src
 
 **** windmove
@@ -2193,6 +2193,68 @@ some packages conflict with org-mode
 
   ;;* rtm feed timer
   (run-at-time 3600 3600 'org-feed-update-all)
+#+end_src
+*** presentation
+#+begin_src emacs-lisp
+    ;; allow for export=>beamer by placing
+  (setq org-latex-to-pdf-process
+    '("xelatex -interaction nonstopmode %f"
+       "xelatex -interaction nonstopmode %f"))
+  ;; #+LaTeX_CLASS: beamer in org files
+  (unless (boundp 'org-export-latex-classes)
+      (setq org-export-latex-classes nil))
+    (add-to-list 'org-export-latex-classes
+                 ;; beamer class, for presentations
+                 '("beamer"
+                   "\\documentclass[11pt]{beamer}\n
+          \\mode<{{{beamermode}}}>\n
+          \\usetheme{{{{beamertheme}}}}\n
+          \\usecolortheme{{{{beamercolortheme}}}}\n
+          \\beamertemplateballitem\n
+          \\setbeameroption{show notes}
+          \\usepackage[utf8]{inputenc}\n
+          \\usepackage[T1]{fontenc}\n
+          \\usepackage{hyperref}\n
+          \\usepackage{color}\n
+          \\usepackage{listings}\n
+          \\usepackage{xeCJK}\n
+          \\setCJKmainfont{LiHei Pro}\n
+          \\XeTeXlinebreaklocale \"zh\"\n
+          \\XeTeXlinebreakskip = 0pt plus 1pt
+          \\lstset{numbers=none,language=[ISO]C++,tabsize=4,
+      frame=single,
+      basicstyle=\\small,
+      showspaces=false,showstringspaces=false,
+      showtabs=false,
+      keywordstyle=\\color{blue}\\bfseries,
+      commentstyle=\\color{red},
+      }\n
+          \\usepackage{verbatim}\n
+          \\institute{{{{beamerinstitute}}}}\n
+           \\subject{{{{beamersubject}}}}\n"
+
+                   ("\\section{%s}" . "\\section*{%s}")
+
+                   ("\\begin{frame}[fragile]\\frametitle{%s}"
+                    "\\end{frame}"
+                    "\\begin{frame}[fragile]\\frametitle{%s}"
+                    "\\end{frame}")))
+
+    ;; letter class, for formal letters
+
+    (add-to-list 'org-export-latex-classes
+
+                 '("letter"
+                   "\\documentclass[11pt]{letter}\n
+          \\usepackage[utf8]{inputenc}\n
+          \\usepackage[T1]{fontenc}\n
+          \\usepackage{color}"
+
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 #+end_src
 ** smex                                                               :smex:
 *** Depends
@@ -2619,7 +2681,7 @@ Following buffer will not show in iBuffer
 #+end_src
 
 *** Config
-term-mode 的設定會影響到 multi-term ，這邊我主要是設定顏色。
+term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 
 **** Color
 移除 term-mode 預設的前景與背景顏色。
@@ -2628,7 +2690,7 @@ term-mode 的設定會影響到 multi-term ，這邊我主要是設定顏色。
   (setq term-default-fg-color nil)
 #+end_src
 
-重新設定 Ansi-Color ，讓他和我的佈景主題配合。
+重新設定 Ansi-Color，讓他和我的佈景主題配合。
 #+begin_src emacs-lisp
   ;; reset ansi-color
   (setq-default ansi-color-names-vector
@@ -2836,7 +2898,7 @@ try to define my editor-mode , some function  or macros copy from evil :)
                               ) )
 #+end_src
 ** 替中文字和英文字中間加入空格
-mixen 是我自己設計的 minor-mode ，能夠自動替中文與英文字元間加入空格。
+mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間加入空格。
 #+begin_src emacs-lisp
   (require* 'mixen)
   (setq mixen-enable-write-to-file t)
@@ -2909,7 +2971,7 @@ mixen 是我自己設計的 minor-mode ，能夠自動替中文與英文字元�
   The parameters are the same as for `defvar', but the variable
   SYMBOL is made `permanent' buffer local."
     (declare (indent defun)
-             (debug (symbolp &optional form stringp [&rest [keywordp sexp]] def-body))
+             (debug (symbolp &optional form stringp[&rest[keywordp sexp]]def-body))
              )
     (let (key arg)
       (if (keywordp (car-safe body))
@@ -2941,7 +3003,7 @@ mixen 是我自己設計的 minor-mode ，能夠自動替中文與英文字元�
     (declare (indent defun)
              (debug (&define name
                              [&optional stringp]
-                             [&rest [keywordp sexp]]
+                             [&rest[keywordp sexp]]
                              def-body)))
     (let* (
            (name (intern (format "%s" state)))
@@ -3056,11 +3118,11 @@ mixen 是我自己設計的 minor-mode ，能夠自動替中文與英文字元�
                   reinitialized for each buffer.
   :func BOOLEAN   Create a toggle function even if BODY is empty.
 
-  \(fn KEYMAP DOC [[KEY VAL]...] BODY...)"
+  \(fn KEYMAP DOC[[KEY VAL]...]BODY...)"
     (declare (indent defun)
              (debug (&define name
                              [&optional stringp]
-                             [&rest [keywordp sexp]]
+                             [&rest[keywordp sexp]]
                              def-body)))
     (let ((func t)
           arg intercept key local mode overriding)
@@ -3474,7 +3536,7 @@ This section contains my editor state
 #+end_src
 ** Config
 *** Do not show tips-of-the-day
-不要顯示　 tips-of-the-day ，感覺很煩人
+不要顯示　 tips-of-the-day，感覺很煩人
 #+begin_src emacs-lisp
   (setq ecb-tip-of-the-day nil)
 #+end_src
@@ -3542,7 +3604,7 @@ This section contains my editor state
   sudo emerge cscope
 #+end_src
 *** 使用 xcscope
-emacs 和 cscope 相關的套件蠻多的， xcscope 包含在 cscope 的套件裡。
+emacs 和 cscope 相關的套件蠻多的，xcscope 包含在 cscope 的套件裡。
 將 xcscope.el 加入你的　 load-path 並載入他。
 #+begin_src emacs-lisp
   (require 'xcscope)
@@ -3880,14 +3942,14 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 #+end_src
 
-讓 pairedit 相容於 eldoc 。
+讓 pairedit 相容於 eldoc。
 #+begin_src emacs-lisp
   (when (featurep 'paredit)
     (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
 #+end_src
 
 **** highlight-cl
-高亮屬於 cl.el 套件的 function 或是 macro 。
+高亮屬於 cl.el 套件的 function 或是 macro。
 #+begin_src emacs-lisp
   (require 'highlight-cl)
   (add-hook 'emacs-lisp-mode-hook 'highlight-cl-add-font-lock-keywords)
@@ -4010,7 +4072,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (require* 'pymacs)
 #+end_src
 **** TODO 讓 pymacs 找的到 rope 以及 ropemacs
-我將 pymacs 必須使用的 rope 、 ropemacs 、 ropemode 安裝在 lisp 資料夾裏面，
+我將 pymacs 必須使用的 rope、ropemacs、ropemode 安裝在 lisp 資料夾裏面，
 必須設定 PATH 讓 pymacs 知道他們在哪。
 #+begin_src emacs-lisp
 ;; no use?
@@ -4427,7 +4489,7 @@ This is to update existing buffers after a Git pull of their underlying files."
           (buffer-list))))
 #+end_src
 *** nuke-all-buffers
-關閉除了 **scratch** 以外的所有 buffer 。
+關閉除了 **scratch** 以外的所有 buffer。
 #+begin_src emacs-lisp
   (defun nuke-all-buffers ()
     "Kill all buffers, leaving *scratch* only."
@@ -4513,7 +4575,7 @@ This is to update existing buffers after a Git pull of their underlying files."
        (concat (substring result2 0 width) "\n"
                (substring result1 0 width) "\n"))
      (line-beginning-position)
-     nil "[space] Clears ruler"))
+     nil "[space]Clears ruler"))
 
 #+end_src
 
@@ -4942,7 +5004,7 @@ yank-n-times 則可以重複的進行貼上。
     (dos->unix (current-buffer)))
 #+end_src
 *** eval-and-replace
-將前面的 sexp 刪除並進行 eval 的動作，如果 eval 失敗則還原前面的 sexp 。
+將前面的 sexp 刪除並進行 eval 的動作，如果 eval 失敗則還原前面的 sexp。
 #+begin_src emacs-lisp
   (defun eval-and-replace ()
     "Replace the preceding sexp with its value."
@@ -5011,7 +5073,7 @@ tramp config
 #+end_src
 **** Configs
 ***** prompt
-設定 erc-prompt 。
+設定 erc-prompt。
 #+begin_src emacs-lisp
   (setq erc-prompt ">>")
 #+end_src
@@ -5115,7 +5177,7 @@ tramp config
 :PROPERTIES:
 :tangle: no
 :END:
-這邊是以前所使用的 rcirc 設定，由於我改用 erc 作為我的 irc client ，這邊的設定將不輸出至
+這邊是以前所使用的 rcirc 設定，由於我改用 erc 作為我的 irc client，這邊的設定將不輸出至
 我的 emacs 設定。
 **** Depends
 #+begin_src emacs-lisp
@@ -5204,7 +5266,7 @@ cA==
 -----END PGP MESSAGE-----
 * Alias                                                               :alias:
 ** git
-和 git 相關的命令的 alias 。
+和 git 相關的命令的 alias。
 #+begin_src emacs-lisp
   (defalias 'git-log    'egg-log)
   (defalias 'git-status 'egg-status)
@@ -5257,7 +5319,7 @@ cA==
 
 #+end_src
 **** Advice                                                       :advice:
-當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window 。
+當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window。
 #+begin_src emacs-lisp
   (defadvice egg-status (around goto-egg-status-buffer activate)
     "Delete other windows after visiting egg-status."
@@ -5337,9 +5399,119 @@ cA==
   (setq auto-save-list-file-prefix (concat emacs-backup-dir "auto-saves-"))
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
 #+end_src
-* EMMS                                                                 :emms:
+* 多媒體                                                               :emms:
 使用 emacs 聽音樂。
+** 預先載入套件
+#+begin_src emacs-lisp
+  (require 'emms-setup)
+#+end_src
+** 選用完整的 emms 功能
+啟用 emms 所有穩定版的功能。
+在 emms-setup 裡面，emms 提供了 minimalistic、standard、all 以及包含各種含在測試中的外掛。
+選擇 all 則啟用了所有穩定版本的外掛。
+#+begin_src emacs-lisp
+  (emms-all)
+#+end_src
+** 自動根據音樂檔的 id3 Tag 進行語言解碼
+#+begin_src emacs-lisp
+  (require 'emms-i18n)
+#+end_src
+** 設定 emms 所使用的播放器
+emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設定，
+這邊重新設定我所需要使用的多媒體播放程式。
+#+begin_src emacs-lisp
+  (setq emms-player-list '(emms-player-mpg321
+                           ;;emms-player-ogg123
+                           emms-player-mplayer-playlist
+                           emms-player-mplayer
+                           emms-player-vlc
+                           ))
+#+end_src
+** 設定預設的音樂資料夾路徑
+#+begin_src emacs-lisp
 
+#+end_src
+** 播放清單設置
+#+begin_src emacs-lisp
+  (setq emms-playlist-buffer-name "*EMMS Playlist*"
+        emms-playlist-mode-open-playlists t)
+
+  (require 'emms-info-libtag)
+  (setq emms-info-functions '(emms-info-libtag))
+
+  (setq xwl-emms-playlist-last-track nil)
+  (setq xwl-emms-playlist-last-indent "\\")
+
+  (defun xwl-emms-track-description-function (track)
+    "Return a description of the current track."
+    (let* ((name (emms-track-name track))
+           (type (emms-track-type track))
+           (short-name (file-name-nondirectory name))
+           (play-count (or (emms-track-get track 'play-count) 0))
+           (last-played (or (emms-track-get track 'last-played) '(0 0 0)))
+           (empty "..."))
+      (prog1
+          (case (emms-track-type track)
+            ((file url)
+             (let* ((artist (or (emms-track-get track 'info-artist) empty))
+                    (year (emms-track-get track 'info-year))
+                    (playing-time (or (emms-track-get track 'info-playing-time) 0))
+                    (min (/ playing-time 60))
+                    (sec (% playing-time 60))
+                    (album (or (emms-track-get track 'info-album) empty))
+                    (tracknumber (emms-track-get track 'info-tracknumber))
+                    (short-name (file-name-sans-extension
+                                 (file-name-nondirectory name)))
+                    (title (or (emms-track-get track 'info-title) short-name))
+
+                    ;; last track
+                    (ltrack xwl-emms-playlist-last-track)
+                    (lartist (or (and ltrack (emms-track-get ltrack 'info-artist))
+                                 empty))
+                    (lalbum (or (and ltrack (emms-track-get ltrack 'info-album))
+                                empty))
+
+                    (same-album-p (and (not (string= lalbum empty))
+                                       (string= album lalbum))))
+               (format "%10s  %3d   %-20s%-60s%-35s%-15s%s"
+                       (emms-last-played-format-date last-played)
+                       play-count
+                       artist
+
+                       ;; Combine indention, tracknumber, title.
+                       (concat
+                        (if same-album-p ; indention by album
+                            (setq xwl-emms-playlist-last-indent
+                                  (concat " " xwl-emms-playlist-last-indent))
+                          (setq xwl-emms-playlist-last-indent "\\")
+                          "")
+                        (if (and tracknumber ; tracknumber
+                                 (not (zerop (string-to-number tracknumber))))
+                            (format "%02d." (string-to-number tracknumber))
+                          "")
+                        title        ; title
+                        )
+
+                       ;; album
+                       (cond ((string= album empty) empty)
+                             ;; (same-album-p "  ")
+                             (t (concat "《" album "》")))
+
+                       (or year empty)
+                       (if (or (> min 0)  (> sec 0))
+                           (format "%02d:%02d" min sec)
+                         empty))))
+            ((url)
+             (concat (symbol-name type) ":" name))
+            (t
+             (format "%-3d%s"
+                     play-count
+                     (concat (symbol-name type) ":" name))))
+        (setq xwl-emms-playlist-last-track track))))
+
+  (setq emms-track-description-function
+        'xwl-emms-track-description-function)
+#+end_src
 * Session
 ** filecache
 #+begin_src emacs-lisp
@@ -5453,7 +5625,7 @@ cA==
       (setq cursor-type emacs-normal-cursor-type)
       (setq cursor-color emacs-normal-cursor-color))))
 #+end_src
-* Global keybinding
+* 全域性按鍵設置
 Main keymaps for personal bindings are:
 
 C-x <letter> primary map (has many defaults too)
@@ -5589,18 +5761,21 @@ ssda
   (global-set-key (kbd "C-v") 'coldnew/set-mark-command)
   (global-set-key (kbd "C-/") 'undo-tree-undo)
   (global-set-key (kbd "C-]") 'coldnew/toggle-state)
+
+  (global-set-key (kbd "C-=") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease)
 #+end_src
 
 ** Ctrl-x Prefix
 *** Misc
-| 按鍵          | 命令                | 用途                   |
-|---------------+---------------------+------------------------|
-| Ctrl-x Ctrl-f | lusty-file-explorer | 查詢並打開檔案         |
-| Ctrl-x Ctrl-y | yank-n-times        | 多次貼上               |
-| Ctrl-x Ctrl-r | lusty-sudo-explorer | 使用 sudo 打開檔案     |
-| Ctrl-x Ctrl-b | ibuffer             | 顯示 ibuffer           |
-| Ctrl-x Ctrl-l | recenter-top-buttom | 將游標至於 buffer 中間 |
-|               |                     |                        |
+| 按鍵    | 命令                | 用途                   |
+|---------+---------------------+------------------------|
+| C-x C-f | lusty-file-explorer | 查詢並打開檔案         |
+| C-x C-y | yank-n-times        | 多次貼上               |
+| C-x C-r | lusty-sudo-explorer | 使用 sudo 打開檔案     |
+| C-x C-b | ibuffer             | 顯示 ibuffer           |
+| C-x C-l | recenter-top-buttom | 將游標至於 buffer 中間 |
+|         |                     |                        |
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
@@ -5620,15 +5795,14 @@ ssda
   (global-set-key (kbd "C-x C-s") 'save-buffer-always)
   (global-set-key (kbd "C-x F") 'fullscreen-window)
   (global-set-key (kbd "C-x s") 'shell-command)
-  (global-set-key (kbd "C-x e") 'eval-and-replace)
 #+end_src
 *** 窗口移動
-| 按鍵     | 命令           | 用途             |
-|----------+----------------+------------------|
-| Ctrl-x n | windmove-down  | 移動到下面的窗口 |
-| Ctrl-x p | windmove-up    | 移動到上面的窗口 |
-| Ctrl-x b | windmove-left  | 移動到左邊的窗口 |
-| Ctrl-x f | windmove-right | 移動到右邊的窗口 |
+| 按鍵  | 命令           | 用途             |
+|-------+----------------+------------------|
+| C-x n | windmove-down  | 移動到下面的窗口 |
+| C-x p | windmove-up    | 移動到上面的窗口 |
+| C-x b | windmove-left  | 移動到左邊的窗口 |
+| C-x f | windmove-right | 移動到右邊的窗口 |
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x n") 'windmove-down)
@@ -5637,28 +5811,47 @@ ssda
   (global-set-key (kbd "C-x p") 'windmove-up)
 #+end_src
 *** Google 相關
-| 按鍵       | 命令                   | 用途           |
-|------------+------------------------+----------------|
-| Ctrl-x g e | google-translate-zh-en | 中文翻譯成英文 |
-| Ctrl-x g t | google-translate-en-zh | 英文翻譯成中文 |
+| 按鍵    | 命令                   | 用途           |
+|---------+------------------------+----------------|
+| C-x g e | google-translate-zh-en | 中文翻譯成英文 |
+| C-x g t | google-translate-en-zh | 英文翻譯成中文 |
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x g e") 'google-translate-zh-en)
   (global-set-key (kbd "C-x g t") 'google-translate-en-zh)
 #+end_src
 *** 轉換
-| 按鍵       | 命令                     | 用途                             |
-|------------+--------------------------+----------------------------------|
-| Ctrl-x c c | capitalize-word-backward | 將前面的 word 第一個字母大寫     |
-| Ctrl-x c l | downcase-word-backward   | 將前面的 word 變成小寫           |
-| Ctrl-x c u | upcase-word-backward     | 將前面的 word 變成大寫           |
-| Ctrl-x c x | dos2unix                 | 將目前的檔案轉換成 unix 檔案型式 |
-| Ctrl-x c d | unix2dos                 | 將目前的檔案轉換成 dos 檔案型式  |
+| 按鍵    | 命令                     | 用途                             |
+|---------+--------------------------+----------------------------------|
+| C-x c c | capitalize-word-backward | 將前面的 word 第一個字母大寫     |
+| C-x c l | downcase-word-backward   | 將前面的 word 變成小寫           |
+| C-x c u | upcase-word-backward     | 將前面的 word 變成大寫           |
+| C-x c x | dos2unix                 | 將目前的檔案轉換成 unix 檔案型式 |
+| C-x c d | unix2dos                 | 將目前的檔案轉換成 dos 檔案型式  |
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x c c") 'capitalize-word-backward)
   (global-set-key (kbd "C-x c l") 'downcase-word-backward)
   (global-set-key (kbd "C-x c u") 'upcase-word-backward)
   (global-set-key (kbd "C-x c x") 'dos2unix)
   (global-set-key (kbd "C-x c d") 'unix2dos)
+#+end_src
+*** emms
+| 按鍵        | 命令              | 用途       |
+|-------------+-------------------+------------|
+| C-x e s     | emms-start        | 啟動 emms  |
+| C-x e n     | emms-next         | 下一首曲目 |
+| C-x e p     | emms-previous     | 前一首曲目 |
+| C-x e <SPC> | emms-pause        | 暫停曲目   |
+| C-x e =     | emms-volume-raise | 放大音量   |
+| C-x e -     | emms-volume-lower | 縮小音量   |
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x e n") 'emms-next)
+  (global-set-key (kbd "C-x e p") 'emms-previous)
+  (global-set-key (kbd "C-x e <SPC>") 'emms-pause)
+  (global-set-key (kbd "C-x e s") 'emms-start)
+  ;;(require 'emms-volume)
+  (global-set-key (kbd "C-x e =") 'emms-volume-raise)
+  (global-set-key (kbd "C-x e -") 'emms-volume-lower)
 #+end_src
 ** Ctrl-c prefix
 #+begin_src emacs-lisp
@@ -5738,7 +5931,7 @@ ssda
 #+end_src
 ** Shift prefix
 #+begin_src emacs-lisp
-  (global-set-key [(shift return)] 'insert-empty-line)
+  (global-set-key[(shift return)] 'insert-empty-line)
 #+end_src
 
 ** Super prefix
