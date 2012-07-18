@@ -5405,12 +5405,12 @@ cA==
 #+begin_src emacs-lisp
   (require 'emms-setup)
 #+end_src
-** 選用完整的 emms 功能
+** 選用開發中的 emms 功能
 啟用 emms 所有穩定版的功能。
 在 emms-setup 裡面，emms 提供了 minimalistic、standard、all 以及包含各種含在測試中的外掛。
-選擇 all 則啟用了所有穩定版本的外掛。
+選擇 all 啟用了所有穩定版本的外掛，devel 是選用開發中的外掛。
 #+begin_src emacs-lisp
-  (emms-all)
+  (emms-devel)
 #+end_src
 ** 自動根據音樂檔的 id3 Tag 進行語言解碼
 #+begin_src emacs-lisp
