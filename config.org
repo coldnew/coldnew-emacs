@@ -1941,10 +1941,12 @@ auto-complete-mode 的按鍵設定。
 #+end_src
 
 ** org-mode                                                            :org:
-*** Depends
+*** 載入相關套件
 #+begin_src emacs-lisp
   (require 'org-install)
   (require 'org-table)
+  (require 'ob-ditaa)
+  (require 'org-latex)
 #+end_src
 
 google-weather 是提供　 emacs 連接 google-weathre 的 API，
@@ -2098,17 +2100,6 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
 #+begin_src emacs-lisp
 ;;  (add-to-list 'org-mode-hook '(lambda () (linum-mode -1)))
 #+end_src
-#+begin_src emacs-lisp
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '( (perl . t)
-      (ruby . t)
-      (sh . t)
-      (python . t)
-      (emacs-lisp . t)
-      ))
-#+end_src
-
 *** Conflict Fix
 some packages conflict with org-mode
 **** yasnippet
@@ -2197,9 +2188,7 @@ some packages conflict with org-mode
 *** presentation
 #+begin_src emacs-lisp
     ;; allow for export=>beamer by placing
-  (setq org-latex-to-pdf-process
-    '("xelatex -interaction nonstopmode %f"
-       "xelatex -interaction nonstopmode %f"))
+
   ;; #+LaTeX_CLASS: beamer in org files
   (unless (boundp 'org-export-latex-classes)
       (setq org-export-latex-classes nil))
@@ -2255,6 +2244,102 @@ some packages conflict with org-mode
                    ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                    ("\\paragraph{%s}" . "\\paragraph*{%s}")
                    ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+#+end_src
+*** Babel 支援的語言
+#+begin_src emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (C . t)
+     (ditaa . t)
+     (dot . t)
+     (js . t)
+     (latex . t)
+     (perl . t)
+     (python . t)
+     (ruby . t)
+     (sh . t)
+     ))
+#+end_src
+*** 輸出成 PDF 檔案設定
+**** 使用 Listings 將程式碼加上色彩
+#+begin_src emacs-lisp
+  (setq org-export-latex-listings t)
+#+end_src
+**** Listings 顏色配置
+***** 配置開始
+#+begin_src emacs-lisp
+  (setq org-export-latex-listings-options
+        '(
+#+end_src
+***** 程式碼字體（前景色）
+#+begin_src emacs-lisp
+  ("basicstyle" "\\color{foreground}\\small\\mono")
+#+end_src
+***** 程式碼外框（背景色）
+#+begin_src emacs-lisp
+  ("backgroundcolor" "\\color{background}")
+#+end_src
+***** TODO 關鍵字
+#+begin_src emacs-lisp
+  ("keywordstyle" "\\color{function}\\bfseries\\small\\mono")
+#+end_src
+***** 註解
+#+begin_src emacs-lisp
+  ("commentstyle" "\\color{comment}\\small\\itshape")
+#+end_src
+***** TODO 文檔
+#+begin_src emacs-lisp
+  ("identifierstyle" "\\color{doc}\\small\\mono")
+#+end_src
+***** 行號
+在左邊顯示行號
+#+begin_src emacs-lisp
+  ("numbers" "left")
+#+end_src
+色彩設置
+#+begin_src emacs-lisp
+  ("numberstyle" "\\color{preprocess}")
+#+end_src
+初始數值
+#+begin_src emacs-lisp
+  ("stepnumber" "1")
+#+end_src
+***** 自動斷行
+#+begin_src emacs-lisp
+  ("breaklines" "true")
+#+end_src
+***** 外框設置
+外框設置成單一條線
+#+begin_src emacs-lisp
+  ("frame" "single")
+#+end_src
+轉角處設置成圓角
+#+begin_src emacs-lisp
+  ("frameround" "tttt")
+#+end_src
+#+begin_src emacs-lisp
+  ("framesep" "0pt")
+#+end_src
+#+begin_src emacs-lisp
+  ("framerule" "8pt")
+#+end_src
+***** 配置結束
+#+begin_src emacs-lisp
+          ))
+#+end_src
+**** 使用 xelatex 產生 PDF 檔案
+#+begin_src emacs-lisp
+  (setq org-latex-to-pdf-process
+        '("xelatex -interaction nonstopmode %f"
+          "xelatex -interaction nonstopmode %f"))
+#+end_src
+**** 一般文章所使用的 latex 配置
+#+begin_src emacs-lisp
+  ;; (add-to-list 'org-export-latex-class
+  ;;              '("coldnew-article"
+
+  ;;                ))
 #+end_src
 ** smex                                                               :smex:
 *** Depends
@@ -5407,7 +5492,7 @@ cA==
 #+end_src
 ** 選用開發中的 emms 功能
 啟用 emms 所有穩定版的功能。
-在 emms-setup 裡面，emms 提供了 minimalistic、standard、all 以及包含各種含在測試中的外掛。
+在 emms-setup 裡面，emms 提供了 minimalistic、tandard、all 以及包含各種含在測試中的外掛。
 選擇 all 啟用了所有穩定版本的外掛，devel 是選用開發中的外掛。
 #+begin_src emacs-lisp
   (emms-devel)
