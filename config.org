@@ -1,12 +1,10 @@
-#+TITLE: coldnew emacs config
-#+AUTHOR: coldnew
+#+TITLE: coldnew 的 emacs 配置
+#+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
 #+STARTUP: overview indent align
 #+PROPERTY: noweb tangle
-#+TAGS: macro
+#+OPTIONS: ^:nil
 
-* Introduction
-這是我個人的 emacs 配置
 * 筆記
 ** 書籤管理
 *** 按鍵
@@ -1007,6 +1005,7 @@ comment 只是用來註釋用，並不會解析裏面的東西。
   (require* 'pretty-lambdada)
   (require 'projectile)
   (projectile-mode)
+  (require* 'htmlize)
 #+end_src
 parenface 可以將所有的圓括號上色。
 #+begin_src emacs-lisp
@@ -1462,6 +1461,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
   '(font-lock-warning-face ((t (:foreground "#E91303" :bold t))))
   ;; Doc
   '(font-lock-doc-face ((t (:foreground "#40AAFA"))))
+
 #+end_src
 *** Auto-Complete
 #+begin_src emacs-lisp
@@ -1960,9 +1960,8 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
   (require* 'google-weather)
   (require 'org-google-weather)
 #+end_src
-*** Auto Mode Alist
+*** 設定 org-mode 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
-  ;;;;;;;; org-mode extensions
   (add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
   (add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
@@ -1976,10 +1975,7 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
   (setq org-startup-folded nil)
   ;; indent all at startup
   (setq org-startup-indented t)
-  ;; Make org-mode compatible with cua-mode
-  (setq org-CUA-compatible t)
   (setq org-src-window-setup 'current-window)
-  (setq org-src-fontify-natively t)
   (setq org-agenda-files (list "~/Dropbox/Org/"))
   (setq org-log-done t)
   (setq org-pretty-entities t)
@@ -1990,10 +1986,20 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
                         ))
 
 #+end_src
-增加模版。
+*** 直接在程式碼欄位上為程式碼上色
+#+begin_src emacs-lisp
+  (setq org-src-fontify-natively t)
+#+end_src
+*** 讓 org-mode與cua-mode相容
+#+begin_src emacs-lisp
+  (setq org-CUA-compatible t)
+#+end_src
+*** 增加模版
 #+begin_src emacs-lisp
   (add-to-list 'org-structure-template-alist
                '("E" "#+begin_src emacs-lisp\n?\n#+end_src"))
+  (add-to-list 'org-structure-template-alist
+               '("S" "#+begin_src sh\n?\n#+end_src"))
 #+end_src
 
 *** Capture
@@ -2336,10 +2342,35 @@ some packages conflict with org-mode
 #+end_src
 **** 一般文章所使用的 latex 配置
 #+begin_src emacs-lisp
-  ;; (add-to-list 'org-export-latex-class
-  ;;              '("coldnew-article"
+  (add-to-list 'org-export-latex-classes
+               '("coldnew-article"
+                 "\\documentclass[12pt,a4paper]{article}
+                  \\usepackage[T1]{fontenc}
+                  \\usepackage{fontspec}
+                  \\usepackage{xeCJK}
+                  \\setCJKmainfont{Hiragino Sans GB W3}
+                  \\XeTeXlinebreaklocale \"zh\"
+                  \\XeTeXlinebreakskip = 0pt plus 1pt
+                  \\usepackage{graphicx}
+                  \\usepackage{tikz}
+                  \\usepackage[bookmarks=true,colorlinks,linkcolor=black]{hyperref}
+                  \\defaultfontfeatures{Mapping=tex-text}
+                  \\setmonofont[Scale=0.8]{DejaVu Sans Mono}
+                  \\usepackage{geometry}
+                  \\geometry{a4paper, textwidth=6.5in, textheight=8in,
+                              marginparsep=10pt, marginparwidth=.6in}
+                  \\pagestyle{plain}
+                  \\linespread{1.5}
+                  \\title{}
+                        [NO-DEFAULT-PACKAGES]
+                        [NO-PACKAGES]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")
+                 ))
 
-  ;;                ))
 #+end_src
 ** smex                                                               :smex:
 *** Depends
@@ -2985,9 +3016,9 @@ try to define my editor-mode , some function  or macros copy from evil :)
 ** 替中文字和英文字中間加入空格
 mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間加入空格。
 #+begin_src emacs-lisp
-  (require* 'mixen)
-  (setq mixen-enable-write-to-file t)
-  (mixen-mode)
+;;  (require* 'mixen)
+;;  (setq mixen-enable-write-to-file t)
+;;  (mixen-mode)
 #+end_src
 ** Mode
 #+begin_src emacs-lisp :tangle no
@@ -5485,6 +5516,9 @@ cA==
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
 #+end_src
 * 多媒體                                                               :emms:
+:PROPERTIES:
+:tangle: no
+:END:
 使用 emacs 聽音樂。
 ** 預先載入套件
 #+begin_src emacs-lisp
