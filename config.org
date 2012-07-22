@@ -386,7 +386,7 @@ M-x finder-commentary
 #+begin_src emacs-lisp
   (setq initial-scratch-message "")
 #+end_src
-*** 視覺響鈴
+*** 關閉蜂鳴器
 使用 visible bell 代替電腦的蜂鳴器叫聲。
 #+begin_src emacs-lisp
   (setq visible-bell t)
@@ -395,12 +395,12 @@ M-x finder-commentary
 #+begin_src emacs-lisp
   (if (featurep 'tool-bar) (tool-bar-mode -1))
 #+end_src
-*** Scroll bar
-Disable scrollbar
+*** 關閉滾動條
+關閉左側或右側的滾動條 (scrool-bar)
 #+begin_src emacs-lisp
   (if (featurep 'scroll-bar) (scroll-bar-mode -1))
 #+end_src
-*** Cursor
+*** 關閉游標閃爍
 #+begin_src emacs-lisp
   (blink-cursor-mode -1)
 #+end_src
@@ -746,7 +746,7 @@ emacs 個人配置的檔案，也就是這個檔案。
 #+begin_src emacs-lisp
   )
 #+end_src
-* 語言環境                                                           :locale:
+* 語言與編碼                                                         :locale:
 emacs 編碼設定，大部份都設定成 utf-8。
 ** 系統編碼。
 #+begin_src emacs-lisp
