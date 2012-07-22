@@ -514,7 +514,7 @@ emacs 個人配置的檔案，也就是這個檔案。
   (setq exec-path (cons emacs-bin-dir exec-path))
 #+end_src
 
-**** TODO Remember to remove
+*** TODO Remember to remove
 #+begin_src emacs-lisp
   (defun change-mouse-to-left ()
     (interactive)
@@ -2335,10 +2335,14 @@ some packages conflict with org-mode
           ))
 #+end_src
 **** 使用 xelatex 產生 PDF 檔案
+當系統有安裝 latexmk 時，使用 latexmk 呼叫 xelatex 進行編譯，
+反之則直接呼叫 xelatex 進行二次編譯。
 #+begin_src emacs-lisp
   (setq org-latex-to-pdf-process
-        '("xelatex -interaction nonstopmode %f"
-          "xelatex -interaction nonstopmode %f"))
+        (if (executable-find "latexmk")
+            '("latexmk -pdflatex=xelatex -pdf -silent -f %f")
+          '("xelatex -interaction nonstopmode %f"
+            "xelatex -interaction nonstopmode %f")))
 #+end_src
 **** 一般文章所使用的 latex 配置
 #+begin_src emacs-lisp
@@ -2372,6 +2376,42 @@ some packages conflict with org-mode
                  ))
 
 #+end_src
+**** 投影片所使用的 latex 配置
+#+begin_src emacs-lisp
+  (add-to-list 'org-export-latex-classes
+    ;; beamer class, for presentations
+    '("beamer"
+       "\\documentclass[11pt]{beamer}\n
+        \\mode<{{{beamermode}}}>\n
+        \\usetheme{{{{beamertheme}}}}\n
+        \\usecolortheme{{{{beamercolortheme}}}}\n
+        \\beamertemplateballitem\n
+        \\setbeameroption{show notes}
+        \\usepackage[utf8]{inputenc}\n
+        \\usepackage[T1]{fontenc}\n
+        \\usepackage{hyperref}\n
+        \\usepackage{color}
+        \\usepackage{listings}
+        \\lstset{numbers=none,language=[ISO]C++,tabsize=4,
+    frame=single,
+    basicstyle=\\small,
+    showspaces=false,showstringspaces=false,
+    showtabs=false,
+    keywordstyle=\\color{blue}\\bfseries,
+    commentstyle=\\color{red},
+    }\n
+        \\usepackage{verbatim}\n
+        \\institute{{{{beamerinstitute}}}}\n
+         \\subject{{{{beamersubject}}}}\n"
+
+       ("\\section{%s}" . "\\section*{%s}")
+
+       ("\\begin{frame}[fragile]\\frametitle{%s}"
+         "\\end{frame}"
+         "\\begin{frame}[fragile]\\frametitle{%s}"
+         "\\end{frame}")))
+#+end_src
+**** TODO 投影片所使用的 html5 配置
 ** smex                                                               :smex:
 *** Depends
 #+begin_src emacs-lisp
