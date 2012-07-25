@@ -2379,37 +2379,42 @@ some packages conflict with org-mode
 **** 投影片所使用的 latex 配置
 #+begin_src emacs-lisp
   (add-to-list 'org-export-latex-classes
-    ;; beamer class, for presentations
-    '("beamer"
-       "\\documentclass[11pt]{beamer}\n
-        \\mode<{{{beamermode}}}>\n
-        \\usetheme{{{{beamertheme}}}}\n
-        \\usecolortheme{{{{beamercolortheme}}}}\n
-        \\beamertemplateballitem\n
-        \\setbeameroption{show notes}
-        \\usepackage[utf8]{inputenc}\n
-        \\usepackage[T1]{fontenc}\n
-        \\usepackage{hyperref}\n
-        \\usepackage{color}
-        \\usepackage{listings}
-        \\lstset{numbers=none,language=[ISO]C++,tabsize=4,
-    frame=single,
-    basicstyle=\\small,
-    showspaces=false,showstringspaces=false,
-    showtabs=false,
-    keywordstyle=\\color{blue}\\bfseries,
-    commentstyle=\\color{red},
-    }\n
-        \\usepackage{verbatim}\n
-        \\institute{{{{beamerinstitute}}}}\n
-         \\subject{{{{beamersubject}}}}\n"
+               ;; beamer class, for presentations
+               '("beamer"
+                 "\\documentclass[11pt]{beamer}
+                  \\mode<{{{beamermode}}}>
+                  \\usetheme{{{{beamertheme}}}}
+                  \\usecolortheme{{{{beamercolortheme}}}}
+                  \\beamertemplateballitem
+                  \\setbeameroption{show notes}
+                  \\usepackage[T1]{fontenc}
+                  \\usepackage{xeCJK}
+                  \\setCJKmainfont{Hiragino Sans GB W3}
+                  \\XeTeXlinebreaklocale \"zh\"
+                  \\XeTeXlinebreakskip = 0pt plus 1pt
+                  \\setmainfont{Monaco}
+                  \\usepackage{hyperref}
+                  \\usepackage{color}
+                  \\usepackage{listings}
+                  \\lstset{numbers=none,language=[ISO]C++,tabsize=2,
+                           frame=single,
+                   basicstyle=\\small\\ttfamily,
+                           showspaces=false,
+                           showstringspaces=false,
+                           showtabs=false,
+                           keywordstyle=\\color{blue}\\bfseries,
+                           commentstyle=\\color{red},
+                           }
+                  \\usepackage{verbatim}
+                  \\institute{{{{beamerinstitute}}}}
+                  \\subject{{{{beamersubject}}}}"
 
-       ("\\section{%s}" . "\\section*{%s}")
+                 ("\\section{%s}" . "\\section*{%s}")
 
-       ("\\begin{frame}[fragile]\\frametitle{%s}"
-         "\\end{frame}"
-         "\\begin{frame}[fragile]\\frametitle{%s}"
-         "\\end{frame}")))
+                 ("\\begin{frame}[fragile]\\frametitle{%s}"
+                  "\\end{frame}"
+                  "\\begin{frame}[fragile]\\frametitle{%s}"
+                  "\\end{frame}")))
 #+end_src
 **** TODO 投影片所使用的 html5 配置
 ** smex                                                               :smex:
