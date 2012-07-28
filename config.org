@@ -2340,9 +2340,9 @@ some packages conflict with org-mode
 #+begin_src emacs-lisp
   (setq org-latex-to-pdf-process
         (if (executable-find "latexmk")
-            '("latexmk -pdflatex=xelatex -pdf -silent -f %f")
-          '("xelatex -interaction nonstopmode %f"
-            "xelatex -interaction nonstopmode %f")))
+            '("latexmk -pdflatex=xelatex -pdf -silent '$latex = q/latex --shell-escape  %O %S/' -f  %f")
+          '("xelatex -interaction nonstopmode --shell-escape %f"
+            "xelatex -interaction nonstopmode --shell-escape %f")))
 #+end_src
 **** 一般文章所使用的 latex 配置
 #+begin_src emacs-lisp
@@ -2406,6 +2406,38 @@ some packages conflict with org-mode
                            keywordstyle=\\color{blue}\\bfseries,
                            commentstyle=\\color{red},
                            }
+                  \\usepackage{verbatim}
+                  \\institute{{{{beamerinstitute}}}}
+                  \\subject{{{{beamersubject}}}}"
+
+                 ("\\section{%s}" . "\\section*{%s}")
+
+                 ("\\begin{frame}[fragile]\\frametitle{%s}"
+                  "\\end{frame}"
+                  "\\begin{frame}[fragile]\\frametitle{%s}"
+                  "\\end{frame}")))
+#+end_src
+
+
+#+begin_src emacs-lisp
+  (add-to-list 'org-export-latex-classes
+               ;; beamer class, for presentations
+               '("beamer-minted"
+                 "\\documentclass[11pt]{beamer}
+                  \\mode<{{{beamermode}}}>
+                  \\usetheme{{{{beamertheme}}}}
+                  \\usecolortheme{{{{beamercolortheme}}}}
+                  \\beamertemplateballitem
+                  \\setbeameroption{show notes}
+                  \\usepackage[utf8]{inputenc}
+                  \\usepackage[T1]{fontenc}
+                  \\usepackage{xeCJK}
+                  \\setCJKmainfont{Hiragino Sans GB W3}
+                  \\XeTeXlinebreaklocale \"zh\"
+                  \\XeTeXlinebreakskip = 0pt plus 1pt
+                  \\setmainfont{Monaco}
+                  \\usepackage{hyperref}
+                  \\usepackage{color}
                   \\usepackage{verbatim}
                   \\institute{{{{beamerinstitute}}}}
                   \\subject{{{{beamersubject}}}}"
