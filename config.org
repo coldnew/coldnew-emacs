@@ -170,21 +170,21 @@ matches a character with syntax SYNTAX.  SYNTAX must be one
 of the following symbols, or a symbol corresponding to the syntax
 character, e.g. `\.' for `\s.'.
 
-`whitespace'		(\s- in string notation)
-`punctuation'		(\s.)
-`word'			(\sw)
-`symbol'			(\s_)
-`open-parenthesis'		(\s()
-`close-parenthesis'	(\s))
-`expression-prefix'	(\s')
-`string-quote'		(\s")
-`paired-delimiter'		(\s$)
-`escape'			(\s\)
-`character-quote'		(\s/)
-`comment-start'		(\s<)
-`comment-end'		(\s>)
-`string-delimiter'		(\s|)
-`comment-delimiter'	(\s!)
+`whitespace'            (\s- in string notation)
+`punctuation'           (\s.)
+`word'                  (\sw)
+`symbol'                        (\s_)
+`open-parenthesis'              (\s()
+`close-parenthesis'     (\s))
+`expression-prefix'     (\s')
+`string-quote'          (\s")
+`paired-delimiter'              (\s$)
+`escape'                        (\s\)
+`character-quote'               (\s/)
+`comment-start'         (\s<)
+`comment-end'           (\s>)
+`string-delimiter'              (\s|)
+`comment-delimiter'     (\s!)
 
 `(not (syntax SYNTAX))'
 matches a character that doesn't have syntax SYNTAX.
@@ -368,6 +368,13 @@ cua-mode 下可以用以下命令進行列操作：
 [M-|]: 對 rect 執行一個 shell 命令
 *** 看 package 的註解
 M-x finder-commentary
+*** Search
+**** 基本按鍵
+| 按鍵   | 命令             | 用途     |
+|--------+------------------+----------|
+| Ctrl-s | isearch-forward  | 向前查找 |
+| Ctrl-r | isearch-backward | 向後查找 |
+
 * 基礎設置                                                             :base:
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
 ** 預先載入 cl 套件。
@@ -1943,7 +1950,6 @@ auto-complete-mode 的按鍵設定。
     ;; FIXME: is there more elegent way to make temp face?
     (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
     (helm-occur))
-
 #+end_src
 
 ** lusty-explorer
@@ -2048,7 +2054,7 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
 #+begin_src emacs-lisp
   (add-to-list 'org-structure-template-alist
                '("E" "#+begin_src emacs-lisp\n?\n#+end_src"))
-  (add-to-list 'org-structure-template-alist
+               (add-to-list 'org-structure-template-alist
                '("S" "#+begin_src sh\n?\n#+end_src"))
 #+end_src
 
@@ -4477,7 +4483,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
     (delete-other-windows))
 #+end_src
-** Other
+** 其他、未歸類
 *** 縮排整個 buffer
 #+begin_src emacs-lisp
   (defun indent-whole-buffer ()
@@ -4487,6 +4493,22 @@ This is to update existing buffers after a Git pull of their underlying files."
     (delete-trailing-whitespace)
     (indent-region (point-min) (point-max))
     (untabify (point-min) (point-max)))
+#+end_src
+*** 縮牌區域或是整個 buffer
+#+begin_src emacs-lisp
+  (defun indent-region-or-buffer ()
+    "Indents a region if selected, otherwise the whole buffer."
+    (interactive)
+    (save-excursion
+      (if (region-active-p)
+          (progn
+            (delete-trailing-whitespace (region-beginning) (region-end))
+            (indent-region (region-beginning) (region-end))
+            (untabify (region-beginning) (region-end))
+            (message "Indented selected region."))
+        (progn
+          (indent-region-or-buffer)
+          (message "Indented buffer.")))))
 #+end_src
 *** TODO rewrite
 #+begin_src emacs-lisp
@@ -4522,11 +4544,6 @@ This is to update existing buffers after a Git pull of their underlying files."
     (goto-char here)))
 #+end_src
 #+begin_src emacs-lisp
-  (defun utf8 ()
-    "Sets the buffer-file-coding-system to UTF8."
-    (interactive)
-    (set-buffer-file-coding-system 'utf-8 nil))
-
   (defun window-horizontal-to-vertical ()
     "Switches from a horizontal split to a vertical split."
     (interactive)
@@ -4633,20 +4650,7 @@ This is to update existing buffers after a Git pull of their underlying files."
           ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
           (t (self-insert-command (or arg 1)))))
 
-  (defun delete-between-pair (char)
-    "Delete in between the given pair"
-    (interactive "cDelete between char: ")
-    (let ((pair-char))
-      (search-backward-to-char char)
-      (forward-char 1)
-      (cond
-       ((char-equal char ?\() (setq pair-char ?\)))
-       ((char-equal char ?\") (setq pair-char ?\"))
-       ((char-equal char ?\') (setq pair-char ?\'))
-       ((char-equal char ?\[) (setq pair-char ?\]))
-       ((char-equal char ?\{) (setq pair-char ?\}))
-       ((char-equal char ?\<) (setq pair-char ?\>)))
-      (zap-up-to-char 1 pair-char)))
+
 
   (defun cua-set-mark-or-rectangle-mark (&optional arg)
     "toggle between cua-set-mark or cua-rectangle-mark"
@@ -4767,7 +4771,7 @@ This is to update existing buffers after a Git pull of their underlying files."
   ;;(global-set-key (kbd "C-x 5") 'open-in-largest-window)
 
 #+end_src
-** File
+** 檔案處理
 *** find-files
 #+begin_src emacs-lisp
   (defun find-files (files)
@@ -4785,7 +4789,7 @@ This is to update existing buffers after a Git pull of their underlying files."
       (write-region (point-min) (point-max) filename nil nil nil 'confirm))
     (find-file filename))
 #+end_src
-** Window
+** 視窗
 *** 將整個 emacs 全螢幕
 #+begin_src emacs-lisp
   (defun fullscreen-window ()
@@ -4928,7 +4932,8 @@ This is to update existing buffers after a Git pull of their underlying files."
     (interactive "p")
     (kill-line 0))
 #+end_src
-** Insert
+** 插入
+*** 插入時間
 #+begin_src emacs-lisp
   (defun insert-date-time ()
     "Insert current-date."
@@ -4964,7 +4969,26 @@ yank-n-times 則可以重複的進行貼上。
           (setq times 1)
         (dotimes 'times (yank)))))
 #+end_src
-** Delete
+** 刪除
+*** 刪除相對應的括號
+#+begin_src emacs-lisp
+  (defun delete-between-pair (char)
+    "Delete in between the given pair"
+    (interactive "cDelete between pair: ")
+    (let ((pair-char))
+      (search-backward-to-char char)
+      (forward-char 1)
+      (cond
+       ((char-equal char ?\() (setq pair-char ?\)))
+       ((char-equal char ?\") (setq pair-char ?\"))
+       ((char-equal char ?\') (setq pair-char ?\'))
+       ((char-equal char ?\[) (setq pair-char ?\]))
+       ((char-equal char ?\{) (setq pair-char ?\}))
+       ((char-equal char ?\<) (setq pair-char ?\>)))
+      (zap-up-to-char 1 pair-char)))
+#+end_src
+
+*** 刪除一個 '字'
 #+begin_src emacs-lisp
   (defun delete-word (arg)
     "Delete characters forward until encountering the end of a word.
@@ -4972,13 +4996,28 @@ yank-n-times 則可以重複的進行貼上。
     (interactive "p")
     (delete-region (point) (progn (forward-word arg) (point))))
 
+#+end_src
+
+*** 向左刪除一個 '字'
+#+begin_src emacs-lisp
   (defun backward-delete-word (arg)
     "Delete characters backward until encountering the end of a word.
   With argument, do this that many times."
     (interactive "p")
     (delete-word (- arg)))
 #+end_src
-** Convert
+*** 刪除目前的檔案與 buffer
+#+begin_src emacs-lisp
+  (defun delete-file-and-buffer ()
+    "Kills the current buffer and deletes the file it is visiting"
+    (interactive)
+    (let ((filename (buffer-file-name)))
+      (when filename
+        (delete-file filename)
+        (message "Deleted file %s" filename)))
+    (kill-buffer))
+#+end_src
+** 轉換
 *** 將 unix 格式的文件轉換成 dos 格式
 #+begin_src emacs-lisp
   (defun unix2dos ()
@@ -4992,6 +5031,13 @@ yank-n-times 則可以重複的進行貼上。
     "Convert buffer file from dos file to unix file."
     (interactive)
     (dos->unix (current-buffer)))
+#+end_src
+*** 將 buffer 的編碼改成 utf8
+#+begin_src emacs-lisp
+  (defun encode-to-utf8 ()
+    "Sets the buffer-file-coding-system to UTF8."
+    (interactive)
+    (set-buffer-file-coding-system 'utf-8 nil))
 #+end_src
 *** eval-and-replace
 將前面的 sexp 刪除並進行 eval 的動作，如果 eval 失敗則還原前面的 sexp。
@@ -5268,6 +5314,7 @@ cA==
 #+begin_src emacs-lisp
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
   (defalias 'coldnew/folding-toggle   'toggle-selective-display)
+  (defalias 'iwb 'indent-whole-buffer)
 #+end_src
 * 版本管理
 **  Git
@@ -5582,7 +5629,7 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
   (add-to-list 'desktop-modes-not-to-save 'w3m-mode)
   (add-to-list 'desktop-modes-not-to-save 'view-mode)
 #+end_src
-* Cursor
+* 游標
 #+begin_src emacs-lisp
   (defvar emacs-normal-cursor-color "white")
   (defvar emacs-normal-cursor-type 'bar)
@@ -5730,7 +5777,6 @@ Function key 設置常用的命令。
 #+end_src
 ssda
 ** Ctrl Prefix
-
 *** Default Emacs keybinding
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-n") 'next-line)
@@ -5741,24 +5787,41 @@ ssda
   (global-set-key (kbd "C-a") 'move-beginning-of-line)
 #+end_src
 
-*** Delete
+*** 向右貪婪刪除
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-d") 'hungry-delete-forward)
+#+end_src
+
+*** 向左貪婪刪除
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-l") 'hungry-delete-backward)
-  (global-set-key (kbd "C-d") 'hungry-delete-forward)
-  ;;(global-set-key (kbd "C-u") 'backward-kill-line)
 #+end_src
 
 *** Misc
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-;") 'iedit-mode)
   (global-set-key (kbd "C-v") 'coldnew/set-mark-command)
-  (global-set-key (kbd "C-/") 'undo-tree-undo)
   (global-set-key (kbd "C-]") 'coldnew/toggle-state)
-
-  (global-set-key (kbd "C-=") 'text-scale-increase)
-  (global-set-key (kbd "C--") 'text-scale-decrease)
 #+end_src
 
+*** iedit
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-;") 'iedit-mode)
+#+end_src
+
+*** Undo
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-/") 'undo-tree-undo)
+#+end_src
+
+*** 放大字體
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-=") 'text-scale-increase)
+#+end_src
+
+*** 縮小字體
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+#+end_src
 ** Ctrl-x Prefix
 *** Misc
 | 按鍵    | 命令                | 用途                   |
@@ -6045,12 +6108,6 @@ http://jixiuf.github.com/tags/@Emacs.html
             (concat "&oe=" "utf8")))
 #+end_src
 
-* Search
-** 基本按鍵
-| 按鍵   | 命令             | 用途     |
-|--------+------------------+----------|
-| Ctrl-s | isearch-forward  | 向前查找 |
-| Ctrl-r | isearch-backward | 向後查找 |
 
 * Local File Variable
 # Local Variables:
