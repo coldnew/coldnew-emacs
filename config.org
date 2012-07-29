@@ -391,7 +391,7 @@ M-x finder-commentary
 #+begin_src emacs-lisp
   (setq visible-bell t)
 #+end_src
-*** 關閉工具列。
+*** 關閉工具列
 #+begin_src emacs-lisp
   (if (featurep 'tool-bar) (tool-bar-mode -1))
 #+end_src
@@ -404,7 +404,7 @@ M-x finder-commentary
 #+begin_src emacs-lisp
   (blink-cursor-mode -1)
 #+end_src
-*** 關閉選單列。
+*** 關閉選單列
 #+begin_src emacs-lisp
   (if (featurep 'menu-bar) (menu-bar-mode -1))
 #+end_src
@@ -445,8 +445,10 @@ M-x finder-commentary
   (setq scroll-down-aggressively     0.01 )
 #+end_src
 
-** Variable                                                       :variable:
-*** Emacs Config Variables
+** 變數設定                                                        :variable:
+這邊加入了我自定義的變數以及其初始值。
+*** 資料夾相關設定
+這邊設定了各種類型資料夾的路徑。
 **** emacs-dir
 emacs 設定檔預設所在的資料夾
 #+begin_src emacs-lisp
@@ -454,6 +456,68 @@ emacs 設定檔預設所在的資料夾
     "The top-level emacs-configure directory.")
 #+end_src
 
+**** emacs-themes-dir
+佈景主題的資料夾設定。
+#+begin_src emacs-lisp
+  (defconst emacs-themes-dir (concat emacs-dir "themes/")
+    "directory to place emacs theme.")
+#+end_src
+
+**** emacs-lisp-dir
+el-get 安裝套件的路徑。
+#+begin_src emacs-lisp
+  (defconst emacs-lisp-dir   (concat emacs-dir "lisp/")
+    "directory to place lisp packages from internet.")
+#+end_src
+
+**** emacs-recipes-dir
+el-get 的 recipes 路徑。
+#+begin_src emacs-lisp
+  (defconst emacs-recipes-dir (concat emacs-dir "recipes/")
+    "directory to place local el-get recepies.")
+#+end_src
+
+**** emacs-elpa-dir
+elpa 安裝套件的路徑。
+#+begin_src emacs-lisp
+  (defconst emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
+    "directory to place ELPA lisp packages from internet.")
+#+end_src
+
+**** emacs-snippets-dir
+yasnippet 使用的 snippet路徑
+#+begin_src emacs-lisp
+  (defconst emacs-snippets-dir (concat emacs-dir "snippets/")
+    "directory to place yasnippet files.")
+#+end_src
+**** emacs-bin-dir
+放置 binary 檔案的資料夾。
+#+begin_src emacs-lisp
+  (defconst emacs-bin-dir    (concat emacs-dir "bin/")
+    "directory to place binary staff.")
+#+end_src
+**** emacs-cache-dir
+放置 cache 等暫存檔案的資料夾。
+#+begin_src emacs-lisp
+  (defconst emacs-cache-dir  (concat emacs-dir "cache/")
+    "cache file directory.")
+#+end_src
+**** emacs-backup-dir
+備份文件的資料夾。
+#+begin_src emacs-lisp
+  (defconst emacs-backup-dir (concat emacs-dir "backup/")
+    "directory to backup files.")
+#+end_src
+
+**** emacs-log-dir
+放置紀錄的資料夾。
+#+begin_src emacs-lisp
+  (defconst emacs-log-dir (concat emacs-var-dir "log/")
+    "log file directory.")
+#+end_src
+
+*** 檔案相關設定
+這邊設定了各種檔案的路徑。
 **** emacs-config-file
 emacs 個人配置的檔案，也就是這個檔案。
 #+begin_src emacs-lisp
@@ -461,37 +525,79 @@ emacs 個人配置的檔案，也就是這個檔案。
     "File to place emacs configs.")
 #+end_src
 
-**** 其他，未整理
+**** emacs-custom-file
 #+begin_src emacs-lisp
-  (defconst emacs-themes-dir (concat emacs-dir "themes/")
-    "directory to place emacs theme.")
-  (defconst emacs-lisp-dir   (concat emacs-dir "lisp/")
-    "directory to place lisp packages from internet.")
-  (defconst emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
-    "directory to place ELPA lisp packages from internet.")
-  (defconst emacs-snippets-dir (concat emacs-dir "snippets/")
-    "directory to place yasnippet files.")
-  (defconst emacs-recipes-dir (concat emacs-dir "recipes/")
-    "directory to place local el-get recepies.")
-
   (defconst emacs-custom-file (concat emacs-dir "custom.el")
     "store customize UI config.")
-
-  (defconst emacs-bin-dir    (concat emacs-dir "bin/")
-    "directory to place binary staff.")
-  (defconst emacs-cache-dir  (concat emacs-dir "cache/")
-    "cache file directory.")
-  (defconst emacs-backup-dir (concat emacs-dir "backup/")
-    "directory to backup files.")
-  (defconst emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")
-    "file that save secret")
-  (defconst emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
-    "File to save bookmarks")
-                                      ;; (defconst emacs-log-dir (concat emacs-var-dir "log/")
-  ;;   "log file directory."
 #+end_src
 
-**** Shell
+**** emacs-authinfo-file
+#+begin_src emacs-lisp
+  (defconst emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")
+    "file that save secret")
+#+end_src
+
+**** emacs-bookmark-file
+#+begin_src emacs-lisp
+  (defconst emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
+    "File to save bookmarks")
+#+end_src
+*** 作業系統測試
+放置用於測試目前 emacs 執行在何種作業系統上的變數。
+**** MacOsx
+#+begin_src emacs-lisp
+  (defvar mac-p     (eq system-type 'darwin)
+    "Return nil if OS is not Mac.")
+#+end_src
+**** Linux
+***** all
+#+begin_src emacs-lisp
+  (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
+    "Return nil if OS is not Linux.")
+#+end_src
+***** 32-bit
+#+begin_src emacs-lisp
+  (defvar linux-32bit-p (and (string-match (rx bos "x86-") system-configuration) linux-p)
+  "Return nil if OS is not 32-bit linux.")
+#+end_src
+***** 64-bit
+#+begin_src emacs-lisp
+  (defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
+    "Return nil if OS is not 64-bit linux.")
+#+end_src
+**** Cygwin
+#+begin_src emacs-lisp
+  (defvar cygwin-p  (eq system-type 'cygwin)
+    "Return nil if OS is not CygWin.")
+#+end_src
+**** Window$
+#+begin_src emacs-lisp
+  (defvar windows-p (eq system-type 'windows-nt)
+    "Return nil if OS is not Windows.")
+#+end_src
+
+*** 螢幕解析度測試                                               :resolution:
+放置測試螢幕解析度用的變數
+**** 1280x800
+#+begin_src emacs-lisp
+  (defvar display-1280x800-p   (and (= (display-pixel-width) 1280)
+                                    (= (display-pixel-height) 800))
+    "Return nil if current display's resolution is not 1280x800")
+#+end_src
+**** 1280x1024
+#+begin_src emacs-lisp
+  (defvar display-1280x1024-p  (and (= (display-pixel-width) 1280)
+                                    (= (display-pixel-height) 1024))
+    "Return nil if current display's resolution is not 1280x1024")
+#+end_src
+**** 1920x1080
+#+begin_src emacs-lisp
+  (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920)
+                                    (= (display-pixel-height) 1080))
+    "Return nil if current display's resolution is not 1920x1080")
+#+end_src
+
+*** TODO Shell
 #+begin_src emacs-lisp
   (defvar emacs-default-shell "/bin/bash"
     "Default shell for cemacs.")
@@ -501,7 +607,7 @@ emacs 個人配置的檔案，也就是這個檔案。
     "Make popup shell window at buttom by default.")
 #+end_src
 
-**** Path
+*** TODO Path
 #+begin_src emacs-lisp
   ;; TODO: make it work on every platform, now only has Linux support
   (setenv "PATH"
@@ -539,67 +645,12 @@ emacs 個人配置的檔案，也就是這個檔案。
          (change-mouse-to-left)))
 #+end_src
 
-*** Operation System Testing
-放置用於測試目前 emacs 執行在何種作業系統上的變數。
-**** MacOsx
-#+begin_src emacs-lisp
-  (defvar mac-p     (eq system-type 'darwin)
-    "Return nil if OS is not Mac.")
-#+end_src
-**** Linux
-***** all
-#+begin_src emacs-lisp
-  (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
-    "Return nil if OS is not Linux.")
-#+end_src
-***** 32-bit
-#+begin_src emacs-lisp
-  (defvar linux-32bit-p (and (string-match (rx bos "x86-") system-configuration) linux-p)
-  "Return nil if OS is not 32-bit linux.")
-#+end_src
-***** 64-bit
-#+begin_src emacs-lisp
-  (defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
-    "Return nil if OS is not 64-bit linux.")
-#+end_src
-**** Cygwin
-#+begin_src emacs-lisp
-  (defvar cygwin-p  (eq system-type 'cygwin)
-    "Return nil if OS is not CygWin.")
-#+end_src
-**** Window$
-#+begin_src emacs-lisp
-  (defvar windows-p (eq system-type 'windows-nt)
-    "Return nil if OS is not Windows.")
-#+end_src
-
-*** User Testing
+*** TODO User Testing
 #+begin_src emacs-lisp
 (defvar root-p (zerop (user-real-uid))
   "Return nil if user is not root user.")
 #+end_src
-*** Resolution Testing                                         :resolution:
-放置測試螢幕解析度用的變數
-**** 1280x800
-#+begin_src emacs-lisp
-  (defvar display-1280x800-p   (and (= (display-pixel-width) 1280)
-                                    (= (display-pixel-height) 800))
-    "Return nil if current display's resolution is not 1280x800")
-#+end_src
-**** 1280x1024
-#+begin_src emacs-lisp
-  (defvar display-1280x1024-p  (and (= (display-pixel-width) 1280)
-                                    (= (display-pixel-height) 1024))
-    "Return nil if current display's resolution is not 1280x1024")
-#+end_src
-**** 1920x1080
-#+begin_src emacs-lisp
-  (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920)
-                                    (= (display-pixel-height) 1080))
-    "Return nil if current display's resolution is not 1920x1080")
-#+end_src
-
-*** Face
+*** TODO Face
 #+begin_src emacs-lisp
   (defface mode-line-read-only-face
     '((t (:foreground "#C82829" :bold t)))
@@ -647,8 +698,6 @@ emacs 個人配置的檔案，也就是這個檔案。
     :group 'mode-line)
 #+end_src
 
-*** TODO Load theme
-
 ** Macros                                                            :macro:
 *** reauire*
 這個巨集用途和 require 類似，但是會忽略掉所有的錯誤。此外，如果 emacs 並沒有讀入這個 package
@@ -673,17 +722,17 @@ emacs 個人配置的檔案，也就是這個檔案。
                           '(("(\\(require\*\\*\\)\\s[ \t']*\\(\\sw+\\)?"
                              (1 font-lock-keyword-face)
                              (2 font-lock-constant-face nil t))))
+
   (font-lock-add-keywords 'lisp-interaction-mode
                           '(("(\\(require\*\\*\\)\\s[ \t']*\\(\\sw+\\)?"
                              (1 font-lock-keyword-face)
                              (2 font-lock-constant-face nil t))))
 #+end_src
-** Custom File
-設定 custom-file 到其他檔案，這樣可以避免使用 *customize-UI* 時，會將設定寫入我的 init.el
+** 設定 custom-file 到其他檔案
+避免使用 *customize-UI* 時，會將設定寫入我的 init.el
 #+begin_src emacs-lisp
   (setq custom-file emacs-custom-file)
 #+end_src
-
 ** Daemon
 當啟用 emacs 時，啟動 emacs-server，如果使用者是 root 或已啟用 server，則忽略。
 #+begin_src emacs-lisp
@@ -692,9 +741,10 @@ emacs 個人配置的檔案，也就是這個檔案。
     (require 'server)
     (unless (server-running-p) (server-start)))
 #+end_src
-** Resolution                                                   :resolution:
-根據目前螢幕的解析度調整 emacs 視窗的大小。
-*** Header
+** 根據目前螢幕的解析度調整 emacs 視窗的大小。                  :resolution:
+整個設定是使用 cond 來進行條件式的判斷，因此加入了 *設定起始位置* 和 *設定終止位置*
+作為保護
+*** 設定起始位置
 #+begin_src emacs-lisp
   (cond
 #+end_src
@@ -731,7 +781,7 @@ emacs 個人配置的檔案，也就是這個檔案。
                   '(left   . 300))
                  default-frame-alist)))
 #+end_src
-*** Default
+*** 預設情況
 #+begin_src emacs-lisp
   (t
    (setq default-frame-alist
@@ -742,7 +792,7 @@ emacs 個人配置的檔案，也就是這個檔案。
                   '(left   . 100))
                  default-frame-alist)))
 #+end_src
-*** End
+*** 設定終止位置
 #+begin_src emacs-lisp
   )
 #+end_src
@@ -4904,7 +4954,6 @@ yank-n-times 則可以重複的進行貼上。
         (dotimes 'times (yank)))))
 #+end_src
 ** Delete
-
 #+begin_src emacs-lisp
   (defun delete-word (arg)
     "Delete characters forward until encountering the end of a word.
