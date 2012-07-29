@@ -368,7 +368,7 @@ cua-mode 下可以用以下命令進行列操作：
 [M-|]: 對 rect 執行一個 shell 命令
 *** 看 package 的註解
 M-x finder-commentary
-* 基礎設置
+* 基礎設置                                                             :base:
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
 ** 預先載入 cl 套件。
 #+begin_src emacs-lisp
@@ -743,7 +743,7 @@ emacs 個人配置的檔案，也就是這個檔案。
 #+end_src
 ** 根據目前螢幕的解析度調整 emacs 視窗的大小。                  :resolution:
 整個設定是使用 cond 來進行條件式的判斷，因此加入了 *設定起始位置* 和 *設定終止位置*
-作為保護
+作為保護。
 *** 設定起始位置
 #+begin_src emacs-lisp
   (cond
@@ -834,7 +834,7 @@ emacs 編碼設定，大部份都設定成 utf-8。
 #+begin_src emacs-lisp
   (setq system-time-locale "en_US" )
 #+end_src
-* 套件管理
+* 套件管理                                                          :package:
 emacs 套件管理的設定。
 ** el-get
 *** 設定 el-get-dir
@@ -896,7 +896,7 @@ emacs 套件管理的設定。
 #+begin_src emacs-lisp
   ))
 #+end_src
-** ELPA
+** ELPA                                                               :elpa:
 *** 設定 elpa 安裝目錄到 emacs-elpa-dir
 #+begin_src emacs-lisp
   (setq-default package-user-dir emacs-elpa-dir)
@@ -4478,6 +4478,17 @@ This is to update existing buffers after a Git pull of their underlying files."
     (delete-other-windows))
 #+end_src
 ** Other
+*** 縮排整個 buffer
+#+begin_src emacs-lisp
+  (defun indent-whole-buffer ()
+    "Indent whole buffer and delete trailing whitespace.
+  This command will also do untabify."
+    (interactive)
+    (delete-trailing-whitespace)
+    (indent-region (point-min) (point-max))
+    (untabify (point-min) (point-max)))
+#+end_src
+*** TODO rewrite
 #+begin_src emacs-lisp
   (defun align-code (beg end &optional arg)
     (interactive "rP")
