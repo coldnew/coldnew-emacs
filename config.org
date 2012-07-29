@@ -3953,7 +3953,6 @@ emacs 和 cscope 相關的套件蠻多的，xcscope 包含在 cscope 的套件�
                ))
 #+end_src
 ** C
-dummy
 *** 設定 C 語言 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
@@ -4018,6 +4017,12 @@ adeff
 **** TODO 自動偵測 c-basic-offset
 #+begin_src emacs-lisp
   (require* 'guess-offset)
+#+end_src
+**** 自動猜測縮排風格
+#+begin_src emacs-lisp
+  (when (require 'dtrt-indent nil 'noerror)
+    (add-hook 'c-mode-hook
+              (lambda () (dtrt-indent-mode t))))
 #+end_src
 *** Keybinding
 #+begin_src emacs-lisp
@@ -4123,6 +4128,12 @@ C-s s I             对目录中的相关文件建立列表并进行索引
                (require 'c-eldoc)
                (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
                (c-turn-on-eldoc-mode)))
+#+end_src
+**** 自動猜測縮排風格
+#+begin_src emacs-lisp
+  (when (require 'dtrt-indent nil 'noerror)
+    (add-hook 'c++-mode-hook
+              (lambda () (dtrt-indent-mode t))))
 #+end_src
 *** 自動補全設定
 **** 載入其餘需要使用的套件。
@@ -4300,6 +4311,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+begin_src emacs-lisp
 ))
 #+end_src
+** LaTex
 ** Scheme
 *** 設定 Scheme 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
@@ -5992,12 +6004,9 @@ ssda
 
 ** Super prefix
 #+begin_src emacs-lisp
-  (global-set-key (kbd "s-n") 'windmove-down)
-  (global-set-key (kbd "s-p") 'windmove-up)
-  (global-set-key (kbd "s-b") 'windmove-left)
-  (global-set-key (kbd "s-f") 'windmove-right)
+  (global-set-key (kbd "s-l") 'linum-mode)
+  (global-set-key (kbd "s-s") 'shell-command)
 #+end_src
-
 ** Other
 #+begin_src emacs-lisp
   (global-set-key (kbd "<delete>") 'hungry-delete-forward)
