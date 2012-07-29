@@ -3112,7 +3112,7 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 #+end_src
 
 ** Easy PG                                                          :easypg:
-*** Depends
+*** 載入相依套件
 #+begin_src emacs-lisp
   (require 'epa-file)
 #+end_src
@@ -4378,6 +4378,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                  ))
 #+end_src
 * Mode Line                                                        :modeline:
+** TODO 分類
 #+begin_src emacs-lisp
   ;;;; ---------------------------------------------------------------------------
   ;;;; Initial modeline setting
@@ -4403,7 +4404,10 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   ;;;; ---------------------------------------------------------------------------
   ;;;; modeline User-Interfaced setting
   ;;;; ---------------------------------------------------------------------------
-  (setq-default mode-line-format
+#+end_src
+** 設定 mode-line 樣式
+#+begin_src emacs-lisp
+(setq mode-line-format
                 '((" "
                    mode-line-mule-info
                    ;; read-only or modified status
@@ -4440,9 +4444,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                    "] "
                    )))
 #+end_src
-
 * Command                                                           :command:
-All command file
 ** Buffer
 *** 跳轉到 **scratch**
 跳轉目前 buffer 與 **scratch**，假如 **scratch** 不存在，
@@ -5071,11 +5073,19 @@ yank-n-times 則可以重複的進行貼上。
     (interactive)
     (pp-eval-expression '(macroexpand (read (thing-at-point 'sexp)))))
 #+end_src
-* Google-translate
+* Google 翻譯
 google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作。
+** 載入相關套件
 #+begin_src emacs-lisp
   (require* 'google-translate)
-
+#+end_src
+** 預設設定為 正體中文 -> 英文
+#+begin_src emacs-lisp
+(setq google-translate-default-source-language "zh-TW")
+(setq google-translate-default-target-language "en")
+#+end_src
+** 命令
+#+begin_src emacs-lisp
   (defun google-translate-en-zh ()
     "Translate English to Tranditional Chinese by google-translate."
     (interactive)
@@ -5089,10 +5099,6 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
     (let ((google-translate-default-source-language "zh-TW")
           (google-translate-default-target-language "en"))
       (google-translate-query-translate)))
-#+end_src
-#+begin_src emacs-lisp
-(setq google-translate-default-source-language "zh-TW")
-(setq google-translate-default-target-language "en")
 #+end_src
 * Tramp                                                               :tramp:
 tramp config
@@ -6116,7 +6122,6 @@ http://jixiuf.github.com/tags/@Emacs.html
             ;; add for encoding
             (concat "&oe=" "utf8")))
 #+end_src
-
 
 * Local File Variable
 # Local Variables:
