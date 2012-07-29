@@ -1996,516 +1996,6 @@ auto-complete-mode 的按鍵設定。
   )
 #+end_src
 
-** org-mode                                                            :org:
-*** 載入相關套件
-#+begin_src emacs-lisp
-  (require 'org-install)
-  (require 'org-table)
-  (require 'ob-ditaa)
-  (require 'org-latex)
-#+end_src
-
-google-weather 是提供　 emacs 連接 google-weathre 的 API，
-在 org 檔案裏面加入，則可以在 agenda view 裏面看到天氣
-#+begin_example
-  * Weather
-  %%(org-google-weather "New York")
-#+end_example
-
-#+begin_src emacs-lisp
-  (require* 'google-weather)
-  (require 'org-google-weather)
-#+end_src
-*** 設定 org-mode 檔案的副檔名與對應的模式
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
-  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-  (add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
-#+end_src
-*** Config
-#+begin_src emacs-lisp
-  (setq org-directory "~/Dropbox/Org/")
-  ;; do not show leading stars
-  (setq org-hide-leading-stars t)
-  ;; do not fold every content
-  (setq org-startup-folded nil)
-  ;; indent all at startup
-  (setq org-startup-indented t)
-  (setq org-src-window-setup 'current-window)
-  (setq org-agenda-files (list "~/Dropbox/Org/"))
-  (setq org-log-done t)
-  (setq org-pretty-entities t)
-  (setq org-use-speed-commands t)
-
-  (setq org-tag-alist '(
-                        (:startgroup . nil) ("Business" . ?b) ("School" . ?s) ("Weintek" . ?w) ("Personal" . ?p) (:endgroup . nil)
-                        ))
-
-#+end_src
-*** 直接在程式碼欄位上為程式碼上色
-#+begin_src emacs-lisp
-  (setq org-src-fontify-natively t)
-#+end_src
-*** 讓 org-mode與cua-mode相容
-#+begin_src emacs-lisp
-  (setq org-CUA-compatible t)
-#+end_src
-*** 增加模版
-#+begin_src emacs-lisp
-  (add-to-list 'org-structure-template-alist
-               '("E" "#+begin_src emacs-lisp\n?\n#+end_src"))
-               (add-to-list 'org-structure-template-alist
-               '("S" "#+begin_src sh\n?\n#+end_src"))
-#+end_src
-
-*** Capture
-#+begin_src emacs-lisp
-  (setq org-default-notes-file (concat org-directory "TODO.org"))
-  (setq org-capture-templates '(("t" "TODO" entry (file+headline "" "Tasks")
-                                 "* TODO %?\n %i\n %a")
-                                ("f" "FIXME" entry (file+headline "" "Tasks")
-                                 "* FIXME %?\n %i\n %a")
-                                ("w" "Weintek" entry (file+headline "" "Weintek")
-                                 "* TODO %?\n %i\n %a")
-                                ))
-
-#+end_src
-
-**** Keybinding
-#+begin_src emacs-lisp
-  (add-hook 'org-capture-mode-hook
-            '(lambda ()
-               (define-key coldnew/command-mode-map "c" 'org-capture-finalize)
-               ))
-
-#+end_src
-*** Agenda
-設定 Agenda 顯示在目前的 window 上。
-#+begin_src emacs-lisp
-  (setq org-agenda-window-setup 'current-window)
-#+end_src
-**** Hooks
-啟用 hl-line
-#+begin_src emacs-lisp
-  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
-#+end_src
-**** Keybinding
-#+begin_src emacs-lisp
-  (add-hook 'org-agenda-mode-hook
-            '(lambda ()
-               (local-set-key (kbd "C-g") 'org-agenda-exit)))
-#+end_src
-*** Crypt                                                           :crypt:
-用於加密 org-mode 裡面具有 :encrypt: 這個 TAG 的區塊。
-注意到這需啟用 [[*Easy%20PG][Easy PG]] 才能夠使用。
-**** Depends
-#+begin_src emacs-lisp
-  (require 'org-crypt)
-#+end_src
-**** 設定要加密的 tag 標籤為 *encrypt*
-#+begin_src emacs-lisp
-  (setq org-crypt-tag-matcher "encrypt")
-#+end_src
-**** Add a hook to automatically encrypt entries before a file is saved to disk.
-#+begin_src emacs-lisp
-  (org-crypt-use-before-save-magic)
-#+end_src
-**** 避免 encrypt 這個 tag 被子項目繼承
-#+begin_src emacs-lisp
-  (setq org-tags-exclude-from-inheritance (quote ("encrypt")))
-#+end_src
-**** 設定 org-crypt-disable-auto-save 成 'encrypt 模式。
-此模式並不會停用 auto-save-mode，反之，當自動儲存時，解密過的區域將會加密回去。
-#+begin_src emacs-lisp
-  (setq org-crypt-disable-auto-save 'encrypt)
-#+end_src
-*** Keybinding
-**** org-mode
-設定自定義的按鍵。
-#+begin_src emacs-lisp
-  (add-hook 'org-mode-hook
-            '(lambda ()
-               (define-key org-mode-map (kbd "C-c C-p") 'org-backward-same-level)
-               (define-key org-mode-map (kbd "C-c C-n") 'org-forward-same-level)
-               (define-key org-mode-map (kbd "C-c C-b") 'coldnew/org-up-parent)
-               (define-key org-mode-map (kbd "C-c C-f") 'coldnew/org-down-children)
-               (define-key coldnew/command-mode-map "c" 'org-edit-special)
-               ))
-
-(add-hook 'org-mode-hook
-          '(lambda ()
-             (define-key org-mode-map (kbd "C-\'") nil)
-             (define-key org-mode-map (kbd "C-,") nil)
-             (define-key org-mode-map (kbd "C-c C-e") nil)
-             ))
-#+end_src
-
-
-#+begin_src emacs-lisp
-  (add-hook 'org-mode-hook
-            '(lambda ()
-               (define-key org-mode-map (kbd "C-c b") 'org-metaleft)
-               (define-key org-mode-map (kbd "C-c f") 'org-metaright)
-               (define-key org-mode-map (kbd "C-c p") 'org-metaup)
-               (define-key org-mode-map (kbd "C-c n") 'org-metadown)))
-#+end_src
-**** org-src-mode
-#+begin_src emacs-lisp
-  (add-hook 'org-src-mode-hook
-            '(lambda ()
-               ;;(local-set-key (kbd "C-c C-c") 'org-edit-src-exit)
-               (define-key coldnew/command-mode-map "c" 'org-edit-src-exit)
-               ))
-#+end_src
-*** Hooks
-**** TODO Disable linum
-#+begin_src emacs-lisp
-;;  (add-to-list 'org-mode-hook '(lambda () (linum-mode -1)))
-#+end_src
-*** Conflict Fix
-some packages conflict with org-mode
-**** yasnippet
-#+begin_src emacs-lisp
-  (when (featurep 'yasnippet)
-    (add-hook 'org-mode-hook
-              (lambda ()
-                (org-set-local 'yas/trigger-key[tab])
-                (define-key yas/keymap[tab] 'yas/next-field-group))))
-#+end_src
-
-**** windmove
-#+begin_src emacs-lisp
-  ;; Make windmove work in org-mode:
-  (add-hook 'org-shiftup-final-hook 'windmove-up)
-  (add-hook 'org-shiftleft-final-hook 'windmove-left)
-  (add-hook 'org-shiftdown-final-hook 'windmove-down)
-  (add-hook 'org-shiftright-final-hook 'windmove-right)
-#+end_src
-*** Commands
-**** org-archive-done-tasks
-將標記為 *DONE* 的結點收錄到 archive 裡。
-#+begin_src emacs-lisp
-  (defun org-archive-done-tasks ()
-    "Make all DONE subtree to archive."
-    (interactive)
-    (org-map-entries 'org-archive-subtree "/DONE" 'file))
-#+end_src
-**** coldnew/org-up-parent
-跑到目前節點的父節點，並收起目前的結點。
-#+begin_src emacs-lisp
-  (defun coldnew/org-up-parent ()
-    "Move to the parent of current point. If current is the parent heading,
-            move to the previous parent heading."
-    (interactive)
-    (if (not (org-on-heading-p))
-        (outline-back-to-heading)
-      (let* ((level (funcall outline-level))
-             (point-to-move-to
-              (save-excursion
-                (outline-previous-visible-heading 1)
-                (while (>= (funcall outline-level) level)
-                  (outline-previous-visible-heading 1))
-                (point))))
-        (if point-to-move-to
-            (goto-char point-to-move-to))))
-    (org-cycle))
-#+end_src
-**** coldnew/org-down-children
-跑到目前節點的子節點，並展開子節點。
-#+begin_src emacs-lisp
-  (defun coldnew/org-down-children ()
-    "Move to children of current heading. If current heading only has subtree,
-          expand the subtree."
-    (interactive)
-    (outline-back-to-heading)
-    (show-children)
-    (let* ((level (funcall outline-level))
-           (point-to-move-to
-            (save-excursion
-              (outline-next-visible-heading 1)
-              (if (<= (funcall outline-level) level)
-                  nil
-                        (point)))))
-              (if point-to-move-to
-                  (goto-char point-to-move-to)
-                (show-subtree))))
-#+end_src
-*** COMMENT remember the milk ?
-:PROPERTIES:
-:tangle: no
-:END:
-#+begin_src emacs-lisp
-  (require org-feed)
-  (setq org-feed-alist
-        '(("Remember The Milk"
-           "https://www.rememberthemilk.com/rss/jonnay/"
-           "~/org/GTD.org"
-           "Remember The Milk"
-           :template "* TODO %title\n  %a\n "
-           )))
-
-  ;;* rtm feed timer
-  (run-at-time 3600 3600 'org-feed-update-all)
-#+end_src
-*** presentation
-#+begin_src emacs-lisp
-    ;; allow for export=>beamer by placing
-
-  ;; #+LaTeX_CLASS: beamer in org files
-  (unless (boundp 'org-export-latex-classes)
-      (setq org-export-latex-classes nil))
-    (add-to-list 'org-export-latex-classes
-                 ;; beamer class, for presentations
-                 '("beamer"
-                   "\\documentclass[11pt]{beamer}\n
-          \\mode<{{{beamermode}}}>\n
-          \\usetheme{{{{beamertheme}}}}\n
-          \\usecolortheme{{{{beamercolortheme}}}}\n
-          \\beamertemplateballitem\n
-          \\setbeameroption{show notes}
-          \\usepackage[utf8]{inputenc}\n
-          \\usepackage[T1]{fontenc}\n
-          \\usepackage{hyperref}\n
-          \\usepackage{color}\n
-          \\usepackage{listings}\n
-          \\usepackage{xeCJK}\n
-          \\setCJKmainfont{LiHei Pro}\n
-          \\XeTeXlinebreaklocale \"zh\"\n
-          \\XeTeXlinebreakskip = 0pt plus 1pt
-          \\lstset{numbers=none,language=[ISO]C++,tabsize=4,
-      frame=single,
-      basicstyle=\\small,
-      showspaces=false,showstringspaces=false,
-      showtabs=false,
-      keywordstyle=\\color{blue}\\bfseries,
-      commentstyle=\\color{red},
-      }\n
-          \\usepackage{verbatim}\n
-          \\institute{{{{beamerinstitute}}}}\n
-           \\subject{{{{beamersubject}}}}\n"
-
-                   ("\\section{%s}" . "\\section*{%s}")
-
-                   ("\\begin{frame}[fragile]\\frametitle{%s}"
-                    "\\end{frame}"
-                    "\\begin{frame}[fragile]\\frametitle{%s}"
-                    "\\end{frame}")))
-
-    ;; letter class, for formal letters
-
-    (add-to-list 'org-export-latex-classes
-
-                 '("letter"
-                   "\\documentclass[11pt]{letter}\n
-          \\usepackage[utf8]{inputenc}\n
-          \\usepackage[T1]{fontenc}\n
-          \\usepackage{color}"
-
-                   ("\\section{%s}" . "\\section*{%s}")
-                   ("\\subsection{%s}" . "\\subsection*{%s}")
-                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-#+end_src
-*** Babel 支援的語言
-#+begin_src emacs-lisp
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (C . t)
-     (ditaa . t)
-     (dot . t)
-     (js . t)
-     (latex . t)
-     (perl . t)
-     (python . t)
-     (ruby . t)
-     (sh . t)
-     ))
-#+end_src
-*** 輸出成 PDF 檔案設定
-**** 使用 Listings 將程式碼加上色彩
-#+begin_src emacs-lisp
-  (setq org-export-latex-listings t)
-#+end_src
-**** Listings 顏色配置
-***** 配置開始
-#+begin_src emacs-lisp
-  (setq org-export-latex-listings-options
-        '(
-#+end_src
-***** 程式碼字體（前景色）
-#+begin_src emacs-lisp
-  ("basicstyle" "\\color{foreground}\\small\\mono")
-#+end_src
-***** 程式碼外框（背景色）
-#+begin_src emacs-lisp
-  ("backgroundcolor" "\\color{background}")
-#+end_src
-***** TODO 關鍵字
-#+begin_src emacs-lisp
-  ("keywordstyle" "\\color{function}\\bfseries\\small\\mono")
-#+end_src
-***** 註解
-#+begin_src emacs-lisp
-  ("commentstyle" "\\color{comment}\\small\\itshape")
-#+end_src
-***** TODO 文檔
-#+begin_src emacs-lisp
-  ("identifierstyle" "\\color{doc}\\small\\mono")
-#+end_src
-***** 行號
-在左邊顯示行號
-#+begin_src emacs-lisp
-  ("numbers" "left")
-#+end_src
-色彩設置
-#+begin_src emacs-lisp
-  ("numberstyle" "\\color{preprocess}")
-#+end_src
-初始數值
-#+begin_src emacs-lisp
-  ("stepnumber" "1")
-#+end_src
-***** 自動斷行
-#+begin_src emacs-lisp
-  ("breaklines" "true")
-#+end_src
-***** 外框設置
-外框設置成單一條線
-#+begin_src emacs-lisp
-  ("frame" "single")
-#+end_src
-轉角處設置成圓角
-#+begin_src emacs-lisp
-  ("frameround" "tttt")
-#+end_src
-#+begin_src emacs-lisp
-  ("framesep" "0pt")
-#+end_src
-#+begin_src emacs-lisp
-  ("framerule" "8pt")
-#+end_src
-***** 配置結束
-#+begin_src emacs-lisp
-          ))
-#+end_src
-**** 使用 xelatex 產生 PDF 檔案
-當系統有安裝 latexmk 時，使用 latexmk 呼叫 xelatex 進行編譯，
-反之則直接呼叫 xelatex 進行二次編譯。
-#+begin_src emacs-lisp
-  (setq org-latex-to-pdf-process
-        (if (executable-find "latexmk")
-            '("latexmk -pdflatex=xelatex -pdf -silent '$latex = q/latex --shell-escape  %O %S/' -f  %f")
-          '("xelatex -interaction nonstopmode --shell-escape %f"
-            "xelatex -interaction nonstopmode --shell-escape %f")))
-#+end_src
-**** 一般文章所使用的 latex 配置
-#+begin_src emacs-lisp
-  (add-to-list 'org-export-latex-classes
-               '("coldnew-article"
-                 "\\documentclass[12pt,a4paper]{article}
-                  \\usepackage[T1]{fontenc}
-                  \\usepackage{fontspec}
-                  \\usepackage{xeCJK}
-                  \\setCJKmainfont{Hiragino Sans GB W3}
-                  \\XeTeXlinebreaklocale \"zh\"
-                  \\XeTeXlinebreakskip = 0pt plus 1pt
-                  \\usepackage{graphicx}
-                  \\usepackage{tikz}
-                  \\usepackage[bookmarks=true,colorlinks,linkcolor=black]{hyperref}
-                  \\defaultfontfeatures{Mapping=tex-text}
-                  \\setmonofont[Scale=0.8]{DejaVu Sans Mono}
-                  \\usepackage{geometry}
-                  \\geometry{a4paper, textwidth=6.5in, textheight=8in,
-                              marginparsep=10pt, marginparwidth=.6in}
-                  \\pagestyle{plain}
-                  \\linespread{1.5}
-                  \\title{}
-                        [NO-DEFAULT-PACKAGES]
-                        [NO-PACKAGES]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")
-                 ))
-
-#+end_src
-**** 投影片所使用的 latex 配置
-#+begin_src emacs-lisp
-  (add-to-list 'org-export-latex-classes
-               ;; beamer class, for presentations
-               '("beamer"
-                 "\\documentclass[11pt]{beamer}
-                  \\mode<{{{beamermode}}}>
-                  \\usetheme{{{{beamertheme}}}}
-                  \\usecolortheme{{{{beamercolortheme}}}}
-                  \\beamertemplateballitem
-                  \\setbeameroption{show notes}
-                  \\usepackage[utf8]{inputenc}
-                  \\usepackage[T1]{fontenc}
-                  \\usepackage{xeCJK}
-                  \\setCJKmainfont{Hiragino Sans GB W3}
-                  \\XeTeXlinebreaklocale \"zh\"
-                  \\XeTeXlinebreakskip = 0pt plus 1pt
-                  \\setmainfont{Monaco}
-                  \\usepackage{hyperref}
-                  \\usepackage{color}
-                  \\usepackage{listings}
-                  \\lstset{numbers=none,language=[ISO]C++,tabsize=2,
-                           frame=single,
-                   basicstyle=\\small\\ttfamily,
-                           showspaces=false,
-                           showstringspaces=false,
-                           showtabs=false,
-                           keywordstyle=\\color{blue}\\bfseries,
-                           commentstyle=\\color{red},
-                           }
-                  \\usepackage{verbatim}
-                  \\institute{{{{beamerinstitute}}}}
-                  \\subject{{{{beamersubject}}}}"
-
-                 ("\\section{%s}" . "\\section*{%s}")
-
-                 ("\\begin{frame}[fragile]\\frametitle{%s}"
-                  "\\end{frame}"
-                  "\\begin{frame}[fragile]\\frametitle{%s}"
-                  "\\end{frame}")))
-#+end_src
-
-
-#+begin_src emacs-lisp
-  (add-to-list 'org-export-latex-classes
-               ;; beamer class, for presentations
-               '("beamer-minted"
-                 "\\documentclass[11pt]{beamer}
-                  \\mode<{{{beamermode}}}>
-                  \\usetheme{{{{beamertheme}}}}
-                  \\usecolortheme{{{{beamercolortheme}}}}
-                  \\beamertemplateballitem
-                  \\setbeameroption{show notes}
-                  \\usepackage[utf8]{inputenc}
-                  \\usepackage[T1]{fontenc}
-                  \\usepackage{xeCJK}
-                  \\setCJKmainfont{Hiragino Sans GB W3}
-                  \\XeTeXlinebreaklocale \"zh\"
-                  \\XeTeXlinebreakskip = 0pt plus 1pt
-                  \\setmainfont{Monaco}
-                  \\usepackage{hyperref}
-                  \\usepackage{color}
-                  \\usepackage{verbatim}
-                  \\institute{{{{beamerinstitute}}}}
-                  \\subject{{{{beamersubject}}}}"
-
-                 ("\\section{%s}" . "\\section*{%s}")
-
-                 ("\\begin{frame}[fragile]\\frametitle{%s}"
-                  "\\end{frame}"
-                  "\\begin{frame}[fragile]\\frametitle{%s}"
-                  "\\end{frame}")))
-#+end_src
-**** TODO 投影片所使用的 html5 配置
 ** smex                                                               :smex:
 *** Depends
 #+begin_src emacs-lisp
@@ -3136,6 +2626,527 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
 #+end_src
+* org-mode                                                              :org:
+因為 org-mode 在這個設定檔裡佔有非常重要的比例，所以獨立出來。
+** 載入相關套件
+#+begin_src emacs-lisp
+  (require 'org-install)
+  (require 'org-table)
+  (require 'ob-ditaa)
+  (require 'org-latex)
+#+end_src
+
+google-weather 是提供　 emacs 連接 google-weathre 的 API，
+在 org 檔案裏面加入如下的code，則可以在 agenda view 裏面看到天氣資訊。
+#+begin_example
+  * Weather
+  %%(org-google-weather "New York")
+#+end_example
+
+#+begin_src emacs-lisp
+  (require 'google-weather)
+  (require 'org-google-weather)
+#+end_src
+** 設定 org-mode 檔案的副檔名與對應的模式
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+  (add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
+#+end_src
+** Config
+#+begin_src emacs-lisp
+  (setq org-directory "~/Dropbox/Org/")
+  (setq org-agenda-files (list "~/Dropbox/Org/"))
+  (setq org-log-done t)
+  (setq org-pretty-entities t)
+  (setq org-use-speed-commands t)
+
+  (setq org-tag-alist '(
+                        (:startgroup . nil) ("Business" . ?b) ("School" . ?s) ("Weintek" . ?w) ("Personal" . ?p) (:endgroup . nil)
+                        ))
+  (setq org-confirm-babel-evaluate nil)
+#+end_src
+** 預設讓 org-mode 使用自動縮排模式
+#+begin_src emacs-lisp
+  (setq org-startup-indented t)
+#+end_src
+** 打開新的 org-mode 時，預設將所有項目都隱藏
+只保留最上層的父目錄
+#+begin_src emacs-lisp
+  (setq org-startup-folded t)
+#+end_src
+** 將前面的 *星號* 隱藏，只顯示最後一個
+#+begin_src emacs-lisp
+  (setq org-hide-leading-stars t)
+#+end_src
+** 切換成程式碼欄位時使用目前的視窗
+#+begin_src emacs-lisp
+  (setq org-src-window-setup 'current-window)
+#+end_src
+** 直接在程式碼欄位上為程式碼上色
+#+begin_src emacs-lisp
+  (setq org-src-fontify-natively t)
+#+end_src
+** 讓 org-mode 與 cua-mode 相容
+#+begin_src emacs-lisp
+  (setq org-CUA-compatible t)
+#+end_src
+** 增加模版
+#+begin_src emacs-lisp
+  (add-to-list 'org-structure-template-alist
+               '("E" "#+begin_src emacs-lisp\n?\n#+end_src"))
+               (add-to-list 'org-structure-template-alist
+               '("S" "#+begin_src sh\n?\n#+end_src"))
+#+end_src
+
+** Capture
+#+begin_src emacs-lisp
+  (setq org-default-notes-file (concat org-directory "TODO.org"))
+  (setq org-capture-templates '(("t" "TODO" entry (file+headline "" "Tasks")
+                                 "* TODO %?\n %i\n %a")
+                                ("f" "FIXME" entry (file+headline "" "Tasks")
+                                 "* FIXME %?\n %i\n %a")
+                                ("w" "Weintek" entry (file+headline "" "Weintek")
+                                 "* TODO %?\n %i\n %a")
+                                ))
+
+#+end_src
+
+*** Keybinding
+#+begin_src emacs-lisp
+  (add-hook 'org-capture-mode-hook
+            '(lambda ()
+               (define-key coldnew/command-mode-map "c" 'org-capture-finalize)
+               ))
+
+#+end_src
+** Agenda
+設定 Agenda 顯示在目前的 window 上。
+#+begin_src emacs-lisp
+  (setq org-agenda-window-setup 'current-window)
+#+end_src
+*** Hooks
+啟用 hl-line
+#+begin_src emacs-lisp
+  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
+#+end_src
+*** Keybinding
+#+begin_src emacs-lisp
+  (add-hook 'org-agenda-mode-hook
+            '(lambda ()
+               (local-set-key (kbd "C-g") 'org-agenda-exit)))
+#+end_src
+** 讓 org-mode 裡面可以加密文章                                      :crypt:
+用於加密 org-mode 裡面具有 :encrypt: 這個 TAG 的區塊。
+注意到這需啟用 [[*Easy%20PG][Easy PG]] 才能夠使用。
+*** 載入相關模組
+#+begin_src emacs-lisp
+  (require 'org-crypt)
+#+end_src
+*** 設定要加密的 tag 標籤為 *encrypt*
+#+begin_src emacs-lisp
+  (setq org-crypt-tag-matcher "encrypt")
+#+end_src
+*** Add a hook to automatically encrypt entries before a file is saved to disk.
+#+begin_src emacs-lisp
+  (org-crypt-use-before-save-magic)
+#+end_src
+*** 避免 encrypt 這個 tag 被子項目繼承
+#+begin_src emacs-lisp
+  (setq org-tags-exclude-from-inheritance (quote ("encrypt")))
+#+end_src
+*** 設定 org-crypt-disable-auto-save 成 encrypt 模式。
+此模式並不會停用 auto-save-mode，反之，當自動儲存時，解密過的區域將會加密回去。
+#+begin_src emacs-lisp
+  (setq org-crypt-disable-auto-save 'encrypt)
+#+end_src
+** Keybinding
+*** org-mode
+設定自定義的按鍵。
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook
+            '(lambda ()
+               (define-key org-mode-map (kbd "C-c C-p") 'org-backward-same-level)
+               (define-key org-mode-map (kbd "C-c C-n") 'org-forward-same-level)
+               (define-key org-mode-map (kbd "C-c C-b") 'coldnew/org-up-parent)
+               (define-key org-mode-map (kbd "C-c C-f") 'coldnew/org-down-children)
+               (define-key coldnew/command-mode-map "c" 'org-edit-special)
+               ))
+
+(add-hook 'org-mode-hook
+          '(lambda ()
+             (define-key org-mode-map (kbd "C-\'") nil)
+             (define-key org-mode-map (kbd "C-,") nil)
+             (define-key org-mode-map (kbd "C-c C-e") nil)
+             ))
+#+end_src
+
+
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook
+            '(lambda ()
+               (define-key org-mode-map (kbd "C-c b") 'org-metaleft)
+               (define-key org-mode-map (kbd "C-c f") 'org-metaright)
+               (define-key org-mode-map (kbd "C-c p") 'org-metaup)
+               (define-key org-mode-map (kbd "C-c n") 'org-metadown)))
+#+end_src
+*** org-src-mode
+#+begin_src emacs-lisp
+  (add-hook 'org-src-mode-hook
+            '(lambda ()
+               ;;(local-set-key (kbd "C-c C-c") 'org-edit-src-exit)
+               (define-key coldnew/command-mode-map "c" 'org-edit-src-exit)
+               ))
+#+end_src
+** Hooks
+*** TODO Disable linum
+#+begin_src emacs-lisp
+;;  (add-to-list 'org-mode-hook '(lambda () (linum-mode -1)))
+#+end_src
+** Conflict Fix
+some packages conflict with org-mode
+*** yasnippet
+#+begin_src emacs-lisp
+  (when (featurep 'yasnippet)
+    (add-hook 'org-mode-hook
+              (lambda ()
+                (org-set-local 'yas/trigger-key[tab])
+                (define-key yas/keymap[tab] 'yas/next-field-group))))
+#+end_src
+
+*** windmove
+#+begin_src emacs-lisp
+  ;; Make windmove work in org-mode:
+  (add-hook 'org-shiftup-final-hook 'windmove-up)
+  (add-hook 'org-shiftleft-final-hook 'windmove-left)
+  (add-hook 'org-shiftdown-final-hook 'windmove-down)
+  (add-hook 'org-shiftright-final-hook 'windmove-right)
+#+end_src
+** Commands
+*** org-archive-done-tasks
+將標記為 *DONE* 的結點收錄到 archive 裡。
+#+begin_src emacs-lisp
+  (defun org-archive-done-tasks ()
+    "Make all DONE subtree to archive."
+    (interactive)
+    (org-map-entries 'org-archive-subtree "/DONE" 'file))
+#+end_src
+*** coldnew/org-up-parent
+跑到目前節點的父節點，並收起目前的結點。
+#+begin_src emacs-lisp
+  (defun coldnew/org-up-parent ()
+    "Move to the parent of current point. If current is the parent heading,
+            move to the previous parent heading."
+    (interactive)
+    (if (not (org-on-heading-p))
+        (outline-back-to-heading)
+      (let* ((level (funcall outline-level))
+             (point-to-move-to
+              (save-excursion
+                (outline-previous-visible-heading 1)
+                (while (>= (funcall outline-level) level)
+                  (outline-previous-visible-heading 1))
+                (point))))
+        (if point-to-move-to
+            (goto-char point-to-move-to))))
+    (org-cycle))
+#+end_src
+*** coldnew/org-down-children
+跑到目前節點的子節點，並展開子節點。
+#+begin_src emacs-lisp
+  (defun coldnew/org-down-children ()
+    "Move to children of current heading. If current heading only has subtree,
+          expand the subtree."
+    (interactive)
+    (outline-back-to-heading)
+    (show-children)
+    (let* ((level (funcall outline-level))
+           (point-to-move-to
+            (save-excursion
+              (outline-next-visible-heading 1)
+              (if (<= (funcall outline-level) level)
+                  nil
+                        (point)))))
+              (if point-to-move-to
+                  (goto-char point-to-move-to)
+                (show-subtree))))
+#+end_src
+** COMMENT remember the milk ?
+:PROPERTIES:
+:tangle: no
+:END:
+#+begin_src emacs-lisp
+  (require org-feed)
+  (setq org-feed-alist
+        '(("Remember The Milk"
+           "https://www.rememberthemilk.com/rss/jonnay/"
+           "~/org/GTD.org"
+           "Remember The Milk"
+           :template "* TODO %title\n  %a\n "
+           )))
+
+  ;;* rtm feed timer
+  (run-at-time 3600 3600 'org-feed-update-all)
+#+end_src
+** presentation
+#+begin_src emacs-lisp
+    ;; allow for export=>beamer by placing
+
+  ;; #+LaTeX_CLASS: beamer in org files
+  (unless (boundp 'org-export-latex-classes)
+      (setq org-export-latex-classes nil))
+    (add-to-list 'org-export-latex-classes
+                 ;; beamer class, for presentations
+                 '("beamer"
+                   "\\documentclass[11pt]{beamer}\n
+          \\mode<{{{beamermode}}}>\n
+          \\usetheme{{{{beamertheme}}}}\n
+          \\usecolortheme{{{{beamercolortheme}}}}\n
+          \\beamertemplateballitem\n
+          \\setbeameroption{show notes}
+          \\usepackage[utf8]{inputenc}\n
+          \\usepackage[T1]{fontenc}\n
+          \\usepackage{hyperref}\n
+          \\usepackage{color}\n
+          \\usepackage{listings}\n
+          \\usepackage{xeCJK}\n
+          \\setCJKmainfont{LiHei Pro}\n
+          \\XeTeXlinebreaklocale \"zh\"\n
+          \\XeTeXlinebreakskip = 0pt plus 1pt
+          \\lstset{numbers=none,language=[ISO]C++,tabsize=4,
+      frame=single,
+      basicstyle=\\small,
+      showspaces=false,showstringspaces=false,
+      showtabs=false,
+      keywordstyle=\\color{blue}\\bfseries,
+      commentstyle=\\color{red},
+      }\n
+          \\usepackage{verbatim}\n
+          \\institute{{{{beamerinstitute}}}}\n
+           \\subject{{{{beamersubject}}}}\n"
+
+                   ("\\section{%s}" . "\\section*{%s}")
+
+                   ("\\begin{frame}[fragile]\\frametitle{%s}"
+                    "\\end{frame}"
+                    "\\begin{frame}[fragile]\\frametitle{%s}"
+                    "\\end{frame}")))
+
+    ;; letter class, for formal letters
+
+    (add-to-list 'org-export-latex-classes
+
+                 '("letter"
+                   "\\documentclass[11pt]{letter}\n
+          \\usepackage[utf8]{inputenc}\n
+          \\usepackage[T1]{fontenc}\n
+          \\usepackage{color}"
+
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+#+end_src
+** Babel 支援的語言
+#+begin_src emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (C . t)
+     (ditaa . t)
+     (dot . t)
+     (js . t)
+     (latex . t)
+     (perl . t)
+     (python . t)
+     (ruby . t)
+     (sh . t)
+     ))
+#+end_src
+** 輸出成 PDF 檔案設定
+*** 使用 Listings 將程式碼加上色彩
+#+begin_src emacs-lisp
+  (setq org-export-latex-listings t)
+#+end_src
+*** Listings 顏色配置
+**** 配置開始
+#+begin_src emacs-lisp
+  (setq org-export-latex-listings-options
+        '(
+#+end_src
+**** 程式碼字體（前景色）
+#+begin_src emacs-lisp
+  ("basicstyle" "\\color{foreground}\\small\\mono")
+#+end_src
+**** 程式碼外框（背景色）
+#+begin_src emacs-lisp
+  ("backgroundcolor" "\\color{background}")
+#+end_src
+**** TODO 關鍵字
+#+begin_src emacs-lisp
+  ("keywordstyle" "\\color{function}\\bfseries\\small\\mono")
+#+end_src
+**** 註解
+#+begin_src emacs-lisp
+  ("commentstyle" "\\color{comment}\\small\\itshape")
+#+end_src
+**** TODO 文檔
+#+begin_src emacs-lisp
+  ("identifierstyle" "\\color{doc}\\small\\mono")
+#+end_src
+**** 行號
+在左邊顯示行號
+#+begin_src emacs-lisp
+  ("numbers" "left")
+#+end_src
+色彩設置
+#+begin_src emacs-lisp
+  ("numberstyle" "\\color{preprocess}")
+#+end_src
+初始數值
+#+begin_src emacs-lisp
+  ("stepnumber" "1")
+#+end_src
+**** 自動斷行
+#+begin_src emacs-lisp
+  ("breaklines" "true")
+#+end_src
+**** 外框設置
+外框設置成單一條線
+#+begin_src emacs-lisp
+  ("frame" "single")
+#+end_src
+轉角處設置成圓角
+#+begin_src emacs-lisp
+  ("frameround" "tttt")
+#+end_src
+#+begin_src emacs-lisp
+  ("framesep" "0pt")
+#+end_src
+#+begin_src emacs-lisp
+  ("framerule" "8pt")
+#+end_src
+**** 配置結束
+#+begin_src emacs-lisp
+          ))
+#+end_src
+*** 使用 xelatex 產生 PDF 檔案
+當系統有安裝 latexmk 時，使用 latexmk 呼叫 xelatex 進行編譯，
+反之則直接呼叫 xelatex 進行二次編譯。
+#+begin_src emacs-lisp
+  (setq org-latex-to-pdf-process
+        (if (executable-find "latexmk")
+            '("latexmk -pdflatex=xelatex -pdf -silent '$latex = q/latex --shell-escape  %O %S/' -f  %f")
+          '("xelatex -interaction nonstopmode --shell-escape %f"
+            "xelatex -interaction nonstopmode --shell-escape %f")))
+#+end_src
+*** 一般文章所使用的 latex 配置
+#+begin_src emacs-lisp
+  (add-to-list 'org-export-latex-classes
+               '("coldnew-article"
+                 "\\documentclass[12pt,a4paper]{article}
+                  \\usepackage[T1]{fontenc}
+                  \\usepackage{fontspec}
+                  \\usepackage{xeCJK}
+                  \\setCJKmainfont{Hiragino Sans GB W3}
+                  \\XeTeXlinebreaklocale \"zh\"
+                  \\XeTeXlinebreakskip = 0pt plus 1pt
+                  \\usepackage{graphicx}
+                  \\usepackage{tikz}
+                  \\usepackage[bookmarks=true,colorlinks,linkcolor=black]{hyperref}
+                  \\defaultfontfeatures{Mapping=tex-text}
+                  \\setmonofont[Scale=0.8]{DejaVu Sans Mono}
+                  \\usepackage{geometry}
+                  \\geometry{a4paper, textwidth=6.5in, textheight=8in,
+                              marginparsep=10pt, marginparwidth=.6in}
+                  \\pagestyle{plain}
+                  \\linespread{1.5}
+                  \\title{}
+                        [NO-DEFAULT-PACKAGES]
+                        [NO-PACKAGES]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")
+                 ))
+
+#+end_src
+*** 投影片所使用的 latex 配置
+#+begin_src emacs-lisp
+  (add-to-list 'org-export-latex-classes
+               ;; beamer class, for presentations
+               '("beamer"
+                 "\\documentclass[11pt]{beamer}
+                  \\mode<{{{beamermode}}}>
+                  \\usetheme{{{{beamertheme}}}}
+                  \\usecolortheme{{{{beamercolortheme}}}}
+                  \\beamertemplateballitem
+                  \\setbeameroption{show notes}
+                  \\usepackage[utf8]{inputenc}
+                  \\usepackage[T1]{fontenc}
+                  \\usepackage{xeCJK}
+                  \\setCJKmainfont{Hiragino Sans GB W3}
+                  \\XeTeXlinebreaklocale \"zh\"
+                  \\XeTeXlinebreakskip = 0pt plus 1pt
+                  \\setmainfont{Monaco}
+                  \\usepackage{hyperref}
+                  \\usepackage{color}
+                  \\usepackage{listings}
+                  \\lstset{numbers=none,language=[ISO]C++,tabsize=2,
+                           frame=single,
+                   basicstyle=\\small\\ttfamily,
+                           showspaces=false,
+                           showstringspaces=false,
+                           showtabs=false,
+                           keywordstyle=\\color{blue}\\bfseries,
+                           commentstyle=\\color{red},
+                           }
+                  \\usepackage{verbatim}
+                  \\institute{{{{beamerinstitute}}}}
+                  \\subject{{{{beamersubject}}}}"
+
+                 ("\\section{%s}" . "\\section*{%s}")
+
+                 ("\\begin{frame}[fragile]\\frametitle{%s}"
+                  "\\end{frame}"
+                  "\\begin{frame}[fragile]\\frametitle{%s}"
+                  "\\end{frame}")))
+#+end_src
+
+
+#+begin_src emacs-lisp
+  (add-to-list 'org-export-latex-classes
+               ;; beamer class, for presentations
+               '("beamer-minted"
+                 "\\documentclass[11pt]{beamer}
+                  \\mode<{{{beamermode}}}>
+                  \\usetheme{{{{beamertheme}}}}
+                  \\usecolortheme{{{{beamercolortheme}}}}
+                  \\beamertemplateballitem
+                  \\setbeameroption{show notes}
+                  \\usepackage[utf8]{inputenc}
+                  \\usepackage[T1]{fontenc}
+                  \\usepackage{xeCJK}
+                  \\setCJKmainfont{Hiragino Sans GB W3}
+                  \\XeTeXlinebreaklocale \"zh\"
+                  \\XeTeXlinebreakskip = 0pt plus 1pt
+                  \\setmainfont{Monaco}
+                  \\usepackage{hyperref}
+                  \\usepackage{color}
+                  \\usepackage{verbatim}
+                  \\institute{{{{beamerinstitute}}}}
+                  \\subject{{{{beamersubject}}}}"
+
+                 ("\\section{%s}" . "\\section*{%s}")
+
+                 ("\\begin{frame}[fragile]\\frametitle{%s}"
+                  "\\end{frame}"
+                  "\\begin{frame}[fragile]\\frametitle{%s}"
+                  "\\end{frame}")))
+#+end_src
+*** TODO 投影片所使用的 html5 配置
 * Editor
 try to define my editor-mode , some function  or macros copy from evil :)
 ** electric-pair-mode
