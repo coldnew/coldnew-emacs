@@ -519,8 +519,8 @@ yasnippet 使用的 snippet路徑
 **** emacs-log-dir
 放置紀錄的資料夾。
 #+begin_src emacs-lisp
-  (defconst emacs-log-dir (concat emacs-var-dir "log/")
-    "log file directory.")
+;;  (defconst emacs-log-dir (concat emacs-var-dir "log/")
+;;    "log file directory.")
 #+end_src
 
 *** 檔案相關設定
@@ -4418,42 +4418,42 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+end_src
 ** 設定 mode-line 樣式
 #+begin_src emacs-lisp
-(setq mode-line-format
-                '((" "
-                   mode-line-mule-info
-                   ;; read-only or modified status
-                   (:eval
-                    (cond (buffer-read-only
-                           (propertize "RO" 'face 'mode-line-read-only-face))
-                          ((buffer-modified-p)
-                           (propertize "**" 'face 'mode-line-modified-face))
-                          (t "--")))
-                   "   "
-                   (:eval (coldnew-editor-mode-string))
-                   "   "
-                   ;;              (:eval (mode-line-state))
-                   mode-line-buffer-identification
-                   "   "
-                   ;; major-mode name
-                   (:eval (mode-line-major-mode))
-                   "   "
-                   ;; line and column
-                   "("
-                   (:eval (propertize "%02l" 'face 'font-lock-type-face))
-                   ","
-                   (:eval (propertize "%02c" 'face 'font-lock-type-face))
-                   ")"
+  (setq-default mode-line-format
+                  '((" "
+                     mode-line-mule-info
+                     ;; read-only or modified status
+                     (:eval
+                      (cond (buffer-read-only
+                             (propertize "RO" 'face 'mode-line-read-only-face))
+                            ((buffer-modified-p)
+                             (propertize "**" 'face 'mode-line-modified-face))
+                            (t "--")))
+                     "   "
+                     (:eval (coldnew-editor-mode-string))
+                     "   "
+                     ;;              (:eval (mode-line-state))
+                     mode-line-buffer-identification
+                     "   "
+                     ;; major-mode name
+                     (:eval (mode-line-major-mode))
+                     "   "
+                     ;; line and column
+                     "("
+                     (:eval (propertize "%02l" 'face 'font-lock-type-face))
+                     ","
+                     (:eval (propertize "%02c" 'face 'font-lock-type-face))
+                     ")"
 
-                   "   "
-                   (vc-mode vc-mode)
-                   "   "
-                   ;; relative position, size of file
-                   "["
-                   (:eval (propertize "%p" 'face 'font-lock-constant-face)) ;; % above top
-                   "/"
-                   (:eval (propertize "%I" 'face 'font-lock-constant-face)) ;; size
-                   "] "
-                   )))
+                     "   "
+                     (vc-mode vc-mode)
+                     "   "
+                     ;; relative position, size of file
+                     "["
+                     (:eval (propertize "%p" 'face 'font-lock-constant-face)) ;; % above top
+                     "/"
+                     (:eval (propertize "%I" 'face 'font-lock-constant-face)) ;; size
+                     "] "
+                     )))
 #+end_src
 * Command                                                           :command:
 ** Buffer
@@ -5112,7 +5112,6 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
       (google-translate-query-translate)))
 #+end_src
 * Tramp                                                               :tramp:
-tramp config
 #+begin_src emacs-lisp
   (setq tramp-default-method "ssh")
   (add-to-list 'tramp-default-method-alist
@@ -5125,7 +5124,7 @@ tramp config
   (add-to-list 'tramp-default-proxies-alist
                '((regexp-quote (system-name)) nil nil))
 #+end_src
-* Chat Client
+* Chat Client                                                          :chat:
 ** IRC
 *** erc
 **** Depends
@@ -5658,7 +5657,7 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
   (add-to-list 'desktop-modes-not-to-save 'w3m-mode)
   (add-to-list 'desktop-modes-not-to-save 'view-mode)
 #+end_src
-* 游標
+* 游標                                                               :cursor:
 #+begin_src emacs-lisp
   (defvar emacs-normal-cursor-color "white")
   (defvar emacs-normal-cursor-type 'bar)
@@ -6137,5 +6136,4 @@ http://jixiuf.github.com/tags/@Emacs.html
 * Local File Variable
 # Local Variables:
 # mode: org
-# org-confirm-babel-evaluate: nil
 # End:
