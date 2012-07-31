@@ -15,10 +15,6 @@
 ;; a shortcut to reload emacs setting
 (global-set-key (kbd "<f5>") '(lambda () (interactive) (load-file "~/.emacs.d/init.el") (desktop-revert) (delete-other-windows)))
 
-;; add safe local variable
-(add-to-list 'safe-local-variable-values '(org-confirm-babel-evaluate . nil))
-
-
 ;; load up org-mode and org-babel
 (require 'org-install)
 (require 'ob-tangle)
