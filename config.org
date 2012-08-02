@@ -2974,72 +2974,7 @@ some packages conflict with org-mode
         '(("frame" "lines")
           ("fontsize" "\\scriptsize")))
 #+end_src
-*** 使用 Listings 將程式碼加上色彩
-#+begin_src emacs-lisp
-  ;;(setq org-export-latex-listings t)
-#+end_src
-*** Listings 顏色配置
-**** 配置開始
-#+begin_src emacs-lisp
-  (setq org-export-latex-listings-options
-        '(
-#+end_src
-**** 程式碼字體（前景色）
-#+begin_src emacs-lisp
-  ("basicstyle" "\\color{foreground}\\small\\mono")
-#+end_src
-**** 程式碼外框（背景色）
-#+begin_src emacs-lisp
-  ("backgroundcolor" "\\color{background}")
-#+end_src
-**** TODO 關鍵字
-#+begin_src emacs-lisp
-  ("keywordstyle" "\\color{function}\\bfseries\\small\\mono")
-#+end_src
-**** 註解
-#+begin_src emacs-lisp
-  ("commentstyle" "\\color{comment}\\small\\itshape")
-#+end_src
-**** TODO 文檔
-#+begin_src emacs-lisp
-  ("identifierstyle" "\\color{doc}\\small\\mono")
-#+end_src
-**** 行號
-在左邊顯示行號
-#+begin_src emacs-lisp
-  ("numbers" "left")
-#+end_src
-色彩設置
-#+begin_src emacs-lisp
-  ("numberstyle" "\\color{preprocess}")
-#+end_src
-初始數值
-#+begin_src emacs-lisp
-  ("stepnumber" "1")
-#+end_src
-**** 自動斷行
-#+begin_src emacs-lisp
-  ("breaklines" "true")
-#+end_src
-**** 外框設置
-外框設置成單一條線
-#+begin_src emacs-lisp
-  ("frame" "single")
-#+end_src
-轉角處設置成圓角
-#+begin_src emacs-lisp
-  ("frameround" "tttt")
-#+end_src
-#+begin_src emacs-lisp
-  ("framesep" "0pt")
-#+end_src
-#+begin_src emacs-lisp
-  ("framerule" "8pt")
-#+end_src
-**** 配置結束
-#+begin_src emacs-lisp
-          ))
-#+end_src
+
 *** 使用 xelatex 產生 PDF 檔案
 當系統有安裝 latexmk 時，使用 latexmk 呼叫 xelatex 進行編譯，
 反之則直接呼叫 xelatex 進行二次編譯。
@@ -3050,6 +2985,7 @@ some packages conflict with org-mode
           '("xelatex -interaction nonstopmode --shell-escape %f"
             "xelatex -interaction nonstopmode --shell-escape %f")))
 #+end_src
+
 *** 一般文章所使用的 latex 配置
 #+begin_src emacs-lisp
   (add-to-list 'org-export-latex-classes
@@ -3082,6 +3018,7 @@ some packages conflict with org-mode
                  ))
 
 #+end_src
+
 *** 投影片所使用的 latex 配置
 #+begin_src emacs-lisp
   (add-to-list 'org-export-latex-classes
@@ -3102,16 +3039,6 @@ some packages conflict with org-mode
                   \\setmainfont{Monaco}
                   \\usepackage{hyperref}
                   \\usepackage{color}
-                  \\usepackage{listings}
-                  \\lstset{numbers=none,language=[ISO]C++,tabsize=2,
-                           frame=single,
-                   basicstyle=\\small\\ttfamily,
-                           showspaces=false,
-                           showstringspaces=false,
-                           showtabs=false,
-                           keywordstyle=\\color{blue}\\bfseries,
-                           commentstyle=\\color{red},
-                           }
                   \\usepackage{verbatim}
                   \\institute{{{{beamerinstitute}}}}
                   \\subject{{{{beamersubject}}}}"
@@ -3124,37 +3051,6 @@ some packages conflict with org-mode
                   "\\end{frame}")))
 #+end_src
 
-
-#+begin_src emacs-lisp
-  (add-to-list 'org-export-latex-classes
-               ;; beamer class, for presentations
-               '("beamer-minted"
-                 "\\documentclass[11pt]{beamer}
-                  \\mode<{{{beamermode}}}>
-                  \\usetheme{{{{beamertheme}}}}
-                  \\usecolortheme{{{{beamercolortheme}}}}
-                  \\beamertemplateballitem
-                  \\setbeameroption{show notes}
-                  \\usepackage[utf8]{inputenc}
-                  \\usepackage[T1]{fontenc}
-                  \\usepackage{xeCJK}
-                  \\setCJKmainfont{Hiragino Sans GB W3}
-                  \\XeTeXlinebreaklocale \"zh\"
-                  \\XeTeXlinebreakskip = 0pt plus 1pt
-                  \\setmainfont{Monaco}
-                  \\usepackage{hyperref}
-                  \\usepackage{color}
-                  \\usepackage{verbatim}
-                  \\institute{{{{beamerinstitute}}}}
-                  \\subject{{{{beamersubject}}}}"
-
-                 ("\\section{%s}" . "\\section*{%s}")
-
-                 ("\\begin{frame}[fragile]\\frametitle{%s}"
-                  "\\end{frame}"
-                  "\\begin{frame}[fragile]\\frametitle{%s}"
-                  "\\end{frame}")))
-#+end_src
 *** TODO 投影片所使用的 html5 配置
 * Editor
 try to define my editor-mode , some function  or macros copy from evil :)
