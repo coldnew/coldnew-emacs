@@ -1078,6 +1078,11 @@ parenface 可以將所有的圓括號上色。
   (require 'misc)
   (require 'cc-mode)
 #+end_src
+iimage 是讓 emacs 可以直接顯示圖片的模式。
+#+begin_src emacs-lisp
+  (require 'iimage)
+#+end_src
+
 * Advice                                                             :advice:
 advice file
 #+begin_src emacs-lisp
@@ -2763,6 +2768,7 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
 ** 在 org-mode 裡面顯示圖片
 *** 增加 org-mode 圖片的正規表達式到 iimage-mode 裡面
 #+begin_src emacs-lisp
+  (require 'iimage)
   (add-to-list 'iimage-mode-image-regex-alist
                (cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]\\]")  1))
 #+end_src
