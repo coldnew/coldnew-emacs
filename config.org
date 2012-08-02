@@ -5719,14 +5719,14 @@ M- ?#
 ** test
 #+name: global-unset-key
 #+begin_src emacs-lisp :results value raw
-    (coldnew/global-unset-key
-     (kbd "C-x e")
-     (kbd "C-x d")
-     "\C-x e"
-"\C-x n"
-  ;;   "\C-c e"
-     )
-
+      (coldnew/global-unset-key
+       (kbd "C-x e")
+       (kbd "C-x d")
+       "\C-x e"
+  "\C-x n"
+    ;;   "\C-c e"
+       )
+  (global-unset-key (kbd "C-w"))
 #+end_src
 
 ** Function key prefix
@@ -5822,20 +5822,7 @@ ssda
   (global-set-key (kbd "C-x F") 'fullscreen-window)
   (global-set-key (kbd "C-x s") 'shell-command)
 #+end_src
-*** 窗口移動
-| 按鍵  | 命令           | 用途             |
-|-------+----------------+------------------|
-| C-x n | windmove-down  | 移動到下面的窗口 |
-| C-x p | windmove-up    | 移動到上面的窗口 |
-| C-x b | windmove-left  | 移動到左邊的窗口 |
-| C-x f | windmove-right | 移動到右邊的窗口 |
 
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x n") 'windmove-down)
-  (global-set-key (kbd "C-x f") 'windmove-right)
-  (global-set-key (kbd "C-x b") 'windmove-left)
-  (global-set-key (kbd "C-x p") 'windmove-up)
-#+end_src
 *** Google 相關
 | 按鍵    | 命令                   | 用途           |
 |---------+------------------------+----------------|
@@ -5891,6 +5878,26 @@ ssda
   (global-set-key (kbd "C-c l") 'org-store-link)
   (global-set-key (kbd "C-c C-l") 'org-insert-link)
   (global-set-key (kbd "C-c o") 'org-iswitchb)
+#+end_src
+
+** Ctrl-w prefix
+*** 窗口移動
+| 按鍵  | 命令           | 用途             |
+|-------+----------------+------------------|
+| C-w n | windmove-down  | 移動到下面的窗口 |
+| C-w p | windmove-up    | 移動到上面的窗口 |
+| C-w b | windmove-left  | 移動到左邊的窗口 |
+| C-w f | windmove-right | 移動到右邊的窗口 |
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-w n") 'windmove-down)
+  (global-set-key (kbd "C-w f") 'windmove-right)
+  (global-set-key (kbd "C-w b") 'windmove-left)
+  (global-set-key (kbd "C-w p") 'windmove-up)
+#+end_src
+*** 刪除區域或是一行
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-w C-w") 'kill-region)
 #+end_src
 ** Ctrl-Meta Prefix
 #+begin_src emacs-lisp
