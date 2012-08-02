@@ -5636,25 +5636,6 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
       (setq cursor-color emacs-normal-cursor-color))))
 #+end_src
 * 全域性按鍵設置
-Main keymaps for personal bindings are:
-
-C-x <letter> primary map (has many defaults too)
-C-c <letter> secondary map (not just for mode-specific)
-C-. <letter> tertiary map
-
-M-g <letter> goto map
-M-s <letter> search map
-M-o <letter> markup map (even if only temporarily)
-
-C-<capital letter>
-M-<capital letter>
-
-A-<anything>
-M-A-<anything>
-
-Single-letter bindings still available:
-C- ,'";:?<>|!#$%^&*`~ <tab>
-M- ?#
 ** Unset key
 #+begin_src emacs-lisp
   (defmacro coldnew/global-unset-key (key &rest bindings)
@@ -5745,7 +5726,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "<f3>")     'call-last-kbd-macro)
   (global-set-key (kbd "<f4>")     'sr-speedbar-toggle)
 #+end_src
-ssda
 ** Ctrl Prefix
 *** Default Emacs keybinding
 #+begin_src emacs-lisp
@@ -5895,9 +5875,10 @@ ssda
   (global-set-key (kbd "C-w b") 'windmove-left)
   (global-set-key (kbd "C-w p") 'windmove-up)
 #+end_src
-*** 刪除區域或是一行
+*** TODO 刪除區域或是一行
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-w C-w") 'kill-region)
+  (global-set-key (kbd "M-w") 'kill-region)
+  (global-set-key (kbd "M-c") 'kill-ring-save)
 #+end_src
 ** Ctrl-Meta Prefix
 #+begin_src emacs-lisp
