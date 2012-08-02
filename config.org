@@ -2760,6 +2760,29 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
 #+begin_src emacs-lisp
   (setq org-crypt-disable-auto-save 'encrypt)
 #+end_src
+** 在 org-mode 裡面顯示圖片
+*** 增加 org-mode 圖片的正規表達式到 iimage-mode 裡面
+#+begin_src emacs-lisp
+  (add-to-list 'iimage-mode-image-regex-alist
+               (cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]\\]")  1))
+#+end_src
+*** 打開 iimage-mode 並取消 org-link 的顏色
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook
+            '(lambda ()
+               (turn-on-iimage-mode)
+               (set-face-underline-p 'org-link nil)))
+#+end_src
+*** 切換顯示圖片的命令
+#+begin_src emacs-lisp
+  (defun org-display-image ()
+    "Toggle display images in org file."
+    (interactive)
+    (if (face-underline-p 'org-link)
+        (set-face-underline-p 'org-link nil)
+      (set-face-underline-p 'org-link t))
+    (call-interactively 'iimage-mode))
+#+end_src
 ** Keybinding
 *** org-mode
 設定自定義的按鍵。
@@ -3036,10 +3059,13 @@ some packages conflict with org-mode
                   \\setCJKmainfont{Hiragino Sans GB W3}
                   \\XeTeXlinebreaklocale \"zh\"
                   \\XeTeXlinebreakskip = 0pt plus 1pt
+                  \\usepackage{minted}
+                  \\usemintedstyle{emacs}
                   \\setmainfont{Monaco}
                   \\usepackage{hyperref}
                   \\usepackage{color}
                   \\usepackage{verbatim}
+                  \\usepackage{upquote}
                   \\institute{{{{beamerinstitute}}}}
                   \\subject{{{{beamersubject}}}}"
 
@@ -3069,6 +3095,10 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
 ;;  (require* 'mixen)
 ;;  (setq mixen-enable-write-to-file t)
 ;;  (mixen-mode)
+#+end_src
+** 在文章中顯示圖片
+#+begin_src emacs-lisp
+  (iimage-mode)
 #+end_src
 ** Mode
 #+begin_src emacs-lisp :tangle no
