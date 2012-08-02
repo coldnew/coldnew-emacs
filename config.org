@@ -2793,21 +2793,22 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
 *** org-mode
 設定自定義的按鍵。
 #+begin_src emacs-lisp
+    (add-hook 'org-mode-hook
+              '(lambda ()
+                 (define-key org-mode-map (kbd "C-c C-p") 'org-backward-same-level)
+                 (define-key org-mode-map (kbd "C-c C-n") 'org-forward-same-level)
+                 (define-key org-mode-map (kbd "C-c C-b") 'coldnew/org-up-parent)
+                 (define-key org-mode-map (kbd "C-c C-f") 'coldnew/org-down-children)
+                 (define-key org-mode-map (kbd "C-c i") 'org-display-image)
+                 (define-key coldnew/command-mode-map "c" 'org-edit-special)
+                 ))
+
   (add-hook 'org-mode-hook
             '(lambda ()
-               (define-key org-mode-map (kbd "C-c C-p") 'org-backward-same-level)
-               (define-key org-mode-map (kbd "C-c C-n") 'org-forward-same-level)
-               (define-key org-mode-map (kbd "C-c C-b") 'coldnew/org-up-parent)
-               (define-key org-mode-map (kbd "C-c C-f") 'coldnew/org-down-children)
-               (define-key coldnew/command-mode-map "c" 'org-edit-special)
+               (define-key org-mode-map (kbd "C-\'") nil)
+               (define-key org-mode-map (kbd "C-,") nil)
+               (define-key org-mode-map (kbd "C-c C-e") nil)
                ))
-
-(add-hook 'org-mode-hook
-          '(lambda ()
-             (define-key org-mode-map (kbd "C-\'") nil)
-             (define-key org-mode-map (kbd "C-,") nil)
-             (define-key org-mode-map (kbd "C-c C-e") nil)
-             ))
 #+end_src
 
 
