@@ -2965,9 +2965,18 @@ some packages conflict with org-mode
      ))
 #+end_src
 ** 輸出成 PDF 檔案設定
+*** 使用 minted 將程式碼加上色彩
+#+begin_src emacs-lisp
+  (require 'org-latex)
+  (add-to-list 'org-export-latex-packages-alist '("" "minted"))
+  (setq org-export-latex-listings 'minted)
+  (setq org-export-latex-minted-options
+        '(("frame" "lines")
+          ("fontsize" "\\scriptsize")))
+#+end_src
 *** 使用 Listings 將程式碼加上色彩
 #+begin_src emacs-lisp
-  (setq org-export-latex-listings t)
+  ;;(setq org-export-latex-listings t)
 #+end_src
 *** Listings 顏色配置
 **** 配置開始
@@ -3037,7 +3046,7 @@ some packages conflict with org-mode
 #+begin_src emacs-lisp
   (setq org-latex-to-pdf-process
         (if (executable-find "latexmk")
-            '("latexmk -pdflatex=xelatex -pdf -silent '$latex = q/latex --shell-escape  %O %S/' -f  %f")
+            '("latexmk -pdflatex=xelatex -pdf -silent --shell-escape -f %f")
           '("xelatex -interaction nonstopmode --shell-escape %f"
             "xelatex -interaction nonstopmode --shell-escape %f")))
 #+end_src
