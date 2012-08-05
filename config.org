@@ -2035,7 +2035,7 @@ auto-complete-mode 的按鍵設定。
   (require 'info)
 #+end_src
 ** minibuffer
-*** Keybinding
+*** 按鍵設定
 #+begin_src emacs-lisp
   (define-key minibuffer-local-map (kbd "M-l") 'backward-kill-word)
   (define-key minibuffer-local-map (kbd "C-w") 'kill-word)
@@ -2101,30 +2101,28 @@ auto-complete-mode 的按鍵設定。
                ))
 #+end_src
 ** yasnippet                                                     :yasnippet:
-*** Init
+*** 設定 snippet 所在的資料夾
 #+begin_src emacs-lisp
   (setq-default yas/snippet-dirs emacs-snippets-dir)
 #+end_src
-*** Depends
+*** 載入相關套件
 #+begin_src emacs-lisp
   (require 'yasnippet)
   (require 'dropdown-list)
 #+end_src
-*** Config
-**** Initial yasnippet
+*** 初始化 yasnippet
 #+begin_src emacs-lisp
   (yas/initialize)
 #+end_src
-**** Setup yasnippet load-snippet directory
+*** 設定 yasnippet 讀取 snippet 的資料夾
 #+begin_src emacs-lisp
   (yas/load-directory emacs-snippets-dir)
 #+end_src
-**** Setup yasnippet prompt functions
+*** 設定 yasnippet 提示用的 function
 #+begin_src emacs-lisp
   (setq yas/prompt-functions '(yas/dropdown-prompt yas/ido-prompt yas/completing-prompt))
 #+end_src
-*** Hooks
-**** update snippets after save
+*** 當存檔時，更新 snippets
 #+begin_src emacs-lisp
   (add-hook 'after-save-hook 'coldnew/update-yasnippets-on-save)
 #+end_src
@@ -2156,7 +2154,7 @@ auto-complete-mode 的按鍵設定。
       (yas/load-snippet-dirs)))
 #+end_src
 ** ibuffer                                                         :ibuffer:
-*** Depends
+*** 載入相依套件
 #+begin_src emacs-lisp
   (require 'ibuffer)
   (require 'ibuf-ext)
@@ -2419,12 +2417,11 @@ Following buffer will not show in iBuffer
   (setq multi-term-program emacs-default-shell)
 #+end_src
 ** term
-*** Depends
+*** 載入相依套件
 #+begin_src emacs-lisp
   (require 'term)
   (require 'ansi-color)
 #+end_src
-
 *** Config
 term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 
@@ -2469,9 +2466,8 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   ;;;; Keybindings
   (define-key comint-mode-map (kbd "C-g") 'comint-interrupt-subjob)
 #+end_src
-*
 ** undo-tree
-*** Depends
+*** 載入相依套件
 #+begin_src emacs-lisp
   (require 'undo-tree)
 #+end_src
@@ -3489,10 +3485,11 @@ This section contains my editor state
       (define-key map "q" 'quoted-insert)
       (define-key map "r" 'org-capture)
       (define-key map "w" 'kill-region)
-      (define-key map "n" 'windmove-down)
-      (define-key map "p" 'windmove-up)
-      (define-key map "f" 'windmove-right)
-      (define-key map "b" 'windmove-left)
+      ;; (define-key map "n" 'windmove-down)
+      ;; (define-key map "p" 'windmove-up)
+      ;; (define-key map "f" 'windmove-right)
+      ;; (define-key map "b" 'windmove-left)
+      (define-key map "b" 'ido-switch-buffer)
       (define-key map "\C-m" 'bm-toggle)
       (define-key map "\C-n" 'bm-next)
       (define-key map "\C-p" 'bm-previous)
@@ -5864,21 +5861,21 @@ Function key 設置常用的命令。
 *** 窗口移動
 | 按鍵  | 命令           | 用途             |
 |-------+----------------+------------------|
-| C-w n | windmove-down  | 移動到下面的窗口 |
-| C-w p | windmove-up    | 移動到上面的窗口 |
-| C-w b | windmove-left  | 移動到左邊的窗口 |
-| C-w f | windmove-right | 移動到右邊的窗口 |
+| C-x n | windmove-down  | 移動到下面的窗口 |
+| C-x p | windmove-up    | 移動到上面的窗口 |
+| C-x b | windmove-left  | 移動到左邊的窗口 |
+| C-x f | windmove-right | 移動到右邊的窗口 |
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-w n") 'windmove-down)
-  (global-set-key (kbd "C-w f") 'windmove-right)
-  (global-set-key (kbd "C-w b") 'windmove-left)
-  (global-set-key (kbd "C-w p") 'windmove-up)
+  (global-set-key (kbd "C-x n") 'windmove-down)
+  (global-set-key (kbd "C-x f") 'windmove-right)
+  (global-set-key (kbd "C-x b") 'windmove-left)
+  (global-set-key (kbd "C-x p") 'windmove-up)
 #+end_src
 *** TODO 刪除區域或是一行
 #+begin_src emacs-lisp
-  (global-set-key (kbd "M-w") 'kill-region)
-  (global-set-key (kbd "M-c") 'kill-ring-save)
+  (global-set-key (kbd "C-w") 'kill-region)
+  (global-set-key (kbd "M-w") 'kill-ring-save)
 #+end_src
 ** Ctrl-Meta Prefix
 #+begin_src emacs-lisp
