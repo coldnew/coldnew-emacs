@@ -375,7 +375,7 @@ Uses the faces `lusty-directory-face', `lusty-slash-face', and
          (let* ((path (minibuffer-contents-no-properties))
                 (last-char (aref path (1- (length path)))))
            (if (and (file-directory-p path)
-                   (not (eq last-char ?/))) ; <-- FIXME nonportable?
+		    (not (eq last-char ?/))) ; <-- FIXME nonportable?
                ;; Current path is a directory, sans-slash.  Open in dired.
                (lusty-select-current-name)
              ;; Just activate the current match as normal.
