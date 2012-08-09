@@ -3847,7 +3847,7 @@ emacs 和 cscope 相關的套件蠻多的，xcscope 包含在 cscope 的套件�
 #+begin_src emacs-lisp
   (auto-compression-mode 1)
 #+end_src
-* 程式開發
+* 程式開發                                                         :language:
 各種不同程式語言開發用的設定。
 ** Bash
 *** 設定 Bash 語言 檔案的副檔名與對應的模式
@@ -4133,12 +4133,20 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 ** Clojure
 *** 載入相關套件
 #+begin_src emacs-lisp
-  (require* 'clojure-mode)
+  (require 'clojure-mode)
 #+end_src
 *** 設定 Clojure 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
 #+end_src
+*** 啟用 rainbow-delimiters
+#+begin_src emacs-lisp
+  (add-hook 'clojure-mode-hook
+            '(lambda ()
+               (when (require rainbow-delimiters)
+                 (rainbow-delimiters-mode-enable)))
+#+end_src
+** Clojure Script
 ** Emacs Lisp
 *** 設定 emacs-lisp 的副檔名與對應的模式
 #+begin_src emacs-lisp
@@ -4394,7 +4402,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                      "] "
                      )))
 #+end_src
-* Command                                                           :command:
+* 互動式命令                                                        :command:
 ** Buffer
 *** 跳轉到 **scratch**
 跳轉目前 buffer 與 **scratch**，假如 **scratch** 不存在，
