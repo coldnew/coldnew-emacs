@@ -2714,7 +2714,7 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
 #+end_src
 
 *** Keybinding
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (add-hook 'org-capture-mode-hook
             '(lambda ()
                (define-key coldnew/command-mode-map "c" 'org-capture-finalize)
@@ -2796,7 +2796,7 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
                  (define-key org-mode-map (kbd "C-c C-b") 'coldnew/org-up-parent)
                  (define-key org-mode-map (kbd "C-c C-f") 'coldnew/org-down-children)
                  (define-key org-mode-map (kbd "C-c i") 'org-display-image)
-                 (define-key coldnew/command-mode-map "c" 'org-edit-special)
+                 ;;(define-key coldnew/command-mode-map "c" 'org-edit-special)
                  ))
 
   (add-hook 'org-mode-hook
@@ -2821,7 +2821,7 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
   (add-hook 'org-src-mode-hook
             '(lambda ()
                ;;(local-set-key (kbd "C-c C-c") 'org-edit-src-exit)
-               (define-key coldnew/command-mode-map "c" 'org-edit-src-exit)
+               ;;(define-key coldnew/command-mode-map "c" 'org-edit-src-exit)
                ))
 #+end_src
 ** Hooks
@@ -3384,7 +3384,7 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
 
 
 #+end_src
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
     ;;;; lisp common setting
   (defun coldnew-lisp-common-setting ()
     "coldnew's common setting for lisp-like mode"
@@ -3424,7 +3424,7 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
 
 #+end_src
 This section contains my editor state
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (defvar coldnew-editor-hook nil
     "Hooks for coldnew-editor-mode.")
 
@@ -3611,7 +3611,7 @@ This section contains my editor state
 #+end_src
 
 ** hooks
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
        ;; After save buffer, indent whole file.
 ;;       (add-hook 'coldnew-editor-hook 'indent-file-after-save)
        ;; Before save buffer, cleanup whitespace
@@ -3630,7 +3630,6 @@ This section contains my editor state
     ;;   ;; Add spaces between Chinese and English character.
      ;; (add-hook 'before-save-hook 'insert-space-between-english-chinese)
 #+end_src
-
 ** TODO conflict
 #+begin_src emacs-lisp
   ;;   ;; Color nested parentheses, brackets, and braces according to their dept
@@ -4144,7 +4143,7 @@ C-c  I             对目录中的相关文件建立列表并进行索引
   (add-hook 'clojure-mode-hook
             '(lambda ()
                (when (require rainbow-delimiters)
-                 (rainbow-delimiters-mode-enable)))
+                 (rainbow-delimiters-mode-enable))))
 #+end_src
 ** Clojure Script
 ** Emacs Lisp
@@ -4180,7 +4179,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+end_src
 **** Other
 #+begin_src emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook 'coldnew-lisp-common-setting)
+;;  (add-hook 'emacs-lisp-mode-hook 'coldnew-lisp-common-setting)
 #+end_src
 *** Auto Complete Setting
 #+begin_src emacs-lisp
@@ -5323,7 +5322,7 @@ cA==
      (t                                     :quit)))
 #+end_src
 **** Keybinding
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (add-hook 'egg-commit-buffer-mode-hook
             '(lambda ()
                (define-key coldnew/command-mode-map "c" 'egg-log-msg-done)
@@ -5605,7 +5604,8 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
   (add-to-list 'desktop-modes-not-to-save 'view-mode)
 #+end_src
 * 游標                                                               :cursor:
-#+begin_src emacs-lisp
+** TODO remove
+#+begin_src emacs-lisp :tangle no
   (defvar emacs-normal-cursor-color "white")
   (defvar emacs-normal-cursor-type 'bar)
 
@@ -5636,6 +5636,18 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
      ;; (overwrite-mode
      ;;   (set-cursor-color djcb-overwrite-color)
      ;;   (setq cursor-type djcb-overwrite-cursor-type))
+     (t
+      (setq cursor-type emacs-normal-cursor-type)
+      (setq cursor-color emacs-normal-cursor-color))))
+#+end_src
+** TODO remove
+#+begin_src emacs-lisp
+  (defvar emacs-normal-cursor-color "white")
+  (defvar emacs-normal-cursor-type 'bar)
+  (add-hook 'post-command-hook 'coldnew/set-cursor-according-mode)
+  (defun coldnew/set-cursor-according-mode ()
+    "change cursor shap and color according mode"
+    (cond
      (t
       (setq cursor-type emacs-normal-cursor-type)
       (setq cursor-color emacs-normal-cursor-color))))
