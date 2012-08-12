@@ -2275,6 +2275,8 @@ buffer list
                         (name . "\\*inferior-scala\\*$")))
            ("Diff" (mode . diff-mode))
            ;;      ("Project" (mode . qmake-mode))
+           ("JavaScript" (or (mode . js-mode)
+                             (mode . js2-mode)))
            ("C++ . C#" (or (mode . c++-mode)
                            (mode . csharpmode)))
            ("C"          (mode . c-mode))
@@ -4181,7 +4183,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+begin_src emacs-lisp
 ;;  (add-hook 'emacs-lisp-mode-hook 'coldnew-lisp-common-setting)
 #+end_src
-*** Auto Complete Setting
+*** 自動補全
 #+begin_src emacs-lisp
     (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
     (defun ac-emacs-lisp-mode-setup ()
@@ -4267,6 +4269,43 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+name: emacs-lisp-mode-hook-end
 #+begin_src emacs-lisp
 ))
+#+end_src
+** JavaScript
+*** 設定 javascript 的副檔名與對應的模式
+使用 js2-mode 替代原本系統內建的 js-mode。
+#+begin_src emacs-lisp
+  (require* 'js2-mode)
+  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+#+end_src
+*** 自動補全
+#+begin_src emacs-lisp
+  (add-hook 'js-mode-hook 'ac-javascript-mode-setup)
+  (defun ac-javascript-mode-setup ()
+    "auto-complete settings for javascript-mode"
+    (setq ac-sources
+          '(ac-source-dictionary
+            ac-source-filename
+            ac-source-files-in-current-dir
+            ac-source-words-in-same-mode-buffers
+            )))
+#+end_src
+*** REPL 設定
+使用 js-comint 來設定 REPL 模式。
+**** 設定起始位置
+#+begin_src emacs-lisp
+  (when (require 'js-comint nil 'noerror)
+#+end_src
+**** 設定 REPL 程式為 node.js
+#+begin_src emacs-lisp
+    (setq inferior-js-program-command "node")
+#+end_src
+**** 在 REPL 啟用 ANSI 色彩
+#+begin_src emacs-lisp
+;;  (add-hook 'js-mode-hook 'ansi-color-for-comint-mode-on)
+#+end_src
+**** 設定終止位置
+#+begin_src emacs-lisp
+    )
 #+end_src
 ** LaTex
 ** Scheme
@@ -6084,3 +6123,9 @@ http://jixiuf.github.com/tags/@Emacs.html
 # Local Variables:
 # mode: org
 # End:
+
+
+
+
+
+
