@@ -1,7 +1,7 @@
 ;;; init.el --- configuration entry point.
 (eval-when-compile (require 'cl))
 
-(message "\n\nEmacs is powering up... Be patient, Master %s!\n\n" (getenv "USER"))
+(message "\nEmacs is powering up... Be patient, Master %s!\n" (getenv "USER"))
 
 ;; add directories to emacs's `load-path' recursively.
 (let* ((emacs-dir "~/.emacs.d/")
@@ -12,21 +12,31 @@
       (setq load-path (cons load-dir load-path))
       (normal-top-level-add-subdirs-to-load-path))))
 
-;; a shortcut to reload emacs setting
-(global-set-key (kbd "<f5>") '(lambda () (interactive) (load-file "~/.emacs.d/init.el") (desktop-revert) (delete-other-windows)))
+;; Use <F5> as a shortcut to reload emacs setting
+(global-set-key (kbd "<f5>")
+		'(lambda () (interactive)
+		   (load-file "~/.emacs.d/init.el") (desktop-revert) (delete-other-windows)))
 
+;; When eval org-babel, do not confirm
 (setq org-confirm-babel-evaluate nil)
 
-;; load up org-mode and org-babel
+;; Load up org-mode and org-babel
 (require 'org-install)
 (require 'ob-tangle)
 
-;; load up all literate org-mode files in config directory
+;; Load up all literate org-mode files in config directory
 (mapc #'org-babel-load-file (directory-files "~/.emacs.d/" t "\\.org$"))
 
-
 ;; After loading allemacs config file, read authorization file
-;;(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
+(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
 
 
-(message "\n\nEmacs is ready to serve you, Master %s!\n\n" (getenv "USER"))
+(message "\nEmacs is ready to serve you, Master %s!\n" (getenv "USER"))
+
+;;; init.el ends here.
+
+
+
+
+
+
