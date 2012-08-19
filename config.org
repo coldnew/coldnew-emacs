@@ -1094,7 +1094,7 @@ advice file
       ad-do-it))
 #+end_src
 * Function                                                         :function:
-我所自定義或是我的 emacs config 需要用到的 function。
+我所自定義或是我的 emacs 設定檔需要用到的 function。
 ** List Processing
 處理 List 所用的 function。
 *** flatten a list
@@ -5112,10 +5112,11 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
   (add-to-list 'tramp-default-proxies-alist
                '((regexp-quote (system-name)) nil nil))
 #+end_src
-* Chat Client                                                          :chat:
+* 聊天室                                                               :chat:
 ** IRC
-*** erc
-**** Depends
+emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境的設置。
+*** ERC
+**** 載入相依套件
 #+begin_src emacs-lisp
   (require 'erc)
   (require 'erc-log)
@@ -5123,28 +5124,29 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
   (require 'erc-spelling)
   (require 'erc-autoaway)
 #+end_src
-**** Configs
-***** prompt
-設定 erc-prompt。
+**** 設定 prompt
 #+begin_src emacs-lisp
   (setq erc-prompt ">>")
 #+end_src
-***** log
-設定 erc 紀錄檔的位置。
-***** Coding
-設定 erc 的編碼。
+**** 編碼設定為 utf-8
 #+begin_src emacs-lisp
   (setq erc-server-coding-system '(utf-8 . utf-8))
 #+end_src
+**** 當 ERC 啟動時，自動連入 IRC 伺服器
+#+begin_src emacs-lisp
+  (erc-autojoin-mode t)
+#+end_src
+**** 自動連線的伺服器與聊天室
+#+begin_src emacs-lisp
+  (setq erc-autojoin-channels-alist
+        '((".*\\.freenode.net" "#emacs"  "#clojure" "#emacs.tw")
+          ))
+#+end_src
+**** Configs
+***** log
+設定 erc 紀錄檔的位置。
 ***** Misc
 #+begin_src emacs-lisp
-  ;; make sure to use wildcards for e.g. freenode as the actual server
-  ;; name can be be a bit different, which would screw up autoconnect
-  (erc-autojoin-mode t)
-  (setq erc-autojoin-channels-alist
-        '((".*\\.freenode.net" "#emacs"  "#clojure")
-          ))
-
   ;; check channels
   ;; exclude boring stuff from tracking
   (erc-track-mode t)
@@ -5181,8 +5183,6 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
   (setq erc-autoaway-idle-seconds 600)
   (setq erc-autoaway-use-emacs-idle t)
 #+end_src
-**** Hooks
-**** Keybinding
 **** Commands
 #+begin_src emacs-lisp
   (defun i-wanna-be-social ()
@@ -5225,13 +5225,13 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
 
 (add-to-list 'erc-send-pre-hook 'avoid-erc-oops)
 #+end_src
-*** COMMENT rcirc
+*** RCIRC
 :PROPERTIES:
 :tangle: no
 :END:
 這邊是以前所使用的 rcirc 設定，由於我改用 erc 作為我的 irc client，這邊的設定將不輸出至
 我的 emacs 設定。
-**** Depends
+**** 載入相依套件
 #+begin_src emacs-lisp
   (require 'rcirc)
 #+end_src
