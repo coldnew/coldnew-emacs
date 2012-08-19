@@ -2016,23 +2016,23 @@ auto-complete-mode 的按鍵設定。
   (setq smex-save-file (concat emacs-cache-dir "smex.dat"))
 #+end_src
 ** womon                                                             :woman:
-*** Depends
+*** 載入相依套件
 #+begin_src emacs-lisp
   (require 'woman)
 #+end_src
-*** Configs
+*** WoMan 快取儲存位置設定
 #+begin_src emacs-lisp
   (setq woman-cache-filename (concat emacs-cache-dir "woman.cache"))
+#+end_src
+*** 對 woMan 緩衝區上色
+#+begin_src emacs-lisp
+  (setq woman-fontify t)
+#+end_src
+*** TODO 其他
+#+begin_src emacs-lisp
   (setq woman-use-topic-at-point nil)
   ;; Colorful fonts
-  (setq woman-fontify t)
   (setq woman-fill-column 100)
-#+end_src
-
-** info                                                               :info:
-*** Depends
-#+begin_src emacs-lisp
-  (require 'info)
 #+end_src
 ** minibuffer
 *** 按鍵設定
