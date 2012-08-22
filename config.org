@@ -462,35 +462,30 @@ emacs 設定檔預設所在的資料夾
   (defconst emacs-dir "~/.emacs.d/"
     "The top-level emacs-configure directory.")
 #+end_src
-
 **** emacs-themes-dir
 佈景主題的資料夾設定。
 #+begin_src emacs-lisp
   (defconst emacs-themes-dir (concat emacs-dir "themes/")
     "directory to place emacs theme.")
 #+end_src
-
 **** emacs-lisp-dir
 el-get 安裝套件的路徑。
 #+begin_src emacs-lisp
   (defconst emacs-lisp-dir   (concat emacs-dir "lisp/")
     "directory to place lisp packages from internet.")
 #+end_src
-
 **** emacs-recipes-dir
 el-get 的 recipes 路徑。
 #+begin_src emacs-lisp
   (defconst emacs-recipes-dir (concat emacs-dir "recipes/")
     "directory to place local el-get recepies.")
 #+end_src
-
 **** emacs-elpa-dir
 elpa 安裝套件的路徑。
 #+begin_src emacs-lisp
   (defconst emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
     "directory to place ELPA lisp packages from internet.")
 #+end_src
-
 **** emacs-snippets-dir
 yasnippet 使用的 snippet路徑
 #+begin_src emacs-lisp
@@ -515,12 +510,11 @@ yasnippet 使用的 snippet路徑
   (defconst emacs-backup-dir (concat emacs-dir "backup/")
     "directory to backup files.")
 #+end_src
-
 **** emacs-log-dir
 放置紀錄的資料夾。
 #+begin_src emacs-lisp
-;;  (defconst emacs-log-dir (concat emacs-var-dir "log/")
-;;    "log file directory.")
+  (defconst emacs-log-dir (concat emacs-dir "log/")
+    "log file directory.")
 #+end_src
 
 *** 檔案相關設定
@@ -5119,7 +5113,6 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 **** 載入相依套件
 #+begin_src emacs-lisp
   (require 'erc)
-  (require 'erc-log)
   (require 'erc-notify)
   (require 'erc-spelling)
   (require 'erc-autoaway)
@@ -5139,12 +5132,59 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 **** 自動連線的伺服器與聊天室
 #+begin_src emacs-lisp
   (setq erc-autojoin-channels-alist
-        '((".*\\.freenode.net" "#emacs"  "#clojure" "#emacs.tw")
+        '((".*\\.freenode.net" "#emacs"  "#clojure" "#emacs.tw" "#lisp.tw")
           ))
 #+end_src
+**** 關閉部份訊息顯示
+#+begin_src emacs-lisp
+  (setq erc-hide-list '("JOIN" "PART" "QUIT"))
+#+end_src
+**** 加入時間戳
+#+begin_src emacs-lisp
+  (erc-timestamp-mode 1)
+#+end_src
+**** 紀錄聊天訊息
+***** 載入相依套件
+#+begin_src emacs-lisp
+  (require 'erc-log)
+#+end_src
+***** 啟動 erc-log-mode
+#+begin_src emacs-lisp
+  (erc-log-mode 1)
+#+end_src
+***** 設定紀錄檔儲存位置
+#+begin_src emacs-lisp
+  (setq erc-log-channels-directory emacs-log-dir)
+#+end_src
+***** 如果儲存紀錄檔的資料夾不存在，建立他
+#+begin_src emacs-lisp
+  (unless (file-exists-p erc-log-channels-directory)
+    (mkdir erc-log-channels-directory t))
+#+end_src
+***** 紀錄檔編碼為 utf-8
+#+begin_src emacs-lisp
+  (setq erc-log-file-coding-system 'utf-8)
+#+end_src
+***** 送出訊息後寫入到 log
+#+begin_src emacs-lisp
+  (setq erc-log-write-after-send t)
+#+end_src
+***** 當有新訊息時，寫入到log
+#+begin_src emacs-lisp
+  (setq erc-log-write-after-insert t)
+#+end_src
+**** 設定聊天時的行寬為 80
+#+begin_src emacs-lisp
+  (setq erc-fill-column 80)
+#+end_src
+**** 為聊天室裡的使用者暱稱上色
+#+begin_src emacs-lisp
+  (and
+   (require 'erc-highlight-nicknames)
+   (add-to-list 'erc-modules 'highlight-nicknames)
+   (erc-update-modules))
+#+end_src
 **** Configs
-***** log
-設定 erc 紀錄檔的位置。
 ***** Misc
 #+begin_src emacs-lisp
   ;; check channels
@@ -5153,8 +5193,6 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
   (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
 
                                   "324" "329" "332" "333" "353" "477"))
-  ;; don't show any of this
-  (setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK"))
   ;; Interpret mIRC-style color commands in IRC chats
   (setq erc-interpret-mirc-color t)
   ;; The following are commented out by default, but users of other
@@ -5167,10 +5205,6 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
   (setq erc-kill-server-buffer-on-quit t)
   ;; open query buffers in the current window
   (setq erc-query-display 'buffer)
-  ;; logging
-  (setq erc-log-channels-directory "~/.erc/logs/")
-  (if (not (file-exists-p erc-log-channels-directory))
-      (mkdir erc-log-channels-directory t))
   (setq erc-save-buffer-on-part t)
   (defadvice save-buffers-kill-emacs (before save-logs (arg) activate)
     (save-some-buffers t (lambda () (when (eq major-mode 'erc-mode) t))))
@@ -5302,20 +5336,10 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 #+end_src
 
 ** Jabber
-*** Depends
+*** 載入相依套件
 #+begin_src emacs-lisp
   (require 'jabber)
 #+end_src
-*** Config
-
-** test                                                              :encrypt:
------BEGIN PGP MESSAGE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-jA0EAwMCLWMq/YbpVaNgySA80ye96L8unN43hv3FH1TJ3OQBTf5yh38xfntlQLUz
-cA==
-=6ynf
------END PGP MESSAGE-----
 * Alias                                                               :alias:
 ** git
 和 git 相關的命令的 alias。
@@ -5839,14 +5863,14 @@ Function key 設置常用的命令。
 | C-x C-y | yank-n-times        | 多次貼上               |
 | C-x C-r | lusty-sudo-explorer | 使用 sudo 打開檔案     |
 | C-x C-b | ibuffer             | 顯示 ibuffer           |
-| C-x C-l | recenter-top-buttom | 將游標至於 buffer 中間 |
+| C-x C-l | recenter            | 將游標至於 buffer 中間 |
 |         |                     |                        |
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
   (global-set-key (kbd "C-x C-r")  'lusty-sudo-explorer)
   (global-set-key (kbd "C-x C-y")  'yank-n-times)
-  (global-set-key (kbd "C-x C-l")  'recenter-top-bottom)
+  (global-set-key (kbd "C-x C-l")  'recenter)
   (global-set-key (kbd "C-x C-b")  'ibuffer)
 #+end_src
 
