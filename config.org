@@ -719,15 +719,19 @@ emacs 個人配置的檔案，也就是這個檔案。
 這邊的 font-lock 設定主要是為了讓自己設定的 macro（require*) 具有和 require
 一樣的顏色，僅添加於 emacs-lisp-mode 和 lisp-interaction-mode
 #+begin_src emacs-lisp
-  (font-lock-add-keywords 'emacs-lisp-mode
-                          '(("(\\(require\*\\*\\)\\s[ \t']*\\(\\sw+\\)?"
-                             (1 font-lock-keyword-face)
-                             (2 font-lock-constant-face nil t))))
-
+    (font-lock-add-keywords 'emacs-lisp-mode
+                            '(
+                              ;;  ("(\\(require\*\\*\\)\\s[ \t']*\\(\\sw+\\)?"
+                              ("(\\(require\*\\*\\)[ \t']*\\(\\sw+\\)?"
+                               (1 font-lock-keyword-face)
+                               (2 font-lock-constant-face nil t))))
+  
   (font-lock-add-keywords 'lisp-interaction-mode
-                          '(("(\\(require\*\\*\\)\\s[ \t']*\\(\\sw+\\)?"
-                             (1 font-lock-keyword-face)
-                             (2 font-lock-constant-face nil t))))
+                          '(
+                            ("(\\(require\*\\*\\)[ \t']*\\(\\sw+\\)?"
+  ;;                             ("(\\(require\*\\*\\)\\s[ \t']*\\(\\sw+\\)?"
+                               (1 font-lock-keyword-face)
+                               (2 font-lock-constant-face nil t))))
 #+end_src
 ** 設定 custom-file 到其他檔案
 避免使用 *customize-UI* 時，會將設定寫入我的 init.el
@@ -1058,6 +1062,9 @@ comment 只是用來註釋用，並不會解析裏面的東西。
   (projectile-mode)
   (require* 'htmlize)
 #+end_src
+
+#+RESULTS:
+
 parenface 可以將所有的圓括號上色。
 #+begin_src emacs-lisp
   (require 'parenface)
