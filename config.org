@@ -5138,7 +5138,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
         '(;; english channel
           (".*\\.freenode.net" "#emacs" "#lisp" "#clojure" "##linux" "#gentoo")
           ;; Chinese channel
-          (".*\\.freenode.net" "#emacs.tw" "lisp.tw" "#tossug")
+          (".*\\.freenode.net" "#emacs.tw" "#tossug")
           (".*\\debian.org" "#dot")
           ))
 #+end_src
