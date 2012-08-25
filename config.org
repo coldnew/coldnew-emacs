@@ -719,19 +719,15 @@ emacs 個人配置的檔案，也就是這個檔案。
 這邊的 font-lock 設定主要是為了讓自己設定的 macro（require*) 具有和 require
 一樣的顏色，僅添加於 emacs-lisp-mode 和 lisp-interaction-mode
 #+begin_src emacs-lisp
-    (font-lock-add-keywords 'emacs-lisp-mode
-                            '(
-                              ;;  ("(\\(require\*\\*\\)\\s[ \t']*\\(\\sw+\\)?"
-                              ("(\\(require\*\\*\\)[ \t']*\\(\\sw+\\)?"
-                               (1 font-lock-keyword-face)
-                               (2 font-lock-constant-face nil t))))
+  (font-lock-add-keywords 'emacs-lisp-mode
+                          '(("(\\(require\*\\*\\)[ \t']*\\(\\sw+\\)?"
+                             (1 font-lock-keyword-face)
+                             (2 font-lock-constant-face nil t))))
   
   (font-lock-add-keywords 'lisp-interaction-mode
-                          '(
-                            ("(\\(require\*\\*\\)[ \t']*\\(\\sw+\\)?"
-  ;;                             ("(\\(require\*\\*\\)\\s[ \t']*\\(\\sw+\\)?"
-                               (1 font-lock-keyword-face)
-                               (2 font-lock-constant-face nil t))))
+                          '(("(\\(require\*\\*\\)[ \t']*\\(\\sw+\\)?"
+                             (1 font-lock-keyword-face)
+                             (2 font-lock-constant-face nil t))))
 #+end_src
 ** 設定 custom-file 到其他檔案
 避免使用 *customize-UI* 時，會將設定寫入我的 init.el
@@ -5139,7 +5135,11 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 **** 自動連線的伺服器與聊天室
 #+begin_src emacs-lisp
   (setq erc-autojoin-channels-alist
-        '((".*\\.freenode.net" "#emacs"  "#clojure" "#emacs.tw" "#lisp.tw")
+        '(;; english channel
+          (".*\\.freenode.net" "#emacs" "#lisp" "#clojure" "##linux" "#gentoo")
+          ;; Chinese channel
+          (".*\\.freenode.net" "#emacs.tw" "lisp.tw" "#tossug")
+          (".*\\debian.org" "#dot")
           ))
 #+end_src
 **** 關閉部份訊息顯示
@@ -5265,6 +5265,13 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
       (setq erc-send-this nil)))
 
 (add-to-list 'erc-send-pre-hook 'avoid-erc-oops)
+#+end_src
+**** Command
+#+begin_src emacs-lisp
+  (defun irc ()
+    (interactive)
+    (erc :server "irc.freenode.net" :port 6667 :nick erc-nick)
+    (erc :server "irc.debian.org" :port 6667 :nick erc-nick))
 #+end_src
 *** RCIRC
 :PROPERTIES:
