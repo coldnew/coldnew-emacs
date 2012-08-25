@@ -381,6 +381,10 @@ M-x finder-commentary
 #+begin_src emacs-lisp
   (eval-when-compile (require 'cl))
 #+end_src
+
+#+RESULTS:
+: cl
+
 ** 使用者介面設定
 關閉一些 emacs 預設的 UI 設定。
 *** 不啟用 startup message
@@ -388,44 +392,75 @@ M-x finder-commentary
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t)
 #+end_src
+
+#+RESULTS:
+: t
+
 *** 清空 **scratch** buffer 的文字。
 預設 **scratch** 裡面會有幾行文字，直接將他清空。
 #+begin_src emacs-lisp
   (setq initial-scratch-message "")
 #+end_src
+
+#+RESULTS:
+
 *** 關閉蜂鳴器
 使用 visible bell 代替電腦的蜂鳴器叫聲。
 #+begin_src emacs-lisp
   (setq visible-bell t)
 #+end_src
+
+#+RESULTS:
+: t
+
 *** 關閉工具列
 #+begin_src emacs-lisp
   (if (featurep 'tool-bar) (tool-bar-mode -1))
 #+end_src
+
+#+RESULTS:
+
 *** 關閉滾動條
 關閉左側或右側的滾動條 (scrool-bar)
 #+begin_src emacs-lisp
   (if (featurep 'scroll-bar) (scroll-bar-mode -1))
 #+end_src
+
+#+RESULTS:
+
 *** 關閉游標閃爍
 #+begin_src emacs-lisp
   (blink-cursor-mode -1)
 #+end_src
+
+#+RESULTS:
+
 *** 關閉選單列
 #+begin_src emacs-lisp
   (if (featurep 'menu-bar) (menu-bar-mode -1))
 #+end_src
+
+#+RESULTS:
+
 *** Time Stamp
 #+begin_src emacs-lisp
   (setq time-stamp-active      t ) ; do enable time-stamps
   (setq time-stamp-line-limit 10 ) ; check first 10 buffer lines for Time-stamp:
   (setq time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S (%u)") ; date format
 #+end_src
+
+#+RESULTS:
+: %04y-%02m-%02d %02H:%02M:%02S (%u)
+
 *** 回答問題時，使用 *y* 和 *n* 代替 *yes/no* 。
 預設要使用 *yse* 或是 *no* 來回答問題，這裡將他改成用 *y* 或 *n* 。
 #+begin_src emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
+
+#+RESULTS:
+: y-or-n-p
+
 *** TODO Misc
 
 #+begin_src emacs-lisp
@@ -443,6 +478,10 @@ M-x finder-commentary
   (setq max-specpdl-size 5)  ; default is 1000, reduce the backtrace level
   (setq debug-on-error t)    ; now you should get a backtrace
 #+end_src
+
+#+RESULTS:
+: t
+
 #+begin_src emacs-lisp
   ;; nice scrolling
   (setq scroll-margin                   0 )
@@ -451,6 +490,9 @@ M-x finder-commentary
   (setq scroll-up-aggressively       0.01 )
   (setq scroll-down-aggressively     0.01 )
 #+end_src
+
+#+RESULTS:
+: 0.01
 
 ** 變數設定                                                        :variable:
 這邊加入了我自定義的變數以及其初始值。
@@ -462,60 +504,99 @@ emacs 設定檔預設所在的資料夾
   (defconst emacs-dir "~/.emacs.d/"
     "The top-level emacs-configure directory.")
 #+end_src
+
+#+RESULTS:
+: emacs-dir
+
 **** emacs-themes-dir
 佈景主題的資料夾設定。
 #+begin_src emacs-lisp
   (defconst emacs-themes-dir (concat emacs-dir "themes/")
     "directory to place emacs theme.")
 #+end_src
+
+#+RESULTS:
+: emacs-themes-dir
+
 **** emacs-lisp-dir
 el-get 安裝套件的路徑。
 #+begin_src emacs-lisp
   (defconst emacs-lisp-dir   (concat emacs-dir "lisp/")
     "directory to place lisp packages from internet.")
 #+end_src
+
+#+RESULTS:
+: emacs-lisp-dir
+
 **** emacs-recipes-dir
 el-get 的 recipes 路徑。
 #+begin_src emacs-lisp
   (defconst emacs-recipes-dir (concat emacs-dir "recipes/")
     "directory to place local el-get recepies.")
 #+end_src
+
+#+RESULTS:
+: emacs-recipes-dir
+
 **** emacs-elpa-dir
 elpa 安裝套件的路徑。
 #+begin_src emacs-lisp
   (defconst emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
     "directory to place ELPA lisp packages from internet.")
 #+end_src
+
+#+RESULTS:
+: emacs-elpa-dir
+
 **** emacs-snippets-dir
 yasnippet 使用的 snippet路徑
 #+begin_src emacs-lisp
   (defconst emacs-snippets-dir (concat emacs-dir "snippets/")
     "directory to place yasnippet files.")
 #+end_src
+
+#+RESULTS:
+: emacs-snippets-dir
+
 **** emacs-bin-dir
 放置 binary 檔案的資料夾。
 #+begin_src emacs-lisp
   (defconst emacs-bin-dir    (concat emacs-dir "bin/")
     "directory to place binary staff.")
 #+end_src
+
+#+RESULTS:
+: emacs-bin-dir
+
 **** emacs-cache-dir
 放置 cache 等暫存檔案的資料夾。
 #+begin_src emacs-lisp
   (defconst emacs-cache-dir  (concat emacs-dir "cache/")
     "cache file directory.")
 #+end_src
+
+#+RESULTS:
+: emacs-cache-dir
+
 **** emacs-backup-dir
 備份文件的資料夾。
 #+begin_src emacs-lisp
   (defconst emacs-backup-dir (concat emacs-dir "backup/")
     "directory to backup files.")
 #+end_src
+
+#+RESULTS:
+: emacs-backup-dir
+
 **** emacs-log-dir
 放置紀錄的資料夾。
 #+begin_src emacs-lisp
   (defconst emacs-log-dir (concat emacs-dir "log/")
     "log file directory.")
 #+end_src
+
+#+RESULTS:
+: emacs-log-dir
 
 *** 檔案相關設定
 這邊設定了各種檔案的路徑。
@@ -526,11 +607,17 @@ emacs 個人配置的檔案，也就是這個檔案。
     "File to place emacs configs.")
 #+end_src
 
+#+RESULTS:
+: emacs-config-file
+
 **** emacs-custom-file
 #+begin_src emacs-lisp
   (defconst emacs-custom-file (concat emacs-dir "custom.el")
     "store customize UI config.")
 #+end_src
+
+#+RESULTS:
+: emacs-custom-file
 
 **** emacs-authinfo-file
 #+begin_src emacs-lisp
@@ -538,11 +625,18 @@ emacs 個人配置的檔案，也就是這個檔案。
     "file that save secret")
 #+end_src
 
+#+RESULTS:
+: emacs-authinfo-file
+
 **** emacs-bookmark-file
 #+begin_src emacs-lisp
   (defconst emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
     "File to save bookmarks")
 #+end_src
+
+#+RESULTS:
+: emacs-bookmark-file
+
 *** 作業系統測試
 放置用於測試目前 emacs 執行在何種作業系統上的變數。
 **** MacOsx
@@ -550,32 +644,55 @@ emacs 個人配置的檔案，也就是這個檔案。
   (defvar mac-p     (eq system-type 'darwin)
     "Return nil if OS is not Mac.")
 #+end_src
+
+#+RESULTS:
+: mac-p
+
 **** Linux
 ***** all
 #+begin_src emacs-lisp
   (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
     "Return nil if OS is not Linux.")
 #+end_src
+
+#+RESULTS:
+: linux-p
+
 ***** 32-bit
 #+begin_src emacs-lisp
   (defvar linux-32bit-p (and (string-match (rx bos "x86-") system-configuration) linux-p)
   "Return nil if OS is not 32-bit linux.")
 #+end_src
+
+#+RESULTS:
+: linux-32bit-p
+
 ***** 64-bit
 #+begin_src emacs-lisp
   (defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
     "Return nil if OS is not 64-bit linux.")
 #+end_src
+
+#+RESULTS:
+: linux-64bit-p
+
 **** Cygwin
 #+begin_src emacs-lisp
   (defvar cygwin-p  (eq system-type 'cygwin)
     "Return nil if OS is not CygWin.")
 #+end_src
+
+#+RESULTS:
+: cygwin-p
+
 **** Window$
 #+begin_src emacs-lisp
   (defvar windows-p (eq system-type 'windows-nt)
     "Return nil if OS is not Windows.")
 #+end_src
+
+#+RESULTS:
+: windows-p
 
 *** 螢幕解析度測試                                               :resolution:
 放置測試螢幕解析度用的變數
@@ -585,18 +702,29 @@ emacs 個人配置的檔案，也就是這個檔案。
                                     (= (display-pixel-height) 800))
     "Return nil if current display's resolution is not 1280x800")
 #+end_src
+
+#+RESULTS:
+: display-1280x800-p
+
 **** 1280x1024
 #+begin_src emacs-lisp
   (defvar display-1280x1024-p  (and (= (display-pixel-width) 1280)
                                     (= (display-pixel-height) 1024))
     "Return nil if current display's resolution is not 1280x1024")
 #+end_src
+
+#+RESULTS:
+: display-1280x1024-p
+
 **** 1920x1080
 #+begin_src emacs-lisp
   (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920)
                                     (= (display-pixel-height) 1080))
     "Return nil if current display's resolution is not 1920x1080")
 #+end_src
+
+#+RESULTS:
+: display-1920x1080-p
 
 *** TODO Shell
 #+begin_src emacs-lisp
@@ -607,6 +735,9 @@ emacs 個人配置的檔案，也就是這個檔案。
   (defvar emacs-popup-shell-window-position "bottom"
     "Make popup shell window at buttom by default.")
 #+end_src
+
+#+RESULTS:
+: emacs-popup-shell-window-position
 
 *** TODO Path
 #+begin_src emacs-lisp
@@ -620,6 +751,9 @@ emacs 個人配置的檔案，也就是這個檔案。
 
   (setq exec-path (cons emacs-bin-dir exec-path))
 #+end_src
+
+#+RESULTS:
+| ~/.emacs.d/bin/ | ~/.emacs.d/bin/ | ~/.emacs.d/bin | /opt/android-sdk-update-manager/tools/ | /usr/lib/colorgcc/bin | ~/bin | ~/bin/shell_scripts | /usr/local/bin | /usr/bin | /bin | /opt/bin | /usr/x86_64-pc-linux-gnu/arm-none-linux-gnueabi/gcc-bin/4.4.5 | /usr/x86_64-pc-linux-gnu/arm-unknown-linux-gnueabi/gcc-bin/4.6.2 | /usr/armv7a-hardfloat-linux-gnueabi/gcc-bin/4.6.2 | /usr/x86_64-pc-linux-gnu/gcc-bin/4.6.2 | /opt/android-ndk | /opt/android-ndk/toolchains/arm-eabi-4.4.0/prebuilt/linux-x86/bin/ | /opt/android-ndk/toolchains/arm-linux-androideabi-4.4.3/prebuilt/linux-x86/bin/ | /opt/android-sdk-update-manager/tools | /opt/android-sdk-update-manager/platform-tools | /usr/games/bin | /opt/cuda/bin | /opt/cuda/libnvvp | /opt/altera/11.0/quartus/bin/ | /opt/vmware/bin/ | /opt/matlab/bin/ | /opt/hitech/picc/9.82/bin | /opt/hitech/picc-18/pro/9.66/bin | /opt/microchip/mplabx/mplab_ide/bin/ | /usr/libexec/emacs/24.2/x86_64-pc-linux-gnu |
 
 *** TODO Remember to remove
 #+begin_src emacs-lisp
@@ -5180,9 +5314,9 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 #+begin_src emacs-lisp
   (setq erc-log-write-after-insert t)
 #+end_src
-**** 設定聊天時的行寬為 80
+**** 設定聊天時的行寬為 100
 #+begin_src emacs-lisp
-  (setq erc-fill-column 80)
+  (setq erc-fill-column 100)
 #+end_src
 **** 為聊天室裡的使用者暱稱上色
 #+begin_src emacs-lisp
