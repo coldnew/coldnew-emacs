@@ -979,13 +979,15 @@ emacs 套件管理的設定。
 #+end_src
 *** 如果 el-get 不存在的話，重新安裝 el-get
 #+begin_src emacs-lisp
-  (unless (require 'el-get nil t)
-    (setq el-get-install-branch "master")
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-      (end-of-buffer)
-      (eval-print-last-sexp)))
+    (unless (require 'el-get nil t)
+      (setq el-get-install-branch "master")
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+        (end-of-buffer)
+        (eval-print-last-sexp)))
+  
+  (el-get 'sync)
 #+end_src
 *** 如果 elpa 的 recepies 不存在的話，自動建立他。
 #+begin_src emacs-lisp
@@ -1092,7 +1094,6 @@ emacs 套件管理的設定。
   ;;(add-hook 'el-get-post-remove-hooks 'emacs-packages-remove)
   
   (defadvice el-get-remove (after remove-package activate)
-    ad-do-it
     (emacs-packages-remove package))
 #+end_src
 *** 從硬碟中讀取檔案
@@ -1238,27 +1239,29 @@ comment 只是用來註釋用，並不會解析裏面的東西。
 #+begin_src emacs-lisp
   (require* 'ascii)
   (require* 'ace-jump-mode)
-  (require* 'expand-region)
-  (require* 'unicad)
-  (require* 'iedit)
   (require* 'rainbow-mode)
   (require* 'smarter-compile)
-  (require* 'sr-speedbar)
   (require* 'tabbar)
   (require* 'sauron)
   (require* 'traverselisp)
-  (require* 'helm)
   (require* 'space-chord)
   (require* 'smallurl)
   (require* 'switch-window)
-  (require* 'pretty-lambdada)
   (require 'projectile)
   (projectile-mode)
-  (require* 'htmlize)
 #+end_src
 
-#+RESULTS:
+ok
 
+#+begin_src emacs-lisp
+  (require* 'unicad)
+  (require* 'iedit)
+  (require* 'expand-region)
+  (require* 'sr-speedbar)
+  (require* 'helm)
+  (require* 'htmlize)
+  (require* 'pretty-lambdada)
+#+end_src
 parenface 可以將所有的圓括號上色。
 #+begin_src emacs-lisp
   (require 'parenface)
