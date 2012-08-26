@@ -1,6 +1,0 @@
-(:name autopair
-       :website "https://github.com/capitaomorte/autopair"
-       :description "Autopair is an extension to the Emacs text editor that automatically pairs braces and quotes."
-       :type github
-       :pkgname "capitaomorte/autopair"
-       :features autopair)

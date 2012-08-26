@@ -1,4 +1,0 @@
-(:name oauth
-       :description "Oauth library."
-       :type github
-       :pkgname "psanford/emacs-oauth")

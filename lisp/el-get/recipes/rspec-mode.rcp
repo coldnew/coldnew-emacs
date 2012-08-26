@@ -1,5 +1,0 @@
-(:name rspec-mode
-       :description "Enhance ruby-mode for RSpec"
-       :type github
-       :pkgname "pezra/rspec-mode"
-       :features rspec-mode)

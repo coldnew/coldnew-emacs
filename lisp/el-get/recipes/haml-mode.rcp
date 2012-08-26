@@ -1,4 +1,0 @@
-(:name haml-mode
-       :description "Major mode for editing Haml files"
-       :type github
-       :pkgname "nex3/haml-mode")

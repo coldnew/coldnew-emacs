@@ -1,5 +1,0 @@
-(:name initsplit
-       :description "Code to split customizations into different files"
-       :type github
-       :pkgname "dabrahams/initsplit"
-       :features initsplit)

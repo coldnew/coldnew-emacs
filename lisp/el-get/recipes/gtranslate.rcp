@@ -1,6 +1,0 @@
-(:name gtranslate
-       :description "Use google translate api to perform translations"
-       :type github
-       :pkgname "emacsmirror/gtranslate"
-       :load "gtranslate.el")
-

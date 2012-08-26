@@ -1,5 +1,0 @@
-(:name ioccur
-       :description "Incremental occur."
-       :type git
-       :url "https://github.com/thierryvolpiatto/ioccur"
-       :features ioccur)

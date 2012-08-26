@@ -1,4 +1,0 @@
-(:name indirect-region
-       :type github
-       :description "Act like indirect buffer for region."
-       :pkgname "renard/indirect-region")

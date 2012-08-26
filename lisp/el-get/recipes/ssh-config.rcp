@@ -1,5 +1,0 @@
-(:name ssh-config
-       :description "Manage both ssh and dsh confguration from emacs"
-       :type github
-       :pkgname "renard/ssh-config-el"
-       :features ssh-config)

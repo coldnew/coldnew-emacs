@@ -1,7 +1,0 @@
-(:name midje-mode
-       :type github
-       :pkgname "dnaumov/midje-mode"
-       :website "https://github.com/dnaumov/midje-mode"
-       :description
-       "Midje is a testing framework for the Clojure programming language;
-midje-mode integrates it with Emacs, providing features like navigation and test reports.")

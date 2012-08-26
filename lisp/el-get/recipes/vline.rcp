@@ -1,3 +1,0 @@
-(:name vline
-       :description "show vertical line (column highlighting) mode."
-       :type emacswiki :features vline)

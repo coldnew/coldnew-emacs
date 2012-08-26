@@ -1,7 +1,0 @@
-(:name color-theme-chocolate-rain
-       :description "Chocolate rain color theme for Emacs based on Ludvig Widman's Choco TextMate theme"
-       :type github
-       :pkgname "marktran/color-theme-chocolate-rain"
-       :depends color-theme
-       :prepare (autoload 'color-theme-chocolate-rain "color-theme-chocolate-rain"
-                  "color-theme: chocolate-rain" t))

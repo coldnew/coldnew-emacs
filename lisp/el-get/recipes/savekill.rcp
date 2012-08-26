@@ -1,4 +1,0 @@
-(:name savekill
-       :description "Save kill ring to disk"
-       :type emacswiki
-       :features "savekill")

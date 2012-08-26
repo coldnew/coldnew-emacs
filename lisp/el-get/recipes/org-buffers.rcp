@@ -1,4 +1,0 @@
-(:name org-buffers
-       :description "An Org-mode tool for buffer management"
-       :type github
-       :pkgname "dandavison/org-buffers")

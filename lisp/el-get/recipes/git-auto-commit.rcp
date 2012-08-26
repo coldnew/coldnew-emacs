@@ -1,4 +1,0 @@
-(:name git-auto-commit
-       :type github
-       :description "Git auto commit directory within emacs."
-       :pkgname "renard/git-auto-commit")

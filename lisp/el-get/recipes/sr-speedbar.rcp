@@ -1,5 +1,0 @@
-(:name sr-speedbar
-       :type emacswiki
-       :description "Same frame speedbar"
-       :post-init (require 'sr-speedbar)
-       )

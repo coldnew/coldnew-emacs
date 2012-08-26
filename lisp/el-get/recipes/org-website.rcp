@@ -1,4 +1,0 @@
-(:name org-website
-       :description "Generate multi-level website from org"
-       :type github
-       :pkgname "renard/org-website")

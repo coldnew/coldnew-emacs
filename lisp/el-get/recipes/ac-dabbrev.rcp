@@ -1,3 +1,0 @@
-(:name ac-dabbrev
-       :type emacswiki
-       :description "Emacs auto-complete plugin for Dynamic Abbreviations")

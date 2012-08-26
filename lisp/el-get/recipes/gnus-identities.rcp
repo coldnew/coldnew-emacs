@@ -1,4 +1,0 @@
-(:name gnus-identities
-       :description "Change identity when composing a message."
-       :type github
-       :pkgname "renard/gnus-identities")

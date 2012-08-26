@@ -1,4 +1,0 @@
-(:name ri-emacs
-       :description "Ruby ri help inside emacs"
-       :type github
-       :pkgname "pedz/ri-emacs")

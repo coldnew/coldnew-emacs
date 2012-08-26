@@ -1,7 +1,0 @@
-(:name clojure-mode
-       :website "https://github.com/technomancy/clojure-mode"
-       :description "Emacs support for the Clojure language."
-       :type github
-       :pkgname "technomancy/clojure-mode"
-       )
-

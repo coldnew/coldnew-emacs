@@ -1,5 +1,0 @@
-(:name smarttabs
-       :website "https://github.com/jcsalomon/smarttabs"
-       :description "Emacs smart tabs - indent with tabs, align with spaces!"
-       :type github
-       :pkgname "jcsalomon/smarttabs")

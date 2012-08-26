@@ -1,5 +1,0 @@
-(:name smart-tab
-       :description "Intelligent tab completion and indentation."
-       :type github
-       :pkgname "genehack/smart-tab"
-       :features smart-tab)

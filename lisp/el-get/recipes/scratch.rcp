@@ -1,7 +1,0 @@
-(:name scratch
-       :description "Mode-specific scratch buffers"
-       :type github
-       :pkgname "cbbrowne/scratch-el"
-       :info "."
-       :build ("make")
-       :load-path ".")

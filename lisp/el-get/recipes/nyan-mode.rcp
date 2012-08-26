@@ -1,5 +1,0 @@
-(:name nyan-mode
-       :description "Nyan Cat for Emacs! Nyanyanyanyanyanyanyanyanyan!"
-       :type github
-       :pkgname "TeMPOraL/nyan-mode"
-       :features nyan-mode)

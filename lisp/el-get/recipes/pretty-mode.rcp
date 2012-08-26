@@ -1,4 +1,0 @@
-(:name pretty-mode
-       :description "Redisplay parts of the buffer as pretty symbols"
-       :type emacswiki
-       :features "pretty-mode")

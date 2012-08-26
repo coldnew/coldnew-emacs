@@ -1,7 +1,0 @@
-(:name color-theme-twilight
-       :description "Twilight color theme for GNU Emacs inspired by TextMate."
-       :type github
-       :pkgname "crafterm/twilight-emacs"
-       :depends color-theme
-       :prepare (autoload 'color-theme-twilight "color-theme-twilight"
-                  "color-theme: twilight" t))

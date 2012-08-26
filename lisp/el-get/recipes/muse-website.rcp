@@ -1,5 +1,0 @@
-(:name muse-website
-       :website "https://github.com/renard/muse-website"
-       :description "Generate a website from Muse"
-       :type github
-       :pkgname "renard/muse-website")

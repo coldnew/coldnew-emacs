@@ -1,7 +1,0 @@
-(:name epkg
-       :website "https://github.com/tarsius/epkg"
-       :description "The stupid package tracker for Emacs"
-       :type github
-       :pkgname "tarsius/epkg"
-       :depends (vcomp magit listing)
-       :compile ("epkg.el" "epkg-ui.el"))

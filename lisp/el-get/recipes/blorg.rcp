@@ -1,4 +1,0 @@
-(:name blorg
-       :type github
-       :description "Blogging engine using Emacs Org-mode to create static pages"
-       :pkgname "RolKau/blorg")

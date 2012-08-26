@@ -1,4 +1,0 @@
-(:name rebox2
-       :description "create, remove, edit boxes"
-       :type github
-       :pkgname "lewang/rebox2")

@@ -1,5 +1,0 @@
-(:name emacs-http-server
-       :description "A rudimentary HTTP server in elisp."
-       :type github
-       :pkgname "jrhbailey/emacs-http-server")
-

@@ -1,6 +1,0 @@
-(:name nterm
-       :description "New TERMinal emulator"
-       :type github
-       :pkgname "cbbrowne/nterm"
-       :info "."
-       :build ("make"))

@@ -1,4 +1,0 @@
-(:name css-mode
-       :description "Minor mode for CSS"
-       :features css-mode
-       :type elpa)

@@ -1,3 +1,0 @@
-(:name oauth2
-       :description "OAuth 2.0 Authorization Protocol"
-       :type elpa)

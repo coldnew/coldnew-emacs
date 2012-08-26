@@ -1,7 +1,0 @@
-(:name color-theme-zen-and-art
-       :description "Irfn's zen with a bit of art."
-       :type github
-       :pkgname "irfn/zen-and-art"
-       :depends color-theme
-       :prepare (autoload 'color-theme-zen-and-art "zen-and-art"
-                  "color-theme: zen-and-art" t))

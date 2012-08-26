@@ -1,4 +1,0 @@
-(:name idomenu
-       :type emacswiki
-       :description "imenu tag selection a la ido"
-       :load-path ".")

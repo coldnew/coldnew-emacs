@@ -1,4 +1,0 @@
-(:name dired-toggle-sudo
-       :type github
-       :description "Browse directory with sudo privileges."
-       :pkgname "renard/dired-toggle-sudo")

@@ -1,5 +1,0 @@
-(:name mode-compile
-       :description "Smart command for compiling files according to major-mode."
-       :type http
-       :url "http://perso.tls.cena.fr/boubaker/distrib/mode-compile.el"
-       :load-path ("."))

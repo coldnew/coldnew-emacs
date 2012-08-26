@@ -1,4 +1,0 @@
-(:name regex-tool
-       :description "A regular expression evaluation tool for programmers"
-       :type github
-       :pkgname "jwiegley/regex-tool")

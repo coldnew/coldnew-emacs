@@ -1,7 +1,0 @@
-(:name color-theme-mac-classic
-       :description "A emacs colour theme which resembles the TextMate Mac Classic colour theme."
-       :type github
-       :pkgname "jbw/color-theme-mac-classic"
-       :depends color-theme
-       :prepare (autoload 'color-theme-mac-classic "color-theme-mac-classic"
-                  "color-theme: mac-classic" t))
