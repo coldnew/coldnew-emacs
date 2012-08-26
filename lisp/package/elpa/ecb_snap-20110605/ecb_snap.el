@@ -1,1 +1,0 @@
-(load ecb.el)
