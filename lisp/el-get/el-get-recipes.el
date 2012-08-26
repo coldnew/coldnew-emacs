@@ -39,9 +39,13 @@
 
 (defcustom el-get-recipe-path
   (list (concat (file-name-directory el-get-script) "recipes")
-       el-get-recipe-path-elpa
-	el-get-recipe-path-emacswiki)
-  "Define where to look for the recipes, that's a list of directories"
+        el-get-recipe-path-elpa
+        el-get-recipe-path-emacswiki)
+  "List of directories in which to look for el-get recipes.
+
+Directories that contain automatically-generated recipes, such as
+`el-get-recipe-path-emacswiki' and `el-get-recipe-path-elpa',
+should be placed last in this list."
   :group 'el-get
   :type '(repeat (directory)))
 
@@ -61,11 +65,13 @@ compiled version."
     (let* ((init-file-name (format "init-%s.el" package))
 	   (package-init-file
 	    (expand-file-name init-file-name el-get-user-package-directory))
-	   (compiled-init-file (concat (file-name-sans-extension package-init-file) ".elc")))
+	   (file-name-no-extension (file-name-sans-extension package-init-file))
+	   (compiled-init-file (concat file-name-no-extension ".elc")))
       (when (file-exists-p package-init-file)
-	(el-get-byte-compile-file package-init-file)
-	(el-get-verbose-message "el-get: load %S" compiled-init-file)
-	(load compiled-init-file 'noerror)))))
+	(when el-get-byte-compile
+	  (el-get-byte-compile-file package-init-file))
+	(el-get-verbose-message "el-get: load %S" file-name-no-extension)
+	(load file-name-no-extension 'noerror)))))
 
 (defun el-get-recipe-dirs ()
   "Return the elements of el-get-recipe-path that actually exist.
@@ -180,5 +186,60 @@ which defaults to installed, required and removed.  Example:
 	for type = (el-get-package-type name)
 	when (or (null types) (memq 'all types) (memq type types))
 	collect (cons name type)))
+
+(defun el-get-package-required-emacs-version (package-or-source)
+  (let* ((def (if (or (symbolp package-or-source) (stringp package-or-source))
+                  (el-get-package-def package-or-source)
+                package-or-source)))
+    (el-get-plist-get-with-default
+        def :minimum-emacs-version
+      0)))
+
+(defun el-get-version-to-list (version)
+  "Convert VERSION to a standard version list.
+
+Like the builtin `version-to-list', this function accepts a
+string. Unlike the builtin, it will also accept a single number,
+which will be wrapped into a single-element list, or a or a list
+of numbers, which will be returned unmodified."
+  (cond
+   ;; String
+   ((stringp version)
+    (version-to-list version))
+   ;; Single number
+   ((numberp version)
+    (list version))
+   ;; List of numbers
+   ((and (listp version)
+         (null (remove-if 'numberp version)))
+    version)
+   (t (error "Unrecognized version specification: %S" version))))
+
+(defun el-get-error-unless-required-emacs-version (package-or-source)
+  "Raise an error if `emacs-major-version' is less than package's requirement.
+
+Second argument PACKAGE is optional and only used to construct the error message."
+  (let* ((pname (el-get-source-name package-or-source))
+         (required-version (el-get-package-required-emacs-version package-or-source))
+         (required-version-list (el-get-version-to-list required-version)))
+    (when (version-list-< (version-to-list emacs-version) required-version-list)
+      (error "Package %s requires Emacs version %s or higher, but the current emacs is only version %s"
+             pname required-version emacs-version))))
+
+(defun el-get-envpath-prepend (envname head)
+  "Prepend HEAD in colon-separated environment variable ENVNAME.
+This is effectively the same as doing the following in shell:
+    export ENVNAME=HEAD:$ENVNAME
+
+Use this to modify environment variable such as $PATH or $PYTHONPATH."
+  (setenv envname (el-get-envpath-prepend-1 (getenv envname) head)))
+
+(defun el-get-envpath-prepend-1 (paths head)
+  "Return \"HEAD:PATHS\" omitting duplicates in it."
+  (let ((pplist (split-string (or paths "") ":" 'omit-nulls)))
+    (mapconcat 'identity
+               (remove-duplicates (cons head pplist)
+                                  :test #'string= :from-end t)
+               ":")))
 
 (provide 'el-get-recipes)

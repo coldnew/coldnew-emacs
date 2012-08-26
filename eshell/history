@@ -1,0 +1,4 @@
+sudo 
+sudo su
+sudo leafpad
+sudo emerge emacs

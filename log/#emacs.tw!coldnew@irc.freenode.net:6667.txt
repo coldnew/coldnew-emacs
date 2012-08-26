@@ -1,0 +1,46 @@
+
+[Wed Aug 22 2012]
+*** Topic for #emacs.tw: Emacs 24.1 released ( http://goo.gl/SiWLk )  [15:41]
+*** #emacs.tw: topic set by
+    _13h!3ddcf7bc@gateway/web/freenode/ip.61.220.247.188, 14:35:29 2012/06/14
+*** Users on #emacs.tw: coldnew gko b4283 jjhuang blue119 Swl AceLan cyt93cs_
+    kanru_ kanru lloydhuang
+*** #emacs.tw modes: +ns  [15:42]
+*** #emacs.tw was created on Sunday 2011/09/25 12:03:26 AM
+
+[Wed Aug 22 2012]
+*** Topic for #emacs.tw: Emacs 24.1 released ( http://goo.gl/SiWLk )  [15:59]
+*** #emacs.tw: topic set by
+    _13h!3ddcf7bc@gateway/web/freenode/ip.61.220.247.188, 14:35:29 2012/06/14
+*** Users on #emacs.tw: coldnew gko b4283 jjhuang blue119 Swl AceLan cyt93cs_
+    kanru_ kanru lloydhuang
+-holmes.freenode.net- [freenode-info] why register and identify? your IRC nick
+		 is how people know you. http://freenode.net/faq.shtml#nicksetup
+*** lisp.tw: No such channel
+*** #emacs.tw modes: +ns
+*** #emacs.tw was created on Sunday 2011/09/25 12:03:26 AM
+
+[Wed Aug 22 2012]
+*** Topic for #emacs.tw: Emacs 24.1 released ( http://goo.gl/SiWLk )  [23:56]
+*** #emacs.tw: topic set by
+    _13h!3ddcf7bc@gateway/web/freenode/ip.61.220.247.188, 14:35:29 2012/06/14
+*** Users on #emacs.tw: coldnew b4283 gko jjhuang blue119 Swl AceLan cyt93cs_
+    kanru_ lloydhuang
+*** lisp.tw: No such channel
+*** #emacs.tw modes: +ns
+*** #emacs.tw was created on Sunday 2011/09/25 12:03:26 AM
+
+[Thu Aug 23 2012]
+<lloydhuang> http://terohasu.net/blog/2011-02-23-presenting-with-emacs.html
+									  [17:15]
+<lloydhuang> 剛剛試用了這個 emacs + org + epresent.el 的 presenting tool. 簡單好
+	     用。  [17:17]
+
+[Fri Aug 24 2012]
+<b4283> 有 paste-buffer-to-internest 嗎? XD  [12:00]
+<b4283> *internet*
+
+[Sat Aug 25 2012]
+<coldnew> b4283: 你用 lisp-packages 找 paste 就可以找到了  [21:51]
+<coldnew> b4283: 有 dpaste、lispaste、pastebin的擴展
+<b4283> coldnew: very cool :D  [21:59]
