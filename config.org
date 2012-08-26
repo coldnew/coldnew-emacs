@@ -990,7 +990,7 @@ emacs 套件管理的設定。
 *** 如果 elpa 的 recepies 不存在的話，自動建立他。
 #+begin_src emacs-lisp
   (unless (file-exists-p el-get-recipe-path-elpa)
-    (el-get-elpa-build-local-recipies))
+    (el-get-elpa-build-local-recipes))
 #+end_src
 *** 將我的 recipes 加入 el-get-recipe-path
 #+begin_src emacs-lisp
@@ -1050,7 +1050,7 @@ emacs 套件管理的設定。
 #+end_src
 ** 套件檢查
 為了避免有套件因為 *意外* 而不見，對套件進行檢查，若不存在則進行重新安裝的動作。
-*注意* ：進行到套件檢查時，必須確認 el-get 已經安裝至 emacs 裡面，否則會產生錯誤。
+*注意* ：進行套件檢查時，必須確認 el-get 已經安裝至 emacs 裡面，否則會產生錯誤。
 *** 存放套件資訊的變數
 此變數用於存放系統裏面必須安裝的 emacs 套件。
 #+begin_src emacs-lisp
@@ -1071,6 +1071,30 @@ emacs 套件管理的設定。
     (with-temp-file emacs-packages-file
       (insert (el-get-print-to-string emacs-packages-list 'pretty))))
 #+end_src
+*** 設定自動更新安裝套件資訊的時間
+**** 當安裝新的套件時，更新套件資訊
+#+begin_src emacs-lisp
+  (defun emacs-packages-install (pkg)
+    (add-to-list 'emacs-packages-list pkg)
+    (emacs-packages-write-to-file))
+  
+  ;; add to hooks
+  (add-hook 'el-get-post-install-hooks 'emacs-packages-install)
+#+end_src
+**** 當移除套件時，更新套件資訊
+***** TODO el-get-post-remove-hooks 不知道為什麼不能用，所以只好先 advice el-get-remove
+#+begin_src emacs-lisp
+  (defun emacs-packages-remove (pkg)
+    (setq emacs-packages-list (remove pkg emacs-packages-list))
+    (emacs-packages-write-to-file))
+  
+  ;; add to hooks
+  ;;(add-hook 'el-get-post-remove-hooks 'emacs-packages-remove)
+  
+  (defadvice el-get-remove (after remove-package activate)
+    ad-do-it
+    (emacs-packages-remove package))
+#+end_src
 *** 從硬碟中讀取檔案
 #+begin_src emacs-lisp
   (defun emacs-packages-read-from-file ()
@@ -1081,6 +1105,9 @@ emacs 套件管理的設定。
              (with-temp-buffer emacs-packages-file
                                (insert-file-contents-literally emacs-packages-file)
                                (read-from-string (buffer-string)))))))
+  
+  ;; read installed packages info from file
+  (emacs-packages-read-from-file)
 #+end_src
 *** 檢查套件是否有在 emacs-packages-list 裡
 #+begin_src emacs-lisp
@@ -1089,10 +1116,19 @@ emacs 套件管理的設定。
           when (not (el-get-package-is-installed p)) do (return nil)
           finally (return t)))
 #+end_src
-*** 當有套件
-當發現有套件存在 emacs-package-list 裡面，但是卻被 coldnew/packages-installed-p 回報為
-此套件不存在時，重心安裝此套件。
-**** TODO 完成此 function
+*** 當發現有套件存在 emacs-package-list 裡面，但是卻被 emacs-packages-installed-p 回報為
+此套件不存在時，重新安裝此套件。
+#+begin_src emacs-lisp
+  (defun emacs-packages-install-packages ()
+    (unless (emacs-packages-installed-p)
+      ;; install missing packages
+      (dolist (p emacs-packages-list)
+        (unless (el-get-package-is-installed p)
+          (el-get-reinstall p)))))
+  
+  ;; install missing packages
+  (emacs-packages-install-packages)
+#+end_src
 
 * 巨集                                                                :macro:
 ** Clojure
