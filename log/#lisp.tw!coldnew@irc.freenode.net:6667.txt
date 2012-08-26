@@ -1,8 +1,0 @@
-
-[Wed Aug 22 2012]
-*** Topic for #lisp.tw: | #lisp.tw | sbcl 1.0.58 |  [15:42]
-*** #lisp.tw: topic set by b4283!~b4283@60-249-196-111.HINET-IP.hinet.net,
-    09:59:23 2012/08/16
-*** Users on #lisp.tw: coldnew b4283 lloydhuang cyt93cs_ @kanru
-*** #lisp.tw modes: +cnt
-*** #lisp.tw was created on Monday 2012/06/11 12:27:24 PM
