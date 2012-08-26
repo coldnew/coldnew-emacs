@@ -1048,25 +1048,48 @@ emacs 套件管理的設定。
           ("marmalade" . "http://marmalade-repo.org/packages/")
           ("melpa" . "http://melpa.milkbox.net/packages/")))
 #+end_src
-
 ** 套件檢查
 為了避免有套件因為 *意外* 而不見，對套件進行檢查，若不存在則進行重新安裝的動作。
-*** emacs-package-list
+*注意* ：進行到套件檢查時，必須確認 el-get 已經安裝至 emacs 裡面，否則會產生錯誤。
+*** 存放套件資訊的變數
 此變數用於存放系統裏面必須安裝的 emacs 套件。
-**** TODO 將資訊存入檔案
 #+begin_src emacs-lisp
-  (defvar emacs-packages-list nil
-    "A list of packages to ensure are installed at launch.")
+   (defvar emacs-packages-list nil
+     "A list of packages to ensure are installed at launch.")
 #+end_src
-*** coldnew/packages-installed-p
-檢查此套件是否有在 emacs-packages-list 裡面。
+*** 存放套件資訊的檔案
+此檔案用於將 emacs-packags-list 暫存。
 #+begin_src emacs-lisp
-  (defun coldnew/packages-installed-p ()
+  (defvar emacs-packages-file
+    (concat emacs-dir ".packages.el")
+    "Define where to store and read the installed packages list.")
+#+end_src
+*** 將套件資訊寫入到檔案
+#+begin_src emacs-lisp
+  (defun emacs-packages-write-to-file ()
+    "Write emasc-packages-list to files."
+    (with-temp-file emacs-packages-file
+      (insert (el-get-print-to-string emacs-packages-list 'pretty))))
+#+end_src
+*** 從硬碟中讀取檔案
+#+begin_src emacs-lisp
+  (defun emacs-packages-read-from-file ()
+    "Read from emacs-packages-file and set the contents to emacs-packages-list."
+    (when (file-exists-p emacs-packages-file)
+      (setq emacs-packages-list
+            (car
+             (with-temp-buffer emacs-packages-file
+                               (insert-file-contents-literally emacs-packages-file)
+                               (read-from-string (buffer-string)))))))
+#+end_src
+*** 檢查套件是否有在 emacs-packages-list 裡
+#+begin_src emacs-lisp
+  (defun emacs-packages-installed-p ()
     (loop for p in emacs-packages-list
           when (not (el-get-package-is-installed p)) do (return nil)
           finally (return t)))
 #+end_src
-*** coldnew/reinstall-missing-packages
+*** 當有套件
 當發現有套件存在 emacs-package-list 裡面，但是卻被 coldnew/packages-installed-p 回報為
 此套件不存在時，重心安裝此套件。
 **** TODO 完成此 function
@@ -2152,9 +2175,9 @@ auto-complete-mode 的按鍵設定。
   (setq max-mini-window-height         4) 
 #+end_src
 *** 按鍵設定
-| 按鍵 | 命令                     | 用途         |
-|------+--------------------------+--------------|
-| M-l  | backward-kill-word       | 刪除前一個詞 |
+| 按鍵 | 命令                     | 用途           |
+|------+--------------------------+----------------|
+| M-l  | backward-kill-word       | 刪除前一個詞   |
 | M-p  | previous-history-element | 前一個歷史紀錄 |
 | M-n  | next-history-element     | 後一個歷史紀錄 |
 #+begin_src emacs-lisp
