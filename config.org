@@ -2147,22 +2147,30 @@ auto-complete-mode 的按鍵設定。
   (setq smex-save-file (concat emacs-cache-dir "smex.dat"))
 #+end_src
 ** minibuffer
+*** 設定視窗高度最多為4行高
+#+begin_src emacs-lisp
+  (setq max-mini-window-height         4) 
+#+end_src
 *** 按鍵設定
+| 按鍵 | 命令                     | 用途         |
+|------+--------------------------+--------------|
+| M-l  | backward-kill-word       | 刪除前一個詞 |
+| M-p  | previous-history-element | 前一個歷史紀錄 |
+| M-n  | next-history-element     | 後一個歷史紀錄 |
 #+begin_src emacs-lisp
   (define-key minibuffer-local-map (kbd "M-l") 'backward-kill-word)
-  (define-key minibuffer-local-map (kbd "C-w") 'kill-word)
-  (define-key minibuffer-local-map (kbd "C-u") '(lambda() (interactive) (kill-line 0)))
   (define-key minibuffer-local-map (kbd "M-p") 'previous-history-element)
   (define-key minibuffer-local-map (kbd "M-n") 'next-history-element)
   (define-key minibuffer-local-map (kbd "C-g") 'minibuffer-keyboard-quit)
-  (define-key minibuffer-local-map (kbd "C-r") 'resolve-sym-link)
 #+end_src
+
 #+begin_src emacs-lisp
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; initial setting
-  ;;;; ---------------------------------------------------------------------------
+  (define-key minibuffer-local-map (kbd "C-r") 'resolve-sym-link)
+  (define-key minibuffer-local-map (kbd "C-u") (lambda () (interactive) (kill-line 0)))
+#+end_src
+*** 其他
+#+begin_src emacs-lisp
   (setq enable-recursive-minibuffers     t )
-  (setq max-mini-window-height         .25 ) ; 2 lines high
   (setq minibuffer-electric-default-mode t )
 
 
@@ -6298,6 +6306,9 @@ http://jixiuf.github.com/tags/@Emacs.html
 # Local Variables:
 # mode: org
 # End:
+
+
+
 
 
 
