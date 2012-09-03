@@ -1,13 +1,1 @@
-(ascii apel "pretty-lambdada" "htmlize" "helm" "sr-speedbar" "expand-region" "iedit" "unicad")
-
-
-
-
-
-
-
-
-
-
-
-
+("shell-pop" "auto-complete-clang" "auto-complete" "helm" "htmlize" "pretty-lambdada" "rainbow-mode" "ace-jump-mode" "eldoc-extension" "ctags-update" "smarter-compile" "smallurl" "sr-speedbar" "ac-slime" "ascii" "auto-indent-mode" "expand-region" "unicad")
