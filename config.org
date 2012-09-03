@@ -375,6 +375,8 @@ M-x finder-commentary
 | Ctrl-s | isearch-forward  | 向前查找 |
 | Ctrl-r | isearch-backward | 向後查找 |
 
+*** id-manager
+負責管理密碼的plugin
 * 基礎設置                                                             :base:
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
 ** 預先載入 cl 套件。
@@ -1236,6 +1238,7 @@ comment 只是用來註釋用，並不會解析裏面的東西。
          ,@body)))
 #+end_src
 *** safe
+ref: http://curiousprogrammer.wordpress.com/2009/06/08/error-handling-in-emacs-lisp/
 #+begin_src emacs-lisp
   (defmacro safe-wrap (fn &rest clean-up)
     `(unwind-protect
