@@ -1253,9 +1253,6 @@ ref: http://curiousprogrammer.wordpress.com/2009/06/08/error-handling-in-emacs-l
 #+end_src
 * Depends
 #+begin_src emacs-lisp
-  (require* 'ascii)
-  (require* 'ace-jump-mode)
-  (require* 'rainbow-mode)
 ;;  (require* 'tabbar)
   (require* 'sauron)
   (require* 'traverselisp)
@@ -1268,10 +1265,14 @@ ref: http://curiousprogrammer.wordpress.com/2009/06/08/error-handling-in-emacs-l
 ok
 
 #+begin_src emacs-lisp
+  (require* 'rainbow-mode)
+  (require* 'ascii)
+  (require* 'ace-jump-mode)
   (require* 'smarter-compile)
   (require* 'smallurl)
   (require* 'unicad)
   (require* 'iedit)
+
   (require* 'expand-region)
   (require* 'sr-speedbar)
   (require* 'helm)
