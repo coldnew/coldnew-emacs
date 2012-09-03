@@ -987,7 +987,7 @@ emacs 套件管理的設定。
         (end-of-buffer)
         (eval-print-last-sexp)))
   
-  (el-get 'sync)
+;;  (el-get 'sync)
 #+end_src
 *** 如果 elpa 的 recepies 不存在的話，自動建立他。
 #+begin_src emacs-lisp
@@ -1234,6 +1234,19 @@ comment 只是用來註釋用，並不會解析裏面的東西。
        (defun ,name (,@arglist)
          ,docstring
          ,@body)))
+#+end_src
+*** safe
+#+begin_src emacs-lisp
+  (defmacro safe-wrap (fn &rest clean-up)
+    `(unwind-protect
+         (let (retval)
+           (condition-case ex
+               (setq retval (progn ,fn))
+             ('error
+              (message (format "Caught exception: [%s]" ex))
+              (setq retval (cons 'exception (list ex)))))
+           retval)
+       ,@clean-up))
 #+end_src
 * Depends
 #+begin_src emacs-lisp
@@ -2299,7 +2312,8 @@ auto-complete-mode 的按鍵設定。
 #+end_src
 *** 初始化 yasnippet
 #+begin_src emacs-lisp
-;;  (yas/initialize)
+  ;;  (yas/initialize)
+  (yas-global-mode 1)
 #+end_src
 *** 設定 yasnippet 讀取 snippet 的資料夾
 #+begin_src emacs-lisp
@@ -3044,11 +3058,25 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
 some packages conflict with org-mode
 *** yasnippet
 #+begin_src emacs-lisp
+  ;; (when (featurep 'yasnippet)
+  ;;   (add-hook 'org-mode-hook
+  ;;             (lambda ()
+  ;;               (org-set-local 'yas/trigger-key[tab])
+  ;;               (define-key yas/keymap[tab] 'yas/next-field-group)
+                
+  ;;               )))
   (when (featurep 'yasnippet)
+    (defun yas/org-very-safe-expand ()
+      (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
+  
     (add-hook 'org-mode-hook
               (lambda ()
-                (org-set-local 'yas/trigger-key[tab])
-                (define-key yas/keymap[tab] 'yas/next-field-group))))
+                (make-variable-buffer-local 'yas/trigger-key)
+                (setq yas/trigger-key [tab])
+                (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
+                (define-key yas/keymap [tab] 'yas/next-field)))
+    )
+  
 #+end_src
 
 *** windmove
