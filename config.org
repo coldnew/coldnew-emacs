@@ -5950,80 +5950,13 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
       (setq cursor-color emacs-normal-cursor-color))))
 #+end_src
 * 全域性按鍵設置
-** Unset key
+** 關閉預設的按鍵設定
+關閉部份按鍵設定，在後面重新設定他。
 #+begin_src emacs-lisp
-  (defmacro coldnew/global-unset-key (key &rest bindings)
-    `(progn
-       (let* ((keyf ,key)
-              (bindings (list ,@bindings)))
-         (with-temp-buffer
-           ;;(with-current-buffer (get-buffer-create "tttmp")
-           (insert "| unset key ")
-           (newline)
-           (insert "|-")
-           (newline)
-           (while keyf
-             (global-unset-key keyf)
-             (insert (format "| %s \n" (coldnew/parse-keymap keyf)))
-             (setq keyf (pop bindings))
-             )
-           (princ (buffer-string))
-           ))))
-
-  (defun coldnew/parse-keymap (s)
-    "Parse \C-x to Ctrl-x, and return string."
-    (let ((char-list (string-to-list (replace-regexp-in-string " " "" s)))
-          (result-list))
-      (dolist (char char-list)
-        ;;\A to \Z
-        ;; set char to cdr of coldnew/keymap-string-alist if assoc succes
-        ;; else set char to char
-        (setq char (or (reverse (string-to-list (cdr-safe (assoc char coldnew/keymap-string-alist))))
-                       char))
-        (setq result-list (cons char result-list))
-        (setq result-list  (cons  ?\s result-list))
-        )
-      ;;result-list
-      (list-to-string (nreverse
-                       (cdr-safe
-                        (flatten result-list))))
-      ))
-
-  (defvar coldnew/keymap-string-alist
-    (let ((result))
-      (dolist (char (number-sequence ?\^a ?\^z))
-        (add-to-list 'result (cons char (concat "Ctrl-" (char-to-string (1- (+ char ?a)))))))
-      result))
-
-  (coldnew/parse-keymap (kbd "C-a e C-x y"))
-  (coldnew/parse-keymap "\C-x e ")
-
-  (setq show-paren-delay 0)
-
-
-
+  (global-unset-key (kbd "C-r"))
+  (global-unset-key (kbd "C-x e"))
+  (global-unset-key (kbd "C-x d"))
 #+end_src
-
-#+results: global-unset-key
-| unset key |
-|-----------|
-| Ctrl-x e  |
-| Ctrl-x d  |
-| Ctrl-x e  |
-
-** test
-#+name: global-unset-key
-#+begin_src emacs-lisp :results value raw
-      (coldnew/global-unset-key
-       (kbd "C-x e")
-       (kbd "C-x d")
-       "\C-x e"
-  "\C-x n"
-    ;;   "\C-c e"
-       )
-  (global-unset-key (kbd "C-w"))
-#+end_src
-
 ** Function key prefix
 Function key 設置常用的命令。
 
@@ -6160,6 +6093,24 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x e =") 'emms-volume-raise)
   (global-set-key (kbd "C-x e -") 'emms-volume-lower)
 #+end_src
+** Ctrl-r 暫存器、書籤、快速跳轉、矩型處理
+預設的 C-r 其實是 isearch-backward, 這裡將他改掉。
+
+| 按鍵           | 命令                       | 用途                           |
+|----------------+----------------------------+--------------------------------|
+| C-r s <char>   | copy-to-register           | 將區域(選擇)存入暫存器         |
+| C-r r <char>   | copy-rectangle-to-register | 將矩型區域存入暫存器           |
+| C-r i <char>   | insert-register            | 將暫存器內的東西插入           |
+| C-r SPC <char> | point-to-register          | 將檔案或是緩衝區位置存入暫存器 |
+| C-r j <char>   | jump-to-register           | 跳轉到暫存的檔案或是緩衝區位置 |
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-r j") 'jump-to-register)
+  (global-set-key (kbd "C-r r") 'copy-rectangle-to-register)
+  (global-set-key (kbd "C-r i") 'insert-register)
+  (global-set-key (kbd "C-r <SPC>") 'point-to-register)
+  (global-set-key (kbd "C-r j") 'jump-to-register)
+#+end_src  
 ** Ctrl-c prefix
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
@@ -6286,19 +6237,6 @@ Function key 設置常用的命令。
 #+end_src
 
 * Register                                                         :register:
-** TODO add now doc
-** 複製貼上多次
-Use registers. Mark the region, store it in register `a' and insert the
-contents of register `a' multiple times.
-
-Mark region
-
-C-x r s a
-
-C-x r i a
-C-x r i a
-*** C-x r s copy-to-register
-*** C-x r i insert-register
 ** 放置快速跳轉的捷徑命令。
 使用 Ctrl-x r j <char> 就可以進行快速跳轉至檔案，其中 <char> 為以下所設定。
 #+begin_src emacs-lisp
@@ -6381,6 +6319,10 @@ http://jixiuf.github.com/tags/@Emacs.html
 # Local Variables:
 # mode: org
 # End:
+
+
+
+
 
 
 
