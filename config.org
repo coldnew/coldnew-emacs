@@ -5931,8 +5931,11 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
   ;;     (setq cursor-type emacs-normal-cursor-type)
   ;;     (setq cursor-color emacs-normal-cursor-color))))
   
-  (setq cursor-type emacs-normal-cursor-type)
-  (setq cursor-color emacs-normal-cursor-color)
+  (add-hook 'post-command-hook 'coldnew/change-cursor)
+  
+  (defun coldnew/change-cursor ()
+    (setq cursor-type emacs-normal-cursor-type)
+    (setq cursor-color emacs-normal-cursor-color))
 #+end_src
 * 全域性按鍵設置
 ** 關閉預設的按鍵設定
