@@ -843,13 +843,13 @@ emacs 個人配置的檔案，也就是這個檔案。
 **** TODO add function to handle if el-get return error
 #+begin_src emacs-lisp
   (defmacro require* (feature &optional file)
-      "Try to require FEATURE, but don't signal an error if `reauire' fails.
-    If this package does not exist, use el-get reinstall it."
-      `(let* ((require-result (require ,feature ,file 'noerror)))
-         ;; if package does not exist, reinstall it
-         (if-not require-result (el-get-reinstall ,feature)
-                 ;; TODO: add require-result buffer
-                 )))
+    "Try to require FEATURE, but don't signal an error if `reauire' fails.
+      If this package does not exist, use el-get reinstall it."
+    `(let* ((require-result (require ,feature ,file 'noerror)))
+       ;; if package does not exist, reinstall it
+       (if-not require-result (el-get-reinstall ,feature)
+               ;; TODO: add require-result buffer
+               )))
 #+end_src
 ** Font-lock
 這邊的 font-lock 設定主要是為了讓自己設定的 macro（require*) 具有和 require
@@ -4918,6 +4918,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (if (or (not mark-active) arg)
         (cua-set-mark arg)
       (cua-toggle-rectangle-mark)))
+
 
 
   (defadvice kill-ring-save (before slickcopy activate compile)
