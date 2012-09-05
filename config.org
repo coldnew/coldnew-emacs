@@ -2089,7 +2089,8 @@ auto-complete-mode 的按鍵設定。
   (require 'helm)
   (require 'helm-config)
 ;;  (require 'helm-projectile)
-;;  (require 'helm-etags+)
+  (require 'helm-etags+)
+;;  (require 'helm-git)
   (require 'ctags-update)
 #+end_src
 *** TODO Config this
@@ -5902,52 +5903,36 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
 #+end_src
 * 游標                                                               :cursor:
 ** TODO remove
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp 
   (defvar emacs-normal-cursor-color "white")
   (defvar emacs-normal-cursor-type 'bar)
-
-  (defvar emacs-read-only-cursor-color "gray")
-  (defvar emacs-read-only-cursor-type 'box)
-
-  (defvar emacs-overwrite-cursor-color "yellow")
-  (defvar emacs-overwrite-cursor-type 'hbar)
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Hooks
-  ;;;; ---------------------------------------------------------------------------
-  (add-hook 'post-command-hook 'coldnew/set-cursor-according-mode)
-
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Functions
-  ;;;; ---------------------------------------------------------------------------
-  (defun coldnew/set-cursor-according-mode ()
-    "change cursor shap and color according mode"
-    (cond
-     ((string= "Command" coldnew-editor-state)
-      (setq cursor-type emacs-read-only-cursor-type)
-      (setq cursor-color emacs-read-only-cursor-color))
-     (buffer-read-only
-      (setq cursor-type emacs-read-only-cursor-type)
-      (setq cursor-color emacs-read-only-cursor-color))
-     ;; (overwrite-mode
-     ;;   (set-cursor-color djcb-overwrite-color)
-     ;;   (setq cursor-type djcb-overwrite-cursor-type))
-     (t
-      (setq cursor-type emacs-normal-cursor-type)
-      (setq cursor-color emacs-normal-cursor-color))))
-#+end_src
-** TODO remove
-#+begin_src emacs-lisp
-  (defvar emacs-normal-cursor-color "white")
-  (defvar emacs-normal-cursor-type 'bar)
-  (add-hook 'post-command-hook 'coldnew/set-cursor-according-mode)
-  (defun coldnew/set-cursor-according-mode ()
-    "change cursor shap and color according mode"
-    (cond
-     (t
-      (setq cursor-type emacs-normal-cursor-type)
-      (setq cursor-color emacs-normal-cursor-color))))
+  
+  ;; (defvar emacs-read-only-cursor-color "gray")
+  ;; (defvar emacs-read-only-cursor-type 'box)
+  
+  ;; (defvar emacs-overwrite-cursor-color "yellow")
+  ;; (defvar emacs-overwrite-cursor-type 'hbar)
+  
+  ;; (add-hook 'post-command-hook 'coldnew/set-cursor-according-mode)
+  
+  ;; (defun coldnew/set-cursor-according-mode ()
+  ;;   "change cursor shap and color according mode"
+  ;;   (cond
+  ;;    ((string= "Command" coldnew-editor-state)
+  ;;     (setq cursor-type emacs-read-only-cursor-type)
+  ;;     (setq cursor-color emacs-read-only-cursor-color))
+  ;;    (buffer-read-only
+  ;;     (setq cursor-type emacs-read-only-cursor-type)
+  ;;     (setq cursor-color emacs-read-only-cursor-color))
+  ;;    ;; (overwrite-mode
+  ;;    ;;   (set-cursor-color djcb-overwrite-color)
+  ;;    ;;   (setq cursor-type djcb-overwrite-cursor-type))
+  ;;    (t
+  ;;     (setq cursor-type emacs-normal-cursor-type)
+  ;;     (setq cursor-color emacs-normal-cursor-color))))
+  
+  (setq cursor-type emacs-normal-cursor-type)
+  (setq cursor-color emacs-normal-cursor-color)
 #+end_src
 * 全域性按鍵設置
 ** 關閉預設的按鍵設定
@@ -6319,6 +6304,19 @@ http://jixiuf.github.com/tags/@Emacs.html
 # Local Variables:
 # mode: org
 # End:
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
