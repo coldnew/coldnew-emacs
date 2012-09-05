@@ -835,36 +835,6 @@ emacs 個人配置的檔案，也就是這個檔案。
     :group 'mode-line)
 #+end_src
 
-** Macros                                                            :macro:
-*** reauire*
-這個巨集用途和 require 類似，但是會忽略掉所有的錯誤。此外，如果 emacs 並沒有讀入這個 package
-則會呼叫 el-get 來安裝這個 package。
-**** TODO add require-result buffer
-**** TODO add function to handle if el-get return error
-#+begin_src emacs-lisp
-  (defmacro require* (feature &optional file)
-    "Try to require FEATURE, but don't signal an error if `reauire' fails.
-      If this package does not exist, use el-get reinstall it."
-    `(let* ((require-result (require ,feature ,file 'noerror)))
-       ;; if package does not exist, reinstall it
-       (if-not require-result (el-get-reinstall ,feature)
-               ;; TODO: add require-result buffer
-               )))
-#+end_src
-** Font-lock
-這邊的 font-lock 設定主要是為了讓自己設定的 macro（require*) 具有和 require
-一樣的顏色，僅添加於 emacs-lisp-mode 和 lisp-interaction-mode
-#+begin_src emacs-lisp
-  (font-lock-add-keywords 'emacs-lisp-mode
-                          '(("(\\(require\*\\*\\)[ \t']*\\(\\sw+\\)?"
-                             (1 font-lock-keyword-face)
-                             (2 font-lock-constant-face nil t))))
-  
-  (font-lock-add-keywords 'lisp-interaction-mode
-                          '(("(\\(require\*\\*\\)[ \t']*\\(\\sw+\\)?"
-                             (1 font-lock-keyword-face)
-                             (2 font-lock-constant-face nil t))))
-#+end_src
 ** 設定 custom-file 到其他檔案
 避免使用 *customize-UI* 時，會將設定寫入我的 init.el
 #+begin_src emacs-lisp
@@ -1253,11 +1223,9 @@ ref: http://curiousprogrammer.wordpress.com/2009/06/08/error-handling-in-emacs-l
 #+end_src
 * Depends
 #+begin_src emacs-lisp
-;;  (require* 'tabbar)
-  (require* 'sauron)
-  (require* 'traverselisp)
-  (require* 'space-chord)
-  (require* 'switch-window)
+  (require 'sauron)
+  (require 'space-chord)
+  (require 'switch-window)
   (require 'projectile)
   (projectile-mode)
 #+end_src
@@ -1265,19 +1233,18 @@ ref: http://curiousprogrammer.wordpress.com/2009/06/08/error-handling-in-emacs-l
 ok
 
 #+begin_src emacs-lisp
-  (require* 'rainbow-mode)
-  (require* 'ascii)
-  (require* 'ace-jump-mode)
-  (require* 'smarter-compile)
-  (require* 'smallurl)
-  (require* 'unicad)
-  (require* 'iedit)
-
-  (require* 'expand-region)
-  (require* 'sr-speedbar)
-  (require* 'helm)
-  (require* 'htmlize)
-  (require* 'pretty-lambdada)
+  (require 'rainbow-mode)
+  (require 'ascii)
+  (require 'ace-jump-mode)
+  (require 'smarter-compile)
+  (require 'smallurl)
+  (require 'unicad)
+  (require 'iedit)
+  (require 'expand-region)
+  (require 'sr-speedbar)
+  (require 'helm)
+  (require 'htmlize)
+  (require 'pretty-lambdada)
 #+end_src
 parenface 可以將所有的圓括號上色。
 #+begin_src emacs-lisp
@@ -1286,7 +1253,7 @@ parenface 可以將所有的圓括號上色。
 #+end_src
 
 #+begin_src emacs-lisp
-;;(require* 'smart-tab)
+;;(require 'smart-tab)
 #+end_src
 ** Build-in
 #+begin_src emacs-lisp
@@ -1880,7 +1847,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
 #+begin_src emacs-lisp
   (require 'auto-complete)
   (require 'auto-complete-config)
-  (require* 'auto-complete-clang)
+  (require 'auto-complete-clang)
 #+end_src
 *** Config
 **** 使用預設的設定。
@@ -1930,18 +1897,18 @@ auto-complete-mode 的按鍵設定。
 ** auto-indent
 *** Depends
 #+begin_src emacs-lisp
-  (require* 'auto-indent-mode)
+  (require 'auto-indent-mode)
 #+end_src
 ** android                                                         :android:
 #+begin_src emacs-lisp
-  (require* 'android-mode)
+  (require 'android-mode)
   ;; Set my android-emulator-path
   (setq android-mode-sdk-dir "/opt/android-sdk-update-manager/")
 #+end_src
 ** elscreen                                                       :elscreen:
 *** Depends
 #+begin_src emacs-lisp
-  (require* 'elscreen)
+  (require 'elscreen)
 #+end_src
 *** Config
 **** 自動啟用 elscreen
@@ -2119,7 +2086,7 @@ auto-complete-mode 的按鍵設定。
 ** helm-mode                                                          :helm:
 *** Depends
 #+begin_src emacs-lisp
-  (require* 'helm)
+  (require 'helm)
   (require 'helm-config)
 ;;  (require 'helm-projectile)
 ;;  (require 'helm-etags+)
@@ -2175,7 +2142,7 @@ auto-complete-mode 的按鍵設定。
 ** lusty-explorer
 *** Depends
 #+begin_src emacs-lisp
-  (require* 'lusty-explorer)
+  (require 'lusty-explorer)
 #+end_src
 *** Keybinding
 #+begin_src emacs-lisp
@@ -2219,7 +2186,7 @@ auto-complete-mode 的按鍵設定。
 ** smex                                                               :smex:
 *** Depends
 #+begin_src emacs-lisp
-  (require* 'smex)
+  (require 'smex)
 #+end_src
 *** Init
 啟動 smex
@@ -2736,7 +2703,7 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 ** hideshow
 #+begin_src emacs-lisp
   (require 'hideshow)
-  (require* 'hideshowvis)
+  (require 'hideshowvis)
 
   ;;; enable following mode to use hideshow
   (dolist (hook (list 'emacs-lisp-mode-hook
@@ -2801,7 +2768,7 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 ** cmake
 *** Depends
 #+begin_src emacs-lisp
-  (require* 'cmake-mode)
+  (require 'cmake-mode)
 #+end_src
 *** Mode List
 #+begin_src emacs-lisp
@@ -3338,7 +3305,7 @@ try to define my editor-mode , some function  or macros copy from evil :)
 ** 替中文字和英文字中間加入空格
 mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間加入空格。
 #+begin_src emacs-lisp
-;;  (require* 'mixen)
+;;  (require 'mixen)
 ;;  (setq mixen-enable-write-to-file t)
 ;;  (mixen-mode)
 #+end_src
@@ -3974,7 +3941,7 @@ This section contains my editor state
 * ECB                                                                   :ecb:
 ** Depends
 #+begin_src emacs-lisp
-  (require* 'ecb)
+  (require 'ecb)
 #+end_src
 ** Config
 *** Do not show tips-of-the-day
@@ -4028,7 +3995,7 @@ This section contains my editor state
 #+end_src
 
 #+begin_src emacs-lisp
-  (require* 'bm)
+  (require 'bm)
 #+end_src
 * Cscope                                                             :cscope:
 ** cscope 說明
@@ -4081,8 +4048,8 @@ emacs 和 cscope 相關的套件蠻多的，xcscope 包含在 cscope 的套件�
 
 ** 載入和 cscope 相關的 package
 #+begin_src emacs-lisp
-  (require* 'xcscope)
-  (require* 'xcscope+)
+  (require 'xcscope)
+  (require 'xcscope+)
   (setq cscope-do-not-update-database t)
 #+end_src
 * Auto Compression Mode
@@ -4131,7 +4098,7 @@ emacs 和 cscope 相關的套件蠻多的，xcscope 包含在 cscope 的套件�
 ;;  (bash-completion-setup)
 
   ;; use flymake-shell
-  (require* 'flymake-shell)
+  (require 'flymake-shell)
   (add-hook 'shell-mode-hook 'flymake-shell-load)
 
 #+end_src
@@ -4208,7 +4175,7 @@ adeff
 #+end_src
 **** TODO 自動偵測 c-basic-offset
 #+begin_src emacs-lisp
-  (require* 'guess-offset)
+  (require 'guess-offset)
 #+end_src
 **** 自動猜測縮排風格
 #+begin_src emacs-lisp
@@ -4515,7 +4482,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 *** 設定 javascript 的副檔名與對應的模式
 使用 js2-mode 替代原本系統內建的 js-mode。
 #+begin_src emacs-lisp
-  (require* 'js2-mode)
+  (require 'js2-mode)
   (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 #+end_src
 *** 自動補全
@@ -4573,7 +4540,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+end_src
 **** require
 #+begin_src emacs-lisp
-  (require* 'pymacs)
+  (require 'pymacs)
 #+end_src
 **** TODO 讓 pymacs 找的到 rope 以及 ropemacs
 我將 pymacs 必須使用的 rope、ropemacs、ropemode 安裝在 lisp 資料夾裏面，
@@ -4604,7 +4571,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+end_src
 *** 自動補全
 #+begin_src emacs-lisp
-(require* 'ac-python)
+(require 'ac-python)
 #+end_src
 ** Verilog
 *** 設定 verilog 檔案的副檔名與對應的模式
@@ -5324,7 +5291,7 @@ yank-n-times 則可以重複的進行貼上。
 google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作。
 ** 載入相關套件
 #+begin_src emacs-lisp
-  (require* 'google-translate)
+  (require 'google-translate)
 #+end_src
 ** 預設設定為 正體中文 -> 英文
 #+begin_src emacs-lisp
