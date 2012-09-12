@@ -3030,13 +3030,6 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
 some packages conflict with org-mode
 *** yasnippet
 #+begin_src emacs-lisp
-  ;; (when (featurep 'yasnippet)
-  ;;   (add-hook 'org-mode-hook
-  ;;             (lambda ()
-  ;;               (org-set-local 'yas/trigger-key[tab])
-  ;;               (define-key yas/keymap[tab] 'yas/next-field-group)
-                
-  ;;               )))
   (when (featurep 'yasnippet)
     (defun yas/org-very-safe-expand ()
       (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
@@ -3044,11 +3037,10 @@ some packages conflict with org-mode
     (add-hook 'org-mode-hook
               (lambda ()
                 (make-variable-buffer-local 'yas/trigger-key)
-                (setq yas/trigger-key [tab])
+                (setq yas/trigger-key (kbd "TAB"))
                 (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
                 (define-key yas/keymap [tab] 'yas/next-field)))
     )
-  
 #+end_src
 
 *** windmove
