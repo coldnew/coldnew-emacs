@@ -12,10 +12,11 @@
       (setq load-path (cons load-dir load-path))
       (normal-top-level-add-subdirs-to-load-path))))
 
-;; Use <F5> as a shortcut to reload emacs setting
-(global-set-key (kbd "<f5>")
-		'(lambda () (interactive)
-		   (load-file "~/.emacs.d/init.el") (desktop-revert) (delete-other-windows)))
+;; define a reload command
+(defun reload-emacs ()
+  "reload my emacs settings"
+  (interactive)
+  (load-file "~/.emacs.d/init.el") (desktop-revert) (delete-other-windows))
 
 ;; When eval org-babel, do not confirm
 (setq org-confirm-babel-evaluate nil)
@@ -28,7 +29,7 @@
 (mapc #'org-babel-load-file (directory-files "~/.emacs.d/" t "\\.org$"))
 
 ;; After loading allemacs config file, read authorization file
-;;(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
+(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
 
 
 (message "\nEmacs is ready to serve you, Master %s!\n" (getenv "USER"))

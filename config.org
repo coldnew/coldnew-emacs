@@ -4509,7 +4509,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     )
 #+end_src
 ** LaTex
-** Qml
+** qml
 *** 設定 qml 的副檔名與對應的模式
 #+begin_src emacs-lisp
   (require 'qml-mode)
