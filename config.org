@@ -994,12 +994,12 @@ emacs 套件管理的設定。
          :pkgname sjbach/lusty-emacs
          :description "LustyExplorer is a fast and responsive way to manage files and buffers")
 #+end_src
-***** mixen
+***** aml-mode
 #+begin_src emacs-lisp
-  (:name mixen
-          :type github
-          :pkgname coldnew/mixen
-          :features mixen)
+  (:name qml-mode
+         :type github
+         :pkgname cataska/qml-mode
+          :features qml-mode)
 #+end_src
 ***** End of config
 #+begin_src emacs-lisp
@@ -4509,6 +4509,15 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     )
 #+end_src
 ** LaTex
+** Qml
+*** 載入相依套件
+#+begin_src emacs-lisp
+  (require 'qml-mode)
+#+end_src
+*** 設定 qml 的副檔名與對應的模式
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
+#+end_src
 ** Scheme
 *** 設定 Scheme 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
