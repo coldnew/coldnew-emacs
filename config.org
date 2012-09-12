@@ -4510,13 +4510,16 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+end_src
 ** LaTex
 ** Qml
-*** 載入相依套件
-#+begin_src emacs-lisp
-  (require 'qml-mode)
-#+end_src
 *** 設定 qml 的副檔名與對應的模式
 #+begin_src emacs-lisp
+  (require 'qml-mode)
   (add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
+#+end_src
+** qmake
+*** 設定 qmake 的副檔名與對應的模式
+#+begin_src emacs-lisp
+  (require 'qmake-mode)
+  (add-to-list 'auto-mode-alist '("\\.pro$" . qmake-mode))
 #+end_src
 ** Scheme
 *** 設定 Scheme 檔案的副檔名與對應的模式
