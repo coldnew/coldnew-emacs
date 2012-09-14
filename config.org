@@ -2304,10 +2304,6 @@ auto-complete-mode 的按鍵設定。
 #+begin_src emacs-lisp
   (setq yas/prompt-functions '(yas/dropdown-prompt yas/ido-prompt yas/completing-prompt))
 #+end_src
-*** 當存檔時，更新 snippets
-#+begin_src emacs-lisp
-  (add-hook 'after-save-hook 'coldnew/update-yasnippets-on-save)
-#+end_src
 *** 增加類似 org-mode 那樣使用 < 進行補全的方法 (easy-template)
 #+begin_src emacs-lisp
   (defun coldnew/major-mode-expand ()
@@ -2355,10 +2351,6 @@ auto-complete-mode 的按鍵設定。
     (insert user-mail-address))
   (defun yas/user-nickname ()
     (insert user-nickname))
-  (defun coldnew/update-yasnippets-on-save ()
-    "automatic reloadinf of ghanged snippets"
-    (when (string-match "/snippets/" buffer-file-name)
-      (yas/load-snippet-dirs)))
 #+end_src
 ** ibuffer                                                         :ibuffer:
 *** 載入相依套件
@@ -4439,6 +4431,14 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                 ac-source-words-in-same-mode-buffers
                 )))
 #+end_src
+*** 快速插入樣板
+#+begin_src emacs-lisp
+  (setq emacs-lisp-mode-expand-alist
+        '(("r" . "require")
+          ("d" . "defun")
+          ("l" . "lambda")
+          ))
+#+end_src
 *** TODO Flymake
 #+begin_src emacs-lisp :tangle no
   (require 'flymake)
@@ -4554,6 +4554,17 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+begin_src emacs-lisp
   (require 'qml-mode)
   (add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
+#+end_src
+*** 快速插入樣板
+#+begin_src emacs-lisp
+  (setq qml-mode-expand-alist
+        '(("R" . "Rectangle")
+          ("I" . "Item")
+          ("M" . "MouseArea")
+          ("i" . "import")
+          ("L" . "ListModel")
+          ("C" . "Component")
+          ))
 #+end_src
 ** qmake
 *** 設定 qmake 的副檔名與對應的模式
@@ -6133,13 +6144,14 @@ Function key 設置常用的命令。
 ** Ctrl-r 暫存器、書籤、快速跳轉、矩型處理
 預設的 C-r 其實是 isearch-backward, 這裡將他改掉。
 
-| 按鍵           | 命令                       | 用途                           |
-|----------------+----------------------------+--------------------------------|
-| C-r s <char>   | copy-to-register           | 將區域(選擇)存入暫存器         |
-| C-r r <char>   | copy-rectangle-to-register | 將矩型區域存入暫存器           |
-| C-r i <char>   | insert-register            | 將暫存器內的東西插入           |
-| C-r SPC <char> | point-to-register          | 將檔案或是緩衝區位置存入暫存器 |
-| C-r j <char>   | jump-to-register           | 跳轉到暫存的檔案或是緩衝區位置 |
+| 按鍵           | 命令                       | 用途                                     |
+|----------------+----------------------------+------------------------------------------|
+| C-r s <char>   | copy-to-register           | 將區域(選擇)存入暫存器                   |
+| C-r r <char>   | copy-rectangle-to-register | 將矩型區域存入暫存器                     |
+| C-r i <char>   | insert-register            | 將暫存器內的東西插入                     |
+| C-r SPC <char> | point-to-register          | 將檔案或是緩衝區位置存入暫存器           |
+| C-r j <char>   | jump-to-register           | 跳轉到暫存的檔案或是緩衝區位置           |
+| C-r n          | cua-sequence-rectangel     | 對選取的矩型區域每行加入相對應的續列數字 |
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-r j") 'jump-to-register)
@@ -6147,6 +6159,7 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-r i") 'insert-register)
   (global-set-key (kbd "C-r <SPC>") 'point-to-register)
   (global-set-key (kbd "C-r j") 'jump-to-register)
+  (global-set-key (kbd "C-r n") 'cua-sequence-rectangle)
 #+end_src  
 ** Ctrl-c prefix
 #+begin_src emacs-lisp
