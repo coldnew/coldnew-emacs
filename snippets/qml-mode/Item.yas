@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Item
+# key: Item
+# --
+Item {
+$0
+}

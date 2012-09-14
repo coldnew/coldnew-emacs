@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Rectangle
+# key: Rectangle
+# --
+Rectangle {
+$0
+}

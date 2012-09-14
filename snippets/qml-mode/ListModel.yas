@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ListModel
+# key: ListModel
+# --
+ListModel {
+$0
+} 
