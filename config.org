@@ -2902,7 +2902,7 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
 #+begin_src emacs-lisp
   (add-to-list 'org-structure-template-alist
                '("E" "#+begin_src emacs-lisp\n?\n#+end_src"))
-               (add-to-list 'org-structure-template-alist
+  (add-to-list 'org-structure-template-alist
                '("S" "#+begin_src sh\n?\n#+end_src"))
 #+end_src
 
@@ -3048,7 +3048,7 @@ some packages conflict with org-mode
                 (make-variable-buffer-local 'yas/trigger-key)
                 (setq yas/trigger-key (kbd "TAB"))
                 (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
-                (define-key yas/keymap [tab] 'yas/next-field)))
+                (define-key yas/keymap (kbd "TAB") 'yas/next-field)))
     )
 #+end_src
 
@@ -5980,6 +5980,10 @@ Function key 設置常用的命令。
   (global-set-key (kbd "<f3>")     'call-last-kbd-macro)
   (global-set-key (kbd "<f4>")     'sr-speedbar-toggle)
 #+end_src
+** 在目前行加上彩色條
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x l") 'hl-line-mode)
+#+end_src
 ** Ctrl Prefix
 *** Default Emacs keybinding
 #+begin_src emacs-lisp
@@ -6081,6 +6085,7 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x c x") 'dos2unix)
   (global-set-key (kbd "C-x c d") 'unix2dos)
 #+end_src
+
 *** emms
 | 按鍵        | 命令              | 用途       |
 |-------------+-------------------+------------|
