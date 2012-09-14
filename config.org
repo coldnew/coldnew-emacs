@@ -1848,31 +1848,30 @@ emacs-lisp-mode 的 buffer，可以這樣做
 #+begin_src emacs-lisp
   (load-theme 'coldnew-night t)
 #+end_src
-* Mode
-** 自動補全
-*** 載入相關套件
+* 自動補全
+** 載入相關套件
 #+begin_src emacs-lisp
   (require 'auto-complete)
   (require 'auto-complete-config)
   (require 'auto-complete-clang)
 #+end_src
-*** 使用預設的設定。
+** 使用預設的設定。
 #+begin_src emacs-lisp
   (ac-config-default)
 #+end_src
-*** 不使用 fuzzy-match
+** 不使用 fuzzy-match
 #+begin_src emacs-lisp
   (setq ac-use-fuzzy nil)
 #+end_src
-*** 當輸入 4 個字母以上時，啟用自動補全。
+** 當輸入 4 個字母以上時，啟用自動補全。
 #+begin_src emacs-lisp
   (setq ac-auto-start 4)
 #+end_src
-*** 加入我自定義的補全字典
+** 加入我自定義的補全字典
 #+begin_src emacs-lisp
   (add-to-list 'ac-dictionary-directories (concat emacs-dir "ac-dict"))
 #+end_src
-*** TODO 位分類
+** TODO 位分類
 #+begin_src emacs-lisp
   ;; Ignore case if completion target string doesn't include upper characters
   (setq ac-ignore-case 'smart)
@@ -1895,7 +1894,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
   ;; Enable ac-menu-map
   (setq ac-use-menu-map t)
 #+end_src
-*** 按鍵設定
+** 按鍵設定
 auto-complete-mode 的按鍵設定。
 #+begin_src emacs-lisp
   (define-key ac-menu-map (kbd "C-n") 'ac-next)
@@ -1903,6 +1902,7 @@ auto-complete-mode 的按鍵設定。
   (define-key ac-completing-map "\t" 'ac-complete)
   (define-key ac-complete-mode-map[tab] 'ac-expand)
 #+end_src
+* Mode
 ** auto-indent
 *** Depends
 #+begin_src emacs-lisp
