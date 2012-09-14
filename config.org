@@ -2308,6 +2308,31 @@ auto-complete-mode 的按鍵設定。
 #+begin_src emacs-lisp
   (add-hook 'after-save-hook 'coldnew/update-yasnippets-on-save)
 #+end_src
+*** 增加類似 org-mode 那樣使用 < 進行補全的方法 (easy-template)
+#+begin_src emacs-lisp
+  (defun coldnew/major-mode-expand ()
+    "Try to complete a structure template before point like org-mode does.
+  This looks for strings like \"<e\" on an otherwise empty line and
+  expands them.
+  Before use this function, you muse setup `major-mode-name'-expand-alist variable.
+  
+  Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
+  in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
+  
+   (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
+    (let* ((l (buffer-substring (point-at-bol) (point)))
+           (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
+           (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
+           a)
+      (when (and (looking-at "[ \t]*$")
+                 (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
+                 (setq a (assoc (match-string 1 l) expand-alist)))
+        (backward-delete-char (1+ (length (car-safe a))))
+        (insert (cdr-safe a))
+        t)))
+  
+  (defadvice yas-expand (before coldnew/major-mode-expand activate) (coldnew/major-mode-expand))
+#+end_src
 *** Functions
 #+begin_src emacs-lisp
   (defun yas/dir ()
@@ -6269,6 +6294,34 @@ Function key 設置常用的命令。
 :END:
 這邊放置的是不再使用的設定,並且這邊的設定並不會輸出至我的 emacs-config 上。
 #+begin_src emacs-lisp
+(defun aa ()
+  "Try to complete a structure template before point.
+This looks for strings like \"<e\" on an otherwise empty line and
+expands them."
+  (interactive)
+  (let ((l (buffer-substring (point-at-bol) (point)))
+        a)
+    (when (and (looking-at "[ \t]*$")
+               (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
+               (setq a (assoc (match-string 1 l) aa-structure-template-alist)))
+      ;;      (org-complete-expand-structure-template (+ -1 (point-at-bol)
+      ;;                                           (match-beginning 1)) a)
+      (backward-delete-char 2)
+      (insert (car (cdr-safe a)))
+      (yas/expand)
+      t)))
+
+
+(setq aa-structure-template-alist org-structure-template-alist)
+
+(add-to-list 'aa-structure-template-alist
+      '("E" ."require"))
+
+(add-to-list 'aa-structure-template-alist
+             '("H" "require"))
+
+#+end_src
+#+begin_src emacs-lisp
   (defun sacha/search-word-backward ()
     "Find the previous occurrence of the current word."
     (interactive)
@@ -6326,7 +6379,6 @@ http://jixiuf.github.com/tags/@Emacs.html
             ;; add for encoding
             (concat "&oe=" "utf8")))
 #+end_src
-
 * Local File Variable
 # Local Variables:
 # mode: org
