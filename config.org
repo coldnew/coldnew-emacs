@@ -994,12 +994,19 @@ emacs 套件管理的設定。
          :pkgname sjbach/lusty-emacs
          :description "LustyExplorer is a fast and responsive way to manage files and buffers")
 #+end_src
-***** aml-mode
+***** qml-mode
 #+begin_src emacs-lisp
   (:name qml-mode
          :type github
-         :pkgname cataska/qml-mode
-          :features qml-mode)
+         :pkgname coldnew/qml-mode
+         :features qml-mode)
+#+end_src
+***** qmake-mode
+#+begin_src emacs-lisp
+  (:name qmake-mode
+         :type github
+         :pkgname coldnew/qmake-mode
+         :features qmake-mode)
 #+end_src
 ***** End of config
 #+begin_src emacs-lisp
