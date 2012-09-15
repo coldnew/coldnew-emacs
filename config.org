@@ -4561,9 +4561,10 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
         '(("R" . "Rectangle")
           ("I" . "Item")
           ("M" . "MouseArea")
-          ("i" . "import")
           ("L" . "ListModel")
           ("C" . "Component")
+          ("T" . "Text")
+          ("i" . "import")
           ))
 #+end_src
 ** qmake
