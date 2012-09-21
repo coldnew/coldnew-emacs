@@ -1773,24 +1773,24 @@ emacs-lisp-mode 的 buffer，可以這樣做
   ;; Link
   '(link ((t (:foreground "dodger blue" :underline t))))
   ;; '(link-visited ((t (:foreground "#8b008b" :underline t))))
-
+  
    ;;;; Show Paren
   '(show-paren-match ((t (:background "#E65C00" :foreground "#CDCDCD" :bold t))))
   '(show-paren-mismatch ((t (:background "#0C0C0C" :foreground "#E91303" :bold t))))
-
+  
    ;;;; isearch
   '(isearch ((t (:background "#F57900" :foreground "#7F6BFF"))))
   '(lazy-highlight ((t (:background "#E9B96E" :foreground "#7F6BFF"))))
-
+  
    ;;;; Comint
   '(comint-highlight-prompt ((t (:foreground "#5D9AE4" :bold t))))
-
+  
    ;;;; Hl-line
   '(hl-line ((t :background "#444444")))
-
+  
    ;;;; selection
   '(secondary-selection ((t (:background "#CAE682" :foreground "#0c0c0c"))))
-
+  
    ;;;; Diff
   '(diff-added ((t (:foreground "#95E454"))))
   '(diff-removed ((t (:foreground "#E52210"))))
@@ -1803,23 +1803,23 @@ emacs-lisp-mode 的 buffer，可以這樣做
   '(diff-index ((t (:foreground "yellow"))))
   '(diff-context ((t (:inherit font-lock-comment))))
   '(diff-refine-change ((t (:background "#0B0B0E" :foreground "#DCDCDC"))))
-
+  
    ;;;; cua
   '(cua-rectangle ((t (:background "#444444" :foreground "#DCDCDC"))))
-
+  
    ;;;; iBuffer
   '(ibuffer-deletion ((t (:foreground "#dfaf8f" :weight bold))))
   '(ibuffer-help-buffer ((t (:inherit font-lock-comment))))
   '(ibuffer-marked ((t (:foreground "#f0dfaf" :weight bold))))
   '(ibuffer-special-buffer ((t (:inherit font-lock-doc))))
-
+  
    ;;;; iBuffer-git
   '(ibuffer-git-add-face ((t (:inherit (diff-added)))))
   '(ibuffer-git-del-face ((t (:inherit (diff-removed)))))
-
+  
    ;;;; ECB
   '(ecb-default-highlight-face ((t (:background "#CAE682" :foreground "#0C0C0C" :bold t))))
-
+  
    ;;;;
   ;; '(button ((t (:underline t))))
   ;; '(header-line ((t (:background "#e5e5e5" :foreground "#333333"))))
@@ -4233,12 +4233,12 @@ C-s s I             对目录中的相关文件建立列表并进行索引
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.hpp$" . c++-mode))
   (add-to-list 'auto-mode-alist '("\\.cpp$" . c++-mode))
-  (add-to-list 'magic-mode-alist
-               `(,(lambda ()
-                    (and (string= (file-name-extension buffer-file-name) "h")
-                         (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
-                                            magic-mode-regexp-match-limit t)))
-                 . c++-mode))
+  ;; (add-to-list 'magic-mode-alist
+  ;;              `(,(lambda ()
+  ;;                   (and (string= (file-name-extension buffer-file-name) "h")
+  ;;                        (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
+  ;;                                           magic-mode-regexp-match-limit t)))
+  ;;                . c++-mode))
 #+end_src
 *** Config
 **** Codinf Style
@@ -6392,6 +6392,10 @@ http://jixiuf.github.com/tags/@Emacs.html
               (concat "&hl=" language))
             ;; add for encoding
             (concat "&oe=" "utf8")))
+#+end_src
+* Blog
+#+begin_src emacs-lisp
+(require 'o-blog)
 #+end_src
 * Local File Variable
 # Local Variables:
