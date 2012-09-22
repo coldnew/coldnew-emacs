@@ -4359,6 +4359,12 @@ C-c  I             对目录中的相关文件建立列表并进行索引
   (require 'css-mode)
   (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
 #+end_src
+** LESS
+*** 設定 CSS 的副檔名與對應的模式
+#+begin_src emacs-lisp
+  (require 'less-css-mode)
+  (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
+#+end_src
 ** Common Lisp
 *** 設定 Common Lisp 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
