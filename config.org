@@ -4688,7 +4688,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                              (propertize "**" 'face 'mode-line-modified-face))
                             (t "--")))
                      "   "
-                     (:eval (coldnew-editor-mode-string))
+                   ;;  (:eval (coldnew-editor-mode-string))
                      "   "
                      ;;              (:eval (mode-line-state))
                      mode-line-buffer-identification
@@ -6401,6 +6401,15 @@ http://jixiuf.github.com/tags/@Emacs.html
 # Local Variables:
 # mode: org
 # End:
+
+
+
+
+
+
+
+
+
 
 
 
