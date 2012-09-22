@@ -596,10 +596,6 @@ yasnippet 使用的 snippet路徑
   (defconst emacs-log-dir (concat emacs-dir "log/")
     "log file directory.")
 #+end_src
-
-#+RESULTS:
-: emacs-log-dir
-
 *** 檔案相關設定
 這邊設定了各種檔案的路徑。
 **** emacs-config-file
@@ -3126,23 +3122,6 @@ some packages conflict with org-mode
                   (goto-char point-to-move-to)
                 (show-subtree))))
 #+end_src
-** COMMENT remember the milk ?
-:PROPERTIES:
-:tangle: no
-:END:
-#+begin_src emacs-lisp
-  (require org-feed)
-  (setq org-feed-alist
-        '(("Remember The Milk"
-           "https://www.rememberthemilk.com/rss/jonnay/"
-           "~/org/GTD.org"
-           "Remember The Milk"
-           :template "* TODO %title\n  %a\n "
-           )))
-
-  ;;* rtm feed timer
-  (run-at-time 3600 3600 'org-feed-update-all)
-#+end_src
 ** presentation
 #+begin_src emacs-lisp
     ;; allow for export=>beamer by placing
@@ -3310,6 +3289,18 @@ some packages conflict with org-mode
 #+end_src
 
 *** TODO 投影片所使用的 html5 配置
+** Blog
+*** variable
+#+begin_src emacs-lisp
+  (defvar coldnew-blog-org-file "~/Workspace/coldnew-blog/src/blog.org"
+    "coldnew's blog file")
+#+end_src
+*** update function
+#+begin_src emacs-lisp
+  (defun coldnew/update-blog ()
+    (interactive)
+    (org-publish-blog coldnew-blog-org-file))
+#+end_src
 * Editor
 try to define my editor-mode , some function  or macros copy from evil :)
 ** electric-pair-mode
@@ -5417,10 +5408,10 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 #+begin_src emacs-lisp
   (setq erc-autojoin-channels-alist
         '(;; english channel
-          (".*\\.freenode.net" "#emacs" "#lisp" "#clojure" "##linux" "#gentoo")
+          (".*\\.freenode.net" "#emacs" "#clojure" "##linux" "#gentoo")
           ;; Chinese channel
           (".*\\.freenode.net" "#emacs.tw" "#tossug")
-          (".*\\debian.org" "#dot")
+          (".*\\.oftc.net" "#dot")
           ))
 #+end_src
 **** 關閉部份訊息顯示
@@ -6192,10 +6183,14 @@ Function key 設置常用的命令。
 | C-x f | windmove-right | 移動到右邊的窗口 |
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-x n") 'windmove-down)
-  (global-set-key (kbd "C-x f") 'windmove-right)
-  (global-set-key (kbd "C-x b") 'windmove-left)
-  (global-set-key (kbd "C-x p") 'windmove-up)
+;;  (global-set-key (kbd "C-x n") 'windmove-down)
+;;  (global-set-key (kbd "C-x f") 'windmove-right)
+;;  (global-set-key (kbd "C-x b") 'windmove-left)
+;;  (global-set-key (kbd "C-x p") 'windmove-up)
+  (global-set-key (kbd "s-n") 'windmove-down)
+  (global-set-key (kbd "s-p") 'windmove-up)
+  (global-set-key (kbd "s-b") 'windmove-left)
+  (global-set-key (kbd "s-f") 'windmove-right)
 #+end_src
 *** TODO 刪除區域或是一行
 #+begin_src emacs-lisp
@@ -6258,13 +6253,7 @@ Function key 設置常用的命令。
 ;;  (global-set-key (kbd "C-0 m") 'ecb-goto-window-methods)
 ; ; (global-set-key (kbd "C-0 l") 'ecb-toggle-layout)
 #+end_src
-*** Window move
-#+begin_src emacs-lisp
-;;  (global-set-key (kbd "M-j n") 'windmove-down)
-;;  (global-set-key (kbd "M-j p") 'windmove-up)
-;;  (global-set-key (kbd "M-j b") 'windmove-left)
-;;  (global-set-key (kbd "M-j f") 'windmove-right)
-#+end_src
+
 ** Shift prefix
 #+begin_src emacs-lisp
   (global-set-key[(shift return)] 'insert-empty-line)
