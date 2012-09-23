@@ -1004,20 +1004,6 @@ emacs 套件管理的設定。
          :pkgname coldnew/qmake-mode
          :features qmake-mode)
 #+end_src
-***** simple-httpd
-#+begin_src emacs-lisp
-  (:name simple-httpd
-         :type github
-         :pkgname skeeto/emacs-http-server
-         :features simple-httpd)
-#+end_src
-***** impatient-mode
-#+begin_src emacs-lisp
-  (:name impatient-mode
-         :type github
-         :pkgname netguy204/imp.el
-         :features impatient-mode)
-#+end_src
 ***** End of config
 #+begin_src emacs-lisp
   ))
@@ -2118,15 +2104,10 @@ auto-complete-mode 的按鍵設定。
 
   ;; Enable helm globally
   (helm-mode 1)
-
   ;; Enable dired binding
   (helm-dired-bindings 1)
-
+(helm-dired-bindings 1)
   (ctags-update-minor-mode 1)
-#+end_src
-
-#+begin_src emacs-lisp
-
 #+end_src
 *** Function
 #+begin_src emacs-lisp
@@ -4172,10 +4153,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 啟動時會同時啟動 moz-repl
 #+begin_src emacs-lisp
   (require 'moz)
-#+end_src
-*** impatient
-#+begin_src emacs-lisp
-(require 'impatient-mode)
 #+end_src
 *** 令 firefox 更新目前的頁面
 #+begin_src emacs-lisp
