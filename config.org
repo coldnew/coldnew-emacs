@@ -3299,7 +3299,8 @@ some packages conflict with org-mode
 #+begin_src emacs-lisp
   (defun coldnew/update-blog ()
     (interactive)
-    (org-publish-blog coldnew-blog-org-file))
+    (org-publish-blog coldnew-blog-org-file)
+    (firefox-refresh))
 #+end_src
 * Editor
 try to define my editor-mode , some function  or macros copy from evil :)
@@ -4157,7 +4158,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+end_src
 *** 令 firefox 更新目前的頁面
 #+begin_src emacs-lisp
-  (defun firefox-refrsh ()
+  (defun firefox-refresh ()
     "Refresh the firefox browser"
     (interactive)
     (comint-send-string (inferior-moz-process)
