@@ -3539,16 +3539,25 @@ This section contains my editor state
   (global-set-key (kbd "C-j") 'linum-ace-jump)
 
 #+end_src
+** 不使用 TAB 進行縮排
 #+begin_src emacs-lisp
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Initial Editor Setting
-  ;;;; ---------------------------------------------------------------------------
-  (setq indent-tabs-mode nil )          ; don't use tabs to indent
-  (setq tab-width          8 )          ; default tab-width is 8
-  (setq line-spacing       4 )          ; Additional space between lines
+  (setq indent-tabs-mode nil)
+#+end_src
+** 設定 TAB 的寬度為 8
+#+begin_src emacs-lisp
+  (setq tab-width 8)
+#+end_src
+** 設定每行之間的間格為 4
+#+begin_src emacs-lisp
+  (setq line-spacing 4)
+#+end_src
+** 在檔案的最後一行加入一空白行
+#+begin_src emacs-lisp
+  (setq require-final-newline t)
+#+end_src
+#+begin_src emacs-lisp
   (setq fill-column      100 ) ; column beyond which automatic line-wrapping shold happen
-  (setq kill-ring-max    300 ) ; Maximum lenght of kill-ring
-  (setq require-final-newline  t ) ; Auto add a newline at the end of line
+  (setq kill-ring-max    3000 ) ; Maximum lenght of kill-ring
   (setq next-line-add-newlines t ) ;
   (setq shift-select-mode      t ) ; Enable shift-select mode
 
@@ -3568,7 +3577,7 @@ This section contains my editor state
          ;; After save buffer, indent whole file.
   ;;       (add-hook 'coldnew-editor-hook 'indent-file-after-save)
          ;; Before save buffer, cleanup whitespace
-  (add-hook 'before-save-hook 'cleanup-whitespace-before-save)
+;;  (add-hook 'before-save-hook 'cleanup-whitespace-before-save)
          ;; Enable line-number
          (require 'linum)
         ;; (add-hook 'coldnew-editor-hook 'linum-mode)
