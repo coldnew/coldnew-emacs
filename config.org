@@ -1004,6 +1004,13 @@ emacs 套件管理的設定。
          :pkgname coldnew/qmake-mode
          :features qmake-mode)
 #+end_src
+***** helm-git
+#+begin_src emacs-lisp
+  (:name helm-git
+         :type github
+         :pkgname maio/helm-git
+         :features helm-git)
+#+end_src
 ***** End of config
 #+begin_src emacs-lisp
   ))
@@ -2108,6 +2115,8 @@ auto-complete-mode 的按鍵設定。
   (helm-dired-bindings 1)
 (helm-dired-bindings 1)
   (ctags-update-minor-mode 1)
+
+(require 'helm-git)
 #+end_src
 *** Function
 #+begin_src emacs-lisp
