@@ -5287,6 +5287,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
   ;; if use magit, do not use vc-git to handle Git interface.
   ;; (when (featurep 'magit)
   ;;   (setq vc-handled-backends (remq 'Git vc-handled-backends)))
+  (define-key magit-mode-map (kbd "C-g") 'magit-quit-window)
 #+end_src
 **** Magit 的使用
 每個 magit buffer
