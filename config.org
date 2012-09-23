@@ -5955,34 +5955,9 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
   (add-to-list 'desktop-modes-not-to-save 'view-mode)
 #+end_src
 * 游標                                                               :cursor:
-** TODO remove
 #+begin_src emacs-lisp 
   (defvar emacs-normal-cursor-color "white")
   (defvar emacs-normal-cursor-type 'bar)
-  
-  ;; (defvar emacs-read-only-cursor-color "gray")
-  ;; (defvar emacs-read-only-cursor-type 'box)
-  
-  ;; (defvar emacs-overwrite-cursor-color "yellow")
-  ;; (defvar emacs-overwrite-cursor-type 'hbar)
-  
-  ;; (add-hook 'post-command-hook 'coldnew/set-cursor-according-mode)
-  
-  ;; (defun coldnew/set-cursor-according-mode ()
-  ;;   "change cursor shap and color according mode"
-  ;;   (cond
-  ;;    ((string= "Command" coldnew-editor-state)
-  ;;     (setq cursor-type emacs-read-only-cursor-type)
-  ;;     (setq cursor-color emacs-read-only-cursor-color))
-  ;;    (buffer-read-only
-  ;;     (setq cursor-type emacs-read-only-cursor-type)
-  ;;     (setq cursor-color emacs-read-only-cursor-color))
-  ;;    ;; (overwrite-mode
-  ;;    ;;   (set-cursor-color djcb-overwrite-color)
-  ;;    ;;   (setq cursor-type djcb-overwrite-cursor-type))
-  ;;    (t
-  ;;     (setq cursor-type emacs-normal-cursor-type)
-  ;;     (setq cursor-color emacs-normal-cursor-color))))
   
   (add-hook 'post-command-hook 'coldnew/change-cursor)
   
