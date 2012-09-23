@@ -2106,9 +2106,9 @@ auto-complete-mode 的按鍵設定。
 #+begin_src emacs-lisp
   (require 'helm)
   (require 'helm-config)
-;;  (require 'helm-projectile)
+  (require 'helm-projectile)
   (require 'helm-etags+)
-;;  (require 'helm-git)
+  ;;(require 'helm-git)
   (require 'ctags-update)
 #+end_src
 *** TODO Config this
@@ -2123,6 +2123,10 @@ auto-complete-mode 的按鍵設定。
   (helm-dired-bindings 1)
 
   (ctags-update-minor-mode 1)
+#+end_src
+
+#+begin_src emacs-lisp
+
 #+end_src
 *** Function
 #+begin_src emacs-lisp
