@@ -4062,10 +4062,6 @@ emacs 和 cscope 相關的套件蠻多的，xcscope 包含在 cscope 的套件�
   (require 'xcscope+)
   (setq cscope-do-not-update-database t)
 #+end_src
-* Auto Compression Mode
-#+begin_src emacs-lisp
-  (auto-compression-mode 1)
-#+end_src
 * 程式開發                                                         :language:
 各種不同程式語言開發用的設定。
 ** Bash
@@ -6371,6 +6367,14 @@ http://jixiuf.github.com/tags/@Emacs.html
 # Local Variables:
 # mode: org
 # End:
+
+
+
+
+
+
+
+
 
 
 
