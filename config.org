@@ -954,7 +954,7 @@ emacs 套件管理的設定。
            "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
         (end-of-buffer)
         (eval-print-last-sexp)))
-  
+
 ;;  (el-get 'sync)
 #+end_src
 *** 如果 elpa 的 recepies 不存在的話，自動建立他。
@@ -1056,7 +1056,7 @@ emacs 套件管理的設定。
       (setq pkg (symbol-name pkg)))
     (add-to-list 'emacs-packages-list pkg)
     (emacs-packages-write-to-file))
-  
+
   ;; add to hooks
   (add-hook 'el-get-post-install-hooks 'emacs-packages-install)
 #+end_src
@@ -1066,10 +1066,10 @@ emacs 套件管理的設定。
   (defun emacs-packages-remove (pkg)
     (setq emacs-packages-list (remove pkg emacs-packages-list))
     (emacs-packages-write-to-file))
-  
+
   ;; add to hooks
   ;;(add-hook 'el-get-post-remove-hooks 'emacs-packages-remove)
-  
+
   (defadvice el-get-remove (after remove-package activate)
     (emacs-packages-remove package))
 #+end_src
@@ -1088,7 +1088,7 @@ emacs 套件管理的設定。
                                    nil
                                  (read-from-string (buffer-string))
                                  ))))))
-  
+
   ;; read installed packages info from file
   (emacs-packages-read-from-file)
 #+end_src
@@ -1108,7 +1108,7 @@ emacs 套件管理的設定。
       (dolist (p emacs-packages-list)
         (unless (el-get-package-is-installed p)
           (el-get-reinstall p)))))
-  
+
   ;; install missing packages
   (emacs-packages-install-packages)
 #+end_src
@@ -1769,24 +1769,24 @@ emacs-lisp-mode 的 buffer，可以這樣做
   ;; Link
   '(link ((t (:foreground "dodger blue" :underline t))))
   ;; '(link-visited ((t (:foreground "#8b008b" :underline t))))
-  
+
    ;;;; Show Paren
   '(show-paren-match ((t (:background "#E65C00" :foreground "#CDCDCD" :bold t))))
   '(show-paren-mismatch ((t (:background "#0C0C0C" :foreground "#E91303" :bold t))))
-  
+
    ;;;; isearch
   '(isearch ((t (:background "#F57900" :foreground "#7F6BFF"))))
   '(lazy-highlight ((t (:background "#E9B96E" :foreground "#7F6BFF"))))
-  
+
    ;;;; Comint
   '(comint-highlight-prompt ((t (:foreground "#5D9AE4" :bold t))))
-  
+
    ;;;; Hl-line
   '(hl-line ((t :background "#444444")))
-  
+
    ;;;; selection
   '(secondary-selection ((t (:background "#CAE682" :foreground "#0c0c0c"))))
-  
+
    ;;;; Diff
   '(diff-added ((t (:foreground "#95E454"))))
   '(diff-removed ((t (:foreground "#E52210"))))
@@ -1799,23 +1799,23 @@ emacs-lisp-mode 的 buffer，可以這樣做
   '(diff-index ((t (:foreground "yellow"))))
   '(diff-context ((t (:inherit font-lock-comment))))
   '(diff-refine-change ((t (:background "#0B0B0E" :foreground "#DCDCDC"))))
-  
+
    ;;;; cua
   '(cua-rectangle ((t (:background "#444444" :foreground "#DCDCDC"))))
-  
+
    ;;;; iBuffer
   '(ibuffer-deletion ((t (:foreground "#dfaf8f" :weight bold))))
   '(ibuffer-help-buffer ((t (:inherit font-lock-comment))))
   '(ibuffer-marked ((t (:foreground "#f0dfaf" :weight bold))))
   '(ibuffer-special-buffer ((t (:inherit font-lock-doc))))
-  
+
    ;;;; iBuffer-git
   '(ibuffer-git-add-face ((t (:inherit (diff-added)))))
   '(ibuffer-git-del-face ((t (:inherit (diff-removed)))))
-  
+
    ;;;; ECB
   '(ecb-default-highlight-face ((t (:background "#CAE682" :foreground "#0C0C0C" :bold t))))
-  
+
    ;;;;
   ;; '(button ((t (:underline t))))
   ;; '(header-line ((t (:background "#e5e5e5" :foreground "#333333"))))
@@ -2206,7 +2206,7 @@ auto-complete-mode 的按鍵設定。
 ** minibuffer
 *** 設定視窗高度最多為4行高
 #+begin_src emacs-lisp
-  (setq max-mini-window-height         4) 
+  (setq max-mini-window-height         4)
 #+end_src
 *** 按鍵設定
 | 按鍵 | 命令                     | 用途           |
@@ -2307,10 +2307,10 @@ auto-complete-mode 的按鍵設定。
   This looks for strings like \"<e\" on an otherwise empty line and
   expands them.
   Before use this function, you muse setup `major-mode-name'-expand-alist variable.
-  
+
   Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
   in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
-  
+
    (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
     (let* ((l (buffer-substring (point-at-bol) (point)))
            (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
@@ -2322,7 +2322,7 @@ auto-complete-mode 的按鍵設定。
         (backward-delete-char (1+ (length (car-safe a))))
         (insert (cdr-safe a))
         t)))
-  
+
   (defadvice yas-expand (before coldnew/major-mode-expand activate) (coldnew/major-mode-expand))
 #+end_src
 *** Functions
@@ -3055,7 +3055,7 @@ some packages conflict with org-mode
   (when (featurep 'yasnippet)
     (defun yas/org-very-safe-expand ()
       (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
-  
+
     (add-hook 'org-mode-hook
               (lambda ()
                 (make-variable-buffer-local 'yas/trigger-key)
@@ -3583,6 +3583,11 @@ This section contains my editor state
       ;;   ;; Add spaces between Chinese and English character.
        ;; (add-hook 'before-save-hook 'insert-space-between-english-chinese)
 #+end_src
+** 在存檔前清除多餘的空白
+#+begin_src emacs-lisp
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (add-hook 'before-save-hook 'whitespace-cleanup)
+#+end_src
 ** Functions
 #+begin_src emacs-lisp
   (defun indent-file-after-save ()
@@ -3592,14 +3597,6 @@ This section contains my editor state
               '(lambda ()
                  (indent-region (point-min) (point-max) nil)
                  (save-buffer))))
-
-  (defun cleanup-whitespace-before-save ()
-    "Cleanup whitespaces before save to a file."
-    (make-local-variable 'before-save-hook)
-    (add-hook 'before-save-hook
-              '(lambda ()
-                 (whitespace-cleanup)
-                 (delete-trailing-whitespace))))
 
   (defun highlight-additional-keywords ()
     "Highlight additional keywords."
@@ -5678,12 +5675,12 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
   (add-to-list 'desktop-modes-not-to-save 'view-mode)
 #+end_src
 * 游標                                                               :cursor:
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp
   (defvar emacs-normal-cursor-color "white")
   (defvar emacs-normal-cursor-type 'bar)
-  
+
   (add-hook 'post-command-hook 'coldnew/change-cursor)
-  
+
   (defun coldnew/change-cursor ()
     (setq cursor-type emacs-normal-cursor-type)
     (setq cursor-color emacs-normal-cursor-color))
@@ -5856,7 +5853,7 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-r <SPC>") 'point-to-register)
   (global-set-key (kbd "C-r j") 'jump-to-register)
   (global-set-key (kbd "C-r n") 'cua-sequence-rectangle)
-#+end_src  
+#+end_src
 ** Ctrl-c prefix
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
@@ -6094,46 +6091,3 @@ http://jixiuf.github.com/tags/@Emacs.html
 # Local Variables:
 # mode: org
 # End:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
