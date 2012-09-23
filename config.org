@@ -3323,53 +3323,6 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
 #+begin_src emacs-lisp
   (iimage-mode)
 #+end_src
-** Mode
-#+begin_src emacs-lisp :tangle no
-    (define-minor-mode coldnew-editor-local-mode
-      "Minor mode for setting up coldnew-editor in a single bufer."
-      :init-value nil
-      (cond
-       (load-in-progress)                   ; don't enable coldnew-editor in loading buffers
-       (coldnew-editor-local-mode
-        ;; restore the proper value of `major-mode' in Fundamental buffers
-        (when (eq major-mode 'turn-on-coldnew-editor-mode)
-          (setq major-mode 'fundamental-mode))
-
-        ;; determine and enable the initial state
-        ;; (unless coldnew-editor-state
-        ;;   (coldnew-editor-initialize-state)
-        ;;   ;; re-determine the initial state in `post-command-hook' since
-        ;;   ;; the major mode may not have been initialized yet
-        ;;   (add-hook 'post-command-hook #'coldnew-editor-initialize-state t t))
-        ;; TODO:remove
-        (run-hooks 'coldnew-editor-hook)
-        )
-       (t
-        ;; refresh mode-line
-        )))
-
-  (defun turn-on-coldnew-editor-mode (&optional arg)
-    "Turn on coldnew-editor in the current buffer."
-    (interactive)
-    (coldnew-editor-local-mode (or arg 1)))
-
-  (defun turn-off-coldnew-editor-mode (&optional arg)
-    "Turn off coldnew-editor in the current buffer."
-    (interactive)
-    (coldnew-editor-local-mode (or arg -1)))
-
-  (defun coldnew-editor-initialize ()
-    "Enable coldnew-editor in the current buffer, if appropriate.
-    To enable coldnew-editor globally, do `(coldnew-editor-mode 1)'."
-    (unless (minibufferp)
-      (coldnew-editor-local-mode 1)))
-
-    ;;;### autoload
-  (define-global-minor-mode coldnew-editor-mode
-    coldnew-editor-local-mode coldnew-editor-initialize)
-
-#+end_src
-
 ** Variables
 #+begin_src emacs-lisp
   (defvar coldnew-global-keymaps-alist nil
@@ -3384,226 +3337,7 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
   the keymap for MODE.")
 #+end_src
 ** Macro
-#+begin_src emacs-lisp :tangle no
-  (defmacro coldnew/define-local-var (symbol &optional value doc &rest body)
-    "Define SYMBOL as perment buffer local variable, and return SYMBOL.
-  The parameters are the same as for `defvar', but the variable
-  SYMBOL is made `permanent' buffer local."
-    (declare (indent defun)
-             (debug (symbolp &optional form stringp[&rest[keywordp sexp]]def-body))
-             )
-    (let (key arg)
-      (if (keywordp (car-safe body))
-          (setq key (pop body)
-                arg (pop body)))
-      `(progn
-         (defvar ,symbol ,value ,doc)
-         (make-variable-buffer-local ',symbol)
-         ;; collect keywords
-         (if (eq key :permanent)
-             (put ',symbol 'permanent-local arg)))))
-
-  (coldnew/define-local-var aa "sd" :permanent nil)
-#+end_src
-#+begin_src emacs-lisp
-  (defmacro coldnew/define-state (state doc &rest body)
-    "Define an coldnew-editor mode MODE.
-  DOC is a general description and shows up in all docstrings;
-  the first line of the string should be the full name of the state.
-  Then follows one or more optional keywords:
-
-  :tag STRING             Mode line indicator.
-  :message STRING         Echo area message when changing to STATE.
-  :cursor SPEC            Cursor to use in STATE.
-  :entry-hook LIST        Hooks run when changing to STATE.
-  :exit-hook LIST         Hooks run when changing from STATE.
-  :suppress-keymap FLAG   If FLAG is non-nil, disabling bindings to
-                          `self-insert-command'."
-    (declare (indent defun)
-             (debug (&define name
-                             [&optional stringp]
-                             [&rest[keywordp sexp]]
-                             def-body)))
-    (let* (
-           (name (intern (format "%s" state)))
-           (doc (if (or (null doc) (string= doc "")) ""
-                  (format "\n%s" doc)))
-           (toggle (intern (format "coldnew-%s" state)))
-           (major-mode (intern (format "%s-modes" toggle)))
-           (minor-mode (intern (format "%s-minor-mode" toggle)))
-           (keymap (intern (format "%s-map" toggle)))
-           (local (intern (format "%s-local-minor-mode" toggle)))
-           (local-keymap (intern (format "%s-local-map" toggle)))
-           (tag (intern (format "%s-tag" toggle)))
-           (message (intern (format "%s-message" toggle)))
-           (cursor (intern (format "%s-cursor" toggle)))
-           (entry-hook (intern (format "%s-entry-hook" toggle)))
-           (exit-hook (intern (format "%s-exit-hook" toggle)))
-           (predicate (intern (format "%s-p" toggle)))
-           arg cursor-value enable entry-hook-value exit-hook-value
-           input-method key message-value suppress-keymap tag-value)
-      ;; collect keywords
-      (while (keywordp (car-safe body))
-        (setq key (pop body)
-              arg (pop body))
-        (cond
-         ((eq key :tag)
-          (setq tag-value arg))
-         ((eq key :message)
-          (setq message-value arg))
-         ((eq key :cursor)
-          (setq cursor-value arg))
-         ((eq key :entry-hook)
-          (setq entry-hook-value arg)
-          (unless (listp entry-hook-value)
-            (setq entry-hook-value (list entry-hook-value))))
-         ((eq key :exit-hook)
-          (setq exit-hook-value arg)
-          (unless (listp exit-hook-value)
-            (setq exit-hook-value (list entry-hook-value))))
-         ;; ((eq key :enable)
-         ;;  (setq enable arg))
-         ((eq key :input-method)
-          (setq input-method arg))
-         ((eq key :suppress-keymap)
-          (setq suppress-keymap arg))))
-      ;; macro expansion
-      `(progn
-         (defvar ,minor-mode nil
-           ,(format "Non-nil if %s is enabled.
-                              Use the command `%s' to change this variable." name toggle))
-         (defvar ,major-mode nil
-           ,(format "Modes that should come up in %s." name))
-         ;; (defun ,predicate (&optional state)
-         ;;        ,(format "Whether the current `coldnew-editor' state is `%s'.)" name)
-         ;;        )
-         )
-      ))
-
-#+end_src
 ** COMMENT Function
-#+begin_src emacs-lisp :tangle no
-  (defmacro coldnew-define-local-var (symbol &optional initvalue docstring)
-    "Define SYMBOL as permanent buffer local variable, and return SYMBOL.
-  The parameters are the same as for `defvar', but the variable
-  SYMBOL is made permanent buffer local."
-    (declare (indent defun)
-             (debug (symbolp &optional form stringp)))
-    `(progn
-       (defvar ,symbol ,initvalue ,docstring)
-       (make-variable-buffer-local ',symbol)
-       (put ',symbol 'permanent-local t)))
-
-  (coldnew-define-local-var coldnew-editor-state nil
-                            "The current coldnew-editor-state.
-  To change the state, use `coldnew-change-state'
-  or call the state function (e.g., `coldnew-editor-state').")
-
-  (coldnew-define-local-var coldnew-editor-previous-state nil
-                            "The coldnew-editor-state being switched from.")
-
-  (coldnew-define-local-var coldnew-mode-line-tag nil
-                            "Mode-Line indicator for the current state.")
-  (put 'coldnew-mode-line-tag 'risky-local-variable t)
-
-  (defun coldnew-add-to-alist (list-var key val &rest elements)
-    "Add the assocation of KEY and VAL to the value of LIST-VAR.
-  If the list already contains an entry for KEY, update that entry;
-  otherwise add at the end of the list."
-    (let ((tail (symbol-value list-var)))
-      (while (and tail (not (equal (car-safe (car-safe tail)) key)))
-        (setq tail (cdr tail)))
-      (if tail
-          (setcar tail (cons key val))
-        (set list-var (append (symbol-value list-var)
-                              (list (cons key val)))))
-      (if elements
-          (apply #'coldnew-add-to-alist list-var elements)
-        (symbol-value list-var))))
-
-
-
-  (defmacro coldnew/define-keymap (keymap doc &rest body)
-    "Define a keymap KEYMAP listed in `coldnew-mode-map-alist'.
-  That means it will have precedence over regular keymaps.
-
-  DOC is the documentation for the variable. BODY, if specified,
-  is executed after toggling the mode. Optional keyword arguments
-  may be specified before the body code:
-
-  :mode VAR       Mode variable. If unspecified, the variable
-                  is based on the keymap name.
-  :local BOOLEAN  Whether the keymap should be buffer-local, that is,
-                  reinitialized for each buffer.
-  :func BOOLEAN   Create a toggle function even if BODY is empty.
-
-  \(fn KEYMAP DOC[[KEY VAL]...]BODY...)"
-    (declare (indent defun)
-             (debug (&define name
-                             [&optional stringp]
-                             [&rest[keywordp sexp]]
-                             def-body)))
-    (let ((func t)
-          arg intercept key local mode overriding)
-      (while (keywordp (car-safe body))
-        (setq key (pop body)
-              arg (pop body))
-        (cond
-         ((eq key :mode)
-          (setq mode arg))
-         ((eq key :local)
-          (setq local arg))
-         ((eq key :func)
-          (setq func arg))
-         ((eq key :intercept)
-          (setq intercept arg))
-         ((eq key :overriding)
-          (setq overriding arg))))
-      (setq mode (or mode
-                     (intern (replace-regexp-in-string
-                              "\\(?:-\\(?:mode-\\)?\\(?:key\\)?map\\)?$"
-                              "-mode"
-                              (symbol-name keymap)))))
-      `(progn
-         (defvar ,keymap ,(unless local '(make-sparse-keymap)))
-         (unless (get ',keymap 'variable-documentation)
-           (put ',keymap 'variable-documentation ,doc))
-         (defvar ,mode nil)
-         (unless (get ',mode 'variable-documentation)
-           (put ',mode 'variable-documentation ,doc))
-         (make-variable-buffer-local ',mode)
-         (put ',mode 'permanent-local t)
-         (when ,intercept
-           (evil-make-intercept-map ,keymap))
-         (when ,overriding
-           (evil-make-overriding-map ,keymap))
-         ,@(if local
-               `((make-variable-buffer-local ',keymap)
-                 (put ',keymap 'permanent-local t)
-                 (coldnew-add-to-alist 'coldnew-local-keymaps-alist
-                                       ',mode ',keymap))
-             `((coldnew-add-to-alist 'coldnew-global-keymaps-alist
-                                     ',mode ',keymap)))
-         ,(when (or body func)
-            `(defun ,mode (&optional arg)
-               ,@(when doc `(,doc))
-               (interactive)
-               (cond
-                ((numberp arg)
-                 (setq ,mode (> arg 0)))
-                (t
-                 (setq ,mode (not ,mode))))
-               ,@body))
-         ',keymap)))
-
-  (coldnew/define-state test
-    "doc"
-    :tag "e"
-    )
-
-
-
-#+end_src
 #+begin_src emacs-lisp :tangle no
     ;;;; lisp common setting
   (defun coldnew-lisp-common-setting ()
@@ -3829,32 +3563,25 @@ This section contains my editor state
   ;; Enable delete-selection-mode
   (delete-selection-mode t)
 #+end_src
-
 ** hooks
 #+begin_src emacs-lisp :tangle no
-       ;; After save buffer, indent whole file.
-;;       (add-hook 'coldnew-editor-hook 'indent-file-after-save)
-       ;; Before save buffer, cleanup whitespace
-       (add-hook 'coldnew-editor-hook 'cleanup-whitespace-before-save)
-       ;; Enable line-number
-       (require 'linum)
-      ;; (add-hook 'coldnew-editor-hook 'linum-mode)
-       ;; use electric-indent-mode
-       (add-hook 'coldnew-editor-hook 'electric-indent-mode)
-       ;; highlight special keywords like TODO, BUF
-       (add-hook 'coldnew-editor-hook 'highlight-additional-keywords)
-     ;; highlight fontify numbers and constant
-  ;;    (add-hook 'coldnew-editor-hook 'highlight-fontify-numbers)
-      ;; highlight escape char in string
-      (add-hook 'coldnew-editor-hook 'highlight-escape-char)
-    ;;   ;; Add spaces between Chinese and English character.
-     ;; (add-hook 'before-save-hook 'insert-space-between-english-chinese)
-#+end_src
-** TODO conflict
-#+begin_src emacs-lisp
-  ;;   ;; Color nested parentheses, brackets, and braces according to their dept
-  ;;   (require 'rainbow-delimiters)
-  ;;   (add-hook 'coldnew-editor-hook 'rainbow-delimiters-mode)
+         ;; After save buffer, indent whole file.
+  ;;       (add-hook 'coldnew-editor-hook 'indent-file-after-save)
+         ;; Before save buffer, cleanup whitespace
+  (add-hook 'before-save-hook 'cleanup-whitespace-before-save)
+         ;; Enable line-number
+         (require 'linum)
+        ;; (add-hook 'coldnew-editor-hook 'linum-mode)
+         ;; use electric-indent-mode
+         (add-hook 'coldnew-editor-hook 'electric-indent-mode)
+         ;; highlight special keywords like TODO, BUF
+         (add-hook 'coldnew-editor-hook 'highlight-additional-keywords)
+       ;; highlight fontify numbers and constant
+    ;;    (add-hook 'coldnew-editor-hook 'highlight-fontify-numbers)
+        ;; highlight escape char in string
+        (add-hook 'coldnew-editor-hook 'highlight-escape-char)
+      ;;   ;; Add spaces between Chinese and English character.
+       ;; (add-hook 'before-save-hook 'insert-space-between-english-chinese)
 #+end_src
 ** Functions
 #+begin_src emacs-lisp
