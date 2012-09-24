@@ -596,10 +596,6 @@ yasnippet 使用的 snippet路徑
   (defconst emacs-log-dir (concat emacs-dir "log/")
     "log file directory.")
 #+end_src
-
-#+RESULTS:
-: emacs-log-dir
-
 *** 檔案相關設定
 這邊設定了各種檔案的路徑。
 **** emacs-config-file
@@ -958,7 +954,7 @@ emacs 套件管理的設定。
            "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
         (end-of-buffer)
         (eval-print-last-sexp)))
-  
+
 ;;  (el-get 'sync)
 #+end_src
 *** 如果 elpa 的 recepies 不存在的話，自動建立他。
@@ -1008,6 +1004,13 @@ emacs 套件管理的設定。
          :pkgname coldnew/qmake-mode
          :features qmake-mode)
 #+end_src
+***** helm-git
+#+begin_src emacs-lisp
+  (:name helm-git
+         :type github
+         :pkgname maio/helm-git
+         :features helm-git)
+#+end_src
 ***** End of config
 #+begin_src emacs-lisp
   ))
@@ -1024,10 +1027,11 @@ emacs 套件管理的設定。
 *** 設定 elpa 所使用的套件庫
 #+begin_src emacs-lisp
   (setq package-archives
-        '(("ELPA" . "http://tromey.com/elpa/")
+        '(("melpa" . "http://melpa.milkbox.net/packages/")
+          ("ELPA" . "http://tromey.com/elpa/")
           ("gnu" . "http://elpa.gnu.org/packages/")
           ("marmalade" . "http://marmalade-repo.org/packages/")
-          ("melpa" . "http://melpa.milkbox.net/packages/")))
+          ))
 #+end_src
 ** 套件檢查
 為了避免有套件因為 *意外* 而不見，對套件進行檢查，若不存在則進行重新安裝的動作。
@@ -1042,40 +1046,8 @@ emacs 套件管理的設定。
 此檔案用於將 emacs-packags-list 暫存。
 #+begin_src emacs-lisp
   (defvar emacs-packages-file
-    (concat emacs-dir ".packages.el")
+    (concat emacs-dir "installed.el")
     "Define where to store and read the installed packages list.")
-#+end_src
-*** 將套件資訊寫入到檔案
-#+begin_src emacs-lisp
-  (defun emacs-packages-write-to-file ()
-    "Write emasc-packages-list to files."
-    (with-temp-file emacs-packages-file
-      (insert (el-get-print-to-string emacs-packages-list 'pretty))))
-#+end_src
-*** 設定自動更新安裝套件資訊的時間
-**** 當安裝新的套件時，更新套件資訊
-#+begin_src emacs-lisp
-  (defun emacs-packages-install (pkg)
-    (unless (stringp pkg)
-      (setq pkg (symbol-name pkg)))
-    (add-to-list 'emacs-packages-list pkg)
-    (emacs-packages-write-to-file))
-  
-  ;; add to hooks
-  (add-hook 'el-get-post-install-hooks 'emacs-packages-install)
-#+end_src
-**** 當移除套件時，更新套件資訊
-***** TODO el-get-post-remove-hooks 不知道為什麼不能用，所以只好先 advice el-get-remove
-#+begin_src emacs-lisp
-  (defun emacs-packages-remove (pkg)
-    (setq emacs-packages-list (remove pkg emacs-packages-list))
-    (emacs-packages-write-to-file))
-  
-  ;; add to hooks
-  ;;(add-hook 'el-get-post-remove-hooks 'emacs-packages-remove)
-  
-  (defadvice el-get-remove (after remove-package activate)
-    (emacs-packages-remove package))
 #+end_src
 *** 從硬碟中讀取檔案
 #+begin_src emacs-lisp
@@ -1092,9 +1064,41 @@ emacs 套件管理的設定。
                                    nil
                                  (read-from-string (buffer-string))
                                  ))))))
-  
+
   ;; read installed packages info from file
   (emacs-packages-read-from-file)
+#+end_src
+*** 將套件資訊寫入到檔案
+#+begin_src emacs-lisp
+  (defun emacs-packages-write-to-file ()
+    "Write emasc-packages-list to files."
+    (with-temp-file emacs-packages-file
+      (insert (el-get-print-to-string emacs-packages-list 'pretty))))
+#+end_src
+*** 設定自動更新安裝套件資訊的時間
+**** 當安裝新的套件時，更新套件資訊
+#+begin_src emacs-lisp
+  (defun emacs-packages-install (pkg)
+    (unless (stringp pkg)
+      (setq pkg (symbol-name pkg)))
+    (add-to-list 'emacs-packages-list pkg)
+    (emacs-packages-write-to-file))
+
+  ;; add to hooks
+  (add-hook 'el-get-post-install-hooks 'emacs-packages-install)
+#+end_src
+**** 當移除套件時，更新套件資訊
+***** TODO el-get-post-remove-hooks 不知道為什麼不能用，所以只好先 advice el-get-remove
+#+begin_src emacs-lisp
+  (defun emacs-packages-remove (pkg)
+    (setq emacs-packages-list (remove pkg emacs-packages-list))
+    (emacs-packages-write-to-file))
+
+  ;; add to hooks
+  ;;(add-hook 'el-get-post-remove-hooks 'emacs-packages-remove)
+
+  (defadvice el-get-remove (after remove-package activate)
+    (emacs-packages-remove package))
 #+end_src
 *** 檢查套件是否有在 emacs-packages-list 裡
 #+begin_src emacs-lisp
@@ -1112,7 +1116,7 @@ emacs 套件管理的設定。
       (dolist (p emacs-packages-list)
         (unless (el-get-package-is-installed p)
           (el-get-reinstall p)))))
-  
+
   ;; install missing packages
   (emacs-packages-install-packages)
 #+end_src
@@ -1271,7 +1275,6 @@ iimage 是讓 emacs 可以直接顯示圖片的模式。
 #+begin_src emacs-lisp
   (require 'iimage)
 #+end_src
-
 * Advice                                                             :advice:
 advice file
 #+begin_src emacs-lisp
@@ -2097,9 +2100,9 @@ auto-complete-mode 的按鍵設定。
 #+begin_src emacs-lisp
   (require 'helm)
   (require 'helm-config)
-;;  (require 'helm-projectile)
+  (require 'helm-projectile)
   (require 'helm-etags+)
-;;  (require 'helm-git)
+  ;;(require 'helm-git)
   (require 'ctags-update)
 #+end_src
 *** TODO Config this
@@ -2109,11 +2112,12 @@ auto-complete-mode 的按鍵設定。
 
   ;; Enable helm globally
   (helm-mode 1)
-
   ;; Enable dired binding
   (helm-dired-bindings 1)
-
+(helm-dired-bindings 1)
   (ctags-update-minor-mode 1)
+
+(require 'helm-git)
 #+end_src
 *** Function
 #+begin_src emacs-lisp
@@ -2123,30 +2127,51 @@ auto-complete-mode 的按鍵設定。
             (format ": %s" (buffer-substring s e))))
 #+end_src
 *** Commands
+*** 在目前的專案找尋檔案
 #+begin_src emacs-lisp
-  (defun coldnew/helm-filelist ()
-    "Preconfigured `anything' to open files/buffers/bookmarks instantly.
-   This is a replacement for `anything-for-files'.
-   See `anything-c-filelist-file-name' docstring for usage."
+  (defun coldnew/project-find-file ()
     (interactive)
     (helm-other-buffer
-     '(
-       helm-c-source-buffers-list
-       helm-c-source-recentf
-       helm-c-source-ffap-line
-       helm-c-source-ffap-guesser
-       helm-c-source-bookmarks
-       helm-c-source-file-cache
-        helm-c-source-projectile-files-list
-       helm-c-source-files-in-current-dir
-       helm-c-source-locate)
-     "*coldnew/filelist*"))
-  (defun coldnew/helm-occur ()
-    "I don't like highlight when goto lines."
-    (interactive)
-    ;; FIXME: is there more elegent way to make temp face?
-    (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
-    (helm-occur))
+     '(helm-c-source-git-files
+       )
+     "*coldnew/project-file-list"))
+#+end_src
+*** 在目前的專案找尋 buffer
+#+begin_src emacs-lisp
+  (defun coldnew/project-find-buffer ()
+      (interactive)
+      (helm-other-buffer
+       '(helm-c-source-projectile-buffers-list
+         )
+       "*coldnew/project-buffer-list"))
+#+end_src
+
+*** TODO 其他
+#+begin_src emacs-lisp
+    (defun coldnew/helm-filelist ()
+      "Preconfigured `anything' to open files/buffers/bookmarks instantly.
+     This is a replacement for `anything-for-files'.
+     See `anything-c-filelist-file-name' docstring for usage."
+      (interactive)
+      (helm-other-buffer
+       '(helm-c-source-buffers-list
+         helm-c-source-recentf
+         helm-c-source-ffap-line
+         helm-c-source-ffap-guesser
+         helm-c-source-bookmarks
+         helm-c-source-file-cache
+         helm-c-source-projectile-files-list
+         helm-c-source-files-in-current-dir
+         helm-c-source-locate)
+       "*coldnew/filelist*"))
+
+
+    (defun coldnew/helm-occur ()
+      "I don't like highlight when goto lines."
+      (interactive)
+      ;; FIXME: is there more elegent way to make temp face?
+      (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
+      (helm-occur))
 #+end_src
 
 ** lusty-explorer
@@ -2210,7 +2235,7 @@ auto-complete-mode 的按鍵設定。
 ** minibuffer
 *** 設定視窗高度最多為4行高
 #+begin_src emacs-lisp
-  (setq max-mini-window-height         4) 
+  (setq max-mini-window-height         4)
 #+end_src
 *** 按鍵設定
 | 按鍵 | 命令                     | 用途           |
@@ -2311,10 +2336,10 @@ auto-complete-mode 的按鍵設定。
   This looks for strings like \"<e\" on an otherwise empty line and
   expands them.
   Before use this function, you muse setup `major-mode-name'-expand-alist variable.
-  
+
   Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
   in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
-  
+
    (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
     (let* ((l (buffer-substring (point-at-bol) (point)))
            (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
@@ -2326,7 +2351,7 @@ auto-complete-mode 的按鍵設定。
         (backward-delete-char (1+ (length (car-safe a))))
         (insert (cdr-safe a))
         t)))
-  
+
   (defadvice yas-expand (before coldnew/major-mode-expand activate) (coldnew/major-mode-expand))
 #+end_src
 *** Functions
@@ -2923,6 +2948,26 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
                '("S" "#+begin_src sh\n?\n#+end_src"))
 #+end_src
 
+** TODO Image size
+#+begin_example
+
+You can now (from git master) use `org-image-actual-width'.
+
+(setq org-image-actual-width 300)
+  => always resize inline images to 300 pixels
+
+(setq org-image-actual-width '(400))
+  => if there is a #+ATTR.*: width="200", resize to 200,
+     otherwise resize to 400
+
+(setq org-image-actual-width nil)
+  => if there is a #+ATTR.*: width="200", resize to 200,
+     otherwise don't resize
+
+(setq org-image-actual-width t)
+  => Never resize and use original width (the default)
+
+#+end_example
 ** Capture
 #+begin_src emacs-lisp
   (setq org-default-notes-file (concat org-directory "TODO.org"))
@@ -3059,7 +3104,7 @@ some packages conflict with org-mode
   (when (featurep 'yasnippet)
     (defun yas/org-very-safe-expand ()
       (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
-  
+
     (add-hook 'org-mode-hook
               (lambda ()
                 (make-variable-buffer-local 'yas/trigger-key)
@@ -3125,23 +3170,6 @@ some packages conflict with org-mode
               (if point-to-move-to
                   (goto-char point-to-move-to)
                 (show-subtree))))
-#+end_src
-** COMMENT remember the milk ?
-:PROPERTIES:
-:tangle: no
-:END:
-#+begin_src emacs-lisp
-  (require org-feed)
-  (setq org-feed-alist
-        '(("Remember The Milk"
-           "https://www.rememberthemilk.com/rss/jonnay/"
-           "~/org/GTD.org"
-           "Remember The Milk"
-           :template "* TODO %title\n  %a\n "
-           )))
-
-  ;;* rtm feed timer
-  (run-at-time 3600 3600 'org-feed-update-all)
 #+end_src
 ** presentation
 #+begin_src emacs-lisp
@@ -3310,17 +3338,21 @@ some packages conflict with org-mode
 #+end_src
 
 *** TODO 投影片所使用的 html5 配置
+** Blog
+*** variable
+#+begin_src emacs-lisp
+  (defvar coldnew-blog-org-file "~/Workspace/coldnew-blog/src/blog.org"
+    "coldnew's blog file")
+#+end_src
+*** update function
+#+begin_src emacs-lisp
+  (defun coldnew/update-blog ()
+    (interactive)
+    (org-publish-blog coldnew-blog-org-file)
+    (firefox-refresh))
+#+end_src
 * Editor
 try to define my editor-mode , some function  or macros copy from evil :)
-** electric-pair-mode
-#+begin_src emacs-lisp
-  (electric-pair-mode 1)
-  ;; setting for auto-close brackets for electric-pair-mode regardless of current major mode syntax table
-  (setq electric-pair-pairs '(
-                              (?\" . ?\")
-                              (?\{ . ?\})
-                              ) )
-#+end_src
 ** 替中文字和英文字中間加入空格
 mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間加入空格。
 #+begin_src emacs-lisp
@@ -3332,293 +3364,11 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
 #+begin_src emacs-lisp
   (iimage-mode)
 #+end_src
-** Mode
-#+begin_src emacs-lisp :tangle no
-    (define-minor-mode coldnew-editor-local-mode
-      "Minor mode for setting up coldnew-editor in a single bufer."
-      :init-value nil
-      (cond
-       (load-in-progress)                   ; don't enable coldnew-editor in loading buffers
-       (coldnew-editor-local-mode
-        ;; restore the proper value of `major-mode' in Fundamental buffers
-        (when (eq major-mode 'turn-on-coldnew-editor-mode)
-          (setq major-mode 'fundamental-mode))
-
-        ;; determine and enable the initial state
-        ;; (unless coldnew-editor-state
-        ;;   (coldnew-editor-initialize-state)
-        ;;   ;; re-determine the initial state in `post-command-hook' since
-        ;;   ;; the major mode may not have been initialized yet
-        ;;   (add-hook 'post-command-hook #'coldnew-editor-initialize-state t t))
-        ;; TODO:remove
-        (run-hooks 'coldnew-editor-hook)
-        )
-       (t
-        ;; refresh mode-line
-        )))
-
-  (defun turn-on-coldnew-editor-mode (&optional arg)
-    "Turn on coldnew-editor in the current buffer."
-    (interactive)
-    (coldnew-editor-local-mode (or arg 1)))
-
-  (defun turn-off-coldnew-editor-mode (&optional arg)
-    "Turn off coldnew-editor in the current buffer."
-    (interactive)
-    (coldnew-editor-local-mode (or arg -1)))
-
-  (defun coldnew-editor-initialize ()
-    "Enable coldnew-editor in the current buffer, if appropriate.
-    To enable coldnew-editor globally, do `(coldnew-editor-mode 1)'."
-    (unless (minibufferp)
-      (coldnew-editor-local-mode 1)))
-
-    ;;;### autoload
-  (define-global-minor-mode coldnew-editor-mode
-    coldnew-editor-local-mode coldnew-editor-initialize)
-
-#+end_src
-
-** Variables
-#+begin_src emacs-lisp
-  (defvar coldnew-global-keymaps-alist nil
-    "Association list of keymap variables.
-  Entries have the form (MODE . KEYMAP), where KEYMAP
-  is the variable containing the keymap for MODE.")
-
-  (defvar coldnew-local-keymaps-alist nil
-    "Association list of keymap variables that must be
-  reinitialized in each buffer. Entries have the form
-  \(MODE . KEYMAP), where KEYMAP is the variable containing
-  the keymap for MODE.")
-#+end_src
-** Macro
-#+begin_src emacs-lisp :tangle no
-  (defmacro coldnew/define-local-var (symbol &optional value doc &rest body)
-    "Define SYMBOL as perment buffer local variable, and return SYMBOL.
-  The parameters are the same as for `defvar', but the variable
-  SYMBOL is made `permanent' buffer local."
-    (declare (indent defun)
-             (debug (symbolp &optional form stringp[&rest[keywordp sexp]]def-body))
-             )
-    (let (key arg)
-      (if (keywordp (car-safe body))
-          (setq key (pop body)
-                arg (pop body)))
-      `(progn
-         (defvar ,symbol ,value ,doc)
-         (make-variable-buffer-local ',symbol)
-         ;; collect keywords
-         (if (eq key :permanent)
-             (put ',symbol 'permanent-local arg)))))
-
-  (coldnew/define-local-var aa "sd" :permanent nil)
-#+end_src
-#+begin_src emacs-lisp
-  (defmacro coldnew/define-state (state doc &rest body)
-    "Define an coldnew-editor mode MODE.
-  DOC is a general description and shows up in all docstrings;
-  the first line of the string should be the full name of the state.
-  Then follows one or more optional keywords:
-
-  :tag STRING             Mode line indicator.
-  :message STRING         Echo area message when changing to STATE.
-  :cursor SPEC            Cursor to use in STATE.
-  :entry-hook LIST        Hooks run when changing to STATE.
-  :exit-hook LIST         Hooks run when changing from STATE.
-  :suppress-keymap FLAG   If FLAG is non-nil, disabling bindings to
-                          `self-insert-command'."
-    (declare (indent defun)
-             (debug (&define name
-                             [&optional stringp]
-                             [&rest[keywordp sexp]]
-                             def-body)))
-    (let* (
-           (name (intern (format "%s" state)))
-           (doc (if (or (null doc) (string= doc "")) ""
-                  (format "\n%s" doc)))
-           (toggle (intern (format "coldnew-%s" state)))
-           (major-mode (intern (format "%s-modes" toggle)))
-           (minor-mode (intern (format "%s-minor-mode" toggle)))
-           (keymap (intern (format "%s-map" toggle)))
-           (local (intern (format "%s-local-minor-mode" toggle)))
-           (local-keymap (intern (format "%s-local-map" toggle)))
-           (tag (intern (format "%s-tag" toggle)))
-           (message (intern (format "%s-message" toggle)))
-           (cursor (intern (format "%s-cursor" toggle)))
-           (entry-hook (intern (format "%s-entry-hook" toggle)))
-           (exit-hook (intern (format "%s-exit-hook" toggle)))
-           (predicate (intern (format "%s-p" toggle)))
-           arg cursor-value enable entry-hook-value exit-hook-value
-           input-method key message-value suppress-keymap tag-value)
-      ;; collect keywords
-      (while (keywordp (car-safe body))
-        (setq key (pop body)
-              arg (pop body))
-        (cond
-         ((eq key :tag)
-          (setq tag-value arg))
-         ((eq key :message)
-          (setq message-value arg))
-         ((eq key :cursor)
-          (setq cursor-value arg))
-         ((eq key :entry-hook)
-          (setq entry-hook-value arg)
-          (unless (listp entry-hook-value)
-            (setq entry-hook-value (list entry-hook-value))))
-         ((eq key :exit-hook)
-          (setq exit-hook-value arg)
-          (unless (listp exit-hook-value)
-            (setq exit-hook-value (list entry-hook-value))))
-         ;; ((eq key :enable)
-         ;;  (setq enable arg))
-         ((eq key :input-method)
-          (setq input-method arg))
-         ((eq key :suppress-keymap)
-          (setq suppress-keymap arg))))
-      ;; macro expansion
-      `(progn
-         (defvar ,minor-mode nil
-           ,(format "Non-nil if %s is enabled.
-                              Use the command `%s' to change this variable." name toggle))
-         (defvar ,major-mode nil
-           ,(format "Modes that should come up in %s." name))
-         ;; (defun ,predicate (&optional state)
-         ;;        ,(format "Whether the current `coldnew-editor' state is `%s'.)" name)
-         ;;        )
-         )
-      ))
-
-#+end_src
 ** COMMENT Function
 #+begin_src emacs-lisp :tangle no
-  (defmacro coldnew-define-local-var (symbol &optional initvalue docstring)
-    "Define SYMBOL as permanent buffer local variable, and return SYMBOL.
-  The parameters are the same as for `defvar', but the variable
-  SYMBOL is made permanent buffer local."
-    (declare (indent defun)
-             (debug (symbolp &optional form stringp)))
-    `(progn
-       (defvar ,symbol ,initvalue ,docstring)
-       (make-variable-buffer-local ',symbol)
-       (put ',symbol 'permanent-local t)))
-
-  (coldnew-define-local-var coldnew-editor-state nil
-                            "The current coldnew-editor-state.
-  To change the state, use `coldnew-change-state'
-  or call the state function (e.g., `coldnew-editor-state').")
-
-  (coldnew-define-local-var coldnew-editor-previous-state nil
-                            "The coldnew-editor-state being switched from.")
-
-  (coldnew-define-local-var coldnew-mode-line-tag nil
-                            "Mode-Line indicator for the current state.")
-  (put 'coldnew-mode-line-tag 'risky-local-variable t)
-
-  (defun coldnew-add-to-alist (list-var key val &rest elements)
-    "Add the assocation of KEY and VAL to the value of LIST-VAR.
-  If the list already contains an entry for KEY, update that entry;
-  otherwise add at the end of the list."
-    (let ((tail (symbol-value list-var)))
-      (while (and tail (not (equal (car-safe (car-safe tail)) key)))
-        (setq tail (cdr tail)))
-      (if tail
-          (setcar tail (cons key val))
-        (set list-var (append (symbol-value list-var)
-                              (list (cons key val)))))
-      (if elements
-          (apply #'coldnew-add-to-alist list-var elements)
-        (symbol-value list-var))))
-
-
-
-  (defmacro coldnew/define-keymap (keymap doc &rest body)
-    "Define a keymap KEYMAP listed in `coldnew-mode-map-alist'.
-  That means it will have precedence over regular keymaps.
-
-  DOC is the documentation for the variable. BODY, if specified,
-  is executed after toggling the mode. Optional keyword arguments
-  may be specified before the body code:
-
-  :mode VAR       Mode variable. If unspecified, the variable
-                  is based on the keymap name.
-  :local BOOLEAN  Whether the keymap should be buffer-local, that is,
-                  reinitialized for each buffer.
-  :func BOOLEAN   Create a toggle function even if BODY is empty.
-
-  \(fn KEYMAP DOC[[KEY VAL]...]BODY...)"
-    (declare (indent defun)
-             (debug (&define name
-                             [&optional stringp]
-                             [&rest[keywordp sexp]]
-                             def-body)))
-    (let ((func t)
-          arg intercept key local mode overriding)
-      (while (keywordp (car-safe body))
-        (setq key (pop body)
-              arg (pop body))
-        (cond
-         ((eq key :mode)
-          (setq mode arg))
-         ((eq key :local)
-          (setq local arg))
-         ((eq key :func)
-          (setq func arg))
-         ((eq key :intercept)
-          (setq intercept arg))
-         ((eq key :overriding)
-          (setq overriding arg))))
-      (setq mode (or mode
-                     (intern (replace-regexp-in-string
-                              "\\(?:-\\(?:mode-\\)?\\(?:key\\)?map\\)?$"
-                              "-mode"
-                              (symbol-name keymap)))))
-      `(progn
-         (defvar ,keymap ,(unless local '(make-sparse-keymap)))
-         (unless (get ',keymap 'variable-documentation)
-           (put ',keymap 'variable-documentation ,doc))
-         (defvar ,mode nil)
-         (unless (get ',mode 'variable-documentation)
-           (put ',mode 'variable-documentation ,doc))
-         (make-variable-buffer-local ',mode)
-         (put ',mode 'permanent-local t)
-         (when ,intercept
-           (evil-make-intercept-map ,keymap))
-         (when ,overriding
-           (evil-make-overriding-map ,keymap))
-         ,@(if local
-               `((make-variable-buffer-local ',keymap)
-                 (put ',keymap 'permanent-local t)
-                 (coldnew-add-to-alist 'coldnew-local-keymaps-alist
-                                       ',mode ',keymap))
-             `((coldnew-add-to-alist 'coldnew-global-keymaps-alist
-                                     ',mode ',keymap)))
-         ,(when (or body func)
-            `(defun ,mode (&optional arg)
-               ,@(when doc `(,doc))
-               (interactive)
-               (cond
-                ((numberp arg)
-                 (setq ,mode (> arg 0)))
-                (t
-                 (setq ,mode (not ,mode))))
-               ,@body))
-         ',keymap)))
-
-  (coldnew/define-state test
-    "doc"
-    :tag "e"
-    )
-
-
-
-#+end_src
-#+begin_src emacs-lisp :tangle no
-    ;;;; lisp common setting
   (defun coldnew-lisp-common-setting ()
     "coldnew's common setting for lisp-like mode"
     ;; Use coldnew's editor mode
-    (coldnew-editor-mode)
     ;; Use Greek character lambda insteda of string
     (turn-on-pretty-lambda-mode)
     (require 'rainbow-delimiters)
@@ -3629,8 +3379,6 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
   ;;;; cc-mode common setting
   (defun coldnew-cc-mode-common-setting ()
     "coldnew's common setting for cc-mode"
-    ;; Use coldnew's editor mode
-    (coldnew-editor-mode)
     ;; enable doxygen
     ;;  (doxymacs-mode t)
     ;;  (doxymacs-font-lock)
@@ -3652,178 +3400,40 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
     )
 
 #+end_src
-This section contains my editor state
-#+begin_src emacs-lisp :tangle no
-  (defvar coldnew-editor-hook nil
-    "Hooks for coldnew-editor-mode.")
-
-  (defvar coldnew-editor-state "Emacs"
-    "default editor mode is Emacs-mode")
-
-  (defvar coldnew-editor-map
-    (let ((map (make-sparse-keymap)))
-      map)
-    "Keymap for coldnew-editor-mode.")
-
-  (define-minor-mode coldnew-editor-mode
-    "Minor mode for coldnew's editor."
-    :init-value t
-    :lighter " coldnew-editor"
-    :keymap coldnew-editor-map
-    (run-hooks 'coldnew-editor-hook))
-
-  (defun coldnew/disable-mode-according-state ()
-    (cond
-     ((string= "View"  coldnew-editor-state) (view-mode -1))
-     ((string= "Command"  coldnew-editor-state) (coldnew/command-mode -1))
-     ))
-
-  (defun coldnew/switch-to-emacs-mode ()
-    (interactive)
-    ;; disable other state according mode
-    (coldnew/disable-mode-according-state)
-    (setq coldnew-editor-state "Emacs"))
-
-  (defun coldnew/switch-to-command-mode ()
-    (interactive)
-    ;; disable other state according mode
-    (coldnew/disable-mode-according-state)
-    (setq coldnew-editor-state "Command")
-    (coldnew/command-mode 1))
-
-  (defvar coldnew/command-mode-map
-    (let ((map (make-sparse-keymap)))
-      (suppress-keymap map)
-      ;; simulate vim keys
-      (define-key map "i" 'coldnew/switch-to-emacs-mode)
-      (define-key map "%" 'match-paren)
-      (define-key map "." 'repeat)
-      (define-key map "*" 'vjo-forward-current-word-keep-offset)
-      (define-key map "#" 'vjo-backward-current-word-keep-offset)
-      ;; my keymap
-      (define-key map "C" 'capitalize-word-backward)
-      (define-key map "c" 'capitalize-word-backward)
-      (define-key map "L" 'downcase-word-backward)
-      (define-key map "U" 'upcase-word-backward)
-      (define-key map "Z" 'zap-up-to-char-backward)
-      (define-key map "e" 'ecb-toggle-ecb-windows)
-      ;; (define-key map "a" 'backward-sentence)
-      ;; (define-key map "e" 'forward-sentence)
-      (define-key map "g" 'linum-ace-jump)
-      (define-key map "o" 'org-ido-switchb)
-      (define-key map "q" 'quoted-insert)
-      (define-key map "r" 'org-capture)
-      (define-key map "w" 'kill-region)
-      ;; (define-key map "n" 'windmove-down)
-      ;; (define-key map "p" 'windmove-up)
-      ;; (define-key map "f" 'windmove-right)
-      ;; (define-key map "b" 'windmove-left)
-      (define-key map "b" 'ido-switch-buffer)
-      (define-key map "\C-m" 'bm-toggle)
-      (define-key map "\C-n" 'bm-next)
-      (define-key map "\C-p" 'bm-previous)
-      (define-key map "x" 'helm-M-x)
-      (define-key map "y" 'yank)
-      (define-key map "z" 'zap-up-to-char)
-      ;; FIXME: I think this must change to vc-next-action
-      (define-key map "v" 'egg-next-action)
-      (define-key map "h" 'coldnew/helm-filelist)
-      (define-key map (kbd "<SPC>") 'ace-jump-mode)
-      (define-key map (kbd "(")  '(lambda () (interactive) (delete-between-pair ?\()))
-      (define-key map (kbd "\"") '(lambda () (interactive) (delete-between-pair ?\")))
-      (define-key map (kbd "[")  '(lambda () (interactive) (delete-between-pair ?\[)))
-      (define-key map (kbd "{")  '(lambda () (interactive) (delete-between-pair ?\{)))
-      (define-key map (kbd "\'") '(lambda () (interactive) (delete-between-pair ?\')))
-      ;; elscreen
-      ;; TODO: move to coldnew-elscreen
-      (define-key map "t0" 'elscreen-jump-0)
-      (define-key map "t9" 'elscreen-jump-9)
-      (define-key map "tc" 'elscreen-create)
-      (define-key map "td" 'elscreen-kill)
-      (define-key map "tn" 'elscreen-next)
-      (define-key map "tp" 'elscreen-previous)
-      map)
-    "Keymap for coldnew-editor-Mode.")
-
-  (define-minor-mode coldnew/command-mode
-    "Minor mode like vi's normal mode"
-    :init-value nil
-    :global t
-    :lighter " "
-    :keymap coldnew/command-mode-map
-    (if coldnew/command-mode
-        (progn
-          ;; use key-chord
-          (setq input-method-function 'key-chord-input-method))
-      (progn
-        ;; disable keychord
-        (setq input-method-function nil))))
-
-  (add-hook 'post-command-hook 'coldnew/set-mode-according-state)
-
-  (defun coldnew/toggle-state ()
-    (interactive)
-    (cond
-     ((string= "Command" coldnew-editor-state) (coldnew/switch-to-emacs-mode))
-     ((string= "Emacs"   coldnew-editor-state) (coldnew/switch-to-command-mode)) )
-    )
-
-  (defvar coldnew/buffer-state-alist
-    '((eshell-mode . "Emacs")
-      (term-mode   . "Emacs")
-      (ibuffer-mode . "Emacs")
-      ))
-
-  (defun coldnew/set-mode-according-state ()
-    (let* ((mode major-mode)
-           (state (cdr-safe (assoc mode coldnew/buffer-state-alist))))
-      (if (minibufferp) (setq state "Emacs"))
-      (cond
-       ((string= "Command" state) (coldnew/switch-to-command-mode))
-       ((string= "Emacs"   state) (coldnew/switch-to-emacs-mode)) )
-      ))
-
-  ;; FIXME: change to my own code one day
-  (defun coldnew/evil-delay (condition form hook &optional append local name)
-    "Execute FORM when CONDITION becomes true, checking with HOOK.
-  NAME specifies the name of the entry added to HOOK. If APPEND is
-  non-nil, the entry is appended to the hook. If LOCAL is non-nil,
-  the buffer-local value of HOOK is modified."
-    (if (and (not (booleanp condition)) (eval condition))
-        (eval form)
-      (let* ((name (or name (format "evil-delay-form-in-%s" hook)))
-             (fun (make-symbol name))
-             (condition (or condition t)))
-        (fset fun `(lambda (&rest args)
-                     (when ,condition
-                       (remove-hook ',hook #',fun ',local)
-                       ,form)))
-        (put fun 'permanent-local-hook t)
-        (add-hook hook fun append local))))
-
-  (defun coldnew/execute-in-command-mode ()
-    "Execute the next command in Command mode."
-    (interactive)
-    (coldnew/evil-delay '(not (eq this-command #'coldnew/execute-in-command-mode))
-                        `(progn (coldnew/switch-to-emacs-mode))
-                        'post-command-hook)
-    (coldnew/switch-to-command-mode)
-    )
-
-  (global-set-key (kbd "C-o") 'coldnew/execute-in-command-mode)
-  (global-set-key (kbd "C-j") 'linum-ace-jump)
-
+** 不使用 TAB 進行縮排
+#+begin_src emacs-lisp
+  (setq indent-tabs-mode nil)
+#+end_src
+** 設定 TAB 的寬度為 8
+#+begin_src emacs-lisp
+  (setq tab-width 8)
+#+end_src
+** 設定每行之間的間格為 4
+#+begin_src emacs-lisp
+  (setq line-spacing 4)
+#+end_src
+** 在檔案的最後一行加入一空白行
+#+begin_src emacs-lisp
+  (setq require-final-newline t)
+#+end_src
+** 在存檔前清除多餘的空白
+#+begin_src emacs-lisp
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (add-hook 'before-save-hook 'whitespace-cleanup)
+#+end_src
+** TODO remember
+*** electric-pair-mode
+#+begin_src emacs-lisp
+  (electric-pair-mode 1)
+  ;; setting for auto-close brackets for electric-pair-mode regardless of current major mode syntax table
+  (setq electric-pair-pairs '(
+                              (?\" . ?\")
+                              (?\{ . ?\})
+                              ) )
 #+end_src
 #+begin_src emacs-lisp
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Initial Editor Setting
-  ;;;; ---------------------------------------------------------------------------
-  (setq indent-tabs-mode nil )          ; don't use tabs to indent
-  (setq tab-width          8 )          ; default tab-width is 8
-  (setq line-spacing       4 )          ; Additional space between lines
   (setq fill-column      100 ) ; column beyond which automatic line-wrapping shold happen
-  (setq kill-ring-max    300 ) ; Maximum lenght of kill-ring
-  (setq require-final-newline  t ) ; Auto add a newline at the end of line
+  (setq kill-ring-max    3000 ) ; Maximum lenght of kill-ring
   (setq next-line-add-newlines t ) ;
   (setq shift-select-mode      t ) ; Enable shift-select mode
 
@@ -3838,33 +3448,27 @@ This section contains my editor state
   ;; Enable delete-selection-mode
   (delete-selection-mode t)
 #+end_src
-
 ** hooks
 #+begin_src emacs-lisp :tangle no
-       ;; After save buffer, indent whole file.
-;;       (add-hook 'coldnew-editor-hook 'indent-file-after-save)
-       ;; Before save buffer, cleanup whitespace
-       (add-hook 'coldnew-editor-hook 'cleanup-whitespace-before-save)
-       ;; Enable line-number
-       (require 'linum)
-      ;; (add-hook 'coldnew-editor-hook 'linum-mode)
-       ;; use electric-indent-mode
-       (add-hook 'coldnew-editor-hook 'electric-indent-mode)
-       ;; highlight special keywords like TODO, BUF
-       (add-hook 'coldnew-editor-hook 'highlight-additional-keywords)
-     ;; highlight fontify numbers and constant
-  ;;    (add-hook 'coldnew-editor-hook 'highlight-fontify-numbers)
-      ;; highlight escape char in string
-      (add-hook 'coldnew-editor-hook 'highlight-escape-char)
-    ;;   ;; Add spaces between Chinese and English character.
-     ;; (add-hook 'before-save-hook 'insert-space-between-english-chinese)
+         ;; After save buffer, indent whole file.
+  ;;       (add-hook 'coldnew-editor-hook 'indent-file-after-save)
+         ;; Before save buffer, cleanup whitespace
+;;  (add-hook 'before-save-hook 'cleanup-whitespace-before-save)
+         ;; Enable line-number
+         (require 'linum)
+        ;; (add-hook 'coldnew-editor-hook 'linum-mode)
+         ;; use electric-indent-mode
+         (add-hook 'coldnew-editor-hook 'electric-indent-mode)
+         ;; highlight special keywords like TODO, BUF
+         (add-hook 'coldnew-editor-hook 'highlight-additional-keywords)
+       ;; highlight fontify numbers and constant
+    ;;    (add-hook 'coldnew-editor-hook 'highlight-fontify-numbers)
+        ;; highlight escape char in string
+        (add-hook 'coldnew-editor-hook 'highlight-escape-char)
+      ;;   ;; Add spaces between Chinese and English character.
+       ;; (add-hook 'before-save-hook 'insert-space-between-english-chinese)
 #+end_src
-** TODO conflict
-#+begin_src emacs-lisp
-  ;;   ;; Color nested parentheses, brackets, and braces according to their dept
-  ;;   (require 'rainbow-delimiters)
-  ;;   (add-hook 'coldnew-editor-hook 'rainbow-delimiters-mode)
-#+end_src
+
 ** Functions
 #+begin_src emacs-lisp
   (defun indent-file-after-save ()
@@ -3874,14 +3478,6 @@ This section contains my editor state
               '(lambda ()
                  (indent-region (point-min) (point-max) nil)
                  (save-buffer))))
-
-  (defun cleanup-whitespace-before-save ()
-    "Cleanup whitespaces before save to a file."
-    (make-local-variable 'before-save-hook)
-    (add-hook 'before-save-hook
-              '(lambda ()
-                 (whitespace-cleanup)
-                 (delete-trailing-whitespace))))
 
   (defun highlight-additional-keywords ()
     "Highlight additional keywords."
@@ -4071,10 +3667,6 @@ emacs 和 cscope 相關的套件蠻多的，xcscope 包含在 cscope 的套件�
   (require 'xcscope+)
   (setq cscope-do-not-update-database t)
 #+end_src
-* Auto Compression Mode
-#+begin_src emacs-lisp
-  (auto-compression-mode 1)
-#+end_src
 * 程式開發                                                         :language:
 各種不同程式語言開發用的設定。
 ** Bash
@@ -4233,12 +3825,12 @@ C-s s I             对目录中的相关文件建立列表并进行索引
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.hpp$" . c++-mode))
   (add-to-list 'auto-mode-alist '("\\.cpp$" . c++-mode))
-  (add-to-list 'magic-mode-alist
-               `(,(lambda ()
-                    (and (string= (file-name-extension buffer-file-name) "h")
-                         (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
-                                            magic-mode-regexp-match-limit t)))
-                 . c++-mode))
+  ;; (add-to-list 'magic-mode-alist
+  ;;              `(,(lambda ()
+  ;;                   (and (string= (file-name-extension buffer-file-name) "h")
+  ;;                        (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
+  ;;                                           magic-mode-regexp-match-limit t)))
+  ;;                . c++-mode))
 #+end_src
 *** Config
 **** Codinf Style
@@ -4352,12 +3944,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
   (define-key c++-mode-map (kbd "C-c I") 'cscope-create-list-of-files-to-index)
  ;; remember to remove
   (define-key c++-mode-map (kbd "C-c f") 'cscope-find-this-file)
-#+end_src
-** CSS
-*** 設定 CSS 的副檔名與對應的模式
-#+begin_src emacs-lisp
-  (require 'css-mode)
-  (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
 #+end_src
 ** Common Lisp
 *** 設定 Common Lisp 檔案的副檔名與對應的模式
@@ -4511,43 +4097,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+begin_src emacs-lisp
 ))
 #+end_src
-** JavaScript
-*** 設定 javascript 的副檔名與對應的模式
-使用 js2-mode 替代原本系統內建的 js-mode。
-#+begin_src emacs-lisp
-  (require 'js2-mode)
-  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-#+end_src
-*** 自動補全
-#+begin_src emacs-lisp
-  (add-hook 'js-mode-hook 'ac-javascript-mode-setup)
-  (defun ac-javascript-mode-setup ()
-    "auto-complete settings for javascript-mode"
-    (setq ac-sources
-          '(ac-source-dictionary
-            ac-source-filename
-            ac-source-files-in-current-dir
-            ac-source-words-in-same-mode-buffers
-            )))
-#+end_src
-*** REPL 設定
-使用 js-comint 來設定 REPL 模式。
-**** 設定起始位置
-#+begin_src emacs-lisp
-  (when (require 'js-comint nil 'noerror)
-#+end_src
-**** 設定 REPL 程式為 node.js
-#+begin_src emacs-lisp
-    (setq inferior-js-program-command "node")
-#+end_src
-**** 在 REPL 啟用 ANSI 色彩
-#+begin_src emacs-lisp
-;;  (add-hook 'js-mode-hook 'ansi-color-for-comint-mode-on)
-#+end_src
-**** 設定終止位置
-#+begin_src emacs-lisp
-    )
-#+end_src
 ** LaTex
 ** qml
 *** 設定 qml 的副檔名與對應的模式
@@ -4647,6 +4196,72 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                  (auto-complete-mode)
                  ))
 #+end_src
+* 網頁開發
+** 網頁開發基本設定
+*** 讓 emacs 能與 firefox 溝通
+在讓 emacs 和 firefox 能互相溝通之前，兩邊都必須先裝上 moz-repl 這個外掛。
+可以在 firefox 上的 moz-repl 選單，選擇 Active on startup 來確保當 firefox
+啟動時會同時啟動 moz-repl
+#+begin_src emacs-lisp
+  (require 'moz)
+#+end_src
+*** 令 firefox 更新目前的頁面
+#+begin_src emacs-lisp
+  (defun firefox-refresh ()
+    "Refresh the firefox browser"
+    (interactive)
+    (comint-send-string (inferior-moz-process)
+                        "BrowserReload();"))
+#+end_src
+** CSS
+*** 設定 CSS 的副檔名與對應的模式
+#+begin_src emacs-lisp
+  (require 'css-mode)
+  (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
+#+end_src
+** Less-CSS
+*** 設定 LESS-CSS 的副檔名與對應的模式
+#+begin_src emacs-lisp
+  (require 'less-css-mode)
+  (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
+#+end_src
+** JavaScript
+*** 設定 javascript 的副檔名與對應的模式
+使用 js2-mode 替代原本系統內建的 js-mode。
+#+begin_src emacs-lisp
+  (require 'js2-mode)
+  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+#+end_src
+*** 自動補全
+#+begin_src emacs-lisp
+  (add-hook 'js-mode-hook 'ac-javascript-mode-setup)
+  (defun ac-javascript-mode-setup ()
+    "auto-complete settings for javascript-mode"
+    (setq ac-sources
+          '(ac-source-dictionary
+            ac-source-filename
+            ac-source-files-in-current-dir
+            ac-source-words-in-same-mode-buffers
+            )))
+#+end_src
+*** REPL 設定
+使用 js-comint 來設定 REPL 模式。
+**** 設定起始位置
+#+begin_src emacs-lisp
+  (when (require 'js-comint nil 'noerror)
+#+end_src
+**** 設定 REPL 程式為 node.js
+#+begin_src emacs-lisp
+    (setq inferior-js-program-command "node")
+#+end_src
+**** 在 REPL 啟用 ANSI 色彩
+#+begin_src emacs-lisp
+;;  (add-hook 'js-mode-hook 'ansi-color-for-comint-mode-on)
+#+end_src
+**** 設定終止位置
+#+begin_src emacs-lisp
+    )
+#+end_src
 * Mode Line                                                        :modeline:
 ** TODO 分類
 #+begin_src emacs-lisp
@@ -4688,7 +4303,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                              (propertize "**" 'face 'mode-line-modified-face))
                             (t "--")))
                      "   "
-                     (:eval (coldnew-editor-mode-string))
+                   ;;  (:eval (coldnew-editor-mode-string))
                      "   "
                      ;;              (:eval (mode-line-state))
                      mode-line-buffer-identification
@@ -5411,10 +5026,10 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 #+begin_src emacs-lisp
   (setq erc-autojoin-channels-alist
         '(;; english channel
-          (".*\\.freenode.net" "#emacs" "#lisp" "#clojure" "##linux" "#gentoo")
+          (".*\\.freenode.net" "#emacs" "#clojure" "##linux" "#gentoo")
           ;; Chinese channel
           (".*\\.freenode.net" "#emacs.tw" "#tossug")
-          (".*\\debian.org" "#dot")
+          (".*\\.oftc.net" "#dot")
           ))
 #+end_src
 **** 關閉部份訊息顯示
@@ -5704,6 +5319,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
   ;; if use magit, do not use vc-git to handle Git interface.
   ;; (when (featurep 'magit)
   ;;   (setq vc-handled-backends (remq 'Git vc-handled-backends)))
+  (define-key magit-mode-map (kbd "C-g") 'magit-quit-window)
 #+end_src
 **** Magit 的使用
 每個 magit buffer
@@ -5958,37 +5574,12 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
   (add-to-list 'desktop-modes-not-to-save 'view-mode)
 #+end_src
 * 游標                                                               :cursor:
-** TODO remove
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp
   (defvar emacs-normal-cursor-color "white")
   (defvar emacs-normal-cursor-type 'bar)
-  
-  ;; (defvar emacs-read-only-cursor-color "gray")
-  ;; (defvar emacs-read-only-cursor-type 'box)
-  
-  ;; (defvar emacs-overwrite-cursor-color "yellow")
-  ;; (defvar emacs-overwrite-cursor-type 'hbar)
-  
-  ;; (add-hook 'post-command-hook 'coldnew/set-cursor-according-mode)
-  
-  ;; (defun coldnew/set-cursor-according-mode ()
-  ;;   "change cursor shap and color according mode"
-  ;;   (cond
-  ;;    ((string= "Command" coldnew-editor-state)
-  ;;     (setq cursor-type emacs-read-only-cursor-type)
-  ;;     (setq cursor-color emacs-read-only-cursor-color))
-  ;;    (buffer-read-only
-  ;;     (setq cursor-type emacs-read-only-cursor-type)
-  ;;     (setq cursor-color emacs-read-only-cursor-color))
-  ;;    ;; (overwrite-mode
-  ;;    ;;   (set-cursor-color djcb-overwrite-color)
-  ;;    ;;   (setq cursor-type djcb-overwrite-cursor-type))
-  ;;    (t
-  ;;     (setq cursor-type emacs-normal-cursor-type)
-  ;;     (setq cursor-color emacs-normal-cursor-color))))
-  
+
   (add-hook 'post-command-hook 'coldnew/change-cursor)
-  
+
   (defun coldnew/change-cursor ()
     (setq cursor-type emacs-normal-cursor-type)
     (setq cursor-color emacs-normal-cursor-color))
@@ -6020,6 +5611,16 @@ Function key 設置常用的命令。
 ** 在目前行加上彩色條
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x l") 'hl-line-mode)
+#+end_src
+** 專案相關的按鍵
+| 按鍵    | 命令                        | 用途                     |
+|---------+-----------------------------+--------------------------|
+| C-x p f | coldnew/project-find-file   | 在目前的專案裏面找尋檔案 |
+| C-x p b | coldnew/project-find-buffer | 找尋目前專案的緩衝區     |
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x p f") 'coldnew/project-find-file)
+  (global-set-key (kbd "C-x p b") 'coldnew/project-find-buffer)
 #+end_src
 ** Ctrl Prefix
 *** Default Emacs keybinding
@@ -6161,7 +5762,7 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-r <SPC>") 'point-to-register)
   (global-set-key (kbd "C-r j") 'jump-to-register)
   (global-set-key (kbd "C-r n") 'cua-sequence-rectangle)
-#+end_src  
+#+end_src
 ** Ctrl-c prefix
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
@@ -6186,10 +5787,14 @@ Function key 設置常用的命令。
 | C-x f | windmove-right | 移動到右邊的窗口 |
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-x n") 'windmove-down)
-  (global-set-key (kbd "C-x f") 'windmove-right)
-  (global-set-key (kbd "C-x b") 'windmove-left)
-  (global-set-key (kbd "C-x p") 'windmove-up)
+;;  (global-set-key (kbd "C-x n") 'windmove-down)
+;;  (global-set-key (kbd "C-x f") 'windmove-right)
+;;  (global-set-key (kbd "C-x b") 'windmove-left)
+;;  (global-set-key (kbd "C-x p") 'windmove-up)
+  (global-set-key (kbd "s-n") 'windmove-down)
+  (global-set-key (kbd "s-p") 'windmove-up)
+  (global-set-key (kbd "s-b") 'windmove-left)
+  (global-set-key (kbd "s-f") 'windmove-right)
 #+end_src
 *** TODO 刪除區域或是一行
 #+begin_src emacs-lisp
@@ -6252,13 +5857,7 @@ Function key 設置常用的命令。
 ;;  (global-set-key (kbd "C-0 m") 'ecb-goto-window-methods)
 ; ; (global-set-key (kbd "C-0 l") 'ecb-toggle-layout)
 #+end_src
-*** Window move
-#+begin_src emacs-lisp
-;;  (global-set-key (kbd "M-j n") 'windmove-down)
-;;  (global-set-key (kbd "M-j p") 'windmove-up)
-;;  (global-set-key (kbd "M-j b") 'windmove-left)
-;;  (global-set-key (kbd "M-j f") 'windmove-right)
-#+end_src
+
 ** Shift prefix
 #+begin_src emacs-lisp
   (global-set-key[(shift return)] 'insert-empty-line)
@@ -6393,33 +5992,11 @@ http://jixiuf.github.com/tags/@Emacs.html
             ;; add for encoding
             (concat "&oe=" "utf8")))
 #+end_src
+* Blog
+#+begin_src emacs-lisp
+(require 'o-blog)
+#+end_src
 * Local File Variable
 # Local Variables:
 # mode: org
 # End:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
