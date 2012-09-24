@@ -1049,6 +1049,25 @@ emacs 套件管理的設定。
     (concat emacs-dir "installed.el")
     "Define where to store and read the installed packages list.")
 #+end_src
+*** 從硬碟中讀取檔案
+#+begin_src emacs-lisp
+  (defun emacs-packages-read-from-file ()
+    "Read from emacs-packages-file and set the contents to emacs-packages-list."
+    (when (file-exists-p emacs-packages-file)
+      (setq emacs-packages-list
+            (car
+             (with-temp-buffer emacs-packages-file
+                               (insert-file-contents-literally emacs-packages-file)
+                               ;; if emacs-packages-file is an empty file
+                               ;; return nil, else return buffer-string
+                               (if (= 0 (buffer-size (current-buffer)))
+                                   nil
+                                 (read-from-string (buffer-string))
+                                 ))))))
+
+  ;; read installed packages info from file
+  (emacs-packages-read-from-file)
+#+end_src
 *** 將套件資訊寫入到檔案
 #+begin_src emacs-lisp
   (defun emacs-packages-write-to-file ()
@@ -1080,25 +1099,6 @@ emacs 套件管理的設定。
 
   (defadvice el-get-remove (after remove-package activate)
     (emacs-packages-remove package))
-#+end_src
-*** 從硬碟中讀取檔案
-#+begin_src emacs-lisp
-  (defun emacs-packages-read-from-file ()
-    "Read from emacs-packages-file and set the contents to emacs-packages-list."
-    (when (file-exists-p emacs-packages-file)
-      (setq emacs-packages-list
-            (car
-             (with-temp-buffer emacs-packages-file
-                               (insert-file-contents-literally emacs-packages-file)
-                               ;; if emacs-packages-file is an empty file
-                               ;; return nil, else return buffer-string
-                               (if (= 0 (buffer-size (current-buffer)))
-                                   nil
-                                 (read-from-string (buffer-string))
-                                 ))))))
-
-  ;; read installed packages info from file
-  (emacs-packages-read-from-file)
 #+end_src
 *** 檢查套件是否有在 emacs-packages-list 裡
 #+begin_src emacs-lisp
