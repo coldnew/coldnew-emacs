@@ -697,7 +697,7 @@ emacs 個人配置的檔案，也就是這個檔案。
 **** 1280x800
 #+begin_src emacs-lisp
   (defvar display-1280x800-p   (and (= (display-pixel-width) 1280)
-                                    (= (display-pixel-height) 800))
+				    (= (display-pixel-height) 800))
     "Return nil if current display's resolution is not 1280x800")
 #+end_src
 
@@ -707,7 +707,7 @@ emacs 個人配置的檔案，也就是這個檔案。
 **** 1280x1024
 #+begin_src emacs-lisp
   (defvar display-1280x1024-p  (and (= (display-pixel-width) 1280)
-                                    (= (display-pixel-height) 1024))
+				    (= (display-pixel-height) 1024))
     "Return nil if current display's resolution is not 1280x1024")
 #+end_src
 
@@ -717,7 +717,7 @@ emacs 個人配置的檔案，也就是這個檔案。
 **** 1920x1080
 #+begin_src emacs-lisp
   (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920)
-                                    (= (display-pixel-height) 1080))
+				    (= (display-pixel-height) 1080))
     "Return nil if current display's resolution is not 1920x1080")
 #+end_src
 
@@ -741,11 +741,11 @@ emacs 個人配置的檔案，也就是這個檔案。
 #+begin_src emacs-lisp
   ;; TODO: make it work on every platform, now only has Linux support
   (setenv "PATH"
-          (concat
-           emacs-bin-dir ":"
-           "~/.lein/bin" ":"
-           (getenv "PATH")
-           ))
+	  (concat
+	   emacs-bin-dir ":"
+	   "~/.lein/bin" ":"
+	   (getenv "PATH")
+	   ))
 
   (setq exec-path (cons emacs-bin-dir exec-path))
 #+end_src
@@ -773,9 +773,9 @@ emacs 個人配置的檔案，也就是這個檔案。
 
   ;; only disable capslock and make it as control
   (cond ((eq window-system 'x)
-         ;; make caps lock a control key
-         (make-caps-as-ctrl)
-         (change-mouse-to-left)))
+	 ;; make caps lock a control key
+	 (make-caps-as-ctrl)
+	 (change-mouse-to-left)))
 #+end_src
 
 *** TODO User Testing
@@ -855,45 +855,45 @@ emacs 個人配置的檔案，也就是這個檔案。
 #+begin_src emacs-lisp
   (display-1920x1080-p
    (setq default-frame-alist
-         (append (list
-                  '(width  . 134)
-                  '(height . 45)
-                  '(top    . 90)
-                  '(left   . 500))
-                 default-frame-alist)))
+	 (append (list
+		  '(width  . 134)
+		  '(height . 45)
+		  '(top    . 90)
+		  '(left   . 500))
+		 default-frame-alist)))
 #+end_src
 *** 1280x1024
 #+begin_src emacs-lisp
   (display-1280x1024-p
    (setq default-frame-alist
-         (append (list
-                  '(width  . 114)
-                  '(height . 40)
-                  '(top    . 90)
-                  '(left   . 300))
-                 default-frame-alist)))
+	 (append (list
+		  '(width  . 114)
+		  '(height . 40)
+		  '(top    . 90)
+		  '(left   . 300))
+		 default-frame-alist)))
 #+end_src
 *** 1280x800
 #+begin_src emacs-lisp
   (display-1280x800-p
    (setq default-frame-alist
-         (append (list
-                  '(width  . 114)
-                  '(height . 40)
-                  '(top    . 90)
-                  '(left   . 300))
-                 default-frame-alist)))
+	 (append (list
+		  '(width  . 114)
+		  '(height . 40)
+		  '(top    . 90)
+		  '(left   . 300))
+		 default-frame-alist)))
 #+end_src
 *** 預設情況
 #+begin_src emacs-lisp
   (t
    (setq default-frame-alist
-         (append (list
-                  '(width  . 100)
-                  '(height . 40)
-                  '(top    . 90)
-                  '(left   . 100))
-                 default-frame-alist)))
+	 (append (list
+		  '(width  . 100)
+		  '(height . 40)
+		  '(top    . 90)
+		  '(left   . 100))
+		 default-frame-alist)))
 #+end_src
 *** 設定終止位置
 #+begin_src emacs-lisp
@@ -950,10 +950,10 @@ emacs 套件管理的設定。
     (unless (require 'el-get nil t)
       (setq el-get-install-branch "master")
       (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-        (end-of-buffer)
-        (eval-print-last-sexp)))
+	  (url-retrieve-synchronously
+	   "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+	(end-of-buffer)
+	(eval-print-last-sexp)))
 
 ;;  (el-get 'sync)
 #+end_src
@@ -979,37 +979,37 @@ emacs 套件管理的設定。
 ***** TODO powerline remember to remove
 #+begin_src emacs-lisp
   (:name powerline
-         :type github
-         :pkgname "jonathanchu/emacs-powerline")
+	 :type github
+	 :pkgname "jonathanchu/emacs-powerline")
 #+end_src
 ***** lusty-emacs
 使用最新版本的 lusty-explorer
 #+begin_src emacs-lisp
   (:name lusty-explorer
-         :type github
-         :pkgname sjbach/lusty-emacs
-         :description "LustyExplorer is a fast and responsive way to manage files and buffers")
+	 :type github
+	 :pkgname sjbach/lusty-emacs
+	 :description "LustyExplorer is a fast and responsive way to manage files and buffers")
 #+end_src
 ***** qml-mode
 #+begin_src emacs-lisp
   (:name qml-mode
-         :type github
-         :pkgname coldnew/qml-mode
-         :features qml-mode)
+	 :type github
+	 :pkgname coldnew/qml-mode
+	 :features qml-mode)
 #+end_src
 ***** qmake-mode
 #+begin_src emacs-lisp
   (:name qmake-mode
-         :type github
-         :pkgname coldnew/qmake-mode
-         :features qmake-mode)
+	 :type github
+	 :pkgname coldnew/qmake-mode
+	 :features qmake-mode)
 #+end_src
 ***** helm-git
 #+begin_src emacs-lisp
   (:name helm-git
-         :type github
-         :pkgname maio/helm-git
-         :features helm-git)
+	 :type github
+	 :pkgname maio/helm-git
+	 :features helm-git)
 #+end_src
 ***** End of config
 #+begin_src emacs-lisp
@@ -1027,11 +1027,11 @@ emacs 套件管理的設定。
 *** 設定 elpa 所使用的套件庫
 #+begin_src emacs-lisp
   (setq package-archives
-        '(("melpa" . "http://melpa.milkbox.net/packages/")
-          ("ELPA" . "http://tromey.com/elpa/")
-          ("gnu" . "http://elpa.gnu.org/packages/")
-          ("marmalade" . "http://marmalade-repo.org/packages/")
-          ))
+	'(("melpa" . "http://melpa.milkbox.net/packages/")
+	  ("ELPA" . "http://tromey.com/elpa/")
+	  ("gnu" . "http://elpa.gnu.org/packages/")
+	  ("marmalade" . "http://marmalade-repo.org/packages/")
+	  ))
 #+end_src
 ** 套件檢查
 為了避免有套件因為 *意外* 而不見，對套件進行檢查，若不存在則進行重新安裝的動作。
@@ -1055,15 +1055,15 @@ emacs 套件管理的設定。
     "Read from emacs-packages-file and set the contents to emacs-packages-list."
     (when (file-exists-p emacs-packages-file)
       (setq emacs-packages-list
-            (car
-             (with-temp-buffer emacs-packages-file
-                               (insert-file-contents-literally emacs-packages-file)
-                               ;; if emacs-packages-file is an empty file
-                               ;; return nil, else return buffer-string
-                               (if (= 0 (buffer-size (current-buffer)))
-                                   nil
-                                 (read-from-string (buffer-string))
-                                 ))))))
+	    (car
+	     (with-temp-buffer emacs-packages-file
+			       (insert-file-contents-literally emacs-packages-file)
+			       ;; if emacs-packages-file is an empty file
+			       ;; return nil, else return buffer-string
+			       (if (= 0 (buffer-size (current-buffer)))
+				   nil
+				 (read-from-string (buffer-string))
+				 ))))))
 
   ;; read installed packages info from file
   (emacs-packages-read-from-file)
@@ -1104,8 +1104,8 @@ emacs 套件管理的設定。
 #+begin_src emacs-lisp
   (defun emacs-packages-installed-p ()
     (loop for p in emacs-packages-list
-          when (not (el-get-package-is-installed p)) do (return nil)
-          finally (return t)))
+	  when (not (el-get-package-is-installed p)) do (return nil)
+	  finally (return t)))
 #+end_src
 *** 當發現有套件存在 emacs-package-list 裡面，但是卻被 emacs-packages-installed-p 回報為
 此套件不存在時，重新安裝此套件。
@@ -1114,8 +1114,8 @@ emacs 套件管理的設定。
     (unless (emacs-packages-installed-p)
       ;; install missing packages
       (dolist (p emacs-packages-list)
-        (unless (el-get-package-is-installed p)
-          (el-get-reinstall p)))))
+	(unless (el-get-package-is-installed p)
+	  (el-get-reinstall p)))))
 
   ;; install missing packages
   (emacs-packages-install-packages)
@@ -1137,40 +1137,40 @@ comment 只是用來註釋用，並不會解析裏面的東西。
 #+begin_src emacs-lisp
   (defmacro -> (x &optional form &rest more)
     (cond ((not (null more))
-           `(-> (-> ,x ,form) ,@more))
-          ((not (null form))
-           (if (sequencep form)
-               `(,(first form) ,x ,@(rest form))
-             (list form x)))
-          (t x)))
+	   `(-> (-> ,x ,form) ,@more))
+	  ((not (null form))
+	   (if (sequencep form)
+	       `(,(first form) ,x ,@(rest form))
+	     (list form x)))
+	  (t x)))
 #+end_src
 *** ->>
 #+begin_src emacs-lisp
   (defmacro ->> (x form &rest more)
     (cond ((not (null more)) `(->> (->> ,x ,form) ,@more))
-          (t (if (sequencep form)
-                 `(,(first form) ,@(rest form) ,x)
-               (list form x)))))
+	  (t (if (sequencep form)
+		 `(,(first form) ,@(rest form) ,x)
+	       (list form x)))))
 #+end_src
 *** -?>
 #+begin_src emacs-lisp
   (defmacro -?> (x form &rest more)
     (cond ((not (null more)) `(-?> (-?> ,x ,form) ,@more))
-          (t (if (sequencep form)
-                 `(if (null ,x) nil
-                    (,(first form) ,x ,@(rest form)))
-               `(if (null ,x) nil
-                  ,(list form x))))))
+	  (t (if (sequencep form)
+		 `(if (null ,x) nil
+		    (,(first form) ,x ,@(rest form)))
+	       `(if (null ,x) nil
+		  ,(list form x))))))
 #+end_src
 *** -?>>
 #+begin_src emacs-lisp
   (defmacro -?>> (x form &rest more)
     (cond ((not (null more)) `(-?>> (-?>> ,x ,form) ,@more))
-          (t (if (sequencep form)
-                 `(if (null ,x) nil
-                    (,(first form) ,@(rest form) ,x))
-               `(if (null ,x) nil
-                  ,(list form x))))))
+	  (t (if (sequencep form)
+		 `(if (null ,x) nil
+		    (,(first form) ,@(rest form) ,x))
+	       `(if (null ,x) nil
+		  ,(list form x))))))
 #+end_src
 *** if-not
 #+begin_src emacs-lisp
@@ -1186,7 +1186,7 @@ comment 只是用來註釋用，並不會解析裏面的東西。
   (defmacro define (what &rest rest)
     "Scheme-like alias to defvar/defun"
     (if (consp what)
-        `(defun  ,(car what) ,(cdr what) ,@rest)
+	`(defun  ,(car what) ,(cdr what) ,@rest)
       `(defvar ,what ,@rest)))
   ;; Syntaxes:
   ;;  (define varname opt-defaultvalue "opt-docscring"
@@ -1209,27 +1209,27 @@ comment 只是用來註釋用，並不會解析裏面的東西。
   (defmacro defclosure (name arglist docstring bindings &rest body)
     "Define NAME as a closure.
 
-          DOCSTRING is *not* optional.
-          BINDINGS is an alist of lexical bindings.
-          The definition is (lambda ARGLIST DOCSTRING BODY...)."
+	  DOCSTRING is *not* optional.
+	  BINDINGS is an alist of lexical bindings.
+	  The definition is (lambda ARGLIST DOCSTRING BODY...)."
     (declare (indent defun))
     `(lexical-let (,@bindings)
        (defun ,name (,@arglist)
-         ,docstring
-         ,@body)))
+	 ,docstring
+	 ,@body)))
 #+end_src
 *** safe
 ref: http://curiousprogrammer.wordpress.com/2009/06/08/error-handling-in-emacs-lisp/
 #+begin_src emacs-lisp
   (defmacro safe-wrap (fn &rest clean-up)
     `(unwind-protect
-         (let (retval)
-           (condition-case ex
-               (setq retval (progn ,fn))
-             ('error
-              (message (format "Caught exception: [%s]" ex))
-              (setq retval (cons 'exception (list ex)))))
-           retval)
+	 (let (retval)
+	   (condition-case ex
+	       (setq retval (progn ,fn))
+	     ('error
+	      (message (format "Caught exception: [%s]" ex))
+	      (setq retval (cons 'exception (list ex)))))
+	   retval)
        ,@clean-up))
 #+end_src
 * Depends
@@ -1282,7 +1282,7 @@ advice file
     "Before exit emacs, kill config.el which is generate by config.org."
     (let ((file-name (expand-file-name (concat emacs-dir "config.el"))))
       (if (file-exists-p file-name)
-          (delete-file file-name nil))
+	  (delete-file file-name nil))
       ad-do-it))
 #+end_src
 * Function                                                         :function:
@@ -1307,8 +1307,8 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
   (defun flatten (structure)
     "Flatten the nesting in an arbitrary list of values."
     (cond ((null structure) nil)
-          ((atom structure) `(,structure))
-          (t (mapcan #'flatten structure))))
+	  ((atom structure) `(,structure))
+	  (t (mapcan #'flatten structure))))
 #+end_src
 *** List to string
 將一個 list 變成字串回傳。
@@ -1316,10 +1316,10 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
   (defun list-to-string (char-list)
     "RETURN: A new string containing the characters in char-list."
     (let ((result (make-string (length char-list) 0))
-          (i 0))
+	  (i 0))
       (dolist (char char-list)
-        (aset result i char)
-        (setq i (1+ i)))
+	(aset result i char)
+	(setq i (1+ i)))
       result))
 #+end_src
 ** Search
@@ -1348,12 +1348,12 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     "Find the first FILE in DIRECTORY or it's parents.
   If file does not exist return nil."
     (let ((directory (or directory
-                         (file-name-directory (buffer-file-name))
-                         (pwd))))
+			 (file-name-directory (buffer-file-name))
+			 (pwd))))
       (if (file-exists-p (expand-file-name file directory))
-          (expand-file-name file directory)
-        (unless (string= "/" directory)
-          (coldnew/recursive-find-file file (expand-file-name ".." directory))))))
+	  (expand-file-name file directory)
+	(unless (string= "/" directory)
+	  (coldnew/recursive-find-file file (expand-file-name ".." directory))))))
 #+end_src
 ** Testing
 測試用的 function，和測試用的變數很像，但是他允許參數的輸入。
@@ -1363,7 +1363,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
   (defun font-exist-p (fontname)
     "test if this font is exist or not."
     (if (not (x-list-fonts fontname))
-        nil t))
+	nil t))
 #+end_src
 ** File
 *** filesize
@@ -1381,7 +1381,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     "Convert buffer file from dos file to unix file."
     (let* (current-buf (current-buffer))
       (if (not (eq current-buf buf))
-          (switch-to-buffer buf))
+	  (switch-to-buffer buf))
       (goto-char(point-min))
       (while (search-forward "\r" nil t) (replace-match ""))))
 #+end_src
@@ -1391,7 +1391,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     "Convert buffer file from unix file to dos file."
     (let* (current-buf (current-buffer))
       (if (not (eq current-buf buf))
-          (switch-to-buffer buf))
+	  (switch-to-buffer buf))
       (goto-char(point-min))
       (while (search-forward "\n" nil t) (replace-match "\r\n"))))
 #+end_src
@@ -1401,8 +1401,8 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     "Convert file to string in buffer with quote."
     (when (file-readable-p file)
       (with-temp-buffer
-        (insert-file-contents file)
-        (buffer-string))))
+	(insert-file-contents file)
+	(buffer-string))))
 #+end_src
 *** 十進位轉換成十六進位
 #+begin_src emacs-lisp
@@ -1410,11 +1410,11 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     "Convert decimal to hexdecimal number."
     (let ((hexstr))
       (if (stringp decimal)
-          (setq decimal (string-to-number decimal 16)))
+	  (setq decimal (string-to-number decimal 16)))
       (cond
        ;; Use #x as hex prefix (elisp, ....)
        ((or (eq major-mode 'emacs-lisp-mode)
-            (eq major-mode 'lisp-interaction-mode)) (setq hexstr "#x"))
+	    (eq major-mode 'lisp-interaction-mode)) (setq hexstr "#x"))
        ;; Use # as hex prefix (CSS, ....)
        ((eq major-mode 'css-mode) (setq hexstr "#"))
        ;; otherwise use 0x as hexprefix (C, Perl...)
@@ -1426,15 +1426,15 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
   (defun hex->dec (hex)
     "Convert hexdecimal number or string to digit-number."
     (let ((case-fold-search nil)
-          (hex-regexp (rx (or
-                           ;; elisp
-                           (group bol "#x")
-                           ;; C perl
-                           (group bol "0x")
-                           ;; CSS
-                           (group bol "#")))))
+	  (hex-regexp (rx (or
+			   ;; elisp
+			   (group bol "#x")
+			   ;; C perl
+			   (group bol "0x")
+			   ;; CSS
+			   (group bol "#")))))
       (if (not (stringp hex))
-          (setq hex (symbol-name hex)))
+	  (setq hex (symbol-name hex)))
       (string-to-number
        (replace-regexp-in-string hex-regexp "" hex)
        16)))
@@ -1446,12 +1446,12 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     "Implement the quicksort algorithm."
     (if (null lst) nil
       (let* ((spl (car lst))
-             (rst (cdr lst))
-             (smalp (lambda (x)
-                      (< x spl))))
-        (append (quicksort (remove-if-not smalp rst))
-                (list spl)
-                (quicksort (remove-if smalp rst))))))
+	     (rst (cdr lst))
+	     (smalp (lambda (x)
+		      (< x spl))))
+	(append (quicksort (remove-if-not smalp rst))
+		(list spl)
+		(quicksort (remove-if smalp rst))))))
 #+end_src
 ** Buffer
 *** get-buffers-matching-mode
@@ -1466,9 +1466,9 @@ emacs-lisp-mode 的 buffer，可以這樣做
     "Returns a list of buffers where their major-mode is equal to MODE"
     (let ((buffer-mode-matches '()))
       (dolist (buf (buffer-list))
-        (with-current-buffer buf
-          (if (eq mode major-mode)
-              (add-to-list 'buffer-mode-matches buf))))
+	(with-current-buffer buf
+	  (if (eq mode major-mode)
+	      (add-to-list 'buffer-mode-matches buf))))
       buffer-mode-matches))
 #+end_src
 *** show-buffer-major-mode
@@ -1498,7 +1498,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
   (defun current-date-time ()
     "return current date in `%Y-%m-%d' format, ex:`2012-04-25'."
     (let ((system-time-locale "en_US")
-          (format "%Y-%m-%d"))
+	  (format "%Y-%m-%d"))
       (format-time-string "%Y-%m-%d")))
 
   (defun day-of-week (year month day)
@@ -1509,8 +1509,8 @@ emacs-lisp-mode 的 buffer，可以這樣做
   (defun day-of-week-in-string (year month day)
     "Return the day of the week as day name."
     (let* ((day-names '("Sunday" "Monday" "Tuesday" "Wednesday"
-                        "Thursday" "Friday" "Saturday"))
-           (day-index (nth 6 (decode-time (encode-time 0 0 0 day month year)))))
+			"Thursday" "Friday" "Saturday"))
+	   (day-index (nth 6 (decode-time (encode-time 0 0 0 day month year)))))
       (nth day-index day-names)))
 #+end_src
 ** other
@@ -1519,17 +1519,17 @@ emacs-lisp-mode 的 buffer，可以這樣做
     "Like define-key but the key arg is a list that should be mapped over.
      For example: (map-define-key '(a b c d) 'function-name)."
     (mapc (lambda (k) (define-key mode-map k fname))
-          keylist))
+	  keylist))
 
   (defun emacs-process-p (pid)
     "If pid is the process ID of an emacs process, return t, else nil.
   Also returns nil if pid is nil."
     (when pid
       (let ((attributes (process-attributes pid)) (cmd))
-        (dolist (attr attributes)
-          (if (string= "comm" (car attr))
-              (setq cmd (cdr attr))))
-        (if (and cmd (or (string= "emacs" cmd) (string= "emacs.exe" cmd))) t))))
+	(dolist (attr attributes)
+	  (if (string= "comm" (car attr))
+	      (setq cmd (cdr attr))))
+	(if (and cmd (or (string= "emacs" cmd) (string= "emacs.exe" cmd))) t))))
 
   ;;;; ---------------------------------------------------------------------------
   ;;;; Region
@@ -1539,23 +1539,23 @@ emacs-lisp-mode 的 buffer，可以這樣做
   'match'.  The 'dir' controls direction, if nil or 'forwards then
   go forwards, if 'backwards go backwards."
     (let ((start (point))
-          (end nil))
+	  (end nil))
 
       (transient-mark-mode 1)    ;; Transient mark
       (push-mark)                ;; Mark the start, where point is now
 
       (if (or (null dir)
-              (equalp 'forwards dir))
+	      (equalp 'forwards dir))
 
-          ;; Move forwards to the next match then back off
-          (progn
-            (search-forward match)
-            (backward-char))
+	  ;; Move forwards to the next match then back off
+	  (progn
+	    (search-forward match)
+	    (backward-char))
 
-        ;; Or search backwards and move forwards
-        (progn
-          (search-backward match)
-          (forward-char)))
+	;; Or search backwards and move forwards
+	(progn
+	  (search-backward match)
+	  (forward-char)))
 
       ;; Store, then hilight
       (setq end (point))
@@ -1563,9 +1563,9 @@ emacs-lisp-mode 的 buffer，可以這樣做
 
       ;; And return, swap the start/end depending on direction we're going
       (if (or (null dir)
-              (equalp 'forwards dir))
-          (list start end)
-        (list end start))))
+	      (equalp 'forwards dir))
+	  (list start end)
+	(list end start))))
 #+end_src
 * 字體                                                                 :font:
 ** 英文字體
@@ -1593,29 +1593,29 @@ emacs-lisp-mode 的 buffer，可以這樣做
 ** 在圖形介面下使用我所設定的字體
 #+begin_src emacs-lisp
   (cond ((eq window-system 'x)
-         ;; Setting English Fonts
-         (if (font-exist-p emacs-english-font)
-             (set-frame-font (format "%s-%s" (eval emacs-english-font) (eval emacs-english-font-size))))
+	 ;; Setting English Fonts
+	 (if (font-exist-p emacs-english-font)
+	     (set-frame-font (format "%s-%s" (eval emacs-english-font) (eval emacs-english-font-size))))
 
-         ;; Setting Chinese Fonts
-         (if (font-exist-p emacs-cjk-font)
-             (set-fontset-font (frame-parameter nil 'font)
-                               'han (format "%s-%s" (eval emacs-cjk-font) (eval emacs-cjk-font-size))))
+	 ;; Setting Chinese Fonts
+	 (if (font-exist-p emacs-cjk-font)
+	     (set-fontset-font (frame-parameter nil 'font)
+			       'han (format "%s-%s" (eval emacs-cjk-font) (eval emacs-cjk-font-size))))
 
-         ;; Setting Symbol Fonts
-         (if (font-exist-p emacs-symbol-font)
-             (set-fontset-font (frame-parameter nil 'font)
-                               'symbol (format "%s-%s" (eval emacs-symbol-font) (eval emacs-symbol-font-size))))
-         ))
+	 ;; Setting Symbol Fonts
+	 (if (font-exist-p emacs-symbol-font)
+	     (set-fontset-font (frame-parameter nil 'font)
+			       'symbol (format "%s-%s" (eval emacs-symbol-font) (eval emacs-symbol-font-size))))
+	 ))
 #+end_src
 ** 設定顯示字體時的格式
 使用 *list-face-display* 可以看到所有的 face 顏色與字體。
 #+begin_src emacs-lisp
   (setq list-faces-sample-text
-        (concat
-         "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz\n"
-         "11223344556677889900       壹貳參肆伍陸柒捌玖零"
-         ))
+	(concat
+	 "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz\n"
+	 "11223344556677889900       壹貳參肆伍陸柒捌玖零"
+	 ))
 #+end_src
 * 佈景主題                                                            :theme:
 佈景主題的設置，包含我自訂的佈景主題以及路徑。
@@ -1681,9 +1681,9 @@ emacs-lisp-mode 的 buffer，可以這樣做
 *** Mode Line
 #+begin_src emacs-lisp
   '(mode-line ((t (:background "#0C0C0C" :foreground "#B1C3D4"
-                               :box (:line-width 2 :color "#B184CB")))))
+			       :box (:line-width 2 :color "#B184CB")))))
   '(mode-line-inactive ((t (:background "#343434" :foreground "#7B8793"
-                                        :box (:line-width 2 :color "#565968")))))
+					:box (:line-width 2 :color "#565968")))))
   '(mode-line-buffer-id ((t (:foreground "#CDCDCD":bold t :italic t))))
 #+end_src
 *** fringe
@@ -1941,10 +1941,10 @@ auto-complete-mode 的按鍵設定。
 #+begin_src emacs-lisp
   (defmacro elscreen-create-automatically (ad-do-it)
     (` (if (not (elscreen-one-screen-p))
-           (, ad-do-it)
-         (elscreen-create)
-         (elscreen-notify-screen-modification 'force-immediately)
-         (elscreen-message "New screen is automatically created"))))
+	   (, ad-do-it)
+	 (elscreen-create)
+	 (elscreen-notify-screen-modification 'force-immediately)
+	 (elscreen-message "New screen is automatically created"))))
 
   (defadvice elscreen-next (around elscreen-create-automatically activate)
     (elscreen-create-automatically ad-do-it))
@@ -1970,14 +1970,14 @@ auto-complete-mode 的按鍵設定。
 將 eshell 的 prompt 設定成和 bash 一樣，也就是　 username@system-name。
 #+begin_src emacs-lisp
   (setq eshell-prompt-function
-        '(lambda ()
-           (concat
-            user-login-name "@" system-name " "
-            (if (search (directory-file-name (expand-file-name (getenv "HOME"))) (eshell/pwd))
-                (replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
-              (eshell/pwd))
-            (if (= (user-uid) 0) " # " " $ ")
-            )))
+	'(lambda ()
+	   (concat
+	    user-login-name "@" system-name " "
+	    (if (search (directory-file-name (expand-file-name (getenv "HOME"))) (eshell/pwd))
+		(replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
+	      (eshell/pwd))
+	    (if (= (user-uid) 0) " # " " $ ")
+	    )))
 #+end_src
 #+begin_src emacs-lisp
   ;;; change history file path
@@ -2007,10 +2007,10 @@ auto-complete-mode 的按鍵設定。
   ;; use helm to complete esehll
   (when (featurep 'helm)
     (add-hook 'eshell-mode-hook
-              #'(lambda ()
-                  (define-key eshell-mode-map
-                    [remap pcomplete]
-                    'helm-esh-pcomplete))))
+	      #'(lambda ()
+		  (define-key eshell-mode-map
+		    [remap pcomplete]
+		    'helm-esh-pcomplete))))
 
 
   ;; define ac-source for eshell-pcomplete
@@ -2022,16 +2022,16 @@ auto-complete-mode 的按鍵設定。
   (defun ac-eshell-mode-setup ()
     "auto-complete settings for eshell-mode"
     (setq ac-sources
-          '(
-            ac-source-eshell-pcomplete
-            ;; ac-source-symbols
-            ;; ac-source-variables
-            ;; ac-source-functions
-            ;; ac-source-features
-            ;; ac-source-filename
-            ;; ac-source-files-in-current-dir
-            ;; ac-source-words-in-same-mode-buffers
-            )))
+	  '(
+	    ac-source-eshell-pcomplete
+	    ;; ac-source-symbols
+	    ;; ac-source-variables
+	    ;; ac-source-functions
+	    ;; ac-source-features
+	    ;; ac-source-filename
+	    ;; ac-source-files-in-current-dir
+	    ;; ac-source-words-in-same-mode-buffers
+	    )))
 #+end_src
 *** Command
 #+begin_src emacs-lisp
@@ -2057,22 +2057,22 @@ auto-complete-mode 的按鍵設定。
     (let ((buf (current-buffer)))
       (Info-directory)
       (let ((node-exists (ignore-errors (Info-menu subject))))
-        (if node-exists
-            0
-          ;; We want to switch back to *eshell* if the requested
-          ;; Info manual doesn't exist.
-          (switch-to-buffer buf)
-          (eshell-print (format "There is no Info manual on %s.\n"
-                                subject))
-          1))))
+	(if node-exists
+	    0
+	  ;; We want to switch back to *eshell* if the requested
+	  ;; Info manual doesn't exist.
+	  (switch-to-buffer buf)
+	  (eshell-print (format "There is no Info manual on %s.\n"
+				subject))
+	  1))))
 
   (defun eshell/emacs (&rest args)
     "Open a file in emacs. Some habits die hard."
     (if (null args)
-        ;; If I just ran "emacs", I probably expect to be launching
-        ;; Emacs, which is rather silly since I'm already in Emacs.
-        ;; So just pretend to do what I ask.
-        (bury-buffer)
+	;; If I just ran "emacs", I probably expect to be launching
+	;; Emacs, which is rather silly since I'm already in Emacs.
+	;; So just pretend to do what I ask.
+	(bury-buffer)
       ;; We have to expand the file names or else naming a directory in an
       ;; argument causes later arguments to be looked for in that directory,
       ;; not the starting directory
@@ -2083,17 +2083,17 @@ auto-complete-mode 的按鍵設定。
   (defun coldnew/colorfy-eshell-prompt ()
     (interactive)
     (let* ((mpoint)
-           (user-string-regexp (concat "^" user-login-name "@" system-name)))
+	   (user-string-regexp (concat "^" user-login-name "@" system-name)))
       (save-excursion
-        (goto-char (point-min))
-        (while (re-search-forward (concat user-string-regexp ".*[$#]") (point-max) t)
-          (setq mpoint (point))
-          (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "dodger blue")))
-        (goto-char (point-min))
-        (while (re-search-forward user-string-regexp (point-max) t)
-          (setq mpoint (point))
-          (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "green3"))
-          ))))
+	(goto-char (point-min))
+	(while (re-search-forward (concat user-string-regexp ".*[$#]") (point-max) t)
+	  (setq mpoint (point))
+	  (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "dodger blue")))
+	(goto-char (point-min))
+	(while (re-search-forward user-string-regexp (point-max) t)
+	  (setq mpoint (point))
+	  (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "green3"))
+	  ))))
 #+end_src
 ** helm-mode                                                          :helm:
 *** Depends
@@ -2124,7 +2124,7 @@ auto-complete-mode 的按鍵設定。
   (defun helm-c-occur-get-line (s e)
     "rewrite `helm-c-occur-get-line' to make it color on line-number."
     (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
-            (format ": %s" (buffer-substring s e))))
+	    (format ": %s" (buffer-substring s e))))
 #+end_src
 *** Commands
 *** 在目前的專案找尋檔案
@@ -2142,7 +2142,7 @@ auto-complete-mode 的按鍵設定。
       (interactive)
       (helm-other-buffer
        '(helm-c-source-projectile-buffers-list
-         )
+	 )
        "*coldnew/project-buffer-list"))
 #+end_src
 
@@ -2155,14 +2155,14 @@ auto-complete-mode 的按鍵設定。
       (interactive)
       (helm-other-buffer
        '(helm-c-source-buffers-list
-         helm-c-source-recentf
-         helm-c-source-ffap-line
-         helm-c-source-ffap-guesser
-         helm-c-source-bookmarks
-         helm-c-source-file-cache
-         helm-c-source-projectile-files-list
-         helm-c-source-files-in-current-dir
-         helm-c-source-locate)
+	 helm-c-source-recentf
+	 helm-c-source-ffap-line
+	 helm-c-source-ffap-guesser
+	 helm-c-source-bookmarks
+	 helm-c-source-file-cache
+	 helm-c-source-projectile-files-list
+	 helm-c-source-files-in-current-dir
+	 helm-c-source-locate)
        "*coldnew/filelist*"))
 
 
@@ -2182,9 +2182,9 @@ auto-complete-mode 的按鍵設定。
 *** Keybinding
 #+begin_src emacs-lisp
   (add-hook 'lusty-setup-hook
-            '(lambda ()
-               (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)
-               ))
+	    '(lambda ()
+	       (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)
+	       ))
 #+end_src
 *** Command
 #+begin_src emacs-lisp
@@ -2192,22 +2192,22 @@ auto-complete-mode 的按鍵設定。
     "Launch the file/directory mode of LustyExplorer."
     (interactive)
     (let ((lusty--active-mode :file-explorer)
-          (lusty-prompt "sudo: >>"))
+	  (lusty-prompt "sudo: >>"))
       (lusty--define-mode-map)
       (let* ((lusty--ignored-extensions-regex
-              (concat "\\(?:" (regexp-opt completion-ignored-extensions) "\\)$"))
-             (minibuffer-local-filename-completion-map lusty-mode-map)
-             (file
-              ;; read-file-name is silly in that if the result is equal to the
-              ;; dir argument, it gets converted to the default-filename
-              ;; argument. Set it explicitly to "" so if lusty-launch-dired is
-              ;; called in the directory we start at, the result is that directory
-              ;; instead of the name of the current buffer.
-              (lusty--run 'read-file-name default-directory "")))
-        (when file
-          (switch-to-buffer
-           (find-file-noselect (concat "/sudo:root@localhost:"
-                                       (expand-file-name file))))))))
+	      (concat "\\(?:" (regexp-opt completion-ignored-extensions) "\\)$"))
+	     (minibuffer-local-filename-completion-map lusty-mode-map)
+	     (file
+	      ;; read-file-name is silly in that if the result is equal to the
+	      ;; dir argument, it gets converted to the default-filename
+	      ;; argument. Set it explicitly to "" so if lusty-launch-dired is
+	      ;; called in the directory we start at, the result is that directory
+	      ;; instead of the name of the current buffer.
+	      (lusty--run 'read-file-name default-directory "")))
+	(when file
+	  (switch-to-buffer
+	   (find-file-noselect (concat "/sudo:root@localhost:"
+				       (expand-file-name file))))))))
 #+end_src
 *** Make lusty-explorer use it's own completion, not helm-completion
 #+begin_src emacs-lisp
@@ -2284,10 +2284,10 @@ auto-complete-mode 的按鍵設定。
     (interactive)
     (beginning-of-line)
     (let* ((file (buffer-substring (point)
-                                   (save-excursion (end-of-line) (point))))
-           (file-dir (file-name-directory file))
-           (file-true-dir (file-truename file-dir))
-           (file-name (file-name-nondirectory file)))
+				   (save-excursion (end-of-line) (point))))
+	   (file-dir (file-name-directory file))
+	   (file-true-dir (file-truename file-dir))
+	   (file-name (file-name-nondirectory file)))
       (delete-region (point) (save-excursion (end-of-line) (point)))
       (insert (concat file-true-dir file-name))))
 
@@ -2301,10 +2301,10 @@ auto-complete-mode 的按鍵設定。
 *** Keybindings
 #+begin_src emacs-lisp
   (add-hook 'ido-setup-hook
-            '(lambda ()
-               (define-key ido-completion-map (kbd "C-f") 'ido-next-match)
-               (define-key ido-completion-map (kbd "C-b") 'ido-prev-match)
-               ))
+	    '(lambda ()
+	       (define-key ido-completion-map (kbd "C-f") 'ido-next-match)
+	       (define-key ido-completion-map (kbd "C-b") 'ido-prev-match)
+	       ))
 #+end_src
 ** yasnippet                                                     :yasnippet:
 *** 設定 snippet 所在的資料夾
@@ -2342,15 +2342,15 @@ auto-complete-mode 的按鍵設定。
 
    (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
     (let* ((l (buffer-substring (point-at-bol) (point)))
-           (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
-           (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
-           a)
+	   (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
+	   (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
+	   a)
       (when (and (looking-at "[ \t]*$")
-                 (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
-                 (setq a (assoc (match-string 1 l) expand-alist)))
-        (backward-delete-char (1+ (length (car-safe a))))
-        (insert (cdr-safe a))
-        t)))
+		 (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
+		 (setq a (assoc (match-string 1 l) expand-alist)))
+	(backward-delete-char (1+ (length (car-safe a))))
+	(insert (cdr-safe a))
+	t)))
 
   (defadvice yas-expand (before coldnew/major-mode-expand activate) (coldnew/major-mode-expand))
 #+end_src
@@ -2397,158 +2397,158 @@ integrate ibuffer with git
 #+begin_src emacs-lisp
   (require 'ibuffer-git)
   (setq ibuffer-formats
-        '((mark modified read-only git-status-mini " "
-                (name 23 23 :left :elide)
-                " "
-                (size-h 9 -1 :right)
-                "  "
-                (mode 16 16 :left :elide)
-                " "
-                (git-status 8 8 :left)
-                "    "
-                ;;              (eproject 16 16 :left :elide)
-                ;;              "      "
-                filename-and-process)))
+	'((mark modified read-only git-status-mini " "
+		(name 23 23 :left :elide)
+		" "
+		(size-h 9 -1 :right)
+		"  "
+		(mode 16 16 :left :elide)
+		" "
+		(git-status 8 8 :left)
+		"    "
+		;;              (eproject 16 16 :left :elide)
+		;;              "      "
+		filename-and-process)))
 #+end_src
 buffer list
 #+begin_src emacs-lisp
   ;;;; buffer-list
   (setq ibuffer-saved-filter-groups
-        '(("default"
-           ("*Buffer*" (or
-                        (name . "^TAGS\\(<[0-9]+>\\)?$")
-                        (name . "^\\**Loading Log\\*$")
-                        (name . "^\\*coldnew/filelist\\*$")
-                        (name . "^\\*Backtrace\\*$")
-                        (name . "^\\*Buffer List\\*$")
-                        (name . "^\\*CEDET Global\\*$")
-                        (name . "^\\*Compile-Log\\*$")
-                        (name . "^\\*Completions\\*$")
-                        (name . "^\\*EGG:*")
-                        (name . "^\\*Kill Ring\\*$")
-                        (name . "^\\*Occur\\*$")
-                        (name . "^\\*Customize*")
-                        (name . "^\\*Process List\\*$")
-                        (name . "^\\*Shell Command Output\\*")
-                        (name . "^\\*Warnings\\*$")
-                        (name . "^\\*compilation\\*$")
-                        (name . "^\\*el-get*")
-                        (name . "^\\*grep\\*$")
-                        (name . "^\\*gud\\*$")
-                        (name . "^\\*ielm\\*")
-                        (name . "^\\*im.bitlbee.org\\*$")
-                        (name . "^\\*scratch\\*$")
-                        (name . "^\\*tramp")
-                        (name . "^\\*wclock\\*$")
-                        (name . "^ipa*")
-                        (name . "^loaddefs.el$")
-                        (name . "^\\*Messages\\*$")
-                        (name . "^\\*WoMan-Log\\*$")
-                        ))
-           ("Version Control" (or (mode . svn-status-mode)
-                                  (mode . svn-log-edit-mode)
-                                  (name . "^\\*svn*\\*")
-                                  (name . "^\\*vc*\\*$")
-                                  (name . "^\\*Annotate")
-                                  (name . "^\\*git-*")
-                                  (name . "^\\*cvs*")
-                                  (name . "^\\*vc-*")
-                                  (mode . egg-status-buffer-mode)
-                                  (mode . egg-log-buffer-mode)
-                                  (mode . egg-commit-buffer-mode)))
-           ("Help" (or (mode . woman-mode)
-                       (mode . man-mode)
-                       (mode . info-mode)
-                       (mode . help-mode)
-                       (name . "\\*Help\\*$")
-                       (name . "\\*info\\*$")))
-           ("Dired" (or (mode . dired-mode)
-                        (mode . nav-mode)))
-           ("IRC"   (or (mode . erc-mode)
-                        (mode . rcirc-mode)))
-           ("Jabber" (or (mode . jabber-roster-mode)
-                         (mode . jabber-chat-mode)))
-           ("Terminal" (or (mode . eshell-mode)
-                           (mode . term-mode)
-                           (mode . inferior-python-mode)
-                           (mode . eshell-mode)
-                           (mode . comint-mode)
-                           (name . "\\*scheme\\*$")))
-           ("Config" (name . "*.conf$"))
-           ("Text" (or (mode . text-mode)
-                       (name . "*.txt$")))
-           ("w3m"   (or (mode . w3m-mode)
-                        (name . "^\\*w3m*")))
-           ("Org"   (mode . org-mode))
-           ("LaTEX" (or (mode . latex-mode)
-                        (name . "*.tex$")))
-           ("Verilog" (mode . verilog-mode))
-           ("Web Develop" (or (mode . html-mode)
-                              (mode . css-mode)))
-           ("Shell Script" (or (mode . shell-script-mode)
-                               (mode . shell-mode)
-                               (mode . sh-mode)
-                               (mode . ruby-mode)))
-           ("Perl"  (or (mode . cperl-mode)
-                        (mode . perl-mode)))
-           ("Python" (or (mode . python-mode)
-                         (mode . ipython-mode)))
-           ("Octave" (or (mode . octave-mode)
-                         (mode . inferior-octave-mode)))
-           ("Scala" (or (mode . scala-mode)
-                        (name . "\\*inferior-scala\\*$")))
-           ("Diff" (mode . diff-mode))
-           ;;      ("Project" (mode . qmake-mode))
-           ("JavaScript" (or (mode . js-mode)
-                             (mode . js2-mode)))
-           ("C++ . C#" (or (mode . c++-mode)
-                           (mode . csharpmode)))
-           ("C"          (mode . c-mode))
-           ("Object-C"   (mode . objc-mode))
-           ("Snippet" (or (mode . snippet-mode)
-                          (name . "*.yas$")))
-           ("newLisp"  (mode . newlisp-mode))
-           ("Common Lisp"   (mode . slime-mode))
-           ("Scheme"  (or (mode . scheme-mode)
-                          (mode . gambit-mode)))
-           ("Clojure" (or (mode . clojure-mode)
-                          (name . "\\*slime-repl clojure\\*")))
-           ("Emacs recipes" (name . "*.rcp$"))
-           ("Emacs" (or (mode . emacs-lisp-mode)
-                        (mode . lisp-interaction-mode)
-                        ))
-           )))
+	'(("default"
+	   ("*Buffer*" (or
+			(name . "^TAGS\\(<[0-9]+>\\)?$")
+			(name . "^\\**Loading Log\\*$")
+			(name . "^\\*coldnew/filelist\\*$")
+			(name . "^\\*Backtrace\\*$")
+			(name . "^\\*Buffer List\\*$")
+			(name . "^\\*CEDET Global\\*$")
+			(name . "^\\*Compile-Log\\*$")
+			(name . "^\\*Completions\\*$")
+			(name . "^\\*EGG:*")
+			(name . "^\\*Kill Ring\\*$")
+			(name . "^\\*Occur\\*$")
+			(name . "^\\*Customize*")
+			(name . "^\\*Process List\\*$")
+			(name . "^\\*Shell Command Output\\*")
+			(name . "^\\*Warnings\\*$")
+			(name . "^\\*compilation\\*$")
+			(name . "^\\*el-get*")
+			(name . "^\\*grep\\*$")
+			(name . "^\\*gud\\*$")
+			(name . "^\\*ielm\\*")
+			(name . "^\\*im.bitlbee.org\\*$")
+			(name . "^\\*scratch\\*$")
+			(name . "^\\*tramp")
+			(name . "^\\*wclock\\*$")
+			(name . "^ipa*")
+			(name . "^loaddefs.el$")
+			(name . "^\\*Messages\\*$")
+			(name . "^\\*WoMan-Log\\*$")
+			))
+	   ("Version Control" (or (mode . svn-status-mode)
+				  (mode . svn-log-edit-mode)
+				  (name . "^\\*svn*\\*")
+				  (name . "^\\*vc*\\*$")
+				  (name . "^\\*Annotate")
+				  (name . "^\\*git-*")
+				  (name . "^\\*cvs*")
+				  (name . "^\\*vc-*")
+				  (mode . egg-status-buffer-mode)
+				  (mode . egg-log-buffer-mode)
+				  (mode . egg-commit-buffer-mode)))
+	   ("Help" (or (mode . woman-mode)
+		       (mode . man-mode)
+		       (mode . info-mode)
+		       (mode . help-mode)
+		       (name . "\\*Help\\*$")
+		       (name . "\\*info\\*$")))
+	   ("Dired" (or (mode . dired-mode)
+			(mode . nav-mode)))
+	   ("IRC"   (or (mode . erc-mode)
+			(mode . rcirc-mode)))
+	   ("Jabber" (or (mode . jabber-roster-mode)
+			 (mode . jabber-chat-mode)))
+	   ("Terminal" (or (mode . eshell-mode)
+			   (mode . term-mode)
+			   (mode . inferior-python-mode)
+			   (mode . eshell-mode)
+			   (mode . comint-mode)
+			   (name . "\\*scheme\\*$")))
+	   ("Config" (name . "*.conf$"))
+	   ("Text" (or (mode . text-mode)
+		       (name . "*.txt$")))
+	   ("w3m"   (or (mode . w3m-mode)
+			(name . "^\\*w3m*")))
+	   ("Org"   (mode . org-mode))
+	   ("LaTEX" (or (mode . latex-mode)
+			(name . "*.tex$")))
+	   ("Verilog" (mode . verilog-mode))
+	   ("Web Develop" (or (mode . html-mode)
+			      (mode . css-mode)))
+	   ("Shell Script" (or (mode . shell-script-mode)
+			       (mode . shell-mode)
+			       (mode . sh-mode)
+			       (mode . ruby-mode)))
+	   ("Perl"  (or (mode . cperl-mode)
+			(mode . perl-mode)))
+	   ("Python" (or (mode . python-mode)
+			 (mode . ipython-mode)))
+	   ("Octave" (or (mode . octave-mode)
+			 (mode . inferior-octave-mode)))
+	   ("Scala" (or (mode . scala-mode)
+			(name . "\\*inferior-scala\\*$")))
+	   ("Diff" (mode . diff-mode))
+	   ;;      ("Project" (mode . qmake-mode))
+	   ("JavaScript" (or (mode . js-mode)
+			     (mode . js2-mode)))
+	   ("C++ . C#" (or (mode . c++-mode)
+			   (mode . csharpmode)))
+	   ("C"          (mode . c-mode))
+	   ("Object-C"   (mode . objc-mode))
+	   ("Snippet" (or (mode . snippet-mode)
+			  (name . "*.yas$")))
+	   ("newLisp"  (mode . newlisp-mode))
+	   ("Common Lisp"   (mode . slime-mode))
+	   ("Scheme"  (or (mode . scheme-mode)
+			  (mode . gambit-mode)))
+	   ("Clojure" (or (mode . clojure-mode)
+			  (name . "\\*slime-repl clojure\\*")))
+	   ("Emacs recipes" (name . "*.rcp$"))
+	   ("Emacs" (or (mode . emacs-lisp-mode)
+			(mode . lisp-interaction-mode)
+			))
+	   )))
 #+end_src
 Following buffer will not show in iBuffer
 #+begin_src emacs-lisp
   (setq ibuffer-never-show-predicates
-        (list
-         "^\\*Buffer List\\*$"
-         "^\\*CEDET Global\\*$"
-         "^\\*MiniBuf-*"
-         "^\\*Egg:Select Action\\*$"
-         "^\\*Ido Completions\\*$"
-         "^\\*SPEEDBAR\\*$"
-         "^\\*nav\\*$"
-         "^\\*swank\\*$"
-         "^\\*slime-events\\*$"
-         "^\\*RE-Builder\\*$"
-         "^\\*pomodoro\\*$"
-         "^\\*Project Buffers\\*$"
-         "^eproject$"
-         "\\*fsm-debug\\*$"
-         ;; "^"
-         "^\\*.*\\(-preprocessed\\)\\>\\*"
-         "^\\*ORG.*\\*"
-         "^\\*ac-mode-*"
-         ".loaddefs.el$"
-         "^loaddefs.el$"
-         "^\\*magit*"
-         "\\*GTAGS SELECT\\**"
-         "\\*Symref*"
-         "\\*cscope\\*"
-         "\\*helm*"
-         ))
+	(list
+	 "^\\*Buffer List\\*$"
+	 "^\\*CEDET Global\\*$"
+	 "^\\*MiniBuf-*"
+	 "^\\*Egg:Select Action\\*$"
+	 "^\\*Ido Completions\\*$"
+	 "^\\*SPEEDBAR\\*$"
+	 "^\\*nav\\*$"
+	 "^\\*swank\\*$"
+	 "^\\*slime-events\\*$"
+	 "^\\*RE-Builder\\*$"
+	 "^\\*pomodoro\\*$"
+	 "^\\*Project Buffers\\*$"
+	 "^eproject$"
+	 "\\*fsm-debug\\*$"
+	 ;; "^"
+	 "^\\*.*\\(-preprocessed\\)\\>\\*"
+	 "^\\*ORG.*\\*"
+	 "^\\*ac-mode-*"
+	 ".loaddefs.el$"
+	 "^loaddefs.el$"
+	 "^\\*magit*"
+	 "\\*GTAGS SELECT\\**"
+	 "\\*Symref*"
+	 "\\*cscope\\*"
+	 "\\*helm*"
+	 ))
 #+end_src
 *** Advice
 #+begin_src emacs-lisp
@@ -2631,11 +2631,11 @@ Following buffer will not show in iBuffer
   (defadvice shell-pop (before kill-dead-term activate)
     "If there is a stopped ansi-term, kill it and create a new one."
     (let ((running-p (term-check-proc (buffer-name)))
-          (term-p (string= "term-mode" major-mode)))
+	  (term-p (string= "term-mode" major-mode)))
       (if term-p
-          (when (not running-p)
-            (kill-buffer (buffer-name))
-            (shell-pop-out)))))
+	  (when (not running-p)
+	    (kill-buffer (buffer-name))
+	    (shell-pop-out)))))
 #+end_src
 ** multi-term
 #+begin_src emacs-lisp
@@ -2662,9 +2662,9 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 #+begin_src emacs-lisp
   ;; reset ansi-color
   (setq-default ansi-color-names-vector
-                (vector (frame-parameter nil 'background-color)
-                        "#0B0B0E" "#CA3839" "#8ae234" "#edd400"
-                        "#729fcf" "#ad7fa8" "cyan3"   "#DCDCDC"))
+		(vector (frame-parameter nil 'background-color)
+			"#0B0B0E" "#CA3839" "#8ae234" "#edd400"
+			"#729fcf" "#ad7fa8" "cyan3"   "#DCDCDC"))
   (setq ansi-term-color-vector ansi-color-names-vector)
   ;; (setq ansi-color-map (ansi-color-make-color-map))
 #+end_src
@@ -2687,7 +2687,7 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   ;; Do not show password in comint-mode
   (setq comint-output-filter-functions  '(comint-watch-for-password-prompt))
   (setq comint-password-prompt-regexp
-        "\\(\\([Oo]ld \\|]e]eew \\|^\\)[Pp]assword\\|Enter password\\):\\s *\\'")
+	"\\(\\([Oo]ld \\|]e]eew \\|^\\)[Pp]assword\\|Enter password\\):\\s *\\'")
 
   ;;;; Keybindings
   (define-key comint-mode-map (kbd "C-g") 'comint-interrupt-subjob)
@@ -2737,14 +2737,14 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
     ad-do-it
     (when (featurep 'hungry-delete)
       (if (eq (char-before) ?\s)
-          (hungry-delete-backward))))
+	  (hungry-delete-backward))))
 
   (defadvice paredit-forward-delete (around paredit-forward-delete activate)
     "Intergrated paredit-forward-delete with hungry-delete."
     ad-do-it
     (when (featurep 'hungry-delete)
       (if (eolp)
-          (hungry-delete-forward))))
+	  (hungry-delete-forward))))
 #+end_src
 ** projectile
 #+begin_src emacs-lisp
@@ -2759,8 +2759,8 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 
   ;;; enable following mode to use hideshow
   (dolist (hook (list 'emacs-lisp-mode-hook
-                      'c++-mode-hook
-                      'c-mode-hook))
+		      'c++-mode-hook
+		      'c-mode-hook))
     (add-hook hook 'hideshowvis-enable))
 #+end_src
 ** slime
@@ -2782,10 +2782,10 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   (defun ielm-auto-complete ()
     "Enables `auto-complete' support in \\[ielm]."
     (setq ac-sources '(ac-source-functions
-                       ac-source-variables
-                       ac-source-features
-                       ac-source-symbols
-                       ac-source-words-in-same-mode-buffers))
+		       ac-source-variables
+		       ac-source-features
+		       ac-source-symbols
+		       ac-source-words-in-same-mode-buffers))
     (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
     (auto-complete-mode 1))
   (add-hook 'ielm-mode-hook 'ielm-auto-complete)
@@ -2798,11 +2798,11 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
      close the *compilation* buffer if the compilation is successful,
      and set the focus back to Emacs frame"
     (if (string-match "^finished" msg)
-        (progn
-          (delete-windows-on buffer)
-          (message (propertize "COMPILATION SUCCESSFUL :-) " 'face 'font-lock-warning-face))
-          ;;       (tooltip-show "\n Compilation Successful :-) \n ")
-          )
+	(progn
+	  (delete-windows-on buffer)
+	  (message (propertize "COMPILATION SUCCESSFUL :-) " 'face 'font-lock-warning-face))
+	  ;;       (tooltip-show "\n Compilation Successful :-) \n ")
+	  )
       (tooltip-show "\n Compilation Failed :-( \n "))
     ;; FIXME: When I use dualscreen, following functiokn will make error,
     ;;        after compilation, current frame will jump to another DISPLAY
@@ -2911,8 +2911,8 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
   (setq org-use-speed-commands t)
 
   (setq org-tag-alist '(
-                        (:startgroup . nil) ("Business" . ?b) ("School" . ?s) ("Weintek" . ?w) ("Personal" . ?p) (:endgroup . nil)
-                        ))
+			(:startgroup . nil) ("Business" . ?b) ("School" . ?s) ("Weintek" . ?w) ("Personal" . ?p) (:endgroup . nil)
+			))
   (setq org-confirm-babel-evaluate nil)
 #+end_src
 ** 預設讓 org-mode 使用自動縮排模式
@@ -2943,9 +2943,9 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
 ** 增加模版
 #+begin_src emacs-lisp
   (add-to-list 'org-structure-template-alist
-               '("E" "#+begin_src emacs-lisp\n?\n#+end_src"))
+	       '("E" "#+begin_src emacs-lisp\n?\n#+end_src"))
   (add-to-list 'org-structure-template-alist
-               '("S" "#+begin_src sh\n?\n#+end_src"))
+	       '("S" "#+begin_src sh\n?\n#+end_src"))
 #+end_src
 
 ** TODO Image size
@@ -2972,21 +2972,21 @@ You can now (from git master) use `org-image-actual-width'.
 #+begin_src emacs-lisp
   (setq org-default-notes-file (concat org-directory "TODO.org"))
   (setq org-capture-templates '(("t" "TODO" entry (file+headline "" "Tasks")
-                                 "* TODO %?\n %i\n %a")
-                                ("f" "FIXME" entry (file+headline "" "Tasks")
-                                 "* FIXME %?\n %i\n %a")
-                                ("w" "Weintek" entry (file+headline "" "Weintek")
-                                 "* TODO %?\n %i\n %a")
-                                ))
+				 "* TODO %?\n %i\n %a")
+				("f" "FIXME" entry (file+headline "" "Tasks")
+				 "* FIXME %?\n %i\n %a")
+				("w" "Weintek" entry (file+headline "" "Weintek")
+				 "* TODO %?\n %i\n %a")
+				))
 
 #+end_src
 
 *** Keybinding
 #+begin_src emacs-lisp :tangle no
   (add-hook 'org-capture-mode-hook
-            '(lambda ()
-               (define-key coldnew/command-mode-map "c" 'org-capture-finalize)
-               ))
+	    '(lambda ()
+	       (define-key coldnew/command-mode-map "c" 'org-capture-finalize)
+	       ))
 
 #+end_src
 ** Agenda
@@ -3002,8 +3002,8 @@ You can now (from git master) use `org-image-actual-width'.
 *** Keybinding
 #+begin_src emacs-lisp
   (add-hook 'org-agenda-mode-hook
-            '(lambda ()
-               (local-set-key (kbd "C-g") 'org-agenda-exit)))
+	    '(lambda ()
+	       (local-set-key (kbd "C-g") 'org-agenda-exit)))
 #+end_src
 ** 讓 org-mode 裡面可以加密文章                                      :crypt:
 用於加密 org-mode 裡面具有 :encrypt: 這個 TAG 的區塊。
@@ -3034,14 +3034,14 @@ You can now (from git master) use `org-image-actual-width'.
 #+begin_src emacs-lisp
   (require 'iimage)
   (add-to-list 'iimage-mode-image-regex-alist
-               (cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]\\]")  1))
+	       (cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]\\]")  1))
 #+end_src
 *** 打開 iimage-mode 並取消 org-link 的顏色
 #+begin_src emacs-lisp
   (add-hook 'org-mode-hook
-            '(lambda ()
-               (turn-on-iimage-mode)
-               (set-face-underline-p 'org-link nil)))
+	    '(lambda ()
+	       (turn-on-iimage-mode)
+	       (set-face-underline-p 'org-link nil)))
 #+end_src
 *** 切換顯示圖片的命令
 #+begin_src emacs-lisp
@@ -3049,7 +3049,7 @@ You can now (from git master) use `org-image-actual-width'.
     "Toggle display images in org file."
     (interactive)
     (if (face-underline-p 'org-link)
-        (set-face-underline-p 'org-link nil)
+	(set-face-underline-p 'org-link nil)
       (set-face-underline-p 'org-link t))
     (call-interactively 'iimage-mode))
 #+end_src
@@ -3058,39 +3058,39 @@ You can now (from git master) use `org-image-actual-width'.
 設定自定義的按鍵。
 #+begin_src emacs-lisp
     (add-hook 'org-mode-hook
-              '(lambda ()
-                 (define-key org-mode-map (kbd "C-c C-p") 'org-backward-same-level)
-                 (define-key org-mode-map (kbd "C-c C-n") 'org-forward-same-level)
-                 (define-key org-mode-map (kbd "C-c C-b") 'coldnew/org-up-parent)
-                 (define-key org-mode-map (kbd "C-c C-f") 'coldnew/org-down-children)
-                 (define-key org-mode-map (kbd "C-c i") 'org-display-image)
-                 ;;(define-key coldnew/command-mode-map "c" 'org-edit-special)
-                 ))
+	      '(lambda ()
+		 (define-key org-mode-map (kbd "C-c C-p") 'org-backward-same-level)
+		 (define-key org-mode-map (kbd "C-c C-n") 'org-forward-same-level)
+		 (define-key org-mode-map (kbd "C-c C-b") 'coldnew/org-up-parent)
+		 (define-key org-mode-map (kbd "C-c C-f") 'coldnew/org-down-children)
+		 (define-key org-mode-map (kbd "C-c i") 'org-display-image)
+		 ;;(define-key coldnew/command-mode-map "c" 'org-edit-special)
+		 ))
 
   (add-hook 'org-mode-hook
-            '(lambda ()
-               (define-key org-mode-map (kbd "C-\'") nil)
-               (define-key org-mode-map (kbd "C-,") nil)
-               (define-key org-mode-map (kbd "C-c C-e") nil)
-               ))
+	    '(lambda ()
+	       (define-key org-mode-map (kbd "C-\'") nil)
+	       (define-key org-mode-map (kbd "C-,") nil)
+	       (define-key org-mode-map (kbd "C-c C-e") nil)
+	       ))
 #+end_src
 
 
 #+begin_src emacs-lisp
   (add-hook 'org-mode-hook
-            '(lambda ()
-               (define-key org-mode-map (kbd "C-c b") 'org-metaleft)
-               (define-key org-mode-map (kbd "C-c f") 'org-metaright)
-               (define-key org-mode-map (kbd "C-c p") 'org-metaup)
-               (define-key org-mode-map (kbd "C-c n") 'org-metadown)))
+	    '(lambda ()
+	       (define-key org-mode-map (kbd "C-c b") 'org-metaleft)
+	       (define-key org-mode-map (kbd "C-c f") 'org-metaright)
+	       (define-key org-mode-map (kbd "C-c p") 'org-metaup)
+	       (define-key org-mode-map (kbd "C-c n") 'org-metadown)))
 #+end_src
 *** org-src-mode
 #+begin_src emacs-lisp
   (add-hook 'org-src-mode-hook
-            '(lambda ()
-               ;;(local-set-key (kbd "C-c C-c") 'org-edit-src-exit)
-               ;;(define-key coldnew/command-mode-map "c" 'org-edit-src-exit)
-               ))
+	    '(lambda ()
+	       ;;(local-set-key (kbd "C-c C-c") 'org-edit-src-exit)
+	       ;;(define-key coldnew/command-mode-map "c" 'org-edit-src-exit)
+	       ))
 #+end_src
 ** Hooks
 *** TODO Disable linum
@@ -3106,11 +3106,11 @@ some packages conflict with org-mode
       (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
 
     (add-hook 'org-mode-hook
-              (lambda ()
-                (make-variable-buffer-local 'yas/trigger-key)
-                (setq yas/trigger-key (kbd "TAB"))
-                (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
-                (define-key yas/keymap (kbd "TAB") 'yas/next-field)))
+	      (lambda ()
+		(make-variable-buffer-local 'yas/trigger-key)
+		(setq yas/trigger-key (kbd "TAB"))
+		(add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
+		(define-key yas/keymap (kbd "TAB") 'yas/next-field)))
     )
 #+end_src
 
@@ -3136,19 +3136,19 @@ some packages conflict with org-mode
 #+begin_src emacs-lisp
   (defun coldnew/org-up-parent ()
     "Move to the parent of current point. If current is the parent heading,
-            move to the previous parent heading."
+	    move to the previous parent heading."
     (interactive)
     (if (not (org-on-heading-p))
-        (outline-back-to-heading)
+	(outline-back-to-heading)
       (let* ((level (funcall outline-level))
-             (point-to-move-to
-              (save-excursion
-                (outline-previous-visible-heading 1)
-                (while (>= (funcall outline-level) level)
-                  (outline-previous-visible-heading 1))
-                (point))))
-        (if point-to-move-to
-            (goto-char point-to-move-to))))
+	     (point-to-move-to
+	      (save-excursion
+		(outline-previous-visible-heading 1)
+		(while (>= (funcall outline-level) level)
+		  (outline-previous-visible-heading 1))
+		(point))))
+	(if point-to-move-to
+	    (goto-char point-to-move-to))))
     (org-cycle))
 #+end_src
 *** coldnew/org-down-children
@@ -3156,20 +3156,20 @@ some packages conflict with org-mode
 #+begin_src emacs-lisp
   (defun coldnew/org-down-children ()
     "Move to children of current heading. If current heading only has subtree,
-          expand the subtree."
+	  expand the subtree."
     (interactive)
     (outline-back-to-heading)
     (show-children)
     (let* ((level (funcall outline-level))
-           (point-to-move-to
-            (save-excursion
-              (outline-next-visible-heading 1)
-              (if (<= (funcall outline-level) level)
-                  nil
-                        (point)))))
-              (if point-to-move-to
-                  (goto-char point-to-move-to)
-                (show-subtree))))
+	   (point-to-move-to
+	    (save-excursion
+	      (outline-next-visible-heading 1)
+	      (if (<= (funcall outline-level) level)
+		  nil
+			(point)))))
+	      (if point-to-move-to
+		  (goto-char point-to-move-to)
+		(show-subtree))))
 #+end_src
 ** presentation
 #+begin_src emacs-lisp
@@ -3179,24 +3179,24 @@ some packages conflict with org-mode
   (unless (boundp 'org-export-latex-classes)
       (setq org-export-latex-classes nil))
     (add-to-list 'org-export-latex-classes
-                 ;; beamer class, for presentations
-                 '("beamer"
-                   "\\documentclass[11pt]{beamer}\n
-          \\mode<{{{beamermode}}}>\n
-          \\usetheme{{{{beamertheme}}}}\n
-          \\usecolortheme{{{{beamercolortheme}}}}\n
-          \\beamertemplateballitem\n
-          \\setbeameroption{show notes}
-          \\usepackage[utf8]{inputenc}\n
-          \\usepackage[T1]{fontenc}\n
-          \\usepackage{hyperref}\n
-          \\usepackage{color}\n
-          \\usepackage{listings}\n
-          \\usepackage{xeCJK}\n
-          \\setCJKmainfont{LiHei Pro}\n
-          \\XeTeXlinebreaklocale \"zh\"\n
-          \\XeTeXlinebreakskip = 0pt plus 1pt
-          \\lstset{numbers=none,language=[ISO]C++,tabsize=4,
+		 ;; beamer class, for presentations
+		 '("beamer"
+		   "\\documentclass[11pt]{beamer}\n
+	  \\mode<{{{beamermode}}}>\n
+	  \\usetheme{{{{beamertheme}}}}\n
+	  \\usecolortheme{{{{beamercolortheme}}}}\n
+	  \\beamertemplateballitem\n
+	  \\setbeameroption{show notes}
+	  \\usepackage[utf8]{inputenc}\n
+	  \\usepackage[T1]{fontenc}\n
+	  \\usepackage{hyperref}\n
+	  \\usepackage{color}\n
+	  \\usepackage{listings}\n
+	  \\usepackage{xeCJK}\n
+	  \\setCJKmainfont{LiHei Pro}\n
+	  \\XeTeXlinebreaklocale \"zh\"\n
+	  \\XeTeXlinebreakskip = 0pt plus 1pt
+	  \\lstset{numbers=none,language=[ISO]C++,tabsize=4,
       frame=single,
       basicstyle=\\small,
       showspaces=false,showstringspaces=false,
@@ -3204,32 +3204,32 @@ some packages conflict with org-mode
       keywordstyle=\\color{blue}\\bfseries,
       commentstyle=\\color{red},
       }\n
-          \\usepackage{verbatim}\n
-          \\institute{{{{beamerinstitute}}}}\n
-           \\subject{{{{beamersubject}}}}\n"
+	  \\usepackage{verbatim}\n
+	  \\institute{{{{beamerinstitute}}}}\n
+	   \\subject{{{{beamersubject}}}}\n"
 
-                   ("\\section{%s}" . "\\section*{%s}")
+		   ("\\section{%s}" . "\\section*{%s}")
 
-                   ("\\begin{frame}[fragile]\\frametitle{%s}"
-                    "\\end{frame}"
-                    "\\begin{frame}[fragile]\\frametitle{%s}"
-                    "\\end{frame}")))
+		   ("\\begin{frame}[fragile]\\frametitle{%s}"
+		    "\\end{frame}"
+		    "\\begin{frame}[fragile]\\frametitle{%s}"
+		    "\\end{frame}")))
 
     ;; letter class, for formal letters
 
     (add-to-list 'org-export-latex-classes
 
-                 '("letter"
-                   "\\documentclass[11pt]{letter}\n
-          \\usepackage[utf8]{inputenc}\n
-          \\usepackage[T1]{fontenc}\n
-          \\usepackage{color}"
+		 '("letter"
+		   "\\documentclass[11pt]{letter}\n
+	  \\usepackage[utf8]{inputenc}\n
+	  \\usepackage[T1]{fontenc}\n
+	  \\usepackage{color}"
 
-                   ("\\section{%s}" . "\\section*{%s}")
-                   ("\\subsection{%s}" . "\\subsection*{%s}")
-                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+		   ("\\section{%s}" . "\\section*{%s}")
+		   ("\\subsection{%s}" . "\\subsection*{%s}")
+		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 #+end_src
 ** Babel 支援的語言
 #+begin_src emacs-lisp
@@ -3254,8 +3254,8 @@ some packages conflict with org-mode
   (add-to-list 'org-export-latex-packages-alist '("" "minted"))
   (setq org-export-latex-listings 'minted)
   (setq org-export-latex-minted-options
-        '(("frame" "lines")
-          ("fontsize" "\\scriptsize")))
+	'(("frame" "lines")
+	  ("fontsize" "\\scriptsize")))
 #+end_src
 
 *** 使用 xelatex 產生 PDF 檔案
@@ -3263,78 +3263,78 @@ some packages conflict with org-mode
 反之則直接呼叫 xelatex 進行二次編譯。
 #+begin_src emacs-lisp
   (setq org-latex-to-pdf-process
-        (if (executable-find "latexmk")
-            '("latexmk -pdflatex=xelatex -pdf -silent --shell-escape -f %f")
-          '("xelatex -interaction nonstopmode --shell-escape %f"
-            "xelatex -interaction nonstopmode --shell-escape %f")))
+	(if (executable-find "latexmk")
+	    '("latexmk -pdflatex=xelatex -pdf -silent --shell-escape -f %f")
+	  '("xelatex -interaction nonstopmode --shell-escape %f"
+	    "xelatex -interaction nonstopmode --shell-escape %f")))
 #+end_src
 
 *** 一般文章所使用的 latex 配置
 #+begin_src emacs-lisp
   (add-to-list 'org-export-latex-classes
-               '("coldnew-article"
-                 "\\documentclass[12pt,a4paper]{article}
-                  \\usepackage[T1]{fontenc}
-                  \\usepackage{fontspec}
-                  \\usepackage{xeCJK}
-                  \\setCJKmainfont{Hiragino Sans GB W3}
-                  \\XeTeXlinebreaklocale \"zh\"
-                  \\XeTeXlinebreakskip = 0pt plus 1pt
-                  \\usepackage{graphicx}
-                  \\usepackage{tikz}
-                  \\usepackage[bookmarks=true,colorlinks,linkcolor=black]{hyperref}
-                  \\defaultfontfeatures{Mapping=tex-text}
-                  \\setmonofont[Scale=0.8]{DejaVu Sans Mono}
-                  \\usepackage{geometry}
-                  \\geometry{a4paper, textwidth=6.5in, textheight=8in,
-                              marginparsep=10pt, marginparwidth=.6in}
-                  \\pagestyle{plain}
-                  \\linespread{1.5}
-                  \\title{}
-                        [NO-DEFAULT-PACKAGES]
-                        [NO-PACKAGES]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")
-                 ))
+	       '("coldnew-article"
+		 "\\documentclass[12pt,a4paper]{article}
+		  \\usepackage[T1]{fontenc}
+		  \\usepackage{fontspec}
+		  \\usepackage{xeCJK}
+		  \\setCJKmainfont{Hiragino Sans GB W3}
+		  \\XeTeXlinebreaklocale \"zh\"
+		  \\XeTeXlinebreakskip = 0pt plus 1pt
+		  \\usepackage{graphicx}
+		  \\usepackage{tikz}
+		  \\usepackage[bookmarks=true,colorlinks,linkcolor=black]{hyperref}
+		  \\defaultfontfeatures{Mapping=tex-text}
+		  \\setmonofont[Scale=0.8]{DejaVu Sans Mono}
+		  \\usepackage{geometry}
+		  \\geometry{a4paper, textwidth=6.5in, textheight=8in,
+			      marginparsep=10pt, marginparwidth=.6in}
+		  \\pagestyle{plain}
+		  \\linespread{1.5}
+		  \\title{}
+			[NO-DEFAULT-PACKAGES]
+			[NO-PACKAGES]"
+		 ("\\section{%s}" . "\\section*{%s}")
+		 ("\\subsection{%s}" . "\\subsection*{%s}")
+		 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")
+		 ))
 
 #+end_src
 
 *** 投影片所使用的 latex 配置
 #+begin_src emacs-lisp
   (add-to-list 'org-export-latex-classes
-               ;; beamer class, for presentations
-               '("beamer"
-                 "\\documentclass[11pt]{beamer}
-                  \\mode<{{{beamermode}}}>
-                  \\usetheme{{{{beamertheme}}}}
-                  \\usecolortheme{{{{beamercolortheme}}}}
-                  \\beamertemplateballitem
-                  \\setbeameroption{show notes}
-                  \\usepackage[utf8]{inputenc}
-                  \\usepackage[T1]{fontenc}
-                  \\usepackage{xeCJK}
-                  \\setCJKmainfont{Hiragino Sans GB W3}
-                  \\XeTeXlinebreaklocale \"zh\"
-                  \\XeTeXlinebreakskip = 0pt plus 1pt
-                  \\usepackage{minted}
-                  \\usemintedstyle{emacs}
-                  \\setmainfont{Monaco}
-                  \\usepackage{hyperref}
-                  \\usepackage{color}
-                  \\usepackage{verbatim}
-                  \\usepackage{upquote}
-                  \\institute{{{{beamerinstitute}}}}
-                  \\subject{{{{beamersubject}}}}"
+	       ;; beamer class, for presentations
+	       '("beamer"
+		 "\\documentclass[11pt]{beamer}
+		  \\mode<{{{beamermode}}}>
+		  \\usetheme{{{{beamertheme}}}}
+		  \\usecolortheme{{{{beamercolortheme}}}}
+		  \\beamertemplateballitem
+		  \\setbeameroption{show notes}
+		  \\usepackage[utf8]{inputenc}
+		  \\usepackage[T1]{fontenc}
+		  \\usepackage{xeCJK}
+		  \\setCJKmainfont{Hiragino Sans GB W3}
+		  \\XeTeXlinebreaklocale \"zh\"
+		  \\XeTeXlinebreakskip = 0pt plus 1pt
+		  \\usepackage{minted}
+		  \\usemintedstyle{emacs}
+		  \\setmainfont{Monaco}
+		  \\usepackage{hyperref}
+		  \\usepackage{color}
+		  \\usepackage{verbatim}
+		  \\usepackage{upquote}
+		  \\institute{{{{beamerinstitute}}}}
+		  \\subject{{{{beamersubject}}}}"
 
-                 ("\\section{%s}" . "\\section*{%s}")
+		 ("\\section{%s}" . "\\section*{%s}")
 
-                 ("\\begin{frame}[fragile]\\frametitle{%s}"
-                  "\\end{frame}"
-                  "\\begin{frame}[fragile]\\frametitle{%s}"
-                  "\\end{frame}")))
+		 ("\\begin{frame}[fragile]\\frametitle{%s}"
+		  "\\end{frame}"
+		  "\\begin{frame}[fragile]\\frametitle{%s}"
+		  "\\end{frame}")))
 #+end_src
 
 *** TODO 投影片所使用的 html5 配置
@@ -3419,7 +3419,7 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
 ** 在存檔前清除多餘的空白
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
-  (add-hook 'before-save-hook 'whitespace-cleanup)
+;;  (add-hook 'before-save-hook 'whitespace-cleanup)
 #+end_src
 ** TODO remember
 *** electric-pair-mode
@@ -3427,9 +3427,9 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
   (electric-pair-mode 1)
   ;; setting for auto-close brackets for electric-pair-mode regardless of current major mode syntax table
   (setq electric-pair-pairs '(
-                              (?\" . ?\")
-                              (?\{ . ?\})
-                              ) )
+			      (?\" . ?\")
+			      (?\{ . ?\})
+			      ) )
 #+end_src
 #+begin_src emacs-lisp
   (setq fill-column      100 ) ; column beyond which automatic line-wrapping shold happen
@@ -3450,21 +3450,21 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
 #+end_src
 ** hooks
 #+begin_src emacs-lisp :tangle no
-         ;; After save buffer, indent whole file.
+	 ;; After save buffer, indent whole file.
   ;;       (add-hook 'coldnew-editor-hook 'indent-file-after-save)
-         ;; Before save buffer, cleanup whitespace
+	 ;; Before save buffer, cleanup whitespace
 ;;  (add-hook 'before-save-hook 'cleanup-whitespace-before-save)
-         ;; Enable line-number
-         (require 'linum)
-        ;; (add-hook 'coldnew-editor-hook 'linum-mode)
-         ;; use electric-indent-mode
-         (add-hook 'coldnew-editor-hook 'electric-indent-mode)
-         ;; highlight special keywords like TODO, BUF
-         (add-hook 'coldnew-editor-hook 'highlight-additional-keywords)
+	 ;; Enable line-number
+	 (require 'linum)
+	;; (add-hook 'coldnew-editor-hook 'linum-mode)
+	 ;; use electric-indent-mode
+	 (add-hook 'coldnew-editor-hook 'electric-indent-mode)
+	 ;; highlight special keywords like TODO, BUF
+	 (add-hook 'coldnew-editor-hook 'highlight-additional-keywords)
        ;; highlight fontify numbers and constant
     ;;    (add-hook 'coldnew-editor-hook 'highlight-fontify-numbers)
-        ;; highlight escape char in string
-        (add-hook 'coldnew-editor-hook 'highlight-escape-char)
+	;; highlight escape char in string
+	(add-hook 'coldnew-editor-hook 'highlight-escape-char)
       ;;   ;; Add spaces between Chinese and English character.
        ;; (add-hook 'before-save-hook 'insert-space-between-english-chinese)
 #+end_src
@@ -3475,9 +3475,9 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
     "Indent whole file after saved."
     (make-local-variable 'after-save-hook)
     (add-hook 'after-save-hook
-              '(lambda ()
-                 (indent-region (point-min) (point-max) nil)
-                 (save-buffer))))
+	      '(lambda ()
+		 (indent-region (point-min) (point-max) nil)
+		 (save-buffer))))
 
   (defun highlight-additional-keywords ()
     "Highlight additional keywords."
@@ -3490,34 +3490,34 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
   (defun highlight-fontify-numbers ()
     "Use this function as a hook to fontify numbers as constant"
     (font-lock-add-keywords nil
-                            '(
-                              ;; hexadecimal
-                              ("\\b\\(0[00-9a-fA-F]+\\)" 1 font-lock-constant-face)
-                              ;; float
-                              ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
-                              ;; int
-                              ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
-                              )))
+			    '(
+			      ;; hexadecimal
+			      ("\\b\\(0[00-9a-fA-F]+\\)" 1 font-lock-constant-face)
+			      ;; float
+			      ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
+			      ;; int
+			      ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
+			      )))
 
   (defun highlight-escape-char ()
     "Use this function as a hook to fontify escape char."
     (font-lock-add-keywords nil
-                            '(
-                              ("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
-                               0 'font-lock-escape-char-face prepend)
-                              )))
+			    '(
+			      ("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
+			       0 'font-lock-escape-char-face prepend)
+			      )))
 
   (defun insert-space-between-english-chinese ()
     "Insert a space between English words and Chinese charactors"
     (save-excursion
       (goto-char (point-min))
       (while (or (re-search-forward "\\(\\cc\\)\\([a-zA-Z0-9]\\)" nil t)
-                 (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
-        (replace-match "\\1 \\2" nil nil))
+		 (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
+	(replace-match "\\1 \\2" nil nil))
       (goto-char (point-min))
       (while (or (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
-                 (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
-        (replace-match "\\1\\2" nil nil))))
+		 (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
+	(replace-match "\\1\\2" nil nil))))
 #+end_src
 
 * Cedet                                                                :cede:
@@ -3576,16 +3576,16 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
     "Toggle ecb-minor-mode and resize window accordingly"
     (interactive)
     (if ecb-minor-mode
-        (progn
-          (let ((w (frame-width ecb-frame)))
-            (message "%i" w)
-            )
-          (ecb-minor-mode)
-          )
+	(progn
+	  (let ((w (frame-width ecb-frame)))
+	    (message "%i" w)
+	    )
+	  (ecb-minor-mode)
+	  )
       (progn
-        (message "%s" "turning on, make frame wider")
-        (ecb-minor-mode)
-        )
+	(message "%s" "turning on, make frame wider")
+	(ecb-minor-mode)
+	)
       ))
 #+end_src
 * 書籤
@@ -3688,12 +3688,12 @@ emacs 和 cscope 相關的套件蠻多的，xcscope 包含在 cscope 的套件�
   (defun ac-shell-script-mode-setup ()
     "auto-complete settings for shell-script-mode"
     (setq ac-sources
-          '(ac-source-pcomplete
-            ac-source-dictionary
-            ac-source-filename
-            ac-source-files-in-current-dir
-            ac-source-words-in-same-mode-buffers
-            )))
+	  '(ac-source-pcomplete
+	    ac-source-dictionary
+	    ac-source-filename
+	    ac-source-files-in-current-dir
+	    ac-source-words-in-same-mode-buffers
+	    )))
 #+end_src
 #+begin_src emacs-lisp
     ;;;; ---------------------------------------------------------------------------
@@ -3716,11 +3716,11 @@ emacs 和 cscope 相關的套件蠻多的，xcscope 包含在 cscope 的套件�
 *** Keybinding
 #+begin_src emacs-lisp
   (add-hook 'sh-mode-hook
-            '(lambda ()
-               (local-set-key (kbd "}") 'self-insert-command)
-               (local-set-key (kbd "]") 'self-insert-command)
-               (local-set-key (kbd ")") 'self-insert-command)
-               ))
+	    '(lambda ()
+	       (local-set-key (kbd "}") 'self-insert-command)
+	       (local-set-key (kbd "]") 'self-insert-command)
+	       (local-set-key (kbd ")") 'self-insert-command)
+	       ))
 #+end_src
 ** C
 *** 設定 C 語言 檔案的副檔名與對應的模式
@@ -3731,8 +3731,8 @@ emacs 和 cscope 相關的套件蠻多的，xcscope 包含在 cscope 的套件�
 *** 預設使用 Linux Coding Style
 #+begin_src emacs-lisp
   (add-hook 'c-mode-hook
-            '(lambda ()
-               (c-set-style "linux")))
+	    '(lambda ()
+	       (c-set-style "linux")))
 #+end_src
 *** Hooks
 **** prefix
@@ -3740,10 +3740,10 @@ emacs 和 cscope 相關的套件蠻多的，xcscope 包含在 cscope 的套件�
 adeff
 #+begin_src emacs-lisp
     (add-hook 'c-mode-hook
-            '(lambda ()
-               (require 'c-eldoc)
-               (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
-               (c-turn-on-eldoc-mode)))
+	    '(lambda ()
+	       (require 'c-eldoc)
+	       (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
+	       (c-turn-on-eldoc-mode)))
 #+end_src
 #+begin_src emacs-lisp
   ;; use my cc-mode-common-setting
@@ -3775,14 +3775,14 @@ adeff
   else add `if' and expand it."
     (interactive)
     (let* ((current (point))
-           (begin (line-beginning-position)))
+	   (begin (line-beginning-position)))
       (if (eq current begin)
-          (progn
-            (c-mode:insert-include)
-            (newline-and-indent))
-        (progn
-          (insert "if")
-          (yas/expand)))))
+	  (progn
+	    (c-mode:insert-include)
+	    (newline-and-indent))
+	(progn
+	  (insert "if")
+	  (yas/expand)))))
 #+end_src
 **** TODO 自動偵測 c-basic-offset
 #+begin_src emacs-lisp
@@ -3792,7 +3792,7 @@ adeff
 #+begin_src emacs-lisp
   (when (require 'dtrt-indent nil 'noerror)
     (add-hook 'c-mode-hook
-              (lambda () (dtrt-indent-mode t))))
+	      (lambda () (dtrt-indent-mode t))))
 #+end_src
 *** Keybinding
 #+begin_src emacs-lisp
@@ -3815,9 +3815,9 @@ C-s s I             对目录中的相关文件建立列表并进行索引
     "insert main()."
     (interactive)
     (let* ((current (point))
-           (begin (line-beginning-position)))
+	   (begin (line-beginning-position)))
       (if (equal current begin)
-          (insert "main"))
+	  (insert "main"))
       (yas/expand)))
 #+end_src
 ** C++
@@ -3837,40 +3837,40 @@ C-s s I             对目录中的相关文件建立列表并进行索引
 #+begin_src emacs-lisp
     ;;;; CodingStyle
   (add-hook 'c++-mode-hook
-            '(lambda ()
+	    '(lambda ()
 
-               ;; TODO: add comment here
-               (setq c-macro-shrink-window-flag t)
-               (setq c-macro-preprocessor "cpp")
-               (setq c-macro-cppflags " ")
-               (setq c-macro-prompt-flag t)
+	       ;; TODO: add comment here
+	       (setq c-macro-shrink-window-flag t)
+	       (setq c-macro-preprocessor "cpp")
+	       (setq c-macro-cppflags " ")
+	       (setq c-macro-prompt-flag t)
 
-               ;; Use linux-kernel style
-               (c-set-style "linux")
+	       ;; Use linux-kernel style
+	       (c-set-style "linux")
 
-               ;; Setting indentation lvel
-               (setq c-basic-offset 4)
+	       ;; Setting indentation lvel
+	       (setq c-basic-offset 4)
 
-               ;; Make TAB equivilent to 4 spaces
-               (setq tab-width 4)
+	       ;; Make TAB equivilent to 4 spaces
+	       (setq tab-width 4)
 
-               ;; Use spaces to indent instead of tabs.
-               (setq indent-tabs-mode nil)
+	       ;; Use spaces to indent instead of tabs.
+	       (setq indent-tabs-mode nil)
 
-               ;; Indent the continuation by 2
-               (setq c-continued-statement-offset 2)
+	       ;; Indent the continuation by 2
+	       (setq c-continued-statement-offset 2)
 
-               ;; Brackets should be at same indentation level as the statements they open
-               ;; for example:
-               ;;                 if (0)        becomes        if (0)
-               ;;                     {                        {
-               ;;                        ;                         ;
-               ;;                     }                        }
-               (c-set-offset 'substatement-open '0)
-               ;; make open-braces after a case
-               (c-set-offset 'case-label '+)
+	       ;; Brackets should be at same indentation level as the statements they open
+	       ;; for example:
+	       ;;                 if (0)        becomes        if (0)
+	       ;;                     {                        {
+	       ;;                        ;                         ;
+	       ;;                     }                        }
+	       (c-set-offset 'substatement-open '0)
+	       ;; make open-braces after a case
+	       (c-set-offset 'case-label '+)
 
-               ))
+	       ))
 
 #+end_src
 #+begin_src emacs-lisp
@@ -3883,27 +3883,27 @@ C-s s I             对目录中的相关文件建立列表并进行索引
     ;; Default clang completion flags
     ;;    (setq clang-completion-flags
     (setq ac-clang-flags
-          (split-string
-           (concat
-            "-pthread -I./ -I../ "
-            (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0"))))
+	  (split-string
+	   (concat
+	    "-pthread -I./ -I../ "
+	    (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0"))))
 #+end_src
 
 *** Hooks
 **** c-eldoc
 #+begin_src emacs-lisp
   (add-hook 'c++-mode-hook
-            '(lambda ()
-               ;; Enable c-eldoc
-               (require 'c-eldoc)
-               (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
-               (c-turn-on-eldoc-mode)))
+	    '(lambda ()
+	       ;; Enable c-eldoc
+	       (require 'c-eldoc)
+	       (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
+	       (c-turn-on-eldoc-mode)))
 #+end_src
 **** 自動猜測縮排風格
 #+begin_src emacs-lisp
   (when (require 'dtrt-indent nil 'noerror)
     (add-hook 'c++-mode-hook
-              (lambda () (dtrt-indent-mode t))))
+	      (lambda () (dtrt-indent-mode t))))
 #+end_src
 *** 自動補全設定
 **** 載入其餘需要使用的套件。
@@ -3916,14 +3916,14 @@ C-s s I             对目录中的相关文件建立列表并进行索引
   (defun ac-cpp-mode-setup ()
     "auto-complete settings for c-mode."
     (setq ac-sources '(
-                       ac-source-clang
-                       ac-source-dictionary
-                       ac-source-abbrev
-                       ac-source-semantic
-                       ac-source-filename
-                       ac-source-files-in-current-dir
-                       ac-source-words-in-same-mode-buffers
-                       )))
+		       ac-source-clang
+		       ac-source-dictionary
+		       ac-source-abbrev
+		       ac-source-semantic
+		       ac-source-filename
+		       ac-source-files-in-current-dir
+		       ac-source-words-in-same-mode-buffers
+		       )))
 #+end_src
 *** Keybinding
 #+begin_src emacs-lisp
@@ -3962,9 +3962,9 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 *** 啟用 rainbow-delimiters
 #+begin_src emacs-lisp
   (add-hook 'clojure-mode-hook
-            '(lambda ()
-               (when (require rainbow-delimiters)
-                 (rainbow-delimiters-mode-enable))))
+	    '(lambda ()
+	       (when (require rainbow-delimiters)
+		 (rainbow-delimiters-mode-enable))))
 #+end_src
 ** Clojure Script
 ** Emacs Lisp
@@ -4006,24 +4006,24 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+begin_src emacs-lisp
     (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
     (defun ac-emacs-lisp-mode-setup ()
-        "auto-complete settings for emacs-lisp-mode"
-        (setq ac-sources
-              '(ac-source-symbols
-                ac-source-variables
-                ac-source-functions
-                ac-source-features
-                ac-source-filename
-                ac-source-files-in-current-dir
-                ac-source-words-in-same-mode-buffers
-                )))
+	"auto-complete settings for emacs-lisp-mode"
+	(setq ac-sources
+	      '(ac-source-symbols
+		ac-source-variables
+		ac-source-functions
+		ac-source-features
+		ac-source-filename
+		ac-source-files-in-current-dir
+		ac-source-words-in-same-mode-buffers
+		)))
 #+end_src
 *** 快速插入樣板
 #+begin_src emacs-lisp
   (setq emacs-lisp-mode-expand-alist
-        '(("r" . "require")
-          ("d" . "defun")
-          ("l" . "lambda")
-          ))
+	'(("r" . "require")
+	  ("d" . "defun")
+	  ("l" . "lambda")
+	  ))
 #+end_src
 *** TODO Flymake
 #+begin_src emacs-lisp :tangle no
@@ -4031,32 +4031,32 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (defun flymake-elisp-init ()
     (unless (string-match "^ " (buffer-name))
       (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-                           'flymake-create-temp-inplace))
-             (local-file  (file-relative-name
-                           temp-file
-                           (file-name-directory buffer-file-name))))
-        (list
-         (expand-file-name invocation-name invocation-directory)
-         (list
-          "-Q" "--batch" "--eval"
-          (prin1-to-string
-           (quote
-            (dolist (file command-line-args-left)
-              (with-temp-buffer
-                (insert-file-contents file)
-                (condition-case data
-                    (scan-sexps (point-min) (point-max))
-                  (scan-error
-                   (goto-char(nth 2 data))
-                   (princ (format "%s:%s: error: Unmatched bracket or quote\n"
-                                  file (line-number-at-pos)))))))
-            )
-           )
-          local-file)))))
+			   'flymake-create-temp-inplace))
+	     (local-file  (file-relative-name
+			   temp-file
+			   (file-name-directory buffer-file-name))))
+	(list
+	 (expand-file-name invocation-name invocation-directory)
+	 (list
+	  "-Q" "--batch" "--eval"
+	  (prin1-to-string
+	   (quote
+	    (dolist (file command-line-args-left)
+	      (with-temp-buffer
+		(insert-file-contents file)
+		(condition-case data
+		    (scan-sexps (point-min) (point-max))
+		  (scan-error
+		   (goto-char(nth 2 data))
+		   (princ (format "%s:%s: error: Unmatched bracket or quote\n"
+				  file (line-number-at-pos)))))))
+	    )
+	   )
+	  local-file)))))
   (push '("\\.el$" flymake-elisp-init) flymake-allowed-file-name-masks)
   (add-hook 'emacs-lisp-mode-hook
-            ;; workaround for (eq buffer-file-name nil)
-            '(lambda () (if buffer-file-name (flymake-mode t))))
+	    ;; workaround for (eq buffer-file-name nil)
+	    '(lambda () (if buffer-file-name (flymake-mode t))))
 
 
 #+end_src
@@ -4066,17 +4066,17 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
       "After visit elisp file, remove .elc extension file."
       (make-local-variable 'find-file-hook)
       (add-hook 'find-file-hook
-                (lambda ()
-                  (if (and (file-exists-p (concat buffer-file-name "c"))
-                           (file-writable-p (concat buffer-file-name "c")))
-                      (delete-file (concat buffer-file-name "c"))))))
+		(lambda ()
+		  (if (and (file-exists-p (concat buffer-file-name "c"))
+			   (file-writable-p (concat buffer-file-name "c")))
+		      (delete-file (concat buffer-file-name "c"))))))
 #+end_src
 *** Keybinding
 #+begin_src emacs-lisp
   (add-hook 'emacs-lisp-mode-hook
-            '(lambda ()
-               (define-key emacs-lisp-mode-map (kbd "M-i r") '(lambda () (interactive) (insert "require") (yas/expand)))
-               ))
+	    '(lambda ()
+	       (define-key emacs-lisp-mode-map (kbd "M-i r") '(lambda () (interactive) (insert "require") (yas/expand)))
+	       ))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -4090,7 +4090,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+name: emacs-lisp-mode-hook-begin
 #+begin_src emacs-lisp
   (add-hook 'emacs-lisp-mode-hook
-            '(lambda ()
+	    '(lambda ()
 #+end_src
 
 #+name: emacs-lisp-mode-hook-end
@@ -4107,14 +4107,14 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 *** 快速插入樣板
 #+begin_src emacs-lisp
   (setq qml-mode-expand-alist
-        '(("R" . "Rectangle")
-          ("I" . "Item")
-          ("M" . "MouseArea")
-          ("L" . "ListModel")
-          ("C" . "Component")
-          ("T" . "Text")
-          ("i" . "import")
-          ))
+	'(("R" . "Rectangle")
+	  ("I" . "Item")
+	  ("M" . "MouseArea")
+	  ("L" . "ListModel")
+	  ("C" . "Component")
+	  ("T" . "Text")
+	  ("i" . "import")
+	  ))
 #+end_src
 ** qmake
 *** 設定 qmake 的副檔名與對應的模式
@@ -4191,10 +4191,10 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 *** 按鍵設定
 #+begin_src emacs-lisp
     (add-hook 'verilog-mode-hook
-              '(lambda ()
-                 (define-key verilog-mode-map (kbd "C-;") 'iedit-mode)
-                 (auto-complete-mode)
-                 ))
+	      '(lambda ()
+		 (define-key verilog-mode-map (kbd "C-;") 'iedit-mode)
+		 (auto-complete-mode)
+		 ))
 #+end_src
 * 網頁開發
 ** 網頁開發基本設定
@@ -4211,7 +4211,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     "Refresh the firefox browser"
     (interactive)
     (comint-send-string (inferior-moz-process)
-                        "BrowserReload();"))
+			"BrowserReload();"))
 #+end_src
 ** CSS
 *** 設定 CSS 的副檔名與對應的模式
@@ -4238,11 +4238,11 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (defun ac-javascript-mode-setup ()
     "auto-complete settings for javascript-mode"
     (setq ac-sources
-          '(ac-source-dictionary
-            ac-source-filename
-            ac-source-files-in-current-dir
-            ac-source-words-in-same-mode-buffers
-            )))
+	  '(ac-source-dictionary
+	    ac-source-filename
+	    ac-source-files-in-current-dir
+	    ac-source-words-in-same-mode-buffers
+	    )))
 #+end_src
 *** REPL 設定
 使用 js-comint 來設定 REPL 模式。
@@ -4280,11 +4280,11 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (concat "<< " (propertize mode-name 'face 'mode-line-mode-name-face) " >>"))
   (defun coldnew-editor-mode-string ()
     (let* ((mode-string-face
-            (cond
-             ((string= "Command" coldnew-editor-state) 'mode-line-evil-state-string-V)
-             ((string= "View" coldnew-editor-state) 'mode-line-evil-state-string-N)
-             (t 'mode-line-evil-state-string-E)
-             )))
+	    (cond
+	     ((string= "Command" coldnew-editor-state) 'mode-line-evil-state-string-V)
+	     ((string= "View" coldnew-editor-state) 'mode-line-evil-state-string-N)
+	     (t 'mode-line-evil-state-string-E)
+	     )))
       (concat "<" (propertize coldnew-editor-state 'face mode-string-face) ">")))
   ;;;; ---------------------------------------------------------------------------
   ;;;; modeline User-Interfaced setting
@@ -4293,41 +4293,41 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 ** 設定 mode-line 樣式
 #+begin_src emacs-lisp
   (setq-default mode-line-format
-                  '((" "
-                     mode-line-mule-info
-                     ;; read-only or modified status
-                     (:eval
-                      (cond (buffer-read-only
-                             (propertize "RO" 'face 'mode-line-read-only-face))
-                            ((buffer-modified-p)
-                             (propertize "**" 'face 'mode-line-modified-face))
-                            (t "--")))
-                     "   "
-                   ;;  (:eval (coldnew-editor-mode-string))
-                     "   "
-                     ;;              (:eval (mode-line-state))
-                     mode-line-buffer-identification
-                     "   "
-                     ;; major-mode name
-                     (:eval (mode-line-major-mode))
-                     "   "
-                     ;; line and column
-                     "("
-                     (:eval (propertize "%02l" 'face 'font-lock-type-face))
-                     ","
-                     (:eval (propertize "%02c" 'face 'font-lock-type-face))
-                     ")"
+		  '((" "
+		     mode-line-mule-info
+		     ;; read-only or modified status
+		     (:eval
+		      (cond (buffer-read-only
+			     (propertize "RO" 'face 'mode-line-read-only-face))
+			    ((buffer-modified-p)
+			     (propertize "**" 'face 'mode-line-modified-face))
+			    (t "--")))
+		     "   "
+		   ;;  (:eval (coldnew-editor-mode-string))
+		     "   "
+		     ;;              (:eval (mode-line-state))
+		     mode-line-buffer-identification
+		     "   "
+		     ;; major-mode name
+		     (:eval (mode-line-major-mode))
+		     "   "
+		     ;; line and column
+		     "("
+		     (:eval (propertize "%02l" 'face 'font-lock-type-face))
+		     ","
+		     (:eval (propertize "%02c" 'face 'font-lock-type-face))
+		     ")"
 
-                     "   "
-                     (vc-mode vc-mode)
-                     "   "
-                     ;; relative position, size of file
-                     "["
-                     (:eval (propertize "%p" 'face 'font-lock-constant-face)) ;; % above top
-                     "/"
-                     (:eval (propertize "%I" 'face 'font-lock-constant-face)) ;; size
-                     "] "
-                     )))
+		     "   "
+		     (vc-mode vc-mode)
+		     "   "
+		     ;; relative position, size of file
+		     "["
+		     (:eval (propertize "%p" 'face 'font-lock-constant-face)) ;; % above top
+		     "/"
+		     (:eval (propertize "%I" 'face 'font-lock-constant-face)) ;; size
+		     "] "
+		     )))
 #+end_src
 * 互動式命令                                                        :command:
 ** Buffer
@@ -4341,12 +4341,12 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (interactive)
     (let ((scratch-buffer-name (get-buffer-create "*scratch*")))
       (if (equal (current-buffer) scratch-buffer-name)
-          (switch-to-buffer (other-buffer))
-        ;;        (previous-user-buffer)
-        (progn
-          (switch-to-buffer scratch-buffer-name)
-          (unless (equal major-mode 'lisp-interaction-mode)
-            (lisp-interaction-mode))))))
+	  (switch-to-buffer (other-buffer))
+	;;        (previous-user-buffer)
+	(progn
+	  (switch-to-buffer scratch-buffer-name)
+	  (unless (equal major-mode 'lisp-interaction-mode)
+	    (lisp-interaction-mode))))))
 #+end_src
 *** save-buffer-always
 預設的 save-buffer 在 buffer 沒有變動時，不會進行儲存，
@@ -4367,11 +4367,11 @@ This is to update existing buffers after a Git pull of their underlying files."
   (interactive)
   (save-current-buffer
     (mapc (lambda (b)
-            (set-buffer b)
-            (unless (or (null (buffer-file-name)) (buffer-modified-p))
-              (revert-buffer t t)
-              (message "Reverted %s\n" (buffer-file-name))))
-          (buffer-list))))
+	    (set-buffer b)
+	    (unless (or (null (buffer-file-name)) (buffer-modified-p))
+	      (revert-buffer t t)
+	      (message "Reverted %s\n" (buffer-file-name))))
+	  (buffer-list))))
 #+end_src
 *** nuke-all-buffers
 關閉除了 **scratch** 以外的所有 buffer。
@@ -4400,24 +4400,24 @@ This is to update existing buffers after a Git pull of their underlying files."
     (interactive)
     (save-excursion
       (if (region-active-p)
-          (progn
-            (delete-trailing-whitespace (region-beginning) (region-end))
-            (indent-region (region-beginning) (region-end))
-            (untabify (region-beginning) (region-end))
-            (message "Indented selected region."))
-        (progn
-          (indent-region-or-buffer)
-          (message "Indented buffer.")))))
+	  (progn
+	    (delete-trailing-whitespace (region-beginning) (region-end))
+	    (indent-region (region-beginning) (region-end))
+	    (untabify (region-beginning) (region-end))
+	    (message "Indented selected region."))
+	(progn
+	  (indent-region-or-buffer)
+	  (message "Indented buffer.")))))
 #+end_src
 *** TODO rewrite
 #+begin_src emacs-lisp
   (defun align-code (beg end &optional arg)
     (interactive "rP")
     (if (null arg)
-        (align beg end)
+	(align beg end)
       (let ((end-mark (copy-marker end)))
-        (indent-region beg end-mark nil)
-        (align beg end-mark))))
+	(indent-region beg end-mark nil)
+	(align beg end-mark))))
 #+end_src
 #+begin_src emacs-lisp
   (defun mark-line (&optional arg)
@@ -4425,7 +4425,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (beginning-of-line)
     (let ((here (point)))
       (dotimes (i arg)
-        (end-of-line))
+	(end-of-line))
       (set-mark (point))
       (goto-char here)))
   (defun mark-sentence (&optional arg)
@@ -4447,7 +4447,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     "Switches from a horizontal split to a vertical split."
     (interactive)
     (let ((one-buf (window-buffer (selected-window)))
-          (buf-point (point)))
+	  (buf-point (point)))
       (other-window 1)
       (delete-other-windows)
       (split-window-horizontally)
@@ -4458,7 +4458,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     "Switches from a vertical split to a horizontal split."
     (interactive)
     (let ((one-buf (window-buffer (selected-window)))
-          (buf-point (point)))
+	  (buf-point (point)))
       (other-window 1)
       (delete-other-windows)
       (split-window-vertically)
@@ -4470,17 +4470,17 @@ This is to update existing buffers after a Git pull of their underlying files."
     (interactive `(,(+ (window-hscroll)(window-width))))
     (momentary-string-display
      (let* ((iterations (/ (1- width) 10))
-            (result1 "|...|....|")
-            (result2 "1   5   10")
-            (inc1 "....|....|")
-            (inc2 "        %d0")
-            (i 1))
+	    (result1 "|...|....|")
+	    (result2 "1   5   10")
+	    (inc1 "....|....|")
+	    (inc2 "        %d0")
+	    (i 1))
        (while  (<= i iterations)
-         (setq i (1+ i))
-         (setq result1 (concat result1 inc1))
-         (setq result2 (concat result2 (substring (format inc2 i) -10))))
+	 (setq i (1+ i))
+	 (setq result1 (concat result1 inc1))
+	 (setq result2 (concat result2 (substring (format inc2 i) -10))))
        (concat (substring result2 0 width) "\n"
-               (substring result1 0 width) "\n"))
+	       (substring result1 0 width) "\n"))
      (line-beginning-position)
      nil "[space]Clears ruler"))
 
@@ -4491,15 +4491,15 @@ This is to update existing buffers after a Git pull of their underlying files."
     (interactive)
     (let ((other-window (windmove-find-other-window dir)))
       (when other-window
-        (let* ((this-window (selected-window))
-               (this-buffer (window-buffer this-window))
-               (other-buffer (window-buffer other-window))
-               (this-start (window-start this-window))
-               (other-start (window-start other-window)))
-          (set-window-buffer this-window other-buffer)
-          (set-window-buffer other-window this-buffer)
-          (set-window-start this-window other-start)
-          (set-window-start other-window this-start)))))
+	(let* ((this-window (selected-window))
+	       (this-buffer (window-buffer this-window))
+	       (other-buffer (window-buffer other-window))
+	       (this-start (window-start this-window))
+	       (other-start (window-start other-window)))
+	  (set-window-buffer this-window other-buffer)
+	  (set-window-buffer other-window this-buffer)
+	  (set-window-start this-window other-start)
+	  (set-window-start other-window this-start)))))
 
   ;; (global-set-key (kbd "C-M-J") (lambda () (interactive) (swap-with 'down)))
   ;; (global-set-key (kbd "C-M-K") (lambda () (interactive) (swap-with 'up)))
@@ -4529,8 +4529,8 @@ This is to update existing buffers after a Git pull of their underlying files."
   select-region-to-before-match, then kills that region."
     (interactive "MKill forwards to just before: ")
     (let* ((positions (select-region-to-before-match match 'forwards))
-           (start (car positions))
-           (end (cadr positions)))
+	   (start (car positions))
+	   (end (cadr positions)))
       (kill-region start end)))
 
   (defun kill-backwards-to-before-match (match)
@@ -4538,16 +4538,16 @@ This is to update existing buffers after a Git pull of their underlying files."
   select-region-to-before-match, then kills that region."
     (interactive "MKill backwards to just before: ")
     (let* ((positions (select-region-to-before-match match 'backwards))
-           (start (car positions))
-           (end (cadr positions)))
+	   (start (car positions))
+	   (end (cadr positions)))
       (kill-region start end)))
 
   (defun match-paren (arg)
     "Go to the matching paren if on a paren; otherwise insert %."
     (interactive "p")
     (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
-          ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
-          (t (self-insert-command (or arg 1)))))
+	  ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+	  (t (self-insert-command (or arg 1)))))
 
 
 
@@ -4555,7 +4555,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     "toggle between cua-set-mark or cua-rectangle-mark"
     (interactive "P")
     (if (or (not mark-active) arg)
-        (cua-set-mark arg)
+	(cua-set-mark arg)
       (cua-toggle-rectangle-mark)))
 
 
@@ -4566,7 +4566,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (interactive
      (if mark-active (list (region-beginning) (region-end))
        (list (line-beginning-position)
-             (line-beginning-position 2)))))
+	     (line-beginning-position 2)))))
 
   (defadvice kill-region (before slickcut activate compile)
     "When called interactively with no active region, kill a single line
@@ -4574,7 +4574,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (interactive
      (if mark-active (list (region-beginning) (region-end))
        (list (line-beginning-position)
-             (line-beginning-position 2)))))
+	     (line-beginning-position 2)))))
 
   (defun zap-up-to-char-backward (arg char)
     (interactive "p\ncZap up to char backward: ")
@@ -4584,22 +4584,22 @@ This is to update existing buffers after a Git pull of their underlying files."
     (interactive "p\ncGo to char: ")
     (forward-char 1)
     (if (if arg
-            (search-forward (char-to-string char) nil nil arg)
-          (search-forward (char-to-string char)))
-        (backward-char 1)))
+	    (search-forward (char-to-string char) nil nil arg)
+	  (search-forward (char-to-string char)))
+	(backward-char 1)))
 
   (defun go-back-to-char (arg char)
     (interactive "p\ncGo back to char: ")
     (forward-char -1)
     (if arg
-        (search-backward (char-to-string char) nil nil arg)
+	(search-backward (char-to-string char) nil nil arg)
       (search-backward (char-to-string char))))
 
   (defun vjo-forward-current-word-keep-offset ()
     " (Vagn Johansen 1999)"
     (interactive)
     (let ((re-curword) (curword) (offset (point))
-          (old-case-fold-search case-fold-search) )
+	  (old-case-fold-search case-fold-search) )
       (setq curword (thing-at-point 'symbol))
       (setq re-curword (concat "\\<" (thing-at-point 'symbol) "\\>") )
       (beginning-of-thing 'symbol)
@@ -4608,15 +4608,15 @@ This is to update existing buffers after a Git pull of their underlying files."
       (forward-char)
       (setq case-fold-search nil)
       (if (re-search-forward re-curword nil t)
-          (backward-char offset)
-        ;; else
-        (progn (goto-char (point-min))
-               (if (re-search-forward re-curword nil t)
-                   (progn (message "Searching from top. %s" (what-line))
-                          (backward-char offset))
-                 ;; else
-                 (message "Searching from top: Not found"))
-               ))
+	  (backward-char offset)
+	;; else
+	(progn (goto-char (point-min))
+	       (if (re-search-forward re-curword nil t)
+		   (progn (message "Searching from top. %s" (what-line))
+			  (backward-char offset))
+		 ;; else
+		 (message "Searching from top: Not found"))
+	       ))
       (setq case-fold-search old-case-fold-search)
       ))
 
@@ -4624,7 +4624,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     " (Vagn Johansen 2002)"
     (interactive)
     (let ((re-curword) (curword) (offset (point))
-          (old-case-fold-search case-fold-search) )
+	  (old-case-fold-search case-fold-search) )
       (setq curword (thing-at-point 'symbol))
       (setq re-curword (concat "\\<" curword "\\>") )
       (beginning-of-thing 'symbol)
@@ -4632,15 +4632,15 @@ This is to update existing buffers after a Git pull of their underlying files."
       (forward-char)
       (setq case-fold-search nil)
       (if (re-search-backward re-curword nil t)
-          (forward-char offset)
-        ;; else
-        (progn (goto-char (point-max))
-               (if (re-search-backward re-curword nil t)
-                   (progn (message "Searching from bottom. %s" (what-line))
-                          (forward-char offset))
-                 ;; else
-                 (message "Searching from bottom: Not found"))
-               ))
+	  (forward-char offset)
+	;; else
+	(progn (goto-char (point-max))
+	       (if (re-search-backward re-curword nil t)
+		   (progn (message "Searching from bottom. %s" (what-line))
+			  (forward-char offset))
+		 ;; else
+		 (message "Searching from bottom: Not found"))
+	       ))
       (setq case-fold-search old-case-fold-search)
       ))
 
@@ -4696,19 +4696,19 @@ This is to update existing buffers after a Git pull of their underlying files."
     "Make the window full-screen."
     (interactive)
     (let ((current-value (frame-parameter nil 'fullscreen))
-          (old-value nil))
+	  (old-value nil))
       (set-frame-parameter nil 'fullscreen
-                           (if (equal 'fullboth current-value)
-                               'old-value
-                             (progn
-                               (setq old-value current-value)
-                               'fullboth)))))
+			   (if (equal 'fullboth current-value)
+			       'old-value
+			     (progn
+			       (setq old-value current-value)
+			       'fullboth)))))
 #+end_src
 #+begin_src emacs-lisp
   (defun collapse-or-expand ()
     (interactive)
     (if (> (length (window-list)) 1)
-        (delete-other-windows)
+	(delete-other-windows)
       (bury-buffer)))
 #+end_src
 #+begin_src emacs-lisp
@@ -4722,32 +4722,32 @@ This is to update existing buffers after a Git pull of their underlying files."
     "Select window below current one and make it fullscreen."
     (interactive)
     (if (windmove-down)
-        (delete-other-windows)))
+	(delete-other-windows)))
 
   (defun windmove-up-fullscreen ()
     "Select window above the current one and make it fullscreen."
     (interactive)
     (if (windmove-up)
-        (delete-other-windows)))
+	(delete-other-windows)))
 
   (defun windmove-left-fullscreen ()
     "Select window left to current one and make it fullscreen."
     (interactive)
     (if (windmove-left)
-        (delete-other-windows)))
+	(delete-other-windows)))
 
   (defun windmove-right-fullscreen ()
     "Select window right to current one and make it fullscreen."
     (interactive)
     (if (windmove-right)
-        (delete-other-windows)))
+	(delete-other-windows)))
 
   (defun sudo-edit (&optional arg)
     "Edit file with sudo in emacs"
     (interactive "p")
     (if (or arg (not buffer-file-name))
-        ;; (find-file (concat "/sudo:root@localhost:" (anything-read-file-name "File: ")))
-        (find-file (concat "/sudo:root@localhost:" (read-file-name "File: ")))
+	;; (find-file (concat "/sudo:root@localhost:" (anything-read-file-name "File: ")))
+	(find-file (concat "/sudo:root@localhost:" (read-file-name "File: ")))
       (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 (setq tramp-debug-buffer t)
@@ -4768,13 +4768,13 @@ This is to update existing buffers after a Git pull of their underlying files."
     "Insert a shortend URL at point by passed in URL"
     (interactive "sEnter url: " )
     (let* ((url (replace-regexp-in-string "^http://" "" url))
-           (tinyurl
-            (save-excursion
-              (with-temp-buffer
-                (mm-url-insert
-                 (concat "http://tinyurl.com/api-create.php?url=http://" url))
-                (kill-ring-save (point-min) (point-max))
-                (buffer-string)))))
+	   (tinyurl
+	    (save-excursion
+	      (with-temp-buffer
+		(mm-url-insert
+		 (concat "http://tinyurl.com/api-create.php?url=http://" url))
+		(kill-ring-save (point-min) (point-max))
+		(buffer-string)))))
       (insert tinyurl)))
 
   ;;;; ---------------------------------------------------------------------------
@@ -4863,11 +4863,11 @@ yank-n-times 則可以重複的進行貼上。
     "yank multiple times."
     (interactive "P")
     (let ((times (if (equal current-prefix-arg nil)
-                     (read-number "yank repet times: ")
-                   arg)))
+		     (read-number "yank repet times: ")
+		   arg)))
       (if (< times 1)
-          (setq times 1)
-        (dotimes 'times (yank)))))
+	  (setq times 1)
+	(dotimes 'times (yank)))))
 #+end_src
 ** 刪除
 *** 刪除相對應的括號
@@ -4913,8 +4913,8 @@ yank-n-times 則可以重複的進行貼上。
     (interactive)
     (let ((filename (buffer-file-name)))
       (when filename
-        (delete-file filename)
-        (message "Deleted file %s" filename)))
+	(delete-file filename)
+	(message "Deleted file %s" filename)))
     (kill-buffer))
 #+end_src
 ** 轉換
@@ -4947,10 +4947,10 @@ yank-n-times 則可以重複的進行貼上。
     (interactive)
     (backward-kill-sexp)
     (condition-case nil
-        (prin1 (eval (read (current-kill 0)))
-               (current-buffer))
+	(prin1 (eval (read (current-kill 0)))
+	       (current-buffer))
       (error (message "Invalid expression")
-             (insert (current-kill 0)))))
+	     (insert (current-kill 0)))))
 #+end_src
 *** expand-last-sexp
 #+begin_src emacs-lisp
@@ -4976,28 +4976,28 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
     "Translate English to Tranditional Chinese by google-translate."
     (interactive)
     (let ((google-translate-default-source-language "en")
-          (google-translate-default-target-language "zh-TW"))
+	  (google-translate-default-target-language "zh-TW"))
       (google-translate-query-translate)))
 
   (defun google-translate-zh-en ()
     "Translate Tranditional Chinese to English by google-translate."
     (interactive)
     (let ((google-translate-default-source-language "zh-TW")
-          (google-translate-default-target-language "en"))
+	  (google-translate-default-target-language "en"))
       (google-translate-query-translate)))
 #+end_src
 * Tramp                                                               :tramp:
 #+begin_src emacs-lisp
   (setq tramp-default-method "ssh")
   (add-to-list 'tramp-default-method-alist
-               '("\\`localhost\\'" "\\`root\\'" "su"))
+	       '("\\`localhost\\'" "\\`root\\'" "su"))
 #+end_src
 ** Remote sudo access with tramp
 #+begin_src emacs-lisp
   (add-to-list 'tramp-default-proxies-alist
-               '(nil "\\`root\\'" "/ssh:%h:"))
+	       '(nil "\\`root\\'" "/ssh:%h:"))
   (add-to-list 'tramp-default-proxies-alist
-               '((regexp-quote (system-name)) nil nil))
+	       '((regexp-quote (system-name)) nil nil))
 #+end_src
 * 聊天室                                                               :chat:
 ** IRC
@@ -5025,12 +5025,12 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 **** 自動連線的伺服器與聊天室
 #+begin_src emacs-lisp
   (setq erc-autojoin-channels-alist
-        '(;; english channel
-          (".*\\.freenode.net" "#emacs" "#clojure" "##linux" "#gentoo")
-          ;; Chinese channel
-          (".*\\.freenode.net" "#emacs.tw" "#tossug")
-          (".*\\.oftc.net" "#dot")
-          ))
+	'(;; english channel
+	  (".*\\.freenode.net" "#emacs" "#clojure" "##linux" "#gentoo")
+	  ;; Chinese channel
+	  (".*\\.freenode.net" "#emacs.tw" "#tossug")
+	  (".*\\.oftc.net" "#dot")
+	  ))
 #+end_src
 **** 關閉部份訊息顯示
 #+begin_src emacs-lisp
@@ -5089,7 +5089,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
   (erc-track-mode t)
   (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
 
-                                  "324" "329" "332" "333" "353" "477"))
+				  "324" "329" "332" "333" "353" "477"))
   ;; Interpret mIRC-style color commands in IRC chats
   (setq erc-interpret-mirc-color t)
   ;; The following are commented out by default, but users of other
@@ -5125,28 +5125,28 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
   (defun erc-cmd-WII (nick &rest ignore)
     "`/WHOIS' command with extra user information."
     (erc-send-command (mapconcat #'identity
-                                 (list "WHOIS" nick nick) " ")))
+				 (list "WHOIS" nick nick) " ")))
   (defun erc-cmd-IDENTIFY (password &rest ignore)
     "Short-hand alias for `/msg NickServ identify PASS'."
     (erc-send-command (mapconcat #'identity
-                                 (list "identify" password) " ")))
+				 (list "identify" password) " ")))
   (defun erc-cmd-CS (&rest args)
     "Short alias for `/chanserv ARGS'."
     (let ((command-args (append (list "CHANSERV") args)))
       (let ((chanserv-command (mapconcat #'identity command-args " ")))
-        (erc-send-command chanserv-command))))
+	(erc-send-command chanserv-command))))
 
   (defun erc-cmd-MS (&rest args)
     "Short alias for `/memoserv ARGS'."
     (let ((command-args (append (list "MEMOSERV") args)))
       (let ((memoserv-command (mapconcat #'identity command-args " ")))
-        (erc-send-command memoserv-command))))
+	(erc-send-command memoserv-command))))
 
   (defun erc-cmd-NS (&rest args)
     "Short alias for `/nickserv ARGS'."
     (let ((command-args (append (list "NICKSERV") args)))
       (let ((nickserv-command (mapconcat #'identity command-args " ")))
-        (erc-send-command nickserv-command))))
+	(erc-send-command nickserv-command))))
 #+end_src
 **** Function
 #+begin_src emacs-lisp
@@ -5196,41 +5196,41 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 
   ;; Join these channels at startup.
   (setq rcirc-server-alist
-        '(
-          ("irc.freenode.net" :channels  ("#emacs" "#lisp" "##linux" "#gentoo"    ; english channel
-                                          "#tossug" "#gentoo-tw" "#python.tw" "#ubuntu-tw"))
-          ("irc.debian.org" :channels ("#dot"))
-          ))
+	'(
+	  ("irc.freenode.net" :channels  ("#emacs" "#lisp" "##linux" "#gentoo"    ; english channel
+					  "#tossug" "#gentoo-tw" "#python.tw" "#ubuntu-tw"))
+	  ("irc.debian.org" :channels ("#dot"))
+	  ))
 #+end_src
 **** Hooks
 #+begin_src emacs-lisp
   (add-hook 'rcirc-mode-hook
-            '(lambda ()
-               ;; Keep input line at bottom.
-               (set (make-local-variable 'scroll-conservatively) 8192)
-               ;; Use Omit-mode
-               (rcirc-omit-mode)
-               ))
+	    '(lambda ()
+	       ;; Keep input line at bottom.
+	       (set (make-local-variable 'scroll-conservatively) 8192)
+	       ;; Use Omit-mode
+	       (rcirc-omit-mode)
+	       ))
 #+end_src
 **** Commands
 #+begin_src emacs-lisp
   (defun-rcirc-command all (input)
     "Run the arguments as a command for all connections.
-         Example use: /all away food or /all quit zzzz."
+	 Example use: /all away food or /all quit zzzz."
     (interactive "s")
     (let ((buffers (mapcar 'process-buffer (rcirc-process-list))))
       (dolist (buf buffers)
-        (with-current-buffer buf
-          (goto-char (point-max))
-          (insert "/" input)
-          (rcirc-send-input)))))
+	(with-current-buffer buf
+	  (goto-char (point-max))
+	  (insert "/" input)
+	  (rcirc-send-input)))))
 
   (defun-rcirc-command calc (input)
     "calculate value of some expression using bc"
     (let ((expr (mapconcat 'identity args " ")))
       (when (length expr)
-        (let ((result (shell-command-to-string (concat "echo '" expr "' | bc ")))
-              (when result (rcirc-send-message (concat expr " = " result))))))))
+	(let ((result (shell-command-to-string (concat "echo '" expr "' | bc ")))
+	      (when result (rcirc-send-message (concat expr " = " result))))))))
 #+end_src
 **** Fix
 不顯示任何 /away 訊息。
@@ -5294,9 +5294,9 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 **** Keybinding
 #+begin_src emacs-lisp :tangle no
   (add-hook 'egg-commit-buffer-mode-hook
-            '(lambda ()
-               (define-key coldnew/command-mode-map "c" 'egg-log-msg-done)
-               ))
+	    '(lambda ()
+	       (define-key coldnew/command-mode-map "c" 'egg-log-msg-done)
+	       ))
 
 #+end_src
 **** Advice                                                       :advice:
@@ -5336,25 +5336,25 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 #+begin_src emacs-lisp
   ;; Auto add HEADER in new file
   (add-hook 'find-file-hook
-            '(lambda ()
-               (when (and (buffer-file-name)
-                          (not (file-exists-p (buffer-file-name)))
-                          (= (point-max) 1))
-                 (let ((header-snippet "HEADER")
-                       (yas/fallback-behavior 'return-nil))
-                   (insert header-snippet)
-                   ;; if can't expand snippet, clear whole buffer
-                   (if (not (yas/expand))
-                       (delete-region (point-min) (point-max)))))))
+	    '(lambda ()
+	       (when (and (buffer-file-name)
+			  (not (file-exists-p (buffer-file-name)))
+			  (= (point-max) 1))
+		 (let ((header-snippet "HEADER")
+		       (yas/fallback-behavior 'return-nil))
+		   (insert header-snippet)
+		   ;; if can't expand snippet, clear whole buffer
+		   (if (not (yas/expand))
+		       (delete-region (point-min) (point-max)))))))
 #+end_src
 
 ** before-save-hook
 #+begin_src emacs-lisp
   ;; If save a newfile to nonexist directory, create the directory before save.
   (add-hook 'before-save-hook
-            '(lambda ()
-               (or (file-exists-p  (file-name-directory buffer-file-name))
-                   (make-directory (file-name-directory buffer-file-name) t))))
+	    '(lambda ()
+	       (or (file-exists-p  (file-name-directory buffer-file-name))
+		   (make-directory (file-name-directory buffer-file-name) t))))
 #+end_src
 * 檔案備份
 #+begin_src emacs-lisp
@@ -5405,11 +5405,11 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
 這邊重新設定我所需要使用的多媒體播放程式。
 #+begin_src emacs-lisp
   (setq emms-player-list '(emms-player-mpg321
-                           ;;emms-player-ogg123
-                           emms-player-mplayer-playlist
-                           emms-player-mplayer
-                           emms-player-vlc
-                           ))
+			   ;;emms-player-ogg123
+			   emms-player-mplayer-playlist
+			   emms-player-mplayer
+			   emms-player-vlc
+			   ))
 #+end_src
 ** 設定預設的音樂資料夾路徑
 #+begin_src emacs-lisp
@@ -5418,7 +5418,7 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
 ** 播放清單設置
 #+begin_src emacs-lisp
   (setq emms-playlist-buffer-name "*EMMS Playlist*"
-        emms-playlist-mode-open-playlists t)
+	emms-playlist-mode-open-playlists t)
 
   (require 'emms-info-libtag)
   (setq emms-info-functions '(emms-info-libtag))
@@ -5429,72 +5429,72 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
   (defun xwl-emms-track-description-function (track)
     "Return a description of the current track."
     (let* ((name (emms-track-name track))
-           (type (emms-track-type track))
-           (short-name (file-name-nondirectory name))
-           (play-count (or (emms-track-get track 'play-count) 0))
-           (last-played (or (emms-track-get track 'last-played) '(0 0 0)))
-           (empty "..."))
+	   (type (emms-track-type track))
+	   (short-name (file-name-nondirectory name))
+	   (play-count (or (emms-track-get track 'play-count) 0))
+	   (last-played (or (emms-track-get track 'last-played) '(0 0 0)))
+	   (empty "..."))
       (prog1
-          (case (emms-track-type track)
-            ((file url)
-             (let* ((artist (or (emms-track-get track 'info-artist) empty))
-                    (year (emms-track-get track 'info-year))
-                    (playing-time (or (emms-track-get track 'info-playing-time) 0))
-                    (min (/ playing-time 60))
-                    (sec (% playing-time 60))
-                    (album (or (emms-track-get track 'info-album) empty))
-                    (tracknumber (emms-track-get track 'info-tracknumber))
-                    (short-name (file-name-sans-extension
-                                 (file-name-nondirectory name)))
-                    (title (or (emms-track-get track 'info-title) short-name))
+	  (case (emms-track-type track)
+	    ((file url)
+	     (let* ((artist (or (emms-track-get track 'info-artist) empty))
+		    (year (emms-track-get track 'info-year))
+		    (playing-time (or (emms-track-get track 'info-playing-time) 0))
+		    (min (/ playing-time 60))
+		    (sec (% playing-time 60))
+		    (album (or (emms-track-get track 'info-album) empty))
+		    (tracknumber (emms-track-get track 'info-tracknumber))
+		    (short-name (file-name-sans-extension
+				 (file-name-nondirectory name)))
+		    (title (or (emms-track-get track 'info-title) short-name))
 
-                    ;; last track
-                    (ltrack xwl-emms-playlist-last-track)
-                    (lartist (or (and ltrack (emms-track-get ltrack 'info-artist))
-                                 empty))
-                    (lalbum (or (and ltrack (emms-track-get ltrack 'info-album))
-                                empty))
+		    ;; last track
+		    (ltrack xwl-emms-playlist-last-track)
+		    (lartist (or (and ltrack (emms-track-get ltrack 'info-artist))
+				 empty))
+		    (lalbum (or (and ltrack (emms-track-get ltrack 'info-album))
+				empty))
 
-                    (same-album-p (and (not (string= lalbum empty))
-                                       (string= album lalbum))))
-               (format "%10s  %3d   %-20s%-60s%-35s%-15s%s"
-                       (emms-last-played-format-date last-played)
-                       play-count
-                       artist
+		    (same-album-p (and (not (string= lalbum empty))
+				       (string= album lalbum))))
+	       (format "%10s  %3d   %-20s%-60s%-35s%-15s%s"
+		       (emms-last-played-format-date last-played)
+		       play-count
+		       artist
 
-                       ;; Combine indention, tracknumber, title.
-                       (concat
-                        (if same-album-p ; indention by album
-                            (setq xwl-emms-playlist-last-indent
-                                  (concat " " xwl-emms-playlist-last-indent))
-                          (setq xwl-emms-playlist-last-indent "\\")
-                          "")
-                        (if (and tracknumber ; tracknumber
-                                 (not (zerop (string-to-number tracknumber))))
-                            (format "%02d." (string-to-number tracknumber))
-                          "")
-                        title        ; title
-                        )
+		       ;; Combine indention, tracknumber, title.
+		       (concat
+			(if same-album-p ; indention by album
+			    (setq xwl-emms-playlist-last-indent
+				  (concat " " xwl-emms-playlist-last-indent))
+			  (setq xwl-emms-playlist-last-indent "\\")
+			  "")
+			(if (and tracknumber ; tracknumber
+				 (not (zerop (string-to-number tracknumber))))
+			    (format "%02d." (string-to-number tracknumber))
+			  "")
+			title        ; title
+			)
 
-                       ;; album
-                       (cond ((string= album empty) empty)
-                             ;; (same-album-p "  ")
-                             (t (concat "《" album "》")))
+		       ;; album
+		       (cond ((string= album empty) empty)
+			     ;; (same-album-p "  ")
+			     (t (concat "《" album "》")))
 
-                       (or year empty)
-                       (if (or (> min 0)  (> sec 0))
-                           (format "%02d:%02d" min sec)
-                         empty))))
-            ((url)
-             (concat (symbol-name type) ":" name))
-            (t
-             (format "%-3d%s"
-                     play-count
-                     (concat (symbol-name type) ":" name))))
-        (setq xwl-emms-playlist-last-track track))))
+		       (or year empty)
+		       (if (or (> min 0)  (> sec 0))
+			   (format "%02d:%02d" min sec)
+			 empty))))
+	    ((url)
+	     (concat (symbol-name type) ":" name))
+	    (t
+	     (format "%-3d%s"
+		     play-count
+		     (concat (symbol-name type) ":" name))))
+	(setq xwl-emms-playlist-last-track track))))
 
   (setq emms-track-description-function
-        'xwl-emms-track-description-function)
+	'xwl-emms-track-description-function)
 #+end_src
 * Session
 ** filecache
@@ -5502,10 +5502,10 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
   (require 'filecache)
   ;; setup file-cache-filter-regexps
   (setq file-cache-filter-regexps
-        '("~$" "\\.o$" "\\.exe$" "\\.a$" "\\.out$"  "\\.elc$"
-          "\\.output$" "\\.$" "#$" "\\.class$" "\\.pyc$" "\\.png$" "\\.jpg$" "\\.gif$"
-          "\\.svn$" "\\.svn-base$" "\\.git$" "\\.hg$"
-          ))
+	'("~$" "\\.o$" "\\.exe$" "\\.a$" "\\.out$"  "\\.elc$"
+	  "\\.output$" "\\.$" "#$" "\\.class$" "\\.pyc$" "\\.png$" "\\.jpg$" "\\.gif$"
+	  "\\.svn$" "\\.svn-base$" "\\.git$" "\\.hg$"
+	  ))
 
   (file-cache-add-directory-list '("~/.emacs.d/" ))
 #+end_src
@@ -5555,16 +5555,16 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
 
   ;; auto save desktop
   (add-hook 'after-init-hook
-            (lambda ()
-              (setq *desktop-saver-timer*
-                    (run-with-timer 5 300 'autosave-desktop))))
+	    (lambda ()
+	      (setq *desktop-saver-timer*
+		    (run-with-timer 5 300 'autosave-desktop))))
 
   ;; Following modes are ignore and won't save to desktop
   (setq desktop-buffers-not-to-save
-        (concat "\\("
-                "^\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
-                "\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
-                "\\)$"))
+	(concat "\\("
+		"^\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
+		"\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
+		"\\)$"))
 
   (add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
   (add-to-list 'desktop-modes-not-to-save 'dired-mode)
@@ -5892,12 +5892,12 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
   (dolist
       (r `(
-           ;; emacs-config
-           (?e (file . ,(expand-file-name emacs-config-file)))
-           ;; TODO.org
-           (?t (file . "~/Dropbox/Org/TODO.org"))
-           ;; (?b (file . "~/personal/business.org"))
-           ))
+	   ;; emacs-config
+	   (?e (file . ,(expand-file-name emacs-config-file)))
+	   ;; TODO.org
+	   (?t (file . "~/Dropbox/Org/TODO.org"))
+	   ;; (?b (file . "~/personal/business.org"))
+	   ))
     (set-register (car r) (cadr r)))
 #+end_src
 
@@ -5913,10 +5913,10 @@ This looks for strings like \"<e\" on an otherwise empty line and
 expands them."
   (interactive)
   (let ((l (buffer-substring (point-at-bol) (point)))
-        a)
+	a)
     (when (and (looking-at "[ \t]*$")
-               (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
-               (setq a (assoc (match-string 1 l) aa-structure-template-alist)))
+	       (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
+	       (setq a (assoc (match-string 1 l) aa-structure-template-alist)))
       ;;      (org-complete-expand-structure-template (+ -1 (point-at-bol)
       ;;                                           (match-beginning 1)) a)
       (backward-delete-char 2)
@@ -5931,7 +5931,7 @@ expands them."
       '("E" ."require"))
 
 (add-to-list 'aa-structure-template-alist
-             '("H" "require"))
+	     '("H" "require"))
 
 #+end_src
 #+begin_src emacs-lisp
@@ -5942,8 +5942,8 @@ expands them."
       (skip-syntax-backward "w_")
       (goto-char
        (if (re-search-backward (concat "\\_<" (current-word) "\\_>") nil t)
-           (match-beginning 0)
-         cur))))
+	   (match-beginning 0)
+	 cur))))
 
   (defun sacha/search-word-forward ()
     "Find the next occurrence of the current word."
@@ -5952,8 +5952,8 @@ expands them."
       (skip-syntax-forward "w_")
       (goto-char
        (if (re-search-forward (concat "\\_<" (current-word) "\\_>") nil t)
-           (match-beginning 0)
-         cur))))
+	   (match-beginning 0)
+	 cur))))
   (global-set-key '[M-up] 'sacha/search-word-backward)
   (global-set-key '[M-down] 'sacha/search-word-forward)
 #+end_src
@@ -5963,7 +5963,7 @@ expands them."
     "Set the TAGS file."
     (set (make-variable-buffer-local 'tags-table-list) nil)
     (set (make-variable-buffer-local 'tags-file-name)
-         (sacha/recursive-find-file "TAGS")))
+	 (sacha/recursive-find-file "TAGS")))
 #+end_src
 
 https://github.com/travisbhartwell/emacs-config/blob/master/HOME/_emacs.d/init-helpers.el
@@ -5974,9 +5974,9 @@ http://jixiuf.github.com/tags/@Emacs.html
   (defun run-rand (n times)
     (defun run-rand-iter (k)
       (cond ((= k times) (princ (concat (number-to-string (random n)) "\n")))
-            (t
-             (princ (concat (number-to-string (random n)) "\n"))
-             (run-rand-iter (+ k 1)))))
+	    (t
+	     (princ (concat (number-to-string (random n)) "\n"))
+	     (run-rand-iter (+ k 1)))))
     (run-rand-iter 0))
 
 #+end_src
@@ -5987,10 +5987,10 @@ http://jixiuf.github.com/tags/@Emacs.html
   (defun google-weather-build-url (location &optional language)
     "Build URL to retrieve weather for LOCATION in LANGUAGE."
     (concat "http" (when google-weather-use-https "s") "://" google-weather-url "?weather=" (url-hexify-string location)
-            (when language
-              (concat "&hl=" language))
-            ;; add for encoding
-            (concat "&oe=" "utf8")))
+	    (when language
+	      (concat "&hl=" language))
+	    ;; add for encoding
+	    (concat "&oe=" "utf8")))
 #+end_src
 * Blog
 #+begin_src emacs-lisp
