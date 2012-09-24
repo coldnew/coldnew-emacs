@@ -1027,10 +1027,11 @@ emacs 套件管理的設定。
 *** 設定 elpa 所使用的套件庫
 #+begin_src emacs-lisp
   (setq package-archives
-        '(("ELPA" . "http://tromey.com/elpa/")
+        '(("melpa" . "http://melpa.milkbox.net/packages/")
+          ("ELPA" . "http://tromey.com/elpa/")
           ("gnu" . "http://elpa.gnu.org/packages/")
           ("marmalade" . "http://marmalade-repo.org/packages/")
-          ("melpa" . "http://melpa.milkbox.net/packages/")))
+          ))
 #+end_src
 ** 套件檢查
 為了避免有套件因為 *意外* 而不見，對套件進行檢查，若不存在則進行重新安裝的動作。
@@ -2126,30 +2127,51 @@ auto-complete-mode 的按鍵設定。
             (format ": %s" (buffer-substring s e))))
 #+end_src
 *** Commands
+*** 在目前的專案找尋檔案
 #+begin_src emacs-lisp
-  (defun coldnew/helm-filelist ()
-    "Preconfigured `anything' to open files/buffers/bookmarks instantly.
-   This is a replacement for `anything-for-files'.
-   See `anything-c-filelist-file-name' docstring for usage."
+  (defun coldnew/project-find-file ()
     (interactive)
     (helm-other-buffer
-     '(
-       helm-c-source-buffers-list
-       helm-c-source-recentf
-       helm-c-source-ffap-line
-       helm-c-source-ffap-guesser
-       helm-c-source-bookmarks
-       helm-c-source-file-cache
-        helm-c-source-projectile-files-list
-       helm-c-source-files-in-current-dir
-       helm-c-source-locate)
-     "*coldnew/filelist*"))
-  (defun coldnew/helm-occur ()
-    "I don't like highlight when goto lines."
-    (interactive)
-    ;; FIXME: is there more elegent way to make temp face?
-    (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
-    (helm-occur))
+     '(helm-c-source-git-files
+       )
+     "*coldnew/project-file-list"))
+#+end_src
+*** 在目前的專案找尋 buffer
+#+begin_src emacs-lisp
+  (defun coldnew/project-find-buffer ()
+      (interactive)
+      (helm-other-buffer
+       '(helm-c-source-projectile-buffers-list
+         )
+       "*coldnew/project-buffer-list"))
+#+end_src
+
+*** TODO 其他
+#+begin_src emacs-lisp
+    (defun coldnew/helm-filelist ()
+      "Preconfigured `anything' to open files/buffers/bookmarks instantly.
+     This is a replacement for `anything-for-files'.
+     See `anything-c-filelist-file-name' docstring for usage."
+      (interactive)
+      (helm-other-buffer
+       '(helm-c-source-buffers-list
+         helm-c-source-recentf
+         helm-c-source-ffap-line
+         helm-c-source-ffap-guesser
+         helm-c-source-bookmarks
+         helm-c-source-file-cache
+         helm-c-source-projectile-files-list
+         helm-c-source-files-in-current-dir
+         helm-c-source-locate)
+       "*coldnew/filelist*"))
+
+
+    (defun coldnew/helm-occur ()
+      "I don't like highlight when goto lines."
+      (interactive)
+      ;; FIXME: is there more elegent way to make temp face?
+      (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
+      (helm-occur))
 #+end_src
 
 ** lusty-explorer
@@ -2926,6 +2948,26 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
                '("S" "#+begin_src sh\n?\n#+end_src"))
 #+end_src
 
+** TODO Image size
+#+begin_example
+
+You can now (from git master) use `org-image-actual-width'.
+
+(setq org-image-actual-width 300)
+  => always resize inline images to 300 pixels
+
+(setq org-image-actual-width '(400))
+  => if there is a #+ATTR.*: width="200", resize to 200,
+     otherwise resize to 400
+
+(setq org-image-actual-width nil)
+  => if there is a #+ATTR.*: width="200", resize to 200,
+     otherwise don't resize
+
+(setq org-image-actual-width t)
+  => Never resize and use original width (the default)
+
+#+end_example
 ** Capture
 #+begin_src emacs-lisp
   (setq org-default-notes-file (concat org-directory "TODO.org"))
@@ -5569,6 +5611,16 @@ Function key 設置常用的命令。
 ** 在目前行加上彩色條
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x l") 'hl-line-mode)
+#+end_src
+** 專案相關的按鍵
+| 按鍵    | 命令                        | 用途                     |
+|---------+-----------------------------+--------------------------|
+| C-x p f | coldnew/project-find-file   | 在目前的專案裏面找尋檔案 |
+| C-x p b | coldnew/project-find-buffer | 找尋目前專案的緩衝區     |
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x p f") 'coldnew/project-find-file)
+  (global-set-key (kbd "C-x p b") 'coldnew/project-find-buffer)
 #+end_src
 ** Ctrl Prefix
 *** Default Emacs keybinding
