@@ -1046,7 +1046,7 @@ emacs 套件管理的設定。
 此檔案用於將 emacs-packags-list 暫存。
 #+begin_src emacs-lisp
   (defvar emacs-packages-file
-    (concat emacs-dir ".packages.el")
+    (concat emacs-dir "installed.el")
     "Define where to store and read the installed packages list.")
 #+end_src
 *** 將套件資訊寫入到檔案
