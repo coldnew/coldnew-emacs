@@ -5499,7 +5499,8 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
 * Session
 ** filecache
 filecache 會根據使用者輸入的文件名，找到該文件的實際位置。
-使用 C-x C-f 找尋文件時，在 minibuffer 上輸入該文件的名字，並使用 C-TAB 進行補全。
+使用 C-x C-f 找尋文件時，在 minibuffer 上輸入該文件的名字，並使用 C-TAB 進行補全，
+此時路徑會被 filecache 更改成欲找尋文件的路徑。
 #+begin_src emacs-lisp
   (require 'filecache)
   ;; setup file-cache-filter-regexps
