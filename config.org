@@ -5498,16 +5498,18 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
 #+end_src
 * Session
 ** filecache
+filecache 會根據使用者輸入的文件名，找到該文件的實際位置。
+使用 C-x C-f 找尋文件時，在 minibuffer 上輸入該文件的名字，並使用 C-TAB 進行補全。
 #+begin_src emacs-lisp
   (require 'filecache)
   ;; setup file-cache-filter-regexps
   (setq file-cache-filter-regexps
-	'("~$" "\\.o$" "\\.exe$" "\\.a$" "\\.out$"  "\\.elc$"
-	  "\\.output$" "\\.$" "#$" "\\.class$" "\\.pyc$" "\\.png$" "\\.jpg$" "\\.gif$"
+	'("~$" "\\.o$" "\\.exe$" "\\.a$" "\\.out$"  "\\.elc$" "\\.so$"
+	  "\\.output$" "\\.$" "#$" "\\.class$" "\\.pyc$"
 	  "\\.svn$" "\\.svn-base$" "\\.git$" "\\.hg$"
 	  ))
 
-  (file-cache-add-directory-list '("~/.emacs.d/" ))
+  (file-cache-add-directory-list '("~/.emacs.d/" "~/Workspace/"))
 #+end_src
 ** savehist
 #+begin_src emacs-lisp
