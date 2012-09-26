@@ -1256,11 +1256,12 @@ ok
   (require 'helm)
   (require 'htmlize)
   (require 'pretty-lambdada)
+  (require 'rainbow-delimiters)
 #+end_src
 parenface 可以將所有的圓括號上色。
 #+begin_src emacs-lisp
-  (require 'parenface)
-  (set-face-foreground 'paren-face "green")
+;;  (require 'parenface)
+;;  (set-face-foreground 'paren-face "green")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1759,17 +1760,17 @@ emacs-lisp-mode 的 buffer，可以這樣做
 *** rainbow-delimiters
 #+begin_src emacs-lisp
   '(rainbow-delimiters-depth-1-face ((t (:foreground "green"))))
-  ;; '(rainbow-delimiters-depth-2-face ((t (:foreground  "yellow"))))
-  ;; '(rainbow-delimiters-depth-3-face ((t (:foreground  "blue"))))
-  ;; '(rainbow-delimiters-depth-4-face ((t (:foreground "purple"))))
-  ;; '(rainbow-delimiters-depth-5-face ((t (:foreground "orange"))))
-  ;; '(rainbow-delimiters-depth-6-face ((t (:foreground  "magenta"))))
-  ;; '(rainbow-delimiters-depth-7-face ((t (:foreground  "spring green"))))
-  ;; '(rainbow-delimiters-depth-8-face ((t (:foreground  "coral"))))
-  ;; '(rainbow-delimiters-depth-9-face ((t (:foreground  "dodger blue"))))
-  ;; '(rainbow-delimiters-depth-10-face ((t (:foreground "violet red"))))
-  ;; '(rainbow-delimiters-depth-11-face ((t (:foreground "DarkOrange1"))))
-  ;; '(rainbow-delimiters-depth-12-face ((t (:foreground "chartreuse2"))))
+   '(rainbow-delimiters-depth-2-face ((t (:foreground  "yellow"))))
+   '(rainbow-delimiters-depth-3-face ((t (:foreground  "blue"))))
+   '(rainbow-delimiters-depth-4-face ((t (:foreground "purple"))))
+   '(rainbow-delimiters-depth-5-face ((t (:foreground "orange"))))
+   '(rainbow-delimiters-depth-6-face ((t (:foreground  "magenta"))))
+   '(rainbow-delimiters-depth-7-face ((t (:foreground  "spring green"))))
+   '(rainbow-delimiters-depth-8-face ((t (:foreground  "coral"))))
+   '(rainbow-delimiters-depth-9-face ((t (:foreground  "dodger blue"))))
+   '(rainbow-delimiters-depth-10-face ((t (:foreground "violet red"))))
+   '(rainbow-delimiters-depth-11-face ((t (:foreground "DarkOrange1"))))
+   '(rainbow-delimiters-depth-12-face ((t (:foreground "chartreuse2"))))
 #+end_src
 *** Other
 #+begin_src emacs-lisp
@@ -1941,17 +1942,17 @@ auto-complete-mode 的按鍵設定。
 #+begin_src emacs-lisp
   (defmacro elscreen-create-automatically (ad-do-it)
     (` (if (not (elscreen-one-screen-p))
-	   (, ad-do-it)
-	 (elscreen-create)
-	 (elscreen-notify-screen-modification 'force-immediately)
-	 (elscreen-message "New screen is automatically created"))))
-
+           (, ad-do-it)
+         (elscreen-create)
+         (elscreen-notify-screen-modification 'force-immediately)
+         (elscreen-message "New screen is automatically created"))))
+  
   (defadvice elscreen-next (around elscreen-create-automatically activate)
     (elscreen-create-automatically ad-do-it))
-
+  
   (defadvice elscreen-previous (around elscreen-create-automatically activate)
     (elscreen-create-automatically ad-do-it))
-
+  
   (defadvice elscreen-toggle (around elscreen-create-automatically activate)
     (elscreen-create-automatically ad-do-it))
 #+end_src
@@ -4990,7 +4991,7 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
 #+begin_src emacs-lisp
   (setq tramp-default-method "ssh")
   (add-to-list 'tramp-default-method-alist
-	       '("\\`localhost\\'" "\\`root\\'" "su"))
+               '("\\`localhost\\'" "\\`root\\'" "su"))
 #+end_src
 ** Remote sudo access with tramp
 #+begin_src emacs-lisp
