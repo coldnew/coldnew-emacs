@@ -4702,7 +4702,7 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
   (add-to-list 'tramp-default-proxies-alist
 	       '((regexp-quote (system-name)) nil nil))
 #+end_src
-* 聊天室                                                               :chat:
+* 聊天軟體                                                             :chat:
 ** IRC
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境的設置。
 *** ERC
@@ -5620,34 +5620,6 @@ Function key 設置常用的命令。
 :END:
 這邊放置的是不再使用的設定,並且這邊的設定並不會輸出至我的 emacs-config 上。
 #+begin_src emacs-lisp
-(defun aa ()
-  "Try to complete a structure template before point.
-This looks for strings like \"<e\" on an otherwise empty line and
-expands them."
-  (interactive)
-  (let ((l (buffer-substring (point-at-bol) (point)))
-	a)
-    (when (and (looking-at "[ \t]*$")
-	       (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
-	       (setq a (assoc (match-string 1 l) aa-structure-template-alist)))
-      ;;      (org-complete-expand-structure-template (+ -1 (point-at-bol)
-      ;;                                           (match-beginning 1)) a)
-      (backward-delete-char 2)
-      (insert (car (cdr-safe a)))
-      (yas/expand)
-      t)))
-
-
-(setq aa-structure-template-alist org-structure-template-alist)
-
-(add-to-list 'aa-structure-template-alist
-      '("E" ."require"))
-
-(add-to-list 'aa-structure-template-alist
-	     '("H" "require"))
-
-#+end_src
-#+begin_src emacs-lisp
   (defun sacha/search-word-backward ()
     "Find the previous occurrence of the current word."
     (interactive)
@@ -5693,7 +5665,6 @@ http://jixiuf.github.com/tags/@Emacs.html
     (run-rand-iter 0))
 
 #+end_src
-
 * Other
 ** TODO 為 google-weather 增加編碼的設定
 #+begin_src emacs-lisp
