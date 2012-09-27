@@ -1814,7 +1814,7 @@ auto-complete-mode 的按鍵設定。
                (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
 #+end_src
 
-*** 讓 lusty-explorer 能夠使用 sudo 來打開檔案
+*** 讓 lusty-explorer 能夠使用 sudo 來打開檔案                    :command:
 #+begin_src emacs-lisp
   (defun lusty-sudo-explorer ()
     "Launch the file/directory mode of LustyExplorer."
@@ -2479,8 +2479,9 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
 #+end_src
-* helm-mode                                                            :helm:
+* Helm                                                                 :helm:
 ** 載入相關套件
+
 #+begin_src emacs-lisp
   (require 'helm)
   (require 'helm-projectile)
@@ -2488,15 +2489,20 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   (require 'helm-git)
   (require 'ctags-update)
 #+end_src
+
 ** 使用預先定義好的 helm 設定
+
 #+begin_src emacs-lisp
   (require 'helm-config)
   (setq helm-config t)
 #+end_src
+
 ** 全域性啟用 helm-mode
+
 #+begin_src emacs-lisp
   (helm-mode 1)
 #+end_src
+
 ** TODO Config this
 #+begin_src emacs-lisp
   ;; Enable dired binding
@@ -2510,8 +2516,8 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
     (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
 	    (format ": %s" (buffer-substring s e))))
 #+end_src
-** Commands
-** 在目前的專案找尋檔案
+** 在目前的專案找尋檔案                                            :command:
+
 #+begin_src emacs-lisp
   (defun coldnew/project-find-file ()
     (interactive)
@@ -2520,7 +2526,9 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
        )
      "*coldnew/project-file-list"))
 #+end_src
-** 在目前的專案找尋 buffer
+
+** 在目前的專案找尋 buffer                                         :command:
+
 #+begin_src emacs-lisp
   (defun coldnew/project-find-buffer ()
       (interactive)
@@ -2548,14 +2556,17 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 	 helm-c-source-files-in-current-dir
 	 helm-c-source-locate)
        "*coldnew/filelist*"))
+#+end_src
 
+** 尋找目前緩衝區所有符合查詢規則的文字、字串                      :command:
 
-    (defun coldnew/helm-occur ()
-      "I don't like highlight when goto lines."
-      (interactive)
-      ;; FIXME: is there more elegent way to make temp face?
-      (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
-      (helm-occur))
+#+begin_src emacs-lisp
+  (defun coldnew/helm-occur ()
+    "I don't like highlight when goto lines."
+    (interactive)
+    ;; FIXME: is there more elegent way to make temp face?
+    (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
+    (helm-occur))
 #+end_src
 
 * 文檔幫助
@@ -5321,11 +5332,11 @@ Function key 設置常用的命令。
 #+end_src
 ** 在目前行加上彩色條
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-x h") 'hl-line-mode)
+  (global-set-key (kbd "C-x l") 'hl-line-mode)
 #+end_src
 ** 顯示行號
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-x l") 'linum-mode)
+  (global-set-key (kbd "C-x L") 'linum-mode)
 #+end_src
 ** 專案相關的按鍵
 | 按鍵    | 命令                        | 用途                     |
