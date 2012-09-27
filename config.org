@@ -1800,18 +1800,21 @@ auto-complete-mode 的按鍵設定。
 #+end_src
 
 ** lusty-explorer
-*** Depends
+*** 載入相關套件
+
 #+begin_src emacs-lisp
   (require 'lusty-explorer)
 #+end_src
-*** Keybinding
+
+*** 使用 <ENTER> 選擇目前的檔案
+
 #+begin_src emacs-lisp
   (add-hook 'lusty-setup-hook
-	    '(lambda ()
-	       (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)
-	       ))
+            '(lambda ()
+               (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
 #+end_src
-*** Command
+
+*** 讓 lusty-explorer 能夠使用 sudo 來打開檔案
 #+begin_src emacs-lisp
   (defun lusty-sudo-explorer ()
     "Launch the file/directory mode of LustyExplorer."
@@ -1823,24 +1826,22 @@ auto-complete-mode 的按鍵設定。
 	      (concat "\\(?:" (regexp-opt completion-ignored-extensions) "\\)$"))
 	     (minibuffer-local-filename-completion-map lusty-mode-map)
 	     (file
-	      ;; read-file-name is silly in that if the result is equal to the
-	      ;; dir argument, it gets converted to the default-filename
-	      ;; argument. Set it explicitly to "" so if lusty-launch-dired is
-	      ;; called in the directory we start at, the result is that directory
-	      ;; instead of the name of the current buffer.
 	      (lusty--run 'read-file-name default-directory "")))
 	(when file
 	  (switch-to-buffer
 	   (find-file-noselect (concat "/sudo:root@localhost:"
 				       (expand-file-name file))))))))
 #+end_src
-*** Make lusty-explorer use it's own completion, not helm-completion
+
+*** 讓 lusty-explorer 使用自己的補全方式，而不是 helm 的補全方式
+
+當 helm-mode 載入完後，將和 lusty-explorer 相關的命令加入至 helm-completing-read-handlers-alist，
+以避免 lusty-explorer 使用 helm-mode 提供的補全方法。
 #+begin_src emacs-lisp
-    (when (featurep 'helm)
-      (add-to-list 'helm-completing-read-handlers-alist '(lusty-sudo-explorer . nil))
-      (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
-      (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil))
-  )
+  (when (featurep 'helm-mode)
+    (add-to-list 'helm-completing-read-handlers-alist '(lusty-sudo-explorer . nil))
+    (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
+    (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
 #+end_src
 
 ** smex                                                               :smex:
@@ -2482,25 +2483,25 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 ** 載入相關套件
 #+begin_src emacs-lisp
   (require 'helm)
-  (require 'helm-config)
   (require 'helm-projectile)
   (require 'helm-etags+)
   (require 'helm-git)
   (require 'ctags-update)
 #+end_src
+** 使用預先定義好的 helm 設定
+#+begin_src emacs-lisp
+  (require 'helm-config)
+  (setq helm-config t)
+#+end_src
+** 全域性啟用 helm-mode
+#+begin_src emacs-lisp
+  (helm-mode 1)
+#+end_src
 ** TODO Config this
 #+begin_src emacs-lisp
-  ;; Use predefined configurations for `helm.el'
-  (setq helm-config t)
-
-  ;; Enable helm globally
-  (helm-mode 1)
   ;; Enable dired binding
   (helm-dired-bindings 1)
-(helm-dired-bindings 1)
   (ctags-update-minor-mode 1)
-
-(require 'helm-git)
 #+end_src
 ** Function
 #+begin_src emacs-lisp
