@@ -1838,10 +1838,11 @@ auto-complete-mode 的按鍵設定。
 當 helm-mode 載入完後，將和 lusty-explorer 相關的命令加入至 helm-completing-read-handlers-alist，
 以避免 lusty-explorer 使用 helm-mode 提供的補全方法。
 #+begin_src emacs-lisp
-  (when (featurep 'helm-mode)
-    (add-to-list 'helm-completing-read-handlers-alist '(lusty-sudo-explorer . nil))
-    (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
-    (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil)))
+  (eval-after-load "helm-mode"
+    '(progn
+       (add-to-list 'helm-completing-read-handlers-alist '(lusty-sudo-explorer . nil))
+       (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
+       (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil))))
 #+end_src
 
 ** smex                                                               :smex:
