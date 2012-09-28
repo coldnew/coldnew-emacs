@@ -20,311 +20,6 @@
 |-----------------------+----------------------+----------------|
 | bookmark-default-file | ~/.emacs.d/bookmarks | 預設的書籤檔案 |
 | bookmark-save-flag    | t                    |                |
-** 正規表達式
-*** 使用 rx 來製作正規表達式
-rx 為 emacs macro，可以幫助產生 emacs 的正規表達式
-**** TODO 理解並翻譯回中文
-rx is a Lisp macro in `rx.el'.
-
-(rx &rest REGEXPS)
-
-Translate regular expressions REGEXPS in sexp form to a regexp string.
-REGEXPS is a non-empty sequence of forms of the sort listed below.
-
-Note that `rx' is a Lisp macro; when used in a Lisp program being
-compiled, the translation is performed by the compiler.
-See `rx-to-string' for how to do such a translation at run-time.
-
-The following are valid subforms of regular expressions in sexp
-notation.
-
-STRING
-matches string STRING literally.
-
-CHAR
-matches character CHAR literally.
-
-`not-newline', `nonl'
-matches any character except a newline.
-
-`anything'
-matches any character
-
-`(any SET ...)'
-`(in SET ...)'
-`(char SET ...)'
-matches any character in SET ....  SET may be a character or string.
-Ranges of characters can be specified as `A-Z' in strings.
-Ranges may also be specified as conses like `(?A . ?Z)'.
-
-SET may also be the name of a character class: `digit',
-`control', `hex-digit', `blank', `graph', `print', `alnum',
-`alpha', `ascii', `nonascii', `lower', `punct', `space', `upper',
-`word', or one of their synonyms.
-
-`(not (any SET ...))'
-matches any character not in SET ...
-
-`line-start', `bol'
-matches the empty string, but only at the beginning of a line
-in the text being matched
-
-`line-end', `eol'
-is similar to `line-start' but matches only at the end of a line
-
-`string-start', `bos', `bot'
-matches the empty string, but only at the beginning of the
-string being matched against.
-
-`string-end', `eos', `eot'
-matches the empty string, but only at the end of the
-string being matched against.
-
-`buffer-start'
-matches the empty string, but only at the beginning of the
-buffer being matched against.  Actually equivalent to `string-start'.
-
-`buffer-end'
-matches the empty string, but only at the end of the
-buffer being matched against.  Actually equivalent to `string-end'.
-
-`point'
-matches the empty string, but only at point.
-
-`word-start', `bow'
-matches the empty string, but only at the beginning of a word.
-
-`word-end', `eow'
-matches the empty string, but only at the end of a word.
-
-`word-boundary'
-matches the empty string, but only at the beginning or end of a
-word.
-
-`(not word-boundary)'
-`not-word-boundary'
-matches the empty string, but not at the beginning or end of a
-word.
-
-`symbol-start'
-matches the empty string, but only at the beginning of a symbol.
-
-`symbol-end'
-matches the empty string, but only at the end of a symbol.
-
-`digit', `numeric', `num'
-matches 0 through 9.
-
-`control', `cntrl'
-matches ASCII control characters.
-
-`hex-digit', `hex', `xdigit'
-matches 0 through 9, a through f and A through F.
-
-`blank'
-matches space and tab only.
-
-`graphic', `graph'
-matches graphic characters--everything except ASCII control chars,
-space, and DEL.
-
-`printing', `print'
-matches printing characters--everything except ASCII control chars
-and DEL.
-
-`alphanumeric', `alnum'
-matches letters and digits.  (But at present, for multibyte characters,
-it matches anything that has word syntax.)
-
-`letter', `alphabetic', `alpha'
-matches letters.  (But at present, for multibyte characters,
-it matches anything that has word syntax.)
-
-`ascii'
-matches ASCII (unibyte) characters.
-
-`nonascii'
-matches non-ASCII (multibyte) characters.
-
-`lower', `lower-case'
-matches anything lower-case.
-
-`upper', `upper-case'
-matches anything upper-case.
-
-`punctuation', `punct'
-matches punctuation.  (But at present, for multibyte characters,
-it matches anything that has non-word syntax.)
-
-`space', `whitespace', `white'
-matches anything that has whitespace syntax.
-
-`word', `wordchar'
-matches anything that has word syntax.
-
-`not-wordchar'
-matches anything that has non-word syntax.
-
-`(syntax SYNTAX)'
-matches a character with syntax SYNTAX.  SYNTAX must be one
-of the following symbols, or a symbol corresponding to the syntax
-character, e.g. `\.' for `\s.'.
-
-`whitespace'            (\s- in string notation)
-`punctuation'           (\s.)
-`word'                  (\sw)
-`symbol'                        (\s_)
-`open-parenthesis'              (\s()
-`close-parenthesis'     (\s))
-`expression-prefix'     (\s')
-`string-quote'          (\s")
-`paired-delimiter'              (\s$)
-`escape'                        (\s\)
-`character-quote'               (\s/)
-`comment-start'         (\s<)
-`comment-end'           (\s>)
-`string-delimiter'              (\s|)
-`comment-delimiter'     (\s!)
-
-`(not (syntax SYNTAX))'
-matches a character that doesn't have syntax SYNTAX.
-
-`(category CATEGORY)'
-matches a character with category CATEGORY.  CATEGORY must be
-either a character to use for C, or one of the following symbols.
-
-| consonant                        | (\c0 in string notation) |
-| base-vowel                       | (\c1)                    |
-| upper-diacritical-mark           | (\c2)                    |
-| lower-diacritical-mark           | (\c3)                    |
-| tone-mark                        | (\c4)                    |
-| symbol                           | (\c5)                    |
-| digit                            | (\c6)                    |
-| vowel-modifying-diacritical-mark | (\c7)                    |
-| vowel-sign                       | (\c8)                    |
-| semivowel-lower                  | (\c9)                    |
-| not-at-end-of-line               | (\c<)                    |
-| not-at-beginning-of-line         | (\c>)                    |
-| alpha-numeric-two-byte           | (\cA)                    |
-| chinse-two-byte                  | (\cC)                    |
-| greek-two-byte                   | (\cG)                    |
-| japanese-hiragana-two-byte       | (\cH)                    |
-| indian-tow-byte                  | (\cI)                    |
-| japanese-katakana-two-byte       | (\cK)                    |
-| korean-hangul-two-byte           | (\cN)                    |
-| cyrillic-two-byte                | (\cY)                    |
-| combining-diacritic              | (\c^)                    |
-| ascii                            | (\ca)                    |
-| arabic                           | (\cb)                    |
-| chinese                          | (\cc)                    |
-| ethiopic                         | (\ce)                    |
-| greek                            | (\cg)                    |
-| korean                           | (\ch)                    |
-| indian                           | (\ci)                    |
-| japanese                         | (\cj)                    |
-| japanese-katakana                | (\ck)                    |
-| latin                            | (\cl)                    |
-| lao                              | (\co)                    |
-| tibetan                          | (\cq)                    |
-| japanese-roman                   | (\cr)                    |
-| thai                             | (\ct)                    |
-| vietnamese                       | (\cv)                    |
-| hebrew                           | (\cw)                    |
-| cyrillic                         | (\cy)                    |
-
-| `can-break' | (\c | ) | ) |
-
-`(not (category CATEGORY))'
-matches a character that doesn't have categor CATEGORY.
-
-`(and SEXP1 SEXP2 ...)'
-`(: SEXP1 SEXP2 ...)'
-`(seq SEXP1 SEXP2 ...)'
-`(sequence SEXP1 SEXP2 ...)'
-matches what SEXP1 matches, followed by what EXP2 matches, etc.
-
-`(submatch SEXP1 SEXP2 ...)'
-`(group SEXP1 SEXP2 ...)'
-like `and', but makes the match accessible with `match-end',
-`match-beginning', and `match-string'.
-
-`(submatch-n N SEXP1 SEXP2 ...)'
-`(group-n N SEXP1 SEXP2 ...)'
-like `group', but make it an explicitly-numbered group with
-group number N.
-
-`(or SEXP1 SEXP2 ...)'
-`(| SEXP1 SEXP2 ...)'
-matches anything that matches SEXP1 or SEXP2, etc.  If all
-args are strings, use `regexp-opt' to optimize the resulting
-regular expression.
-
-`(minimal-match SEXP)'
-produce a non-greedy regexp for SEXP.  Normally, regexps matching
-zero or more occurrences of something are "greedy" in that they
-match as much as they can, as long as the overall regexp can
-still match.  A non-greedy regexp matches as little as possible.
-
-`(maximal-match SEXP)'
-produce a greedy regexp for SEXP.  This is the default.
-
-Below, `SEXP ...' represents a sequence of regexp forms, treated as if
-enclosed in `(and ...)'.
-
-`(zero-or-more SEXP ...)'
-`(0+ SEXP ...)'
-matches zero or more occurrences of what SEXP ... matches.
-
-`(* SEXP ...)'
-like `zero-or-more', but always produces a greedy regexp, independent
-of `rx-greedy-flag'.
-
-`(*? SEXP ...)'
-like `zero-or-more', but always produces a non-greedy regexp,
-independent of `rx-greedy-flag'.
-
-`(one-or-more SEXP ...)'
-`(1+ SEXP ...)'
-matches one or more occurrences of SEXP ...
-
-`(+ SEXP ...)'
-like `one-or-more', but always produces a greedy regexp.
-
-`(+? SEXP ...)'
-like `one-or-more', but always produces a non-greedy regexp.
-
-`(zero-or-one SEXP ...)'
-`(optional SEXP ...)'
-`(opt SEXP ...)'
-matches zero or one occurrences of A.
-
-`(? SEXP ...)'
-like `zero-or-one', but always produces a greedy regexp.
-
-`(?? SEXP ...)'
-like `zero-or-one', but always produces a non-greedy regexp.
-
-`(repeat N SEXP)'
-`(= N SEXP ...)'
-matches N occurrences.
-
-`(>= N SEXP ...)'
-matches N or more occurrences.
-
-`(repeat N M SEXP)'
-`(** N M SEXP ...)'
-matches N to M occurrences.
-
-`(backref N)'
-matches what was matched previously by submatch N.
-
-`(eval FORM)'
-evaluate FORM and insert result.  If result is a string,
-`regexp-quote' it.
-
-`(regexp REGEXP)'
-include REGEXP in string notation in the result.
-
 ** TODO 未歸類的 emacs 筆記。
 *** C-x r N 添加數字序號
 (rectangle-number-lines START END START-AT &optional FORMAT)
@@ -989,6 +684,13 @@ emacs 套件管理的設定。
 	 :type github
 	 :pkgname sjbach/lusty-emacs
 	 :description "LustyExplorer is a fast and responsive way to manage files and buffers")
+#+end_src
+***** linum-ace
+#+begin_src emacs-lisp
+  (:name linum-ace
+	 :type github
+	 :pkgname coldnew/linum-ace
+	 :features linum-ace)
 #+end_src
 ***** qml-mode
 #+begin_src emacs-lisp
@@ -1760,17 +1462,17 @@ emacs-lisp-mode 的 buffer，可以這樣做
 *** rainbow-delimiters
 #+begin_src emacs-lisp
   '(rainbow-delimiters-depth-1-face ((t (:foreground "green"))))
-   '(rainbow-delimiters-depth-2-face ((t (:foreground  "yellow"))))
-   '(rainbow-delimiters-depth-3-face ((t (:foreground  "blue"))))
-   '(rainbow-delimiters-depth-4-face ((t (:foreground "purple"))))
-   '(rainbow-delimiters-depth-5-face ((t (:foreground "orange"))))
-   '(rainbow-delimiters-depth-6-face ((t (:foreground  "magenta"))))
-   '(rainbow-delimiters-depth-7-face ((t (:foreground  "spring green"))))
-   '(rainbow-delimiters-depth-8-face ((t (:foreground  "coral"))))
-   '(rainbow-delimiters-depth-9-face ((t (:foreground  "dodger blue"))))
-   '(rainbow-delimiters-depth-10-face ((t (:foreground "violet red"))))
-   '(rainbow-delimiters-depth-11-face ((t (:foreground "DarkOrange1"))))
-   '(rainbow-delimiters-depth-12-face ((t (:foreground "chartreuse2"))))
+  '(rainbow-delimiters-depth-2-face ((t (:foreground  "yellow"))))
+  '(rainbow-delimiters-depth-3-face ((t (:foreground  "blue"))))
+  '(rainbow-delimiters-depth-4-face ((t (:foreground "purple"))))
+  '(rainbow-delimiters-depth-5-face ((t (:foreground "orange"))))
+  '(rainbow-delimiters-depth-6-face ((t (:foreground  "magenta"))))
+  '(rainbow-delimiters-depth-7-face ((t (:foreground  "spring green"))))
+  '(rainbow-delimiters-depth-8-face ((t (:foreground  "coral"))))
+  '(rainbow-delimiters-depth-9-face ((t (:foreground  "dodger blue"))))
+  '(rainbow-delimiters-depth-10-face ((t (:foreground "violet red"))))
+  '(rainbow-delimiters-depth-11-face ((t (:foreground "DarkOrange1"))))
+  '(rainbow-delimiters-depth-12-face ((t (:foreground "chartreuse2"))))
 #+end_src
 *** Other
 #+begin_src emacs-lisp
@@ -1946,13 +1648,13 @@ auto-complete-mode 的按鍵設定。
          (elscreen-create)
          (elscreen-notify-screen-modification 'force-immediately)
          (elscreen-message "New screen is automatically created"))))
-  
+
   (defadvice elscreen-next (around elscreen-create-automatically activate)
     (elscreen-create-automatically ad-do-it))
-  
+
   (defadvice elscreen-previous (around elscreen-create-automatically activate)
     (elscreen-create-automatically ad-do-it))
-  
+
   (defadvice elscreen-toggle (around elscreen-create-automatically activate)
     (elscreen-create-automatically ad-do-it))
 #+end_src
@@ -2096,98 +1798,23 @@ auto-complete-mode 的按鍵設定。
 	  (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "green3"))
 	  ))))
 #+end_src
-** helm-mode                                                          :helm:
-*** Depends
-#+begin_src emacs-lisp
-  (require 'helm)
-  (require 'helm-config)
-  (require 'helm-projectile)
-  (require 'helm-etags+)
-  ;;(require 'helm-git)
-  (require 'ctags-update)
-#+end_src
-*** TODO Config this
-#+begin_src emacs-lisp
-  ;; Use predefined configurations for `helm.el'
-  (setq helm-config t)
-
-  ;; Enable helm globally
-  (helm-mode 1)
-  ;; Enable dired binding
-  (helm-dired-bindings 1)
-(helm-dired-bindings 1)
-  (ctags-update-minor-mode 1)
-
-(require 'helm-git)
-#+end_src
-*** Function
-#+begin_src emacs-lisp
-  (defun helm-c-occur-get-line (s e)
-    "rewrite `helm-c-occur-get-line' to make it color on line-number."
-    (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
-	    (format ": %s" (buffer-substring s e))))
-#+end_src
-*** Commands
-*** 在目前的專案找尋檔案
-#+begin_src emacs-lisp
-  (defun coldnew/project-find-file ()
-    (interactive)
-    (helm-other-buffer
-     '(helm-c-source-git-files
-       )
-     "*coldnew/project-file-list"))
-#+end_src
-*** 在目前的專案找尋 buffer
-#+begin_src emacs-lisp
-  (defun coldnew/project-find-buffer ()
-      (interactive)
-      (helm-other-buffer
-       '(helm-c-source-projectile-buffers-list
-	 )
-       "*coldnew/project-buffer-list"))
-#+end_src
-
-*** TODO 其他
-#+begin_src emacs-lisp
-    (defun coldnew/helm-filelist ()
-      "Preconfigured `anything' to open files/buffers/bookmarks instantly.
-     This is a replacement for `anything-for-files'.
-     See `anything-c-filelist-file-name' docstring for usage."
-      (interactive)
-      (helm-other-buffer
-       '(helm-c-source-buffers-list
-	 helm-c-source-recentf
-	 helm-c-source-ffap-line
-	 helm-c-source-ffap-guesser
-	 helm-c-source-bookmarks
-	 helm-c-source-file-cache
-	 helm-c-source-projectile-files-list
-	 helm-c-source-files-in-current-dir
-	 helm-c-source-locate)
-       "*coldnew/filelist*"))
-
-
-    (defun coldnew/helm-occur ()
-      "I don't like highlight when goto lines."
-      (interactive)
-      ;; FIXME: is there more elegent way to make temp face?
-      (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
-      (helm-occur))
-#+end_src
 
 ** lusty-explorer
-*** Depends
+*** 載入相關套件
+
 #+begin_src emacs-lisp
   (require 'lusty-explorer)
 #+end_src
-*** Keybinding
+
+*** 使用 <ENTER> 選擇目前的檔案
+
 #+begin_src emacs-lisp
   (add-hook 'lusty-setup-hook
-	    '(lambda ()
-	       (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)
-	       ))
+            '(lambda ()
+               (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
 #+end_src
-*** Command
+
+*** 讓 lusty-explorer 能夠使用 sudo 來打開檔案                    :command:
 #+begin_src emacs-lisp
   (defun lusty-sudo-explorer ()
     "Launch the file/directory mode of LustyExplorer."
@@ -2199,24 +1826,23 @@ auto-complete-mode 的按鍵設定。
 	      (concat "\\(?:" (regexp-opt completion-ignored-extensions) "\\)$"))
 	     (minibuffer-local-filename-completion-map lusty-mode-map)
 	     (file
-	      ;; read-file-name is silly in that if the result is equal to the
-	      ;; dir argument, it gets converted to the default-filename
-	      ;; argument. Set it explicitly to "" so if lusty-launch-dired is
-	      ;; called in the directory we start at, the result is that directory
-	      ;; instead of the name of the current buffer.
 	      (lusty--run 'read-file-name default-directory "")))
 	(when file
 	  (switch-to-buffer
 	   (find-file-noselect (concat "/sudo:root@localhost:"
 				       (expand-file-name file))))))))
 #+end_src
-*** Make lusty-explorer use it's own completion, not helm-completion
+
+*** 讓 lusty-explorer 使用自己的補全方式，而不是 helm 的補全方式
+
+當 helm-mode 載入完後，將和 lusty-explorer 相關的命令加入至 helm-completing-read-handlers-alist，
+以避免 lusty-explorer 使用 helm-mode 提供的補全方法。
 #+begin_src emacs-lisp
-    (when (featurep 'helm)
-      (add-to-list 'helm-completing-read-handlers-alist '(lusty-sudo-explorer . nil))
-      (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
-      (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil))
-  )
+  (eval-after-load "helm-mode"
+    '(progn
+       (add-to-list 'helm-completing-read-handlers-alist '(lusty-sudo-explorer . nil))
+       (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
+       (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil))))
 #+end_src
 
 ** smex                                                               :smex:
@@ -2854,6 +2480,96 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
 #+end_src
+* Helm                                                                 :helm:
+** 載入相關套件
+
+#+begin_src emacs-lisp
+  (require 'helm)
+  (require 'helm-projectile)
+  (require 'helm-etags+)
+  (require 'helm-git)
+  (require 'ctags-update)
+#+end_src
+
+** 使用預先定義好的 helm 設定
+
+#+begin_src emacs-lisp
+  (require 'helm-config)
+  (setq helm-config t)
+#+end_src
+
+** 全域性啟用 helm-mode
+
+#+begin_src emacs-lisp
+  (helm-mode 1)
+#+end_src
+
+** TODO Config this
+#+begin_src emacs-lisp
+  ;; Enable dired binding
+  (helm-dired-bindings 1)
+  (ctags-update-minor-mode 1)
+#+end_src
+** Function
+#+begin_src emacs-lisp
+  (defun helm-c-occur-get-line (s e)
+    "rewrite `helm-c-occur-get-line' to make it color on line-number."
+    (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
+	    (format ": %s" (buffer-substring s e))))
+#+end_src
+** 在目前的專案找尋檔案                                            :command:
+
+#+begin_src emacs-lisp
+  (defun coldnew/project-find-file ()
+    (interactive)
+    (helm-other-buffer
+     '(helm-c-source-git-files
+       )
+     "*coldnew/project-file-list"))
+#+end_src
+
+** 在目前的專案找尋 buffer                                         :command:
+
+#+begin_src emacs-lisp
+  (defun coldnew/project-find-buffer ()
+      (interactive)
+      (helm-other-buffer
+       '(helm-c-source-projectile-buffers-list
+	 )
+       "*coldnew/project-buffer-list"))
+#+end_src
+
+** TODO 其他
+#+begin_src emacs-lisp
+    (defun coldnew/helm-filelist ()
+      "Preconfigured `anything' to open files/buffers/bookmarks instantly.
+     This is a replacement for `anything-for-files'.
+     See `anything-c-filelist-file-name' docstring for usage."
+      (interactive)
+      (helm-other-buffer
+       '(helm-c-source-buffers-list
+	 helm-c-source-recentf
+	 helm-c-source-ffap-line
+	 helm-c-source-ffap-guesser
+	 helm-c-source-bookmarks
+	 helm-c-source-file-cache
+	 helm-c-source-projectile-files-list
+	 helm-c-source-files-in-current-dir
+	 helm-c-source-locate)
+       "*coldnew/filelist*"))
+#+end_src
+
+** 尋找目前緩衝區所有符合查詢規則的文字、字串                      :command:
+
+#+begin_src emacs-lisp
+  (defun coldnew/helm-occur ()
+    "I don't like highlight when goto lines."
+    (interactive)
+    ;; FIXME: is there more elegent way to make temp face?
+    (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
+    (helm-occur))
+#+end_src
+
 * 文檔幫助
 這邊放置 manpage、womanpage、info 等幫助文檔模式的設定。
 ** WoMan                                                              :woman:
@@ -5000,7 +4716,7 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
   (add-to-list 'tramp-default-proxies-alist
 	       '((regexp-quote (system-name)) nil nil))
 #+end_src
-* 聊天室                                                               :chat:
+* 聊天軟體                                                             :chat:
 ** IRC
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境的設置。
 *** ERC
@@ -5620,6 +5336,10 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x l") 'hl-line-mode)
 #+end_src
+** 顯示行號
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x L") 'linum-mode)
+#+end_src
 ** 專案相關的按鍵
 | 按鍵    | 命令                        | 用途                     |
 |---------+-----------------------------+--------------------------|
@@ -5915,34 +5635,6 @@ Function key 設置常用的命令。
 :END:
 這邊放置的是不再使用的設定,並且這邊的設定並不會輸出至我的 emacs-config 上。
 #+begin_src emacs-lisp
-(defun aa ()
-  "Try to complete a structure template before point.
-This looks for strings like \"<e\" on an otherwise empty line and
-expands them."
-  (interactive)
-  (let ((l (buffer-substring (point-at-bol) (point)))
-	a)
-    (when (and (looking-at "[ \t]*$")
-	       (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
-	       (setq a (assoc (match-string 1 l) aa-structure-template-alist)))
-      ;;      (org-complete-expand-structure-template (+ -1 (point-at-bol)
-      ;;                                           (match-beginning 1)) a)
-      (backward-delete-char 2)
-      (insert (car (cdr-safe a)))
-      (yas/expand)
-      t)))
-
-
-(setq aa-structure-template-alist org-structure-template-alist)
-
-(add-to-list 'aa-structure-template-alist
-      '("E" ."require"))
-
-(add-to-list 'aa-structure-template-alist
-	     '("H" "require"))
-
-#+end_src
-#+begin_src emacs-lisp
   (defun sacha/search-word-backward ()
     "Find the previous occurrence of the current word."
     (interactive)
@@ -5988,7 +5680,6 @@ http://jixiuf.github.com/tags/@Emacs.html
     (run-rand-iter 0))
 
 #+end_src
-
 * Other
 ** TODO 為 google-weather 增加編碼的設定
 #+begin_src emacs-lisp
