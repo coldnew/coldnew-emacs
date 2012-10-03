@@ -4,6 +4,7 @@
 #+STARTUP: overview indent align
 #+PROPERTY: noweb tangle
 #+OPTIONS: ^:nil
+#+INFOJS_OPT: view:info toc:t ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 
 * 筆記
 ** 書籤管理
