@@ -1621,24 +1621,24 @@ auto-complete-mode 的按鍵設定。
   (setq android-mode-sdk-dir "/opt/android-sdk-update-manager/")
 #+end_src
 ** elscreen                                                       :elscreen:
-*** Depends
+*** 載入相關模組
 #+begin_src emacs-lisp
   (require 'elscreen)
 #+end_src
-*** Config
-**** 自動啟用 elscreen
+*** 自動啟用 elscreen
 #+begin_src emacs-lisp
   (elscreen-start)
 #+end_src
-**** 分頁上顯示 *控制* 圖示
+*** 分頁上顯示 *控制* 圖示
 #+begin_src emacs-lisp
   (setq elscreen-tab-display-control t)
 #+end_src
-**** 分頁上不顯示 *關閉* 圖示
+*** 分頁上不顯示 *關閉* 圖示
 #+begin_src emacs-lisp
   (setq elscreen-tab-display-kill-screen nil)
 #+end_src
 *** Advice
+
 當目前只有一個 elscreen-tab 存在時，呼叫 *elscreen-next* 、 *elscreen-previous*
 或是 *elscreen-toggle* 會自動建立另外一個 elscreen-tab。
 #+begin_src emacs-lisp
@@ -5341,6 +5341,7 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x L") 'linum-mode)
 #+end_src
 ** 專案相關的按鍵
+
 | 按鍵    | 命令                        | 用途                     |
 |---------+-----------------------------+--------------------------|
 | C-x p f | coldnew/project-find-file   | 在目前的專案裏面找尋檔案 |
@@ -5349,6 +5350,17 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x p f") 'coldnew/project-find-file)
   (global-set-key (kbd "C-x p b") 'coldnew/project-find-buffer)
+#+end_src
+** 分頁切換
+
+| 按鍵    | 命令              | 用途       |
+|---------+-------------------+------------|
+| C-x t n | elscreen-next     | 下一個分頁 |
+| C-x t p | elscreen-previous | 前一個分頁 |
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x t n") 'elscreen-next)
+  (global-set-key (kbd "C-x t p") 'elscreen-previous)
 #+end_src
 ** Ctrl Prefix
 *** Default Emacs keybinding
