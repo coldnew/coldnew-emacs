@@ -5653,6 +5653,7 @@ Function key 設置常用的命令。
            (?e (file . ,(expand-file-name emacs-config-file)))
            ;; TODO.org
            (?t (file . "~/Dropbox/Org/TODO.org"))
+           (?w (file . "~/Dropbox/Org/Weintek.org"))
            ;; (?b (file . "~/personal/business.org"))
            ))
     (set-register (car r) (cadr r)))
