@@ -5354,14 +5354,20 @@ Function key 設置常用的命令。
 #+end_src
 ** 分頁切換
 
-| 按鍵    | 命令              | 用途       |
-|---------+-------------------+------------|
-| C-x t n | elscreen-next     | 下一個分頁 |
-| C-x t p | elscreen-previous | 前一個分頁 |
+| 按鍵          | 命令                     | 用途          |
+|---------------+--------------------------+---------------|
+| C-x t n       | elscreen-next            | 下一個分頁    |
+| C-x t p       | elscreen-previous        | 前一個分頁    |
+| C-x t r       | elscreen-screen-nickname | 更改分頁名稱  |
+| C-x t j <NUM> | elscreen-jump            | 跳到 <NUM> 頁 |
+| C-x t c       | elscreen-create          | 建立新的分頁  |
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x t n") 'elscreen-next)
   (global-set-key (kbd "C-x t p") 'elscreen-previous)
+  (global-set-key (kbd "C-x t r") 'elscreen-screen-nickname)
+  (global-set-key (kbd "C-x t j") 'elscreen-jump)
+  (global-set-key (kbd "C-x t c") 'elscreen-create)
 #+end_src
 ** 縮排整個緩衝區
 
