@@ -4968,6 +4968,12 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 #+begin_src emacs-lisp
   (require 'skype)
 #+end_src
+* 電子郵件
+** mu4e
+*** 載入套件
+#+begin_src emacs-lisp
+  (require 'mu4e)
+#+end_src
 * Alias                                                               :alias:
 ** git
 和 git 相關的命令的 alias。
