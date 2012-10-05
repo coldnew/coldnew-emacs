@@ -5388,12 +5388,12 @@ Function key 設置常用的命令。
 #+end_src
 ** 縮排整個緩衝區
 
-| 按鍵  | 命令                | 用途           |
-|-------+---------------------+----------------|
-| C-x i | indent-whole-buffer | 縮排整個緩衝區 |
+| 按鍵    | 命令                | 用途           |
+|---------+---------------------+----------------|
+| C-x C-i | indent-whole-buffer | 縮排整個緩衝區 |
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-x i") 'indent-whole-buffer)
+  (global-set-key (kbd "C-x C-i") 'indent-whole-buffer)
 #+end_src
 
 ** Ctrl Prefix
