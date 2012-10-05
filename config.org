@@ -5362,20 +5362,29 @@ Function key 設置常用的命令。
 #+end_src
 ** 分頁切換
 
-| 按鍵          | 命令                     | 用途          |
-|---------------+--------------------------+---------------|
-| C-x t n       | elscreen-next            | 下一個分頁    |
-| C-x t p       | elscreen-previous        | 前一個分頁    |
-| C-x t r       | elscreen-screen-nickname | 更改分頁名稱  |
-| C-x t j <NUM> | elscreen-goto            | 跳到 <NUM> 頁 |
-| C-x t c       | elscreen-create          | 建立新的分頁  |
+| 按鍵        | 命令                     | 用途          |
+|-------------+--------------------------+---------------|
+| C-x t n     | elscreen-next            | 下一個分頁    |
+| C-x t p     | elscreen-previous        | 前一個分頁    |
+| C-x t r     | elscreen-screen-nickname | 更改分頁名稱  |
+| C-x t <NUM> | elscreen-goto <NUM>      | 跳到 <NUM> 頁 |
+| C-x t c     | elscreen-create          | 建立新的分頁  |
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x t n") 'elscreen-next)
   (global-set-key (kbd "C-x t p") 'elscreen-previous)
   (global-set-key (kbd "C-x t r") 'elscreen-screen-nickname)
-  (global-set-key (kbd "C-x t j") 'elscreen-goto)
   (global-set-key (kbd "C-x t c") 'elscreen-create)
+  (global-set-key (kbd "C-x t 0") '(lambda () (interactive) (elscreen-goto 0)))
+  (global-set-key (kbd "C-x t 1") '(lambda () (interactive) (elscreen-goto 1)))
+  (global-set-key (kbd "C-x t 2") '(lambda () (interactive) (elscreen-goto 2)))
+  (global-set-key (kbd "C-x t 3") '(lambda () (interactive) (elscreen-goto 3)))
+  (global-set-key (kbd "C-x t 4") '(lambda () (interactive) (elscreen-goto 4)))
+  (global-set-key (kbd "C-x t 5") '(lambda () (interactive) (elscreen-goto 5)))
+  (global-set-key (kbd "C-x t 6") '(lambda () (interactive) (elscreen-goto 6)))
+  (global-set-key (kbd "C-x t 7") '(lambda () (interactive) (elscreen-goto 7)))
+  (global-set-key (kbd "C-x t 8") '(lambda () (interactive) (elscreen-goto 8)))
+  (global-set-key (kbd "C-x t 9") '(lambda () (interactive) (elscreen-goto 9)))
 #+end_src
 ** 縮排整個緩衝區
 
