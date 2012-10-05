@@ -461,10 +461,12 @@ emacs 個人配置的檔案，也就是這個檔案。
 
   (defun swap-ctrl-caps ()
     "swap control and capslock"
+    (interactive)
     (shell-command "setxkbmap -option ctrl:swapcaps"))
 
   (defun make-caps-as-ctrl ()
     "make capslock as control-key"
+    (interactive)
     (shell-command "setxkbmap -option ctrl:nocaps"))
 
   ;; only disable capslock and make it as control
