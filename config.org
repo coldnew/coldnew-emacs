@@ -3541,7 +3541,7 @@ C-s s I             对目录中的相关文件建立列表并进行索引
                           ("1" default font-lock-comment-face both)))
     (cpp-highlight-buffer t))
 
-  (add-hook 'c-mode-common-hook 'cc-mode:highlight-if-0)
+  (add-hook 'c-mode-hook 'cc-mode:highlight-if-0)
 #+end_src
 *** Functions
 *** Commands
@@ -3660,6 +3660,12 @@ C-s s I             对目录中的相关文件建立列表并进行索引
                        ac-source-words-in-same-mode-buffers
                        )))
 #+end_src
+*** 將 #if 0 #endif 區域上色為灰色
+
+#+begin_src emacs-lisp
+  (add-hook 'c++-mode-hook 'cc-mode:highlight-if-0)
+#+end_src
+
 *** Keybinding
 #+begin_src emacs-lisp
   (define-key c++-mode-map (kbd "C-x C-o") 'ff-find-other-file)
