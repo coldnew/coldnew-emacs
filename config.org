@@ -3527,6 +3527,22 @@ C-c s f             寻找文件
 C-c s i             看看指定的文件被哪些文件 include
 C-c s a             设定初始化的目录，一般是你代码的根目录
 C-s s I             对目录中的相关文件建立列表并进行索引
+*** 將 #if 0 #endif 區域上色為灰色
+
+#+begin_src emacs-lisp
+  (defun cc-mode:highlight-if-0 ()
+    "highlight c/c++ #if 0 #endif macros"
+    (interactive)
+    (setq cpp-known-face 'default)
+    (setq cpp-unknown-face 'default)
+    (setq cpp-known-writable 't)
+    (setq cpp-unknown-writable 't)
+    (setq cpp-edit-list '(("0" '(foreground-color . "gray")  default both)
+                          ("1" default font-lock-comment-face both)))
+    (cpp-highlight-buffer t))
+
+  (add-hook 'c-mode-common-hook 'cc-mode:highlight-if-0)
+#+end_src
 *** Functions
 *** Commands
 #+begin_src emacs-lisp
@@ -4689,6 +4705,11 @@ popwin resolves there problems. Windows of such temporary buffers will be shown 
 #+begin_src emacs-lisp
   (require 'popwin)
   (setq display-buffer-function 'popwin:display-buffer)
+#+end_src
+* 網頁瀏覽
+** 使用 w3m 作為網頁瀏覽器
+#+begin_src emacs-lisp
+(require 'w3m)
 #+end_src
 * Google 翻譯
 google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作。
