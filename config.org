@@ -5084,6 +5084,41 @@ offlineimap 可以在設定中加入
   (setq mu4e-get-mail-command "offlineimap")
 #+end_src
 
+*** 設定最頂層的郵件資料夾
+#+begin_src emacs-lisp
+  (setq mu4e-maildir "~/.Maildir")
+#+end_src
+*** 設定我的 email 帳戶列表
+
+#+begin_src emacs-lisp
+  (setq coldnew/mu4e-account-alist
+        '(("Gmail"
+           (mu4e-sent-folder "/Gmail/Sent")
+           (mu4e-drafts-folder "/Gmail/Drafts")
+           (user-mail-address "coldnew.tw@gmail.com"))
+          ("Weintek"
+           (mu4e-sent-folder "/Weintek/Sent")
+           (mu4e-drafts-folder "/Weintek/Drafts")
+           (user-mail-address "yenchin@weintek.com"))))
+#+end_src
+*** 設定預設的帳戶為 Gmail
+
+#+begin_src emacs-lisp
+  (defun coldnew/mu4e-set-default-account (account)
+    "Setup the default account based on coldnew/mu4e-account-alist."
+    (let* ((account (cdr (assoc account coldnew/mu4e-account-alist))))
+      (when account (mapc #'(lambda (a)
+                              (set (car a) (cadr a))) account))))
+
+  (coldnew/mu4e-set-default-account "Gmail")
+#+end_src
+
+*** 每隔 60秒 重新抓取郵件
+
+#+begin_src emacs-lisp
+  (setq mu4e-update-interval 60)
+#+end_src
+
 *** 在郵件中顯示圖片
 #+begin_src emacs-lisp
   (setq mu4e-view-show-images t)
@@ -5092,6 +5127,28 @@ offlineimap 可以在設定中加入
 #+begin_src emacs-lisp
   (setq mu4e-html2text-command "w3m -dump -T text/html")
   ;; enable inline images
+#+end_src
+
+#+begin_src emacs-lisp
+
+  (defun coldnew/mu4e-set-account ()
+    "Set the account for composing a message."
+    (let* ((account
+;;            (if mu4e-compose-parent-message
+                (let ((maildir (mu4e-msg-field mu4e-compose-parent-message :maildir)))
+                  (string-match "/\\(.*?\\)/" maildir)
+                  (match-string 1 maildir))
+              (completing-read (format "Compose with account: (%s) "
+                                       (mapconcat #'(lambda (var) (car var)) coldnew/mu4e-account-alist "/"))
+                               (mapcar #'(lambda (var) (car var)) coldnew/mu4e-account-alist)
+                               nil t nil nil (caar coldnew/mu4e-account-alist)));;)
+           (account-vars (cdr (assoc account coldnew/mu4e-account-alist))))
+      (if account-vars
+          (mapc #'(lambda (var)
+                    (set (car var) (cadr var)))
+                account-vars))))
+
+  (add-hook 'mu4e-compose-pre-hook 'coldnew/mu4e-set-account)
 #+end_src
 * Alias                                                               :alias:
 ** git
