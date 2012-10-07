@@ -5085,9 +5085,11 @@ offlineimap 可以在設定中加入
 #+end_src
 
 *** 設定最頂層的郵件資料夾
+
 #+begin_src emacs-lisp
   (setq mu4e-maildir "~/.Maildir")
 #+end_src
+
 *** 設定我的 email 帳戶列表
 
 #+begin_src emacs-lisp
@@ -5101,6 +5103,7 @@ offlineimap 可以在設定中加入
            (mu4e-drafts-folder "/Weintek/Drafts")
            (user-mail-address "yenchin@weintek.com"))))
 #+end_src
+
 *** 設定預設的帳戶為 Gmail
 
 #+begin_src emacs-lisp
