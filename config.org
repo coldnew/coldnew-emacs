@@ -1961,16 +1961,16 @@ auto-complete-mode 的按鍵設定。
 #+end_src
 *** 增加類似 org-mode 那樣使用 < 進行補全的方法 (easy-template)
 #+begin_src emacs-lisp
-  (defun coldnew/major-mode-expand ()
+  (defadvice yas-expand (around coldnew/major-mode-expand activate)
     "Try to complete a structure template before point like org-mode does.
-  This looks for strings like \"<e\" on an otherwise empty line and
-  expands them.
-  Before use this function, you muse setup `major-mode-name'-expand-alist variable.
+    This looks for strings like \"<e\" on an otherwise empty line and
+    expands them.
+    Before use this function, you muse setup `major-mode-name'-expand-alist variable.
 
-  Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
-  in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
+    Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
+    in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
 
-   (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
+     (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
     (let* ((l (buffer-substring (point-at-bol) (point)))
            (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
            (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
@@ -1979,10 +1979,12 @@ auto-complete-mode 的按鍵設定。
                  (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
                  (setq a (assoc (match-string 1 l) expand-alist)))
         (backward-delete-char (1+ (length (car-safe a))))
-        (insert (cdr-safe a))
-        t)))
-
-  (defadvice yas-expand (before coldnew/major-mode-expand activate) (coldnew/major-mode-expand))
+        (if (symbolp (cdr-safe a))
+            (funcall (cdr-safe a))
+          (insert (cdr-safe a)))
+        t)
+      ad-do-it
+      ))
 #+end_src
 *** Functions
 #+begin_src emacs-lisp
@@ -3454,8 +3456,7 @@ emacs 和 cscope 相關的套件蠻多的，xcscope 包含在 cscope 的套件�
             '(lambda ()
                (c-set-style "linux")))
 #+end_src
-*** Hooks
-**** c-eldoc
+*** c-eldoc
 adeff
 #+begin_src emacs-lisp
     (add-hook 'c-mode-hook
@@ -3503,15 +3504,22 @@ adeff
             (insert "if")
             (yas/expand)))))
 #+end_src
-**** TODO 自動偵測 c-basic-offset
+*** TODO 自動偵測 c-basic-offset
 #+begin_src emacs-lisp
   (require 'guess-offset)
 #+end_src
-**** 自動猜測縮排風格
+*** 自動猜測縮排風格
 #+begin_src emacs-lisp
   (when (require 'dtrt-indent nil 'noerror)
     (add-hook 'c-mode-hook
               (lambda () (dtrt-indent-mode t))))
+#+end_src
+*** 快速插入樣板
+#+begin_src emacs-lisp
+  (setq c-mode-expand-alist
+        '(("i" . c-mode:insert-inc-or-if)
+          ("m" . c-mode:insert-main-function)
+          ))
 #+end_src
 *** Keybinding
 #+begin_src emacs-lisp
@@ -4716,6 +4724,7 @@ popwin resolves there problems. Windows of such temporary buffers will be shown 
 ** 使用 w3m 作為網頁瀏覽器
 #+begin_src emacs-lisp
 (require 'w3m)
+ (setq w3m-default-display-inline-images t)
 #+end_src
 * Google 翻譯
 google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作。
@@ -5012,6 +5021,32 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 #+begin_src emacs-lisp
   (require 'offlineimap)
 #+end_src
+*** 取得 offlineimap 的密碼
+
+offlineimap 可以在設定中加入
+
+: pythonfile = ~/.offlineimap.py
+
+來載入額外的 function ，我在這個檔案裏面加入了
+
+#+begin_src python :tangle no
+  #!/usr/bin/env python
+
+  import subprocess
+
+  def get_output(cmd):
+      # Bunch of boilerplate to catch the output of a command:
+      pipe = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+      (output, errout) = pipe.communicate()
+      assert pipe.returncode == 0 and not errout
+      return output
+
+  def get_password_emacs(host):
+      cmd = "emacsclient --eval '(offlineimap-get-password \"%s\")'" % (host)
+      return get_output(cmd).strip().lstrip('"').rstrip('"')
+#+end_src
+
+讓 offlineimap 可以透過 get_password_emacs() 來從 emacs 裏面取得密碼。
 
 #+begin_src emacs-lisp
   (defun offlineimap-get-password (account)
@@ -5019,13 +5054,44 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
     (if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
     (or (netrc-get offlineimap-account-list account) ""))
 #+end_src
+
+在我的 ~/.authinfo.gpg 檔案內容是像這樣的
+
+
+#+begin_src emacs-lisp :tangle no
+  ;; -*- mode: emacs-lisp -*-
+
+  ;;;; offlineimap
+  (setq offlineimap-account-list
+        '(("account@mail.com" . "password")
+          ))
+#+end_src
+
+因此，在 .offlineimaprc 裏面加入這樣一行
+
+: remotepasseval = get_password_emacs("account@mail.com")
+
+即可透過 emacs 取得 password 這個密碼。
+
 ** mu4e
 *** 載入套件
 #+begin_src emacs-lisp
   (require 'mu4e)
 #+end_src
+*** 使用 offlineimap 取得郵件
+
 #+begin_src emacs-lisp
   (setq mu4e-get-mail-command "offlineimap")
+#+end_src
+
+*** 在郵件中顯示圖片
+#+begin_src emacs-lisp
+  (setq mu4e-view-show-images t)
+#+end_src
+*** TODO 未整理
+#+begin_src emacs-lisp
+  (setq mu4e-html2text-command "w3m -dump -T text/html")
+  ;; enable inline images
 #+end_src
 * Alias                                                               :alias:
 ** git
