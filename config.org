@@ -5119,6 +5119,28 @@ offlineimap 可以在設定中加入
 
 即可透過 emacs 取得 password 這個密碼。
 
+** smtp
+*** 取得 smtp 的密碼
+
+在我的 ~/.authinfo.gpg 檔案內容是像這樣的
+
+
+#+begin_src emacs-lisp :tangle no
+  ;; -*- mode: emacs-lisp -*-
+
+  ;;;; smtp
+  (setq smtp-account-list
+        '(("account@gmail.com"
+           ("smtp.gmail.com" 587 "account@gmail.com" "password"))
+          ))
+#+end_src
+
+#+begin_src emacs-lisp
+  (defun smtp-get-password (account)
+    (require 'netrc)
+    (if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
+    (or (netrc-get smtp-account-list account) ""))
+#+end_src
 ** mu4e
 *** 載入套件
 #+begin_src emacs-lisp
@@ -5150,7 +5172,15 @@ offlineimap 可以在設定中加入
            (mu4e-sent-folder "/Gmail/Sent")
            (mu4e-drafts-folder "/Gmail/Drafts")
            (mu4e-trash-folder "/Gmail/Trash")
-           (user-mail-address "coldnew.tw@gmail.com"))
+           (user-mail-address "coldnew.tw@gmail.com")
+           ;; Sent mail
+           (message-send-mail-function 'smtpmail-send-it)
+           (smtpmail-stream-type 'starttls)
+           (smtpmail-smtp-server "smtp.gmail.com")
+           (smtpmail-smtp-service 587)
+           (smtpmail-smtp-user user-mail-address)
+           (smtpmail-auth-credentials (smtp-get-password smtpmail-smtp-user))
+           )
           ("Weintek"
            (mu4e-sent-folder "/Weintek/Sent")
            (mu4e-drafts-folder "/Weintek/Drafts")
@@ -5165,9 +5195,11 @@ offlineimap 可以在設定中加入
     "Setup the default account based on coldnew/mu4e-account-alist."
     (let* ((account (cdr (assoc account coldnew/mu4e-account-alist))))
       (when account (mapc #'(lambda (a)
-                              (set (car a) (cadr a))) account))))
+                              (set (car a) (if (stringp (cadr a)) (cadr a) (eval (cadr a))))) account))))
+                              ;;(set (car a) (cadr a))) account))))
 
   (coldnew/mu4e-set-default-account "Gmail")
+
 #+end_src
 
 *** 每隔 60秒 重新抓取郵件
@@ -5186,9 +5218,38 @@ offlineimap 可以在設定中加入
 
 #+begin_src emacs-lisp
   (setq mu4e-html2text-command "w3m -dump -T text/html")
+
 #+end_src
 
 *** TODO 未整理
+#+begin_src emacs-lisp
+  (setq starttls-use-gnutls t)
+
+  (defun mu4e~view-fontify-diff ()
+    "Colorize diff message."
+    (interactive)
+    (let ((inhibit-read-only t))
+      (save-excursion
+        (goto-char (point-min))
+        ;; consider only lines that heuristically look like a citation line...
+        (while (re-search-forward "^\\(\\(\\+\\)[^+]\\|\\(-\\)[^-]\\)" nil t)
+          (let ((cur-point (or (match-beginning 2) (match-beginning 3)))
+                (color (if (match-beginning 2)
+                           "green"
+                         "deep pink")))
+            (end-of-line)
+            (add-text-properties cur-point (point)
+                                 `(face ((foreground-color . ,color))))))
+        (goto-char (point-min))
+        (while (re-search-forward "^\\(\\+\\+\\+\\|---\\)" nil t)
+          (let ((cur-point (match-beginning 1)))
+            (end-of-line)
+            (add-text-properties cur-point (point)
+                                 '(face ((weight . bold)))))))))
+
+  (add-hook 'mu4e-view-mode-hook 'mu4e~view-fontify-diff)
+#+end_src
+
 #+begin_src emacs-lisp
   (defun coldnew/mu4e-set-account ()
     "Set the account for composing a message."
