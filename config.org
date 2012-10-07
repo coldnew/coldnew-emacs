@@ -4766,6 +4766,26 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
   (add-to-list 'tramp-default-proxies-alist
                '((regexp-quote (system-name)) nil nil))
 #+end_src
+* 警示系統
+** 載入相關套件
+
+alert 是一個可以直接顯示資訊在 minibuffer 上面的套件，最簡單的使用
+方式如下：
+
+#+begin_src emacs-lisp :tangle no
+  (alert "this is alert")
+#+end_src
+
+#+begin_src emacs-lisp
+  (require 'alert)
+#+end_src
+
+sauron 是一個可以用來追蹤 emacs 裡面發生什麼事情的 minor-mode。
+
+#+begin_src emacs-lisp
+  (require 'sauron)
+#+end_src
+
 * 聊天軟體                                                             :chat:
 ** IRC
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境的設置。
