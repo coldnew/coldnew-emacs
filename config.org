@@ -4786,6 +4786,32 @@ sauron 是一個可以用來追蹤 emacs 裡面發生什麼事情的 minor-mode�
   (require 'sauron)
 #+end_src
 
+** 讓 sauron 不使用另外一個 frame 來顯示
+
+#+begin_src emacs-lisp
+  (setq sauron-separate-frame nil)
+#+end_src
+
+** 讓 sauron 黏在 frame 上面
+
+#+begin_src emacs-lisp
+ (setq sauron-sticky-frame t)
+#+end_src
+
+** 讓 sauron 顯示 mode-line
+
+#+begin_src emacs-lisp
+  (setq sauron-hide-mode-line nil)
+#+end_src
+
+** 整合 sauron 到 alert 之中
+
+#+begin_src emacs-lisp
+  (eval-after-load "alert"
+    '(progn
+       (when (require 'sauron nil 'noerror)
+       (add-hook 'sauron-event-added-functions 'sauron-alert-el-adapter))))
+#+end_src
 * 聊天軟體                                                             :chat:
 ** IRC
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境的設置。
@@ -5104,10 +5130,16 @@ offlineimap 可以在設定中加入
   (setq mu4e-get-mail-command "offlineimap")
 #+end_src
 
+*** 設定 mu4e 為預設的 email 系統
+
+#+begin_src emacs-lisp
+  (setq mail-user-agent 'mu4e-user-agent)
+#+end_src
+
 *** 設定最頂層的郵件資料夾
 
 #+begin_src emacs-lisp
-  (setq mu4e-maildir "~/.Maildir")
+  (setq mu4e-maildir "~/Maildir")
 #+end_src
 
 *** 設定我的 email 帳戶列表
@@ -5117,10 +5149,12 @@ offlineimap 可以在設定中加入
         '(("Gmail"
            (mu4e-sent-folder "/Gmail/Sent")
            (mu4e-drafts-folder "/Gmail/Drafts")
+           (mu4e-trash-folder "/Gmail/Trash")
            (user-mail-address "coldnew.tw@gmail.com"))
           ("Weintek"
            (mu4e-sent-folder "/Weintek/Sent")
            (mu4e-drafts-folder "/Weintek/Drafts")
+           (mu4e-trash-folder "/Weintek/Trash")
            (user-mail-address "yenchin@weintek.com"))))
 #+end_src
 
@@ -5143,28 +5177,31 @@ offlineimap 可以在設定中加入
 #+end_src
 
 *** 在郵件中顯示圖片
+
 #+begin_src emacs-lisp
   (setq mu4e-view-show-images t)
 #+end_src
-*** TODO 未整理
+
+*** 使用 w3m 將 HTML 轉換為 text 檔
+
 #+begin_src emacs-lisp
   (setq mu4e-html2text-command "w3m -dump -T text/html")
-  ;; enable inline images
 #+end_src
 
+*** TODO 未整理
 #+begin_src emacs-lisp
-
   (defun coldnew/mu4e-set-account ()
     "Set the account for composing a message."
+    (interactive)
     (let* ((account
-;;            (if mu4e-compose-parent-message
+            (if mu4e-compose-parent-message
                 (let ((maildir (mu4e-msg-field mu4e-compose-parent-message :maildir)))
                   (string-match "/\\(.*?\\)/" maildir)
                   (match-string 1 maildir))
               (completing-read (format "Compose with account: (%s) "
                                        (mapconcat #'(lambda (var) (car var)) coldnew/mu4e-account-alist "/"))
                                (mapcar #'(lambda (var) (car var)) coldnew/mu4e-account-alist)
-                               nil t nil nil (caar coldnew/mu4e-account-alist)));;)
+                               nil t nil nil (caar coldnew/mu4e-account-alist))))
            (account-vars (cdr (assoc account coldnew/mu4e-account-alist))))
       (if account-vars
           (mapc #'(lambda (var)
