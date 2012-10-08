@@ -1961,16 +1961,16 @@ auto-complete-mode 的按鍵設定。
 #+end_src
 *** 增加類似 org-mode 那樣使用 < 進行補全的方法 (easy-template)
 #+begin_src emacs-lisp
-  (defun coldnew/major-mode-expand ()
+  (defadvice yas-expand (around coldnew/major-mode-expand activate)
     "Try to complete a structure template before point like org-mode does.
-  This looks for strings like \"<e\" on an otherwise empty line and
-  expands them.
-  Before use this function, you muse setup `major-mode-name'-expand-alist variable.
+    This looks for strings like \"<e\" on an otherwise empty line and
+    expands them.
+    Before use this function, you muse setup `major-mode-name'-expand-alist variable.
 
-  Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
-  in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
+    Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
+    in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
 
-   (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
+     (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
     (let* ((l (buffer-substring (point-at-bol) (point)))
            (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
            (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
@@ -1979,10 +1979,12 @@ auto-complete-mode 的按鍵設定。
                  (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
                  (setq a (assoc (match-string 1 l) expand-alist)))
         (backward-delete-char (1+ (length (car-safe a))))
-        (insert (cdr-safe a))
-        t)))
-
-  (defadvice yas-expand (before coldnew/major-mode-expand activate) (coldnew/major-mode-expand))
+        (if (symbolp (cdr-safe a))
+            (funcall (cdr-safe a))
+          (insert (cdr-safe a)))
+        t)
+      ad-do-it
+      ))
 #+end_src
 *** Functions
 #+begin_src emacs-lisp
@@ -2732,9 +2734,9 @@ You can now (from git master) use `org-image-actual-width'.
 #+begin_src emacs-lisp
   (require 'org-crypt)
 #+end_src
-*** 設定要加密的 tag 標籤為 *encrypt*
+*** 設定要加密的 tag 標籤為 *secret*
 #+begin_src emacs-lisp
-  (setq org-crypt-tag-matcher "encrypt")
+  (setq org-crypt-tag-matcher "secret")
 #+end_src
 *** Add a hook to automatically encrypt entries before a file is saved to disk.
 #+begin_src emacs-lisp
@@ -2742,7 +2744,7 @@ You can now (from git master) use `org-image-actual-width'.
 #+end_src
 *** 避免 encrypt 這個 tag 被子項目繼承
 #+begin_src emacs-lisp
-  (setq org-tags-exclude-from-inheritance (quote ("encrypt")))
+  (setq org-tags-exclude-from-inheritance (quote ("secret")))
 #+end_src
 *** 設定 org-crypt-disable-auto-save 成 encrypt 模式。
 此模式並不會停用 auto-save-mode，反之，當自動儲存時，解密過的區域將會加密回去。
@@ -3454,9 +3456,7 @@ emacs 和 cscope 相關的套件蠻多的，xcscope 包含在 cscope 的套件�
             '(lambda ()
                (c-set-style "linux")))
 #+end_src
-*** Hooks
-**** prefix
-**** c-eldoc
+*** c-eldoc
 adeff
 #+begin_src emacs-lisp
     (add-hook 'c-mode-hook
@@ -3466,53 +3466,60 @@ adeff
                (c-turn-on-eldoc-mode)))
 #+end_src
 #+begin_src emacs-lisp
-  ;; use my cc-mode-common-setting
-;;  (add-hook 'c-mode-hook 'coldnew-cc-mode-common-setting)
+    ;; use my cc-mode-common-setting
+  ;;  (add-hook 'c-mode-hook 'coldnew-cc-mode-common-setting)
 
-  ;; use ctypes
-  (require 'ctypes)
-  (setq-default ctypes-file-name (concat emacs-cache-dir "ctypes_std_c.dat"))
-  (add-hook 'ctypes-load-hook 'my-ctypes-load-hook)
+    ;; use ctypes
+    (require 'ctypes)
+    (setq-default ctypes-file-name (concat emacs-cache-dir "ctypes_std_c.dat"))
+    (add-hook 'ctypes-load-hook 'my-ctypes-load-hook)
 
-  ;; use hide-if-def-mode
-  ;;(add-hook 'c-mode-hook 'hide-ifdef-mode)
+    ;; use hide-if-def-mode
+    ;;(add-hook 'c-mode-hook 'hide-ifdef-mode)
 
-  (require 'gccsense)
+    (require 'gccsense)
 
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Functions
-  ;;;; ---------------------------------------------------------------------------
-  (defun my-ctypes-load-hook ()
-    (ctypes-read-file ctypes-file-name nil t t))
+    ;;;; ---------------------------------------------------------------------------
+    ;;;; Functions
+    ;;;; ---------------------------------------------------------------------------
+    (defun my-ctypes-load-hook ()
+      (ctypes-read-file ctypes-file-name nil t t))
 
 
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Commands
-  ;;;; ---------------------------------------------------------------------------
+    ;;;; ---------------------------------------------------------------------------
+    ;;;; Commands
+    ;;;; ---------------------------------------------------------------------------
 
-  (defun c-mode:insert-inc-or-if ()
-    "If at the start of line. add `inc' and expand it,
-  else add `if' and expand it."
-    (interactive)
-    (let* ((current (point))
-           (begin (line-beginning-position)))
-      (if (eq current begin)
+    (defun c-mode:insert-inc-or-if ()
+      "If at the start of line. add `inc' and expand it,
+    else add `if' and expand it."
+      (interactive)
+      (let* ((current (point))
+             (begin (line-beginning-position)))
+        (if (eq current begin)
+            (progn
+              (c-mode:insert-include)
+              (newline-and-indent))
           (progn
-            (c-mode:insert-include)
-            (newline-and-indent))
-        (progn
-          (insert "if")
-          (yas/expand)))))
+            (insert "if")
+            (yas/expand)))))
 #+end_src
-**** TODO 自動偵測 c-basic-offset
+*** TODO 自動偵測 c-basic-offset
 #+begin_src emacs-lisp
   (require 'guess-offset)
 #+end_src
-**** 自動猜測縮排風格
+*** 自動猜測縮排風格
 #+begin_src emacs-lisp
   (when (require 'dtrt-indent nil 'noerror)
     (add-hook 'c-mode-hook
               (lambda () (dtrt-indent-mode t))))
+#+end_src
+*** 快速插入樣板
+#+begin_src emacs-lisp
+  (setq c-mode-expand-alist
+        '(("i" . c-mode:insert-inc-or-if)
+          ("m" . c-mode:insert-main-function)
+          ))
 #+end_src
 *** Keybinding
 #+begin_src emacs-lisp
@@ -3528,6 +3535,22 @@ C-c s f             寻找文件
 C-c s i             看看指定的文件被哪些文件 include
 C-c s a             设定初始化的目录，一般是你代码的根目录
 C-s s I             对目录中的相关文件建立列表并进行索引
+*** 將 #if 0 #endif 區域上色為灰色
+
+#+begin_src emacs-lisp
+  (defun cc-mode:highlight-if-0 ()
+    "highlight c/c++ #if 0 #endif macros"
+    (interactive)
+    (setq cpp-known-face 'default)
+    (setq cpp-unknown-face 'default)
+    (setq cpp-known-writable 't)
+    (setq cpp-unknown-writable 't)
+    (setq cpp-edit-list '(("0" '(foreground-color . "gray")  default both)
+                          ("1" default font-lock-comment-face both)))
+    (cpp-highlight-buffer t))
+
+  (add-hook 'c-mode-hook 'cc-mode:highlight-if-0)
+#+end_src
 *** Functions
 *** Commands
 #+begin_src emacs-lisp
@@ -3645,6 +3668,12 @@ C-s s I             对目录中的相关文件建立列表并进行索引
                        ac-source-words-in-same-mode-buffers
                        )))
 #+end_src
+*** 將 #if 0 #endif 區域上色為灰色
+
+#+begin_src emacs-lisp
+  (add-hook 'c++-mode-hook 'cc-mode:highlight-if-0)
+#+end_src
+
 *** Keybinding
 #+begin_src emacs-lisp
   (define-key c++-mode-map (kbd "C-x C-o") 'ff-find-other-file)
@@ -4679,6 +4708,24 @@ yank-n-times 則可以重複的進行貼上。
     (interactive)
     (pp-eval-expression '(macroexpand (read (thing-at-point 'sexp)))))
 #+end_src
+* 窗口管理
+** popwin
+
+popwin is a popup window manager for Emacs which makes you free from the hell of annoying buffers such like *Help*, *Completions*, *compilation*, and etc.
+Take an example. When you complete file names during find-file, the (annoying) *Completions* buffer will appear in a newly splitted window.
+You might understand the necessity of the window, but you may wonder why the window still remains after completion...
+popwin resolves there problems. Windows of such temporary buffers will be shown as a popup window, and you can close them smoothly by typing C-g in anytime.
+
+#+begin_src emacs-lisp
+  (require 'popwin)
+  (setq display-buffer-function 'popwin:display-buffer)
+#+end_src
+* 網頁瀏覽
+** 使用 w3m 作為網頁瀏覽器
+#+begin_src emacs-lisp
+(require 'w3m)
+ (setq w3m-default-display-inline-images t)
+#+end_src
 * Google 翻譯
 google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作。
 ** 載入相關套件
@@ -4718,6 +4765,52 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
                '(nil "\\`root\\'" "/ssh:%h:"))
   (add-to-list 'tramp-default-proxies-alist
                '((regexp-quote (system-name)) nil nil))
+#+end_src
+* 警示系統
+** 載入相關套件
+
+alert 是一個可以直接顯示資訊在 minibuffer 上面的套件，最簡單的使用
+方式如下：
+
+#+begin_src emacs-lisp :tangle no
+  (alert "this is alert")
+#+end_src
+
+#+begin_src emacs-lisp
+  (require 'alert)
+#+end_src
+
+sauron 是一個可以用來追蹤 emacs 裡面發生什麼事情的 minor-mode。
+
+#+begin_src emacs-lisp
+  (require 'sauron)
+#+end_src
+
+** 讓 sauron 不使用另外一個 frame 來顯示
+
+#+begin_src emacs-lisp
+  (setq sauron-separate-frame nil)
+#+end_src
+
+** 讓 sauron 黏在 frame 上面
+
+#+begin_src emacs-lisp
+ (setq sauron-sticky-frame t)
+#+end_src
+
+** 讓 sauron 顯示 mode-line
+
+#+begin_src emacs-lisp
+  (setq sauron-hide-mode-line nil)
+#+end_src
+
+** 整合 sauron 到 alert 之中
+
+#+begin_src emacs-lisp
+  (eval-after-load "alert"
+    '(progn
+       (when (require 'sauron nil 'noerror)
+       (add-hook 'sauron-event-added-functions 'sauron-alert-el-adapter))))
 #+end_src
 * 聊天軟體                                                             :chat:
 ** IRC
@@ -4969,10 +5062,214 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
   (require 'skype)
 #+end_src
 * 電子郵件
+** offlineimap
+*** 載入套件
+#+begin_src emacs-lisp
+  (require 'offlineimap)
+#+end_src
+*** 取得 offlineimap 的密碼
+
+offlineimap 可以在設定中加入
+
+: pythonfile = ~/.offlineimap.py
+
+來載入額外的 function ，我在這個檔案裏面加入了
+
+#+begin_src python :tangle no
+  #!/usr/bin/env python
+
+  import subprocess
+
+  def get_output(cmd):
+      # Bunch of boilerplate to catch the output of a command:
+      pipe = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+      (output, errout) = pipe.communicate()
+      assert pipe.returncode == 0 and not errout
+      return output
+
+  def get_password_emacs(host):
+      cmd = "emacsclient --eval '(offlineimap-get-password \"%s\")'" % (host)
+      return get_output(cmd).strip().lstrip('"').rstrip('"')
+#+end_src
+
+讓 offlineimap 可以透過 get_password_emacs() 來從 emacs 裏面取得密碼。
+
+#+begin_src emacs-lisp
+  (defun offlineimap-get-password (account)
+    (require 'netrc)
+    (if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
+    (or (netrc-get offlineimap-account-list account) ""))
+#+end_src
+
+在我的 ~/.authinfo.gpg 檔案內容是像這樣的
+
+
+#+begin_src emacs-lisp :tangle no
+  ;; -*- mode: emacs-lisp -*-
+
+  ;;;; offlineimap
+  (setq offlineimap-account-list
+        '(("account@mail.com" . "password")
+          ))
+#+end_src
+
+因此，在 .offlineimaprc 裏面加入這樣一行
+
+: remotepasseval = get_password_emacs("account@mail.com")
+
+即可透過 emacs 取得 password 這個密碼。
+
+** smtp
+*** 取得 smtp 的密碼
+
+在我的 ~/.authinfo.gpg 檔案內容是像這樣的
+
+
+#+begin_src emacs-lisp :tangle no
+  ;; -*- mode: emacs-lisp -*-
+
+  ;;;; smtp
+  (setq smtp-account-list
+        '(("account@gmail.com"
+           ("smtp.gmail.com" 587 "account@gmail.com" "password"))
+          ))
+#+end_src
+
+#+begin_src emacs-lisp
+  (defun smtp-get-password (account)
+    (require 'netrc)
+    (if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
+    (or (netrc-get smtp-account-list account) ""))
+#+end_src
 ** mu4e
 *** 載入套件
 #+begin_src emacs-lisp
   (require 'mu4e)
+#+end_src
+*** 使用 offlineimap 取得郵件
+
+#+begin_src emacs-lisp
+  (setq mu4e-get-mail-command "offlineimap")
+#+end_src
+
+*** 設定 mu4e 為預設的 email 系統
+
+#+begin_src emacs-lisp
+  (setq mail-user-agent 'mu4e-user-agent)
+#+end_src
+
+*** 設定最頂層的郵件資料夾
+
+#+begin_src emacs-lisp
+  (setq mu4e-maildir "~/Maildir")
+#+end_src
+
+*** 設定我的 email 帳戶列表
+
+#+begin_src emacs-lisp
+  (setq coldnew/mu4e-account-alist
+        '(("Gmail"
+           (mu4e-sent-folder "/Gmail/Sent")
+           (mu4e-drafts-folder "/Gmail/Drafts")
+           (mu4e-trash-folder "/Gmail/Trash")
+           (user-mail-address "coldnew.tw@gmail.com")
+           ;; Sent mail
+           (message-send-mail-function 'smtpmail-send-it)
+           (smtpmail-stream-type 'starttls)
+           (smtpmail-smtp-server "smtp.gmail.com")
+           (smtpmail-smtp-service 587)
+           (smtpmail-smtp-user user-mail-address)
+           (smtpmail-auth-credentials (smtp-get-password smtpmail-smtp-user))
+           )
+          ("Weintek"
+           (mu4e-sent-folder "/Weintek/Sent")
+           (mu4e-drafts-folder "/Weintek/Drafts")
+           (mu4e-trash-folder "/Weintek/Trash")
+           (user-mail-address "yenchin@weintek.com"))))
+#+end_src
+
+*** 設定預設的帳戶為 Gmail
+
+#+begin_src emacs-lisp
+  (defun coldnew/mu4e-set-default-account (account)
+    "Setup the default account based on coldnew/mu4e-account-alist."
+    (let* ((account (cdr (assoc account coldnew/mu4e-account-alist))))
+      (when account (mapc #'(lambda (a)
+                              (set (car a) (if (stringp (cadr a)) (cadr a) (eval (cadr a))))) account))))
+                              ;;(set (car a) (cadr a))) account))))
+
+  (coldnew/mu4e-set-default-account "Gmail")
+
+#+end_src
+
+*** 每隔 60秒 重新抓取郵件
+
+#+begin_src emacs-lisp
+  (setq mu4e-update-interval 60)
+#+end_src
+
+*** 在郵件中顯示圖片
+
+#+begin_src emacs-lisp
+  (setq mu4e-view-show-images t)
+#+end_src
+
+*** 使用 w3m 將 HTML 轉換為 text 檔
+
+#+begin_src emacs-lisp
+  (setq mu4e-html2text-command "w3m -dump -T text/html")
+
+#+end_src
+
+*** TODO 未整理
+#+begin_src emacs-lisp
+  (setq starttls-use-gnutls t)
+
+  (defun mu4e~view-fontify-diff ()
+    "Colorize diff message."
+    (interactive)
+    (let ((inhibit-read-only t))
+      (save-excursion
+        (goto-char (point-min))
+        ;; consider only lines that heuristically look like a citation line...
+        (while (re-search-forward "^\\(\\(\\+\\)[^+]\\|\\(-\\)[^-]\\)" nil t)
+          (let ((cur-point (or (match-beginning 2) (match-beginning 3)))
+                (color (if (match-beginning 2)
+                           "green"
+                         "deep pink")))
+            (end-of-line)
+            (add-text-properties cur-point (point)
+                                 `(face ((foreground-color . ,color))))))
+        (goto-char (point-min))
+        (while (re-search-forward "^\\(\\+\\+\\+\\|---\\)" nil t)
+          (let ((cur-point (match-beginning 1)))
+            (end-of-line)
+            (add-text-properties cur-point (point)
+                                 '(face ((weight . bold)))))))))
+
+  (add-hook 'mu4e-view-mode-hook 'mu4e~view-fontify-diff)
+#+end_src
+
+#+begin_src emacs-lisp
+  (defun coldnew/mu4e-set-account ()
+    "Set the account for composing a message."
+    (interactive)
+    (let* ((account
+            (if mu4e-compose-parent-message
+                (let ((maildir (mu4e-msg-field mu4e-compose-parent-message :maildir)))
+                  (string-match "/\\(.*?\\)/" maildir)
+                  (match-string 1 maildir))
+              (completing-read (format "Compose with account: (%s) "
+                                       (mapconcat #'(lambda (var) (car var)) coldnew/mu4e-account-alist "/"))
+                               (mapcar #'(lambda (var) (car var)) coldnew/mu4e-account-alist)
+                               nil t nil nil (caar coldnew/mu4e-account-alist))))
+           (account-vars (cdr (assoc account coldnew/mu4e-account-alist))))
+      (if account-vars
+          (mapc #'(lambda (var)
+                    (set (car var) (cadr var)))
+                account-vars))))
+
+  (add-hook 'mu4e-compose-pre-hook 'coldnew/mu4e-set-account)
 #+end_src
 * Alias                                                               :alias:
 ** git
