@@ -3343,23 +3343,26 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
   (set-default 'semantic-case-fold t)
 
 #+end_src
+
 * ECB                                                                   :ecb:
-** Depends
+** 載入相關套件
+
 #+begin_src emacs-lisp
   (require 'ecb)
 #+end_src
-** Config
-*** Do not show tips-of-the-day
-不要顯示　 tips-of-the-day，感覺很煩人
+
+** 不要顯示 tips-of-the-day，感覺很煩人
+
 #+begin_src emacs-lisp
   (setq ecb-tip-of-the-day nil)
 #+end_src
-*** Do not check ecb options for compatibility across versions
-不要自動檢查版本是否相容，很煩人...
+
+** 不要自動檢查版本是否相容，很煩人...
+
 #+begin_src emacs-lisp
   (setq ecb-auto-compatibility-check nil)
 #+end_src
-** Advice
+
 ** Commands
 #+begin_src emacs-lisp
   (defun ccc-toggle-ecb-mode ()
@@ -4149,6 +4152,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 * 互動式命令                                                        :command:
 ** Buffer
 *** 跳轉到 **scratch**
+
 跳轉目前 buffer 與 **scratch**，假如 **scratch** 不存在，
 則建立一個 major-mode 為 lisp-interaction-mode 的 **scratch**
 #+begin_src emacs-lisp
@@ -4165,7 +4169,9 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
           (unless (equal major-mode 'lisp-interaction-mode)
             (lisp-interaction-mode))))))
 #+end_src
+
 *** save-buffer-always
+
 預設的 save-buffer 在 buffer 沒有變動時，不會進行儲存，
 使用此命令可以使得在呼叫 save-buffer-always 時，將 buffer 變更為修改過，
 並進行儲存。
@@ -4176,7 +4182,9 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (set-buffer-modified-p t)
     (save-buffer))
 #+end_src
+
 *** revert-all-buffer
+
 #+begin_src emacs-lisp
 (defun revert-all-buffers ()
   "Revert all non-modified buffers associated with a file.
@@ -4190,7 +4198,9 @@ This is to update existing buffers after a Git pull of their underlying files."
               (message "Reverted %s\n" (buffer-file-name))))
           (buffer-list))))
 #+end_src
+
 *** nuke-all-buffers
+
 關閉除了 **scratch** 以外的所有 buffer。
 #+begin_src emacs-lisp
   (defun nuke-all-buffers ()
@@ -4199,6 +4209,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
     (delete-other-windows))
 #+end_src
+
 ** 其他、未歸類
 *** 縮排整個 buffer
 #+begin_src emacs-lisp
@@ -4210,7 +4221,9 @@ This is to update existing buffers after a Git pull of their underlying files."
     (indent-region (point-min) (point-max))
     (untabify (point-min) (point-max)))
 #+end_src
+
 *** 縮牌區域或是整個 buffer
+
 #+begin_src emacs-lisp
   (defun indent-region-or-buffer ()
     "Indents a region if selected, otherwise the whole buffer."
@@ -4226,7 +4239,9 @@ This is to update existing buffers after a Git pull of their underlying files."
           (indent-region-or-buffer)
           (message "Indented buffer.")))))
 #+end_src
+
 *** TODO rewrite
+
 #+begin_src emacs-lisp
   (defun align-code (beg end &optional arg)
     (interactive "rP")
@@ -4488,6 +4503,7 @@ This is to update existing buffers after a Git pull of their underlying files."
   ;;(global-set-key (kbd "C-x 5") 'open-in-largest-window)
 
 #+end_src
+
 ** 檔案處理
 *** find-files
 #+begin_src emacs-lisp
