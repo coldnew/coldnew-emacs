@@ -292,6 +292,12 @@ yasnippet 使用的 snippet路徑
   (defconst emacs-log-dir (concat emacs-dir "log/")
     "log file directory.")
 #+end_src
+**** emacs-etc-dir
+放置 jar 等其他文件的位置
+#+begin_src emacs-lisp
+  (defconst emacs-etc-dir (concat emacs-dir "etc/")
+    "etc file directory.")
+#+end_src
 *** 檔案相關設定
 這邊設定了各種檔案的路徑。
 **** emacs-config-file
@@ -2624,6 +2630,10 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
   (add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
 #+end_src
+** 將 plantuml 加入 org-mode
+#+begin_src emacs-lisp
+  (setq org-plantuml-jar-path (concat emacs-etc-dir "plantuml.jar"))
+#+end_src
 ** Config
 #+begin_src emacs-lisp
   (setq org-directory "~/Dropbox/Org/")
@@ -2662,14 +2672,15 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
 #+begin_src emacs-lisp
   (setq org-CUA-compatible t)
 #+end_src
-** 增加模版
+** 增加快速模版
 #+begin_src emacs-lisp
   (add-to-list 'org-structure-template-alist
                '("E" "#+begin_src emacs-lisp\n?\n#+end_src"))
-               (add-to-list 'org-structure-template-alist
+  (add-to-list 'org-structure-template-alist
                '("S" "#+begin_src sh\n?\n#+end_src"))
+  (add-to-list 'org-structure-template-alist
+               '("p" "#+begin_src plantuml :file uml.png \n?\n#+end_src"))
 #+end_src
-
 ** TODO Image size
 #+begin_example
 
@@ -2967,6 +2978,7 @@ some packages conflict with org-mode
      (python . t)
      (ruby . t)
      (sh . t)
+     (plantuml . t)
      ))
 #+end_src
 ** 輸出成 PDF 檔案設定
