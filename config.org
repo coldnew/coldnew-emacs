@@ -5285,7 +5285,6 @@ offlineimap 可以在設定中加入
   (coldnew/mu4e-set-default-account "Gmail")
 
 #+end_src
-
 *** 每隔 60秒 重新抓取郵件
 
 #+begin_src emacs-lisp
