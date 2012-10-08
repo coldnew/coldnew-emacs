@@ -2631,10 +2631,14 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
   (add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
 #+end_src
 ** 將 plantuml 加入 org-mode
+
+plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前最好將 Garphviz 裝上。
+
 #+begin_src emacs-lisp
   (setq org-plantuml-jar-path (concat emacs-etc-dir "plantuml.jar"))
 #+end_src
-** Config
+
+** TODO Config
 #+begin_src emacs-lisp
   (setq org-directory "~/Dropbox/Org/")
   (setq org-agenda-files (list "~/Dropbox/Org/"))
