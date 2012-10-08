@@ -195,141 +195,128 @@ M-x finder-commentary
 ** 變數設定                                                        :variable:
 這邊加入了我自定義的變數以及其初始值。
 *** 資料夾相關設定
+
 這邊設定了各種類型資料夾的路徑。
+
 **** emacs-dir
+
 emacs 設定檔預設所在的資料夾
 #+begin_src emacs-lisp
   (defconst emacs-dir "~/.emacs.d/"
     "The top-level emacs-configure directory.")
 #+end_src
 
-#+RESULTS:
-: emacs-dir
-
 **** emacs-themes-dir
+
 佈景主題的資料夾設定。
 #+begin_src emacs-lisp
   (defconst emacs-themes-dir (concat emacs-dir "themes/")
     "directory to place emacs theme.")
 #+end_src
 
-#+RESULTS:
-: emacs-themes-dir
-
 **** emacs-lisp-dir
+
 el-get 安裝套件的路徑。
 #+begin_src emacs-lisp
   (defconst emacs-lisp-dir   (concat emacs-dir "lisp/")
     "directory to place lisp packages from internet.")
 #+end_src
 
-#+RESULTS:
-: emacs-lisp-dir
-
 **** emacs-recipes-dir
+
 el-get 的 recipes 路徑。
 #+begin_src emacs-lisp
   (defconst emacs-recipes-dir (concat emacs-dir "recipes/")
     "directory to place local el-get recepies.")
 #+end_src
 
-#+RESULTS:
-: emacs-recipes-dir
-
 **** emacs-elpa-dir
+
 elpa 安裝套件的路徑。
 #+begin_src emacs-lisp
   (defconst emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
     "directory to place ELPA lisp packages from internet.")
 #+end_src
 
-#+RESULTS:
-: emacs-elpa-dir
-
 **** emacs-snippets-dir
+
 yasnippet 使用的 snippet路徑
 #+begin_src emacs-lisp
   (defconst emacs-snippets-dir (concat emacs-dir "snippets/")
     "directory to place yasnippet files.")
 #+end_src
 
-#+RESULTS:
-: emacs-snippets-dir
-
 **** emacs-bin-dir
+
 放置 binary 檔案的資料夾。
 #+begin_src emacs-lisp
   (defconst emacs-bin-dir    (concat emacs-dir "bin/")
     "directory to place binary staff.")
 #+end_src
 
-#+RESULTS:
-: emacs-bin-dir
-
 **** emacs-cache-dir
+
 放置 cache 等暫存檔案的資料夾。
 #+begin_src emacs-lisp
   (defconst emacs-cache-dir  (concat emacs-dir "cache/")
     "cache file directory.")
 #+end_src
 
-#+RESULTS:
-: emacs-cache-dir
-
 **** emacs-backup-dir
+
 備份文件的資料夾。
 #+begin_src emacs-lisp
   (defconst emacs-backup-dir (concat emacs-dir "backup/")
     "directory to backup files.")
 #+end_src
 
-#+RESULTS:
-: emacs-backup-dir
-
 **** emacs-log-dir
+
 放置紀錄的資料夾。
-#+begin_src emacs-lisp
+ #+begin_src emacs-lisp
   (defconst emacs-log-dir (concat emacs-dir "log/")
     "log file directory.")
 #+end_src
+
+**** emacs-etc-dir
+
+放置 jar 等其他文件的位置
+#+begin_src emacs-lisp
+  (defconst emacs-etc-dir (concat emacs-dir "etc/")
+    "etc file directory.")
+#+end_src
+
 *** 檔案相關設定
+
 這邊設定了各種檔案的路徑。
 **** emacs-config-file
+
 emacs 個人配置的檔案，也就是這個檔案。
 #+begin_src emacs-lisp
   (defconst emacs-config-file (concat emacs-dir "config.org")
     "File to place emacs configs.")
 #+end_src
 
-#+RESULTS:
-: emacs-config-file
-
 **** emacs-custom-file
+
 #+begin_src emacs-lisp
   (defconst emacs-custom-file (concat emacs-dir "custom.el")
     "store customize UI config.")
 #+end_src
 
-#+RESULTS:
-: emacs-custom-file
-
 **** emacs-authinfo-file
+
 #+begin_src emacs-lisp
   (defconst emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")
     "file that save secret")
 #+end_src
 
-#+RESULTS:
-: emacs-authinfo-file
-
 **** emacs-bookmark-file
+
 #+begin_src emacs-lisp
   (defconst emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
     "File to save bookmarks")
 #+end_src
-
-#+RESULTS:
-: emacs-bookmark-file
 
 *** 作業系統測試
 放置用於測試目前 emacs 執行在何種作業系統上的變數。
@@ -530,11 +517,14 @@ emacs 個人配置的檔案，也就是這個檔案。
 #+end_src
 
 ** 設定 custom-file 到其他檔案
+
 避免使用 *customize-UI* 時，會將設定寫入我的 init.el
 #+begin_src emacs-lisp
   (setq custom-file emacs-custom-file)
 #+end_src
+
 ** Daemon
+
 當啟用 emacs 時，啟動 emacs-server，如果使用者是 root 或已啟用 server，則忽略。
 #+begin_src emacs-lisp
   ;; Only start server mode if I'm not root
@@ -542,7 +532,9 @@ emacs 個人配置的檔案，也就是這個檔案。
     (require 'server)
     (unless (server-running-p) (server-start)))
 #+end_src
+
 ** 根據目前螢幕的解析度調整 emacs 視窗的大小。                  :resolution:
+
 整個設定是使用 cond 來進行條件式的判斷，因此加入了 *設定起始位置* 和 *設定終止位置*
 作為保護。
 *** 設定起始位置
@@ -598,52 +590,77 @@ emacs 個人配置的檔案，也就是這個檔案。
   )
 #+end_src
 * 語言與編碼                                                         :locale:
+
 emacs 編碼設定，大部份都設定成 utf-8。
+
 ** 系統編碼。
+
 #+begin_src emacs-lisp
   (prefer-coding-system 'utf-8 )
 #+end_src
+
 ** 語言環境。
+
 #+begin_src emacs-lisp
   (set-language-environment 'utf-8 )
 #+end_src
+
 ** 文件保存時的編碼設置
+
 #+begin_src emacs-lisp
   (set-buffer-file-coding-system 'utf-8 )
 #+end_src
+
 ** 鍵盤編碼設定
+
 #+begin_src emacs-lisp
   (set-keyboard-coding-system    'utf-8 )
 #+end_src
+
 ** 設定終端機的編碼
+
 #+begin_src emacs-lisp
   (set-terminal-coding-system    'utf-8 )
 #+end_src
+
 ** 選擇區域內編碼
+
 #+begin_src emacs-lisp
   (set-selection-coding-system   'utf-8 )
 #+end_src
+
 ** 剪貼簿編碼設定
+
 #+begin_src emacs-lisp
   (set-clipboard-coding-system   'utf-8 )
 #+end_src
+
 ** 使用 utf-8 編碼顯示文件名
+
 #+begin_src emacs-lisp
   (set-file-name-coding-system   'utf-8 )
 #+end_src
+
 ** 設定時間顯示使用英文
+
 #+begin_src emacs-lisp
   (setq system-time-locale "en_US" )
 #+end_src
+
 * 套件管理                                                          :package:
+
 emacs 套件管理的設定。
+
 ** el-get
 *** 設定 el-get-dir
+
 我不喜歡 el-get 預設使用 el-get 目錄，這裡根據我的 emacs-lisp-dir 重新設定。
 #+begin_src emacs-lisp
   (setq-default el-get-dir emacs-lisp-dir)
 #+end_src
+
 *** 如果 el-get 不存在的話，重新安裝 el-get
+
 #+begin_src emacs-lisp
     (unless (require 'el-get nil t)
       (setq el-get-install-branch "master")
@@ -655,20 +672,27 @@ emacs 套件管理的設定。
 
 ;;  (el-get 'sync)
 #+end_src
+
 *** 如果 elpa 的 recepies 不存在的話，自動建立他。
+
 #+begin_src emacs-lisp
   (unless (file-exists-p el-get-recipe-path-elpa)
     (el-get-elpa-build-local-recipes))
 #+end_src
+
 *** 將我的 recipes 加入 el-get-recipe-path
+
 #+begin_src emacs-lisp
   (add-to-list 'el-get-recipe-path emacs-recipes-dir)
 #+end_src
+
 *** Auto Mode Alist
+
 \\.rcp$ 為 el-get 的 recipes 副檔名。
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.rcp$" . emacs-lisp-mode))
 #+end_src
+
 *** TODO Recipes 轉移所有的 recipe 至此
 ***** Header
 #+begin_src emacs-lisp
@@ -722,14 +746,19 @@ emacs 套件管理的設定。
 #+end_src
 ** ELPA                                                               :elpa:
 *** 設定 elpa 安裝目錄到 emacs-elpa-dir
+
 #+begin_src emacs-lisp
   (setq-default package-user-dir emacs-elpa-dir)
 #+end_src
+
 *** Depends
+
 #+begin_src emacs-lisp
   (require 'package)
 #+end_src
+
 *** 設定 elpa 所使用的套件庫
+
 #+begin_src emacs-lisp
   (setq package-archives
         '(("melpa" . "http://melpa.milkbox.net/packages/")
@@ -738,23 +767,30 @@ emacs 套件管理的設定。
           ("marmalade" . "http://marmalade-repo.org/packages/")
           ))
 #+end_src
+
 ** 套件檢查
+
 為了避免有套件因為 *意外* 而不見，對套件進行檢查，若不存在則進行重新安裝的動作。
 *注意* ：進行套件檢查時，必須確認 el-get 已經安裝至 emacs 裡面，否則會產生錯誤。
 *** 存放套件資訊的變數
+
 此變數用於存放系統裏面必須安裝的 emacs 套件。
 #+begin_src emacs-lisp
    (defvar emacs-packages-list nil
      "A list of packages to ensure are installed at launch.")
 #+end_src
+
 *** 存放套件資訊的檔案
+
 此檔案用於將 emacs-packags-list 暫存。
 #+begin_src emacs-lisp
   (defvar emacs-packages-file
     (concat emacs-dir "installed.el")
     "Define where to store and read the installed packages list.")
 #+end_src
+
 *** 從硬碟中讀取檔案
+
 #+begin_src emacs-lisp
   (defun emacs-packages-read-from-file ()
     "Read from emacs-packages-file and set the contents to emacs-packages-list."
@@ -773,15 +809,19 @@ emacs 套件管理的設定。
   ;; read installed packages info from file
   (emacs-packages-read-from-file)
 #+end_src
+
 *** 將套件資訊寫入到檔案
+
 #+begin_src emacs-lisp
   (defun emacs-packages-write-to-file ()
     "Write emasc-packages-list to files."
     (with-temp-file emacs-packages-file
       (insert (el-get-print-to-string emacs-packages-list 'pretty))))
 #+end_src
+
 *** 設定自動更新安裝套件資訊的時間
 **** 當安裝新的套件時，更新套件資訊
+
 #+begin_src emacs-lisp
   (defun emacs-packages-install (pkg)
     (unless (stringp pkg)
@@ -792,6 +832,7 @@ emacs 套件管理的設定。
   ;; add to hooks
   (add-hook 'el-get-post-install-hooks 'emacs-packages-install)
 #+end_src
+
 **** 當移除套件時，更新套件資訊
 ***** TODO el-get-post-remove-hooks 不知道為什麼不能用，所以只好先 advice el-get-remove
 #+begin_src emacs-lisp
@@ -2624,7 +2665,60 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
   (add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
 #+end_src
-** Config
+** 將 plantuml 加入 org-mode
+
+plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前最好將 Garphviz 裝上。
+
+#+begin_src emacs-lisp
+  (setq org-plantuml-jar-path (concat emacs-etc-dir "plantuml.jar"))
+#+end_src
+
+** 預設讓 org-mode 使用自動縮排模式
+#+begin_src emacs-lisp
+  (setq org-startup-indented t)
+#+end_src
+** 打開新的 org-mode 時，預設將所有項目都隱藏，只保留最上層的父目錄
+
+#+begin_src emacs-lisp
+  (setq org-startup-folded t)
+#+end_src
+
+** 將前面的 *星號* 隱藏，只顯示最後一個
+
+#+begin_src emacs-lisp
+  (setq org-hide-leading-stars t)
+#+end_src
+
+** 切換成程式碼欄位時使用目前的視窗
+
+#+begin_src emacs-lisp
+  (setq org-src-window-setup 'current-window)
+#+end_src
+
+** 直接在程式碼欄位上為程式碼上色
+
+#+begin_src emacs-lisp
+  (setq org-src-fontify-natively t)
+#+end_src
+
+** 讓 org-mode 與 cua-mode 相容
+
+#+begin_src emacs-lisp
+  (setq org-CUA-compatible t)
+#+end_src
+
+** 增加快速模版
+
+#+begin_src emacs-lisp
+  (add-to-list 'org-structure-template-alist
+               '("E" "#+begin_src emacs-lisp\n?\n#+end_src"))
+  (add-to-list 'org-structure-template-alist
+               '("S" "#+begin_src sh\n?\n#+end_src"))
+  (add-to-list 'org-structure-template-alist
+               '("p" "#+begin_src plantuml :file uml.png \n?\n#+end_src"))
+#+end_src
+
+** TODO Config
 #+begin_src emacs-lisp
   (setq org-directory "~/Dropbox/Org/")
   (setq org-agenda-files (list "~/Dropbox/Org/"))
@@ -2637,39 +2731,6 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
                         ))
   (setq org-confirm-babel-evaluate nil)
 #+end_src
-** 預設讓 org-mode 使用自動縮排模式
-#+begin_src emacs-lisp
-  (setq org-startup-indented t)
-#+end_src
-** 打開新的 org-mode 時，預設將所有項目都隱藏
-只保留最上層的父目錄
-#+begin_src emacs-lisp
-  (setq org-startup-folded t)
-#+end_src
-** 將前面的 *星號* 隱藏，只顯示最後一個
-#+begin_src emacs-lisp
-  (setq org-hide-leading-stars t)
-#+end_src
-** 切換成程式碼欄位時使用目前的視窗
-#+begin_src emacs-lisp
-  (setq org-src-window-setup 'current-window)
-#+end_src
-** 直接在程式碼欄位上為程式碼上色
-#+begin_src emacs-lisp
-  (setq org-src-fontify-natively t)
-#+end_src
-** 讓 org-mode 與 cua-mode 相容
-#+begin_src emacs-lisp
-  (setq org-CUA-compatible t)
-#+end_src
-** 增加模版
-#+begin_src emacs-lisp
-  (add-to-list 'org-structure-template-alist
-               '("E" "#+begin_src emacs-lisp\n?\n#+end_src"))
-               (add-to-list 'org-structure-template-alist
-               '("S" "#+begin_src sh\n?\n#+end_src"))
-#+end_src
-
 ** TODO Image size
 #+begin_example
 
@@ -2711,24 +2772,29 @@ You can now (from git master) use `org-image-actual-width'.
                ))
 
 #+end_src
-** Agenda
-設定 Agenda 顯示在目前的 window 上。
+** 設定 Agenda 顯示在目前的 window 上。
+
 #+begin_src emacs-lisp
   (setq org-agenda-window-setup 'current-window)
 #+end_src
-*** Hooks
-啟用 hl-line
+
+** 在 Agenda mode 時啟用 hl-line
+
 #+begin_src emacs-lisp
   (add-hook 'org-agenda-mode-hook 'hl-line-mode)
 #+end_src
-*** Keybinding
+
+** 使用 C-g 離開 Agenda
+
 #+begin_src emacs-lisp
   (add-hook 'org-agenda-mode-hook
             '(lambda ()
                (local-set-key (kbd "C-g") 'org-agenda-exit)))
 #+end_src
+
 ** 讓 org-mode 裡面可以加密文章                                      :crypt:
-用於加密 org-mode 裡面具有 :encrypt: 這個 TAG 的區塊。
+
+用於加密 org-mode 裡面具有 :secret: 這個 TAG 的區塊。
 注意到這需啟用 [[*Easy%20PG][Easy PG]] 才能夠使用。
 *** 載入相關模組
 #+begin_src emacs-lisp
@@ -2751,6 +2817,7 @@ You can now (from git master) use `org-image-actual-width'.
 #+begin_src emacs-lisp
   (setq org-crypt-disable-auto-save 'encrypt)
 #+end_src
+
 ** 在 org-mode 裡面顯示圖片
 *** 增加 org-mode 圖片的正規表達式到 iimage-mode 裡面
 #+begin_src emacs-lisp
@@ -2967,6 +3034,7 @@ some packages conflict with org-mode
      (python . t)
      (ruby . t)
      (sh . t)
+     (plantuml . t)
      ))
 #+end_src
 ** 輸出成 PDF 檔案設定
@@ -3275,23 +3343,26 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
   (set-default 'semantic-case-fold t)
 
 #+end_src
+
 * ECB                                                                   :ecb:
-** Depends
+** 載入相關套件
+
 #+begin_src emacs-lisp
   (require 'ecb)
 #+end_src
-** Config
-*** Do not show tips-of-the-day
-不要顯示　 tips-of-the-day，感覺很煩人
+
+** 不要顯示 tips-of-the-day，感覺很煩人
+
 #+begin_src emacs-lisp
   (setq ecb-tip-of-the-day nil)
 #+end_src
-*** Do not check ecb options for compatibility across versions
-不要自動檢查版本是否相容，很煩人...
+
+** 不要自動檢查版本是否相容，很煩人...
+
 #+begin_src emacs-lisp
   (setq ecb-auto-compatibility-check nil)
 #+end_src
-** Advice
+
 ** Commands
 #+begin_src emacs-lisp
   (defun ccc-toggle-ecb-mode ()
@@ -4081,6 +4152,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 * 互動式命令                                                        :command:
 ** Buffer
 *** 跳轉到 **scratch**
+
 跳轉目前 buffer 與 **scratch**，假如 **scratch** 不存在，
 則建立一個 major-mode 為 lisp-interaction-mode 的 **scratch**
 #+begin_src emacs-lisp
@@ -4097,7 +4169,9 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
           (unless (equal major-mode 'lisp-interaction-mode)
             (lisp-interaction-mode))))))
 #+end_src
+
 *** save-buffer-always
+
 預設的 save-buffer 在 buffer 沒有變動時，不會進行儲存，
 使用此命令可以使得在呼叫 save-buffer-always 時，將 buffer 變更為修改過，
 並進行儲存。
@@ -4108,7 +4182,9 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (set-buffer-modified-p t)
     (save-buffer))
 #+end_src
+
 *** revert-all-buffer
+
 #+begin_src emacs-lisp
 (defun revert-all-buffers ()
   "Revert all non-modified buffers associated with a file.
@@ -4122,7 +4198,9 @@ This is to update existing buffers after a Git pull of their underlying files."
               (message "Reverted %s\n" (buffer-file-name))))
           (buffer-list))))
 #+end_src
+
 *** nuke-all-buffers
+
 關閉除了 **scratch** 以外的所有 buffer。
 #+begin_src emacs-lisp
   (defun nuke-all-buffers ()
@@ -4131,6 +4209,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
     (delete-other-windows))
 #+end_src
+
 ** 其他、未歸類
 *** 縮排整個 buffer
 #+begin_src emacs-lisp
@@ -4142,7 +4221,9 @@ This is to update existing buffers after a Git pull of their underlying files."
     (indent-region (point-min) (point-max))
     (untabify (point-min) (point-max)))
 #+end_src
+
 *** 縮牌區域或是整個 buffer
+
 #+begin_src emacs-lisp
   (defun indent-region-or-buffer ()
     "Indents a region if selected, otherwise the whole buffer."
@@ -4158,7 +4239,9 @@ This is to update existing buffers after a Git pull of their underlying files."
           (indent-region-or-buffer)
           (message "Indented buffer.")))))
 #+end_src
+
 *** TODO rewrite
+
 #+begin_src emacs-lisp
   (defun align-code (beg end &optional arg)
     (interactive "rP")
@@ -4420,6 +4503,7 @@ This is to update existing buffers after a Git pull of their underlying files."
   ;;(global-set-key (kbd "C-x 5") 'open-in-largest-window)
 
 #+end_src
+
 ** 檔案處理
 *** find-files
 #+begin_src emacs-lisp
