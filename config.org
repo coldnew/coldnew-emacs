@@ -2659,12 +2659,15 @@ google-weather 是提供　 emacs 連接 google-weathre 的 API，
   (require 'google-weather)
   (require 'org-google-weather)
 #+end_src
+
 ** 設定 org-mode 檔案的副檔名與對應的模式
+
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
   (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
   (add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
 #+end_src
+
 ** 將 plantuml 加入 org-mode
 
 plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前最好將 Garphviz 裝上。
@@ -2674,9 +2677,11 @@ plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前最好將
 #+end_src
 
 ** 預設讓 org-mode 使用自動縮排模式
+
 #+begin_src emacs-lisp
   (setq org-startup-indented t)
 #+end_src
+
 ** 打開新的 org-mode 時，預設將所有項目都隱藏，只保留最上層的父目錄
 
 #+begin_src emacs-lisp
@@ -2881,11 +2886,6 @@ You can now (from git master) use `org-image-actual-width'.
                ;;(define-key coldnew/command-mode-map "c" 'org-edit-src-exit)
                ))
 #+end_src
-** Hooks
-*** TODO Disable linum
-#+begin_src emacs-lisp
-;;  (add-to-list 'org-mode-hook '(lambda () (linum-mode -1)))
-#+end_src
 ** Conflict Fix
 some packages conflict with org-mode
 *** yasnippet
@@ -2962,8 +2962,6 @@ some packages conflict with org-mode
 #+end_src
 ** presentation
 #+begin_src emacs-lisp
-    ;; allow for export=>beamer by placing
-
   ;; #+LaTeX_CLASS: beamer in org files
   (unless (boundp 'org-export-latex-classes)
       (setq org-export-latex-classes nil))
@@ -3061,34 +3059,36 @@ some packages conflict with org-mode
 
 *** 一般文章所使用的 latex 配置
 #+begin_src emacs-lisp
-  (add-to-list 'org-export-latex-classes
-               '("coldnew-article"
-                 "\\documentclass[12pt,a4paper]{article}
-                  \\usepackage[T1]{fontenc}
-                  \\usepackage{fontspec}
-                  \\usepackage{xeCJK}
-                  \\setCJKmainfont{Hiragino Sans GB W3}
-                  \\XeTeXlinebreaklocale \"zh\"
-                  \\XeTeXlinebreakskip = 0pt plus 1pt
-                  \\usepackage{graphicx}
-                  \\usepackage{tikz}
-                  \\usepackage[bookmarks=true,colorlinks,linkcolor=black]{hyperref}
-                  \\defaultfontfeatures{Mapping=tex-text}
-                  \\setmonofont[Scale=0.8]{DejaVu Sans Mono}
-                  \\usepackage{geometry}
-                  \\geometry{a4paper, textwidth=6.5in, textheight=8in,
-                              marginparsep=10pt, marginparwidth=.6in}
-                  \\pagestyle{plain}
-                  \\linespread{1.5}
-                  \\title{}
-                        [NO-DEFAULT-PACKAGES]
-                        [NO-PACKAGES]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")
-                 ))
+    (add-to-list 'org-export-latex-classes
+                 '("coldnew-article"
+                   "\\documentclass[12pt,a4paper]{article}
+                    \\usepackage[T1]{fontenc}
+                    \\usepackage{fontspec}
+                    \\usepackage{xeCJK}
+                    \\setCJKmainfont{Hiragino Sans GB W3}
+                    \\XeTeXlinebreaklocale \"zh\"
+                    \\XeTeXlinebreakskip = 0pt plus 1pt
+                    \\usepackage{graphicx}
+                    \\usepackage{tikz}
+                    \\usepackage[bookmarks=true,colorlinks,linkcolor=black]{hyperref}
+                    \\defaultfontfeatures{Mapping=tex-text}
+                    \\setmonofont[Scale=0.8]{DejaVu Sans Mono}
+                    \\usepackage{geometry}
+                    \\usepackage{minted}
+                    \\usemintedstyle{emacs}
+                    \\geometry{a4paper, textwidth=6.5in, textheight=8in,
+                                marginparsep=10pt, marginparwidth=.6in}
+                    \\pagestyle{plain}
+                    \\linespread{1.5}
+                    \\title{}
+                          [NO-DEFAULT-PACKAGES]
+                          [NO-PACKAGES]"
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")
+                   ))
 
 #+end_src
 
