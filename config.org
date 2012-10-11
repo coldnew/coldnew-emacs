@@ -341,21 +341,16 @@ emacs 個人配置的檔案，也就是這個檔案。
 
 ***** 32-bit
 #+begin_src emacs-lisp
-  (defvar linux-32bit-p (and (string-match (rx bos "x86-") system-configuration) linux-p)
+  (defvar linux-32bit-p (and (string-match
+                            (rx (or bos "x86-" bos "i686-")) system-configuration) linux-p)
   "Return nil if OS is not 32-bit linux.")
 #+end_src
-
-#+RESULTS:
-: linux-32bit-p
 
 ***** 64-bit
 #+begin_src emacs-lisp
   (defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
     "Return nil if OS is not 64-bit linux.")
 #+end_src
-
-#+RESULTS:
-: linux-64bit-p
 
 **** Cygwin
 #+begin_src emacs-lisp
@@ -2511,7 +2506,7 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   ;; use local gpg program instaed of system one
   ;; only work under linux
   (cond
-   ;; (linux-32bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg-x86")))
+   (linux-32bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg-x86")))
    (linux-64bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg")))
    )
 
@@ -5181,7 +5176,7 @@ offlineimap 可以在設定中加入
 #+begin_src emacs-lisp
   (defun offlineimap-get-password (account)
     (require 'netrc)
-    (if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
+    ;;(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
     (or (netrc-get offlineimap-account-list account) ""))
 #+end_src
 
@@ -5220,9 +5215,10 @@ offlineimap 可以在設定中加入
 #+end_src
 
 #+begin_src emacs-lisp
+(defvar smtp-account-list nil)
   (defun smtp-get-password (account)
     (require 'netrc)
-    (if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
+    ;;(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
     (or (netrc-get smtp-account-list account) ""))
 #+end_src
 ** mu4e
@@ -5755,6 +5751,7 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x t p") 'elscreen-previous)
   (global-set-key (kbd "C-x t r") 'elscreen-screen-nickname)
   (global-set-key (kbd "C-x t c") 'elscreen-create)
+  (global-set-key (kbd "C-x t k") 'elscreen-kill)
   (global-set-key (kbd "C-x t 0") '(lambda () (interactive) (elscreen-goto 0)))
   (global-set-key (kbd "C-x t 1") '(lambda () (interactive) (elscreen-goto 1)))
   (global-set-key (kbd "C-x t 2") '(lambda () (interactive) (elscreen-goto 2)))
