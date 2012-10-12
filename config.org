@@ -5132,9 +5132,36 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 #+end_src
 
 ** Jabber
-*** 載入相依套件
+
+jabber 帳戶設定寫在 emacs-authinfo-file 裏面。
+
+*** 載入相關套件
 #+begin_src emacs-lisp
   (require 'jabber)
+#+end_src
+
+*** 在系統上顯示 jabber 的訊息
+
+#+begin_src emacs-lisp
+    (require 'notifications)
+  ;;  (notifications-notify :title "title")
+
+    (defun jabber-notify (from buf text proposed-alert)
+      (when (or jabber-message-alert-same-buffer
+                (not (memq (selected-window) (get-buffer-window-list buf))))
+        (if (jabber-muc-sender-p from)
+            (notifications-notify :title (jabber-jid-displayname (jabber-jid-user from))
+                                  :body  text))
+      (notifications-notify :title (jabber-jid-displayname from)
+                            :body text)))
+
+  (add-hook 'jabber-alert-message-hooks 'jabber-notify)
+
+  ;; Message alert hooks
+  (define-jabber-alert echo "Show a message in the echo area"
+    (lambda (msg)
+      (unless (minibuffer-prompt)
+        (message "%s" msg))))
 #+end_src
 ** Skype
 #+begin_src emacs-lisp
