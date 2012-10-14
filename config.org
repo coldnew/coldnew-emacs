@@ -2420,17 +2420,6 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   (projectile-global-mode)
   (setq projectile-enable-caching t)
 #+end_src
-** hideshow
-#+begin_src emacs-lisp
-  (require 'hideshow)
-  (require 'hideshowvis)
-
-  ;;; enable following mode to use hideshow
-  (dolist (hook (list 'emacs-lisp-mode-hook
-                      'c++-mode-hook
-                      'c-mode-hook))
-    (add-hook hook 'hideshowvis-enable))
-#+end_src
 ** slime
 #+begin_src emacs-lisp
   (require 'slime)
@@ -6116,8 +6105,21 @@ http://jixiuf.github.com/tags/@Emacs.html
             (concat "&oe=" "utf8")))
 #+end_src
 * Blog
+** 使用 o-blog 作為 blogging 系統
+
+*** 載入相關套件
 #+begin_src emacs-lisp
 (require 'o-blog)
+#+end_src
+
+*** 設定網頁連結名稱
+
+#+begin_src emacs-lisp
+  (defun coldnew/o-blog:sanitizer (s)
+    "Sanitize string S"
+    (if (not (equal (ob-sanitize-string s) "blog"))
+        (md5 s)
+      (ob-sanitize-string s)))
 #+end_src
 * Local File Variable
 # Local Variables:
