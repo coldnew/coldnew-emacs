@@ -1589,31 +1589,41 @@ emacs-lisp-mode 的 buffer，可以這樣做
 #+end_src
 * 自動補全
 ** 載入相關套件
+
 #+begin_src emacs-lisp
   (require 'auto-complete)
   (require 'auto-complete-config)
   (require 'auto-complete-clang)
 #+end_src
+
 ** 使用預設的設定。
+
 #+begin_src emacs-lisp
   (ac-config-default)
 #+end_src
+
 ** 不使用 fuzzy-match
+
 #+begin_src emacs-lisp
   (setq ac-use-fuzzy nil)
 #+end_src
-** 當輸入 4 個字母以上時，啟用自動補全。
+
+** 當輸入 6 個字母以上時，啟用自動補全。
+
 #+begin_src emacs-lisp
-  (setq ac-auto-start 4)
+  (setq ac-auto-start 6)
 #+end_src
+
 ** 加入我自定義的補全字典
+
 #+begin_src emacs-lisp
   (add-to-list 'ac-dictionary-directories (concat emacs-dir "ac-dict"))
 #+end_src
+
 ** TODO 位分類
 #+begin_src emacs-lisp
   ;; Ignore case if completion target string doesn't include upper characters
-  (setq ac-ignore-case 'smart)
+  (setq ac-ignore-case nil)
 
   ;; Enable auto-complete quick help
   (setq ac-use-quick-help t)
