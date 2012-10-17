@@ -971,7 +971,6 @@ ref: http://curiousprogrammer.wordpress.com/2009/06/08/error-handling-in-emacs-l
 #+begin_src emacs-lisp
   (require 'sauron)
   (require 'space-chord)
-  (require 'switch-window)
   (require 'projectile)
   (projectile-mode)
 #+end_src
@@ -5847,7 +5846,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x C-d")  'dired)
   (global-set-key (kbd "C-x vv") 'egg-next-action)
   (global-set-key (kbd "C-x M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x o")   'switch-window)
   (global-set-key (kbd "C-x C-n") 'auto-complete)
   (global-set-key (kbd "C-x C-s") 'save-buffer-always)
   (global-set-key (kbd "C-x F") 'fullscreen-window)
@@ -5997,10 +5995,7 @@ Function key 設置常用的命令。
   ;; (global-set-key (kbd "M-3") 'split-window-right)
   ;; (global-set-key (kbd "M-4") 'delete-window)
   ;; (global-set-key (kbd "M-0") 'other-window)
-  ;;  (global-set-key (kbd "M-j") 'switch-window)
   ;;  (global-set-key (kbd "M-i") 'yas/expand)
-
-
 #+end_src
 
 ** Meta-j prefix
