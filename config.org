@@ -3121,19 +3121,6 @@ some packages conflict with org-mode
 #+begin_src emacs-lisp
   (require 'org-html5presentation)
 #+end_src
-** Blog
-*** variable
-#+begin_src emacs-lisp
-  (defvar coldnew-blog-org-file "~/Workspace/coldnew-blog/src/blog.org"
-    "coldnew's blog file")
-#+end_src
-*** update function
-#+begin_src emacs-lisp
-  (defun coldnew/update-blog ()
-    (interactive)
-    (org-publish-blog coldnew-blog-org-file)
-    (firefox-refresh))
-#+end_src
 * Editor
 try to define my editor-mode , some function  or macros copy from evil :)
 ** 替中文字和英文字中間加入空格
@@ -6140,9 +6127,8 @@ http://jixiuf.github.com/tags/@Emacs.html
             ;; add for encoding
             (concat "&oe=" "utf8")))
 #+end_src
-* Blog
+* 部若格                                                      :blog:
 ** 使用 o-blog 作為 blogging 系統
-
 *** 載入相關套件
 #+begin_src emacs-lisp
 (require 'o-blog)
@@ -6156,6 +6142,18 @@ http://jixiuf.github.com/tags/@Emacs.html
     (if (not (equal (ob-sanitize-string s) "blog"))
         (md5 s)
       (ob-sanitize-string s)))
+#+end_src
+*** 設定 blog 檔案的位置
+#+begin_src emacs-lisp
+  (defvar coldnew-blog-org-file "~/Workspace/coldnew-blog/src/blog.org"
+    "coldnew's blog file")
+#+end_src
+*** 更新 blog 的命令
+#+begin_src emacs-lisp
+  (defun coldnew/update-blog ()
+    (interactive)
+    (org-publish-blog coldnew-blog-org-file)
+    (firefox-refresh))
 #+end_src
 * Local File Variable
 # Local Variables:
