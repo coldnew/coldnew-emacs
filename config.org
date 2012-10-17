@@ -3112,6 +3112,10 @@ some packages conflict with org-mode
 #+end_src
 
 *** TODO 投影片所使用的 html5 配置
+** TODO 輸出成 HTML slide 設定
+#+begin_src emacs-lisp
+  (require 'org-html5presentation)
+#+end_src
 ** Blog
 *** variable
 #+begin_src emacs-lisp
