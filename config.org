@@ -64,13 +64,6 @@ cua-mode 下可以用以下命令進行列操作：
 [M-|]: 對 rect 執行一個 shell 命令
 *** 看 package 的註解
 M-x finder-commentary
-*** Search
-**** 基本按鍵
-| 按鍵   | 命令             | 用途     |
-|--------+------------------+----------|
-| Ctrl-s | isearch-forward  | 向前查找 |
-| Ctrl-r | isearch-backward | 向後查找 |
-
 *** id-manager
 負責管理密碼的plugin
 * 基礎設置                                                             :base:
