@@ -689,17 +689,17 @@ emacs 套件管理的設定。
 #+end_src
 
 *** TODO Recipes 轉移所有的 recipe 至此
-***** Header
+**** Header
 #+begin_src emacs-lisp
   (setq el-get-sources '(
 #+end_src
-***** TODO powerline remember to remove
+**** TODO powerline remember to remove
 #+begin_src emacs-lisp
   (:name powerline
          :type github
          :pkgname "jonathanchu/emacs-powerline")
 #+end_src
-***** lusty-emacs
+**** lusty-emacs
 使用最新版本的 lusty-explorer
 #+begin_src emacs-lisp
   (:name lusty-explorer
@@ -707,35 +707,35 @@ emacs 套件管理的設定。
          :pkgname sjbach/lusty-emacs
          :description "LustyExplorer is a fast and responsive way to manage files and buffers")
 #+end_src
-***** linum-ace
+**** linum-ace
 #+begin_src emacs-lisp
   (:name linum-ace
          :type github
          :pkgname coldnew/linum-ace
          :features linum-ace)
 #+end_src
-***** qml-mode
+**** qml-mode
 #+begin_src emacs-lisp
   (:name qml-mode
          :type github
          :pkgname coldnew/qml-mode
          :features qml-mode)
 #+end_src
-***** qmake-mode
+**** qmake-mode
 #+begin_src emacs-lisp
   (:name qmake-mode
          :type github
          :pkgname coldnew/qmake-mode
          :features qmake-mode)
 #+end_src
-***** helm-git
+**** helm-git
 #+begin_src emacs-lisp
   (:name helm-git
          :type github
          :pkgname maio/helm-git
          :features helm-git)
 #+end_src
-***** End of config
+**** End of config
 #+begin_src emacs-lisp
   ))
 #+end_src
@@ -2718,7 +2718,6 @@ plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前最好將
   (setq org-tag-alist '(
                         (:startgroup . nil) ("Business" . ?b) ("School" . ?s) ("Weintek" . ?w) ("Personal" . ?p) (:endgroup . nil)
                         ))
-  (setq org-confirm-babel-evaluate nil)
 #+end_src
 ** TODO Image size
 #+begin_example
@@ -3019,6 +3018,12 @@ some packages conflict with org-mode
      (plantuml . t)
      ))
 #+end_src
+** 對程式碼區塊進行 eval 時不再詢問
+
+#+begin_src emacs-lisp
+  (setq org-confirm-babel-evaluate nil)
+#+end_src
+
 ** 輸出成 PDF 檔案設定
 *** 使用 minted 將程式碼加上色彩
 #+begin_src emacs-lisp
