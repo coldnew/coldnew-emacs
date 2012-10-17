@@ -3709,7 +3709,7 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 #+begin_src emacs-lisp
   (add-hook 'clojure-mode-hook
             '(lambda ()
-               (when (require rainbow-delimiters)
+               (when (require 'rainbow-delimiters)
                  (rainbow-delimiters-mode-enable))))
 #+end_src
 ** Clojure Script
