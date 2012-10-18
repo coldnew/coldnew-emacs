@@ -2585,21 +2585,31 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 #+end_src
 
 * 文檔幫助
+
 這邊放置 manpage、womanpage、info 等幫助文檔模式的設定。
+
 ** WoMan                                                              :woman:
+
 woman 是 emacs 下顯示 manpage 最好的方式。
+
 *** 載入相依套件
+
 #+begin_src emacs-lisp
   (require 'woman)
 #+end_src
+
 *** WoMan 快取儲存位置設定
+
 #+begin_src emacs-lisp
   (setq woman-cache-filename (concat emacs-cache-dir "woman.cache"))
 #+end_src
+
 *** 對 woMan 緩衝區上色
+
 #+begin_src emacs-lisp
   (setq woman-fontify t)
 #+end_src
+
 *** TODO 其他
 #+begin_src emacs-lisp
   (setq woman-use-topic-at-point nil)
