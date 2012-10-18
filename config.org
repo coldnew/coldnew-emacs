@@ -998,8 +998,10 @@ parenface 可以將所有的圓括號上色。
 ;;  (set-face-foreground 'paren-face "green")
 #+end_src
 
+smart-tab 會幫你決定使用 yasnippet 或是 tab
 #+begin_src emacs-lisp
   (require 'smart-tab)
+  (global-smart-tab-mode 1)
 #+end_src
 ** Build-in
 #+begin_src emacs-lisp
