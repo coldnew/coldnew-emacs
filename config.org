@@ -5857,7 +5857,6 @@ Function key 設置常用的命令。
 *** Misc
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-v") 'coldnew/set-mark-command)
-  (global-set-key (kbd "C-]") 'coldnew/toggle-state)
 #+end_src
 
 *** iedit
