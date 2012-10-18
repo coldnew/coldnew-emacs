@@ -4772,17 +4772,24 @@ popwin resolves there problems. Windows of such temporary buffers will be shown 
  (setq w3m-default-display-inline-images t)
 #+end_src
 * Google 翻譯
+
 google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作。
+
 ** 載入相關套件
+
 #+begin_src emacs-lisp
   (require 'google-translate)
 #+end_src
+
 ** 預設設定為 正體中文 -> 英文
+
 #+begin_src emacs-lisp
 (setq google-translate-default-source-language "zh-TW")
 (setq google-translate-default-target-language "en")
 #+end_src
-** 命令
+
+** 將英文翻譯為中文
+
 #+begin_src emacs-lisp
   (defun google-translate-en-zh ()
     "Translate English to Tranditional Chinese by google-translate."
@@ -4790,7 +4797,10 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
     (let ((google-translate-default-source-language "en")
           (google-translate-default-target-language "zh-TW"))
       (google-translate-query-translate)))
+#+end_src
 
+** 將中文翻譯為英文
+#+begin_src emacs-lisp
   (defun google-translate-zh-en ()
     "Translate Tranditional Chinese to English by google-translate."
     (interactive)
@@ -5812,6 +5822,18 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
   (global-set-key (kbd "C--") 'text-scale-decrease)
 #+end_src
+** 語言翻譯
+
+| 按鍵    | 命令                   | 用途           |
+|---------+------------------------+----------------|
+| C-x t e | google-translate-zh-en | 中文翻譯成英文 |
+| C-x t z | google-translate-en-zh | 英文翻譯成中文 |
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x t e") 'google-translate-zh-en)
+  (global-set-key (kbd "C-x t z") 'google-translate-en-zh)
+#+end_src
+
 ** Ctrl-x Prefix
 *** Misc
 | 按鍵    | 命令                | 用途                   |
@@ -5842,15 +5864,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x s") 'shell-command)
 #+end_src
 
-*** Google 相關
-| 按鍵    | 命令                   | 用途           |
-|---------+------------------------+----------------|
-| C-x g e | google-translate-zh-en | 中文翻譯成英文 |
-| C-x g t | google-translate-en-zh | 英文翻譯成中文 |
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x g e") 'google-translate-zh-en)
-  (global-set-key (kbd "C-x g t") 'google-translate-en-zh)
-#+end_src
 *** 轉換
 | 按鍵    | 命令                     | 用途                             |
 |---------+--------------------------+----------------------------------|
