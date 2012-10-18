@@ -21,6 +21,7 @@
 |-----------------------+----------------------+----------------|
 | bookmark-default-file | ~/.emacs.d/bookmarks | 預設的書籤檔案 |
 | bookmark-save-flag    | t                    |                |
+
 ** TODO 未歸類的 emacs 筆記。
 *** C-x r N 添加數字序號
 (rectangle-number-lines START END START-AT &optional FORMAT)
@@ -69,88 +70,77 @@ M-x finder-commentary
 * 基礎設置                                                             :base:
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
 ** 預先載入 cl 套件。
+
 #+begin_src emacs-lisp
   (eval-when-compile (require 'cl))
 #+end_src
 
-#+RESULTS:
-: cl
-
 ** 使用者介面設定
+
 關閉一些 emacs 預設的 UI 設定。
+
 *** 不啟用 startup message
+
 啟動 emacs 時會出現的 GNU/Emacs 畫面，這裡將他關閉
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t)
 #+end_src
 
-#+RESULTS:
-: t
-
 *** 清空 **scratch** buffer 的文字。
+
 預設 **scratch** 裡面會有幾行文字，直接將他清空。
 #+begin_src emacs-lisp
   (setq initial-scratch-message "")
 #+end_src
 
-#+RESULTS:
-
 *** 關閉蜂鳴器
+
 使用 visible bell 代替電腦的蜂鳴器叫聲。
 #+begin_src emacs-lisp
   (setq visible-bell t)
 #+end_src
 
-#+RESULTS:
-: t
-
 *** 關閉工具列
+
+不顯示工具列。
 #+begin_src emacs-lisp
   (if (featurep 'tool-bar) (tool-bar-mode -1))
 #+end_src
 
-#+RESULTS:
-
 *** 關閉滾動條
-關閉左側或右側的滾動條 (scrool-bar)
+
+關閉左側或右側的滾動條 (scrool-bar)。
 #+begin_src emacs-lisp
   (if (featurep 'scroll-bar) (scroll-bar-mode -1))
 #+end_src
 
-#+RESULTS:
-
 *** 關閉游標閃爍
+
+不允許游標閃爍。
 #+begin_src emacs-lisp
   (blink-cursor-mode -1)
 #+end_src
 
-#+RESULTS:
-
 *** 關閉選單列
+
+不顯示選單列
 #+begin_src emacs-lisp
   (if (featurep 'menu-bar) (menu-bar-mode -1))
 #+end_src
 
-#+RESULTS:
-
-*** Time Stamp
+*** TODO Time Stamp
 #+begin_src emacs-lisp
   (setq time-stamp-active      t ) ; do enable time-stamps
   (setq time-stamp-line-limit 10 ) ; check first 10 buffer lines for Time-stamp:
   (setq time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S (%u)") ; date format
 #+end_src
 
-#+RESULTS:
-: %04y-%02m-%02d %02H:%02M:%02S (%u)
-
 *** 回答問題時，使用 *y* 和 *n* 代替 *yes/no* 。
+
 預設要使用 *yse* 或是 *no* 來回答問題，這裡將他改成用 *y* 或 *n* 。
 #+begin_src emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
-
-#+RESULTS:
-: y-or-n-p
 
 *** TODO Misc
 
@@ -170,9 +160,6 @@ M-x finder-commentary
   (setq debug-on-error t)    ; now you should get a backtrace
 #+end_src
 
-#+RESULTS:
-: t
-
 #+begin_src emacs-lisp
   ;; nice scrolling
   (setq scroll-margin                   0 )
@@ -181,9 +168,6 @@ M-x finder-commentary
   (setq scroll-up-aggressively       0.01 )
   (setq scroll-down-aggressively     0.01 )
 #+end_src
-
-#+RESULTS:
-: 0.01
 
 ** 變數設定                                                        :variable:
 這邊加入了我自定義的變數以及其初始值。
@@ -998,8 +982,10 @@ parenface 可以將所有的圓括號上色。
 ;;  (set-face-foreground 'paren-face "green")
 #+end_src
 
+smart-tab 會幫你決定使用 yasnippet 或是 tab
 #+begin_src emacs-lisp
-;;(require 'smart-tab)
+  (require 'smart-tab)
+  (global-smart-tab-mode 1)
 #+end_src
 ** Build-in
 #+begin_src emacs-lisp
@@ -1607,16 +1593,22 @@ emacs-lisp-mode 的 buffer，可以這樣做
   (setq ac-use-fuzzy nil)
 #+end_src
 
-** 當輸入 6 個字母以上時，啟用自動補全。
+** 不自動啟用自動補全
 
 #+begin_src emacs-lisp
-  (setq ac-auto-start 6)
+  (setq ac-auto-start nil)
 #+end_src
 
 ** 加入我自定義的補全字典
 
 #+begin_src emacs-lisp
   (add-to-list 'ac-dictionary-directories (concat emacs-dir "ac-dict"))
+#+end_src
+
+** 全域性使用自動補全
+
+#+begin_src emacs-lisp
+  (global-auto-complete-mode 1)
 #+end_src
 
 ** TODO 位分類
@@ -1638,7 +1630,6 @@ emacs-lisp-mode 的 buffer，可以這樣做
 
   ;; Show menu
   (setq ac-auto-show-menu t)
-
   ;; Enable ac-menu-map
   (setq ac-use-menu-map t)
 #+end_src
@@ -2476,16 +2467,6 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 
   ;; Auto jump to the first error.
   (setq compilation-auto-jump-to-first-error t)
-#+end_src
-** cmake
-*** Depends
-#+begin_src emacs-lisp
-  (require 'cmake-mode)
-#+end_src
-*** Mode List
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode))
-  (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
 #+end_src
 
 ** Easy PG                                                          :easypg:
@@ -3700,6 +3681,15 @@ C-c  I             对目录中的相关文件建立列表并进行索引
  ;; remember to remove
   (define-key c++-mode-map (kbd "C-c f") 'cscope-find-this-file)
 #+end_src
+** CMake
+*** 設定 CMake 檔案的副檔名與對應的模式
+
+#+begin_src emacs-lisp
+  (require 'cmake-mode)
+  (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode))
+  (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
+#+end_src
+
 ** Common Lisp
 *** 設定 Common Lisp 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
@@ -4782,17 +4772,24 @@ popwin resolves there problems. Windows of such temporary buffers will be shown 
  (setq w3m-default-display-inline-images t)
 #+end_src
 * Google 翻譯
+
 google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作。
+
 ** 載入相關套件
+
 #+begin_src emacs-lisp
   (require 'google-translate)
 #+end_src
+
 ** 預設設定為 正體中文 -> 英文
+
 #+begin_src emacs-lisp
 (setq google-translate-default-source-language "zh-TW")
 (setq google-translate-default-target-language "en")
 #+end_src
-** 命令
+
+** 將英文翻譯為中文
+
 #+begin_src emacs-lisp
   (defun google-translate-en-zh ()
     "Translate English to Tranditional Chinese by google-translate."
@@ -4800,7 +4797,10 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
     (let ((google-translate-default-source-language "en")
           (google-translate-default-target-language "zh-TW"))
       (google-translate-query-translate)))
+#+end_src
 
+** 將中文翻譯為英文
+#+begin_src emacs-lisp
   (defun google-translate-zh-en ()
     "Translate Tranditional Chinese to English by google-translate."
     (interactive)
@@ -5822,6 +5822,18 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
   (global-set-key (kbd "C--") 'text-scale-decrease)
 #+end_src
+** 語言翻譯
+
+| 按鍵    | 命令                   | 用途           |
+|---------+------------------------+----------------|
+| C-x t e | google-translate-zh-en | 中文翻譯成英文 |
+| C-x t z | google-translate-en-zh | 英文翻譯成中文 |
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x t e") 'google-translate-zh-en)
+  (global-set-key (kbd "C-x t z") 'google-translate-en-zh)
+#+end_src
+
 ** Ctrl-x Prefix
 *** Misc
 | 按鍵    | 命令                | 用途                   |
@@ -5852,15 +5864,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x s") 'shell-command)
 #+end_src
 
-*** Google 相關
-| 按鍵    | 命令                   | 用途           |
-|---------+------------------------+----------------|
-| C-x g e | google-translate-zh-en | 中文翻譯成英文 |
-| C-x g t | google-translate-en-zh | 英文翻譯成中文 |
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x g e") 'google-translate-zh-en)
-  (global-set-key (kbd "C-x g t") 'google-translate-en-zh)
-#+end_src
 *** 轉換
 | 按鍵    | 命令                     | 用途                             |
 |---------+--------------------------+----------------------------------|
