@@ -21,6 +21,7 @@
 |-----------------------+----------------------+----------------|
 | bookmark-default-file | ~/.emacs.d/bookmarks | 預設的書籤檔案 |
 | bookmark-save-flag    | t                    |                |
+
 ** TODO 未歸類的 emacs 筆記。
 *** C-x r N 添加數字序號
 (rectangle-number-lines START END START-AT &optional FORMAT)
@@ -69,88 +70,77 @@ M-x finder-commentary
 * 基礎設置                                                             :base:
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
 ** 預先載入 cl 套件。
+
 #+begin_src emacs-lisp
   (eval-when-compile (require 'cl))
 #+end_src
 
-#+RESULTS:
-: cl
-
 ** 使用者介面設定
+
 關閉一些 emacs 預設的 UI 設定。
+
 *** 不啟用 startup message
+
 啟動 emacs 時會出現的 GNU/Emacs 畫面，這裡將他關閉
 #+begin_src emacs-lisp
   (setq inhibit-startup-message t)
 #+end_src
 
-#+RESULTS:
-: t
-
 *** 清空 **scratch** buffer 的文字。
+
 預設 **scratch** 裡面會有幾行文字，直接將他清空。
 #+begin_src emacs-lisp
   (setq initial-scratch-message "")
 #+end_src
 
-#+RESULTS:
-
 *** 關閉蜂鳴器
+
 使用 visible bell 代替電腦的蜂鳴器叫聲。
 #+begin_src emacs-lisp
   (setq visible-bell t)
 #+end_src
 
-#+RESULTS:
-: t
-
 *** 關閉工具列
+
+不顯示工具列。
 #+begin_src emacs-lisp
   (if (featurep 'tool-bar) (tool-bar-mode -1))
 #+end_src
 
-#+RESULTS:
-
 *** 關閉滾動條
-關閉左側或右側的滾動條 (scrool-bar)
+
+關閉左側或右側的滾動條 (scrool-bar)。
 #+begin_src emacs-lisp
   (if (featurep 'scroll-bar) (scroll-bar-mode -1))
 #+end_src
 
-#+RESULTS:
-
 *** 關閉游標閃爍
+
+不允許游標閃爍。
 #+begin_src emacs-lisp
   (blink-cursor-mode -1)
 #+end_src
 
-#+RESULTS:
-
 *** 關閉選單列
+
+不顯示選單列
 #+begin_src emacs-lisp
   (if (featurep 'menu-bar) (menu-bar-mode -1))
 #+end_src
 
-#+RESULTS:
-
-*** Time Stamp
+*** TODO Time Stamp
 #+begin_src emacs-lisp
   (setq time-stamp-active      t ) ; do enable time-stamps
   (setq time-stamp-line-limit 10 ) ; check first 10 buffer lines for Time-stamp:
   (setq time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S (%u)") ; date format
 #+end_src
 
-#+RESULTS:
-: %04y-%02m-%02d %02H:%02M:%02S (%u)
-
 *** 回答問題時，使用 *y* 和 *n* 代替 *yes/no* 。
+
 預設要使用 *yse* 或是 *no* 來回答問題，這裡將他改成用 *y* 或 *n* 。
 #+begin_src emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
-
-#+RESULTS:
-: y-or-n-p
 
 *** TODO Misc
 
@@ -170,9 +160,6 @@ M-x finder-commentary
   (setq debug-on-error t)    ; now you should get a backtrace
 #+end_src
 
-#+RESULTS:
-: t
-
 #+begin_src emacs-lisp
   ;; nice scrolling
   (setq scroll-margin                   0 )
@@ -181,9 +168,6 @@ M-x finder-commentary
   (setq scroll-up-aggressively       0.01 )
   (setq scroll-down-aggressively     0.01 )
 #+end_src
-
-#+RESULTS:
-: 0.01
 
 ** 變數設定                                                        :variable:
 這邊加入了我自定義的變數以及其初始值。
