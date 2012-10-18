@@ -2463,16 +2463,6 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   ;; Auto jump to the first error.
   (setq compilation-auto-jump-to-first-error t)
 #+end_src
-** cmake
-*** Depends
-#+begin_src emacs-lisp
-  (require 'cmake-mode)
-#+end_src
-*** Mode List
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode))
-  (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
-#+end_src
 
 ** Easy PG                                                          :easypg:
 *** 載入相依套件
@@ -3686,6 +3676,15 @@ C-c  I             对目录中的相关文件建立列表并进行索引
  ;; remember to remove
   (define-key c++-mode-map (kbd "C-c f") 'cscope-find-this-file)
 #+end_src
+** CMake
+*** 設定 CMake 檔案的副檔名與對應的模式
+
+#+begin_src emacs-lisp
+  (require 'cmake-mode)
+  (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode))
+  (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
+#+end_src
+
 ** Common Lisp
 *** 設定 Common Lisp 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
