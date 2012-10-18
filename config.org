@@ -1609,10 +1609,10 @@ emacs-lisp-mode 的 buffer，可以這樣做
   (setq ac-use-fuzzy nil)
 #+end_src
 
-** 當輸入 6 個字母以上時，啟用自動補全。
+** 不自動啟用自動補全
 
 #+begin_src emacs-lisp
-  (setq ac-auto-start 6)
+  (setq ac-auto-start nil)
 #+end_src
 
 ** 加入我自定義的補全字典
