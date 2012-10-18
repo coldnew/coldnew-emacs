@@ -2258,18 +2258,6 @@ Following buffer will not show in iBuffer
 #+begin_src emacs-lisp
   (add-hook 'ibuffer-mode-hook 'ibuffer-do-sort-by-filename/process)
 #+end_src
-** winner
-*** Depends
-#+begin_src emacs-lisp
-  (require 'winner)
-#+end_src
-*** Cpnfig
-#+begin_src emacs-lisp
-  ;; do not use default keybindings
-  (setq winner-dont-bind-my-keys t)
-  ;; Enable winner-mode
-  (winner-mode t)
-#+end_src
 ** speedbar
 #+begin_src emacs-lisp
   (require 'speedbar)
@@ -4775,6 +4763,39 @@ popwin resolves there problems. Windows of such temporary buffers will be shown 
   (require 'popwin)
   (setq display-buffer-function 'popwin:display-buffer)
 #+end_src
+
+** 使用 winner-mode 快速切換窗口佈局
+
+winner-mode 是 emacs 自帶的窗口佈局管理器，可以對窗口的改變進行 undo/redo 的動作。
+
+*** 載入相關套件
+#+begin_src emacs-lisp
+  (require 'winner)
+#+end_src
+*** 不使用 winner 預設的按鍵
+
+#+begin_src emacs-lisp
+  (setq winner-dont-bind-my-keys t)
+#+end_src
+
+*** 全域啟用 winner-mode
+
+#+begin_src emacs-lisp
+  (winner-mode t)
+#+end_src
+
+*** 全域按鍵設定                                               :global@key:
+
+| 按鍵 | 命令        | 用途                               |
+|------+-------------+------------------------------------|
+| M-[  | winner-undo | 回復上一個窗口佈局                 |
+| M-]  | winner-redo | 切回上一組進行窗口復原時的窗口佈局 |
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "M-[") 'winner-undo)
+  (global-set-key (kbd "M-]") 'winner-redo)
+#+end_src
+
 * 網頁瀏覽
 ** 使用 w3m 作為網頁瀏覽器
 #+begin_src emacs-lisp
@@ -5649,7 +5670,7 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
         '("~$" "\\.o$" "\\.exe$" "\\.a$" "\\.out$"  "\\.elc$" "\\.so$"
           "\\.output$" "\\.$" "#$" "\\.class$" "\\.pyc$"
           "\\.svn$" "\\.svn-base$" "\\.git$" "\\.hg$"
-          ))
+a          ))
 
   (file-cache-add-directory-list '("~/.emacs.d/" "~/Workspace/"))
 #+end_src
@@ -5731,12 +5752,14 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 #+end_src
 * 全域性按鍵設置
 ** 關閉預設的按鍵設定
+
 關閉部份按鍵設定，在後面重新設定他。
 #+begin_src emacs-lisp
   (global-unset-key (kbd "C-r"))
   (global-unset-key (kbd "C-x e"))
   (global-unset-key (kbd "C-x d"))
 #+end_src
+
 ** Function key prefix
 Function key 設置常用的命令。
 
@@ -5781,6 +5804,7 @@ Function key 設置常用的命令。
 | C-x t r     | elscreen-screen-nickname | 更改分頁名稱  |
 | C-x t <NUM> | elscreen-goto <NUM>      | 跳到 <NUM> 頁 |
 | C-x t c     | elscreen-create          | 建立新的分頁  |
+| C-x t k     | elscreen-kill            | 關閉當前分頁  |
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x t n") 'elscreen-next)
