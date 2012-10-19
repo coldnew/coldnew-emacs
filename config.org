@@ -5670,7 +5670,7 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
         '("~$" "\\.o$" "\\.exe$" "\\.a$" "\\.out$"  "\\.elc$" "\\.so$"
           "\\.output$" "\\.$" "#$" "\\.class$" "\\.pyc$"
           "\\.svn$" "\\.svn-base$" "\\.git$" "\\.hg$"
-a          ))
+          ))
 
   (file-cache-add-directory-list '("~/.emacs.d/" "~/Workspace/"))
 #+end_src
