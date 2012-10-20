@@ -666,69 +666,62 @@ emacs 套件管理的設定。
 #+end_src
 
 *** TODO Recipes 轉移所有的 recipe 至此
-**** Header
-#+begin_src emacs-lisp
-  (setq el-get-sources '(
-#+end_src
-**** TODO powerline remember to remove
-#+begin_src emacs-lisp
-  (:name powerline
-         :type github
-         :pkgname "jonathanchu/emacs-powerline")
-#+end_src
 **** lusty-emacs
 使用最新版本的 lusty-explorer
 #+begin_src emacs-lisp
-  (:name lusty-explorer
-         :type github
-         :pkgname "sjbach/lusty-emacs"
-         :description "LustyExplorer is a fast and responsive way to manage files and buffers")
-#+end_src
-**** linum-ace
-#+begin_src emacs-lisp
-  (:name linum-ace
-         :type github
-         :pkgname "coldnew/linum-ace"
-         :features linum-ace)
+  (add-to-list 'el-get-sources
+               '(:name lusty-explorer
+                       :type github
+                       :pkgname "sjbach/lusty-emacs"
+                       :description "LustyExplorer is a fast and responsive way to manage files and buffers"))
 #+end_src
 **** qml-mode
+
 #+begin_src emacs-lisp
-  (:name qml-mode
-         :type github
-         :pkgname "coldnew/qml-mode"
-         :features qml-mode)
-#+end_src
-**** qmake-mode
-#+begin_src emacs-lisp
-  (:name qmake-mode
-         :type github
-         :pkgname "coldnew/qmake-mode"
-         :features qmake-mode)
-#+end_src
-**** helm-git
-#+begin_src emacs-lisp
-  (:name helm-git
-         :type github
-         :pkgname "maio/helm-git"
-         :features helm-git)
+  (add-to-list 'el-get-sources
+               '(:name qml-mode
+                       :type github
+                       :pkgname "coldnew/qml-mode"
+                       :features qml-mode))
 #+end_src
 **** evil
 #+begin_src emacs-lisp
-  (:name evil
-         :website "http://gitorious.org/evil/pages/Home"
-         :description "Evil is an extensible vi layer for Emacs. It
-         emulates the main features of Vim, and provides facilities
-         for writing custom extensions."
-         :type git
-         :url "https://git.gitorious.org/evil/evil.git"
-         :features evil
-         :depends undo-tree
-         :build (("make"))
-         :info "doc")
+  (add-to-list 'el-get-sources
+               '(:name evil
+                       :website "http://gitorious.org/evil/pages/Home"
+                       :description "Evil is an extensible vi layer for Emacs. It
+                                     emulates the main features of Vim, and provides facilities
+                                     for writing custom extensions."
+                       :type git
+                       :url "https://git.gitorious.org/evil/evil.git"
+                       :features evil
+                       :depends undo-tree))
+
 #+end_src
-**** End of config
+**** linum-ace
 #+begin_src emacs-lisp
-  ))
+  (add-to-list 'el-get-sources
+               '(:name linum-ace
+                       :type github
+                       :pkgname "coldnew/linum-ace"
+                       :features linum-ace))
+#+end_src
+**** helm-git
+#+begin_src emacs-lisp
+  (add-to-list 'el-get-sources
+               '(:name helm-git
+                       :type github
+                       :pkgname "maio/helm-git"
+                       :features helm-git))
+#+end_src
+
+**** qmake-mode
+#+begin_src emacs-lisp
+  (add-to-list 'el-get-sources
+               '(:name qmake-mode
+                       :type github
+                       :pkgname "coldnew/qmake-mode"
+                       :features qmake-mode))
 #+end_src
 ** ELPA                                                               :elpa:
 *** 設定 elpa 安裝目錄到 emacs-elpa-dir
@@ -3298,7 +3291,6 @@ Evil 是 emacs 上最好用的 vim 摹擬程式。
 #+begin_src emacs-lisp
 ;;  (require 'evil)
 #+end_src
-
 
 * Cedet                                                                :cede:
 #+begin_src emacs-lisp
