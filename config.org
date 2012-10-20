@@ -1337,6 +1337,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
 #+end_src
 ** 設定顯示字體時的格式
 使用 *list-face-display* 可以看到所有的 face 顏色與字體。
+
 #+begin_src emacs-lisp
   (setq list-faces-sample-text
         (concat
@@ -3278,7 +3279,7 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
         (replace-match "\\1\\2" nil nil))))
 #+end_src
 
-* Vim 摹擬
+* Vim 摹擬                                                              :vim:
 
 實在不能不佩服 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
 只要一個按鍵就可以呼叫，為了提升編輯效率，套用一些 Vim 的按鍵也是再所難免。
@@ -3290,6 +3291,115 @@ Evil 是 emacs 上最好用的 vim 摹擬程式。
 #+begin_src emacs-lisp
   (require 'evil)
 #+end_src
+
+** 預設使用 Insert state
+
+#+begin_src emacs-lisp
+  (setq evil-default-state 'insert)
+#+end_src
+
+** 將 Emacs 按鍵綁到 Insert 模式上
+
+對我而言， Vim 的 Insert 模式是趨近於無用的，這邊將我的 Emacs 模式下的按鍵綁到
+Insert 模式上，之後再來做其他設置。
+
+#+begin_src emacs-lisp
+  (setcdr evil-insert-state-map nil)
+  (define-key evil-insert-state-map
+    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+#+end_src
+
+將 ESC 綁定成切換為 normal-state-map
+
+#+begin_src emacs-lisp
+  (define-key evil-insert-state-map (kbd "<escape>") 'evil-normal-state)
+#+end_src
+
+** 全域性啟用 evil-mode
+
+#+begin_src emacs-lisp
+  (evil-mode t)
+#+end_src
+
+** 綁定按鍵好用的巨集
+
+我很喜歡以前用 vim-mode 時的按鍵定義方式，所以我定義了以下巨集來簡化
+綁定按鍵的方法。
+
+全域性的按鍵設置
+
+- evil:nmap 綁定按鍵到 Normal 狀態下
+- evil:imap 綁定按鍵到 Insert 狀態下
+- evil:vmap 綁定按鍵到 Visual 狀態下
+
+使用方式：
+
+: (evil:nmap (kbd "g") 'linum-ace-jump)
+
+這樣在 Normal-state 時，按下 g 就可以呼叫 linum-ace-jump 這個命令。
+
+#+begin_src emacs-lisp
+  (defmacro evil:nmap (key cmd)
+    "Binding keymap to evil-normal-state."
+    `(define-key evil-normal-state-map ,key ,cmd))
+  (defmacro evil:imap (key cmd)
+    "Binding keymap to evil-insert-state."
+    `(define-key evil-insert-state-map ,key ,cmd))
+  (defmacro evil:vmap (key cmd)
+    "Binding keymap to evil-visual-state."
+    `(define-key evil-visual-state-map ,key ,cmd))
+#+end_src
+
+區域性的按鍵設置
+
+- evil:local-namp 綁定按鍵到 Normal 狀態下，只作用於該緩衝區
+- evil:local-imap 綁定按鍵到 Insert 狀態下，只作用於該緩衝區
+- evil:local-vmap 綁定按鍵到 Visual 狀態下，只作用於該緩衝區
+
+使用方式：
+
+: (evil:local-nmap (kbd "g") 'linum-ace-jump)
+
+這樣在目前的緩衝區時時， 切到 Normal-state，按下 g 就可以呼叫 linum-ace-jump 這個命令。
+
+注意到這個是屬於 buffer-local 的設定方式，只會影響到該緩衝區，而不是影響整個 mode。
+
+#+begin_src emacs-lisp
+  (defmacro evil:local-nmap (key cmd)
+    "Binding keymap to evil-normal-state."
+    `(define-key evil-visual-state-local-map ,key ,cmd))
+  (defmacro evil:local-imap (key cmd)
+    "Binding keymap to evil-insert-state."
+    `(define-key evil-visual-state-local-map ,key ,cmd))
+  (defmacro evil:local-vmap (key cmd)
+    "Binding keymap to evil-visual-state."
+    `(define-key evil-visual-state-local-map ,key ,cmd))
+#+end_src
+
+根據模式進行按鍵設置
+
+- evil:mode-namp 綁定按鍵到 Normal 狀態下，只作用於特定模式
+- evil:mode-imap 綁定按鍵到 Insert 狀態下，只作用於特定模式
+- evil:mode-vmap 綁定按鍵到 Visual 狀態下，只作用於特定模式
+
+使用方式：
+
+: (evil:mode-nmap emacs-lisp-mode-map (kbd "g") 'linum-ace-jump)
+
+這樣在 emacs-lisp-mode 時， 切到 Normal-state，按下 g 就可以呼叫 linum-ace-jump 這個命令。
+
+#+begin_src emacs-lisp
+  (defmacro evil:mode-nmap (map key cmd)
+    "Binding keymap to evil-normal-state."
+    `(evil-define-key 'normal ,map ,key ,cmd))
+  (defmacro evil:mode-imap (map key cmd)
+    "Binding keymap to evil-insert-state."
+    `(evil-define-key 'insert ,map ,key ,cmd))
+  (defmacro evil:mode-vmap (map key cmd)
+    "Binding keymap to evil-visual-state."
+    `(evil-define-key 'visual ,map ,key ,cmd))
+#+end_src
+
 
 * Cedet                                                                :cede:
 #+begin_src emacs-lisp
@@ -4080,6 +4190,70 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (concat "<< " (propertize mode-name 'face 'mode-line-mode-name-face) " >>"))
 #+end_src
 
+** 顯示 Evil 狀態
+
+這個 function 用來定義如何顯示目前 evil-mode 的狀態，要放入 mode-line-format 才會真的顯示。
+
+#+begin_src emacs-lisp
+  (defun evil-mode-string ()
+    (let ((evil-state-string (substring evil-mode-line-tag 2 3)))
+      (setq evil-state-string-face
+            (cond
+             ((string= "N" evil-state-string) 'mode-line-evil-state-string-N)
+             ((string= "I" evil-state-string) 'mode-line-evil-state-string-I)
+             ((string= "V" evil-state-string) 'mode-line-evil-state-string-V)
+             ((string= "E" evil-state-string) 'mode-line-evil-state-string-E)
+             ))
+      (concat "<" (propertize evil-state-string 'face evil-state-string-face) ">")
+      ))
+#+end_src
+
+** 設定 Evil 狀態的色彩
+
+為了能夠讓 Evil 不同狀態有不同的顏色，這邊定義了各種 evil-state 對應的顏色。
+
+#+begin_src emacs-lisp
+  (defface mode-line-read-only-face
+    '((t (:foreground "#C82829" :bold t)))
+    "face for mode-name-string in modeline."
+    :group 'mode-line)
+
+  (defface mode-line-modified-face
+    '((t (:inherit 'font-lock-function-name-face :bolt t)))
+    "face for mode-name-string in modeline."
+    :group'mode-lin)
+
+  (defface mode-line-mode-name-face
+    '((t (:inherit font-lock-keyword-face)))
+    "face for mode-name-string in modeline."
+    :group 'mode-line)
+
+  (defface mode-line-evil-state-string-N
+    '((t (:inherit font-lock-function-name-face)))
+    "face for vim-string in normal-map on mode-line."
+    :group 'mode-line)
+
+  (defface mode-line-evil-state-string-I
+    '((t (:inherit font-lock-constant-face)))
+    "face for vim-string in insert-map on mode-line."
+    :group 'mode-line)
+
+  (defface mode-line-evil-state-string-V
+    '((t (:inherit font-lock-variable-name-face)))
+    "face for vim-string in visual-map on mode-line."
+    :group 'mode-line)
+
+  (defface mode-line-evil-state-string-E
+    '((t (:inherit font-lock-string-face)))
+    "face for vim-string in emacs-map on mode-line."
+    :group 'mode-line)
+
+  (defface font-lock-escape-char-face
+    '((((class color)) (:foreground "seagreen2")))
+    "highlight c escapes char like vim"
+    :group 'font-lock-faces)
+#+end_src
+
 ** 樣式設定
 
 自己定義  mode-line 的樣式。
@@ -4097,6 +4271,8 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                             (t "--")))
                      "   "
                    ;;  (:eval (coldnew-editor-mode-string))
+                     (when (featurep 'evil)
+                       (:eval (evil-mode-string)))
                      "   "
                      ;;              (:eval (mode-line-state))
                      mode-line-buffer-identification
@@ -5769,9 +5945,11 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 
 關閉部份按鍵設定，在後面重新設定他。
 #+begin_src emacs-lisp
+;;  (global-unset-key (kbd "<escape>"))
   (global-unset-key (kbd "C-r"))
   (global-unset-key (kbd "C-x e"))
   (global-unset-key (kbd "C-x d"))
+;;  (global-set-key (kbd "<escape>") 'evil-normal-state)
 #+end_src
 
 ** Function key prefix
