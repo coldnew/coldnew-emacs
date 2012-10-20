@@ -693,10 +693,9 @@ emacs 套件管理的設定。
                                      emulates the main features of Vim, and provides facilities
                                      for writing custom extensions."
                        :type git
-                       :url "https://git.gitorious.org/evil/evil.git"
+                       :url "git://gitorious.org/evil/evil.git"
                        :features evil
                        :depends undo-tree))
-
 #+end_src
 **** linum-ace
 #+begin_src emacs-lisp
