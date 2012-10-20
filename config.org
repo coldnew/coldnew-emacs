@@ -5887,7 +5887,7 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
 
 我討厭在 minibuffer 時還是使用方塊狀的游標，這裡將他改變成 Bar 的形狀。
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (add-hook 'minibuffer-setup-hook
             '(lambda ()
                (setq cursor-type 'bar)
