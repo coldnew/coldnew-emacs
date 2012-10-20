@@ -681,36 +681,50 @@ emacs 套件管理的設定。
 #+begin_src emacs-lisp
   (:name lusty-explorer
          :type github
-         :pkgname sjbach/lusty-emacs
+         :pkgname "sjbach/lusty-emacs"
          :description "LustyExplorer is a fast and responsive way to manage files and buffers")
 #+end_src
 **** linum-ace
 #+begin_src emacs-lisp
   (:name linum-ace
          :type github
-         :pkgname coldnew/linum-ace
+         :pkgname "coldnew/linum-ace"
          :features linum-ace)
 #+end_src
 **** qml-mode
 #+begin_src emacs-lisp
   (:name qml-mode
          :type github
-         :pkgname coldnew/qml-mode
+         :pkgname "coldnew/qml-mode"
          :features qml-mode)
 #+end_src
 **** qmake-mode
 #+begin_src emacs-lisp
   (:name qmake-mode
          :type github
-         :pkgname coldnew/qmake-mode
+         :pkgname "coldnew/qmake-mode"
          :features qmake-mode)
 #+end_src
 **** helm-git
 #+begin_src emacs-lisp
   (:name helm-git
          :type github
-         :pkgname maio/helm-git
+         :pkgname "maio/helm-git"
          :features helm-git)
+#+end_src
+**** evil
+#+begin_src emacs-lisp
+  (:name evil
+         :website "http://gitorious.org/evil/pages/Home"
+         :description "Evil is an extensible vi layer for Emacs. It
+         emulates the main features of Vim, and provides facilities
+         for writing custom extensions."
+         :type git
+         :url "https://git.gitorious.org/evil/evil.git"
+         :features evil
+         :depends undo-tree
+         :build (("make"))
+         :info "doc")
 #+end_src
 **** End of config
 #+begin_src emacs-lisp
@@ -3101,7 +3115,7 @@ some packages conflict with org-mode
 *** TODO 投影片所使用的 html5 配置
 ** TODO 輸出成 HTML slide 設定
 #+begin_src emacs-lisp
-  (require 'org-html5presentation)
+  ;;(require 'org-html5presentation)
 #+end_src
 * Editor
 try to define my editor-mode , some function  or macros copy from evil :)
@@ -3271,6 +3285,20 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
                  (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
         (replace-match "\\1\\2" nil nil))))
 #+end_src
+
+* Vim 摹擬
+
+實在不能不配符 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
+只要一個按鍵就可以呼叫，會了提升編輯效率，套用一些 Vim 的按鍵也是再所難免。
+
+** 載入 evil-mode
+
+Evil 是 emacs 上最好用的 vim 摹擬程式。
+
+#+begin_src emacs-lisp
+;;  (require 'evil)
+#+end_src
+
 
 * Cedet                                                                :cede:
 #+begin_src emacs-lisp
@@ -3462,7 +3490,7 @@ adeff
     ;; use hide-if-def-mode
     ;;(add-hook 'c-mode-hook 'hide-ifdef-mode)
 
-    (require 'gccsense)
+    ;;(require 'gccsense)
 
     ;;;; ---------------------------------------------------------------------------
     ;;;; Functions
