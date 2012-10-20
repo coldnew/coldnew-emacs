@@ -3312,6 +3312,12 @@ Evil 是 emacs 上最好用的 vim 摹擬程式。
 
 ** 預設使用 Insert state
 
+為什麼要預設使用 Insert 模式？我記得曾經我放棄過一次 evil-mode，因為切換到不同模式時，
+他會跑到我不喜歡的 state，比如 Normal-state，這樣讓我感到很煩，每次到新的 mode 就要加他加入到
+evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死了。
+
+直接統一用 insert 模式比較快 :)
+
 #+begin_src emacs-lisp
   (setq evil-default-state 'insert)
 #+end_src
@@ -3327,10 +3333,12 @@ Insert 模式上，之後再來做其他設置。
     (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
 #+end_src
 
-將 ESC 綁定成切換為 normal-state-map
+將 ESC 綁定成切換為 normal-state-map，因為我用自己的 emacs 按鍵綁定蓋掉了 evil-mode
+裡面的 insert-state 按鍵綁定，所以這邊要先加入這個設定，才能夠用 ESC 來切換到
+normal-state。
 
 #+begin_src emacs-lisp
-  (define-key evil-insert-state-map (kbd "<escape>") 'evil-normal-state)
+  (define-key evil-insert-state-map [escape] 'evil-normal-state)
 #+end_src
 
 ** 全域性啟用 evil-mode
@@ -3438,29 +3446,6 @@ Insert 模式上，之後再來做其他設置。
 #+begin_src emacs-lisp
   (evil:imap (kbd "C-o") 'evil-execute-in-normal-state)
 #+end_src
-
-- 窗口切換
-
-改用 C-w 作為窗口相關的起始按鍵，原本 emacs 裡面 C-w 所使用的 kill-region
-
-命令，改為 C-x w (或是 C-w C-w)。
-
-#+begin_src emacs-lisp
-  (evil:imap (kbd "C-w n") 'windmove-down)
-  (evil:imap (kbd "C-w p") 'windmove-up)
-  (evil:imap (kbd "C-w f") 'windmove-right)
-  (evil:imap (kbd "C-w b") 'windmove-left)
-#+end_src
-
-- 貼上、刪除
-
-原本是使用 C-w
-
-#+begin_src emacs-lisp
-  (evil:imap (kbd "C-x w") 'kill-region)
-  (evil:imap (kbd "C-w C-w") 'kill-region)
-#+end_src
-
 
 * Cedet                                                                :cede:
 #+begin_src emacs-lisp
