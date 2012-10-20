@@ -250,7 +250,7 @@ yasnippet 使用的 snippet路徑
 **** emacs-log-dir
 
 放置紀錄的資料夾。
- #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (defconst emacs-log-dir (concat emacs-dir "log/")
     "log file directory.")
 #+end_src
@@ -2709,9 +2709,9 @@ plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前最好將
 #+begin_src emacs-lisp
   (add-to-list 'org-structure-template-alist
                '("E" "#+begin_src emacs-lisp\n?\n#+end_src"))
-  (add-to-list 'org-structure-template-alist
+               (add-to-list 'org-structure-template-alist
                '("S" "#+begin_src sh\n?\n#+end_src"))
-  (add-to-list 'org-structure-template-alist
+               (add-to-list 'org-structure-template-alist
                '("p" "#+begin_src plantuml :file uml.png \n?\n#+end_src"))
 #+end_src
 
@@ -3433,9 +3433,34 @@ Insert 模式上，之後再來做其他設置。
 
 ** Insert-state 按鍵設定
 
+這邊設定我的 Insert-state 的按鍵，部份會和我原本的 emacs 按鍵設置不太一樣。
+
 #+begin_src emacs-lisp
   (evil:imap (kbd "C-o") 'evil-execute-in-normal-state)
 #+end_src
+
+- 窗口切換
+
+改用 C-w 作為窗口相關的起始按鍵，原本 emacs 裡面 C-w 所使用的 kill-region
+
+命令，改為 C-x w (或是 C-w C-w)。
+
+#+begin_src emacs-lisp
+  (evil:imap (kbd "C-w n") 'windmove-down)
+  (evil:imap (kbd "C-w p") 'windmove-up)
+  (evil:imap (kbd "C-w f") 'windmove-right)
+  (evil:imap (kbd "C-w b") 'windmove-left)
+#+end_src
+
+- 貼上、刪除
+
+原本是使用 C-w
+
+#+begin_src emacs-lisp
+  (evil:imap (kbd "C-x w") 'kill-region)
+  (evil:imap (kbd "C-w C-w") 'kill-region)
+#+end_src
+
 
 * Cedet                                                                :cede:
 #+begin_src emacs-lisp
@@ -5890,8 +5915,8 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
 #+begin_src emacs-lisp
   (add-hook 'minibuffer-setup-hook
             '(lambda ()
-               (setq cursor-type 'bar)
-               (setq cursor-color "white")))
+               (setq cursor-type 'bar)))
+;;               (setq cursor-color "white")))
 #+end_src
 
 * Session
