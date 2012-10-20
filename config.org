@@ -3280,15 +3280,15 @@ mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間
 
 * Vim 摹擬
 
-實在不能不配符 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
-只要一個按鍵就可以呼叫，會了提升編輯效率，套用一些 Vim 的按鍵也是再所難免。
+實在不能不佩服 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
+只要一個按鍵就可以呼叫，為了提升編輯效率，套用一些 Vim 的按鍵也是再所難免。
 
-** 載入 evil-mode
+** 載入相關套件
 
 Evil 是 emacs 上最好用的 vim 摹擬程式。
 
 #+begin_src emacs-lisp
-;;  (require 'evil)
+  (require 'evil)
 #+end_src
 
 * Cedet                                                                :cede:
