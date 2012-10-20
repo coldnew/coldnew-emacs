@@ -3382,7 +3382,7 @@ normal-state。
 
 區域性的按鍵設置
 
-- evil:local-namp 綁定按鍵到 Normal 狀態下，只作用於該緩衝區
+- evil:local-nmap 綁定按鍵到 Normal 狀態下，只作用於該緩衝區
 - evil:local-imap 綁定按鍵到 Insert 狀態下，只作用於該緩衝區
 - evil:local-vmap 綁定按鍵到 Visual 狀態下，只作用於該緩衝區
 
@@ -3408,7 +3408,7 @@ normal-state。
 
 根據模式進行按鍵設置
 
-- evil:mode-namp 綁定按鍵到 Normal 狀態下，只作用於特定模式
+- evil:mode-nmap 綁定按鍵到 Normal 狀態下，只作用於特定模式
 - evil:mode-imap 綁定按鍵到 Insert 狀態下，只作用於特定模式
 - evil:mode-vmap 綁定按鍵到 Visual 狀態下，只作用於特定模式
 
