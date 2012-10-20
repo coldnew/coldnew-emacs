@@ -3056,37 +3056,36 @@ some packages conflict with org-mode
 
 *** 一般文章所使用的 latex 配置
 #+begin_src emacs-lisp
-    (add-to-list 'org-export-latex-classes
-                 '("coldnew-article"
-                   "\\documentclass[12pt,a4paper]{article}
-                    \\usepackage[T1]{fontenc}
-                    \\usepackage{fontspec}
-                    \\usepackage{xeCJK}
-                    \\setCJKmainfont{Hiragino Sans GB W3}
-                    \\XeTeXlinebreaklocale \"zh\"
-                    \\XeTeXlinebreakskip = 0pt plus 1pt
-                    \\usepackage{graphicx}
-                    \\usepackage{tikz}
-                    \\usepackage[bookmarks=true,colorlinks,linkcolor=black]{hyperref}
-                    \\defaultfontfeatures{Mapping=tex-text}
-                    \\setmonofont[Scale=0.8]{DejaVu Sans Mono}
-                    \\usepackage{geometry}
-                    \\usepackage{minted}
-                    \\usemintedstyle{emacs}
-                    \\geometry{a4paper, textwidth=6.5in, textheight=8in,
-                                marginparsep=10pt, marginparwidth=.6in}
-                    \\pagestyle{plain}
-                    \\linespread{1.5}
-                    \\title{}
-                          [NO-DEFAULT-PACKAGES]
-                          [NO-PACKAGES]"
-                   ("\\section{%s}" . "\\section*{%s}")
-                   ("\\subsection{%s}" . "\\subsection*{%s}")
-                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")
-                   ))
-
+  (add-to-list 'org-export-latex-classes
+               '("coldnew-article"
+                 "\\documentclass[12pt,a4paper]{article}
+                  \\usepackage[T1]{fontenc}
+                  \\usepackage{fontspec}
+                  \\usepackage{xeCJK}
+                  \\setCJKmainfont{Hiragino Sans GB W3}
+                  \\XeTeXlinebreaklocale \"zh\"
+                  \\XeTeXlinebreakskip = 0pt plus 1pt
+                  \\usepackage{graphicx}
+                  \\usepackage{tikz}
+                  \\usepackage[bookmarks=true,colorlinks,urlcolor=blue]{hyperref}
+                  \\defaultfontfeatures{Mapping=tex-text}
+                  \\setmonofont[Scale=0.8]{DejaVu Sans Mono}
+                  \\usepackage{geometry}
+                  \\usepackage{minted}
+                  \\usemintedstyle{emacs}
+                  \\geometry{a4paper, textwidth=6.5in, textheight=8in,
+                              marginparsep=10pt, marginparwidth=.6in}
+                  \\pagestyle{plain}
+                  \\linespread{1.5}
+                  \\title{}
+                        [NO-DEFAULT-PACKAGES]
+                        [NO-PACKAGES]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")
+                 ))
 #+end_src
 
 *** 投影片所使用的 latex 配置
