@@ -4060,35 +4060,30 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+begin_src emacs-lisp
     )
 #+end_src
-* Mode Line                                                        :modeline:
+* 狀態欄                                                           :modeline:
 ** TODO 分類
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   ;;;; ---------------------------------------------------------------------------
   ;;;; Initial modeline setting
   ;;;; ---------------------------------------------------------------------------
   (line-number-mode t)
   (column-number-mode t)
   (size-indication-mode t)
+#+end_src
+** 顯示主模式
 
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Functions
-  ;;;; ---------------------------------------------------------------------------
+這個 function 用來定義如何顯示 major-mode，要放入 mode-line-format 才會真的顯示。
+
+#+begin_src emacs-lisp
   (defun mode-line-major-mode ()
     "Get major-mode name with << >>."
     (concat "<< " (propertize mode-name 'face 'mode-line-mode-name-face) " >>"))
-  (defun coldnew-editor-mode-string ()
-    (let* ((mode-string-face
-            (cond
-             ((string= "Command" coldnew-editor-state) 'mode-line-evil-state-string-V)
-             ((string= "View" coldnew-editor-state) 'mode-line-evil-state-string-N)
-             (t 'mode-line-evil-state-string-E)
-             )))
-      (concat "<" (propertize coldnew-editor-state 'face mode-string-face) ">")))
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; modeline User-Interfaced setting
-  ;;;; ---------------------------------------------------------------------------
 #+end_src
-** 設定 mode-line 樣式
+
+** 樣式設定
+
+自己定義  mode-line 的樣式。
+
 #+begin_src emacs-lisp
   (setq-default mode-line-format
                   '((" "
