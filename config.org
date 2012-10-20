@@ -1015,8 +1015,11 @@ advice file
 * Function                                                         :function:
 我所自定義或是我的 emacs 設定檔需要用到的 function。
 ** List Processing
+
 處理 List 所用的 function。
+
 *** flatten a list
+
 flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 list。
 舉例來說，假如目前有這樣一個 list:
 
@@ -1037,8 +1040,11 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
           ((atom structure) `(,structure))
           (t (mapcan #'flatten structure))))
 #+end_src
+
 *** List to string
+
 將一個 list 變成字串回傳。
+
 #+begin_src emacs-lisp
   (defun list-to-string (char-list)
     "RETURN: A new string containing the characters in char-list."
@@ -1049,9 +1055,13 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
         (setq i (1+ i)))
       result))
 #+end_src
+
 ** Search
+
 搜尋相關的 function。
+
 *** search-backward-to-char
+
 向後搜尋一個字元。
 #+begin_src emacs-lisp
   (defun search-backward-to-char (chr)
@@ -1059,7 +1069,9 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     (while (not (= (char-after) chr))
       (backward-char 1)))
 #+end_src
+
 *** search-forward-to-char
+
 向前搜尋一個字元。
 #+begin_src emacs-lisp
   (defun search-forward-to-char (chr)
@@ -1067,7 +1079,9 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     (while (not (= (char-before) chr))
       (forward-char 1)))
 #+end_src
+
 *** recursive-find-file
+
 遞迴尋找檔案，若在當前目錄找不到此檔案，則去其父目錄進行尋找。
 如果該檔案或是目錄不存在，則回傳 nil.
 #+begin_src emacs-lisp
@@ -1082,9 +1096,12 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
         (unless (string= "/" directory)
           (coldnew/recursive-find-file file (expand-file-name ".." directory))))))
 #+end_src
+
 ** Testing
+
 測試用的 function，和測試用的變數很像，但是他允許參數的輸入。
 *** font-exist-p
+
 測試這個字體在系統內是否存在。
 #+begin_src emacs-lisp
   (defun font-exist-p (fontname)
@@ -1092,6 +1109,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     (if (not (x-list-fonts fontname))
         nil t))
 #+end_src
+
 ** File
 *** filesize
 #+begin_src emacs-lisp
@@ -1101,6 +1119,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     (nth 7 (file-attributes filename)))
 #+end_src
 ** Convert
+
 進行轉換用的 function。
 *** 將輸入的 buffer (DOS 格式)　轉換成 UNIX 格式。　
 #+begin_src emacs-lisp
