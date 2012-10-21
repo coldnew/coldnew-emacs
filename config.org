@@ -3347,6 +3347,17 @@ normal-state。
   (evil-mode t)
 #+end_src
 
+** 讓 evil-mode 的區域選擇方式和 Vim 相同
+
+在 emacs 中，最後一個被選擇的字元是游標的前一個字元，但是在 vim 中，卻是在游標
+下的那個字元。
+
+若要使用和 vim 相同的方式，則要進行下面的設定:
+
+#+begin_src emacs-lisp
+  (setq evil-want-visual-char-semi-exclusive t)
+#+end_src
+
 ** 綁定按鍵好用的巨集
 
 我很喜歡以前用 vim-mode 時的按鍵定義方式，所以我定義了以下巨集來簡化
@@ -3435,8 +3446,10 @@ normal-state。
 將一些非常慣用的 emacs 按鍵綁到 Normal-state 上面。
 
 #+begin_src emacs-lisp
-  (evil:nmap (kbd "C-n") 'next-line)
-  (evil:nmap (kbd "C-p") 'previous-line)
+  (evil:nmap (kbd "C-n") 'evil-next-line)
+  (evil:nmap (kbd "C-p") 'evil-previous-line)
+  (evil:nmap (kbd "C-f") 'evil-forward-char)
+  (evil:nmap (kbd "C-b") 'evil-backward-char)
 #+end_src
 
 ** Insert-state 按鍵設定
