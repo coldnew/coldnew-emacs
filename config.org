@@ -3347,6 +3347,8 @@ Insert 模式上，之後再來做其他設置。
 裡面的 insert-state 按鍵綁定，所以這邊要先加入這個設定，才能夠用 ESC 來切換到
 normal-state。
 
+注意到除了 ESC 按鍵本身，使用 C-[ 也具有 ESC 按鍵的效果。
+
 #+begin_src emacs-lisp
   (define-key evil-insert-state-map [escape] 'evil-normal-state)
 #+end_src
