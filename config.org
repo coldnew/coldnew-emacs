@@ -3024,6 +3024,7 @@ some packages conflict with org-mode
      (ruby . t)
      (sh . t)
      (plantuml . t)
+     (clojure .t)
      ))
 #+end_src
 ** 對程式碼區塊進行 eval 時不再詢問
