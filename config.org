@@ -3448,8 +3448,8 @@ normal-state。
 #+begin_src emacs-lisp
   (evil:nmap (kbd "C-n") 'evil-next-line)
   (evil:nmap (kbd "C-p") 'evil-previous-line)
-  (evil:nmap (kbd "C-f") 'evil-forward-char)
-  (evil:nmap (kbd "C-b") 'evil-backward-char)
+;;  (evil:nmap (kbd "C-f") 'evil-forward-char)
+;;  (evil:nmap (kbd "C-b") 'evil-backward-char)
 #+end_src
 
 ** Insert-state 按鍵設定
