@@ -3445,6 +3445,7 @@ normal-state。
 
 #+begin_src emacs-lisp
   (evil:imap (kbd "C-o") 'evil-execute-in-normal-state)
+  (evil:imap (kbd "C-l") 'backward-delete-char)
 #+end_src
 
 * Cedet                                                                :cede:
