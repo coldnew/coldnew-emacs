@@ -3128,19 +3128,12 @@ some packages conflict with org-mode
 #+begin_src emacs-lisp
   ;;(require 'org-html5presentation)
 #+end_src
-* Editor
-try to define my editor-mode , some function  or macros copy from evil :)
-** 替中文字和英文字中間加入空格
-mixen 是我自己設計的 minor-mode，能夠自動替中文與英文字元間加入空格。
-#+begin_src emacs-lisp
-;;  (require 'mixen)
-;;  (setq mixen-enable-write-to-file t)
-;;  (mixen-mode)
-#+end_src
-** 在文章中顯示圖片
-#+begin_src emacs-lisp
-  (iimage-mode)
-#+end_src
+* 編輯器                                                             :editor:
+
+** 通用型 C 語言編輯設定
+
+這邊設定的是通用的
+
 ** COMMENT Function
 #+begin_src emacs-lisp :tangle no
   (defun coldnew-lisp-common-setting ()
@@ -4096,6 +4089,20 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
           ("T" . "Text")
           ("i" . "import")
           ))
+#+end_src
+*** 自動補全
+#+begin_src emacs-lisp
+  (add-hook 'qml-mode-hook 'ac-qml-mode-setup)
+  (defun ac-qml-mode-setup ()
+    "auto-complete settings for qml-mode"
+    (setq ac-sources
+          '(
+            ac-source-dictionary
+            ac-source-abbrev
+            ac-source-filename
+            ac-source-files-in-current-dir
+            ac-source-words-in-same-mode-buffers
+            )))
 #+end_src
 ** qmake
 *** 設定 qmake 的副檔名與對應的模式
