@@ -1737,6 +1737,8 @@ auto-complete-mode 的按鍵設定。
               (eshell/pwd))
             (if (= (user-uid) 0) " # " " $ ")
             )))
+
+
 #+end_src
 #+begin_src emacs-lisp
   ;;; change history file path
@@ -1751,7 +1753,6 @@ auto-complete-mode 的按鍵設定。
   (setq eshell-cmpl-cycle-completions nil)
   (setq eshell-scroll-to-bottom-on-output t)
   (setq eshell-show-maximum-output t)
-
   ;;;; ---------------------------------------------------------------------------
   ;;;; Hooks
   ;;;; ---------------------------------------------------------------------------
@@ -1783,13 +1784,6 @@ auto-complete-mode 的按鍵設定。
     (setq ac-sources
           '(
             ac-source-eshell-pcomplete
-            ;; ac-source-symbols
-            ;; ac-source-variables
-            ;; ac-source-functions
-            ;; ac-source-features
-            ;; ac-source-filename
-            ;; ac-source-files-in-current-dir
-            ;; ac-source-words-in-same-mode-buffers
             )))
 #+end_src
 *** Command
@@ -2885,7 +2879,7 @@ some packages conflict with org-mode
     (add-hook 'org-mode-hook
               (lambda ()
                 (make-variable-buffer-local 'yas/trigger-key)
-                (setq yas/trigger-key [tab])
+                (setq yas/trigger-key (kbd "TAB"))
                 (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
                 (define-key yas/keymap [tab] 'yas/next-field))))
 #+end_src
@@ -3593,24 +3587,6 @@ normal-state。
             ac-source-files-in-current-dir
             ac-source-words-in-same-mode-buffers
             )))
-#+end_src
-#+begin_src emacs-lisp
-      ;;;; ---------------------------------------------------------------------------
-      ;;;; Hooks
-      ;;;; ---------------------------------------------------------------------------
-
-    ;; use my editor-mode
-    (add-hook 'shell-mode-hook '(lambda() (coldnew-editor-mode 1)))
-
-
-    ;; bash-completion
-  ;;  (require 'bash-completion)
-  ;;  (bash-completion-setup)
-
-    ;; use flymake-shell
-  ;;  (require 'flymake-shell)
-  ;;  (add-hook 'shell-mode-hook 'flymake-shell-load)
-
 #+end_src
 *** Keybinding
 #+begin_src emacs-lisp
