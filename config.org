@@ -1670,12 +1670,6 @@ auto-complete-mode 的按鍵設定。
 #+begin_src emacs-lisp
   (require 'auto-indent-mode)
 #+end_src
-** android                                                         :android:
-#+begin_src emacs-lisp
-  (require 'android-mode)
-  ;; Set my android-emulator-path
-  (setq android-mode-sdk-dir "/opt/android-sdk-update-manager/")
-#+end_src
 ** elscreen                                                       :elscreen:
 *** 載入相關模組
 #+begin_src emacs-lisp
@@ -2252,12 +2246,13 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   (setq compilation-auto-jump-to-first-error t)
 #+end_src
 
-** Easy PG                                                          :easypg:
-*** 載入相依套件
+
+* 文件加密
+
 #+begin_src emacs-lisp
   (require 'epa-file)
 #+end_src
-*** Config
+
 #+begin_src emacs-lisp
   ;; use local gpg program instaed of system one
   ;; only work under linux
@@ -2277,6 +2272,8 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
 #+end_src
+
+
 * Minibuffer
 
 ** 設定視窗高度最多為4行高
@@ -3561,7 +3558,15 @@ normal-state。
   (setq cscope-do-not-update-database t)
 #+end_src
 * 程式開發                                                         :language:
+
 各種不同程式語言開發用的設定。
+
+** Android                                                          :android:
+#+begin_src emacs-lisp
+  (require 'android-mode)
+  ;; Set my android-emulator-path
+  (setq android-mode-sdk-dir "/opt/android-sdk-update-manager/")
+#+end_src
 ** Bash
 *** 設定 Bash 語言 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
