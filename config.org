@@ -405,9 +405,6 @@ emacs 個人配置的檔案，也就是這個檔案。
   (setq exec-path (cons emacs-bin-dir exec-path))
 #+end_src
 
-#+RESULTS:
-| ~/.emacs.d/bin/ | ~/.emacs.d/bin/ | ~/.emacs.d/bin | /opt/android-sdk-update-manager/tools/ | /usr/lib/colorgcc/bin | ~/bin | ~/bin/shell_scripts | /usr/local/bin | /usr/bin | /bin | /opt/bin | /usr/x86_64-pc-linux-gnu/arm-none-linux-gnueabi/gcc-bin/4.4.5 | /usr/x86_64-pc-linux-gnu/arm-unknown-linux-gnueabi/gcc-bin/4.6.2 | /usr/armv7a-hardfloat-linux-gnueabi/gcc-bin/4.6.2 | /usr/x86_64-pc-linux-gnu/gcc-bin/4.6.2 | /opt/android-ndk | /opt/android-ndk/toolchains/arm-eabi-4.4.0/prebuilt/linux-x86/bin/ | /opt/android-ndk/toolchains/arm-linux-androideabi-4.4.3/prebuilt/linux-x86/bin/ | /opt/android-sdk-update-manager/tools | /opt/android-sdk-update-manager/platform-tools | /usr/games/bin | /opt/cuda/bin | /opt/cuda/libnvvp | /opt/altera/11.0/quartus/bin/ | /opt/vmware/bin/ | /opt/matlab/bin/ | /opt/hitech/picc/9.82/bin | /opt/hitech/picc-18/pro/9.66/bin | /opt/microchip/mplabx/mplab_ide/bin/ | /usr/libexec/emacs/24.2/x86_64-pc-linux-gnu |
-
 *** TODO Remember to remove
 #+begin_src emacs-lisp
   (defun change-mouse-to-left ()
@@ -2888,10 +2885,9 @@ some packages conflict with org-mode
     (add-hook 'org-mode-hook
               (lambda ()
                 (make-variable-buffer-local 'yas/trigger-key)
-                (setq yas/trigger-key (kbd "TAB"))
+                (setq yas/trigger-key [tab])
                 (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
-                (define-key yas/keymap (kbd "TAB") 'yas/next-field)))
-    )
+                (define-key yas/keymap [tab] 'yas/next-field))))
 #+end_src
 
 *** windmove
@@ -3599,21 +3595,21 @@ normal-state。
             )))
 #+end_src
 #+begin_src emacs-lisp
-    ;;;; ---------------------------------------------------------------------------
-    ;;;; Hooks
-    ;;;; ---------------------------------------------------------------------------
+      ;;;; ---------------------------------------------------------------------------
+      ;;;; Hooks
+      ;;;; ---------------------------------------------------------------------------
 
-  ;; use my editor-mode
-  (add-hook 'shell-mode-hook '(lambda() (coldnew-editor-mode 1)))
+    ;; use my editor-mode
+    (add-hook 'shell-mode-hook '(lambda() (coldnew-editor-mode 1)))
 
 
-  ;; bash-completion
-;;  (require 'bash-completion)
-;;  (bash-completion-setup)
+    ;; bash-completion
+  ;;  (require 'bash-completion)
+  ;;  (bash-completion-setup)
 
-  ;; use flymake-shell
-  (require 'flymake-shell)
-  (add-hook 'shell-mode-hook 'flymake-shell-load)
+    ;; use flymake-shell
+  ;;  (require 'flymake-shell)
+  ;;  (add-hook 'shell-mode-hook 'flymake-shell-load)
 
 #+end_src
 *** Keybinding
