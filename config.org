@@ -2183,7 +2183,7 @@ Following buffer will not show in iBuffer
 
 * 終端機
 ** shell-pop
-*** Depends
+*** 載入相依套件
 #+begin_src emacs-lisp
   (require 'shell-pop)
 #+end_src
@@ -3177,6 +3177,21 @@ some packages conflict with org-mode
 ** 在存檔前清除多餘的空白
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+end_src
+** 自動建立資料夾
+
+當使用 C-x C-f 建立新的檔案的時候，如果該資料夾未被建立，則自動建立他。
+
+一般網路上流傳的方式，是在存檔案時才建立資料夾。但是我認為應該一開始就該先建立好資料夾，
+畢竟很少人會建好資料夾內的檔案而放棄。
+
+如果需要存檔後才進行建立資料夾的動作，則將下面的 find-file-hook 改為 before-save-hook。
+
+#+begin_src emacs-lisp
+  (add-hook 'find-file-hook
+            '(lambda ()
+                 (or (file-exists-p  (file-name-directory buffer-file-name))
+                     (make-directory (file-name-directory buffer-file-name) t))))
 #+end_src
 ** TODO remember
 *** electric-pair-mode
@@ -5701,16 +5716,36 @@ offlineimap 可以在設定中加入
     (delete-other-windows))
 #+end_src
 *** magit
+
+**** 載入 magit 套件
 #+begin_src emacs-lisp
-  ;;;;;;;; Magit
   (require 'magit)
-  ;; if use magit, do not use vc-git to handle Git interface.
-  ;; (when (featurep 'magit)
-  ;;   (setq vc-handled-backends (remq 'Git vc-handled-backends)))
+#+end_src
+
+**** 當使用 magit 時，不使用 emacs 原生的 vc 來處理和 git 相關的事情
+
+#+begin_src emacs-lisp
+  (when (featurep 'magit)
+    (setq vc-handled-backends (remq 'Git vc-handled-backends)))
+#+end_src
+
+
+**** 使用 C-g 離開 magit 的視窗
+#+begin_src emacs-lisp
   (define-key magit-mode-map (kbd "C-g") 'magit-quit-window)
 #+end_src
-**** Magit 的使用
-每個 magit buffer
+
+**** 全域性按鍵設定                                           :global@key:
+
+| 按鍵    | 命令      | 用途                |
+|---------+-----------+---------------------|
+| C-x v l | magit-log | 使用 magit 察看 log |
+|         |           |                     |
+
+#+begin_src emacs-lisp
+  (evil:imap (kbd "C-x vl") 'magit-log)
+#+end_src
+
 *** git-emacs
 #+begin_src emacs-lisp
   (require 'git-emacs)
@@ -5736,14 +5771,6 @@ offlineimap 可以在設定中加入
                        (delete-region (point-min) (point-max)))))))
 #+end_src
 
-** before-save-hook
-#+begin_src emacs-lisp
-  ;; If save a newfile to nonexist directory, create the directory before save.
-  (add-hook 'before-save-hook
-            '(lambda ()
-               (or (file-exists-p  (file-name-directory buffer-file-name))
-                   (make-directory (file-name-directory buffer-file-name) t))))
-#+end_src
 * 檔案備份
 
 ** 如果備份檔案用的資料夾不存在，重新建立他
@@ -5771,10 +5798,9 @@ offlineimap 可以在設定中加入
   (setq delete-by-moving-to-trash nil)
 #+end_src
 
-
 ** TODO 位龜類
 #+begin_src emacs-lisp
-  (setq auto-save-visited-file-name t)    ; auto-save buffer in the file it is visiting
+  (setq auto-save-visited-file-name nil)    ; auto-save buffer in the file it is visiting
   (setq delete-auto-save-files      t)    ; delete auto-save file when bffer is saved or killed
   (setq auto-save-default    t)           ; auto-save of every file-visiting buffer
 
