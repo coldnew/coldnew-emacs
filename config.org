@@ -1482,6 +1482,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
 #+begin_src emacs-lisp
   '(ac-candidate-face ((t (:background "#424242" :foreground "white"))))
   '(ac-selection-face ((t (:background "#CAE682" :foreground "#0C0C0C"))))
+
 #+end_src
 
 *** org-mode
@@ -1515,6 +1516,12 @@ emacs-lisp-mode 的 buffer，可以這樣做
   '(lusty-file-face ((t (:inherit font-lock-string-face))))
 #+end_src
 
+*** magit
+
+移除掉 diff-mode 時候的背景色彩。
+#+begin_src emacs-lisp
+  '(magit-item-highlight ((t (:background "#0B0B0E" :foreground "#DCDCDC"))))
+#+end_src
 *** woman
 
 #+begin_src emacs-lisp
@@ -1541,6 +1548,28 @@ emacs-lisp-mode 的 buffer，可以這樣做
   '(rainbow-delimiters-depth-12-face ((t (:foreground "chartreuse2"))))
 #+end_src
 
+*** hl-line
+
+#+begin_src emacs-lisp
+  '(hl-line ((t :background "#CAE682" :foreground "#0C0C0C")))
+#+end_src
+
+*** diff
+
+#+begin_src emacs-lisp
+  '(diff-added ((t (:foreground "#95E454"))))
+  '(diff-removed ((t (:foreground "#E52210"))))
+  '(diff-header ((t (:background "#0B0B0E"))))
+  '(diff-hunk-header ((t (:foreground "yellow"))))
+  '(diff-function ((t :foreground "green")))
+  '(diff-file-header ((t (:foreground "aquamarine1" :slant italic :weight bold))))
+  '(diff-header ((t (:foreground "VioletRed1"))))
+
+  '(diff-index ((t (:foreground "yellow"))))
+  '(diff-context ((t (:inherit font-lock-comment))))
+  '(diff-refine-change ((t (:background "#0B0B0E" :foreground "#DCDCDC"))))
+#+end_src
+
 *** Other
 
 #+begin_src emacs-lisp
@@ -1559,25 +1588,8 @@ emacs-lisp-mode 的 buffer，可以這樣做
    ;;;; Comint
   '(comint-highlight-prompt ((t (:foreground "#5D9AE4" :bold t))))
 
-   ;;;; Hl-line
-  '(hl-line ((t :background "#CAE682")))
-
    ;;;; selection
   '(secondary-selection ((t (:background "#CAE682" :foreground "#0c0c0c"))))
-
-   ;;;; Diff
-  '(diff-added ((t (:foreground "#95E454"))))
-  '(diff-removed ((t (:foreground "#E52210"))))
-  '(diff-header ((t (:background "#0B0B0E"))))
-  '(diff-hunk-header ((t (:foreground "yellow"))))
-  '(diff-function ((t :foreground "green")))
-  '(diff-file-header ((t (:foreground "aquamarine1" :slant italic :weight bold))))
-  '(diff-header ((t (:foreground "VioletRed1"))))
-
-   ;;;;;;
-  '(diff-index ((t (:foreground "yellow"))))
-  '(diff-context ((t (:inherit font-lock-comment))))
-  '(diff-refine-change ((t (:background "#0B0B0E" :foreground "#DCDCDC"))))
 
    ;;;; cua
   '(cua-rectangle ((t (:background "#444444" :foreground "#DCDCDC"))))
