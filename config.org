@@ -1523,6 +1523,18 @@ emacs-lisp-mode 的 buffer，可以這樣做
 #+begin_src emacs-lisp
   '(magit-item-highlight ((t (:background "#0B0B0E" ))))
 #+end_src
+
+設定 add 和 remove 的色彩
+#+begin_src emacs-lisp
+  '(magit-diff-add ((t (:inherit (diff-added)))))
+  '(magit-diff-del ((t (:inherit (diff-removed)))))
+#+end_src
+
+設定 diff 時，比對兩個檔案位置的色彩
+#+begin_src emacs-lisp
+  '(magit-diff-hunk-header ((t (:inherit (diff-hunk-header)))))
+#+end_src
+
 *** woman
 
 #+begin_src emacs-lisp
@@ -1563,7 +1575,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
   '(diff-header ((t (:background "#0B0B0E"))))
   '(diff-hunk-header ((t (:foreground "yellow"))))
   '(diff-function ((t :foreground "green")))
-  '(diff-file-header ((t (:foreground "aquamarine1" :slant italic :weight bold))))
+  '(diff-file-header ((t (:foreground "#9FCC23" :slant italic :weight bold))))
   '(diff-header ((t (:foreground "VioletRed1"))))
 
   '(diff-index ((t (:foreground "yellow"))))
