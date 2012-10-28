@@ -1362,6 +1362,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
          ))
 #+end_src
 * 佈景主題                                                            :theme:
+
 佈景主題的設置，包含我自訂的佈景主題以及路徑。
 ** 設定佈景主題的位置。
 佈景主題的路徑設定在 emacs-themes-dir 裡面。
@@ -1520,7 +1521,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
 
 移除掉 diff-mode 時候的背景色彩。
 #+begin_src emacs-lisp
-  '(magit-item-highlight ((t (:background "#0B0B0E" :foreground "#DCDCDC"))))
+  '(magit-item-highlight ((t (:background "#0B0B0E" ))))
 #+end_src
 *** woman
 
