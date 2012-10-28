@@ -2055,71 +2055,6 @@ Following buffer will not show in iBuffer
   (setq sr-speedbar-right-side nil)
   (setq sr-speedbar-refresh-turn-on t)
 #+end_src
-** shell-pop
-*** Depends
-#+begin_src emacs-lisp
-  (require 'shell-pop)
-#+end_src
-*** Config
-#+begin_src emacs-lisp
-  (shell-pop-set-internal-mode "eshell")
-  (shell-pop-set-internal-mode-shell emacs-default-shell)
-  (shell-pop-set-window-height emacs-popup-shell-window-height)
-  (shell-pop-set-window-position emacs-popup-shell-window-position)
-
-  (defadvice shell-pop (before kill-dead-term activate)
-    "If there is a stopped ansi-term, kill it and create a new one."
-    (let ((running-p (term-check-proc (buffer-name)))
-          (term-p (string= "term-mode" major-mode)))
-      (if term-p
-          (when (not running-p)
-            (kill-buffer (buffer-name))
-            (shell-pop-out)))))
-#+end_src
-** multi-term
-#+begin_src emacs-lisp
-  (require 'multi-term)
-  (setq multi-term-program emacs-default-shell)
-#+end_src
-** term
-*** 載入相依套件
-#+begin_src emacs-lisp
-  (require 'term)
-  (require 'ansi-color)
-#+end_src
-*** Config
-term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
-
-**** Color
-移除 term-mode 預設的前景與背景顏色。
-#+begin_src emacs-lisp
-  (setq term-default-bg-color nil)
-  (setq term-default-fg-color nil)
-#+end_src
-
-重新設定 Ansi-Color，讓他和我的佈景主題配合。
-#+begin_src emacs-lisp
-  ;; reset ansi-color
-  (setq-default ansi-color-names-vector
-                (vector (frame-parameter nil 'background-color)
-                        "#0B0B0E" "#CA3839" "#8ae234" "#edd400"
-                        "#729fcf" "#ad7fa8" "cyan3"   "#DCDCDC"))
-  (setq ansi-term-color-vector ansi-color-names-vector)
-  ;; (setq ansi-color-map (ansi-color-make-color-map))
-#+end_src
-
-*** Keybindings
-#+begin_src emacs-lisp
-  ;;;; keybindings
-  ;; (define-key term-raw-map (kbd "<f4>") 'shell-pop)
-  (define-key term-raw-map (kbd "M-x") 'execute-extended-command)
-  (define-key term-raw-map (kbd "C-g") 'term-interrupt-subjob)
-  (define-key term-raw-map (kbd "C-n") 'term-send-down)
-  (define-key term-raw-map (kbd "C-p") 'term-send-up)
-  (define-key term-raw-map (kbd "<enter>") 'term-send-input)
-  (define-key term-raw-map (kbd "C-o") 'coldnew/execute-in-command-mode)
-#+end_src
-
 ** comint
 #+begin_src emacs-lisp
   (require 'comint)
@@ -2246,6 +2181,72 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   (setq compilation-auto-jump-to-first-error t)
 #+end_src
 
+* 終端機
+** shell-pop
+*** Depends
+#+begin_src emacs-lisp
+  (require 'shell-pop)
+#+end_src
+*** Config
+#+begin_src emacs-lisp
+  (shell-pop-set-internal-mode "eshell")
+  (shell-pop-set-internal-mode-shell emacs-default-shell)
+  (shell-pop-set-window-height emacs-popup-shell-window-height)
+  (shell-pop-set-window-position emacs-popup-shell-window-position)
+
+  (defadvice shell-pop (before kill-dead-term activate)
+    "If there is a stopped ansi-term, kill it and create a new one."
+    (let ((running-p (term-check-proc (buffer-name)))
+          (term-p (string= "term-mode" major-mode)))
+      (if term-p
+          (when (not running-p)
+            (kill-buffer (buffer-name))
+            (shell-pop-out)))))
+#+end_src
+
+** multi-term
+#+begin_src emacs-lisp
+  (require 'multi-term)
+  (setq multi-term-program emacs-default-shell)
+#+end_src
+** term
+*** 載入相依套件
+#+begin_src emacs-lisp
+  (require 'term)
+  (require 'ansi-color)
+#+end_src
+*** Config
+term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
+
+**** Color
+移除 term-mode 預設的前景與背景顏色。
+#+begin_src emacs-lisp
+  (setq term-default-bg-color nil)
+  (setq term-default-fg-color nil)
+#+end_src
+
+重新設定 Ansi-Color，讓他和我的佈景主題配合。
+#+begin_src emacs-lisp
+  ;; reset ansi-color
+  (setq-default ansi-color-names-vector
+                (vector (frame-parameter nil 'background-color)
+                        "#0B0B0E" "#CA3839" "#8ae234" "#edd400"
+                        "#729fcf" "#ad7fa8" "cyan3"   "#DCDCDC"))
+  (setq ansi-term-color-vector ansi-color-names-vector)
+  ;; (setq ansi-color-map (ansi-color-make-color-map))
+#+end_src
+
+*** Keybindings
+#+begin_src emacs-lisp
+  ;;;; keybindings
+  ;; (define-key term-raw-map (kbd "<f4>") 'shell-pop)
+  (define-key term-raw-map (kbd "M-x") 'execute-extended-command)
+  (define-key term-raw-map (kbd "C-g") 'term-interrupt-subjob)
+  (define-key term-raw-map (kbd "C-n") 'term-send-down)
+  (define-key term-raw-map (kbd "C-p") 'term-send-up)
+  (define-key term-raw-map (kbd "<enter>") 'term-send-input)
+  (define-key term-raw-map (kbd "C-o") 'coldnew/execute-in-command-mode)
+#+end_src
 
 * 文件加密
 
@@ -2272,7 +2273,6 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
 #+end_src
-
 
 * Minibuffer
 
