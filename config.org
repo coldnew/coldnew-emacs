@@ -3116,182 +3116,6 @@ some packages conflict with org-mode
 #+begin_src emacs-lisp
   ;;(require 'org-html5presentation)
 #+end_src
-* 編輯器                                                             :editor:
-
-** 通用型 C 語言編輯設定
-
-這邊設定的是通用的
-
-** COMMENT Function
-#+begin_src emacs-lisp :tangle no
-  (defun coldnew-lisp-common-setting ()
-    "coldnew's common setting for lisp-like mode"
-    ;; Use coldnew's editor mode
-    ;; Use Greek character lambda insteda of string
-    (turn-on-pretty-lambda-mode)
-    (require 'rainbow-delimiters)
-;;    (rainbow-delimiters-mode)
-    )
-
-
-  ;;;; cc-mode common setting
-  (defun coldnew-cc-mode-common-setting ()
-    "coldnew's common setting for cc-mode"
-    ;; enable doxygen
-    ;;  (doxymacs-mode t)
-    ;;  (doxymacs-font-lock)
-
-    ;; hide-if-def mode
-    (hide-ifdef-mode)
-    ;; use shadow
-    (setq hide-ifdef-shadow t)
-
-    ;; gtags
-    ;;  (gtags-mode t)
-    ;;  (if-not (string-match "/usr/src/linux/" (expand-file-name default-directory))
-    ;;        (gtags-create-or-update))
-
-    ;; keybindings
-    (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
-    (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
-    (local-set-key (kbd "<f9>") 'smarter-compile)
-    )
-
-#+end_src
-** 不使用 TAB 進行縮排
-#+begin_src emacs-lisp
-  (setq indent-tabs-mode nil)
-#+end_src
-** 設定 TAB 的寬度為 8
-#+begin_src emacs-lisp
-  (setq tab-width 8)
-#+end_src
-** 設定每行之間的間格為 4
-#+begin_src emacs-lisp
-  (setq line-spacing 4)
-#+end_src
-** 在檔案的最後一行加入一空白行
-#+begin_src emacs-lisp
-  (setq require-final-newline t)
-#+end_src
-** 在存檔前清除多餘的空白
-#+begin_src emacs-lisp
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
-#+end_src
-** 自動建立資料夾
-
-當使用 C-x C-f 建立新的檔案的時候，如果該資料夾未被建立，則自動建立他。
-
-一般網路上流傳的方式，是在存檔案時才建立資料夾。但是我認為應該一開始就該先建立好資料夾，
-畢竟很少人會建好資料夾內的檔案而放棄。
-
-如果需要存檔後才進行建立資料夾的動作，則將下面的 find-file-hook 改為 before-save-hook。
-
-#+begin_src emacs-lisp
-  (add-hook 'find-file-hook
-            '(lambda ()
-                 (or (file-exists-p  (file-name-directory buffer-file-name))
-                     (make-directory (file-name-directory buffer-file-name) t))))
-#+end_src
-** TODO remember
-*** electric-pair-mode
-#+begin_src emacs-lisp
-  (electric-pair-mode 1)
-  ;; setting for auto-close brackets for electric-pair-mode regardless of current major mode syntax table
-  (setq electric-pair-pairs '(
-                              (?\" . ?\")
-                              (?\{ . ?\})
-                              ) )
-#+end_src
-#+begin_src emacs-lisp
-  (setq fill-column      100 ) ; column beyond which automatic line-wrapping shold happen
-  (setq kill-ring-max    3000 ) ; Maximum lenght of kill-ring
-  (setq next-line-add-newlines t ) ;
-  (setq shift-select-mode      t ) ; Enable shift-select mode
-
-  ;; Enable global font-lock
-  (global-font-lock-mode t)
-  ;; Revert buffers automatically when underlying files are changed externally
-  (global-auto-revert-mode t)
-  ;; Show matching parentheses all the time
-  (show-paren-mode t)
-  ;; Enable auto-complete-mode
-  (global-auto-complete-mode t)
-  ;; Enable delete-selection-mode
-  (delete-selection-mode t)
-#+end_src
-** hooks
-#+begin_src emacs-lisp :tangle no
-         ;; After save buffer, indent whole file.
-  ;;       (add-hook 'coldnew-editor-hook 'indent-file-after-save)
-         ;; Before save buffer, cleanup whitespace
-;;  (add-hook 'before-save-hook 'cleanup-whitespace-before-save)
-         ;; Enable line-number
-         (require 'linum)
-        ;; (add-hook 'coldnew-editor-hook 'linum-mode)
-         ;; use electric-indent-mode
-         (add-hook 'coldnew-editor-hook 'electric-indent-mode)
-         ;; highlight special keywords like TODO, BUF
-         (add-hook 'coldnew-editor-hook 'highlight-additional-keywords)
-       ;; highlight fontify numbers and constant
-    ;;    (add-hook 'coldnew-editor-hook 'highlight-fontify-numbers)
-        ;; highlight escape char in string
-        (add-hook 'coldnew-editor-hook 'highlight-escape-char)
-      ;;   ;; Add spaces between Chinese and English character.
-       ;; (add-hook 'before-save-hook 'insert-space-between-english-chinese)
-#+end_src
-
-** Functions
-#+begin_src emacs-lisp
-  (defun indent-file-after-save ()
-    "Indent whole file after saved."
-    (make-local-variable 'after-save-hook)
-    (add-hook 'after-save-hook
-              '(lambda ()
-                 (indent-region (point-min) (point-max) nil)
-                 (save-buffer))))
-
-  (defun highlight-additional-keywords ()
-    "Highlight additional keywords."
-    (font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)))
-    (font-lock-add-keywords nil '(("\\<\\(NOTE\\):" 1 'org-level-2 t)))
-    (font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
-    (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t)))
-    )
-
-  (defun highlight-fontify-numbers ()
-    "Use this function as a hook to fontify numbers as constant"
-    (font-lock-add-keywords nil
-                            '(
-                              ;; hexadecimal
-                              ("\\b\\(0[00-9a-fA-F]+\\)" 1 font-lock-constant-face)
-                              ;; float
-                              ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
-                              ;; int
-                              ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
-                              )))
-
-  (defun highlight-escape-char ()
-    "Use this function as a hook to fontify escape char."
-    (font-lock-add-keywords nil
-                            '(
-                              ("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
-                               0 'font-lock-escape-char-face prepend)
-                              )))
-
-  (defun insert-space-between-english-chinese ()
-    "Insert a space between English words and Chinese charactors"
-    (save-excursion
-      (goto-char (point-min))
-      (while (or (re-search-forward "\\(\\cc\\)\\([a-zA-Z0-9]\\)" nil t)
-                 (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
-        (replace-match "\\1 \\2" nil nil))
-      (goto-char (point-min))
-      (while (or (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
-                 (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
-        (replace-match "\\1\\2" nil nil))))
-#+end_src
-
 * Vim 摹擬                                                              :vim:
 
 實在不能不佩服 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
@@ -3468,6 +3292,178 @@ normal-state。
 #+begin_src emacs-lisp
   (evil:imap (kbd "C-o") 'evil-execute-in-normal-state)
   (evil:imap (kbd "C-l") 'backward-delete-char)
+#+end_src
+
+* 編輯器                                                             :editor:
+
+** 通用型 C 語言編輯設定
+
+這邊設定的是通用的
+
+** COMMENT Function
+#+begin_src emacs-lisp :tangle no
+  (defun coldnew-lisp-common-setting ()
+    "coldnew's common setting for lisp-like mode"
+    ;; Use coldnew's editor mode
+    ;; Use Greek character lambda insteda of string
+    (turn-on-pretty-lambda-mode)
+    (require 'rainbow-delimiters)
+;;    (rainbow-delimiters-mode)
+    )
+
+
+  ;;;; cc-mode common setting
+  (defun coldnew-cc-mode-common-setting ()
+    "coldnew's common setting for cc-mode"
+    ;; enable doxygen
+    ;;  (doxymacs-mode t)
+    ;;  (doxymacs-font-lock)
+
+    ;; hide-if-def mode
+    (hide-ifdef-mode)
+    ;; use shadow
+    (setq hide-ifdef-shadow t)
+
+    ;; gtags
+    ;;  (gtags-mode t)
+    ;;  (if-not (string-match "/usr/src/linux/" (expand-file-name default-directory))
+    ;;        (gtags-create-or-update))
+
+    ;; keybindings
+    (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
+    (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
+    (local-set-key (kbd "<f9>") 'smarter-compile)
+    )
+
+#+end_src
+** 不使用 TAB 進行縮排
+#+begin_src emacs-lisp
+  (setq indent-tabs-mode nil)
+#+end_src
+** 設定 TAB 的寬度為 8
+#+begin_src emacs-lisp
+  (setq tab-width 8)
+#+end_src
+** 設定每行之間的間格為 4
+#+begin_src emacs-lisp
+  (setq line-spacing 4)
+#+end_src
+** 在檔案的最後一行加入一空白行
+#+begin_src emacs-lisp
+  (setq require-final-newline t)
+#+end_src
+** 在存檔前清除多餘的空白
+#+begin_src emacs-lisp
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+end_src
+** 自動建立資料夾
+
+當使用 C-x C-f 建立新的檔案的時候，如果該資料夾未被建立，則自動建立他。
+
+一般網路上流傳的方式，是在存檔案時才建立資料夾。但是我認為應該一開始就該先建立好資料夾，
+畢竟很少人會建好資料夾內的檔案而放棄。
+
+如果需要存檔後才進行建立資料夾的動作，則將下面的 find-file-hook 改為 before-save-hook。
+
+#+begin_src emacs-lisp
+  (add-hook 'find-file-hook
+            '(lambda ()
+                 (or (file-exists-p  (file-name-directory buffer-file-name))
+                     (make-directory (file-name-directory buffer-file-name) t))))
+#+end_src
+** TODO remember
+*** electric-pair-mode
+#+begin_src emacs-lisp
+  (electric-pair-mode 1)
+  ;; setting for auto-close brackets for electric-pair-mode regardless of current major mode syntax table
+  (setq electric-pair-pairs '(
+                              (?\" . ?\")
+                              (?\{ . ?\})
+                              ) )
+#+end_src
+#+begin_src emacs-lisp
+  (setq fill-column      100 ) ; column beyond which automatic line-wrapping shold happen
+  (setq kill-ring-max    3000 ) ; Maximum lenght of kill-ring
+  (setq next-line-add-newlines t ) ;
+  (setq shift-select-mode      t ) ; Enable shift-select mode
+
+  ;; Enable global font-lock
+  (global-font-lock-mode t)
+  ;; Revert buffers automatically when underlying files are changed externally
+  (global-auto-revert-mode t)
+  ;; Show matching parentheses all the time
+  (show-paren-mode t)
+  ;; Enable auto-complete-mode
+  (global-auto-complete-mode t)
+  ;; Enable delete-selection-mode
+  (delete-selection-mode t)
+#+end_src
+** hooks
+#+begin_src emacs-lisp :tangle no
+         ;; Enable line-number
+         (require 'linum)
+        ;; (add-hook 'coldnew-editor-hook 'linum-mode)
+         ;; use electric-indent-mode
+         (add-hook 'coldnew-editor-hook 'electric-indent-mode)
+         ;; highlight special keywords like TODO, BUF
+         (add-hook 'coldnew-editor-hook 'highlight-additional-keywords)
+       ;; highlight fontify numbers and constant
+    ;;    (add-hook 'coldnew-editor-hook 'highlight-fontify-numbers)
+        ;; highlight escape char in string
+        (add-hook 'coldnew-editor-hook 'highlight-escape-char)
+      ;;   ;; Add spaces between Chinese and English character.
+       ;; (add-hook 'before-save-hook 'insert-space-between-english-chinese)
+#+end_src
+
+** Functions
+#+begin_src emacs-lisp
+  (defun indent-file-after-save ()
+    "Indent whole file after saved."
+    (make-local-variable 'after-save-hook)
+    (add-hook 'after-save-hook
+              '(lambda ()
+                 (indent-region (point-min) (point-max) nil)
+                 (save-buffer))))
+
+  (defun highlight-additional-keywords ()
+    "Highlight additional keywords."
+    (font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)))
+    (font-lock-add-keywords nil '(("\\<\\(NOTE\\):" 1 'org-level-2 t)))
+    (font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
+    (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t)))
+    )
+
+  (defun highlight-fontify-numbers ()
+    "Use this function as a hook to fontify numbers as constant"
+    (font-lock-add-keywords nil
+                            '(
+                              ;; hexadecimal
+                              ("\\b\\(0[00-9a-fA-F]+\\)" 1 font-lock-constant-face)
+                              ;; float
+                              ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
+                              ;; int
+                              ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
+                              )))
+
+  (defun highlight-escape-char ()
+    "Use this function as a hook to fontify escape char."
+    (font-lock-add-keywords nil
+                            '(
+                              ("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
+                               0 'font-lock-escape-char-face prepend)
+                              )))
+
+  (defun insert-space-between-english-chinese ()
+    "Insert a space between English words and Chinese charactors"
+    (save-excursion
+      (goto-char (point-min))
+      (while (or (re-search-forward "\\(\\cc\\)\\([a-zA-Z0-9]\\)" nil t)
+                 (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
+        (replace-match "\\1 \\2" nil nil))
+      (goto-char (point-min))
+      (while (or (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
+                 (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
+        (replace-match "\\1\\2" nil nil))))
 #+end_src
 
 * Cedet                                                                :cede:
