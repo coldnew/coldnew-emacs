@@ -1680,8 +1680,16 @@ emacs-lisp-mode 的 buffer，可以這樣做
 
 ** 全域性使用自動補全
 
+global-auto-complete-mode 這個 function 只具有切換全部 buffer 的自動補全功能，
+若想要一開始就全部的 mode 都具有自動補全能力，則必須用個 dirty hack 才行。
+
 #+begin_src emacs-lisp
-  (global-auto-complete-mode 1)
+  (define-globalized-minor-mode real-global-auto-complete-mode
+    auto-complete-mode (lambda ()
+                         (if (not (minibufferp (current-buffer)))
+                             (auto-complete-mode 1))
+                         ))
+  (real-global-auto-complete-mode t)
 #+end_src
 
 ** TODO 位分類
