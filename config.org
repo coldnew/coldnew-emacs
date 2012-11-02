@@ -4486,6 +4486,14 @@ This is to update existing buffers after a Git pull of their underlying files."
     (delete-other-windows))
 #+end_src
 
+*** 清除除了目前的緩衝區以外的緩衝區
+
+#+begin_src emacs-lisp
+    (defun kill-other-buffers ()
+      "Kill all other buffers."
+      (interactive)
+      (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+#+end_src
 ** 其他、未歸類
 *** 縮排整個 buffer
 #+begin_src emacs-lisp
