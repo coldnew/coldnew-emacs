@@ -6,67 +6,6 @@
 #+OPTIONS: ^:nil
 #+INFOJS_OPT: view:info toc:t ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 
-* 筆記
-** 書籤管理
-*** 按鍵
-| 按鍵    | 命令                | 用途                     |
-|---------+---------------------+--------------------------|
-| C-x r m | bookmark-set        | 設置書籤                 |
-| C-x r b | bookmark-jump       | 跳轉到書籤               |
-| C-x r l | bookmark-bmenu-list | 開啟一個 buffer 列出書籤 |
-|         | bookmark-delete     | 刪除書籤                 |
-|         | bookmark-load       | 讀取已儲存的書籤檔案     |
-*** 配置
-| 變數名稱              | 預設值               | 用途           |
-|-----------------------+----------------------+----------------|
-| bookmark-default-file | ~/.emacs.d/bookmarks | 預設的書籤檔案 |
-| bookmark-save-flag    | t                    |                |
-
-** TODO 未歸類的 emacs 筆記。
-*** C-x r N 添加數字序號
-(rectangle-number-lines START END START-AT &optional FORMAT)
-*** C-M-W append-next-kill
-Quite useful, actually.  Normally, if you kill a couple of lines,
-move the cursor, and then kills some more lines, only the second
-batch of lines will be yanked with C-y.
-However, if you use append-next-kill before the second batch of
-kills, they will be appended to the first batch.﻿
-
-*** ede
-http://epsilonvectorplusplus.wordpress.com/2012/04/27/a-functional-introduction-to-cedet-ede/
-
-*** 矩型操作
-emacs 以 C-x r 開頭的命令來進行矩形操作。先用 C-space 或者 C-@設一個 mark，移動光標到另一點，用以下命令進行列操作：
-
-C-x r k 剪切一個矩形塊
-C-x r y 粘貼一個矩形塊
-C-x r o 插入一個矩形塊
-C-x r c 清除一個矩形塊(使其變成空白)
-C-x r t 在選定區域的所有列前插入樣的字符
-*** cua
-cua-mode 下可以用以下命令進行列操作：
-
-直接輸入字符: 在每行前(或後)都插入這個字符
-[M-a]: 將 rect 中的文字左對齊
-[M-b]: 用空格(tabs 或者 spaces)替換所有 rect 中的字符
-[M-c]: 去掉所有行左側的空格
-[M-f]: 用單個字符替換所有 rect 中的字符(提示輸入一個字符)
-[M-i]: 對每行中第一個找到的數字進行加 1 操作(自動把 0x 開頭的當作十六進制數字)
-[M-k]: 剪切 rect
-[M-l]: 把 rect 中的內容全部轉換為小寫
-[M-m]: 拷貝 rect
-[M-n]: 用一串自增的數字替換 rect 中的每一行(這個功能可以用來給每行編號)
-[M-o]: rect 的內容右移，選中的 rect 用空格填充
-[M-r]: 用字符串替換符滿足正則表達式的字符串
-[M-R]: 上下反轉
-[M-s]: 把 rect 中的每一行替換為一個字符串(提示輸入)
-[M-t]: 把 rect 整個替換為一個字符串(提示輸入)
-[M-u]: 把 rect 中的內容全部轉換為大寫
-[M-|]: 對 rect 執行一個 shell 命令
-*** 看 package 的註解
-M-x finder-commentary
-*** id-manager
-負責管理密碼的plugin
 * 基礎設置                                                             :base:
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
 ** 預先載入 cl 套件。
