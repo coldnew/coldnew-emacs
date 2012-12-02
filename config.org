@@ -34,7 +34,7 @@
 
 *** 關閉蜂鳴器
 
-使用 visible bell 代替電腦的蜂鳴器叫聲。
+使用畫面閃爍代替電腦的蜂鳴器叫聲。
 #+begin_src emacs-lisp
   (setq visible-bell t)
 #+end_src
@@ -110,7 +110,7 @@
 
 ** 變數設定                                                        :variable:
 這邊加入了我自定義的變數以及其初始值。
-*** 資料夾相關設定
+*** 資料夾相關變數
 
 這邊設定了各種類型資料夾的路徑。
 
@@ -202,9 +202,10 @@ yasnippet 使用的 snippet路徑
     "etc file directory.")
 #+end_src
 
-*** 檔案相關設定
+*** 檔案相關變數
 
 這邊設定了各種檔案的路徑。
+
 **** emacs-config-file
 
 emacs 個人配置的檔案，也就是這個檔案。
@@ -215,6 +216,7 @@ emacs 個人配置的檔案，也就是這個檔案。
 
 **** emacs-custom-file
 
+客制化設定檔的位置
 #+begin_src emacs-lisp
   (defconst emacs-custom-file (concat emacs-dir "custom.el")
     "store customize UI config.")
@@ -235,15 +237,14 @@ emacs 個人配置的檔案，也就是這個檔案。
 #+end_src
 
 *** 作業系統測試
+
 放置用於測試目前 emacs 執行在何種作業系統上的變數。
+
 **** MacOsx
 #+begin_src emacs-lisp
   (defvar mac-p     (eq system-type 'darwin)
     "Return nil if OS is not Mac.")
 #+end_src
-
-#+RESULTS:
-: mac-p
 
 **** Linux
 ***** all
@@ -251,9 +252,6 @@ emacs 個人配置的檔案，也就是這個檔案。
   (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
     "Return nil if OS is not Linux.")
 #+end_src
-
-#+RESULTS:
-: linux-p
 
 ***** 32-bit
 #+begin_src emacs-lisp
@@ -274,29 +272,22 @@ emacs 個人配置的檔案，也就是這個檔案。
     "Return nil if OS is not CygWin.")
 #+end_src
 
-#+RESULTS:
-: cygwin-p
-
 **** Window$
 #+begin_src emacs-lisp
   (defvar windows-p (eq system-type 'windows-nt)
     "Return nil if OS is not Windows.")
 #+end_src
 
-#+RESULTS:
-: windows-p
-
 *** 螢幕解析度測試                                               :resolution:
+
 放置測試螢幕解析度用的變數
+
 **** 1280x800
 #+begin_src emacs-lisp
   (defvar display-1280x800-p   (and (= (display-pixel-width) 1280)
                                     (= (display-pixel-height) 800))
     "Return nil if current display's resolution is not 1280x800")
 #+end_src
-
-#+RESULTS:
-: display-1280x800-p
 
 **** 1280x1024
 #+begin_src emacs-lisp
@@ -305,18 +296,12 @@ emacs 個人配置的檔案，也就是這個檔案。
     "Return nil if current display's resolution is not 1280x1024")
 #+end_src
 
-#+RESULTS:
-: display-1280x1024-p
-
 **** 1920x1080
 #+begin_src emacs-lisp
   (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920)
                                     (= (display-pixel-height) 1080))
     "Return nil if current display's resolution is not 1920x1080")
 #+end_src
-
-#+RESULTS:
-: display-1920x1080-p
 
 *** TODO Shell
 #+begin_src emacs-lisp
