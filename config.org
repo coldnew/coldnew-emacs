@@ -684,7 +684,7 @@ emacs 套件管理的設定。
 此檔案用於將 emacs-packags-list 暫存。
 #+begin_src emacs-lisp
   (defvar emacs-packages-file
-    (concat emacs-dir "installed.el")
+    (concat emacs-dir "pkglist.el")
     "Define where to store and read the installed packages list.")
 #+end_src
 
@@ -4042,6 +4042,19 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+begin_src emacs-lisp
 ))
 #+end_src
+** Go
+
+載入相關套件
+
+#+begin_src emacs-lisp
+(require 'go-mode)
+#+end_src
+
+設定 go 的副檔名與對應的模式
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
+#+end_src
+
 ** LaTex
 ** QML
 *** 設定 QML 的副檔名與對應的模式
