@@ -1564,7 +1564,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
 #+begin_src emacs-lisp
   (load-theme 'coldnew-night t)
 #+end_src
-* 自動補全
+* 自動補全                                                         :complete:
 ** 載入相關套件
 
 #+begin_src emacs-lisp
@@ -2152,7 +2152,7 @@ Following buffer will not show in iBuffer
   (setq compilation-auto-jump-to-first-error t)
 #+end_src
 
-* 終端機
+* 終端機                                                               :term:
 ** shell-pop
 *** 載入相依套件
 #+begin_src emacs-lisp
@@ -2219,7 +2219,7 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
   (define-key term-raw-map (kbd "C-o") 'coldnew/execute-in-command-mode)
 #+end_src
 
-* 文件加密
+* 文件加密                                                          :encrypt:
 
 #+begin_src emacs-lisp
   (require 'epa-file)
@@ -2245,7 +2245,7 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 
 #+end_src
 
-* Minibuffer
+* Minibuffer                                                     :minibuffer:
 
 ** 設定視窗高度最多為4行高
 
@@ -2738,24 +2738,35 @@ You can now (from git master) use `org-image-actual-width'.
 
 用於加密 org-mode 裡面具有 :secret: 這個 TAG 的區塊。
 注意到這需啟用 [[*Easy%20PG][Easy PG]] 才能夠使用。
+
 *** 載入相關模組
+
 #+begin_src emacs-lisp
   (require 'org-crypt)
 #+end_src
+
 *** 設定要加密的 tag 標籤為 *secret*
+
 #+begin_src emacs-lisp
   (setq org-crypt-tag-matcher "secret")
 #+end_src
+
 *** Add a hook to automatically encrypt entries before a file is saved to disk.
+
 #+begin_src emacs-lisp
   (org-crypt-use-before-save-magic)
 #+end_src
+
 *** 避免 encrypt 這個 tag 被子項目繼承
+
 #+begin_src emacs-lisp
   (setq org-tags-exclude-from-inheritance (quote ("secret")))
 #+end_src
+
 *** 設定 org-crypt-disable-auto-save 成 encrypt 模式。
+
 此模式並不會停用 auto-save-mode，反之，當自動儲存時，解密過的區域將會加密回去。
+
 #+begin_src emacs-lisp
   (setq org-crypt-disable-auto-save 'encrypt)
 #+end_src
@@ -3069,11 +3080,7 @@ some packages conflict with org-mode
                   "\\end{frame}")))
 #+end_src
 
-*** TODO 投影片所使用的 html5 配置
-** TODO 輸出成 HTML slide 設定
-#+begin_src emacs-lisp
-  ;;(require 'org-html5presentation)
-#+end_src
+
 * Vim 摹擬                                                              :vim:
 
 實在不能不佩服 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
@@ -3258,62 +3265,36 @@ normal-state。
 
 這邊設定的是通用的
 
-** COMMENT Function
-#+begin_src emacs-lisp :tangle no
-  (defun coldnew-lisp-common-setting ()
-    "coldnew's common setting for lisp-like mode"
-    ;; Use coldnew's editor mode
-    ;; Use Greek character lambda insteda of string
-    (turn-on-pretty-lambda-mode)
-    (require 'rainbow-delimiters)
-;;    (rainbow-delimiters-mode)
-    )
-
-
-  ;;;; cc-mode common setting
-  (defun coldnew-cc-mode-common-setting ()
-    "coldnew's common setting for cc-mode"
-    ;; enable doxygen
-    ;;  (doxymacs-mode t)
-    ;;  (doxymacs-font-lock)
-
-    ;; hide-if-def mode
-    (hide-ifdef-mode)
-    ;; use shadow
-    (setq hide-ifdef-shadow t)
-
-    ;; gtags
-    ;;  (gtags-mode t)
-    ;;  (if-not (string-match "/usr/src/linux/" (expand-file-name default-directory))
-    ;;        (gtags-create-or-update))
-
-    ;; keybindings
-    (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
-    (local-set-key (kbd "C-x C-o") 'ff-find-other-file)
-    (local-set-key (kbd "<f9>") 'smarter-compile)
-    )
-
-#+end_src
 ** 不使用 TAB 進行縮排
+
 #+begin_src emacs-lisp
   (setq indent-tabs-mode nil)
 #+end_src
+
 ** 設定 TAB 的寬度為 8
+
 #+begin_src emacs-lisp
   (setq tab-width 8)
 #+end_src
+
 ** 設定每行之間的間格為 4
+
 #+begin_src emacs-lisp
   (setq line-spacing 4)
 #+end_src
+
 ** 在檔案的最後一行加入一空白行
+
 #+begin_src emacs-lisp
   (setq require-final-newline t)
 #+end_src
+
 ** 在存檔前清除多餘的空白
+
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+end_src
+
 ** 自動建立資料夾
 
 當使用 C-x C-f 建立新的檔案的時候，如果該資料夾未被建立，則自動建立他。
@@ -3329,6 +3310,7 @@ normal-state。
                  (or (file-exists-p  (file-name-directory buffer-file-name))
                      (make-directory (file-name-directory buffer-file-name) t))))
 #+end_src
+
 ** TODO remember
 *** electric-pair-mode
 #+begin_src emacs-lisp
@@ -3356,23 +3338,6 @@ normal-state。
   ;; Enable delete-selection-mode
   (delete-selection-mode t)
 #+end_src
-** hooks
-#+begin_src emacs-lisp :tangle no
-         ;; Enable line-number
-         (require 'linum)
-        ;; (add-hook 'coldnew-editor-hook 'linum-mode)
-         ;; use electric-indent-mode
-         (add-hook 'coldnew-editor-hook 'electric-indent-mode)
-         ;; highlight special keywords like TODO, BUF
-         (add-hook 'coldnew-editor-hook 'highlight-additional-keywords)
-       ;; highlight fontify numbers and constant
-    ;;    (add-hook 'coldnew-editor-hook 'highlight-fontify-numbers)
-        ;; highlight escape char in string
-        (add-hook 'coldnew-editor-hook 'highlight-escape-char)
-      ;;   ;; Add spaces between Chinese and English character.
-       ;; (add-hook 'before-save-hook 'insert-space-between-english-chinese)
-#+end_src
-
 ** Functions
 #+begin_src emacs-lisp
   (defun indent-file-after-save ()
@@ -3919,11 +3884,9 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+begin_src emacs-lisp
   (add-hook 'emacs-lisp-mode-hook 'auto-indent-minor-mode)
 #+end_src
-**** Other
-#+begin_src emacs-lisp
-;;  (add-hook 'emacs-lisp-mode-hook 'coldnew-lisp-common-setting)
-#+end_src
+
 *** 自動補全
+
 #+begin_src emacs-lisp
     (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
     (defun ac-emacs-lisp-mode-setup ()
@@ -3946,41 +3909,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
           ("l" . "lambda")
           ))
 #+end_src
-*** TODO Flymake
-#+begin_src emacs-lisp :tangle no
-  (require 'flymake)
-  (defun flymake-elisp-init ()
-    (unless (string-match "^ " (buffer-name))
-      (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-                           'flymake-create-temp-inplace))
-             (local-file  (file-relative-name
-                           temp-file
-                           (file-name-directory buffer-file-name))))
-        (list
-         (expand-file-name invocation-name invocation-directory)
-         (list
-          "-Q" "--batch" "--eval"
-          (prin1-to-string
-           (quote
-            (dolist (file command-line-args-left)
-              (with-temp-buffer
-                (insert-file-contents file)
-                (condition-case data
-                    (scan-sexps (point-min) (point-max))
-                  (scan-error
-                   (goto-char(nth 2 data))
-                   (princ (format "%s:%s: error: Unmatched bracket or quote\n"
-                                  file (line-number-at-pos)))))))
-            )
-           )
-          local-file)))))
-  (push '("\\.el$" flymake-elisp-init) flymake-allowed-file-name-masks)
-  (add-hook 'emacs-lisp-mode-hook
-            ;; workaround for (eq buffer-file-name nil)
-            '(lambda () (if buffer-file-name (flymake-mode t))))
 
-
-#+end_src
 *** Functions
 #+begin_src emacs-lisp
     (defun remove-elc-when-visit ()
@@ -3992,6 +3921,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                            (file-writable-p (concat buffer-file-name "c")))
                       (delete-file (concat buffer-file-name "c"))))))
 #+end_src
+
 *** Keybinding
 
 #+begin_src emacs-lisp
@@ -5021,10 +4951,15 @@ winner-mode 是 emacs 自帶的窗口佈局管理器，可以對窗口的改變�
 
 * 網頁瀏覽
 ** 使用 w3m 作為網頁瀏覽器
+
 #+begin_src emacs-lisp
-(require 'w3m)
- (setq w3m-default-display-inline-images t)
+  (require 'w3m)
 #+end_src
+
+#+begin_src emacs-lisp
+  (setq w3m-default-display-inline-images t)
+#+end_src
+
 * Google 翻譯
 
 google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作。
@@ -5054,7 +4989,9 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
 #+end_src
 
 ** 將中文翻譯為英文
+
 #+begin_src emacs-lisp
+
   (defun google-translate-zh-en ()
     "Translate Tranditional Chinese to English by google-translate."
     (interactive)
@@ -5062,6 +4999,7 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
           (google-translate-default-target-language "en"))
       (google-translate-query-translate)))
 #+end_src
+
 * Tramp                                                               :tramp:
 #+begin_src emacs-lisp
   (setq tramp-default-method "ssh")
@@ -5621,7 +5559,6 @@ offlineimap 可以在設定中加入
 #+begin_src emacs-lisp
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
   (defalias 'coldnew/folding-toggle   'toggle-selective-display)
-  (defalias 'iwb 'indent-whole-buffer)
 #+end_src
 * 版本管理
 **  Git
@@ -5758,12 +5695,21 @@ offlineimap 可以在設定中加入
   (setq delete-by-moving-to-trash nil)
 #+end_src
 
+** 當讀取檔案時，不自動進行檔案儲存
+
+#+begin_src emacs-lisp
+  (setq auto-save-visited-file-name nil)
+#+end_src
+
+** 當緩衝區儲存後，刪除掉自動儲存的檔案
+
+#+begin_src emacs-lisp
+  (setq delete-auto-save-files t)
+#+end_src
+
 ** TODO 位龜類
 #+begin_src emacs-lisp
-  (setq auto-save-visited-file-name nil)    ; auto-save buffer in the file it is visiting
-  (setq delete-auto-save-files      t)    ; delete auto-save file when bffer is saved or killed
   (setq auto-save-default    t)           ; auto-save of every file-visiting buffer
-
   (setq backup-directory-alist `(("." . ,emacs-backup-dir)))
   (setq version-control      t )          ; enable version-control
   (setq backup-by-copying    t )          ; backup by copy
@@ -6343,73 +6289,10 @@ Function key 設置常用的命令。
            (?t (file . "~/Dropbox/Org/TODO.org"))
            (?w (file . "~/Dropbox/Org/Weintek.org"))
            (?b (file . "~/Workspace/Blog/src/blog.org"))
-           ;; (?b (file . "~/personal/business.org"))
            ))
     (set-register (car r) (cadr r)))
 #+end_src
 
-* Deprecated
-:PROPERTIES:
-:tangle: no
-:END:
-這邊放置的是不再使用的設定,並且這邊的設定並不會輸出至我的 emacs-config 上。
-#+begin_src emacs-lisp
-  (defun sacha/search-word-backward ()
-    "Find the previous occurrence of the current word."
-    (interactive)
-    (let ((cur (point)))
-      (skip-syntax-backward "w_")
-      (goto-char
-       (if (re-search-backward (concat "\\_<" (current-word) "\\_>") nil t)
-           (match-beginning 0)
-         cur))))
-
-  (defun sacha/search-word-forward ()
-    "Find the next occurrence of the current word."
-    (interactive)
-    (let ((cur (point)))
-      (skip-syntax-forward "w_")
-      (goto-char
-       (if (re-search-forward (concat "\\_<" (current-word) "\\_>") nil t)
-           (match-beginning 0)
-         cur))))
-  (global-set-key '[M-up] 'sacha/search-word-backward)
-  (global-set-key '[M-down] 'sacha/search-word-forward)
-#+end_src
-
-#+begin_src emacs-lisp
-  (defun sacha/find-tags ()
-    "Set the TAGS file."
-    (set (make-variable-buffer-local 'tags-table-list) nil)
-    (set (make-variable-buffer-local 'tags-file-name)
-         (sacha/recursive-find-file "TAGS")))
-#+end_src
-
-https://github.com/travisbhartwell/emacs-config/blob/master/HOME/_emacs.d/init-helpers.el
-http://doc.norang.ca/org-mode.html
-http://jixiuf.github.com/tags/@Emacs.html
-
-#+begin_src emacs-lisp
-  (defun run-rand (n times)
-    (defun run-rand-iter (k)
-      (cond ((= k times) (princ (concat (number-to-string (random n)) "\n")))
-            (t
-             (princ (concat (number-to-string (random n)) "\n"))
-             (run-rand-iter (+ k 1)))))
-    (run-rand-iter 0))
-
-#+end_src
-* Other
-** TODO 為 google-weather 增加編碼的設定
-#+begin_src emacs-lisp
-  (defun google-weather-build-url (location &optional language)
-    "Build URL to retrieve weather for LOCATION in LANGUAGE."
-    (concat "http" (when google-weather-use-https "s") "://" google-weather-url "?weather=" (url-hexify-string location)
-            (when language
-              (concat "&hl=" language))
-            ;; add for encoding
-            (concat "&oe=" "utf8")))
-#+end_src
 * 部若格                                                      :blog:
 ** 使用 o-blog 作為 blogging 系統
 *** 載入相關套件
