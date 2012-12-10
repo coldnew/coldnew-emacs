@@ -1710,6 +1710,7 @@ auto-complete-mode 的按鍵設定。
 #+end_src
 
 *** 讓 lusty-explorer 能夠使用 sudo 來打開檔案                    :command:
+
 #+begin_src emacs-lisp
   (defun lusty-sudo-explorer ()
     "Launch the file/directory mode of LustyExplorer."
