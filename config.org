@@ -3080,7 +3080,6 @@ some packages conflict with org-mode
                   "\\end{frame}")))
 #+end_src
 
-
 * Vim 摹擬                                                              :vim:
 
 實在不能不佩服 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
