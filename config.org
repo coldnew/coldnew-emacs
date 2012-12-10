@@ -1980,7 +1980,6 @@ Following buffer will not show in iBuffer
          "^\\*ac-mode-*"
          ".loaddefs.el$"
          "^loaddefs.el$"
-         "^\\*magit*"
          "\\*GTAGS SELECT\\**"
          "\\*Symref*"
          "\\*cscope\\*"
