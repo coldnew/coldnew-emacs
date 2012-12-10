@@ -2194,10 +2194,9 @@ Following buffer will not show in iBuffer
   (require 'term)
   (require 'ansi-color)
 #+end_src
-*** Config
-term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
 
-**** Color
+*** 設定 term-mode 的色彩
+
 移除 term-mode 預設的前景與背景顏色。
 #+begin_src emacs-lisp
   (setq term-default-bg-color nil)
@@ -2212,7 +2211,6 @@ term-mode 的設定會影響到 multi-term，這邊我主要是設定顏色。
                         "#0B0B0E" "#CA3839" "#8ae234" "#edd400"
                         "#729fcf" "#ad7fa8" "cyan3"   "#DCDCDC"))
   (setq ansi-term-color-vector ansi-color-names-vector)
-  ;; (setq ansi-color-map (ansi-color-make-color-map))
 #+end_src
 
 *** Keybindings
