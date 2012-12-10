@@ -1649,22 +1649,30 @@ auto-complete-mode 的按鍵設定。
 #+end_src
 ** elscreen                                                       :elscreen:
 *** 載入相關模組
+
 #+begin_src emacs-lisp
   (require 'elscreen)
 #+end_src
+
 *** 自動啟用 elscreen
+
 #+begin_src emacs-lisp
   (elscreen-start)
 #+end_src
+
 *** 分頁上顯示 *控制* 圖示
+
 #+begin_src emacs-lisp
   (setq elscreen-tab-display-control t)
 #+end_src
+
 *** 分頁上不顯示 *關閉* 圖示
+
 #+begin_src emacs-lisp
   (setq elscreen-tab-display-kill-screen nil)
 #+end_src
-*** Advice
+
+*** 功能強化
 
 當目前只有一個 elscreen-tab 存在時，呼叫 *elscreen-next* 、 *elscreen-previous*
 或是 *elscreen-toggle* 會自動建立另外一個 elscreen-tab。
