@@ -3537,16 +3537,21 @@ normal-state。
 #+end_src
 ** C
 *** 設定 C 語言 檔案的副檔名與對應的模式
+
 #+begin_src emacs-lisp
+
   (add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
   (add-to-list 'auto-mode-alist '("\\.h$" . c-mode))
 #+end_src
+
 *** 預設使用 Linux Coding Style
+
 #+begin_src emacs-lisp
   (add-hook 'c-mode-hook
             '(lambda ()
                (c-set-style "linux")))
 #+end_src
+
 *** c-eldoc
 adeff
 #+begin_src emacs-lisp
@@ -3599,33 +3604,20 @@ adeff
 #+begin_src emacs-lisp
   (require 'guess-offset)
 #+end_src
-*** 自動猜測縮排風格
-#+begin_src emacs-lisp
-  (when (require 'dtrt-indent nil 'noerror)
-    (add-hook 'c-mode-hook
-              (lambda () (dtrt-indent-mode t))))
-#+end_src
 *** 快速插入樣板
+
 #+begin_src emacs-lisp
   (setq c-mode-expand-alist
         '(("i" . c-mode:insert-inc-or-if)
-          ("m" . c-mode:insert-main-function)
+          ("m" . "main")
           ))
 #+end_src
-*** Keybinding
+
+*** 按鍵配置                                                       :keymap:
 #+begin_src emacs-lisp
   (define-key c-mode-map (kbd "C-x C-o") 'ff-find-other-file)
 #+end_src
-*** Cscope
-C-c s s             序找符号
-C-c s g             寻找全局的定义
-C-c s c             看看指定函数被哪些函数所调用
-C-c s C             看看指定函数调用了哪些函数
-C-c s e             寻找正则表达式
-C-c s f             寻找文件
-C-c s i             看看指定的文件被哪些文件 include
-C-c s a             设定初始化的目录，一般是你代码的根目录
-C-s s I             对目录中的相关文件建立列表并进行索引
+
 *** 將 #if 0 #endif 區域上色為灰色
 
 #+begin_src emacs-lisp
@@ -3642,18 +3634,7 @@ C-s s I             对目录中的相关文件建立列表并进行索引
 
   (add-hook 'c-mode-hook 'cc-mode:highlight-if-0)
 #+end_src
-*** Functions
-*** Commands
-#+begin_src emacs-lisp
-  (defun c-mode:insert-main-function ()
-    "insert main()."
-    (interactive)
-    (let* ((current (point))
-           (begin (line-beginning-position)))
-      (if (equal current begin)
-          (insert "main"))
-      (yas/expand)))
-#+end_src
+
 ** C++
 *** 設定 C++ 語言 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
@@ -3930,7 +3911,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                (define-key emacs-lisp-mode-map (kbd "C-c C-b") 'backward-sexp)
                ))
 #+end_src
-
 
 ** Go
 
