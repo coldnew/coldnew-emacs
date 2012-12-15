@@ -3265,7 +3265,6 @@ normal-state。
 #+end_src
 
 * 編輯器                                                             :editor:
-
 ** 通用型 C 語言編輯設定
 
 這邊設定的是通用的
@@ -3314,6 +3313,36 @@ normal-state。
             '(lambda ()
                  (or (file-exists-p  (file-name-directory buffer-file-name))
                      (make-directory (file-name-directory buffer-file-name) t))))
+#+end_src
+
+** 行號設定
+
+預設顯示行號
+#+begin_src emacs-lisp
+  (global-linum-mode 1)
+#+end_src
+
+設定某些 Mode 不顯示行號，這邊先設定不顯示行號的 mode-list
+#+begin_src emacs-lisp
+  (setq inhibit-linum-mode-alist
+        '(
+          eshell-mode
+          shell-mode
+          term-mode
+          erc-mode
+          compilation-mode
+          woman-mode
+          w3m-mode
+          calendar-mode
+          org-mode
+          ))
+#+end_src
+
+#+begin_src emacs-lisp
+  (defadvice linum-on (around inhibit-for-modes activate)
+    "Stop turing linum-mode if it is in the inhibit-linum-mode-alist."
+    (unless (member major-mode inhibit-linum-mode-alist)
+      ad-do-it))
 #+end_src
 
 ** TODO remember
