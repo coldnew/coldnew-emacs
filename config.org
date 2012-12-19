@@ -4105,7 +4105,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 
 #+begin_src emacs-lisp
   (require 'multi-web-mode)
-  (setq mweb-default-major-mode 'html-mode)
+  (setq mweb-default-major-mode 'nxhtml-mode)
   (setq mweb-tags
         '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
           (js2-mode  "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
@@ -4164,12 +4164,20 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     )
 #+end_src
 ** HTML
+*** 使用 nxhtml 作為 HTML 編輯模式
+
+#+begin_src emacs-lisp
+  (require 'nxhtml)
+  (defalias 'html-mode 'nxhtml-mode)
+#+end_src
+
 *** 使用 zencoding-mode 讓寫 HTML 更方便
 
 #+begin_src emacs-lisp
   (require 'zencoding-mode)
   (add-hook 'html-mode-hook 'zencoding-mode)
 #+end_src
+
 
 * 狀態欄                                                           :modeline:
 ** TODO 分類
