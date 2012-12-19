@@ -2550,6 +2550,20 @@ Following buffer will not show in iBuffer
     (helm-occur))
 #+end_src
 
+** 按鍵設定
+
+#+begin_src emacs-lisp
+  (defun coldnew/helm-mini ()
+    (interactive)
+    (helm-other-buffer '(helm-c-source-buffers-list
+                         helm-c-source-git-files
+                         helm-c-source-recentf
+                         helm-c-source-buffer-not-found)
+                       "*coldnew helm mini*"))
+
+  (evil:imap (kbd "M-o") 'coldnew/helm-mini)
+#+end_src
+
 * 文檔幫助
 
 這邊放置 manpage、womanpage、info 等幫助文檔模式的設定。
@@ -3251,8 +3265,6 @@ normal-state。
 #+begin_src emacs-lisp
   (evil:nmap (kbd "C-n") 'evil-next-line)
   (evil:nmap (kbd "C-p") 'evil-previous-line)
-;;  (evil:nmap (kbd "C-f") 'evil-forward-char)
-;;  (evil:nmap (kbd "C-b") 'evil-backward-char)
 #+end_src
 
 ** Insert-state 按鍵設定
