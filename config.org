@@ -648,23 +648,16 @@ emacs 套件管理的設定。
 
 #+begin_src emacs-lisp
   (setq-default package-user-dir emacs-elpa-dir)
-#+end_src
-
-*** Depends
-
-#+begin_src emacs-lisp
   (require 'package)
 #+end_src
 
-*** 設定 elpa 所使用的套件庫
+*** 添加我需要的庫到 ELPA 裏面
 
 #+begin_src emacs-lisp
-  (setq package-archives
-        '(("melpa" . "http://melpa.milkbox.net/packages/")
-          ("ELPA" . "http://tromey.com/elpa/")
-          ("gnu" . "http://elpa.gnu.org/packages/")
-          ("marmalade" . "http://marmalade-repo.org/packages/")
-          ))
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/") t)
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 #+end_src
 
 ** 套件檢查
