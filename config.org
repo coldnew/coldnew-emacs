@@ -1564,6 +1564,181 @@ emacs-lisp-mode 的 buffer，可以這樣做
 #+begin_src emacs-lisp
   (load-theme 'coldnew-night t)
 #+end_src
+* Vim 摹擬                                                              :vim:
+
+實在不能不佩服 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
+只要一個按鍵就可以呼叫，為了提升編輯效率，套用一些 Vim 的按鍵也是再所難免。
+
+好用的 vim 快速鍵組合[fn:1]：
+
+- d/foo[RET] 從目前的游標位置刪除到字串 foo
+- dfa        從目前的游標位置刪除到字元 a，包含 a 本身
+- cta        從目前的游標位置刪除到字元 a，不包含 a 本身
+- viw        將目前游標所在的 "字" 選擇起來
+- vfa        從目前的游標位置選擇到字元 a，包含 a 本身
+- yi)        複製括號內的東西，不包含括號本身
+- di"        刪除雙引號內的文字
+
+[fn:1] [[http://dnquark.com/blog/2012/02/emacs-evil-ecumenicalism/][Emacs + Evil = ecumenicalism]]
+
+** 載入相關套件
+
+Evil 是 emacs 上最好用的 vim 摹擬程式。
+
+#+begin_src emacs-lisp
+  (require 'evil)
+#+end_src
+
+** 預設使用 Insert state
+
+為什麼要預設使用 Insert 模式？我記得曾經我放棄過一次 evil-mode，因為切換到不同模式時，
+他會跑到我不喜歡的 state，比如 Normal-state，這樣讓我感到很煩，每次到新的 mode 就要加他加入到
+evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死了。
+
+直接統一用 insert 模式比較快 :)
+
+#+begin_src emacs-lisp
+  (setq evil-default-state 'insert)
+#+end_src
+
+** 將 Emacs 按鍵綁到 Insert 模式上
+
+對我而言， Vim 的 Insert 模式是趨近於無用的，這邊將我的 Emacs 模式下的按鍵綁到
+Insert 模式上，之後再來做其他設置。
+
+#+begin_src emacs-lisp
+  (setcdr evil-insert-state-map nil)
+  (define-key evil-insert-state-map
+    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+#+end_src
+
+將 ESC 綁定成切換為 normal-state-map，因為我用自己的 emacs 按鍵綁定蓋掉了 evil-mode
+裡面的 insert-state 按鍵綁定，所以這邊要先加入這個設定，才能夠用 ESC 來切換到
+normal-state。
+
+注意到除了 ESC 按鍵本身，使用 C-[ 也具有 ESC 按鍵的效果。
+
+#+begin_src emacs-lisp
+  (define-key evil-insert-state-map [escape] 'evil-normal-state)
+#+end_src
+
+** 全域性啟用 evil-mode
+
+#+begin_src emacs-lisp
+  (evil-mode t)
+#+end_src
+
+** 讓 evil-mode 的區域選擇方式和 Vim 相同
+
+在 emacs 中，最後一個被選擇的字元是游標的前一個字元，但是在 vim 中，卻是在游標
+下的那個字元。
+
+若要使用和 vim 相同的方式，則要進行下面的設定:
+
+#+begin_src emacs-lisp
+  (setq evil-want-visual-char-semi-exclusive t)
+#+end_src
+
+** 綁定按鍵好用的巨集
+
+我很喜歡以前用 vim-mode 時的按鍵定義方式，所以我定義了以下巨集來簡化
+綁定按鍵的方法。
+
+全域性的按鍵設置
+
+- evil:nmap 綁定按鍵到 Normal 狀態下
+- evil:imap 綁定按鍵到 Insert 狀態下
+- evil:vmap 綁定按鍵到 Visual 狀態下
+- evil:wmap 綁定按鍵到窗口切換的按鍵
+
+使用方式：
+
+: (evil:nmap (kbd "g") 'linum-ace-jump)
+
+這樣在 Normal-state 時，按下 g 就可以呼叫 linum-ace-jump 這個命令。
+
+#+begin_src emacs-lisp
+  (defmacro evil:nmap (key cmd)
+    "Binding keymap to evil-normal-state."
+    `(define-key evil-normal-state-map ,key ,cmd))
+  (defmacro evil:imap (key cmd)
+    "Binding keymap to evil-insert-state."
+    `(define-key evil-insert-state-map ,key ,cmd))
+  (defmacro evil:vmap (key cmd)
+    "Binding keymap to evil-visual-state."
+    `(define-key evil-visual-state-map ,key ,cmd))
+  (defmacro evil:wmap (key cmd)
+    "Binding keymap to evil-visual-state."
+    `(define-key evil-window-map ,key ,cmd))
+#+end_src
+
+區域性的按鍵設置
+
+- evil:local-nmap 綁定按鍵到 Normal 狀態下，只作用於該緩衝區
+- evil:local-imap 綁定按鍵到 Insert 狀態下，只作用於該緩衝區
+- evil:local-vmap 綁定按鍵到 Visual 狀態下，只作用於該緩衝區
+
+使用方式：
+
+: (evil:local-nmap (kbd "g") 'linum-ace-jump)
+
+這樣在目前的緩衝區時時， 切到 Normal-state，按下 g 就可以呼叫 linum-ace-jump 這個命令。
+
+注意到這個是屬於 buffer-local 的設定方式，只會影響到該緩衝區，而不是影響整個 mode。
+
+#+begin_src emacs-lisp
+  (defmacro evil:local-nmap (key cmd)
+    "Binding keymap to evil-normal-state."
+    `(define-key evil-visual-state-local-map ,key ,cmd))
+  (defmacro evil:local-imap (key cmd)
+    "Binding keymap to evil-insert-state."
+    `(define-key evil-visual-state-local-map ,key ,cmd))
+  (defmacro evil:local-vmap (key cmd)
+    "Binding keymap to evil-visual-state."
+    `(define-key evil-visual-state-local-map ,key ,cmd))
+#+end_src
+
+根據模式進行按鍵設置
+
+- evil:mode-nmap 綁定按鍵到 Normal 狀態下，只作用於特定模式
+- evil:mode-imap 綁定按鍵到 Insert 狀態下，只作用於特定模式
+- evil:mode-vmap 綁定按鍵到 Visual 狀態下，只作用於特定模式
+
+使用方式：
+
+: (evil:mode-nmap emacs-lisp-mode-map (kbd "g") 'linum-ace-jump)
+
+這樣在 emacs-lisp-mode 時， 切到 Normal-state，按下 g 就可以呼叫 linum-ace-jump 這個命令。
+
+#+begin_src emacs-lisp
+  (defmacro evil:mode-nmap (map key cmd)
+    "Binding keymap to evil-normal-state."
+    `(evil-define-key 'normal ,map ,key ,cmd))
+  (defmacro evil:mode-imap (map key cmd)
+    "Binding keymap to evil-insert-state."
+    `(evil-define-key 'insert ,map ,key ,cmd))
+  (defmacro evil:mode-vmap (map key cmd)
+    "Binding keymap to evil-visual-state."
+    `(evil-define-key 'visual ,map ,key ,cmd))
+#+end_src
+
+** Normal-state 按鍵設定
+
+將一些非常慣用的 emacs 按鍵綁到 Normal-state 上面。
+
+#+begin_src emacs-lisp
+  (evil:nmap (kbd "C-n") 'evil-next-line)
+  (evil:nmap (kbd "C-p") 'evil-previous-line)
+#+end_src
+
+** Insert-state 按鍵設定
+
+這邊設定我的 Insert-state 的按鍵，部份會和我原本的 emacs 按鍵設置不太一樣。
+
+#+begin_src emacs-lisp
+  (evil:imap (kbd "C-o") 'evil-execute-in-normal-state)
+  (evil:imap (kbd "C-l") 'backward-delete-char)
+#+end_src
 * 自動補全                                                         :complete:
 ** 載入相關套件
 
@@ -3100,182 +3275,6 @@ some packages conflict with org-mode
                   "\\end{frame}")))
 #+end_src
 
-* Vim 摹擬                                                              :vim:
-
-實在不能不佩服 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
-只要一個按鍵就可以呼叫，為了提升編輯效率，套用一些 Vim 的按鍵也是再所難免。
-
-好用的 vim 快速鍵組合[fn:1]：
-
-- d/foo[RET] 從目前的游標位置刪除到字串 foo
-- dfa        從目前的游標位置刪除到字元 a，包含 a 本身
-- cta        從目前的游標位置刪除到字元 a，不包含 a 本身
-- viw        將目前游標所在的 "字" 選擇起來
-- vfa        從目前的游標位置選擇到字元 a，包含 a 本身
-- yi)        複製括號內的東西，不包含括號本身
-- di"        刪除雙引號內的文字
-
-[fn:1] [[http://dnquark.com/blog/2012/02/emacs-evil-ecumenicalism/][Emacs + Evil = ecumenicalism]]
-
-** 載入相關套件
-
-Evil 是 emacs 上最好用的 vim 摹擬程式。
-
-#+begin_src emacs-lisp
-  (require 'evil)
-#+end_src
-
-** 預設使用 Insert state
-
-為什麼要預設使用 Insert 模式？我記得曾經我放棄過一次 evil-mode，因為切換到不同模式時，
-他會跑到我不喜歡的 state，比如 Normal-state，這樣讓我感到很煩，每次到新的 mode 就要加他加入到
-evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死了。
-
-直接統一用 insert 模式比較快 :)
-
-#+begin_src emacs-lisp
-  (setq evil-default-state 'insert)
-#+end_src
-
-** 將 Emacs 按鍵綁到 Insert 模式上
-
-對我而言， Vim 的 Insert 模式是趨近於無用的，這邊將我的 Emacs 模式下的按鍵綁到
-Insert 模式上，之後再來做其他設置。
-
-#+begin_src emacs-lisp
-  (setcdr evil-insert-state-map nil)
-  (define-key evil-insert-state-map
-    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
-#+end_src
-
-將 ESC 綁定成切換為 normal-state-map，因為我用自己的 emacs 按鍵綁定蓋掉了 evil-mode
-裡面的 insert-state 按鍵綁定，所以這邊要先加入這個設定，才能夠用 ESC 來切換到
-normal-state。
-
-注意到除了 ESC 按鍵本身，使用 C-[ 也具有 ESC 按鍵的效果。
-
-#+begin_src emacs-lisp
-  (define-key evil-insert-state-map [escape] 'evil-normal-state)
-#+end_src
-
-** 全域性啟用 evil-mode
-
-#+begin_src emacs-lisp
-  (evil-mode t)
-#+end_src
-
-** 讓 evil-mode 的區域選擇方式和 Vim 相同
-
-在 emacs 中，最後一個被選擇的字元是游標的前一個字元，但是在 vim 中，卻是在游標
-下的那個字元。
-
-若要使用和 vim 相同的方式，則要進行下面的設定:
-
-#+begin_src emacs-lisp
-  (setq evil-want-visual-char-semi-exclusive t)
-#+end_src
-
-** 綁定按鍵好用的巨集
-
-我很喜歡以前用 vim-mode 時的按鍵定義方式，所以我定義了以下巨集來簡化
-綁定按鍵的方法。
-
-全域性的按鍵設置
-
-- evil:nmap 綁定按鍵到 Normal 狀態下
-- evil:imap 綁定按鍵到 Insert 狀態下
-- evil:vmap 綁定按鍵到 Visual 狀態下
-- evil:wmap 綁定按鍵到窗口切換的按鍵
-
-使用方式：
-
-: (evil:nmap (kbd "g") 'linum-ace-jump)
-
-這樣在 Normal-state 時，按下 g 就可以呼叫 linum-ace-jump 這個命令。
-
-#+begin_src emacs-lisp
-  (defmacro evil:nmap (key cmd)
-    "Binding keymap to evil-normal-state."
-    `(define-key evil-normal-state-map ,key ,cmd))
-  (defmacro evil:imap (key cmd)
-    "Binding keymap to evil-insert-state."
-    `(define-key evil-insert-state-map ,key ,cmd))
-  (defmacro evil:vmap (key cmd)
-    "Binding keymap to evil-visual-state."
-    `(define-key evil-visual-state-map ,key ,cmd))
-  (defmacro evil:wmap (key cmd)
-    "Binding keymap to evil-visual-state."
-    `(define-key evil-window-map ,key ,cmd))
-#+end_src
-
-區域性的按鍵設置
-
-- evil:local-nmap 綁定按鍵到 Normal 狀態下，只作用於該緩衝區
-- evil:local-imap 綁定按鍵到 Insert 狀態下，只作用於該緩衝區
-- evil:local-vmap 綁定按鍵到 Visual 狀態下，只作用於該緩衝區
-
-使用方式：
-
-: (evil:local-nmap (kbd "g") 'linum-ace-jump)
-
-這樣在目前的緩衝區時時， 切到 Normal-state，按下 g 就可以呼叫 linum-ace-jump 這個命令。
-
-注意到這個是屬於 buffer-local 的設定方式，只會影響到該緩衝區，而不是影響整個 mode。
-
-#+begin_src emacs-lisp
-  (defmacro evil:local-nmap (key cmd)
-    "Binding keymap to evil-normal-state."
-    `(define-key evil-visual-state-local-map ,key ,cmd))
-  (defmacro evil:local-imap (key cmd)
-    "Binding keymap to evil-insert-state."
-    `(define-key evil-visual-state-local-map ,key ,cmd))
-  (defmacro evil:local-vmap (key cmd)
-    "Binding keymap to evil-visual-state."
-    `(define-key evil-visual-state-local-map ,key ,cmd))
-#+end_src
-
-根據模式進行按鍵設置
-
-- evil:mode-nmap 綁定按鍵到 Normal 狀態下，只作用於特定模式
-- evil:mode-imap 綁定按鍵到 Insert 狀態下，只作用於特定模式
-- evil:mode-vmap 綁定按鍵到 Visual 狀態下，只作用於特定模式
-
-使用方式：
-
-: (evil:mode-nmap emacs-lisp-mode-map (kbd "g") 'linum-ace-jump)
-
-這樣在 emacs-lisp-mode 時， 切到 Normal-state，按下 g 就可以呼叫 linum-ace-jump 這個命令。
-
-#+begin_src emacs-lisp
-  (defmacro evil:mode-nmap (map key cmd)
-    "Binding keymap to evil-normal-state."
-    `(evil-define-key 'normal ,map ,key ,cmd))
-  (defmacro evil:mode-imap (map key cmd)
-    "Binding keymap to evil-insert-state."
-    `(evil-define-key 'insert ,map ,key ,cmd))
-  (defmacro evil:mode-vmap (map key cmd)
-    "Binding keymap to evil-visual-state."
-    `(evil-define-key 'visual ,map ,key ,cmd))
-#+end_src
-
-** Normal-state 按鍵設定
-
-將一些非常慣用的 emacs 按鍵綁到 Normal-state 上面。
-
-#+begin_src emacs-lisp
-  (evil:nmap (kbd "C-n") 'evil-next-line)
-  (evil:nmap (kbd "C-p") 'evil-previous-line)
-#+end_src
-
-** Insert-state 按鍵設定
-
-這邊設定我的 Insert-state 的按鍵，部份會和我原本的 emacs 按鍵設置不太一樣。
-
-#+begin_src emacs-lisp
-  (evil:imap (kbd "C-o") 'evil-execute-in-normal-state)
-  (evil:imap (kbd "C-l") 'backward-delete-char)
-#+end_src
-
 * 編輯器                                                             :editor:
 ** 通用型 C 語言編輯設定
 
@@ -4152,13 +4151,13 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     )
 #+end_src
 ** HTML
-
 *** 使用 zencoding-mode 讓寫 HTML 更方便
 
 #+begin_src emacs-lisp
   (require 'zencoding-mode)
 #+end_src
 
+*** 整合 Javascript/HT
 * 狀態欄                                                           :modeline:
 ** TODO 分類
 #+begin_src emacs-lisp :tangle no
