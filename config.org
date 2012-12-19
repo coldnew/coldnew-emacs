@@ -4098,7 +4098,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 
 #+begin_src emacs-lisp
   (require 'multi-web-mode)
-  (setq mweb-default-major-mode 'nxhtml-mode)
+  (setq mweb-default-major-mode 'html-mode)
   (setq mweb-tags
         '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
           (js2-mode  "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
@@ -4171,6 +4171,12 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (add-hook 'html-mode-hook 'zencoding-mode)
 #+end_src
 
+*** 使用 impatient-mode 即時顯示網頁
+
+#+begin_src emacs-lisp
+  (require 'impatient-mode)
+  (require 'simple-httpd)
+#+end_src
 
 * 狀態欄                                                           :modeline:
 ** TODO 分類
