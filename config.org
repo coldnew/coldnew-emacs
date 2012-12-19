@@ -4101,6 +4101,19 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (comint-send-string (inferior-moz-process)
                         "BrowserReload();"))
 #+end_src
+*** 整合 Javascript/HTML/CSS 色彩
+
+#+begin_src emacs-lisp
+  (require 'multi-web-mode)
+  (setq mweb-default-major-mode 'html-mode)
+  (setq mweb-tags
+        '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
+          (js2-mode  "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
+          (css-mode "<style +type=\"text/css\"[^>]*>" "</style>")))
+  (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
+  (multi-web-global-mode 1)
+#+end_src
+
 ** CSS
 *** 設定 CSS 的副檔名與對應的模式
 #+begin_src emacs-lisp
@@ -4155,9 +4168,9 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 
 #+begin_src emacs-lisp
   (require 'zencoding-mode)
+  (add-hook 'html-mode-hook 'zencoding-mode)
 #+end_src
 
-*** 整合 Javascript/HT
 * 狀態欄                                                           :modeline:
 ** TODO 分類
 #+begin_src emacs-lisp :tangle no
