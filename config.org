@@ -4139,6 +4139,14 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+begin_src emacs-lisp
     )
 #+end_src
+** HTML
+
+*** 使用 zencoding-mode 讓寫 HTML 更方便
+
+#+begin_src emacs-lisp
+  (require 'zencoding-mode)
+#+end_src
+
 * 狀態欄                                                           :modeline:
 ** TODO 分類
 #+begin_src emacs-lisp :tangle no
