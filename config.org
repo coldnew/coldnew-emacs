@@ -7,7 +7,9 @@
 #+INFOJS_OPT: view:info toc:t ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 
 * 基礎設置                                                             :base:
+
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
+
 ** 預先載入 cl 套件。
 
 #+begin_src emacs-lisp
@@ -247,11 +249,6 @@
          (change-mouse-to-left)))
 #+end_src
 
-*** TODO User Testing
-#+begin_src emacs-lisp
-(defvar root-p (zerop (user-real-uid))
-  "Return nil if user is not root user.")
-#+end_src
 *** TODO Face
 #+begin_src emacs-lisp
   (defface mode-line-read-only-face
