@@ -14,289 +14,180 @@
   (eval-when-compile (require 'cl))
 #+end_src
 
-** 使用者介面設定
-
-關閉一些 emacs 預設的 UI 設定。
-
-*** 不啟用 startup message
-
-啟動 emacs 時會出現的 GNU/Emacs 畫面，這裡將他關閉
-#+begin_src emacs-lisp
-  (setq inhibit-startup-message t)
-#+end_src
-
-*** 清空 **scratch** buffer 的文字。
-
-預設 **scratch** 裡面會有幾行文字，直接將他清空。
-#+begin_src emacs-lisp
-  (setq initial-scratch-message "")
-#+end_src
-
-*** 關閉蜂鳴器
-
-使用畫面閃爍代替電腦的蜂鳴器叫聲。
-#+begin_src emacs-lisp
-  (setq visible-bell t)
-#+end_src
-
-*** 關閉工具列
-
-不顯示工具列。
-#+begin_src emacs-lisp
-  (if (featurep 'tool-bar) (tool-bar-mode -1))
-#+end_src
-
-*** 關閉滾動條
-
-關閉左側或右側的滾動條 (scrool-bar)。
-#+begin_src emacs-lisp
-  (if (featurep 'scroll-bar) (scroll-bar-mode -1))
-#+end_src
-
-*** 關閉游標閃爍
-
-不允許游標閃爍。
-#+begin_src emacs-lisp
-  (blink-cursor-mode -1)
-#+end_src
-
-*** 關閉選單列
-
-不顯示選單列
-#+begin_src emacs-lisp
-  (if (featurep 'menu-bar) (menu-bar-mode -1))
-#+end_src
-
-*** TODO Time Stamp
-#+begin_src emacs-lisp
-  (setq time-stamp-active      t ) ; do enable time-stamps
-  (setq time-stamp-line-limit 10 ) ; check first 10 buffer lines for Time-stamp:
-  (setq time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S (%u)") ; date format
-#+end_src
-
-*** 回答問題時，使用 *y* 和 *n* 代替 *yes/no* 。
-
-預設要使用 *yse* 或是 *no* 來回答問題，這裡將他改成用 *y* 或 *n* 。
-#+begin_src emacs-lisp
-  (fset 'yes-or-no-p 'y-or-n-p)
-#+end_src
-
-*** TODO Misc
-
-#+begin_src emacs-lisp
-  ;; TODO: add comment
-  (setq stack-trace-on-error t)
-  (setq imenu-auto-scan t)
-  ;;(setq redisplay-dont-pause t)
-
-  ;; xrelated srtting
-  (setq x-select-enable-clipboard t)
-  (setq select-active-regions t)
-  (setq x-gtk-use-system-tooltips nil)    ; disable gtk-tooltip
-
-  (setq max-lisp-eval-depth '40000)
-  (setq max-specpdl-size 1000)  ; default is 1000, reduce the backtrace level
-  (setq debug-on-error t)    ; now you should get a backtrace
-#+end_src
-
-#+begin_src emacs-lisp
-  ;; nice scrolling
-  (setq scroll-margin                   0 )
-  (setq scroll-conservatively      100000 )
-  (setq scroll-preserve-screen-position 1 )
-  (setq scroll-up-aggressively       0.01 )
-  (setq scroll-down-aggressively     0.01 )
-#+end_src
-
-** 變數設定                                                        :variable:
-這邊加入了我自定義的變數以及其初始值。
-*** 資料夾相關變數
+** 資料夾相關變數設定                                             :variable:
 
 這邊設定了各種類型資料夾的路徑。
 
-**** emacs-dir
+*** emacs 設定檔預設所在的資料夾
 
-emacs 設定檔預設所在的資料夾
 #+begin_src emacs-lisp
   (defconst emacs-dir "~/.emacs.d/"
     "The top-level emacs-configure directory.")
 #+end_src
 
-**** emacs-themes-dir
+*** 佈景主題的資料夾設定
 
-佈景主題的資料夾設定。
 #+begin_src emacs-lisp
   (defconst emacs-themes-dir (concat emacs-dir "themes/")
     "directory to place emacs theme.")
 #+end_src
 
-**** emacs-lisp-dir
+*** el-get 安裝套件的路徑
 
-el-get 安裝套件的路徑。
 #+begin_src emacs-lisp
   (defconst emacs-lisp-dir   (concat emacs-dir "lisp/")
     "directory to place lisp packages from internet.")
 #+end_src
 
-**** emacs-recipes-dir
+*** el-get 的 recipes 路徑
 
-el-get 的 recipes 路徑。
 #+begin_src emacs-lisp
   (defconst emacs-recipes-dir (concat emacs-dir "recipes/")
     "directory to place local el-get recepies.")
 #+end_src
 
-**** emacs-elpa-dir
+*** elpa 安裝套件的路徑
 
-elpa 安裝套件的路徑。
 #+begin_src emacs-lisp
   (defconst emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
     "directory to place ELPA lisp packages from internet.")
 #+end_src
 
-**** emacs-snippets-dir
+*** yasnippet 使用的 snippet 路徑
 
-yasnippet 使用的 snippet路徑
 #+begin_src emacs-lisp
   (defconst emacs-snippets-dir (concat emacs-dir "snippets/")
     "directory to place yasnippet files.")
 #+end_src
 
-**** emacs-bin-dir
+*** 放置 binary 檔案的資料夾
 
-放置 binary 檔案的資料夾。
 #+begin_src emacs-lisp
   (defconst emacs-bin-dir    (concat emacs-dir "bin/")
     "directory to place binary staff.")
 #+end_src
 
-**** emacs-cache-dir
+*** 放置 cache 等暫存檔案的資料夾
 
-放置 cache 等暫存檔案的資料夾。
 #+begin_src emacs-lisp
   (defconst emacs-cache-dir  (concat emacs-dir "cache/")
     "cache file directory.")
 #+end_src
 
-**** emacs-backup-dir
+*** 備份文件的資料夾
 
-備份文件的資料夾。
 #+begin_src emacs-lisp
   (defconst emacs-backup-dir (concat emacs-dir "backup/")
     "directory to backup files.")
 #+end_src
 
-**** emacs-log-dir
+*** 放置紀錄的資料夾
 
-放置紀錄的資料夾。
 #+begin_src emacs-lisp
   (defconst emacs-log-dir (concat emacs-dir "log/")
     "log file directory.")
 #+end_src
 
-**** emacs-etc-dir
+*** 放置 jar 等其他文件的位置
 
-放置 jar 等其他文件的位置
 #+begin_src emacs-lisp
   (defconst emacs-etc-dir (concat emacs-dir "etc/")
     "etc file directory.")
 #+end_src
 
-*** 檔案相關變數
+** 檔案相關變數設定                                               :variable:
 
 這邊設定了各種檔案的路徑。
 
-**** emacs-config-file
+*** emacs 個人配置的檔案，也就是這個檔案
 
-emacs 個人配置的檔案，也就是這個檔案。
 #+begin_src emacs-lisp
   (defconst emacs-config-file (concat emacs-dir "config.org")
     "File to place emacs configs.")
 #+end_src
 
-**** emacs-custom-file
+*** 客制化設定檔的位置
 
-客制化設定檔的位置
 #+begin_src emacs-lisp
   (defconst emacs-custom-file (concat emacs-dir "custom.el")
     "store customize UI config.")
 #+end_src
 
-**** emacs-authinfo-file
+*** emacs-authinfo-file
 
 #+begin_src emacs-lisp
   (defconst emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")
     "file that save secret")
 #+end_src
 
-**** emacs-bookmark-file
+*** emacs-bookmark-file
 
 #+begin_src emacs-lisp
   (defconst emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
     "File to save bookmarks")
 #+end_src
 
-*** 作業系統測試
+** 作業系統測試
 
 放置用於測試目前 emacs 執行在何種作業系統上的變數。
 
-**** MacOsx
+*** MacOsx
 #+begin_src emacs-lisp
   (defvar mac-p     (eq system-type 'darwin)
     "Return nil if OS is not Mac.")
 #+end_src
 
-**** Linux
-***** all
+*** Linux
+**** all
 #+begin_src emacs-lisp
   (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
     "Return nil if OS is not Linux.")
 #+end_src
 
-***** 32-bit
+**** 32-bit
 #+begin_src emacs-lisp
   (defvar linux-32bit-p (and (string-match
                             (rx (or bos "x86-" bos "i686-")) system-configuration) linux-p)
   "Return nil if OS is not 32-bit linux.")
 #+end_src
 
-***** 64-bit
+**** 64-bit
 #+begin_src emacs-lisp
   (defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
     "Return nil if OS is not 64-bit linux.")
 #+end_src
 
-**** Cygwin
+*** Cygwin
 #+begin_src emacs-lisp
   (defvar cygwin-p  (eq system-type 'cygwin)
     "Return nil if OS is not CygWin.")
 #+end_src
 
-**** Window$
+*** Window$
 #+begin_src emacs-lisp
   (defvar windows-p (eq system-type 'windows-nt)
     "Return nil if OS is not Windows.")
 #+end_src
 
-*** 螢幕解析度測試                                               :resolution:
+** 螢幕解析度測試                                               :resolution:
 
 放置測試螢幕解析度用的變數
 
-**** 1280x800
+*** 1280x800
 #+begin_src emacs-lisp
   (defvar display-1280x800-p   (and (= (display-pixel-width) 1280)
                                     (= (display-pixel-height) 800))
     "Return nil if current display's resolution is not 1280x800")
 #+end_src
 
-**** 1280x1024
+*** 1280x1024
 #+begin_src emacs-lisp
   (defvar display-1280x1024-p  (and (= (display-pixel-width) 1280)
                                     (= (display-pixel-height) 1024))
     "Return nil if current display's resolution is not 1280x1024")
 #+end_src
 
-**** 1920x1080
+*** 1920x1080
 #+begin_src emacs-lisp
   (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920)
                                     (= (display-pixel-height) 1080))
@@ -407,6 +298,100 @@ emacs 個人配置的檔案，也就是這個檔案。
     '((t (:inherit font-lock-string-face)))
     "face for vim-string in emacs-map on mode-line."
     :group 'mode-line)
+#+end_src
+
+** 使用者介面設定
+
+關閉一些 emacs 預設的 UI 設定。
+
+*** 不啟用 startup message
+
+啟動 emacs 時會出現的 GNU/Emacs 畫面，這裡將他關閉
+#+begin_src emacs-lisp
+  (setq inhibit-startup-message t)
+#+end_src
+
+*** 清空 **scratch** buffer 的文字。
+
+預設 **scratch** 裡面會有幾行文字，直接將他清空。
+#+begin_src emacs-lisp
+  (setq initial-scratch-message "")
+#+end_src
+
+*** 關閉蜂鳴器
+
+使用畫面閃爍代替電腦的蜂鳴器叫聲。
+#+begin_src emacs-lisp
+  (setq visible-bell t)
+#+end_src
+
+*** 關閉工具列
+
+不顯示工具列。
+#+begin_src emacs-lisp
+  (if (featurep 'tool-bar) (tool-bar-mode -1))
+#+end_src
+
+*** 關閉滾動條
+
+關閉左側或右側的滾動條 (scrool-bar)。
+#+begin_src emacs-lisp
+  (if (featurep 'scroll-bar) (scroll-bar-mode -1))
+#+end_src
+
+*** 關閉游標閃爍
+
+不允許游標閃爍。
+#+begin_src emacs-lisp
+  (blink-cursor-mode -1)
+#+end_src
+
+*** 關閉選單列
+
+不顯示選單列
+#+begin_src emacs-lisp
+  (if (featurep 'menu-bar) (menu-bar-mode -1))
+#+end_src
+
+*** TODO Time Stamp
+#+begin_src emacs-lisp
+  (setq time-stamp-active      t ) ; do enable time-stamps
+  (setq time-stamp-line-limit 10 ) ; check first 10 buffer lines for Time-stamp:
+  (setq time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S (%u)") ; date format
+#+end_src
+
+*** 回答問題時，使用 *y* 和 *n* 代替 *yes/no* 。
+
+預設要使用 *yse* 或是 *no* 來回答問題，這裡將他改成用 *y* 或 *n* 。
+#+begin_src emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+#+end_src
+
+*** TODO Misc
+
+#+begin_src emacs-lisp
+  ;; TODO: add comment
+  (setq stack-trace-on-error t)
+  (setq imenu-auto-scan t)
+  ;;(setq redisplay-dont-pause t)
+
+  ;; xrelated srtting
+  (setq x-select-enable-clipboard t)
+  (setq select-active-regions t)
+  (setq x-gtk-use-system-tooltips nil)    ; disable gtk-tooltip
+
+  (setq max-lisp-eval-depth '40000)
+  (setq max-specpdl-size 1000)  ; default is 1000, reduce the backtrace level
+  (setq debug-on-error t)    ; now you should get a backtrace
+#+end_src
+
+#+begin_src emacs-lisp
+  ;; nice scrolling
+  (setq scroll-margin                   0 )
+  (setq scroll-conservatively      100000 )
+  (setq scroll-preserve-screen-position 1 )
+  (setq scroll-up-aggressively       0.01 )
+  (setq scroll-down-aggressively     0.01 )
 #+end_src
 
 ** 設定 custom-file 到其他檔案
@@ -4101,7 +4086,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (setq mweb-default-major-mode 'html-mode)
   (setq mweb-tags
         '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
-          (js2-mode  "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
+          (js-mode  "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
           (css-mode "<style +type=\"text/css\"[^>]*>" "</style>")))
   (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
   (multi-web-global-mode 1)
@@ -4161,7 +4146,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 
 #+begin_src emacs-lisp
   (require 'nxhtml)
-  (defalias 'html-mode 'nxhtml-mode)
+;;  (defalias 'html-mode 'nxhtml-mode)
 #+end_src
 
 *** 使用 zencoding-mode 讓寫 HTML 更方便
@@ -4177,6 +4162,10 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (require 'impatient-mode)
   (require 'simple-httpd)
   (require 'htmlize)
+
+  (add-hook 'css-mode-hook 'impatient-mode)
+  (add-hook 'html-mode-hook 'impatient-mode)
+  (add-hook 'js-mode-hook 'impatient-mode)
 #+end_src
 
 * 狀態欄                                                           :modeline:
@@ -4266,6 +4255,10 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 ** 樣式設定
 
 自己定義  mode-line 的樣式。
+
+#+begin_src emacs-lisp
+;;  (require 'powerline)
+#+end_src
 
 #+begin_src emacs-lisp
   (setq-default mode-line-format
@@ -6351,7 +6344,7 @@ Function key 設置常用的命令。
 ** 使用 o-blog 作為 blogging 系統
 *** 載入相關套件
 #+begin_src emacs-lisp
-(require 'o-blog)
+;;(require 'o-blog)
 #+end_src
 
 *** 設定網頁連結名稱
