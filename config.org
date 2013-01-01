@@ -2459,6 +2459,14 @@ Following buffer will not show in iBuffer
 
 #+end_src
 
+** 游標改成 bar 的形狀                                             :cursor:
+
+我討厭在 minibuffer 時還是使用方塊狀的游標，這裡將他改變成 Bar 的形狀。
+
+#+begin_src emacs-lisp
+  (add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 'bar)))
+#+end_src
+
 ** smex                                                               :smex:
 *** Depends
 #+begin_src emacs-lisp
@@ -5875,17 +5883,6 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
   (setq emms-track-description-function
         'xwl-emms-track-description-function)
 #+end_src
-* 游標                                                               :cursor:
-
-我討厭在 minibuffer 時還是使用方塊狀的游標，這裡將他改變成 Bar 的形狀。
-
-#+begin_src emacs-lisp
-  (add-hook 'minibuffer-setup-hook
-            '(lambda ()
-               (setq cursor-type 'bar)))
-;;               (setq cursor-color "white")))
-#+end_src
-
 * Session
 ** filecache
 
