@@ -133,39 +133,38 @@
 
 放置用於測試目前 emacs 執行在何種作業系統上的變數。
 
-*** MacOsx
+*** MacOS X
 #+begin_src emacs-lisp
   (defvar mac-p     (eq system-type 'darwin)
     "Return nil if OS is not Mac.")
 #+end_src
 
 *** Linux
-**** all
+
 #+begin_src emacs-lisp
+  ;; linux device
   (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
     "Return nil if OS is not Linux.")
-#+end_src
 
-**** 32-bit
-#+begin_src emacs-lisp
+  ;; linux 32-bit
   (defvar linux-32bit-p (and (string-match
-                            (rx (or bos "x86-" bos "i686-")) system-configuration) linux-p)
-  "Return nil if OS is not 32-bit linux.")
-#+end_src
+                              (rx (or bos "x86-" bos "i686-")) system-configuration) linux-p)
+    "Return nil if OS is not 32-bit linux.")
 
-**** 64-bit
-#+begin_src emacs-lisp
+  ;; linux 64-bit
   (defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
     "Return nil if OS is not 64-bit linux.")
 #+end_src
 
 *** Cygwin
+
 #+begin_src emacs-lisp
   (defvar cygwin-p  (eq system-type 'cygwin)
     "Return nil if OS is not CygWin.")
 #+end_src
 
 *** Window$
+
 #+begin_src emacs-lisp
   (defvar windows-p (eq system-type 'windows-nt)
     "Return nil if OS is not Windows.")
