@@ -2269,19 +2269,6 @@ Following buffer will not show in iBuffer
   (add-hook 'slime-repl-mode-hook 'programming-mode)
   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 #+end_src
-** ielm-mode
-#+begin_src emacs-lisp
-  (defun ielm-auto-complete ()
-    "Enables `auto-complete' support in \\[ielm]."
-    (setq ac-sources '(ac-source-functions
-                       ac-source-variables
-                       ac-source-features
-                       ac-source-symbols
-                       ac-source-words-in-same-mode-buffers))
-    (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
-    (auto-complete-mode 1))
-  (add-hook 'ielm-mode-hook 'ielm-auto-complete)
-#+end_src
 ** compilation
 #+begin_src emacs-lisp
   ;; FIXME: move to other place
@@ -2377,9 +2364,13 @@ Following buffer will not show in iBuffer
 
 * 文件加密                                                          :encrypt:
 
+** 載入相依套件
+
 #+begin_src emacs-lisp
   (require 'epa-file)
 #+end_src
+
+** 其他設置
 
 #+begin_src emacs-lisp
   ;; use local gpg program instaed of system one
@@ -5037,7 +5028,6 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
 ** 將中文翻譯為英文
 
 #+begin_src emacs-lisp
-
   (defun google-translate-zh-en ()
     "Translate Tranditional Chinese to English by google-translate."
     (interactive)
@@ -5046,65 +5036,6 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
       (google-translate-query-translate)))
 #+end_src
 
-* Tramp                                                               :tramp:
-#+begin_src emacs-lisp
-  (setq tramp-default-method "ssh")
-  (add-to-list 'tramp-default-method-alist
-               '("\\`localhost\\'" "\\`root\\'" "su"))
-#+end_src
-** Remote sudo access with tramp
-#+begin_src emacs-lisp
-  (add-to-list 'tramp-default-proxies-alist
-               '(nil "\\`root\\'" "/ssh:%h:"))
-  (add-to-list 'tramp-default-proxies-alist
-               '((regexp-quote (system-name)) nil nil))
-#+end_src
-* 警示系統
-** 載入相關套件
-
-alert 是一個可以直接顯示資訊在 minibuffer 上面的套件，最簡單的使用
-方式如下：
-
-#+begin_src emacs-lisp :tangle no
-  (alert "this is alert")
-#+end_src
-
-#+begin_src emacs-lisp
-  (require 'alert)
-#+end_src
-
-sauron 是一個可以用來追蹤 emacs 裡面發生什麼事情的 minor-mode。
-
-#+begin_src emacs-lisp
-  (require 'sauron)
-#+end_src
-
-** 讓 sauron 不使用另外一個 frame 來顯示
-
-#+begin_src emacs-lisp
-  (setq sauron-separate-frame nil)
-#+end_src
-
-** 讓 sauron 黏在 frame 上面
-
-#+begin_src emacs-lisp
- (setq sauron-sticky-frame t)
-#+end_src
-
-** 讓 sauron 顯示 mode-line
-
-#+begin_src emacs-lisp
-  (setq sauron-hide-mode-line nil)
-#+end_src
-
-** 整合 sauron 到 alert 之中
-
-#+begin_src emacs-lisp
-  (eval-after-load "alert"
-    '(progn
-       (when (require 'sauron nil 'noerror)
-       (add-hook 'sauron-event-added-functions 'sauron-alert-el-adapter))))
-#+end_src
 * 聊天軟體                                                             :chat:
 ** IRC
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境的設置。
@@ -5345,42 +5276,6 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
     "/away message handler.")
 #+end_src
 
-** Jabber
-
-jabber 帳戶設定寫在 emacs-authinfo-file 裏面。
-
-*** 載入相關套件
-#+begin_src emacs-lisp
-  (require 'jabber)
-#+end_src
-
-*** 在系統上顯示 jabber 的訊息
-
-#+begin_src emacs-lisp
-    (require 'notifications)
-  ;;  (notifications-notify :title "title")
-
-    (defun jabber-notify (from buf text proposed-alert)
-      (when (or jabber-message-alert-same-buffer
-                (not (memq (selected-window) (get-buffer-window-list buf))))
-        (if (jabber-muc-sender-p from)
-            (notifications-notify :title (jabber-jid-displayname (jabber-jid-user from))
-                                  :body  text))
-      (notifications-notify :title (jabber-jid-displayname from)
-                            :body text)))
-
-  (add-hook 'jabber-alert-message-hooks 'jabber-notify)
-
-  ;; Message alert hooks
-  (define-jabber-alert echo "Show a message in the echo area"
-    (lambda (msg)
-      (unless (minibuffer-prompt)
-        (message "%s" msg))))
-#+end_src
-** Skype
-#+begin_src emacs-lisp
-  (require 'skype)
-#+end_src
 * 電子郵件
 ** offlineimap
 *** 載入套件
