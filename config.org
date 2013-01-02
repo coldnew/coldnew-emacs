@@ -5038,28 +5038,29 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
 
 * 聊天軟體                                                             :chat:
 ** IRC
-emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境的設置。
-*** ERC
-**** 載入相依套件
+
+emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
+
+*** 載入相依套件
 #+begin_src emacs-lisp
   (require 'erc)
   (require 'erc-notify)
   (require 'erc-spelling)
   (require 'erc-autoaway)
 #+end_src
-**** 設定 prompt
+*** 設定 prompt
 #+begin_src emacs-lisp
   (setq erc-prompt ">>")
 #+end_src
-**** 編碼設定為 utf-8
+*** 編碼設定為 utf-8
 #+begin_src emacs-lisp
   (setq erc-server-coding-system '(utf-8 . utf-8))
 #+end_src
-**** 當 ERC 啟動時，自動連入 IRC 伺服器
+*** 當 ERC 啟動時，自動連入 IRC 伺服器
 #+begin_src emacs-lisp
   (erc-autojoin-mode t)
 #+end_src
-**** 自動連線的伺服器與聊天室
+*** 自動連線的伺服器與聊天室
 #+begin_src emacs-lisp
   (setq erc-autojoin-channels-alist
         '(;; english channel
@@ -5069,57 +5070,57 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
           (".*\\.oftc.net" "#dot")
           ))
 #+end_src
-**** 關閉部份訊息顯示
+*** 關閉部份訊息顯示
 #+begin_src emacs-lisp
   (setq erc-hide-list '("JOIN" "PART" "QUIT"))
 #+end_src
-**** 加入時間戳
+*** 加入時間戳
 #+begin_src emacs-lisp
   (erc-timestamp-mode 1)
 #+end_src
-**** 紀錄聊天訊息
-***** 載入相依套件
+*** 紀錄聊天訊息
+**** 載入相依套件
 #+begin_src emacs-lisp
   (require 'erc-log)
 #+end_src
-***** 啟動 erc-log-mode
+**** 啟動 erc-log-mode
 #+begin_src emacs-lisp
   (erc-log-mode 1)
 #+end_src
-***** 設定紀錄檔儲存位置
+**** 設定紀錄檔儲存位置
 #+begin_src emacs-lisp
   (setq erc-log-channels-directory emacs-log-dir)
 #+end_src
-***** 如果儲存紀錄檔的資料夾不存在，建立他
+**** 如果儲存紀錄檔的資料夾不存在，建立他
 #+begin_src emacs-lisp
   (unless (file-exists-p erc-log-channels-directory)
     (mkdir erc-log-channels-directory t))
 #+end_src
-***** 紀錄檔編碼為 utf-8
+**** 紀錄檔編碼為 utf-8
 #+begin_src emacs-lisp
   (setq erc-log-file-coding-system 'utf-8)
 #+end_src
-***** 送出訊息後寫入到 log
+**** 送出訊息後寫入到 log
 #+begin_src emacs-lisp
   (setq erc-log-write-after-send t)
 #+end_src
-***** 當有新訊息時，寫入到log
+**** 當有新訊息時，寫入到log
 #+begin_src emacs-lisp
   (setq erc-log-write-after-insert t)
 #+end_src
-**** 設定聊天時的行寬為 100
+*** 設定聊天時的行寬為 100
 #+begin_src emacs-lisp
   (setq erc-fill-column 100)
 #+end_src
-**** 為聊天室裡的使用者暱稱上色
+*** 為聊天室裡的使用者暱稱上色
 #+begin_src emacs-lisp
   (and
    (require 'erc-highlight-nicknames)
    (add-to-list 'erc-modules 'highlight-nicknames)
    (erc-update-modules))
 #+end_src
-**** Configs
-***** Misc
+*** Configs
+**** Misc
 #+begin_src emacs-lisp
   ;; check channels
   ;; exclude boring stuff from tracking
@@ -5151,7 +5152,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
   (setq erc-autoaway-idle-seconds 600)
   (setq erc-autoaway-use-emacs-idle t)
 #+end_src
-**** Commands
+*** Commands
 #+begin_src emacs-lisp
   (defun i-wanna-be-social ()
     "Connect to IM networks using bitlbee."
@@ -5185,7 +5186,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
       (let ((nickserv-command (mapconcat #'identity command-args " ")))
         (erc-send-command nickserv-command))))
 #+end_src
-**** Function
+*** Function
 #+begin_src emacs-lisp
 (defun avoid-erc-oops (txt)
   (when (member txt '("ls" "xb" "cd"))
@@ -5193,87 +5194,12 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 
 (add-to-list 'erc-send-pre-hook 'avoid-erc-oops)
 #+end_src
-**** Command
+*** Command
 #+begin_src emacs-lisp
   (defun irc ()
     (interactive)
     (erc :server "irc.freenode.net" :port 6667 :nick erc-nick)
     (erc :server "irc.debian.org" :port 6667 :nick erc-nick))
-#+end_src
-*** RCIRC
-:PROPERTIES:
-:tangle: no
-:END:
-這邊是以前所使用的 rcirc 設定，由於我改用 erc 作為我的 irc client，這邊的設定將不輸出至
-我的 emacs 設定。
-**** 載入相依套件
-#+begin_src emacs-lisp
-  (require 'rcirc)
-#+end_src
-**** Config
-#+begin_src emacs-lisp
-  ;; for debugging.
-  (setq rcirc-debug-flag t)
-  ;; Include date in time stamp.
-  (setq rcirc-time-format "%Y-%m-%d %H:%M ")
-  ;; Enable Logging rcirc
-  (setq rcirc-log-flag t)
-  ;; Put logs in this directory
-  (setq rcirc-log-directory "~/.emacs.d/var/log/rcirc/")
-  ;;
-  (setq rcirc-notify-open t)
-  ;;
-  (setq rcirc-notify-timeout 1)
-  ;;
-  (setq rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE"))
-  ;; Prompt Settings
-  (setq rcirc-prompt " %n  >> ")
-  ;; Do not show on modline
-  (setq rcirc-track-minor-mode nil)
-
-  ;; Join these channels at startup.
-  (setq rcirc-server-alist
-        '(
-          ("irc.freenode.net" :channels  ("#emacs" "#lisp" "##linux" "#gentoo"    ; english channel
-                                          "#tossug" "#gentoo-tw" "#python.tw" "#ubuntu-tw"))
-          ("irc.debian.org" :channels ("#dot"))
-          ))
-#+end_src
-**** Hooks
-#+begin_src emacs-lisp
-  (add-hook 'rcirc-mode-hook
-            '(lambda ()
-               ;; Keep input line at bottom.
-               (set (make-local-variable 'scroll-conservatively) 8192)
-               ;; Use Omit-mode
-               (rcirc-omit-mode)
-               ))
-#+end_src
-**** Commands
-#+begin_src emacs-lisp
-  (defun-rcirc-command all (input)
-    "Run the arguments as a command for all connections.
-         Example use: /all away food or /all quit zzzz."
-    (interactive "s")
-    (let ((buffers (mapcar 'process-buffer (rcirc-process-list))))
-      (dolist (buf buffers)
-        (with-current-buffer buf
-          (goto-char (point-max))
-          (insert "/" input)
-          (rcirc-send-input)))))
-
-  (defun-rcirc-command calc (input)
-    "calculate value of some expression using bc"
-    (let ((expr (mapconcat 'identity args " ")))
-      (when (length expr)
-        (let ((result (shell-command-to-string (concat "echo '" expr "' | bc ")))
-              (when result (rcirc-send-message (concat expr " = " result))))))))
-#+end_src
-**** Fix
-不顯示任何 /away 訊息。
-#+begin_src emacs-lisp
-  (defun rcirc-handler-301 (process cmd sender args)
-    "/away message handler.")
 #+end_src
 
 * 電子郵件
