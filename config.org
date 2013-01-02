@@ -174,22 +174,18 @@
 
 放置測試螢幕解析度用的變數
 
-*** 1280x800
 #+begin_src emacs-lisp
+  ;; 1280x800
   (defvar display-1280x800-p   (and (= (display-pixel-width) 1280)
                                     (= (display-pixel-height) 800))
     "Return nil if current display's resolution is not 1280x800")
-#+end_src
 
-*** 1280x1024
-#+begin_src emacs-lisp
+  ;; 1280x1024
   (defvar display-1280x1024-p  (and (= (display-pixel-width) 1280)
                                     (= (display-pixel-height) 1024))
     "Return nil if current display's resolution is not 1280x1024")
-#+end_src
 
-*** 1920x1080
-#+begin_src emacs-lisp
+  ;; 1920x1080
   (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920)
                                     (= (display-pixel-height) 1080))
     "Return nil if current display's resolution is not 1920x1080")
