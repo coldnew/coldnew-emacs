@@ -4101,7 +4101,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (setq mweb-default-major-mode 'html-mode)
   (setq mweb-tags
         '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
-          (js2-mode  "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
+          (js-mode  "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
           (css-mode "<style +type=\"text/css\"[^>]*>" "</style>")))
   (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
   (multi-web-global-mode 1)
@@ -4160,8 +4160,8 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 *** 使用 nxhtml 作為 HTML 編輯模式
 
 #+begin_src emacs-lisp
-  (require 'nxhtml)
-  (defalias 'html-mode 'nxhtml-mode)
+;;  (require 'nxhtml)
+;;  (defalias 'html-mode 'nxhtml-mode)
 #+end_src
 
 *** 使用 zencoding-mode 讓寫 HTML 更方便
@@ -6347,11 +6347,11 @@ Function key 設置常用的命令。
     (set-register (car r) (cadr r)))
 #+end_src
 
-* 部若格                                                      :blog:
+* COMMENT 部若格                                                      :blog:
 ** 使用 o-blog 作為 blogging 系統
 *** 載入相關套件
 #+begin_src emacs-lisp
-(require 'o-blog)
+;;(require 'o-blog)
 #+end_src
 
 *** 設定網頁連結名稱
