@@ -1692,13 +1692,16 @@ normal-state。
     `(evil-define-key 'visual ,map ,key ,cmd))
 #+end_src
 
-** TODO ex command
+** 綁定 ex 命令的巨集
+
+Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define-cmd。
 
 #+begin_src emacs-lisp
   (defmacro vim:ex-cmd (cmd func)
     "Binding to evil-ex-define-cmd."
     `(evil-ex-define-cmd ,cmd ,func))
 #+end_src
+
 ** Normal-state 按鍵設定
 
 將一些非常慣用的 emacs 按鍵綁到 Normal-state 上面。
