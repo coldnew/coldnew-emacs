@@ -5427,14 +5427,13 @@ offlineimap 可以在設定中加入
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
   (defalias 'coldnew/folding-toggle   'toggle-selective-display)
 #+end_src
-* 版本管理
-**  Git
-*** egg
-**** Depends
+* Git 版本管理
+** egg
+*** Depends
 #+begin_src emacs-lisp
   (require 'egg)
 #+end_src
-**** Config
+*** Config
 #+begin_src emacs-lisp
   ;; do not auto-update egg-status on file save
   (setq egg-auto-update nil)
@@ -5458,7 +5457,7 @@ offlineimap 可以在設定中加入
      ((memq :rebase-in-progress desc)       :rebase-continue)
      (t                                     :quit)))
 #+end_src
-**** Keybinding
+*** Keybinding
 #+begin_src emacs-lisp :tangle no
   (add-hook 'egg-commit-buffer-mode-hook
             '(lambda ()
@@ -5466,7 +5465,7 @@ offlineimap 可以在設定中加入
                ))
 
 #+end_src
-**** Advice                                                       :advice:
+*** Advice                                                         :advice:
 當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window。
 #+begin_src emacs-lisp
   (defadvice egg-status (around goto-egg-status-buffer activate)
@@ -5479,38 +5478,38 @@ offlineimap 可以在設定中加入
     ad-do-it
     (delete-other-windows))
 #+end_src
-*** magit
+** 載入 magit 套件
 
-**** 載入 magit 套件
 #+begin_src emacs-lisp
   (require 'magit)
 #+end_src
 
-**** 當使用 magit 時，不使用 emacs 原生的 vc 來處理和 git 相關的事情
+** 當使用 magit 時，不使用 emacs 原生的 vc 來處理和 git 相關的事情
 
 #+begin_src emacs-lisp
   (when (featurep 'magit)
     (setq vc-handled-backends (remq 'Git vc-handled-backends)))
 #+end_src
 
+** 使用 C-g 離開 magit 的視窗
 
-**** 使用 C-g 離開 magit 的視窗
 #+begin_src emacs-lisp
   (define-key magit-mode-map (kbd "C-g") 'magit-quit-window)
 #+end_src
 
-**** 全域性按鍵設定                                           :global@key:
+** 全域性按鍵設定                                               :global@key:
 
-| 按鍵    | 命令      | 用途                |
-|---------+-----------+---------------------|
-| C-x v l | magit-log | 使用 magit 察看 log |
-|         |           |                     |
+| 按鍵    | 命令         | 用途                            |
+|---------+--------------+---------------------------------|
+| C-x v l | magit-log    | 使用 magit 察看 log             |
+| C-x v s | magit-status | 使用 magit 查看目前的git status |
 
 #+begin_src emacs-lisp
   (evil:imap (kbd "C-x vl") 'magit-log)
+  (evil:imap (kbd "C-x vs") 'magit-status)
 #+end_src
 
-*** git-emacs
+** git-emacs
 #+begin_src emacs-lisp
   (require 'git-emacs)
   ;;   ;; disable git-emacs's advice
