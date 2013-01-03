@@ -7,11 +7,294 @@
 #+INFOJS_OPT: view:info toc:t ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 
 * 基礎設置                                                             :base:
+
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
+
 ** 預先載入 cl 套件。
 
 #+begin_src emacs-lisp
   (eval-when-compile (require 'cl))
+#+end_src
+
+** 資料夾相關變數設定                                             :variable:
+
+這邊設定了各種類型資料夾的路徑。
+
+*** emacs 設定檔預設所在的資料夾
+
+#+begin_src emacs-lisp
+  (defconst emacs-dir "~/.emacs.d/"
+    "The top-level emacs-configure directory.")
+#+end_src
+
+*** 佈景主題的資料夾設定
+
+#+begin_src emacs-lisp
+  (defconst emacs-themes-dir (concat emacs-dir "themes/")
+    "directory to place emacs theme.")
+#+end_src
+
+*** el-get 安裝套件的路徑
+
+#+begin_src emacs-lisp
+  (defconst emacs-lisp-dir   (concat emacs-dir "lisp/")
+    "directory to place lisp packages from internet.")
+#+end_src
+
+*** el-get 的 recipes 路徑
+
+#+begin_src emacs-lisp
+  (defconst emacs-recipes-dir (concat emacs-dir "recipes/")
+    "directory to place local el-get recepies.")
+#+end_src
+
+*** elpa 安裝套件的路徑
+
+#+begin_src emacs-lisp
+  (defconst emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
+    "directory to place ELPA lisp packages from internet.")
+#+end_src
+
+*** yasnippet 使用的 snippet 路徑
+
+#+begin_src emacs-lisp
+  (defconst emacs-snippets-dir (concat emacs-dir "snippets/")
+    "directory to place yasnippet files.")
+#+end_src
+
+*** 放置 binary 檔案的資料夾
+
+#+begin_src emacs-lisp
+  (defconst emacs-bin-dir    (concat emacs-dir "bin/")
+    "directory to place binary staff.")
+#+end_src
+
+*** 放置 cache 等暫存檔案的資料夾
+
+#+begin_src emacs-lisp
+  (defconst emacs-cache-dir  (concat emacs-dir "cache/")
+    "cache file directory.")
+#+end_src
+
+*** 備份文件的資料夾
+
+#+begin_src emacs-lisp
+  (defconst emacs-backup-dir (concat emacs-dir "backup/")
+    "directory to backup files.")
+#+end_src
+
+*** 放置紀錄的資料夾
+
+#+begin_src emacs-lisp
+  (defconst emacs-log-dir (concat emacs-dir "log/")
+    "log file directory.")
+#+end_src
+
+*** 放置 jar 等其他文件的位置
+
+#+begin_src emacs-lisp
+  (defconst emacs-etc-dir (concat emacs-dir "etc/")
+    "etc file directory.")
+#+end_src
+
+** 檔案相關變數設定                                               :variable:
+
+這邊設定了各種檔案的路徑。
+
+*** emacs 個人配置的檔案，也就是這個檔案
+
+#+begin_src emacs-lisp
+  (defconst emacs-config-file (concat emacs-dir "config.org")
+    "File to place emacs configs.")
+#+end_src
+
+*** 客制化設定檔的位置
+
+#+begin_src emacs-lisp
+  (defconst emacs-custom-file (concat emacs-dir "custom.el")
+    "store customize UI config.")
+#+end_src
+
+*** emacs-authinfo-file
+
+#+begin_src emacs-lisp
+  (defconst emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")
+    "file that save secret")
+#+end_src
+
+*** emacs-bookmark-file
+
+#+begin_src emacs-lisp
+  (defconst emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
+    "File to save bookmarks")
+#+end_src
+
+** 作業系統測試
+
+放置用於測試目前 emacs 執行在何種作業系統上的變數。
+
+*** MacOsx
+#+begin_src emacs-lisp
+  (defvar mac-p     (eq system-type 'darwin)
+    "Return nil if OS is not Mac.")
+#+end_src
+
+*** Linux
+**** all
+#+begin_src emacs-lisp
+  (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
+    "Return nil if OS is not Linux.")
+#+end_src
+
+**** 32-bit
+#+begin_src emacs-lisp
+  (defvar linux-32bit-p (and (string-match
+                            (rx (or bos "x86-" bos "i686-")) system-configuration) linux-p)
+  "Return nil if OS is not 32-bit linux.")
+#+end_src
+
+**** 64-bit
+#+begin_src emacs-lisp
+  (defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
+    "Return nil if OS is not 64-bit linux.")
+#+end_src
+
+*** Cygwin
+#+begin_src emacs-lisp
+  (defvar cygwin-p  (eq system-type 'cygwin)
+    "Return nil if OS is not CygWin.")
+#+end_src
+
+*** Window$
+#+begin_src emacs-lisp
+  (defvar windows-p (eq system-type 'windows-nt)
+    "Return nil if OS is not Windows.")
+#+end_src
+
+** 螢幕解析度測試                                               :resolution:
+
+放置測試螢幕解析度用的變數
+
+*** 1280x800
+#+begin_src emacs-lisp
+  (defvar display-1280x800-p   (and (= (display-pixel-width) 1280)
+                                    (= (display-pixel-height) 800))
+    "Return nil if current display's resolution is not 1280x800")
+#+end_src
+
+*** 1280x1024
+#+begin_src emacs-lisp
+  (defvar display-1280x1024-p  (and (= (display-pixel-width) 1280)
+                                    (= (display-pixel-height) 1024))
+    "Return nil if current display's resolution is not 1280x1024")
+#+end_src
+
+*** 1920x1080
+#+begin_src emacs-lisp
+  (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920)
+                                    (= (display-pixel-height) 1080))
+    "Return nil if current display's resolution is not 1920x1080")
+#+end_src
+
+*** TODO Shell
+#+begin_src emacs-lisp
+  (defvar emacs-default-shell "/bin/bash"
+    "Default shell for cemacs.")
+  (defvar emacs-popup-shell-window-height 30
+    "Window hight of popup shell.")
+  (defvar emacs-popup-shell-window-position "bottom"
+    "Make popup shell window at buttom by default.")
+#+end_src
+
+#+RESULTS:
+: emacs-popup-shell-window-position
+
+*** TODO Path
+#+begin_src emacs-lisp
+  ;; TODO: make it work on every platform, now only has Linux support
+  (setenv "PATH"
+          (concat
+           emacs-bin-dir ":"
+           "~/.lein/bin" ":"
+           (getenv "PATH")
+           ))
+
+  (setq exec-path (cons emacs-bin-dir exec-path))
+#+end_src
+
+*** TODO Remember to remove
+#+begin_src emacs-lisp
+  (defun change-mouse-to-left ()
+    (interactive)
+    (shell-command "xmodmap -e \"pointer = 3 2 1\""))
+
+  (defun change-mouse-to-right ()
+    (interactive)
+    (shell-command "xmodmap -e \"pointer = 1 2 3\""))
+
+  (defun swap-ctrl-caps ()
+    "swap control and capslock"
+    (interactive)
+    (shell-command "setxkbmap -option ctrl:swapcaps"))
+
+  (defun make-caps-as-ctrl ()
+    "make capslock as control-key"
+    (interactive)
+    (shell-command "setxkbmap -option ctrl:nocaps"))
+
+  ;; only disable capslock and make it as control
+  (cond ((eq window-system 'x)
+         ;; make caps lock a control key
+         (make-caps-as-ctrl)
+         (change-mouse-to-left)))
+#+end_src
+
+*** TODO Face
+#+begin_src emacs-lisp
+  (defface mode-line-read-only-face
+    '((t (:foreground "#C82829" :bold t)))
+    "face for mode-name-string in modeline."
+    :group 'mode-line)
+
+  (defface mode-line-modified-face
+    '((t (:inherit 'font-lock-function-name-face :bolt t)))
+    "face for mode-name-string in modeline."
+    :group'mode-line)
+
+  (defface mode-line-mode-name-face
+    '((t (:inherit font-lock-keyword-face)))
+    "face for mode-name-string in modeline."
+    :group 'mode-line)
+
+  (defface mode-line-normal-state-face
+    '((t (:inherit font-lock-function-name-face)))
+    "face for emacs normal state"
+    :group 'mode-line)
+
+  (defface font-lock-escape-char-face
+    '((((class color)) (:foreground "seagreen2")))
+    "highlight c escapes char like vim"
+    :group 'font-lock-faces)
+
+  (defface mode-line-evil-state-string-N
+    '((t (:inherit font-lock-function-name-face)))
+    "face for vim-string in normal-map on mode-line."
+    :group 'mode-line)
+
+  (defface mode-line-evil-state-string-I
+    '((t (:inherit font-lock-constant-face)))
+    "face for vim-string in insert-map on mode-line."
+    :group 'mode-line)
+
+  (defface mode-line-evil-state-string-V
+    '((t (:inherit font-lock-variable-name-face)))
+    "face for vim-string in visual-map on mode-line."
+    :group 'mode-line)
+
+  (defface mode-line-evil-state-string-E
+    '((t (:inherit font-lock-string-face)))
+    "face for vim-string in emacs-map on mode-line."
+    :group 'mode-line)
 #+end_src
 
 ** 使用者介面設定
@@ -106,307 +389,6 @@
   (setq scroll-preserve-screen-position 1 )
   (setq scroll-up-aggressively       0.01 )
   (setq scroll-down-aggressively     0.01 )
-#+end_src
-
-** 變數設定                                                        :variable:
-這邊加入了我自定義的變數以及其初始值。
-*** 資料夾相關變數
-
-這邊設定了各種類型資料夾的路徑。
-
-**** emacs-dir
-
-emacs 設定檔預設所在的資料夾
-#+begin_src emacs-lisp
-  (defconst emacs-dir "~/.emacs.d/"
-    "The top-level emacs-configure directory.")
-#+end_src
-
-**** emacs-themes-dir
-
-佈景主題的資料夾設定。
-#+begin_src emacs-lisp
-  (defconst emacs-themes-dir (concat emacs-dir "themes/")
-    "directory to place emacs theme.")
-#+end_src
-
-**** emacs-lisp-dir
-
-el-get 安裝套件的路徑。
-#+begin_src emacs-lisp
-  (defconst emacs-lisp-dir   (concat emacs-dir "lisp/")
-    "directory to place lisp packages from internet.")
-#+end_src
-
-**** emacs-recipes-dir
-
-el-get 的 recipes 路徑。
-#+begin_src emacs-lisp
-  (defconst emacs-recipes-dir (concat emacs-dir "recipes/")
-    "directory to place local el-get recepies.")
-#+end_src
-
-**** emacs-elpa-dir
-
-elpa 安裝套件的路徑。
-#+begin_src emacs-lisp
-  (defconst emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
-    "directory to place ELPA lisp packages from internet.")
-#+end_src
-
-**** emacs-snippets-dir
-
-yasnippet 使用的 snippet路徑
-#+begin_src emacs-lisp
-  (defconst emacs-snippets-dir (concat emacs-dir "snippets/")
-    "directory to place yasnippet files.")
-#+end_src
-
-**** emacs-bin-dir
-
-放置 binary 檔案的資料夾。
-#+begin_src emacs-lisp
-  (defconst emacs-bin-dir    (concat emacs-dir "bin/")
-    "directory to place binary staff.")
-#+end_src
-
-**** emacs-cache-dir
-
-放置 cache 等暫存檔案的資料夾。
-#+begin_src emacs-lisp
-  (defconst emacs-cache-dir  (concat emacs-dir "cache/")
-    "cache file directory.")
-#+end_src
-
-**** emacs-backup-dir
-
-備份文件的資料夾。
-#+begin_src emacs-lisp
-  (defconst emacs-backup-dir (concat emacs-dir "backup/")
-    "directory to backup files.")
-#+end_src
-
-**** emacs-log-dir
-
-放置紀錄的資料夾。
-#+begin_src emacs-lisp
-  (defconst emacs-log-dir (concat emacs-dir "log/")
-    "log file directory.")
-#+end_src
-
-**** emacs-etc-dir
-
-放置 jar 等其他文件的位置
-#+begin_src emacs-lisp
-  (defconst emacs-etc-dir (concat emacs-dir "etc/")
-    "etc file directory.")
-#+end_src
-
-*** 檔案相關變數
-
-這邊設定了各種檔案的路徑。
-
-**** emacs-config-file
-
-emacs 個人配置的檔案，也就是這個檔案。
-#+begin_src emacs-lisp
-  (defconst emacs-config-file (concat emacs-dir "config.org")
-    "File to place emacs configs.")
-#+end_src
-
-**** emacs-custom-file
-
-客制化設定檔的位置
-#+begin_src emacs-lisp
-  (defconst emacs-custom-file (concat emacs-dir "custom.el")
-    "store customize UI config.")
-#+end_src
-
-**** emacs-authinfo-file
-
-#+begin_src emacs-lisp
-  (defconst emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")
-    "file that save secret")
-#+end_src
-
-**** emacs-bookmark-file
-
-#+begin_src emacs-lisp
-  (defconst emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
-    "File to save bookmarks")
-#+end_src
-
-*** 作業系統測試
-
-放置用於測試目前 emacs 執行在何種作業系統上的變數。
-
-**** MacOsx
-#+begin_src emacs-lisp
-  (defvar mac-p     (eq system-type 'darwin)
-    "Return nil if OS is not Mac.")
-#+end_src
-
-**** Linux
-***** all
-#+begin_src emacs-lisp
-  (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
-    "Return nil if OS is not Linux.")
-#+end_src
-
-***** 32-bit
-#+begin_src emacs-lisp
-  (defvar linux-32bit-p (and (string-match
-                            (rx (or bos "x86-" bos "i686-")) system-configuration) linux-p)
-  "Return nil if OS is not 32-bit linux.")
-#+end_src
-
-***** 64-bit
-#+begin_src emacs-lisp
-  (defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
-    "Return nil if OS is not 64-bit linux.")
-#+end_src
-
-**** Cygwin
-#+begin_src emacs-lisp
-  (defvar cygwin-p  (eq system-type 'cygwin)
-    "Return nil if OS is not CygWin.")
-#+end_src
-
-**** Window$
-#+begin_src emacs-lisp
-  (defvar windows-p (eq system-type 'windows-nt)
-    "Return nil if OS is not Windows.")
-#+end_src
-
-*** 螢幕解析度測試                                               :resolution:
-
-放置測試螢幕解析度用的變數
-
-**** 1280x800
-#+begin_src emacs-lisp
-  (defvar display-1280x800-p   (and (= (display-pixel-width) 1280)
-                                    (= (display-pixel-height) 800))
-    "Return nil if current display's resolution is not 1280x800")
-#+end_src
-
-**** 1280x1024
-#+begin_src emacs-lisp
-  (defvar display-1280x1024-p  (and (= (display-pixel-width) 1280)
-                                    (= (display-pixel-height) 1024))
-    "Return nil if current display's resolution is not 1280x1024")
-#+end_src
-
-**** 1920x1080
-#+begin_src emacs-lisp
-  (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920)
-                                    (= (display-pixel-height) 1080))
-    "Return nil if current display's resolution is not 1920x1080")
-#+end_src
-
-*** TODO Shell
-#+begin_src emacs-lisp
-  (defvar emacs-default-shell "/bin/bash"
-    "Default shell for cemacs.")
-  (defvar emacs-popup-shell-window-height 30
-    "Window hight of popup shell.")
-  (defvar emacs-popup-shell-window-position "bottom"
-    "Make popup shell window at buttom by default.")
-#+end_src
-
-#+RESULTS:
-: emacs-popup-shell-window-position
-
-*** TODO Path
-#+begin_src emacs-lisp
-  ;; TODO: make it work on every platform, now only has Linux support
-  (setenv "PATH"
-          (concat
-           emacs-bin-dir ":"
-           "~/.lein/bin" ":"
-           (getenv "PATH")
-           ))
-
-  (setq exec-path (cons emacs-bin-dir exec-path))
-#+end_src
-
-*** TODO Remember to remove
-#+begin_src emacs-lisp
-  (defun change-mouse-to-left ()
-    (interactive)
-    (shell-command "xmodmap -e \"pointer = 3 2 1\""))
-
-  (defun change-mouse-to-right ()
-    (interactive)
-    (shell-command "xmodmap -e \"pointer = 1 2 3\""))
-
-  (defun swap-ctrl-caps ()
-    "swap control and capslock"
-    (interactive)
-    (shell-command "setxkbmap -option ctrl:swapcaps"))
-
-  (defun make-caps-as-ctrl ()
-    "make capslock as control-key"
-    (interactive)
-    (shell-command "setxkbmap -option ctrl:nocaps"))
-
-  ;; only disable capslock and make it as control
-  (cond ((eq window-system 'x)
-         ;; make caps lock a control key
-         (make-caps-as-ctrl)
-         (change-mouse-to-left)))
-#+end_src
-
-*** TODO User Testing
-#+begin_src emacs-lisp
-(defvar root-p (zerop (user-real-uid))
-  "Return nil if user is not root user.")
-#+end_src
-*** TODO Face
-#+begin_src emacs-lisp
-  (defface mode-line-read-only-face
-    '((t (:foreground "#C82829" :bold t)))
-    "face for mode-name-string in modeline."
-    :group 'mode-line)
-
-  (defface mode-line-modified-face
-    '((t (:inherit 'font-lock-function-name-face :bolt t)))
-    "face for mode-name-string in modeline."
-    :group'mode-line)
-
-  (defface mode-line-mode-name-face
-    '((t (:inherit font-lock-keyword-face)))
-    "face for mode-name-string in modeline."
-    :group 'mode-line)
-
-  (defface mode-line-normal-state-face
-    '((t (:inherit font-lock-function-name-face)))
-    "face for emacs normal state"
-    :group 'mode-line)
-
-  (defface font-lock-escape-char-face
-    '((((class color)) (:foreground "seagreen2")))
-    "highlight c escapes char like vim"
-    :group 'font-lock-faces)
-
-  (defface mode-line-evil-state-string-N
-    '((t (:inherit font-lock-function-name-face)))
-    "face for vim-string in normal-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-I
-    '((t (:inherit font-lock-constant-face)))
-    "face for vim-string in insert-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-V
-    '((t (:inherit font-lock-variable-name-face)))
-    "face for vim-string in visual-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-E
-    '((t (:inherit font-lock-string-face)))
-    "face for vim-string in emacs-map on mode-line."
-    :group 'mode-line)
 #+end_src
 
 ** 設定 custom-file 到其他檔案
@@ -2287,19 +2269,6 @@ Following buffer will not show in iBuffer
   (add-hook 'slime-repl-mode-hook 'programming-mode)
   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 #+end_src
-** ielm-mode
-#+begin_src emacs-lisp
-  (defun ielm-auto-complete ()
-    "Enables `auto-complete' support in \\[ielm]."
-    (setq ac-sources '(ac-source-functions
-                       ac-source-variables
-                       ac-source-features
-                       ac-source-symbols
-                       ac-source-words-in-same-mode-buffers))
-    (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
-    (auto-complete-mode 1))
-  (add-hook 'ielm-mode-hook 'ielm-auto-complete)
-#+end_src
 ** compilation
 #+begin_src emacs-lisp
   ;; FIXME: move to other place
@@ -2395,9 +2364,13 @@ Following buffer will not show in iBuffer
 
 * 文件加密                                                          :encrypt:
 
+** 載入相依套件
+
 #+begin_src emacs-lisp
   (require 'epa-file)
 #+end_src
+
+** 其他設置
 
 #+begin_src emacs-lisp
   ;; use local gpg program instaed of system one
@@ -2475,6 +2448,14 @@ Following buffer will not show in iBuffer
       (delete-region (point) (save-excursion (end-of-line) (point)))
       (insert (concat file-true-dir file-name))))
 
+#+end_src
+
+** 游標改成 bar 的形狀                                             :cursor:
+
+我討厭在 minibuffer 時還是使用方塊狀的游標，這裡將他改變成 Bar 的形狀。
+
+#+begin_src emacs-lisp
+  (add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 'bar)))
 #+end_src
 
 ** smex                                                               :smex:
@@ -2739,12 +2720,6 @@ Following buffer will not show in iBuffer
 ** WoMan                                                              :woman:
 
 woman 是 emacs 下顯示 manpage 最好的方式。
-
-*** 載入相依套件
-
-#+begin_src emacs-lisp
-  (require 'woman)
-#+end_src
 
 *** WoMan 快取儲存位置設定
 
@@ -4177,6 +4152,10 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (require 'impatient-mode)
   (require 'simple-httpd)
   (require 'htmlize)
+
+  (add-hook 'css-mode-hook 'impatient-mode)
+  (add-hook 'html-mode-hook 'impatient-mode)
+  (add-hook 'js-mode-hook 'impatient-mode)
 #+end_src
 
 * 狀態欄                                                           :modeline:
@@ -4266,6 +4245,10 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 ** 樣式設定
 
 自己定義  mode-line 的樣式。
+
+#+begin_src emacs-lisp
+;;  (require 'powerline)
+#+end_src
 
 #+begin_src emacs-lisp
   (setq-default mode-line-format
@@ -5045,7 +5028,6 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
 ** 將中文翻譯為英文
 
 #+begin_src emacs-lisp
-
   (defun google-translate-zh-en ()
     "Translate Tranditional Chinese to English by google-translate."
     (interactive)
@@ -5054,89 +5036,31 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
       (google-translate-query-translate)))
 #+end_src
 
-* Tramp                                                               :tramp:
-#+begin_src emacs-lisp
-  (setq tramp-default-method "ssh")
-  (add-to-list 'tramp-default-method-alist
-               '("\\`localhost\\'" "\\`root\\'" "su"))
-#+end_src
-** Remote sudo access with tramp
-#+begin_src emacs-lisp
-  (add-to-list 'tramp-default-proxies-alist
-               '(nil "\\`root\\'" "/ssh:%h:"))
-  (add-to-list 'tramp-default-proxies-alist
-               '((regexp-quote (system-name)) nil nil))
-#+end_src
-* 警示系統
-** 載入相關套件
-
-alert 是一個可以直接顯示資訊在 minibuffer 上面的套件，最簡單的使用
-方式如下：
-
-#+begin_src emacs-lisp :tangle no
-  (alert "this is alert")
-#+end_src
-
-#+begin_src emacs-lisp
-  (require 'alert)
-#+end_src
-
-sauron 是一個可以用來追蹤 emacs 裡面發生什麼事情的 minor-mode。
-
-#+begin_src emacs-lisp
-  (require 'sauron)
-#+end_src
-
-** 讓 sauron 不使用另外一個 frame 來顯示
-
-#+begin_src emacs-lisp
-  (setq sauron-separate-frame nil)
-#+end_src
-
-** 讓 sauron 黏在 frame 上面
-
-#+begin_src emacs-lisp
- (setq sauron-sticky-frame t)
-#+end_src
-
-** 讓 sauron 顯示 mode-line
-
-#+begin_src emacs-lisp
-  (setq sauron-hide-mode-line nil)
-#+end_src
-
-** 整合 sauron 到 alert 之中
-
-#+begin_src emacs-lisp
-  (eval-after-load "alert"
-    '(progn
-       (when (require 'sauron nil 'noerror)
-       (add-hook 'sauron-event-added-functions 'sauron-alert-el-adapter))))
-#+end_src
 * 聊天軟體                                                             :chat:
 ** IRC
-emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境的設置。
-*** ERC
-**** 載入相依套件
+
+emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
+
+*** 載入相依套件
 #+begin_src emacs-lisp
   (require 'erc)
   (require 'erc-notify)
   (require 'erc-spelling)
   (require 'erc-autoaway)
 #+end_src
-**** 設定 prompt
+*** 設定 prompt
 #+begin_src emacs-lisp
   (setq erc-prompt ">>")
 #+end_src
-**** 編碼設定為 utf-8
+*** 編碼設定為 utf-8
 #+begin_src emacs-lisp
   (setq erc-server-coding-system '(utf-8 . utf-8))
 #+end_src
-**** 當 ERC 啟動時，自動連入 IRC 伺服器
+*** 當 ERC 啟動時，自動連入 IRC 伺服器
 #+begin_src emacs-lisp
   (erc-autojoin-mode t)
 #+end_src
-**** 自動連線的伺服器與聊天室
+*** 自動連線的伺服器與聊天室
 #+begin_src emacs-lisp
   (setq erc-autojoin-channels-alist
         '(;; english channel
@@ -5146,57 +5070,57 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
           (".*\\.oftc.net" "#dot")
           ))
 #+end_src
-**** 關閉部份訊息顯示
+*** 關閉部份訊息顯示
 #+begin_src emacs-lisp
   (setq erc-hide-list '("JOIN" "PART" "QUIT"))
 #+end_src
-**** 加入時間戳
+*** 加入時間戳
 #+begin_src emacs-lisp
   (erc-timestamp-mode 1)
 #+end_src
-**** 紀錄聊天訊息
-***** 載入相依套件
+*** 紀錄聊天訊息
+**** 載入相依套件
 #+begin_src emacs-lisp
   (require 'erc-log)
 #+end_src
-***** 啟動 erc-log-mode
+**** 啟動 erc-log-mode
 #+begin_src emacs-lisp
   (erc-log-mode 1)
 #+end_src
-***** 設定紀錄檔儲存位置
+**** 設定紀錄檔儲存位置
 #+begin_src emacs-lisp
   (setq erc-log-channels-directory emacs-log-dir)
 #+end_src
-***** 如果儲存紀錄檔的資料夾不存在，建立他
+**** 如果儲存紀錄檔的資料夾不存在，建立他
 #+begin_src emacs-lisp
   (unless (file-exists-p erc-log-channels-directory)
     (mkdir erc-log-channels-directory t))
 #+end_src
-***** 紀錄檔編碼為 utf-8
+**** 紀錄檔編碼為 utf-8
 #+begin_src emacs-lisp
   (setq erc-log-file-coding-system 'utf-8)
 #+end_src
-***** 送出訊息後寫入到 log
+**** 送出訊息後寫入到 log
 #+begin_src emacs-lisp
   (setq erc-log-write-after-send t)
 #+end_src
-***** 當有新訊息時，寫入到log
+**** 當有新訊息時，寫入到log
 #+begin_src emacs-lisp
   (setq erc-log-write-after-insert t)
 #+end_src
-**** 設定聊天時的行寬為 100
+*** 設定聊天時的行寬為 100
 #+begin_src emacs-lisp
   (setq erc-fill-column 100)
 #+end_src
-**** 為聊天室裡的使用者暱稱上色
+*** 為聊天室裡的使用者暱稱上色
 #+begin_src emacs-lisp
   (and
    (require 'erc-highlight-nicknames)
    (add-to-list 'erc-modules 'highlight-nicknames)
    (erc-update-modules))
 #+end_src
-**** Configs
-***** Misc
+*** Configs
+**** Misc
 #+begin_src emacs-lisp
   ;; check channels
   ;; exclude boring stuff from tracking
@@ -5228,7 +5152,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
   (setq erc-autoaway-idle-seconds 600)
   (setq erc-autoaway-use-emacs-idle t)
 #+end_src
-**** Commands
+*** Commands
 #+begin_src emacs-lisp
   (defun i-wanna-be-social ()
     "Connect to IM networks using bitlbee."
@@ -5262,7 +5186,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
       (let ((nickserv-command (mapconcat #'identity command-args " ")))
         (erc-send-command nickserv-command))))
 #+end_src
-**** Function
+*** Function
 #+begin_src emacs-lisp
 (defun avoid-erc-oops (txt)
   (when (member txt '("ls" "xb" "cd"))
@@ -5270,125 +5194,14 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，以下是這兩種環境�
 
 (add-to-list 'erc-send-pre-hook 'avoid-erc-oops)
 #+end_src
-**** Command
+*** Command
 #+begin_src emacs-lisp
   (defun irc ()
     (interactive)
     (erc :server "irc.freenode.net" :port 6667 :nick erc-nick)
     (erc :server "irc.debian.org" :port 6667 :nick erc-nick))
 #+end_src
-*** RCIRC
-:PROPERTIES:
-:tangle: no
-:END:
-這邊是以前所使用的 rcirc 設定，由於我改用 erc 作為我的 irc client，這邊的設定將不輸出至
-我的 emacs 設定。
-**** 載入相依套件
-#+begin_src emacs-lisp
-  (require 'rcirc)
-#+end_src
-**** Config
-#+begin_src emacs-lisp
-  ;; for debugging.
-  (setq rcirc-debug-flag t)
-  ;; Include date in time stamp.
-  (setq rcirc-time-format "%Y-%m-%d %H:%M ")
-  ;; Enable Logging rcirc
-  (setq rcirc-log-flag t)
-  ;; Put logs in this directory
-  (setq rcirc-log-directory "~/.emacs.d/var/log/rcirc/")
-  ;;
-  (setq rcirc-notify-open t)
-  ;;
-  (setq rcirc-notify-timeout 1)
-  ;;
-  (setq rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY" "MODE"))
-  ;; Prompt Settings
-  (setq rcirc-prompt " %n  >> ")
-  ;; Do not show on modline
-  (setq rcirc-track-minor-mode nil)
 
-  ;; Join these channels at startup.
-  (setq rcirc-server-alist
-        '(
-          ("irc.freenode.net" :channels  ("#emacs" "#lisp" "##linux" "#gentoo"    ; english channel
-                                          "#tossug" "#gentoo-tw" "#python.tw" "#ubuntu-tw"))
-          ("irc.debian.org" :channels ("#dot"))
-          ))
-#+end_src
-**** Hooks
-#+begin_src emacs-lisp
-  (add-hook 'rcirc-mode-hook
-            '(lambda ()
-               ;; Keep input line at bottom.
-               (set (make-local-variable 'scroll-conservatively) 8192)
-               ;; Use Omit-mode
-               (rcirc-omit-mode)
-               ))
-#+end_src
-**** Commands
-#+begin_src emacs-lisp
-  (defun-rcirc-command all (input)
-    "Run the arguments as a command for all connections.
-         Example use: /all away food or /all quit zzzz."
-    (interactive "s")
-    (let ((buffers (mapcar 'process-buffer (rcirc-process-list))))
-      (dolist (buf buffers)
-        (with-current-buffer buf
-          (goto-char (point-max))
-          (insert "/" input)
-          (rcirc-send-input)))))
-
-  (defun-rcirc-command calc (input)
-    "calculate value of some expression using bc"
-    (let ((expr (mapconcat 'identity args " ")))
-      (when (length expr)
-        (let ((result (shell-command-to-string (concat "echo '" expr "' | bc ")))
-              (when result (rcirc-send-message (concat expr " = " result))))))))
-#+end_src
-**** Fix
-不顯示任何 /away 訊息。
-#+begin_src emacs-lisp
-  (defun rcirc-handler-301 (process cmd sender args)
-    "/away message handler.")
-#+end_src
-
-** Jabber
-
-jabber 帳戶設定寫在 emacs-authinfo-file 裏面。
-
-*** 載入相關套件
-#+begin_src emacs-lisp
-  (require 'jabber)
-#+end_src
-
-*** 在系統上顯示 jabber 的訊息
-
-#+begin_src emacs-lisp
-    (require 'notifications)
-  ;;  (notifications-notify :title "title")
-
-    (defun jabber-notify (from buf text proposed-alert)
-      (when (or jabber-message-alert-same-buffer
-                (not (memq (selected-window) (get-buffer-window-list buf))))
-        (if (jabber-muc-sender-p from)
-            (notifications-notify :title (jabber-jid-displayname (jabber-jid-user from))
-                                  :body  text))
-      (notifications-notify :title (jabber-jid-displayname from)
-                            :body text)))
-
-  (add-hook 'jabber-alert-message-hooks 'jabber-notify)
-
-  ;; Message alert hooks
-  (define-jabber-alert echo "Show a message in the echo area"
-    (lambda (msg)
-      (unless (minibuffer-prompt)
-        (message "%s" msg))))
-#+end_src
-** Skype
-#+begin_src emacs-lisp
-  (require 'skype)
-#+end_src
 * 電子郵件
 ** offlineimap
 *** 載入套件
@@ -5891,17 +5704,6 @@ emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設�
   (setq emms-track-description-function
         'xwl-emms-track-description-function)
 #+end_src
-* 游標                                                               :cursor:
-
-我討厭在 minibuffer 時還是使用方塊狀的游標，這裡將他改變成 Bar 的形狀。
-
-#+begin_src emacs-lisp
-  (add-hook 'minibuffer-setup-hook
-            '(lambda ()
-               (setq cursor-type 'bar)))
-;;               (setq cursor-color "white")))
-#+end_src
-
 * Session
 ** filecache
 
