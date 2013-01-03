@@ -582,17 +582,17 @@ emacs 套件管理的設定。
                        :pkgname "coldnew/qml-mode"
                        :features qml-mode))
 #+end_src
-**** evil
+**** vim
 #+begin_src emacs-lisp
   (add-to-list 'el-get-sources
-               '(:name evil
+               '(:name vim
                        :website "http://gitorious.org/evil/pages/Home"
                        :description "Evil is an extensible vi layer for Emacs. It
                                      emulates the main features of Vim, and provides facilities
                                      for writing custom extensions."
                        :type git
                        :url "git://gitorious.org/evil/evil.git"
-                       :features evil
+                       :features vim
                        :depends undo-tree))
 #+end_src
 **** linum-ace
@@ -1616,89 +1616,96 @@ normal-state。
 
 全域性的按鍵設置
 
-- evil:nmap 綁定按鍵到 Normal 狀態下
-- evil:imap 綁定按鍵到 Insert 狀態下
-- evil:vmap 綁定按鍵到 Visual 狀態下
-- evil:wmap 綁定按鍵到窗口切換的按鍵
+- vim:nmap 綁定按鍵到 Normal 狀態下
+- vim:imap 綁定按鍵到 Insert 狀態下
+- vim:vmap 綁定按鍵到 Visual 狀態下
+- vim:wmap 綁定按鍵到窗口切換的按鍵
 
 使用方式：
 
-: (evil:nmap (kbd "g") 'linum-ace-jump)
+: (vim:nmap (kbd "g") 'linum-ace-jump)
 
 這樣在 Normal-state 時，按下 g 就可以呼叫 linum-ace-jump 這個命令。
 
 #+begin_src emacs-lisp
-  (defmacro evil:nmap (key cmd)
+  (defmacro vim:nmap (key cmd)
     "Binding keymap to evil-normal-state."
     `(define-key evil-normal-state-map ,key ,cmd))
-  (defmacro evil:imap (key cmd)
+  (defmacro vim:imap (key cmd)
     "Binding keymap to evil-insert-state."
     `(define-key evil-insert-state-map ,key ,cmd))
-  (defmacro evil:vmap (key cmd)
+  (defmacro vim:vmap (key cmd)
     "Binding keymap to evil-visual-state."
     `(define-key evil-visual-state-map ,key ,cmd))
-  (defmacro evil:wmap (key cmd)
+  (defmacro vim:wmap (key cmd)
     "Binding keymap to evil-visual-state."
     `(define-key evil-window-map ,key ,cmd))
 #+end_src
 
 區域性的按鍵設置
 
-- evil:local-nmap 綁定按鍵到 Normal 狀態下，只作用於該緩衝區
-- evil:local-imap 綁定按鍵到 Insert 狀態下，只作用於該緩衝區
-- evil:local-vmap 綁定按鍵到 Visual 狀態下，只作用於該緩衝區
+- vim:local-nmap 綁定按鍵到 Normal 狀態下，只作用於該緩衝區
+- vim:local-imap 綁定按鍵到 Insert 狀態下，只作用於該緩衝區
+- vim:local-vmap 綁定按鍵到 Visual 狀態下，只作用於該緩衝區
 
 使用方式：
 
-: (evil:local-nmap (kbd "g") 'linum-ace-jump)
+: (vim:local-nmap (kbd "g") 'linum-ace-jump)
 
 這樣在目前的緩衝區時時， 切到 Normal-state，按下 g 就可以呼叫 linum-ace-jump 這個命令。
 
 注意到這個是屬於 buffer-local 的設定方式，只會影響到該緩衝區，而不是影響整個 mode。
 
 #+begin_src emacs-lisp
-  (defmacro evil:local-nmap (key cmd)
+  (defmacro vim:local-nmap (key cmd)
     "Binding keymap to evil-normal-state."
     `(define-key evil-visual-state-local-map ,key ,cmd))
-  (defmacro evil:local-imap (key cmd)
+  (defmacro vim:local-imap (key cmd)
     "Binding keymap to evil-insert-state."
     `(define-key evil-visual-state-local-map ,key ,cmd))
-  (defmacro evil:local-vmap (key cmd)
+  (defmacro vim:local-vmap (key cmd)
     "Binding keymap to evil-visual-state."
     `(define-key evil-visual-state-local-map ,key ,cmd))
 #+end_src
 
 根據模式進行按鍵設置
 
-- evil:mode-nmap 綁定按鍵到 Normal 狀態下，只作用於特定模式
-- evil:mode-imap 綁定按鍵到 Insert 狀態下，只作用於特定模式
-- evil:mode-vmap 綁定按鍵到 Visual 狀態下，只作用於特定模式
+- vim:mode-nmap 綁定按鍵到 Normal 狀態下，只作用於特定模式
+- vim:mode-imap 綁定按鍵到 Insert 狀態下，只作用於特定模式
+- vim:mode-vmap 綁定按鍵到 Visual 狀態下，只作用於特定模式
 
 使用方式：
 
-: (evil:mode-nmap emacs-lisp-mode-map (kbd "g") 'linum-ace-jump)
+: (vim:mode-nmap emacs-lisp-mode-map (kbd "g") 'linum-ace-jump)
 
 這樣在 emacs-lisp-mode 時， 切到 Normal-state，按下 g 就可以呼叫 linum-ace-jump 這個命令。
 
 #+begin_src emacs-lisp
-  (defmacro evil:mode-nmap (map key cmd)
+  (defmacro vim:mode-nmap (map key cmd)
     "Binding keymap to evil-normal-state."
     `(evil-define-key 'normal ,map ,key ,cmd))
-  (defmacro evil:mode-imap (map key cmd)
+  (defmacro vim:mode-imap (map key cmd)
     "Binding keymap to evil-insert-state."
     `(evil-define-key 'insert ,map ,key ,cmd))
-  (defmacro evil:mode-vmap (map key cmd)
+  (defmacro vim:mode-vmap (map key cmd)
     "Binding keymap to evil-visual-state."
     `(evil-define-key 'visual ,map ,key ,cmd))
 #+end_src
 
+** TODO ex command
+
+#+begin_src emacs-lisp
+  (defmacro vim:ex-cmd (cmd func)
+    "Binding to evil-ex-define-cmd."
+    `(evil-ex-define-cmd ,cmd ,func))
+#+end_src
 ** Normal-state 按鍵設定
 
 將一些非常慣用的 emacs 按鍵綁到 Normal-state 上面。
 
 #+begin_src emacs-lisp
-  (evil:nmap (kbd "C-n") 'evil-next-line)
-  (evil:nmap (kbd "C-p") 'evil-previous-line)
+  (vim:nmap (kbd "C-n") 'evil-next-line)
+  (vim:nmap (kbd "C-p") 'evil-previous-line)
 #+end_src
 
 ** Insert-state 按鍵設定
@@ -1706,9 +1713,10 @@ normal-state。
 這邊設定我的 Insert-state 的按鍵，部份會和我原本的 emacs 按鍵設置不太一樣。
 
 #+begin_src emacs-lisp
-  (evil:imap (kbd "C-o") 'evil-execute-in-normal-state)
-  (evil:imap (kbd "C-l") 'backward-delete-char)
+  (vim:imap (kbd "C-o") 'evil-execute-in-normal-state)
+  (vim:imap (kbd "C-l") 'backward-delete-char)
 #+end_src
+
 * 自動補全                                                         :complete:
 ** 載入相關套件
 
@@ -2705,7 +2713,7 @@ Following buffer will not show in iBuffer
                          helm-c-source-buffer-not-found)
                        "*coldnew helm mini*"))
 
-  (evil:imap (kbd "M-o") 'coldnew/helm-mini)
+  (vim:imap (kbd "M-o") 'coldnew/helm-mini)
 #+end_src
 
 * 文檔幫助
@@ -4130,7 +4138,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 *** 使用 nxhtml 作為 HTML 編輯模式
 
 #+begin_src emacs-lisp
-  (require 'nxhtml)
+;;  (require 'nxhtml)
 ;;  (defalias 'html-mode 'nxhtml-mode)
 #+end_src
 
@@ -5422,14 +5430,13 @@ offlineimap 可以在設定中加入
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
   (defalias 'coldnew/folding-toggle   'toggle-selective-display)
 #+end_src
-* 版本管理
-**  Git
-*** egg
-**** Depends
+* Git 版本管理
+** egg
+*** Depends
 #+begin_src emacs-lisp
   (require 'egg)
 #+end_src
-**** Config
+*** Config
 #+begin_src emacs-lisp
   ;; do not auto-update egg-status on file save
   (setq egg-auto-update nil)
@@ -5453,7 +5460,7 @@ offlineimap 可以在設定中加入
      ((memq :rebase-in-progress desc)       :rebase-continue)
      (t                                     :quit)))
 #+end_src
-**** Keybinding
+*** Keybinding
 #+begin_src emacs-lisp :tangle no
   (add-hook 'egg-commit-buffer-mode-hook
             '(lambda ()
@@ -5461,7 +5468,7 @@ offlineimap 可以在設定中加入
                ))
 
 #+end_src
-**** Advice                                                       :advice:
+*** Advice                                                         :advice:
 當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window。
 #+begin_src emacs-lisp
   (defadvice egg-status (around goto-egg-status-buffer activate)
@@ -5474,38 +5481,38 @@ offlineimap 可以在設定中加入
     ad-do-it
     (delete-other-windows))
 #+end_src
-*** magit
+** 載入 magit 套件
 
-**** 載入 magit 套件
 #+begin_src emacs-lisp
   (require 'magit)
 #+end_src
 
-**** 當使用 magit 時，不使用 emacs 原生的 vc 來處理和 git 相關的事情
+** 當使用 magit 時，不使用 emacs 原生的 vc 來處理和 git 相關的事情
 
 #+begin_src emacs-lisp
   (when (featurep 'magit)
     (setq vc-handled-backends (remq 'Git vc-handled-backends)))
 #+end_src
 
+** 使用 C-g 離開 magit 的視窗
 
-**** 使用 C-g 離開 magit 的視窗
 #+begin_src emacs-lisp
   (define-key magit-mode-map (kbd "C-g") 'magit-quit-window)
 #+end_src
 
-**** 全域性按鍵設定                                           :global@key:
+** 全域性按鍵設定                                               :global@key:
 
-| 按鍵    | 命令      | 用途                |
-|---------+-----------+---------------------|
-| C-x v l | magit-log | 使用 magit 察看 log |
-|         |           |                     |
+| 按鍵    | 命令         | 用途                            |
+|---------+--------------+---------------------------------|
+| C-x v l | magit-log    | 使用 magit 察看 log             |
+| C-x v s | magit-status | 使用 magit 查看目前的git status |
 
 #+begin_src emacs-lisp
-  (evil:imap (kbd "C-x vl") 'magit-log)
+  (vim:imap (kbd "C-x vl") 'magit-log)
+  (vim:imap (kbd "C-x vs") 'magit-status)
 #+end_src
 
-*** git-emacs
+** git-emacs
 #+begin_src emacs-lisp
   (require 'git-emacs)
   ;;   ;; disable git-emacs's advice
@@ -6028,7 +6035,7 @@ Function key 設置常用的命令。
     (set-register (car r) (cadr r)))
 #+end_src
 
-* 部若格                                                      :blog:
+* COMMENT 部若格                                                      :blog:
 ** 使用 o-blog 作為 blogging 系統
 *** 載入相關套件
 #+begin_src emacs-lisp
