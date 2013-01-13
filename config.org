@@ -5014,17 +5014,6 @@ winner-mode 是 emacs 自帶的窗口佈局管理器，可以對窗口的改變�
   (global-set-key (kbd "M-]") 'winner-redo)
 #+end_src
 
-* 網頁瀏覽
-** 使用 w3m 作為網頁瀏覽器
-
-#+begin_src emacs-lisp
-  (require 'w3m)
-#+end_src
-
-#+begin_src emacs-lisp
-  (setq w3m-default-display-inline-images t)
-#+end_src
-
 * Google 翻譯
 
 google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作。
