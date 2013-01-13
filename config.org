@@ -1571,6 +1571,13 @@ evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死�
   (setq evil-default-state 'insert)
 #+end_src
 
+
+#+begin_src emacs-lisp
+;;  (setq evil-normal- nil)
+;;  (setq evil-emacs-state nil)
+;;  (setq evil-motion-state nil)
+#+end_src
+
 ** 將 Emacs 按鍵綁到 Insert 模式上
 
 對我而言， Vim 的 Insert 模式是趨近於無用的，這邊將我的 Emacs 模式下的按鍵綁到
@@ -2941,20 +2948,26 @@ You can now (from git master) use `org-image-actual-width'.
 #+end_src
 
 ** 在 org-mode 裡面顯示圖片
+
 *** 增加 org-mode 圖片的正規表達式到 iimage-mode 裡面
+
 #+begin_src emacs-lisp
   (require 'iimage)
   (add-to-list 'iimage-mode-image-regex-alist
                (cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]\\]")  1))
 #+end_src
+
 *** 打開 iimage-mode 並取消 org-link 的顏色
+
 #+begin_src emacs-lisp
   (add-hook 'org-mode-hook
             '(lambda ()
                (turn-on-iimage-mode)
                (set-face-underline-p 'org-link nil)))
 #+end_src
+
 *** 切換顯示圖片的命令
+
 #+begin_src emacs-lisp
   (defun org-display-image ()
     "Toggle display images in org file."
@@ -2964,6 +2977,15 @@ You can now (from git master) use `org-image-actual-width'.
       (set-face-underline-p 'org-link t))
     (call-interactively 'iimage-mode))
 #+end_src
+
+*** 在 org-mode 裏面使用 C-c I 切換顯示圖片                        :keymap:
+
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook
+            '(lambda ()
+               (define-key org-mode-map (kbd "C-c I") 'org-display-image)))
+#+end_src
+
 ** Keybinding
 *** org-mode
 設定自定義的按鍵。
@@ -6038,11 +6060,11 @@ Function key 設置常用的命令。
     (set-register (car r) (cadr r)))
 #+end_src
 
-* COMMENT 部若格                                                      :blog:
+* 部若格                                                      :blog:
 ** 使用 o-blog 作為 blogging 系統
 *** 載入相關套件
 #+begin_src emacs-lisp
-;;(require 'o-blog)
+(require 'o-blog)
 #+end_src
 
 *** 設定網頁連結名稱
