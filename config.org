@@ -2996,7 +2996,7 @@ You can now (from git master) use `org-image-actual-width'.
                  (define-key org-mode-map (kbd "C-c C-n") 'org-forward-same-level)
                  (define-key org-mode-map (kbd "C-c C-b") 'coldnew/org-up-parent)
                  (define-key org-mode-map (kbd "C-c C-f") 'coldnew/org-down-children)
-                 (define-key org-mode-map (kbd "C-c i") 'org-display-image)
+                 (define-key org-mode-map (kbd "C-c i") 'org-insert-link)
                  ;;(define-key coldnew/command-mode-map "c" 'org-edit-special)
                  ))
 
