@@ -5555,6 +5555,21 @@ offlineimap 可以在設定中加入
 
 * 檔案備份
 
+雖然現在大家都有在使用 git、svn 等檔案管理系統，但我們最好還是有其他的
+備份，這裡設定的是 emacs 內建的備份方式。
+
+- *注意*:
+　　由於內建的備份方式是採用明碼來備份，所以若是加密的檔案也會直接被
+   備份。
+
+** 設定備份檔案的資料夾
+
+這個資料夾將存放所有的備份檔案
+
+#+begin_src emacs-lisp
+  (setq backup-directory-alist `(("." . ,emacs-backup-dir)))
+#+end_src
+
 ** 如果備份檔案用的資料夾不存在，重新建立他
 
 #+begin_src emacs-lisp
@@ -5592,16 +5607,48 @@ offlineimap 可以在設定中加入
   (setq delete-auto-save-files t)
 #+end_src
 
+** 讓備份檔案具有版本控管的功能
+
+當備份檔案的時候，可以透過設定 kept-old-versions 以及 kept-new-versions 來決定
+要保留多少備份。
+
+#+begin_src emacs-lisp
+  (setq version-control t)
+#+end_src
+
+** 保留舊有的 10 個備份
+
+當新的備份建立起來後，保留舊有的 10 個備份
+
+#+begin_src emacs-lisp
+  (setq kept-old-versions 10)
+#+end_src
+
+** 建立新的 20 個備份
+
+建立新的 20 個備份，當備份數量超過 20 以後，第一個備份會變成舊有的備份。
+
+#+begin_src emacs-lisp
+  (setq kept-new-versions 20)
+#+end_src
+
+** 刪除舊有的備份
+
+刪除非以上所述的 30 個備份
+
+#+begin_src emacs-lisp
+  (setq delete-old-versions t)
+#+end_src
+
+** 使用複製的方式來產生備份檔案
+
+#+begin_src emacs-lisp
+  (setq backup-by-copying t)
+#+end_src
+
 ** TODO 位龜類
 #+begin_src emacs-lisp
   (setq auto-save-default    t)           ; auto-save of every file-visiting buffer
-  (setq backup-directory-alist `(("." . ,emacs-backup-dir)))
-  (setq version-control      t )          ; enable version-control
-  (setq backup-by-copying    t )          ; backup by copy
-  (setq kept-old-versions   10 )          ; keep 10 old-version
-  (setq kept-new-versions   20 )          ; keep 20 new-version
-  (setq delete-old-versions  t )          ; delete non-of-above version
-
   ;; change auto-save-list setting
   (setq auto-save-list-file-prefix (concat emacs-backup-dir "auto-saves-"))
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
