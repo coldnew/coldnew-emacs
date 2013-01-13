@@ -4987,9 +4987,11 @@ popwin resolves there problems. Windows of such temporary buffers will be shown 
 winner-mode 是 emacs 自帶的窗口佈局管理器，可以對窗口的改變進行 undo/redo 的動作。
 
 *** 載入相關套件
+
 #+begin_src emacs-lisp
   (require 'winner)
 #+end_src
+
 *** 不使用 winner 預設的按鍵
 
 #+begin_src emacs-lisp
