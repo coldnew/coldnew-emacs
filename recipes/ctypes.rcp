@@ -1,3 +1,0 @@
-(:name ctypes
-       :description "Enhanced Font lock support for custom defined type"
-       :type elpa)
