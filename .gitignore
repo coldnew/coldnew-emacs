@@ -32,3 +32,4 @@ config.el
 local-lisp/
 log/
 url/
+lisp/
