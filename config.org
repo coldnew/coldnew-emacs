@@ -1708,6 +1708,18 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (vim:nmap (kbd "C-p") 'evil-previous-line)
 #+end_src
 
+| 按鍵 | 命令            | 用途             |
+|------+-----------------+------------------|
+| M-u  | upcase-word     | 將整個英文字大寫 |
+| M-l  | downcase-word   | 將整個英文字小寫 |
+| M-c  | capitalize-word | 將英文字字首大寫 |
+
+#+begin_src emacs-lisp
+  (vim:nmap (kbd "M-u") 'upcase-word)
+  (vim:nmap (kbd "M-l") 'downcase-word)
+  (vim:nmap (kbd "M-c") 'capitalize-word)
+#+end_src
+
 ** Insert-state 按鍵設定
 
 這邊設定我的 Insert-state 的按鍵，部份會和我原本的 emacs 按鍵設置不太一樣。
