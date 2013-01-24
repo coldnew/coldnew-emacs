@@ -133,39 +133,38 @@
 
 放置用於測試目前 emacs 執行在何種作業系統上的變數。
 
-*** MacOsx
+*** MacOS X
 #+begin_src emacs-lisp
   (defvar mac-p     (eq system-type 'darwin)
     "Return nil if OS is not Mac.")
 #+end_src
 
 *** Linux
-**** all
+
 #+begin_src emacs-lisp
+  ;; linux device
   (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
     "Return nil if OS is not Linux.")
-#+end_src
 
-**** 32-bit
-#+begin_src emacs-lisp
+  ;; linux 32-bit
   (defvar linux-32bit-p (and (string-match
-                            (rx (or bos "x86-" bos "i686-")) system-configuration) linux-p)
-  "Return nil if OS is not 32-bit linux.")
-#+end_src
+                              (rx (or bos "x86-" bos "i686-")) system-configuration) linux-p)
+    "Return nil if OS is not 32-bit linux.")
 
-**** 64-bit
-#+begin_src emacs-lisp
+  ;; linux 64-bit
   (defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
     "Return nil if OS is not 64-bit linux.")
 #+end_src
 
 *** Cygwin
+
 #+begin_src emacs-lisp
   (defvar cygwin-p  (eq system-type 'cygwin)
     "Return nil if OS is not CygWin.")
 #+end_src
 
 *** Window$
+
 #+begin_src emacs-lisp
   (defvar windows-p (eq system-type 'windows-nt)
     "Return nil if OS is not Windows.")
@@ -175,22 +174,18 @@
 
 放置測試螢幕解析度用的變數
 
-*** 1280x800
 #+begin_src emacs-lisp
+  ;; 1280x800
   (defvar display-1280x800-p   (and (= (display-pixel-width) 1280)
                                     (= (display-pixel-height) 800))
     "Return nil if current display's resolution is not 1280x800")
-#+end_src
 
-*** 1280x1024
-#+begin_src emacs-lisp
+  ;; 1280x1024
   (defvar display-1280x1024-p  (and (= (display-pixel-width) 1280)
                                     (= (display-pixel-height) 1024))
     "Return nil if current display's resolution is not 1280x1024")
-#+end_src
 
-*** 1920x1080
-#+begin_src emacs-lisp
+  ;; 1920x1080
   (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920)
                                     (= (display-pixel-height) 1080))
     "Return nil if current display's resolution is not 1920x1080")
@@ -893,16 +888,6 @@ iimage 是讓 emacs 可以直接顯示圖片的模式。
   (require 'iimage)
 #+end_src
 
-* Advice                                                             :advice:
-advice file
-#+begin_src emacs-lisp
-  (defadvice kill-emacs (around recompile-emacs-config activate)
-    "Before exit emacs, kill config.el which is generate by config.org."
-    (let ((file-name (expand-file-name (concat emacs-dir "config.el"))))
-      (if (file-exists-p file-name)
-          (delete-file file-name nil))
-      ad-do-it))
-#+end_src
 * Function                                                         :function:
 我所自定義或是我的 emacs 設定檔需要用到的 function。
 ** List Processing
@@ -1576,6 +1561,13 @@ evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死�
   (setq evil-default-state 'insert)
 #+end_src
 
+
+#+begin_src emacs-lisp
+;;  (setq evil-normal- nil)
+;;  (setq evil-emacs-state nil)
+;;  (setq evil-motion-state nil)
+#+end_src
+
 ** 將 Emacs 按鍵綁到 Insert 模式上
 
 對我而言， Vim 的 Insert 模式是趨近於無用的，這邊將我的 Emacs 模式下的按鍵綁到
@@ -1697,13 +1689,16 @@ normal-state。
     `(evil-define-key 'visual ,map ,key ,cmd))
 #+end_src
 
-** TODO ex command
+** 綁定 ex 命令的巨集
+
+Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define-cmd。
 
 #+begin_src emacs-lisp
   (defmacro vim:ex-cmd (cmd func)
     "Binding to evil-ex-define-cmd."
     `(evil-ex-define-cmd ,cmd ,func))
 #+end_src
+
 ** Normal-state 按鍵設定
 
 將一些非常慣用的 emacs 按鍵綁到 Normal-state 上面。
@@ -1711,6 +1706,18 @@ normal-state。
 #+begin_src emacs-lisp
   (vim:nmap (kbd "C-n") 'evil-next-line)
   (vim:nmap (kbd "C-p") 'evil-previous-line)
+#+end_src
+
+| 按鍵 | 命令            | 用途             |
+|------+-----------------+------------------|
+| M-u  | upcase-word     | 將整個英文字大寫 |
+| M-l  | downcase-word   | 將整個英文字小寫 |
+| M-c  | capitalize-word | 將英文字字首大寫 |
+
+#+begin_src emacs-lisp
+  (vim:nmap (kbd "M-u") 'upcase-word)
+  (vim:nmap (kbd "M-l") 'downcase-word)
+  (vim:nmap (kbd "M-c") 'capitalize-word)
 #+end_src
 
 ** Insert-state 按鍵設定
@@ -2943,20 +2950,26 @@ You can now (from git master) use `org-image-actual-width'.
 #+end_src
 
 ** 在 org-mode 裡面顯示圖片
+
 *** 增加 org-mode 圖片的正規表達式到 iimage-mode 裡面
+
 #+begin_src emacs-lisp
   (require 'iimage)
   (add-to-list 'iimage-mode-image-regex-alist
                (cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]\\]")  1))
 #+end_src
+
 *** 打開 iimage-mode 並取消 org-link 的顏色
+
 #+begin_src emacs-lisp
   (add-hook 'org-mode-hook
             '(lambda ()
                (turn-on-iimage-mode)
                (set-face-underline-p 'org-link nil)))
 #+end_src
+
 *** 切換顯示圖片的命令
+
 #+begin_src emacs-lisp
   (defun org-display-image ()
     "Toggle display images in org file."
@@ -2966,6 +2979,15 @@ You can now (from git master) use `org-image-actual-width'.
       (set-face-underline-p 'org-link t))
     (call-interactively 'iimage-mode))
 #+end_src
+
+*** 在 org-mode 裏面使用 C-c I 切換顯示圖片                        :keymap:
+
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook
+            '(lambda ()
+               (define-key org-mode-map (kbd "C-c I") 'org-display-image)))
+#+end_src
+
 ** Keybinding
 *** org-mode
 設定自定義的按鍵。
@@ -2976,7 +2998,7 @@ You can now (from git master) use `org-image-actual-width'.
                  (define-key org-mode-map (kbd "C-c C-n") 'org-forward-same-level)
                  (define-key org-mode-map (kbd "C-c C-b") 'coldnew/org-up-parent)
                  (define-key org-mode-map (kbd "C-c C-f") 'coldnew/org-down-children)
-                 (define-key org-mode-map (kbd "C-c i") 'org-display-image)
+                 (define-key org-mode-map (kbd "C-c i") 'org-insert-link)
                  ;;(define-key coldnew/command-mode-map "c" 'org-edit-special)
                  ))
 
@@ -4967,9 +4989,11 @@ popwin resolves there problems. Windows of such temporary buffers will be shown 
 winner-mode 是 emacs 自帶的窗口佈局管理器，可以對窗口的改變進行 undo/redo 的動作。
 
 *** 載入相關套件
+
 #+begin_src emacs-lisp
   (require 'winner)
 #+end_src
+
 *** 不使用 winner 預設的按鍵
 
 #+begin_src emacs-lisp
@@ -4982,7 +5006,7 @@ winner-mode 是 emacs 自帶的窗口佈局管理器，可以對窗口的改變�
   (winner-mode t)
 #+end_src
 
-** 全域按鍵設定                                                 :global@key:
+*** winner-mode 按鍵設定                                         :global@key:
 
 | 按鍵 | 命令        | 用途                               |
 |------+-------------+------------------------------------|
@@ -4992,17 +5016,6 @@ winner-mode 是 emacs 自帶的窗口佈局管理器，可以對窗口的改變�
 #+begin_src emacs-lisp
   (global-set-key (kbd "M-[") 'winner-undo)
   (global-set-key (kbd "M-]") 'winner-redo)
-#+end_src
-
-* 網頁瀏覽
-** 使用 w3m 作為網頁瀏覽器
-
-#+begin_src emacs-lisp
-  (require 'w3m)
-#+end_src
-
-#+begin_src emacs-lisp
-  (setq w3m-default-display-inline-images t)
 #+end_src
 
 * Google 翻譯
@@ -5544,6 +5557,21 @@ offlineimap 可以在設定中加入
 
 * 檔案備份
 
+雖然現在大家都有在使用 git、svn 等檔案管理系統，但我們最好還是有其他的
+備份，這裡設定的是 emacs 內建的備份方式。
+
+- *注意*:
+　　由於內建的備份方式是採用明碼來備份，所以若是加密的檔案也會直接被
+   備份。
+
+** 設定備份檔案的資料夾
+
+這個資料夾將存放所有的備份檔案
+
+#+begin_src emacs-lisp
+  (setq backup-directory-alist `(("." . ,emacs-backup-dir)))
+#+end_src
+
 ** 如果備份檔案用的資料夾不存在，重新建立他
 
 #+begin_src emacs-lisp
@@ -5581,135 +5609,51 @@ offlineimap 可以在設定中加入
   (setq delete-auto-save-files t)
 #+end_src
 
+** 讓備份檔案具有版本控管的功能
+
+當備份檔案的時候，可以透過設定 kept-old-versions 以及 kept-new-versions 來決定
+要保留多少備份。
+
+#+begin_src emacs-lisp
+  (setq version-control t)
+#+end_src
+
+** 保留舊有的 10 個備份
+
+當新的備份建立起來後，保留舊有的 10 個備份
+
+#+begin_src emacs-lisp
+  (setq kept-old-versions 10)
+#+end_src
+
+** 建立新的 20 個備份
+
+建立新的 20 個備份，當備份數量超過 20 以後，第一個備份會變成舊有的備份。
+
+#+begin_src emacs-lisp
+  (setq kept-new-versions 20)
+#+end_src
+
+** 刪除舊有的備份
+
+刪除非以上所述的 30 個備份
+
+#+begin_src emacs-lisp
+  (setq delete-old-versions t)
+#+end_src
+
+** 使用複製的方式來產生備份檔案
+
+#+begin_src emacs-lisp
+  (setq backup-by-copying t)
+#+end_src
+
 ** TODO 位龜類
 #+begin_src emacs-lisp
   (setq auto-save-default    t)           ; auto-save of every file-visiting buffer
-  (setq backup-directory-alist `(("." . ,emacs-backup-dir)))
-  (setq version-control      t )          ; enable version-control
-  (setq backup-by-copying    t )          ; backup by copy
-  (setq kept-old-versions   10 )          ; keep 10 old-version
-  (setq kept-new-versions   20 )          ; keep 20 new-version
-  (setq delete-old-versions  t )          ; delete non-of-above version
-
   ;; change auto-save-list setting
   (setq auto-save-list-file-prefix (concat emacs-backup-dir "auto-saves-"))
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
-#+end_src
-* 多媒體                                                               :emms:
-:PROPERTIES:
-:tangle: no
-:END:
-使用 emacs 聽音樂。
-** 預先載入套件
-#+begin_src emacs-lisp
-  (require 'emms-setup)
-#+end_src
-** 選用開發中的 emms 功能
-啟用 emms 所有穩定版的功能。
-在 emms-setup 裡面，emms 提供了 minimalistic、tandard、all 以及包含各種含在測試中的外掛。
-選擇 all 啟用了所有穩定版本的外掛，devel 是選用開發中的外掛。
-#+begin_src emacs-lisp
-  (emms-devel)
-#+end_src
-** 自動根據音樂檔的 id3 Tag 進行語言解碼
-#+begin_src emacs-lisp
-  (require 'emms-i18n)
-#+end_src
-** 設定 emms 所使用的播放器
-emms-setup 提供了 emms-default-players 這個函數來簡化播放器的設定，
-這邊重新設定我所需要使用的多媒體播放程式。
-#+begin_src emacs-lisp
-  (setq emms-player-list '(emms-player-mpg321
-                           ;;emms-player-ogg123
-                           emms-player-mplayer-playlist
-                           emms-player-mplayer
-                           emms-player-vlc
-                           ))
-#+end_src
-** 設定預設的音樂資料夾路徑
-#+begin_src emacs-lisp
-
-#+end_src
-** 播放清單設置
-#+begin_src emacs-lisp
-  (setq emms-playlist-buffer-name "*EMMS Playlist*"
-        emms-playlist-mode-open-playlists t)
-
-  (require 'emms-info-libtag)
-  (setq emms-info-functions '(emms-info-libtag))
-
-  (setq xwl-emms-playlist-last-track nil)
-  (setq xwl-emms-playlist-last-indent "\\")
-
-  (defun xwl-emms-track-description-function (track)
-    "Return a description of the current track."
-    (let* ((name (emms-track-name track))
-           (type (emms-track-type track))
-           (short-name (file-name-nondirectory name))
-           (play-count (or (emms-track-get track 'play-count) 0))
-           (last-played (or (emms-track-get track 'last-played) '(0 0 0)))
-           (empty "..."))
-      (prog1
-          (case (emms-track-type track)
-            ((file url)
-             (let* ((artist (or (emms-track-get track 'info-artist) empty))
-                    (year (emms-track-get track 'info-year))
-                    (playing-time (or (emms-track-get track 'info-playing-time) 0))
-                    (min (/ playing-time 60))
-                    (sec (% playing-time 60))
-                    (album (or (emms-track-get track 'info-album) empty))
-                    (tracknumber (emms-track-get track 'info-tracknumber))
-                    (short-name (file-name-sans-extension
-                                 (file-name-nondirectory name)))
-                    (title (or (emms-track-get track 'info-title) short-name))
-
-                    ;; last track
-                    (ltrack xwl-emms-playlist-last-track)
-                    (lartist (or (and ltrack (emms-track-get ltrack 'info-artist))
-                                 empty))
-                    (lalbum (or (and ltrack (emms-track-get ltrack 'info-album))
-                                empty))
-
-                    (same-album-p (and (not (string= lalbum empty))
-                                       (string= album lalbum))))
-               (format "%10s  %3d   %-20s%-60s%-35s%-15s%s"
-                       (emms-last-played-format-date last-played)
-                       play-count
-                       artist
-
-                       ;; Combine indention, tracknumber, title.
-                       (concat
-                        (if same-album-p ; indention by album
-                            (setq xwl-emms-playlist-last-indent
-                                  (concat " " xwl-emms-playlist-last-indent))
-                          (setq xwl-emms-playlist-last-indent "\\")
-                          "")
-                        (if (and tracknumber ; tracknumber
-                                 (not (zerop (string-to-number tracknumber))))
-                            (format "%02d." (string-to-number tracknumber))
-                          "")
-                        title        ; title
-                        )
-
-                       ;; album
-                       (cond ((string= album empty) empty)
-                             ;; (same-album-p "  ")
-                             (t (concat "《" album "》")))
-
-                       (or year empty)
-                       (if (or (> min 0)  (> sec 0))
-                           (format "%02d:%02d" min sec)
-                         empty))))
-            ((url)
-             (concat (symbol-name type) ":" name))
-            (t
-             (format "%-3d%s"
-                     play-count
-                     (concat (symbol-name type) ":" name))))
-        (setq xwl-emms-playlist-last-track track))))
-
-  (setq emms-track-description-function
-        'xwl-emms-track-description-function)
 #+end_src
 * Session
 ** filecache
@@ -6156,11 +6100,11 @@ Function key 設置常用的命令。
     (set-register (car r) (cadr r)))
 #+end_src
 
-* COMMENT 部若格                                                      :blog:
+* 部若格                                                      :blog:
 ** 使用 o-blog 作為 blogging 系統
 *** 載入相關套件
 #+begin_src emacs-lisp
-;;(require 'o-blog)
+(require 'o-blog)
 #+end_src
 
 *** 設定網頁連結名稱

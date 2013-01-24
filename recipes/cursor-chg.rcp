@@ -1,4 +1,0 @@
-(:name cursor-chg
-       :description ""
-       :features cursor-chg
-       :type elpa)

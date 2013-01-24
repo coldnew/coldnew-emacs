@@ -1,4 +1,0 @@
-(:name smarter-compile
-       :description "an interface to `compile'"
-       :features smarter-compile
-       :type elpa)
