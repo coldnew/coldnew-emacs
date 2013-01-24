@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-(:name elscreen
-       :description ""
-       :website ""
-       :type github
-       :pkgname "renard/o-blog")
-=======
 (:name o-blog
        :description ""
        :type git
        :url "https://github.com/renard/o-blog.git"
        :features o-blog)
->>>>>>> 13e916653caeacc392b6eee0175e2a41fa27ccc9
