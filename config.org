@@ -2929,7 +2929,10 @@ You can now (from git master) use `org-image-actual-width'.
   (setq org-crypt-tag-matcher "secret")
 #+end_src
 
-*** Add a hook to automatically encrypt entries before a file is saved to disk.
+*** 當被加密的部份要存入硬碟時，自動加密回去
+
+如果 emacs 有打開檔案備份，在存回硬碟前必須要先加密在儲存，
+否則加密的部份也會被備份起來。
 
 #+begin_src emacs-lisp
   (org-crypt-use-before-save-magic)
