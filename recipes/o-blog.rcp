@@ -1,0 +1,5 @@
+(:name elscreen
+       :description ""
+       :website ""
+       :type github
+       :pkgname "renard/o-blog")
