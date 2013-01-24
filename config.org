@@ -6075,7 +6075,6 @@ Function key 設置常用的命令。
   ;; (global-set-key (kbd "\"") 'paredit-doublequote)
 #+end_src
 
-
 * Register                                                         :register:
 ** 放置快速跳轉的捷徑命令。
 使用 Ctrl-x r j <char> 就可以進行快速跳轉至檔案，其中 <char> 為以下所設定。
