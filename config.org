@@ -3453,8 +3453,8 @@ some packages conflict with org-mode
   (global-semantic-decoration-mode -1)
 
   ;;;; Enable support for GNU Global
-  (semanticdb-enable-gnu-global-databases 'c-mode)
-  (semanticdb-enable-gnu-global-databases 'c++-mode)
+;;  (semanticdb-enable-gnu-global-databases 'c-mode)
+;;  (semanticdb-enable-gnu-global-databases 'c++-mode)
 
   (setq semanticdb-default-save-directory (concat emacs-cache-dir "semanticdb"))
   (set-default 'semantic-case-fold t)
