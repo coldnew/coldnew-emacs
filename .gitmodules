@@ -1,3 +1,0 @@
-[submodule "lisp/el-get"]
-	path = lisp/el-get
-	url = http://github.com/dimitri/el-get.git
