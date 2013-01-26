@@ -5440,11 +5440,20 @@ offlineimap 可以在設定中加入
   (defalias 'coldnew/folding-toggle   'toggle-selective-display)
 #+end_src
 * Git 版本管理
-** egg
-*** Depends
+
+git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最好的， emacs
+有許多好用的 git 套件，諸如 egg, magit, git-emacs 之類，在這邊的設定
+我整合了這幾種工具，選用我最喜歡的功能。
+
+** 載入套件
+
 #+begin_src emacs-lisp
   (require 'egg)
+  (require 'magit)
+  (require 'git-emacs)
 #+end_src
+
+** egg
 *** Config
 #+begin_src emacs-lisp
   ;; do not auto-update egg-status on file save
@@ -5490,12 +5499,6 @@ offlineimap 可以在設定中加入
     ad-do-it
     (delete-other-windows))
 #+end_src
-** 載入 magit 套件
-
-#+begin_src emacs-lisp
-  (require 'magit)
-#+end_src
-
 ** 當使用 magit 時，不使用 emacs 原生的 vc 來處理和 git 相關的事情
 
 #+begin_src emacs-lisp
@@ -5503,10 +5506,14 @@ offlineimap 可以在設定中加入
     (setq vc-handled-backends (remq 'Git vc-handled-backends)))
 #+end_src
 
-** 使用 C-g 離開 magit 的視窗
+** 使用 C-g 離開 git 程式的視窗
+
+我習慣在 emacs 使用 C-g 來跳離視窗，所以這邊也是這樣設定，用來
+逃離 magit, git-emacs 的視窗。
 
 #+begin_src emacs-lisp
   (define-key magit-mode-map (kbd "C-g") 'magit-quit-window)
+  (define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
 #+end_src
 
 ** 全域性按鍵設定                                               :global@key:
@@ -5521,14 +5528,6 @@ offlineimap 可以在設定中加入
   (vim:imap (kbd "C-x vs") 'magit-status)
 #+end_src
 
-** git-emacs
-#+begin_src emacs-lisp
-  (require 'git-emacs)
-  ;;   ;; disable git-emacs's advice
-  ;;   (ad-disable-advice 'vc-next-action 'around 'git--vc-git-next-action)
-  ;;   (ad-activate 'vc-next-action)
-  (define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
-#+end_src
 * Hooks                                                               :hook:
 ** find-file-hook
 #+begin_src emacs-lisp
