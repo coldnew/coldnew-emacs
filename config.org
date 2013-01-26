@@ -2379,7 +2379,6 @@ Following buffer will not show in iBuffer
 #+end_src
 
 * 文件加密                                                          :encrypt:
-
 ** 載入相依套件
 
 #+begin_src emacs-lisp
@@ -2514,8 +2513,7 @@ Following buffer will not show in iBuffer
   (require 'em-cmpl)
 #+end_src
 
-** Config
-**** Prompt
+*** Prompt
 將 eshell 的 prompt 設定成和 bash 一樣，也就是　 username@system-name。
 #+begin_src emacs-lisp
   (setq eshell-prompt-function
@@ -5028,8 +5026,8 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
 ** 預設設定為 正體中文 -> 英文
 
 #+begin_src emacs-lisp
-(setq google-translate-default-source-language "zh-TW")
-(setq google-translate-default-target-language "en")
+  (setq google-translate-default-source-language "zh-TW")
+  (setq google-translate-default-target-language "en")
 #+end_src
 
 ** 將英文翻譯為中文
@@ -5572,7 +5570,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 雖然現在大家都有在使用 git、svn 等檔案管理系統，但我們最好還是有其他的
 備份，這裡設定的是 emacs 內建的備份方式。
 
-- *注意*:
+*注意*:
 　　由於內建的備份方式是採用明碼來備份，所以若是加密的檔案也會直接被
    備份。
 
@@ -5754,11 +5752,9 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 
 關閉部份按鍵設定，在後面重新設定他。
 #+begin_src emacs-lisp
-;;  (global-unset-key (kbd "<escape>"))
   (global-unset-key (kbd "C-r"))
   (global-unset-key (kbd "C-x e"))
   (global-unset-key (kbd "C-x d"))
-;;  (global-set-key (kbd "<escape>") 'evil-normal-state)
 #+end_src
 
 ** Function key prefix
