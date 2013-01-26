@@ -1617,6 +1617,7 @@ normal-state。
 - vim:imap 綁定按鍵到 Insert 狀態下
 - vim:vmap 綁定按鍵到 Visual 狀態下
 - vim:wmap 綁定按鍵到窗口切換的按鍵
+- vim:map  綁定按鍵到 Normal, Insert 狀態下
 
 使用方式：
 
@@ -1637,6 +1638,11 @@ normal-state。
   (defmacro vim:wmap (key cmd)
     "Binding keymap to evil-visual-state."
     `(define-key evil-window-map ,key ,cmd))
+
+  (defmacro vim:map (key cmd)
+    "Binding keymap to evil-visual-state."
+    `(define-key evil-normal-state-map ,key ,cmd)
+    `(define-key evil-insert-state-map ,key ,cmd))
 #+end_src
 
 區域性的按鍵設置
@@ -5425,15 +5431,6 @@ offlineimap 可以在設定中加入
   (add-hook 'mu4e-compose-pre-hook 'coldnew/mu4e-set-account)
 #+end_src
 * Alias                                                               :alias:
-** git
-和 git 相關的命令的 alias。
-#+begin_src emacs-lisp
-  (defalias 'git-log    'egg-log)
-  (defalias 'git-status 'egg-status)
-  (defalias 'git-rebase 'magit-rebase-step)
-  (defalias 'git-push   'magit-push)
-  (defalias 'git-commit 'egg-commit-log-edit)
-#+end_src
 ** Misc
 #+begin_src emacs-lisp
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
@@ -5453,15 +5450,34 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
   (require 'git-emacs)
 #+end_src
 
-** egg
-*** Config
+** 命令綁定、縮寫                                                    :alias:
+
+由於我用了很多 git 的程式，這邊綁定命令到我想用的程式去
+
 #+begin_src emacs-lisp
-  ;; do not auto-update egg-status on file save
+  (defalias 'git-log    'egg-log)
+  (defalias 'git-status 'egg-status)
+  (defalias 'git-rebase 'magit-rebase-step)
+  (defalias 'git-push   'magit-push)
+  (defalias 'git-commit 'egg-commit-log-edit)
+#+end_src
+
+** 當檔案儲存時不自動將其加入 commit 中
+
+egg 有一個很不錯的功能，就是當檔案儲存的時候，自動將其加入到 commit
+當中，不過我用起來實在是很不習慣，所以把他 disable 掉。
+
+#+begin_src emacs-lisp
   (setq egg-auto-update nil)
+#+end_src
 
-  ;; do not switch to the status buffer in the same window
-  (setq egg-switch-to-buffer t)
+** 讓 egg 自動猜測下一個動作
 
+我很喜歡 vc-mode 的一個功能，就是當我按下 C-x vv 的時候，會自動幫我將
+目前的 buffer 加入 commit, egg 同樣也提供這個功能，這邊關掉 egg
+的確認系統，讓他根據狀況自動猜測下一步要做什麼。
+
+#+begin_src emacs-lisp
   ;; make egg auto guess next action
   (setq egg-confirm-next-action nil)
 
@@ -5478,16 +5494,13 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
      ((memq :rebase-in-progress desc)       :rebase-continue)
      (t                                     :quit)))
 #+end_src
-*** Keybinding
-#+begin_src emacs-lisp :tangle no
-  (add-hook 'egg-commit-buffer-mode-hook
-            '(lambda ()
-               (define-key coldnew/command-mode-map "c" 'egg-log-msg-done)
-               ))
 
-#+end_src
-*** Advice                                                         :advice:
-當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window。
+** 當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window。 :advice:
+
+egg-status 和 egg-commit-log-edit 這兩個 buffer 都很酷，我覺得讓
+他們啟動時成為一個全螢幕的視窗比較好，所以這邊增加 advice 來改變
+預設的動作。
+
 #+begin_src emacs-lisp
   (defadvice egg-status (around goto-egg-status-buffer activate)
     "Delete other windows after visiting egg-status."
@@ -5499,11 +5512,16 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
     ad-do-it
     (delete-other-windows))
 #+end_src
+
 ** 當使用 magit 時，不使用 emacs 原生的 vc 來處理和 git 相關的事情
+
+emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事情，但
+是我覺的 magit 比較好用，所以當有載入 magit 時，就將 vc-mode 裏面
+負責處理 git 的部份拿掉。
 
 #+begin_src emacs-lisp
   (when (featurep 'magit)
-    (setq vc-handled-backends (remq 'Git vc-handled-backends)))
+    (setq vc-handled-backends (remq 'git vc-handled-backends)))
 #+end_src
 
 ** 使用 C-g 離開 git 程式的視窗
@@ -5518,14 +5536,16 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
 
 ** 全域性按鍵設定                                               :global@key:
 
-| 按鍵    | 命令         | 用途                            |
-|---------+--------------+---------------------------------|
-| C-x v l | magit-log    | 使用 magit 察看 log             |
-| C-x v s | magit-status | 使用 magit 查看目前的git status |
+| 按鍵    | 命令            | 用途                            |
+|---------+-----------------+---------------------------------|
+| C-x v l | magit-log       | 使用 magit 察看 log             |
+| C-x v s | magit-status    | 使用 magit 查看目前的git status |
+| C-x v v | egg-next-action | 讓 egg 自動猜測下一步要做什麼   |
 
 #+begin_src emacs-lisp
   (vim:imap (kbd "C-x vl") 'magit-log)
   (vim:imap (kbd "C-x vs") 'magit-status)
+  (vim:map (kbd "C-x vv") 'egg-next-action)
 #+end_src
 
 * Hooks                                                               :hook:
@@ -5889,9 +5909,7 @@ Function key 設置常用的命令。
 #+end_src
 
 #+begin_src emacs-lisp
-  ;;  (global-set-key (kbd "C-x b")    'coldnew/helm-filelist)
   (global-set-key (kbd "C-x C-d")  'dired)
-  (global-set-key (kbd "C-x vv") 'egg-next-action)
   (global-set-key (kbd "C-x M-x") 'helm-M-x)
   (global-set-key (kbd "C-x C-n") 'auto-complete)
   (global-set-key (kbd "C-x C-s") 'save-buffer-always)
