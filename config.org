@@ -5530,6 +5530,8 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 逃離 magit, git-emacs 的視窗。
 
 #+begin_src emacs-lisp
+  (define-key egg-status-buffer-mode-map (kbd "C-g") 'egg-quit-buffer)
+  (define-key egg-log-msg-mode-map (kbd "C-g") 'egg-quit-buffer)
   (define-key magit-mode-map (kbd "C-g") 'magit-quit-window)
   (define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
 #+end_src
