@@ -6,6 +6,16 @@
 #+OPTIONS: ^:nil
 #+INFOJS_OPT: view:info toc:t ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 
+* 關於這份檔案
+
+用了 emacs 至今已有 6年了，最初我的 emacs 配置也是英文版，並且分散了許多檔案，
+直到我知道了 org-mode 以及所謂的文學編程，我二話不說就將我的 emacs 設定移植到
+org-mode 上面，並重新改寫用中文來寫配置的說明。
+
+在這 6年的時間裡，用 emacs 學 emacs 以及配置 emacs 花費了我不少時間，網路上
+太多太多中文的配置都是複製貼上複製貼上，連用途都不懂就轉用了別人的文章放到
+自己的部若格上，讓我剛開始學 emacs 查找資料時有許多困擾， <待續>
+
 * 基礎設置                                                             :base:
 
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
