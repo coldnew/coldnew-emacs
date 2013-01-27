@@ -5305,12 +5305,13 @@ offlineimap 可以在設定中加入
 #+end_src
 
 #+begin_src emacs-lisp
-(defvar smtp-account-list nil)
-  (defun smtp-get-password (account)
-    (require 'netrc)
-    ;;(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
-    (or (netrc-get smtp-account-list account) ""))
+  (defvar smtp-account-list nil)
+    (defun smtp-get-password (account)
+      (require 'netrc)
+      ;;(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
+      (or (netrc-get smtp-account-list account) ""))
 #+end_src
+
 ** mu4e
 *** 載入套件
 #+begin_src emacs-lisp
