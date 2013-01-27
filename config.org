@@ -877,7 +877,6 @@ M-x iedit-mode 接著就會發現到同個緩衝區裏面所有和游標底下�
   (require 'smarter-compile)
   (require 'unicad)
   (require 'expand-region)
-  (require 'sr-speedbar)
   (require 'pretty-lambdada)
   (require 'rainbow-delimiters)
 #+end_src
@@ -2282,37 +2281,8 @@ Following buffer will not show in iBuffer
   (setq slime-repl-history-size 300)
 
   ;; Use global programming mode
-  (add-hook 'slime-repl-mode-hook 'programming-mode)
   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 #+end_src
-** compilation
-#+begin_src emacs-lisp
-  ;; FIXME: move to other place
-  (defun notify-compilation-result(buffer msg)
-    "Notify that the compilation is finished,
-     close the *compilation* buffer if the compilation is successful,
-     and set the focus back to Emacs frame"
-    (if (string-match "^finished" msg)
-        (progn
-          (delete-windows-on buffer)
-          (message (propertize "COMPILATION SUCCESSFUL :-) " 'face 'font-lock-warning-face))
-          ;;       (tooltip-show "\n Compilation Successful :-) \n ")
-          )
-      (tooltip-show "\n Compilation Failed :-( \n "))
-    ;; FIXME: When I use dualscreen, following functiokn will make error,
-    ;;        after compilation, current frame will jump to another DISPLAY
-    ;;  (setq current-frame (car (car (cdr (current-frame-configuration)))))
-    ;; (select-frame-set-input-focus current-frame)
-    )
-
-  (add-to-list 'compilation-finish-functions 'notify-compilation-result)
-  ;; Make compilaction buffer always scrolls to follow output as it comes in.
-  (setq compilation-scroll-output t)
-
-  ;; Auto jump to the first error.
-  (setq compilation-auto-jump-to-first-error t)
-#+end_src
-
 * 終端機                                                               :term:
 ** shell-pop
 *** 載入相依套件
@@ -5058,25 +5028,34 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
 
 *** 載入相依套件
+
 #+begin_src emacs-lisp
   (require 'erc)
   (require 'erc-notify)
   (require 'erc-spelling)
   (require 'erc-autoaway)
 #+end_src
-*** 設定 prompt
+
+*** 設定 prompt 為 >>
+
 #+begin_src emacs-lisp
   (setq erc-prompt ">>")
 #+end_src
+
 *** 編碼設定為 utf-8
+
 #+begin_src emacs-lisp
   (setq erc-server-coding-system '(utf-8 . utf-8))
 #+end_src
+
 *** 當 ERC 啟動時，自動連入 IRC 伺服器
+
 #+begin_src emacs-lisp
   (erc-autojoin-mode t)
 #+end_src
+
 *** 自動連線的伺服器與聊天室
+
 #+begin_src emacs-lisp
   (setq erc-autojoin-channels-alist
         '(;; english channel
@@ -5086,57 +5065,80 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
           (".*\\.oftc.net" "#dot")
           ))
 #+end_src
+
 *** 關閉部份訊息顯示
+
 #+begin_src emacs-lisp
   (setq erc-hide-list '("JOIN" "PART" "QUIT"))
 #+end_src
+
 *** 加入時間戳
+
 #+begin_src emacs-lisp
   (erc-timestamp-mode 1)
 #+end_src
+
 *** 紀錄聊天訊息
 **** 載入相依套件
+
 #+begin_src emacs-lisp
   (require 'erc-log)
 #+end_src
+
 **** 啟動 erc-log-mode
+
 #+begin_src emacs-lisp
   (erc-log-mode 1)
 #+end_src
+
 **** 設定紀錄檔儲存位置
+
 #+begin_src emacs-lisp
   (setq erc-log-channels-directory emacs-log-dir)
 #+end_src
+
 **** 如果儲存紀錄檔的資料夾不存在，建立他
+
 #+begin_src emacs-lisp
   (unless (file-exists-p erc-log-channels-directory)
     (mkdir erc-log-channels-directory t))
 #+end_src
+
 **** 紀錄檔編碼為 utf-8
+
 #+begin_src emacs-lisp
   (setq erc-log-file-coding-system 'utf-8)
 #+end_src
+
 **** 送出訊息後寫入到 log
+
 #+begin_src emacs-lisp
   (setq erc-log-write-after-send t)
 #+end_src
+
 **** 當有新訊息時，寫入到log
+
 #+begin_src emacs-lisp
   (setq erc-log-write-after-insert t)
 #+end_src
+
 *** 設定聊天時的行寬為 100
+
 #+begin_src emacs-lisp
   (setq erc-fill-column 100)
 #+end_src
+
 *** 為聊天室裡的使用者暱稱上色
+
 #+begin_src emacs-lisp
   (and
    (require 'erc-highlight-nicknames)
    (add-to-list 'erc-modules 'highlight-nicknames)
    (erc-update-modules))
 #+end_src
-*** Configs
-**** Misc
+
+*** Misc
+
 #+begin_src emacs-lisp
   ;; check channels
   ;; exclude boring stuff from tracking
@@ -5168,7 +5170,9 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
   (setq erc-autoaway-idle-seconds 600)
   (setq erc-autoaway-use-emacs-idle t)
 #+end_src
+
 *** Commands
+
 #+begin_src emacs-lisp
   (defun i-wanna-be-social ()
     "Connect to IM networks using bitlbee."
@@ -5202,7 +5206,9 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
       (let ((nickserv-command (mapconcat #'identity command-args " ")))
         (erc-send-command nickserv-command))))
 #+end_src
+
 *** Function
+
 #+begin_src emacs-lisp
 (defun avoid-erc-oops (txt)
   (when (member txt '("ls" "xb" "cd"))
@@ -5210,7 +5216,9 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
 
 (add-to-list 'erc-send-pre-hook 'avoid-erc-oops)
 #+end_src
+
 *** Command
+
 #+begin_src emacs-lisp
   (defun irc ()
     (interactive)
