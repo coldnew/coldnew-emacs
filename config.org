@@ -698,8 +698,7 @@ emacs 在 24 版後終於有自己的套件管理器 ELPA ，不過有些外部�
         (insert ")"))))
 #+end_src
 
-*** 設定自動更新安裝套件資訊的時間
-**** 當安裝新的套件時，更新套件資訊
+*** 當安裝新的套件時，更新套件資訊
 
 #+begin_src emacs-lisp
   (defun emacs-packages-install (pkg)
@@ -712,28 +711,31 @@ emacs 在 24 版後終於有自己的套件管理器 ELPA ，不過有些外部�
   (add-hook 'el-get-post-install-hooks 'emacs-packages-install)
 #+end_src
 
-**** 當移除套件時，更新套件資訊
-***** TODO el-get-post-remove-hooks 不知道為什麼不能用，所以只好先 advice el-get-remove
+*** 當移除套件時，更新套件資訊
+
 #+begin_src emacs-lisp
   (defun emacs-packages-remove (pkg)
     (setq emacs-packages-list (remove pkg emacs-packages-list))
     (emacs-packages-write-to-file))
 
   ;; add to hooks
-  ;;(add-hook 'el-get-post-remove-hooks 'emacs-packages-remove)
-
-  (defadvice el-get-remove (after remove-package activate)
-    (emacs-packages-remove package))
+  (add-hook 'el-get-post-remove-hooks 'emacs-packages-remove)
 #+end_src
+
 *** 檢查套件是否有在 emacs-packages-list 裡
+
 #+begin_src emacs-lisp
   (defun emacs-packages-installed-p ()
     (loop for p in emacs-packages-list
           when (not (el-get-package-is-installed p)) do (return nil)
           finally (return t)))
 #+end_src
-*** 當發現有套件存在 emacs-package-list 裡面，但是卻被 emacs-packages-installed-p 回報為
+
+*** 套件檢查，不存在則重新安裝
+
+當發現有套件存在 emacs-package-list 裡面，但是卻被 emacs-packages-installed-p 回報為
 此套件不存在時，重新安裝此套件。
+
 #+begin_src emacs-lisp
   (defun emacs-packages-install-packages ()
     (unless (emacs-packages-installed-p)
@@ -745,6 +747,7 @@ emacs 在 24 版後終於有自己的套件管理器 ELPA ，不過有些外部�
   ;; install missing packages
   (emacs-packages-install-packages)
 #+end_src
+
 * 巨集                                                                :macro:
 ** Clojure
 *** comment
