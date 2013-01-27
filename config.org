@@ -1572,9 +1572,11 @@ evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死�
 
 
 #+begin_src emacs-lisp
-;;  (setq evil-normal- nil)
-;;  (setq evil-emacs-state nil)
-;;  (setq evil-motion-state nil)
+  ;;  (setq evil-normal- nil)
+  ;;  (setq evil-emacs-state nil)
+  ;;  (setq evil-motion-state nil)
+
+  ;;evil-motion-state-modes
 #+end_src
 
 ** 將 Emacs 按鍵綁到 Insert 模式上
