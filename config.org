@@ -853,10 +853,21 @@ ascii-mode。
 
 ** 縮短網址
 
-smallurl 是一個很棒的短網址工具，他會幫你到遠端的 server 取得短網址。a
+smallurl 是一個很棒的短網址工具，他會幫你到遠端的 server 取得短網址。
 
 #+begin_src emacs-lisp
   (require 'smallurl)
+#+end_src
+
+** 快速更改相同的英文字
+
+我們有時候會希望可以快尋尋找某個字，並用新的文字來取代他， iedit-mode
+就是做這種事情的好幫手，先將游標停在要尋找取代的文字上，並輸入
+M-x iedit-mode 接著就會發現到同個緩衝區裏面所有和游標底下的文字相同的
+文字都被標記起來，試著更改看看，你會發現到這些文字同時被更改了。
+
+#+begin_src emacs-lisp
+  (require 'iedit)
 #+end_src
 
 ** TODO 其他
@@ -865,7 +876,6 @@ smallurl 是一個很棒的短網址工具，他會幫你到遠端的 server 取
   (require 'ace-jump-mode)
   (require 'smarter-compile)
   (require 'unicad)
-  (require 'iedit)
   (require 'expand-region)
   (require 'sr-speedbar)
   (require 'pretty-lambdada)
