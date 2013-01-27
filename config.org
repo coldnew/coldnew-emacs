@@ -6054,23 +6054,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "M-.") 'helm-etags+-select-one-key)
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-
-  ;; (global-set-key (kbd "M-1") 'delete-other-windows)
-  ;; (global-set-key (kbd "M-2") 'split-window-below)
-  ;; (global-set-key (kbd "M-3") 'split-window-right)
-  ;; (global-set-key (kbd "M-4") 'delete-window)
-  ;; (global-set-key (kbd "M-0") 'other-window)
-  ;;  (global-set-key (kbd "M-i") 'yas/expand)
-#+end_src
-
-** Meta-j prefix
-*** ECB
-#+begin_src emacs-lisp
-;;  (global-set-key (kbd "C-0 e") 'ecb-toggle-ecb-windows)
-;;  (global-set-key (kbd "C-0 1") 'ecb-goto-window-edit1)
-;;  (global-set-key (kbd "C-0 2") 'ecb-goto-window-edit2)
-;;  (global-set-key (kbd "C-0 m") 'ecb-goto-window-methods)
-; ; (global-set-key (kbd "C-0 l") 'ecb-toggle-layout)
 #+end_src
 
 ** Shift prefix
@@ -6084,22 +6067,12 @@ Function key 設置常用的命令。
   (global-set-key (kbd "s-s") 'shell-command)
 #+end_src
 ** Other
+
 #+begin_src emacs-lisp
   (global-set-key (kbd "<delete>") 'hungry-delete-forward)
   (global-set-key (kbd "C-.") 'repeat)
-  (global-set-key (kbd "%") 'match-paren)
+#+end_src
 
-#+end_src
-全域性設定 (）、 ""、 []、 {}具有自動補全功能
-#+begin_src emacs-lisp
-  ;; (global-set-key (kbd "(") 'paredit-open-parenthesis)
-  ;; (global-set-key (kbd ")") 'paredit-close-parenthesis)
-  ;; (global-set-key (kbd "[") 'paredit-open-square)
-  ;; (global-set-key (kbd "]") 'paredit-close-square)
-  ;; (global-set-key (kbd "{") 'paredit-open-curly)
-  ;; (global-set-key (kbd "}") 'paredit-close-curly)
-  ;; (global-set-key (kbd "\"") 'paredit-doublequote)
-#+end_src
 
 * Register                                                         :register:
 ** 放置快速跳轉的捷徑命令。
