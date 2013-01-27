@@ -43,6 +43,7 @@
 "multi-term"
 "multi-web-mode"
 "nrepl"
+"o-blog"
 "offlineimap"
 "org-html5presentation"
 "package"
