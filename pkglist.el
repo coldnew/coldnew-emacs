@@ -57,7 +57,6 @@
 "rainbow-mode"
 "recentf-ext"
 "s"
-"sauron"
 "shell-pop"
 "simple-httpd"
 "slime"
