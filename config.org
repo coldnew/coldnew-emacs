@@ -535,6 +535,9 @@ emacs 在 24 版後終於有自己的套件管理器 ELPA ，不過有些外部�
 
 *** 如果 el-get 不存在的話，重新安裝 el-get
 
+曾經有手殘不小心砍掉我整個 lisp 資料夾，因此特別加了這個 function 來進行
+保護，如果 el-get 不存在，則重新安裝他。
+
 #+begin_src emacs-lisp
       (unless (require 'el-get nil t)
         (setq el-get-install-branch "master")
@@ -543,11 +546,12 @@ emacs 在 24 版後終於有自己的套件管理器 ELPA ，不過有些外部�
              "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
           (end-of-buffer)
           (eval-print-last-sexp)))
-
-  ;;  (el-get 'sync)
 #+end_src
 
 *** 如果 elpa 的 recepies 不存在的話，自動建立他。
+
+第一次下載 el-get 的時候，並不會自動建立 elpa 的 recipes, 這邊進行檢查，
+若 elpa 的 recipes 不存在，則自動建立他。
 
 #+begin_src emacs-lisp
   (unless (file-exists-p el-get-recipe-path-elpa)
@@ -556,74 +560,21 @@ emacs 在 24 版後終於有自己的套件管理器 ELPA ，不過有些外部�
 
 *** 將我的 recipes 加入 el-get-recipe-path
 
+el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維護另外
+一份 recipes。
+
 #+begin_src emacs-lisp
   (add-to-list 'el-get-recipe-path emacs-recipes-dir)
 #+end_src
 
-*** Auto Mode Alist
+*** 設定 el-get 的 recipes 預設使用 emacs-list-mode
 
 \\.rcp$ 為 el-get 的 recipes 副檔名。
+
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.rcp$" . emacs-lisp-mode))
 #+end_src
 
-*** TODO Recipes 轉移所有的 recipe 至此
-**** lusty-emacs
-使用最新版本的 lusty-explorer
-#+begin_src emacs-lisp
-  (add-to-list 'el-get-sources
-               '(:name lusty-explorer
-                       :type github
-                       :pkgname "sjbach/lusty-emacs"
-                       :description "LustyExplorer is a fast and responsive way to manage files and buffers"))
-#+end_src
-**** qml-mode
-
-#+begin_src emacs-lisp
-  (add-to-list 'el-get-sources
-               '(:name qml-mode
-                       :type github
-                       :pkgname "coldnew/qml-mode"
-                       :features qml-mode))
-#+end_src
-**** vim
-#+begin_src emacs-lisp
-  (add-to-list 'el-get-sources
-               '(:name vim
-                       :website "http://gitorious.org/evil/pages/Home"
-                       :description "Evil is an extensible vi layer for Emacs. It
-                                     emulates the main features of Vim, and provides facilities
-                                     for writing custom extensions."
-                       :type git
-                       :url "git://gitorious.org/evil/evil.git"
-                       :features vim
-                       :depends undo-tree))
-#+end_src
-**** linum-ace
-#+begin_src emacs-lisp
-  (add-to-list 'el-get-sources
-               '(:name linum-ace
-                       :type github
-                       :pkgname "coldnew/linum-ace"
-                       :features linum-ace))
-#+end_src
-**** helm-git
-#+begin_src emacs-lisp
-  (add-to-list 'el-get-sources
-               '(:name helm-git
-                       :type github
-                       :pkgname "maio/helm-git"
-                       :features helm-git))
-#+end_src
-
-**** qmake-mode
-#+begin_src emacs-lisp
-  (add-to-list 'el-get-sources
-               '(:name qmake-mode
-                       :type github
-                       :pkgname "coldnew/qmake-mode"
-                       :features qmake-mode))
-#+end_src
 ** ELPA                                                               :elpa:
 *** 設定 elpa 安裝目錄到 emacs-elpa-dir
 
