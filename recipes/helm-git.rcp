@@ -1,0 +1,4 @@
+(:name helm-git
+       :type github
+       :pkgname "maio/helm-git"
+       :features helm-git)
