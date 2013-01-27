@@ -513,13 +513,17 @@ emacs 編碼設定，大部份都設定成 utf-8。
 
 ** 設定時間顯示使用英文
 
+時間顯示中文還是怪怪的，所以這邊設定成英文
+
 #+begin_src emacs-lisp
   (setq system-time-locale "en_US" )
 #+end_src
 
 * 套件管理                                                          :package:
 
-emacs 套件管理的設定。
+emacs 在 24 版後終於有自己的套件管理器 ELPA ，不過有些外部的套件沒
+辦法透過他來安裝，所以我又使用了另外一個非常好用的套件管理器 el-get,
+透過這兩個套件管理器，在 emacs 下安裝軟體是非常方便的。
 
 ** el-get
 *** 設定 el-get-dir
@@ -532,15 +536,15 @@ emacs 套件管理的設定。
 *** 如果 el-get 不存在的話，重新安裝 el-get
 
 #+begin_src emacs-lisp
-    (unless (require 'el-get nil t)
-      (setq el-get-install-branch "master")
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-        (end-of-buffer)
-        (eval-print-last-sexp)))
+      (unless (require 'el-get nil t)
+        (setq el-get-install-branch "master")
+        (with-current-buffer
+            (url-retrieve-synchronously
+             "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+          (end-of-buffer)
+          (eval-print-last-sexp)))
 
-;;  (el-get 'sync)
+  ;;  (el-get 'sync)
 #+end_src
 
 *** 如果 elpa 的 recepies 不存在的話，自動建立他。
@@ -5455,9 +5459,10 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
 #+begin_src emacs-lisp
   (defalias 'git-log    'egg-log)
   (defalias 'git-status 'egg-status)
+  (defalias 'git-commit 'egg-commit-log-edit)
   (defalias 'git-rebase 'magit-rebase-step)
   (defalias 'git-push   'magit-push)
-  (defalias 'git-commit 'egg-commit-log-edit)
+  (defalias 'git-add-remote 'magit-add-remote)
 #+end_src
 
 ** 當檔案儲存時不自動將其加入 commit 中
