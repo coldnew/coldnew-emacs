@@ -5338,6 +5338,9 @@ offlineimap 可以在設定中加入
 *** 設定我的 email 帳戶列表
 
 #+begin_src emacs-lisp
+  (setq message-send-mail-function 'smtpmail-send-it)
+  (setq smtpmail-stream-type 'starttls)
+
   (setq coldnew/mu4e-account-alist
         '(("Gmail"
            (mu4e-sent-folder "/Gmail/Sent")
@@ -5345,11 +5348,9 @@ offlineimap 可以在設定中加入
            (mu4e-trash-folder "/Gmail/Trash")
            (user-mail-address "coldnew.tw@gmail.com")
            ;; Sent mail
-           (message-send-mail-function 'smtpmail-send-it)
-           (smtpmail-stream-type 'starttls)
            (smtpmail-smtp-server "smtp.gmail.com")
            (smtpmail-smtp-service 587)
-           (smtpmail-smtp-user user-mail-address)
+           (smtpmail-smtp-user "coldnew.tw@gmail.com")
            (smtpmail-auth-credentials (smtp-get-password smtpmail-smtp-user))
            )
           ("Weintek"
@@ -5370,7 +5371,6 @@ offlineimap 可以在設定中加入
                               ;;(set (car a) (cadr a))) account))))
 
   (coldnew/mu4e-set-default-account "Gmail")
-
 #+end_src
 *** 每隔 60秒 重新抓取郵件
 
