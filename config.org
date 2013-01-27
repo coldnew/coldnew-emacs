@@ -3944,7 +3944,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 #+end_src
 
-** LaTex
 ** QML
 *** 設定 QML 的副檔名與對應的模式
 #+begin_src emacs-lisp
