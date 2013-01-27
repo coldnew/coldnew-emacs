@@ -4167,9 +4167,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 * 狀態欄                                                           :modeline:
 ** TODO 分類
 #+begin_src emacs-lisp :tangle no
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Initial modeline setting
-  ;;;; ---------------------------------------------------------------------------
   (line-number-mode t)
   (column-number-mode t)
   (size-indication-mode t)
@@ -4251,10 +4248,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 ** 樣式設定
 
 自己定義  mode-line 的樣式。
-
-#+begin_src emacs-lisp
-;;  (require 'powerline)
-#+end_src
 
 #+begin_src emacs-lisp
   (setq-default mode-line-format
