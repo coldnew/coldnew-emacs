@@ -812,25 +812,62 @@ ref: http://curiousprogrammer.wordpress.com/2009/06/08/error-handling-in-emacs-l
            retval)
        ,@clean-up))
 #+end_src
-* Depends
+* 常用的模組/函式庫                                                 :library:
+
+emacs 有一些套件本身不需要配置，或是只是函式庫，這一類的套件我設
+定為預先載入，這樣在後面的設定裏面我就可以直接使用這些套件的功能。
+
+** 內建套件
+
+有一些內建套件沒有預設載入，這邊將其載入使用。
+
 #+begin_src emacs-lisp
-  (require 'sauron)
+  (require 'misc)
+  (require 'cc-mode)
 #+end_src
 
-ok
+iimage 是讓 emacs 可以直接顯示圖片的模式。
 
 #+begin_src emacs-lisp
-  (require 'rainbow-mode)
+  (require 'iimage)
+#+end_src
+
+** 輸出成 html 檔案
+
+htmlize 是 emacs 一個非常好用的模組，可以讓 emacs 輸出檔案成為
+HTML 檔， org-mode 輸出成 html 時也是使用他。
+
+#+begin_src emacs-lisp
+  (require 'htmlize)
+#+end_src
+
+** 顯示 ascii 表
+
+ascii 是一個很不錯的 ascii 表顯示工具，你可以使用 ascii-on 來啟用
+, 他會告訴你目前游標所在位置的 ASCII 碼，使用 ascii-off 可以關閉
+ascii-mode。
+
+#+begin_src emacs-lisp
   (require 'ascii)
+#+end_src
+
+** 縮短網址
+
+smallurl 是一個很棒的短網址工具，他會幫你到遠端的 server 取得短網址。a
+
+#+begin_src emacs-lisp
+  (require 'smallurl)
+#+end_src
+
+** TODO 其他
+#+begin_src emacs-lisp
+  (require 'rainbow-mode)
   (require 'ace-jump-mode)
   (require 'smarter-compile)
-  (require 'smallurl)
   (require 'unicad)
   (require 'iedit)
   (require 'expand-region)
   (require 'sr-speedbar)
-  (require 'helm)
-  (require 'htmlize)
   (require 'pretty-lambdada)
   (require 'rainbow-delimiters)
 #+end_src
@@ -839,17 +876,6 @@ smart-tab 會幫你決定使用 yasnippet 或是 tab
 #+begin_src emacs-lisp
   (require 'smart-tab)
   (global-smart-tab-mode 1)
-#+end_src
-
-內建套件
-#+begin_src emacs-lisp
-  (require 'misc)
-  (require 'cc-mode)
-#+end_src
-
-iimage 是讓 emacs 可以直接顯示圖片的模式。
-#+begin_src emacs-lisp
-  (require 'iimage)
 #+end_src
 
 * Function                                                         :function:
