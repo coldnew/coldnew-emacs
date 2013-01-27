@@ -645,6 +645,7 @@ emacs 在 24 版後終於有自己的套件管理器 ELPA ，不過有些外部�
 
 為了避免有套件因為 *意外* 而不見，對套件進行檢查，若不存在則進行重新安裝的動作。
 *注意* ：進行套件檢查時，必須確認 el-get 已經安裝至 emacs 裡面，否則會產生錯誤。
+
 *** 存放套件資訊的變數
 
 此變數用於存放系統裏面必須安裝的 emacs 套件。
@@ -689,7 +690,12 @@ emacs 在 24 版後終於有自己的套件管理器 ELPA ，不過有些外部�
   (defun emacs-packages-write-to-file ()
     "Write emasc-packages-list to files."
     (with-temp-file emacs-packages-file
-      (insert (el-get-print-to-string emacs-packages-list 'pretty))))
+      (let ((l emacs-packages-list))
+        (setq emacs-packages-list (sort l #'string-lessp))
+        (insert (format "%s\n" "("))
+        (dolist (pkg emacs-packages-list)
+          (insert (format "\"%s\"\n" pkg)))
+        (insert ")"))))
 #+end_src
 
 *** 設定自動更新安裝套件資訊的時間
