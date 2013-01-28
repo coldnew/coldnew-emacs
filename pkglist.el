@@ -9,6 +9,7 @@
 "auto-complete"
 "auto-complete-clang"
 "bm"
+"c-eldoc"
 "clojure-mode"
 "ctags-update"
 "ctypes"
