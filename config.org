@@ -6,6 +6,16 @@
 #+OPTIONS: ^:nil
 #+INFOJS_OPT: view:info toc:t ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 
+* 關於這份檔案
+
+用了 emacs 至今已有 6年了，最初我的 emacs 配置也是英文版，並且分散了許多檔案，
+直到我知道了 org-mode 以及所謂的文學編程，我二話不說就將我的 emacs 設定移植到
+org-mode 上面，並重新改寫用中文來寫配置的說明。
+
+在這 6年的時間裡，用 emacs 學 emacs 以及配置 emacs 花費了我不少時間，網路上
+太多太多中文的配置都是複製貼上複製貼上，連用途都不懂就轉用了別人的文章放到
+自己的部若格上，讓我剛開始學 emacs 查找資料時有許多困擾， <待續>
+
 * 基礎設置                                                             :base:
 
 這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
@@ -513,13 +523,17 @@ emacs 編碼設定，大部份都設定成 utf-8。
 
 ** 設定時間顯示使用英文
 
+時間顯示中文還是怪怪的，所以這邊設定成英文
+
 #+begin_src emacs-lisp
   (setq system-time-locale "en_US" )
 #+end_src
 
 * 套件管理                                                          :package:
 
-emacs 套件管理的設定。
+emacs 在 24 版後終於有自己的套件管理器 ELPA ，不過有些外部的套件沒
+辦法透過他來安裝，所以我又使用了另外一個非常好用的套件管理器 el-get,
+透過這兩個套件管理器，在 emacs 下安裝軟體是非常方便的。
 
 ** el-get
 *** 設定 el-get-dir
@@ -531,19 +545,23 @@ emacs 套件管理的設定。
 
 *** 如果 el-get 不存在的話，重新安裝 el-get
 
-#+begin_src emacs-lisp
-    (unless (require 'el-get nil t)
-      (setq el-get-install-branch "master")
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-        (end-of-buffer)
-        (eval-print-last-sexp)))
+曾經有手殘不小心砍掉我整個 lisp 資料夾，因此特別加了這個 function 來進行
+保護，如果 el-get 不存在，則重新安裝他。
 
-;;  (el-get 'sync)
+#+begin_src emacs-lisp
+      (unless (require 'el-get nil t)
+        (setq el-get-install-branch "master")
+        (with-current-buffer
+            (url-retrieve-synchronously
+             "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+          (end-of-buffer)
+          (eval-print-last-sexp)))
 #+end_src
 
 *** 如果 elpa 的 recepies 不存在的話，自動建立他。
+
+第一次下載 el-get 的時候，並不會自動建立 elpa 的 recipes, 這邊進行檢查，
+若 elpa 的 recipes 不存在，則自動建立他。
 
 #+begin_src emacs-lisp
   (unless (file-exists-p el-get-recipe-path-elpa)
@@ -552,74 +570,21 @@ emacs 套件管理的設定。
 
 *** 將我的 recipes 加入 el-get-recipe-path
 
+el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維護另外
+一份 recipes。
+
 #+begin_src emacs-lisp
   (add-to-list 'el-get-recipe-path emacs-recipes-dir)
 #+end_src
 
-*** Auto Mode Alist
+*** 設定 el-get 的 recipes 預設使用 emacs-list-mode
 
 \\.rcp$ 為 el-get 的 recipes 副檔名。
+
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.rcp$" . emacs-lisp-mode))
 #+end_src
 
-*** TODO Recipes 轉移所有的 recipe 至此
-**** lusty-emacs
-使用最新版本的 lusty-explorer
-#+begin_src emacs-lisp
-  (add-to-list 'el-get-sources
-               '(:name lusty-explorer
-                       :type github
-                       :pkgname "sjbach/lusty-emacs"
-                       :description "LustyExplorer is a fast and responsive way to manage files and buffers"))
-#+end_src
-**** qml-mode
-
-#+begin_src emacs-lisp
-  (add-to-list 'el-get-sources
-               '(:name qml-mode
-                       :type github
-                       :pkgname "coldnew/qml-mode"
-                       :features qml-mode))
-#+end_src
-**** vim
-#+begin_src emacs-lisp
-  (add-to-list 'el-get-sources
-               '(:name vim
-                       :website "http://gitorious.org/evil/pages/Home"
-                       :description "Evil is an extensible vi layer for Emacs. It
-                                     emulates the main features of Vim, and provides facilities
-                                     for writing custom extensions."
-                       :type git
-                       :url "git://gitorious.org/evil/evil.git"
-                       :features vim
-                       :depends undo-tree))
-#+end_src
-**** linum-ace
-#+begin_src emacs-lisp
-  (add-to-list 'el-get-sources
-               '(:name linum-ace
-                       :type github
-                       :pkgname "coldnew/linum-ace"
-                       :features linum-ace))
-#+end_src
-**** helm-git
-#+begin_src emacs-lisp
-  (add-to-list 'el-get-sources
-               '(:name helm-git
-                       :type github
-                       :pkgname "maio/helm-git"
-                       :features helm-git))
-#+end_src
-
-**** qmake-mode
-#+begin_src emacs-lisp
-  (add-to-list 'el-get-sources
-               '(:name qmake-mode
-                       :type github
-                       :pkgname "coldnew/qmake-mode"
-                       :features qmake-mode))
-#+end_src
 ** ELPA                                                               :elpa:
 *** 設定 elpa 安裝目錄到 emacs-elpa-dir
 
@@ -641,6 +606,7 @@ emacs 套件管理的設定。
 
 為了避免有套件因為 *意外* 而不見，對套件進行檢查，若不存在則進行重新安裝的動作。
 *注意* ：進行套件檢查時，必須確認 el-get 已經安裝至 emacs 裡面，否則會產生錯誤。
+
 *** 存放套件資訊的變數
 
 此變數用於存放系統裏面必須安裝的 emacs 套件。
@@ -685,11 +651,15 @@ emacs 套件管理的設定。
   (defun emacs-packages-write-to-file ()
     "Write emasc-packages-list to files."
     (with-temp-file emacs-packages-file
-      (insert (el-get-print-to-string emacs-packages-list 'pretty))))
+      (let ((l emacs-packages-list))
+        (setq emacs-packages-list (sort l #'string-lessp))
+        (insert (format "%s\n" "("))
+        (dolist (pkg emacs-packages-list)
+          (insert (format "\"%s\"\n" pkg)))
+        (insert ")"))))
 #+end_src
 
-*** 設定自動更新安裝套件資訊的時間
-**** 當安裝新的套件時，更新套件資訊
+*** 當安裝新的套件時，更新套件資訊
 
 #+begin_src emacs-lisp
   (defun emacs-packages-install (pkg)
@@ -702,28 +672,31 @@ emacs 套件管理的設定。
   (add-hook 'el-get-post-install-hooks 'emacs-packages-install)
 #+end_src
 
-**** 當移除套件時，更新套件資訊
-***** TODO el-get-post-remove-hooks 不知道為什麼不能用，所以只好先 advice el-get-remove
+*** 當移除套件時，更新套件資訊
+
 #+begin_src emacs-lisp
   (defun emacs-packages-remove (pkg)
     (setq emacs-packages-list (remove pkg emacs-packages-list))
     (emacs-packages-write-to-file))
 
   ;; add to hooks
-  ;;(add-hook 'el-get-post-remove-hooks 'emacs-packages-remove)
-
-  (defadvice el-get-remove (after remove-package activate)
-    (emacs-packages-remove package))
+  (add-hook 'el-get-post-remove-hooks 'emacs-packages-remove)
 #+end_src
+
 *** 檢查套件是否有在 emacs-packages-list 裡
+
 #+begin_src emacs-lisp
   (defun emacs-packages-installed-p ()
     (loop for p in emacs-packages-list
           when (not (el-get-package-is-installed p)) do (return nil)
           finally (return t)))
 #+end_src
-*** 當發現有套件存在 emacs-package-list 裡面，但是卻被 emacs-packages-installed-p 回報為
+
+*** 套件檢查，不存在則重新安裝
+
+當發現有套件存在 emacs-package-list 裡面，但是卻被 emacs-packages-installed-p 回報為
 此套件不存在時，重新安裝此套件。
+
 #+begin_src emacs-lisp
   (defun emacs-packages-install-packages ()
     (unless (emacs-packages-installed-p)
@@ -735,6 +708,7 @@ emacs 套件管理的設定。
   ;; install missing packages
   (emacs-packages-install-packages)
 #+end_src
+
 * 巨集                                                                :macro:
 ** Clojure
 *** comment
@@ -848,25 +822,71 @@ ref: http://curiousprogrammer.wordpress.com/2009/06/08/error-handling-in-emacs-l
            retval)
        ,@clean-up))
 #+end_src
-* Depends
+* 常用的模組/函式庫                                                 :library:
+
+emacs 有一些套件本身不需要配置，或是只是函式庫，這一類的套件我設
+定為預先載入，這樣在後面的設定裏面我就可以直接使用這些套件的功能。
+
+** 內建套件
+
+有一些內建套件沒有預設載入，這邊將其載入使用。
+
 #+begin_src emacs-lisp
-  (require 'sauron)
+  (require 'misc)
+  (require 'cc-mode)
 #+end_src
 
-ok
+iimage 是讓 emacs 可以直接顯示圖片的模式。
 
 #+begin_src emacs-lisp
-  (require 'rainbow-mode)
+  (require 'iimage)
+#+end_src
+
+** 輸出成 html 檔案
+
+htmlize 是 emacs 一個非常好用的模組，可以讓 emacs 輸出檔案成為
+HTML 檔， org-mode 輸出成 html 時也是使用他。
+
+#+begin_src emacs-lisp
+  (require 'htmlize)
+#+end_src
+
+** 顯示 ascii 表
+
+ascii 是一個很不錯的 ascii 表顯示工具，你可以使用 ascii-on 來啟用
+, 他會告訴你目前游標所在位置的 ASCII 碼，使用 ascii-off 可以關閉
+ascii-mode。
+
+#+begin_src emacs-lisp
   (require 'ascii)
+#+end_src
+
+** 縮短網址
+
+smallurl 是一個很棒的短網址工具，他會幫你到遠端的 server 取得短網址。
+
+#+begin_src emacs-lisp
+  (require 'smallurl)
+#+end_src
+
+** 快速更改相同的英文字
+
+我們有時候會希望可以快尋尋找某個字，並用新的文字來取代他， iedit-mode
+就是做這種事情的好幫手，先將游標停在要尋找取代的文字上，並輸入
+M-x iedit-mode 接著就會發現到同個緩衝區裏面所有和游標底下的文字相同的
+文字都被標記起來，試著更改看看，你會發現到這些文字同時被更改了。
+
+#+begin_src emacs-lisp
+  (require 'iedit)
+#+end_src
+
+** TODO 其他
+#+begin_src emacs-lisp
+  (require 'rainbow-mode)
   (require 'ace-jump-mode)
   (require 'smarter-compile)
-  (require 'smallurl)
   (require 'unicad)
-  (require 'iedit)
   (require 'expand-region)
-  (require 'sr-speedbar)
-  (require 'helm)
-  (require 'htmlize)
   (require 'pretty-lambdada)
   (require 'rainbow-delimiters)
 #+end_src
@@ -875,17 +895,6 @@ smart-tab 會幫你決定使用 yasnippet 或是 tab
 #+begin_src emacs-lisp
   (require 'smart-tab)
   (global-smart-tab-mode 1)
-#+end_src
-
-內建套件
-#+begin_src emacs-lisp
-  (require 'misc)
-  (require 'cc-mode)
-#+end_src
-
-iimage 是讓 emacs 可以直接顯示圖片的模式。
-#+begin_src emacs-lisp
-  (require 'iimage)
 #+end_src
 
 * Function                                                         :function:
@@ -1563,9 +1572,11 @@ evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死�
 
 
 #+begin_src emacs-lisp
-;;  (setq evil-normal- nil)
-;;  (setq evil-emacs-state nil)
-;;  (setq evil-motion-state nil)
+  ;;  (setq evil-normal- nil)
+  ;;  (setq evil-emacs-state nil)
+  ;;  (setq evil-motion-state nil)
+
+  ;;evil-motion-state-modes
 #+end_src
 
 ** 將 Emacs 按鍵綁到 Insert 模式上
@@ -1617,6 +1628,7 @@ normal-state。
 - vim:imap 綁定按鍵到 Insert 狀態下
 - vim:vmap 綁定按鍵到 Visual 狀態下
 - vim:wmap 綁定按鍵到窗口切換的按鍵
+- vim:map  綁定按鍵到 Normal, Insert 狀態下
 
 使用方式：
 
@@ -1637,6 +1649,11 @@ normal-state。
   (defmacro vim:wmap (key cmd)
     "Binding keymap to evil-visual-state."
     `(define-key evil-window-map ,key ,cmd))
+
+  (defmacro vim:map (key cmd)
+    "Binding keymap to evil-visual-state."
+    `(define-key evil-normal-state-map ,key ,cmd)
+    `(define-key evil-insert-state-map ,key ,cmd))
 #+end_src
 
 區域性的按鍵設置
@@ -2276,37 +2293,8 @@ Following buffer will not show in iBuffer
   (setq slime-repl-history-size 300)
 
   ;; Use global programming mode
-  (add-hook 'slime-repl-mode-hook 'programming-mode)
   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 #+end_src
-** compilation
-#+begin_src emacs-lisp
-  ;; FIXME: move to other place
-  (defun notify-compilation-result(buffer msg)
-    "Notify that the compilation is finished,
-     close the *compilation* buffer if the compilation is successful,
-     and set the focus back to Emacs frame"
-    (if (string-match "^finished" msg)
-        (progn
-          (delete-windows-on buffer)
-          (message (propertize "COMPILATION SUCCESSFUL :-) " 'face 'font-lock-warning-face))
-          ;;       (tooltip-show "\n Compilation Successful :-) \n ")
-          )
-      (tooltip-show "\n Compilation Failed :-( \n "))
-    ;; FIXME: When I use dualscreen, following functiokn will make error,
-    ;;        after compilation, current frame will jump to another DISPLAY
-    ;;  (setq current-frame (car (car (cdr (current-frame-configuration)))))
-    ;; (select-frame-set-input-focus current-frame)
-    )
-
-  (add-to-list 'compilation-finish-functions 'notify-compilation-result)
-  ;; Make compilaction buffer always scrolls to follow output as it comes in.
-  (setq compilation-scroll-output t)
-
-  ;; Auto jump to the first error.
-  (setq compilation-auto-jump-to-first-error t)
-#+end_src
-
 * 終端機                                                               :term:
 ** shell-pop
 *** 載入相依套件
@@ -2373,7 +2361,6 @@ Following buffer will not show in iBuffer
 #+end_src
 
 * 文件加密                                                          :encrypt:
-
 ** 載入相依套件
 
 #+begin_src emacs-lisp
@@ -2508,8 +2495,7 @@ Following buffer will not show in iBuffer
   (require 'em-cmpl)
 #+end_src
 
-** Config
-**** Prompt
+*** Prompt
 將 eshell 的 prompt 設定成和 bash 一樣，也就是　 username@system-name。
 #+begin_src emacs-lisp
   (setq eshell-prompt-function
@@ -3456,8 +3442,8 @@ some packages conflict with org-mode
   (global-semantic-decoration-mode -1)
 
   ;;;; Enable support for GNU Global
-  (semanticdb-enable-gnu-global-databases 'c-mode)
-  (semanticdb-enable-gnu-global-databases 'c++-mode)
+;;  (semanticdb-enable-gnu-global-databases 'c-mode)
+;;  (semanticdb-enable-gnu-global-databases 'c++-mode)
 
   (setq semanticdb-default-save-directory (concat emacs-cache-dir "semanticdb"))
   (set-default 'semantic-case-fold t)
@@ -3963,7 +3949,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 #+end_src
 
-** LaTex
 ** QML
 *** 設定 QML 的副檔名與對應的模式
 #+begin_src emacs-lisp
@@ -4185,9 +4170,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 * 狀態欄                                                           :modeline:
 ** TODO 分類
 #+begin_src emacs-lisp :tangle no
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Initial modeline setting
-  ;;;; ---------------------------------------------------------------------------
   (line-number-mode t)
   (column-number-mode t)
   (size-indication-mode t)
@@ -4269,10 +4251,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 ** 樣式設定
 
 自己定義  mode-line 的樣式。
-
-#+begin_src emacs-lisp
-;;  (require 'powerline)
-#+end_src
 
 #+begin_src emacs-lisp
   (setq-default mode-line-format
@@ -5025,8 +5003,8 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
 ** 預設設定為 正體中文 -> 英文
 
 #+begin_src emacs-lisp
-(setq google-translate-default-source-language "zh-TW")
-(setq google-translate-default-target-language "en")
+  (setq google-translate-default-source-language "zh-TW")
+  (setq google-translate-default-target-language "en")
 #+end_src
 
 ** 將英文翻譯為中文
@@ -5057,25 +5035,34 @@ google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作�
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
 
 *** 載入相依套件
+
 #+begin_src emacs-lisp
   (require 'erc)
   (require 'erc-notify)
   (require 'erc-spelling)
   (require 'erc-autoaway)
 #+end_src
-*** 設定 prompt
+
+*** 設定 prompt 為 >>
+
 #+begin_src emacs-lisp
   (setq erc-prompt ">>")
 #+end_src
+
 *** 編碼設定為 utf-8
+
 #+begin_src emacs-lisp
   (setq erc-server-coding-system '(utf-8 . utf-8))
 #+end_src
+
 *** 當 ERC 啟動時，自動連入 IRC 伺服器
+
 #+begin_src emacs-lisp
   (erc-autojoin-mode t)
 #+end_src
+
 *** 自動連線的伺服器與聊天室
+
 #+begin_src emacs-lisp
   (setq erc-autojoin-channels-alist
         '(;; english channel
@@ -5085,57 +5072,80 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
           (".*\\.oftc.net" "#dot")
           ))
 #+end_src
+
 *** 關閉部份訊息顯示
+
 #+begin_src emacs-lisp
   (setq erc-hide-list '("JOIN" "PART" "QUIT"))
 #+end_src
+
 *** 加入時間戳
+
 #+begin_src emacs-lisp
   (erc-timestamp-mode 1)
 #+end_src
+
 *** 紀錄聊天訊息
 **** 載入相依套件
+
 #+begin_src emacs-lisp
   (require 'erc-log)
 #+end_src
+
 **** 啟動 erc-log-mode
+
 #+begin_src emacs-lisp
   (erc-log-mode 1)
 #+end_src
+
 **** 設定紀錄檔儲存位置
+
 #+begin_src emacs-lisp
   (setq erc-log-channels-directory emacs-log-dir)
 #+end_src
+
 **** 如果儲存紀錄檔的資料夾不存在，建立他
+
 #+begin_src emacs-lisp
   (unless (file-exists-p erc-log-channels-directory)
     (mkdir erc-log-channels-directory t))
 #+end_src
+
 **** 紀錄檔編碼為 utf-8
+
 #+begin_src emacs-lisp
   (setq erc-log-file-coding-system 'utf-8)
 #+end_src
+
 **** 送出訊息後寫入到 log
+
 #+begin_src emacs-lisp
   (setq erc-log-write-after-send t)
 #+end_src
+
 **** 當有新訊息時，寫入到log
+
 #+begin_src emacs-lisp
   (setq erc-log-write-after-insert t)
 #+end_src
+
 *** 設定聊天時的行寬為 100
+
 #+begin_src emacs-lisp
   (setq erc-fill-column 100)
 #+end_src
+
 *** 為聊天室裡的使用者暱稱上色
+
 #+begin_src emacs-lisp
   (and
    (require 'erc-highlight-nicknames)
    (add-to-list 'erc-modules 'highlight-nicknames)
    (erc-update-modules))
 #+end_src
-*** Configs
-**** Misc
+
+*** Misc
+
 #+begin_src emacs-lisp
   ;; check channels
   ;; exclude boring stuff from tracking
@@ -5167,7 +5177,9 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
   (setq erc-autoaway-idle-seconds 600)
   (setq erc-autoaway-use-emacs-idle t)
 #+end_src
+
 *** Commands
+
 #+begin_src emacs-lisp
   (defun i-wanna-be-social ()
     "Connect to IM networks using bitlbee."
@@ -5201,7 +5213,9 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
       (let ((nickserv-command (mapconcat #'identity command-args " ")))
         (erc-send-command nickserv-command))))
 #+end_src
+
 *** Function
+
 #+begin_src emacs-lisp
 (defun avoid-erc-oops (txt)
   (when (member txt '("ls" "xb" "cd"))
@@ -5209,7 +5223,9 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
 
 (add-to-list 'erc-send-pre-hook 'avoid-erc-oops)
 #+end_src
+
 *** Command
+
 #+begin_src emacs-lisp
   (defun irc ()
     (interactive)
@@ -5428,34 +5444,54 @@ offlineimap 可以在設定中加入
   (add-hook 'mu4e-compose-pre-hook 'coldnew/mu4e-set-account)
 #+end_src
 * Alias                                                               :alias:
-** git
-和 git 相關的命令的 alias。
-#+begin_src emacs-lisp
-  (defalias 'git-log    'egg-log)
-  (defalias 'git-status 'egg-status)
-  (defalias 'git-rebase 'magit-rebase-step)
-  (defalias 'git-push   'magit-push)
-  (defalias 'git-commit 'egg-commit-log-edit)
-#+end_src
 ** Misc
 #+begin_src emacs-lisp
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
   (defalias 'coldnew/folding-toggle   'toggle-selective-display)
 #+end_src
 * Git 版本管理
-** egg
-*** Depends
+
+git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最好的， emacs
+有許多好用的 git 套件，諸如 egg, magit, git-emacs 之類，在這邊的設定
+我整合了這幾種工具，選用我最喜歡的功能。
+
+** 載入套件
+
 #+begin_src emacs-lisp
   (require 'egg)
+  (require 'magit)
+  (require 'git-emacs)
 #+end_src
-*** Config
+
+** 命令綁定、縮寫                                                    :alias:
+
+由於我用了很多 git 的程式，這邊綁定命令到我想用的程式去
+
 #+begin_src emacs-lisp
-  ;; do not auto-update egg-status on file save
+  (defalias 'git-log    'egg-log)
+  (defalias 'git-status 'egg-status)
+  (defalias 'git-commit 'egg-commit-log-edit)
+  (defalias 'git-rebase 'magit-rebase-step)
+  (defalias 'git-push   'magit-push)
+  (defalias 'git-add-remote 'magit-add-remote)
+#+end_src
+
+** 當檔案儲存時不自動將其加入 commit 中
+
+egg 有一個很不錯的功能，就是當檔案儲存的時候，自動將其加入到 commit
+當中，不過我用起來實在是很不習慣，所以把他 disable 掉。
+
+#+begin_src emacs-lisp
   (setq egg-auto-update nil)
+#+end_src
 
-  ;; do not switch to the status buffer in the same window
-  (setq egg-switch-to-buffer t)
+** 讓 egg 自動猜測下一個動作
 
+我很喜歡 vc-mode 的一個功能，就是當我按下 C-x vv 的時候，會自動幫我將
+目前的 buffer 加入 commit, egg 同樣也提供這個功能，這邊關掉 egg
+的確認系統，讓他根據狀況自動猜測下一步要做什麼。
+
+#+begin_src emacs-lisp
   ;; make egg auto guess next action
   (setq egg-confirm-next-action nil)
 
@@ -5472,16 +5508,13 @@ offlineimap 可以在設定中加入
      ((memq :rebase-in-progress desc)       :rebase-continue)
      (t                                     :quit)))
 #+end_src
-*** Keybinding
-#+begin_src emacs-lisp :tangle no
-  (add-hook 'egg-commit-buffer-mode-hook
-            '(lambda ()
-               (define-key coldnew/command-mode-map "c" 'egg-log-msg-done)
-               ))
 
-#+end_src
-*** Advice                                                         :advice:
-當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window。
+** 當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window。 :advice:
+
+egg-status 和 egg-commit-log-edit 這兩個 buffer 都很酷，我覺得讓
+他們啟動時成為一個全螢幕的視窗比較好，所以這邊增加 advice 來改變
+預設的動作。
+
 #+begin_src emacs-lisp
   (defadvice egg-status (around goto-egg-status-buffer activate)
     "Delete other windows after visiting egg-status."
@@ -5493,45 +5526,46 @@ offlineimap 可以在設定中加入
     ad-do-it
     (delete-other-windows))
 #+end_src
-** 載入 magit 套件
-
-#+begin_src emacs-lisp
-  (require 'magit)
-#+end_src
 
 ** 當使用 magit 時，不使用 emacs 原生的 vc 來處理和 git 相關的事情
 
+emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事情，但
+是我覺的 magit 比較好用，所以當有載入 magit 時，就將 vc-mode 裏面
+負責處理 git 的部份拿掉。
+
 #+begin_src emacs-lisp
   (when (featurep 'magit)
-    (setq vc-handled-backends (remq 'Git vc-handled-backends)))
+    (setq vc-handled-backends (remq 'git vc-handled-backends)))
 #+end_src
 
-** 使用 C-g 離開 magit 的視窗
+** 使用 C-g 離開 git 程式的視窗
+
+我習慣在 emacs 使用 C-g 來跳離視窗，所以這邊也是這樣設定，用來
+逃離 magit, git-emacs 的視窗。
 
 #+begin_src emacs-lisp
+  (define-key egg-status-buffer-mode-map (kbd "C-g") 'egg-quit-buffer)
+  (define-key egg-log-msg-mode-map (kbd "C-g") 'egg-quit-buffer)
   (define-key magit-mode-map (kbd "C-g") 'magit-quit-window)
+  (define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
 #+end_src
 
 ** 全域性按鍵設定                                               :global@key:
 
-| 按鍵    | 命令         | 用途                            |
-|---------+--------------+---------------------------------|
-| C-x v l | magit-log    | 使用 magit 察看 log             |
-| C-x v s | magit-status | 使用 magit 查看目前的git status |
+| 按鍵    | 命令            | 用途                            |
+|---------+-----------------+---------------------------------|
+| C-x v l | magit-log       | 使用 magit 察看 log             |
+| C-x v s | magit-status    | 使用 magit 查看目前的git status |
+| C-x v v | egg-next-action | 讓 egg 自動猜測下一步要做什麼   |
+| C-x v p | git-push        | push 到遠端 repo                |
 
 #+begin_src emacs-lisp
   (vim:imap (kbd "C-x vl") 'magit-log)
   (vim:imap (kbd "C-x vs") 'magit-status)
+  (vim:map (kbd "C-x vv") 'egg-next-action)
+  (vim:map (kbd "C-x vp") 'git-push)
 #+end_src
 
-** git-emacs
-#+begin_src emacs-lisp
-  (require 'git-emacs)
-  ;;   ;; disable git-emacs's advice
-  ;;   (ad-disable-advice 'vc-next-action 'around 'git--vc-git-next-action)
-  ;;   (ad-activate 'vc-next-action)
-  (define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
-#+end_src
 * Hooks                                                               :hook:
 ** find-file-hook
 #+begin_src emacs-lisp
@@ -5554,7 +5588,7 @@ offlineimap 可以在設定中加入
 雖然現在大家都有在使用 git、svn 等檔案管理系統，但我們最好還是有其他的
 備份，這裡設定的是 emacs 內建的備份方式。
 
-- *注意*:
+*注意*:
 　　由於內建的備份方式是採用明碼來備份，所以若是加密的檔案也會直接被
    備份。
 
@@ -5736,11 +5770,9 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 
 關閉部份按鍵設定，在後面重新設定他。
 #+begin_src emacs-lisp
-;;  (global-unset-key (kbd "<escape>"))
   (global-unset-key (kbd "C-r"))
   (global-unset-key (kbd "C-x e"))
   (global-unset-key (kbd "C-x d"))
-;;  (global-set-key (kbd "<escape>") 'evil-normal-state)
 #+end_src
 
 ** Function key prefix
@@ -5893,9 +5925,7 @@ Function key 設置常用的命令。
 #+end_src
 
 #+begin_src emacs-lisp
-  ;;  (global-set-key (kbd "C-x b")    'coldnew/helm-filelist)
   (global-set-key (kbd "C-x C-d")  'dired)
-  (global-set-key (kbd "C-x vv") 'egg-next-action)
   (global-set-key (kbd "C-x M-x") 'helm-M-x)
   (global-set-key (kbd "C-x C-n") 'auto-complete)
   (global-set-key (kbd "C-x C-s") 'save-buffer-always)
@@ -6031,23 +6061,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "M-.") 'helm-etags+-select-one-key)
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-
-  ;; (global-set-key (kbd "M-1") 'delete-other-windows)
-  ;; (global-set-key (kbd "M-2") 'split-window-below)
-  ;; (global-set-key (kbd "M-3") 'split-window-right)
-  ;; (global-set-key (kbd "M-4") 'delete-window)
-  ;; (global-set-key (kbd "M-0") 'other-window)
-  ;;  (global-set-key (kbd "M-i") 'yas/expand)
-#+end_src
-
-** Meta-j prefix
-*** ECB
-#+begin_src emacs-lisp
-;;  (global-set-key (kbd "C-0 e") 'ecb-toggle-ecb-windows)
-;;  (global-set-key (kbd "C-0 1") 'ecb-goto-window-edit1)
-;;  (global-set-key (kbd "C-0 2") 'ecb-goto-window-edit2)
-;;  (global-set-key (kbd "C-0 m") 'ecb-goto-window-methods)
-; ; (global-set-key (kbd "C-0 l") 'ecb-toggle-layout)
 #+end_src
 
 ** Shift prefix
@@ -6061,21 +6074,10 @@ Function key 設置常用的命令。
   (global-set-key (kbd "s-s") 'shell-command)
 #+end_src
 ** Other
+
 #+begin_src emacs-lisp
   (global-set-key (kbd "<delete>") 'hungry-delete-forward)
   (global-set-key (kbd "C-.") 'repeat)
-  (global-set-key (kbd "%") 'match-paren)
-
-#+end_src
-全域性設定 (）、 ""、 []、 {}具有自動補全功能
-#+begin_src emacs-lisp
-  ;; (global-set-key (kbd "(") 'paredit-open-parenthesis)
-  ;; (global-set-key (kbd ")") 'paredit-close-parenthesis)
-  ;; (global-set-key (kbd "[") 'paredit-open-square)
-  ;; (global-set-key (kbd "]") 'paredit-close-square)
-  ;; (global-set-key (kbd "{") 'paredit-open-curly)
-  ;; (global-set-key (kbd "}") 'paredit-close-curly)
-  ;; (global-set-key (kbd "\"") 'paredit-doublequote)
 #+end_src
 
 * Register                                                         :register:
