@@ -1807,11 +1807,6 @@ auto-complete-mode 的按鍵設定。
   (define-key ac-complete-mode-map[tab] 'ac-expand)
 #+end_src
 * Mode
-** auto-indent
-*** Depends
-#+begin_src emacs-lisp
-  (require 'auto-indent-mode)
-#+end_src
 ** elscreen                                                       :elscreen:
 *** 載入相關模組
 
@@ -3907,11 +3902,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (add-hook 'emacs-lisp-mode-hook 'highlight-cl-add-font-lock-keywords)
 #+end_src
 
-**** auto-indent
-#+begin_src emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook 'auto-indent-minor-mode)
-#+end_src
-
 *** 自動補全
 
 #+begin_src emacs-lisp
@@ -3968,6 +3958,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+end_src
 
 *** 設定 go 的副檔名與對應的模式
+
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 #+end_src
