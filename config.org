@@ -3199,6 +3199,7 @@ some packages conflict with org-mode
                   \\setCJKmainfont{Hiragino Sans GB W3}
                   \\XeTeXlinebreaklocale \"zh\"
                   \\XeTeXlinebreakskip = 0pt plus 1pt
+                  \\xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
                   \\usepackage{graphicx}
                   \\usepackage{tikz}
                   \\usepackage[bookmarks=true,colorlinks,urlcolor=blue]{hyperref}
@@ -3239,6 +3240,7 @@ some packages conflict with org-mode
                   \\setCJKmainfont{Hiragino Sans GB W3}
                   \\XeTeXlinebreaklocale \"zh\"
                   \\XeTeXlinebreakskip = 0pt plus 1pt
+                  \\xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
                   \\usepackage{minted}
                   \\usemintedstyle{emacs}
                   \\setmainfont{Monaco}
