@@ -2296,6 +2296,37 @@ Following buffer will not show in iBuffer
   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 #+end_src
 * 終端機                                                               :term:
+
+** 基本設定
+
+term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 shell-mode
+來替代 term-mode)，但是我用於串口通訊的 serial-term 仍舊是以 term-mode
+為基礎，基於習慣，這邊會設置基本的 term-mode 配置。
+
+- 載入相依套件
+   #+begin_src emacs-lisp
+     (require 'term)
+     (require 'ansi-color)
+   #+end_src
+
+- 色彩配置
+
+  移除 term-mode 預設的前景與背景顏色。
+  #+begin_src emacs-lisp
+    (setq term-default-bg-color nil)
+    (setq term-default-fg-color nil)
+  #+end_src
+
+  重新設定 Ansi-Color，讓他和我的佈景主題配合。
+  #+begin_src emacs-lisp
+    ;; reset ansi-color
+    (setq-default ansi-color-names-vector
+                  (vector (frame-parameter nil 'background-color)
+                          "#0B0B0E" "#CA3839" "#8ae234" "#edd400"
+                          "#729fcf" "#ad7fa8" "cyan3"   "#DCDCDC"))
+    (setq ansi-term-color-vector ansi-color-names-vector)
+  #+end_src
+
 ** shell-pop
 *** 載入相依套件
 #+begin_src emacs-lisp
@@ -2322,42 +2353,6 @@ Following buffer will not show in iBuffer
 #+begin_src emacs-lisp
   (require 'multi-term)
   (setq multi-term-program emacs-default-shell)
-#+end_src
-** term
-*** 載入相依套件
-#+begin_src emacs-lisp
-  (require 'term)
-  (require 'ansi-color)
-#+end_src
-
-*** 設定 term-mode 的色彩
-
-移除 term-mode 預設的前景與背景顏色。
-#+begin_src emacs-lisp
-  (setq term-default-bg-color nil)
-  (setq term-default-fg-color nil)
-#+end_src
-
-重新設定 Ansi-Color，讓他和我的佈景主題配合。
-#+begin_src emacs-lisp
-  ;; reset ansi-color
-  (setq-default ansi-color-names-vector
-                (vector (frame-parameter nil 'background-color)
-                        "#0B0B0E" "#CA3839" "#8ae234" "#edd400"
-                        "#729fcf" "#ad7fa8" "cyan3"   "#DCDCDC"))
-  (setq ansi-term-color-vector ansi-color-names-vector)
-#+end_src
-
-*** Keybindings
-#+begin_src emacs-lisp
-  ;;;; keybindings
-  ;; (define-key term-raw-map (kbd "<f4>") 'shell-pop)
-  (define-key term-raw-map (kbd "M-x") 'execute-extended-command)
-  (define-key term-raw-map (kbd "C-g") 'term-interrupt-subjob)
-  (define-key term-raw-map (kbd "C-n") 'term-send-down)
-  (define-key term-raw-map (kbd "C-p") 'term-send-up)
-  (define-key term-raw-map (kbd "<enter>") 'term-send-input)
-  (define-key term-raw-map (kbd "C-o") 'coldnew/execute-in-command-mode)
 #+end_src
 
 * 文件加密                                                          :encrypt:
