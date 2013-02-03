@@ -3967,11 +3967,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (require 'qmake-mode)
   (add-to-list 'auto-mode-alist '("\\.pro$" . qmake-mode))
 #+end_src
-** Markdown
-
-#+begin_src emacs-lisp
-  (require 'markdown-mode)
-#+end_src
 
 ** Perl
 *** 設定 Perl 檔案的副檔名與對應的模式
