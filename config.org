@@ -2217,17 +2217,6 @@ Following buffer will not show in iBuffer
   (setq sr-speedbar-right-side nil)
   (setq sr-speedbar-refresh-turn-on t)
 #+end_src
-** comint
-#+begin_src emacs-lisp
-  (require 'comint)
-  ;; Do not show password in comint-mode
-  (setq comint-output-filter-functions  '(comint-watch-for-password-prompt))
-  (setq comint-password-prompt-regexp
-        "\\(\\([Oo]ld \\|]e]eew \\|^\\)[Pp]assword\\|Enter password\\):\\s *\\'")
-
-  ;;;; Keybindings
-  (define-key comint-mode-map (kbd "C-g") 'comint-interrupt-subjob)
-#+end_src
 ** undo-tree
 *** 載入相依套件
 #+begin_src emacs-lisp
