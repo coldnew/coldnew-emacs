@@ -545,7 +545,7 @@ emacs 在 24 版後終於有自己的套件管理器 ELPA ，不過有些外部�
 
 *** 如果 el-get 不存在的話，重新安裝 el-get
 
-曾經有手殘不小心砍掉我整個 lisp 資料夾，因此特別加了這個 function 來進行
+曾經有一次手殘不小心砍掉我整個 lisp 資料夾，因此特別加了這個 function 來進行
 保護，如果 el-get 不存在，則重新安裝他。
 
 #+begin_src emacs-lisp
