@@ -3,7 +3,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(auto-indent-next-pair-timer-geo-mean (quote ((default 0.0005 0)))))
+ '(org-agenda-files (quote ("/home/coldnew/Dropbox/Org/Weather.org" "/home/coldnew/Dropbox/Org/Weintek.org"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
