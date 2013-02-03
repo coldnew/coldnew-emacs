@@ -33,3 +33,4 @@ local-lisp/
 log/
 url/
 lisp/
+tramp
