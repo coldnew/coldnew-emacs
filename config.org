@@ -2894,7 +2894,10 @@ You can now (from git master) use `org-image-actual-width'.
   (setq org-crypt-tag-matcher "secret")
 #+end_src
 
-*** Add a hook to automatically encrypt entries before a file is saved to disk.
+*** 當被加密的部份要存入硬碟時，自動加密回去
+
+如果 emacs 有打開檔案備份，在存回硬碟前必須要先加密在儲存，
+否則加密的部份也會被備份起來。
 
 #+begin_src emacs-lisp
   (org-crypt-use-before-save-magic)
@@ -3180,6 +3183,7 @@ some packages conflict with org-mode
                   \\setCJKmainfont{Hiragino Sans GB W3}
                   \\XeTeXlinebreaklocale \"zh\"
                   \\XeTeXlinebreakskip = 0pt plus 1pt
+                  \\xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
                   \\usepackage{graphicx}
                   \\usepackage{tikz}
                   \\usepackage[bookmarks=true,colorlinks,urlcolor=blue]{hyperref}
@@ -3220,6 +3224,7 @@ some packages conflict with org-mode
                   \\setCJKmainfont{Hiragino Sans GB W3}
                   \\XeTeXlinebreaklocale \"zh\"
                   \\XeTeXlinebreakskip = 0pt plus 1pt
+                  \\xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
                   \\usepackage{minted}
                   \\usemintedstyle{emacs}
                   \\setmainfont{Monaco}
@@ -3968,6 +3973,12 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (require 'qmake-mode)
   (add-to-list 'auto-mode-alist '("\\.pro$" . qmake-mode))
 #+end_src
+** Markdown
+
+#+begin_src emacs-lisp
+  (require 'markdown-mode)
+#+end_src
+
 ** Scheme
 *** 設定 Scheme 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
@@ -6073,9 +6084,11 @@ Function key 設置常用的命令。
            ;; TODO.org
            (?t (file . "~/Dropbox/Org/TODO.org"))
            (?w (file . "~/Dropbox/Org/Weintek.org"))
+           (?n (file . "~/Dropbox/Note/Note.org"))
            (?b (file . "~/Workspace/Blog/src/blog.org"))
            ))
     (set-register (car r) (cadr r)))
+
 #+end_src
 
 * 部若格                                                      :blog:

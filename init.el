@@ -35,3 +35,4 @@
 (message "\nEmacs is ready to serve you, Master %s!\n" (getenv "USER"))
 
 ;;; init.el ends here.
+(put 'narrow-to-region 'disabled nil)
