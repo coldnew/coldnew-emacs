@@ -3789,11 +3789,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
   (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
 #+end_src
 
-** Common Lisp
-*** 設定 Common Lisp 檔案的副檔名與對應的模式
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.cl$" . lisp-mode))
-#+end_src
 ** Clojure
 *** 載入相關套件
 
@@ -3922,7 +3917,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+end_src
 
 ** Go
-
 *** 載入相關套件
 
 #+begin_src emacs-lisp
@@ -3979,11 +3973,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (require 'markdown-mode)
 #+end_src
 
-** Scheme
-*** 設定 Scheme 檔案的副檔名與對應的模式
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.scm$" . scheme-mode))
-#+end_src
 ** Perl
 *** 設定 Perl 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
@@ -4035,23 +4024,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 *** 自動補全
 #+begin_src emacs-lisp
 (require 'ac-python)
-#+end_src
-** Verilog
-*** 設定 verilog 檔案的副檔名與對應的模式
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.v$" . verilog-mode))
-#+end_src
-*** 自動添加 *end //blockname* 註解
-#+begin_src emacs-lisp
-  (setq verilog-auto-endcomments t)
-#+end_src
-*** 按鍵設定
-#+begin_src emacs-lisp
-    (add-hook 'verilog-mode-hook
-              '(lambda ()
-                 (define-key verilog-mode-map (kbd "C-;") 'iedit-mode)
-                 (auto-complete-mode)
-                 ))
 #+end_src
 * 網頁開發                                                               :web:
 ** 網頁開發基本設定
