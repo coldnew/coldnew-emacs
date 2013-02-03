@@ -5422,6 +5422,8 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
 
 ** 載入套件
 
+我使用了 egg, magit 以及 git-emacs 這幾種套件。
+
 #+begin_src emacs-lisp
   (require 'egg)
   (require 'magit)
