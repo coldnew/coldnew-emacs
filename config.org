@@ -6020,7 +6020,7 @@ Function key 設置常用的命令。
   (global-set-key (kbd "M-v") 'er/expand-region)
   (global-set-key (kbd "M-q") 'coldnew/switch-to-command-mode)
   (global-set-key (kbd "M-/") 'undo-tree-redo)
-  (global-set-key (kbd "M-.") 'helm-etags+-select-one-key)
+  (global-set-key (kbd "M-.") 'helm-etags+-select)
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 #+end_src
