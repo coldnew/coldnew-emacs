@@ -2628,7 +2628,7 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 ** TODO Config this
 #+begin_src emacs-lisp
   ;; Enable dired binding
-  (helm-dired-bindings 1)
+;;  (helm-dired-bindings 1)
   (ctags-update-minor-mode 1)
 #+end_src
 ** Function
@@ -3579,11 +3579,6 @@ adeff
     ;; use my cc-mode-common-setting
   ;;  (add-hook 'c-mode-hook 'coldnew-cc-mode-common-setting)
 
-    ;; use ctypes
-    (require 'ctypes)
-    (setq-default ctypes-file-name (concat emacs-cache-dir "ctypes_std_c.dat"))
-    (add-hook 'ctypes-load-hook 'my-ctypes-load-hook)
-
     ;; use hide-if-def-mode
     ;;(add-hook 'c-mode-hook 'hide-ifdef-mode)
 
@@ -4100,13 +4095,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     )
 #+end_src
 ** HTML
-*** 使用 nxhtml 作為 HTML 編輯模式
-
-#+begin_src emacs-lisp
-;;  (require 'nxhtml)
-;;  (defalias 'html-mode 'nxhtml-mode)
-#+end_src
-
 *** 使用 zencoding-mode 讓寫 HTML 更方便
 
 #+begin_src emacs-lisp
