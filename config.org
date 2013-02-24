@@ -5463,18 +5463,22 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
 ** 全域性按鍵設定                                               :global@key:
 
-| 按鍵    | 命令            | 用途                            |
-|---------+-----------------+---------------------------------|
-| C-x v l | magit-log       | 使用 magit 察看 log             |
-| C-x v s | magit-status    | 使用 magit 查看目前的git status |
-| C-x v v | egg-next-action | 讓 egg 自動猜測下一步要做什麼   |
-| C-x v p | git-push        | push 到遠端 repo                |
+| 按鍵    | 命令                      | 用途                            |
+|---------+---------------------------+---------------------------------|
+| C-x v l | magit-log                 | 使用 magit 察看 log             |
+| C-x v s | magit-status              | 使用 magit 查看目前的git status |
+| C-x v v | egg-next-action           | 讓 egg 自動猜測下一步要做什麼   |
+| C-x v p | git-push                  | push 到遠端 repo                |
+| C-x v f | magit-flow-feature-create |                                 |
+| C-x v e | magit-flow-feature-finish |                                 |
 
 #+begin_src emacs-lisp
   (vim:imap (kbd "C-x vl") 'magit-log)
   (vim:imap (kbd "C-x vs") 'magit-status)
   (vim:map (kbd "C-x vv") 'egg-next-action)
   (vim:map (kbd "C-x vp") 'git-push)
+  (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
+  (vim:map (kbd "C-x ve") 'magit-flow-feature-finish)
 #+end_src
 
 * Hooks                                                               :hook:

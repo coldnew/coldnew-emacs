@@ -32,6 +32,7 @@
 "key-chord"
 "less-css-mode"
 "lusty-explorer"
+"magit"
 "moz-repl"
 "multi-term"
 "multi-web-mode"
