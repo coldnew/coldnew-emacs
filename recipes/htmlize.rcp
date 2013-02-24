@@ -1,0 +1,4 @@
+(:name htmlize
+       :type github
+       :pkgname "emacsmirror/htmlize"
+       :features htmlize)
