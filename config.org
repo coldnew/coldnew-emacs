@@ -4937,45 +4937,6 @@ winner-mode 是 emacs 自帶的窗口佈局管理器，可以對窗口的改變�
   (global-set-key (kbd "M-]") 'winner-redo)
 #+end_src
 
-* Google 翻譯
-
-google-translate 套件提供 emacs 透過 google 的 API 進行翻譯的動作。
-
-** 載入相關套件
-
-#+begin_src emacs-lisp
-  (require 'google-translate)
-#+end_src
-
-** 預設設定為 正體中文 -> 英文
-
-#+begin_src emacs-lisp
-  (setq google-translate-default-source-language "zh-TW")
-  (setq google-translate-default-target-language "en")
-#+end_src
-
-** 將英文翻譯為中文
-
-#+begin_src emacs-lisp
-  (defun google-translate-en-zh ()
-    "Translate English to Tranditional Chinese by google-translate."
-    (interactive)
-    (let ((google-translate-default-source-language "en")
-          (google-translate-default-target-language "zh-TW"))
-      (google-translate-query-translate)))
-#+end_src
-
-** 將中文翻譯為英文
-
-#+begin_src emacs-lisp
-  (defun google-translate-zh-en ()
-    "Translate Tranditional Chinese to English by google-translate."
-    (interactive)
-    (let ((google-translate-default-source-language "zh-TW")
-          (google-translate-default-target-language "en"))
-      (google-translate-query-translate)))
-#+end_src
-
 * 聊天軟體                                                             :chat:
 ** IRC
 
