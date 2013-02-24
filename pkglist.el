@@ -20,7 +20,6 @@
 "fuzzy"
 "git-emacs"
 "go-mode"
-"google-translate"
 "google-weather"
 "guess-offset"
 "helm-etags-plus"
