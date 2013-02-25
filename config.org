@@ -827,6 +827,8 @@ ref: http://curiousprogrammer.wordpress.com/2009/06/08/error-handling-in-emacs-l
 emacs 有一些套件本身不需要配置，或是只是函式庫，這一類的套件我設
 定為預先載入，這樣在後面的設定裏面我就可以直接使用這些套件的功能。
 
+若是設定比較簡單的獨立程式也放在這邊。
+
 ** 內建套件
 
 有一些內建套件沒有預設載入，這邊將其載入使用。
@@ -859,6 +861,18 @@ ascii-mode。
 
 #+begin_src emacs-lisp
   (require 'ascii)
+#+end_src
+
+增加額外的 function，這樣我可以使用 ascii 或是 ascii-toggle 來切換顯示 ascii 表。
+
+#+begin_src emacs-lisp
+  (when (featurep 'ascii)
+    ;; ascii-toggle
+    (defun ascii-toggle ()
+      (interactive)
+      (if (not (ascii-off)) (ascii-on)))
+    ;; alias ascii to ascii-toggle
+    (defalias 'ascii 'ascii-toggle))
 #+end_src
 
 ** 縮短網址
