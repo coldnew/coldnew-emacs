@@ -596,11 +596,10 @@ el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維�
 *** 設定我需要的 ELPA 倉庫
 
 #+begin_src emacs-lisp
-  (setq package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
-                           ("ELPA" . "http://tromey.com/elpa/")
-                           ("gnu" . "http://elpa.gnu.org/packages/")
-                           ("marmalade" . "http://marmalade-repo.org/packages/")
-                           ))
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/") t)
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 #+end_src
 
 ** 套件檢查
@@ -2401,7 +2400,7 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 #+begin_src emacs-lisp
   (require 'helm)
   (require 'helm-etags+)
-  (require 'helm-git)
+  (require 'helm-ls-git)
   (require 'ctags-update)
 #+end_src
 
@@ -2437,7 +2436,7 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
   (defun coldnew/project-find-file ()
     (interactive)
     (helm-other-buffer
-     '(helm-c-source-git-files
+     '(helm-source-ls-git
        )
      "*coldnew/project-file-list"))
 #+end_src
@@ -2475,15 +2474,15 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 ** 按鍵設定
 
 #+begin_src emacs-lisp
-  (defun coldnew/helm-mini ()
-    (interactive)
-    (helm-other-buffer '(helm-c-source-buffers-list
-                         helm-c-source-git-files
-                         helm-c-source-recentf
-                         helm-c-source-buffer-not-found)
-                       "*coldnew helm mini*"))
-
-  (vim:imap (kbd "M-o") 'coldnew/helm-mini)
+    (defun coldnew/helm-mini ()
+      (interactive)
+      (helm-other-buffer '(helm-source-ls-git
+                           helm-source-locate
+                           helm-c-source-buffers-list
+                           helm-c-source-recentf
+                           helm-c-source-buffer-not-found)
+                         "*coldnew helm mini*"))
+    (vim:imap (kbd "M-o") 'coldnew/helm-mini)
 #+end_src
 
 * 文檔幫助
