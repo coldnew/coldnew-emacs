@@ -69,6 +69,7 @@
           (class '((class color) (min-colors 89))))
      ,@body))
 
+
 (defmacro coldnew-theme--face-specs ()
   "Return a backquote which defines a list of face specs.
 
@@ -129,6 +130,12 @@ names to which it refers are bound."
                                                         :bold t))))
      (elscreen-tab-other-screen-face ((t (:background "#1D1D1F" :foreground "Gray85"
                                                       :bold t))))
+
+     ;; Evil
+     (evil-state-normal-face ((t :foreground ,purple)))
+     (evil-state-insert-face ((t :foreground ,red)))
+     (evil-state-visual-face ((t :foreground ,blue)))
+     (evil-state-emacs-face ((t :foreground ,green)))
 
      ;; Flymake
      (flymake-warnline ((,class (:underline ,orange :background ,background))))
@@ -355,7 +362,7 @@ names to which it refers are bound."
      (org-scheduled-today ((,class (:foreground ,green))))
      (org-special-keyword ((,class (:foreground ,orange))))
      ;;(org-table ((,class (:foreground ,purple))))
-     (org-todo ((,class (:foreground ,red))))
+     (org-todo ((,class (:foreground ,red :bold t))))
      (org-done ((t (:foreground "#4BC98A" :bold t))))
      (org-link   ((t (:inherit (link)))))
      (org-upcoming-deadline ((,class (:foreground ,orange))))

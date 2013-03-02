@@ -1253,10 +1253,56 @@ emacs-lisp-mode 的 buffer，可以這樣做
 
 佈景主題的設置，包含我自訂的佈景主題以及路徑。
 ** 設定佈景主題的位置。
+
 佈景主題的路徑設定在 emacs-themes-dir 裡面。
 #+begin_src emacs-lisp
   (setq custom-theme-directory emacs-themes-dir)
 #+end_src
+
+** 設定額外的佈景主題變數
+
+#+begin_src emacs-lisp
+  (defface evil-state-normal-face
+    '((t (:inherit font-lock-function-name-face)))
+    "face for vim-string in normal-map on mode-line."
+    :group 'mode-line)
+
+  (defface evil-state-insert-face
+    '((t (:inherit font-lock-constant-face)))
+    "face for vim-string in insert-map on mode-line."
+    :group 'mode-line)
+
+  (defface evil-state-visual-face
+    '((t (:inherit font-lock-variable-name-face)))
+    "face for vim-string in visual-map on mode-line."
+    :group 'mode-line)
+
+  (defface evil-state-emacs-face
+    '((t (:inherit font-lock-string-face)))
+    "face for vim-string in emacs-map on mode-line."
+    :group 'mode-line)
+
+  (defface mode-line-read-only-face
+    '((t (:foreground "#C82829" :bold t)))
+    "face for mode-name-string in modeline."
+    :group 'mode-line)
+
+  (defface mode-line-modified-face
+    '((t (:inherit 'font-lock-function-name-face :bolt t)))
+    "face for mode-name-string in modeline."
+    :group'mode-lin)
+
+  (defface mode-line-mode-name-face
+    '((t (:inherit font-lock-keyword-face)))
+    "face for mode-name-string in modeline."
+    :group 'mode-line)
+
+  (defface font-lock-escape-char-face
+    '((((class color)) (:foreground "seagreen2")))
+    "highlight c escapes char like vim"
+    :group 'font-lock-faces)
+#+end_src
+
 ** 設定預設讀取的佈景主題。
 
 這邊載入我新設計的佈景主題。
@@ -1267,6 +1313,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
   ;;(load-theme 'coldnew-theme-night t)
   (coldnew-theme--define-theme night)
 #+end_src
+
 * Vim 摹擬                                                              :vim:
 
 實在不能不佩服 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
@@ -3860,12 +3907,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+end_src
 
 * 狀態欄                                                           :modeline:
-** TODO 分類
-#+begin_src emacs-lisp :tangle no
-  (line-number-mode t)
-  (column-number-mode t)
-  (size-indication-mode t)
-#+end_src
 ** 顯示主模式
 
 這個 function 用來定義如何顯示 major-mode，要放入 mode-line-format 才會真的顯示。
@@ -3885,59 +3926,13 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (let ((evil-state-string (substring evil-mode-line-tag 2 3)))
       (setq evil-state-string-face
             (cond
-             ((string= "N" evil-state-string) 'mode-line-evil-state-string-N)
-             ((string= "I" evil-state-string) 'mode-line-evil-state-string-I)
-             ((string= "V" evil-state-string) 'mode-line-evil-state-string-V)
-             ((string= "E" evil-state-string) 'mode-line-evil-state-string-E)
+             ((string= "N" evil-state-string) 'evil-state-normal-face)
+             ((string= "I" evil-state-string) 'evil-state-insert-face)
+             ((string= "V" evil-state-string) 'evil-state-visual-face)
+             ((string= "E" evil-state-string) 'evil-state-emacs-face)
              ))
       (concat "<" (propertize evil-state-string 'face evil-state-string-face) ">")
       ))
-#+end_src
-
-** 設定 Evil 狀態的色彩
-
-為了能夠讓 Evil 不同狀態有不同的顏色，這邊定義了各種 evil-state 對應的顏色。
-
-#+begin_src emacs-lisp
-  (defface mode-line-read-only-face
-    '((t (:foreground "#C82829" :bold t)))
-    "face for mode-name-string in modeline."
-    :group 'mode-line)
-
-  (defface mode-line-modified-face
-    '((t (:inherit 'font-lock-function-name-face :bolt t)))
-    "face for mode-name-string in modeline."
-    :group'mode-lin)
-
-  (defface mode-line-mode-name-face
-    '((t (:inherit font-lock-keyword-face)))
-    "face for mode-name-string in modeline."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-N
-    '((t (:inherit font-lock-function-name-face)))
-    "face for vim-string in normal-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-I
-    '((t (:inherit font-lock-constant-face)))
-    "face for vim-string in insert-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-V
-    '((t (:inherit font-lock-variable-name-face)))
-    "face for vim-string in visual-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-E
-    '((t (:inherit font-lock-string-face)))
-    "face for vim-string in emacs-map on mode-line."
-    :group 'mode-line)
-
-  (defface font-lock-escape-char-face
-    '((((class color)) (:foreground "seagreen2")))
-    "highlight c escapes char like vim"
-    :group 'font-lock-faces)
 #+end_src
 
 ** 樣式設定
@@ -3956,11 +3951,9 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                              (propertize "**" 'face 'mode-line-modified-face))
                             (t "--")))
                      "   "
-                   ;;  (:eval (coldnew-editor-mode-string))
                      (when (featurep 'evil)
                        (:eval (evil-mode-string)))
                      "   "
-                     ;;              (:eval (mode-line-state))
                      mode-line-buffer-identification
                      "   "
                      ;; major-mode name
