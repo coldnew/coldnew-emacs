@@ -1291,6 +1291,17 @@ Evil 是 emacs 上最好用的 vim 摹擬程式。
 #+begin_src emacs-lisp
   (require 'evil)
 #+end_src
+** 基本設置
+
+- 讓游標使用佈景主題的顏色
+
+  evil-mdoe 預設會讓游標變成黑色，這對於習慣使用暗色系佈景主題的
+  使用者而言是一件很討厭的事情，設定 evil-default-cursor 為 true
+  後就可以使用使用者自訂的佈景主題來改變滑鼠了。
+
+  #+begin_src emacs-lisp
+     (setq evil-default-cursor t)
+  #+end_src
 
 ** 預設使用 Insert state
 
@@ -1338,7 +1349,6 @@ normal-state。
 
 #+begin_src emacs-lisp
   (evil-mode t)
-  (setq evil-default-cursor t)
 #+end_src
 
 ** 讓 evil-mode 的區域選擇方式和 Vim 相同
