@@ -5390,6 +5390,46 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
   (add-to-list 'desktop-modes-not-to-save 'view-mode)
 #+end_src
 * 全域性按鍵設置
+** 文件編輯
+
+| 按鍵         | 命令                   | 用途                                       |
+|--------------+------------------------+--------------------------------------------|
+| C-x C-y      | yank-n-times           | 多次貼上                                   |
+| C-x C-l      | recenter               | 將游標至於 buffer 中間                     |
+| C-x C-n      | auto-complete          | 自動補全                                   |
+| C-x C-s      | save-buffer-always     | 儲存檔案                                   |
+| Shift Return | insert-empty-line      | 插入空白行                                 |
+| M-s          | coldnew/helm-occur     | 使用 occur 查詢當前緩衝區                  |
+| M-r          | query-replace-regexp   | 使用正規表達式查找並取代                   |
+| C-M ,        | beginning-of-buffer    | 回到緩衝區開頭                             |
+| C-M .        | end-of-buffer          | 回到緩衝區尾巴                             |
+| C-d          | hyngry-delete-forward  | 向右貪婪刪除                               |
+| C-l          | hyngry-delete-backward | 向左貪婪刪除                               |
+| C-;          | iedit-mode             | 快速尋找和游標底下相同的文字，進行即時替換 |
+| C-=          | text-scale-increase    | 放大字體                                   |
+| C--          | text-scale-decrease    | 縮小字體                                   |
+| C-x C-i      | indent-whole-buffer    | 縮排整個緩衝區                             |
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x C-y")  'yank-n-times)
+  (global-set-key (kbd "C-x C-l")  'recenter)
+  (global-set-key (kbd "C-x C-n") 'auto-complete)
+  (global-set-key (kbd "C-x C-s") 'save-buffer-always)
+  (global-set-key [(shift return)] 'insert-empty-line)
+  (global-set-key (kbd "M-s") 'coldnew/helm-occur)
+  (global-set-key (kbd "M-r") 'query-replace-regexp)
+  (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
+  (global-set-key (kbd "C-M-.") 'end-of-buffer)
+  (global-set-key (kbd "C-d") 'hungry-delete-forward)
+  (global-set-key (kbd "C-l") 'hungry-delete-backward)
+  (global-set-key (kbd "C-;") 'iedit-mode)
+  (global-set-key (kbd "C-=") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+  (global-set-key (kbd "C-x C-i") 'indent-whole-buffer)
+
+#+end_src
+
+
 ** 關閉預設的按鍵設定
 
 關閉部份按鍵設定，在後面重新設定他。
@@ -5451,45 +5491,12 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x t 8") '(lambda () (interactive) (elscreen-goto 8)))
   (global-set-key (kbd "C-x t 9") '(lambda () (interactive) (elscreen-goto 9)))
 #+end_src
-** 縮排整個緩衝區
-
-| 按鍵    | 命令                | 用途           |
-|---------+---------------------+----------------|
-| C-x C-i | indent-whole-buffer | 縮排整個緩衝區 |
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x C-i") 'indent-whole-buffer)
-#+end_src
 
 ** Ctrl Prefix
-*** Default Emacs keybinding
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-n") 'next-line)
-  (global-set-key (kbd "C-p") 'previous-line)
-  (global-set-key (kbd "C-b") 'backward-char)
-  (global-set-key (kbd "C-f") 'forward-char)
-  (global-set-key (kbd "C-e") 'move-end-of-line)
-  (global-set-key (kbd "C-a") 'move-beginning-of-line)
-#+end_src
-
-*** 向右貪婪刪除
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-d") 'hungry-delete-forward)
-#+end_src
-
-*** 向左貪婪刪除
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-l") 'hungry-delete-backward)
-#+end_src
 
 *** Misc
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-v") 'coldnew/set-mark-command)
-#+end_src
-
-*** iedit
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-;") 'iedit-mode)
 #+end_src
 
 *** Undo
@@ -5497,39 +5504,20 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-/") 'undo-tree-undo)
 #+end_src
 
-*** 放大字體
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-=") 'text-scale-increase)
-#+end_src
-
-*** 縮小字體
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C--") 'text-scale-decrease)
-#+end_src
 ** Ctrl-x Prefix
 *** Misc
 | 按鍵    | 命令                | 用途                   |
 |---------+---------------------+------------------------|
 | C-x C-f | lusty-file-explorer | 查詢並打開檔案         |
-| C-x C-y | yank-n-times        | 多次貼上               |
 | C-x C-r | lusty-sudo-explorer | 使用 sudo 打開檔案     |
 | C-x C-b | ibuffer             | 顯示 ibuffer           |
-| C-x C-l | recenter            | 將游標至於 buffer 中間 |
-|         |                     |                        |
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
   (global-set-key (kbd "C-x C-r")  'lusty-sudo-explorer)
-  (global-set-key (kbd "C-x C-y")  'yank-n-times)
-  (global-set-key (kbd "C-x C-l")  'recenter)
   (global-set-key (kbd "C-x C-b")  'ibuffer)
-#+end_src
 
-#+begin_src emacs-lisp
   (global-set-key (kbd "C-x C-d")  'dired)
-  (global-set-key (kbd "C-x M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x C-n") 'auto-complete)
-  (global-set-key (kbd "C-x C-s") 'save-buffer-always)
   (global-set-key (kbd "C-x F") 'fullscreen-window)
   (global-set-key (kbd "C-x s") 'shell-command)
 #+end_src
@@ -5585,24 +5573,6 @@ Function key 設置常用的命令。
 #+end_src
 
 ** Ctrl-w prefix
-*** 窗口移動
-| 按鍵  | 命令           | 用途             |
-|-------+----------------+------------------|
-| C-x n | windmove-down  | 移動到下面的窗口 |
-| C-x p | windmove-up    | 移動到上面的窗口 |
-| C-x b | windmove-left  | 移動到左邊的窗口 |
-| C-x f | windmove-right | 移動到右邊的窗口 |
-
-#+begin_src emacs-lisp
-;;  (global-set-key (kbd "C-x n") 'windmove-down)
-;;  (global-set-key (kbd "C-x f") 'windmove-right)
-;;  (global-set-key (kbd "C-x b") 'windmove-left)
-;;  (global-set-key (kbd "C-x p") 'windmove-up)
-  (global-set-key (kbd "s-n") 'windmove-down)
-  (global-set-key (kbd "s-p") 'windmove-up)
-  (global-set-key (kbd "s-b") 'windmove-left)
-  (global-set-key (kbd "s-f") 'windmove-right)
-#+end_src
 *** TODO 刪除區域或是一行
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-w") 'kill-region)
@@ -5610,28 +5580,13 @@ Function key 設置常用的命令。
 #+end_src
 ** Ctrl-Meta Prefix
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
-  (global-set-key (kbd "C-M-.") 'end-of-buffer)
   (global-set-key (kbd "C-M-n") 'scroll-other-window)
   (global-set-key (kbd "C-M-p") 'scroll-other-window-down)
 #+end_src
 
 ** Meta Prefix
-*** Default Emacs keybinding
-#+begin_src emacs-lisp
-(global-set-key (kbd "M-f") 'forward-word)
-(global-set-key (kbd "M-b") 'backward-word)
-(global-set-key (kbd "M-e") 'forward-sentence)
-(global-set-key (kbd "M-a") 'backward-sentence)
-#+end_src
-
-#+begin_src emacs-lisp
-(global-set-key (kbd "M-r") 'query-replace-regexp)
-#+end_src
-
 *** Misc
 #+begin_src emacs-lisp
-  (global-set-key (kbd "M-s") 'coldnew/helm-occur)
   (global-set-key (kbd "M-l") 'backward-delete-word)
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
   (global-set-key (kbd "M-n") 'scroll-up)
@@ -5643,11 +5598,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "M-.") 'helm-etags+-select)
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-#+end_src
-
-** Shift prefix
-#+begin_src emacs-lisp
-  (global-set-key[(shift return)] 'insert-empty-line)
 #+end_src
 
 ** Super prefix
