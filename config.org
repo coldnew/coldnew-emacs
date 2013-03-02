@@ -1539,6 +1539,8 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (vim:imap (kbd "C-o") 'evil-execute-in-normal-state)
   (vim:imap (kbd "C-l") 'backward-delete-char)
   (vim:imap (kbd "C-w") 'evil-window-map)
+  (vim:imap (kbd "M-w") 'kill-ring-save)
+  (vim:imap (kbd "M-k") 'kill-region)
 #+end_src
 
 ** Window-sate 按鍵設定
