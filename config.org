@@ -5603,25 +5603,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x c d") 'unix2dos)
 #+end_src
 
-*** emms
-| 按鍵        | 命令              | 用途       |
-|-------------+-------------------+------------|
-| C-x e s     | emms-start        | 啟動 emms  |
-| C-x e n     | emms-next         | 下一首曲目 |
-| C-x e p     | emms-previous     | 前一首曲目 |
-| C-x e <SPC> | emms-pause        | 暫停曲目   |
-| C-x e =     | emms-volume-raise | 放大音量   |
-| C-x e -     | emms-volume-lower | 縮小音量   |
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x e n") 'emms-next)
-  (global-set-key (kbd "C-x e p") 'emms-previous)
-  (global-set-key (kbd "C-x e <SPC>") 'emms-pause)
-  (global-set-key (kbd "C-x e s") 'emms-start)
-  ;;(require 'emms-volume)
-  (global-set-key (kbd "C-x e =") 'emms-volume-raise)
-  (global-set-key (kbd "C-x e -") 'emms-volume-lower)
-#+end_src
 ** Ctrl-r 暫存器、書籤、快速跳轉、矩型處理
 預設的 C-r 其實是 isearch-backward, 這裡將他改掉。
 
