@@ -2420,7 +2420,6 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 ** TODO Config this
 #+begin_src emacs-lisp
   ;; Enable dired binding
-;;  (helm-dired-bindings 1)
   (ctags-update-minor-mode 1)
 #+end_src
 ** Function
@@ -2429,35 +2428,6 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
     "rewrite `helm-c-occur-get-line' to make it color on line-number."
     (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
             (format ": %s" (buffer-substring s e))))
-#+end_src
-** 在目前的專案找尋檔案                                            :command:
-
-#+begin_src emacs-lisp
-  (defun coldnew/project-find-file ()
-    (interactive)
-    (helm-other-buffer
-     '(helm-source-ls-git
-       )
-     "*coldnew/project-file-list"))
-#+end_src
-
-** TODO 其他
-#+begin_src emacs-lisp
-    (defun coldnew/helm-filelist ()
-      "Preconfigured `anything' to open files/buffers/bookmarks instantly.
-     This is a replacement for `anything-for-files'.
-     See `anything-c-filelist-file-name' docstring for usage."
-      (interactive)
-      (helm-other-buffer
-       '(helm-c-source-buffers-list
-         helm-c-source-recentf
-         helm-c-source-ffap-line
-         helm-c-source-ffap-guesser
-         helm-c-source-bookmarks
-         helm-c-source-file-cache
-         helm-c-source-files-in-current-dir
-         helm-c-source-locate)
-       "*coldnew/filelist*"))
 #+end_src
 
 ** 尋找目前緩衝區所有符合查詢規則的文字、字串                      :command:
@@ -2482,7 +2452,7 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
                            helm-c-source-recentf
                            helm-c-source-buffer-not-found)
                          "*coldnew helm mini*"))
-    (vim:imap (kbd "M-o") 'coldnew/helm-mini)
+    (vim:imap (kbd "C-x p") 'coldnew/helm-mini)
 #+end_src
 
 * 文檔幫助
