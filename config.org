@@ -600,6 +600,8 @@ el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維�
   (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/") t)
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+
+  (package-initialize)
 #+end_src
 
 ** 套件檢查
@@ -1536,6 +1538,16 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
 #+begin_src emacs-lisp
   (vim:imap (kbd "C-o") 'evil-execute-in-normal-state)
   (vim:imap (kbd "C-l") 'backward-delete-char)
+  (vim:imap (kbd "C-w") 'evil-window-map)
+#+end_src
+
+** Window-sate 按鍵設定
+
+#+begin_src emacs-lisp
+  (vim:wmap "n" 'evil-window-down)
+  (vim:wmap "p" 'evil-window-up)
+  (vim:wmap "f" 'evil-window-right)
+  (vim:wmap "b" 'evil-window-left)
 #+end_src
 
 * 自動補全                                                         :complete:
@@ -3551,6 +3563,8 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 
 #+begin_src emacs-lisp
   (require 'clojure-mode)
+  (require 'nrepl)
+  (require 'ac-nrepl)
 #+end_src
 
 *** 設定 Clojure 檔案的副檔名與對應的模式
@@ -3566,13 +3580,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
             '(lambda ()
                (when (require 'rainbow-delimiters)
                  (rainbow-delimiters-mode-enable))))
-#+end_src
-
-*** 使用 nRepl
-
-#+begin_src emacs-lisp
-(require 'nrepl)
-(require 'ac-nrepl)
 #+end_src
 
 *** 自動補全設定
@@ -5572,12 +5579,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-c o") 'org-iswitchb)
 #+end_src
 
-** Ctrl-w prefix
-*** TODO 刪除區域或是一行
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-w") 'kill-region)
-  (global-set-key (kbd "M-w") 'kill-ring-save)
-#+end_src
 ** Ctrl-Meta Prefix
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-M-n") 'scroll-other-window)
