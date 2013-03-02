@@ -5371,6 +5371,7 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
 #+begin_src emacs-lisp
   (require 'egg)
   (require 'magit)
+  (require 'magit-flow)
   (require 'git-emacs)
 #+end_src
 
