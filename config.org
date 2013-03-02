@@ -5453,17 +5453,6 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x L") 'linum-mode)
 #+end_src
-** 專案相關的按鍵
-
-| 按鍵    | 命令                        | 用途                     |
-|---------+-----------------------------+--------------------------|
-| C-x p f | coldnew/project-find-file   | 在目前的專案裏面找尋檔案 |
-| C-x p b | coldnew/project-find-buffer | 找尋目前專案的緩衝區     |
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x p f") 'coldnew/project-find-file)
-  (global-set-key (kbd "C-x p b") 'coldnew/project-find-buffer)
-#+end_src
 ** 分頁切換
 
 | 按鍵        | 命令                     | 用途          |
