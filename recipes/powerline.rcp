@@ -1,5 +1,0 @@
-(:name powerline
-       :description ""
-       :website ""
-       :type github
-       :pkgname "milkypostman/powerline")
