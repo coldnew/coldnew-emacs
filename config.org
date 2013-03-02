@@ -3587,8 +3587,10 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 *** 自動補全設定
 
 #+begin_src emacs-lisp
+  (eval-after-load "auto-complete" '(add-to-list 'ac-modes 'nrepl-mode))
   (add-hook 'clojure-mode-hook 'ac-clojure-mode-setup)
   (add-hook 'nrepl-mode-hook   'ac-clojure-mode-setup)
+  (add-hook 'nrepl-interaction-mode-hook   'ac-clojure-mode-setup)
   (defun ac-clojure-mode-setup ()
     "auto-complete settings for clojure-mode."
     (setq ac-sources '(
@@ -5515,11 +5517,11 @@ Function key 設置常用的命令。
 
 ** Ctrl-x Prefix
 *** Misc
-| 按鍵    | 命令                | 用途                   |
-|---------+---------------------+------------------------|
-| C-x C-f | lusty-file-explorer | 查詢並打開檔案         |
-| C-x C-r | lusty-sudo-explorer | 使用 sudo 打開檔案     |
-| C-x C-b | ibuffer             | 顯示 ibuffer           |
+| 按鍵    | 命令                | 用途               |
+|---------+---------------------+--------------------|
+| C-x C-f | lusty-file-explorer | 查詢並打開檔案     |
+| C-x C-r | lusty-sudo-explorer | 使用 sudo 打開檔案 |
+| C-x C-b | ibuffer             | 顯示 ibuffer       |
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
