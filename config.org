@@ -1528,6 +1528,7 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (vim:nmap (kbd "M-u") 'upcase-word)
   (vim:nmap (kbd "M-l") 'downcase-word)
   (vim:nmap (kbd "M-c") 'capitalize-word)
+  (vim:nmap (kbd "<SPC>") 'ace-jump-mode)
 #+end_src
 
 ** Insert-state 按鍵設定
@@ -1541,6 +1542,7 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (vim:imap (kbd "C-w") 'evil-window-map)
   (vim:imap (kbd "M-k") 'kill-ring-save)
   (vim:imap (kbd "M-w") 'kill-region)
+  (vim:imap (kbd "<SPC>") 'ace-jump-mode)
 #+end_src
 
 ** Window-sate 按鍵設定
