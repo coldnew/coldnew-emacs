@@ -11,7 +11,6 @@
 "bm"
 "c-eldoc"
 "clojure-mode"
-"ctags"
 "ctags-update"
 "ecb-snapshot"
 "egg"
