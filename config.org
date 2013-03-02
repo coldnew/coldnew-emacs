@@ -5506,18 +5506,6 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
   (global-set-key (kbd "C--") 'text-scale-decrease)
 #+end_src
-** 語言翻譯
-
-| 按鍵    | 命令                   | 用途           |
-|---------+------------------------+----------------|
-| C-x t e | google-translate-zh-en | 中文翻譯成英文 |
-| C-x t z | google-translate-en-zh | 英文翻譯成中文 |
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x t e") 'google-translate-zh-en)
-  (global-set-key (kbd "C-x t z") 'google-translate-en-zh)
-#+end_src
-
 ** Ctrl-x Prefix
 *** Misc
 | 按鍵    | 命令                | 用途                   |
