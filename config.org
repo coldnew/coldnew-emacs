@@ -593,13 +593,14 @@ el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維�
   (require 'package)
 #+end_src
 
-*** 添加我需要的庫到 ELPA 裏面
+*** 設定我需要的 ELPA 倉庫
 
 #+begin_src emacs-lisp
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/") t)
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
-  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (setq package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
+                           ("ELPA" . "http://tromey.com/elpa/")
+                           ("gnu" . "http://elpa.gnu.org/packages/")
+                           ("marmalade" . "http://marmalade-repo.org/packages/")
+                           ))
 #+end_src
 
 ** 套件檢查
