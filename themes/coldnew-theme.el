@@ -130,12 +130,11 @@ names to which it refers are bound."
                                                         :bold t))))
      (elscreen-tab-other-screen-face ((t (:background "#1D1D1F" :foreground "Gray85"
                                                       :bold t))))
-
      ;; Evil
-     (evil-state-normal-face ((t :foreground ,purple)))
-     (evil-state-insert-face ((t :foreground ,red)))
-     (evil-state-visual-face ((t :foreground ,blue)))
-     (evil-state-emacs-face ((t :foreground ,green)))
+     (evil-state-normal-face ((t :foreground ,purple :bold t)))
+     (evil-state-insert-face ((t :foreground ,red :bold t)))
+     (evil-state-visual-face ((t :foreground ,blue :bold t)))
+     (evil-state-emacs-face ((t :foreground ,green :bold t)))
 
      ;; Flymake
      (flymake-warnline ((,class (:underline ,orange :background ,background))))
