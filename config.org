@@ -2,9 +2,10 @@
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
 #+STARTUP: overview indent align
-#+PROPERTY: noweb tangle
+#+PROPERTY: noweb
+#+PROPERTY: cache yes
+#+PROPERTY: tangle yes
 #+OPTIONS: ^:nil
-#+INFOJS_OPT: view:info toc:t ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 
 * 關於這份檔案
 
@@ -14,7 +15,9 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
 
 在這 6年的時間裡，用 emacs 學 emacs 以及配置 emacs 花費了我不少時間，網路上
 太多太多中文的配置都是複製貼上複製貼上，連用途都不懂就轉用了別人的文章放到
-自己的部若格上，讓我剛開始學 emacs 查找資料時有許多困擾， <待續>
+自己的部若格上，讓我剛開始學 emacs 查找資料時有許多困擾， 為了讓以後有人
+看到我的 emacs 配置，能夠一看就很明白這個配置是做什麼，於是我將所有的配置
+改寫回正體中文。<待續>
 
 * 基礎設置                                                             :base:
 
@@ -254,54 +257,6 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
          (change-mouse-to-left)))
 #+end_src
 
-*** TODO Face
-#+begin_src emacs-lisp
-  (defface mode-line-read-only-face
-    '((t (:foreground "#C82829" :bold t)))
-    "face for mode-name-string in modeline."
-    :group 'mode-line)
-
-  (defface mode-line-modified-face
-    '((t (:inherit 'font-lock-function-name-face :bolt t)))
-    "face for mode-name-string in modeline."
-    :group'mode-line)
-
-  (defface mode-line-mode-name-face
-    '((t (:inherit font-lock-keyword-face)))
-    "face for mode-name-string in modeline."
-    :group 'mode-line)
-
-  (defface mode-line-normal-state-face
-    '((t (:inherit font-lock-function-name-face)))
-    "face for emacs normal state"
-    :group 'mode-line)
-
-  (defface font-lock-escape-char-face
-    '((((class color)) (:foreground "seagreen2")))
-    "highlight c escapes char like vim"
-    :group 'font-lock-faces)
-
-  (defface mode-line-evil-state-string-N
-    '((t (:inherit font-lock-function-name-face)))
-    "face for vim-string in normal-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-I
-    '((t (:inherit font-lock-constant-face)))
-    "face for vim-string in insert-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-V
-    '((t (:inherit font-lock-variable-name-face)))
-    "face for vim-string in visual-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-E
-    '((t (:inherit font-lock-string-face)))
-    "face for vim-string in emacs-map on mode-line."
-    :group 'mode-line)
-#+end_src
-
 ** 使用者介面設定
 
 關閉一些 emacs 預設的 UI 設定。
@@ -353,13 +308,6 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
 不顯示選單列
 #+begin_src emacs-lisp
   (if (featurep 'menu-bar) (menu-bar-mode -1))
-#+end_src
-
-*** TODO Time Stamp
-#+begin_src emacs-lisp
-  (setq time-stamp-active      t ) ; do enable time-stamps
-  (setq time-stamp-line-limit 10 ) ; check first 10 buffer lines for Time-stamp:
-  (setq time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S (%u)") ; date format
 #+end_src
 
 *** 回答問題時，使用 *y* 和 *n* 代替 *yes/no* 。
@@ -417,6 +365,7 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
 
 整個設定是使用 cond 來進行條件式的判斷，因此加入了 *設定起始位置* 和 *設定終止位置*
 作為保護。
+
 *** 設定起始位置
 #+begin_src emacs-lisp
   (cond
@@ -1380,9 +1329,8 @@ evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死�
 
 
 #+begin_src emacs-lisp
-  ;;  (setq evil-normal- nil)
-  ;;  (setq evil-emacs-state nil)
   ;;  (setq evil-motion-state nil)
+  (setq evil-emacs-state-modes nil)
 
   ;;evil-motion-state-modes
 #+end_src
@@ -1543,6 +1491,7 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (vim:nmap (kbd "M-u") 'upcase-word)
   (vim:nmap (kbd "M-l") 'downcase-word)
   (vim:nmap (kbd "M-c") 'capitalize-word)
+  (vim:nmap (kbd "<SPC>") 'ace-jump-mode)
 #+end_src
 
 ** Insert-state 按鍵設定
@@ -1550,7 +1499,8 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
 這邊設定我的 Insert-state 的按鍵，部份會和我原本的 emacs 按鍵設置不太一樣。
 
 #+begin_src emacs-lisp
-  (vim:imap (kbd "C-o") 'evil-execute-in-normal-state)
+;;  (vim:imap (kbd "C-o") 'evil-execute-in-normal-state)
+  (vim:imap (kbd "C-o") 'evil-normal-state)
   (vim:imap (kbd "C-l") 'backward-delete-char)
   (vim:imap (kbd "C-w") 'evil-window-map)
   (vim:imap (kbd "M-w") 'kill-ring-save)
@@ -3034,9 +2984,8 @@ some packages conflict with org-mode
 #+end_src
 
 * 編輯器                                                             :editor:
-** 通用型 C 語言編輯設定
 
-這邊設定的是通用的
+** 基本設置
 
 ** 不使用 TAB 進行縮排
 
@@ -3068,23 +3017,20 @@ some packages conflict with org-mode
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+end_src
 
-** 自動建立資料夾
+** 存檔後自動建立資料夾
 
-當使用 C-x C-f 建立新的檔案的時候，如果該資料夾未被建立，則自動建立他。
-
-一般網路上流傳的方式，是在存檔案時才建立資料夾。但是我認為應該一開始就該先建立好資料夾，
-畢竟很少人會建好資料夾內的檔案而放棄。
-
-如果需要存檔後才進行建立資料夾的動作，則將下面的 find-file-hook 改為 before-save-hook。
-
+當存檔的時候，如果這個緩衝區的父資料夾不存在，自動建立他。
 #+begin_src emacs-lisp
-  (add-hook 'find-file-hook
-            '(lambda ()
-                 (or (file-exists-p  (file-name-directory buffer-file-name))
-                     (make-directory (file-name-directory buffer-file-name) t))))
+(add-hook 'before-save-hook
+          (lambda ()
+            (when buffer-file-name
+              (let ((dir (file-name-directory buffer-file-name)))
+                (when (and (not (file-exists-p dir))
+                           (y-or-n-p (format "Directory %s does not exist. Create it?" dir)))
+                  (make-directory dir t))))))
 #+end_src
 
-** 行號設定
+** 行號顯示設定
 
 預設顯示行號
 #+begin_src emacs-lisp
@@ -3094,8 +3040,7 @@ some packages conflict with org-mode
 設定某些 Mode 不顯示行號，這邊先設定不顯示行號的 mode-list
 #+begin_src emacs-lisp
   (setq inhibit-linum-mode-alist
-        '(
-          eshell-mode
+        '(eshell-mode
           shell-mode
           term-mode
           erc-mode
@@ -3107,12 +3052,29 @@ some packages conflict with org-mode
           ))
 #+end_src
 
+修正 linum-on 的功能，讓他遇到我們設定不顯示行號的模式時，不啟用 linum-mode
 #+begin_src emacs-lisp
   (defadvice linum-on (around inhibit-for-modes activate)
     "Stop turing linum-mode if it is in the inhibit-linum-mode-alist."
     (unless (member major-mode inhibit-linum-mode-alist)
       ad-do-it))
 #+end_src
+
+** Doxygen
+
+*** 加入相依模組
+
+#+begin_src emacs-lisp
+  (require 'doxymacs)
+#+end_src
+
+*** 設定預設啟用 Doxygen 的模式
+
+- C/C++
+
+  #+begin_src emacs-lisp
+    (add-hook 'c-mode-common-hook 'doxymacs-mode)
+  #+end_src
 
 ** TODO remember
 *** electric-pair-mode
@@ -3579,6 +3541,7 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 
 #+begin_src emacs-lisp
   (require 'clojure-mode)
+  (require 'clojure-test-mode)
   (require 'nrepl)
   (require 'ac-nrepl)
 #+end_src
@@ -5371,48 +5334,6 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
   (setq recentf-save-file (concat emacs-cache-dir "recentf"))
   ;; Following file won;t contain in recentf
   (setq recentf-exclude '("\\.elc$" "\\.pyc$" "\\.recentd$" "^/tmp/"))
-#+end_src
-** desktop
-#+begin_src emacs-lisp
-  (require 'desktop)
-  (setq desktop-path (list emacs-cache-dir))
-  (setq desktop-dirname emacs-cache-dir)
-  (setq desktop-base-file-name "desktop.dat")
-  (setq desktop-missing-file-warning nil)
-
-  ;; Enable desktop
-  (desktop-save-mode t)
-
-  (defadvice desktop-owner (after pry-from-cold-dead-hands activate)
-    "Don't allow dead emacsen to own the desktop file."
-    (when (not (emacs-process-p ad-return-value))
-      (setq ad-return-value nil)))
-
-  (defun desktop-in-use? ()
-    (and (file-exists-p desktop-base-file-name) (file-exists-p desktop-base-lock-name)))
-
-  (defun autosave-desktop ()
-    (if (desktop-in-use?) (desktop-save-in-desktop-dir)))
-
-  ;; auto save desktop
-  (add-hook 'after-init-hook
-            (lambda ()
-              (setq *desktop-saver-timer*
-                    (run-with-timer 5 300 'autosave-desktop))))
-
-  ;; Following modes are ignore and won't save to desktop
-  (setq desktop-buffers-not-to-save
-        (concat "\\("
-                "^\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
-                "\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
-                "\\)$"))
-
-  (add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
-  (add-to-list 'desktop-modes-not-to-save 'dired-mode)
-  (add-to-list 'desktop-modes-not-to-save 'Info-mode)
-  (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
-  (add-to-list 'desktop-modes-not-to-save 'w3m-mode)
-  (add-to-list 'desktop-modes-not-to-save 'view-mode)
 #+end_src
 * 全域性按鍵設置
 ** 文件編輯

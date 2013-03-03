@@ -21,7 +21,8 @@
               (current-line . "#2a2a2a")
               (selection . "#444444")
               (highlight . "#CAE682")
-              (comment . "#8e908c")
+              ;;              (comment . "#8e908c")
+              (comment . "#5d9ae4")
               (red    . "#E52210")
               (orange . "#e65c00")
               (yellow . "#f0c674")
@@ -30,7 +31,7 @@
               (blue   . "#4d85ff")
               (purple . "#AD7fA8")))
     (day . ((background . "#ffffff")
-            (foreground . "#4d4d4c")
+            (foreground . "#1d1d1d")
             (cursor . "#0B0B0E")
             (current-line . "#efefef")
             (selection . "#d6d6d6")
@@ -39,7 +40,7 @@
             (red . "#c82829")
             (orange . "#f5871f")
             (yellow . "#eab700")
-            (green . "#718c00")
+            (green . "#829c00")
             (aqua . "#3e999f")
             (blue . "#4271ae")
             (purple . "#8959a8")))
@@ -190,7 +191,7 @@ names to which it refers are bound."
      ;; Emacs interface
      (cursor ((,class (:background ,cursor))))
      (fringe ((,class (:background ,current-line))))
-     ;;     (linum ((,class (:background ,current-line))))
+     (linum ((,class (:foreground ,cursor :background ,background))))
      (hl-line ((,class (:background ,highlight))))
      ;;     (border ((,class (:background ,current-line))))
      ;;     (border-glyph ((,class (nil))))
@@ -198,6 +199,8 @@ names to which it refers are bound."
      (link ((,class (:foreground ,blue))))
      (link-visited ((,class (:foreground ,purple))))
      (gui-element ((,class (:background ,current-line :foreground ,foreground))))
+
+     ;; mode-line
      (mode-line ((,class (:background ,background :foreground "#b1c3d4"
                                       :box (:line-width 2 :color "#B184CB")))))
      (mode-line-inactive ((,class (:background ,current-line :foreground "#7b8793"
@@ -205,6 +208,7 @@ names to which it refers are bound."
      (mode-line-buffer-id ((,class (:foreground ,foreground :background nil))))
      (mode-line-emphasis ((,class (:foreground ,foreground :slant italic))))
      (mode-line-highlight ((,class (:foreground ,purple :box nil :weight bold))))
+
      (minibuffer-prompt ((,class (:foreground ,red :bold t))))
      (region ((,class (:background ,selection))))
      (secondary-selection ((,class (:background ,current-line))))
@@ -250,7 +254,8 @@ names to which it refers are bound."
      (diff-removed ((,class (:foreground ,red))))
      (diff-header ((,class (:background ,current-line))))
      (diff-file-header ((,class (:background ,selection))))
-     (diff-hunk-header ((,class (:background ,current-line :foreground ,purple))))
+     (diff-hunk-header ((,class (:foreground ,yellow :italic t))))
+     (diff-context ((,class (:foreground ,foreground))))
 
      (ediff-even-diff-A ((,class (:foreground nil :background nil :inverse-video t))))
      (ediff-even-diff-B ((,class (:foreground nil :background nil :inverse-video t))))
@@ -302,12 +307,12 @@ names to which it refers are bound."
      (diredp-symlink ((,class (:foreground ,purple))))
      (diredp-write-priv ((,class (:foreground ,yellow :background nil))))
 
-     ;; Magit (a patch is pending in magit to make these standard upstream)
+     ;; Magit
      (magit-branch ((,class (:foreground ,green))))
      (magit-header ((,class (:inherit nil :weight bold))))
      (magit-item-highlight ((,class (:background ,background))))
      (magit-log-graph ((,class (:foreground ,comment))))
-     (magit-log-sha1 ((,class (:foreground ,purple))))
+     (magit-log-sha1 ((,class (:foreground ,orange))))
      (magit-log-head-label-bisect-bad ((,class (:foreground ,red))))
      (magit-log-head-label-bisect-good ((,class (:foreground ,green))))
      (magit-log-head-label-default ((,class (:foreground ,yellow :box nil :weight bold))))
@@ -344,11 +349,12 @@ names to which it refers are bound."
      (org-agenda-date ((,class (:foreground ,blue :underline nil))))
      (org-agenda-done ((,class (:foreground ,green))))
      (org-agenda-dimmed-todo-face ((,class (:foreground ,comment))))
-     ;;(org-block ((,class (:foreground ,orange))))
+     (org-block ((,class (:foreground ,yellow))))
      (org-code ((,class (:foreground ,yellow))))
      (org-column ((,class (:background ,current-line))))
      (org-column-title ((,class (:inherit org-column :weight bold :underline t))))
-     (org-date ((,class (:foreground ,purple :underline t))))
+     (org-date ((,class (:foreground ,purple :underline t :bold t))))
+     (org-agenda-date-weekend ((t (:bold t :foreground ,orange :weight bold))))
      (org-document-info ((,class (:foreground ,aqua))))
      (org-document-info-keyword ((,class (:foreground ,green))))
      (org-document-title ((,class (:weight bold :foreground ,orange :height 1.44))))
@@ -356,6 +362,7 @@ names to which it refers are bound."
      (org-footnote ((,class (:foreground ,aqua))))
      (org-formula ((,class (:foreground ,red))))
      ;;(org-hide ((,class (:foreground ,current-line))))
+     (org-hide ((t (:foreground "#0B0B0E"))))
      (org-scheduled ((,class (:foreground ,green))))
      (org-scheduled-previously ((,class (:foreground ,orange))))
      (org-scheduled-today ((,class (:foreground ,green))))
@@ -508,6 +515,7 @@ names to which it refers are bound."
      (gnus-group-news-5-empty ((,class (:inherit gnus-group-news-5 :foreground ,comment))))
      (gnus-group-news-6-empty ((,class (:inherit gnus-group-news-6 :foreground ,comment))))
 
+     ;; erc
      (erc-direct-msg-face ((,class (:foreground ,orange))))
      (erc-error-face ((,class (:foreground ,red))))
      (erc-header-face ((,class (:foreground ,foreground :background ,selection))))
@@ -521,6 +529,12 @@ names to which it refers are bound."
      (erc-pal-face ((,class (:foreground ,orange))))
      (erc-prompt-face ((,class (:foreground ,blue))))
      (erc-timestamp-face ((,class (:foreground ,aqua))))
+
+     ;; woman
+     (woman-italic-face ((t (:slant italic :weight bold))))
+     (woman-unknown ((t (:foreground ,red :weight bold))))
+     (woman-addition ((t (:foreground ,aqua))))
+     (woman-bold ((t (:inherit bold :foreground ,blue))))
 
      (custom-variable-tag ((,class (:foreground ,blue))))
      (custom-group-tag ((,class (:foreground ,blue))))
@@ -590,12 +604,12 @@ are bound."
 ;;;###autoload
 (defun coldnew-theme-night ()
   (interactive)
-  (coldnew-theme-real 'night))
+  (coldnew-theme--define-theme night))
 
 ;;;###autoload
 (defun coldnew-theme-day ()
   (interactive)
-  (coldnew-theme-real 'day))
+  (coldnew-theme--define-theme day))
 
 (provide 'coldnew-theme)
 

@@ -1,0 +1,6 @@
+(:name evil-elscreen
+       :website "https://github.com/coldnew/evil-elscreen"
+       :description "emacs evil wrpaaer to use elscreen as tab"
+       :type github
+       :pkgname "coldnew/evil-elscreen"
+       :features evil-elscreen)
