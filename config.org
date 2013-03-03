@@ -1541,9 +1541,8 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (vim:imap (kbd "C-o") 'evil-normal-state)
   (vim:imap (kbd "C-l") 'backward-delete-char)
   (vim:imap (kbd "C-w") 'evil-window-map)
-  (vim:imap (kbd "M-k") 'kill-ring-save)
-  (vim:imap (kbd "M-w") 'kill-region)
-  (vim:imap (kbd "<SPC>") 'ace-jump-mode)
+  (vim:imap (kbd "M-w") 'kill-ring-save)
+  (vim:imap (kbd "M-k") 'kill-region)
 #+end_src
 
 ** Window-sate 按鍵設定
@@ -3023,9 +3022,8 @@ some packages conflict with org-mode
 #+end_src
 
 * 編輯器                                                             :editor:
-** 通用型 C 語言編輯設定
 
-這邊設定的是通用的
+** 基本設置
 
 ** 不使用 TAB 進行縮排
 
@@ -3070,8 +3068,7 @@ some packages conflict with org-mode
                   (make-directory dir t))))))
 #+end_src
 
-
-** 行號設定
+** 行號顯示設定
 
 預設顯示行號
 #+begin_src emacs-lisp
@@ -3081,8 +3078,7 @@ some packages conflict with org-mode
 設定某些 Mode 不顯示行號，這邊先設定不顯示行號的 mode-list
 #+begin_src emacs-lisp
   (setq inhibit-linum-mode-alist
-        '(
-          eshell-mode
+        '(eshell-mode
           shell-mode
           term-mode
           erc-mode
@@ -3094,12 +3090,30 @@ some packages conflict with org-mode
           ))
 #+end_src
 
+修正 linum-on 的功能，讓他遇到我們設定不顯示行號的模式時，不啟用 linum-mode
 #+begin_src emacs-lisp
   (defadvice linum-on (around inhibit-for-modes activate)
     "Stop turing linum-mode if it is in the inhibit-linum-mode-alist."
     (unless (member major-mode inhibit-linum-mode-alist)
       ad-do-it))
 #+end_src
+
+** Doxygen
+
+*** 加入相依模組
+
+#+begin_src emacs-lisp
+  (require 'doxymacs)
+#+end_src
+
+*** 設定預設啟用 Doxygen 的模式
+
+- C/C++
+
+  #+begin_src emacs-lisp
+    (add-hook 'c-mode-common-hook 'doxymacs-mode)
+  #+end_src
+
 
 ** TODO remember
 *** electric-pair-mode

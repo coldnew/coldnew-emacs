@@ -14,6 +14,7 @@
 "clojure-test-mode"
 "ctags"
 "ctags-update"
+"doxymacs"
 "ecb-snapshot"
 "egg"
 "eldoc-extension"
