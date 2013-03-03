@@ -2,9 +2,10 @@
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
 #+STARTUP: overview indent align
-#+PROPERTY: noweb tangle
+#+PROPERTY: noweb
+#+PROPERTY: cache yes
+#+PROPERTY: tangle yes
 #+OPTIONS: ^:nil
-#+INFOJS_OPT: view:info toc:t ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 
 * 關於這份檔案
 
