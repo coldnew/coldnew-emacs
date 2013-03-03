@@ -348,7 +348,7 @@ names to which it refers are bound."
      (org-agenda-date ((,class (:foreground ,blue :underline nil))))
      (org-agenda-done ((,class (:foreground ,green))))
      (org-agenda-dimmed-todo-face ((,class (:foreground ,comment))))
-     ;;(org-block ((,class (:foreground ,orange))))
+     (org-block ((,class (:foreground ,yellow))))
      (org-code ((,class (:foreground ,yellow))))
      (org-column ((,class (:background ,current-line))))
      (org-column-title ((,class (:inherit org-column :weight bold :underline t))))
