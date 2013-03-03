@@ -254,7 +254,8 @@ names to which it refers are bound."
      (diff-removed ((,class (:foreground ,red))))
      (diff-header ((,class (:background ,current-line))))
      (diff-file-header ((,class (:background ,selection))))
-     (diff-hunk-header ((,class (:background ,current-line :foreground ,purple))))
+     (diff-hunk-header ((,class (:foreground ,yellow :italic t))))
+     (diff-context ((,class (:foreground ,foreground))))
 
      (ediff-even-diff-A ((,class (:foreground nil :background nil :inverse-video t))))
      (ediff-even-diff-B ((,class (:foreground nil :background nil :inverse-video t))))
@@ -306,12 +307,12 @@ names to which it refers are bound."
      (diredp-symlink ((,class (:foreground ,purple))))
      (diredp-write-priv ((,class (:foreground ,yellow :background nil))))
 
-     ;; Magit (a patch is pending in magit to make these standard upstream)
+     ;; Magit
      (magit-branch ((,class (:foreground ,green))))
      (magit-header ((,class (:inherit nil :weight bold))))
      (magit-item-highlight ((,class (:background ,background))))
      (magit-log-graph ((,class (:foreground ,comment))))
-     (magit-log-sha1 ((,class (:foreground ,purple))))
+     (magit-log-sha1 ((,class (:foreground ,orange))))
      (magit-log-head-label-bisect-bad ((,class (:foreground ,red))))
      (magit-log-head-label-bisect-good ((,class (:foreground ,green))))
      (magit-log-head-label-default ((,class (:foreground ,yellow :box nil :weight bold))))
