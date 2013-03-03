@@ -18,6 +18,7 @@
 "eldoc-extension"
 "elscreen"
 "erc-highlight-nicknames"
+"evil-elscreen"
 "fuzzy"
 "git-emacs"
 "go-mode"
