@@ -3062,7 +3062,6 @@ some packages conflict with org-mode
     (add-hook 'c-mode-common-hook 'doxymacs-mode)
   #+end_src
 
-
 ** TODO remember
 *** electric-pair-mode
 #+begin_src emacs-lisp
