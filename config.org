@@ -3566,6 +3566,7 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 
 #+begin_src emacs-lisp
   (require 'clojure-mode)
+  (require 'clojure-test-mode)
   (require 'nrepl)
   (require 'ac-nrepl)
 #+end_src

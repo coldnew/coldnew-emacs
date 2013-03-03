@@ -11,6 +11,7 @@
 "bm"
 "c-eldoc"
 "clojure-mode"
+"clojure-test-mode"
 "ctags"
 "ctags-update"
 "ecb-snapshot"
