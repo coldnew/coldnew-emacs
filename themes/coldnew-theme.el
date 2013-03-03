@@ -21,7 +21,8 @@
               (current-line . "#2a2a2a")
               (selection . "#444444")
               (highlight . "#CAE682")
-              (comment . "#8e908c")
+              ;;              (comment . "#8e908c")
+              (comment . "#5d9ae4")
               (red    . "#E52210")
               (orange . "#e65c00")
               (yellow . "#f0c674")
@@ -190,7 +191,7 @@ names to which it refers are bound."
      ;; Emacs interface
      (cursor ((,class (:background ,cursor))))
      (fringe ((,class (:background ,current-line))))
-     ;;     (linum ((,class (:background ,current-line))))
+     (linum ((,class (:foreground ,cursor :background ,background))))
      (hl-line ((,class (:background ,highlight))))
      ;;     (border ((,class (:background ,current-line))))
      ;;     (border-glyph ((,class (nil))))
@@ -198,6 +199,8 @@ names to which it refers are bound."
      (link ((,class (:foreground ,blue))))
      (link-visited ((,class (:foreground ,purple))))
      (gui-element ((,class (:background ,current-line :foreground ,foreground))))
+
+     ;; mode-line
      (mode-line ((,class (:background ,background :foreground "#b1c3d4"
                                       :box (:line-width 2 :color "#B184CB")))))
      (mode-line-inactive ((,class (:background ,current-line :foreground "#7b8793"
@@ -205,6 +208,7 @@ names to which it refers are bound."
      (mode-line-buffer-id ((,class (:foreground ,foreground :background nil))))
      (mode-line-emphasis ((,class (:foreground ,foreground :slant italic))))
      (mode-line-highlight ((,class (:foreground ,purple :box nil :weight bold))))
+
      (minibuffer-prompt ((,class (:foreground ,red :bold t))))
      (region ((,class (:background ,selection))))
      (secondary-selection ((,class (:background ,current-line))))
@@ -348,7 +352,8 @@ names to which it refers are bound."
      (org-code ((,class (:foreground ,yellow))))
      (org-column ((,class (:background ,current-line))))
      (org-column-title ((,class (:inherit org-column :weight bold :underline t))))
-     (org-date ((,class (:foreground ,purple :underline t))))
+     (org-date ((,class (:foreground ,purple :underline t :bold t))))
+     (org-agenda-date-weekend ((t (:bold t :foreground ,orange :weight bold))))
      (org-document-info ((,class (:foreground ,aqua))))
      (org-document-info-keyword ((,class (:foreground ,green))))
      (org-document-title ((,class (:weight bold :foreground ,orange :height 1.44))))
@@ -356,6 +361,7 @@ names to which it refers are bound."
      (org-footnote ((,class (:foreground ,aqua))))
      (org-formula ((,class (:foreground ,red))))
      ;;(org-hide ((,class (:foreground ,current-line))))
+     (org-hide ((t (:foreground "#0B0B0E"))))
      (org-scheduled ((,class (:foreground ,green))))
      (org-scheduled-previously ((,class (:foreground ,orange))))
      (org-scheduled-today ((,class (:foreground ,green))))
@@ -508,6 +514,7 @@ names to which it refers are bound."
      (gnus-group-news-5-empty ((,class (:inherit gnus-group-news-5 :foreground ,comment))))
      (gnus-group-news-6-empty ((,class (:inherit gnus-group-news-6 :foreground ,comment))))
 
+     ;; erc
      (erc-direct-msg-face ((,class (:foreground ,orange))))
      (erc-error-face ((,class (:foreground ,red))))
      (erc-header-face ((,class (:foreground ,foreground :background ,selection))))
@@ -521,6 +528,12 @@ names to which it refers are bound."
      (erc-pal-face ((,class (:foreground ,orange))))
      (erc-prompt-face ((,class (:foreground ,blue))))
      (erc-timestamp-face ((,class (:foreground ,aqua))))
+
+     ;; woman
+     (woman-italic-face ((t (:slant italic :weight bold))))
+     (woman-unknown ((t (:foreground ,red :weight bold))))
+     (woman-addition ((t (:foreground ,aqua))))
+     (woman-bold ((t (:inherit bold :foreground ,blue))))
 
      (custom-variable-tag ((,class (:foreground ,blue))))
      (custom-group-tag ((,class (:foreground ,blue))))
