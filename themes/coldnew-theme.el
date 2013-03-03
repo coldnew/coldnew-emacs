@@ -31,7 +31,7 @@
               (blue   . "#4d85ff")
               (purple . "#AD7fA8")))
     (day . ((background . "#ffffff")
-            (foreground . "#4d4d4c")
+            (foreground . "#1d1d1d")
             (cursor . "#0B0B0E")
             (current-line . "#efefef")
             (selection . "#d6d6d6")
@@ -40,7 +40,7 @@
             (red . "#c82829")
             (orange . "#f5871f")
             (yellow . "#eab700")
-            (green . "#718c00")
+            (green . "#829c00")
             (aqua . "#3e999f")
             (blue . "#4271ae")
             (purple . "#8959a8")))
@@ -604,12 +604,12 @@ are bound."
 ;;;###autoload
 (defun coldnew-theme-night ()
   (interactive)
-  (coldnew-theme-real 'night))
+  (coldnew-theme--define-theme night))
 
 ;;;###autoload
 (defun coldnew-theme-day ()
   (interactive)
-  (coldnew-theme-real 'day))
+  (coldnew-theme--define-theme day))
 
 (provide 'coldnew-theme)
 
