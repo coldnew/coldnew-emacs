@@ -3056,21 +3056,19 @@ some packages conflict with org-mode
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+end_src
 
-** 自動建立資料夾
+** 存檔後自動建立資料夾
 
-當使用 C-x C-f 建立新的檔案的時候，如果該資料夾未被建立，則自動建立他。
-
-一般網路上流傳的方式，是在存檔案時才建立資料夾。但是我認為應該一開始就該先建立好資料夾，
-畢竟很少人會建好資料夾內的檔案而放棄。
-
-如果需要存檔後才進行建立資料夾的動作，則將下面的 find-file-hook 改為 before-save-hook。
-
+當存檔的時候，如果這個緩衝區的父資料夾不存在，自動建立他。
 #+begin_src emacs-lisp
-  (add-hook 'find-file-hook
-            '(lambda ()
-                 (or (file-exists-p  (file-name-directory buffer-file-name))
-                     (make-directory (file-name-directory buffer-file-name) t))))
+(add-hook 'before-save-hook
+          (lambda ()
+            (when buffer-file-name
+              (let ((dir (file-name-directory buffer-file-name)))
+                (when (and (not (file-exists-p dir))
+                           (y-or-n-p (format "Directory %s does not exist. Create it?" dir)))
+                  (make-directory dir t))))))
 #+end_src
+
 
 ** 行號設定
 
