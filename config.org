@@ -2237,6 +2237,19 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
                (define-key ido-completion-map (kbd "C-b") 'ido-prev-match)
                ))
 #+end_src
+** 紀錄 Minibuffer 使用過的命令
+
+透過 savehist 套件，我們可以將 Minibuffer 使用過的命令紀錄起來，
+下次打開 emacs 仍可以知道之前呼叫過哪些 Minubuffer 的命令。
+
+#+begin_src emacs-lisp
+  (require 'savehist)
+  ;; keep minibuffer history between session
+  (setq savehist-file (concat emacs-cache-dir "savehist.dat"))
+  ;; enable savehist
+  (savehist-mode 1)
+#+end_src
+
 * EShell                                                              :eshell:
 ** 載入相關套件
 
@@ -5313,13 +5326,6 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
   (file-cache-add-directory-list '("~/.emacs.d/" "~/Workspace/"))
 #+end_src
 
-** savehist
-#+begin_src emacs-lisp
-  (require 'savehist)
-  ;; keep minibuffer history between session
-  (setq savehist-file (concat emacs-cache-dir "savehist.dat"))
-  (savehist-mode 1)
-#+end_src
 ** saveplace
 #+begin_src emacs-lisp
   (require 'saveplace)
