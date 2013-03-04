@@ -1,6 +1,0 @@
-(:name highlight-cl
-       :description "Highlighting `cl' functions."
-       :website ""
-       :type emacswiki
-       :features highlight-cl
-       )

@@ -2,9 +2,10 @@
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
 #+STARTUP: overview indent align
-#+PROPERTY: noweb tangle
+#+PROPERTY: noweb
+#+PROPERTY: cache yes
+#+PROPERTY: tangle yes
 #+OPTIONS: ^:nil
-#+INFOJS_OPT: view:info toc:t ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 
 * 關於這份檔案
 
@@ -14,7 +15,9 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
 
 在這 6年的時間裡，用 emacs 學 emacs 以及配置 emacs 花費了我不少時間，網路上
 太多太多中文的配置都是複製貼上複製貼上，連用途都不懂就轉用了別人的文章放到
-自己的部若格上，讓我剛開始學 emacs 查找資料時有許多困擾， <待續>
+自己的部若格上，讓我剛開始學 emacs 查找資料時有許多困擾， 為了讓以後有人
+看到我的 emacs 配置，能夠一看就很明白這個配置是做什麼，於是我將所有的配置
+改寫回正體中文。<待續>
 
 * 基礎設置                                                             :base:
 
@@ -254,54 +257,6 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
          (change-mouse-to-left)))
 #+end_src
 
-*** TODO Face
-#+begin_src emacs-lisp
-  (defface mode-line-read-only-face
-    '((t (:foreground "#C82829" :bold t)))
-    "face for mode-name-string in modeline."
-    :group 'mode-line)
-
-  (defface mode-line-modified-face
-    '((t (:inherit 'font-lock-function-name-face :bolt t)))
-    "face for mode-name-string in modeline."
-    :group'mode-line)
-
-  (defface mode-line-mode-name-face
-    '((t (:inherit font-lock-keyword-face)))
-    "face for mode-name-string in modeline."
-    :group 'mode-line)
-
-  (defface mode-line-normal-state-face
-    '((t (:inherit font-lock-function-name-face)))
-    "face for emacs normal state"
-    :group 'mode-line)
-
-  (defface font-lock-escape-char-face
-    '((((class color)) (:foreground "seagreen2")))
-    "highlight c escapes char like vim"
-    :group 'font-lock-faces)
-
-  (defface mode-line-evil-state-string-N
-    '((t (:inherit font-lock-function-name-face)))
-    "face for vim-string in normal-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-I
-    '((t (:inherit font-lock-constant-face)))
-    "face for vim-string in insert-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-V
-    '((t (:inherit font-lock-variable-name-face)))
-    "face for vim-string in visual-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-E
-    '((t (:inherit font-lock-string-face)))
-    "face for vim-string in emacs-map on mode-line."
-    :group 'mode-line)
-#+end_src
-
 ** 使用者介面設定
 
 關閉一些 emacs 預設的 UI 設定。
@@ -353,13 +308,6 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
 不顯示選單列
 #+begin_src emacs-lisp
   (if (featurep 'menu-bar) (menu-bar-mode -1))
-#+end_src
-
-*** TODO Time Stamp
-#+begin_src emacs-lisp
-  (setq time-stamp-active      t ) ; do enable time-stamps
-  (setq time-stamp-line-limit 10 ) ; check first 10 buffer lines for Time-stamp:
-  (setq time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S (%u)") ; date format
 #+end_src
 
 *** 回答問題時，使用 *y* 和 *n* 代替 *yes/no* 。
@@ -417,6 +365,7 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
 
 整個設定是使用 cond 來進行條件式的判斷，因此加入了 *設定起始位置* 和 *設定終止位置*
 作為保護。
+
 *** 設定起始位置
 #+begin_src emacs-lisp
   (cond
@@ -593,13 +542,15 @@ el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維�
   (require 'package)
 #+end_src
 
-*** 添加我需要的庫到 ELPA 裏面
+*** 設定我需要的 ELPA 倉庫
 
 #+begin_src emacs-lisp
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/") t)
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+
+  (package-initialize)
 #+end_src
 
 ** 套件檢查
@@ -1267,286 +1218,67 @@ emacs-lisp-mode 的 buffer，可以這樣做
 
 佈景主題的設置，包含我自訂的佈景主題以及路徑。
 ** 設定佈景主題的位置。
+
 佈景主題的路徑設定在 emacs-themes-dir 裡面。
 #+begin_src emacs-lisp
   (setq custom-theme-directory emacs-themes-dir)
 #+end_src
-** coldnew-night
-我自己設計的暗色系佈景主題，會輸出成 ~/.emacs.d/themes/coldnew-night-theme.el
 
-:PROPERTIES:
-:comments: org
-:tangle:   ~/.emacs.d/themes/coldnew-night-theme.el
-:cache: yes
-:padline: no
-:END:
-
-*** 標頭檔
-#+begin_src emacs-lisp
-  ;;; coldnew-night-theme.el --- Custom face theme for Emacs
-
-  ;; Copyright (C) 2012 coldnew.
-
-  ;; This file is free software: you can redistribute it and/or modify
-  ;; it under the terms of the GNU General Public License as published by
-  ;; the Free Software Foundation, either version 3 of the License, or
-  ;; (at your option) any later version.
-
-  ;; This file is distributed in the hope that it will be useful,
-  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ;; GNU General Public License for more details.
-
-  ;; You should have received a copy of the GNU General Public License
-  ;; along with GNU Emacs.  If not, see <http://www.gnu.org/licenses/>.
-
-  ;;; Code:
-#+end_src
-
-*** 初始化
+** 設定額外的佈景主題變數
 
 #+begin_src emacs-lisp
-  (deftheme coldnew-night
-    "coldnew's dark theme.")
+  (defface evil-state-normal-face
+    '((t (:inherit font-lock-function-name-face)))
+    "face for vim-string in normal-map on mode-line."
+    :group 'mode-line)
 
-  (custom-theme-set-faces
-   'coldnew-night
-#+end_src
+  (defface evil-state-insert-face
+    '((t (:inherit font-lock-constant-face)))
+    "face for vim-string in insert-map on mode-line."
+    :group 'mode-line)
 
-*** 背景與文字
+  (defface evil-state-visual-face
+    '((t (:inherit font-lock-variable-name-face)))
+    "face for vim-string in visual-map on mode-line."
+    :group 'mode-line)
 
-設定 emacs 的背景和文字顏色
-#+begin_src emacs-lisp
-  '(default ((t (:background "#0B0B0E" :foreground "#DCDCDC"))))
-#+end_src
+  (defface evil-state-emacs-face
+    '((t (:inherit font-lock-string-face)))
+    "face for vim-string in emacs-map on mode-line."
+    :group 'mode-line)
 
-*** 游標
+  (defface mode-line-read-only-face
+    '((t (:foreground "#C82829" :bold t)))
+    "face for mode-name-string in modeline."
+    :group 'mode-line)
 
-設定 emacs 的游標顏色
-#+begin_src emacs-lisp
-  '(cursor ((t (:background "#C2C2C2" :foreground "#0B0B0E"))))
-#+end_src
+  (defface mode-line-modified-face
+    '((t (:inherit 'font-lock-function-name-face :bolt t)))
+    "face for mode-name-string in modeline."
+    :group'mode-lin)
 
-*** Region
+  (defface mode-line-mode-name-face
+    '((t (:inherit font-lock-keyword-face)))
+    "face for mode-name-string in modeline."
+    :group 'mode-line)
 
-設定選重區域的顏色
-#+begin_src emacs-lisp
-  '(region ((t (:background "#444444" :foreground "#DCDCDC"))))
-#+end_src
-
-*** Mode Line
-
-#+begin_src emacs-lisp
-  '(mode-line ((t (:background "#0C0C0C" :foreground "#B1C3D4"
-                               :box (:line-width 2 :color "#B184CB")))))
-  '(mode-line-inactive ((t (:background "#343434" :foreground "#7B8793"
-                                        :box (:line-width 2 :color "#565968")))))
-  '(mode-line-buffer-id ((t (:foreground "#CDCDCD":bold t :italic t))))
-#+end_src
-
-*** fringe
-
-#+begin_src emacs-lisp
-  '(fringe ((t (:background "#2A2A2A"))))
-#+end_src
-
-*** Minibuffer
-
-#+begin_src emacs-lisp
-  '(minibuffer-prompt ((t (:foreground "#E52210" :bold t))))
-#+end_src
-
-*** 關鍵字上色
-
-#+begin_src emacs-lisp
-  '(font-lock-builtin-face ((t (:foreground "#4BC98A"))))
-  ;; Comment
-  '(font-lock-comment-face ((t (:foreground "#5D9AE4" :italic t))))
-  ;; Constant
-  '(font-lock-constant-face ((t (:foreground "#E53F3F" :bold t))))
-  ;; Function name
-  '(font-lock-function-name-face ((t (:foreground "#AD7FA8" :italic t :bold t))))
-  ;; Keyword
-  '(font-lock-keyword-face ((t (:foreground "#FFC125"))))
-  ;; String
-  '(font-lock-string-face ((t (:foreground "#95E454" :italic t))))
-  ;; Type
-  '(font-lock-type-face ((t (:foreground "#CAE682"))))
-  ;; Variable
-  '(font-lock-variable-name-face ((t (:foreground "#4BC98A"))))
-  ;; Warning
-  '(font-lock-warning-face ((t (:foreground "#E91303" :bold t))))
-  ;; Doc
-  '(font-lock-doc-face ((t (:foreground "#40AAFA"))))
-#+end_src
-
-*** Auto-Complete
-
-#+begin_src emacs-lisp
-  '(ac-candidate-face ((t (:background "#424242" :foreground "white"))))
-  '(ac-selection-face ((t (:background "#CAE682" :foreground "#0C0C0C"))))
-
-#+end_src
-
-*** org-mode
-
-#+begin_src emacs-lisp
-  '(org-date ((t (:foreground "#4D85FF" :bold t))))
-  '(org-agenda-date ((t (:foreground "#8AC6F2"))))
-  '(org-agenda-date-weekend ((t (:bold t :foreground "#E65C00" :weight bold))))
-  '(org-hide ((t (:foreground "#0B0B0E"))))
-  '(org-todo ((t (:foreground "#F43012" :bold t))))
-  '(org-hide ((t (:foreground "#0B0B0E"))))
-  '(org-done ((t (:foreground "#4BC98A" :bold t))))
-  '(org-link   ((t (:inherit (link)))))
-#+end_src
-
-#+begin_src emacs-lisp
-  '(org-level-1 ((t (:foreground "#8AC6F2" :bold t))))
-  '(org-level-2 ((t (:foreground "#ee9a49"))))
-  '(org-level-3 ((t (:foreground "#ff83fa"))))
-  '(org-level-4 ((t (:foreground "#efe500"))))
-  '(org-level-5 ((t (:foreground "#ff4040"))))
-  '(org-level-6 ((t (:foreground "#afe04e"))))
-  '(org-level-7 ((t (:foreground "#0A4C64"))))
-#+end_src
-
-*** lusty-explorer
-
-#+begin_src emacs-lisp
-  '(lusty-match-face ((t (:inherit font-lock-function-name-face))))
-  '(lusty-directory-face ((t (:inherit font-lock-type-face))))
-  '(lusty-file-face ((t (:inherit font-lock-string-face))))
-#+end_src
-
-*** magit
-
-移除掉 diff-mode 時候的背景色彩。
-#+begin_src emacs-lisp
-  '(magit-item-highlight ((t (:background "#0B0B0E" ))))
-#+end_src
-
-設定 add 和 remove 的色彩
-#+begin_src emacs-lisp
-  '(magit-diff-add ((t (:inherit (diff-added)))))
-  '(magit-diff-del ((t (:inherit (diff-removed)))))
-#+end_src
-
-設定 diff 時，比對兩個檔案位置的色彩
-#+begin_src emacs-lisp
-  '(magit-diff-hunk-header ((t (:inherit (diff-hunk-header)))))
-#+end_src
-
-*** woman
-
-#+begin_src emacs-lisp
-  '(woman-italic-face ((t (:slant italic :weight bold))))
-  '(woman-unknown ((t (:foreground "#EA0000" :weight bold))))
-  '(woman-addition ((t (:foreground "cadet blue"))))
-  '(woman-bold ((t (:inherit bold :foreground "CadetBlue3"))))
-#+end_src
-
-*** rainbow-delimiters
-
-#+begin_src emacs-lisp
-  '(rainbow-delimiters-depth-1-face ((t (:foreground "green"))))
-  '(rainbow-delimiters-depth-2-face ((t (:foreground  "yellow"))))
-  '(rainbow-delimiters-depth-3-face ((t (:foreground  "blue"))))
-  '(rainbow-delimiters-depth-4-face ((t (:foreground "purple"))))
-  '(rainbow-delimiters-depth-5-face ((t (:foreground "orange"))))
-  '(rainbow-delimiters-depth-6-face ((t (:foreground  "magenta"))))
-  '(rainbow-delimiters-depth-7-face ((t (:foreground  "spring green"))))
-  '(rainbow-delimiters-depth-8-face ((t (:foreground  "coral"))))
-  '(rainbow-delimiters-depth-9-face ((t (:foreground  "dodger blue"))))
-  '(rainbow-delimiters-depth-10-face ((t (:foreground "violet red"))))
-  '(rainbow-delimiters-depth-11-face ((t (:foreground "DarkOrange1"))))
-  '(rainbow-delimiters-depth-12-face ((t (:foreground "chartreuse2"))))
-#+end_src
-
-*** hl-line
-
-#+begin_src emacs-lisp
-  '(hl-line ((t :background "#CAE682" :foreground "#0C0C0C")))
-#+end_src
-
-*** diff
-
-#+begin_src emacs-lisp
-  '(diff-added ((t (:foreground "#95E454"))))
-  '(diff-removed ((t (:foreground "#E52210"))))
-  '(diff-header ((t (:background "#0B0B0E"))))
-  '(diff-hunk-header ((t (:foreground "yellow"))))
-  '(diff-function ((t :foreground "green")))
-  '(diff-file-header ((t (:foreground "#9FCC23" :slant italic :weight bold))))
-  '(diff-header ((t (:foreground "VioletRed1"))))
-
-  '(diff-index ((t (:foreground "yellow"))))
-  '(diff-context ((t (:inherit font-lock-comment))))
-  '(diff-refine-change ((t (:background "#0B0B0E" :foreground "#DCDCDC"))))
-#+end_src
-
-*** Other
-
-#+begin_src emacs-lisp
-  ;; Link
-  '(link ((t (:foreground "dodger blue" :underline t))))
-  ;; '(link-visited ((t (:foreground "#8b008b" :underline t))))
-
-   ;;;; Show Paren
-  '(show-paren-match ((t (:background "#E65C00" :foreground "#CDCDCD" :bold t))))
-  '(show-paren-mismatch ((t (:background "#0C0C0C" :foreground "#E91303" :bold t))))
-
-   ;;;; isearch
-  '(isearch ((t (:background "#F57900" :foreground "#7F6BFF"))))
-  '(lazy-highlight ((t (:background "#E9B96E" :foreground "#7F6BFF"))))
-
-   ;;;; Comint
-  '(comint-highlight-prompt ((t (:foreground "#5D9AE4" :bold t))))
-
-   ;;;; selection
-  '(secondary-selection ((t (:background "#CAE682" :foreground "#0c0c0c"))))
-
-   ;;;; cua
-  '(cua-rectangle ((t (:background "#444444" :foreground "#DCDCDC"))))
-
-   ;;;; iBuffer
-  '(ibuffer-deletion ((t (:foreground "#dfaf8f" :weight bold))))
-  '(ibuffer-help-buffer ((t (:inherit font-lock-comment))))
-  '(ibuffer-marked ((t (:foreground "#f0dfaf" :weight bold))))
-  '(ibuffer-special-buffer ((t (:inherit font-lock-doc))))
-
-   ;;;; iBuffer-git
-  '(ibuffer-git-add-face ((t (:inherit (diff-added)))))
-  '(ibuffer-git-del-face ((t (:inherit (diff-removed)))))
-
-   ;;;; ECB
-  '(ecb-default-highlight-face ((t (:background "#CAE682" :foreground "#0C0C0C" :bold t))))
-
-#+end_src
-*** elscreen
-#+begin_src emacs-lisp
-  '(elscreen-tab-background-face ((t (:background "#272729" ))))
-  '(elscreen-tab-control-face ((t (:foreground "white" :background "black" :weight extra-bold))))
-  '(elscreen-tab-current-screen-face ((t (:background "#250628" :foreground "Gray90" :bold t))))
-  '(elscreen-tab-other-screen-face ((t (:background "#1D1D1F" :foreground "Gray85" :bold t))))
-#+end_src
-*** End of File
-#+begin_src emacs-lisp
-  )
-
-  (provide-theme 'coldnew-night)
-
-  ;; Local Variables:
-  ;; no-byte-compile: t
-  ;; End:
-
-  ;;; coldnew-night-theme.el  ends here
+  (defface font-lock-escape-char-face
+    '((((class color)) (:foreground "seagreen2")))
+    "highlight c escapes char like vim"
+    :group 'font-lock-faces)
 #+end_src
 
 ** 設定預設讀取的佈景主題。
+
+這邊載入我新設計的佈景主題。
+
 #+begin_src emacs-lisp
-  (load-theme 'coldnew-night t)
+  (require 'coldnew-theme)
+  ;; TODO: use following to read theme
+  ;;(load-theme 'coldnew-theme-night t)
+  (coldnew-theme--define-theme night)
 #+end_src
+
 * Vim 摹擬                                                              :vim:
 
 實在不能不佩服 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
@@ -1571,6 +1303,17 @@ Evil 是 emacs 上最好用的 vim 摹擬程式。
 #+begin_src emacs-lisp
   (require 'evil)
 #+end_src
+** 基本設置
+
+- 讓游標使用佈景主題的顏色
+
+  evil-mdoe 預設會讓游標變成黑色，這對於習慣使用暗色系佈景主題的
+  使用者而言是一件很討厭的事情，設定 evil-default-cursor 為 true
+  後就可以使用使用者自訂的佈景主題來改變滑鼠了。
+
+  #+begin_src emacs-lisp
+     (setq evil-default-cursor t)
+  #+end_src
 
 ** 預設使用 Insert state
 
@@ -1586,9 +1329,8 @@ evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死�
 
 
 #+begin_src emacs-lisp
-  ;;  (setq evil-normal- nil)
-  ;;  (setq evil-emacs-state nil)
   ;;  (setq evil-motion-state nil)
+  (setq evil-emacs-state-modes nil)
 
   ;;evil-motion-state-modes
 #+end_src
@@ -1749,6 +1491,7 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (vim:nmap (kbd "M-u") 'upcase-word)
   (vim:nmap (kbd "M-l") 'downcase-word)
   (vim:nmap (kbd "M-c") 'capitalize-word)
+  (vim:nmap (kbd "<SPC>") 'ace-jump-mode)
 #+end_src
 
 ** Insert-state 按鍵設定
@@ -1756,8 +1499,21 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
 這邊設定我的 Insert-state 的按鍵，部份會和我原本的 emacs 按鍵設置不太一樣。
 
 #+begin_src emacs-lisp
-  (vim:imap (kbd "C-o") 'evil-execute-in-normal-state)
+;;  (vim:imap (kbd "C-o") 'evil-execute-in-normal-state)
+  (vim:imap (kbd "C-o") 'evil-normal-state)
   (vim:imap (kbd "C-l") 'backward-delete-char)
+  (vim:imap (kbd "C-w") 'evil-window-map)
+  (vim:imap (kbd "M-w") 'kill-ring-save)
+  (vim:imap (kbd "M-k") 'kill-region)
+#+end_src
+
+** Window-sate 按鍵設定
+
+#+begin_src emacs-lisp
+  (vim:wmap "n" 'evil-window-down)
+  (vim:wmap "p" 'evil-window-up)
+  (vim:wmap "f" 'evil-window-right)
+  (vim:wmap "b" 'evil-window-left)
 #+end_src
 
 * 自動補全                                                         :complete:
@@ -2622,7 +2378,7 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 #+begin_src emacs-lisp
   (require 'helm)
   (require 'helm-etags+)
-  (require 'helm-git)
+  (require 'helm-ls-git)
   (require 'ctags-update)
 #+end_src
 
@@ -2642,7 +2398,6 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 ** TODO Config this
 #+begin_src emacs-lisp
   ;; Enable dired binding
-;;  (helm-dired-bindings 1)
   (ctags-update-minor-mode 1)
 #+end_src
 ** Function
@@ -2651,35 +2406,6 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
     "rewrite `helm-c-occur-get-line' to make it color on line-number."
     (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
             (format ": %s" (buffer-substring s e))))
-#+end_src
-** 在目前的專案找尋檔案                                            :command:
-
-#+begin_src emacs-lisp
-  (defun coldnew/project-find-file ()
-    (interactive)
-    (helm-other-buffer
-     '(helm-c-source-git-files
-       )
-     "*coldnew/project-file-list"))
-#+end_src
-
-** TODO 其他
-#+begin_src emacs-lisp
-    (defun coldnew/helm-filelist ()
-      "Preconfigured `anything' to open files/buffers/bookmarks instantly.
-     This is a replacement for `anything-for-files'.
-     See `anything-c-filelist-file-name' docstring for usage."
-      (interactive)
-      (helm-other-buffer
-       '(helm-c-source-buffers-list
-         helm-c-source-recentf
-         helm-c-source-ffap-line
-         helm-c-source-ffap-guesser
-         helm-c-source-bookmarks
-         helm-c-source-file-cache
-         helm-c-source-files-in-current-dir
-         helm-c-source-locate)
-       "*coldnew/filelist*"))
 #+end_src
 
 ** 尋找目前緩衝區所有符合查詢規則的文字、字串                      :command:
@@ -2696,15 +2422,15 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 ** 按鍵設定
 
 #+begin_src emacs-lisp
-  (defun coldnew/helm-mini ()
-    (interactive)
-    (helm-other-buffer '(helm-c-source-buffers-list
-                         helm-c-source-git-files
-                         helm-c-source-recentf
-                         helm-c-source-buffer-not-found)
-                       "*coldnew helm mini*"))
-
-  (vim:imap (kbd "M-o") 'coldnew/helm-mini)
+    (defun coldnew/helm-mini ()
+      (interactive)
+      (helm-other-buffer '(helm-source-ls-git
+                           helm-source-locate
+                           helm-c-source-buffers-list
+                           helm-c-source-recentf
+                           helm-c-source-buffer-not-found)
+                         "*coldnew helm mini*"))
+    (vim:imap (kbd "C-x p") 'coldnew/helm-mini)
 #+end_src
 
 * 文檔幫助
@@ -3258,9 +2984,8 @@ some packages conflict with org-mode
 #+end_src
 
 * 編輯器                                                             :editor:
-** 通用型 C 語言編輯設定
 
-這邊設定的是通用的
+** 基本設置
 
 ** 不使用 TAB 進行縮排
 
@@ -3292,23 +3017,20 @@ some packages conflict with org-mode
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+end_src
 
-** 自動建立資料夾
+** 存檔後自動建立資料夾
 
-當使用 C-x C-f 建立新的檔案的時候，如果該資料夾未被建立，則自動建立他。
-
-一般網路上流傳的方式，是在存檔案時才建立資料夾。但是我認為應該一開始就該先建立好資料夾，
-畢竟很少人會建好資料夾內的檔案而放棄。
-
-如果需要存檔後才進行建立資料夾的動作，則將下面的 find-file-hook 改為 before-save-hook。
-
+當存檔的時候，如果這個緩衝區的父資料夾不存在，自動建立他。
 #+begin_src emacs-lisp
-  (add-hook 'find-file-hook
-            '(lambda ()
-                 (or (file-exists-p  (file-name-directory buffer-file-name))
-                     (make-directory (file-name-directory buffer-file-name) t))))
+(add-hook 'before-save-hook
+          (lambda ()
+            (when buffer-file-name
+              (let ((dir (file-name-directory buffer-file-name)))
+                (when (and (not (file-exists-p dir))
+                           (y-or-n-p (format "Directory %s does not exist. Create it?" dir)))
+                  (make-directory dir t))))))
 #+end_src
 
-** 行號設定
+** 行號顯示設定
 
 預設顯示行號
 #+begin_src emacs-lisp
@@ -3318,8 +3040,7 @@ some packages conflict with org-mode
 設定某些 Mode 不顯示行號，這邊先設定不顯示行號的 mode-list
 #+begin_src emacs-lisp
   (setq inhibit-linum-mode-alist
-        '(
-          eshell-mode
+        '(eshell-mode
           shell-mode
           term-mode
           erc-mode
@@ -3331,12 +3052,29 @@ some packages conflict with org-mode
           ))
 #+end_src
 
+修正 linum-on 的功能，讓他遇到我們設定不顯示行號的模式時，不啟用 linum-mode
 #+begin_src emacs-lisp
   (defadvice linum-on (around inhibit-for-modes activate)
     "Stop turing linum-mode if it is in the inhibit-linum-mode-alist."
     (unless (member major-mode inhibit-linum-mode-alist)
       ad-do-it))
 #+end_src
+
+** Doxygen
+
+*** 加入相依模組
+
+#+begin_src emacs-lisp
+  (require 'doxymacs)
+#+end_src
+
+*** 設定預設啟用 Doxygen 的模式
+
+- C/C++
+
+  #+begin_src emacs-lisp
+    (add-hook 'c-mode-common-hook 'doxymacs-mode)
+  #+end_src
 
 ** TODO remember
 *** electric-pair-mode
@@ -3803,6 +3541,9 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 
 #+begin_src emacs-lisp
   (require 'clojure-mode)
+  (require 'clojure-test-mode)
+  (require 'nrepl)
+  (require 'ac-nrepl)
 #+end_src
 
 *** 設定 Clojure 檔案的副檔名與對應的模式
@@ -3820,18 +3561,13 @@ C-c  I             对目录中的相关文件建立列表并进行索引
                  (rainbow-delimiters-mode-enable))))
 #+end_src
 
-*** 使用 nRepl
-
-#+begin_src emacs-lisp
-(require 'nrepl)
-(require 'ac-nrepl)
-#+end_src
-
 *** 自動補全設定
 
 #+begin_src emacs-lisp
+  (eval-after-load "auto-complete" '(add-to-list 'ac-modes 'nrepl-mode))
   (add-hook 'clojure-mode-hook 'ac-clojure-mode-setup)
   (add-hook 'nrepl-mode-hook   'ac-clojure-mode-setup)
+  (add-hook 'nrepl-interaction-mode-hook   'ac-clojure-mode-setup)
   (defun ac-clojure-mode-setup ()
     "auto-complete settings for clojure-mode."
     (setq ac-sources '(
@@ -4129,12 +3865,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+end_src
 
 * 狀態欄                                                           :modeline:
-** TODO 分類
-#+begin_src emacs-lisp :tangle no
-  (line-number-mode t)
-  (column-number-mode t)
-  (size-indication-mode t)
-#+end_src
 ** 顯示主模式
 
 這個 function 用來定義如何顯示 major-mode，要放入 mode-line-format 才會真的顯示。
@@ -4154,59 +3884,13 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (let ((evil-state-string (substring evil-mode-line-tag 2 3)))
       (setq evil-state-string-face
             (cond
-             ((string= "N" evil-state-string) 'mode-line-evil-state-string-N)
-             ((string= "I" evil-state-string) 'mode-line-evil-state-string-I)
-             ((string= "V" evil-state-string) 'mode-line-evil-state-string-V)
-             ((string= "E" evil-state-string) 'mode-line-evil-state-string-E)
+             ((string= "N" evil-state-string) 'evil-state-normal-face)
+             ((string= "I" evil-state-string) 'evil-state-insert-face)
+             ((string= "V" evil-state-string) 'evil-state-visual-face)
+             ((string= "E" evil-state-string) 'evil-state-emacs-face)
              ))
       (concat "<" (propertize evil-state-string 'face evil-state-string-face) ">")
       ))
-#+end_src
-
-** 設定 Evil 狀態的色彩
-
-為了能夠讓 Evil 不同狀態有不同的顏色，這邊定義了各種 evil-state 對應的顏色。
-
-#+begin_src emacs-lisp
-  (defface mode-line-read-only-face
-    '((t (:foreground "#C82829" :bold t)))
-    "face for mode-name-string in modeline."
-    :group 'mode-line)
-
-  (defface mode-line-modified-face
-    '((t (:inherit 'font-lock-function-name-face :bolt t)))
-    "face for mode-name-string in modeline."
-    :group'mode-lin)
-
-  (defface mode-line-mode-name-face
-    '((t (:inherit font-lock-keyword-face)))
-    "face for mode-name-string in modeline."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-N
-    '((t (:inherit font-lock-function-name-face)))
-    "face for vim-string in normal-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-I
-    '((t (:inherit font-lock-constant-face)))
-    "face for vim-string in insert-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-V
-    '((t (:inherit font-lock-variable-name-face)))
-    "face for vim-string in visual-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-evil-state-string-E
-    '((t (:inherit font-lock-string-face)))
-    "face for vim-string in emacs-map on mode-line."
-    :group 'mode-line)
-
-  (defface font-lock-escape-char-face
-    '((((class color)) (:foreground "seagreen2")))
-    "highlight c escapes char like vim"
-    :group 'font-lock-faces)
 #+end_src
 
 ** 樣式設定
@@ -4225,11 +3909,9 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                              (propertize "**" 'face 'mode-line-modified-face))
                             (t "--")))
                      "   "
-                   ;;  (:eval (coldnew-editor-mode-string))
                      (when (featurep 'evil)
                        (:eval (evil-mode-string)))
                      "   "
-                     ;;              (:eval (mode-line-state))
                      mode-line-buffer-identification
                      "   "
                      ;; major-mode name
@@ -5385,6 +5067,7 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
 #+begin_src emacs-lisp
   (require 'egg)
   (require 'magit)
+  (require 'magit-flow)
   (require 'git-emacs)
 #+end_src
 
@@ -5652,49 +5335,47 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
   ;; Following file won;t contain in recentf
   (setq recentf-exclude '("\\.elc$" "\\.pyc$" "\\.recentd$" "^/tmp/"))
 #+end_src
-** desktop
-#+begin_src emacs-lisp
-  (require 'desktop)
-  (setq desktop-path (list emacs-cache-dir))
-  (setq desktop-dirname emacs-cache-dir)
-  (setq desktop-base-file-name "desktop.dat")
-  (setq desktop-missing-file-warning nil)
-
-  ;; Enable desktop
-  (desktop-save-mode t)
-
-  (defadvice desktop-owner (after pry-from-cold-dead-hands activate)
-    "Don't allow dead emacsen to own the desktop file."
-    (when (not (emacs-process-p ad-return-value))
-      (setq ad-return-value nil)))
-
-  (defun desktop-in-use? ()
-    (and (file-exists-p desktop-base-file-name) (file-exists-p desktop-base-lock-name)))
-
-  (defun autosave-desktop ()
-    (if (desktop-in-use?) (desktop-save-in-desktop-dir)))
-
-  ;; auto save desktop
-  (add-hook 'after-init-hook
-            (lambda ()
-              (setq *desktop-saver-timer*
-                    (run-with-timer 5 300 'autosave-desktop))))
-
-  ;; Following modes are ignore and won't save to desktop
-  (setq desktop-buffers-not-to-save
-        (concat "\\("
-                "^\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
-                "\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
-                "\\)$"))
-
-  (add-to-list 'desktop-modes-not-to-save 'fundamental-mode)
-  (add-to-list 'desktop-modes-not-to-save 'dired-mode)
-  (add-to-list 'desktop-modes-not-to-save 'Info-mode)
-  (add-to-list 'desktop-modes-not-to-save 'info-lookup-mode)
-  (add-to-list 'desktop-modes-not-to-save 'w3m-mode)
-  (add-to-list 'desktop-modes-not-to-save 'view-mode)
-#+end_src
 * 全域性按鍵設置
+** 文件編輯
+
+| 按鍵         | 命令                   | 用途                                       |
+|--------------+------------------------+--------------------------------------------|
+| C-x C-y      | yank-n-times           | 多次貼上                                   |
+| C-x C-l      | recenter               | 將游標至於 buffer 中間                     |
+| C-x C-n      | auto-complete          | 自動補全                                   |
+| C-x C-s      | save-buffer-always     | 儲存檔案                                   |
+| Shift Return | insert-empty-line      | 插入空白行                                 |
+| M-s          | coldnew/helm-occur     | 使用 occur 查詢當前緩衝區                  |
+| M-r          | query-replace-regexp   | 使用正規表達式查找並取代                   |
+| C-M ,        | beginning-of-buffer    | 回到緩衝區開頭                             |
+| C-M .        | end-of-buffer          | 回到緩衝區尾巴                             |
+| C-d          | hyngry-delete-forward  | 向右貪婪刪除                               |
+| C-l          | hyngry-delete-backward | 向左貪婪刪除                               |
+| C-;          | iedit-mode             | 快速尋找和游標底下相同的文字，進行即時替換 |
+| C-=          | text-scale-increase    | 放大字體                                   |
+| C--          | text-scale-decrease    | 縮小字體                                   |
+| C-x C-i      | indent-whole-buffer    | 縮排整個緩衝區                             |
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-x C-y")  'yank-n-times)
+  (global-set-key (kbd "C-x C-l")  'recenter)
+  (global-set-key (kbd "C-x C-n") 'auto-complete)
+  (global-set-key (kbd "C-x C-s") 'save-buffer-always)
+  (global-set-key [(shift return)] 'insert-empty-line)
+  (global-set-key (kbd "M-s") 'coldnew/helm-occur)
+  (global-set-key (kbd "M-r") 'query-replace-regexp)
+  (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
+  (global-set-key (kbd "C-M-.") 'end-of-buffer)
+  (global-set-key (kbd "C-d") 'hungry-delete-forward)
+  (global-set-key (kbd "C-l") 'hungry-delete-backward)
+  (global-set-key (kbd "C-;") 'iedit-mode)
+  (global-set-key (kbd "C-=") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+  (global-set-key (kbd "C-x C-i") 'indent-whole-buffer)
+
+#+end_src
+
+
 ** 關閉預設的按鍵設定
 
 關閉部份按鍵設定，在後面重新設定他。
@@ -5728,17 +5409,6 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x L") 'linum-mode)
 #+end_src
-** 專案相關的按鍵
-
-| 按鍵    | 命令                        | 用途                     |
-|---------+-----------------------------+--------------------------|
-| C-x p f | coldnew/project-find-file   | 在目前的專案裏面找尋檔案 |
-| C-x p b | coldnew/project-find-buffer | 找尋目前專案的緩衝區     |
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x p f") 'coldnew/project-find-file)
-  (global-set-key (kbd "C-x p b") 'coldnew/project-find-buffer)
-#+end_src
 ** 分頁切換
 
 | 按鍵        | 命令                     | 用途          |
@@ -5767,45 +5437,12 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x t 8") '(lambda () (interactive) (elscreen-goto 8)))
   (global-set-key (kbd "C-x t 9") '(lambda () (interactive) (elscreen-goto 9)))
 #+end_src
-** 縮排整個緩衝區
-
-| 按鍵    | 命令                | 用途           |
-|---------+---------------------+----------------|
-| C-x C-i | indent-whole-buffer | 縮排整個緩衝區 |
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x C-i") 'indent-whole-buffer)
-#+end_src
 
 ** Ctrl Prefix
-*** Default Emacs keybinding
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-n") 'next-line)
-  (global-set-key (kbd "C-p") 'previous-line)
-  (global-set-key (kbd "C-b") 'backward-char)
-  (global-set-key (kbd "C-f") 'forward-char)
-  (global-set-key (kbd "C-e") 'move-end-of-line)
-  (global-set-key (kbd "C-a") 'move-beginning-of-line)
-#+end_src
-
-*** 向右貪婪刪除
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-d") 'hungry-delete-forward)
-#+end_src
-
-*** 向左貪婪刪除
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-l") 'hungry-delete-backward)
-#+end_src
 
 *** Misc
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-v") 'coldnew/set-mark-command)
-#+end_src
-
-*** iedit
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-;") 'iedit-mode)
 #+end_src
 
 *** Undo
@@ -5813,51 +5450,20 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-/") 'undo-tree-undo)
 #+end_src
 
-*** 放大字體
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-=") 'text-scale-increase)
-#+end_src
-
-*** 縮小字體
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C--") 'text-scale-decrease)
-#+end_src
-** 語言翻譯
-
-| 按鍵    | 命令                   | 用途           |
-|---------+------------------------+----------------|
-| C-x t e | google-translate-zh-en | 中文翻譯成英文 |
-| C-x t z | google-translate-en-zh | 英文翻譯成中文 |
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x t e") 'google-translate-zh-en)
-  (global-set-key (kbd "C-x t z") 'google-translate-en-zh)
-#+end_src
-
 ** Ctrl-x Prefix
 *** Misc
-| 按鍵    | 命令                | 用途                   |
-|---------+---------------------+------------------------|
-| C-x C-f | lusty-file-explorer | 查詢並打開檔案         |
-| C-x C-y | yank-n-times        | 多次貼上               |
-| C-x C-r | lusty-sudo-explorer | 使用 sudo 打開檔案     |
-| C-x C-b | ibuffer             | 顯示 ibuffer           |
-| C-x C-l | recenter            | 將游標至於 buffer 中間 |
-|         |                     |                        |
+| 按鍵    | 命令                | 用途               |
+|---------+---------------------+--------------------|
+| C-x C-f | lusty-file-explorer | 查詢並打開檔案     |
+| C-x C-r | lusty-sudo-explorer | 使用 sudo 打開檔案 |
+| C-x C-b | ibuffer             | 顯示 ibuffer       |
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
   (global-set-key (kbd "C-x C-r")  'lusty-sudo-explorer)
-  (global-set-key (kbd "C-x C-y")  'yank-n-times)
-  (global-set-key (kbd "C-x C-l")  'recenter)
   (global-set-key (kbd "C-x C-b")  'ibuffer)
-#+end_src
 
-#+begin_src emacs-lisp
   (global-set-key (kbd "C-x C-d")  'dired)
-  (global-set-key (kbd "C-x M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x C-n") 'auto-complete)
-  (global-set-key (kbd "C-x C-s") 'save-buffer-always)
   (global-set-key (kbd "C-x F") 'fullscreen-window)
   (global-set-key (kbd "C-x s") 'shell-command)
 #+end_src
@@ -5878,25 +5484,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x c d") 'unix2dos)
 #+end_src
 
-*** emms
-| 按鍵        | 命令              | 用途       |
-|-------------+-------------------+------------|
-| C-x e s     | emms-start        | 啟動 emms  |
-| C-x e n     | emms-next         | 下一首曲目 |
-| C-x e p     | emms-previous     | 前一首曲目 |
-| C-x e <SPC> | emms-pause        | 暫停曲目   |
-| C-x e =     | emms-volume-raise | 放大音量   |
-| C-x e -     | emms-volume-lower | 縮小音量   |
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x e n") 'emms-next)
-  (global-set-key (kbd "C-x e p") 'emms-previous)
-  (global-set-key (kbd "C-x e <SPC>") 'emms-pause)
-  (global-set-key (kbd "C-x e s") 'emms-start)
-  ;;(require 'emms-volume)
-  (global-set-key (kbd "C-x e =") 'emms-volume-raise)
-  (global-set-key (kbd "C-x e -") 'emms-volume-lower)
-#+end_src
 ** Ctrl-r 暫存器、書籤、快速跳轉、矩型處理
 預設的 C-r 其實是 isearch-backward, 這裡將他改掉。
 
@@ -5931,54 +5518,15 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-c o") 'org-iswitchb)
 #+end_src
 
-** Ctrl-w prefix
-*** 窗口移動
-| 按鍵  | 命令           | 用途             |
-|-------+----------------+------------------|
-| C-x n | windmove-down  | 移動到下面的窗口 |
-| C-x p | windmove-up    | 移動到上面的窗口 |
-| C-x b | windmove-left  | 移動到左邊的窗口 |
-| C-x f | windmove-right | 移動到右邊的窗口 |
-
-#+begin_src emacs-lisp
-;;  (global-set-key (kbd "C-x n") 'windmove-down)
-;;  (global-set-key (kbd "C-x f") 'windmove-right)
-;;  (global-set-key (kbd "C-x b") 'windmove-left)
-;;  (global-set-key (kbd "C-x p") 'windmove-up)
-  (global-set-key (kbd "s-n") 'windmove-down)
-  (global-set-key (kbd "s-p") 'windmove-up)
-  (global-set-key (kbd "s-b") 'windmove-left)
-  (global-set-key (kbd "s-f") 'windmove-right)
-#+end_src
-*** TODO 刪除區域或是一行
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-w") 'kill-region)
-  (global-set-key (kbd "M-w") 'kill-ring-save)
-#+end_src
 ** Ctrl-Meta Prefix
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
-  (global-set-key (kbd "C-M-.") 'end-of-buffer)
   (global-set-key (kbd "C-M-n") 'scroll-other-window)
   (global-set-key (kbd "C-M-p") 'scroll-other-window-down)
 #+end_src
 
 ** Meta Prefix
-*** Default Emacs keybinding
-#+begin_src emacs-lisp
-(global-set-key (kbd "M-f") 'forward-word)
-(global-set-key (kbd "M-b") 'backward-word)
-(global-set-key (kbd "M-e") 'forward-sentence)
-(global-set-key (kbd "M-a") 'backward-sentence)
-#+end_src
-
-#+begin_src emacs-lisp
-(global-set-key (kbd "M-r") 'query-replace-regexp)
-#+end_src
-
 *** Misc
 #+begin_src emacs-lisp
-  (global-set-key (kbd "M-s") 'coldnew/helm-occur)
   (global-set-key (kbd "M-l") 'backward-delete-word)
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
   (global-set-key (kbd "M-n") 'scroll-up)
@@ -5990,11 +5538,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "M-.") 'helm-etags+-select)
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-#+end_src
-
-** Shift prefix
-#+begin_src emacs-lisp
-  (global-set-key[(shift return)] 'insert-empty-line)
 #+end_src
 
 ** Super prefix

@@ -1,8 +1,0 @@
-
-
-
-(:name unicad
-       :description ""
-       :type svn
-       :url "http://unicad.googlecode.com/svn/trunk/"
-)

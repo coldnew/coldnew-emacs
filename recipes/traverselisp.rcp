@@ -1,5 +1,0 @@
-(:name traverselisp
-       :description "walk through directories and perform actions on files."
-       :type emacswiki
-       :features traverselisp
-       )
