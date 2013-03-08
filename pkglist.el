@@ -23,6 +23,7 @@
 "evil-elscreen"
 "fuzzy"
 "git-emacs"
+"git-gutter-fringe"
 "go-mode"
 "google-weather"
 "guess-offset"

@@ -321,6 +321,11 @@ names to which it refers are bound."
      (magit-log-head-label-tags ((,class (:foreground ,aqua :box nil :weight bold))))
      (magit-section-title ((,class (:inherit diff-hunk-header))))
 
+     ;; git-gutter
+     (git-gutter-fr:modified ((,class (:foreground ,yellow))))
+     (git-gutter-fr:add ((,class (:inherit diff-added))))
+     (git-gutter-fr:deleted ((,class (:inherit diff-removed))))
+
      (link ((,class (:foreground nil :underline t))))
      (widget-button ((,class (:underline t))))
      (widget-field ((,class (:background ,current-line :box (:line-width 1 :color ,foreground)))))
