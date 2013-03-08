@@ -323,7 +323,7 @@ names to which it refers are bound."
 
      ;; git-gutter
      (git-gutter-fr:modified ((,class (:foreground ,yellow))))
-     (git-gutter-fr:add ((,class (:inherit diff-added))))
+     (git-gutter-fr:added ((,class (:inherit diff-added))))
      (git-gutter-fr:deleted ((,class (:inherit diff-removed))))
 
      (link ((,class (:foreground nil :underline t))))
