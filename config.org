@@ -3505,7 +3505,7 @@ adeff
   (defun ac-cpp-mode-setup ()
     "auto-complete settings for c-mode."
     (setq ac-sources '(
-                       ac-source-clang
+;;                       ac-source-clang
                        ac-source-dictionary
                        ac-source-abbrev
                        ac-source-semantic
@@ -5159,6 +5159,13 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
     (setq vc-handled-backends (remq 'git vc-handled-backends)))
 #+end_src
 
+** 在 fringe 顯示 git 的狀況
+
+#+begin_src emacs-lisp
+  (require 'git-gutter-fringe)
+  (global-git-gutter-mode)
+#+end_src
+
 ** 使用 C-g 離開 git 程式的視窗
 
 我習慣在 emacs 使用 C-g 來跳離視窗，所以這邊也是這樣設定，用來
@@ -5190,7 +5197,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
   (vim:map (kbd "C-x ve") 'magit-flow-feature-finish)
 #+end_src
-
 * Hooks                                                               :hook:
 ** find-file-hook
 #+begin_src emacs-lisp
