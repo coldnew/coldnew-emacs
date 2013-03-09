@@ -5535,7 +5535,7 @@ Function key 設置常用的命令。
 #+end_src
 *** 設定 blog 檔案的位置
 #+begin_src emacs-lisp
-  (defvar coldnew-blog-org-file "~/Workspace/Blog/src/blog.org"
+  (defvar coldnew-blog-org-file "~/Workspace/Blog/blog.org"
     "coldnew's blog file")
 #+end_src
 *** 更新 blog 的命令
