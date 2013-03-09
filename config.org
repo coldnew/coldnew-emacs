@@ -5,6 +5,7 @@
 #+PROPERTY: noweb
 #+PROPERTY: cache yes
 #+PROPERTY: tangle yes
+#+BABEL: :cache yes
 #+OPTIONS: ^:nil
 
 * 關於這份檔案
