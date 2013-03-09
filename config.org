@@ -128,13 +128,6 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
     "store customize UI config.")
 #+end_src
 
-*** emacs-authinfo-file
-
-#+begin_src emacs-lisp
-  (defconst emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")
-    "file that save secret")
-#+end_src
-
 *** emacs-bookmark-file
 
 #+begin_src emacs-lisp

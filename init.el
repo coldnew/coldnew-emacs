@@ -28,10 +28,6 @@
 ;; Load up all literate org-mode files in config directory
 (mapc #'org-babel-load-file (directory-files "~/.emacs.d/" t "\\.org$"))
 
-;; After loading allemacs config file, read authorization file
-(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
-
-
 (message "\nEmacs is ready to serve you, Master %s!\n" (getenv "USER"))
 
 ;;; init.el ends here.
