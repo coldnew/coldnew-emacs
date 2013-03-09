@@ -5546,7 +5546,7 @@ Function key 設置常用的命令。
     (shell-command "cd ~/Workspace/WriteOnce/Blog; git rm -rf *" nil nil)
     (org-publish-blog coldnew-blog-org-file)
     (shell-command "cd ~/Workspace/WriteOnce/Blog; git add . ; git commit -m 'update blog'" nil nil)
-    (shell-command "cd ~/Workspace/WriteOnce/Blog; git push origin master'" nil nil)
+    (shell-command "cd ~/Workspace/WriteOnce/Blog; git push origin master" nil nil)
     (firefox-refresh))
 #+end_src
 * Local File Variable
