@@ -21,7 +21,6 @@
               (current-line . "#2a2a2a")
               (selection . "#444444")
               (highlight . "#CAE682")
-              ;;              (comment . "#8e908c")
               (comment . "#5d9ae4")
               (red    . "#E52210")
               (orange . "#e65c00")
@@ -326,7 +325,7 @@ names to which it refers are bound."
      (git-gutter-fr:added ((,class (:inherit diff-added))))
      (git-gutter-fr:deleted ((,class (:inherit diff-removed))))
 
-     (link ((,class (:foreground nil :underline t))))
+     (link ((t (:foreground "dodger blue" :underline t))))
      (widget-button ((,class (:underline t))))
      (widget-field ((,class (:background ,current-line :box (:line-width 1 :color ,foreground)))))
 
