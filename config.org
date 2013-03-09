@@ -5513,7 +5513,7 @@ Function key 設置常用的命令。
            (?t (file . "~/Dropbox/Org/TODO.org"))
            (?w (file . "~/Dropbox/Org/Weintek.org"))
            (?n (file . "~/Dropbox/Note/Note.org"))
-           (?b (file . "~/Workspace/Blog/src/blog.org"))
+           (?b (file . "~/Workspace/Blog/blog.org"))
            ))
     (set-register (car r) (cadr r)))
 #+end_src
@@ -5543,7 +5543,10 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
   (defun coldnew/update-blog ()
     (interactive)
+    (shell-command "cd ~/Workspace/WriteOnce/Blog; git rm -rf *" nil nil)
     (org-publish-blog coldnew-blog-org-file)
+    (shell-command "cd ~/Workspace/WriteOnce/Blog; git add . ; git commit -m 'update blog'" nil nil)
+    (shell-command "cd ~/Workspace/WriteOnce/Blog; git push origin master'" nil nil)
     (firefox-refresh))
 #+end_src
 * Local File Variable
