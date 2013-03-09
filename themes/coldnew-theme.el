@@ -375,7 +375,7 @@ names to which it refers are bound."
      ;;(org-table ((,class (:foreground ,purple))))
      (org-todo ((,class (:foreground ,red :bold t))))
      (org-done ((t (:foreground "#4BC98A" :bold t))))
-     (org-link   ((t (:inherit (link)))))
+     (org-link   ((t (:inherit link))))
      (org-upcoming-deadline ((,class (:foreground ,orange))))
      (org-warning ((,class (:weight bold :foreground ,red))))
      (org-level-1 ((t (:foreground "#8AC6F2" :bold t))))
