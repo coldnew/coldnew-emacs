@@ -43,7 +43,6 @@
 "multi-term"
 "multi-web-mode"
 "nrepl"
-"offlineimap"
 "org-html5presentation"
 "package"
 "paredit"
