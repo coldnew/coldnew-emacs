@@ -2078,6 +2078,7 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
                         "#0B0B0E" "#CA3839" "#8ae234" "#edd400"
                         "#729fcf" "#ad7fa8" "cyan3"   "#DCDCDC"))
   (setq ansi-term-color-vector ansi-color-names-vector)
+  (setq ansi-color-map (ansi-color-make-color-map))
 #+end_src
 
 ** shell-pop
@@ -2108,6 +2109,11 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
   (setq multi-term-program emacs-default-shell)
 #+end_src
 
+** shell mode
+
+#+begin_src emacs-lisp
+  (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+#+end_src
 * 文件加密                                                          :encrypt:
 ** 載入相依套件
 
