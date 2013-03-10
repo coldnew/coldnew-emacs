@@ -4845,6 +4845,61 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
 #+end_src
 
 * 電子郵件
+** offlineimap
+
+offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙下載信件。
+
+*** 載入相關模組
+
+#+begin_src emacs-lisp
+  (require 'offlineimap)
+#+end_src
+
+
+*** 讓 offlineimap 透過 emacs 取得密碼
+
+我的信件密碼儲存在 ~/.authinfo.gpg 裡面，因為是使用 gpg 進行加密，並且
+我不希望在輸入密碼的過程中另外彈出討厭的視窗，而是讓輸入密碼的視窗
+出現在 emacs 中，因此要讓 emacs 來進行讀取檔案並回傳密碼的動作。
+
+要辦到這樣的狀況 offlineimap 可以在設定中加入
+
+: pythonfile = ~/.offlineimap.py
+
+來載入額外的 function ，我在這個檔案裏面加入了
+
+#+begin_src python :tangle no
+  #!/usr/bin/env python
+
+  import subprocess
+
+  def get_output(cmd):
+      # Bunch of boilerplate to catch the output of a command:
+      pipe = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+      (output, errout) = pipe.communicate()
+      assert pipe.returncode == 0 and not errout
+      return output
+
+  def get_password_emacs(machine):
+      cmd = "emacsclient --eval '(offlineimap-read-authinfo \"%s\")'" % (machine)
+      return get_output(cmd).strip().lstrip('"').rstrip('"')
+#+end_src
+
+讓 offlineimap 可以透過 get_password_emacs() 來從 emacs 裏面取得密碼。
+
+#+begin_src emacs-lisp
+  (defun offlineimap-read-authinfo (machine)
+      "A simple implement to let offlinemap read my authinfo password"
+      (let  ((authinfo (netrc-machine (netrc-parse "~/.authinfo.gpg") machine)))
+        (netrc-get authinfo  "password")))
+#+end_src
+
+因此，在 .offlineimaprc 裏面加入這樣一行
+
+: remotepasseval = get_password_emacs("imap.gmail.com")
+
+即可透過 emacs 取得 password 這個密碼。
+
 ** smtp
 *** 取得 smtp 的密碼
 
@@ -4949,6 +5004,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
 #+end_src
 
 *** TODO 未整理
+
 #+begin_src emacs-lisp
   (setq starttls-use-gnutls t)
 
