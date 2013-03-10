@@ -4855,7 +4855,6 @@ offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙�
   (require 'offlineimap)
 #+end_src
 
-
 *** 讓 offlineimap 透過 emacs 取得密碼
 
 我的信件密碼儲存在 ~/.authinfo.gpg 裡面，因為是使用 gpg 進行加密，並且
@@ -4880,18 +4879,18 @@ offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙�
       assert pipe.returncode == 0 and not errout
       return output
 
-  def get_password_emacs(machine):
-      cmd = "emacsclient --eval '(offlineimap-read-authinfo \"%s\")'" % (machine)
+  def get_password_emacs(host, port):
+      cmd = "emacsclient --eval '(offlineimap-get-password \"%s\" \"%s\")'" % (host,port)
       return get_output(cmd).strip().lstrip('"').rstrip('"')
 #+end_src
 
 讓 offlineimap 可以透過 get_password_emacs() 來從 emacs 裏面取得密碼。
 
 #+begin_src emacs-lisp
-  (defun offlineimap-read-authinfo (machine)
-      "A simple implement to let offlinemap read my authinfo password"
-      (let  ((authinfo (netrc-machine (netrc-parse "~/.authinfo.gpg") machine)))
-        (netrc-get authinfo  "password")))
+  (defun offlineimap-get-password (host port)
+    (let* ((netrc (netrc-parse (expand-file-name "~/.authinfo.gpg")))
+           (hostentry (netrc-machine netrc host port port)))
+      (when hostentry (netrc-get hostentry "password"))))
 #+end_src
 
 因此，在 .offlineimaprc 裏面加入這樣一行
