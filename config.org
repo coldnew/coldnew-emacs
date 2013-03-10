@@ -5599,11 +5599,16 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
   (defun coldnew/update-blog ()
     (interactive)
-    (shell-command "cd ~/Workspace/WriteOnce/Blog; git rm -rf *" nil nil)
+    (let* ((dir "~/Workspace/WriteOnce/Blog")
+           (cd-cmd (concat "cd " dir ";"))
+           (git-remove-cmd (concat cd-cmd "git rm -rf *"))
+           (git-add-cmd    (concat cd-cmd "git add ." ";" "git commit -m 'update blog'"))
+           (git-push-cmd   (concat cd-cmd "git push origin master")))
+    (start-process-shell-command "blog-remove-old" nil git-remove-cmd)
     (org-publish-blog coldnew-blog-org-file)
-    (shell-command "cd ~/Workspace/WriteOnce/Blog; git add . ; git commit -m 'update blog'" nil nil)
-    (shell-command "cd ~/Workspace/WriteOnce/Blog; git push " nil nil)
-    (firefox-refresh))
+    (start-process-shell-command "blog-add-new" nil git-add-cmd)
+    (start-process-shell-command "blog-update" nil git-push-cmd)
+    (firefox-refresh)))
 #+end_src
 * Local File Variable
 # Local Variables:
