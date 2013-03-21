@@ -3281,41 +3281,6 @@ some packages conflict with org-mode
   ;; Set my android-emulator-path
   (setq android-mode-sdk-dir "/opt/android-sdk-update-manager/")
 #+end_src
-** Bash
-*** 設定 Bash 語言 檔案的副檔名與對應的模式
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.sh" . sh-mode))
-  (add-to-list 'auto-mode-alist '("\\.bash" . sh-mode))
-#+end_src
-*** Auto complete
-#+begin_src emacs-lisp
-  ;; auto-complete
-  (add-hook 'shell-mode-hook 'ac-shell-script-mode-setup)
-  ;; define ac-source for pcomplete
-  (ac-define-source pcomplete
-    '((candidates . pcomplete-completions)
-      (cache)
-      (symbol . "f")))
-
-  (defun ac-shell-script-mode-setup ()
-    "auto-complete settings for shell-script-mode"
-    (setq ac-sources
-          '(ac-source-pcomplete
-            ac-source-dictionary
-            ac-source-filename
-            ac-source-files-in-current-dir
-            ac-source-words-in-same-mode-buffers
-            )))
-#+end_src
-*** Keybinding
-#+begin_src emacs-lisp
-  (add-hook 'sh-mode-hook
-            '(lambda ()
-               (local-set-key (kbd "}") 'self-insert-command)
-               (local-set-key (kbd "]") 'self-insert-command)
-               (local-set-key (kbd ")") 'self-insert-command)
-               ))
-#+end_src
 ** C
 *** 設定 C 語言 檔案的副檔名與對應的模式
 
