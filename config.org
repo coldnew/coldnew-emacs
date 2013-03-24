@@ -3439,12 +3439,9 @@ adeff
 #+end_src
 #+begin_src emacs-lisp
   ;; use my cc-mode-common-setting
-  ;;(add-hook 'c++-mode-hook 'coldnew-cc-mode-common-setting)
+  (add-hook 'c++-mode-hook 'coldnew-cc-mode-common-setting)
 
-  ;;;; Auto Complete
-  ;;;; ---------------------------------------------------------------------------
-
-    ;; Default clang completion flags
+      ;; Default clang completion flags
     ;;    (setq clang-completion-flags
     (setq ac-clang-flags
           (split-string
