@@ -2548,6 +2548,14 @@ plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前必須將
   (setq org-CUA-compatible t)
 #+end_src
 
+** 預設不要讓 org-mode 顯示 Latex 形式的下標與上標
+
+org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性取消這個功能。
+
+#+begin_src emacs-lisp
+  (setq org-export-with-sub-superscripts nil)
+#+end_src
+
 ** 增加快速模版
 
 #+begin_src emacs-lisp
