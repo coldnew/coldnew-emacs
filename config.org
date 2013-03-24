@@ -3316,8 +3316,6 @@ adeff
                (c-turn-on-eldoc-mode)))
 #+end_src
 #+begin_src emacs-lisp
-    ;; use my cc-mode-common-setting
-  ;;  (add-hook 'c-mode-hook 'coldnew-cc-mode-common-setting)
 
     ;; use hide-if-def-mode
     ;;(add-hook 'c-mode-hook 'hide-ifdef-mode)
@@ -3438,9 +3436,6 @@ adeff
 
 #+end_src
 #+begin_src emacs-lisp
-  ;; use my cc-mode-common-setting
-  (add-hook 'c++-mode-hook 'coldnew-cc-mode-common-setting)
-
       ;; Default clang completion flags
     ;;    (setq clang-completion-flags
     (setq ac-clang-flags
