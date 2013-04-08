@@ -247,8 +247,7 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
   ;; only disable capslock and make it as control
   (cond ((eq window-system 'x)
          ;; make caps lock a control key
-         (make-caps-as-ctrl)
-         (change-mouse-to-left)))
+         (make-caps-as-ctrl)))
 #+end_src
 
 ** 使用者介面設定
