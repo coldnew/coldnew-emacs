@@ -5539,7 +5539,7 @@ Function key 設置常用的命令。
            ;; TODO.org
            (?t (file . "~/Dropbox/Org/TODO.org"))
            (?w (file . "~/SparkleShare/org/Weintek.org"))
-           (?n (file . "~/Dropbox/Note/Note.org"))
+           (?n (file . "~/SparkleShare/org//Note.org"))
            (?b (file . "~/Workspace/Blog/blog.org"))
            ))
     (set-register (car r) (cadr r)))
