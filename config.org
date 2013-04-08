@@ -5538,7 +5538,7 @@ Function key 設置常用的命令。
            (?e (file . ,(expand-file-name emacs-config-file)))
            ;; TODO.org
            (?t (file . "~/Dropbox/Org/TODO.org"))
-           (?w (file . "~/Dropbox/SparkleShare/org/Weintek.org"))
+           (?w (file . "~/SparkleShare/org/Weintek.org"))
            (?n (file . "~/Dropbox/Note/Note.org"))
            (?b (file . "~/Workspace/Blog/blog.org"))
            ))
