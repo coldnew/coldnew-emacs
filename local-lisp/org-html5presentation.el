@@ -1611,9 +1611,6 @@ layout: [layout-regular|layout-faux-widescreen|layout-widescreen]
 	  (insert org-export-html5presentation-html-helper-timestamp))
 
       (unless org-html5presentation-body-only (insert "
-<article class=\"nobackground\">
-<h1>coldnew</h1>
-</article>
 </section>
 </body>
 </html>

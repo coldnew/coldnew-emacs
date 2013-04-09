@@ -46,7 +46,6 @@
 "nrepl"
 "o-blog"
 "offlineimap"
-"org-html5presentation"
 "package"
 "paredit"
 "popup"
