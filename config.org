@@ -3005,6 +3005,12 @@ some packages conflict with org-mode
                   "\\end{frame}")))
 #+end_src
 
+** 網頁投影片
+
+#+begin_src emacs-lisp
+  (require 'org-html5presentation)
+#+end_src
+
 * 編輯器                                                             :editor:
 
 ** 基本設置

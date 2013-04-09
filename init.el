@@ -5,7 +5,7 @@
 
 ;; add directories to emacs's `load-path' recursively.
 (let* ((emacs-dir "~/.emacs.d/")
-       (lisp-dir '("lisp/" "themes/")))
+       (lisp-dir '("lisp/" "themes/" "local-lisp/")))
   (dolist (lisp-path lisp-dir)
     (let* ((load-dir (concat emacs-dir lisp-path))
 	   (default-directory load-dir))
