@@ -1612,7 +1612,7 @@ layout: [layout-regular|layout-faux-widescreen|layout-widescreen]
 
       (unless org-html5presentation-body-only (insert "
 <article class=\"nobackground\">
-<h1>鎰熻阿鑱嗗惉</h1>
+<h1>coldnew</h1>
 </article>
 </section>
 </body>
