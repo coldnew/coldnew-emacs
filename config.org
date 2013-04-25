@@ -2806,8 +2806,6 @@ some packages conflict with org-mode
 
 * 編輯器                                                             :editor:
 
-** 基本設置
-
 ** 不使用 TAB 進行縮排
 
 #+begin_src emacs-lisp
@@ -2849,6 +2847,16 @@ some packages conflict with org-mode
                 (when (and (not (file-exists-p dir))
                            (y-or-n-p (format "Directory %s does not exist. Create it?" dir)))
                   (make-directory dir t))))))
+#+end_src
+
+** 自動回復檔案
+
+當檔案背別的編輯器修改的時候，自動套用新的檔案到緩衝區上。
+
+#+begin_src emacs-lisp
+  (global-auto-revert-mode)
+  (setq global-auto-revert-non-file-buffers t)
+  (setq auto-revert-verbose nil)
 #+end_src
 
 ** 行號顯示設定
@@ -2988,8 +2996,6 @@ some packages conflict with org-mode
 
   ;; Enable global font-lock
   (global-font-lock-mode t)
-  ;; Revert buffers automatically when underlying files are changed externally
-  (global-auto-revert-mode t)
   ;; Show matching parentheses all the time
   (show-paren-mode t)
   ;; Enable auto-complete-mode
