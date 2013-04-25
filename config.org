@@ -736,12 +736,6 @@ M-x iedit-mode 接著就會發現到同個緩衝區裏面所有和游標底下�
   (require 'rainbow-delimiters)
 #+end_src
 
-smart-tab 會幫你決定使用 yasnippet 或是 tab
-#+begin_src emacs-lisp
-  (require 'smart-tab)
-  (global-smart-tab-mode 1)
-#+end_src
-
 * Function                                                         :function:
 我所自定義或是我的 emacs 設定檔需要用到的 function。
 ** List Processing
@@ -1568,79 +1562,6 @@ auto-complete-mode 的按鍵設定。
        (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil))))
 #+end_src
 
-** yasnippet                                                     :yasnippet:
-*** 設定 snippet 所在的資料夾
-#+begin_src emacs-lisp
-  (setq-default yas/snippet-dirs emacs-snippets-dir)
-#+end_src
-*** 載入相關套件
-#+begin_src emacs-lisp
-  (require 'yasnippet)
-  (require 'dropdown-list)
-#+end_src
-*** 初始化 yasnippet
-#+begin_src emacs-lisp
-  ;;  (yas/initialize)
-  (yas-global-mode 1)
-#+end_src
-*** 設定 yasnippet 讀取 snippet 的資料夾
-#+begin_src emacs-lisp
-  (yas/load-directory emacs-snippets-dir)
-#+end_src
-*** 設定 yasnippet 提示用的 function
-#+begin_src emacs-lisp
-  (setq yas/prompt-functions '(yas/dropdown-prompt yas/ido-prompt yas/completing-prompt))
-#+end_src
-*** 增加類似 org-mode 那樣使用 < 進行補全的方法 (easy-template)
-#+begin_src emacs-lisp
-  (defadvice yas-expand (around coldnew/major-mode-expand activate)
-    "Try to complete a structure template before point like org-mode does.
-    This looks for strings like \"<e\" on an otherwise empty line and
-    expands them.
-    Before use this function, you muse setup `major-mode-name'-expand-alist variable.
-
-    Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
-    in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
-
-     (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
-    (let* ((l (buffer-substring (point-at-bol) (point)))
-           (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
-           (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
-           a)
-      (when (and (looking-at "[ \t]*$")
-                 (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
-                 (setq a (assoc (match-string 1 l) expand-alist)))
-        (backward-delete-char (1+ (length (car-safe a))))
-        (if (symbolp (cdr-safe a))
-            (funcall (cdr-safe a))
-          (insert (cdr-safe a)))
-        t)
-      ad-do-it
-      ))
-#+end_src
-*** Functions
-#+begin_src emacs-lisp
-  (defun yas/dir ()
-    (file-name-directory (buffer-file-name)))
-  (defun yas/file ()
-    (file-name-nondirectory (buffer-file-name)))
-  (defun yas/file-sans ()
-    (file-name-sans-extension (file-name-nondirectory (buffer-file-name))))
-  (defun yas/file-ext ()
-    (file-name-extension (file-name-nondirectory (buffer-file-name))))
-  (defun yas/file-sans-upcase ()
-    (upcase (yas/file-sans)))
-  (defun yas/year ()
-    (format-time-string "%Y"))
-  (defun yas/user-name ()
-    (insert user-full-name))
-  (defun yas/login-name ()
-    (insert user-login-name))
-  (defun yas/user-email ()
-    (insert user-mail-address))
-  (defun yas/user-nickname ()
-    (insert user-nickname))
-#+end_src
 ** ibuffer                                                         :ibuffer:
 *** 載入相依套件
 #+begin_src emacs-lisp
@@ -1956,15 +1877,14 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
   (setq term-default-fg-color nil)
 #+end_src
 
-重新設定 Ansi-Color，讓他和我的佈景主題配合。
+*** 修正與 yasnippet 相衝的問題
+
+term-mode 似乎會和 yasnippet 的 tab 相衝，使用這個設定讓 yasnippet 不
+執行在 term-mode。
+
 #+begin_src emacs-lisp
-  ;; reset ansi-color
-  (setq-default ansi-color-names-vector
-                (vector (frame-parameter nil 'background-color)
-                        "#0B0B0E" "#CA3839" "#8ae234" "#edd400"
-                        "#729fcf" "#ad7fa8" "cyan3"   "#DCDCDC"))
-  (setq ansi-term-color-vector ansi-color-names-vector)
-  (setq ansi-color-map (ansi-color-make-color-map))
+  (eval-after-load 'yasnippet
+    (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1))))
 #+end_src
 
 ** shell-pop
@@ -2646,20 +2566,6 @@ You can now (from git master) use `org-image-actual-width'.
 #+end_src
 ** Conflict Fix
 some packages conflict with org-mode
-*** yasnippet
-#+begin_src emacs-lisp
-  (when (featurep 'yasnippet)
-    (defun yas/org-very-safe-expand ()
-      (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
-
-    (add-hook 'org-mode-hook
-              (lambda ()
-                (make-variable-buffer-local 'yas/trigger-key)
-                (setq yas/trigger-key (kbd "TAB"))
-                (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
-                (define-key yas/keymap [tab] 'yas/next-field))))
-#+end_src
-
 *** windmove
 #+begin_src emacs-lisp
   ;; Make windmove work in org-mode:
@@ -2991,6 +2897,79 @@ some packages conflict with org-mode
     (add-hook 'c-mode-common-hook 'doxymacs-mode)
   #+end_src
 
+** yasnippet                                                     :yasnippet:
+*** 設定 snippet 所在的資料夾
+#+begin_src emacs-lisp
+  (setq-default yas/snippet-dirs emacs-snippets-dir)
+#+end_src
+*** 載入相關套件
+#+begin_src emacs-lisp
+  (require 'yasnippet)
+  (require 'dropdown-list)
+#+end_src
+*** 初始化 yasnippet
+#+begin_src emacs-lisp
+  ;;  (yas/initialize)
+  (yas-global-mode 1)
+#+end_src
+*** 設定 yasnippet 讀取 snippet 的資料夾
+#+begin_src emacs-lisp
+  (yas/load-directory emacs-snippets-dir)
+#+end_src
+*** 設定 yasnippet 提示用的 function
+#+begin_src emacs-lisp
+  (setq yas/prompt-functions '(yas/dropdown-prompt yas/ido-prompt yas/completing-prompt))
+#+end_src
+*** 增加類似 org-mode 那樣使用 < 進行補全的方法 (easy-template)
+#+begin_src emacs-lisp
+  (defadvice yas-expand (around coldnew/major-mode-expand activate)
+    "Try to complete a structure template before point like org-mode does.
+    This looks for strings like \"<e\" on an otherwise empty line and
+    expands them.
+    Before use this function, you muse setup `major-mode-name'-expand-alist variable.
+
+    Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
+    in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
+
+     (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
+    (let* ((l (buffer-substring (point-at-bol) (point)))
+           (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
+           (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
+           a)
+      (when (and (looking-at "[ \t]*$")
+                 (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
+                 (setq a (assoc (match-string 1 l) expand-alist)))
+        (backward-delete-char (1+ (length (car-safe a))))
+        (if (symbolp (cdr-safe a))
+            (funcall (cdr-safe a))
+          (insert (cdr-safe a)))
+        t)
+      ad-do-it
+      ))
+#+end_src
+*** Functions
+#+begin_src emacs-lisp
+  (defun yas/dir ()
+    (file-name-directory (buffer-file-name)))
+  (defun yas/file ()
+    (file-name-nondirectory (buffer-file-name)))
+  (defun yas/file-sans ()
+    (file-name-sans-extension (file-name-nondirectory (buffer-file-name))))
+  (defun yas/file-ext ()
+    (file-name-extension (file-name-nondirectory (buffer-file-name))))
+  (defun yas/file-sans-upcase ()
+    (upcase (yas/file-sans)))
+  (defun yas/year ()
+    (format-time-string "%Y"))
+  (defun yas/user-name ()
+    (insert user-full-name))
+  (defun yas/login-name ()
+    (insert user-login-name))
+  (defun yas/user-email ()
+    (insert user-mail-address))
+  (defun yas/user-nickname ()
+    (insert user-nickname))
+#+end_src
 ** TODO remember
 *** electric-pair-mode
 #+begin_src emacs-lisp
