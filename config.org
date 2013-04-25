@@ -5167,6 +5167,11 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
   (vim:map (kbd "C-x ve") 'magit-flow-feature-finish)
 #+end_src
+** magit-wip?
+
+
+
+
 * Hooks                                                               :hook:
 ** find-file-hook
 #+begin_src emacs-lisp
