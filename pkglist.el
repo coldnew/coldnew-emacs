@@ -40,6 +40,7 @@
 "less-css-mode"
 "lusty-explorer"
 "magit"
+"melpa"
 "moz-repl"
 "multi-term"
 "multi-web-mode"
