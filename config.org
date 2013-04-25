@@ -344,7 +344,7 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
   (setq custom-file emacs-custom-file)
 #+end_src
 
-** Daemon
+** 啟動 emacs-server
 
 當啟用 emacs 時，啟動 emacs-server，如果使用者是 root 或已啟用 server，則忽略。
 #+begin_src emacs-lisp
@@ -653,119 +653,6 @@ el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維�
   (emacs-packages-install-packages)
 #+end_src
 
-* 巨集                                                                :macro:
-** Clojure
-*** comment
-
-comment 只是用來註釋用，並不會解析裏面的東西。
-
-:  (comment "I am comment.")
-
-#+begin_src emacs-lisp
-  (defmacro comment (&rest body)
-    "Comment out one or more s-expressions."
-    nil)
-#+end_src
-
-*** ->
-#+begin_src emacs-lisp
-  (defmacro -> (x &optional form &rest more)
-    (cond ((not (null more))
-           `(-> (-> ,x ,form) ,@more))
-          ((not (null form))
-           (if (sequencep form)
-               `(,(first form) ,x ,@(rest form))
-             (list form x)))
-          (t x)))
-#+end_src
-*** ->>
-#+begin_src emacs-lisp
-  (defmacro ->> (x form &rest more)
-    (cond ((not (null more)) `(->> (->> ,x ,form) ,@more))
-          (t (if (sequencep form)
-                 `(,(first form) ,@(rest form) ,x)
-               (list form x)))))
-#+end_src
-*** -?>
-#+begin_src emacs-lisp
-  (defmacro -?> (x form &rest more)
-    (cond ((not (null more)) `(-?> (-?> ,x ,form) ,@more))
-          (t (if (sequencep form)
-                 `(if (null ,x) nil
-                    (,(first form) ,x ,@(rest form)))
-               `(if (null ,x) nil
-                  ,(list form x))))))
-#+end_src
-*** -?>>
-#+begin_src emacs-lisp
-  (defmacro -?>> (x form &rest more)
-    (cond ((not (null more)) `(-?>> (-?>> ,x ,form) ,@more))
-          (t (if (sequencep form)
-                 `(if (null ,x) nil
-                    (,(first form) ,@(rest form) ,x))
-               `(if (null ,x) nil
-                  ,(list form x))))))
-#+end_src
-*** if-not
-#+begin_src emacs-lisp
-  (defmacro if-not (test then &optional else)
-    "Evaluates test. If logical false, evaluates and returns then expr,
-    otherwise else expr, if supplied, else nil."
-    `(if (not ,test) ,then ,else))
-#+end_src
-
-** Scheme
-*** define
-#+begin_src emacs-lisp
-  (defmacro define (what &rest rest)
-    "Scheme-like alias to defvar/defun"
-    (if (consp what)
-        `(defun  ,(car what) ,(cdr what) ,@rest)
-      `(defvar ,what ,@rest)))
-  ;; Syntaxes:
-  ;;  (define varname opt-defaultvalue "opt-docscring"
-  ;;  (define (fname arg1 arg2...) "opt-docstring" (interactive) (stmt1) ...)
-#+end_src
-** Other
-*** defclosure
-#+begin_example
-  (defclosure counter (&optional increment)
-    "Iseless and bizar counter"
-    ((one 0)
-     (two 1))
-    (incf two (incf one (or increment two))))
-
-(counter) => 2
-(counter) => 5
-#+end_example
-
-#+begin_src emacs-lisp
-  (defmacro defclosure (name arglist docstring bindings &rest body)
-    "Define NAME as a closure.
-
-          DOCSTRING is *not* optional.
-          BINDINGS is an alist of lexical bindings.
-          The definition is (lambda ARGLIST DOCSTRING BODY...)."
-    (declare (indent defun))
-    `(lexical-let (,@bindings)
-       (defun ,name (,@arglist)
-         ,docstring
-         ,@body)))
-#+end_src
-*** safe
-ref: http://curiousprogrammer.wordpress.com/2009/06/08/error-handling-in-emacs-lisp/
-#+begin_src emacs-lisp
-  (defmacro safe-wrap (fn &rest clean-up)
-    `(unwind-protect
-         (let (retval)
-           (condition-case ex
-               (setq retval (progn ,fn))
-             ('error
-              (message (format "Caught exception: [%s]" ex))
-              (setq retval (cons 'exception (list ex)))))
-           retval)
-       ,@clean-up))
-#+end_src
 * 常用的模組/函式庫                                                 :library:
 
 emacs 有一些套件本身不需要配置，或是只是函式庫，這一類的套件我設
