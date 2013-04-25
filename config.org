@@ -5131,12 +5131,39 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
 ** 全域性使用 git-wip
 
-在啟用 magit-wip-mode 之前，要記得使用
+- 關於
 
-: git config --add magit.extension wip-save  # or
-: git config --add magit.extension wip-save
+- 回復
 
-將 git-wip 加到 git 設定中。
+  若要進行回復，首先我們要先找尋我們感興趣的 commit。假設你最近修改的 branch 是 master,
+  那你應該可以找到 wip/master 的參考(reference), 你也可以用以下命令列出 wip/master
+  上面有哪些 wip branch。
+
+  : git reflog show wip/master
+
+  我個人是比較推荐你使用，以下命令來直接看到每次的修改
+
+  : git log -g -p wip/master
+
+  一旦你選定好了某次的 commit, 你必須要取得這些檔案。注意到我們不是直接切換到
+  這個分支，我們只是要取得檔案。
+
+  : git checkout <commit sha1> .
+
+  如果你只是要該分支的某個檔案，你只要修正 . 為檔案名稱就好。
+
+  都完成後，你可以使用以下命令來察看你取回來的檔案和目前的有什麼差別
+
+  : git diff --cached
+
+- 使用 magit-wip-mode
+
+  在啟用 magit-wip-mode 之前，要記得使用
+
+  : git config --add magit.extension wip-save  # or
+  : git config --add magit.extension wip-save
+
+  將 git-wip 加到 git 設定中。
 
 #+begin_src emacs-lisp
   (eval-after-load 'magit
