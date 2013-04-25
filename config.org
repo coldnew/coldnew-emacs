@@ -5134,6 +5134,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 #+begin_src emacs-lisp
   (eval-after-load 'magit
     '(progn
+       (require 'magit-wip)
        (magit-wip-mode 1)
        (global-magit-wip-save-mode)))
 #+end_src
