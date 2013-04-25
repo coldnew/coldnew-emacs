@@ -5129,6 +5129,13 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
     (setq vc-handled-backends (remq 'git vc-handled-backends)))
 #+end_src
 
+** 全域性使用 magit-wip-save-mode
+
+#+begin_src emacs-lisp
+  (eval-after-load 'magit
+    (global-magit-wip-save-mode))
+#+end_src
+
 ** 在 fringe 顯示 git 的狀況
 
 #+begin_src emacs-lisp
@@ -5167,10 +5174,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
   (vim:map (kbd "C-x ve") 'magit-flow-feature-finish)
 #+end_src
-** magit-wip?
-
-
-
 
 * Hooks                                                               :hook:
 ** find-file-hook
