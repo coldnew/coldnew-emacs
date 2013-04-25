@@ -5133,6 +5133,42 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
 - 關於
 
+- 分支
+
+  git-wip 的分支會有 wip/ 作為前綴, 舉例來說，如果你是在 feature branch 進行修改，
+  則 git-wip 會幫你維護 wip/feature 分支。
+
+  當你第一次執行 git-wip 的時候，你會自動幫你擷取所有已經被追蹤或是忽略的檔案，並建立
+  新的分支。
+
+  #+BEGIN_EXAMPLE
+    --- * --- * --- *           <-- topic
+                   \
+                    ,*          <-- wip/topic
+  #+END_EXAMPLE
+
+  當你使用 git wip save 後 (或是用有提供 git wip 功能的文字編輯器儲存後)，
+  你會注意到 wip/topic 指向了下一次的 commit。
+
+  #+BEGIN_EXAMPLE
+    --- * --- * --- *          <-- topic
+                   \
+                    ,*
+                     \
+                      ,*       <-- wip/topic
+  #+END_EXAMPLE
+
+  當你真正遞交了新的 commit， git wip 會指向你新遞交的 commit, 並且新增加 wip branch。
+
+  #+BEGIN_EXAMPLE
+    --- * --- * --- * --- *    <-- topic
+                   \     \
+                    ,*     *   <-- wip/topic
+                     \
+                      *
+  #+END_EXAMPLE
+
+
 - 回復
 
   若要進行回復，首先我們要先找尋我們感興趣的 commit。假設你最近修改的 branch 是 master,
