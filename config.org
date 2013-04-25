@@ -5133,6 +5133,10 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
 - 關於
 
+  git-wip 是一個能夠不斷幫你進行備份檔案的 shell script 程式，會將你正在進行編輯的檔案，
+  放置到 wip branch (Work in Process)，這樣假如你不小心滅掉了你的 commit, 或是某天想找尋
+  某次被遺忘的修改，你都可以透過 git-wip 很簡單的完成他。
+
 - 分支
 
   git-wip 的分支會有 wip/ 作為前綴, 舉例來說，如果你是在 feature branch 進行修改，
