@@ -5052,6 +5052,8 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
   (require 'magit)
   (require 'magit-flow)
   (require 'git-emacs)
+  (require 'gitignore-mode)
+  (require 'gitconfig-mode)
 #+end_src
 
 ** 命令綁定、縮寫                                                    :alias:

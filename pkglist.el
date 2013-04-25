@@ -25,6 +25,8 @@
 "fuzzy"
 "git-emacs"
 "git-gutter-fringe"
+"gitconfig-mode"
+"gitignore-mode"
 "go-mode"
 "google-weather"
 "guess-offset"
