@@ -3115,15 +3115,11 @@ some packages conflict with org-mode
     (if ecb-minor-mode
         (progn
           (let ((w (frame-width ecb-frame)))
-            (message "%i" w)
-            )
-          (ecb-minor-mode)
-          )
+            (message "%i" w))
+          (ecb-minor-mode))
       (progn
         (message "%s" "turning on, make frame wider")
-        (ecb-minor-mode)
-        )
-      ))
+        (ecb-minor-mode))))
 #+end_src
 * 書籤
 ** Bookmark 說明
