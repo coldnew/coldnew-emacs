@@ -4762,17 +4762,6 @@ offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙�
 
 在我的 ~/.authinfo.gpg 檔案內容是像這樣的
 
-
-#+begin_src emacs-lisp :tangle no
-  ;; -*- mode: emacs-lisp -*-
-
-  ;;;; smtp
-  (setq smtp-account-list
-        '(("account@gmail.com"
-           ("smtp.gmail.com" 587 "account@gmail.com" "password"))
-          ))
-#+end_src
-
 #+begin_src emacs-lisp
   (defvar smtp-account-list nil)
     (defun smtp-get-password (account)
@@ -5518,13 +5507,11 @@ Function key 設置常用的命令。
 #+end_src
 
 * 部若格                                                      :blog:
-** 使用 o-blog 作為 blogging 系統
-*** 載入相關套件
+** 載入相關套件
 #+begin_src emacs-lisp
 (require 'o-blog)
 #+end_src
-
-*** 設定網頁連結名稱
+** 設定網頁連結名稱
 
 #+begin_src emacs-lisp
   (defun coldnew/o-blog:sanitizer (s)
@@ -5533,26 +5520,7 @@ Function key 設置常用的命令。
         (md5 s)
       (ob-sanitize-string s)))
 #+end_src
-*** 設定 blog 檔案的位置
-#+begin_src emacs-lisp
-  (defvar coldnew-blog-org-file "~/Workspace/Blog/blog.org"
-    "coldnew's blog file")
-#+end_src
-*** 更新 blog 的命令
-#+begin_src emacs-lisp
-  (defun coldnew/update-blog ()
-    (interactive)
-    (let* ((dir "~/Workspace/WriteOnce/Blog")
-           (cd-cmd (concat "cd " dir ";"))
-           (git-remove-cmd (concat cd-cmd "git rm -rf *"))
-           (git-add-cmd    (concat cd-cmd "git add ." ";" "git commit -m 'update blog'"))
-           (git-push-cmd   (concat cd-cmd "git push origin master")))
-    (start-process-shell-command "blog-remove-old" nil git-remove-cmd)
-    (org-publish-blog coldnew-blog-org-file)
-    (start-process-shell-command "blog-add-new" nil git-add-cmd)
-    (start-process-shell-command "blog-update" nil git-push-cmd)
-    (firefox-refresh)))
-#+end_src
+
 * Local File Variable
 # Local Variables:
 # mode: org
