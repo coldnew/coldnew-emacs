@@ -3868,6 +3868,25 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
       (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 #+end_src
 
+*** 跳轉到 **scratch**
+
+跳轉目前 buffer 與 **scratch**，假如 **scratch** 不存在，
+則建立一個 major-mode 為 lisp-interaction-mode 的 **scratch**
+
+#+begin_src emacs-lisp
+  (defun scratch-toggle ()
+    "Toggle between *scratch* buffer and the current buffer.
+     If the *scratch* buffer does not exist, create it."
+    (interactive)
+    (let ((scratch-buffer-name (get-buffer-create "*scratch*")))
+      (if (equal (current-buffer) scratch-buffer-name)
+          (switch-to-buffer (other-buffer))
+        (progn
+          (switch-to-buffer scratch-buffer-name)
+          (unless (equal major-mode 'lisp-interaction-mode)
+            (lisp-interaction-mode))))))
+#+end_src
+
 ** 檔案處理                                                           :file:
 
 這編放的是和檔案處理，或是和檔案相關的緩衝區處理命令。
@@ -3960,27 +3979,22 @@ yank-n-times 則可以重複的進行貼上。
           (setq times 1)
         (dotimes 'times (yank)))))
 #+end_src
+** 系統命令
+
+*** gitg
+
+雖然很多時候我都會用 magit 來察看 git log, 不過我還是很喜歡 gitg。
+
+#+begin_src emacs-lisp
+  (defun gitg ()
+    "Launch gitg in the current directory."
+    (interactive)
+    (start-process "gitg" nil "gitg"))
+  #+end_src
+
+
 ** TODO 要重新調整
 *** Buffer
-**** 跳轉到 **scratch**
-
-跳轉目前 buffer 與 **scratch**，假如 **scratch** 不存在，
-則建立一個 major-mode 為 lisp-interaction-mode 的 **scratch**
-#+begin_src emacs-lisp
-  (defun scratch-toggle ()
-    "Toggle between *scratch* buffer and the current buffer.
-     If the *scratch* buffer does not exist, create it."
-    (interactive)
-    (let ((scratch-buffer-name (get-buffer-create "*scratch*")))
-      (if (equal (current-buffer) scratch-buffer-name)
-          (switch-to-buffer (other-buffer))
-        ;;        (previous-user-buffer)
-        (progn
-          (switch-to-buffer scratch-buffer-name)
-          (unless (equal major-mode 'lisp-interaction-mode)
-            (lisp-interaction-mode))))))
-#+end_src
-
 **** revert-all-buffer
 
 #+begin_src emacs-lisp
@@ -4101,7 +4115,7 @@ This is to update existing buffers after a Git pull of their underlying files."
        (concat (substring result2 0 width) "\n"
                (substring result1 0 width) "\n"))
      (line-beginning-position)
-     nil "[space]Clears ruler"))
+a     nil "[space]Clears ruler"))
 
 #+end_src
 
@@ -4301,10 +4315,6 @@ This is to update existing buffers after a Git pull of their underlying files."
       (bury-buffer)))
 #+end_src
 #+begin_src emacs-lisp
-  (defun gitg ()
-    "Launch gitg in the current directory."
-    (interactive)
-    (start-process "gitg" nil "gitg"))
 
 
   (defun windmove-down-fullscreen ()
