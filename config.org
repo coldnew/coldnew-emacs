@@ -2890,7 +2890,6 @@ some packages conflict with org-mode
 #+end_src
 
 ** Doxygen
-
 *** 加入相依模組
 
 #+begin_src emacs-lisp
@@ -3797,8 +3796,64 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                      )))
 #+end_src
 * 互動式命令                                                        :command:
-** Buffer
-*** 跳轉到 **scratch**
+
+互動式命令就是可以在 emacs 裏面使用 M-x 然後呼掉的那些 command,
+這邊根據其用途進行分類。
+
+*注意* : 這邊的命令可能依賴我所自訂的 function 。
+
+** 緩衝區處理                                                       :buffer:
+
+*** 將 unix 格式的文件轉換成 dos 格式
+
+#+begin_src emacs-lisp
+  (defun unix2dos ()
+    "Convert buffer file from unix file to dos file."
+    (interactive)
+    (unix->dos (current-buffer)))
+#+end_src
+
+*** 將 dos 格式的文件轉換成 unix 格式
+
+
+#+begin_src emacs-lisp
+  (defun dos2unix ()
+    "Convert buffer file from dos file to unix file."
+    (interactive)
+    (dos->unix (current-buffer)))
+#+end_src
+
+*** 將緩衝區的編碼改成 utf8
+
+#+begin_src emacs-lisp
+  (defun encode-to-utf8 ()
+    "Sets the buffer-file-coding-system to UTF8."
+    (interactive)
+    (set-buffer-file-coding-system 'utf-8 nil))
+#+end_src
+
+** 檔案處理                                                           :file:
+
+這編放的是和檔案處理，或是和檔案相關的緩衝區處理命令。
+
+*** 刪除在緩衝區內的檔案，並移除緩衝區
+
+這個命令是用來移除已經在緩衝區內的的檔案，並且將該緩衝區也關閉。
+
+#+begin_src emacs-lisp
+  (defun delete-this-file ()
+    "Delete the current file, and kill the buffer."
+    (interactive)
+    (or (buffer-file-name) (error "No file is currently being edited"))
+    (when (yes-or-no-p (format "Really delete '%s'?"
+                               (file-name-nondirectory buffer-file-name)))
+      (delete-file (buffer-file-name))
+      (kill-this-buffer)))
+#+end_src
+
+** TODO 要重新調整
+*** Buffer
+**** 跳轉到 **scratch**
 
 跳轉目前 buffer 與 **scratch**，假如 **scratch** 不存在，
 則建立一個 major-mode 為 lisp-interaction-mode 的 **scratch**
@@ -3817,7 +3872,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
             (lisp-interaction-mode))))))
 #+end_src
 
-*** save-buffer-always
+**** save-buffer-always
 
 預設的 save-buffer 在 buffer 沒有變動時，不會進行儲存，
 使用此命令可以使得在呼叫 save-buffer-always 時，將 buffer 變更為修改過，
@@ -3830,7 +3885,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (save-buffer))
 #+end_src
 
-*** revert-all-buffer
+**** revert-all-buffer
 
 #+begin_src emacs-lisp
 (defun revert-all-buffers ()
@@ -3846,7 +3901,7 @@ This is to update existing buffers after a Git pull of their underlying files."
           (buffer-list))))
 #+end_src
 
-*** nuke-all-buffers
+**** nuke-all-buffers
 
 關閉除了 **scratch** 以外的所有 buffer。
 #+begin_src emacs-lisp
@@ -3857,7 +3912,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (delete-other-windows))
 #+end_src
 
-*** 清除除了目前的緩衝區以外的緩衝區
+**** 清除除了目前的緩衝區以外的緩衝區
 
 #+begin_src emacs-lisp
     (defun kill-other-buffers ()
@@ -3865,8 +3920,8 @@ This is to update existing buffers after a Git pull of their underlying files."
       (interactive)
       (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 #+end_src
-** 其他、未歸類
-*** 縮排整個 buffer
+*** 其他、未歸類
+**** 縮排整個 buffer
 #+begin_src emacs-lisp
   (defun indent-whole-buffer ()
     "Indent whole buffer and delete trailing whitespace.
@@ -3877,7 +3932,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (untabify (point-min) (point-max)))
 #+end_src
 
-*** 縮牌區域或是整個 buffer
+**** 縮牌區域或是整個 buffer
 
 #+begin_src emacs-lisp
   (defun indent-region-or-buffer ()
@@ -3895,7 +3950,7 @@ This is to update existing buffers after a Git pull of their underlying files."
           (message "Indented buffer.")))))
 #+end_src
 
-*** TODO rewrite
+**** TODO rewrite
 
 #+begin_src emacs-lisp
   (defun align-code (beg end &optional arg)
@@ -4159,15 +4214,15 @@ This is to update existing buffers after a Git pull of their underlying files."
 
 #+end_src
 
-** 檔案處理
-*** find-files
+*** 檔案處理
+**** find-files
 #+begin_src emacs-lisp
   (defun find-files (files)
     "Open the given files"
     (interactive)
     (foreach (f files) (find-file f)))
 #+end_src
-*** my-clone-and-open-file
+**** my-clone-and-open-file
 #+begin_src emacs-lisp
   (defun my-clone-and-open-file (filename)
     "Clone the current buffer writing it into FILENAME and open it"
@@ -4177,8 +4232,8 @@ This is to update existing buffers after a Git pull of their underlying files."
       (write-region (point-min) (point-max) filename nil nil nil 'confirm))
     (find-file filename))
 #+end_src
-** 視窗
-*** 將整個 emacs 全螢幕
+*** 視窗
+**** 將整個 emacs 全螢幕
 #+begin_src emacs-lisp
   (defun fullscreen-window ()
     "Make the window full-screen."
@@ -4320,15 +4375,16 @@ This is to update existing buffers after a Git pull of their underlying files."
     (interactive "p")
     (kill-line 0))
 #+end_src
-** 插入
-*** 插入時間
+*** 插入
+**** 插入時間
 #+begin_src emacs-lisp
   (defun insert-date-time ()
     "Insert current-date."
     (interactive)
     (insert (current-date-time)))
 #+end_src
-*** 插入空白行
+
+**** 插入空白行
 #+begin_src emacs-lisp
   (defun insert-empty-line ()
     "Insert an empty line after current line and position cursor on newline."
@@ -4337,7 +4393,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (open-line 1)
     (next-line 1))
 #+end_src
-*** 多次貼上
+**** 多次貼上
 emacs 本身的 yank 命令是無法使用 universla-argument 的，
 也就是說無法使用 C-u 80 C-y 來貼上複製的東西 80 次，
 而是貼上前幾次紀錄在 kill-ring 的資訊。
@@ -4357,8 +4413,8 @@ yank-n-times 則可以重複的進行貼上。
           (setq times 1)
         (dotimes 'times (yank)))))
 #+end_src
-** 刪除
-*** 刪除相對應的括號
+*** 刪除
+**** 刪除相對應的括號
 #+begin_src emacs-lisp
   (defun delete-between-pair (char)
     "Delete in between the given pair"
@@ -4376,7 +4432,7 @@ yank-n-times 則可以重複的進行貼上。
       (zap-up-to-char 1 pair-char)))
 #+end_src
 
-*** 刪除一個 '字'
+**** 刪除一個 '字'
 #+begin_src emacs-lisp
   (defun delete-word (arg)
     "Delete characters forward until encountering the end of a word.
@@ -4386,7 +4442,7 @@ yank-n-times 則可以重複的進行貼上。
 
 #+end_src
 
-*** 向左刪除一個 '字'
+**** 向左刪除一個 '字'
 #+begin_src emacs-lisp
   (defun backward-delete-word (arg)
     "Delete characters backward until encountering the end of a word.
@@ -4394,7 +4450,7 @@ yank-n-times 則可以重複的進行貼上。
     (interactive "p")
     (delete-word (- arg)))
 #+end_src
-*** 刪除目前的檔案與 buffer
+**** 刪除目前的檔案與 buffer
 #+begin_src emacs-lisp
   (defun delete-file-and-buffer ()
     "Kills the current buffer and deletes the file it is visiting"
@@ -4405,29 +4461,9 @@ yank-n-times 則可以重複的進行貼上。
         (message "Deleted file %s" filename)))
     (kill-buffer))
 #+end_src
-** 轉換
-*** 將 unix 格式的文件轉換成 dos 格式
-#+begin_src emacs-lisp
-  (defun unix2dos ()
-    "Convert buffer file from unix file to dos file."
-    (interactive)
-    (unix->dos (current-buffer)))
-#+end_src
-*** 將 dos 格式的文件轉換成 unix 格式
-#+begin_src emacs-lisp
-  (defun dos2unix ()
-    "Convert buffer file from dos file to unix file."
-    (interactive)
-    (dos->unix (current-buffer)))
-#+end_src
-*** 將 buffer 的編碼改成 utf8
-#+begin_src emacs-lisp
-  (defun encode-to-utf8 ()
-    "Sets the buffer-file-coding-system to UTF8."
-    (interactive)
-    (set-buffer-file-coding-system 'utf-8 nil))
-#+end_src
-*** eval-and-replace
+*** 轉換
+
+**** eval-and-replace
 將前面的 sexp 刪除並進行 eval 的動作，如果 eval 失敗則還原前面的 sexp。
 #+begin_src emacs-lisp
   (defun eval-and-replace ()
@@ -4440,13 +4476,15 @@ yank-n-times 則可以重複的進行貼上。
       (error (message "Invalid expression")
              (insert (current-kill 0)))))
 #+end_src
-*** expand-last-sexp
+**** expand-last-sexp
 #+begin_src emacs-lisp
   (defun expand-last-sexp ()
     "Expand macro from sexp before point;print value in pp eval buffer"
     (interactive)
     (pp-eval-expression '(macroexpand (read (thing-at-point 'sexp)))))
 #+end_src
+** 全域性按鍵設定                                               :global@key:
+
 * 窗口管理
 ** popwin
 
