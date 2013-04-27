@@ -3845,6 +3845,18 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (save-buffer))
 #+end_src
 
+*** 關閉除了 **scratch** 以外的所有 buffer。
+
+當我想要讓我的 emacs 變得很乾淨的時候，這命令很好用。
+
+#+begin_src emacs-lisp
+  (defun nuke-all-buffers ()
+    "Kill all buffers, leaving *scratch* only."
+    (interactive)
+    (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
+    (delete-other-windows))
+#+end_src
+
 ** 檔案處理                                                           :file:
 
 這編放的是和檔案處理，或是和檔案相關的緩衝區處理命令。
@@ -3896,7 +3908,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
             (lisp-interaction-mode))))))
 #+end_src
 
-
 **** revert-all-buffer
 
 #+begin_src emacs-lisp
@@ -3913,16 +3924,6 @@ This is to update existing buffers after a Git pull of their underlying files."
           (buffer-list))))
 #+end_src
 
-**** nuke-all-buffers
-
-關閉除了 **scratch** 以外的所有 buffer。
-#+begin_src emacs-lisp
-  (defun nuke-all-buffers ()
-    "Kill all buffers, leaving *scratch* only."
-    (interactive)
-    (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
-    (delete-other-windows))
-#+end_src
 
 **** 清除除了目前的緩衝區以外的緩衝區
 
