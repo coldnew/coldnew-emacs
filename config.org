@@ -732,6 +732,14 @@ dash 提供了更多關於 list 處理用的函式，並且不需依賴 cl.
   (require 'dash)
 #+end_src
 
+** 增強 字串 處理的 function
+
+s 提供了許多關於字串處理的函式
+
+#+begin_src emacs-lisp
+  (require 's)
+#+end_src
+
 ** TODO 其他
 #+begin_src emacs-lisp
   (require 'rainbow-mode)
