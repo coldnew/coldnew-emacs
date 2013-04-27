@@ -3851,6 +3851,17 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
       (kill-this-buffer)))
 #+end_src
 
+*** 使用瀏覽器觀看目前的檔案
+
+透過 emacs 的 browse-url function 來呼叫瀏覽器打開目前的檔案。
+
+#+begin_src emacs-lisp
+  (defun browse-current-file ()
+    "Open the current file as a URL using `browse-url'."
+    (interactive)
+    (browse-url (concat "file://" (buffer-file-name))))
+#+end_src
+
 ** TODO 要重新調整
 *** Buffer
 **** 跳轉到 **scratch**
