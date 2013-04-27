@@ -3898,6 +3898,25 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (browse-url (concat "file://" (buffer-file-name))))
 #+end_src
 
+** 視窗操作                                                         :window:
+
+*** 將整個 emacs 全螢幕
+
+有些時候我會很希望我的 emacs 可以全螢幕，用這個命令可以很方便達到我的想法。
+#+begin_src emacs-lisp
+  (defun fullscreen-window ()
+    "Make the window full-screen."
+    (interactive)
+    (let ((current-value (frame-parameter nil 'fullscreen))
+          (old-value nil))
+      (set-frame-parameter nil 'fullscreen
+                           (if (equal 'fullboth current-value)
+                               'old-value
+                             (progn
+                               (setq old-value current-value)
+                               'fullboth)))))
+#+end_src
+
 ** TODO 要重新調整
 *** Buffer
 **** 跳轉到 **scratch**
@@ -3934,7 +3953,6 @@ This is to update existing buffers after a Git pull of their underlying files."
               (message "Reverted %s\n" (buffer-file-name))))
           (buffer-list))))
 #+end_src
-
 
 *** 其他、未歸類
 **** 縮排整個 buffer
@@ -4230,39 +4248,8 @@ This is to update existing buffers after a Git pull of their underlying files."
 
 #+end_src
 
-*** 檔案處理
-**** find-files
-#+begin_src emacs-lisp
-  (defun find-files (files)
-    "Open the given files"
-    (interactive)
-    (foreach (f files) (find-file f)))
-#+end_src
-**** my-clone-and-open-file
-#+begin_src emacs-lisp
-  (defun my-clone-and-open-file (filename)
-    "Clone the current buffer writing it into FILENAME and open it"
-    (interactive "FClone to file: ")
-    (save-restriction
-      (widen)
-      (write-region (point-min) (point-max) filename nil nil nil 'confirm))
-    (find-file filename))
-#+end_src
-*** 視窗
 **** 將整個 emacs 全螢幕
-#+begin_src emacs-lisp
-  (defun fullscreen-window ()
-    "Make the window full-screen."
-    (interactive)
-    (let ((current-value (frame-parameter nil 'fullscreen))
-          (old-value nil))
-      (set-frame-parameter nil 'fullscreen
-                           (if (equal 'fullboth current-value)
-                               'old-value
-                             (progn
-                               (setq old-value current-value)
-                               'fullboth)))))
-#+end_src
+
 #+begin_src emacs-lisp
   (defun collapse-or-expand ()
     (interactive)
@@ -4390,6 +4377,24 @@ This is to update existing buffers after a Git pull of their underlying files."
     "Kill chars backward until encountering the end of a line."
     (interactive "p")
     (kill-line 0))
+#+end_src
+*** 檔案處理
+**** find-files
+#+begin_src emacs-lisp
+  (defun find-files (files)
+    "Open the given files"
+    (interactive)
+    (foreach (f files) (find-file f)))
+#+end_src
+**** my-clone-and-open-file
+#+begin_src emacs-lisp
+  (defun my-clone-and-open-file (filename)
+    "Clone the current buffer writing it into FILENAME and open it"
+    (interactive "FClone to file: ")
+    (save-restriction
+      (widen)
+      (write-region (point-min) (point-max) filename nil nil nil 'confirm))
+    (find-file filename))
 #+end_src
 *** 插入
 **** 插入時間
