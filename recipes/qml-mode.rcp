@@ -1,4 +1,0 @@
-(:name qml-mode
-       :type github
-       :pkgname "coldnew/qml-mode"
-       :features qml-mode)
