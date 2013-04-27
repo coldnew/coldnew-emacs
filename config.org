@@ -3917,6 +3917,49 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                                'fullboth)))))
 #+end_src
 
+** 插入
+
+*** 插入目前的時間
+
+#+begin_src emacs-lisp
+  (defun insert-date-time ()
+    "Insert current-date."
+    (interactive)
+    (insert (current-date-time)))
+#+end_src
+
+*** 插入空白行
+
+#+begin_src emacs-lisp
+  (defun insert-empty-line ()
+    "Insert an empty line after current line and position cursor on newline."
+    (interactive)
+    (move-end-of-line nil)
+    (open-line 1)
+    (next-line 1))
+#+end_src
+
+*** 多次貼上
+
+emacs 本身的 yank 命令是無法使用 universla-argument 的，
+也就是說無法使用 C-u 80 C-y 來貼上複製的東西 80 次，
+而是貼上前幾次紀錄在 kill-ring 的資訊。
+
+yank-n-times 則可以重複的進行貼上。
+
+當沒有使用 universal-argument 指定要貼上多少次時，
+會使用 prompt 詢問貼上的次數。
+#+begin_src emacs-lisp
+  (defun yank-n-times (&optional arg)
+    "yank multiple times."
+    (interactive "P")
+    (let ((times (if (equal current-prefix-arg nil)
+                     (read-number "yank repet times: ")
+                   arg)))
+      (if (< times 1)
+          (setq times 1)
+        (dotimes 'times (yank)))))
+#+end_src
 ** TODO 要重新調整
 *** Buffer
 **** 跳轉到 **scratch**
@@ -4396,44 +4439,7 @@ This is to update existing buffers after a Git pull of their underlying files."
       (write-region (point-min) (point-max) filename nil nil nil 'confirm))
     (find-file filename))
 #+end_src
-*** 插入
-**** 插入時間
-#+begin_src emacs-lisp
-  (defun insert-date-time ()
-    "Insert current-date."
-    (interactive)
-    (insert (current-date-time)))
-#+end_src
 
-**** 插入空白行
-#+begin_src emacs-lisp
-  (defun insert-empty-line ()
-    "Insert an empty line after current line and position cursor on newline."
-    (interactive)
-    (move-end-of-line nil)
-    (open-line 1)
-    (next-line 1))
-#+end_src
-**** 多次貼上
-emacs 本身的 yank 命令是無法使用 universla-argument 的，
-也就是說無法使用 C-u 80 C-y 來貼上複製的東西 80 次，
-而是貼上前幾次紀錄在 kill-ring 的資訊。
-
-yank-n-times 則可以重複的進行貼上。
-
-當沒有使用 universal-argument 指定要貼上多少次時，
-會使用 prompt 詢問貼上的次數。
-#+begin_src emacs-lisp
-  (defun yank-n-times (&optional arg)
-    "yank multiple times."
-    (interactive "P")
-    (let ((times (if (equal current-prefix-arg nil)
-                     (read-number "yank repet times: ")
-                   arg)))
-      (if (< times 1)
-          (setq times 1)
-        (dotimes 'times (yank)))))
-#+end_src
 *** 刪除
 **** 刪除相對應的括號
 #+begin_src emacs-lisp
