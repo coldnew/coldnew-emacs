@@ -3832,6 +3832,19 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (set-buffer-file-coding-system 'utf-8 nil))
 #+end_src
 
+*** 讓 emacs 可以一直儲存緩衝區 (即使檔案未經修正)
+
+預設的 save-buffer 在 buffer 沒有變動時，不會進行儲存，
+使用此命令可以使得在呼叫 save-buffer-always 時，將 buffer 變更為修改過，
+並進行儲存。
+#+begin_src emacs-lisp
+  (defun save-buffer-always ()
+    "Save the buffer even if it is not modified."
+    (interactive)
+    (set-buffer-modified-p t)
+    (save-buffer))
+#+end_src
+
 ** 檔案處理                                                           :file:
 
 這編放的是和檔案處理，或是和檔案相關的緩衝區處理命令。
@@ -3883,18 +3896,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
             (lisp-interaction-mode))))))
 #+end_src
 
-**** save-buffer-always
-
-預設的 save-buffer 在 buffer 沒有變動時，不會進行儲存，
-使用此命令可以使得在呼叫 save-buffer-always 時，將 buffer 變更為修改過，
-並進行儲存。
-#+begin_src emacs-lisp
-  (defun save-buffer-always ()
-    "Save the buffer even if it is not modified."
-    (interactive)
-    (set-buffer-modified-p t)
-    (save-buffer))
-#+end_src
 
 **** revert-all-buffer
 
