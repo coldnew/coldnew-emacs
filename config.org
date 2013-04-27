@@ -3857,6 +3857,17 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (delete-other-windows))
 #+end_src
 
+*** 清除除了目前的緩衝區以外的緩衝區
+
+和 nuke-all-buffers 很像，但是這個命令只會保留目前的緩衝區。
+
+#+begin_src emacs-lisp
+    (defun kill-other-buffers ()
+      "Kill all other buffers."
+      (interactive)
+      (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+#+end_src
+
 ** 檔案處理                                                           :file:
 
 這編放的是和檔案處理，或是和檔案相關的緩衝區處理命令。
@@ -3925,14 +3936,6 @@ This is to update existing buffers after a Git pull of their underlying files."
 #+end_src
 
 
-**** 清除除了目前的緩衝區以外的緩衝區
-
-#+begin_src emacs-lisp
-    (defun kill-other-buffers ()
-      "Kill all other buffers."
-      (interactive)
-      (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
-#+end_src
 *** 其他、未歸類
 **** 縮排整個 buffer
 #+begin_src emacs-lisp
