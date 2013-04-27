@@ -740,6 +740,16 @@ s 提供了許多關於字串處理的函式
   (require 's)
 #+end_src
 
+** 讓 emacs 可以更快速的打開大檔案
+
+vlfi 提供了讓 emacs 更快速打開大檔案的能力，使用方式
+
+: M-x vlfi PATH-TO-FILE
+
+#+begin_src emacs-lisp
+  (require 'vlfi)
+#+end_src
+
 ** TODO 其他
 #+begin_src emacs-lisp
   (require 'rainbow-mode)
