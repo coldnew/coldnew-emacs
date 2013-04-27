@@ -3,7 +3,6 @@
 #+email: coldnew.tw at gmail.com
 #+STARTUP: overview indent align
 #+PROPERTY: noweb
-#+PROPERTY: cache yes
 #+PROPERTY: tangle yes
 #+BABEL: :cache yes
 #+OPTIONS: ^:nil
