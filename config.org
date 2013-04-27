@@ -839,9 +839,9 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 ** Testing
 
 測試用的 function，和測試用的變數很像，但是他允許參數的輸入。
-*** font-exist-p
 
-測試這個字體在系統內是否存在。
+*** 測試這個字體在系統內是否存在。
+
 #+begin_src emacs-lisp
   (defun font-exist-p (fontname)
     "test if this font is exist or not."
@@ -849,8 +849,9 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
         nil t))
 #+end_src
 
-** File
-*** filesize
+** 檔案相關
+
+*** 查詢檔案大小
 #+begin_src emacs-lisp
   (defun file-size (filename)
     "Return the size in bytes of file named FILENAME, as in integer.
