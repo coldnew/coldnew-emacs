@@ -724,6 +724,14 @@ M-x iedit-mode 接著就會發現到同個緩衝區裏面所有和游標底下�
   (require 'iedit)
 #+end_src
 
+** 增強 list 處理的 function
+
+dash 提供了更多關於 list 處理用的函式，並且不需依賴 cl.
+
+#+begin_src emacs-lisp
+  (require 'dash)
+#+end_src
+
 ** TODO 其他
 #+begin_src emacs-lisp
   (require 'rainbow-mode)
