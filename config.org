@@ -5,6 +5,7 @@
 #+PROPERTY: noweb
 #+PROPERTY: cache yes
 #+PROPERTY: tangle yes
+#+BABEL: :cache yes
 #+OPTIONS: ^:nil
 
 * 關於這份檔案
@@ -128,13 +129,6 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
     "store customize UI config.")
 #+end_src
 
-*** emacs-authinfo-file
-
-#+begin_src emacs-lisp
-  (defconst emacs-authinfo-file (concat emacs-dir ".authinfo.gpg")
-    "file that save secret")
-#+end_src
-
 *** emacs-bookmark-file
 
 #+begin_src emacs-lisp
@@ -253,8 +247,7 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
   ;; only disable capslock and make it as control
   (cond ((eq window-system 'x)
          ;; make caps lock a control key
-         (make-caps-as-ctrl)
-         (change-mouse-to-left)))
+         (make-caps-as-ctrl)))
 #+end_src
 
 ** 使用者介面設定
@@ -351,7 +344,7 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
   (setq custom-file emacs-custom-file)
 #+end_src
 
-** Daemon
+** 啟動 emacs-server
 
 當啟用 emacs 時，啟動 emacs-server，如果使用者是 root 或已啟用 server，則忽略。
 #+begin_src emacs-lisp
@@ -660,119 +653,6 @@ el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維�
   (emacs-packages-install-packages)
 #+end_src
 
-* 巨集                                                                :macro:
-** Clojure
-*** comment
-
-comment 只是用來註釋用，並不會解析裏面的東西。
-
-:  (comment "I am comment.")
-
-#+begin_src emacs-lisp
-  (defmacro comment (&rest body)
-    "Comment out one or more s-expressions."
-    nil)
-#+end_src
-
-*** ->
-#+begin_src emacs-lisp
-  (defmacro -> (x &optional form &rest more)
-    (cond ((not (null more))
-           `(-> (-> ,x ,form) ,@more))
-          ((not (null form))
-           (if (sequencep form)
-               `(,(first form) ,x ,@(rest form))
-             (list form x)))
-          (t x)))
-#+end_src
-*** ->>
-#+begin_src emacs-lisp
-  (defmacro ->> (x form &rest more)
-    (cond ((not (null more)) `(->> (->> ,x ,form) ,@more))
-          (t (if (sequencep form)
-                 `(,(first form) ,@(rest form) ,x)
-               (list form x)))))
-#+end_src
-*** -?>
-#+begin_src emacs-lisp
-  (defmacro -?> (x form &rest more)
-    (cond ((not (null more)) `(-?> (-?> ,x ,form) ,@more))
-          (t (if (sequencep form)
-                 `(if (null ,x) nil
-                    (,(first form) ,x ,@(rest form)))
-               `(if (null ,x) nil
-                  ,(list form x))))))
-#+end_src
-*** -?>>
-#+begin_src emacs-lisp
-  (defmacro -?>> (x form &rest more)
-    (cond ((not (null more)) `(-?>> (-?>> ,x ,form) ,@more))
-          (t (if (sequencep form)
-                 `(if (null ,x) nil
-                    (,(first form) ,@(rest form) ,x))
-               `(if (null ,x) nil
-                  ,(list form x))))))
-#+end_src
-*** if-not
-#+begin_src emacs-lisp
-  (defmacro if-not (test then &optional else)
-    "Evaluates test. If logical false, evaluates and returns then expr,
-    otherwise else expr, if supplied, else nil."
-    `(if (not ,test) ,then ,else))
-#+end_src
-
-** Scheme
-*** define
-#+begin_src emacs-lisp
-  (defmacro define (what &rest rest)
-    "Scheme-like alias to defvar/defun"
-    (if (consp what)
-        `(defun  ,(car what) ,(cdr what) ,@rest)
-      `(defvar ,what ,@rest)))
-  ;; Syntaxes:
-  ;;  (define varname opt-defaultvalue "opt-docscring"
-  ;;  (define (fname arg1 arg2...) "opt-docstring" (interactive) (stmt1) ...)
-#+end_src
-** Other
-*** defclosure
-#+begin_example
-  (defclosure counter (&optional increment)
-    "Iseless and bizar counter"
-    ((one 0)
-     (two 1))
-    (incf two (incf one (or increment two))))
-
-(counter) => 2
-(counter) => 5
-#+end_example
-
-#+begin_src emacs-lisp
-  (defmacro defclosure (name arglist docstring bindings &rest body)
-    "Define NAME as a closure.
-
-          DOCSTRING is *not* optional.
-          BINDINGS is an alist of lexical bindings.
-          The definition is (lambda ARGLIST DOCSTRING BODY...)."
-    (declare (indent defun))
-    `(lexical-let (,@bindings)
-       (defun ,name (,@arglist)
-         ,docstring
-         ,@body)))
-#+end_src
-*** safe
-ref: http://curiousprogrammer.wordpress.com/2009/06/08/error-handling-in-emacs-lisp/
-#+begin_src emacs-lisp
-  (defmacro safe-wrap (fn &rest clean-up)
-    `(unwind-protect
-         (let (retval)
-           (condition-case ex
-               (setq retval (progn ,fn))
-             ('error
-              (message (format "Caught exception: [%s]" ex))
-              (setq retval (cons 'exception (list ex)))))
-           retval)
-       ,@clean-up))
-#+end_src
 * 常用的模組/函式庫                                                 :library:
 
 emacs 有一些套件本身不需要配置，或是只是函式庫，這一類的套件我設
@@ -854,12 +734,6 @@ M-x iedit-mode 接著就會發現到同個緩衝區裏面所有和游標底下�
   (require 'expand-region)
   (require 'pretty-lambdada)
   (require 'rainbow-delimiters)
-#+end_src
-
-smart-tab 會幫你決定使用 yasnippet 或是 tab
-#+begin_src emacs-lisp
-  (require 'smart-tab)
-  (global-smart-tab-mode 1)
 #+end_src
 
 * Function                                                         :function:
@@ -1688,79 +1562,6 @@ auto-complete-mode 的按鍵設定。
        (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil))))
 #+end_src
 
-** yasnippet                                                     :yasnippet:
-*** 設定 snippet 所在的資料夾
-#+begin_src emacs-lisp
-  (setq-default yas/snippet-dirs emacs-snippets-dir)
-#+end_src
-*** 載入相關套件
-#+begin_src emacs-lisp
-  (require 'yasnippet)
-  (require 'dropdown-list)
-#+end_src
-*** 初始化 yasnippet
-#+begin_src emacs-lisp
-  ;;  (yas/initialize)
-  (yas-global-mode 1)
-#+end_src
-*** 設定 yasnippet 讀取 snippet 的資料夾
-#+begin_src emacs-lisp
-  (yas/load-directory emacs-snippets-dir)
-#+end_src
-*** 設定 yasnippet 提示用的 function
-#+begin_src emacs-lisp
-  (setq yas/prompt-functions '(yas/dropdown-prompt yas/ido-prompt yas/completing-prompt))
-#+end_src
-*** 增加類似 org-mode 那樣使用 < 進行補全的方法 (easy-template)
-#+begin_src emacs-lisp
-  (defadvice yas-expand (around coldnew/major-mode-expand activate)
-    "Try to complete a structure template before point like org-mode does.
-    This looks for strings like \"<e\" on an otherwise empty line and
-    expands them.
-    Before use this function, you muse setup `major-mode-name'-expand-alist variable.
-
-    Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
-    in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
-
-     (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
-    (let* ((l (buffer-substring (point-at-bol) (point)))
-           (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
-           (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
-           a)
-      (when (and (looking-at "[ \t]*$")
-                 (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
-                 (setq a (assoc (match-string 1 l) expand-alist)))
-        (backward-delete-char (1+ (length (car-safe a))))
-        (if (symbolp (cdr-safe a))
-            (funcall (cdr-safe a))
-          (insert (cdr-safe a)))
-        t)
-      ad-do-it
-      ))
-#+end_src
-*** Functions
-#+begin_src emacs-lisp
-  (defun yas/dir ()
-    (file-name-directory (buffer-file-name)))
-  (defun yas/file ()
-    (file-name-nondirectory (buffer-file-name)))
-  (defun yas/file-sans ()
-    (file-name-sans-extension (file-name-nondirectory (buffer-file-name))))
-  (defun yas/file-ext ()
-    (file-name-extension (file-name-nondirectory (buffer-file-name))))
-  (defun yas/file-sans-upcase ()
-    (upcase (yas/file-sans)))
-  (defun yas/year ()
-    (format-time-string "%Y"))
-  (defun yas/user-name ()
-    (insert user-full-name))
-  (defun yas/login-name ()
-    (insert user-login-name))
-  (defun yas/user-email ()
-    (insert user-mail-address))
-  (defun yas/user-nickname ()
-    (insert user-nickname))
-#+end_src
 ** ibuffer                                                         :ibuffer:
 *** 載入相依套件
 #+begin_src emacs-lisp
@@ -2076,14 +1877,14 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
   (setq term-default-fg-color nil)
 #+end_src
 
-重新設定 Ansi-Color，讓他和我的佈景主題配合。
+*** 修正與 yasnippet 相衝的問題
+
+term-mode 似乎會和 yasnippet 的 tab 相衝，使用這個設定讓 yasnippet 不
+執行在 term-mode。
+
 #+begin_src emacs-lisp
-  ;; reset ansi-color
-  (setq-default ansi-color-names-vector
-                (vector (frame-parameter nil 'background-color)
-                        "#0B0B0E" "#CA3839" "#8ae234" "#edd400"
-                        "#729fcf" "#ad7fa8" "cyan3"   "#DCDCDC"))
-  (setq ansi-term-color-vector ansi-color-names-vector)
+  (eval-after-load 'yasnippet
+    (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1))))
 #+end_src
 
 ** shell-pop
@@ -2114,6 +1915,11 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
   (setq multi-term-program emacs-default-shell)
 #+end_src
 
+** shell mode
+
+#+begin_src emacs-lisp
+  (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+#+end_src
 * 文件加密                                                          :encrypt:
 ** 載入相依套件
 
@@ -2143,7 +1949,7 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 
 #+end_src
 
-* Minibuffer                                                     :minibuffer:
+* 命令欄                                                         :minibuffer:
 
 ** 設定視窗高度最多為4行高
 
@@ -2172,6 +1978,8 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
   (define-key minibuffer-local-map (kbd "C-u") (lambda () (interactive) (kill-line 0)))
   (define-key minibuffer-local-map (kbd "C-t") (lambda () (interactive) (kill-line 0) (insert "/tmp/")))
   (define-key minibuffer-local-map (kbd "C-h") (lambda () (interactive) (kill-line 0) (insert "~/")))
+  (define-key minibuffer-local-map (kbd "C-w") (lambda () (interactive) (kill-line 0) (insert "~/Workspace/")))
+  (define-key minibuffer-local-map (kbd "C-d") (lambda () (interactive) (kill-line 0) (insert "~/Dropbox/")))
 #+end_src
 
 ** 其他
@@ -2237,6 +2045,19 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
                (define-key ido-completion-map (kbd "C-b") 'ido-prev-match)
                ))
 #+end_src
+** 紀錄 Minibuffer 使用過的命令
+
+透過 savehist 套件，我們可以將 Minibuffer 使用過的命令紀錄起來，
+下次打開 emacs 仍可以知道之前呼叫過哪些 Minubuffer 的命令。
+
+#+begin_src emacs-lisp
+  (require 'savehist)
+  ;; keep minibuffer history between session
+  (setq savehist-file (concat emacs-cache-dir "savehist.dat"))
+  ;; enable savehist
+  (savehist-mode 1)
+#+end_src
+
 * EShell                                                              :eshell:
 ** 載入相關套件
 
@@ -2533,6 +2354,14 @@ plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前必須將
   (setq org-CUA-compatible t)
 #+end_src
 
+** 預設不要讓 org-mode 顯示 Latex 形式的下標與上標
+
+org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性取消這個功能。
+
+#+begin_src emacs-lisp
+  (setq org-export-with-sub-superscripts nil)
+#+end_src
+
 ** 增加快速模版
 
 #+begin_src emacs-lisp
@@ -2737,20 +2566,6 @@ You can now (from git master) use `org-image-actual-width'.
 #+end_src
 ** Conflict Fix
 some packages conflict with org-mode
-*** yasnippet
-#+begin_src emacs-lisp
-  (when (featurep 'yasnippet)
-    (defun yas/org-very-safe-expand ()
-      (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
-
-    (add-hook 'org-mode-hook
-              (lambda ()
-                (make-variable-buffer-local 'yas/trigger-key)
-                (setq yas/trigger-key (kbd "TAB"))
-                (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
-                (define-key yas/keymap [tab] 'yas/next-field))))
-#+end_src
-
 *** windmove
 #+begin_src emacs-lisp
   ;; Make windmove work in org-mode:
@@ -2983,9 +2798,13 @@ some packages conflict with org-mode
                   "\\end{frame}")))
 #+end_src
 
-* 編輯器                                                             :editor:
+** 網頁投影片
 
-** 基本設置
+#+begin_src emacs-lisp
+  (require 'org-html5presentation)
+#+end_src
+
+* 編輯器                                                             :editor:
 
 ** 不使用 TAB 進行縮排
 
@@ -3030,6 +2849,16 @@ some packages conflict with org-mode
                   (make-directory dir t))))))
 #+end_src
 
+** 自動回復檔案
+
+當檔案背別的編輯器修改的時候，自動套用新的檔案到緩衝區上。
+
+#+begin_src emacs-lisp
+  (global-auto-revert-mode)
+  (setq global-auto-revert-non-file-buffers t)
+  (setq auto-revert-verbose nil)
+#+end_src
+
 ** 行號顯示設定
 
 預設顯示行號
@@ -3061,7 +2890,6 @@ some packages conflict with org-mode
 #+end_src
 
 ** Doxygen
-
 *** 加入相依模組
 
 #+begin_src emacs-lisp
@@ -3076,6 +2904,79 @@ some packages conflict with org-mode
     (add-hook 'c-mode-common-hook 'doxymacs-mode)
   #+end_src
 
+** yasnippet                                                     :yasnippet:
+*** 設定 snippet 所在的資料夾
+#+begin_src emacs-lisp
+  (setq-default yas/snippet-dirs emacs-snippets-dir)
+#+end_src
+*** 載入相關套件
+#+begin_src emacs-lisp
+  (require 'yasnippet)
+  (require 'dropdown-list)
+#+end_src
+*** 初始化 yasnippet
+#+begin_src emacs-lisp
+  ;;  (yas/initialize)
+  (yas-global-mode 1)
+#+end_src
+*** 設定 yasnippet 讀取 snippet 的資料夾
+#+begin_src emacs-lisp
+  (yas/load-directory emacs-snippets-dir)
+#+end_src
+*** 設定 yasnippet 提示用的 function
+#+begin_src emacs-lisp
+  (setq yas/prompt-functions '(yas/dropdown-prompt yas/ido-prompt yas/completing-prompt))
+#+end_src
+*** 增加類似 org-mode 那樣使用 < 進行補全的方法 (easy-template)
+#+begin_src emacs-lisp
+  (defadvice yas-expand (around coldnew/major-mode-expand activate)
+    "Try to complete a structure template before point like org-mode does.
+    This looks for strings like \"<e\" on an otherwise empty line and
+    expands them.
+    Before use this function, you muse setup `major-mode-name'-expand-alist variable.
+
+    Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
+    in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
+
+     (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
+    (let* ((l (buffer-substring (point-at-bol) (point)))
+           (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
+           (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
+           a)
+      (when (and (looking-at "[ \t]*$")
+                 (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
+                 (setq a (assoc (match-string 1 l) expand-alist)))
+        (backward-delete-char (1+ (length (car-safe a))))
+        (if (symbolp (cdr-safe a))
+            (funcall (cdr-safe a))
+          (insert (cdr-safe a)))
+        t)
+      ad-do-it
+      ))
+#+end_src
+*** Functions
+#+begin_src emacs-lisp
+  (defun yas/dir ()
+    (file-name-directory (buffer-file-name)))
+  (defun yas/file ()
+    (file-name-nondirectory (buffer-file-name)))
+  (defun yas/file-sans ()
+    (file-name-sans-extension (file-name-nondirectory (buffer-file-name))))
+  (defun yas/file-ext ()
+    (file-name-extension (file-name-nondirectory (buffer-file-name))))
+  (defun yas/file-sans-upcase ()
+    (upcase (yas/file-sans)))
+  (defun yas/year ()
+    (format-time-string "%Y"))
+  (defun yas/user-name ()
+    (insert user-full-name))
+  (defun yas/login-name ()
+    (insert user-login-name))
+  (defun yas/user-email ()
+    (insert user-mail-address))
+  (defun yas/user-nickname ()
+    (insert user-nickname))
+#+end_src
 ** TODO remember
 *** electric-pair-mode
 #+begin_src emacs-lisp
@@ -3094,8 +2995,6 @@ some packages conflict with org-mode
 
   ;; Enable global font-lock
   (global-font-lock-mode t)
-  ;; Revert buffers automatically when underlying files are changed externally
-  (global-auto-revert-mode t)
   ;; Show matching parentheses all the time
   (show-paren-mode t)
   ;; Enable auto-complete-mode
@@ -3215,15 +3114,11 @@ some packages conflict with org-mode
     (if ecb-minor-mode
         (progn
           (let ((w (frame-width ecb-frame)))
-            (message "%i" w)
-            )
-          (ecb-minor-mode)
-          )
+            (message "%i" w))
+          (ecb-minor-mode))
       (progn
         (message "%s" "turning on, make frame wider")
-        (ecb-minor-mode)
-        )
-      ))
+        (ecb-minor-mode))))
 #+end_src
 * 書籤
 ** Bookmark 說明
@@ -3266,41 +3161,6 @@ some packages conflict with org-mode
   ;; Set my android-emulator-path
   (setq android-mode-sdk-dir "/opt/android-sdk-update-manager/")
 #+end_src
-** Bash
-*** 設定 Bash 語言 檔案的副檔名與對應的模式
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.sh" . sh-mode))
-  (add-to-list 'auto-mode-alist '("\\.bash" . sh-mode))
-#+end_src
-*** Auto complete
-#+begin_src emacs-lisp
-  ;; auto-complete
-  (add-hook 'shell-mode-hook 'ac-shell-script-mode-setup)
-  ;; define ac-source for pcomplete
-  (ac-define-source pcomplete
-    '((candidates . pcomplete-completions)
-      (cache)
-      (symbol . "f")))
-
-  (defun ac-shell-script-mode-setup ()
-    "auto-complete settings for shell-script-mode"
-    (setq ac-sources
-          '(ac-source-pcomplete
-            ac-source-dictionary
-            ac-source-filename
-            ac-source-files-in-current-dir
-            ac-source-words-in-same-mode-buffers
-            )))
-#+end_src
-*** Keybinding
-#+begin_src emacs-lisp
-  (add-hook 'sh-mode-hook
-            '(lambda ()
-               (local-set-key (kbd "}") 'self-insert-command)
-               (local-set-key (kbd "]") 'self-insert-command)
-               (local-set-key (kbd ")") 'self-insert-command)
-               ))
-#+end_src
 ** C
 *** 設定 C 語言 檔案的副檔名與對應的模式
 
@@ -3328,8 +3188,6 @@ adeff
                (c-turn-on-eldoc-mode)))
 #+end_src
 #+begin_src emacs-lisp
-    ;; use my cc-mode-common-setting
-  ;;  (add-hook 'c-mode-hook 'coldnew-cc-mode-common-setting)
 
     ;; use hide-if-def-mode
     ;;(add-hook 'c-mode-hook 'hide-ifdef-mode)
@@ -3450,13 +3308,7 @@ adeff
 
 #+end_src
 #+begin_src emacs-lisp
-  ;; use my cc-mode-common-setting
-  ;;(add-hook 'c++-mode-hook 'coldnew-cc-mode-common-setting)
-
-  ;;;; Auto Complete
-  ;;;; ---------------------------------------------------------------------------
-
-    ;; Default clang completion flags
+      ;; Default clang completion flags
     ;;    (setq clang-completion-flags
     (setq ac-clang-flags
           (split-string
@@ -3492,7 +3344,7 @@ adeff
   (defun ac-cpp-mode-setup ()
     "auto-complete settings for c-mode."
     (setq ac-sources '(
-                       ac-source-clang
+;;                       ac-source-clang
                        ac-source-dictionary
                        ac-source-abbrev
                        ac-source-semantic
@@ -3765,6 +3617,14 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+begin_src emacs-lisp
 (require 'ac-python)
 #+end_src
+** Markdown
+*** 設定 Markdown 檔案的副檔名與對應的模式
+
+#+begin_src emacs-lisp
+  (require 'markdown-mode+)
+  (add-to-list 'auto-mode-alist '("\\.\\(md\\|markdown\\)\\'" . markdown-mode))
+#+end_src
+
 * 網頁開發                                                               :web:
 ** 網頁開發基本設定
 *** 讓 emacs 能與 firefox 溝通
@@ -3936,8 +3796,64 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
                      )))
 #+end_src
 * 互動式命令                                                        :command:
-** Buffer
-*** 跳轉到 **scratch**
+
+互動式命令就是可以在 emacs 裏面使用 M-x 然後呼掉的那些 command,
+這邊根據其用途進行分類。
+
+*注意* : 這邊的命令可能依賴我所自訂的 function 。
+
+** 緩衝區處理                                                       :buffer:
+
+*** 將 unix 格式的文件轉換成 dos 格式
+
+#+begin_src emacs-lisp
+  (defun unix2dos ()
+    "Convert buffer file from unix file to dos file."
+    (interactive)
+    (unix->dos (current-buffer)))
+#+end_src
+
+*** 將 dos 格式的文件轉換成 unix 格式
+
+
+#+begin_src emacs-lisp
+  (defun dos2unix ()
+    "Convert buffer file from dos file to unix file."
+    (interactive)
+    (dos->unix (current-buffer)))
+#+end_src
+
+*** 將緩衝區的編碼改成 utf8
+
+#+begin_src emacs-lisp
+  (defun encode-to-utf8 ()
+    "Sets the buffer-file-coding-system to UTF8."
+    (interactive)
+    (set-buffer-file-coding-system 'utf-8 nil))
+#+end_src
+
+** 檔案處理                                                           :file:
+
+這編放的是和檔案處理，或是和檔案相關的緩衝區處理命令。
+
+*** 刪除在緩衝區內的檔案，並移除緩衝區
+
+這個命令是用來移除已經在緩衝區內的的檔案，並且將該緩衝區也關閉。
+
+#+begin_src emacs-lisp
+  (defun delete-this-file ()
+    "Delete the current file, and kill the buffer."
+    (interactive)
+    (or (buffer-file-name) (error "No file is currently being edited"))
+    (when (yes-or-no-p (format "Really delete '%s'?"
+                               (file-name-nondirectory buffer-file-name)))
+      (delete-file (buffer-file-name))
+      (kill-this-buffer)))
+#+end_src
+
+** TODO 要重新調整
+*** Buffer
+**** 跳轉到 **scratch**
 
 跳轉目前 buffer 與 **scratch**，假如 **scratch** 不存在，
 則建立一個 major-mode 為 lisp-interaction-mode 的 **scratch**
@@ -3956,7 +3872,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
             (lisp-interaction-mode))))))
 #+end_src
 
-*** save-buffer-always
+**** save-buffer-always
 
 預設的 save-buffer 在 buffer 沒有變動時，不會進行儲存，
 使用此命令可以使得在呼叫 save-buffer-always 時，將 buffer 變更為修改過，
@@ -3969,7 +3885,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (save-buffer))
 #+end_src
 
-*** revert-all-buffer
+**** revert-all-buffer
 
 #+begin_src emacs-lisp
 (defun revert-all-buffers ()
@@ -3985,7 +3901,7 @@ This is to update existing buffers after a Git pull of their underlying files."
           (buffer-list))))
 #+end_src
 
-*** nuke-all-buffers
+**** nuke-all-buffers
 
 關閉除了 **scratch** 以外的所有 buffer。
 #+begin_src emacs-lisp
@@ -3996,7 +3912,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (delete-other-windows))
 #+end_src
 
-*** 清除除了目前的緩衝區以外的緩衝區
+**** 清除除了目前的緩衝區以外的緩衝區
 
 #+begin_src emacs-lisp
     (defun kill-other-buffers ()
@@ -4004,8 +3920,8 @@ This is to update existing buffers after a Git pull of their underlying files."
       (interactive)
       (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 #+end_src
-** 其他、未歸類
-*** 縮排整個 buffer
+*** 其他、未歸類
+**** 縮排整個 buffer
 #+begin_src emacs-lisp
   (defun indent-whole-buffer ()
     "Indent whole buffer and delete trailing whitespace.
@@ -4016,7 +3932,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (untabify (point-min) (point-max)))
 #+end_src
 
-*** 縮牌區域或是整個 buffer
+**** 縮牌區域或是整個 buffer
 
 #+begin_src emacs-lisp
   (defun indent-region-or-buffer ()
@@ -4034,7 +3950,7 @@ This is to update existing buffers after a Git pull of their underlying files."
           (message "Indented buffer.")))))
 #+end_src
 
-*** TODO rewrite
+**** TODO rewrite
 
 #+begin_src emacs-lisp
   (defun align-code (beg end &optional arg)
@@ -4298,15 +4214,15 @@ This is to update existing buffers after a Git pull of their underlying files."
 
 #+end_src
 
-** 檔案處理
-*** find-files
+*** 檔案處理
+**** find-files
 #+begin_src emacs-lisp
   (defun find-files (files)
     "Open the given files"
     (interactive)
     (foreach (f files) (find-file f)))
 #+end_src
-*** my-clone-and-open-file
+**** my-clone-and-open-file
 #+begin_src emacs-lisp
   (defun my-clone-and-open-file (filename)
     "Clone the current buffer writing it into FILENAME and open it"
@@ -4316,8 +4232,8 @@ This is to update existing buffers after a Git pull of their underlying files."
       (write-region (point-min) (point-max) filename nil nil nil 'confirm))
     (find-file filename))
 #+end_src
-** 視窗
-*** 將整個 emacs 全螢幕
+*** 視窗
+**** 將整個 emacs 全螢幕
 #+begin_src emacs-lisp
   (defun fullscreen-window ()
     "Make the window full-screen."
@@ -4459,15 +4375,16 @@ This is to update existing buffers after a Git pull of their underlying files."
     (interactive "p")
     (kill-line 0))
 #+end_src
-** 插入
-*** 插入時間
+*** 插入
+**** 插入時間
 #+begin_src emacs-lisp
   (defun insert-date-time ()
     "Insert current-date."
     (interactive)
     (insert (current-date-time)))
 #+end_src
-*** 插入空白行
+
+**** 插入空白行
 #+begin_src emacs-lisp
   (defun insert-empty-line ()
     "Insert an empty line after current line and position cursor on newline."
@@ -4476,7 +4393,7 @@ This is to update existing buffers after a Git pull of their underlying files."
     (open-line 1)
     (next-line 1))
 #+end_src
-*** 多次貼上
+**** 多次貼上
 emacs 本身的 yank 命令是無法使用 universla-argument 的，
 也就是說無法使用 C-u 80 C-y 來貼上複製的東西 80 次，
 而是貼上前幾次紀錄在 kill-ring 的資訊。
@@ -4496,8 +4413,8 @@ yank-n-times 則可以重複的進行貼上。
           (setq times 1)
         (dotimes 'times (yank)))))
 #+end_src
-** 刪除
-*** 刪除相對應的括號
+*** 刪除
+**** 刪除相對應的括號
 #+begin_src emacs-lisp
   (defun delete-between-pair (char)
     "Delete in between the given pair"
@@ -4515,7 +4432,7 @@ yank-n-times 則可以重複的進行貼上。
       (zap-up-to-char 1 pair-char)))
 #+end_src
 
-*** 刪除一個 '字'
+**** 刪除一個 '字'
 #+begin_src emacs-lisp
   (defun delete-word (arg)
     "Delete characters forward until encountering the end of a word.
@@ -4525,7 +4442,7 @@ yank-n-times 則可以重複的進行貼上。
 
 #+end_src
 
-*** 向左刪除一個 '字'
+**** 向左刪除一個 '字'
 #+begin_src emacs-lisp
   (defun backward-delete-word (arg)
     "Delete characters backward until encountering the end of a word.
@@ -4533,7 +4450,7 @@ yank-n-times 則可以重複的進行貼上。
     (interactive "p")
     (delete-word (- arg)))
 #+end_src
-*** 刪除目前的檔案與 buffer
+**** 刪除目前的檔案與 buffer
 #+begin_src emacs-lisp
   (defun delete-file-and-buffer ()
     "Kills the current buffer and deletes the file it is visiting"
@@ -4544,29 +4461,9 @@ yank-n-times 則可以重複的進行貼上。
         (message "Deleted file %s" filename)))
     (kill-buffer))
 #+end_src
-** 轉換
-*** 將 unix 格式的文件轉換成 dos 格式
-#+begin_src emacs-lisp
-  (defun unix2dos ()
-    "Convert buffer file from unix file to dos file."
-    (interactive)
-    (unix->dos (current-buffer)))
-#+end_src
-*** 將 dos 格式的文件轉換成 unix 格式
-#+begin_src emacs-lisp
-  (defun dos2unix ()
-    "Convert buffer file from dos file to unix file."
-    (interactive)
-    (dos->unix (current-buffer)))
-#+end_src
-*** 將 buffer 的編碼改成 utf8
-#+begin_src emacs-lisp
-  (defun encode-to-utf8 ()
-    "Sets the buffer-file-coding-system to UTF8."
-    (interactive)
-    (set-buffer-file-coding-system 'utf-8 nil))
-#+end_src
-*** eval-and-replace
+*** 轉換
+
+**** eval-and-replace
 將前面的 sexp 刪除並進行 eval 的動作，如果 eval 失敗則還原前面的 sexp。
 #+begin_src emacs-lisp
   (defun eval-and-replace ()
@@ -4579,13 +4476,15 @@ yank-n-times 則可以重複的進行貼上。
       (error (message "Invalid expression")
              (insert (current-kill 0)))))
 #+end_src
-*** expand-last-sexp
+**** expand-last-sexp
 #+begin_src emacs-lisp
   (defun expand-last-sexp ()
     "Expand macro from sexp before point;print value in pp eval buffer"
     (interactive)
     (pp-eval-expression '(macroexpand (read (thing-at-point 'sexp)))))
 #+end_src
+** 全域性按鍵設定                                               :global@key:
+
 * 窗口管理
 ** popwin
 
@@ -4839,13 +4738,22 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
 
 * 電子郵件
 ** offlineimap
-*** 載入套件
+
+offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙下載信件。
+
+*** 載入相關模組
+
 #+begin_src emacs-lisp
   (require 'offlineimap)
 #+end_src
-*** 取得 offlineimap 的密碼
 
-offlineimap 可以在設定中加入
+*** 讓 offlineimap 透過 emacs 取得密碼
+
+我的信件密碼儲存在 ~/.authinfo.gpg 裡面，因為是使用 gpg 進行加密，並且
+我不希望在輸入密碼的過程中另外彈出討厭的視窗，而是讓輸入密碼的視窗
+出現在 emacs 中，因此要讓 emacs 來進行讀取檔案並回傳密碼的動作。
+
+要辦到這樣的狀況 offlineimap 可以在設定中加入
 
 : pythonfile = ~/.offlineimap.py
 
@@ -4863,35 +4771,23 @@ offlineimap 可以在設定中加入
       assert pipe.returncode == 0 and not errout
       return output
 
-  def get_password_emacs(host):
-      cmd = "emacsclient --eval '(offlineimap-get-password \"%s\")'" % (host)
+  def get_password_emacs(host, port):
+      cmd = "emacsclient --eval '(offlineimap-get-password \"%s\" \"%s\")'" % (host,port)
       return get_output(cmd).strip().lstrip('"').rstrip('"')
 #+end_src
 
 讓 offlineimap 可以透過 get_password_emacs() 來從 emacs 裏面取得密碼。
 
 #+begin_src emacs-lisp
-  (defun offlineimap-get-password (account)
-    (require 'netrc)
-    ;;(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
-    (or (netrc-get offlineimap-account-list account) ""))
-#+end_src
-
-在我的 ~/.authinfo.gpg 檔案內容是像這樣的
-
-
-#+begin_src emacs-lisp :tangle no
-  ;; -*- mode: emacs-lisp -*-
-
-  ;;;; offlineimap
-  (setq offlineimap-account-list
-        '(("account@mail.com" . "password")
-          ))
+  (defun offlineimap-get-password (host port)
+    (let* ((netrc (netrc-parse (expand-file-name "~/.authinfo.gpg")))
+           (hostentry (netrc-machine netrc host port port)))
+      (when hostentry (netrc-get hostentry "password"))))
 #+end_src
 
 因此，在 .offlineimaprc 裏面加入這樣一行
 
-: remotepasseval = get_password_emacs("account@mail.com")
+: remotepasseval = get_password_emacs("imap.gmail.com")
 
 即可透過 emacs 取得 password 這個密碼。
 
@@ -4899,17 +4795,6 @@ offlineimap 可以在設定中加入
 *** 取得 smtp 的密碼
 
 在我的 ~/.authinfo.gpg 檔案內容是像這樣的
-
-
-#+begin_src emacs-lisp :tangle no
-  ;; -*- mode: emacs-lisp -*-
-
-  ;;;; smtp
-  (setq smtp-account-list
-        '(("account@gmail.com"
-           ("smtp.gmail.com" 587 "account@gmail.com" "password"))
-          ))
-#+end_src
 
 #+begin_src emacs-lisp
   (defvar smtp-account-list nil)
@@ -4999,6 +4884,7 @@ offlineimap 可以在設定中加入
 #+end_src
 
 *** TODO 未整理
+
 #+begin_src emacs-lisp
   (setq starttls-use-gnutls t)
 
@@ -5069,6 +4955,8 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
   (require 'magit)
   (require 'magit-flow)
   (require 'git-emacs)
+  (require 'gitignore-mode)
+  (require 'gitconfig-mode)
 #+end_src
 
 ** 命令綁定、縮寫                                                    :alias:
@@ -5144,6 +5032,97 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 #+begin_src emacs-lisp
   (when (featurep 'magit)
     (setq vc-handled-backends (remq 'git vc-handled-backends)))
+#+end_src
+
+** 全域性使用 git-wip
+
+- 關於
+
+  git-wip 是一個能夠不斷幫你進行備份檔案的 shell script 程式，會將你正在進行編輯的檔案，
+  放置到 wip branch (Work in Process)，這樣假如你不小心滅掉了你的 commit, 或是某天想找尋
+  某次被遺忘的修改，你都可以透過 git-wip 很簡單的完成他。
+
+- 分支
+
+  git-wip 的分支會有 wip/ 作為前綴, 舉例來說，如果你是在 feature branch 進行修改，
+  則 git-wip 會幫你維護 wip/feature 分支。
+
+  當你第一次執行 git-wip 的時候，你會自動幫你擷取所有已經被追蹤或是忽略的檔案，並建立
+  新的分支。
+
+  #+BEGIN_EXAMPLE
+    --- * --- * --- *           <-- topic
+                   \
+                    ,*          <-- wip/topic
+  #+END_EXAMPLE
+
+  當你使用 git wip save 後 (或是用有提供 git wip 功能的文字編輯器儲存後)，
+  你會注意到 wip/topic 指向了下一次的 commit。
+
+  #+BEGIN_EXAMPLE
+    --- * --- * --- *          <-- topic
+                   \
+                    ,*
+                     \
+                      ,*       <-- wip/topic
+  #+END_EXAMPLE
+
+  當你真正遞交了新的 commit， git wip 會指向你新遞交的 commit, 並且新增加 wip branch。
+
+  #+BEGIN_EXAMPLE
+    --- * --- * --- * --- *    <-- topic
+                   \     \
+                    ,*     *   <-- wip/topic
+                     \
+                      *
+  #+END_EXAMPLE
+
+
+- 回復
+
+  若要進行回復，首先我們要先找尋我們感興趣的 commit。假設你最近修改的 branch 是 master,
+  那你應該可以找到 wip/master 的參考(reference), 你也可以用以下命令列出 wip/master
+  上面有哪些 wip branch。
+
+  : git reflog show wip/master
+
+  我個人是比較推荐你使用，以下命令來直接看到每次的修改
+
+  : git log -g -p wip/master
+
+  一旦你選定好了某次的 commit, 你必須要取得這些檔案。注意到我們不是直接切換到
+  這個分支，我們只是要取得檔案。
+
+  : git checkout <commit sha1> .
+
+  如果你只是要該分支的某個檔案，你只要修正 . 為檔案名稱就好。
+
+  都完成後，你可以使用以下命令來察看你取回來的檔案和目前的有什麼差別
+
+  : git diff --cached
+
+- 使用 magit-wip-mode
+
+  在啟用 magit-wip-mode 之前，要記得使用
+
+  : git config --add magit.extension wip-save  # or
+  : git config --add magit.extension wip-save
+
+  將 git-wip 加到 git 設定中。
+
+#+begin_src emacs-lisp
+  (eval-after-load 'magit
+    '(progn
+       (require 'magit-wip)
+       (magit-wip-mode 1)
+       (global-magit-wip-save-mode)))
+#+end_src
+
+** 在 fringe 顯示 git 的狀況
+
+#+begin_src emacs-lisp
+  (require 'git-gutter-fringe)
+  (global-git-gutter-mode)
 #+end_src
 
 ** 使用 C-g 離開 git 程式的視窗
@@ -5313,13 +5292,6 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
   (file-cache-add-directory-list '("~/.emacs.d/" "~/Workspace/"))
 #+end_src
 
-** savehist
-#+begin_src emacs-lisp
-  (require 'savehist)
-  ;; keep minibuffer history between session
-  (setq savehist-file (concat emacs-cache-dir "savehist.dat"))
-  (savehist-mode 1)
-#+end_src
 ** saveplace
 #+begin_src emacs-lisp
   (require 'saveplace)
@@ -5561,22 +5533,19 @@ Function key 設置常用的命令。
            ;; emacs-config
            (?e (file . ,(expand-file-name emacs-config-file)))
            ;; TODO.org
-           (?t (file . "~/Dropbox/Org/TODO.org"))
-           (?w (file . "~/Dropbox/Org/Weintek.org"))
-           (?n (file . "~/Dropbox/Note/Note.org"))
-           (?b (file . "~/Workspace/Blog/src/blog.org"))
+           (?w (file . "~/SparkleShare/org/Weintek.org"))
+           (?n (file . "~/SparkleShare/org//Note.org"))
+           (?b (file . "~/SparkleShare/coldnew.github.com/blog-src/blog.org"))
            ))
     (set-register (car r) (cadr r)))
 #+end_src
 
 * 部若格                                                      :blog:
-** 使用 o-blog 作為 blogging 系統
-*** 載入相關套件
+** 載入相關套件
 #+begin_src emacs-lisp
 (require 'o-blog)
 #+end_src
-
-*** 設定網頁連結名稱
+** 設定網頁連結名稱
 
 #+begin_src emacs-lisp
   (defun coldnew/o-blog:sanitizer (s)
@@ -5585,18 +5554,7 @@ Function key 設置常用的命令。
         (md5 s)
       (ob-sanitize-string s)))
 #+end_src
-*** 設定 blog 檔案的位置
-#+begin_src emacs-lisp
-  (defvar coldnew-blog-org-file "~/Workspace/Blog/src/blog.org"
-    "coldnew's blog file")
-#+end_src
-*** 更新 blog 的命令
-#+begin_src emacs-lisp
-  (defun coldnew/update-blog ()
-    (interactive)
-    (org-publish-blog coldnew-blog-org-file)
-    (firefox-refresh))
-#+end_src
+
 * Local File Variable
 # Local Variables:
 # mode: org

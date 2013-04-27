@@ -21,7 +21,6 @@
               (current-line . "#2a2a2a")
               (selection . "#444444")
               (highlight . "#CAE682")
-              ;;              (comment . "#8e908c")
               (comment . "#5d9ae4")
               (red    . "#E52210")
               (orange . "#e65c00")
@@ -321,7 +320,12 @@ names to which it refers are bound."
      (magit-log-head-label-tags ((,class (:foreground ,aqua :box nil :weight bold))))
      (magit-section-title ((,class (:inherit diff-hunk-header))))
 
-     (link ((,class (:foreground nil :underline t))))
+     ;; git-gutter
+     (git-gutter-fr:modified ((,class (:foreground ,yellow))))
+     (git-gutter-fr:added ((,class (:inherit diff-added))))
+     (git-gutter-fr:deleted ((,class (:inherit diff-removed))))
+
+     (link ((t (:foreground "dodger blue" :underline t))))
      (widget-button ((,class (:underline t))))
      (widget-field ((,class (:background ,current-line :box (:line-width 1 :color ,foreground)))))
 
@@ -370,7 +374,7 @@ names to which it refers are bound."
      ;;(org-table ((,class (:foreground ,purple))))
      (org-todo ((,class (:foreground ,red :bold t))))
      (org-done ((t (:foreground "#4BC98A" :bold t))))
-     (org-link   ((t (:inherit (link)))))
+     (org-link   ((t (:inherit link))))
      (org-upcoming-deadline ((,class (:foreground ,orange))))
      (org-warning ((,class (:weight bold :foreground ,red))))
      (org-level-1 ((t (:foreground "#8AC6F2" :bold t))))

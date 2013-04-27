@@ -1,1 +1,1 @@
-/home/coldnew/Dropbox/dotfiles/emacs/lisp/
+/home/coldnew/SparkleShare/dotfiles/emacs/lisp
