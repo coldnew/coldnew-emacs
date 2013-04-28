@@ -135,7 +135,7 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
     "store customize UI config.")
 #+end_src
 
-*** emacs-bookmark-file
+*** 書籤文件檔案
 
 #+begin_src emacs-lisp
   (defconst emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
