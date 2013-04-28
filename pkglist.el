@@ -72,6 +72,7 @@
 "sr-speedbar"
 "undo-tree"
 "unicad"
+"vlfi"
 "xcscope"
 "xcscope+"
 "yasnippet"
