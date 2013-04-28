@@ -2263,7 +2263,7 @@ term-mode 似乎會和 yasnippet 的 tab 相衝，使用這個設定讓 yasnippe
     (vim:imap (kbd "C-x p") 'coldnew/helm-mini)
 #+end_src
 
-* 文檔幫助
+* 文檔幫助                                                             :info:
 
 這邊放置 manpage、womanpage、info 等幫助文檔模式的設定。
 
@@ -3147,7 +3147,7 @@ some packages conflict with org-mode
         (message "%s" "turning on, make frame wider")
         (ecb-minor-mode))))
 #+end_src
-* 書籤
+* 書籤                                                             :bookmark:
 ** Bookmark 說明
 :PROPERTIES:
 :tangle:   no
@@ -4549,7 +4549,7 @@ a     nil "[space]Clears ruler"))
 #+end_src
 ** 全域性按鍵設定                                               :global@key:
 
-* 窗口管理
+* 窗口管理                                                           :window:
 ** popwin
 
 popwin is a popup window manager for Emacs which makes you free from the hell of annoying buffers such like *Help*, *Completions*, *compilation*, and etc.
@@ -4800,7 +4800,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
     (erc :server "irc.debian.org" :port 6667 :nick erc-nick))
 #+end_src
 
-* 電子郵件
+* 電子郵件                                                            :email:
 ** offlineimap
 
 offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙下載信件。
@@ -5004,7 +5004,7 @@ offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙�
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
   (defalias 'coldnew/folding-toggle   'toggle-selective-display)
 #+end_src
-* Git 版本管理
+* Git 版本管理                                                          :git:
 
 git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最好的， emacs
 有許多好用的 git 套件，諸如 egg, magit, git-emacs 之類，在這邊的設定
@@ -5238,7 +5238,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
                        (delete-region (point-min) (point-max)))))))
 #+end_src
 
-* 檔案備份
+* 檔案備份                                                           :backup:
 
 雖然現在大家都有在使用 git、svn 等檔案管理系統，但我們最好還是有其他的
 備份，這裡設定的是 emacs 內建的備份方式。
@@ -5338,7 +5338,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (setq auto-save-list-file-prefix (concat emacs-backup-dir "auto-saves-"))
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
 #+end_src
-* Session
+* Session                                                              :blog:
 ** filecache
 
 filecache 會根據使用者輸入的文件名，找到該文件的實際位置。
@@ -5371,7 +5371,7 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
   ;; Following file won;t contain in recentf
   (setq recentf-exclude '("\\.elc$" "\\.pyc$" "\\.recentd$" "^/tmp/"))
 #+end_src
-* 全域性按鍵設置
+* 全域性按鍵設置                                                 :global@key:
 ** 文件編輯
 
 | 按鍵         | 命令                   | 用途                                       |
