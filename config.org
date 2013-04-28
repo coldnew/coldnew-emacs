@@ -2209,13 +2209,17 @@ term-mode 似乎會和 yasnippet 的 tab 相衝，使用這個設定讓 yasnippe
           ))))
 #+end_src
 * Helm                                                                 :helm:
+
+Helm (領航員) 是 emacs 下非常強大的檔案尋找工具，可以用他快速的找尋已經
+打開的緩衝區、檔案，或是透過 locate 命令來找尋檔案，此外 helm 也提供了
+oscurr 功能，可以直接在目前的檔案裡找相同的字串。
+
 ** 載入相關套件
 
 #+begin_src emacs-lisp
   (require 'helm)
   (require 'helm-etags+)
   (require 'helm-ls-git)
-  (require 'ctags-update)
 #+end_src
 
 ** 使用預先定義好的 helm 設定
@@ -2231,11 +2235,6 @@ term-mode 似乎會和 yasnippet 的 tab 相衝，使用這個設定讓 yasnippe
   (helm-mode 1)
 #+end_src
 
-** TODO Config this
-#+begin_src emacs-lisp
-  ;; Enable dired binding
-  (ctags-update-minor-mode 1)
-#+end_src
 ** Function
 #+begin_src emacs-lisp
   (defun helm-c-occur-get-line (s e)
@@ -2860,6 +2859,52 @@ some packages conflict with org-mode
            (?b (file . "~/SparkleShare/coldnew.github.com/blog-src/blog.org"))
            ))
     (set-register (car r) (cadr r)))
+#+end_src
+
+* 專案管理                                                          :project:
+
+emacs 下有太多太多跟專案管理相關的套件了，目前先一一試用，再來
+決定我要用什麼
+
+** projectile
+
+#+begin_src emacs-lisp
+  (require 'projectile)
+#+end_src
+
+* TAGS
+
+這邊放置和 tags 相關的功能
+
+** 自動更新 TAGS
+
+ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ctags-update-minor-mode,
+這樣任何模式下，若我有 TAGS 檔案的話，他都會自動幫我更新。
+
+我並沒有為他增加其他配置，因此預設為 5分鐘更新一次 TAGS。
+
+#+begin_src emacs-lisp
+  (require 'ctags-update)
+  (ctags-update-minor-mode 1)
+#+end_src
+
+** 用來產生 TAGS 的命令                                            :command:
+
+我使用 TAGS 最多的地方應該就是 kernel code 以及 Linux 下的 C code 了，
+由於 kernel code 可以用
+
+: make TAGS
+
+來產生 TAGS 檔案，因此此命令只是添加在這邊，若我有需要的話直接呼叫就可以很方便
+的做出一個新的 TAGS 檔案。
+
+#+begin_src emacs-lisp
+  (defun create-tags (regexp)
+    "Create TAGS file in current directory."
+    (interactive "sRegexp: *.[ch] : ")
+    (if (string-equal "" regexp) (setq regexp "*.[ch]"))
+    (eshell-command
+     (format "find . -type f -name \"%s\" | etags -" regexp)))
 #+end_src
 
 * 編輯器                                                             :editor:
