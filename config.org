@@ -2872,7 +2872,7 @@ emacs 下有太多太多跟專案管理相關的套件了，目前先一一試�
   (require 'projectile)
 #+end_src
 
-* TAGS
+* TAGS                                                                 :tags:
 
 這邊放置和 tags 相關的功能
 
