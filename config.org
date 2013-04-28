@@ -5414,7 +5414,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (setq backup-by-copying t)
 #+end_src
 
-** TODO 位龜類
+** TODO rewrite
 #+begin_src emacs-lisp
   (setq auto-save-default    t)           ; auto-save of every file-visiting buffer
   ;; change auto-save-list setting
