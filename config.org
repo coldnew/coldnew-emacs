@@ -2813,7 +2813,7 @@ some packages conflict with org-mode
   (require 'org-html5presentation)
 #+end_src
 
-* 書籤                                                             :bookmark:
+* 書籤與暫存器                                                     :bookmark:
 ** Bookmark 說明
 :PROPERTIES:
 :tangle:   no
