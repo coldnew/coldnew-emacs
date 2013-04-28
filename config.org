@@ -5156,7 +5156,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
                       *
   #+END_EXAMPLE
 
-
 - 回復
 
   若要進行回復，首先我們要先找尋我們感興趣的 commit。假設你最近修改的 branch 是 master,
@@ -5189,13 +5188,13 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
   將 git-wip 加到 git 設定中。
 
-#+begin_src emacs-lisp
-  (eval-after-load 'magit
-    '(progn
-       (require 'magit-wip)
-       (magit-wip-mode 1)
-       (global-magit-wip-save-mode)))
-#+end_src
+  #+begin_src emacs-lisp
+    (eval-after-load 'magit
+      '(progn
+         (require 'magit-wip)
+         (magit-wip-mode 1)
+         (global-magit-wip-save-mode)))
+  #+end_src
 
 ** 在 fringe 顯示 git 的狀況
 
