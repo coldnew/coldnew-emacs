@@ -2813,6 +2813,45 @@ some packages conflict with org-mode
   (require 'org-html5presentation)
 #+end_src
 
+* 書籤                                                             :bookmark:
+** Bookmark 說明
+:PROPERTIES:
+:tangle:   no
+:END:
+
+*** 預設按鍵
+| 快捷鍵  | 命令                | 用途                                        |
+|---------+---------------------+---------------------------------------------|
+| C-x r m | bookmark-set        | 設置新的書籤                                |
+| C-x r l | bookmark-bmenu-list | 列出所有已設置的書籤                        |
+| C-x r b | bookmarj-jump       | 跳轉到書籤                                  |
+|         | bookmark-delete     | 刪除書籤                                    |
+|         | bookmark-load       | 讀取已儲存的書籤檔案                        |
+|         | bookmark-save       | 儲存書籤至 bookmark-default-file 指定的地方 |
+
+** Config
+#+begin_src emacs-lisp
+  (setq bookmark-default-file emacs-bookmark-file)
+#+end_src
+
+#+begin_src emacs-lisp
+  (require 'bm)
+#+end_src
+** 放置快速跳轉的捷徑命令。
+使用 Ctrl-x r j <char> 就可以進行快速跳轉至檔案，其中 <char> 為以下所設定。
+#+begin_src emacs-lisp
+  (dolist
+      (r `(
+           ;; emacs-config
+           (?e (file . ,(expand-file-name emacs-config-file)))
+           ;; TODO.org
+           (?w (file . "~/SparkleShare/org/Weintek.org"))
+           (?n (file . "~/SparkleShare/org//Note.org"))
+           (?b (file . "~/SparkleShare/coldnew.github.com/blog-src/blog.org"))
+           ))
+    (set-register (car r) (cadr r)))
+#+end_src
+
 * 編輯器                                                             :editor:
 
 ** 不使用 TAB 進行縮排
@@ -3146,30 +3185,6 @@ some packages conflict with org-mode
       (progn
         (message "%s" "turning on, make frame wider")
         (ecb-minor-mode))))
-#+end_src
-* 書籤                                                             :bookmark:
-** Bookmark 說明
-:PROPERTIES:
-:tangle:   no
-:END:
-
-*** 預設按鍵
-| 快捷鍵  | 命令                | 用途                                        |
-|---------+---------------------+---------------------------------------------|
-| C-x r m | bookmark-set        | 設置新的書籤                                |
-| C-x r l | bookmark-bmenu-list | 列出所有已設置的書籤                        |
-| C-x r b | bookmarj-jump       | 跳轉到書籤                                  |
-|         | bookmark-delete     | 刪除書籤                                    |
-|         | bookmark-load       | 讀取已儲存的書籤檔案                        |
-|         | bookmark-save       | 儲存書籤至 bookmark-default-file 指定的地方 |
-
-** Config
-#+begin_src emacs-lisp
-  (setq bookmark-default-file emacs-bookmark-file)
-#+end_src
-
-#+begin_src emacs-lisp
-  (require 'bm)
 #+end_src
 * Cscope                                                             :cscope:
 ** 載入和 cscope 相關的 package
@@ -5586,22 +5601,6 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
   (global-set-key (kbd "<delete>") 'hungry-delete-forward)
   (global-set-key (kbd "C-.") 'repeat)
-#+end_src
-
-* Register                                                         :register:
-** 放置快速跳轉的捷徑命令。
-使用 Ctrl-x r j <char> 就可以進行快速跳轉至檔案，其中 <char> 為以下所設定。
-#+begin_src emacs-lisp
-  (dolist
-      (r `(
-           ;; emacs-config
-           (?e (file . ,(expand-file-name emacs-config-file)))
-           ;; TODO.org
-           (?w (file . "~/SparkleShare/org/Weintek.org"))
-           (?n (file . "~/SparkleShare/org//Note.org"))
-           (?b (file . "~/SparkleShare/coldnew.github.com/blog-src/blog.org"))
-           ))
-    (set-register (car r) (cadr r)))
 #+end_src
 
 * 部若格                                                      :blog:
