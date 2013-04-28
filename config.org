@@ -4,6 +4,7 @@
 #+STARTUP: overview indent align
 #+PROPERTY: noweb
 #+PROPERTY: tangle yes
+#+PROPERTY: cache yes
 #+BABEL: :cache yes
 #+OPTIONS: ^:nil
 
