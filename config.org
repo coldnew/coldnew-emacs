@@ -3725,13 +3725,17 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 * 網頁開發                                                               :web:
 ** 網頁開發基本設定
 *** 讓 emacs 能與 firefox 溝通
+
 在讓 emacs 和 firefox 能互相溝通之前，兩邊都必須先裝上 moz-repl 這個外掛。
 可以在 firefox 上的 moz-repl 選單，選擇 Active on startup 來確保當 firefox
 啟動時會同時啟動 moz-repl
+
 #+begin_src emacs-lisp
   (require 'moz)
 #+end_src
+
 *** 令 firefox 更新目前的頁面
+
 #+begin_src emacs-lisp
   (defun firefox-refresh ()
     "Refresh the firefox browser"
@@ -3739,6 +3743,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (comint-send-string (inferior-moz-process)
                         "BrowserReload();"))
 #+end_src
+
 *** 整合 Javascript/HTML/CSS 色彩
 
 #+begin_src emacs-lisp
@@ -3754,24 +3759,31 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 
 ** CSS
 *** 設定 CSS 的副檔名與對應的模式
+
 #+begin_src emacs-lisp
   (require 'css-mode)
   (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
 #+end_src
 ** Less-CSS
+
 *** 設定 LESS-CSS 的副檔名與對應的模式
 #+begin_src emacs-lisp
   (require 'less-css-mode)
   (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
 #+end_src
+
 ** JavaScript
+
 *** 設定 javascript 的副檔名與對應的模式
+
 使用 js2-mode 替代原本系統內建的 js-mode。
 #+begin_src emacs-lisp
   (require 'js2-mode)
   (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 #+end_src
+
 *** 自動補全
+
 #+begin_src emacs-lisp
   (add-hook 'js-mode-hook 'ac-javascript-mode-setup)
   (defun ac-javascript-mode-setup ()
@@ -3783,24 +3795,26 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
             ac-source-words-in-same-mode-buffers
             )))
 #+end_src
+
 *** REPL 設定
+
 使用 js-comint 來設定 REPL 模式。
 **** 設定起始位置
+
 #+begin_src emacs-lisp
   (when (require 'js-comint nil 'noerror)
 #+end_src
+
 **** 設定 REPL 程式為 node.js
 #+begin_src emacs-lisp
     (setq inferior-js-program-command "node")
 #+end_src
-**** 在 REPL 啟用 ANSI 色彩
-#+begin_src emacs-lisp
-;;  (add-hook 'js-mode-hook 'ansi-color-for-comint-mode-on)
-#+end_src
+
 **** 設定終止位置
 #+begin_src emacs-lisp
     )
 #+end_src
+
 ** HTML
 *** 使用 zencoding-mode 讓寫 HTML 更方便
 
