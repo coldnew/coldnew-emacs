@@ -3356,10 +3356,52 @@ adeff
 #+begin_src emacs-lisp
   (defun cc-mode:tmp ()
     (c-set-offset 'cpp-macro 0))
-  )
+
   (add-hook 'c-mode-hook 'cc-mode:tmp)
 #+end_src
 
+*** 縮排 #ifdef 語句
+
+#+begin_src emacs-lisp
+  (defun cc-mode:indent-preprocessor ()
+    "Indent #ifdef ... #else ... #endf region as if ... else ... statement.
+  This code is based on ppindent.el
+
+  Note: you must (require 's) to use this code."
+    (let ((result (catch 'err
+                    (save-excursion
+                      (let ((cnt 0))
+                        (goto-char (point-min))
+                        (while (re-search-forward "^[ \t]*#[ \t]*\\(.*\\)" nil t)
+                          (cond ((s-starts-with? "if" (match-string-no-properties 1))
+                                 (replace-match (concat (make-string cnt ?\s) "#\\1"))
+                                 (incf cnt c-basic-offset))
+                                ((s-starts-with? "el" (match-string-no-properties 1))
+                                 (when (< (- cnt c-basic-offset) 0)
+                                   (throw 'err `(,(line-number-at-pos) "Unmatched #else or #elif")))
+                                 (replace-match (concat (make-string
+                                                         (- cnt c-basic-offset)
+                                                         ?\s) "#\\1")))
+                                ((s-starts-with? "endif" (match-string-no-properties 1))
+                                 (when (< (- cnt c-basic-offset) 0)
+                                   (throw 'err `(,(line-number-at-pos) "Unmatched #endif")))
+                                 (decf cnt c-basic-offset)
+                                 (replace-match (concat (make-string cnt ?\s) "#\\1")))
+                                (t
+                                 (replace-match (concat (make-string cnt ?\s) "#\\1"))))))
+                      ))))
+      (when result
+        (goto-line (car result))
+        (error "Error: %s" (cadr result)))))
+
+  ;; Advice th indent-region function
+  (defadvice indent-region (after indent-preprocessor activate)
+    "Indent #ifdef ... #else ... #endif region as if ... else ... statement for c/c++ mode."
+    (let ((buffer-major-mode (with-current-buffer (current-buffer) major-mode)))
+      (if (or (string= buffer-major-mode "c-mode")
+              (string= buffer-major-mode "c++-mode"))
+          (cc-mode:indent-preprocessor))))
+  #+end_src
 ** C++
 *** 設定 C++ 語言 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
