@@ -3351,6 +3351,15 @@ adeff
   (add-hook 'c-mode-hook 'cc-mode:highlight-if-0)
 #+end_src
 
+*** make define indent in if
+
+#+begin_src emacs-lisp
+  (defun cc-mode:tmp ()
+    (c-set-offset 'cpp-macro 0))
+  )
+  (add-hook 'c-mode-hook 'cc-mode:tmp)
+#+end_src
+
 ** C++
 *** 設定 C++ 語言 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
