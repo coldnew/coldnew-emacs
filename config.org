@@ -3334,7 +3334,6 @@ code 變成灰色，這樣在看 code 時比較不會吃力。
           (cc-mode:indent-preprocessor))))
   #+end_src
 
-
 ** C
 *** 設定 C 語言 檔案的副檔名與對應的模式
 
