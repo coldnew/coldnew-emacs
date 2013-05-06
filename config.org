@@ -3367,8 +3367,8 @@ code 變成灰色，這樣在看 code 時比較不會吃力。
   (defadvice indent-region (after indent-preprocessor activate)
     "Indent #ifdef ... #else ... #endif region as if ... else ... statement for c/c++ mode."
     (let ((buffer-major-mode (with-current-buffer (current-buffer) major-mode)))
-      (if (or (string= buffer-major-mode "c-mode")
-              (string= buffer-major-mode "c++-mode"))
+      (if (or (eq major-mode 'c-mode)
+              (eq major-mode 'c++-mode))
           (cc-mode:indent-preprocessor))))
   #+end_src
 
