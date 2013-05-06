@@ -3334,6 +3334,17 @@ code 變成灰色，這樣在看 code 時比較不會吃力。
           (cc-mode:indent-preprocessor))))
   #+end_src
 
+*** 加入 eldoc 支援
+
+#+begin_src emacs-lisp
+  (add-hook 'c-mode-common-hook
+            '(lambda ()
+               (when (require 'c-eldoc nil 'noerror)
+                 (setq c-eldoc-includes "`pkg-config gtk+-3.0 --cflags --libs` -I./ -I../")
+                 (c-turn-on-eldoc-mode))))
+#+end_src
+
+
 ** C
 *** 設定 C 語言 檔案的副檔名與對應的模式
 
@@ -3351,33 +3362,13 @@ code 變成灰色，這樣在看 code 時比較不會吃力。
                (c-set-style "linux")))
 #+end_src
 
-*** c-eldoc
-adeff
+*** TODO 自動偵測 c-basic-offset
 #+begin_src emacs-lisp
-    (add-hook 'c-mode-hook
-            '(lambda ()
-               (require 'c-eldoc)
-               (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
-               (c-turn-on-eldoc-mode)))
+  (require 'guess-offset)
 #+end_src
+*** 快速插入樣板
+
 #+begin_src emacs-lisp
-
-    ;; use hide-if-def-mode
-    ;;(add-hook 'c-mode-hook 'hide-ifdef-mode)
-
-    ;;(require 'gccsense)
-
-    ;;;; ---------------------------------------------------------------------------
-    ;;;; Functions
-    ;;;; ---------------------------------------------------------------------------
-    (defun my-ctypes-load-hook ()
-      (ctypes-read-file ctypes-file-name nil t t))
-
-
-    ;;;; ---------------------------------------------------------------------------
-    ;;;; Commands
-    ;;;; ---------------------------------------------------------------------------
-
     (defun c-mode:insert-inc-or-if ()
       "If at the start of line. add `inc' and expand it,
     else add `if' and expand it."
@@ -3391,14 +3382,7 @@ adeff
           (progn
             (insert "if")
             (yas/expand)))))
-#+end_src
-*** TODO 自動偵測 c-basic-offset
-#+begin_src emacs-lisp
-  (require 'guess-offset)
-#+end_src
-*** 快速插入樣板
 
-#+begin_src emacs-lisp
   (setq c-mode-expand-alist
         '(("i" . c-mode:insert-inc-or-if)
           ("m" . "main")
@@ -3482,15 +3466,6 @@ adeff
 #+end_src
 
 *** Hooks
-**** c-eldoc
-#+begin_src emacs-lisp
-  (add-hook 'c++-mode-hook
-            '(lambda ()
-               ;; Enable c-eldoc
-               (require 'c-eldoc)
-               (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
-               (c-turn-on-eldoc-mode)))
-#+end_src
 **** 自動猜測縮排風格
 #+begin_src emacs-lisp
   (when (require 'dtrt-indent nil 'noerror)
