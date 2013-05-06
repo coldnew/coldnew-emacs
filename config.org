@@ -2821,6 +2821,11 @@ some packages conflict with org-mode
   (require 'org-html5presentation)
 #+end_src
 
+** TODO
+
+#+begin_src emacs-lisp
+(setq org-export-html-validation-link nil)
+#+end_src
 * 書籤與暫存器                                                     :bookmark:
 ** Bookmark 說明
 :PROPERTIES:
