@@ -5701,11 +5701,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 #+end_src
 
-** Super prefix
-#+begin_src emacs-lisp
-  (global-set-key (kbd "s-l") 'linum-mode)
-  (global-set-key (kbd "s-s") 'shell-command)
-#+end_src
 ** Other
 
 #+begin_src emacs-lisp
