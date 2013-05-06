@@ -2915,6 +2915,28 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
      (format "find . -type f -name \"%s\" | etags -" regexp)))
 #+end_src
 
+** 用來產生 GTAGS 的命令                                           :command:
+
+#+begin_src emacs-lisp
+  (defun create-gtags ()
+    "create or update the gnu global tag file"
+    (interactive)
+    (if (not (= 0 (call-process "global" nil nil nil " -p")))
+        ;; tagfile doesn't exist?
+        (let ((olddir default-directory)
+              (topdir (read-directory-name
+                       "gtags: top of source tree:" default-directory)))
+          (cd topdir)
+          (message "Creating tags table...")
+          (shell-command "gtags")
+          (message "Creating tags table... Done")
+          (cd olddir)) ;; restore
+      ;; tagfile already exists; update it
+      (message "Updating tags table...")
+      (shell-command "global -u")
+      (message "Updating tags table... Done")))
+#+end_src
+
 * 編輯器                                                             :editor:
 
 ** 不使用 TAB 進行縮排
@@ -3344,12 +3366,10 @@ code 變成灰色，這樣在看 code 時比較不會吃力。
                  (c-turn-on-eldoc-mode))))
 #+end_src
 
-
 ** C
 *** 設定 C 語言 檔案的副檔名與對應的模式
 
 #+begin_src emacs-lisp
-
   (add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
   (add-to-list 'auto-mode-alist '("\\.h$" . c-mode))
 #+end_src
