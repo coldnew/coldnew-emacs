@@ -3266,6 +3266,75 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
   ;; Set my android-emulator-path
   (setq android-mode-sdk-dir "/opt/android-sdk-update-manager/")
 #+end_src
+** C/C++ 通用設定
+
+C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在這邊。
+
+*** 將 #if 0 #endif 區域上色為灰色
+
+emacs 預設不會將 #if 0 到 #endif 之間的區域用其他顏色隔開，這邊將這種類型的
+code 變成灰色，這樣在看 code 時比較不會吃力。
+
+#+begin_src emacs-lisp
+  (defun cc-mode:highlight-if-0 ()
+    "highlight c/c++ #if 0 #endif macros"
+    (interactive)
+    (setq cpp-known-face 'default)
+    (setq cpp-unknown-face 'default)
+    (setq cpp-known-writable 't)
+    (setq cpp-unknown-writable 't)
+    (setq cpp-edit-list '(("0" '(foreground-color . "gray")  default both)
+                          ("1" default font-lock-comment-face both)))
+    (cpp-highlight-buffer t))
+
+  ;; Add to c/c++ mode
+  (add-hook 'c-mode-common-hook 'cc-mode:highlight-if-0)
+#+end_src
+
+*** 縮排 #ifdef 語句
+
+#+begin_src emacs-lisp
+  (defun cc-mode:indent-preprocessor ()
+    "Indent #ifdef ... #else ... #endf region as if ... else ... statement.
+  This code is based on ppindent.el
+
+  Note: you must (require 's) to use this code."
+    (let ((result (catch 'err
+                    (save-excursion
+                      (let ((cnt 0))
+                        (goto-char (point-min))
+                        (while (re-search-forward "^[ \t]*#[ \t]*\\(.*\\)" nil t)
+                          (cond ((s-starts-with? "if" (match-string-no-properties 1))
+                                 (replace-match (concat (make-string cnt ?\s) "#\\1"))
+                                 (incf cnt c-basic-offset))
+                                ((s-starts-with? "el" (match-string-no-properties 1))
+                                 (when (< (- cnt c-basic-offset) 0)
+                                   (throw 'err `(,(line-number-at-pos) "Unmatched #else or #elif")))
+                                 (replace-match (concat (make-string
+                                                         (- cnt c-basic-offset)
+                                                         ?\s) "#\\1")))
+                                ((s-starts-with? "endif" (match-string-no-properties 1))
+                                 (when (< (- cnt c-basic-offset) 0)
+                                   (throw 'err `(,(line-number-at-pos) "Unmatched #endif")))
+                                 (decf cnt c-basic-offset)
+                                 (replace-match (concat (make-string cnt ?\s) "#\\1")))
+                                (t
+                                 (replace-match (concat (make-string cnt ?\s) "#\\1"))))))
+                      ))))
+      (when result
+        (goto-line (car result))
+        (error "Error: %s" (cadr result)))))
+
+  ;; Advice th indent-region function
+  (defadvice indent-region (after indent-preprocessor activate)
+    "Indent #ifdef ... #else ... #endif region as if ... else ... statement for c/c++ mode."
+    (let ((buffer-major-mode (with-current-buffer (current-buffer) major-mode)))
+      (if (or (string= buffer-major-mode "c-mode")
+              (string= buffer-major-mode "c++-mode"))
+          (cc-mode:indent-preprocessor))))
+  #+end_src
+
+
 ** C
 *** 設定 C 語言 檔案的副檔名與對應的模式
 
@@ -3342,23 +3411,6 @@ adeff
   (define-key c-mode-map (kbd "C-x C-o") 'ff-find-other-file)
 #+end_src
 
-*** 將 #if 0 #endif 區域上色為灰色
-
-#+begin_src emacs-lisp
-  (defun cc-mode:highlight-if-0 ()
-    "highlight c/c++ #if 0 #endif macros"
-    (interactive)
-    (setq cpp-known-face 'default)
-    (setq cpp-unknown-face 'default)
-    (setq cpp-known-writable 't)
-    (setq cpp-unknown-writable 't)
-    (setq cpp-edit-list '(("0" '(foreground-color . "gray")  default both)
-                          ("1" default font-lock-comment-face both)))
-    (cpp-highlight-buffer t))
-
-  (add-hook 'c-mode-hook 'cc-mode:highlight-if-0)
-#+end_src
-
 *** make define indent in if
 
 #+begin_src emacs-lisp
@@ -3368,48 +3420,6 @@ adeff
   (add-hook 'c-mode-hook 'cc-mode:tmp)
 #+end_src
 
-*** 縮排 #ifdef 語句
-
-#+begin_src emacs-lisp
-  (defun cc-mode:indent-preprocessor ()
-    "Indent #ifdef ... #else ... #endf region as if ... else ... statement.
-  This code is based on ppindent.el
-
-  Note: you must (require 's) to use this code."
-    (let ((result (catch 'err
-                    (save-excursion
-                      (let ((cnt 0))
-                        (goto-char (point-min))
-                        (while (re-search-forward "^[ \t]*#[ \t]*\\(.*\\)" nil t)
-                          (cond ((s-starts-with? "if" (match-string-no-properties 1))
-                                 (replace-match (concat (make-string cnt ?\s) "#\\1"))
-                                 (incf cnt c-basic-offset))
-                                ((s-starts-with? "el" (match-string-no-properties 1))
-                                 (when (< (- cnt c-basic-offset) 0)
-                                   (throw 'err `(,(line-number-at-pos) "Unmatched #else or #elif")))
-                                 (replace-match (concat (make-string
-                                                         (- cnt c-basic-offset)
-                                                         ?\s) "#\\1")))
-                                ((s-starts-with? "endif" (match-string-no-properties 1))
-                                 (when (< (- cnt c-basic-offset) 0)
-                                   (throw 'err `(,(line-number-at-pos) "Unmatched #endif")))
-                                 (decf cnt c-basic-offset)
-                                 (replace-match (concat (make-string cnt ?\s) "#\\1")))
-                                (t
-                                 (replace-match (concat (make-string cnt ?\s) "#\\1"))))))
-                      ))))
-      (when result
-        (goto-line (car result))
-        (error "Error: %s" (cadr result)))))
-
-  ;; Advice th indent-region function
-  (defadvice indent-region (after indent-preprocessor activate)
-    "Indent #ifdef ... #else ... #endif region as if ... else ... statement for c/c++ mode."
-    (let ((buffer-major-mode (with-current-buffer (current-buffer) major-mode)))
-      (if (or (string= buffer-major-mode "c-mode")
-              (string= buffer-major-mode "c++-mode"))
-          (cc-mode:indent-preprocessor))))
-  #+end_src
 ** C++
 *** 設定 C++ 語言 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
@@ -3422,8 +3432,7 @@ adeff
   ;;                                           magic-mode-regexp-match-limit t)))
   ;;                . c++-mode))
 #+end_src
-*** Config
-**** Codinf Style
+*** Codinf Style
 #+begin_src emacs-lisp
     ;;;; CodingStyle
   (add-hook 'c++-mode-hook
@@ -3509,12 +3518,6 @@ adeff
                        ac-source-words-in-same-mode-buffers
                        )))
 #+end_src
-*** 將 #if 0 #endif 區域上色為灰色
-
-#+begin_src emacs-lisp
-  (add-hook 'c++-mode-hook 'cc-mode:highlight-if-0)
-#+end_src
-
 *** Keybinding
 #+begin_src emacs-lisp
   (define-key c++-mode-map (kbd "C-x C-o") 'ff-find-other-file)
