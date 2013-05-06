@@ -5187,21 +5187,7 @@ egg 有一個很不錯的功能，就是當檔案儲存的時候，自動將其�
 的確認系統，讓他根據狀況自動猜測下一步要做什麼。
 
 #+begin_src emacs-lisp
-  ;; make egg auto guess next action
   (setq egg-confirm-next-action nil)
-
-  ;; remodify next-action priority
-  (defsubst egg-guess-next-action (desc)
-    (cond
-     ((memq :file-has-merged-conflict desc) :merge-file)
-     ((memq :file-is-modified desc)         :stage-file)
-     ((memq :has-staged-changes desc)       :commit)
-     ((memq :file-is-unmerged desc)         :stage-file)
-     ((memq :wdir-has-merged-conflict desc) :status)
-     ((memq :wdir-has-unmerged-files  desc) :stage-all)
-     ((memq :wdir-is-modified desc)         :stage-all)
-     ((memq :rebase-in-progress desc)       :rebase-continue)
-     (t                                     :quit)))
 #+end_src
 
 ** 當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window。 :advice:
