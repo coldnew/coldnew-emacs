@@ -1936,6 +1936,9 @@ term-mode 似乎會和 yasnippet 的 tab 相衝，使用這個設定讓 yasnippe
   (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 #+end_src
 * 文件加密                                                          :encrypt:
+
+emacs 下可以透過 gpg 進行文件加密的動作
+
 ** 載入相依套件
 
 #+begin_src emacs-lisp
