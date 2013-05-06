@@ -2939,6 +2939,22 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 
 * 編輯器                                                             :editor:
 
+** 建立編輯器的全域性 minor-mode
+
+#+begin_src emacs-lisp
+  (define-minor-mode coldnew-editor-mode
+    "coldnew's editor minor mode."
+    :init-value t
+    :keymap nil)
+
+  (define-globalized-minor-mode global-coldnew-editor-mode
+    coldnew-editor-mode (lambda ()
+                          (if (not (minibufferp (current-buffer)))
+                              (coldnew-editor-mode 1))
+                          ))
+  (global-coldnew-editor-mode t)
+#+end_src
+
 ** 不使用 TAB 進行縮排
 
 #+begin_src emacs-lisp
