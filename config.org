@@ -5304,7 +5304,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   在啟用 magit-wip-mode 之前，要記得使用
 
   : git config --add magit.extension wip-save  # or
-  : git config --add magit.extension wip-save
+  : git config --global --add magit.extension wip-save
 
   將 git-wip 加到 git 設定中。
 
