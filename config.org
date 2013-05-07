@@ -4575,8 +4575,8 @@ a     nil "[space]Clears ruler"))
         (find-file (concat "/sudo:root@localhost:" (read-file-name "File: ")))
       (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
-(setq tramp-debug-buffer t)
-(setq tramp-chunksize 500)
+  (setq tramp-debug-buffer t)
+  (setq tramp-chunksize 500)
 
 
   (defun toggle-selective-display (column)
@@ -4584,9 +4584,9 @@ a     nil "[space]Clears ruler"))
     (set-selective-display
      (if selective-display nil (or column 1))))
 
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Insert
-  ;;; ---------------------------------------------------------------------------
+      ;;;; ---------------------------------------------------------------------------
+      ;;;; Insert
+      ;;; ---------------------------------------------------------------------------
   (require 'mm-url)
 
   (defun insert-tinyurl (url)
@@ -4602,9 +4602,9 @@ a     nil "[space]Clears ruler"))
                 (buffer-string)))))
       (insert tinyurl)))
 
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Search
-  ;;;; ---------------------------------------------------------------------------
+      ;;;; ---------------------------------------------------------------------------
+      ;;;; Search
+      ;;;; ---------------------------------------------------------------------------
   (defun multi-occur-in-this-mode ()
     "Show all lines matching REGEXP in buffers with this major mode."
     (interactive)
@@ -4613,9 +4613,9 @@ a     nil "[space]Clears ruler"))
      (car (occur-read-primary-args)))
     (select-window (get-buffer-window "*Occur*")))
 
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; key-macro
-  ;;;; ---------------------------------------------------------------------------
+      ;;;; ---------------------------------------------------------------------------
+      ;;;; key-macro
+      ;;;; ---------------------------------------------------------------------------
   (defun toggle-kbd-macro-recording-on ()
     "One-key keyboard macros: turn recording on."
     (interactive)
@@ -4634,9 +4634,9 @@ a     nil "[space]Clears ruler"))
       'toggle-kbd-macro-recording-on)
     (end-kbd-macro))
 
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Commands that define for key-chord
-  ;;;; ---------------------------------------------------------------------------
+      ;;;; ---------------------------------------------------------------------------
+      ;;;; Commands that define for key-chord
+      ;;;; ---------------------------------------------------------------------------
   (defun upcase-word-backward ()
     "upcase word backward."
     (interactive)
