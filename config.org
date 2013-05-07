@@ -3014,7 +3014,7 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
     (font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
     (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t))))
 
-  (add-hook 'coldnew-editor-mode-hook 'highlight-additional-keywords)
+  ;;  (add-hook 'coldnew-editor-mode-hook 'highlight-additional-keywords)
 #+end_src
 
 ** 存檔後自動建立資料夾
