@@ -3231,11 +3231,59 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
         (replace-match "\\1\\2" nil nil))))
 #+end_src
 
-** keymap
+* 編輯器按鍵設置
+
+** 按鍵巨集錄製/播放 (I)
+
+| 按鍵  | 命令                          | 用途              |
+|-------+-------------------------------+-------------------|
+| C-x q | toggle-kbd-macro-recording-on | 錄製/停止鍵盤巨集 |
+| C-x e | call-last-kbd-macro           | 播放最後一個巨集  |
 
 #+begin_src emacs-lisp
   (vim:imap (kbd "C-x q") 'toggle-kbd-macro-recording-on)
   (vim:imap (kbd "C-x e") 'call-last-kbd-macro)
+#+end_src
+
+** 常用按鍵 (N) (I)
+
+| 按鍵    | 命令             | 用途                   |
+|---------+------------------+------------------------|
+| C-c C-e | eval-and-replace | eval emacs-lisp 命令   |
+| C-x l   | hl-line-mode     | 將游標目前行加上彩色條 |
+| C-x L   | linum-mode       | 切換顯示行號           |
+
+#+begin_src emacs-lisp
+  (vim:map (kbd "C-c C-e") 'eval-and-replace)
+  (vim:map (kbd "C-x l") 'hl-line-mode)
+  (vim:map (kbd "C-x L") 'linum-mode)
+#+end_src
+
+** 檔案相關 (N) (I)
+
+| 按鍵    | 命令                | 用途               |
+|---------+---------------------+--------------------|
+| C-x C-f | lusty-file-explorer | 查詢並打開檔案     |
+| C-x C-r | lusty-sudo-explorer | 使用 sudo 打開檔案 |
+| C-x C-s | save-buffer-always  | 儲存檔案           |
+
+#+begin_src emacs-lisp
+  (vim:map (kbd "C-x C-f")  'lusty-file-explorer)
+  (vim:map (kbd "C-x C-r")  'lusty-sudo-explorer)
+  (vim:map (kbd "C-x C-s")  'save-buffer-always)
+#+end_src
+
+** 視窗相關 (N) (I) (W)
+** 緩衝區編輯 (I)
+
+| 按鍵    | 命令         | 用途                 |
+|---------+--------------+----------------------|
+| C-x C-y | yank-n-times | 多次貼上             |
+| C-x C-l | recenter     | 將游標至於緩衝區中間 |
+
+#+begin_src emacs-lisp
+  (vim:imap (kbd "C-x C-y")  'yank-n-times)
+  (vim:imap (kbd "C-x C-l")  'recenter)
 #+end_src
 
 * Cedet                                                                :cede:
@@ -5566,10 +5614,7 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 
 | 按鍵         | 命令                   | 用途                                       |
 |--------------+------------------------+--------------------------------------------|
-| C-x C-y      | yank-n-times           | 多次貼上                                   |
-| C-x C-l      | recenter               | 將游標至於 buffer 中間                     |
 | C-x C-n      | auto-complete          | 自動補全                                   |
-| C-x C-s      | save-buffer-always     | 儲存檔案                                   |
 | Shift Return | insert-empty-line      | 插入空白行                                 |
 | M-s          | coldnew/helm-occur     | 使用 occur 查詢當前緩衝區                  |
 | M-r          | query-replace-regexp   | 使用正規表達式查找並取代                   |
@@ -5583,10 +5628,8 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 | C-x C-i      | indent-whole-buffer    | 縮排整個緩衝區                             |
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-x C-y")  'yank-n-times)
-  (global-set-key (kbd "C-x C-l")  'recenter)
+
   (global-set-key (kbd "C-x C-n") 'auto-complete)
-  (global-set-key (kbd "C-x C-s") 'save-buffer-always)
   (global-set-key [(shift return)] 'insert-empty-line)
   (global-set-key (kbd "M-s") 'coldnew/helm-occur)
   (global-set-key (kbd "M-r") 'query-replace-regexp)
@@ -5627,14 +5670,7 @@ Function key 設置常用的命令。
   (global-set-key (kbd "<f3>")     'call-last-kbd-macro)
   (global-set-key (kbd "<f4>")     'sr-speedbar-toggle)
 #+end_src
-** 在目前行加上彩色條
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x l") 'hl-line-mode)
-#+end_src
-** 顯示行號
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x L") 'linum-mode)
-#+end_src
+
 ** 分頁切換
 
 | 按鍵        | 命令                     | 用途          |
@@ -5678,15 +5714,13 @@ Function key 設置常用的命令。
 
 ** Ctrl-x Prefix
 *** Misc
-| 按鍵    | 命令                | 用途               |
-|---------+---------------------+--------------------|
-| C-x C-f | lusty-file-explorer | 查詢並打開檔案     |
-| C-x C-r | lusty-sudo-explorer | 使用 sudo 打開檔案 |
-| C-x C-b | ibuffer             | 顯示 ibuffer       |
+
+| 按鍵    | 命令    | 用途         |
+|---------+---------+--------------|
+| C-x C-b | ibuffer | 顯示 ibuffer |
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
-  (global-set-key (kbd "C-x C-r")  'lusty-sudo-explorer)
+
   (global-set-key (kbd "C-x C-b")  'ibuffer)
 
   (global-set-key (kbd "C-x C-d")  'dired)
@@ -5733,7 +5767,6 @@ Function key 設置常用的命令。
 ** Ctrl-c prefix
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
-  (global-set-key (kbd "C-c C-e") 'eval-and-replace)
 #+end_src
 
 *** org-mode                                                          :org:
