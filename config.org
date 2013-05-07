@@ -2941,6 +2941,9 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 
 ** 建立編輯器的全域性 minor-mode
 
+我希望能夠全域性的使用我所定義的編輯器，因此宣告一個 minor-mode，
+並讓他可以直接啟用。
+
 #+begin_src emacs-lisp
   (define-minor-mode coldnew-editor-mode
     "coldnew's editor minor mode."
@@ -2950,8 +2953,9 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
   (define-globalized-minor-mode global-coldnew-editor-mode
     coldnew-editor-mode (lambda ()
                           (if (not (minibufferp (current-buffer)))
-                              (coldnew-editor-mode 1))
-                          ))
+                              (coldnew-editor-mode 1))))
+
+  ;; Gloabal enable
   (global-coldnew-editor-mode t)
 #+end_src
 
@@ -3003,10 +3007,18 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 當檔案背別的編輯器修改的時候，自動套用新的檔案到緩衝區上。
 
 #+begin_src emacs-lisp
-  (global-auto-revert-mode)
+  (global-auto-revert-mode 1)
   (setq global-auto-revert-non-file-buffers t)
   (setq auto-revert-verbose nil)
 #+end_src
+
+回復緩衝區時，不再另外確認
+#+begin_src emacs-lisp
+  (defun revert-buffer-no-confirm ()
+    "Revert buffer without confirmation."
+    (interactive) (revert-buffer t t))
+#+end_src
+
 
 ** 行號顯示設定
 
