@@ -3,22 +3,28 @@
 #+email: coldnew.tw at gmail.com
 #+STARTUP: overview indent align
 #+PROPERTY: noweb
-#+PROPERTY: cache yes
 #+PROPERTY: tangle yes
+#+PROPERTY: cache yes
 #+BABEL: :cache yes
 #+OPTIONS: ^:nil
 
 * 關於這份檔案
 
-用了 emacs 至今已有 6年了，最初我的 emacs 配置也是英文版，並且分散了許多檔案，
+用了 emacs 至今已有 7年了，最初我的 emacs 配置也是英文版，並且分散了許多檔案，
 直到我知道了 org-mode 以及所謂的文學編程，我二話不說就將我的 emacs 設定移植到
 org-mode 上面，並重新改寫用中文來寫配置的說明。
 
-在這 6年的時間裡，用 emacs 學 emacs 以及配置 emacs 花費了我不少時間，網路上
-太多太多中文的配置都是複製貼上複製貼上，連用途都不懂就轉用了別人的文章放到
+在這幾年的時間裡，用 emacs 學 emacs 以及配置 emacs 花費了我不少時間，網路上
+太多太多中文的配置都是複製貼上、複製貼上，連用途都不懂就轉用了別人的文章放到
 自己的部若格上，讓我剛開始學 emacs 查找資料時有許多困擾， 為了讓以後有人
 看到我的 emacs 配置，能夠一看就很明白這個配置是做什麼，於是我將所有的配置
-改寫回正體中文。<待續>
+改寫回正體中文。
+
+對現在我而言，修改 emacs 的設定已經開始變成了習慣，就當作自己再寫作文/部若格吧，
+很多配置以及外掛是非常棒的，但是若只是將官方網站上的英文介紹複製過來，不免太無
+趣，經過理解才能成為自己的東西。於是我慢慢著手增加自己配置文件的說明份量。
+
+                                                               <待續>
 
 * 基礎設置                                                             :base:
 
@@ -129,7 +135,7 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
     "store customize UI config.")
 #+end_src
 
-*** emacs-bookmark-file
+*** 書籤文件檔案
 
 #+begin_src emacs-lisp
   (defconst emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
@@ -475,7 +481,7 @@ emacs 編碼設定，大部份都設定成 utf-8。
 
 emacs 在 24 版後終於有自己的套件管理器 ELPA ，不過有些外部的套件沒
 辦法透過他來安裝，所以我又使用了另外一個非常好用的套件管理器 el-get,
-透過這兩個套件管理器，在 emacs 下安裝軟體是非常方便的。
+透過這兩個套件管理器，在 emacs 下安裝新的套件是非常方便的。
 
 ** el-get
 *** 設定 el-get-dir
@@ -725,6 +731,32 @@ M-x iedit-mode 接著就會發現到同個緩衝區裏面所有和游標底下�
   (require 'iedit)
 #+end_src
 
+** 增強 list 處理的 function
+
+dash 提供了更多關於 list 處理用的函式，並且不需依賴 cl.
+
+#+begin_src emacs-lisp
+  (require 'dash)
+#+end_src
+
+** 增強 字串 處理的 function
+
+s 提供了許多關於字串處理的函式
+
+#+begin_src emacs-lisp
+  (require 's)
+#+end_src
+
+** 讓 emacs 可以更快速的打開大檔案
+
+vlfi 提供了讓 emacs 更快速打開大檔案的能力，使用方式
+
+: M-x vlfi PATH-TO-FILE
+
+#+begin_src emacs-lisp
+  (require 'vlfi)
+#+end_src
+
 ** TODO 其他
 #+begin_src emacs-lisp
   (require 'rainbow-mode)
@@ -732,7 +764,6 @@ M-x iedit-mode 接著就會發現到同個緩衝區裏面所有和游標底下�
   (require 'smarter-compile)
   (require 'unicad)
   (require 'expand-region)
-  (require 'pretty-lambdada)
   (require 'rainbow-delimiters)
 #+end_src
 
@@ -824,9 +855,9 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 ** Testing
 
 測試用的 function，和測試用的變數很像，但是他允許參數的輸入。
-*** font-exist-p
 
-測試這個字體在系統內是否存在。
+*** 測試這個字體在系統內是否存在。
+
 #+begin_src emacs-lisp
   (defun font-exist-p (fontname)
     "test if this font is exist or not."
@@ -834,8 +865,9 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
         nil t))
 #+end_src
 
-** File
-*** filesize
+** 檔案相關
+
+*** 查詢檔案大小
 #+begin_src emacs-lisp
   (defun file-size (filename)
     "Return the size in bytes of file named FILENAME, as in integer.
@@ -1788,24 +1820,6 @@ Following buffer will not show in iBuffer
   (setq sr-speedbar-right-side nil)
   (setq sr-speedbar-refresh-turn-on t)
 #+end_src
-** undo-tree
-*** 載入相依套件
-#+begin_src emacs-lisp
-  (require 'undo-tree)
-#+end_src
-*** Enable undo-tree globally
-#+begin_src emacs-lisp
-  (global-undo-tree-mode)
-#+end_src
-*** Keybinding
-#+begin_src emacs-lisp
-  (define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)
-#+end_src
-** hungry-delete
-#+begin_src emacs-lisp
-  (require 'hungry-delete)
-  (add-hook 'coldnew-editor-hook 'turn-on-hungry-delete-mode)
-#+end_src
 ** cua                                                                 :cua:
 #+begin_src emacs-lisp
   (require 'cua-base)
@@ -1921,6 +1935,9 @@ term-mode 似乎會和 yasnippet 的 tab 相衝，使用這個設定讓 yasnippe
   (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 #+end_src
 * 文件加密                                                          :encrypt:
+
+emacs 下可以透過 gpg 進行文件加密的動作
+
 ** 載入相依套件
 
 #+begin_src emacs-lisp
@@ -2194,13 +2211,17 @@ term-mode 似乎會和 yasnippet 的 tab 相衝，使用這個設定讓 yasnippe
           ))))
 #+end_src
 * Helm                                                                 :helm:
+
+Helm (領航員) 是 emacs 下非常強大的檔案尋找工具，可以用他快速的找尋已經
+打開的緩衝區、檔案，或是透過 locate 命令來找尋檔案，此外 helm 也提供了
+oscurr 功能，可以直接在目前的檔案裡找相同的字串。
+
 ** 載入相關套件
 
 #+begin_src emacs-lisp
   (require 'helm)
   (require 'helm-etags+)
   (require 'helm-ls-git)
-  (require 'ctags-update)
 #+end_src
 
 ** 使用預先定義好的 helm 設定
@@ -2216,11 +2237,6 @@ term-mode 似乎會和 yasnippet 的 tab 相衝，使用這個設定讓 yasnippe
   (helm-mode 1)
 #+end_src
 
-** TODO Config this
-#+begin_src emacs-lisp
-  ;; Enable dired binding
-  (ctags-update-minor-mode 1)
-#+end_src
 ** Function
 #+begin_src emacs-lisp
   (defun helm-c-occur-get-line (s e)
@@ -2254,7 +2270,7 @@ term-mode 似乎會和 yasnippet 的 tab 相衝，使用這個設定讓 yasnippe
     (vim:imap (kbd "C-x p") 'coldnew/helm-mini)
 #+end_src
 
-* 文檔幫助
+* 文檔幫助                                                             :info:
 
 這邊放置 manpage、womanpage、info 等幫助文檔模式的設定。
 
@@ -2804,36 +2820,200 @@ some packages conflict with org-mode
   (require 'org-html5presentation)
 #+end_src
 
+** TODO
+
+#+begin_src emacs-lisp
+(setq org-export-html-validation-link nil)
+#+end_src
+* 書籤與暫存器                                                     :bookmark:
+** Bookmark 說明
+:PROPERTIES:
+:tangle:   no
+:END:
+
+*** 預設按鍵
+| 快捷鍵  | 命令                | 用途                                        |
+|---------+---------------------+---------------------------------------------|
+| C-x r m | bookmark-set        | 設置新的書籤                                |
+| C-x r l | bookmark-bmenu-list | 列出所有已設置的書籤                        |
+| C-x r b | bookmarj-jump       | 跳轉到書籤                                  |
+|         | bookmark-delete     | 刪除書籤                                    |
+|         | bookmark-load       | 讀取已儲存的書籤檔案                        |
+|         | bookmark-save       | 儲存書籤至 bookmark-default-file 指定的地方 |
+
+** Config
+#+begin_src emacs-lisp
+  (setq bookmark-default-file emacs-bookmark-file)
+#+end_src
+
+#+begin_src emacs-lisp
+  (require 'bm)
+#+end_src
+** 快速跳轉到檔案                                                 :register:
+
+使用 Ctrl-x r j <char> 就可以進行快速跳轉至檔案，其中 <char> 為以下所設定。
+
+#+begin_src emacs-lisp
+  (dolist
+      (r `(
+           ;; emacs's config.org
+           (?e (file . ,(expand-file-name emacs-config-file)))
+           ;; TODO.org
+           (?w (file . "~/SparkleShare/org/Weintek.org"))
+           ;; Note.org
+           (?n (file . "~/SparkleShare/org//Note.org"))
+           ;; blog.org
+           (?b (file . "~/SparkleShare/coldnew.github.com/blog-src/blog.org"))
+           ))
+    (set-register (car r) (cadr r)))
+#+end_src
+
+* 專案管理                                                          :project:
+
+emacs 下有太多太多跟專案管理相關的套件了，目前先一一試用，再來
+決定我要用什麼
+
+** projectile
+
+#+begin_src emacs-lisp
+  (require 'projectile)
+#+end_src
+
+* TAGS                                                                 :tags:
+
+這邊放置和 tags 相關的功能
+
+** 自動更新 TAGS
+
+ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ctags-update-minor-mode,
+這樣任何模式下，若我有 TAGS 檔案的話，他都會自動幫我更新。
+
+我並沒有為他增加其他配置，因此預設為 5分鐘更新一次 TAGS。
+
+#+begin_src emacs-lisp
+  (require 'ctags-update)
+  (ctags-update-minor-mode 1)
+#+end_src
+
+** 用來產生 TAGS 的命令                                            :command:
+
+我使用 TAGS 最多的地方應該就是 kernel code 以及 Linux 下的 C code 了，
+由於 kernel code 可以用
+
+: make TAGS
+
+來產生 TAGS 檔案，因此此命令只是添加在這邊，若我有需要的話直接呼叫就可以很方便
+的做出一個新的 TAGS 檔案。
+
+#+begin_src emacs-lisp
+  (defun create-tags (regexp)
+    "Create TAGS file in current directory."
+    (interactive "sRegexp: *.[ch] : ")
+    (if (string-equal "" regexp) (setq regexp "*.[ch]"))
+    (eshell-command
+     (format "find . -type f -name \"%s\" | etags -" regexp)))
+#+end_src
+
+** 用來產生 GTAGS 的命令                                           :command:
+
+#+begin_src emacs-lisp
+  (defun create-gtags ()
+    "create or update the gnu global tag file"
+    (interactive)
+    (if (not (= 0 (call-process "global" nil nil nil " -p")))
+        ;; tagfile doesn't exist?
+        (let ((olddir default-directory)
+              (topdir (read-directory-name
+                       "gtags: top of source tree:" default-directory)))
+          (cd topdir)
+          (message "Creating tags table...")
+          (shell-command "gtags")
+          (message "Creating tags table... Done")
+          (cd olddir)) ;; restore
+      ;; tagfile already exists; update it
+      (message "Updating tags table...")
+      (shell-command "global -u")
+      (message "Updating tags table... Done")))
+#+end_src
+
 * 編輯器                                                             :editor:
 
-** 不使用 TAB 進行縮排
+** 基本編輯器設定
+
+- 設定 TAB 的寬度為 8
+
+  #+begin_src emacs-lisp
+    (setq tab-width 8)
+  #+end_src
+
+- 不使用 TAB 進行縮排
+
+  #+begin_src emacs-lisp
+     (setq indent-tabs-mode nil)
+  #+end_src
+- 設定每行之間的間格為 4
+
+  #+begin_src emacs-lisp
+    (setq line-spacing 4)
+  #+end_src
+
+- 在檔案的最後一行加入一空白行
+
+  #+begin_src emacs-lisp
+    (setq require-final-newline t)
+  #+end_src
+
+- 全域使用色彩上色
+
+  #+begin_src emacs-lisp
+    (global-font-lock-mode t)
+  #+end_src
+
+- 高亮匹配的括號
+
+  #+begin_src emacs-lisp
+    (show-paren-mode t)
+  #+end_src
+
+** 建立編輯器的全域性 minor-mode
+
+我希望能夠全域性的使用我所定義的編輯器，因此宣告一個 minor-mode，
+並讓他可以直接啟用。
 
 #+begin_src emacs-lisp
-  (setq indent-tabs-mode nil)
-#+end_src
+  (define-minor-mode coldnew-editor-mode
+    "coldnew's editor minor mode."
+    :init-value t
+    :keymap nil)
 
-** 設定 TAB 的寬度為 8
+  (define-globalized-minor-mode global-coldnew-editor-mode
+    coldnew-editor-mode (lambda ()
+                          (if (not (minibufferp (current-buffer)))
+                              (coldnew-editor-mode 1))))
 
-#+begin_src emacs-lisp
-  (setq tab-width 8)
-#+end_src
-
-** 設定每行之間的間格為 4
-
-#+begin_src emacs-lisp
-  (setq line-spacing 4)
-#+end_src
-
-** 在檔案的最後一行加入一空白行
-
-#+begin_src emacs-lisp
-  (setq require-final-newline t)
+  ;; Gloabal enable
+  (global-coldnew-editor-mode t)
 #+end_src
 
 ** 在存檔前清除多餘的空白
 
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+end_src
+
+** 替 FIXME 等特殊文字上色
+
+很多時候我們會再程式碼裏面加上了 FIXME: 等字樣，這邊額外定義我需要高亮的文字。
+
+#+begin_src emacs-lisp
+  (defun highlight-additional-keywords ()
+    "Highlight additional keywords."
+    (font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)))
+    (font-lock-add-keywords nil '(("\\<\\(NOTE\\):" 1 'org-level-2 t)))
+    (font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
+    (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t))))
+
+  ;;  (add-hook 'coldnew-editor-mode-hook 'highlight-additional-keywords)
 #+end_src
 
 ** 存檔後自動建立資料夾
@@ -2851,10 +3031,10 @@ some packages conflict with org-mode
 
 ** 自動回復檔案
 
-當檔案背別的編輯器修改的時候，自動套用新的檔案到緩衝區上。
+當檔案被別的編輯器修改的時候，自動套用新的檔案到緩衝區上。
 
 #+begin_src emacs-lisp
-  (global-auto-revert-mode)
+  (global-auto-revert-mode 1)
   (setq global-auto-revert-non-file-buffers t)
   (setq auto-revert-verbose nil)
 #+end_src
@@ -2977,6 +3157,11 @@ some packages conflict with org-mode
   (defun yas/user-nickname ()
     (insert user-nickname))
 #+end_src
+** hungry-delete
+#+begin_src emacs-lisp
+  (require 'hungry-delete)
+  (add-hook 'coldnew-editor-hook 'turn-on-hungry-delete-mode)
+#+end_src
 ** TODO remember
 *** electric-pair-mode
 #+begin_src emacs-lisp
@@ -2993,33 +3178,26 @@ some packages conflict with org-mode
   (setq next-line-add-newlines t ) ;
   (setq shift-select-mode      t ) ; Enable shift-select mode
 
-  ;; Enable global font-lock
-  (global-font-lock-mode t)
-  ;; Show matching parentheses all the time
-  (show-paren-mode t)
   ;; Enable auto-complete-mode
   (global-auto-complete-mode t)
   ;; Enable delete-selection-mode
   (delete-selection-mode t)
 #+end_src
+** undo-tree
+*** 載入相依套件
+#+begin_src emacs-lisp
+  (require 'undo-tree)
+#+end_src
+*** Enable undo-tree globally
+#+begin_src emacs-lisp
+  (global-undo-tree-mode)
+#+end_src
+*** Keybinding
+#+begin_src emacs-lisp
+  (define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)
+#+end_src
 ** Functions
 #+begin_src emacs-lisp
-  (defun indent-file-after-save ()
-    "Indent whole file after saved."
-    (make-local-variable 'after-save-hook)
-    (add-hook 'after-save-hook
-              '(lambda ()
-                 (indent-region (point-min) (point-max) nil)
-                 (save-buffer))))
-
-  (defun highlight-additional-keywords ()
-    "Highlight additional keywords."
-    (font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)))
-    (font-lock-add-keywords nil '(("\\<\\(NOTE\\):" 1 'org-level-2 t)))
-    (font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
-    (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t)))
-    )
-
   (defun highlight-fontify-numbers ()
     "Use this function as a hook to fontify numbers as constant"
     (font-lock-add-keywords nil
@@ -3051,6 +3229,61 @@ some packages conflict with org-mode
       (while (or (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
                  (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
         (replace-match "\\1\\2" nil nil))))
+#+end_src
+
+* 編輯器按鍵設置
+
+** 按鍵巨集錄製/播放 (I)
+
+| 按鍵  | 命令                          | 用途              |
+|-------+-------------------------------+-------------------|
+| C-x q | toggle-kbd-macro-recording-on | 錄製/停止鍵盤巨集 |
+| C-x e | call-last-kbd-macro           | 播放最後一個巨集  |
+
+#+begin_src emacs-lisp
+  (vim:imap (kbd "C-x q") 'toggle-kbd-macro-recording-on)
+  (vim:imap (kbd "C-x e") 'call-last-kbd-macro)
+#+end_src
+
+** 常用按鍵 (N) (I)
+
+| 按鍵    | 命令             | 用途                   |
+|---------+------------------+------------------------|
+| C-c C-e | eval-and-replace | eval emacs-lisp 命令   |
+| C-x l   | hl-line-mode     | 將游標目前行加上彩色條 |
+| C-x L   | linum-mode       | 切換顯示行號           |
+
+#+begin_src emacs-lisp
+  (vim:map (kbd "C-c C-e") 'eval-and-replace)
+  (vim:map (kbd "C-x l") 'hl-line-mode)
+  (vim:map (kbd "C-x L") 'linum-mode)
+#+end_src
+
+** 檔案相關 (N) (I)
+
+| 按鍵    | 命令                | 用途               |
+|---------+---------------------+--------------------|
+| C-x C-f | lusty-file-explorer | 查詢並打開檔案     |
+| C-x C-r | lusty-sudo-explorer | 使用 sudo 打開檔案 |
+| C-x C-s | save-buffer-always  | 儲存檔案           |
+
+#+begin_src emacs-lisp
+  (vim:map (kbd "C-x C-f")  'lusty-file-explorer)
+  (vim:map (kbd "C-x C-r")  'lusty-sudo-explorer)
+  (vim:map (kbd "C-x C-s")  'save-buffer-always)
+#+end_src
+
+** 視窗相關 (N) (I) (W)
+** 緩衝區編輯 (I)
+
+| 按鍵    | 命令         | 用途                 |
+|---------+--------------+----------------------|
+| C-x C-y | yank-n-times | 多次貼上             |
+| C-x C-l | recenter     | 將游標至於緩衝區中間 |
+
+#+begin_src emacs-lisp
+  (vim:imap (kbd "C-x C-y")  'yank-n-times)
+  (vim:imap (kbd "C-x C-l")  'recenter)
 #+end_src
 
 * Cedet                                                                :cede:
@@ -3120,30 +3353,6 @@ some packages conflict with org-mode
         (message "%s" "turning on, make frame wider")
         (ecb-minor-mode))))
 #+end_src
-* 書籤
-** Bookmark 說明
-:PROPERTIES:
-:tangle:   no
-:END:
-
-*** 預設按鍵
-| 快捷鍵  | 命令                | 用途                                        |
-|---------+---------------------+---------------------------------------------|
-| C-x r m | bookmark-set        | 設置新的書籤                                |
-| C-x r l | bookmark-bmenu-list | 列出所有已設置的書籤                        |
-| C-x r b | bookmarj-jump       | 跳轉到書籤                                  |
-|         | bookmark-delete     | 刪除書籤                                    |
-|         | bookmark-load       | 讀取已儲存的書籤檔案                        |
-|         | bookmark-save       | 儲存書籤至 bookmark-default-file 指定的地方 |
-
-** Config
-#+begin_src emacs-lisp
-  (setq bookmark-default-file emacs-bookmark-file)
-#+end_src
-
-#+begin_src emacs-lisp
-  (require 'bm)
-#+end_src
 * Cscope                                                             :cscope:
 ** 載入和 cscope 相關的 package
 #+begin_src emacs-lisp
@@ -3161,83 +3370,14 @@ some packages conflict with org-mode
   ;; Set my android-emulator-path
   (setq android-mode-sdk-dir "/opt/android-sdk-update-manager/")
 #+end_src
-** C
-*** 設定 C 語言 檔案的副檔名與對應的模式
+** C/C++ 通用設定
 
-#+begin_src emacs-lisp
-
-  (add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
-  (add-to-list 'auto-mode-alist '("\\.h$" . c-mode))
-#+end_src
-
-*** 預設使用 Linux Coding Style
-
-#+begin_src emacs-lisp
-  (add-hook 'c-mode-hook
-            '(lambda ()
-               (c-set-style "linux")))
-#+end_src
-
-*** c-eldoc
-adeff
-#+begin_src emacs-lisp
-    (add-hook 'c-mode-hook
-            '(lambda ()
-               (require 'c-eldoc)
-               (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
-               (c-turn-on-eldoc-mode)))
-#+end_src
-#+begin_src emacs-lisp
-
-    ;; use hide-if-def-mode
-    ;;(add-hook 'c-mode-hook 'hide-ifdef-mode)
-
-    ;;(require 'gccsense)
-
-    ;;;; ---------------------------------------------------------------------------
-    ;;;; Functions
-    ;;;; ---------------------------------------------------------------------------
-    (defun my-ctypes-load-hook ()
-      (ctypes-read-file ctypes-file-name nil t t))
-
-
-    ;;;; ---------------------------------------------------------------------------
-    ;;;; Commands
-    ;;;; ---------------------------------------------------------------------------
-
-    (defun c-mode:insert-inc-or-if ()
-      "If at the start of line. add `inc' and expand it,
-    else add `if' and expand it."
-      (interactive)
-      (let* ((current (point))
-             (begin (line-beginning-position)))
-        (if (eq current begin)
-            (progn
-              (c-mode:insert-include)
-              (newline-and-indent))
-          (progn
-            (insert "if")
-            (yas/expand)))))
-#+end_src
-*** TODO 自動偵測 c-basic-offset
-#+begin_src emacs-lisp
-  (require 'guess-offset)
-#+end_src
-*** 快速插入樣板
-
-#+begin_src emacs-lisp
-  (setq c-mode-expand-alist
-        '(("i" . c-mode:insert-inc-or-if)
-          ("m" . "main")
-          ))
-#+end_src
-
-*** 按鍵配置                                                       :keymap:
-#+begin_src emacs-lisp
-  (define-key c-mode-map (kbd "C-x C-o") 'ff-find-other-file)
-#+end_src
+C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在這邊。
 
 *** 將 #if 0 #endif 區域上色為灰色
+
+emacs 預設不會將 #if 0 到 #endif 之間的區域用其他顏色隔開，這邊將這種類型的
+code 變成灰色，這樣在看 code 時比較不會吃力。
 
 #+begin_src emacs-lisp
   (defun cc-mode:highlight-if-0 ()
@@ -3251,7 +3391,118 @@ adeff
                           ("1" default font-lock-comment-face both)))
     (cpp-highlight-buffer t))
 
-  (add-hook 'c-mode-hook 'cc-mode:highlight-if-0)
+  ;; Add to c/c++ mode
+  (add-hook 'c-mode-common-hook 'cc-mode:highlight-if-0)
+#+end_src
+
+*** 縮排 #ifdef 語句
+
+#+begin_src emacs-lisp
+  (defun cc-mode:indent-preprocessor ()
+    "Indent #ifdef ... #else ... #endf region as if ... else ... statement.
+  This code is based on ppindent.el
+
+  Note: you must (require 's) to use this code."
+    (let ((result (catch 'err
+                    (save-excursion
+                      (let ((cnt 0))
+                        (goto-char (point-min))
+                        (while (re-search-forward "^[ \t]*#[ \t]*\\(.*\\)" nil t)
+                          (cond ((s-starts-with? "if" (match-string-no-properties 1))
+                                 (replace-match (concat (make-string cnt ?\s) "#\\1"))
+                                 (incf cnt c-basic-offset))
+                                ((s-starts-with? "el" (match-string-no-properties 1))
+                                 (when (< (- cnt c-basic-offset) 0)
+                                   (throw 'err `(,(line-number-at-pos) "Unmatched #else or #elif")))
+                                 (replace-match (concat (make-string
+                                                         (- cnt c-basic-offset)
+                                                         ?\s) "#\\1")))
+                                ((s-starts-with? "endif" (match-string-no-properties 1))
+                                 (when (< (- cnt c-basic-offset) 0)
+                                   (throw 'err `(,(line-number-at-pos) "Unmatched #endif")))
+                                 (decf cnt c-basic-offset)
+                                 (replace-match (concat (make-string cnt ?\s) "#\\1")))
+                                (t
+                                 (replace-match (concat (make-string cnt ?\s) "#\\1"))))))
+                      ))))
+      (when result
+        (goto-line (car result))
+        (error "Error: %s" (cadr result)))))
+
+  ;; Advice th indent-region function
+  (defadvice indent-region (after indent-preprocessor activate)
+    "Indent #ifdef ... #else ... #endif region as if ... else ... statement for c/c++ mode."
+    (let ((buffer-major-mode (with-current-buffer (current-buffer) major-mode)))
+      (if (or (eq major-mode 'c-mode)
+              (eq major-mode 'c++-mode))
+          (cc-mode:indent-preprocessor))))
+  #+end_src
+
+*** 加入 eldoc 支援
+
+#+begin_src emacs-lisp
+  (add-hook 'c-mode-common-hook
+            '(lambda ()
+               (when (require 'c-eldoc nil 'noerror)
+                 (setq c-eldoc-includes "`pkg-config gtk+-3.0 --cflags --libs` -I./ -I../")
+                 (c-turn-on-eldoc-mode))))
+#+end_src
+
+** C
+*** 設定 C 語言 檔案的副檔名與對應的模式
+
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
+  (add-to-list 'auto-mode-alist '("\\.h$" . c-mode))
+#+end_src
+
+*** 預設使用 Linux Coding Style
+
+#+begin_src emacs-lisp
+  (add-hook 'c-mode-hook
+            '(lambda ()
+               (c-set-style "linux")))
+#+end_src
+
+*** TODO 自動偵測 c-basic-offset
+#+begin_src emacs-lisp
+  (require 'guess-offset)
+#+end_src
+*** 快速插入樣板
+
+#+begin_src emacs-lisp
+    (defun c-mode:insert-inc-or-if ()
+      "If at the start of line. add `inc' and expand it,
+    else add `if' and expand it."
+      (interactive)
+      (let* ((current (point))
+             (begin (line-beginning-position)))
+        (if (eq current begin)
+            (progn
+              (c-mode:insert-include)
+              (newline-and-indent))
+          (progn
+            (insert "if")
+            (yas/expand)))))
+
+  (setq c-mode-expand-alist
+        '(("i" . c-mode:insert-inc-or-if)
+          ("m" . "main")
+          ))
+#+end_src
+
+*** 按鍵配置                                                       :keymap:
+#+begin_src emacs-lisp
+  (define-key c-mode-map (kbd "C-x C-o") 'ff-find-other-file)
+#+end_src
+
+*** make define indent in if
+
+#+begin_src emacs-lisp
+  (defun cc-mode:tmp ()
+    (c-set-offset 'cpp-macro 0))
+
+  (add-hook 'c-mode-hook 'cc-mode:tmp)
 #+end_src
 
 ** C++
@@ -3266,8 +3517,7 @@ adeff
   ;;                                           magic-mode-regexp-match-limit t)))
   ;;                . c++-mode))
 #+end_src
-*** Config
-**** Codinf Style
+*** Codinf Style
 #+begin_src emacs-lisp
     ;;;; CodingStyle
   (add-hook 'c++-mode-hook
@@ -3318,15 +3568,6 @@ adeff
 #+end_src
 
 *** Hooks
-**** c-eldoc
-#+begin_src emacs-lisp
-  (add-hook 'c++-mode-hook
-            '(lambda ()
-               ;; Enable c-eldoc
-               (require 'c-eldoc)
-               (setq c-eldoc-includes "`pkg-config gtk+-3.0 opencv --cflags --libs` -I./ -I../")
-               (c-turn-on-eldoc-mode)))
-#+end_src
 **** 自動猜測縮排風格
 #+begin_src emacs-lisp
   (when (require 'dtrt-indent nil 'noerror)
@@ -3353,12 +3594,6 @@ adeff
                        ac-source-words-in-same-mode-buffers
                        )))
 #+end_src
-*** 將 #if 0 #endif 區域上色為灰色
-
-#+begin_src emacs-lisp
-  (add-hook 'c++-mode-hook 'cc-mode:highlight-if-0)
-#+end_src
-
 *** Keybinding
 #+begin_src emacs-lisp
   (define-key c++-mode-map (kbd "C-x C-o") 'ff-find-other-file)
@@ -3444,8 +3679,8 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 #+end_src
-*** Hooks
-**** eldoc
+
+*** eldoc
 eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在 minibuffer 上。
 #+begin_src emacs-lisp
   (require 'eldoc)
@@ -3459,7 +3694,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
 #+end_src
 
-**** highlight-cl
+*** highlight-cl
 高亮屬於 cl.el 套件的 function 或是 macro。
 #+begin_src emacs-lisp
   (require 'highlight-cl)
@@ -3570,6 +3805,31 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.pl" . perl-mode))
 #+end_src
+** Lisp 通用設定
+*** 建立 lisp-common-hook 變數
+
+就像 C/C++ 有 c-mode-common-hook 可以用，這邊定義類似的變數。
+
+#+begin_src emacs-lisp
+  (defcustom lisp-mode-common-hook nil
+    "*Hook called by all lisp-like Mode modes for common initializations."
+    :type 'hook)
+#+end_src
+
+將需要使用通用設定的 lisp mode 加入 lisp-mode-common-hook
+#+begin_src emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook '(lambda () (run-hooks 'lisp-mode-common-hook)))
+  (add-hook 'clojure-mode-hook '(lambda () (run-hooks 'lisp-mode-common-hook)))
+#+end_src
+
+*** 將 lambdada 以及 fn 變成希臘符號
+
+pretty-lambdada 用來將 lambdada 變成希臘符號
+#+begin_src emacs-lisp
+  (when (require 'pretty-lambdada nil 'noerror)
+    (add-hook 'lisp-mode-common-hook 'pretty-lambda-mode))
+#+end_src
+
 ** Python
 *** 設定 Python 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
@@ -3628,13 +3888,17 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 * 網頁開發                                                               :web:
 ** 網頁開發基本設定
 *** 讓 emacs 能與 firefox 溝通
+
 在讓 emacs 和 firefox 能互相溝通之前，兩邊都必須先裝上 moz-repl 這個外掛。
 可以在 firefox 上的 moz-repl 選單，選擇 Active on startup 來確保當 firefox
 啟動時會同時啟動 moz-repl
+
 #+begin_src emacs-lisp
   (require 'moz)
 #+end_src
+
 *** 令 firefox 更新目前的頁面
+
 #+begin_src emacs-lisp
   (defun firefox-refresh ()
     "Refresh the firefox browser"
@@ -3642,6 +3906,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (comint-send-string (inferior-moz-process)
                         "BrowserReload();"))
 #+end_src
+
 *** 整合 Javascript/HTML/CSS 色彩
 
 #+begin_src emacs-lisp
@@ -3657,24 +3922,31 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 
 ** CSS
 *** 設定 CSS 的副檔名與對應的模式
+
 #+begin_src emacs-lisp
   (require 'css-mode)
   (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
 #+end_src
 ** Less-CSS
+
 *** 設定 LESS-CSS 的副檔名與對應的模式
 #+begin_src emacs-lisp
   (require 'less-css-mode)
   (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
 #+end_src
+
 ** JavaScript
+
 *** 設定 javascript 的副檔名與對應的模式
+
 使用 js2-mode 替代原本系統內建的 js-mode。
 #+begin_src emacs-lisp
   (require 'js2-mode)
   (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 #+end_src
+
 *** 自動補全
+
 #+begin_src emacs-lisp
   (add-hook 'js-mode-hook 'ac-javascript-mode-setup)
   (defun ac-javascript-mode-setup ()
@@ -3686,24 +3958,26 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
             ac-source-words-in-same-mode-buffers
             )))
 #+end_src
+
 *** REPL 設定
+
 使用 js-comint 來設定 REPL 模式。
 **** 設定起始位置
+
 #+begin_src emacs-lisp
   (when (require 'js-comint nil 'noerror)
 #+end_src
+
 **** 設定 REPL 程式為 node.js
 #+begin_src emacs-lisp
     (setq inferior-js-program-command "node")
 #+end_src
-**** 在 REPL 啟用 ANSI 色彩
-#+begin_src emacs-lisp
-;;  (add-hook 'js-mode-hook 'ansi-color-for-comint-mode-on)
-#+end_src
+
 **** 設定終止位置
 #+begin_src emacs-lisp
     )
 #+end_src
+
 ** HTML
 *** 使用 zencoding-mode 讓寫 HTML 更方便
 
@@ -3832,6 +4106,61 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (set-buffer-file-coding-system 'utf-8 nil))
 #+end_src
 
+*** 讓 emacs 可以一直儲存緩衝區 (即使檔案未經修正)
+
+預設的 save-buffer 在 buffer 沒有變動時，不會進行儲存，
+使用此命令可以使得在呼叫 save-buffer-always 時，將 buffer 變更為修改過，
+並進行儲存。
+#+begin_src emacs-lisp
+  (defun save-buffer-always ()
+    "Save the buffer even if it is not modified."
+    (interactive)
+    (set-buffer-modified-p t)
+    (save-buffer))
+#+end_src
+
+*** 關閉除了 **scratch** 以外的所有 buffer。
+
+當我想要讓我的 emacs 變得很乾淨的時候，這命令很好用。
+
+#+begin_src emacs-lisp
+  (defun nuke-all-buffers ()
+    "Kill all buffers, leaving *scratch* only."
+    (interactive)
+    (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
+    (delete-other-windows))
+#+end_src
+
+*** 清除除了目前的緩衝區以外的緩衝區
+
+和 nuke-all-buffers 很像，但是這個命令只會保留目前的緩衝區。
+
+#+begin_src emacs-lisp
+    (defun kill-other-buffers ()
+      "Kill all other buffers."
+      (interactive)
+      (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+#+end_src
+
+*** 跳轉到 **scratch**
+
+跳轉目前 buffer 與 **scratch**，假如 **scratch** 不存在，
+則建立一個 major-mode 為 lisp-interaction-mode 的 **scratch**
+
+#+begin_src emacs-lisp
+  (defun scratch-toggle ()
+    "Toggle between *scratch* buffer and the current buffer.
+     If the *scratch* buffer does not exist, create it."
+    (interactive)
+    (let ((scratch-buffer-name (get-buffer-create "*scratch*")))
+      (if (equal (current-buffer) scratch-buffer-name)
+          (switch-to-buffer (other-buffer))
+        (progn
+          (switch-to-buffer scratch-buffer-name)
+          (unless (equal major-mode 'lisp-interaction-mode)
+            (lisp-interaction-mode))))))
+#+end_src
+
 ** 檔案處理                                                           :file:
 
 這編放的是和檔案處理，或是和檔案相關的緩衝區處理命令。
@@ -3851,40 +4180,118 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
       (kill-this-buffer)))
 #+end_src
 
+*** 使用瀏覽器觀看目前的檔案
+
+透過 emacs 的 browse-url function 來呼叫瀏覽器打開目前的檔案。
+
+#+begin_src emacs-lisp
+  (defun browse-current-file ()
+    "Open the current file as a URL using `browse-url'."
+    (interactive)
+    (browse-url (concat "file://" (buffer-file-name))))
+#+end_src
+
+** 視窗操作                                                         :window:
+
+*** 將整個 emacs 全螢幕
+
+有些時候我會很希望我的 emacs 可以全螢幕，用這個命令可以很方便達到我的想法。
+#+begin_src emacs-lisp
+  (defun fullscreen-window ()
+    "Make the window full-screen."
+    (interactive)
+    (let ((current-value (frame-parameter nil 'fullscreen))
+          (old-value nil))
+      (set-frame-parameter nil 'fullscreen
+                           (if (equal 'fullboth current-value)
+                               'old-value
+                             (progn
+                               (setq old-value current-value)
+                               'fullboth)))))
+#+end_src
+
+** 插入
+
+*** 插入目前的時間
+
+#+begin_src emacs-lisp
+  (defun insert-date-time ()
+    "Insert current-date."
+    (interactive)
+    (insert (current-date-time)))
+#+end_src
+
+*** 插入空白行
+
+#+begin_src emacs-lisp
+  (defun insert-empty-line ()
+    "Insert an empty line after current line and position cursor on newline."
+    (interactive)
+    (move-end-of-line nil)
+    (open-line 1)
+    (next-line 1))
+#+end_src
+
+*** 多次貼上
+
+emacs 本身的 yank 命令是無法使用 universla-argument 的，
+也就是說無法使用 C-u 80 C-y 來貼上複製的東西 80 次，
+而是貼上前幾次紀錄在 kill-ring 的資訊。
+
+yank-n-times 則可以重複的進行貼上。
+
+當沒有使用 universal-argument 指定要貼上多少次時，
+會使用 prompt 詢問貼上的次數。
+#+begin_src emacs-lisp
+  (defun yank-n-times (&optional arg)
+    "yank multiple times."
+    (interactive "P")
+    (let ((times (if (equal current-prefix-arg nil)
+                     (read-number "yank repet times: ")
+                   arg)))
+      (if (< times 1)
+          (setq times 1)
+        (dotimes 'times (yank)))))
+#+end_src
+** 系統命令
+
+*** gitg
+
+雖然很多時候我都會用 magit 來察看 git log, 不過我還是很喜歡 gitg。
+
+#+begin_src emacs-lisp
+  (defun gitg ()
+    "Launch gitg in the current directory."
+    (interactive)
+    (start-process "gitg" nil "gitg"))
+  #+end_src
+
+** 強化功能命令
+
+*** 切換按鍵巨集的錄製/停止
+
+#+begin_src emacs-lisp
+  (defun toggle-kbd-macro-recording-on ()
+    "One-key keyboard macros: turn recording on."
+    (interactive)
+    (define-key
+      global-map
+      (this-command-keys)
+      'toggle-kbd-macro-recording-off)
+    (start-kbd-macro nil))
+
+  (defun toggle-kbd-macro-recording-off ()
+    "One-key keyboard macros: turn recording off."
+    (interactive)
+    (define-key
+      global-map
+      (this-command-keys)
+      'toggle-kbd-macro-recording-on)
+    (end-kbd-macro))
+#+end_src
+
 ** TODO 要重新調整
 *** Buffer
-**** 跳轉到 **scratch**
-
-跳轉目前 buffer 與 **scratch**，假如 **scratch** 不存在，
-則建立一個 major-mode 為 lisp-interaction-mode 的 **scratch**
-#+begin_src emacs-lisp
-  (defun scratch-toggle ()
-    "Toggle between *scratch* buffer and the current buffer.
-     If the *scratch* buffer does not exist, create it."
-    (interactive)
-    (let ((scratch-buffer-name (get-buffer-create "*scratch*")))
-      (if (equal (current-buffer) scratch-buffer-name)
-          (switch-to-buffer (other-buffer))
-        ;;        (previous-user-buffer)
-        (progn
-          (switch-to-buffer scratch-buffer-name)
-          (unless (equal major-mode 'lisp-interaction-mode)
-            (lisp-interaction-mode))))))
-#+end_src
-
-**** save-buffer-always
-
-預設的 save-buffer 在 buffer 沒有變動時，不會進行儲存，
-使用此命令可以使得在呼叫 save-buffer-always 時，將 buffer 變更為修改過，
-並進行儲存。
-#+begin_src emacs-lisp
-  (defun save-buffer-always ()
-    "Save the buffer even if it is not modified."
-    (interactive)
-    (set-buffer-modified-p t)
-    (save-buffer))
-#+end_src
-
 **** revert-all-buffer
 
 #+begin_src emacs-lisp
@@ -3901,25 +4308,6 @@ This is to update existing buffers after a Git pull of their underlying files."
           (buffer-list))))
 #+end_src
 
-**** nuke-all-buffers
-
-關閉除了 **scratch** 以外的所有 buffer。
-#+begin_src emacs-lisp
-  (defun nuke-all-buffers ()
-    "Kill all buffers, leaving *scratch* only."
-    (interactive)
-    (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
-    (delete-other-windows))
-#+end_src
-
-**** 清除除了目前的緩衝區以外的緩衝區
-
-#+begin_src emacs-lisp
-    (defun kill-other-buffers ()
-      "Kill all other buffers."
-      (interactive)
-      (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
-#+end_src
 *** 其他、未歸類
 **** 縮排整個 buffer
 #+begin_src emacs-lisp
@@ -4024,7 +4412,7 @@ This is to update existing buffers after a Git pull of their underlying files."
        (concat (substring result2 0 width) "\n"
                (substring result1 0 width) "\n"))
      (line-beginning-position)
-     nil "[space]Clears ruler"))
+a     nil "[space]Clears ruler"))
 
 #+end_src
 
@@ -4214,39 +4602,8 @@ This is to update existing buffers after a Git pull of their underlying files."
 
 #+end_src
 
-*** 檔案處理
-**** find-files
-#+begin_src emacs-lisp
-  (defun find-files (files)
-    "Open the given files"
-    (interactive)
-    (foreach (f files) (find-file f)))
-#+end_src
-**** my-clone-and-open-file
-#+begin_src emacs-lisp
-  (defun my-clone-and-open-file (filename)
-    "Clone the current buffer writing it into FILENAME and open it"
-    (interactive "FClone to file: ")
-    (save-restriction
-      (widen)
-      (write-region (point-min) (point-max) filename nil nil nil 'confirm))
-    (find-file filename))
-#+end_src
-*** 視窗
 **** 將整個 emacs 全螢幕
-#+begin_src emacs-lisp
-  (defun fullscreen-window ()
-    "Make the window full-screen."
-    (interactive)
-    (let ((current-value (frame-parameter nil 'fullscreen))
-          (old-value nil))
-      (set-frame-parameter nil 'fullscreen
-                           (if (equal 'fullboth current-value)
-                               'old-value
-                             (progn
-                               (setq old-value current-value)
-                               'fullboth)))))
-#+end_src
+
 #+begin_src emacs-lisp
   (defun collapse-or-expand ()
     (interactive)
@@ -4255,12 +4612,6 @@ This is to update existing buffers after a Git pull of their underlying files."
       (bury-buffer)))
 #+end_src
 #+begin_src emacs-lisp
-  (defun gitg ()
-    "Launch gitg in the current directory."
-    (interactive)
-    (start-process "gitg" nil "gitg"))
-
-
   (defun windmove-down-fullscreen ()
     "Select window below current one and make it fullscreen."
     (interactive)
@@ -4293,8 +4644,8 @@ This is to update existing buffers after a Git pull of their underlying files."
         (find-file (concat "/sudo:root@localhost:" (read-file-name "File: ")))
       (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
-(setq tramp-debug-buffer t)
-(setq tramp-chunksize 500)
+  (setq tramp-debug-buffer t)
+  (setq tramp-chunksize 500)
 
 
   (defun toggle-selective-display (column)
@@ -4302,9 +4653,9 @@ This is to update existing buffers after a Git pull of their underlying files."
     (set-selective-display
      (if selective-display nil (or column 1))))
 
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Insert
-  ;;; ---------------------------------------------------------------------------
+      ;;;; ---------------------------------------------------------------------------
+      ;;;; Insert
+      ;;; ---------------------------------------------------------------------------
   (require 'mm-url)
 
   (defun insert-tinyurl (url)
@@ -4320,9 +4671,9 @@ This is to update existing buffers after a Git pull of their underlying files."
                 (buffer-string)))))
       (insert tinyurl)))
 
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Search
-  ;;;; ---------------------------------------------------------------------------
+      ;;;; ---------------------------------------------------------------------------
+      ;;;; Search
+      ;;;; ---------------------------------------------------------------------------
   (defun multi-occur-in-this-mode ()
     "Show all lines matching REGEXP in buffers with this major mode."
     (interactive)
@@ -4331,30 +4682,13 @@ This is to update existing buffers after a Git pull of their underlying files."
      (car (occur-read-primary-args)))
     (select-window (get-buffer-window "*Occur*")))
 
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; key-macro
-  ;;;; ---------------------------------------------------------------------------
-  (defun toggle-kbd-macro-recording-on ()
-    "One-key keyboard macros: turn recording on."
-    (interactive)
-    (define-key
-      global-map
-      (this-command-keys)
-      'toggle-kbd-macro-recording-off)
-    (start-kbd-macro nil))
+      ;;;; ---------------------------------------------------------------------------
+      ;;;; key-macro
+      ;;;; ---------------------------------------------------------------------------
 
-  (defun toggle-kbd-macro-recording-off ()
-    "One-key keyboard macros: turn recording off."
-    (interactive)
-    (define-key
-      global-map
-      (this-command-keys)
-      'toggle-kbd-macro-recording-on)
-    (end-kbd-macro))
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Commands that define for key-chord
-  ;;;; ---------------------------------------------------------------------------
+      ;;;; ---------------------------------------------------------------------------
+      ;;;; Commands that define for key-chord
+      ;;;; ---------------------------------------------------------------------------
   (defun upcase-word-backward ()
     "upcase word backward."
     (interactive)
@@ -4375,44 +4709,25 @@ This is to update existing buffers after a Git pull of their underlying files."
     (interactive "p")
     (kill-line 0))
 #+end_src
-*** 插入
-**** 插入時間
+*** 檔案處理
+**** find-files
 #+begin_src emacs-lisp
-  (defun insert-date-time ()
-    "Insert current-date."
+  (defun find-files (files)
+    "Open the given files"
     (interactive)
-    (insert (current-date-time)))
+    (foreach (f files) (find-file f)))
 #+end_src
-
-**** 插入空白行
+**** my-clone-and-open-file
 #+begin_src emacs-lisp
-  (defun insert-empty-line ()
-    "Insert an empty line after current line and position cursor on newline."
-    (interactive)
-    (move-end-of-line nil)
-    (open-line 1)
-    (next-line 1))
+  (defun my-clone-and-open-file (filename)
+    "Clone the current buffer writing it into FILENAME and open it"
+    (interactive "FClone to file: ")
+    (save-restriction
+      (widen)
+      (write-region (point-min) (point-max) filename nil nil nil 'confirm))
+    (find-file filename))
 #+end_src
-**** 多次貼上
-emacs 本身的 yank 命令是無法使用 universla-argument 的，
-也就是說無法使用 C-u 80 C-y 來貼上複製的東西 80 次，
-而是貼上前幾次紀錄在 kill-ring 的資訊。
 
-yank-n-times 則可以重複的進行貼上。
-
-當沒有使用 universal-argument 指定要貼上多少次時，
-會使用 prompt 詢問貼上的次數。
-#+begin_src emacs-lisp
-  (defun yank-n-times (&optional arg)
-    "yank multiple times."
-    (interactive "P")
-    (let ((times (if (equal current-prefix-arg nil)
-                     (read-number "yank repet times: ")
-                   arg)))
-      (if (< times 1)
-          (setq times 1)
-        (dotimes 'times (yank)))))
-#+end_src
 *** 刪除
 **** 刪除相對應的括號
 #+begin_src emacs-lisp
@@ -4485,7 +4800,7 @@ yank-n-times 則可以重複的進行貼上。
 #+end_src
 ** 全域性按鍵設定                                               :global@key:
 
-* 窗口管理
+* 窗口管理                                                           :window:
 ** popwin
 
 popwin is a popup window manager for Emacs which makes you free from the hell of annoying buffers such like *Help*, *Completions*, *compilation*, and etc.
@@ -4736,7 +5051,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
     (erc :server "irc.debian.org" :port 6667 :nick erc-nick))
 #+end_src
 
-* 電子郵件
+* 電子郵件                                                            :email:
 ** offlineimap
 
 offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙下載信件。
@@ -4940,7 +5255,7 @@ offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙�
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
   (defalias 'coldnew/folding-toggle   'toggle-selective-display)
 #+end_src
-* Git 版本管理
+* Git 版本管理                                                          :git:
 
 git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最好的， emacs
 有許多好用的 git 套件，諸如 egg, magit, git-emacs 之類，在這邊的設定
@@ -4988,21 +5303,7 @@ egg 有一個很不錯的功能，就是當檔案儲存的時候，自動將其�
 的確認系統，讓他根據狀況自動猜測下一步要做什麼。
 
 #+begin_src emacs-lisp
-  ;; make egg auto guess next action
   (setq egg-confirm-next-action nil)
-
-  ;; remodify next-action priority
-  (defsubst egg-guess-next-action (desc)
-    (cond
-     ((memq :file-has-merged-conflict desc) :merge-file)
-     ((memq :file-is-modified desc)         :stage-file)
-     ((memq :has-staged-changes desc)       :commit)
-     ((memq :file-is-unmerged desc)         :stage-file)
-     ((memq :wdir-has-merged-conflict desc) :status)
-     ((memq :wdir-has-unmerged-files  desc) :stage-all)
-     ((memq :wdir-is-modified desc)         :stage-all)
-     ((memq :rebase-in-progress desc)       :rebase-continue)
-     (t                                     :quit)))
 #+end_src
 
 ** 當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window。 :advice:
@@ -5077,7 +5378,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
                       *
   #+END_EXAMPLE
 
-
 - 回復
 
   若要進行回復，首先我們要先找尋我們感興趣的 commit。假設你最近修改的 branch 是 master,
@@ -5106,17 +5406,17 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   在啟用 magit-wip-mode 之前，要記得使用
 
   : git config --add magit.extension wip-save  # or
-  : git config --add magit.extension wip-save
+  : git config --global --add magit.extension wip-save
 
   將 git-wip 加到 git 設定中。
 
-#+begin_src emacs-lisp
-  (eval-after-load 'magit
-    '(progn
-       (require 'magit-wip)
-       (magit-wip-mode 1)
-       (global-magit-wip-save-mode)))
-#+end_src
+  #+begin_src emacs-lisp
+    (eval-after-load 'magit
+      '(progn
+         (require 'magit-wip)
+         (magit-wip-mode 1)
+         (global-magit-wip-save-mode)))
+  #+end_src
 
 ** 在 fringe 顯示 git 的狀況
 
@@ -5144,6 +5444,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 | C-x v l | magit-log                 | 使用 magit 察看 log             |
 | C-x v s | magit-status              | 使用 magit 查看目前的git status |
 | C-x v v | egg-next-action           | 讓 egg 自動猜測下一步要做什麼   |
+| C-x v c | magit-checkout            | 切換到其他的 git branch         |
 | C-x v p | git-push                  | push 到遠端 repo                |
 | C-x v f | magit-flow-feature-create |                                 |
 | C-x v e | magit-flow-feature-finish |                                 |
@@ -5152,6 +5453,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (vim:imap (kbd "C-x vl") 'magit-log)
   (vim:imap (kbd "C-x vs") 'magit-status)
   (vim:map (kbd "C-x vv") 'egg-next-action)
+  (vim:map (kbd "C-x vc") 'magit-checkout)
   (vim:map (kbd "C-x vp") 'git-push)
   (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
   (vim:map (kbd "C-x ve") 'magit-flow-feature-finish)
@@ -5174,7 +5476,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
                        (delete-region (point-min) (point-max)))))))
 #+end_src
 
-* 檔案備份
+* 檔案備份                                                           :backup:
 
 雖然現在大家都有在使用 git、svn 等檔案管理系統，但我們最好還是有其他的
 備份，這裡設定的是 emacs 內建的備份方式。
@@ -5267,14 +5569,14 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (setq backup-by-copying t)
 #+end_src
 
-** TODO 位龜類
+** TODO rewrite
 #+begin_src emacs-lisp
   (setq auto-save-default    t)           ; auto-save of every file-visiting buffer
   ;; change auto-save-list setting
   (setq auto-save-list-file-prefix (concat emacs-backup-dir "auto-saves-"))
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
 #+end_src
-* Session
+* Session                                                              :blog:
 ** filecache
 
 filecache 會根據使用者輸入的文件名，找到該文件的實際位置。
@@ -5307,15 +5609,12 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
   ;; Following file won;t contain in recentf
   (setq recentf-exclude '("\\.elc$" "\\.pyc$" "\\.recentd$" "^/tmp/"))
 #+end_src
-* 全域性按鍵設置
+* 全域性按鍵設置                                                 :global@key:
 ** 文件編輯
 
 | 按鍵         | 命令                   | 用途                                       |
 |--------------+------------------------+--------------------------------------------|
-| C-x C-y      | yank-n-times           | 多次貼上                                   |
-| C-x C-l      | recenter               | 將游標至於 buffer 中間                     |
 | C-x C-n      | auto-complete          | 自動補全                                   |
-| C-x C-s      | save-buffer-always     | 儲存檔案                                   |
 | Shift Return | insert-empty-line      | 插入空白行                                 |
 | M-s          | coldnew/helm-occur     | 使用 occur 查詢當前緩衝區                  |
 | M-r          | query-replace-regexp   | 使用正規表達式查找並取代                   |
@@ -5329,10 +5628,8 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 | C-x C-i      | indent-whole-buffer    | 縮排整個緩衝區                             |
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-x C-y")  'yank-n-times)
-  (global-set-key (kbd "C-x C-l")  'recenter)
+
   (global-set-key (kbd "C-x C-n") 'auto-complete)
-  (global-set-key (kbd "C-x C-s") 'save-buffer-always)
   (global-set-key [(shift return)] 'insert-empty-line)
   (global-set-key (kbd "M-s") 'coldnew/helm-occur)
   (global-set-key (kbd "M-r") 'query-replace-regexp)
@@ -5373,14 +5670,7 @@ Function key 設置常用的命令。
   (global-set-key (kbd "<f3>")     'call-last-kbd-macro)
   (global-set-key (kbd "<f4>")     'sr-speedbar-toggle)
 #+end_src
-** 在目前行加上彩色條
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x l") 'hl-line-mode)
-#+end_src
-** 顯示行號
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x L") 'linum-mode)
-#+end_src
+
 ** 分頁切換
 
 | 按鍵        | 命令                     | 用途          |
@@ -5424,15 +5714,13 @@ Function key 設置常用的命令。
 
 ** Ctrl-x Prefix
 *** Misc
-| 按鍵    | 命令                | 用途               |
-|---------+---------------------+--------------------|
-| C-x C-f | lusty-file-explorer | 查詢並打開檔案     |
-| C-x C-r | lusty-sudo-explorer | 使用 sudo 打開檔案 |
-| C-x C-b | ibuffer             | 顯示 ibuffer       |
+
+| 按鍵    | 命令    | 用途         |
+|---------+---------+--------------|
+| C-x C-b | ibuffer | 顯示 ibuffer |
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-x C-f")  'lusty-file-explorer)
-  (global-set-key (kbd "C-x C-r")  'lusty-sudo-explorer)
+
   (global-set-key (kbd "C-x C-b")  'ibuffer)
 
   (global-set-key (kbd "C-x C-d")  'dired)
@@ -5479,7 +5767,6 @@ Function key 設置常用的命令。
 ** Ctrl-c prefix
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
-  (global-set-key (kbd "C-c C-e") 'eval-and-replace)
 #+end_src
 
 *** org-mode                                                          :org:
@@ -5512,32 +5799,11 @@ Function key 設置常用的命令。
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 #+end_src
 
-** Super prefix
-#+begin_src emacs-lisp
-  (global-set-key (kbd "s-l") 'linum-mode)
-  (global-set-key (kbd "s-s") 'shell-command)
-#+end_src
 ** Other
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "<delete>") 'hungry-delete-forward)
   (global-set-key (kbd "C-.") 'repeat)
-#+end_src
-
-* Register                                                         :register:
-** 放置快速跳轉的捷徑命令。
-使用 Ctrl-x r j <char> 就可以進行快速跳轉至檔案，其中 <char> 為以下所設定。
-#+begin_src emacs-lisp
-  (dolist
-      (r `(
-           ;; emacs-config
-           (?e (file . ,(expand-file-name emacs-config-file)))
-           ;; TODO.org
-           (?w (file . "~/SparkleShare/org/Weintek.org"))
-           (?n (file . "~/SparkleShare/org//Note.org"))
-           (?b (file . "~/SparkleShare/coldnew.github.com/blog-src/blog.org"))
-           ))
-    (set-register (car r) (cadr r)))
 #+end_src
 
 * 部若格                                                      :blog:

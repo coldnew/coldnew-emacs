@@ -1,4 +1,7 @@
 (:name qml-mode
+       :website "https://github.com/coldnew/qml-mode"
+       :description "Qt Declarative UI (QML) mode for Emacs"
        :type github
        :pkgname "coldnew/qml-mode"
-       :features qml-mode)
+       :features qml-mode
+       )
