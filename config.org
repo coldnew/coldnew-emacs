@@ -4218,6 +4218,29 @@ yank-n-times 則可以重複的進行貼上。
     (start-process "gitg" nil "gitg"))
   #+end_src
 
+** 強化功能命令
+
+*** 切換按鍵巨集的錄製/停止
+
+#+begin_src emacs-lisp
+  (defun toggle-kbd-macro-recording-on ()
+    "One-key keyboard macros: turn recording on."
+    (interactive)
+    (define-key
+      global-map
+      (this-command-keys)
+      'toggle-kbd-macro-recording-off)
+    (start-kbd-macro nil))
+
+  (defun toggle-kbd-macro-recording-off ()
+    "One-key keyboard macros: turn recording off."
+    (interactive)
+    (define-key
+      global-map
+      (this-command-keys)
+      'toggle-kbd-macro-recording-on)
+    (end-kbd-macro))
+#+end_src
 
 ** TODO 要重新調整
 *** Buffer
@@ -4541,8 +4564,6 @@ a     nil "[space]Clears ruler"))
       (bury-buffer)))
 #+end_src
 #+begin_src emacs-lisp
-
-
   (defun windmove-down-fullscreen ()
     "Select window below current one and make it fullscreen."
     (interactive)
@@ -4616,23 +4637,6 @@ a     nil "[space]Clears ruler"))
       ;;;; ---------------------------------------------------------------------------
       ;;;; key-macro
       ;;;; ---------------------------------------------------------------------------
-  (defun toggle-kbd-macro-recording-on ()
-    "One-key keyboard macros: turn recording on."
-    (interactive)
-    (define-key
-      global-map
-      (this-command-keys)
-      'toggle-kbd-macro-recording-off)
-    (start-kbd-macro nil))
-
-  (defun toggle-kbd-macro-recording-off ()
-    "One-key keyboard macros: turn recording off."
-    (interactive)
-    (define-key
-      global-map
-      (this-command-keys)
-      'toggle-kbd-macro-recording-on)
-    (end-kbd-macro))
 
       ;;;; ---------------------------------------------------------------------------
       ;;;; Commands that define for key-chord
