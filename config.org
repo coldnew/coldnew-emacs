@@ -2939,6 +2939,43 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 
 * 編輯器                                                             :editor:
 
+** 基本編輯器設定
+
+- 設定 TAB 的寬度為 8
+
+  #+begin_src emacs-lisp
+    (setq tab-width 8)
+  #+end_src
+
+- 不使用 TAB 進行縮排
+
+  #+begin_src emacs-lisp
+     (setq indent-tabs-mode nil)
+  #+end_src
+- 設定每行之間的間格為 4
+
+  #+begin_src emacs-lisp
+    (setq line-spacing 4)
+  #+end_src
+
+- 在檔案的最後一行加入一空白行
+
+  #+begin_src emacs-lisp
+    (setq require-final-newline t)
+  #+end_src
+
+- 全域使用色彩上色
+
+  #+begin_src emacs-lisp
+    (global-font-lock-mode t)
+  #+end_src
+
+- 高亮匹配的括號
+
+  #+begin_src emacs-lisp
+    (show-paren-mode t)
+  #+end_src
+
 ** 建立編輯器的全域性 minor-mode
 
 我希望能夠全域性的使用我所定義的編輯器，因此宣告一個 minor-mode，
@@ -2959,34 +2996,23 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
   (global-coldnew-editor-mode t)
 #+end_src
 
-** 不使用 TAB 進行縮排
-
-#+begin_src emacs-lisp
-  (setq indent-tabs-mode nil)
-#+end_src
-
-** 設定 TAB 的寬度為 8
-
-#+begin_src emacs-lisp
-  (setq tab-width 8)
-#+end_src
-
-** 設定每行之間的間格為 4
-
-#+begin_src emacs-lisp
-  (setq line-spacing 4)
-#+end_src
-
-** 在檔案的最後一行加入一空白行
-
-#+begin_src emacs-lisp
-  (setq require-final-newline t)
-#+end_src
-
 ** 在存檔前清除多餘的空白
 
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+end_src
+
+** 替 FIXME 等特殊文字上色
+
+#+begin_src emacs-lisp
+  (defun highlight-additional-keywords ()
+    "Highlight additional keywords."
+    (font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)))
+    (font-lock-add-keywords nil '(("\\<\\(NOTE\\):" 1 'org-level-2 t)))
+    (font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
+    (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t))))
+
+  (add-hook 'coldnew-editor-mode-hook 'highlight-additional-keywords)
 #+end_src
 
 ** 存檔後自動建立資料夾
@@ -3004,21 +3030,13 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 
 ** 自動回復檔案
 
-當檔案背別的編輯器修改的時候，自動套用新的檔案到緩衝區上。
+當檔案被別的編輯器修改的時候，自動套用新的檔案到緩衝區上。
 
 #+begin_src emacs-lisp
   (global-auto-revert-mode 1)
   (setq global-auto-revert-non-file-buffers t)
   (setq auto-revert-verbose nil)
 #+end_src
-
-回復緩衝區時，不再另外確認
-#+begin_src emacs-lisp
-  (defun revert-buffer-no-confirm ()
-    "Revert buffer without confirmation."
-    (interactive) (revert-buffer t t))
-#+end_src
-
 
 ** 行號顯示設定
 
@@ -3159,10 +3177,6 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
   (setq next-line-add-newlines t ) ;
   (setq shift-select-mode      t ) ; Enable shift-select mode
 
-  ;; Enable global font-lock
-  (global-font-lock-mode t)
-  ;; Show matching parentheses all the time
-  (show-paren-mode t)
   ;; Enable auto-complete-mode
   (global-auto-complete-mode t)
   ;; Enable delete-selection-mode
@@ -3183,21 +3197,7 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 #+end_src
 ** Functions
 #+begin_src emacs-lisp
-  (defun indent-file-after-save ()
-    "Indent whole file after saved."
-    (make-local-variable 'after-save-hook)
-    (add-hook 'after-save-hook
-              '(lambda ()
-                 (indent-region (point-min) (point-max) nil)
-                 (save-buffer))))
 
-  (defun highlight-additional-keywords ()
-    "Highlight additional keywords."
-    (font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)))
-    (font-lock-add-keywords nil '(("\\<\\(NOTE\\):" 1 'org-level-2 t)))
-    (font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
-    (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t)))
-    )
 
   (defun highlight-fontify-numbers ()
     "Use this function as a hook to fontify numbers as constant"
