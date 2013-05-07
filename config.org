@@ -764,7 +764,6 @@ vlfi 提供了讓 emacs 更快速打開大檔案的能力，使用方式
   (require 'smarter-compile)
   (require 'unicad)
   (require 'expand-region)
-  (require 'pretty-lambdada)
   (require 'rainbow-delimiters)
 #+end_src
 
@@ -3754,7 +3753,6 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
   (add-to-list 'auto-mode-alist '("\\.pl" . perl-mode))
 #+end_src
 ** Lisp 通用設定
-
 *** 建立 lisp-common-hook 變數
 
 就像 C/C++ 有 c-mode-common-hook 可以用，這邊定義類似的變數。
@@ -3765,7 +3763,19 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     :type 'hook)
 #+end_src
 
+將需要使用通用設定的 lisp mode 加入 lisp-mode-common-hook
+#+begin_src emacs-lisp
+  (add-hook 'emacs-lisp-mode-hook '(lambda () (run-hooks 'lisp-mode-common-hook)))
+  (add-hook 'clojure-mode-hook '(lambda () (run-hooks 'lisp-mode-common-hook)))
+#+end_src
 
+*** 將 lambdada 以及 fn 變成希臘符號
+
+pretty-lambdada 用來將 lambdada 變成希臘符號
+#+begin_src emacs-lisp
+  (when (require 'pretty-lambdada nil 'noerror)
+    (add-hook 'lisp-mode-common-hook 'pretty-lambda-mode))
+#+end_src
 
 ** Python
 *** 設定 Python 檔案的副檔名與對應的模式

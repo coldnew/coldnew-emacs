@@ -56,7 +56,6 @@
 "popup"
 "popwin"
 "powerline"
-"pretty-lambdada"
 "projectile"
 "qmake-mode"
 "rainbow-delimiters"
