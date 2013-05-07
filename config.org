@@ -3627,8 +3627,8 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 #+end_src
-*** Hooks
-**** eldoc
+
+*** eldoc
 eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在 minibuffer 上。
 #+begin_src emacs-lisp
   (require 'eldoc)
@@ -3642,7 +3642,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
     (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
 #+end_src
 
-**** highlight-cl
+*** highlight-cl
 高亮屬於 cl.el 套件的 function 或是 macro。
 #+begin_src emacs-lisp
   (require 'highlight-cl)
@@ -3753,6 +3753,20 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.pl" . perl-mode))
 #+end_src
+** Lisp 通用設定
+
+*** 建立 lisp-common-hook 變數
+
+就像 C/C++ 有 c-mode-common-hook 可以用，這邊定義類似的變數。
+
+#+begin_src emacs-lisp
+  (defcustom lisp-mode-common-hook nil
+    "*Hook called by all lisp-like Mode modes for common initializations."
+    :type 'hook)
+#+end_src
+
+
+
 ** Python
 *** 設定 Python 檔案的副檔名與對應的模式
 #+begin_src emacs-lisp
