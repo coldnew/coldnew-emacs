@@ -3004,6 +3004,8 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 
 ** 替 FIXME 等特殊文字上色
 
+很多時候我們會再程式碼裏面加上了 FIXME: 等字樣，這邊額外定義我需要高亮的文字。
+
 #+begin_src emacs-lisp
   (defun highlight-additional-keywords ()
     "Highlight additional keywords."
