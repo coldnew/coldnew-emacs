@@ -3198,8 +3198,6 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 #+end_src
 ** Functions
 #+begin_src emacs-lisp
-
-
   (defun highlight-fontify-numbers ()
     "Use this function as a hook to fontify numbers as constant"
     (font-lock-add-keywords nil
@@ -3231,6 +3229,13 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
       (while (or (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
                  (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
         (replace-match "\\1\\2" nil nil))))
+#+end_src
+
+** keymap
+
+#+begin_src emacs-lisp
+  (vim:imap (kbd "C-x q") 'toggle-kbd-macro-recording-on)
+  (vim:imap (kbd "C-x e") 'call-last-kbd-macro)
 #+end_src
 
 * Cedet                                                                :cede:
