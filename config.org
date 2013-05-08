@@ -739,6 +739,19 @@ dash 提供了更多關於 list 處理用的函式，並且不需依賴 cl.
   (require 'dash)
 #+end_src
 
+dash 提供了主要以下幾種 list 處理功能
+
+- -map (fn list)
+
+  Returns a new list consisting of the result of applying fn to the items in list.
+
+  #+begin_src emacs-lisp :tangle no
+    (-map (lambda (num) (* num num)) '(1 2 3 4)) ;; => '(1 4 9 16)
+    (-map 'square '(1 2 3 4)) ;; => '(1 4 9 16)
+    (--map (* it it) '(1 2 3 4)) ;; => '(1 4 9 16)
+  #+end_src
+
+
 ** 增強 字串 處理的 function
 
 s 提供了許多關於字串處理的函式
@@ -767,8 +780,10 @@ vlfi 提供了讓 emacs 更快速打開大檔案的能力，使用方式
   (require 'rainbow-delimiters)
 #+end_src
 
-* Function                                                         :function:
+* 自定義函式/方法                                                  :function:
+
 我所自定義或是我的 emacs 設定檔需要用到的 function。
+
 ** List Processing
 
 處理 List 所用的 function。
@@ -852,7 +867,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
           (coldnew/recursive-find-file file (expand-file-name ".." directory))))))
 #+end_src
 
-** Testing
+** 測試檔案、變數值
 
 測試用的 function，和測試用的變數很像，但是他允許參數的輸入。
 
