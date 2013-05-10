@@ -3246,13 +3246,18 @@ vim 預設也會對數字進行別的上色動作。
   (defun yas/user-nickname ()
     (insert user-nickname))
 #+end_src
-** hungry-delete
+** 加上貪婪刪除功能                                               :hungry@delete:
+
+一般使用 backspace 都只刪除一個字元， hungry-delete 這個套件
+加入了貪婪刪除功能，可以刪除前面一堆的空白字元。
+
 #+begin_src emacs-lisp
   (add-hook 'coldnew-editor-mode-hook
             '(lambda ()
                (when (require 'hungry-delete nil 'noerror)
                  (turn-on-hungry-delete-mode))))
 #+end_src
+
 ** TODO remember
 *** electric-pair-mode
 #+begin_src emacs-lisp
@@ -3289,9 +3294,6 @@ vim 預設也會對數字進行別的上色動作。
 #+end_src
 ** Functions
 #+begin_src emacs-lisp
-
-
-
   (defun insert-space-between-english-chinese ()
     "Insert a space between English words and Chinese charactors"
     (save-excursion
