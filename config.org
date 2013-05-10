@@ -751,7 +751,6 @@ dash 提供了主要以下幾種 list 處理功能
     (--map (* it it) '(1 2 3 4)) ;; => '(1 4 9 16)
   #+end_src
 
-
 ** 增強 字串 處理的 function
 
 s 提供了許多關於字串處理的函式
@@ -888,6 +887,13 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     "Return the size in bytes of file named FILENAME, as in integer.
   Returns nil if no such file."
     (nth 7 (file-attributes filename)))
+#+end_src
+*** 大量打開檔案
+
+#+begin_src emacs-lisp
+  (defun find-files (files)
+    "Open the given files"
+    (foreach (f files) (find-file f)))
 #+end_src
 ** Convert
 
@@ -3253,7 +3259,10 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 
 * 編輯器按鍵設置
 
-** 按鍵巨集錄製/播放 (I)
+這邊是我定義的 coldnew-editor-mode 的按鍵設定，每個類型的標條都會附註這裏面的
+按鍵是 Normal, Insert 或是其他模式下才會有的按鍵。
+
+** 按鍵巨集錄製/播放 (N) (I)
 
 | 按鍵  | 命令                          | 用途              |
 |-------+-------------------------------+-------------------|
@@ -3261,8 +3270,8 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 | C-x e | call-last-kbd-macro           | 播放最後一個巨集  |
 
 #+begin_src emacs-lisp
-  (vim:mode-imap coldnew-editor-map (kbd "C-x q") 'toggle-kbd-macro-recording-on)
-  (vim:mode-imap coldnew-editor-map (kbd "C-x e") 'call-last-kbd-macro)
+  (vim:mode-map coldnew-editor-map (kbd "C-x q") 'toggle-kbd-macro-recording-on)
+  (vim:mode-map coldnew-editor-map (kbd "C-x e") 'call-last-kbd-macro)
 #+end_src
 
 ** 常用按鍵 (N) (I)
@@ -3293,7 +3302,6 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
   (vim:mode-map coldnew-editor-map (kbd "C-x C-s")  'save-buffer-always)
 #+end_src
 
-** 視窗相關 (N) (I) (W)
 ** 緩衝區編輯 (I)
 
 | 按鍵    | 命令         | 用途                 |
@@ -4181,6 +4189,43 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
             (lisp-interaction-mode))))))
 #+end_src
 
+*** 縮排整個緩衝區
+
+將整個緩衝區進行縮排的動作，同時移除多餘的空白以及將 TABS 轉換
+成空白
+
+#+begin_src emacs-lisp
+  (defun indent-whole-buffer ()
+    "Indent whole buffer and delete trailing whitespace.
+  This command will also do untabify."
+    (interactive)
+    (delete-trailing-whitespace)
+    (indent-region (point-min) (point-max))
+    (untabify (point-min) (point-max)))
+#+end_src
+
+*** 縮牌選擇區域或是整個緩衝區
+
+將整個緩衝區進行縮排的動作，同時移除多餘的空白以及將 TABS 轉換
+成空白，如果有選取區域，則只對區域有效，反之種個緩衝區有效。
+
+#+begin_src emacs-lisp
+  (defun indent-region-or-buffer ()
+    "Indents a region if selected, otherwise the whole buffer."
+    (interactive)
+    (save-excursion
+      (if (region-active-p)
+          (progn
+            (delete-trailing-whitespace (region-beginning) (region-end))
+            (indent-region (region-beginning) (region-end))
+            (untabify (region-beginning) (region-end))
+            (message "Indented selected region."))
+        (progn
+          (indent-region-or-buffer)
+          (message "Indented buffer.")))))
+#+end_src
+
+
 ** 檔案處理                                                           :file:
 
 這編放的是和檔案處理，或是和檔案相關的緩衝區處理命令。
@@ -4209,6 +4254,59 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
     "Open the current file as a URL using `browse-url'."
     (interactive)
     (browse-url (concat "file://" (buffer-file-name))))
+#+end_src
+
+*** 重新載入緩衝區裏面的檔案
+
+如果沒有設定
+
+: (global-auto-revert-mode 1)
+
+的話， emacs 式不會自動重新載入檔案的，這個時候就會需要使用命令
+來幫忙將所有緩衝區的檔案進行重新載入，避免寫入檔案時出現錯誤。
+
+#+begin_src emacs-lisp
+(defun revert-all-buffers ()
+  "Revert all non-modified buffers associated with a file.
+This is to update existing buffers after a Git pull of their underlying files."
+  (interactive)
+  (save-current-buffer
+    (mapc (lambda (b)
+            (set-buffer b)
+            (unless (or (null (buffer-file-name)) (buffer-modified-p))
+              (revert-buffer t t)
+              (message "Reverted %s\n" (buffer-file-name))))
+          (buffer-list))))
+#+end_src
+
+*** 刪除目前的檔案與 buffer
+
+有些時候我們不只是想要關掉緩衝區，同時還要順便把這個檔案砍了，
+使用這個命令可以同時將這兩個想法完成。
+
+#+begin_src emacs-lisp
+  (defun delete-file-and-buffer ()
+    "Kills the current buffer and deletes the file it is visiting"
+    (interactive)
+    (let ((filename (buffer-file-name)))
+      (when filename
+        (delete-file filename)
+        (message "Deleted file %s" filename)))
+    (kill-buffer))
+#+end_src
+
+*** 複製並開啟檔案
+
+使用這個命令，可以複製目前的緩衝區到另外一個檔案，同時打開那個檔案。
+
+#+begin_src emacs-lisp
+  (defun clone-file-and-open (filename)
+    "Clone the current buffer writing it into FILENAME and open it"
+    (interactive "FClone to file: ")
+    (save-restriction
+      (widen)
+      (write-region (point-min) (point-max) filename nil nil nil 'confirm))
+    (find-file filename))
 #+end_src
 
 ** 視窗操作                                                         :window:
@@ -4311,53 +4409,7 @@ yank-n-times 則可以重複的進行貼上。
 #+end_src
 
 ** TODO 要重新調整
-*** Buffer
-**** revert-all-buffer
-
-#+begin_src emacs-lisp
-(defun revert-all-buffers ()
-  "Revert all non-modified buffers associated with a file.
-This is to update existing buffers after a Git pull of their underlying files."
-  (interactive)
-  (save-current-buffer
-    (mapc (lambda (b)
-            (set-buffer b)
-            (unless (or (null (buffer-file-name)) (buffer-modified-p))
-              (revert-buffer t t)
-              (message "Reverted %s\n" (buffer-file-name))))
-          (buffer-list))))
-#+end_src
-
 *** 其他、未歸類
-**** 縮排整個 buffer
-#+begin_src emacs-lisp
-  (defun indent-whole-buffer ()
-    "Indent whole buffer and delete trailing whitespace.
-  This command will also do untabify."
-    (interactive)
-    (delete-trailing-whitespace)
-    (indent-region (point-min) (point-max))
-    (untabify (point-min) (point-max)))
-#+end_src
-
-**** 縮牌區域或是整個 buffer
-
-#+begin_src emacs-lisp
-  (defun indent-region-or-buffer ()
-    "Indents a region if selected, otherwise the whole buffer."
-    (interactive)
-    (save-excursion
-      (if (region-active-p)
-          (progn
-            (delete-trailing-whitespace (region-beginning) (region-end))
-            (indent-region (region-beginning) (region-end))
-            (untabify (region-beginning) (region-end))
-            (message "Indented selected region."))
-        (progn
-          (indent-region-or-buffer)
-          (message "Indented buffer.")))))
-#+end_src
-
 **** TODO rewrite
 
 #+begin_src emacs-lisp
@@ -4432,7 +4484,7 @@ This is to update existing buffers after a Git pull of their underlying files."
        (concat (substring result2 0 width) "\n"
                (substring result1 0 width) "\n"))
      (line-beginning-position)
-a     nil "[space]Clears ruler"))
+     nil "[space]Clears ruler"))
 
 #+end_src
 
@@ -4729,25 +4781,6 @@ a     nil "[space]Clears ruler"))
     (interactive "p")
     (kill-line 0))
 #+end_src
-*** 檔案處理
-**** find-files
-#+begin_src emacs-lisp
-  (defun find-files (files)
-    "Open the given files"
-    (interactive)
-    (foreach (f files) (find-file f)))
-#+end_src
-**** my-clone-and-open-file
-#+begin_src emacs-lisp
-  (defun my-clone-and-open-file (filename)
-    "Clone the current buffer writing it into FILENAME and open it"
-    (interactive "FClone to file: ")
-    (save-restriction
-      (widen)
-      (write-region (point-min) (point-max) filename nil nil nil 'confirm))
-    (find-file filename))
-#+end_src
-
 *** 刪除
 **** 刪除相對應的括號
 #+begin_src emacs-lisp
@@ -4785,17 +4818,7 @@ a     nil "[space]Clears ruler"))
     (interactive "p")
     (delete-word (- arg)))
 #+end_src
-**** 刪除目前的檔案與 buffer
-#+begin_src emacs-lisp
-  (defun delete-file-and-buffer ()
-    "Kills the current buffer and deletes the file it is visiting"
-    (interactive)
-    (let ((filename (buffer-file-name)))
-      (when filename
-        (delete-file filename)
-        (message "Deleted file %s" filename)))
-    (kill-buffer))
-#+end_src
+
 *** 轉換
 
 **** eval-and-replace
@@ -4818,7 +4841,6 @@ a     nil "[space]Clears ruler"))
     (interactive)
     (pp-eval-expression '(macroexpand (read (thing-at-point 'sexp)))))
 #+end_src
-** 全域性按鍵設定                                               :global@key:
 
 * 窗口管理                                                           :window:
 ** popwin
