@@ -3093,20 +3093,14 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
       ad-do-it))
 #+end_src
 
-** Doxygen
-*** 加入相依模組
+** 加入 Doxygen 支援
 
 #+begin_src emacs-lisp
-  (require 'doxymacs)
+  (add-hook 'coldnew-editor-mode-hook
+            '(lambda ()
+               (when (require 'doxymacs nil 'noerror)
+                 (doxymacs-mode))))
 #+end_src
-
-*** 設定預設啟用 Doxygen 的模式
-
-- C/C++
-
-  #+begin_src emacs-lisp
-    (add-hook 'c-mode-common-hook 'doxymacs-mode)
-  #+end_src
 
 ** yasnippet                                                     :yasnippet:
 *** 設定 snippet 所在的資料夾
@@ -3183,8 +3177,10 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 #+end_src
 ** hungry-delete
 #+begin_src emacs-lisp
-  (require 'hungry-delete)
-  (add-hook 'coldnew-editor-hook 'turn-on-hungry-delete-mode)
+  (add-hook 'coldnew-editor-mode-hook
+            '(lambda ()
+               (when (require 'hungry-delete nil 'noerror)
+                 (turn-on-hungry-delete-mode))))
 #+end_src
 ** TODO remember
 *** electric-pair-mode
