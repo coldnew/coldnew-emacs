@@ -2936,10 +2936,16 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 #+begin_src emacs-lisp
   (defun create-tags (regexp)
     "Create TAGS file in current directory."
-    (interactive "sRegexp: *.[ch] : ")
-    (if (string-equal "" regexp) (setq regexp "*.[ch]"))
-    (eshell-command
-     (format "find . -type f -name \"%s\" | etags -" regexp)))
+    (interactive)
+    (let ((exp "") (dir ""))
+      (setq dir (read-from-minibuffer "generate tags in: " default-directory)
+            exp (read-from-minibuffer "suffix: "))
+      ;; if suffix is null, take it as c language
+      (if (string-equal "" exp) (setq exp "*.[ch]"))
+      (with-temp-buffer
+        (shell-command
+         (concat "find " dir " -name \"" exp "\" | xargs etags ")
+         (buffer-name)))))
 #+end_src
 
 ** 用來產生 GTAGS 的命令                                           :command:
