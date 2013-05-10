@@ -3265,9 +3265,8 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 | C-x e | call-last-kbd-macro           | 播放最後一個巨集  |
 
 #+begin_src emacs-lisp
-  (vim:imap (kbd "C-x q") 'toggle-kbd-macro-recording-on)
-  (vim:imap (kbd "C-x e") 'call-last-kbd-macro)
-;;  (vim:mode-map coldnew-editor-map (kbd "C-x i") 'call-last-kbd-macro)
+  (vim:mode-imap coldnew-editor-map (kbd "C-x q") 'toggle-kbd-macro-recording-on)
+  (vim:mode-imap coldnew-editor-map (kbd "C-x e") 'call-last-kbd-macro)
 #+end_src
 
 ** 常用按鍵 (N) (I)
@@ -3279,9 +3278,9 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 | C-x L   | linum-mode       | 切換顯示行號           |
 
 #+begin_src emacs-lisp
-  (vim:map (kbd "C-c C-e") 'eval-and-replace)
-  (vim:map (kbd "C-x l") 'hl-line-mode)
-  (vim:map (kbd "C-x L") 'linum-mode)
+  (vim:mode-map coldnew-editor-map (kbd "C-c C-e") 'eval-and-replace)
+  (vim:mode-map coldnew-editor-map (kbd "C-x l") 'hl-line-mode)
+  (vim:mode-map coldnew-editor-map (kbd "C-x L") 'linum-mode)
 #+end_src
 
 ** 檔案相關 (N) (I)
@@ -3293,9 +3292,9 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 | C-x C-s | save-buffer-always  | 儲存檔案           |
 
 #+begin_src emacs-lisp
-  (vim:map (kbd "C-x C-f")  'lusty-file-explorer)
-  (vim:map (kbd "C-x C-r")  'lusty-sudo-explorer)
-  (vim:map (kbd "C-x C-s")  'save-buffer-always)
+  (vim:mode-map coldnew-editor-map (kbd "C-x C-f")  'lusty-file-explorer)
+  (vim:mode-map coldnew-editor-map (kbd "C-x C-r")  'lusty-sudo-explorer)
+  (vim:mode-map coldnew-editor-map (kbd "C-x C-s")  'save-buffer-always)
 #+end_src
 
 ** 視窗相關 (N) (I) (W)
@@ -3307,8 +3306,8 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 | C-x C-l | recenter     | 將游標至於緩衝區中間 |
 
 #+begin_src emacs-lisp
-  (vim:imap (kbd "C-x C-y")  'yank-n-times)
-  (vim:imap (kbd "C-x C-l")  'recenter)
+  (vim:mode-imap coldnew-editor-map (kbd "C-x C-y")  'yank-n-times)
+  (vim:mode-imap coldnew-editor-map (kbd "C-x C-l")  'recenter)
 #+end_src
 
 * Cedet                                                                :cede:
