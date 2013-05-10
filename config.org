@@ -1224,6 +1224,7 @@ Evil 是 emacs 上最好用的 vim 摹擬程式。
 #+begin_src emacs-lisp
   (require 'evil)
 #+end_src
+
 ** 基本設置
 
 - 讓游標使用佈景主題的顏色
@@ -3002,7 +3003,7 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 並讓他可以直接啟用。
 
 #+begin_src emacs-lisp
-  (defvar coldnew-editor-map nil)
+  (defvar coldnew-editor-map (make-keymap))
 
   (define-minor-mode coldnew-editor-mode
     "coldnew's editor minor mode."
@@ -3266,6 +3267,7 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 #+begin_src emacs-lisp
   (vim:imap (kbd "C-x q") 'toggle-kbd-macro-recording-on)
   (vim:imap (kbd "C-x e") 'call-last-kbd-macro)
+;;  (vim:mode-map coldnew-editor-map (kbd "C-x i") 'call-last-kbd-macro)
 #+end_src
 
 ** 常用按鍵 (N) (I)
