@@ -1364,6 +1364,7 @@ normal-state。
 - vim:mode-nmap 綁定按鍵到 Normal 狀態下，只作用於特定模式
 - vim:mode-imap 綁定按鍵到 Insert 狀態下，只作用於特定模式
 - vim:mode-vmap 綁定按鍵到 Visual 狀態下，只作用於特定模式
+- vim:mode-map  綁定按鍵到 Normal, Insert 狀態下
 
 使用方式：
 
@@ -1381,6 +1382,11 @@ normal-state。
   (defmacro vim:mode-vmap (map key cmd)
     "Binding keymap to evil-visual-state."
     `(evil-define-key 'visual ,map ,key ,cmd))
+
+  (defmacro vim:mode-map (map key cmd)
+    "Binding keymap to evil-visual-state."
+    `(evil-define-key 'normal ,map ,key ,cmd)
+    `(evil-define-key 'insert ,map ,key ,cmd))
 #+end_src
 
 ** 綁定 ex 命令的巨集
