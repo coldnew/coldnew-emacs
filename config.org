@@ -3031,19 +3031,84 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+end_src
 
-** 替 FIXME 等特殊文字上色
+** 定義會加入額外上色的 major-mode
+
+emacs 有一些 major 無法和 font-lock-add-keywords 相處融洽，
+會倒置整個緩衝區的顏色不見，因此最好的方式是定義要加入新的
+關鍵字上色用的 major-mode。
+
+#+begin_src emacs-lisp
+  (defvar coldnew/extra-font-lock-mode
+    '(emacs-lisp-mode
+
+      ;; lisp
+      lisp-interaction-mode lisp-mode
+      clojure-mode scheme-mode
+      common-lisp-mode
+
+      ;; C/C++ like
+      c-mode c++-mode objc-mode
+      csharp-mode  d-mode
+      java-mode jde-mode
+
+      ;; Web
+      html-mode javascript-mode js2-mode
+
+      ;; script
+      sh-mode python-mode ruby-mode cperl-mode
+
+      ;; others
+      erlang-mode sgml-mode qml-mode
+      slime-mode haskell-mode tuareg-mode lua-mode
+      pascal-mode fortran-mode prolog-mode asm-mode
+      sml-mode
+      )
+    "Major mode that i will add more font-lock")
+#+end_src
+
+** 替 FIXME: 等關鍵字上色
 
 很多時候我們會再程式碼裏面加上了 FIXME: 等字樣，這邊額外定義我需要高亮的文字。
 
 #+begin_src emacs-lisp
-  (defun highlight-additional-keywords ()
-    "Highlight additional keywords."
-    (font-lock-add-keywords nil '(("\\<\\(FIXME\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)))
-    (font-lock-add-keywords nil '(("\\<\\(NOTE\\):" 1 'org-level-2 t)))
-    (font-lock-add-keywords nil '(("\\<\\(TODO\\):" 1 'org-todo t)))
-    (font-lock-add-keywords nil '(("\\<\\(DONE\\):" 1 'org-done t))))
+  (dolist (mode coldnew/extra-font-lock-mode)
+    (font-lock-add-keywords
+     mode
+     '(("\\<\\(FIXME\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)
+       ("\\<\\(NOTE\\):" 1 'org-level-2 t)
+       ("\\<\\(TODO\\):" 1 'org-todo t)
+       ("\\<\\(DONE\\):" 1 'org-done t))
+     ))
+#+end_src
 
-  ;;  (add-hook 'coldnew-editor-mode-hook 'highlight-additional-keywords)
+** 替數字額外上色
+
+vim 預設也會對數字進行別的上色動作。
+
+#+begin_src emacs-lisp
+  (dolist (mode coldnew/extra-font-lock-mode)
+    (font-lock-add-keywords
+     mode
+     '(;; hexadecimal
+       ("\\b\\(0[00-9a-fA-F]+\\)" 1 font-lock-constant-face)
+       ;; float
+       ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
+       ;; int
+       ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
+       )))
+#+end_src
+
+** 替逸脫字元上色 (escape char)
+
+很多語言都有逸脫字元(escape char), 並且語法都是類似 c 語言那樣，這邊也將
+這些字元進行上色。a
+
+#+begin_src emacs-lisp
+  (dolist (mode coldnew/extra-font-lock-mode)
+    (font-lock-add-keywords
+     mode
+     '(("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
+        0 '(:foreground "seagreen2") prepend))))
 #+end_src
 
 ** 存檔後自動建立資料夾
@@ -3224,25 +3289,8 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 #+end_src
 ** Functions
 #+begin_src emacs-lisp
-  (defun highlight-fontify-numbers ()
-    "Use this function as a hook to fontify numbers as constant"
-    (font-lock-add-keywords nil
-                            '(
-                              ;; hexadecimal
-                              ("\\b\\(0[00-9a-fA-F]+\\)" 1 font-lock-constant-face)
-                              ;; float
-                              ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
-                              ;; int
-                              ("[\`^(\{\[,\+\-\*/\%=\s-]\\(-?[0-9]+U?L?L?\\)" 1 font-lock-constant-face)
-                              )))
 
-  (defun highlight-escape-char ()
-    "Use this function as a hook to fontify escape char."
-    (font-lock-add-keywords nil
-                            '(
-                              ("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
-                               0 'font-lock-escape-char-face prepend)
-                              )))
+
 
   (defun insert-space-between-english-chinese ()
     "Insert a space between English words and Chinese charactors"
