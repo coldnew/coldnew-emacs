@@ -2934,12 +2934,13 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 的做出一個新的 TAGS 檔案。
 
 #+begin_src emacs-lisp
-  (defun create-tags (regexp)
+  (defun create-tags ()
     "Create TAGS file in current directory."
     (interactive)
-    (let ((exp "") (dir ""))
-      (setq dir (read-from-minibuffer "generate tags in: " default-directory)
-            exp (read-from-minibuffer "suffix: "))
+    (let ((dir (read-from-minibuffer "generate tags in: "
+                                     (file-name-directory (or (buffer-file-name)
+                                         default-directory))))
+            (exp (read-from-minibuffer "suffix: ")))
       ;; if suffix is null, take it as c language
       (if (string-equal "" exp) (setq exp "*.[ch]"))
       (with-temp-buffer
@@ -5744,7 +5745,6 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
   (global-set-key (kbd "C-x C-i") 'indent-whole-buffer)
 
 #+end_src
-
 
 ** 關閉預設的按鍵設定
 
