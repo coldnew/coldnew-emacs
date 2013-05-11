@@ -3548,7 +3548,7 @@ code 變成灰色，這樣在看 code 時比較不會吃力。
                  (c-turn-on-eldoc-mode))))
 #+end_src
 
-*** 使用 cwarn-mode
+*** 使用 cwarn-mode 顯示可能有問題的代碼
 
 cwarn-mode 會顯示出 C/++ 下面一些致命的錯誤，以下面的程式碼來說
 
