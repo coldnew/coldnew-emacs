@@ -784,7 +784,7 @@ vlfi 提供了讓 emacs 更快速打開大檔案的能力，使用方式
 ** TODO 其他
 #+begin_src emacs-lisp
   (require 'rainbow-mode)
-  (require 'ace-jump-mode)
+
   (require 'smarter-compile)
   (require 'unicad)
   (require 'expand-region)
@@ -3358,6 +3358,9 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
   (vim:mode-map coldnew-editor-map (kbd "C-c C-e") 'eval-and-replace)
   (vim:mode-map coldnew-editor-map (kbd "C-x l") 'hl-line-mode)
   (vim:mode-map coldnew-editor-map (kbd "C-x L") 'linum-mode)
+
+  (when (require 'ace-jump-mode nil 'noerror)
+    (vim:mode-nmap coldnew-editor-map (kbd "<SPC>") 'ace-jump-mode))
 #+end_src
 
 ** 檔案相關 (N) (I)
@@ -3595,6 +3598,18 @@ cwarn-mode 會顯示出 C/++ 下面一些致命的錯誤，以下面的程式碼
             '(lambda ()
                  (cwarn-mode 1)))
 #+end_src
+*** 使用 ctypes 高亮 C/C++ 自行定義的 typedef
+
+ctypes 這個套件可以識別 C/C++ 裏面的 typdef 定義，自動對他們進行語法高
+亮。
+
+#+begin_src emacs-lisp
+  (add-hook 'c-mode-common-hook
+            '(lambda ()
+               (when (require 'ctypes nil 'noerror)
+                 (ctypes-auto-parse-mode 1))))
+#+end_src
+
 ** C
 *** 設定 C 語言 檔案的副檔名與對應的模式
 
