@@ -325,13 +325,25 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
   ;;(setq redisplay-dont-pause t)
 
   ;; xrelated srtting
+  ;;设定剪贴板的内容格式 适应Firefox
+  (set-clipboard-coding-system 'utf-8)
+  ;;允许emacs和外部其他程序的粘贴
   (setq x-select-enable-clipboard t)
+  ;;使用鼠标中键可以粘贴
+  (setq mouse-yank-at-point t)
+  ;; 当光标在行尾上下移动的时候，始终保持在行尾。
+  (setq track-eol t)
+  ;; 当浏览 man page 时，直接跳转到 man buffer。
+  (setq Man-notify-method 'pushy)
   (setq select-active-regions t)
   (setq x-gtk-use-system-tooltips nil)    ; disable gtk-tooltip
 
   (setq max-lisp-eval-depth '40000)
   (setq max-specpdl-size 1000)  ; default is 1000, reduce the backtrace level
   (setq debug-on-error t)    ; now you should get a backtrace
+  ;;设置 sentence-end 可以识别中文标点。不用在 fill 时在句号后插入两个空格。
+  (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
+  (setq sentence-end-double-space nil)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -3536,6 +3548,53 @@ code 變成灰色，這樣在看 code 時比較不會吃力。
                  (c-turn-on-eldoc-mode))))
 #+end_src
 
+*** 使用 cwarn-mode
+
+cwarn-mode 會顯示出 C/++ 下面一些致命的錯誤，以下面的程式碼來說
+
+#+begin_src c :tangle no
+  void test ()
+  {
+          if (x = y);
+                 printf("This is error example\n");
+  }
+#+end_src
+
+這段程式碼包含了兩種致命的錯誤。第一個是 *=* 只有在指派變數的值時才會
+使用到，而不會存在於判斷式裏面，這邊應該要修改成 *==* 。
+
+另外一個問題是，這邊多添加了不必要的分號在 if 判斷式的尾巴，這會讓 if
+判斷式出錯，拿掉就沒問題了。
+
+簡單的來說， cwarn-mode 包含以下幾種語法檢查:
+
+  - Semicolons right after conditions and loops
+
+    #+BEGIN_SRC c :tangle no
+      if (x == y);
+    #+END_SRC
+
+  - Assignments in tests
+
+    #+BEGIN_SRC c :tangle no
+      void test() {
+              if (a = b) foo();
+      }
+    #+END_SRC
+
+  - Functions with reference parameters
+
+    #+begin_src c++ :tangle no
+      void funct(string &p) {
+    #+end_src
+
+這邊將 cwarn-mode 加入到 c-mode-common-hook 裏面。
+
+#+begin_src emacs-lisp
+  (add-hook 'c-mode-common-hook
+            '(lambda ()
+                 (cwarn-mode 1)))
+#+end_src
 ** C
 *** 設定 C 語言 檔案的副檔名與對應的模式
 
