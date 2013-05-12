@@ -3379,14 +3379,29 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 
 ** 緩衝區編輯 (I)
 
-| 按鍵    | 命令         | 用途                 |
-|---------+--------------+----------------------|
-| C-x C-y | yank-n-times | 多次貼上             |
-| C-x C-l | recenter     | 將游標至於緩衝區中間 |
+| 按鍵    | 命令                | 用途                 |
+|---------+---------------------+----------------------|
+| C-x C-y | yank-n-times        | 多次貼上             |
+| C-x C-l | recenter            | 將游標至於緩衝區中間 |
+| C-x C-i | indent-whole-buffer | 縮排整個緩衝區       |
+
 
 #+begin_src emacs-lisp
   (vim:mode-imap coldnew-editor-map (kbd "C-x C-y")  'yank-n-times)
   (vim:mode-imap coldnew-editor-map (kbd "C-x C-l")  'recenter)
+  (vim:mode-imap coldnew-editor-map (kbd "C-x C-i")  'indent-whole-buffer)
+#+end_src
+
+** 字體調整 (N) (I)
+
+| 按鍵 | 命令                | 用途               |
+|------+---------------------+--------------------|
+| C-=  | text-scale-increase | 放大緩衝區內的字體 |
+| C-   | text-scale-decrease | 縮小緩衝區內的字體 |
+
+#+begin_src emacs-lisp
+  (vim:mode-map coldnew-editor-map (kbd "C-=")  'text-scale-increase)
+  (vim:mode-map coldnew-editor-map (kbd "C--")  'text-scale-decrease)
 #+end_src
 
 * Cedet                                                                :cede:
@@ -5798,9 +5813,6 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 | C-d          | hyngry-delete-forward  | 向右貪婪刪除                               |
 | C-l          | hyngry-delete-backward | 向左貪婪刪除                               |
 | C-;          | iedit-mode             | 快速尋找和游標底下相同的文字，進行即時替換 |
-| C-=          | text-scale-increase    | 放大字體                                   |
-| C--          | text-scale-decrease    | 縮小字體                                   |
-| C-x C-i      | indent-whole-buffer    | 縮排整個緩衝區                             |
 
 #+begin_src emacs-lisp
 
@@ -5813,10 +5825,6 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
   (global-set-key (kbd "C-d") 'hungry-delete-forward)
   (global-set-key (kbd "C-l") 'hungry-delete-backward)
   (global-set-key (kbd "C-;") 'iedit-mode)
-  (global-set-key (kbd "C-=") 'text-scale-increase)
-  (global-set-key (kbd "C--") 'text-scale-decrease)
-  (global-set-key (kbd "C-x C-i") 'indent-whole-buffer)
-
 #+end_src
 
 ** 關閉預設的按鍵設定
@@ -5835,13 +5843,11 @@ Function key 設置常用的命令。
 |-----+---------------------|
 | F1  | woman               |
 | F2  | shell-pop           |
-| F3  | call-last-kcd-macro |
 | F4  | sr-speedbar-toggle  |
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "<f1>")     'woman)
   (global-set-key (kbd "<f2>")     'shell-pop)
-  (global-set-key (kbd "<f3>")     'call-last-kbd-macro)
   (global-set-key (kbd "<f4>")     'sr-speedbar-toggle)
 #+end_src
 
@@ -5900,22 +5906,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x C-d")  'dired)
   (global-set-key (kbd "C-x F") 'fullscreen-window)
   (global-set-key (kbd "C-x s") 'shell-command)
-#+end_src
-
-*** 轉換
-| 按鍵    | 命令                     | 用途                             |
-|---------+--------------------------+----------------------------------|
-| C-x c c | capitalize-word-backward | 將前面的 word 第一個字母大寫     |
-| C-x c l | downcase-word-backward   | 將前面的 word 變成小寫           |
-| C-x c u | upcase-word-backward     | 將前面的 word 變成大寫           |
-| C-x c x | dos2unix                 | 將目前的檔案轉換成 unix 檔案型式 |
-| C-x c d | unix2dos                 | 將目前的檔案轉換成 dos 檔案型式  |
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x c c") 'capitalize-word-backward)
-  (global-set-key (kbd "C-x c l") 'downcase-word-backward)
-  (global-set-key (kbd "C-x c u") 'upcase-word-backward)
-  (global-set-key (kbd "C-x c x") 'dos2unix)
-  (global-set-key (kbd "C-x c d") 'unix2dos)
 #+end_src
 
 ** Ctrl-r 暫存器、書籤、快速跳轉、矩型處理
