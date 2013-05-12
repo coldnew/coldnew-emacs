@@ -3231,12 +3231,13 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
   (setq yas/prompt-functions '(yas/dropdown-prompt yas/ido-prompt yas/completing-prompt))
 #+end_src
 *** 增加類似 org-mode 那樣使用 < 進行補全的方法 (easy-template)
+
 #+begin_src emacs-lisp
   (defadvice yas-expand (around coldnew/major-mode-expand activate)
     "Try to complete a structure template before point like org-mode does.
     This looks for strings like \"<e\" on an otherwise empty line and
     expands them.
-    Before use this function, you muse setup `major-mode-name'-expand-alist variable.
+    Before use this function, you must setup `major-mode-name'-expand-alist variable.
 
     Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
     in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
@@ -3254,8 +3255,7 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
             (funcall (cdr-safe a))
           (insert (cdr-safe a)))
         t)
-      ad-do-it
-      ))
+      ad-do-it))
 #+end_src
 *** Functions
 #+begin_src emacs-lisp
