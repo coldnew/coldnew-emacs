@@ -3404,7 +3404,7 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
   (vim:mode-map coldnew-editor-map (kbd "C--")  'text-scale-decrease)
 #+end_src
 
-* Cedet                                                                :cede:
+* Cedet                                                                :cedet:
 #+begin_src emacs-lisp
   (require 'semantic)
 
