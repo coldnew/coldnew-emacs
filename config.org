@@ -3595,8 +3595,7 @@ cwarn-mode 會顯示出 C/++ 下面一些致命的錯誤，以下面的程式碼
 
 #+begin_src emacs-lisp
   (add-hook 'c-mode-common-hook
-            '(lambda ()
-                 (cwarn-mode 1)))
+            '(lambda () (cwarn-mode 1)))
 #+end_src
 *** 使用 ctypes 高亮 C/C++ 自行定義的 typedef
 
