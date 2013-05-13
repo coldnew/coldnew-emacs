@@ -791,6 +791,8 @@ vlfi 提供了讓 emacs 更快速打開大檔案的能力，使用方式
   (require 'rainbow-delimiters)
 #+end_src
 
+sequential-command.el ??
+
 * 自定義函式/方法                                                  :function:
 
 我所自定義或是我的 emacs 設定檔需要用到的 function。
