@@ -61,6 +61,7 @@
 "rainbow-mode"
 "recentf-ext"
 "s"
+"sequential-command"
 "shell-pop"
 "simple-httpd"
 "slime"
