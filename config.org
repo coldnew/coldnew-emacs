@@ -781,16 +781,6 @@ vlfi 提供了讓 emacs 更快速打開大檔案的能力，使用方式
   (require 'vlfi)
 #+end_src
 
-** TODO 其他
-#+begin_src emacs-lisp
-  (require 'rainbow-mode)
-
-  (require 'smarter-compile)
-  (require 'unicad)
-  (require 'expand-region)
-  (require 'rainbow-delimiters)
-#+end_src
-
 ** 使用 sequential-command 來整合許多命令
 
 #+begin_src emacs-lisp
@@ -817,6 +807,20 @@ sequential-command 這個套件提供了整合多個命令到一個命令的能�
 想要看更多的例子，可以見以下連結:
 
 http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
+
+** 使用 unicad 讓 emacs 自動識別檔案編碼
+
+#+begin_src emacs-lisp
+  (require 'unicad)
+#+end_src
+
+** TODO 其他
+#+begin_src emacs-lisp
+  (require 'rainbow-mode)
+  (require 'smarter-compile)
+  (require 'expand-region)
+  (require 'rainbow-delimiters)
+#+end_src
 
 * 自定義函式/方法                                                  :function:
 
