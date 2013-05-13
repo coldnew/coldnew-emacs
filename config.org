@@ -795,11 +795,28 @@ vlfi 提供了讓 emacs 更快速打開大檔案的能力，使用方式
 
 我所自定義或是我的 emacs 設定檔需要用到的 function。
 
-** List Processing
+** 排序
+*** 使用正規表達式排序行
+
+#+begin_src emacs-lisp
+  (defun sort-lines-regex (reg)
+    "This is a function to sort lines by regex,
+  which are placing near by each other."
+    (interactive)
+    (save-excursion
+      (beginning-of-buffer)
+      (re-search-forward reg)
+      (let ((point (point-to-beginnnig-line)))
+        (while (re-search-forward reg nil t))
+        (sort-lines nil point (point)))))
+#+end_src
+
+** TODO 需整理
+*** List Processing
 
 處理 List 所用的 function。
 
-*** flatten a list
+**** flatten a list
 
 flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 list。
 舉例來說，假如目前有這樣一個 list:
@@ -822,7 +839,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
           (t (mapcan #'flatten structure))))
 #+end_src
 
-*** List to string
+**** List to string
 
 將一個 list 變成字串回傳。
 
@@ -837,11 +854,11 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
       result))
 #+end_src
 
-** Search
+*** Search
 
 搜尋相關的 function。
 
-*** search-backward-to-char
+**** search-backward-to-char
 
 向後搜尋一個字元。
 #+begin_src emacs-lisp
@@ -851,7 +868,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
       (backward-char 1)))
 #+end_src
 
-*** search-forward-to-char
+**** search-forward-to-char
 
 向前搜尋一個字元。
 #+begin_src emacs-lisp
@@ -861,7 +878,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
       (forward-char 1)))
 #+end_src
 
-*** recursive-find-file
+**** recursive-find-file
 
 遞迴尋找檔案，若在當前目錄找不到此檔案，則去其父目錄進行尋找。
 如果該檔案或是目錄不存在，則回傳 nil.
@@ -878,11 +895,11 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
           (coldnew/recursive-find-file file (expand-file-name ".." directory))))))
 #+end_src
 
-** 測試檔案、變數值
+*** 測試檔案、變數值
 
 測試用的 function，和測試用的變數很像，但是他允許參數的輸入。
 
-*** 測試這個字體在系統內是否存在。
+**** 測試這個字體在系統內是否存在。
 
 #+begin_src emacs-lisp
   (defun font-exist-p (fontname)
@@ -891,26 +908,26 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
         nil t))
 #+end_src
 
-** 檔案相關
+*** 檔案相關
 
-*** 查詢檔案大小
+**** 查詢檔案大小
 #+begin_src emacs-lisp
   (defun file-size (filename)
     "Return the size in bytes of file named FILENAME, as in integer.
   Returns nil if no such file."
     (nth 7 (file-attributes filename)))
 #+end_src
-*** 大量打開檔案
+**** 大量打開檔案
 
 #+begin_src emacs-lisp
   (defun find-files (files)
     "Open the given files"
     (foreach (f files) (find-file f)))
 #+end_src
-** Convert
+*** Convert
 
 進行轉換用的 function。
-*** 將輸入的 buffer (DOS 格式)　轉換成 UNIX 格式。　
+**** 將輸入的 buffer (DOS 格式)　轉換成 UNIX 格式。　
 #+begin_src emacs-lisp
   (defun dos->unix (buf)
     "Convert buffer file from dos file to unix file."
@@ -920,7 +937,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
       (goto-char(point-min))
       (while (search-forward "\r" nil t) (replace-match ""))))
 #+end_src
-*** 將輸入的 buffer (UNIX 格式)　轉換成 DOS 格式。　
+**** 將輸入的 buffer (UNIX 格式)　轉換成 DOS 格式。　
 #+begin_src emacs-lisp
   (defun unix->dos (buf)
     "Convert buffer file from unix file to dos file."
@@ -930,7 +947,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
       (goto-char(point-min))
       (while (search-forward "\n" nil t) (replace-match "\r\n"))))
 #+end_src
-*** 將檔案變成字串，此 function 比較適用於該檔案只有一行（或少數幾行）的情況。
+**** 將檔案變成字串，此 function 比較適用於該檔案只有一行（或少數幾行）的情況。
 #+begin_src emacs-lisp
   (defun file->string (file)
     "Convert file to string in buffer with quote."
@@ -939,7 +956,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
         (insert-file-contents file)
         (buffer-string))))
 #+end_src
-*** 十進位轉換成十六進位
+**** 十進位轉換成十六進位
 #+begin_src emacs-lisp
   (defun dec->hex (decimal)
     "Convert decimal to hexdecimal number."
@@ -956,7 +973,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
        (t (setq hexstr "0x")))
       (format "%s%02X" hexstr decimal)))
 #+end_src
-*** 十六進位轉換成十進位
+**** 十六進位轉換成十進位
 #+begin_src emacs-lisp
   (defun hex->dec (hex)
     "Convert hexdecimal number or string to digit-number."
@@ -974,8 +991,8 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
        (replace-regexp-in-string hex-regexp "" hex)
        16)))
 #+end_src
-** Sort
-*** quicksort
+*** Sort
+**** quicksort
 #+begin_src emacs-lisp
   (defun quicksort (lst)
     "Implement the quicksort algorithm."
@@ -988,8 +1005,8 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
                 (list spl)
                 (quicksort (remove-if smalp rst))))))
 #+end_src
-** Buffer
-*** get-buffers-matching-mode
+*** Buffer
+**** get-buffers-matching-mode
 取得 major-mode 和要求符合的所有 buffer，假如我們希望可以列出所有為
 emacs-lisp-mode 的 buffer，可以這樣做
 #+begin_src emacs-lisp :tangle no
@@ -1006,7 +1023,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
               (add-to-list 'buffer-mode-matches buf))))
       buffer-mode-matches))
 #+end_src
-*** show-buffer-major-mode
+**** show-buffer-major-mode
 顯示 buffer 目前所處於的 major-mode
 
 #+begin_src emacs-lisp :tangle no
@@ -1018,9 +1035,9 @@ emacs-lisp-mode 的 buffer，可以這樣做
     "Returns the major mode associated with a buffer."
     (with-current-buffer buffer-or-string major-mode))
 #+end_src
-** System
+*** System
 和系統相關的 function。
-*** get-ip-address
+**** get-ip-address
 取得目前的 IP 位置，預設為 eth0。（此 function 不能用於 windows 上）
 #+begin_src emacs-lisp
   (defun get-ip-address (&optional dev)
@@ -1028,7 +1045,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
     (let ((dev (if dev dev "eth0")))
       (format-network-address (car (network-interface-info dev)) t)))
 #+end_src
-** Date
+*** Date
 #+begin_src emacs-lisp
   (defun current-date-time ()
     "return current date in `%Y-%m-%d' format, ex:`2012-04-25'."
@@ -1048,7 +1065,7 @@ emacs-lisp-mode 的 buffer，可以這樣做
            (day-index (nth 6 (decode-time (encode-time 0 0 0 day month year)))))
       (nth day-index day-names)))
 #+end_src
-** other
+*** other
 #+begin_src emacs-lisp
   (defun map-define-key (mode-map keylist fname)
     "Like define-key but the key arg is a list that should be mapped over.
