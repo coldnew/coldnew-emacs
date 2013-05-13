@@ -4423,7 +4423,6 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
           (message "Indented buffer.")))))
 #+end_src
 
-
 ** 檔案處理                                                           :file:
 
 這編放的是和檔案處理，或是和檔案相關的緩衝區處理命令。
