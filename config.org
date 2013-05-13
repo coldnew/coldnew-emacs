@@ -3108,7 +3108,8 @@ vim 預設也會對數字進行別的上色動作。
   (dolist (mode coldnew/extra-font-lock-mode)
     (font-lock-add-keywords
      mode
-     '(;; hexadecimal
+     '(
+       ;; hexadecimal
        ("\\b\\(0[00-9a-fA-F]+\\)" 1 font-lock-constant-face)
        ;; float
        ("\\b\\([+-]?[0-9]+\\.[0-9]+\\)" 1 font-lock-constant-face)
@@ -5852,11 +5853,11 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 ** Function key prefix
 Function key 設置常用的命令。
 
-| Key | Command             |
-|-----+---------------------|
-| F1  | woman               |
-| F2  | shell-pop           |
-| F4  | sr-speedbar-toggle  |
+| Key | Command            |
+|-----+--------------------|
+| F1  | woman              |
+| F2  | shell-pop          |
+| F4  | sr-speedbar-toggle |
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "<f1>")     'woman)
