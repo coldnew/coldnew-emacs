@@ -4506,6 +4506,19 @@ This is to update existing buffers after a Git pull of their underlying files."
     (find-file filename))
 #+end_src
 
+*** TODO 使用 root 權限修改目前正在編輯的檔案
+
+#+begin_src emacs-lisp
+  (defun edit-current-file-as-root ()
+    "Edit the file that is associated with the current buffer as root"
+    (interactive)
+    (if (buffer-file-name)
+        (progn
+          (setq file (concat "/sudo:root@localhost:" (buffer-file-name)))
+          (find-file file))
+      (message "Current buffer does not have an associated file.")))
+#+end_src
+
 ** 視窗操作                                                         :window:
 
 *** 將整個 emacs 全螢幕
