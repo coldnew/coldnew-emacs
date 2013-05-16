@@ -3414,16 +3414,22 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 
 ** 檔案相關 (N) (I)
 
-| 按鍵    | 命令                | 用途               |
-|---------+---------------------+--------------------|
-| C-x C-f | lusty-file-explorer | 查詢並打開檔案     |
-| C-x C-r | lusty-sudo-explorer | 使用 sudo 打開檔案 |
-| C-x C-s | save-buffer-always  | 儲存檔案           |
+| 按鍵    | 命令                   | 用途                         |
+|---------+------------------------+------------------------------|
+| C-x C-f | lusty-file-explorer    | 查詢並打開檔案               |
+| C-x C-r | lusty-sudo-explorer    | 使用 sudo 打開檔案           |
+| C-x C-s | save-buffer-always     | 儲存檔案                     |
+| C-x f x | set-file-executable    | 為目前檔案加上可執行權限     |
+| C-x f c | clone-file-and-open    | 複製目前檔案到其他檔案並打開 |
+| C-x f d | delete-file-and-buffer | 刪除目前的檔案與緩衝區       |
 
 #+begin_src emacs-lisp
   (vim:mode-map coldnew-editor-map (kbd "C-x C-f")  'lusty-file-explorer)
   (vim:mode-map coldnew-editor-map (kbd "C-x C-r")  'lusty-sudo-explorer)
   (vim:mode-map coldnew-editor-map (kbd "C-x C-s")  'save-buffer-always)
+  (vim:mode-map coldnew-editor-map (kbd "C-x fx")  'set-file-executable)
+  (vim:mode-map coldnew-editor-map (kbd "C-x fc")  'clone-file-and-open)
+  (vim:mode-map coldnew-editor-map (kbd "C-x fd")  'delete-file-and-buffer)
 #+end_src
 
 ** 緩衝區編輯 (I)
@@ -4437,19 +4443,24 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
 
 這編放的是和檔案處理，或是和檔案相關的緩衝區處理命令。
 
-*** 刪除在緩衝區內的檔案，並移除緩衝區
+*** 刪除目前的檔案與 buffer
 
-這個命令是用來移除已經在緩衝區內的的檔案，並且將該緩衝區也關閉。
+有些時候我們不只是想要關掉緩衝區，同時還要順便把這個檔案砍了，
+使用這個命令可以同時將這兩個想法完成。
 
 #+begin_src emacs-lisp
-  (defun delete-this-file ()
-    "Delete the current file, and kill the buffer."
+  (defun delete-file-and-buffer ()
+    "Removes file connected to current buffer and kills buffer."
     (interactive)
-    (or (buffer-file-name) (error "No file is currently being edited"))
-    (when (yes-or-no-p (format "Really delete '%s'?"
-                               (file-name-nondirectory buffer-file-name)))
-      (delete-file (buffer-file-name))
-      (kill-this-buffer)))
+    (let ((filename (buffer-file-name))
+          (buffer (current-buffer))
+          (name (buffer-name)))
+      (if (not (and filename (file-exists-p filename)))
+          (error "Buffer '%s' is not visiting a file!" name)
+        (when (yes-or-no-p "Are you sure you want to remove this file? ")
+          (delete-file filename)
+          (kill-buffer buffer)
+          (message "File '%s' successfully removed" filename)))))
 #+end_src
 
 *** 使用瀏覽器觀看目前的檔案
@@ -4484,22 +4495,6 @@ This is to update existing buffers after a Git pull of their underlying files."
               (revert-buffer t t)
               (message "Reverted %s\n" (buffer-file-name))))
           (buffer-list))))
-#+end_src
-
-*** 刪除目前的檔案與 buffer
-
-有些時候我們不只是想要關掉緩衝區，同時還要順便把這個檔案砍了，
-使用這個命令可以同時將這兩個想法完成。
-
-#+begin_src emacs-lisp
-  (defun delete-file-and-buffer ()
-    "Kills the current buffer and deletes the file it is visiting"
-    (interactive)
-    (let ((filename (buffer-file-name)))
-      (when filename
-        (delete-file filename)
-        (message "Deleted file %s" filename)))
-    (kill-buffer))
 #+end_src
 
 *** 複製並開啟檔案
