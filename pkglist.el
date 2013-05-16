@@ -29,6 +29,7 @@
 "gitconfig-mode"
 "gitignore-mode"
 "go-mode"
+"golden-ratio"
 "google-weather"
 "guess-offset"
 "helm-etags-plus"

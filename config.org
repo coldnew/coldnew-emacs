@@ -5086,6 +5086,13 @@ winner-mode 是 emacs 自帶的窗口佈局管理器，可以對窗口的改變�
   (global-set-key (kbd "M-]") 'winner-redo)
 #+end_src
 
+** golden-ratio
+
+#+begin_src emacs-lisp
+  (when (require 'golden-ratio nil 'noerror)
+    (golden-ratio-mode 1))
+#+end_src
+
 * 聊天軟體                                                             :chat:
 ** IRC
 
