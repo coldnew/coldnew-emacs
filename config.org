@@ -4253,6 +4253,16 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
       ))
 #+end_src
 
+** 顯示檔案的權限
+
+#+begin_src emacs-lisp
+  (defun mode-line-buffer-permissions ()
+    "Get buffer-file permissions."
+    (when (buffer-file-name)
+      (format "-%04o-" (file-modes (buffer-file-name)))))
+#+end_src
+
+
 ** 樣式設定
 
 自己定義  mode-line 的樣式。
@@ -4273,6 +4283,7 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
                        (:eval (evil-mode-string)))
                      "   "
                      mode-line-buffer-identification
+                     " " (:eval (mode-line-buffer-permissions))
                      "   "
                      ;; major-mode name
                      (:eval (mode-line-major-mode))
