@@ -4077,9 +4077,27 @@ elpy 與 rope 的 python 套件。
 
 : pip install elpy rope
 
-接著使用  elpa 來下載 elpy
+接著在 *scratch* 緩衝區對以下程式進行求值(eval)
+
+#+begin_src emacs-lisp :tangle no
+  (add-to-list 'package-archives
+               '("marmalade" . "http://marmalade-repo.org/packages/"))
+#+end_src
+
+接著執行 M-x package-refresh-contents 來載入新的套件資訊，並安裝 elpy。
 
 : package-install elpy
+
+最後，在 .emacs 裏面加上下面兩行
+
+#+begin_src emacs-lisp :tnagle no
+  (package-initialize)
+#+end_src
+
+#+begin_src emacs-lisp
+  (when (require 'elpy nil 'noerror)
+    (elpy-enable))
+#+end_src
 
 *** pymacs
 **** 設定檔起始
