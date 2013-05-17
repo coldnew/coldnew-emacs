@@ -4074,7 +4074,7 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
 
 - 關於 elpy 以及安裝
 
-[[https://github.com/jorgenschaefer/elpy][  elpy]] 是一個用來增強 python 編輯能力的套件，使用這個套件之前必須先安裝
+  [[https://github.com/jorgenschaefer/elpy][elpy]] 是一個用來增強 python 編輯能力的套件，使用這個套件之前必須先安裝
   elpy 與 rope 的 python 套件。
 
   : pip install elpy rope
