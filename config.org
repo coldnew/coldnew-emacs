@@ -4072,32 +4072,36 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
 
 *** 使用 elpy 增強 emacs 編輯 python 的能力
 
-[[https://github.com/jorgenschaefer/elpy][elpy]] 是一個用來增強 python 編輯能力的套件，使用這個套件之前必須先安裝
-elpy 與 rope 的 python 套件。
+- 關於 elpy 以及安裝
 
-: pip install elpy rope
+[[https://github.com/jorgenschaefer/elpy][  elpy]] 是一個用來增強 python 編輯能力的套件，使用這個套件之前必須先安裝
+  elpy 與 rope 的 python 套件。
 
-接著在 *scratch* 緩衝區對以下程式進行求值(eval)
+  : pip install elpy rope
 
-#+begin_src emacs-lisp :tangle no
-  (add-to-list 'package-archives
-               '("marmalade" . "http://marmalade-repo.org/packages/"))
-#+end_src
+  接著在 *scratch* 緩衝區對以下程式進行求值(eval)
 
-接著執行 M-x package-refresh-contents 來載入新的套件資訊，並安裝 elpy。
+  #+begin_src emacs-lisp :tangle no
+    (add-to-list 'package-archives
+                 '("marmalade" . "http://marmalade-repo.org/packages/"))
+  #+end_src
 
-: package-install elpy
+  接著執行 M-x package-refresh-contents 來載入新的套件資訊，並安裝 elpy。
 
-最後，在 .emacs 裏面加上下面兩行
+  : package-install elpy
 
-#+begin_src emacs-lisp :tnagle no
-  (package-initialize)
-#+end_src
+  最後，在 .emacs 裏面加上下面兩行
 
-#+begin_src emacs-lisp
-  (when (require 'elpy nil 'noerror)
-    (elpy-enable))
-#+end_src
+  #+begin_src emacs-lisp :tnagle no
+    (package-initialize)
+  #+end_src
+
+  #+begin_src emacs-lisp
+    (when (require 'elpy nil 'noerror)
+      (elpy-enable))
+  #+end_src
+
+
 
 *** pymacs
 **** 設定檔起始
