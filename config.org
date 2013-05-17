@@ -4064,10 +4064,23 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
 
 ** Python
 *** 設定 Python 檔案的副檔名與對應的模式
+
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.py" . python-mode))
   (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 #+end_src
+
+*** 使用 elpy 增強 emacs 編輯 python 的能力
+
+[[https://github.com/jorgenschaefer/elpy][elpy]] 是一個用來增強 python 編輯能力的套件，使用這個套件之前必須先安裝
+elpy 與 rope 的 python 套件。
+
+: pip install elpy rope
+
+接著使用  elpa 來下載 elpy
+
+: package-install elpy
+
 *** pymacs
 **** 設定檔起始
 #+begin_src emacs-lisp

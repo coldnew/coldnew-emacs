@@ -20,6 +20,7 @@
 "ecb-snapshot"
 "egg"
 "eldoc-extension"
+"elpy"
 "elscreen"
 "erc-highlight-nicknames"
 "evil-elscreen"
