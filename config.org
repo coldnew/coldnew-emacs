@@ -2902,11 +2902,7 @@ some packages conflict with org-mode
 #+end_src
 * 書籤與暫存器                                                     :bookmark:
 ** Bookmark 說明
-:PROPERTIES:
-:tangle:   no
-:END:
 
-*** 預設按鍵
 | 快捷鍵  | 命令                | 用途                                        |
 |---------+---------------------+---------------------------------------------|
 | C-x r m | bookmark-set        | 設置新的書籤                                |
@@ -2924,6 +2920,7 @@ some packages conflict with org-mode
 #+begin_src emacs-lisp
   (require 'bm)
 #+end_src
+
 ** 快速跳轉到檔案                                                 :register:
 
 使用 Ctrl-x r j <char> 就可以進行快速跳轉至檔案，其中 <char> 為以下所設定。
@@ -2936,7 +2933,7 @@ some packages conflict with org-mode
            ;; TODO.org
            (?w (file . "~/SparkleShare/org/Weintek.org"))
            ;; Note.org
-           (?n (file . "~/SparkleShare/org//Note.org"))
+           (?n (file . "~/SparkleShare/org/Note.org"))
            ;; blog.org
            (?b (file . "~/SparkleShare/coldnew.github.com/blog-src/blog.org"))
            ))
