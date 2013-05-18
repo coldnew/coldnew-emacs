@@ -889,6 +889,24 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
     (foreach (f files) (find-file f)))
 #+end_src
 
+*** 遞迴尋找檔案
+
+若在當前目錄找不到此檔案，則去其父目錄進行尋找。
+如果該檔案或是目錄不存在，則回傳 nil.
+
+#+begin_src emacs-lisp
+  (defun recursive-find-file (file &optional directory)
+    "Find the first FILE in DIRECTORY or it's parents.
+  If file does not exist return nil."
+    (let ((directory (or directory
+                         (file-name-directory (buffer-file-name))
+                         (pwd))))
+      (if (file-exists-p (expand-file-name file directory))
+          (expand-file-name file directory)
+        (unless (string= "/" directory)
+          (recursive-find-file file (expand-file-name ".." directory))))))
+#+end_src
+
 ** 系統相關
 
 和系統相關的 function。
@@ -1000,6 +1018,38 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
       result))
 #+end_src
 
+** 緩衝區相關
+
+*** 取得 major-mode 和要求符合的所有 buffer
+
+假如我們希望可以列出所有為 emacs-lisp-mode 的 buffer，可以這樣做
+
+#+begin_src emacs-lisp :tangle no
+  (get-buffers-matching-mode 'emacs-lisp-mode)
+#+end_src
+
+#+begin_src emacs-lisp
+  (defun get-buffers-matching-mode (mode)
+    "Returns a list of buffers where their major-mode is equal to MODE"
+    (let ((buffer-mode-matches '()))
+      (dolist (buf (buffer-list))
+        (with-current-buffer buf
+          (if (eq mode major-mode)
+              (add-to-list 'buffer-mode-matches buf))))
+      buffer-mode-matches))
+#+end_src
+
+*** 顯示 buffer 目前所處於的 major-mode
+
+#+begin_src emacs-lisp :tangle no
+  (show-buffer-major-mode "*scratch*")
+#+end_src
+
+#+begin_src emacs-lisp
+  (defun show-buffer-major-mode (buffer-or-string)
+    "Returns the major mode associated with a buffer."
+    (with-current-buffer buffer-or-string major-mode))
+#+end_src
 
 ** TODO 需整理
 *** List Processing
@@ -1050,53 +1100,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
       (forward-char 1)))
 #+end_src
 
-**** recursive-find-file
 
-遞迴尋找檔案，若在當前目錄找不到此檔案，則去其父目錄進行尋找。
-如果該檔案或是目錄不存在，則回傳 nil.
-#+begin_src emacs-lisp
-  (defun coldnew/recursive-find-file (file &optional directory)
-    "Find the first FILE in DIRECTORY or it's parents.
-  If file does not exist return nil."
-    (let ((directory (or directory
-                         (file-name-directory (buffer-file-name))
-                         (pwd))))
-      (if (file-exists-p (expand-file-name file directory))
-          (expand-file-name file directory)
-        (unless (string= "/" directory)
-          (coldnew/recursive-find-file file (expand-file-name ".." directory))))))
-#+end_src
-
-*** Buffer
-**** get-buffers-matching-mode
-取得 major-mode 和要求符合的所有 buffer，假如我們希望可以列出所有為
-emacs-lisp-mode 的 buffer，可以這樣做
-#+begin_src emacs-lisp :tangle no
-  (get-buffers-matching-mode 'emacs-lisp-mode)
-#+end_src
-
-#+begin_src emacs-lisp
-  (defun get-buffers-matching-mode (mode)
-    "Returns a list of buffers where their major-mode is equal to MODE"
-    (let ((buffer-mode-matches '()))
-      (dolist (buf (buffer-list))
-        (with-current-buffer buf
-          (if (eq mode major-mode)
-              (add-to-list 'buffer-mode-matches buf))))
-      buffer-mode-matches))
-#+end_src
-**** show-buffer-major-mode
-顯示 buffer 目前所處於的 major-mode
-
-#+begin_src emacs-lisp :tangle no
-  (show-buffer-major-mode "*scratch*")
-#+end_src
-
-#+begin_src emacs-lisp
-  (defun show-buffer-major-mode (buffer-or-string)
-    "Returns the major mode associated with a buffer."
-    (with-current-buffer buffer-or-string major-mode))
-#+end_src
 *** Date
 #+begin_src emacs-lisp
   (defun current-date-time ()
