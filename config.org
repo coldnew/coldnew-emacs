@@ -3134,7 +3134,7 @@ emacs 有一些 major 無法和 font-lock-add-keywords 相處融洽，
       erlang-mode sgml-mode qml-mode
       slime-mode haskell-mode tuareg-mode lua-mode
       pascal-mode fortran-mode prolog-mode asm-mode
-      sml-mode org-mode
+      sml-mode
       )
     "Major mode that i will add more font-lock")
 #+end_src
