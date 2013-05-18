@@ -3477,7 +3477,7 @@ yasnippet 是一個非常強大的樣板 (template) 系統，在現在的 emacs 
 | C-l      | hyngry-delete-backward | 向左貪婪刪除 |
 | <delete> | hyngry-delete-backward | 向左貪婪刪除 |
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (eval-after-load 'hungry-delete
     '(progn
        (vim:mode-imap coldnew-editor-map (kbd "C-d") 'hungry-delete-forward)
@@ -3490,11 +3490,21 @@ yasnippet 是一個非常強大的樣板 (template) 系統，在現在的 emacs 
 | C-/  | undo-tree-undo | undo |
 | M-/  | undo-tree-redo | redo |
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (eval-after-load 'undo-tree
     '(progn
       (vim:mode-imap coldnew-editor-map (kbd "C-/") 'undo-tree-undo)
       (vim:mode-imap coldnew-editor-map (kbd "M-/") 'undo-tree-redo)))
+#+end_src
+
+| 按鍵 | 命令       | 用途                       |
+|------+------------+----------------------------|
+| C-;  | iedit-mode | 快速修改緩衝區內相同的文字 |
+
+#+begin_src emacs-lisp
+  (eval-after-load 'iedit
+    '(progn
+       (vim:mode-imap coldnew-editor-map (kbd "C-;") 'iedit-mode)))
 #+end_src
 
 ** 字體調整 (N) (I)
@@ -6044,7 +6054,7 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
   (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
   (global-set-key (kbd "C-M-.") 'end-of-buffer)
 
-  (global-set-key (kbd "C-;") 'iedit-mode)
+
 #+end_src
 
 ** 關閉預設的按鍵設定
@@ -6117,7 +6127,6 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
 
   (global-set-key (kbd "C-x C-b")  'ibuffer)
-
   (global-set-key (kbd "C-x C-d")  'dired)
   (global-set-key (kbd "C-x F") 'fullscreen-window)
   (global-set-key (kbd "C-x s") 'shell-command)
