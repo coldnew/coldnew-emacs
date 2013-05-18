@@ -1576,6 +1576,7 @@ global-auto-complete-mode 這個 function 只具有切換全部 buffer 的自動
                              (auto-complete-mode 1))
                          ))
   (real-global-auto-complete-mode t)
+  (global-auto-complete-mode t)
 #+end_src
 
 ** TODO 位分類
@@ -3356,8 +3357,6 @@ yasnippet 是一個非常強大的樣板 (template) 系統，在現在的 emacs 
   (setq next-line-add-newlines t ) ;
   (setq shift-select-mode      t ) ; Enable shift-select mode
 
-  ;; Enable auto-complete-mode
-  (global-auto-complete-mode t)
   ;; Enable delete-selection-mode
   (delete-selection-mode t)
 #+end_src
