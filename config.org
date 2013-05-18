@@ -3245,29 +3245,33 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
                  (turn-on-hungry-delete-mode))))
 #+end_src
 
-** yasnippet                                                     :yasnippet:
+** 使用 yasnippet 加強樣板處理                                    :yasnippet:
+
+yasnippet 是一個非常強大的樣板 (template) 系統，在現在的 emacs 下，他
+已經是必備的套件了。
+
 *** 設定 snippet 所在的資料夾
+
+我不想要使用 yasnippet 預設的 snippet, 這邊將他改成我自己定義的
+snippet 位置。
+
 #+begin_src emacs-lisp
   (setq-default yas/snippet-dirs emacs-snippets-dir)
 #+end_src
+
 *** 載入相關套件
+
 #+begin_src emacs-lisp
   (require 'yasnippet)
   (require 'dropdown-list)
 #+end_src
-*** 初始化 yasnippet
+
+*** 全域性啟用 yasnippet
+
 #+begin_src emacs-lisp
-  ;;  (yas/initialize)
   (yas-global-mode 1)
 #+end_src
-*** 設定 yasnippet 讀取 snippet 的資料夾
-#+begin_src emacs-lisp
-  (yas/load-directory emacs-snippets-dir)
-#+end_src
-*** 設定 yasnippet 提示用的 function
-#+begin_src emacs-lisp
-  (setq yas/prompt-functions '(yas/dropdown-prompt yas/ido-prompt yas/completing-prompt))
-#+end_src
+
 *** 增加類似 org-mode 那樣使用 < 進行補全的方法 (easy-template)
 
 #+begin_src emacs-lisp
@@ -3295,6 +3299,7 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
         t)
       ad-do-it))
 #+end_src
+
 *** Functions
 #+begin_src emacs-lisp
   (defun yas/dir ()
