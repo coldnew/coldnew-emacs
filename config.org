@@ -3250,26 +3250,26 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 yasnippet 是一個非常強大的樣板 (template) 系統，在現在的 emacs 下，他
 已經是必備的套件了。
 
-*** 載入相關套件
+- 載入相關套件
 
-#+begin_src emacs-lisp
-  (require 'yasnippet)
-#+end_src
+  #+begin_src emacs-lisp
+    (require 'yasnippet)
+  #+end_src
 
-*** 全域性啟用 yasnippet
+- 全域性啟用 yasnippet
 
-#+begin_src emacs-lisp
-  (yas-global-mode 1)
-#+end_src
+  #+begin_src emacs-lisp
+    (yas-global-mode 1)
+  #+end_src
 
-*** 設定 snippet 所在的資料夾
+- 設定 snippet 所在的資料夾
 
-我不想要使用 yasnippet 預設的 snippet, 這邊將他改成我自己定義的
-snippet 位置。
+  我不想要使用 yasnippet 預設的 snippet, 這邊將他改成我自己定義的
+  snippet 位置。
 
-#+begin_src emacs-lisp
-  (setq yas/snippet-dirs '(emacs-snippets-dir))
-#+end_src
+  #+begin_src emacs-lisp
+    (setq yas/snippet-dirs '(emacs-snippets-dir))
+  #+end_src
 
 *** 增加類似 org-mode 那樣使用 < 進行補全的方法 (easy-template)
 
