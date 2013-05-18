@@ -2062,29 +2062,19 @@ emacs 下可以透過 gpg 進行文件加密的動作
   (setq max-mini-window-height 4)
 #+end_src
 
-** 按鍵設定
-
-| 按鍵 | 命令                     | 用途               |
-|------+--------------------------+--------------------|
-| M-l  | backward-kill-word       | 刪除前一個詞       |
-| M-p  | previous-history-element | 前一個歷史紀錄     |
-| M-n  | next-history-element     | 後一個歷史紀錄     |
-| C-g  | minibuffer-keyboard-quit | 離開 minibuffer    |
-| C-u  |                          | 清除游標前的文字   |
-| C-t  |                          | 切換到 /tmp 資料夾 |
-| C-h  |                          | 切換到家目錄       |
+** 使用 smex 來替代原本的緩衝區功能                            :smex:
 
 #+begin_src emacs-lisp
-  (define-key minibuffer-local-map (kbd "M-l") 'backward-kill-word)
-  (define-key minibuffer-local-map (kbd "M-p") 'previous-history-element)
-  (define-key minibuffer-local-map (kbd "M-n") 'next-history-element)
-  (define-key minibuffer-local-map (kbd "C-g") 'minibuffer-keyboard-quit)
-  (define-key minibuffer-local-map (kbd "C-r") 'resolve-sym-link)
-  (define-key minibuffer-local-map (kbd "C-u") (lambda () (interactive) (kill-line 0)))
-  (define-key minibuffer-local-map (kbd "C-t") (lambda () (interactive) (kill-line 0) (insert "/tmp/")))
-  (define-key minibuffer-local-map (kbd "C-h") (lambda () (interactive) (kill-line 0) (insert "~/")))
-  (define-key minibuffer-local-map (kbd "C-w") (lambda () (interactive) (kill-line 0) (insert "~/Workspace/")))
-  (define-key minibuffer-local-map (kbd "C-d") (lambda () (interactive) (kill-line 0) (insert "~/Dropbox/")))
+  (require 'smex)
+#+end_src
+
+啟動 smex
+#+begin_src emacs-lisp
+  (smex-initialize)
+#+end_src
+
+#+begin_src emacs-lisp
+  (setq smex-save-file (concat emacs-cache-dir "smex.dat"))
 #+end_src
 
 ** 其他
@@ -2099,19 +2089,6 @@ emacs 下可以透過 gpg 進行文件加密的動作
     "kill the minibuffer"
     (when (and (>= (recursion-depth) 1) (active-minibuffer-window))
       (abort-recursive-edit)))
-
-  (defun resolve-sym-link ()
-    "Replace the string at the point with the true path."
-    (interactive)
-    (beginning-of-line)
-    (let* ((file (buffer-substring (point)
-                                   (save-excursion (end-of-line) (point))))
-           (file-dir (file-name-directory file))
-           (file-true-dir (file-truename file-dir))
-           (file-name (file-name-nondirectory file)))
-      (delete-region (point) (save-excursion (end-of-line) (point)))
-      (insert (concat file-true-dir file-name))))
-
 #+end_src
 
 ** 游標改成 bar 的形狀                                             :cursor:
@@ -2120,21 +2097,6 @@ emacs 下可以透過 gpg 進行文件加密的動作
 
 #+begin_src emacs-lisp
   (add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 'bar)))
-#+end_src
-
-** smex                                                               :smex:
-*** Depends
-#+begin_src emacs-lisp
-  (require 'smex)
-#+end_src
-*** Init
-啟動 smex
-#+begin_src emacs-lisp
-  (smex-initialize)
-#+end_src
-*** Config
-#+begin_src emacs-lisp
-  (setq smex-save-file (concat emacs-cache-dir "smex.dat"))
 #+end_src
 
 ** ido
@@ -2161,6 +2123,31 @@ emacs 下可以透過 gpg 進行文件加密的動作
   (setq savehist-file (concat emacs-cache-dir "savehist.dat"))
   ;; enable savehist
   (savehist-mode 1)
+#+end_src
+
+** 按鍵設定
+
+| 按鍵 | 命令                     | 用途               |
+|------+--------------------------+--------------------|
+| M-l  | backward-kill-word       | 刪除前一個詞       |
+| M-p  | previous-history-element | 前一個歷史紀錄     |
+| M-n  | next-history-element     | 後一個歷史紀錄     |
+| C-g  | minibuffer-keyboard-quit | 離開 minibuffer    |
+| C-u  |                          | 清除游標前的文字   |
+| C-t  |                          | 切換到 /tmp 資料夾 |
+| C-h  |                          | 切換到家目錄       |
+
+#+begin_src emacs-lisp
+  (define-key minibuffer-local-map (kbd "M-l") 'backward-kill-word)
+  (define-key minibuffer-local-map (kbd "M-p") 'previous-history-element)
+  (define-key minibuffer-local-map (kbd "M-n") 'next-history-element)
+  (define-key minibuffer-local-map (kbd "C-g") 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-map (kbd "C-u") (lambda () (interactive) (kill-line 0)))
+  (define-key minibuffer-local-map (kbd "C-t") (lambda () (interactive) (kill-line 0) (insert "/tmp/")))
+  (define-key minibuffer-local-map (kbd "C-h") (lambda () (interactive) (kill-line 0) (insert "~/")))
+  (define-key minibuffer-local-map (kbd "C-w") (lambda () (interactive) (kill-line 0) (insert "~/Workspace/")))
+  (define-key minibuffer-local-map (kbd "C-d") (lambda () (interactive) (kill-line 0) (insert "~/Dropbox/")))
+  (define-key minibuffer-local-map (kbd "C-s") (lambda () (interactive) (kill-line 0) (insert "~/SparkleShare/")))
 #+end_src
 
 * EShell                                                              :eshell:
@@ -4677,6 +4664,26 @@ yank-n-times 則可以重複的進行貼上。
       (this-command-keys)
       'toggle-kbd-macro-recording-on)
     (end-kbd-macro))
+#+end_src
+
+** 文字/字詞處理
+
+*** 將游標下的文字改用絕對路徑表示
+
+這個命令可以再當你輸入 ~/ 時，使用他會將他變成絕對路徑。
+
+#+begin_src emacs-lisp
+  (defun resolve-sym-link ()
+    "Replace the string at the point with the true path."
+    (interactive)
+    (beginning-of-line)
+    (let* ((file (buffer-substring (point)
+                                   (save-excursion (end-of-line) (point))))
+           (file-dir (file-name-directory file))
+           (file-true-dir (file-truename file-dir))
+           (file-name (file-name-nondirectory file)))
+      (delete-region (point) (save-excursion (end-of-line) (point)))
+      (insert (concat file-true-dir file-name))))
 #+end_src
 
 ** TODO 要重新調整
