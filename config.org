@@ -3112,19 +3112,23 @@ emacs 有一些 major 無法和 font-lock-add-keywords 相處融洽，
       erlang-mode sgml-mode qml-mode
       slime-mode haskell-mode tuareg-mode lua-mode
       pascal-mode fortran-mode prolog-mode asm-mode
-      sml-mode
+      sml-mode org-mode
       )
     "Major mode that i will add more font-lock")
 #+end_src
 
-** 替 FIXME: 等關鍵字上色
+** 替 FIXME 等關鍵字上色
 
 很多時候我們會再程式碼裏面加上了 FIXME: 等字樣，這邊額外定義我需要高亮的文字。
 
+我設定了對以下關鍵字上色
+
+FIXME: BUG: HACK:
+NOTE: TODO: DONE:
+
 #+begin_src emacs-lisp
   (dolist (mode coldnew/extra-font-lock-mode)
-    (font-lock-add-keywords
-     mode
+    (font-lock-add-keywords mode
      '(("\\<\\(FIXME\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)
        ("\\<\\(NOTE\\):" 1 'org-level-2 t)
        ("\\<\\(TODO\\):" 1 'org-todo t)
@@ -3138,8 +3142,7 @@ vim 預設也會對數字進行別的上色動作。
 
 #+begin_src emacs-lisp
   (dolist (mode coldnew/extra-font-lock-mode)
-    (font-lock-add-keywords
-     mode
+    (font-lock-add-keywords mode
      '(
        ;; hexadecimal
        ("\\b\\(0[00-9a-fA-F]+\\)" 1 font-lock-constant-face)
@@ -3153,12 +3156,11 @@ vim 預設也會對數字進行別的上色動作。
 ** 替逸脫字元上色 (escape char)
 
 很多語言都有逸脫字元(escape char), 並且語法都是類似 c 語言那樣，這邊也將
-這些字元進行上色。a
+這些字元進行上色。
 
 #+begin_src emacs-lisp
   (dolist (mode coldnew/extra-font-lock-mode)
-    (font-lock-add-keywords
-     mode
+    (font-lock-add-keywords mode
      '(("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
         0 '(:foreground "seagreen2") prepend))))
 #+end_src
@@ -3188,33 +3190,36 @@ vim 預設也會對數字進行別的上色動作。
 
 ** 行號顯示設定
 
-預設顯示行號
-#+begin_src emacs-lisp
-  (global-linum-mode 1)
-#+end_src
+- 預設顯示行號
 
-設定某些 Mode 不顯示行號，這邊先設定不顯示行號的 mode-list
-#+begin_src emacs-lisp
-  (setq inhibit-linum-mode-alist
-        '(eshell-mode
-          shell-mode
-          term-mode
-          erc-mode
-          compilation-mode
-          woman-mode
-          w3m-mode
-          calendar-mode
-          org-mode
-          ))
-#+end_src
+  #+begin_src emacs-lisp
+    (global-linum-mode 1)
+  #+end_src
 
-修正 linum-on 的功能，讓他遇到我們設定不顯示行號的模式時，不啟用 linum-mode
-#+begin_src emacs-lisp
-  (defadvice linum-on (around inhibit-for-modes activate)
-    "Stop turing linum-mode if it is in the inhibit-linum-mode-alist."
-    (unless (member major-mode inhibit-linum-mode-alist)
-      ad-do-it))
-#+end_src
+- 設定某些 Mode 不顯示行號，這邊先設定不顯示行號的 mode-list
+
+  #+begin_src emacs-lisp
+    (setq inhibit-linum-mode-alist
+          '(eshell-mode
+            shell-mode
+            term-mode
+            erc-mode
+            compilation-mode
+            woman-mode
+            w3m-mode
+            calendar-mode
+            org-mode
+            ))
+  #+end_src
+
+- 修正 linum-on 的功能，讓他遇到我們設定不顯示行號的模式時，不啟用 linum-mode
+
+  #+begin_src emacs-lisp
+    (defadvice linum-on (around inhibit-for-modes activate)
+      "Stop turing linum-mode if it is in the inhibit-linum-mode-alist."
+      (unless (member major-mode inhibit-linum-mode-alist)
+        ad-do-it))
+  #+end_src
 
 ** 加入 Doxygen 支援
 
@@ -3430,6 +3435,18 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
   (vim:mode-imap coldnew-editor-map (kbd "C-x C-l")  'recenter)
   (vim:mode-imap coldnew-editor-map (kbd "C-x C-i")  'indent-whole-buffer)
   (vim:mode-imap coldnew-editor-map (kbd "C-x C-q")  'toggle-read-only)
+#+end_src
+
+| 按鍵 | 命令                   | 用途         |
+|------+------------------------+--------------|
+| C-d  | hyngry-delete-forward  | 向右貪婪刪除 |
+| C-l  | hyngry-delete-backward | 向左貪婪刪除 |
+
+#+begin_src emacs-lisp :tangle no
+  (eval-after-load 'hungry-delete
+    '(progn
+      (vim:mode-imap coldnew-editor-map (kbd "C-d") 'hungry-delete-forward)
+      (vim:mode-imap coldnew-editor-map (kbd "C-l") 'hungry-delete-backward)))
 #+end_src
 
 ** 字體調整 (N) (I)
@@ -5959,17 +5976,16 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 * 全域性按鍵設置                                                 :global@key:
 ** 文件編輯
 
-| 按鍵         | 命令                   | 用途                                       |
-|--------------+------------------------+--------------------------------------------|
-| C-x C-n      | auto-complete          | 自動補全                                   |
-| Shift Return | insert-empty-line      | 插入空白行                                 |
-| M-s          | coldnew/helm-occur     | 使用 occur 查詢當前緩衝區                  |
-| M-r          | query-replace-regexp   | 使用正規表達式查找並取代                   |
-| C-M ,        | beginning-of-buffer    | 回到緩衝區開頭                             |
-| C-M .        | end-of-buffer          | 回到緩衝區尾巴                             |
-| C-d          | hyngry-delete-forward  | 向右貪婪刪除                               |
-| C-l          | hyngry-delete-backward | 向左貪婪刪除                               |
-| C-;          | iedit-mode             | 快速尋找和游標底下相同的文字，進行即時替換 |
+| 按鍵         | 命令                 | 用途                      |
+|--------------+----------------------+---------------------------|
+| C-x C-n      | auto-complete        | 自動補全                  |
+| Shift Return | insert-empty-line    | 插入空白行                |
+| M-s          | coldnew/helm-occur   | 使用 occur 查詢當前緩衝區 |
+| M-r          | query-replace-regexp | 使用正規表達式查找並取代  |
+| C-M ,        | beginning-of-buffer  | 回到緩衝區開頭            |
+| C-M .        | end-of-buffer        | 回到緩衝區尾巴            |
+
+| C-; | iedit-mode | 快速尋找和游標底下相同的文字，進行即時替換 |
 
 #+begin_src emacs-lisp
 
@@ -5979,8 +5995,7 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
   (global-set-key (kbd "M-r") 'query-replace-regexp)
   (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
   (global-set-key (kbd "C-M-.") 'end-of-buffer)
-  (global-set-key (kbd "C-d") 'hungry-delete-forward)
-  (global-set-key (kbd "C-l") 'hungry-delete-backward)
+
   (global-set-key (kbd "C-;") 'iedit-mode)
 #+end_src
 
