@@ -983,12 +983,26 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
        16)))
 #+end_src
 
+** 鏈表 (list) 處理
+
+處理 List 所用的 function，有些功能 dash.el 也有提供。
+
+*** 將一個 list 變成字串回傳
+
+#+begin_src emacs-lisp
+  (defun list->string (char-list)
+    "RETURN: A new string containing the characters in char-list."
+    (let ((result (make-string (length char-list) 0))
+          (i 0))
+      (dolist (char char-list)
+        (aset result i char)
+        (setq i (1+ i)))
+      result))
+#+end_src
+
 
 ** TODO 需整理
 *** List Processing
-
-處理 List 所用的 function。
-
 **** flatten a list
 
 flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 list。
@@ -1010,21 +1024,6 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     (cond ((null structure) nil)
           ((atom structure) `(,structure))
           (t (mapcan #'flatten structure))))
-#+end_src
-
-**** List to string
-
-將一個 list 變成字串回傳。
-
-#+begin_src emacs-lisp
-  (defun list-to-string (char-list)
-    "RETURN: A new string containing the characters in char-list."
-    (let ((result (make-string (length char-list) 0))
-          (i 0))
-      (dolist (char char-list)
-        (aset result i char)
-        (setq i (1+ i)))
-      result))
 #+end_src
 
 *** Search
