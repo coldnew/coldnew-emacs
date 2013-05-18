@@ -2285,7 +2285,6 @@ emacs 下可以透過 gpg 進行文件加密的動作
       ;; simply delete the region
       (delete-region (point-min) (point-max))))
 
-
   (defun eshell/info (subject)
     "Read the Info manual on SUBJECT."
     (let ((buf (current-buffer)))
@@ -2299,7 +2298,15 @@ emacs 下可以透過 gpg 進行文件加密的動作
           (eshell-print (format "There is no Info manual on %s.\n"
                                 subject))
           1))))
+#+end_src
 
+** 在 eshell 中用 emacs 打開檔案
+
+如果在 eshell 中呼叫 emacs 命令，實際上還是會打開另外一個 emacs 程式，
+因此在這邊重弄 emacs 命令，這樣就可以很安心的在 eshell 中用 emacs 打開
+檔案到緩衝區裏面。
+
+#+begin_src emacs-lisp
   (defun eshell/emacs (&rest args)
     "Open a file in emacs. Some habits die hard."
     (if (null args)
