@@ -3266,6 +3266,8 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 yasnippet 是一個非常強大的樣板 (template) 系統，在現在的 emacs 下，他
 已經是必備的套件了。
 
+*** 基本設置
+
 - 載入相關套件
 
   #+begin_src emacs-lisp
@@ -3287,53 +3289,70 @@ yasnippet 是一個非常強大的樣板 (template) 系統，在現在的 emacs 
     (setq yas/snippet-dirs '(emacs-snippets-dir))
   #+end_src
 
-- 使用 yasnippet 達到 org-mode 的 easy-template 功能
+*** 使用 yasnippet 達到 org-mode 的 easy-template 功能
 
-  org-mode 的 easy-template 提供使用者輸入 <e 再按下 TAB 就可以進行自動補全的功能,
-  為了在任意模式下都可以辦到如同 org-mode 的 easy template 的功能，我
-  設計了以下的程式碼。
+org-mode 的 easy-template 提供使用者輸入 <e 再按下 TAB 就可以進行自動補全的功能,
+為了在任意模式下都可以辦到如同 org-mode 的 easy template 的功能，我
+設計了以下的程式碼。
 
-  #+begin_src emacs-lisp
-    (defadvice yas-expand (around coldnew/major-mode-expand activate)
-      "Try to complete a structure template before point like org-mode does.
-      This looks for strings like \"<e\" on an otherwise empty line and
-      expands them.
-      Before use this function, you must setup `major-mode-name'-expand-alist variable.
+#+begin_src emacs-lisp
+  (defadvice yas-expand (around coldnew/major-mode-expand activate)
+    "Try to complete a structure template before point like org-mode does.
+    This looks for strings like \"<e\" on an otherwise empty line and
+    expands them.
+    Before use this function, you must setup `major-mode-name'-expand-alist variable.
 
-      Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
-      in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
+    Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
+    in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
 
-       (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
-      (let* ((l (buffer-substring (point-at-bol) (point)))
-             (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
-             (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
-             a)
-        (when (and (looking-at "[ \t]*$")
-                   (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
-                   (setq a (assoc (match-string 1 l) expand-alist)))
-          (backward-delete-char (1+ (length (car-safe a))))
-          (if (symbolp (cdr-safe a))
-              (funcall (cdr-safe a))
-            (insert (cdr-safe a)))
-          t)
-        ad-do-it))
-  #+end_src
+     (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
+    (let* ((l (buffer-substring (point-at-bol) (point)))
+           (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
+           (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
+           a)
+      (when (and (looking-at "[ \t]*$")
+                 (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
+                 (setq a (assoc (match-string 1 l) expand-alist)))
+        (backward-delete-char (1+ (length (car-safe a))))
+        (if (symbolp (cdr-safe a))
+            (funcall (cdr-safe a))
+          (insert (cdr-safe a)))
+        t)
+      ad-do-it))
+#+end_src
 
-  假如希望在emacs-lisp-mode輸入 <r 再按下 TAB 就可以使用 yasnippet 展開
-  require 的 snippet, 則添加以下程式
+假如希望在emacs-lisp-mode輸入 <r 再按下 TAB 就可以使用 yasnippet 展開
+require 的 snippet, 則添加以下程式
 
-  #+begin_src emacs-lisp :tangle no
-   (setq emacs-lisp-mode-expand-alist '(("r" . "require")))
-  #+end_src
+#+begin_src emacs-lisp :tangle no
+ (setq emacs-lisp-mode-expand-alist '(("r" . "require")))
+#+end_src
 
-  注意到 major-mode 是什麼，則添加相對應的 *major-mode-expand-alist*,
-  比如 major-mode 是 c-mode 則加入
+注意到 major-mode 是什麼，則添加相對應的 *major-mode-expand-alist*,
+比如 major-mode 是 c-mode 則加入
 
-  #+begin_src emacs-lisp :tangle no
-   (setq c-mode-expand-alist '(("i" . "include")))
-  #+end_src
+#+begin_src emacs-lisp :tangle no
+ (setq c-mode-expand-alist '(("i" . "include")))
+#+end_src
 
-  其他以此類推
+其他以此類推
+
+*** 在建立新的檔案時，自動插入樣板
+
+#+begin_src emacs-lisp
+  ;; Auto add HEADER in new file
+  (add-hook 'find-file-hook
+            '(lambda ()
+               (when (and (buffer-file-name)
+                          (not (file-exists-p (buffer-file-name)))
+                          (= (point-max) 1))
+                 (let ((header-snippet "HEADER")
+                       (yas/fallback-behavior 'return-nil))
+                   (insert header-snippet)
+                   ;; if can't expand snippet, clear whole buffer
+                   (if (not (yas/expand))
+                       (delete-region (point-min) (point-max)))))))
+#+end_src
 
 ** 使用 undo-tree 來進行 undo/redo                               :undo@tree:
 
@@ -5873,23 +5892,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (vim:map (kbd "C-x vp") 'git-push)
   (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
   (vim:map (kbd "C-x ve") 'magit-flow-feature-finish)
-#+end_src
-
-* Hooks                                                               :hook:
-** find-file-hook
-#+begin_src emacs-lisp
-  ;; Auto add HEADER in new file
-  (add-hook 'find-file-hook
-            '(lambda ()
-               (when (and (buffer-file-name)
-                          (not (file-exists-p (buffer-file-name)))
-                          (= (point-max) 1))
-                 (let ((header-snippet "HEADER")
-                       (yas/fallback-behavior 'return-nil))
-                   (insert header-snippet)
-                   ;; if can't expand snippet, clear whole buffer
-                   (if (not (yas/expand))
-                       (delete-region (point-min) (point-max)))))))
 #+end_src
 
 * 檔案備份                                                           :backup:
