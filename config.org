@@ -3271,33 +3271,53 @@ yasnippet 是一個非常強大的樣板 (template) 系統，在現在的 emacs 
     (setq yas/snippet-dirs '(emacs-snippets-dir))
   #+end_src
 
-*** 增加類似 org-mode 那樣使用 < 進行補全的方法 (easy-template)
+- 使用 yasnippet 達到 org-mode 的 easy-template 功能
 
-#+begin_src emacs-lisp
-  (defadvice yas-expand (around coldnew/major-mode-expand activate)
-    "Try to complete a structure template before point like org-mode does.
-    This looks for strings like \"<e\" on an otherwise empty line and
-    expands them.
-    Before use this function, you must setup `major-mode-name'-expand-alist variable.
+  org-mode 的 easy-template 提供使用者輸入 <e 再按下 TAB 就可以進行自動補全的功能,
+  為了在任意模式下都可以辦到如同 org-mode 的 easy template 的功能，我
+  設計了以下的程式碼。
 
-    Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
-    in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
+  #+begin_src emacs-lisp
+    (defadvice yas-expand (around coldnew/major-mode-expand activate)
+      "Try to complete a structure template before point like org-mode does.
+      This looks for strings like \"<e\" on an otherwise empty line and
+      expands them.
+      Before use this function, you must setup `major-mode-name'-expand-alist variable.
 
-     (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
-    (let* ((l (buffer-substring (point-at-bol) (point)))
-           (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
-           (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
-           a)
-      (when (and (looking-at "[ \t]*$")
-                 (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
-                 (setq a (assoc (match-string 1 l) expand-alist)))
-        (backward-delete-char (1+ (length (car-safe a))))
-        (if (symbolp (cdr-safe a))
-            (funcall (cdr-safe a))
-          (insert (cdr-safe a)))
-        t)
-      ad-do-it))
-#+end_src
+      Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
+      in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
+
+       (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
+      (let* ((l (buffer-substring (point-at-bol) (point)))
+             (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
+             (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
+             a)
+        (when (and (looking-at "[ \t]*$")
+                   (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
+                   (setq a (assoc (match-string 1 l) expand-alist)))
+          (backward-delete-char (1+ (length (car-safe a))))
+          (if (symbolp (cdr-safe a))
+              (funcall (cdr-safe a))
+            (insert (cdr-safe a)))
+          t)
+        ad-do-it))
+  #+end_src
+
+  假如希望在emacs-lisp-mode輸入 <r 再按下 TAB 就可以使用 yasnippet 展開
+  require 的 snippet, 則添加以下程式
+
+  #+begin_src emacs-lisp :tangle no
+   (setq emacs-lisp-mode-expand-alist '(("r" . "require")))
+  #+end_src
+
+  注意到 major-mode 是什麼，則添加相對應的 *major-mode-expand-alist*,
+  比如 major-mode 是 c-mode 則加入
+
+  #+begin_src emacs-lisp :tangle no
+   (setq c-mode-expand-alist '(("i" . "include")))
+  #+end_src
+
+  其他以此類推
 
 *** Functions
 #+begin_src emacs-lisp
