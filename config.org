@@ -2167,19 +2167,33 @@ emacs 下可以透過 gpg 進行文件加密的動作
 #+end_src
 
 * EShell                                                              :eshell:
-** 載入相關套件
 
-#+begin_src emacs-lisp
-  (require 'eshell)
-  (require 'em-dirs)
-  (require 'em-hist)
-  (require 'em-prompt)
-  (require 'em-term)
-  (require 'em-cmpl)
-#+end_src
+** 基本設置
 
-*** Prompt
-將 eshell 的 prompt 設定成和 bash 一樣，也就是　 username@system-name。
+- 載入相關套件
+
+  #+begin_src emacs-lisp
+    (require 'eshell)
+    (require 'em-dirs)
+    (require 'em-hist)
+    (require 'em-prompt)
+    (require 'em-term)
+    (require 'em-cmpl)
+  #+end_src
+
+- 當離開 eshell 時自動儲存歷史紀錄
+
+  設定 eshell 的歷史紀錄快取資料夾位置，以及檔案大小
+
+  #+begin_src emacs-lisp
+    (setq eshell-history-file-name (concat emacs-cache-dir "eshell-history"))
+    (setq eshell-history-size 512)
+    (setq eshell-save-history-on-exit t)
+  #+end_src
+
+
+** 將 eshell 的 prompt 設定成和 bash 一樣
+
 #+begin_src emacs-lisp
   (setq eshell-prompt-function
         '(lambda ()
@@ -2188,30 +2202,44 @@ emacs 下可以透過 gpg 進行文件加密的動作
             (if (search (directory-file-name (expand-file-name (getenv "HOME"))) (eshell/pwd))
                 (replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
               (eshell/pwd))
-            (if (= (user-uid) 0) " # " " $ ")
-            )))
-
-
+            (if (= (user-uid) 0) " # " " $ "))))
 #+end_src
-#+begin_src emacs-lisp
-  ;;; change history file path
-  (setq eshell-last-dir-ring-file-name (concat emacs-cache-dir "eshell-lastdir"))
-  (setq eshell-history-file-name (concat emacs-cache-dir "eshell-history"))
 
+** 替 eshell 的 prompt 上色
+
+我不喜歡原本 eshell 那樣單一的顏色，用 Gentoo 系統預設的上色方式還比較好看 :)
+
+#+begin_src emacs-lisp
+  (defun coldnew/colorfy-eshell-prompt ()
+    (let* ((mpoint)
+           (user-string-regexp (concat "^" user-login-name "@" system-name)))
+      (save-excursion
+        (goto-char (point-min))
+        (while (re-search-forward (concat user-string-regexp ".*[$#]") (point-max) t)
+          (setq mpoint (point))
+          (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "dodger blue")))
+        (goto-char (point-min))
+        (while (re-search-forward user-string-regexp (point-max) t)
+          (setq mpoint (point))
+          (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "green3"))
+          ))))
+
+  ;; Make eshell prompt more colorful
+  (add-to-list 'eshell-output-filter-functions 'coldnew/colorfy-eshell-prompt)
+  #+end_src
+
+** 載入相關套件
+
+*** Prompt
+
+#+begin_src emacs-lisp
   ;; other setting
-  (setq eshell-save-history-on-exit t)
+(setq eshell-last-dir-ring-file-name (concat emacs-cache-dir "eshell-lastdir"))
   (setq eshell-ask-to-save-last-dir nil)
-  (setq eshell-history-size 512)
   (setq eshell-hist-ignoredups t)
   (setq eshell-cmpl-cycle-completions nil)
   (setq eshell-scroll-to-bottom-on-output t)
   (setq eshell-show-maximum-output t)
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Hooks
-  ;;;; ---------------------------------------------------------------------------
-
-  ;;; Make eshell prompt more colorful
-  (add-to-list 'eshell-output-filter-functions 'coldnew/colorfy-eshell-prompt)
 
   ;; my auto-complete for elisp
   (add-hook 'eshell-mode-hook 'auto-complete-mode)
@@ -2284,23 +2312,7 @@ emacs 下可以透過 gpg 進行文件加密的動作
       ;; not the starting directory
       (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
 #+end_src
-** Function
-#+begin_src emacs-lisp
-  (defun coldnew/colorfy-eshell-prompt ()
-    (interactive)
-    (let* ((mpoint)
-           (user-string-regexp (concat "^" user-login-name "@" system-name)))
-      (save-excursion
-        (goto-char (point-min))
-        (while (re-search-forward (concat user-string-regexp ".*[$#]") (point-max) t)
-          (setq mpoint (point))
-          (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "dodger blue")))
-        (goto-char (point-min))
-        (while (re-search-forward user-string-regexp (point-max) t)
-          (setq mpoint (point))
-          (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "green3"))
-          ))))
-#+end_src
+
 * Helm                                                                 :helm:
 
 Helm (領航員) 是 emacs 下非常強大的檔案尋找工具，可以用他快速的找尋已經
