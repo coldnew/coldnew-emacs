@@ -3343,11 +3343,16 @@ yasnippet 是一個非常強大的樣板 (template) 系統，在現在的 emacs 
 
 ** 使用 undo-tree 來進行 undo/redo                               :undo@tree:
 
+- 關於 undo-tree
+
+  undo-tree 是 emacs 與 vim 上面都有的一個套件，對於 emacs 使用者而言，
+  undo-tree 幫 emacs 增加了 redo 的功能。
+
 - 載入相依套件
 
-   #+begin_src emacs-lisp
-     (require 'undo-tree)
-   #+end_src
+  #+begin_src emacs-lisp
+    (require 'undo-tree)
+  #+end_src
 
 - 全域性啟用 undo-tree
 
