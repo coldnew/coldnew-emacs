@@ -3341,6 +3341,26 @@ yasnippet 是一個非常強大的樣板 (template) 系統，在現在的 emacs 
 
   其他以此類推
 
+** 使用 undo-tree 來進行 undo/redo                               :undo@tree:
+
+- 載入相依套件
+
+   #+begin_src emacs-lisp
+     (require 'undo-tree)
+   #+end_src
+
+- 全域性啟用 undo-tree
+
+  #+begin_src emacs-lisp
+    (global-undo-tree-mode)
+  #+end_src
+
+- 使用 C-g 跳出 undo-tree
+
+  #+begin_src emacs-lisp
+    (define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)
+  #+end_src
+
 ** TODO remember
 *** electric-pair-mode
 #+begin_src emacs-lisp
@@ -3360,19 +3380,7 @@ yasnippet 是一個非常強大的樣板 (template) 系統，在現在的 emacs 
   ;; Enable delete-selection-mode
   (delete-selection-mode t)
 #+end_src
-** undo-tree
-*** 載入相依套件
-#+begin_src emacs-lisp
-  (require 'undo-tree)
-#+end_src
-*** Enable undo-tree globally
-#+begin_src emacs-lisp
-  (global-undo-tree-mode)
-#+end_src
-*** Keybinding
-#+begin_src emacs-lisp
-  (define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)
-#+end_src
+
 ** Functions
 #+begin_src emacs-lisp
   (defun insert-space-between-english-chinese ()
