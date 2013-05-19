@@ -3418,21 +3418,6 @@ require 的 snippet, 則添加以下程式
   (delete-selection-mode t)
 #+end_src
 
-** Functions
-#+begin_src emacs-lisp
-  (defun insert-space-between-english-chinese ()
-    "Insert a space between English words and Chinese charactors"
-    (save-excursion
-      (goto-char (point-min))
-      (while (or (re-search-forward "\\(\\cc\\)\\([a-zA-Z0-9]\\)" nil t)
-                 (re-search-forward "\\([a-zA-Z0-9]\\)\\(\\cc\\)" nil t))
-        (replace-match "\\1 \\2" nil nil))
-      (goto-char (point-min))
-      (while (or (re-search-forward "\\([。，！？；：「」（）、]\\) \\([a-zA-Z0-9]\\)" nil t)
-                 (re-search-forward "\\([a-zA-Z0-9]\\) \\([。，！？；：「」（）、]\\)" nil t))
-        (replace-match "\\1\\2" nil nil))))
-#+end_src
-
 * 編輯器按鍵設置
 
 這邊是我定義的 coldnew-editor-mode 的按鍵設定，每個類型的標條都會附註這裏面的
