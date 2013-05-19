@@ -1,4 +1,0 @@
-(:name pangu-spacing
-       :features pangu-spacing
-       :type github
-       :pkgname "coldnew/pangu-spacing")
