@@ -10,7 +10,7 @@
 
 * 關於這份檔案
 
-用了 emacs 至今已有 7年了，最初我的 emacs 配置也是英文版，並且分散了許多檔案，
+用了 emacs 至今已有 7 年了，最初我的 emacs 配置也是英文版，並且分散了許多檔案，
 直到我知道了 org-mode 以及所謂的文學編程，我二話不說就將我的 emacs 設定移植到
 org-mode 上面，並重新改寫用中文來寫配置的說明。
 
@@ -325,9 +325,9 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
   ;;(setq redisplay-dont-pause t)
 
   ;; xrelated srtting
-  ;;设定剪贴板的内容格式 适应Firefox
+  ;;设定剪贴板的内容格式 适应 Firefox
   (set-clipboard-coding-system 'utf-8)
-  ;;允许emacs和外部其他程序的粘贴
+  ;;允许 emacs 和外部其他程序的粘贴
   (setq x-select-enable-clipboard t)
   ;;使用鼠标中键可以粘贴
   (setq mouse-yank-at-point t)
@@ -491,7 +491,7 @@ emacs 編碼設定，大部份都設定成 utf-8。
 
 * 套件管理                                                          :package:
 
-emacs 在 24 版後終於有自己的套件管理器 ELPA ，不過有些外部的套件沒
+emacs 在 24 版後終於有自己的套件管理器 ELPA，不過有些外部的套件沒
 辦法透過他來安裝，所以我又使用了另外一個非常好用的套件管理器 el-get,
 透過這兩個套件管理器，在 emacs 下安裝新的套件是非常方便的。
 
@@ -696,7 +696,7 @@ iimage 是讓 emacs 可以直接顯示圖片的模式。
 ** 輸出成 html 檔案
 
 htmlize 是 emacs 一個非常好用的模組，可以讓 emacs 輸出檔案成為
-HTML 檔， org-mode 輸出成 html 時也是使用他。
+HTML 檔，org-mode 輸出成 html 時也是使用他。
 
 #+begin_src emacs-lisp
   (require 'htmlize)
@@ -734,7 +734,7 @@ smallurl 是一個很棒的短網址工具，他會幫你到遠端的 server 取
 
 ** 快速更改相同的英文字
 
-我們有時候會希望可以快尋尋找某個字，並用新的文字來取代他， iedit-mode
+我們有時候會希望可以快尋尋找某個字，並用新的文字來取代他，iedit-mode
 就是做這種事情的好幫手，先將游標停在要尋找取代的文字上，並輸入
 M-x iedit-mode 接著就會發現到同個緩衝區裏面所有和游標底下的文字相同的
 文字都被標記起來，試著更改看看，你會發現到這些文字同時被更改了。
@@ -1340,7 +1340,7 @@ evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死�
 
 ** 將 Emacs 按鍵綁到 Insert 模式上
 
-對我而言， Vim 的 Insert 模式是趨近於無用的，這邊將我的 Emacs 模式下的按鍵綁到
+對我而言，Vim 的 Insert 模式是趨近於無用的，這邊將我的 Emacs 模式下的按鍵綁到
 Insert 模式上，之後再來做其他設置。
 
 #+begin_src emacs-lisp
@@ -1356,7 +1356,7 @@ normal-state。
 注意到除了 ESC 按鍵本身，使用 C-[ 也具有 ESC 按鍵的效果。
 
 #+begin_src emacs-lisp
-  (define-key evil-insert-state-map [escape] 'evil-normal-state)
+  (define-key evil-insert-state-map[escape] 'evil-normal-state)
 #+end_src
 
 ** 全域性啟用 evil-mode
@@ -2072,7 +2072,7 @@ emacs 下可以透過 gpg 進行文件加密的動作
 
 * 命令欄                                                         :minibuffer:
 
-** 設定視窗高度最多為4行高
+** 設定視窗高度最多為 4 行高
 
 #+begin_src emacs-lisp
   (setq max-mini-window-height 4)
@@ -2160,7 +2160,7 @@ emacs 下可以透過 gpg 進行文件加密的動作
   (define-key minibuffer-local-map (kbd "C-g") 'minibuffer-keyboard-quit)
   (define-key minibuffer-local-map (kbd "C-u") (lambda () (interactive) (kill-line 0)))
   (define-key minibuffer-local-map (kbd "C-t") (lambda () (interactive) (kill-line 0) (insert "/tmp/")))
-  (define-key minibuffer-local-map (kbd "C-h") (lambda () (interactive) (kill-line 0) (insert "~/")))
+ ;; (define-key minibuffer-local-map (kbd "C-h") (lambda () (interactive) (kill-line 0) (insert "~/")))
   (define-key minibuffer-local-map (kbd "C-w") (lambda () (interactive) (kill-line 0) (insert "~/Workspace/")))
   (define-key minibuffer-local-map (kbd "C-d") (lambda () (interactive) (kill-line 0) (insert "~/Dropbox/")))
   (define-key minibuffer-local-map (kbd "C-s") (lambda () (interactive) (kill-line 0) (insert "~/SparkleShare/")))
@@ -2417,7 +2417,7 @@ woman 是 emacs 下顯示 manpage 最好的方式。
 #+end_src
 
 google-weather 是提供　 emacs 連接 google-weathre 的 API，
-在 org 檔案裏面加入如下的code，則可以在 agenda view 裏面看到天氣資訊。
+在 org 檔案裏面加入如下的 code，則可以在 agenda view 裏面看到天氣資訊。
 #+begin_example
   * Weather
   %%(org-google-weather "New York")
@@ -2995,7 +2995,7 @@ emacs 下有太多太多跟專案管理相關的套件了，目前先一一試�
 ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ctags-update-minor-mode,
 這樣任何模式下，若我有 TAGS 檔案的話，他都會自動幫我更新。
 
-我並沒有為他增加其他配置，因此預設為 5分鐘更新一次 TAGS。
+我並沒有為他增加其他配置，因此預設為 5 分鐘更新一次 TAGS。
 
 #+begin_src emacs-lisp
   (require 'ctags-update)
@@ -3152,7 +3152,7 @@ emacs 有一些 major 無法和 font-lock-add-keywords 相處融洽，
     "Major mode that i will add more font-lock")
 #+end_src
 
-** 替FIXME等關鍵字上色
+** 替 FIXME 等關鍵字上色
 
 很多時候我們會再程式碼裏面加上了 FIXME: 等字樣，這邊額外定義我需要高亮的文字。
 
@@ -3406,7 +3406,7 @@ require 的 snippet, 則添加以下程式
     (require 'pangu-spacing)
   #+end_src
 
-- 全域性啟用pangu-spacing
+- 全域性啟用 pangu-spacing
 
   #+begin_src emacs-lisp
     (global-pangu-spacing-mode 1)
@@ -6071,7 +6071,7 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 #+begin_src emacs-lisp
 
   (global-set-key (kbd "C-x C-n") 'auto-complete)
-  (global-set-key [(shift return)] 'insert-empty-line)
+  (global-set-key[(shift return)] 'insert-empty-line)
   (global-set-key (kbd "M-s") 'coldnew/helm-occur)
   (global-set-key (kbd "M-r") 'query-replace-regexp)
   (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
