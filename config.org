@@ -3414,11 +3414,10 @@ require 的 snippet, 則添加以下程式
 
 - 只有在 org-mode 裏面真的添加空白進去
 
-  #+begin_src emacs-lisp :tangle no
-    (add-hook 'org-mode-hook
-              '(lambda ()
-                 (make-local-variable 'pangu-spacing-real-insert-separtor)
-                 (setq pangu-spacing-real-insert-separtor t)))
+  #+begin_src emacs-lisp
+     (add-hook 'org-mode-hook
+               '(lambda ()
+                 (set (make-local-variable 'pangu-spacing-real-insert-separtor) t)))
   #+end_src
 
 ** TODO remember
