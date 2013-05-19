@@ -2160,7 +2160,7 @@ emacs 下可以透過 gpg 進行文件加密的動作
   (define-key minibuffer-local-map (kbd "C-g") 'minibuffer-keyboard-quit)
   (define-key minibuffer-local-map (kbd "C-u") (lambda () (interactive) (kill-line 0)))
   (define-key minibuffer-local-map (kbd "C-t") (lambda () (interactive) (kill-line 0) (insert "/tmp/")))
- ;; (define-key minibuffer-local-map (kbd "C-h") (lambda () (interactive) (kill-line 0) (insert "~/")))
+  (define-key minibuffer-local-map (kbd "C-h") (lambda () (interactive) (kill-line 0) (insert "~/")))
   (define-key minibuffer-local-map (kbd "C-w") (lambda () (interactive) (kill-line 0) (insert "~/Workspace/")))
   (define-key minibuffer-local-map (kbd "C-d") (lambda () (interactive) (kill-line 0) (insert "~/Dropbox/")))
   (define-key minibuffer-local-map (kbd "C-s") (lambda () (interactive) (kill-line 0) (insert "~/SparkleShare/")))
