@@ -3152,7 +3152,7 @@ emacs 有一些 major 無法和 font-lock-add-keywords 相處融洽，
     "Major mode that i will add more font-lock")
 #+end_src
 
-** 替 FIXME 等關鍵字上色
+** 替FIXME等關鍵字上色
 
 很多時候我們會再程式碼裏面加上了 FIXME: 等字樣，這邊額外定義我需要高亮的文字。
 
@@ -3270,7 +3270,7 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 
 ** 加上貪婪刪除功能                                               :hungry@delete:
 
-一般使用 backspace 都只刪除一個字元， hungry-delete 這個套件
+一般使用 backspace 都只刪除一個字元，hungry-delete 這個套件
 加入了貪婪刪除功能，可以刪除前面一堆的空白字元。
 
 #+begin_src emacs-lisp
@@ -3340,7 +3340,7 @@ org-mode 的 easy-template 提供使用者輸入 <e 再按下 TAB 就可以進�
       ad-do-it))
 #+end_src
 
-假如希望在emacs-lisp-mode輸入 <r 再按下 TAB 就可以使用 yasnippet 展開
+假如希望在 emacs-lisp-mode 輸入 <r 再按下 TAB 就可以使用 yasnippet 展開
 require 的 snippet, 則添加以下程式
 
 #+begin_src emacs-lisp :tangle no
@@ -3396,6 +3396,29 @@ require 的 snippet, 則添加以下程式
 
   #+begin_src emacs-lisp
     (define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)
+  #+end_src
+
+** 自動在英文與中文之間加入空白
+
+- 載入相關套件
+
+  #+begin_src emacs-lisp
+    (require 'pangu-spacing)
+  #+end_src
+
+- 全域性啟用pangu-spacing
+
+  #+begin_src emacs-lisp
+    (global-pangu-spacing-mode 1)
+  #+end_src
+
+- 只有在 org-mode 裏面真的添加空白進去
+
+  #+begin_src emacs-lisp
+    (add-hook 'org-mode-hook
+              '(lambda ()
+                 (make-local-variable 'pangu-spacing-real-insert-separtor)
+                 (setq pangu-spacing-real-insert-separtor t)))
   #+end_src
 
 ** TODO remember
@@ -3716,7 +3739,7 @@ cwarn-mode 會顯示出 C/++ 下面一些致命的錯誤，以下面的程式碼
 另外一個問題是，這邊多添加了不必要的分號在 if 判斷式的尾巴，這會讓 if
 判斷式出錯，拿掉就沒問題了。
 
-簡單的來說， cwarn-mode 包含以下幾種語法檢查:
+簡單的來說，cwarn-mode 包含以下幾種語法檢查:
 
   - Semicolons right after conditions and loops
 
@@ -4427,7 +4450,7 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
 互動式命令就是可以在 emacs 裏面使用 M-x 然後呼掉的那些 command,
 這邊根據其用途進行分類。
 
-*注意* : 這邊的命令可能依賴我所自訂的 function 。
+*注意* : 這邊的命令可能依賴我所自訂的 function。
 
 ** 緩衝區處理                                                       :buffer:
 
@@ -4591,7 +4614,7 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
 
 : (global-auto-revert-mode 1)
 
-的話， emacs 式不會自動重新載入檔案的，這個時候就會需要使用命令
+的話，emacs 式不會自動重新載入檔案的，這個時候就會需要使用命令
 來幫忙將所有緩衝區的檔案進行重新載入，避免寫入檔案時出現錯誤。
 
 #+begin_src emacs-lisp
@@ -5367,7 +5390,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
   (setq erc-log-write-after-send t)
 #+end_src
 
-**** 當有新訊息時，寫入到log
+**** 當有新訊息時，寫入到 log
 
 #+begin_src emacs-lisp
   (setq erc-log-write-after-insert t)
@@ -5498,7 +5521,7 @@ offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙�
 
 : pythonfile = ~/.offlineimap.py
 
-來載入額外的 function ，我在這個檔案裏面加入了
+來載入額外的 function，我在這個檔案裏面加入了
 
 #+begin_src python :tangle no
   #!/usr/bin/env python
@@ -5605,7 +5628,7 @@ offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙�
 
   (coldnew/mu4e-set-default-account "Gmail")
 #+end_src
-*** 每隔 60秒 重新抓取郵件
+*** 每隔 60 秒 重新抓取郵件
 
 #+begin_src emacs-lisp
   (setq mu4e-update-interval 60)
@@ -5683,7 +5706,7 @@ offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙�
 #+end_src
 * Git 版本管理                                                          :git:
 
-git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最好的， emacs
+git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最好的，emacs
 有許多好用的 git 套件，諸如 egg, magit, git-emacs 之類，在這邊的設定
 我整合了這幾種工具，選用我最喜歡的功能。
 
@@ -5807,7 +5830,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
                       ,*       <-- wip/topic
   #+END_EXAMPLE
 
-  當你真正遞交了新的 commit， git wip 會指向你新遞交的 commit, 並且新增加 wip branch。
+  當你真正遞交了新的 commit，git wip 會指向你新遞交的 commit, 並且新增加 wip branch。
 
   #+BEGIN_EXAMPLE
     --- * --- * --- * --- *    <-- topic
@@ -5878,15 +5901,15 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
 ** 全域性按鍵設定                                               :global@key:
 
-| 按鍵    | 命令                      | 用途                            |
-|---------+---------------------------+---------------------------------|
-| C-x v l | magit-log                 | 使用 magit 察看 log             |
-| C-x v s | magit-status              | 使用 magit 查看目前的git status |
-| C-x v v | egg-next-action           | 讓 egg 自動猜測下一步要做什麼   |
-| C-x v c | magit-checkout            | 切換到其他的 git branch         |
-| C-x v p | git-push                  | push 到遠端 repo                |
-| C-x v f | magit-flow-feature-create |                                 |
-| C-x v e | magit-flow-feature-finish |                                 |
+| 按鍵    | 命令                      | 用途                             |
+|---------+---------------------------+----------------------------------|
+| C-x v l | magit-log                 | 使用 magit 察看 log              |
+| C-x v s | magit-status              | 使用 magit 查看目前的 git status |
+| C-x v v | egg-next-action           | 讓 egg 自動猜測下一步要做什麼    |
+| C-x v c | magit-checkout            | 切換到其他的 git branch          |
+| C-x v p | git-push                  | push 到遠端 repo                 |
+| C-x v f | magit-flow-feature-create |                                  |
+| C-x v e | magit-flow-feature-finish |                                  |
 
 #+begin_src emacs-lisp
   (vim:imap (kbd "C-x vl") 'magit-log)

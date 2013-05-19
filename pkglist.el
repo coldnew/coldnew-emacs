@@ -53,6 +53,7 @@
 "nrepl"
 "offlineimap"
 "package"
+"pangu-spacing"
 "paredit"
 "popup"
 "popwin"
