@@ -4210,53 +4210,13 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
     (package-initialize)
   #+end_src
 
-  #+begin_src emacs-lisp
+  #+begin_src emacs-lisp :tangle no
     (when (require 'elpy nil 'noerror)
       (elpy-enable))
   #+end_src
-
-
-
-*** pymacs
-**** 設定檔起始
-#+begin_src emacs-lisp
-  (eval-after-load "python-mode"
-    '(progn
-#+end_src
-**** require
-#+begin_src emacs-lisp
-  (require 'pymacs)
-#+end_src
-**** TODO 讓 pymacs 找的到 rope 以及 ropemacs
-我將 pymacs 必須使用的 rope、ropemacs、ropemode 安裝在 lisp 資料夾裏面，
-必須設定 PATH 讓 pymacs 知道他們在哪。
-#+begin_src emacs-lisp
-;; no use?
-;;  (setq pymacs-load-path '("~/.emacs.d/lisp/rope"
-;;                          "~/.emacs.d/lisp/ropemacs"))
-#+end_src
-**** 設定 pymacs 使用的 python 版本
-使用 python2.7
-#+begin_src emacs-lisp
-  (setenv "PYMACS_PYTHON" "python2.7")
-#+end_src
-**** 修改 ropemacs 預設的 keymap-prefix
-#+begin_src emacs-lisp
-  (setq ropemacs-enable-shortcuts nil)
-  (setq ropemacs-local-prefix "C-c C-p")
-  (setq ropemacs-global-prefix "C-c p")
-#+end_src
-**** 啟用 ropemacs
-#+begin_src emacs-lisp
-  (pymacs-load "ropemacs" "rope-")
-#+end_src
-**** 設定檔結速
-#+begin_src emacs-lisp
-  ))
-#+end_src
 *** 自動補全
 #+begin_src emacs-lisp
-(require 'ac-python)
+  (require 'ac-python)
 #+end_src
 ** Markdown
 *** 設定 Markdown 檔案的副檔名與對應的模式
