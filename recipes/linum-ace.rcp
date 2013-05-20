@@ -2,4 +2,4 @@
        :description ""
        :features linum-ace
        :type github
-       :pkgname clodnew/linum-ace)
+       :pkgname "coldnew/linum-ace")
