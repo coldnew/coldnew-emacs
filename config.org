@@ -4011,30 +4011,40 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 
 ** Clojure Script
 ** Emacs Lisp
+
 *** 設定 emacs-lisp 的副檔名與對應的模式
+
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 #+end_src
 
-*** eldoc
-eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在 minibuffer 上。
+*** 顯示目前所使用的 elisp function 宣告在 minibuffer 上面
+
+eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
+minibuffer 上。
+
 #+begin_src emacs-lisp
-  (require 'eldoc)
-  (require 'eldoc-extension)
-  (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+  (add-hook 'emacs-lisp-mode-hook
+            '(lambda ()
+               (when (require 'eldoc nil 'noerror)
+                 (require 'eldoc nil 'noerror)
+                 (turn-on-eldoc-mode)
+
+                 ;; fix for paredit
+                 (eval-after-load 'paredit
+                   '(progn
+                      (eldoc-add-command 'paredit-backward-delete
+                                         'paredit-close-round)))
+                 )))
 #+end_src
 
-讓 pairedit 相容於 eldoc。
-#+begin_src emacs-lisp
-  (when (featurep 'paredit)
-    (eldoc-add-command 'paredit-backward-delete 'paredit-close-round))
-#+end_src
+*** 高亮屬於 cl.el 套件的 function 或是 macro。
 
-*** highlight-cl
-高亮屬於 cl.el 套件的 function 或是 macro。
 #+begin_src emacs-lisp
-  (require 'highlight-cl)
-  (add-hook 'emacs-lisp-mode-hook 'highlight-cl-add-font-lock-keywords)
+  (add-hook 'emacs-lisp-mode-hook
+            '(lambda ()
+               (when (require 'highlight-cl nil 'noerror)
+                 (highlight-cl-add-font-lock-keywords))))
 #+end_src
 
 *** 自動補全
@@ -4062,16 +4072,22 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
           ))
 #+end_src
 
-*** Functions
+*** 當打開 elisp 檔案的時候，移除 *.elc 檔案
+
+我們會打開 elisp 程式通常都是為了編輯，並重新載入他，因此把 *.elc 檔案
+移除勢必要的，這樣可以避免下次載入到錯誤的 elisp 程式。
+
 #+begin_src emacs-lisp
-    (defun remove-elc-when-visit ()
-      "After visit elisp file, remove .elc extension file."
-      (make-local-variable 'find-file-hook)
-      (add-hook 'find-file-hook
-                (lambda ()
-                  (if (and (file-exists-p (concat buffer-file-name "c"))
-                           (file-writable-p (concat buffer-file-name "c")))
-                      (delete-file (concat buffer-file-name "c"))))))
+  (defun remove-elc-when-visit ()
+    "After visit elisp file, remove .elc extension file."
+    (make-local-variable 'find-file-hook)
+    (add-hook 'find-file-hook
+              (lambda ()
+                (if (and (file-exists-p (concat buffer-file-name "c"))
+                         (file-writable-p (concat buffer-file-name "c")))
+                    (delete-file (concat buffer-file-name "c"))))))
+
+  (add-hook 'emacs-lisp-mode-hook 'remove-elc-when-visit)
 #+end_src
 
 *** Keybinding
