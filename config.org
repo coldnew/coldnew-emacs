@@ -433,61 +433,61 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
 
 emacs 編碼設定，大部份都設定成 utf-8。
 
-** 系統編碼。
+- 系統編碼。
 
-#+begin_src emacs-lisp
-  (prefer-coding-system 'utf-8 )
-#+end_src
+  #+begin_src emacs-lisp
+    (prefer-coding-system 'utf-8 )
+  #+end_src
 
-** 語言環境。
+- 語言環境。
 
-#+begin_src emacs-lisp
-  (set-language-environment 'utf-8 )
-#+end_src
+ #+begin_src emacs-lisp
+   (set-language-environment 'utf-8 )
+ #+end_src
 
-** 文件保存時的編碼設置
+- 文件保存時的編碼設置
 
-#+begin_src emacs-lisp
-  (set-buffer-file-coding-system 'utf-8 )
-#+end_src
+  #+begin_src emacs-lisp
+    (set-buffer-file-coding-system 'utf-8 )
+  #+end_src
 
-** 鍵盤編碼設定
+- 鍵盤編碼設定
 
-#+begin_src emacs-lisp
-  (set-keyboard-coding-system    'utf-8 )
-#+end_src
+  #+begin_src emacs-lisp
+    (set-keyboard-coding-system    'utf-8 )
+  #+end_src
 
-** 設定終端機的編碼
+- 設定終端機的編碼
 
-#+begin_src emacs-lisp
-  (set-terminal-coding-system    'utf-8 )
-#+end_src
+  #+begin_src emacs-lisp
+    (set-terminal-coding-system    'utf-8 )
+  #+end_src
 
-** 選擇區域內編碼
+- 選擇區域內編碼
 
-#+begin_src emacs-lisp
-  (set-selection-coding-system   'utf-8 )
-#+end_src
+  #+begin_src emacs-lisp
+    (set-selection-coding-system   'utf-8 )
+  #+end_src
 
-** 剪貼簿編碼設定
+- 剪貼簿編碼設定
 
-#+begin_src emacs-lisp
-  (set-clipboard-coding-system   'utf-8 )
-#+end_src
+  #+begin_src emacs-lisp
+    (set-clipboard-coding-system   'utf-8 )
+  #+end_src
 
-** 使用 utf-8 編碼顯示文件名
+- 使用 utf-8 編碼顯示文件名
 
-#+begin_src emacs-lisp
-  (set-file-name-coding-system   'utf-8 )
-#+end_src
+  #+begin_src emacs-lisp
+    (set-file-name-coding-system   'utf-8 )
+  #+end_src
 
-** 設定時間顯示使用英文
+- 設定時間顯示使用英文
 
-時間顯示中文還是怪怪的，所以這邊設定成英文
+  時間顯示中文還是怪怪的，所以這邊設定成英文
 
-#+begin_src emacs-lisp
-  (setq system-time-locale "en_US" )
-#+end_src
+  #+begin_src emacs-lisp
+    (setq system-time-locale "en_US" )
+  #+end_src
 
 * 套件管理                                                          :package:
 
