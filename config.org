@@ -121,26 +121,26 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
 
 這邊設定了各種檔案的路徑。
 
-*** emacs 個人配置的檔案，也就是這個檔案
+- emacs 個人配置的檔案，也就是這個檔案
 
-#+begin_src emacs-lisp
-  (defconst emacs-config-file (concat emacs-dir "config.org")
-    "File to place emacs configs.")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-config-file (concat emacs-dir "config.org")
+      "File to place emacs configs.")
+  #+end_src
 
-*** 客制化設定檔的位置
+- 客制化設定檔的位置
 
-#+begin_src emacs-lisp
-  (defconst emacs-custom-file (concat emacs-dir "custom.el")
-    "store customize UI config.")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-custom-file (concat emacs-dir "custom.el")
+      "store customize UI config.")
+  #+end_src
 
-*** 書籤文件檔案
+- 書籤文件檔案
 
-#+begin_src emacs-lisp
-  (defconst emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
-    "File to save bookmarks")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
+      "File to save bookmarks")
+  #+end_src
 
 ** 作業系統測試
 
