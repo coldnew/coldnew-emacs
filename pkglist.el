@@ -45,7 +45,7 @@
 "less-css-mode"
 "lusty-explorer"
 "magit"
-"markdown-mode+"
+"markdown-mode"
 "melpa"
 "moz-repl"
 "multi-term"

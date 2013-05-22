@@ -4222,7 +4222,7 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
 *** 設定 Markdown 檔案的副檔名與對應的模式
 
 #+begin_src emacs-lisp
-  (require 'markdown-mode+)
+  (require 'markdown-mode)
   (add-to-list 'auto-mode-alist '("\\.\\(md\\|markdown\\)\\'" . markdown-mode))
 #+end_src
 
