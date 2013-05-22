@@ -819,7 +819,6 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
   (require 'rainbow-mode)
   (require 'smarter-compile)
   (require 'expand-region)
-  (require 'rainbow-delimiters)
 #+end_src
 
 * 自定義函式/方法                                                  :function:
@@ -3985,15 +3984,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
   (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
 #+end_src
 
-*** 啟用 rainbow-delimiters
-
-#+begin_src emacs-lisp
-  (add-hook 'clojure-mode-hook
-            '(lambda ()
-               (when (require 'rainbow-delimiters)
-                 (rainbow-delimiters-mode-enable))))
-#+end_src
-
 *** 自動補全設定
 
 #+begin_src emacs-lisp
@@ -4174,6 +4164,13 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
 #+begin_src emacs-lisp
   (when (require 'pretty-lambdada nil 'noerror)
     (add-hook 'lisp-mode-common-hook 'pretty-lambda-mode))
+#+end_src
+
+*** 對每一個括號進行上色
+
+#+begin_src emacs-lisp
+  (when (require 'rainbow-delimiters nil 'noerror)
+    (add-hook 'lisp-mode-common-hook '(lambda () (rainbow-delimiters-mode 1))))
 #+end_src
 
 ** Python
