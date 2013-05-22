@@ -40,82 +40,82 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
 
 這邊設定了各種類型資料夾的路徑。
 
-*** emacs 設定檔預設所在的資料夾
+- emacs 設定檔預設所在的資料夾
 
-#+begin_src emacs-lisp
-  (defconst emacs-dir "~/.emacs.d/"
-    "The top-level emacs-configure directory.")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-dir "~/.emacs.d/"
+      "The top-level emacs-configure directory.")
+  #+end_src
 
-*** 佈景主題的資料夾設定
+- 佈景主題的資料夾設定
 
-#+begin_src emacs-lisp
-  (defconst emacs-themes-dir (concat emacs-dir "themes/")
-    "directory to place emacs theme.")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-themes-dir (concat emacs-dir "themes/")
+      "directory to place emacs theme.")
+  #+end_src
 
-*** el-get 安裝套件的路徑
+- el-get 安裝套件的路徑
 
-#+begin_src emacs-lisp
-  (defconst emacs-lisp-dir   (concat emacs-dir "lisp/")
-    "directory to place lisp packages from internet.")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-lisp-dir   (concat emacs-dir "lisp/")
+      "directory to place lisp packages from internet.")
+  #+end_src
 
-*** el-get 的 recipes 路徑
+- el-get 的 recipes 路徑
 
-#+begin_src emacs-lisp
-  (defconst emacs-recipes-dir (concat emacs-dir "recipes/")
-    "directory to place local el-get recepies.")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-recipes-dir (concat emacs-dir "recipes/")
+      "directory to place local el-get recepies.")
+  #+end_src
 
-*** elpa 安裝套件的路徑
+- elpa 安裝套件的路徑
 
-#+begin_src emacs-lisp
-  (defconst emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
-    "directory to place ELPA lisp packages from internet.")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
+      "directory to place ELPA lisp packages from internet.")
+  #+end_src
 
-*** yasnippet 使用的 snippet 路徑
+- yasnippet 使用的 snippet 路徑
 
-#+begin_src emacs-lisp
-  (defconst emacs-snippets-dir (concat emacs-dir "snippets/")
-    "directory to place yasnippet files.")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-snippets-dir (concat emacs-dir "snippets/")
+      "directory to place yasnippet files.")
+  #+end_src
 
-*** 放置 binary 檔案的資料夾
+- 放置 binary 檔案的資料夾
 
-#+begin_src emacs-lisp
-  (defconst emacs-bin-dir    (concat emacs-dir "bin/")
-    "directory to place binary staff.")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-bin-dir    (concat emacs-dir "bin/")
+      "directory to place binary staff.")
+  #+end_src
 
-*** 放置 cache 等暫存檔案的資料夾
+- 放置 cache 等暫存檔案的資料夾
 
-#+begin_src emacs-lisp
-  (defconst emacs-cache-dir  (concat emacs-dir "cache/")
-    "cache file directory.")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-cache-dir  (concat emacs-dir "cache/")
+      "cache file directory.")
+  #+end_src
 
-*** 備份文件的資料夾
+- 備份文件的資料夾
 
-#+begin_src emacs-lisp
-  (defconst emacs-backup-dir (concat emacs-dir "backup/")
-    "directory to backup files.")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-backup-dir (concat emacs-dir "backup/")
+      "directory to backup files.")
+  #+end_src
 
-*** 放置紀錄的資料夾
+- 放置紀錄的資料夾
 
-#+begin_src emacs-lisp
-  (defconst emacs-log-dir (concat emacs-dir "log/")
-    "log file directory.")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-log-dir (concat emacs-dir "log/")
+      "log file directory.")
+  #+end_src
 
-*** 放置 jar 等其他文件的位置
+- 放置 jar 等其他文件的位置
 
-#+begin_src emacs-lisp
-  (defconst emacs-etc-dir (concat emacs-dir "etc/")
-    "etc file directory.")
-#+end_src
+  #+begin_src emacs-lisp
+    (defconst emacs-etc-dir (concat emacs-dir "etc/")
+      "etc file directory.")
+  #+end_src
 
 ** 檔案相關變數設定                                               :variable:
 
