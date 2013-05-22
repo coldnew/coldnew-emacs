@@ -4063,6 +4063,7 @@ minibuffer 上。
                 ac-source-words-in-same-mode-buffers
                 )))
 #+end_src
+
 *** 快速插入樣板
 #+begin_src emacs-lisp
   (setq emacs-lisp-mode-expand-alist
@@ -4088,16 +4089,6 @@ minibuffer 上。
                     (delete-file (concat buffer-file-name "c"))))))
 
   (add-hook 'emacs-lisp-mode-hook 'remove-elc-when-visit)
-#+end_src
-
-*** Keybinding
-
-#+begin_src emacs-lisp
-
-  (add-hook 'emacs-lisp-mode-hook
-            '(lambda ()
-               (define-key emacs-lisp-mode-map (kbd "C-c C-b") 'backward-sexp)
-               ))
 #+end_src
 
 ** Go
