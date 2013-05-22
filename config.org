@@ -146,42 +146,43 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
 
 放置用於測試目前 emacs 執行在何種作業系統上的變數。
 
-*** MacOS X
-#+begin_src emacs-lisp
-  (defvar mac-p     (eq system-type 'darwin)
-    "Return nil if OS is not Mac.")
-#+end_src
+- MacOS X
 
-*** Linux
+  #+begin_src emacs-lisp
+    (defvar mac-p     (eq system-type 'darwin)
+      "Return nil if OS is not Mac.")
+  #+end_src
 
-#+begin_src emacs-lisp
-  ;; linux device
-  (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
-    "Return nil if OS is not Linux.")
+- Linux
 
-  ;; linux 32-bit
-  (defvar linux-32bit-p (and (string-match
-                              (rx (or bos "x86-" bos "i686-")) system-configuration) linux-p)
-    "Return nil if OS is not 32-bit linux.")
+  #+begin_src emacs-lisp
+    ;; linux device
+    (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
+      "Return nil if OS is not Linux.")
 
-  ;; linux 64-bit
-  (defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
-    "Return nil if OS is not 64-bit linux.")
-#+end_src
+    ;; linux 32-bit
+    (defvar linux-32bit-p (and (string-match
+                                (rx (or bos "x86-" bos "i686-")) system-configuration) linux-p)
+      "Return nil if OS is not 32-bit linux.")
 
-*** Cygwin
+    ;; linux 64-bit
+    (defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
+      "Return nil if OS is not 64-bit linux.")
+  #+end_src
 
-#+begin_src emacs-lisp
-  (defvar cygwin-p  (eq system-type 'cygwin)
-    "Return nil if OS is not CygWin.")
-#+end_src
+- Cygwin
 
-*** Window$
+   #+begin_src emacs-lisp
+     (defvar cygwin-p  (eq system-type 'cygwin)
+       "Return nil if OS is not CygWin.")
+   #+end_src
 
-#+begin_src emacs-lisp
-  (defvar windows-p (eq system-type 'windows-nt)
-    "Return nil if OS is not Windows.")
-#+end_src
+- Window$
+
+   #+begin_src emacs-lisp
+     (defvar windows-p (eq system-type 'windows-nt)
+       "Return nil if OS is not Windows.")
+   #+end_src
 
 ** 螢幕解析度測試                                               :resolution:
 
