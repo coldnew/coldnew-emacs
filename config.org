@@ -4018,7 +4018,7 @@ C-c  I             对目录中的相关文件建立列表并进行索引
   (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
 #+end_src
 
-*** 顯示目前所使用的 elisp function 宣告在 minibuffer 上面
+*** 顯示目前所使用的函式宣告在 minibuffer 上面
 
 eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 minibuffer 上。
@@ -4143,11 +4143,6 @@ minibuffer 上。
   (add-to-list 'auto-mode-alist '("\\.pro$" . qmake-mode))
 #+end_src
 
-** Perl
-*** 設定 Perl 檔案的副檔名與對應的模式
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.pl" . perl-mode))
-#+end_src
 ** Lisp 通用設定
 *** 建立 lisp-common-hook 變數
 
