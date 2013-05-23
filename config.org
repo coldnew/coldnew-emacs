@@ -3212,26 +3212,30 @@ vim 預設也會對數字進行別的上色動作。
 
 ** 在寫文件或是程式註解時自動填滿行寬
 
-#+begin_src emacs-lisp
-  (dolist (mode coldnew/literacture-mode)
-    (let ((hook (intern (concat (symbol-name mode) "-hook"))))
-      (add-hook hook
-                (lambda ()
-                  (auto-fill-mode 1)))))
-#+end_src
+- 在寫文章的時候啟用 auto-fill-mode
 
-#+begin_src emacs-lisp
+  #+begin_src emacs-lisp
+    (dolist (mode coldnew/literacture-mode)
+      (let ((hook (intern (concat (symbol-name mode) "-hook"))))
+        (add-hook hook
+                  (lambda ()
+                    (auto-fill-mode 1)))))
+  #+end_src
 
-  (dolist (mode coldnew/programming-mode)
-    (let ((hook (intern (concat (symbol-name mode) "-hook"))))
-      (add-hook hook
-                (lambda ()
-                  (auto-fill-mode 1)
-                  (set (make-local-variable 'fill-nobreak-predicate)
-                       (lambda ()
-                         (not (eq (get-text-property (point) 'face)
-                                  'font-lock-comment-face))))))))
-#+end_src
+
+- 在寫程式時只在註解啟用 auto-fill-mode
+
+  #+begin_src emacs-lisp
+    (dolist (mode coldnew/programming-mode)
+      (let ((hook (intern (concat (symbol-name mode) "-hook"))))
+        (add-hook hook
+                  (lambda ()
+                    (auto-fill-mode 1)
+                    (set (make-local-variable 'fill-nobreak-predicate)
+                         (lambda ()
+                           (not (eq (get-text-property (point) 'face)
+                                    'font-lock-comment-face))))))))
+  #+end_src
 
 ** 存檔後自動建立資料夾
 
