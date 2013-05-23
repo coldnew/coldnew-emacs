@@ -3124,7 +3124,7 @@ emacs 有一些 major 無法和 font-lock-add-keywords 相處融洽，
 關鍵字上色用的 major-mode。
 
 #+begin_src emacs-lisp
-  (defvar coldnew/extra-font-lock-mode
+  (defvar coldnew/programming-mode
     '(emacs-lisp-mode
 
       ;; lisp
@@ -3162,7 +3162,7 @@ FIXME: BUG: HACK:
 NOTE: TODO: DONE:
 
 #+begin_src emacs-lisp
-  (dolist (mode coldnew/extra-font-lock-mode)
+  (dolist (mode coldnew/programming-mode)
     (font-lock-add-keywords mode
      '(("\\<\\(FIXME\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)
        ("\\<\\(NOTE\\):" 1 'org-level-2 t)
@@ -3176,7 +3176,7 @@ NOTE: TODO: DONE:
 vim 預設也會對數字進行別的上色動作。
 
 #+begin_src emacs-lisp
-  (dolist (mode coldnew/extra-font-lock-mode)
+  (dolist (mode coldnew/programming-mode)
     (font-lock-add-keywords mode
      '(
        ;; hexadecimal
@@ -3194,7 +3194,7 @@ vim 預設也會對數字進行別的上色動作。
 這些字元進行上色。
 
 #+begin_src emacs-lisp
-  (dolist (mode coldnew/extra-font-lock-mode)
+  (dolist (mode coldnew/programming-mode)
     (font-lock-add-keywords mode
      '(("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
         0 '(:foreground "seagreen2") prepend))))
