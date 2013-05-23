@@ -51,6 +51,7 @@
 "multi-term"
 "multi-web-mode"
 "nrepl"
+"o-blog"
 "offlineimap"
 "package"
 "pangu-spacing"
