@@ -3200,6 +3200,24 @@ vim 預設也會對數字進行別的上色動作。
         0 '(:foreground "seagreen2") prepend))))
 #+end_src
 
+** 在寫註解時自動填滿行寬
+
+#+begin_src emacs-lisp
+  (add-hook 'coldnew-editor-mode-hook
+            (lambda ()
+              (auto-fill-mode 1)))
+
+  (dolist (mode coldnew/programming-mode)
+    (let ((hook (intern (concat (symbol-name mode) "-hook"))))
+      (add-hook hook
+                (lambda ()
+                  (auto-fill-mode 1)
+                  (set (make-local-variable 'fill-nobreak-predicate)
+                       (lambda ()
+                         (not (eq (get-text-property (point) 'face)
+                                  'font-lock-comment-face))))))))
+#+end_src
+
 ** 存檔後自動建立資料夾
 
 當存檔的時候，如果這個緩衝區的父資料夾不存在，自動建立他。
