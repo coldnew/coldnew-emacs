@@ -3149,7 +3149,11 @@ emacs 有一些 major 無法和 font-lock-add-keywords 相處融洽，
       pascal-mode fortran-mode prolog-mode asm-mode
       sml-mode
       )
-    "Major mode that i will add more font-lock")
+    "Major mode for programming languages")
+
+  (defvar coldnew/literacture-mode
+    '(org-mode text-mode latex-mode)
+    "Major mode that i will use for writting")
 #+end_src
 
 ** 替 FIXME 等關鍵字上色
@@ -3200,12 +3204,17 @@ vim 預設也會對數字進行別的上色動作。
         0 '(:foreground "seagreen2") prepend))))
 #+end_src
 
-** 在寫註解時自動填滿行寬
+** 在寫文件或是程式註解時自動填滿行寬
 
 #+begin_src emacs-lisp
-  (add-hook 'coldnew-editor-mode-hook
-            (lambda ()
-              (auto-fill-mode 1)))
+  (dolist (mode coldnew/literacture-mode)
+    (let ((hook (intern (concat (symbol-name mode) "-hook"))))
+      (add-hook hool
+                (lambda ()
+                  (auto-fill-mode 1)))))
+#+end_src
+
+#+begin_src emacs-lisp
 
   (dolist (mode coldnew/programming-mode)
     (let ((hook (intern (concat (symbol-name mode) "-hook"))))
