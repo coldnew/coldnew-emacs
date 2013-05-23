@@ -3117,44 +3117,50 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+end_src
 
-** 定義會加入額外上色的 major-mode
+** 宣告寫程式、文學用的 mode list
 
-emacs 有一些 major 無法和 font-lock-add-keywords 相處融洽，
-會倒置整個緩衝區的顏色不見，因此最好的方式是定義要加入新的
-關鍵字上色用的 major-mode。
+- 定義寫程式用的 mode
 
-#+begin_src emacs-lisp
-  (defvar coldnew/programming-mode
-    '(emacs-lisp-mode
+  emacs 有一些 major 無法和 font-lock-add-keywords 相處融洽，
+  會倒置整個緩衝區的顏色不見，因此最好的方式是定義要加入新的
+  關鍵字上色用的 major-mode，或者說，這些 mode 是要用來寫程式的。
 
-      ;; lisp
-      lisp-interaction-mode lisp-mode
-      clojure-mode scheme-mode
-      common-lisp-mode
+  #+begin_src emacs-lisp
+    (defvar coldnew/programming-mode
+      '(emacs-lisp-mode
 
-      ;; C/C++ like
-      c-mode c++-mode objc-mode
-      csharp-mode  d-mode
-      java-mode jde-mode
+        ;; lisp
+        lisp-interaction-mode lisp-mode
+        clojure-mode scheme-mode
+        common-lisp-mode
 
-      ;; Web
-      html-mode javascript-mode js2-mode
+        ;; C/C++ like
+        c-mode c++-mode objc-mode
+        csharp-mode  d-mode
+        java-mode jde-mode
 
-      ;; script
-      sh-mode python-mode ruby-mode cperl-mode
+        ;; Web
+        html-mode javascript-mode js2-mode
 
-      ;; others
-      erlang-mode sgml-mode qml-mode
-      slime-mode haskell-mode tuareg-mode lua-mode
-      pascal-mode fortran-mode prolog-mode asm-mode
-      sml-mode
-      )
-    "Major mode for programming languages")
+        ;; script
+        sh-mode python-mode ruby-mode cperl-mode
 
-  (defvar coldnew/literacture-mode
-    '(org-mode text-mode latex-mode)
-    "Major mode that i will use for writting")
-#+end_src
+        ;; others
+        erlang-mode sgml-mode qml-mode
+        slime-mode haskell-mode tuareg-mode lua-mode
+        pascal-mode fortran-mode prolog-mode asm-mode
+        sml-mode
+        )
+      "Major mode for programming languages")
+  #+end_src
+
+- 定義寫文章的 mode
+
+  #+begin_src emacs-lisp
+    (defvar coldnew/literacture-mode
+      '(org-mode text-mode latex-mode)
+      "Major mode that i will use for writting")
+  #+end_src
 
 ** 替 FIXME 等關鍵字上色
 
@@ -3209,7 +3215,7 @@ vim 預設也會對數字進行別的上色動作。
 #+begin_src emacs-lisp
   (dolist (mode coldnew/literacture-mode)
     (let ((hook (intern (concat (symbol-name mode) "-hook"))))
-      (add-hook hool
+      (add-hook hook
                 (lambda ()
                   (auto-fill-mode 1)))))
 #+end_src
