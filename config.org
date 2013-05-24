@@ -1973,6 +1973,15 @@ Following buffer will not show in iBuffer
   ;; Use global programming mode
   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 #+end_src
+** TODO uniquify
+#+begin_src emacs-lisp
+  (require 'uniquify)
+  (setq uniquify-buffer-name-style 'reverse)
+  (setq uniquify-separator "|")
+  (setq uniquify-after-kill-buffer-p 1)
+  (setq uniquify-ignore-buffers-re "^\\*")
+#+end_src
+
 * 終端機                                                               :term:
 
 ** 基本設定
