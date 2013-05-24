@@ -4067,6 +4067,18 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 #+end_src
 
 ** Clojure Script
+*** 載入相關套件
+
+#+begin_src emacs-lisp
+  (require 'clojurescript-mode)
+#+end_src
+
+*** 設定 Clojure Script 檔案的副檔名與對應的模式
+
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.cljs$" . clojurescript-mode))
+#+end_src
+
 ** Emacs Lisp
 
 *** 設定 emacs-lisp 的副檔名與對應的模式

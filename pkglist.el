@@ -12,6 +12,7 @@
 "c-eldoc"
 "clojure-mode"
 "clojure-test-mode"
+"clojurescript-mode"
 "ctags"
 "ctags-update"
 "dash"
