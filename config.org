@@ -6265,11 +6265,14 @@ Function key 設置常用的命令。
 ** 設定網頁連結名稱
 
 #+begin_src emacs-lisp
-  (defun coldnew/o-blog:sanitizer (s)
-    "Sanitize string S"
-    (if (not (equal (ob-sanitize-string s) "blog"))
-        (md5 s)
-      (ob-sanitize-string s)))
+  (defun coldnew/ob-sanitize-string (s)
+    "Sanitize string s"
+    (let* ((avoid-list '("blog"))
+           (not-in-list (not (member (ob-sanitize-string s)
+                                     avoid-list))))
+      (if not-in-list
+          (s-left 5 (sha1 s))
+        (ob-sanitize-string s))))
 #+end_src
 
 * Local File Variable
