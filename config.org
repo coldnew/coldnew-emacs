@@ -6322,7 +6322,7 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
   (add-hook 'o-blog-after-publish-hook
             '(lambda ()
-               (let* ((style-dir (concat coldnew-blog-src-dir "/style"))
+               (let* ((style-dir (concat coldnew-blog-dir "/style"))
                       (source-dir (concat style-dir "/source"))
                       (less-dir (concat source-dir "/less.js"))
                       (theme-dir (concat style-dir "/theme"))
