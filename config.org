@@ -117,6 +117,20 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
       "etc file directory.")
   #+end_src
 
+- Dropbox 資料夾
+
+      #+begin_src emacs-lisp
+        (defconst coldnew-dropbox-dir "~/Dropbox"
+          "Dropbox directory.")
+      #+end_src
+
+    - Sparkleshare 資料夾
+
+      #+begin_src emacs-lisp
+        (defconst coldnew-sparkleshare-dir "~/Sparkleshare"
+          "Sparkleshare directory.")
+      #+end_src
+
 ** 檔案相關變數設定                                               :variable:
 
 這邊設定了各種檔案的路徑。
@@ -6258,10 +6272,38 @@ Function key 設置常用的命令。
 #+end_src
 
 * 部若格                                                      :blog:
-** 載入相關套件
-#+begin_src emacs-lisp
-(require 'o-blog)
-#+end_src
+
+** 基本設定
+
+- 載入相關套件
+
+  #+begin_src emacs-lisp
+    (require 'o-blog)
+  #+end_src
+
+- 設定我的部若格資料夾位置
+
+  #+begin_src emacs-lisp
+    (defvar coldnew-blog-dir
+      (concat coldnew-sparkleshare-dir "/coldnew.github.com")
+      "My blog directory")
+  #+end_src
+
+- 設定我的部若格主檔案資料夾
+
+  #+begin_src emacs-lisp
+    (defvar coldnew-blog-src-dir
+      (concat coldnew-blog-dir "/blog-src")
+      "My blog-src directory")
+  #+end_src
+
+- 設定我的主要 blog 檔案位置
+
+  #+begin_src emacs-lisp
+    (defvar coldnew-blog-file
+      (concat coldnew-blog-src-dir "/blog.org"))
+  #+end_src
+
 ** 設定網頁連結名稱
 
 #+begin_src emacs-lisp
@@ -6273,6 +6315,23 @@ Function key 設置常用的命令。
       (if not-in-list
           (s-left 5 (sha1 s))
         (ob-sanitize-string s))))
+#+end_src
+
+** 當更新 blog 時自動重新編譯佈景主題成 css 檔案
+
+#+begin_src emacs-lisp
+  (add-hook 'o-blog-after-publish-hook
+            '(lambda ()
+               (let* ((style-dir (concat coldnew-blog-src-dir "/style"))
+                      (source-dir (concat style-dir "/source"))
+                      (less-dir (concat source-dir "/less.js"))
+                      (theme-dir (concat style-dir "/theme"))
+                      (css-dir (concat style-dir "/css")))
+
+                 ;; compile blog.less to blog.css and add it to css folder
+                 (shell-command (concat less-dir "/bin/lessc "
+                                        theme-dir "/blog.less" " > " css-dir "/blog.css"))
+                 )))
 #+end_src
 
 * Local File Variable
