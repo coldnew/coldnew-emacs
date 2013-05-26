@@ -6325,12 +6325,11 @@ Function key 設置常用的命令。
                (let* ((style-dir (concat coldnew-blog-dir "/style"))
                       (source-dir (concat style-dir "/source"))
                       (less-dir (concat source-dir "/less.js"))
-                      (theme-dir (concat style-dir "/theme"))
-                      (css-dir (concat style-dir "/css")))
+                      (theme-dir (concat style-dir "/theme")))
 
                  ;; compile blog.less to blog.css and add it to css folder
-                 (shell-command (concat less-dir "/bin/lessc "
-                                        theme-dir "/blog.less" " > " css-dir "/blog.css"))
+                 (shell-command (concat less-dir "/bin/lessc -x "
+                                        theme-dir "/blog.less" " > " theme-dir "/blog.css"))
                  )))
 #+end_src
 
