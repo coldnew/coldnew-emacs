@@ -127,7 +127,7 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
     - Sparkleshare 資料夾
 
       #+begin_src emacs-lisp
-        (defconst coldnew-sparkleshare-dir "~/Sparkleshare"
+        (defconst coldnew-sparkleshare-dir "~/SparkleShare"
           "Sparkleshare directory.")
       #+end_src
 
@@ -6320,7 +6320,7 @@ Function key 設置常用的命令。
 ** 當更新 blog 時自動重新編譯佈景主題成 css 檔案
 
 #+begin_src emacs-lisp
-  (add-hook 'o-blog-after-publish-hook
+  (add-hook 'o-blog-before-publish-hook
             '(lambda ()
                (let* ((style-dir (concat coldnew-blog-dir "/style"))
                       (source-dir (concat style-dir "/source"))
