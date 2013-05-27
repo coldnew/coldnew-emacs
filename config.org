@@ -5349,8 +5349,7 @@ a smaller size that doesn't get in the way, but at the same time will
 be readable enough to know it's content.
 
 #+begin_src emacs-lisp
-  (when (require 'golden-ratio nil 'noerror)
-    (golden-ratio-mode 1))
+  (require 'golden-ratio nil 'noerror)
 #+end_src
 
 * 聊天軟體                                                             :chat:
