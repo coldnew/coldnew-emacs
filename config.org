@@ -2430,6 +2430,7 @@ woman 是 emacs 下顯示 manpage 最好的方式。
   (setq woman-fill-column 100)
 #+end_src
 * org-mode                                                              :org:
+
 因為 org-mode 在這個設定檔裡佔有非常重要的比例，所以獨立出來。
 
 ** 基本設定
@@ -2451,31 +2452,29 @@ woman 是 emacs 下顯示 manpage 最好的方式。
     (add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
   #+end_src
 
-** 將 plantuml 加入 org-mode
+- 預設讓 org-mode 使用自動縮排模式
 
-plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前必須將 Garphviz 裝上。
+  #+begin_src emacs-lisp
+    (setq org-startup-indented t)
+  #+end_src
 
-#+begin_src emacs-lisp
-  (setq org-plantuml-jar-path (concat emacs-etc-dir "plantuml.jar"))
-#+end_src
+- 預設將所有項目都隱藏，只保留最上層的父目錄
 
-** 預設讓 org-mode 使用自動縮排模式
+  #+begin_src emacs-lisp
+    (setq org-startup-folded t)
+  #+end_src
 
-#+begin_src emacs-lisp
-  (setq org-startup-indented t)
-#+end_src
+- 將前面的 *星號* 隱藏，只顯示最後一個
 
-** 打開新的 org-mode 時，預設將所有項目都隱藏，只保留最上層的父目錄
+  #+begin_src emacs-lisp
+    (setq org-hide-leading-stars t)
+  #+end_src
 
-#+begin_src emacs-lisp
-  (setq org-startup-folded t)
-#+end_src
+- 直接在程式碼欄位上為程式碼上色
 
-** 將前面的 *星號* 隱藏，只顯示最後一個
-
-#+begin_src emacs-lisp
-  (setq org-hide-leading-stars t)
-#+end_src
+  #+begin_src emacs-lisp
+    (setq org-src-fontify-natively t)
+  #+end_src
 
 ** 切換成程式碼欄位時使用目前的視窗
 
@@ -2483,10 +2482,12 @@ plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前必須將
   (setq org-src-window-setup 'current-window)
 #+end_src
 
-** 直接在程式碼欄位上為程式碼上色
+** 將 plantuml 加入 org-mode
+
+plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前必須將 Garphviz 裝上。
 
 #+begin_src emacs-lisp
-  (setq org-src-fontify-natively t)
+  (setq org-plantuml-jar-path (concat emacs-etc-dir "plantuml.jar"))
 #+end_src
 
 ** 讓 org-mode 與 cua-mode 相容
