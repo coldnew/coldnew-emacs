@@ -2439,18 +2439,6 @@ woman 是 emacs 下顯示 manpage 最好的方式。
   (require 'org-latex)
 #+end_src
 
-google-weather 是提供　 emacs 連接 google-weathre 的 API，
-在 org 檔案裏面加入如下的 code，則可以在 agenda view 裏面看到天氣資訊。
-#+begin_example
-  * Weather
-  %%(org-google-weather "New York")
-#+end_example
-
-#+begin_src emacs-lisp
-  (require 'google-weather)
-  (require 'org-google-weather)
-#+end_src
-
 ** 設定 org-mode 檔案的副檔名與對應的模式
 
 #+begin_src emacs-lisp
