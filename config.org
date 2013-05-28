@@ -2431,21 +2431,25 @@ woman 是 emacs 下顯示 manpage 最好的方式。
 #+end_src
 * org-mode                                                              :org:
 因為 org-mode 在這個設定檔裡佔有非常重要的比例，所以獨立出來。
-** 載入相關套件
-#+begin_src emacs-lisp
-  (require 'org-install)
-  (require 'org-table)
-  (require 'ob-ditaa)
-  (require 'org-latex)
-#+end_src
 
-** 設定 org-mode 檔案的副檔名與對應的模式
+** 基本設定
 
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
-  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-  (add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
-#+end_src
+- 載入相關套件
+
+  #+begin_src emacs-lisp
+    (require 'org-install)
+    (require 'org-table)
+    (require 'ob-ditaa)
+    (require 'org-latex)
+  #+end_src
+
+- 設定 org-mode 檔案的副檔名與對應的模式
+
+  #+begin_src emacs-lisp
+    (add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
+    (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+    (add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
+  #+end_src
 
 ** 將 plantuml 加入 org-mode
 
