@@ -2276,10 +2276,6 @@ emacs 下可以透過 gpg 進行文件加密的動作
   (setq eshell-scroll-to-bottom-on-output t)
   (setq eshell-show-maximum-output t)
 
-  ;; my auto-complete for elisp
-  (add-hook 'eshell-mode-hook 'auto-complete-mode)
-  (add-hook 'eshell-mode-hook 'ac-eshell-mode-setup)
-
   ;; use helm to complete esehll
   (when (featurep 'helm)
     (add-hook 'eshell-mode-hook
@@ -2289,6 +2285,10 @@ emacs 下可以透過 gpg 進行文件加密的動作
                     'helm-esh-pcomplete))))
 
 
+#+end_src
+** 使用 auto-complete 來補全 eshell 命令
+
+#+begin_src emacs-lisp
   ;; define ac-source for eshell-pcomplete
   (ac-define-source eshell-pcomplete
     '((candidates . pcomplete-completions)
@@ -2297,11 +2297,13 @@ emacs 下可以透過 gpg 進行文件加密的動作
 
   (defun ac-eshell-mode-setup ()
     "auto-complete settings for eshell-mode"
-    (setq ac-sources
-          '(
-            ac-source-eshell-pcomplete
-            )))
+    (setq ac-sources '(ac-source-eshell-pcomplete)))
+
+  ;; Add to eshell-mode
+  (add-hook 'eshell-mode-hook 'auto-complete-mode)
+  (add-hook 'eshell-mode-hook 'ac-eshell-mode-setup)
 #+end_src
+
 ** Command
 #+begin_src emacs-lisp
   ;; find-file
