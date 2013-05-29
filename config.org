@@ -2307,20 +2307,10 @@ emacs 下可以透過 gpg 進行文件加密的動作
 ** Command
 #+begin_src emacs-lisp
   ;; find-file
-  ;; (defun eshell/ef (file) (find-file file))
   (defun eshell/ef (&rest args) (eshell/emacs args))
 
   ;; ediff
   (defun eshell/ed (file1 file2) (ediff file1 file2))
-
-  ;; clear
-  (defun eshell/clear ()
-    "Clears the shell buffer ala Unix's clear or DOS' cls"
-    (interactive)
-    ;; the shell prompts are read-only, so clear that for the duration
-    (let ((inhibit-read-only t))
-      ;; simply delete the region
-      (delete-region (point-min) (point-max))))
 
   (defun eshell/info (subject)
     "Read the Info manual on SUBJECT."
@@ -2355,6 +2345,20 @@ emacs 下可以透過 gpg 進行文件加密的動作
       ;; argument causes later arguments to be looked for in that directory,
       ;; not the starting directory
       (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
+#+end_src
+
+** 清空 eshell 緩衝區
+
+這個命令的作用和 Unix 下的 clear 功用相同，都是用來清空 shell 的內容。
+
+#+begin_src emacs-lisp
+  (defun eshell/clear ()
+    "Clears the shell buffer ala Unix's clear or DOS' cls"
+    (interactive)
+    ;; the shell prompts are read-only, so clear that for the duration
+    (let ((inhibit-read-only t))
+      ;; simply delete the region
+      (delete-region (point-min) (point-max))))
 #+end_src
 
 * Helm                                                                 :helm:
