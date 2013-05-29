@@ -2030,6 +2030,15 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
       (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1))))
   #+end_src
 
+- 讓一些習慣的按鍵在 term-mode 下也有作用
+
+  這邊重新設定一下 term-mode 下的按鍵設定，不這樣做的話，很多按鍵不能用
+  很麻煩，比如說，在 emacs 下 M-x 不能用像話嘛....
+
+  #+begin_src emacs-lisp
+    (define-key term-raw-map (kbd "M-x") 'nil)
+  #+end_src
+
 ** shell-pop
 *** 載入相依套件
 #+begin_src emacs-lisp
