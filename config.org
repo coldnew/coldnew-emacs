@@ -2004,29 +2004,31 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 來替代 term-mode)，但是我用於串口通訊的 serial-term 仍舊是以 term-mode
 為基礎，基於習慣，這邊會設置基本的 term-mode 配置。
 
-*** 載入相依套件
-#+begin_src emacs-lisp
-  (require 'term)
-  (require 'ansi-color)
-#+end_src
+- 載入相依套件
 
-*** 色彩配置
+  #+begin_src emacs-lisp
+    (require 'term)
+    (require 'ansi-color)
+  #+end_src
 
-移除 term-mode 預設的前景與背景顏色。
-#+begin_src emacs-lisp
-  (setq term-default-bg-color nil)
-  (setq term-default-fg-color nil)
-#+end_src
+- 色彩配置
 
-*** 修正與 yasnippet 相衝的問題
+  移除 term-mode 預設的前景與背景顏色。
 
-term-mode 似乎會和 yasnippet 的 tab 相衝，使用這個設定讓 yasnippet 不
-執行在 term-mode。
+  #+begin_src emacs-lisp
+    (setq term-default-bg-color nil)
+    (setq term-default-fg-color nil)
+  #+end_src
 
-#+begin_src emacs-lisp
-  (eval-after-load 'yasnippet
-    (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1))))
-#+end_src
+- 修正與 yasnippet 相衝的問題
+
+  term-mode 似乎會和 yasnippet 的 tab 相衝，使用這個設定讓 yasnippet 不
+  執行在 term-mode。
+
+  #+begin_src emacs-lisp
+    (eval-after-load 'yasnippet
+      (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1))))
+  #+end_src
 
 ** shell-pop
 *** 載入相依套件
