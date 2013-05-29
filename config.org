@@ -2037,6 +2037,7 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 
   #+begin_src emacs-lisp
     (define-key term-raw-map (kbd "M-x") 'nil)
+    (define-key term-raw-map (kbd "C-h") 'nil)
   #+end_src
 
 ** shell-pop
