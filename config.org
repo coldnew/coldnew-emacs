@@ -2327,6 +2327,17 @@ emacs 下可以透過 gpg 進行文件加密的動作
           1))))
 #+end_src
 
+** 按鍵設定
+
+這邊的按鍵設定，刻意讓 eshell 和一般 bash 下使用的形式相同。
+
+#+begin_src emacs-lisp
+  ;; (add-hook 'eshell-mode-hook
+  ;;           '(lambda ()
+  ;;              (local-set-key (kbd "C-u") '(lambda () (interactive) (kill-line 0)))
+  ;;              ))
+#+end_src
+
 ** 在 eshell 中用 emacs 打開檔案
 
 如果在 eshell 中呼叫 emacs 命令，實際上還是會打開另外一個 emacs 程式，
