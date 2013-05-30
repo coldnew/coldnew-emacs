@@ -3666,6 +3666,41 @@ require 的 snippet, 則添加以下程式
   (vim:mode-map coldnew-editor-map (kbd "C--")  'text-scale-decrease)
 #+end_src
 
+** 復合式按鍵
+
+這邊的按鍵呼叫的功能比較特別，是 *複合式* 的，代表一個命令可能依據使用
+的方式不同，而具有不同的功能。
+
+因為這邊的命令也是特別的，因此同時定義在這裡
+
+| 按鍵 | 用途 1       | 用途 2     |
+|------+--------------+------------|
+| M-r  | 旋轉切換視窗 | 尋找並取代 |
+
+
+- 旋轉切換視窗 or 尋找並取代
+
+  #+begin_src emacs-lisp
+    (vim:mode-imap coldnew-editor-map (kbd "M-r")
+                   '(lambda ()
+                      "If in region, us query replace, else use rotate-window-only."
+                      (interactive)
+                      (if (or mark-active (= (length (window-list)) 1))
+                          (call-interactively 'query-replace-regexp)
+                        (rotate-windows-only))))
+  #+end_src
+
+#+begin_src emacs-lisp
+  (defun cua-set-mark-or-rectangle-mark (&optional arg)
+    "toggle between cua-set-mark or cua-rectangle-mark"
+    (interactive "P")
+    (if (or (not mark-active) arg)
+        (cua-set-mark arg)
+      (cua-toggle-rectangle-mark)))
+
+#+end_src
+
+
 * Cedet                                                                :cedet:
 #+begin_src emacs-lisp
   (require 'semantic)
@@ -5051,16 +5086,6 @@ yank-n-times 則可以重複的進行貼上。
     (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
           ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
           (t (self-insert-command (or arg 1)))))
-
-
-
-  (defun cua-set-mark-or-rectangle-mark (&optional arg)
-    "toggle between cua-set-mark or cua-rectangle-mark"
-    (interactive "P")
-    (if (or (not mark-active) arg)
-        (cua-set-mark arg)
-      (cua-toggle-rectangle-mark)))
-
 
 
   (defadvice kill-ring-save (before slickcopy activate compile)
