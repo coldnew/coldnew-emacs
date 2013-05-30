@@ -5431,48 +5431,49 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
 #+end_src
 
 *** 紀錄聊天訊息
-**** 載入相依套件
+
+- 載入相依套件
 
 #+begin_src emacs-lisp
   (require 'erc-log)
 #+end_src
 
-**** 啟動 erc-log-mode
+- 啟動 erc-log-mode
 
-#+begin_src emacs-lisp
-  (erc-log-mode 1)
-#+end_src
+  #+begin_src emacs-lisp
+    (erc-log-mode 1)
+  #+end_src
 
-**** 設定紀錄檔儲存位置
+- 設定紀錄檔儲存位置
 
-#+begin_src emacs-lisp
-  (setq erc-log-channels-directory emacs-log-dir)
-#+end_src
+  #+begin_src emacs-lisp
+    (setq erc-log-channels-directory emacs-log-dir)
+  #+end_src
 
-**** 如果儲存紀錄檔的資料夾不存在，建立他
+- 如果儲存紀錄檔的資料夾不存在，建立他
 
-#+begin_src emacs-lisp
-  (unless (file-exists-p erc-log-channels-directory)
-    (mkdir erc-log-channels-directory t))
-#+end_src
+  #+begin_src emacs-lisp
+    (unless (file-exists-p erc-log-channels-directory)
+      (mkdir erc-log-channels-directory t))
+  #+end_src
 
-**** 紀錄檔編碼為 utf-8
+- 紀錄檔編碼為 utf-8
 
-#+begin_src emacs-lisp
-  (setq erc-log-file-coding-system 'utf-8)
-#+end_src
+  #+begin_src emacs-lisp
+    (setq erc-log-file-coding-system 'utf-8)
+  #+end_src
 
-**** 送出訊息後寫入到 log
+- 送出訊息後寫入到 log
 
-#+begin_src emacs-lisp
-  (setq erc-log-write-after-send t)
-#+end_src
+  #+begin_src emacs-lisp
+    (setq erc-log-write-after-send t)
+  #+end_src
 
-**** 當有新訊息時，寫入到 log
+- 當有新訊息時，寫入到 log
 
-#+begin_src emacs-lisp
-  (setq erc-log-write-after-insert t)
-#+end_src
+  #+begin_src emacs-lisp
+    (setq erc-log-write-after-insert t)
+  #+end_src
 
 *** 設定聊天時的行寬為 100
 
