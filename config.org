@@ -4777,6 +4777,38 @@ logior function 來改變檔案屬性。
                                'fullboth)))))
 #+end_src
 
+*** 旋轉視窗
+
+有時候就是希望左右兩邊視窗可以對調，因此弄了以下的命令讓視窗可以進行旋
+轉移動，若只有兩個視窗，則這個命令相當於 swap-windows 的功能，這邊設計
+了兩種類型的旋轉視窗
+
+- rotate-windows - 選轉視窗，視窗焦點會落在原本的緩衝區內。
+- rotate-windows-only - 旋轉視窗，但是視窗的焦點還是在原本的視窗內。
+
+#+begin_src emacs-lisp
+  (defun rotate-windows-helper (x d)
+    "Helper function for rotate window."
+    (if (equal (cdr x) nil)
+        (set-window-buffer (car x) d)
+      (set-window-buffer (car x) (window-buffer (cadr x)))
+      (rotate-windows-helper (cdr x) d)))
+
+  (defun rotate-windows ()
+    "Rotate window but make the focus on the same bufer."
+    (interactive)
+    (rotate-windows-helper (window-list) (window-buffer (car (window-list))))
+    (select-window (car (last (window-list)))))
+
+  (defun rotate-windows-only ()
+    "Rotate windows only, keep focus at the same window."
+    (interactive)
+    ;; sotre window
+    (let ((cur (car (window-list))))
+      (rotate-windows-helper (window-list) (window-buffer (car (window-list))))
+      (select-window cur)))
+#+end_src
+
 ** 插入
 
 *** 插入目前的時間
