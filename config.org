@@ -3676,7 +3676,7 @@ require 的 snippet, 則添加以下程式
 | 按鍵 | 用途 1       | 用途 2     |
 |------+--------------+------------|
 | M-r  | 旋轉切換視窗 | 尋找並取代 |
-
+| C-v  | 選取區域     | 選取矩型區域 |
 
 - 旋轉切換視窗 or 尋找並取代
 
@@ -3690,16 +3690,17 @@ require 的 snippet, 則添加以下程式
                         (rotate-windows-only))))
   #+end_src
 
-#+begin_src emacs-lisp
-  (defun cua-set-mark-or-rectangle-mark (&optional arg)
-    "toggle between cua-set-mark or cua-rectangle-mark"
-    (interactive "P")
-    (if (or (not mark-active) arg)
-        (cua-set-mark arg)
-      (cua-toggle-rectangle-mark)))
+- 選取區域 or 選取矩型區域
 
-#+end_src
-
+  #+begin_src emacs-lisp
+    (vim:mode-imap coldnew-editor-map (kbd "C-v")
+                   '(lambda ()
+                      "toggle between cua-set-mark or cua-rectangle-mark"
+                      (interactive)
+                      (if (not mark-active)
+                          (call-interactively 'cua-set-mark)
+                        (cua-toggle-rectangle-mark))))
+  #+end_src
 
 * Cedet                                                                :cedet:
 #+begin_src emacs-lisp
@@ -6267,13 +6268,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-x t 7") '(lambda () (interactive) (elscreen-goto 7)))
   (global-set-key (kbd "C-x t 8") '(lambda () (interactive) (elscreen-goto 8)))
   (global-set-key (kbd "C-x t 9") '(lambda () (interactive) (elscreen-goto 9)))
-#+end_src
-
-** Ctrl Prefix
-
-*** Misc
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-v") 'coldnew/set-mark-command)
 #+end_src
 
 ** Ctrl-x Prefix
