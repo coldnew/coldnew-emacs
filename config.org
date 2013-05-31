@@ -1065,6 +1065,26 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
     (with-current-buffer buffer-or-string major-mode))
 #+end_src
 
+** 尋找、取代
+
+*** 向後搜尋一個字元
+
+#+begin_src emacs-lisp
+  (defun search-backward-to-char (chr)
+    "Search backwards to a character"
+    (while (not (= (char-after) chr))
+      (backward-char 1)))
+#+end_src
+
+*** 向前搜尋一個字元
+
+#+begin_src emacs-lisp
+  (defun search-forward-to-char (chr)
+    "Search forwards to a character"
+    (while (not (= (char-before) chr))
+      (forward-char 1)))
+#+end_src
+
 ** TODO 需整理
 *** List Processing
 **** flatten a list
@@ -1089,31 +1109,6 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
           ((atom structure) `(,structure))
           (t (mapcan #'flatten structure))))
 #+end_src
-
-*** Search
-
-搜尋相關的 function。
-
-**** search-backward-to-char
-
-向後搜尋一個字元。
-#+begin_src emacs-lisp
-  (defun search-backward-to-char (chr)
-    "Search backwards to a character"
-    (while (not (= (char-after) chr))
-      (backward-char 1)))
-#+end_src
-
-**** search-forward-to-char
-
-向前搜尋一個字元。
-#+begin_src emacs-lisp
-  (defun search-forward-to-char (chr)
-    "Search forwards to a character"
-    (while (not (= (char-before) chr))
-      (forward-char 1)))
-#+end_src
-
 
 *** Date
 #+begin_src emacs-lisp
