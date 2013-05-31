@@ -6194,7 +6194,6 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 | C-x C-n      | auto-complete        | 自動補全                  |
 | Shift Return | insert-empty-line    | 插入空白行                |
 | M-s          | coldnew/helm-occur   | 使用 occur 查詢當前緩衝區 |
-| M-r          | query-replace-regexp | 使用正規表達式查找並取代  |
 | C-M ,        | beginning-of-buffer  | 回到緩衝區開頭            |
 | C-M .        | end-of-buffer        | 回到緩衝區尾巴            |
 
@@ -6205,7 +6204,6 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
   (global-set-key (kbd "C-x C-n") 'auto-complete)
   (global-set-key[(shift return)] 'insert-empty-line)
   (global-set-key (kbd "M-s") 'coldnew/helm-occur)
-  (global-set-key (kbd "M-r") 'query-replace-regexp)
   (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
   (global-set-key (kbd "C-M-.") 'end-of-buffer)
 
