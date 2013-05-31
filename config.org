@@ -6320,7 +6320,7 @@ Function key 設置常用的命令。
 #+end_src
 
 ** Meta Prefix
-*** Misc
+
 #+begin_src emacs-lisp
   (global-set-key (kbd "M-l") 'backward-delete-word)
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
