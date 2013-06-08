@@ -5464,7 +5464,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
 #+begin_src emacs-lisp
   (setq erc-autojoin-channels-alist
         '(;; english channel
-          (".*\\.freenode.net" "#emacs" "#clojure" "##linux" "#gentoo")
+          (".*\\.freenode.net" "#emacs" "#clojure" "#coscup")
           ;; Chinese channel
           (".*\\.freenode.net" "#emacs.tw" "#tossug")
           (".*\\.oftc.net" "#dot")
@@ -5570,7 +5570,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
   ;; truncate long irc buffers
   (erc-truncate-mode +1)
   ;; enable spell checking
-  (erc-spelling-mode 1)
+  (erc-spelling-mode 0)
   ;; autoaway setup
   (setq erc-auto-discard-away t)
   (setq erc-autoaway-idle-seconds 600)
@@ -6375,7 +6375,7 @@ Function key 設置常用的命令。
 #+begin_src emacs-lisp
   (defun coldnew/ob-sanitize-string (s)
     "Sanitize string s"
-    (let* ((avoid-list '("blog"))
+    (let* ((avoid-list '("blog" "draft"))
            (not-in-list (not (member (ob-sanitize-string s)
                                      avoid-list))))
       (if not-in-list
@@ -6386,7 +6386,7 @@ Function key 設置常用的命令。
 ** 當更新 blog 時自動重新編譯佈景主題成 css 檔案
 
 #+begin_src emacs-lisp
-  (add-hook 'o-blog-before-publish-hook
+  (add-hook 'o-blog-after-publish-hook
             '(lambda ()
                (let* ((style-dir (concat coldnew-blog-dir "/style"))
                       (source-dir (concat style-dir "/source"))
@@ -6405,7 +6405,7 @@ Function key 設置常用的命令。
 稿的部份，則是放到 Draft 裏面，當 Draft 裏面的子項目變成 DONE 的時候，自動將
 其移到 Blog 項目內。
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (defun coldnew/blog-track-draft-done (change-plist)
     "Track Draft task, move it to Blog task if it's stats change to DONE."
     (let* ((pos (plist-get change-plist :position))
@@ -6432,6 +6432,8 @@ Function key 設置常用的命令。
 
   (add-hook 'org-trigger-hook 'coldnew/blog-track-draft-done)
 #+end_src
+
+
 * Local File Variable
 # Local Variables:
 # mode: org
