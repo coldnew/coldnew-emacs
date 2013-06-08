@@ -2514,6 +2514,12 @@ plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前必須將
   (setq org-plantuml-jar-path (concat emacs-etc-dir "plantuml.jar"))
 #+end_src
 
+** 將 ditaa 加入 org-mode
+
+#+begin_src emacs-lisp
+  (setq org-ditaa-jar-path (concat emacs-etc-dir "ditaa.jar"))
+#+end_src
+
 ** 讓 org-mode 與 cua-mode 相容
 
 #+begin_src emacs-lisp
