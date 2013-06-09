@@ -3,10 +3,12 @@
 
 (message "\nEmacs is powering up... Be patient, Master %s!\n" (getenv "USER"))
 
-;; add directories to emacs's `load-path' recursively.
+;; Add directories to emacs's `load-path' recursively.
+;; if path does not exist, create directory.
 (let* ((emacs-dir "~/.emacs.d/")
        (lisp-dir '("lisp/" "themes/" "local-lisp/")))
   (dolist (lisp-path lisp-dir)
+    (if (not (file-exists-p lisp-path)) (make-directory lisp-path t))
     (let* ((load-dir (concat emacs-dir lisp-path))
 	   (default-directory load-dir))
       (setq load-path (cons load-dir load-path))
@@ -18,19 +20,14 @@
   (interactive)
   (load-file "~/.emacs.d/init.el") (desktop-revert) (delete-other-windows))
 
-;; When eval org-babel, do not confirm
-(setq org-confirm-babel-evaluate nil)
-
 ;; Load up org-mode and org-babel
 (require 'org-install)
 (require 'ob-tangle)
 
-;; Load up all literate org-mode files in config directory
-;;(mapc #'org-babel-load-file (directory-files "~/.emacs.d/" t "\\.org$"))
+;; Load config.org
 (org-babel-load-file (expand-file-name "config.org" emacs-dir))
 
 
 (message "\nEmacs is ready to serve you, Master %s!\n" (getenv "USER"))
 
 ;;; init.el ends here.
-(put 'narrow-to-region 'disabled nil)
