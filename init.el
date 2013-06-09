@@ -26,7 +26,9 @@
 (require 'ob-tangle)
 
 ;; Load up all literate org-mode files in config directory
-(mapc #'org-babel-load-file (directory-files "~/.emacs.d/" t "\\.org$"))
+;;(mapc #'org-babel-load-file (directory-files "~/.emacs.d/" t "\\.org$"))
+(org-babel-load-file (expand-file-name "config.org" emacs-dir))
+
 
 (message "\nEmacs is ready to serve you, Master %s!\n" (getenv "USER"))
 
