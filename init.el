@@ -24,10 +24,10 @@
 (require 'org-install)
 (require 'ob-tangle)
 
-;; Load config.org
-(org-babel-load-file (expand-file-name "config.org" emacs-dir))
+;; Load config.org from ~/.emacs.d/
+(org-babel-load-file (expand-file-name "config.org" "~/.emacs.d/"))
 
-
+;; Done and done!!
 (message "\nEmacs is ready to serve you, Master %s!\n" (getenv "USER"))
 
 ;;; init.el ends here.
