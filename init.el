@@ -8,7 +8,7 @@
 (let* ((emacs-dir "~/.emacs.d/")
        (lisp-dir '("lisp/" "themes/" "local-lisp/")))
   (dolist (lisp-path lisp-dir)
-    (if (not (file-exists-p lisp-path)) (make-directory (concat emacs-dir lisp-path t)))
+    (if (not (file-exists-p lisp-path)) (make-directory (concat emacs-dir lisp-path) t))
     (let* ((load-dir (concat emacs-dir lisp-path))
 	   (default-directory load-dir))
       (setq load-path (cons load-dir load-path))
