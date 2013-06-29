@@ -50,6 +50,7 @@
 "moz-repl"
 "multi-term"
 "multi-web-mode"
+"newlisp"
 "nrepl"
 "o-blog"
 "offlineimap"

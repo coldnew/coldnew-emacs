@@ -3178,7 +3178,7 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
         ;; lisp
         lisp-interaction-mode lisp-mode
         clojure-mode scheme-mode
-        common-lisp-mode
+        common-lisp-mode newlisp-mode
 
         ;; C/C++ like
         c-mode c++-mode objc-mode
@@ -4233,6 +4233,15 @@ minibuffer 上。
   (add-hook 'emacs-lisp-mode-hook 'remove-elc-when-visit)
 #+end_src
 
+** newlisp
+
+*** 設定 newlisp 的副檔名與對應的模式
+
+#+begin_src emacs-lisp
+  (when (require 'newlisp nil 'noerror)
+    (add-to-list 'auto-mode-alist '("\\.lsp$" . newlisp-mode)))
+#+end_src
+
 ** Go
 *** 載入相關套件
 
@@ -4300,6 +4309,7 @@ minibuffer 上。
 #+begin_src emacs-lisp
   (add-hook 'emacs-lisp-mode-hook '(lambda () (run-hooks 'lisp-mode-common-hook)))
   (add-hook 'clojure-mode-hook '(lambda () (run-hooks 'lisp-mode-common-hook)))
+  (add-hook 'newlisp-mode-hook '(lambda () (run-hooks 'lisp-mode-common-hook)))
 #+end_src
 
 *** 將 lambdada 以及 fn 變成希臘符號
