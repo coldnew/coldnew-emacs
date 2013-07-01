@@ -3593,7 +3593,7 @@ require 的 snippet, 則添加以下程式
 | C-x f x | set-file-executable    | 為目前檔案加上可執行權限     |
 | C-x f c | clone-file-and-open    | 複製目前檔案到其他檔案並打開 |
 | C-x f d | delete-file-and-buffer | 刪除目前的檔案與緩衝區       |
-| M-o     | coldnew/helm-mini      | 使用自訂的 helm-mini 找檔案 |
+| M-o     | coldnew/helm-mini      | 使用自訂的 helm-mini 找檔案  |
 
 #+begin_src emacs-lisp
   (vim:mode-map coldnew-editor-map (kbd "C-x C-f")  'lusty-file-explorer)
@@ -3602,7 +3602,28 @@ require 的 snippet, 則添加以下程式
   (vim:mode-map coldnew-editor-map (kbd "C-x fx")  'set-file-executable)
   (vim:mode-map coldnew-editor-map (kbd "C-x fc")  'clone-file-and-open)
   (vim:mode-map coldnew-editor-map (kbd "C-x fd")  'delete-file-and-buffer)
-  (vim:mode-map coldnew-editor-map (kbd "M-o")     'coldnew/helm-mini)
+
+#+end_src
+
+| 按鍵    | 命令                   | 用途                         |
+|---------+------------------------+------------------------------|
+| M-o     | coldnew/helm-mini      | 使用自訂的 helm-mini 找檔案  |
+
+#+begin_src emacs-lisp
+  (eval-after-load 'helm
+    '(progn
+       (vim:mode-map coldnew-editor-map (kbd "M-o")
+                     '(lambda ()
+                        "coldnew's helm-mini"
+                        (interactive)
+                        (helm-other-buffer
+                         '(helm-source-ls-git
+                           helm-source-locate
+                           helm-c-source-buffers-list
+                           helm-c-source-recentf
+                           helm-c-source-buffer-not-found)
+                         "*coldnew helm mini*")))
+       ))
 #+end_src
 
 ** 緩衝區編輯 (I)
