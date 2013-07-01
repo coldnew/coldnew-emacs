@@ -33,3 +33,4 @@ log/
 url/
 lisp/
 tramp
+custom.el
