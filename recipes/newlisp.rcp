@@ -1,0 +1,5 @@
+(:name newlisp
+       :description "newlisp mode"
+       :features newlisp
+       :type github
+       :pkgname "coldnew/newlisp-mode")
