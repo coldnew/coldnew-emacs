@@ -119,17 +119,17 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
 
 - Dropbox 資料夾
 
-      #+begin_src emacs-lisp
-        (defconst coldnew-dropbox-dir "~/Dropbox"
-          "Dropbox directory.")
-      #+end_src
+  #+begin_src emacs-lisp
+    (defconst coldnew-dropbox-dir "~/Dropbox"
+      "Dropbox directory.")
+  #+end_src
 
-    - Sparkleshare 資料夾
+- Sparkleshare 資料夾
 
-      #+begin_src emacs-lisp
-        (defconst coldnew-sparkleshare-dir "~/SparkleShare"
-          "Sparkleshare directory.")
-      #+end_src
+  #+begin_src emacs-lisp
+    (defconst coldnew-sparkleshare-dir "~/SparkleShare"
+      "Sparkleshare directory.")
+  #+end_src
 
 ** 檔案相關變數設定                                               :variable:
 
