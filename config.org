@@ -2508,10 +2508,26 @@ woman 是 emacs 下顯示 manpage 最好的方式。
     (setq org-src-fontify-natively t)
   #+end_src
 
-** 切換成程式碼欄位時使用目前的視窗
+- 切換成程式碼欄位時使用目前的視窗
+
+  #+begin_src emacs-lisp
+    (setq org-src-window-setup 'current-window)
+  #+end_src
+
+** 使用 org-mode 記事
+
+*** 設定 org-mode 檔案所在的位置
 
 #+begin_src emacs-lisp
-  (setq org-src-window-setup 'current-window)
+  (let ((org-files (concat coldnew-sparkleshare-dir "/org/")))
+    (setq org-directory org-files)
+    (setq org-agenda-files (list org-files)))
+#+end_src
+
+*** 設定預設的 logdone 為加上時間註記
+
+#+begin_src emacs-lisp
+  (setq org-log-done 'time)
 #+end_src
 
 ** 將 plantuml 加入 org-mode
@@ -2554,10 +2570,8 @@ org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性
 #+end_src
 
 ** TODO Config
+
 #+begin_src emacs-lisp
-  (setq org-directory "~/Dropbox/Org/")
-  (setq org-agenda-files (list "~/Dropbox/Org/"))
-  (setq org-log-done t)
   (setq org-pretty-entities t)
   (setq org-use-speed-commands t)
 
