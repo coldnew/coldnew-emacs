@@ -4,7 +4,7 @@
 # somewhere on your $PATH, like ~/bin. The rest of Leiningen will be
 # installed upon first run into the ~/.lein/self-installs directory.
 
-export LEIN_VERSION="2.1.2"
+export LEIN_VERSION="2.2.0"
 
 case $LEIN_VERSION in
     *SNAPSHOT) SNAPSHOT="YES" ;;
@@ -17,9 +17,15 @@ else
     delimiter=":"
 fi
 
+if [[ "$OSTYPE" == "cygwin" ]]; then
+  cygwin=true
+else
+  cygwin=false
+fi
+
 function make_native_path {
     # ensure we have native paths
-    if [[ "$OSTYPE" == "cygwin" && "$1"  == /* ]]; then
+    if $cygwin && [[ "$1"  == /* ]]; then
     echo -n "$(cygpath -wp "$1")"
     elif [[ "$OSTYPE" == "msys" && "$1"  == /* ]]; then
     echo -n "$(sh -c "(cd $1 2</dev/null && pwd -W) || echo $1 | sed 's/^\\/\([a-z]\)/\\1:/g'")"
@@ -65,7 +71,7 @@ for f in "$LEIN_HOME/leinrc" ".leinrc"; do
   fi
 done
 
-if [ "$OSTYPE" = "cygwin" ]; then
+if $cygwin; then
     export LEIN_HOME=`cygpath -w "$LEIN_HOME"`
 fi
 
@@ -184,6 +190,19 @@ fi
 # Support $JAVA_OPTS for backwards-compatibility.
 export JVM_OPTS="${JVM_OPTS:-"$JAVA_OPTS"}"
 
+# Handle jline issue with cygwin not propagating OSTYPE through java subprocesses: https://github.com/jline/jline2/issues/62
+cygterm=false
+if $cygwin; then
+  case "$TERM" in
+    rxvt* | xterm* | vt*) cygterm=true ;;
+  esac
+fi
+
+if $cygterm; then
+  JVM_OPTS="$JVM_OPTS -Djline.terminal=jline.UnixTerminal"
+  stty -icanon min 1 -echo > /dev/null 2>&1
+fi
+
 # TODO: investigate http://skife.org/java/unix/2011/06/20/really_executable_jars.html
 # If you're packaging this for a package manager (.deb, homebrew, etc)
 # you need to remove the self-install and upgrade functionality or see lein-pkg.
@@ -232,7 +251,7 @@ elif [ "$1" = "upgrade" ]; then
                 echo
                 echo "Upgrading..."
                 TARGET="/tmp/lein-$$-upgrade"
-                if [ "$OSTYPE" = "cygwin" ]; then
+                if $cygwin; then
                     TARGET=`cygpath -w $TARGET`
                 fi
                 LEIN_SCRIPT_URL="https://github.com/technomancy/leiningen/raw/$TARGET_VERSION/bin/lein"
@@ -252,7 +271,7 @@ elif [ "$1" = "upgrade" ]; then
         esac
     fi
 else
-    if [ "$OSTYPE" = "cygwin" ]; then
+    if $cygwin; then
         # When running on Cygwin, use Windows-style paths for java
         ORIGINAL_PWD=`cygpath -w "$ORIGINAL_PWD"`
     fi
@@ -268,7 +287,7 @@ else
 
     if ([ "$LEIN_FAST_TRAMPOLINE" != "" ] || [ -r .lein-fast-trampoline ]) &&
         [ -r project.clj ]; then
-        INPUTS="$@ $(cat project.clj) $LEIN_VERSION $(cat "$LEIN_HOME/profiles.clj")"
+        INPUTS="$@ $(cat project.clj) $LEIN_VERSION $(test -f "$LEIN_HOME/profiles.clj" && cat "$LEIN_HOME/profiles.clj")"
         INPUT_CHECKSUM=$(echo $INPUTS | shasum - | cut -f 1 -d " ")
         # Just don't change :target-path in project.clj, mkay?
         TRAMPOLINE_FILE="target/trampolines/$INPUT_CHECKSUM"
@@ -277,7 +296,7 @@ else
         trap "rm -f $TRAMPOLINE_FILE" EXIT
     fi
 
-    if [ "$OSTYPE" = "cygwin" ]; then
+    if $cygwin; then
         TRAMPOLINE_FILE=`cygpath -w $TRAMPOLINE_FILE`
     fi
 
@@ -300,6 +319,10 @@ else
 
         EXIT_CODE=$?
 
+        if $cygterm ; then
+          stty icanon echo > /dev/null 2>&1
+        fi
+
         if [ -r "$TRAMPOLINE_FILE" ] && [ "$LEIN_TRAMPOLINE_WARMUP" = "" ]; then
             TRAMPOLINE="$(cat $TRAMPOLINE_FILE)"
             if [ "$INPUT_CHECKSUM" = "" ]; then
@@ -311,3 +334,4 @@ else
         fi
     fi
 fi
+
