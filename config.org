@@ -2189,12 +2189,21 @@ emacs 下可以透過 gpg 進行文件加密的動作
   (define-key minibuffer-local-map (kbd "M-n") 'next-history-element)
   (define-key minibuffer-local-map (kbd "C-g") 'minibuffer-keyboard-quit)
   (define-key minibuffer-local-map (kbd "C-u") (lambda () (interactive) (kill-line 0)))
-  (define-key minibuffer-local-map (kbd "C-t") (lambda () (interactive) (kill-line 0) (insert "/tmp/")))
-  (define-key minibuffer-local-map (kbd "C-h") (lambda () (interactive) (kill-line 0) (insert "~/")))
-  (define-key minibuffer-local-map (kbd "C-w") (lambda () (interactive) (kill-line 0) (insert "~/Workspace/")))
-  (define-key minibuffer-local-map (kbd "C-d") (lambda () (interactive) (kill-line 0) (insert "~/Dropbox/")))
-  (define-key minibuffer-local-map (kbd "C-s") (lambda () (interactive) (kill-line 0) (insert "~/SparkleShare/")))
 #+end_src
+
+
+| 按鍵 | 命令                     | 用途               |
+|------+--------------------------+--------------------|
+| M-t |                          | 切換到 /tmp 資料夾 |
+| M-h |                          | 切換到家目錄       |
+
+#+begin_src emacs-lisp
+  (define-key minibuffer-local-map (kbd "M-t") (lambda () (interactive) (kill-line 0) (insert "/tmp/")))
+  (define-key minibuffer-local-map (kbd "M-h") (lambda () (interactive) (kill-line 0) (insert "~/")))
+  (define-key minibuffer-local-map (kbd "M-w") (lambda () (interactive) (kill-line 0) (insert "~/Workspace/")))
+  (define-key minibuffer-local-map (kbd "M-s") (lambda () (interactive) (kill-line 0) (insert "~/SparkleShare/")))
+#+end_src
+
 
 * EShell                                                              :eshell:
 
