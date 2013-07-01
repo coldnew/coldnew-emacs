@@ -3001,15 +3001,11 @@ some packages conflict with org-mode
 
 *** 使用 org-reveal 製作網頁投影片
 
-need org-mode 0.8
+org-reveal 是 reveal.js 的 org-mode wrapper，使用他你必須安裝 8.0 版本以
+上的 org-mode。
 
 #+begin_src emacs-lisp
-  (require 'org-compat)
   (require 'ox-reveal)
-  (require 'ox)
-  (require 'ox-md)
-  (require 'ox-beamer)
-  (require 'ob-exp)
 #+end_src
 
 * 書籤與暫存器                                                     :bookmark:
