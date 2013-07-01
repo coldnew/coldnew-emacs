@@ -3003,6 +3003,7 @@ some packages conflict with org-mode
 #+begin_src emacs-lisp
 (setq org-export-html-validation-link nil)
 #+end_src
+
 * 書籤與暫存器                                                     :bookmark:
 ** Bookmark 說明
 
@@ -6515,7 +6516,6 @@ Function key 設置常用的命令。
 
   (add-hook 'org-trigger-hook 'coldnew/blog-track-draft-done)
 #+end_src
-
 
 * Local File Variable
 # Local Variables:
