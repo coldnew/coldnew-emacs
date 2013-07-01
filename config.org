@@ -2192,10 +2192,10 @@ emacs 下可以透過 gpg 進行文件加密的動作
 #+end_src
 
 
-| 按鍵 | 命令                     | 用途               |
-|------+--------------------------+--------------------|
-| M-t |                          | 切換到 /tmp 資料夾 |
-| M-h |                          | 切換到家目錄       |
+| 按鍵 | 命令 | 用途               |
+|------+------+--------------------|
+| M-t  |      | 切換到 /tmp 資料夾 |
+| M-h  |      | 切換到家目錄       |
 
 #+begin_src emacs-lisp
   (define-key minibuffer-local-map (kbd "M-t") (lambda () (interactive) (kill-line 0) (insert "/tmp/")))
@@ -2575,9 +2575,10 @@ org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性
   (setq org-pretty-entities t)
   (setq org-use-speed-commands t)
 
-  (setq org-tag-alist '(
-                        (:startgroup . nil) ("Business" . ?b) ("School" . ?s) ("Weintek" . ?w) ("Personal" . ?p) (:endgroup . nil)
-                        ))
+  (setq org-tag-alist '((:startgroup . nil)
+                        ("Weintek" . ?w)
+                        ("Personal" . ?p)
+                        (:endgroup . nil)))
 #+end_src
 ** TODO Image size
 #+begin_example
@@ -2998,10 +2999,12 @@ some packages conflict with org-mode
   (require 'org-html5presentation)
 #+end_src
 
-** TODO
+*** 使用 org-reveal 製作網頁投影片
+
+need org-mode 0.8
 
 #+begin_src emacs-lisp
-(setq org-export-html-validation-link nil)
+  (require 'ox-reveal)
 #+end_src
 
 * 書籤與暫存器                                                     :bookmark:
@@ -3626,9 +3629,9 @@ require 的 snippet, 則添加以下程式
   (vim:mode-map coldnew-editor-map (kbd "C-x fd")  'delete-file-and-buffer)
 #+end_src
 
-| 按鍵    | 命令                   | 用途                         |
-|---------+------------------------+------------------------------|
-| M-o     | coldnew/helm-mini      | 使用自訂的 helm-mini 找檔案  |
+| 按鍵 | 命令              | 用途                        |
+|------+-------------------+-----------------------------|
+| M-o  | coldnew/helm-mini | 使用自訂的 helm-mini 找檔案 |
 
 #+begin_src emacs-lisp
   (eval-after-load 'helm
@@ -6111,23 +6114,23 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
 ** 全域性按鍵設定                                               :global@key:
 
-| 按鍵    | 命令                      | 用途                             |
-|---------+---------------------------+----------------------------------|
-| C-x v l | magit-log                 | 使用 magit 察看 log              |
-| C-x v s | magit-status              | 使用 magit 查看目前的 git status |
+| 按鍵    | 命令         | 用途                             |
+|---------+--------------+----------------------------------|
+| C-x v l | magit-log    | 使用 magit 察看 log              |
+| C-x v s | magit-status | 使用 magit 查看目前的 git status |
 
 #+begin_src emacs-lisp
   (vim:imap (kbd "C-x vl") 'magit-log)
   (vim:imap (kbd "C-x vs") 'magit-status)
 #+end_src
 
-| 按鍵    | 命令                      | 用途                             |
-|---------+---------------------------+----------------------------------|
-| C-x v v | egg-next-action           | 讓 egg 自動猜測下一步要做什麼    |
-| C-x v c | magit-checkout            | 切換到其他的 git branch          |
-| C-x v p | git-push                  | push 到遠端 repo                 |
-| C-x v f | magit-flow-feature-create |                                  |
-| C-x v e | magit-flow-feature-finish |                                  |
+| 按鍵    | 命令                      | 用途                          |
+|---------+---------------------------+-------------------------------|
+| C-x v v | egg-next-action           | 讓 egg 自動猜測下一步要做什麼 |
+| C-x v c | magit-checkout            | 切換到其他的 git branch       |
+| C-x v p | git-push                  | push 到遠端 repo              |
+| C-x v f | magit-flow-feature-create |                               |
+| C-x v e | magit-flow-feature-finish |                               |
 
 #+begin_src emacs-lisp
   (vim:map (kbd "C-x vv") 'egg-next-action)
