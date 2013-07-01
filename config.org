@@ -3708,9 +3708,9 @@ require 的 snippet, 則添加以下程式
        (vim:mode-imap coldnew-editor-map (kbd "C-;") 'iedit-mode)))
 #+end_src
 
-| 按鍵 | 命令 | 用途                             |
-|------+------+----------------------------------|
-| M-s  |      | 快速找尋緩衝區內所有要找尋的文字 |
+| 按鍵 | 用途                             |
+|------+----------------------------------|
+| M-s  | 快速找尋緩衝區內所有要找尋的文字 |
 
 #+begin_src emacs-lisp
   (eval-after-load 'helm
@@ -3725,6 +3725,23 @@ require 的 snippet, 則添加以下程式
                          (helm-occur)))
        ))
 #+end_src
+
+
+| 按鍵    | 用途         |
+|---------+--------------|
+| C-c C-h | 快速代碼折疊 |
+
+#+begin_src emacs-lisp
+  (vim:mode-imap coldnew-editor-map (kbd "C-c C-h")
+                 '(lambda ()
+                    ""
+                    (interactive)
+                    (set-selective-display
+                     (if selective-display nil 1))))
+#+end_src
+
+
+
 
 ** 字體調整 (N) (I)
 
@@ -5329,14 +5346,6 @@ yank-n-times 則可以重複的進行貼上。
   (setq tramp-chunksize 500)
 
 
-  (defun toggle-selective-display (column)
-    (interactive "P")
-    (set-selective-display
-     (if selective-display nil (or column 1))))
-
-      ;;;; ---------------------------------------------------------------------------
-      ;;;; Insert
-      ;;; ---------------------------------------------------------------------------
   (require 'mm-url)
 
   (defun insert-tinyurl (url)
@@ -5921,7 +5930,6 @@ offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙�
 ** Misc
 #+begin_src emacs-lisp
   (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
-  (defalias 'coldnew/folding-toggle   'toggle-selective-display)
 #+end_src
 * Git 版本管理                                                          :git:
 
@@ -6383,18 +6391,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "C-r <SPC>") 'point-to-register)
   (global-set-key (kbd "C-r j") 'jump-to-register)
   (global-set-key (kbd "C-r n") 'cua-sequence-rectangle)
-#+end_src
-** Ctrl-c prefix
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-c C-h") 'coldnew/folding-toggle)
-#+end_src
-
-*** org-mode                                                          :org:
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (global-set-key (kbd "C-c l") 'org-store-link)
-  (global-set-key (kbd "C-c C-l") 'org-insert-link)
-  (global-set-key (kbd "C-c o") 'org-iswitchb)
 #+end_src
 
 ** Ctrl-Meta Prefix
