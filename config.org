@@ -6413,7 +6413,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
   (global-set-key (kbd "M-n") 'scroll-up)
   (global-set-key (kbd "M-p") 'scroll-down)
-  (global-set-key (kbd "M-g") 'linum-ace-jump)
   (global-set-key (kbd "M-.") 'helm-etags+-select)
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
