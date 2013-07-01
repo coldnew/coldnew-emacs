@@ -3708,6 +3708,16 @@ require 的 snippet, 則添加以下程式
        (vim:mode-imap coldnew-editor-map (kbd "C-;") 'iedit-mode)))
 #+end_src
 
+| 按鍵 | 命令          | 用途                       |
+|------+---------------+----------------------------|
+| M-v  | expand-region | 快速選取游標下的文字、區域 |
+
+#+begin_src emacs-lisp
+  (eval-after-load 'expand-region
+    '(progn
+       (vim:mode-imap coldnew-editor-map (kbd "M-v") 'er/expand-region)))
+#+end_src
+
 | 按鍵 | 用途                             |
 |------+----------------------------------|
 | M-s  | 快速找尋緩衝區內所有要找尋的文字 |
@@ -6404,7 +6414,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "M-n") 'scroll-up)
   (global-set-key (kbd "M-p") 'scroll-down)
   (global-set-key (kbd "M-g") 'linum-ace-jump)
-  (global-set-key (kbd "M-v") 'er/expand-region)
   (global-set-key (kbd "M-.") 'helm-etags+-select)
   (global-set-key (kbd "M-x") 'smex)
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
