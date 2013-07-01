@@ -4,9 +4,10 @@
 (message "\nEmacs is powering up... Be patient, Master %s!\n" (getenv "USER"))
 
 (defvar emacs-dir
-  (or (file-name-directory (buffer-file-name (current-buffer))) "~/.emacs.d/")
-  "This the top dir we use in config files. If emacs is read from user's ~/.emacs.d/init.el
-use ~/.emacs.d/ as the top dir.")
+  (or (file-name-directory
+       (buffer-file-name (current-buffer))) "~/.emacs.d/")
+  "This the top dir we use in config files. If emacs is read
+from user's ~/.emacs.d/init.el use ~/.emacs.d/ as the top dir.")
 
 ;; Add directories to emacs's `load-path' recursively.
 ;; if path does not exist, create directory.
