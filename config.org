@@ -3588,10 +3588,12 @@ require 的 snippet, 則添加以下程式
 |-------+-------------------------------+-------------------|
 | C-x q | toggle-kbd-macro-recording-on | 錄製/停止鍵盤巨集 |
 | C-x e | call-last-kbd-macro           | 播放最後一個巨集  |
+| C-.   | repeat                        | 重複上一個命令    |
 
 #+begin_src emacs-lisp
   (vim:mode-map coldnew-editor-map (kbd "C-x q") 'toggle-kbd-macro-recording-on)
   (vim:mode-map coldnew-editor-map (kbd "C-x e") 'call-last-kbd-macro)
+  (vim:mode-map coldnew-editor-map (kbd "C-.")   'repeat)
 #+end_src
 
 ** 常用按鍵 (N) (I)
@@ -6415,11 +6417,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 #+end_src
 
-** Other
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-.") 'repeat)
-#+end_src
 
 * 部若格                                                      :blog:
 
