@@ -2901,8 +2901,8 @@ some packages conflict with org-mode
 #+end_src
 
 ** 輸出成 PDF 檔案設定
-*** 使用 minted 將程式碼加上色彩
-#+begin_src emacs-lisp
+*** COMMENT 使用 minted 將程式碼加上色彩
+#+begin_src emacs-lisp :tangle no
   (require 'org-latex)
   (add-to-list 'org-export-latex-packages-alist '("" "minted"))
   (setq org-export-latex-listings 'minted)
@@ -3004,7 +3004,12 @@ some packages conflict with org-mode
 need org-mode 0.8
 
 #+begin_src emacs-lisp
+  (require 'org-compat)
   (require 'ox-reveal)
+  (require 'ox)
+  (require 'ox-md)
+  (require 'ox-beamer)
+  (require 'ob-exp)
 #+end_src
 
 * 書籤與暫存器                                                     :bookmark:
