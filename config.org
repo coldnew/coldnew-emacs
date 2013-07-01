@@ -3005,7 +3005,8 @@ org-reveal 是 reveal.js 的 org-mode wrapper，使用他你必須安裝 8.0 版
 上的 org-mode。
 
 #+begin_src emacs-lisp
-  (require 'ox-reveal)
+  (if (>= (string-to-number (org-version)) 8.0)
+      (require 'ox-reveal))
 #+end_src
 
 * 書籤與暫存器                                                     :bookmark:
