@@ -10,9 +10,15 @@
   (dolist (lisp-path lisp-dir)
     (if (not (file-exists-p lisp-path)) (make-directory (concat emacs-dir lisp-path) t))
     (let* ((load-dir (concat emacs-dir lisp-path))
-	   (default-directory load-dir))
-      (setq load-path (cons load-dir load-path))
-      (normal-top-level-add-subdirs-to-load-path))))
+           (default-directory load-dir))
+      (setq load-path
+            (append
+             (let ((load-path (copy-sequence load-path)))
+	       (append
+		(copy-sequence (normal-top-level-add-to-load-path '(".")))
+		(normal-top-level-add-subdirs-to-load-path)))
+             load-path
+             )))))
 
 ;; define a reload command
 (defun reload-emacs ()
@@ -21,8 +27,7 @@
   (load-file "~/.emacs.d/init.el") (desktop-revert) (delete-other-windows))
 
 ;; Load up org-mode and org-babel
-(require 'org-install)
-(require 'ob-tangle)
+(require 'org)
 
 ;; Load config.org from ~/.emacs.d/
 (org-babel-load-file (expand-file-name "config.org" "~/.emacs.d/"))
