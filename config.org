@@ -3660,12 +3660,14 @@ require 的 snippet, 則添加以下程式
 | C-x C-l | recenter            | 將游標至於緩衝區中間          |
 | C-x C-i | indent-whole-buffer | 縮排整個緩衝區                |
 | C-x C-q | toggle-read-only    | 切換緩衝區變成唯讀/可寫的狀況 |
+| C-x C-n | auto-complete       | 自動補全                      |
 
 #+begin_src emacs-lisp
   (vim:mode-imap coldnew-editor-map (kbd "C-x C-y")  'yank-n-times)
   (vim:mode-imap coldnew-editor-map (kbd "C-x C-l")  'recenter)
   (vim:mode-imap coldnew-editor-map (kbd "C-x C-i")  'indent-whole-buffer)
   (vim:mode-imap coldnew-editor-map (kbd "C-x C-q")  'toggle-read-only)
+  (vim:mode-imap coldnew-editor-map (kbd "C-x C-n")  'auto-complete)
 #+end_src
 
 | 按鍵     | 命令                   | 用途         |
@@ -6280,7 +6282,6 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 
 | 按鍵         | 命令                | 用途                      |
 |--------------+---------------------+---------------------------|
-| C-x C-n      | auto-complete       | 自動補全                  |
 | Shift Return | insert-empty-line   | 插入空白行                |
 | M-s          | coldnew/helm-occur  | 使用 occur 查詢當前緩衝區 |
 | C-M ,        | beginning-of-buffer | 回到緩衝區開頭            |
@@ -6289,14 +6290,10 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
 | C-; | iedit-mode | 快速尋找和游標底下相同的文字，進行即時替換 |
 
 #+begin_src emacs-lisp
-
-  (global-set-key (kbd "C-x C-n") 'auto-complete)
   (global-set-key[(shift return)] 'insert-empty-line)
   (global-set-key (kbd "M-s") 'coldnew/helm-occur)
   (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
   (global-set-key (kbd "C-M-.") 'end-of-buffer)
-
-
 #+end_src
 
 ** 關閉預設的按鍵設定
