@@ -2204,7 +2204,6 @@ emacs 下可以透過 gpg 進行文件加密的動作
   (define-key minibuffer-local-map (kbd "M-s") (lambda () (interactive) (kill-line 0) (insert "~/SparkleShare/")))
 #+end_src
 
-
 * EShell                                                              :eshell:
 
 ** 基本設置
@@ -2547,11 +2546,11 @@ org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性
 
 #+begin_src emacs-lisp
   (add-to-list 'org-structure-template-alist
-               '("E" "#+begin_src emacs-lisp\n?\n#+end_src"))
+               '("E" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
                (add-to-list 'org-structure-template-alist
-               '("S" "#+begin_src sh\n?\n#+end_src"))
+               '("S" "#+BEGIN_SRC sh\n?\n#+END_SRC"))
                (add-to-list 'org-structure-template-alist
-               '("p" "#+begin_src plantuml :file uml.png \n?\n#+end_src"))
+               '("p" "#+BEGIN_SRC plantuml :file uml.png \n?\n#+END_SRC"))
 #+end_src
 
 ** TODO Config
