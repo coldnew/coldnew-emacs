@@ -3205,7 +3205,7 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 
         ;; lisp
         lisp-interaction-mode lisp-mode
-        clojure-mode scheme-mode
+        clojure-mode clojurescript-mode scheme-mode
         common-lisp-mode newlisp-mode
 
         ;; C/C++ like
