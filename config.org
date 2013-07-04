@@ -6481,39 +6481,6 @@ Function key 設置常用的命令。
                  )))
 #+end_src
 
-** 當將 Draft 裏面的文章變成 DONE 狀態的時候，移至 Blog 項目
-
-我將我文章分為兩個部份，一個是已經寫好的文章，都放到 Blog 項目裏面，草
-稿的部份，則是放到 Draft 裏面，當 Draft 裏面的子項目變成 DONE 的時候，自動將
-其移到 Blog 項目內。
-
-#+begin_src emacs-lisp :tangle no
-  (defun coldnew/blog-track-draft-done (change-plist)
-    "Track Draft task, move it to Blog task if it's stats change to DONE."
-    (let* ((pos (plist-get change-plist :position))
-          (task (format "** %s\n%s\n" (org-get-heading) (org-get-entry)))
-          (blog-task-name  "Blog")
-          (draft-task-name "Draft")
-          (is-draft-task (member draft-task-name
-                                 (save-excursion
-                                   (org-up-heading-safe)
-                                   (org-heading-components)))))
-      (when (and is-draft-task
-                 (member (nth 2 (org-heading-components)) org-done-keywords))
-        (save-excursion
-          (save-restriction
-            (widen)
-            (goto-char (point-min))
-            (when (search-forward-regexp (concat "^* " blog-task-name))
-              (goto-char (match-beginning 0))
-              (forward-line)
-              (insert task)
-              (goto-char pos)
-              (delete-region (org-entry-beginning-position) (org-entry-end-position))
-              ))))))
-
-  (add-hook 'org-trigger-hook 'coldnew/blog-track-draft-done)
-#+end_src
 
 * Local File Variable
 # Local Variables:
