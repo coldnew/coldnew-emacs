@@ -1178,7 +1178,6 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 #+end_src
 * 字體設置                                                             :font:
 
-
 ** 英文字體與中文字體設置
 
 - 英文字體
@@ -1213,19 +1212,18 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 設定而變大/變小。
 
 #+BEGIN_SRC emacs-lisp
-  (defun set-font (english chinese english-size chinese-size)
+  (defun set-font (english chinese size-pair)
     "Setup emacs English and Chinese font on x window-system."
     (if (font-exist-p english)
         (set-face-attribute 'default nil :font
-                            (format "%s:pixelsize=%d" english english-size)))
+                            (format "%s:pixelsize=%d" english (car size-pair))))
     (if (font-exist-p chinese)
         (dolist (charset '(kana han symbol cjk-misc bopomofo))
           (set-fontset-font (frame-parameter nil 'font) charset
-                            (font-spec :family chinese :size chinese-size)))))
+                            (font-spec :family chinese :size (cdr size-pair))))))
 
   ;; Setup font size based on emacs-font-size-pair
-  (set-font emacs-english-font emacs-cjk-font
-            (car emacs-font-size-pair) (cdr emacs-font-size-pair))
+  (set-font emacs-english-font emacs-cjk-font emacs-font-size-pair)
 #+END_SRC
 
 ** 使用 C-= 或是 C-- 來調整字體大小
@@ -3828,8 +3826,8 @@ require 的 snippet, 則添加以下程式
 
 ** 字體調整 (N) (I)
 
-| 按鍵 | 命令                | 用途               |
-|------+---------------------+--------------------|
+| 按鍵 | 命令                     | 用途               |
+|------+--------------------------+--------------------|
 | C-=  | increase-emacs-font-size | 放大緩衝區內的字體 |
 | C-   | decrease-emacs-font-size | 縮小緩衝區內的字體 |
 
