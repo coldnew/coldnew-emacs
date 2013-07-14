@@ -3074,6 +3074,17 @@ org-reveal 是 reveal.js 的 org-mode wrapper，使用他你必須安裝 8.0 版
       (require 'ox-reveal))
 #+end_src
 
+** 網頁輸出設定
+
+*** 不要在輸出的網頁上面加上 Validate 字樣
+
+  預設的 org-mode 會在輸出的網頁尾巴加上 Validate 字樣，看起來很討厭，
+  這裡將他移除。
+
+  #+BEGIN_SRC emacs-lisp
+    (setq org-html-validation-link nil)
+  #+END_SRC
+
 * 書籤與暫存器                                                     :bookmark:
 ** Bookmark 說明
 
