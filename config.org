@@ -1176,63 +1176,93 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
           (list start end)
         (list end start))))
 #+end_src
-* 字體                                                                 :font:
+* 字體設置                                                             :font:
 
-NOTE: for more font info, take a look at
 
-https://raw.github.com/baohaojun/system-config/master/.emacs_d/lisp/bhj-fonts.el
+** 英文字體與中文字體設置
 
-** 英文字體
-#+begin_src emacs-lisp
-  (defvar emacs-english-font "Monaco"
-    "The font name of English.")
-  (defvar emacs-english-font-size 11.5
-    "Default English font size.")
-#+end_src
-** 中文字體
-#+begin_src emacs-lisp
-  (defvar emacs-cjk-font "Hiragino Sans GB W3"
-    "The font name for CJK.")
-  (defvar emacs-cjk-font-size 13.5
-    "Default CJK font size.")
-#+end_src
-** 符號字體
-*** TODO 不能使用，為什麼？
-#+begin_src emacs-lisp
-  (defvar emacs-symbol-font "Monaco"
-    "The font name for Synbol.")
-  (defvar emacs-symbol-font-size 16
-    "Default Symbol font size.")
-#+end_src
+- 英文字體
+
+  #+begin_src emacs-lisp
+    (defvar emacs-english-font "Monaco"
+      "The font name of English.")
+  #+end_src
+
+- 中文字體
+
+  #+begin_src emacs-lisp
+    (defvar emacs-cjk-font "Hiragino Sans GB W3"
+      "The font name for CJK.")
+  #+end_src
+
+** 預設字體大小設定
+
+為了可以在 org-mode 的表格中縮放字體也不會有中英文排版亂掉的情況，我的
+字體設定是以 pair 的形式來進行設定，*emacs-font-size-pair* 存放預設的
+字體，若有使用我自訂的字體放大/縮小命令，則這個變數也會更著被修改。
+
+#+BEGIN_SRC emacs-lisp
+  (defvar emacs-font-size-pair '(15 . 18)
+    "Default font size pair for (english . chinese)")
+#+END_SRC
+
 ** 在圖形介面下使用我所設定的字體
 
-#+begin_src emacs-lisp :tangle no
-  (cond ((eq window-system 'x)
-         ;; Setting English Fonts
-         (if (font-exist-p emacs-english-font)
-             (set-frame-font (format "%s-%s" (eval emacs-english-font) (eval emacs-english-font-size))))
-
-         ;; Setting Chinese Fonts
-         (if (font-exist-p emacs-cjk-font)
-             (set-fontset-font (frame-parameter nil 'font)
-                               'han (format "%s-%s" (eval emacs-cjk-font) (eval emacs-cjk-font-size))))
-
-         ;; Setting Symbol Fonts
-         (if (font-exist-p emacs-symbol-font)
-             (set-fontset-font (frame-parameter nil 'font)
-                               'symbol (format "%s-%s" (eval emacs-symbol-font) (eval emacs-symbol-font-size))))
-         ))
-#+end_src
+這邊主要定義 *set-font* 這個函式，他會根據傳送給他的字體資訊，即時設定
+整個 emacs 的字體大小，這樣也不會有切換 buffer，但是字體確沒有跟著之前的
+設定而變大/變小。
 
 #+BEGIN_SRC emacs-lisp
   (defun set-font (english chinese english-size chinese-size)
-    (set-face-attribute 'default nil :font
-                        (format "%s:pixelsize=%d" english english-size))
-    (dolist (charset '(kana han symbol cjk-misc bopomofo))
-      (set-fontset-font (frame-parameter nil 'font) charset
-                        (font-spec :family chinese :size chinese-size))))
-  (set-font emacs-english-font emacs-cjk-font 15 18)
-;;  (set-font emacs-english-font emacs-cjk-font 20 24)
+    "Setup emacs English and Chinese font on x window-system."
+    (if (font-exist-p english)
+        (set-face-attribute 'default nil :font
+                            (format "%s:pixelsize=%d" english english-size)))
+    (if (font-exist-p chinese)
+        (dolist (charset '(kana han symbol cjk-misc bopomofo))
+          (set-fontset-font (frame-parameter nil 'font) charset
+                            (font-spec :family chinese :size chinese-size)))))
+
+  ;; Setup font size based on emacs-font-size-pair
+  (set-font emacs-english-font emacs-cjk-font
+            (car emacs-font-size-pair) (cdr emacs-font-size-pair))
+#+END_SRC
+
+** 使用 C-= 或是 C-- 來調整字體大小
+
+這邊設定了一個 *emacs-font-size-pair-list* 變數，這個變數存放了即使使
+用這一對字體大小，org-mode 的表格也不會走樣的中英字體設定。
+
+#+BEGIN_SRC emacs-lisp
+  (defvar emacs-font-size-pair-list
+    '((13 . 16) (15 . 18) (17 . 20)
+      (19 . 22) (20 . 24) (21 . 26)
+      (24 . 28) (26 . 32) (28 . 34)
+      (30 . 36) (34 . 40) (36 . 44))
+    "This list is used to store matching (englis . chinese) font-size.")
+
+  (defun emacs-step-font-size (step)
+    "Increase/Decrease emacs's font size."
+    (let ((scale-steps emacs-font-size-pair-list))
+      (if (< step 0) (setq scale-steps (reverse scale-steps)))
+      (setq emacs-font-size-pair
+            (or (cadr (member emacs-font-size-pair scale-steps))
+                emacs-font-size-pair))
+      (when emacs-font-size-pair
+        (message "emacs font size set to %.1f" (car emacs-font-size-pair))
+        (set-font emacs-english-font emacs-cjk-font
+                  (car emacs-font-size-pair) (cdr emacs-font-size-pair)))))
+
+  (defun increase-emacs-font-size ()
+    "Decrease emacs's font-size acording emacs-font-size-pair-list."
+    (interactive) (emacs-step-font-size 1))
+
+  (defun decrease-emacs-font-size ()
+    "Increase emacs's font-size acording emacs-font-size-pair-list."
+    (interactive) (emacs-step-font-size -1))
+
+  (global-set-key (kbd "C-=") 'increase-emacs-font-size)
+  (global-set-key (kbd "C--") 'decrease-emacs-font-size)
 #+END_SRC
 
 ** 設定顯示字體時的格式
@@ -1245,6 +1275,7 @@ https://raw.github.com/baohaojun/system-config/master/.emacs_d/lisp/bhj-fonts.el
          "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz\n"
          "11223344556677889900       壹貳參肆伍陸柒捌玖零"))
 #+end_src
+
 * 佈景主題                                                            :theme:
 
 佈景主題的設置，包含我自訂的佈景主題以及路徑。
@@ -3788,12 +3819,12 @@ require 的 snippet, 則添加以下程式
 
 | 按鍵 | 命令                | 用途               |
 |------+---------------------+--------------------|
-| C-=  | text-scale-increase | 放大緩衝區內的字體 |
-| C-   | text-scale-decrease | 縮小緩衝區內的字體 |
+| C-=  | increase-emacs-font-size | 放大緩衝區內的字體 |
+| C-   | decrease-emacs-font-size | 縮小緩衝區內的字體 |
 
 #+begin_src emacs-lisp
-  (vim:mode-map coldnew-editor-map (kbd "C-=")  'text-scale-increase)
-  (vim:mode-map coldnew-editor-map (kbd "C--")  'text-scale-decrease)
+  (vim:mode-map coldnew-editor-map (kbd "C-=")  'increase-emacs-font-size)
+  (vim:mode-map coldnew-editor-map (kbd "C--")  'decrease-emacs-font-size)
 #+end_src
 
 ** 復合式按鍵
