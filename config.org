@@ -2461,6 +2461,12 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
             (format ": %s" (buffer-substring s e))))
 #+end_src
 
+#+BEGIN_SRC emacs-lisp
+  (defun helm-create-locatedb ()
+    (interactive)
+    (helm-locate -1))
+  #+END_SRC
+
 ** 尋找目前緩衝區所有符合查詢規則的文字、字串                      :command:
 
 #+begin_src emacs-lisp
@@ -3720,6 +3726,7 @@ require 的 snippet, 則添加以下程式
                         (helm-other-buffer
                          '(helm-source-ls-git
                            helm-source-locate
+                           helm-source
                            helm-c-source-buffers-list
                            helm-c-source-recentf
                            helm-c-source-buffer-not-found)
