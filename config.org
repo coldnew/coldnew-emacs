@@ -3732,7 +3732,7 @@ require 的 snippet, 則添加以下程式
                            helm-c-source-buffer-not-found)
                          "*coldnew helm mini*")))
        ))
-  #+end_src
+#+end_src
 
 ** 緩衝區編輯 (I)
 
