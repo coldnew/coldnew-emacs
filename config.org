@@ -1248,8 +1248,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
                 emacs-font-size-pair))
       (when emacs-font-size-pair
         (message "emacs font size set to %.1f" (car emacs-font-size-pair))
-        (set-font emacs-english-font emacs-cjk-font
-                  (car emacs-font-size-pair) (cdr emacs-font-size-pair)))))
+        (set-font emacs-english-font emacs-cjk-font emacs-font-size-pair))))
 
   (defun increase-emacs-font-size ()
     "Decrease emacs's font-size acording emacs-font-size-pair-list."
