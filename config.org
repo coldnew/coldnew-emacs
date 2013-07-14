@@ -834,6 +834,8 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
   (require 'rainbow-mode)
   (require 'smarter-compile)
   (require 'expand-region)
+  (require 'graphviz-dot-mode)
+  (defalias 'dot-mode 'graphviz-dot-mode)
 #+end_src
 
 * 自定義函式/方法                                                  :function:
@@ -1198,7 +1200,8 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
     "Default Symbol font size.")
 #+end_src
 ** 在圖形介面下使用我所設定的字體
-#+begin_src emacs-lisp
+
+#+begin_src emacs-lisp :tangle no
   (cond ((eq window-system 'x)
          ;; Setting English Fonts
          (if (font-exist-p emacs-english-font)
@@ -1215,15 +1218,27 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
                                'symbol (format "%s-%s" (eval emacs-symbol-font) (eval emacs-symbol-font-size))))
          ))
 #+end_src
+
+#+BEGIN_SRC emacs-lisp
+  (defun set-font (english chinese english-size chinese-size)
+    (set-face-attribute 'default nil :font
+                        (format "%s:pixelsize=%d" english english-size))
+    (dolist (charset '(kana han symbol cjk-misc bopomofo))
+      (set-fontset-font (frame-parameter nil 'font) charset
+                        (font-spec :family chinese :size chinese-size))))
+  (set-font emacs-english-font emacs-cjk-font 15 18)
+;;  (set-font emacs-english-font emacs-cjk-font 20 24)
+#+END_SRC
+
 ** 設定顯示字體時的格式
+
 使用 *list-face-display* 可以看到所有的 face 顏色與字體。
 
 #+begin_src emacs-lisp
   (setq list-faces-sample-text
         (concat
          "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz\n"
-         "11223344556677889900       壹貳參肆伍陸柒捌玖零"
-         ))
+         "11223344556677889900       壹貳參肆伍陸柒捌玖零"))
 #+end_src
 * 佈景主題                                                            :theme:
 
@@ -2070,7 +2085,10 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 #+end_src
 * 文件加密                                                          :encrypt:
 
-emacs 下可以透過 gpg 進行文件加密的動作
+對於一些和隱私比較相關的文件，總是希望可以加密起來，讓自己可以更加放心。
+
+在 emacs 中，提供了 [[http://www.emacswiki.org/emacs/EasyPG][Easy PG]] 來協助你加密存文字檔案，你只要很簡單的將你的
+檔案副檔名再加上 *.gpg* ，這樣 emacs 就會向你詢問加密用的密碼。
 
 ** 載入相依套件
 
@@ -2715,10 +2733,21 @@ You can now (from git master) use `org-image-actual-width'.
 *** 在 org-mode 裏面使用 C-c I 切換顯示圖片                        :keymap:
 
 #+begin_src emacs-lisp
+  ;; (add-hook 'org-mode-hook
+  ;;           '(lambda ()
+  ;;              (define-key org-mode-map (kbd "C-c I") 'org-display-image)))
+
   (add-hook 'org-mode-hook
             '(lambda ()
-               (define-key org-mode-map (kbd "C-c I") 'org-display-image)))
+               (define-key org-mode-map (kbd "C-c I") 'org-toggle-inline-images)))
 #+end_src
+
+
+*** 設定圖片的寬度
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-image-actual-width nil)
+#+END_SRC
 
 ** Keybinding
 *** org-mode
@@ -6418,7 +6447,6 @@ Function key 設置常用的命令。
   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 #+end_src
 
-
 * 部若格                                                      :blog:
 
 ** 基本設定
@@ -6478,42 +6506,35 @@ Function key 設置常用的命令。
                  ;; compile blog.less to blog.css and add it to css folder
                  (shell-command (concat less-dir "/bin/lessc -x "
                                         theme-dir "/blog.less" " > " theme-dir "/blog.css"))
-                 )))
+                 )
+))
 #+end_src
 
-** 當將 Draft 裏面的文章變成 DONE 狀態的時候，移至 Blog 項目
 
-我將我文章分為兩個部份，一個是已經寫好的文章，都放到 Blog 項目裏面，草
-稿的部份，則是放到 Draft 裏面，當 Draft 裏面的子項目變成 DONE 的時候，自動將
-其移到 Blog 項目內。
+** 使用 org-publish 產生網頁
 
-#+begin_src emacs-lisp :tangle no
-  (defun coldnew/blog-track-draft-done (change-plist)
-    "Track Draft task, move it to Blog task if it's stats change to DONE."
-    (let* ((pos (plist-get change-plist :position))
-          (task (format "** %s\n%s\n" (org-get-heading) (org-get-entry)))
-          (blog-task-name  "Blog")
-          (draft-task-name "Draft")
-          (is-draft-task (member draft-task-name
-                                 (save-excursion
-                                   (org-up-heading-safe)
-                                   (org-heading-components)))))
-      (when (and is-draft-task
-                 (member (nth 2 (org-heading-components)) org-done-keywords))
-        (save-excursion
-          (save-restriction
-            (widen)
-            (goto-char (point-min))
-            (when (search-forward-regexp (concat "^* " blog-task-name))
-              (goto-char (match-beginning 0))
-              (forward-line)
-              (insert task)
-              (goto-char pos)
-              (delete-region (org-entry-beginning-position) (org-entry-end-position))
-              ))))))
-
-  (add-hook 'org-trigger-hook 'coldnew/blog-track-draft-done)
-#+end_src
+#+BEGIN_SRC emacs-lisp
+  (require 'ox-publish)
+  (setq org-publish-project-alist
+        '(
+          ("blog"
+           :base-directory "~/org/blog/"
+           :base-extension "org"
+           :publishing-directory "~/org/coldnew.github.com/"
+           :recursive t
+           :publishing-function org-html-publish-to-html
+           :headline-levels 4
+           :section-numbers nil
+           :auto-preamble t
+           :auto-sitemap t                ; Generate sitemap.org automagically...
+           :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
+           :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
+           :author "coldnew"
+           :email "coldnew.tw at gmail dot com"
+           :html-head    "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/worg.css\"/>"
+           )
+          ))
+#+END_SRC
 
 * Local File Variable
 # Local Variables:
