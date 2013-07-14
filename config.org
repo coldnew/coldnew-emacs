@@ -1177,6 +1177,11 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
         (list end start))))
 #+end_src
 * 字體                                                                 :font:
+
+NOTE: for more font info, take a look at
+
+https://raw.github.com/baohaojun/system-config/master/.emacs_d/lisp/bhj-fonts.el
+
 ** 英文字體
 #+begin_src emacs-lisp
   (defvar emacs-english-font "Monaco"
@@ -6520,7 +6525,7 @@ Function key 設置常用的命令。
           ("blog"
            :base-directory "~/org/blog/"
            :base-extension "org"
-           :publishing-directory "~/org/coldnew.github.com/"
+           :publishing-directory "~/org/.github.com/"
            :recursive t
            :publishing-function org-html-publish-to-html
            :headline-levels 4
@@ -6529,8 +6534,8 @@ Function key 設置常用的命令。
            :auto-sitemap t                ; Generate sitemap.org automagically...
            :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
            :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
-           :author "coldnew"
-           :email "coldnew.tw at gmail dot com"
+           :author "dayigu"
+           :email "dayigu at gmail dot com"
            :html-head    "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/worg.css\"/>"
            )
           ))
