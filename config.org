@@ -880,8 +880,10 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
 #+begin_src emacs-lisp
   (defun font-exist-p (fontname)
     "test if this font is exist or not."
+    (if (or (not fontname) (string= fontname ""))
+        nil
     (if (not (x-list-fonts fontname))
-        nil t))
+          nil t)))
 #+end_src
 
 ** 檔案相關
