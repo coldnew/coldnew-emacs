@@ -834,8 +834,8 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
   (require 'rainbow-mode)
   (require 'smarter-compile)
   (require 'expand-region)
-  ;;  (require 'graphviz-dot-mode)
-  ;;  (defalias 'dot-mode 'graphviz-dot-mode)
+  (require 'graphviz-dot-mode)
+  (defalias 'dot-mode 'graphviz-dot-mode)
 #+end_src
 
 * 自定義函式/方法                                                  :function:
