@@ -1233,7 +1233,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 
 #+BEGIN_SRC emacs-lisp
   (defvar emacs-font-size-pair-list
-    '((5 . 6)   (10 . 12)
+    '(( 5 .  6) (10 . 12)
       (13 . 16) (15 . 18) (17 . 20)
       (19 . 22) (20 . 24) (21 . 26)
       (24 . 28) (26 . 32) (28 . 34)
