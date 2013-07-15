@@ -834,8 +834,6 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
   (require 'rainbow-mode)
   (require 'smarter-compile)
   (require 'expand-region)
-  (require 'graphviz-dot-mode)
-  (defalias 'dot-mode 'graphviz-dot-mode)
 #+end_src
 
 * 自定義函式/方法                                                  :function:
@@ -3726,7 +3724,6 @@ require 的 snippet, 則添加以下程式
                         (helm-other-buffer
                          '(helm-source-ls-git
                            helm-source-locate
-                           helm-source
                            helm-c-source-buffers-list
                            helm-c-source-recentf
                            helm-c-source-buffer-not-found)
@@ -4417,6 +4414,12 @@ minibuffer 上。
     (add-to-list 'auto-mode-alist '("\\.lsp$" . newlisp-mode)))
 #+end_src
 
+** Graphviz
+
+#+BEGIN_SRC emacs-lisp
+  (require 'graphviz-dot-mode)
+  (defalias 'dot-mode 'graphviz-dot-mode)
+#+END_SRC
 ** Go
 *** 載入相關套件
 
