@@ -3724,7 +3724,6 @@ require 的 snippet, 則添加以下程式
                         (helm-other-buffer
                          '(helm-source-ls-git
                            helm-source-locate
-                           helm-source
                            helm-c-source-buffers-list
                            helm-c-source-recentf
                            helm-c-source-buffer-not-found)
