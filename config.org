@@ -3412,6 +3412,7 @@ vim 預設也會對數字進行別的上色動作。
   (global-auto-revert-mode 1)
   (setq global-auto-revert-non-file-buffers t)
   (setq auto-revert-verbose nil)
+  (setq revert-without-query '(".*")) ;; disable revert query
 #+end_src
 
 ** 行號顯示設定
