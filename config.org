@@ -2588,6 +2588,33 @@ woman 是 emacs 下顯示 manpage 最好的方式。
   (setq org-log-done 'time)
 #+end_src
 
+
+** 紀錄需要做的事情                                                :capture:
+
+設定預設的筆記檔案，我使用 TODO.org 當作預設的記事檔案。
+#+BEGIN_SRC emacs-lisp
+  (setq org-default-notes-file (concat org-directory "TODO.org"))
+#+END_SRC
+
+#+begin_src emacs-lisp
+  (setq org-capture-templates '(("t" "TODO" entry (file+headline "" "Tasks")
+                                 "* TODO %?\n %i\n %a")
+                                ("f" "FIXME" entry (file+headline "" "Tasks")
+                                 "* FIXME %?\n %i\n %a")
+                                ("w" "Weintek" entry (file+headline "" "Weintek")
+                                 "* TODO %?\n %i\n %a")
+                                ))
+
+#+end_src
+
+*** Keybinding
+#+begin_src emacs-lisp :tangle no
+  (add-hook 'org-capture-mode-hook
+            '(lambda ()
+               (define-key coldnew/command-mode-map "c" 'org-capture-finalize)
+               ))
+
+#+end_src
 ** 將 plantuml 加入 org-mode
 
 plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前必須將 Garphviz 裝上。
@@ -2638,27 +2665,7 @@ org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性
                         ("Personal" . ?p)
                         (:endgroup . nil)))
 #+end_src
-** Capture
-#+begin_src emacs-lisp
-  (setq org-default-notes-file (concat org-directory "TODO.org"))
-  (setq org-capture-templates '(("t" "TODO" entry (file+headline "" "Tasks")
-                                 "* TODO %?\n %i\n %a")
-                                ("f" "FIXME" entry (file+headline "" "Tasks")
-                                 "* FIXME %?\n %i\n %a")
-                                ("w" "Weintek" entry (file+headline "" "Weintek")
-                                 "* TODO %?\n %i\n %a")
-                                ))
 
-#+end_src
-
-*** Keybinding
-#+begin_src emacs-lisp :tangle no
-  (add-hook 'org-capture-mode-hook
-            '(lambda ()
-               (define-key coldnew/command-mode-map "c" 'org-capture-finalize)
-               ))
-
-#+end_src
 ** 設定 Agenda 顯示在目前的 window 上。
 
 #+begin_src emacs-lisp
