@@ -2638,26 +2638,6 @@ org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性
                         ("Personal" . ?p)
                         (:endgroup . nil)))
 #+end_src
-** TODO Image size
-#+begin_example
-
-You can now (from git master) use `org-image-actual-width'.
-
-(setq org-image-actual-width 300)
-  => always resize inline images to 300 pixels
-
-(setq org-image-actual-width '(400))
-  => if there is a #+ATTR.*: width="200", resize to 200,
-     otherwise resize to 400
-
-(setq org-image-actual-width nil)
-  => if there is a #+ATTR.*: width="200", resize to 200,
-     otherwise don't resize
-
-(setq org-image-actual-width t)
-  => Never resize and use original width (the default)
-
-#+end_example
 ** Capture
 #+begin_src emacs-lisp
   (setq org-default-notes-file (concat org-directory "TODO.org"))
