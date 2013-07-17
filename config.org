@@ -3120,6 +3120,8 @@ org-reveal 是 reveal.js 的 org-mode wrapper，使用他你必須安裝 8.0 版
            ;; emacs's config.org
            (?e (file . ,(expand-file-name emacs-config-file)))
            ;; TODO.org
+           (?t (file . "~/SparkleShare/org/TODO.org"))
+           ;; Offilce
            (?w (file . "~/SparkleShare/org/Weintek.org"))
            ;; Note.org
            (?n (file . "~/SparkleShare/org/Note.org"))
