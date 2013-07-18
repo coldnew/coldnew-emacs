@@ -3835,6 +3835,20 @@ require 的 snippet, 則添加以下程式
   (vim:mode-map coldnew-editor-map (kbd "C--")  'decrease-emacs-font-size)
 #+end_src
 
+** org-mode 相關按鍵
+
+和 org-mode 相關的全域按鍵都整理到這裡
+
+| 按鍵  | 命令           | 用途                         |
+|-------+----------------+------------------------------|
+| C-c a | org-agenda     | 呼叫 org-mode agenda 命令    |
+| C-c l | org-store-link | 儲存目前游標位置作為連結使用 |
+
+#+BEGIN_SRC emacs-lisp
+  (vim:mode-imap coldnew-editor-map (kbd "C-c a")  'org-agenda)
+  (vim:mode-imap coldnew-editor-map (kbd "C-c l")  'org-store-link)
+#+END_SRC
+
 ** 復合式按鍵
 
 這邊的按鍵呼叫的功能比較特別，是 *複合式* 的，代表一個命令可能依據使用
