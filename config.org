@@ -2601,7 +2601,6 @@ org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-
   (setq org-default-notes-file (concat org-directory "TODO.org"))
 #+END_SRC
 
-
 *** TODO 加上去
 
 #+begin_src emacs-lisp
@@ -2623,7 +2622,6 @@ org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-
                ))
 
 #+end_src
-
 
 ** 將 plantuml 加入 org-mode
 
@@ -2669,11 +2667,6 @@ org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性
 #+begin_src emacs-lisp
   (setq org-pretty-entities t)
   (setq org-use-speed-commands t)
-
-  (setq org-tag-alist '((:startgroup . nil)
-                        ("Weintek" . ?w)
-                        ("Personal" . ?p)
-                        (:endgroup . nil)))
 #+end_src
 
 ** 設定 Agenda 顯示在目前的 window 上。
