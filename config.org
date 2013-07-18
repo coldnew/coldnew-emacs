@@ -2615,10 +2615,11 @@ org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-
 #+end_src
 
 *** TODO Keybinding
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (add-hook 'org-capture-mode-hook
             '(lambda ()
-               (define-key coldnew/command-mode-map "c" 'org-capture-finalize)
+               ;;(define-key coldnew/command-mode-map "c" 'org-capture-finalize)
+               (local-set-key (kbd "C-g") 'org-capture-kill)
                ))
 
 #+end_src
@@ -2911,6 +2912,9 @@ some packages conflict with org-mode
                    ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 #+end_src
 ** Babel 支援的語言
+
+org-mode 的 Babel 功能可以實現所謂的 Literacture Programming
+
 #+begin_src emacs-lisp
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -3818,7 +3822,7 @@ require 的 snippet, 則添加以下程式
 |-------+----------------+------------------------------|
 | C-c a | org-agenda     | 呼叫 org-mode agenda 命令    |
 | C-c l | org-store-link | 儲存目前游標位置作為連結使用 |
-| C-c c | org-capture    |  |
+| C-c c | org-capture    |                              |
 
 #+BEGIN_SRC emacs-lisp
   (vim:mode-imap coldnew-editor-map (kbd "C-c a")  'org-agenda)
