@@ -836,6 +836,14 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
   (require 'expand-region)
 #+end_src
 
+
+** 使用 doc-present 來播放 PDF 投影片
+
+#+BEGIN_SRC emacs-lisp
+  (require 'doc-present)
+  (setq doc-view-resolution 300)
+#+END_SRC
+
 * 自定義函式/方法                                                  :function:
 
 我所自定義或是我的 emacs 設定檔需要用到的 function。
