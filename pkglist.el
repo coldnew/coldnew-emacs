@@ -16,6 +16,7 @@
 "ctags"
 "ctags-update"
 "dash"
+"doc-present"
 "dos"
 "doxymacs"
 "ecb-snapshot"
