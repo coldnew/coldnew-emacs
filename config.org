@@ -3843,10 +3843,12 @@ require 的 snippet, 則添加以下程式
 |-------+----------------+------------------------------|
 | C-c a | org-agenda     | 呼叫 org-mode agenda 命令    |
 | C-c l | org-store-link | 儲存目前游標位置作為連結使用 |
+| C-c c | org-capture    |  |
 
 #+BEGIN_SRC emacs-lisp
   (vim:mode-imap coldnew-editor-map (kbd "C-c a")  'org-agenda)
   (vim:mode-imap coldnew-editor-map (kbd "C-c l")  'org-store-link)
+  (vim:mode-imap coldnew-editor-map (kbd "C-c c")  'org-capture)
 #+END_SRC
 
 ** 復合式按鍵
