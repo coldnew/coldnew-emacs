@@ -2572,29 +2572,37 @@ woman 是 emacs 下顯示 manpage 最好的方式。
     (setq org-src-window-setup 'current-window)
   #+end_src
 
-** 使用 org-mode 記事
+** 使用 org-mode 記事                                              :capture:
 
-*** 設定 org-mode 檔案所在的位置
+org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-mdoe 檔案的資料
+夾
 
-#+begin_src emacs-lisp
-  (let ((org-files (concat coldnew-sparkleshare-dir "/org/")))
-    (setq org-directory org-files)
-    (setq org-agenda-files (list org-files)))
-#+end_src
+#+BEGIN_SRC emacs-lisp
+  (setq org-directory (concat coldnew-sparkleshare-dir "/org/"))
+#+END_SRC
 
-*** 設定預設的 logdone 為加上時間註記
+而 agenda 的檔案則直接從 org-mode 檔案所在的資料夾去尋找
 
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-files (list org-directory))
+#+END_SRC
+
+*** 當從 TODO 轉變成 DONE 的時候，加上時間標記 (logdone)
+
+#+BEGIN_SRC emacs-lisp
   (setq org-log-done 'time)
-#+end_src
+#+END_SRC
 
+*** 設定預設的筆記檔案
 
-** 紀錄需要做的事情                                                :capture:
+我使用 TODO.org 當作預設的記事檔案。
 
-設定預設的筆記檔案，我使用 TODO.org 當作預設的記事檔案。
 #+BEGIN_SRC emacs-lisp
   (setq org-default-notes-file (concat org-directory "TODO.org"))
 #+END_SRC
+
+
+*** TODO 加上去
 
 #+begin_src emacs-lisp
   (setq org-capture-templates '(("t" "TODO" entry (file+headline "" "Tasks")
@@ -2607,7 +2615,7 @@ woman 是 emacs 下顯示 manpage 最好的方式。
 
 #+end_src
 
-*** Keybinding
+*** TODO Keybinding
 #+begin_src emacs-lisp :tangle no
   (add-hook 'org-capture-mode-hook
             '(lambda ()
@@ -2615,6 +2623,8 @@ woman 是 emacs 下顯示 manpage 最好的方式。
                ))
 
 #+end_src
+
+
 ** 將 plantuml 加入 org-mode
 
 plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前必須將 Garphviz 裝上。
