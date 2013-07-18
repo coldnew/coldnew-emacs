@@ -837,12 +837,17 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
 #+end_src
 
 
+* 獨立模組
+
+這邊放置可以直接呼叫命令，能夠被視為一個 *軟體* 的各式各樣的模組。
+
 ** 使用 doc-present 來播放 PDF 投影片
 
 #+BEGIN_SRC emacs-lisp
   (require 'doc-present)
   (setq doc-view-resolution 300)
 #+END_SRC
+
 
 * 自定義函式/方法                                                  :function:
 
