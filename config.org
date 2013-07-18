@@ -2605,7 +2605,7 @@ org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-
 
 #+begin_src emacs-lisp
   (setq org-capture-templates '(("t" "TODO" entry (file+headline "" "Tasks")
-                                 "* TODO %?\n %i\n %a")
+                                 "* TODO %?\n %i\n")
                                 ("f" "FIXME" entry (file+headline "" "Tasks")
                                  "* FIXME %?\n %i\n %a")
                                 ("w" "Weintek" entry (file+headline "" "Weintek")
