@@ -2741,52 +2741,14 @@ org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性
   (setq org-crypt-key nil)
 #+END_SRC
 
-
-** 在 org-mode 裡面顯示圖片
-
-*** 增加 org-mode 圖片的正規表達式到 iimage-mode 裡面
+** 在 org-mode 裏面使用 C-c I 切換顯示圖片                          :keymap:
 
 #+begin_src emacs-lisp
-  (require 'iimage)
-  (add-to-list 'iimage-mode-image-regex-alist
-               (cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex "\\)\\]\\]")  1))
-#+end_src
-
-*** 打開 iimage-mode 並取消 org-link 的顏色
-
-#+begin_src emacs-lisp
-  (add-hook 'org-mode-hook
-            '(lambda ()
-               (turn-on-iimage-mode)
-               (set-face-underline-p 'org-link nil)))
-#+end_src
-
-*** 切換顯示圖片的命令
-
-#+begin_src emacs-lisp
-  (defun org-display-image ()
-    "Toggle display images in org file."
-    (interactive)
-    (if (face-underline-p 'org-link)
-        (set-face-underline-p 'org-link nil)
-      (set-face-underline-p 'org-link t))
-    (call-interactively 'iimage-mode))
-#+end_src
-
-*** 在 org-mode 裏面使用 C-c I 切換顯示圖片                        :keymap:
-
-#+begin_src emacs-lisp
-  ;; (add-hook 'org-mode-hook
-  ;;           '(lambda ()
-  ;;              (define-key org-mode-map (kbd "C-c I") 'org-display-image)))
-
   (add-hook 'org-mode-hook
             '(lambda ()
                (define-key org-mode-map (kbd "C-c I") 'org-toggle-inline-images)))
 #+end_src
-
-
-*** 設定圖片的寬度
+** 設定圖片的寬度
 
 #+BEGIN_SRC emacs-lisp
   (setq org-image-actual-width nil)
