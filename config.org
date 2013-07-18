@@ -2718,6 +2718,9 @@ org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性
 
 *** 避免 encrypt 這個 tag 被子項目繼承
 
+避免 secret 這個 tag 被子項目繼承 造成重複加密
+(但是子項目還是會被加密喔)
+
 #+begin_src emacs-lisp
   (setq org-tags-exclude-from-inheritance (quote ("secret")))
 #+end_src
@@ -2729,6 +2732,15 @@ org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性
 #+begin_src emacs-lisp
   (setq org-crypt-disable-auto-save 'encrypt)
 #+end_src
+
+*** 設定用於加密的 GPG 金鑰
+
+可以設定任何 ID 或是設成 nil 來使用對稱式加密 (symmetric encryption)
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-crypt-key nil)
+#+END_SRC
+
 
 ** 在 org-mode 裡面顯示圖片
 
