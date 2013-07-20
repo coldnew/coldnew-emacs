@@ -686,6 +686,24 @@ el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維�
   (emacs-packages-install-packages)
 #+end_src
 
+*** 安裝套件時，移除 emacs 的 .loaddefs.el 檔案
+
+我發現到使用 SparkleShare 似乎會和 el-get-install 衝突到，原因是因為 emacs
+的 .loaddefs.el* 因為 git 的原因產生某種錯誤，因此解決的最好方式，就是
+在使用 el-get-install 時，刪除 .loaddefs.el 檔案。
+
+#+BEGIN_SRC emacs-lisp
+  (defun emacs-packages-remove-loaddefs ()
+    "Remove .loaddefs.el* according to emacs-lisp-dir"
+    (let (file (concat emacs-lisp-dir ".loaddefs.el"))
+    (if (file-exists-p file)
+        (progn
+          (delete-file file nil)
+          (delete-file (concat file "c") nil)))))
+
+  (add-hook 'el-get-post-install-hooks 'emacs-packages-remove-loaddefs)
+#+END_SRC
+
 * 常用的模組/函式庫                                                 :library:
 
 emacs 有一些套件本身不需要配置，或是只是函式庫，這一類的套件我設
@@ -786,16 +804,6 @@ s 提供了許多關於字串處理的函式
   (require 's)
 #+end_src
 
-** 讓 emacs 可以更快速的打開大檔案
-
-vlfi 提供了讓 emacs 更快速打開大檔案的能力，使用方式
-
-: M-x vlfi PATH-TO-FILE
-
-#+begin_src emacs-lisp
-  (require 'vlfi)
-#+end_src
-
 ** 使用 sequential-command 來整合許多命令
 
 #+begin_src emacs-lisp
@@ -836,7 +844,6 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
   (require 'expand-region)
 #+end_src
 
-
 * 獨立模組
 
 這邊放置可以直接呼叫命令，能夠被視為一個 *軟體* 的各式各樣的模組。
@@ -847,7 +854,6 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
   (require 'doc-present)
   (setq doc-view-resolution 300)
 #+END_SRC
-
 
 * 自定義函式/方法                                                  :function:
 
@@ -3137,7 +3143,8 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 
 #+begin_src emacs-lisp
   (require 'ctags-update)
-  (ctags-update-minor-mode 1)
+;;  (ctags-update-minor-mode 1)
+  (ctags-auto-update-mode 1)
 #+end_src
 
 ** 用來產生 TAGS 的命令                                            :command:
@@ -3571,7 +3578,7 @@ require 的 snippet, 則添加以下程式
 - 使用 C-g 跳出 undo-tree
 
   #+begin_src emacs-lisp
-    (define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)
+;;    (define-key undo-tree-visualizer-map (kbd "C-g") 'undo-tree-visualizer-quit)
   #+end_src
 
 ** 自動在英文與中文之間加入空白
