@@ -693,13 +693,13 @@ el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維�
 在使用 el-get-install 時，刪除 .loaddefs.el 檔案。
 
 #+BEGIN_SRC emacs-lisp
-  (defun emacs-packages-remove-loaddefs ()
+  (defun emacs-packages-remove-loaddefs (pkg)
     "Remove .loaddefs.el* according to emacs-lisp-dir"
-    (let (file (concat emacs-lisp-dir ".loaddefs.el"))
-    (if (file-exists-p file)
-        (progn
-          (delete-file file nil)
-          (delete-file (concat file "c") nil)))))
+    (let ((file (concat emacs-lisp-dir ".loaddefs.el")))
+      (if (file-exists-p file)
+          (progn
+            (delete-file file)
+            (delete-file (concat file "c"))))))
 
   (add-hook 'el-get-post-install-hooks 'emacs-packages-remove-loaddefs)
 #+END_SRC
