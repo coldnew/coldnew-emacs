@@ -844,7 +844,7 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
   (require 'expand-region)
 #+end_src
 
-* 獨立模組
+* 獨立模組                                                      :application:
 
 這邊放置可以直接呼叫命令，能夠被視為一個 *軟體* 的各式各樣的模組。
 
@@ -1680,7 +1680,7 @@ auto-complete-mode 的按鍵設定。
   (define-key ac-completing-map "\t" 'ac-complete)
   (define-key ac-complete-mode-map[tab] 'ac-expand)
 #+end_src
-* Mode
+* TODO Mode
 ** elscreen                                                       :elscreen:
 *** 載入相關模組
 
