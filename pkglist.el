@@ -50,7 +50,6 @@
 "multi-web-mode"
 "newlisp"
 "offlineimap"
-"org-reveal"
 "package"
 "paredit"
 "popwin"
