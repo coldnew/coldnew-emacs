@@ -2625,7 +2625,7 @@ org-mode 裏面的用來強調 (emphasize) 字體的正規表達式有一些缺�
 
 修改成如下 (其中的 *#* 代表剛剛所提及的 <U200B> 字元 )
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (defcustom org-emphasis-regexp-components
    '(" #​\t('\"{" "- ​\t.,:!?;'\")}\\" " \t\r\n,\"'" "." 1))
 #+END_SRC
@@ -3866,6 +3866,16 @@ require 的 snippet, 則添加以下程式
                     (set-selective-display
                      (if selective-display nil 1))))
 #+end_src
+
+
+| 按鍵   | 用途              |
+|--------+-------------------|
+| M-<SPC> | 插入 <U200B> 字元 |
+
+#+BEGIN_SRC emacs-lisp
+  (vim:mode-imap coldnew-editor-map (kbd "M-<SPC>")
+                 '(lambda ()(interactive) (insert "\ufeff")))
+#+END_SRC
 
 ** 字體調整 (N) (I)
 
