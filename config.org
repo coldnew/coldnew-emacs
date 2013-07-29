@@ -504,6 +504,13 @@ emacs 編碼設定，大部份都設定成 utf-8。
     (setq system-time-locale "en_US" )
   #+end_src
 
+- 讀寫緩衝區或是檔案時使用的編碼
+
+  #+BEGIN_SRC emacs-lisp
+    (setq coding-system-for-read 'utf-8)
+    (setq coding-system-for-write 'utf-8)
+  #+END_SRC
+
 * 套件管理                                                          :package:
 
 emacs 在 24 版後終於有自己的套件管理器 ELPA，不過有些外部的套件沒
