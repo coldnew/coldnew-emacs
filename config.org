@@ -2591,6 +2591,51 @@ woman 是 emacs 下顯示 manpage 最好的方式。
     (setq org-src-window-setup 'current-window)
   #+end_src
 
+** 加強 org-mode 強調文句的正規表達式
+
+org-mode 裏面的用來強調 (emphasize) 字體的正規表達式有一些缺點，
+比如你想使用下面的表達方式就會出現問題。
+
+: ~target="_self"~   =>  <code>target="_self"</code>
+
+解決的方式有兩個
+
+1. 如果你確定這個文句是要輸出成為 HTML 的話，你可以使用下面的方式強制
+   將他轉換。
+
+   :  @@html:<code> target="_self" </code>@@
+
+   關於更多 @@html: ... @@ 區塊的資訊，請參考 [[http://orgmode.org/manual/Quoting-HTML-tags.html#Quoting-HTML-tags][Quoting-HTML-tags]]
+
+2. 你也可以輸入特別的 Unicode 字元
+
+   : <U200B> /xe2/x80/x8b ZERO WIDTH SPACE
+
+   這個特殊的 Unicode 字元顯示出一個很微小的的空白，基本上你是看不出來
+   的，插入的方式是使用 *C-x 8 RET 200b RET* 來輸入這個 Unicode 字元。
+
+   此外，你也要修改 *org-emphasis-regexp-components* 的規則。
+
+原始的規則如下
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (defcustom org-emphasis-regexp-components
+   '(" ​\t('\"{" "- ​\t.,:!?;'\")}\\" " \t\r\n,\"'" "." 1))
+#+END_SRC
+
+修改成如下 (其中的 *#* 代表剛剛所提及的 <U200B> 字元 )
+
+#+BEGIN_SRC emacs-lisp
+  (defcustom org-emphasis-regexp-components
+   '(" #​\t('\"{" "- ​\t.,:!?;'\")}\\" " \t\r\n,\"'" "." 1))
+#+END_SRC
+
+因此以下就是我實際上修改過後的 *org-emphasis-regexp-components* 。
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-emphasis-regexp-components '(" ​\t('\"{" "- \t.,:!?;'\")}\\" " \t\r\n,\"'" "." 1))
+#+END_SRC
+
 ** 使用 org-mode 記事                                              :capture:
 
 org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-mdoe 檔案的資料
@@ -3062,8 +3107,8 @@ org-reveal 是 reveal.js 的 org-mode wrapper，使用他你必須安裝 8.0 版
 上的 org-mode。
 
 #+begin_src emacs-lisp
-  (if (>= (string-to-number (org-version)) 8.0)
-      (require 'ox-reveal))
+;;  (if (>= (string-to-number (org-version)) 8.0)
+;;      (require 'ox-reveal))
 #+end_src
 
 ** 網頁輸出設定
