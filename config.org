@@ -2924,64 +2924,6 @@ some packages conflict with org-mode
                   (goto-char point-to-move-to)
                 (show-subtree))))
 #+end_src
-** presentation
-#+begin_src emacs-lisp
-  ;; #+LaTeX_CLASS: beamer in org files
-  (unless (boundp 'org-export-latex-classes)
-      (setq org-export-latex-classes nil))
-    (add-to-list 'org-export-latex-classes
-                 ;; beamer class, for presentations
-                 '("beamer"
-                   "\\documentclass[11pt]{beamer}\n
-          \\mode<{{{beamermode}}}>\n
-          \\usetheme{{{{beamertheme}}}}\n
-          \\usecolortheme{{{{beamercolortheme}}}}\n
-          \\beamertemplateballitem\n
-          \\setbeameroption{show notes}
-          \\usepackage[utf8]{inputenc}\n
-          \\usepackage[T1]{fontenc}\n
-          \\usepackage{hyperref}\n
-          \\usepackage{color}\n
-          \\usepackage{listings}\n
-          \\usepackage{xeCJK}\n
-          \\setCJKmainfont{LiHei Pro}\n
-          \\XeTeXlinebreaklocale \"zh\"\n
-          \\XeTeXlinebreakskip = 0pt plus 1pt
-          \\lstset{numbers=none,language=[ISO]C++,tabsize=4,
-      frame=single,
-      basicstyle=\\small,
-      showspaces=false,showstringspaces=false,
-      showtabs=false,
-      keywordstyle=\\color{blue}\\bfseries,
-      commentstyle=\\color{red},
-      }\n
-          \\usepackage{verbatim}\n
-          \\institute{{{{beamerinstitute}}}}\n
-           \\subject{{{{beamersubject}}}}\n"
-
-                   ("\\section{%s}" . "\\section*{%s}")
-
-                   ("\\begin{frame}[fragile]\\frametitle{%s}"
-                    "\\end{frame}"
-                    "\\begin{frame}[fragile]\\frametitle{%s}"
-                    "\\end{frame}")))
-
-    ;; letter class, for formal letters
-
-    (add-to-list 'org-export-latex-classes
-
-                 '("letter"
-                   "\\documentclass[11pt]{letter}\n
-          \\usepackage[utf8]{inputenc}\n
-          \\usepackage[T1]{fontenc}\n
-          \\usepackage{color}"
-
-                   ("\\section{%s}" . "\\section*{%s}")
-                   ("\\subsection{%s}" . "\\subsection*{%s}")
-                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-#+end_src
 ** Babel 支援的語言
 
 org-mode 的 Babel 功能可以實現所謂的 Literacture Programming
@@ -3073,34 +3015,25 @@ org-mode 的 Babel 功能可以實現所謂的 Literacture Programming
 
 *** 投影片所使用的 latex 配置
 #+begin_src emacs-lisp
-
+;;\\xeCJKsetup{CJKglue=\hspace{0pt plus .08 baselineskip }}
   (add-to-list 'org-latex-classes
                ;; beamer class, for presentations
                '("beamer"
-                 "\\documentclass[11pt]{beamer}
-                  \\mode<{{{beamermode}}}>
-                  \\usetheme{{{{beamertheme}}}}
-                  \\usecolortheme{{{{beamercolortheme}}}}
-                  \\beamertemplateballitem
-                  \\setbeameroption{show notes}
+                 "\\documentclass\[presentation\]\{beamer\}
                   \\usepackage[utf8]{inputenc}
                   \\usepackage[T1]{fontenc}
                   \\usepackage{xeCJK}
                   \\setCJKmainfont{Hiragino Sans GB W3}
                   \\XeTeXlinebreaklocale \"zh\"
                   \\XeTeXlinebreakskip = 0pt plus 1pt
-                  \\xeCJKsetup{CJKglue=\hspace{0pt plus .08 baselineskip }}
                   \\usepackage{minted}
                   \\usemintedstyle{emacs}
                   \\setmainfont{Monaco}
                   \\usepackage{hyperref}
                   \\usepackage{color}
                   \\usepackage{verbatim}
-                  \\usepackage{upquote}
-                  \institute{{{{beamerinstitute}}}}
-                  \\subject{{{{beamersubject}}}}"
+                  \\usepackage{upquote}"
                  ("\\section{%s}" . "\\section*{%s}")
-
                  ("\\begin{frame}[fragile]\\frametitle{%s}"
                   "\\end{frame}"
                   "\\begin{frame}[fragile]\\frametitle{%s}"
