@@ -2844,7 +2844,7 @@ org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性
             '(lambda ()
                (define-key org-mode-map (kbd "C-\'") nil)
                (define-key org-mode-map (kbd "C-,") nil)
-               (define-key org-mode-map (kbd "C-c C-e") nil)
+               ;;(define-key org-mode-map (kbd "C-c C-e") nil)
                ))
 #+end_src
 
@@ -3742,7 +3742,7 @@ require 的 snippet, 則添加以下程式
 | C-x L   | linum-mode       | 切換顯示行號           |
 
 #+begin_src emacs-lisp
-  (vim:mode-map coldnew-editor-map (kbd "C-c C-e") 'eval-and-replace)
+  ;;(vim:mode-map coldnew-editor-map (kbd "C-c C-e") 'eval-and-replace)
   (vim:mode-map coldnew-editor-map (kbd "C-x l") 'hl-line-mode)
   (vim:mode-map coldnew-editor-map (kbd "C-x L") 'linum-mode)
 
