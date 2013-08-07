@@ -1,1 +1,0 @@
-/home/coldnew/SparkleShare/dotfiles/emacs/lisp
