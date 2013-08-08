@@ -6331,23 +6331,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
 #+end_src
 * Session                                                              :blog:
-** filecache
-
-filecache 會根據使用者輸入的文件名，找到該文件的實際位置。
-使用 C-x C-f 找尋文件時，在 minibuffer 上輸入該文件的名字，並使用 C-TAB 進行補全，
-此時路徑會被 filecache 更改成欲找尋文件的路徑。
-#+begin_src emacs-lisp
-  (require 'filecache)
-  ;; setup file-cache-filter-regexps
-  (setq file-cache-filter-regexps
-        '("~$" "\\.o$" "\\.exe$" "\\.a$" "\\.out$"  "\\.elc$" "\\.so$"
-          "\\.output$" "\\.$" "#$" "\\.class$" "\\.pyc$"
-          "\\.svn$" "\\.svn-base$" "\\.git$" "\\.hg$"
-          ))
-
-;;  (file-cache-add-directory-list '("~/.emacs.d/" "~/Workspace/"))
-#+end_src
-
 ** saveplace
 #+begin_src emacs-lisp
   (require 'saveplace)
@@ -6363,7 +6346,7 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
   ;; Following file won;t contain in recentf
   (setq recentf-exclude '("\\.elc$" "\\.pyc$" "\\.recentd$" "^/tmp/"))
 #+end_src
-* 全域性按鍵設置                                                 :global@key:
+* TODO 全域性按鍵設置                                            :global@key:
 ** 文件編輯
 
 | 按鍵         | 命令                | 用途                      |
@@ -6488,7 +6471,6 @@ Function key 設置常用的命令。
 #+end_src
 
 * 部若格                                                      :blog:
-
 ** 基本設定
 
 - 載入相關套件
@@ -6549,7 +6531,6 @@ Function key 設置常用的命令。
                  )
 ))
 #+end_src
-
 
 ** 使用 org-publish 產生網頁
 
