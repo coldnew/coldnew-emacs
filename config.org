@@ -263,32 +263,6 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
   (setq exec-path (cons emacs-bin-dir exec-path))
 #+end_src
 
-*** TODO Remember to remove
-#+begin_src emacs-lisp
-  (defun change-mouse-to-left ()
-    (interactive)
-    (shell-command "xmodmap -e \"pointer = 3 2 1\""))
-
-  (defun change-mouse-to-right ()
-    (interactive)
-    (shell-command "xmodmap -e \"pointer = 1 2 3\""))
-
-  (defun swap-ctrl-caps ()
-    "swap control and capslock"
-    (interactive)
-    (shell-command "setxkbmap -option ctrl:swapcaps"))
-
-  (defun make-caps-as-ctrl ()
-    "make capslock as control-key"
-    (interactive)
-    (shell-command "setxkbmap -option ctrl:nocaps"))
-
-  ;; only disable capslock and make it as control
-  (cond ((eq window-system 'x)
-         ;; make caps lock a control key
-         (make-caps-as-ctrl)))
-#+end_src
-
 ** 使用者介面設定
 
 關閉一些 emacs 預設的 UI 設定。
@@ -392,6 +366,22 @@ Mac OSX 下會有方塊狀的提示，關掉他
   (setq scroll-up-aggressively       0.01 )
   (setq scroll-down-aggressively     0.01 )
 #+end_src
+
+** 根據作業系統而外進行的初始化設定
+
+*** 在 X11 下將 Caps Lock 變成 Contrl
+
+#+BEGIN_SRC emacs-lisp
+  (defun make-caps-as-ctrl ()
+    "make capslock as control-key"
+    (interactive)
+    (shell-command "setxkbmap -option ctrl:nocaps"))
+
+  ;; only disable capslock and make it as control
+  (cond ((eq window-system 'x)
+         ;; make caps lock a control key
+         (make-caps-as-ctrl)))
+#+END_SRC
 
 ** 設定 custom-file 到其他檔案
 
