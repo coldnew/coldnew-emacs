@@ -748,6 +748,7 @@ emacs 有一些套件本身不需要配置，或是只是函式庫，這一類�
 #+begin_src emacs-lisp
   (require 'misc)
   (require 'cc-mode)
+  (require 'frameset)
 #+end_src
 
 iimage 是讓 emacs 可以直接顯示圖片的模式。
@@ -1263,9 +1264,10 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 #+BEGIN_SRC emacs-lisp
   (defun set-font (english chinese size-pair)
     "Setup emacs English and Chinese font on x window-system."
+
     (if (font-exist-p english)
-        (set-face-attribute 'default nil :font
-                            (format "%s:pixelsize=%d" english (car size-pair))))
+        (set-frame-font (format "%s:pixelsize=%d" english (car size-pair)) t))
+
     (if (font-exist-p chinese)
         (dolist (charset '(kana han symbol cjk-misc bopomofo))
           (set-fontset-font (frame-parameter nil 'font) charset
@@ -6214,12 +6216,12 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (vim:imap (kbd "C-x vs") 'magit-status)
 #+end_src
 
-| 按鍵    | 命令                      | 用途                          |
-|---------+---------------------------+-------------------------------|
-| C-x v c | magit-checkout            | 切換到其他的 git branch       |
-| C-x v p | git-push                  | push 到遠端 repo              |
-| C-x v f | magit-flow-feature-create |                               |
-| C-x v e | magit-flow-feature-finish |                               |
+| 按鍵    | 命令                      | 用途                    |
+|---------+---------------------------+-------------------------|
+| C-x v c | magit-checkout            | 切換到其他的 git branch |
+| C-x v p | git-push                  | push 到遠端 repo        |
+| C-x v f | magit-flow-feature-create |                         |
+| C-x v e | magit-flow-feature-finish |                         |
 
 #+begin_src emacs-lisp
   (vim:map (kbd "C-x vc") 'magit-checkout)
@@ -6343,7 +6345,7 @@ filecache 會根據使用者輸入的文件名，找到該文件的實際位置�
           "\\.svn$" "\\.svn-base$" "\\.git$" "\\.hg$"
           ))
 
-  (file-cache-add-directory-list '("~/.emacs.d/" "~/Workspace/"))
+;;  (file-cache-add-directory-list '("~/.emacs.d/" "~/Workspace/"))
 #+end_src
 
 ** saveplace
