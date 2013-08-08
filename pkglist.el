@@ -18,7 +18,6 @@
 "doc-present"
 "dos"
 "ecb-snapshot"
-"egg"
 "eldoc-extension"
 "elscreen"
 "erc-highlight-nicknames"
