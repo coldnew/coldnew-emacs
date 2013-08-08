@@ -317,6 +317,11 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
   (blink-cursor-mode -1)
 #+end_src
 
+Mac OSX 下會有方塊狀的提示，關掉他
+#+BEGIN_SRC emacs-lisp
+  (setq ring-bell-function #'ignore)
+#+END_SRC
+
 *** 關閉選單列
 
 不顯示選單列
@@ -847,7 +852,7 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
 ** TODO 其他
 #+begin_src emacs-lisp
   (require 'rainbow-mode)
-  (require 'smarter-compile)
+  ;;(require 'smarter-compile)
   (require 'expand-region)
 #+end_src
 
@@ -3043,7 +3048,7 @@ org-mode 的 Babel 功能可以實現所謂的 Literacture Programming
 ** 網頁投影片
 
 #+begin_src emacs-lisp
-  (require 'org-html5presentation)
+;;  (require 'org-html5presentation)
 #+end_src
 
 *** 使用 org-reveal 製作網頁投影片
@@ -3486,7 +3491,7 @@ yasnippet 是一個非常強大的樣板 (template) 系統，在現在的 emacs 
   snippet 位置。
 
   #+begin_src emacs-lisp
-    (setq yas/snippet-dirs '(emacs-snippets-dir))
+;;    (setq yas/snippet-dirs '(emacs-snippets-dir))
   #+end_src
 
 *** 使用 yasnippet 達到 org-mode 的 easy-template 功能
