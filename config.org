@@ -6060,11 +6060,6 @@ offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙�
 
   (add-hook 'mu4e-compose-pre-hook 'coldnew/mu4e-set-account)
 #+end_src
-* Alias                                                               :alias:
-** Misc
-#+begin_src emacs-lisp
-  (defalias 'coldnew/set-mark-command 'cua-set-mark-or-rectangle-mark)
-#+end_src
 * Git 版本管理                                                          :git:
 
 git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最好的，emacs
