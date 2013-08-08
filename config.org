@@ -6074,7 +6074,6 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
 我使用了 egg, magit 以及 git-emacs 這幾種套件。
 
 #+begin_src emacs-lisp
-  (require 'egg)
   (require 'magit)
   (require 'magit-flow)
   (require 'git-emacs)
@@ -6087,62 +6086,9 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
 由於我用了很多 git 的程式，這邊綁定命令到我想用的程式去
 
 #+begin_src emacs-lisp
-  (defalias 'git-log    'egg-log)
-  (defalias 'git-status 'egg-status)
-  (defalias 'git-commit 'egg-commit-log-edit)
   (defalias 'git-rebase 'magit-rebase-step)
   (defalias 'git-push   'magit-push)
   (defalias 'git-add-remote 'magit-add-remote)
-#+end_src
-
-** 當檔案儲存時不自動將其加入 commit 中
-
-egg 有一個很不錯的功能，就是當檔案儲存的時候，自動將其加入到 commit
-當中，不過我用起來實在是很不習慣，所以把他 disable 掉。
-
-#+begin_src emacs-lisp
-  (setq egg-auto-update nil)
-#+end_src
-
-** 讓 egg 自動猜測下一個動作
-
-我很喜歡 vc-mode 的一個功能，就是當我按下 C-x vv 的時候，會自動幫我將
-目前的 buffer 加入 commit, egg 同樣也提供這個功能，這邊關掉 egg
-的確認系統，讓他根據狀況自動猜測下一步要做什麼。
-
-#+begin_src emacs-lisp
-  (setq egg-confirm-next-action nil)
-
-  ;; remodify next-action priority
-  (defsubst egg-guess-next-action (desc)
-    (cond
-     ((memq :file-has-merged-conflict desc) :merge-file)
-     ((memq :file-is-modified desc)         :stage-file)
-     ((memq :has-staged-changes desc)       :commit)
-     ((memq :file-is-unmerged desc)         :stage-file)
-     ((memq :wdir-has-merged-conflict desc) :status)
-     ((memq :wdir-has-unmerged-files  desc) :stage-all)
-     ((memq :wdir-is-modified desc)         :stage-all)
-     ((memq :rebase-in-progress desc)       :rebase-continue)
-     (t                                     :quit)))
-#+end_src
-
-** 當進入 egg-status 或是 egg-commit-log-edit 時，關掉其他 window。 :advice:
-
-egg-status 和 egg-commit-log-edit 這兩個 buffer 都很酷，我覺得讓
-他們啟動時成為一個全螢幕的視窗比較好，所以這邊增加 advice 來改變
-預設的動作。
-
-#+begin_src emacs-lisp
-  (defadvice egg-status (around goto-egg-status-buffer activate)
-    "Delete other windows after visiting egg-status."
-    ad-do-it
-    (delete-other-windows))
-
-  (defadvice egg-commit-log-edit (around goto-egg-commit-buffer activate)
-    "Delete other windows after visiting egg-commit-buffer."
-    ad-do-it
-    (delete-other-windows))
 #+end_src
 
 ** 當使用 magit 時，不使用 emacs 原生的 vc 來處理和 git 相關的事情
@@ -6252,8 +6198,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 逃離 magit, git-emacs 的視窗。
 
 #+begin_src emacs-lisp
-  (define-key egg-status-buffer-mode-map (kbd "C-g") 'egg-quit-buffer)
-  (define-key egg-log-msg-mode-map (kbd "C-g") 'egg-quit-buffer)
   (define-key magit-mode-map (kbd "C-g") 'magit-quit-window)
   (define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
 #+end_src
@@ -6272,14 +6216,12 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
 | 按鍵    | 命令                      | 用途                          |
 |---------+---------------------------+-------------------------------|
-| C-x v v | egg-next-action           | 讓 egg 自動猜測下一步要做什麼 |
 | C-x v c | magit-checkout            | 切換到其他的 git branch       |
 | C-x v p | git-push                  | push 到遠端 repo              |
 | C-x v f | magit-flow-feature-create |                               |
 | C-x v e | magit-flow-feature-finish |                               |
 
 #+begin_src emacs-lisp
-  (vim:map (kbd "C-x vv") 'egg-next-action)
   (vim:map (kbd "C-x vc") 'magit-checkout)
   (vim:map (kbd "C-x vp") 'git-push)
   (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
