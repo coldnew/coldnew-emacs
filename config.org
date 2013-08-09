@@ -3055,22 +3055,6 @@ org-mode 的 Babel 功能可以實現所謂的 Literacture Programming
                   "\\end{frame}")))
 #+end_src
 
-** 網頁投影片
-
-#+begin_src emacs-lisp
-;;  (require 'org-html5presentation)
-#+end_src
-
-*** 使用 org-reveal 製作網頁投影片
-
-org-reveal 是 reveal.js 的 org-mode wrapper，使用他你必須安裝 8.0 版本以
-上的 org-mode。
-
-#+begin_src emacs-lisp
-;;  (if (>= (string-to-number (org-version)) 8.0)
-;;      (require 'ox-reveal))
-#+end_src
-
 ** 網頁輸出設定
 
 *** 不要在輸出的網頁上面加上 Validate 字樣
