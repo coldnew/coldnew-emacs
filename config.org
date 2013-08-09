@@ -3140,8 +3140,22 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 
 #+begin_src emacs-lisp
   (require 'ctags-update)
-  (ctags-update-minor-mode 1)
 #+end_src
+
+很令人討厭的一件事情是, helm-etags-plus 的作者有包了另外一個
+ctags-update.el 檔案，所以如果載入順序出錯的話，會和另外一個同名的
+ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不存在在使
+用 helm-etags-plus 裡面附贈的 ctags-update.el。
+
+#+BEGIN_SRC emacs-lisp
+  ;; Use ctags-update function in ctags-update.el
+  (if (fboundp 'ctags-auto-update-mode)
+      (ctags-auto-update-mode 1)
+    ;; if the function does not exist, use the ctags-update
+    ;; in helm-etags-plus packages.
+    (if (fboundp 'ctags-update-minor-mode)
+        (ctags-update-minor-mode 1)))
+#+END_SRC
 
 ** 用來產生 TAGS 的命令                                            :command:
 
