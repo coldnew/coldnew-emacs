@@ -382,6 +382,16 @@ Mac OSX 下會有方塊狀的提示，關掉他
          ;; make caps lock a control key
          (make-caps-as-ctrl)))
 #+END_SRC
+*** 在 Mac OS X 下用 Command 案件替代 ALT
+
+在 Mac OS X 下，我只有將 Control 榜定到 Caps lock 按鍵上面，至於原本
+Mac 最常用的 Command 按鍵，在 emacs 下則將他當作是 Alt 按鍵使用，
+至於 option 按鍵，則變成 super 按鍵使用。
+
+#+BEGIN_SRC emacs-lisp
+   (setq mac-option-modifier 'super)
+   (setq mac-command-modifier 'meta)
+#+END_SRC
 
 ** 設定 custom-file 到其他檔案
 
