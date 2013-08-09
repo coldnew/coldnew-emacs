@@ -738,7 +738,7 @@ emacs 有一些套件本身不需要配置，或是只是函式庫，這一類�
 #+begin_src emacs-lisp
   (require 'misc)
   (require 'cc-mode)
-  (require 'frameset)
+  (require 'frameset nil 'noerror)
 #+end_src
 
 iimage 是讓 emacs 可以直接顯示圖片的模式。
@@ -3140,8 +3140,7 @@ ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ct
 
 #+begin_src emacs-lisp
   (require 'ctags-update)
-;;  (ctags-update-minor-mode 1)
-  (ctags-auto-update-mode 1)
+  (ctags-update-minor-mode 1)
 #+end_src
 
 ** 用來產生 TAGS 的命令                                            :command:
