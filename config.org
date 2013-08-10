@@ -3879,6 +3879,24 @@ require 的 snippet, 則添加以下程式
   (vim:mode-imap coldnew-editor-map (kbd "C-c l")  'org-store-link)
   (vim:mode-imap coldnew-editor-map (kbd "C-c c")  'org-capture)
 #+END_SRC
+** 特殊命令
+
+有些很好用的命令，比如說呼叫 Woman, 或是彈出一個 terminal 視窗，這些我
+將他們綁定到 super 按鍵作為 prefix，這一類按鍵有些會有相對應的 F1 ~ F12
+的按鍵。
+
+| 按鍵       | 命令      | 用途                |
+|------------+-----------+---------------------|
+| s-1 , <F1> | woman     | 使用 woman 查看文檔 |
+| s-2 , <F2> | shell-pop | 彈出 eshell 視窗    |
+
+#+BEGIN_SRC emacs-lisp
+  (vim:mode-map coldnew-editor-map (kbd "<f1>")  'woman)
+  (vim:mode-map coldnew-editor-map (kbd "s-1")   'woman)
+
+  (vim:mode-map coldnew-editor-map (kbd "<f2>")  'shell-pop)
+  (vim:mode-map coldnew-editor-map (kbd "s-2")   'shell-pop)
+#+END_SRC
 
 ** 復合式按鍵
 
@@ -6362,21 +6380,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (global-unset-key (kbd "C-r"))
   (global-unset-key (kbd "C-x e"))
   (global-unset-key (kbd "C-x d"))
-#+end_src
-
-** Function key prefix
-Function key 設置常用的命令。
-
-| Key | Command            |
-|-----+--------------------|
-| F1  | woman              |
-| F2  | shell-pop          |
-| F4  | sr-speedbar-toggle |
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "<f1>")     'woman)
-  (global-set-key (kbd "<f2>")     'shell-pop)
-  (global-set-key (kbd "<f4>")     'sr-speedbar-toggle)
 #+end_src
 
 ** 分頁切換
