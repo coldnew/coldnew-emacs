@@ -3697,7 +3697,7 @@ require 的 snippet, 則添加以下程式
 | C-x L   | linum-mode       | 切換顯示行號           |
 
 #+begin_src emacs-lisp
-  ;;(vim:mode-map coldnew-editor-map (kbd "C-c C-e") 'eval-and-replace)
+  (vim:mode-map coldnew-editor-map (kbd "C-c C-e") 'eval-and-replace)
   (vim:mode-map coldnew-editor-map (kbd "C-x l") 'hl-line-mode)
   (vim:mode-map coldnew-editor-map (kbd "C-x L") 'linum-mode)
 
