@@ -3705,6 +3705,22 @@ require 的 snippet, 則添加以下程式
     (vim:mode-nmap coldnew-editor-map (kbd "<SPC>") 'ace-jump-mode))
 #+end_src
 
+| 按鍵 | 命令                     | 用途             |
+|------+--------------------------+------------------|
+| M-y  | helm-show-kill-ring      | 顯示 kill-ring   |
+| M-x  | smex                     | 顯示 emacs 命令  |
+| s-x  | smex-major-mode-commands | 顯示主模式的命令 |
+
+#+BEGIN_SRC emacs-lisp
+  (when (require 'helm nil 'noerror)
+    (vim:mode-map coldnew-editor-map (kbd "M-y") 'helm-show-kill-ring))
+
+  (when (require 'smex nil 'noerror)
+    (vim:mode-map coldnew-editor-map (kbd "M-x") 'smex)
+    (vim:mode-map coldnew-editor-map (kbd "s-x") 'smex-major-mode-commands))
+#+END_SRC
+
+
 ** 檔案相關 (N) (I)
 
 | 按鍵    | 命令                   | 用途                         |
@@ -6457,12 +6473,9 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "M-l") 'backward-delete-word)
-  (global-set-key (kbd "M-y") 'helm-show-kill-ring)
   (global-set-key (kbd "M-n") 'scroll-up)
   (global-set-key (kbd "M-p") 'scroll-down)
   (global-set-key (kbd "M-.") 'helm-etags+-select)
-  (global-set-key (kbd "M-x") 'smex)
-  (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 #+end_src
 
 * 部若格                                                      :blog:
