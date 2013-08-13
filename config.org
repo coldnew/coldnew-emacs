@@ -2983,6 +2983,7 @@ org-mode 的 Babel 功能可以實現所謂的 Literacture Programming
 #+END_SRC
 
 *** 使用 minted 將程式碼加上色彩
+
 #+begin_src emacs-lisp :tangle no
   (require 'org-latex)
   (add-to-list 'org-latex-packages-alist '("" "minted"))
@@ -2993,6 +2994,7 @@ org-mode 的 Babel 功能可以實現所謂的 Literacture Programming
 #+end_src
 
 *** 使用 xelatex 產生 PDF 檔案
+
 當系統有安裝 latexmk 時，使用 latexmk 呼叫 xelatex 進行編譯，
 反之則直接呼叫 xelatex 進行二次編譯。
 #+begin_src emacs-lisp
@@ -3004,6 +3006,7 @@ org-mode 的 Babel 功能可以實現所謂的 Literacture Programming
 #+end_src
 
 *** 一般文章所使用的 latex 配置
+
 #+begin_src emacs-lisp :tangle no
   (add-to-list 'org-latex-classes
                '("coldnew-article"
@@ -3039,6 +3042,7 @@ org-mode 的 Babel 功能可以實現所謂的 Literacture Programming
 #+end_src
 
 *** 投影片所使用的 latex 配置
+
 #+begin_src emacs-lisp
 ;;\\xeCJKsetup{CJKglue=\hspace{0pt plus .08 baselineskip }}
   (add-to-list 'org-latex-classes
