@@ -3720,7 +3720,6 @@ require 的 snippet, 則添加以下程式
     (vim:mode-map coldnew-editor-map (kbd "s-x") 'smex-major-mode-commands))
 #+END_SRC
 
-
 ** 檔案相關 (N) (I)
 
 | 按鍵    | 命令                   | 用途                         |
