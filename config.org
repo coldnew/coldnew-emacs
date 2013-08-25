@@ -3865,9 +3865,12 @@ require 的 snippet, 則添加以下程式
 | 按鍵    | 用途              |
 |---------+-------------------|
 | M-<SPC> | 插入 <U200B> 字元 |
+| s-<SPC> | 插入 <U200B> 字元 |
 
 #+BEGIN_SRC emacs-lisp
   (vim:mode-imap coldnew-editor-map (kbd "M-<SPC>")
+                 '(lambda ()(interactive) (insert "\ufeff")))
+  (vim:mode-imap coldnew-editor-map (kbd "s-<SPC>")
                  '(lambda ()(interactive) (insert "\ufeff")))
 #+END_SRC
 
