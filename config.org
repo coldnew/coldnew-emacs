@@ -4614,7 +4614,13 @@ paredit 可以幫助傳寫程式的速度。
 - 增加自定義的 paredit 按鍵
 
   #+BEGIN_SRC emacs-lisp
-;;    (vim:mode-imap )
+   ;; (vim:mode-imap coldnew-lisp-map (kbd "(") 'paredit-open-round)
+   ;; (vim:mode-imap coldnew-lisp-map (kbd ")") 'paredit-close-round)
+   ;; (vim:mode-imap coldnew-lisp-map (kbd "[") 'paredit-open-square)
+   ;; (vim:mode-imap coldnew-lisp-map (kbd "]") 'paredit-close-square)
+   ;; (vim:mode-imap coldnew-lisp-map (kbd "{") 'paredit-open-bracket)
+   ;; (vim:mode-imap coldnew-lisp-map (kbd "}") 'paredit-close-bracket)
+   ;; (vim:mode-imap coldnew-lisp-map (kbd "\"") 'paredit-doublequote)
   #+END_SRC
 
 ** Python
