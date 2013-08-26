@@ -3652,7 +3652,6 @@ require 的 snippet, 則添加以下程式
                '(lambda ()
                  (set (make-local-variable 'pangu-spacing-real-insert-separtor) t)))
   #+end_src
-
 ** TODO remember
 *** electric-pair-mode
 #+begin_src emacs-lisp
@@ -4422,18 +4421,16 @@ minibuffer 上。
   (add-hook 'emacs-lisp-mode-hook
             '(lambda ()
                (when (require 'eldoc nil 'noerror)
-                 (require 'eldoc nil 'noerror)
                  (turn-on-eldoc-mode)
 
                  ;; fix for paredit
                  (eval-after-load 'paredit
                    '(progn
                       (eldoc-add-command 'paredit-backward-delete
-                                         'paredit-close-round)))
-                 )))
+                                         'paredit-close-round))))))
 #+end_src
 
-*** 高亮屬於 cl.el 套件的 function 或是 macro。
+*** 高亮屬於 cl.el 套件的 function 或是 macro
 
 #+begin_src emacs-lisp
   (add-hook 'emacs-lisp-mode-hook
@@ -4554,21 +4551,38 @@ minibuffer 上。
 #+end_src
 
 ** Lisp 通用設定
-*** 建立 lisp-common-hook 變數
 
-就像 C/C++ 有 c-mode-common-hook 可以用，這邊定義類似的變數。
+*** 建立編輯 lisp 程式用的 minor-mode
+
+這個 minor-mode 類似我自己全域使用的 coldnew-editor-mode，但是是針對
+lisp 類語言增加額外的設定。
+
+#+BEGIN_SRC emacs-lisp
+  (defvar coldnew-lisp-map (make-keymap))
+
+  (define-minor-mode coldnew-lisp-mode
+    "coldnew's lisp editing mode."
+    :keymap coldnew-lisp-map)
+#+END_SRC
+
+定義會被加入到 coldnew-lisp-mode 的 major-mode list
 
 #+begin_src emacs-lisp
-  (defcustom lisp-mode-common-hook nil
-    "*Hook called by all lisp-like Mode modes for common initializations."
-    :type 'hook)
-#+end_src
+  (defvar coldnew/lisp-mode
+    '(;; emacs
+      emacs-lisp-mode
+      ;; clojure
+      clojure-mode clojurescript-mode clojure-test-mode
+      ;; newlisp
+      newlisp-mode
+      ;; scheme
+      scheme-mode
+      ))
 
-將需要使用通用設定的 lisp mode 加入 lisp-mode-common-hook
-#+begin_src emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook '(lambda () (run-hooks 'lisp-mode-common-hook)))
-  (add-hook 'clojure-mode-hook '(lambda () (run-hooks 'lisp-mode-common-hook)))
-  (add-hook 'newlisp-mode-hook '(lambda () (run-hooks 'lisp-mode-common-hook)))
+  ;;; Add coldnew/lisp-mode to coldnew-lisp-mode
+  (dolist (mode coldnew/lisp-mode)
+    (let ((hook (intern (concat (symbol-name mode) "-hook"))))
+      (add-hook hook 'coldnew-lisp-mode)))
 #+end_src
 
 *** 將 lambdada 以及 fn 變成希臘符號
@@ -4576,15 +4590,32 @@ minibuffer 上。
 pretty-lambdada 用來將 lambdada 變成希臘符號
 #+begin_src emacs-lisp
   (when (require 'pretty-lambdada nil 'noerror)
-    (add-hook 'lisp-mode-common-hook 'pretty-lambda-mode))
+    (add-hook 'coldnew-lisp-mode-hook 'pretty-lambda-mode))
 #+end_src
 
 *** 對每一個括號進行上色
 
 #+begin_src emacs-lisp
   (when (require 'rainbow-delimiters nil 'noerror)
-    (add-hook 'lisp-mode-common-hook '(lambda () (rainbow-delimiters-mode 1))))
+    (add-hook 'coldnew-lisp-mode-hook '(lambda () (rainbow-delimiters-mode 1))))
 #+end_src
+
+*** 使用 paredit 來簡化括號的操作
+
+[[http://www.emacswiki.org/emacs/ParEdit][ParEdit]] 是一個非常好用的括號批配模式，特別是在寫 lisp 程式的時候，使用
+paredit 可以幫助傳寫程式的速度。
+
+- 將 paredit 加入 lisp-common-hook
+
+  #+BEGIN_SRC emacs-lisp
+    (add-hook 'coldnew-lisp-mode-hook '(lambda () (paredit-mode t)))
+  #+END_SRC
+
+- 增加自定義的 paredit 按鍵
+
+  #+BEGIN_SRC emacs-lisp
+;;    (vim:mode-imap )
+  #+END_SRC
 
 ** Python
 *** 設定 Python 檔案的副檔名與對應的模式
