@@ -56,6 +56,7 @@
 "popup"
 "popwin"
 "powerline"
+"pretty-lambdada"
 "projectile"
 "qmake-mode"
 "qml-mode"
