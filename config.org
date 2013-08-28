@@ -3922,7 +3922,6 @@ require 的 snippet, 則添加以下程式
   (vim:mode-imap coldnew-editor-map (kbd "C-M-.") 'end-of-buffer)
 #+end_src
 
-
 ** 字體調整 (N) (I)
 
 | 按鍵 | 命令                     | 用途               |
