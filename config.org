@@ -4605,23 +4605,62 @@ pretty-lambdada 用來將 lambdada 變成希臘符號
 [[http://www.emacswiki.org/emacs/ParEdit][ParEdit]] 是一個非常好用的括號批配模式，特別是在寫 lisp 程式的時候，使用
 paredit 可以幫助傳寫程式的速度。
 
-- 將 paredit 加入 lisp-common-hook
+正常來說，要加入 paredit 只需要使用
 
-  #+BEGIN_SRC emacs-lisp
-    (add-hook 'coldnew-lisp-mode-hook '(lambda () (paredit-mode t)))
-  #+END_SRC
+#+BEGIN_SRC emacs-lisp :tangle no
+  (paredit-mode 1)
+#+END_SRC
 
-- 增加自定義的 paredit 按鍵
+這樣就足夠了，但是有些按鍵我不希望 paredit 去更改他，因此我重新定義我自
+己習慣的 paredit 案件。*
 
-  #+BEGIN_SRC emacs-lisp
-   ;; (vim:mode-imap coldnew-lisp-map (kbd "(") 'paredit-open-round)
-   ;; (vim:mode-imap coldnew-lisp-map (kbd ")") 'paredit-close-round)
-   ;; (vim:mode-imap coldnew-lisp-map (kbd "[") 'paredit-open-square)
-   ;; (vim:mode-imap coldnew-lisp-map (kbd "]") 'paredit-close-square)
-   ;; (vim:mode-imap coldnew-lisp-map (kbd "{") 'paredit-open-bracket)
-   ;; (vim:mode-imap coldnew-lisp-map (kbd "}") 'paredit-close-bracket)
-   ;; (vim:mode-imap coldnew-lisp-map (kbd "\"") 'paredit-doublequote)
-  #+END_SRC
+**** 基本的插入
+
+***** 圓括號
+
+#+BEGIN_SRC emacs-lisp
+  (vim:mode-imap coldnew-lisp-map (kbd "(") 'paredit-open-round)
+  (vim:mode-imap coldnew-lisp-map (kbd ")") 'paredit-close-round)
+  (vim:mode-imap coldnew-lisp-map (kbd "M-)") 'paredit-close-round-and-newline)
+#+END_SRC
+
+***** 方括號
+
+#+BEGIN_SRC emacs-lisp
+  (vim:mode-imap coldnew-lisp-map (kbd "[") 'paredit-open-square)
+  (vim:mode-imap coldnew-lisp-map (kbd "]") 'paredit-close-square)
+#+END_SRC
+
+***** 大括號
+
+#+BEGIN_SRC emacs-lisp
+  (vim:mode-imap coldnew-lisp-map (kbd "{") 'paredit-open-bracket)
+  (vim:mode-imap coldnew-lisp-map (kbd "}") 'paredit-close-bracket)
+#+END_SRC
+
+***** 單、雙引號
+
+#+BEGIN_SRC emacs-lisp
+  (vim:mode-imap coldnew-lisp-map (kbd "\"") 'paredit-doublequote)
+  (vim:mode-imap coldnew-lisp-map (kbd "M-\"") 'paredit-meta-doublequote)
+#+END_SRC
+
+***** 反斜線、分號
+
+#+BEGIN_SRC emacs-lisp
+  (vim:mode-imap coldnew-lisp-map (kbd "\\") 'paredit-backslash)
+  (vim:mode-imap coldnew-lisp-map (kbd ";") 'paredit-semicolon)
+#+END_SRC
+
+**** 刪除
+
+#+BEGIN_SRC emacs-lisp
+  (vim:mode-imap coldnew-lisp-map (kbd "C-d") 'paredit-forward-delete)
+  (vim:mode-imap coldnew-lisp-map (kbd "C-l") 'paredit-backword-delete)
+  (vim:mode-imap coldnew-lisp-map (kbd "C-k") 'paredit-kill)
+  (vim:mode-imap coldnew-lisp-map (kbd "M-d") 'paredit-forward-kill-word)
+  (vim:mode-imap coldnew-lisp-map (kbd "M-l") 'paredit-backward-kill-word)
+#+END_SRC
 
 ** Python
 *** 設定 Python 檔案的副檔名與對應的模式
