@@ -2462,6 +2462,8 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
       ;; argument causes later arguments to be looked for in that directory,
       ;; not the starting directory
       (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
+
+  (defalias 'eshell/e 'eshell/emacs)
 #+end_src
 
 ** 清空 eshell 緩衝區
