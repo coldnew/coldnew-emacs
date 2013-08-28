@@ -3749,9 +3749,9 @@ require 的 snippet, 則添加以下程式
     (vim:mode-map coldnew-editor-map (kbd "s-x") 'smex-major-mode-commands))
 #+END_SRC
 
-| 按鍵 | 命令                | 用途                       |
-|------+---------------------+----------------------------|
-| M-2  | multi-eshell        | 切換至完整的 eshell 視窗   |
+| 按鍵 | 命令                | 用途                         |
+|------+---------------------+------------------------------|
+| M-2  | multi-eshell        | 切換至完整的 eshell 視窗     |
 | M-3  | multi-eshell-switch | 切換目前已打開的 eshell 視窗 |
 
 #+BEGIN_SRC emacs-lisp
@@ -3911,6 +3911,18 @@ require 的 snippet, 則添加以下程式
                  '(lambda ()(interactive) (insert "\ufeff")))
 #+END_SRC
 
+
+| 按鍵  | 命令                | 用途           |
+|-------+---------------------+----------------|
+| C-M , | beginning-of-buffer | 回到緩衝區開頭 |
+| C-M . | end-of-buffer       | 回到緩衝區尾巴 |
+
+#+begin_src emacs-lisp
+  (vim:mode-imap coldnew-editor-map (kbd "C-M-,") 'beginning-of-buffer)
+  (vim:mode-imap coldnew-editor-map (kbd "C-M-.") 'end-of-buffer)
+#+end_src
+
+
 ** 字體調整 (N) (I)
 
 | 按鍵 | 命令                     | 用途               |
@@ -3944,10 +3956,10 @@ require 的 snippet, 則添加以下程式
 將他們綁定到 super 按鍵作為 prefix，這一類按鍵有些會有相對應的 F1 ~ F12
 的按鍵。
 
-| 按鍵       | 命令      | 用途                     |
-|------------+-----------+--------------------------|
-| s-1 , <F1> | woman     | 使用 woman 查看文檔      |
-| s-2 , <F2> | shell-pop | 彈出 eshell 視窗         |
+| 按鍵       | 命令      | 用途                |
+|------------+-----------+---------------------|
+| s-1 , <F1> | woman     | 使用 woman 查看文檔 |
+| s-2 , <F2> | shell-pop | 彈出 eshell 視窗    |
 
 
 #+BEGIN_SRC emacs-lisp
@@ -6501,14 +6513,10 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 |--------------+---------------------+---------------------------|
 | Shift Return | insert-empty-line   | 插入空白行                |
 | M-s          | coldnew/helm-occur  | 使用 occur 查詢當前緩衝區 |
-| C-M ,        | beginning-of-buffer | 回到緩衝區開頭            |
-| C-M .        | end-of-buffer       | 回到緩衝區尾巴            |
 
 #+begin_src emacs-lisp
   (global-set-key[(shift return)] 'insert-empty-line)
   (global-set-key (kbd "M-s") 'coldnew/helm-occur)
-  (global-set-key (kbd "C-M-,") 'beginning-of-buffer)
-  (global-set-key (kbd "C-M-.") 'end-of-buffer)
 #+end_src
 
 ** 關閉預設的按鍵設定
