@@ -3906,10 +3906,11 @@ require 的 snippet, 則添加以下程式
 將他們綁定到 super 按鍵作為 prefix，這一類按鍵有些會有相對應的 F1 ~ F12
 的按鍵。
 
-| 按鍵       | 命令      | 用途                |
-|------------+-----------+---------------------|
-| s-1 , <F1> | woman     | 使用 woman 查看文檔 |
-| s-2 , <F2> | shell-pop | 彈出 eshell 視窗    |
+| 按鍵       | 命令      | 用途                     |
+|------------+-----------+--------------------------|
+| s-1 , <F1> | woman     | 使用 woman 查看文檔      |
+| s-2 , <F2> | shell-pop | 彈出 eshell 視窗         |
+| s-3 , <F3> | eshell    | 切換至完整的 eshell 視窗 |
 
 #+BEGIN_SRC emacs-lisp
   (vim:mode-map coldnew-editor-map (kbd "<f1>")  'woman)
@@ -3917,6 +3918,9 @@ require 的 snippet, 則添加以下程式
 
   (vim:mode-map coldnew-editor-map (kbd "<f2>")  'shell-pop)
   (vim:mode-map coldnew-editor-map (kbd "s-2")   'shell-pop)
+
+  (vim:mode-map coldnew-editor-map (kbd "<f3>")  'eshell)
+  (vim:mode-map coldnew-editor-map (kbd "s-3")   'eshell)
 #+END_SRC
 
 ** 復合式按鍵
