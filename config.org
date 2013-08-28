@@ -3908,19 +3908,19 @@ require 的 snippet, 則添加以下程式
 
 | 按鍵       | 命令      | 用途                     |
 |------------+-----------+--------------------------|
-| s-1 , <F1> | woman     | 使用 woman 查看文檔      |
-| s-2 , <F2> | shell-pop | 彈出 eshell 視窗         |
-| s-3 , <F3> | eshell    | 切換至完整的 eshell 視窗 |
+| M-1 , <F1> | woman     | 使用 woman 查看文檔      |
+| M-2 , <F2> | shell-pop | 彈出 eshell 視窗         |
+| M-3 , <F3> | eshell    | 切換至完整的 eshell 視窗 |
 
 #+BEGIN_SRC emacs-lisp
   (vim:mode-map coldnew-editor-map (kbd "<f1>")  'woman)
-  (vim:mode-map coldnew-editor-map (kbd "s-1")   'woman)
+  (vim:mode-map coldnew-editor-map (kbd "M-1")   'woman)
 
   (vim:mode-map coldnew-editor-map (kbd "<f2>")  'shell-pop)
-  (vim:mode-map coldnew-editor-map (kbd "s-2")   'shell-pop)
+  (vim:mode-map coldnew-editor-map (kbd "M-2")   'shell-pop)
 
   (vim:mode-map coldnew-editor-map (kbd "<f3>")  'eshell)
-  (vim:mode-map coldnew-editor-map (kbd "s-3")   'eshell)
+  (vim:mode-map coldnew-editor-map (kbd "M-3")   'eshell)
 #+END_SRC
 
 ** 復合式按鍵
