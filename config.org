@@ -2322,16 +2322,23 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
     (require 'em-cmpl)
   #+end_src
 
+- 設定預設的 eshell 資料夾位置
+
+  eshell-directory-name 設定了 eshell 的資料夾，裡面可能存放一些和
+  eshell 相關的資訊。
+
+  #+BEGIN_SRC emacs-lisp
+    (setq eshell-directory-name (concat emacs-cache-dir "eshell"))
+  #+END_SRC
+
 - 當離開 eshell 時自動儲存歷史紀錄
 
-  設定 eshell 的歷史紀錄快取資料夾位置，以及檔案大小
+  設定 eshell 的歷史紀錄檔案大小等資訊
 
   #+begin_src emacs-lisp
-    (setq eshell-history-file-name (concat emacs-cache-dir "eshell-history"))
     (setq eshell-history-size 512)
     (setq eshell-save-history-on-exit t)
   #+end_src
-
 
 ** 將 eshell 的 prompt 設定成和 bash 一樣
 
@@ -2369,14 +2376,11 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
   (add-to-list 'eshell-output-filter-functions 'coldnew/colorfy-eshell-prompt)
   #+end_src
 
-** 載入相關套件
-
-*** Prompt
+** TODO 其他設定
 
 #+begin_src emacs-lisp
   ;; other setting
-(setq eshell-last-dir-ring-file-name (concat emacs-cache-dir "eshell-lastdir"))
-  (setq eshell-ask-to-save-last-dir nil)
+  (setq eshell-ask-to-save-last-dir 'always)
   (setq eshell-hist-ignoredups t)
   (setq eshell-cmpl-cycle-completions nil)
   (setq eshell-scroll-to-bottom-on-output t)
@@ -2392,6 +2396,7 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 
 
 #+end_src
+
 ** 使用 auto-complete 來補全 eshell 命令
 
 #+begin_src emacs-lisp
@@ -2410,7 +2415,7 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
   (add-hook 'eshell-mode-hook 'ac-eshell-mode-setup)
 #+end_src
 
-** Command
+** TODO Command
 #+begin_src emacs-lisp
   ;; find-file
   (defun eshell/ef (&rest args) (eshell/emacs args))
@@ -2432,19 +2437,30 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
                                 subject))
           1))))
 #+end_src
+** 使用 eshell-autojump 快速跳轉資料夾
 
-** 按鍵設定
+[[http://www.emacswiki.org/emacs/EshellAutojump][Eshell Autojump]] 提供了一個 *j* 的 eshell 命令，他會根據你之前使用 cd 切
+換資料夾的紀錄，透過 regexp 的方式來批配你要切換的資料夾，舉例來說，
+若我曾經在 eshell 裡面切換到 ~/.emacs.d 過，則只要使用
 
-這邊的按鍵設定，刻意讓 eshell 和一般 bash 下使用的形式相同。
+: j emacs
 
-#+begin_src emacs-lisp
-  ;; (add-hook 'eshell-mode-hook
-  ;;           '(lambda ()
-  ;;              (local-set-key (kbd "C-u") '(lambda () (interactive) (kill-line 0)))
-  ;;              ))
-#+end_src
+就可以在 emacs 中切換到 ~/.emacs.d 中了。
 
-** 在 eshell 中用 emacs 打開檔案
+你可以使用
+
+: cd =
+
+來查看目前在列表中的資料夾有哪些
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'eshell
+    '(require 'eshell-autojump nil 'noerror))
+#+END_SRC
+
+** eshell 命令
+
+*** 在 eshell 中用 emacs 打開檔案
 
 如果在 eshell 中呼叫 emacs 命令，實際上還是會打開另外一個 emacs 程式，
 因此在這邊重弄 emacs 命令，這樣就可以很安心的在 eshell 中用 emacs 打開
@@ -2466,14 +2482,13 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
   (defalias 'eshell/e 'eshell/emacs)
 #+end_src
 
-** 清空 eshell 緩衝區
+*** 清空 eshell 緩衝區
 
 這個命令的作用和 Unix 下的 clear 功用相同，都是用來清空 shell 的內容。
 
 #+begin_src emacs-lisp
   (defun eshell/clear ()
     "Clears the shell buffer ala Unix's clear or DOS' cls"
-    (interactive)
     ;; the shell prompts are read-only, so clear that for the duration
     (let ((inhibit-read-only t))
       ;; simply delete the region

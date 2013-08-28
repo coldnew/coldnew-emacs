@@ -19,6 +19,7 @@
 "eldoc-extension"
 "elscreen"
 "erc-highlight-nicknames"
+"eshell-autojump"
 "fuzzy"
 "git-emacs"
 "git-gutter-fringe"
