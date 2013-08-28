@@ -2397,24 +2397,6 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 
 #+end_src
 
-** 使用 auto-complete 來補全 eshell 命令
-
-#+begin_src emacs-lisp
-  ;; define ac-source for eshell-pcomplete
-  (ac-define-source eshell-pcomplete
-    '((candidates . pcomplete-completions)
-      (cache)
-      (symbol . "f")))
-
-  (defun ac-eshell-mode-setup ()
-    "auto-complete settings for eshell-mode"
-    (setq ac-sources '(ac-source-eshell-pcomplete)))
-
-  ;; Add to eshell-mode
-  (add-hook 'eshell-mode-hook 'auto-complete-mode)
-  (add-hook 'eshell-mode-hook 'ac-eshell-mode-setup)
-#+end_src
-
 ** TODO Command
 #+begin_src emacs-lisp
   ;; find-file
@@ -2437,6 +2419,33 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
                                 subject))
           1))))
 #+end_src
+** 使用 auto-complete 來補全 eshell 命令
+
+#+begin_src emacs-lisp
+  ;; define ac-source for eshell-pcomplete
+  (ac-define-source eshell-pcomplete
+    '((candidates . pcomplete-completions)
+      (cache)
+      (symbol . "f")))
+
+  (defun ac-eshell-mode-setup ()
+    "auto-complete settings for eshell-mode"
+    (setq ac-sources '(ac-source-eshell-pcomplete)))
+
+  ;; Add to eshell-mode
+  (add-hook 'eshell-mode-hook 'auto-complete-mode)
+  (add-hook 'eshell-mode-hook 'ac-eshell-mode-setup)
+#+end_src
+** 使用 multi-eshell 快速切換不同的 eshell
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'eshell
+    '(when (require 'multi-eshell nil 'noerror)
+       ;; setup to eshell
+       (setq multi-eshell-shell-function '(eshell))
+       (setq multi-eshell-name "*eshell*")))
+#+END_SRC
+
 ** 使用 eshell-autojump 快速跳轉資料夾
 
 [[http://www.emacswiki.org/emacs/EshellAutojump][Eshell Autojump]] 提供了一個 *j* 的 eshell 命令，他會根據你之前使用 cd 切
@@ -3740,6 +3749,18 @@ require 的 snippet, 則添加以下程式
     (vim:mode-map coldnew-editor-map (kbd "s-x") 'smex-major-mode-commands))
 #+END_SRC
 
+| 按鍵 | 命令                | 用途                       |
+|------+---------------------+----------------------------|
+| M-2  | multi-eshell        | 切換至完整的 eshell 視窗   |
+| M-3  | multi-eshell-switch | 切換目前已打開的 eshell 視窗 |
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'multi-eshell
+    '(progn
+       (vim:mode-map coldnew-editor-map (kbd "M-2")   'multi-eshell)
+       (vim:mode-map coldnew-editor-map (kbd "M-3")   'multi-eshell-switch)))
+#+END_SRC
+
 ** 檔案相關 (N) (I)
 
 | 按鍵    | 命令                   | 用途                         |
@@ -3917,7 +3938,7 @@ require 的 snippet, 則添加以下程式
   (vim:mode-imap coldnew-editor-map (kbd "C-c l")  'org-store-link)
   (vim:mode-imap coldnew-editor-map (kbd "C-c c")  'org-capture)
 #+END_SRC
-** 特殊命令
+** 特殊命令 (super, function)
 
 有些很好用的命令，比如說呼叫 Woman, 或是彈出一個 terminal 視窗，這些我
 將他們綁定到 super 按鍵作為 prefix，這一類按鍵有些會有相對應的 F1 ~ F12
@@ -3925,19 +3946,17 @@ require 的 snippet, 則添加以下程式
 
 | 按鍵       | 命令      | 用途                     |
 |------------+-----------+--------------------------|
-| M-1 , <F1> | woman     | 使用 woman 查看文檔      |
-| M-2 , <F2> | shell-pop | 彈出 eshell 視窗         |
-| M-3 , <F3> | eshell    | 切換至完整的 eshell 視窗 |
+| s-1 , <F1> | woman     | 使用 woman 查看文檔      |
+| s-2 , <F2> | shell-pop | 彈出 eshell 視窗         |
+
 
 #+BEGIN_SRC emacs-lisp
   (vim:mode-map coldnew-editor-map (kbd "<f1>")  'woman)
-  (vim:mode-map coldnew-editor-map (kbd "M-1")   'woman)
+  (vim:mode-map coldnew-editor-map (kbd "s-1")   'woman)
 
   (vim:mode-map coldnew-editor-map (kbd "<f2>")  'shell-pop)
-  (vim:mode-map coldnew-editor-map (kbd "M-2")   'shell-pop)
+  (vim:mode-map coldnew-editor-map (kbd "s-2")   'shell-pop)
 
-  (vim:mode-map coldnew-editor-map (kbd "<f3>")  'eshell)
-  (vim:mode-map coldnew-editor-map (kbd "M-3")   'eshell)
 #+END_SRC
 
 ** 復合式按鍵
