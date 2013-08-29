@@ -4696,11 +4696,10 @@ paredit 可以幫助傳寫程式的速度。
   (vim:mode-imap coldnew-lisp-map (kbd "M-\"") 'paredit-meta-doublequote)
 #+END_SRC
 
-***** 反斜線、分號
+***** 反斜線
 
 #+BEGIN_SRC emacs-lisp
   (vim:mode-imap coldnew-lisp-map (kbd "\\") 'paredit-backslash)
-  (vim:mode-imap coldnew-lisp-map (kbd ";") 'paredit-semicolon)
 #+END_SRC
 
 **** 刪除
@@ -6508,10 +6507,10 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 * TODO 全域性按鍵設置                                            :global@key:
 ** 文件編輯
 
-| 按鍵         | 命令                | 用途                      |
-|--------------+---------------------+---------------------------|
-| Shift Return | insert-empty-line   | 插入空白行                |
-| M-s          | coldnew/helm-occur  | 使用 occur 查詢當前緩衝區 |
+| 按鍵         | 命令               | 用途                      |
+|--------------+--------------------+---------------------------|
+| Shift Return | insert-empty-line  | 插入空白行                |
+| M-s          | coldnew/helm-occur | 使用 occur 查詢當前緩衝區 |
 
 #+begin_src emacs-lisp
   (global-set-key[(shift return)] 'insert-empty-line)
