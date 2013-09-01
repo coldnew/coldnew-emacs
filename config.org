@@ -1278,7 +1278,6 @@ Following buffer will not show in iBuffer
   (setq uniquify-ignore-buffers-re "^\\*")
 #+end_src
 
-
 * 自定義函式 / 方法                                                :function:
 
 我所自定義或是我的 emacs 設定檔需要用到的 function。
@@ -4622,6 +4621,7 @@ lisp 類語言增加額外的設定。
 
   (define-minor-mode coldnew-lisp-mode
     "coldnew's lisp editing mode."
+    :init-value t
     :keymap coldnew-lisp-map)
 #+END_SRC
 
@@ -4720,6 +4720,20 @@ paredit 可以幫助傳寫程式的速度。
   (vim:mode-imap coldnew-lisp-map (kbd "C-k") 'paredit-kill)
   (vim:mode-imap coldnew-lisp-map (kbd "M-d") 'paredit-forward-kill-word)
   (vim:mode-imap coldnew-lisp-map (kbd "M-l") 'paredit-backward-kill-word)
+#+END_SRC
+
+**** 移動
+
+#+BEGIN_SRC emacs-lisp
+  (vim:mode-imap coldnew-lisp-map (kbd "C-M f") 'paredit-forward)
+  (vim:mode-imap coldnew-lisp-map (kbd "C-M b") 'paredit-backward)
+#+END_SRC
+
+**** 括號等級調整
+
+#+BEGIN_SRC emacs-lisp
+  (vim:mode-imap coldnew-lisp-map (kbd "M-9") 'paredit-wrap-round)
+  (vim:mode-imap coldnew-lisp-map (kbd "M-(") 'paredit-wrap-round)
 #+END_SRC
 
 ** Python
@@ -4968,7 +4982,7 @@ paredit 可以幫助傳寫程式的速度。
 #+end_src
 * 互動式命令                                                        :command:
 
-互動式命令就是可以在 emacs 裏面使用 M-x 然後呼掉的那些 command,
+互動式命令就是可以在 emacs 裏面使用 M-x 然後呼叫的那些 command,
 這邊根據其用途進行分類。
 
 *注意* : 這邊的命令可能依賴我所自訂的 function。
@@ -6519,9 +6533,9 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 * TODO 全域性按鍵設置                                            :global@key:
 ** 文件編輯
 
-| 按鍵         | 命令               | 用途                      |
-|--------------+--------------------+---------------------------|
-| Shift Return | insert-empty-line  | 插入空白行                |
+| 按鍵         | 命令              | 用途       |
+|--------------+-------------------+------------|
+| Shift Return | insert-empty-line | 插入空白行 |
 
 #+begin_src emacs-lisp
   (global-set-key[(shift return)] 'insert-empty-line)
