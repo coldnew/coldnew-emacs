@@ -6491,13 +6491,15 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (setq backup-by-copying t)
 #+end_src
 
-** TODO rewrite
+** 其他設置
+
 #+begin_src emacs-lisp
   (setq auto-save-default    t)           ; auto-save of every file-visiting buffer
   ;; change auto-save-list setting
   (setq auto-save-list-file-prefix (concat emacs-backup-dir "auto-saves-"))
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
 #+end_src
+
 * Session                                                              :blog:
 ** saveplace
 #+begin_src emacs-lisp
