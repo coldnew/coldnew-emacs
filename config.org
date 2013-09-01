@@ -913,6 +913,101 @@ paredit 可以幫助傳寫程式的速度。
             (hungry-delete-forward))))
   #+END_SRC
 
+** TODO lusty-explorer
+
+*** 載入相關套件
+
+#+begin_src emacs-lisp
+  (require 'lusty-explorer)
+#+end_src
+
+*** 使用 <ENTER> 選擇目前的檔案
+
+#+begin_src emacs-lisp
+  (add-hook 'lusty-setup-hook
+            '(lambda ()
+               (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
+#+end_src
+
+*** 讓 lusty-explorer 能夠使用 sudo 來打開檔案                    :command:
+
+#+begin_src emacs-lisp
+  (defun lusty-sudo-explorer ()
+    "Launch the file/directory mode of LustyExplorer."
+    (interactive)
+    (let ((lusty--active-mode :file-explorer)
+          (lusty-prompt "sudo: >>"))
+      (lusty--define-mode-map)
+      (let* ((lusty--ignored-extensions-regex
+              (concat "\\(?:" (regexp-opt completion-ignored-extensions) "\\)$"))
+             (minibuffer-local-filename-completion-map lusty-mode-map)
+             (file
+              (lusty--run 'read-file-name default-directory "")))
+        (when file
+          (switch-to-buffer
+           (find-file-noselect (concat "/sudo:root@localhost:"
+                                       (expand-file-name file))))))))
+#+end_src
+
+*** 讓 lusty-explorer 使用自己的補全方式，而不是 helm 的補全方式
+
+當 helm-mode 載入完後，將和 lusty-explorer 相關的命令加入至 helm-completing-read-handlers-alist，
+以避免 lusty-explorer 使用 helm-mode 提供的補全方法。
+#+begin_src emacs-lisp
+  (eval-after-load "helm-mode"
+    '(progn
+       (add-to-list 'helm-completing-read-handlers-alist '(lusty-sudo-explorer . nil))
+       (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
+       (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil))))
+#+end_src
+
+** TODO elscreen                                                  :elscreen:
+*** 載入相關模組
+
+#+begin_src emacs-lisp
+  (require 'elscreen)
+#+end_src
+
+*** 自動啟用 elscreen
+
+#+begin_src emacs-lisp
+  (elscreen-start)
+#+end_src
+
+*** 分頁上顯示 *控制* 圖示
+
+#+begin_src emacs-lisp
+  (setq elscreen-tab-display-control t)
+#+end_src
+
+*** 分頁上不顯示 *關閉* 圖示
+
+#+begin_src emacs-lisp
+  (setq elscreen-tab-display-kill-screen nil)
+#+end_src
+
+*** 功能強化
+
+當目前只有一個 elscreen-tab 存在時，呼叫 *elscreen-next* 、 *elscreen-previous*
+或是 *elscreen-toggle* 會自動建立另外一個 elscreen-tab。
+#+begin_src emacs-lisp
+  (defmacro elscreen-create-automatically (ad-do-it)
+    (` (if (not (elscreen-one-screen-p))
+           (, ad-do-it)
+         (elscreen-create)
+         (elscreen-notify-screen-modification 'force-immediately)
+         (elscreen-message "New screen is automatically created"))))
+
+  (defadvice elscreen-next (around elscreen-create-automatically activate)
+    (elscreen-create-automatically ad-do-it))
+
+  (defadvice elscreen-previous (around elscreen-create-automatically activate)
+    (elscreen-create-automatically ad-do-it))
+
+  (defadvice elscreen-toggle (around elscreen-create-automatically activate)
+    (elscreen-create-automatically ad-do-it))
+#+end_src
+
 ** TODO 其他
 #+begin_src emacs-lisp
   (require 'rainbow-mode)
@@ -920,7 +1015,271 @@ paredit 可以幫助傳寫程式的速度。
   (require 'expand-region)
 #+end_src
 
-* 自定義函式/方法                                                  :function:
+** TODO ibuffer                                                    :ibuffer:
+*** 載入相依套件
+#+begin_src emacs-lisp
+  (require 'ibuffer)
+  (require 'ibuf-ext)
+#+end_src
+*** Config
+#+begin_src emacs-lisp
+  ;;;; Settings
+  (setq ibuffer-always-compile-formats         t )
+  (setq ibuffer-default-shrink-to-minimum-size t )
+  (setq ibuffer-expert                         t )
+  (setq ibuffer-show-empty-filter-groups     nil )
+  (setq ibuffer-use-other-window             nil )
+  (setq ibuffer-always-show-last-buffer      nil )
+#+end_src
+integrate ibuffer with git
+#+begin_src emacs-lisp
+  (require 'ibuffer-git)
+  (setq ibuffer-formats
+        '((mark modified read-only git-status-mini " "
+                (name 23 23 :left :elide)
+                " "
+                (size-h 9 -1 :right)
+                "  "
+                (mode 16 16 :left :elide)
+                " "
+                (git-status 8 8 :left)
+                "    "
+                ;;              (eproject 16 16 :left :elide)
+                ;;              "      "
+                filename-and-process)))
+#+end_src
+buffer list
+#+begin_src emacs-lisp
+  ;;;; buffer-list
+  (setq ibuffer-saved-filter-groups
+        '(("default"
+           ("*Buffer*" (or
+                        (name . "^TAGS\\(<[0-9]+>\\)?$")
+                        (name . "^\\**Loading Log\\*$")
+                        (name . "^\\*coldnew/filelist\\*$")
+                        (name . "^\\*Backtrace\\*$")
+                        (name . "^\\*Buffer List\\*$")
+                        (name . "^\\*CEDET Global\\*$")
+                        (name . "^\\*Compile-Log\\*$")
+                        (name . "^\\*Completions\\*$")
+                        (name . "^\\*EGG:*")
+                        (name . "^\\*Kill Ring\\*$")
+                        (name . "^\\*Occur\\*$")
+                        (name . "^\\*Customize*")
+                        (name . "^\\*Process List\\*$")
+                        (name . "^\\*Shell Command Output\\*")
+                        (name . "^\\*Warnings\\*$")
+                        (name . "^\\*compilation\\*$")
+                        (name . "^\\*el-get*")
+                        (name . "^\\*grep\\*$")
+                        (name . "^\\*gud\\*$")
+                        (name . "^\\*ielm\\*")
+                        (name . "^\\*im.bitlbee.org\\*$")
+                        (name . "^\\*scratch\\*$")
+                        (name . "^\\*tramp")
+                        (name . "^\\*wclock\\*$")
+                        (name . "^ipa*")
+                        (name . "^loaddefs.el$")
+                        (name . "^\\*Messages\\*$")
+                        (name . "^\\*WoMan-Log\\*$")
+                        ))
+           ("Version Control" (or (mode . svn-status-mode)
+                                  (mode . svn-log-edit-mode)
+                                  (name . "^\\*svn*\\*")
+                                  (name . "^\\*vc*\\*$")
+                                  (name . "^\\*Annotate")
+                                  (name . "^\\*git-*")
+                                  (name . "^\\*cvs*")
+                                  (name . "^\\*vc-*")
+                                  (mode . egg-status-buffer-mode)
+                                  (mode . egg-log-buffer-mode)
+                                  (mode . egg-commit-buffer-mode)))
+           ("Help" (or (mode . woman-mode)
+                       (mode . man-mode)
+                       (mode . info-mode)
+                       (mode . help-mode)
+                       (name . "\\*Help\\*$")
+                       (name . "\\*info\\*$")))
+           ("Dired" (or (mode . dired-mode)
+                        (mode . nav-mode)))
+           ("IRC"   (or (mode . erc-mode)
+                        (mode . rcirc-mode)))
+           ("Jabber" (or (mode . jabber-roster-mode)
+                         (mode . jabber-chat-mode)))
+           ("Terminal" (or (mode . eshell-mode)
+                           (mode . term-mode)
+                           (mode . inferior-python-mode)
+                           (mode . eshell-mode)
+                           (mode . comint-mode)
+                           (name . "\\*scheme\\*$")))
+           ("Config" (name . "*.conf$"))
+           ("Text" (or (mode . text-mode)
+                       (name . "*.txt$")))
+           ("w3m"   (or (mode . w3m-mode)
+                        (name . "^\\*w3m*")))
+           ("Org"   (mode . org-mode))
+           ("LaTEX" (or (mode . latex-mode)
+                        (name . "*.tex$")))
+           ("Verilog" (mode . verilog-mode))
+           ("Web Develop" (or (mode . html-mode)
+                              (mode . css-mode)))
+           ("Shell Script" (or (mode . shell-script-mode)
+                               (mode . shell-mode)
+                               (mode . sh-mode)
+                               (mode . ruby-mode)))
+           ("Perl"  (or (mode . cperl-mode)
+                        (mode . perl-mode)))
+           ("Python" (or (mode . python-mode)
+                         (mode . ipython-mode)))
+           ("Octave" (or (mode . octave-mode)
+                         (mode . inferior-octave-mode)))
+           ("Scala" (or (mode . scala-mode)
+                        (name . "\\*inferior-scala\\*$")))
+           ("Diff" (mode . diff-mode))
+           ;;      ("Project" (mode . qmake-mode))
+           ("JavaScript" (or (mode . js-mode)
+                             (mode . js2-mode)))
+           ("C++ . C#" (or (mode . c++-mode)
+                           (mode . csharpmode)))
+           ("C"          (mode . c-mode))
+           ("Object-C"   (mode . objc-mode))
+           ("Snippet" (or (mode . snippet-mode)
+                          (name . "*.yas$")))
+           ("newLisp"  (mode . newlisp-mode))
+           ("Common Lisp"   (mode . slime-mode))
+           ("Scheme"  (or (mode . scheme-mode)
+                          (mode . gambit-mode)))
+           ("Clojure" (or (mode . clojure-mode)
+                          (name . "\\*slime-repl clojure\\*")))
+           ("Emacs recipes" (name . "*.rcp$"))
+           ("Emacs" (or (mode . emacs-lisp-mode)
+                        (mode . lisp-interaction-mode)
+                        ))
+           )))
+#+end_src
+Following buffer will not show in iBuffer
+#+begin_src emacs-lisp
+  (setq ibuffer-never-show-predicates
+        (list
+         "^\\*Buffer List\\*$"
+         "^\\*CEDET Global\\*$"
+         "^\\*MiniBuf-*"
+         "^\\*Egg:Select Action\\*$"
+         "^\\*Ido Completions\\*$"
+         "^\\*SPEEDBAR\\*$"
+         "^\\*nav\\*$"
+         "^\\*swank\\*$"
+         "^\\*slime-events\\*$"
+         "^\\*RE-Builder\\*$"
+         "^\\*pomodoro\\*$"
+         "^\\*Project Buffers\\*$"
+         "^eproject$"
+         "\\*fsm-debug\\*$"
+         ;; "^"
+         "^\\*.*\\(-preprocessed\\)\\>\\*"
+         "^\\*ORG.*\\*"
+         "^\\*ac-mode-*"
+         ".loaddefs.el$"
+         "^loaddefs.el$"
+         "\\*GTAGS SELECT\\**"
+         "\\*Symref*"
+         "\\*cscope\\*"
+         "\\*helm*"
+         ))
+#+end_src
+*** Advice
+#+begin_src emacs-lisp
+  ;;;; Advice
+  ;; Reverse group list
+  (defadvice ibuffer-generate-filter-groups (after reverse-ibuffer-groups () activate)
+    (setq ad-return-value (nreverse ad-return-value)))
+
+  ;; Switching to ibuffer puts the cursor on the most recent buffer
+  (defadvice ibuffer (around ibuffer-point-to-most-recent activate)
+    "Open ibuffer with cursor pointed to most recent buffer name"
+    (let ((recent-buffer-name (buffer-name)))
+      ad-do-it
+      (ibuffer-jump-to-buffer recent-buffer-name)))
+
+  ;; Kill ibuffer after quit
+  (defadvice ibuffer-quit (after kill-ibuffer activate)
+    "Kill the ibuffer buffer on exit."
+    (kill-buffer "*Ibuffer*"))
+#+end_src
+*** Keybindings
+#+begin_src emacs-lisp
+  (define-key ibuffer-mode-map (kbd "C-x C-f") 'lusty-file-explorer)
+#+end_src
+*** Functions
+#+begin_src emacs-lisp
+  ;; Use human readable Size column instead of original one
+  (define-ibuffer-column size-h
+    (:name "Size" :inline t)
+    (cond
+     ((> (buffer-size) 1000) (format "%7.3fK" (/ (buffer-size) 1000.0)))
+     ((> (buffer-size) 1000000) (format "%7.3fM" (/ (buffer-size) 1000000.0)))
+     (t (format "%8dB" (buffer-size)))))
+#+end_src
+*** Hooks
+**** enable highlight-line
+#+begin_src emacs-lisp
+  (add-hook 'ibuffer-mode-hook 'hl-line-mode)
+#+end_src
+**** setting default group
+#+begin_src emacs-lisp
+  (add-hook 'ibuffer-mode-hook '(lambda () (ibuffer-switch-to-saved-filter-groups "default")))
+#+end_src
+**** sort filename automatically
+#+begin_src emacs-lisp
+  (add-hook 'ibuffer-mode-hook 'ibuffer-do-sort-by-filename/process)
+#+end_src
+** TODO speedbar
+#+begin_src emacs-lisp
+  (require 'speedbar)
+  (setq speedbar-use-images nil)
+  (require 'sr-speedbar)
+  (setq sr-speedbar-right-side nil)
+  (setq sr-speedbar-refresh-turn-on t)
+#+end_src
+** TODO cua                                                            :cua:
+#+begin_src emacs-lisp
+  (require 'cua-base)
+  (require 'cua-rect)
+  ;; don't add C-x, C-c, C-v
+  (setq cua-enable-cua-keys nil)
+  (setq cua-rectangle-mark-key (kbd "C-c RET"))
+  ;; Enable cua-mode
+  (cua-mode t)
+
+  (cua--init-rectangles)
+  (cua--rect-M/H-key ?n   'cua-scroll-up)
+  (cua--rect-M/H-key ?N   'cua-sequence-rectangle)
+  (cua--rect-M/H-key ?p   'cua-scroll-down)
+#+end_src
+** TODO slime
+#+begin_src emacs-lisp
+  (require 'slime)
+  (require 'ac-slime)
+  ;; Save REPL history to emacs-cache-dir
+  (setq slime-repl-history-file (concat emacs-cache-dir "slime-hist.dat"))
+
+  ;; REPL history size set to 300
+  (setq slime-repl-history-size 300)
+
+  ;; Use global programming mode
+  (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+#+end_src
+** TODO uniquify
+#+begin_src emacs-lisp
+  (require 'uniquify)
+  (setq uniquify-buffer-name-style 'reverse)
+  (setq uniquify-separator "|")
+  (setq uniquify-after-kill-buffer-p 1)
+  (setq uniquify-ignore-buffers-re "^\\*")
+#+end_src
+
+
+* 自定義函式 / 方法                                                :function:
 
 我所自定義或是我的 emacs 設定檔需要用到的 function。
 
@@ -1746,364 +2105,6 @@ auto-complete-mode 的按鍵設定。
   (define-key ac-completing-map "\t" 'ac-complete)
   (define-key ac-complete-mode-map[tab] 'ac-expand)
 #+end_src
-* TODO Mode
-** elscreen                                                       :elscreen:
-*** 載入相關模組
-
-#+begin_src emacs-lisp
-  (require 'elscreen)
-#+end_src
-
-*** 自動啟用 elscreen
-
-#+begin_src emacs-lisp
-  (elscreen-start)
-#+end_src
-
-*** 分頁上顯示 *控制* 圖示
-
-#+begin_src emacs-lisp
-  (setq elscreen-tab-display-control t)
-#+end_src
-
-*** 分頁上不顯示 *關閉* 圖示
-
-#+begin_src emacs-lisp
-  (setq elscreen-tab-display-kill-screen nil)
-#+end_src
-
-*** 功能強化
-
-當目前只有一個 elscreen-tab 存在時，呼叫 *elscreen-next* 、 *elscreen-previous*
-或是 *elscreen-toggle* 會自動建立另外一個 elscreen-tab。
-#+begin_src emacs-lisp
-  (defmacro elscreen-create-automatically (ad-do-it)
-    (` (if (not (elscreen-one-screen-p))
-           (, ad-do-it)
-         (elscreen-create)
-         (elscreen-notify-screen-modification 'force-immediately)
-         (elscreen-message "New screen is automatically created"))))
-
-  (defadvice elscreen-next (around elscreen-create-automatically activate)
-    (elscreen-create-automatically ad-do-it))
-
-  (defadvice elscreen-previous (around elscreen-create-automatically activate)
-    (elscreen-create-automatically ad-do-it))
-
-  (defadvice elscreen-toggle (around elscreen-create-automatically activate)
-    (elscreen-create-automatically ad-do-it))
-#+end_src
-
-** lusty-explorer
-*** 載入相關套件
-
-#+begin_src emacs-lisp
-  (require 'lusty-explorer)
-#+end_src
-
-*** 使用 <ENTER> 選擇目前的檔案
-
-#+begin_src emacs-lisp
-  (add-hook 'lusty-setup-hook
-            '(lambda ()
-               (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
-#+end_src
-
-*** 讓 lusty-explorer 能夠使用 sudo 來打開檔案                    :command:
-
-#+begin_src emacs-lisp
-  (defun lusty-sudo-explorer ()
-    "Launch the file/directory mode of LustyExplorer."
-    (interactive)
-    (let ((lusty--active-mode :file-explorer)
-          (lusty-prompt "sudo: >>"))
-      (lusty--define-mode-map)
-      (let* ((lusty--ignored-extensions-regex
-              (concat "\\(?:" (regexp-opt completion-ignored-extensions) "\\)$"))
-             (minibuffer-local-filename-completion-map lusty-mode-map)
-             (file
-              (lusty--run 'read-file-name default-directory "")))
-        (when file
-          (switch-to-buffer
-           (find-file-noselect (concat "/sudo:root@localhost:"
-                                       (expand-file-name file))))))))
-#+end_src
-
-*** 讓 lusty-explorer 使用自己的補全方式，而不是 helm 的補全方式
-
-當 helm-mode 載入完後，將和 lusty-explorer 相關的命令加入至 helm-completing-read-handlers-alist，
-以避免 lusty-explorer 使用 helm-mode 提供的補全方法。
-#+begin_src emacs-lisp
-  (eval-after-load "helm-mode"
-    '(progn
-       (add-to-list 'helm-completing-read-handlers-alist '(lusty-sudo-explorer . nil))
-       (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
-       (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil))))
-#+end_src
-
-** ibuffer                                                         :ibuffer:
-*** 載入相依套件
-#+begin_src emacs-lisp
-  (require 'ibuffer)
-  (require 'ibuf-ext)
-#+end_src
-*** Config
-#+begin_src emacs-lisp
-  ;;;; Settings
-  (setq ibuffer-always-compile-formats         t )
-  (setq ibuffer-default-shrink-to-minimum-size t )
-  (setq ibuffer-expert                         t )
-  (setq ibuffer-show-empty-filter-groups     nil )
-  (setq ibuffer-use-other-window             nil )
-  (setq ibuffer-always-show-last-buffer      nil )
-#+end_src
-integrate ibuffer with git
-#+begin_src emacs-lisp
-  (require 'ibuffer-git)
-  (setq ibuffer-formats
-        '((mark modified read-only git-status-mini " "
-                (name 23 23 :left :elide)
-                " "
-                (size-h 9 -1 :right)
-                "  "
-                (mode 16 16 :left :elide)
-                " "
-                (git-status 8 8 :left)
-                "    "
-                ;;              (eproject 16 16 :left :elide)
-                ;;              "      "
-                filename-and-process)))
-#+end_src
-buffer list
-#+begin_src emacs-lisp
-  ;;;; buffer-list
-  (setq ibuffer-saved-filter-groups
-        '(("default"
-           ("*Buffer*" (or
-                        (name . "^TAGS\\(<[0-9]+>\\)?$")
-                        (name . "^\\**Loading Log\\*$")
-                        (name . "^\\*coldnew/filelist\\*$")
-                        (name . "^\\*Backtrace\\*$")
-                        (name . "^\\*Buffer List\\*$")
-                        (name . "^\\*CEDET Global\\*$")
-                        (name . "^\\*Compile-Log\\*$")
-                        (name . "^\\*Completions\\*$")
-                        (name . "^\\*EGG:*")
-                        (name . "^\\*Kill Ring\\*$")
-                        (name . "^\\*Occur\\*$")
-                        (name . "^\\*Customize*")
-                        (name . "^\\*Process List\\*$")
-                        (name . "^\\*Shell Command Output\\*")
-                        (name . "^\\*Warnings\\*$")
-                        (name . "^\\*compilation\\*$")
-                        (name . "^\\*el-get*")
-                        (name . "^\\*grep\\*$")
-                        (name . "^\\*gud\\*$")
-                        (name . "^\\*ielm\\*")
-                        (name . "^\\*im.bitlbee.org\\*$")
-                        (name . "^\\*scratch\\*$")
-                        (name . "^\\*tramp")
-                        (name . "^\\*wclock\\*$")
-                        (name . "^ipa*")
-                        (name . "^loaddefs.el$")
-                        (name . "^\\*Messages\\*$")
-                        (name . "^\\*WoMan-Log\\*$")
-                        ))
-           ("Version Control" (or (mode . svn-status-mode)
-                                  (mode . svn-log-edit-mode)
-                                  (name . "^\\*svn*\\*")
-                                  (name . "^\\*vc*\\*$")
-                                  (name . "^\\*Annotate")
-                                  (name . "^\\*git-*")
-                                  (name . "^\\*cvs*")
-                                  (name . "^\\*vc-*")
-                                  (mode . egg-status-buffer-mode)
-                                  (mode . egg-log-buffer-mode)
-                                  (mode . egg-commit-buffer-mode)))
-           ("Help" (or (mode . woman-mode)
-                       (mode . man-mode)
-                       (mode . info-mode)
-                       (mode . help-mode)
-                       (name . "\\*Help\\*$")
-                       (name . "\\*info\\*$")))
-           ("Dired" (or (mode . dired-mode)
-                        (mode . nav-mode)))
-           ("IRC"   (or (mode . erc-mode)
-                        (mode . rcirc-mode)))
-           ("Jabber" (or (mode . jabber-roster-mode)
-                         (mode . jabber-chat-mode)))
-           ("Terminal" (or (mode . eshell-mode)
-                           (mode . term-mode)
-                           (mode . inferior-python-mode)
-                           (mode . eshell-mode)
-                           (mode . comint-mode)
-                           (name . "\\*scheme\\*$")))
-           ("Config" (name . "*.conf$"))
-           ("Text" (or (mode . text-mode)
-                       (name . "*.txt$")))
-           ("w3m"   (or (mode . w3m-mode)
-                        (name . "^\\*w3m*")))
-           ("Org"   (mode . org-mode))
-           ("LaTEX" (or (mode . latex-mode)
-                        (name . "*.tex$")))
-           ("Verilog" (mode . verilog-mode))
-           ("Web Develop" (or (mode . html-mode)
-                              (mode . css-mode)))
-           ("Shell Script" (or (mode . shell-script-mode)
-                               (mode . shell-mode)
-                               (mode . sh-mode)
-                               (mode . ruby-mode)))
-           ("Perl"  (or (mode . cperl-mode)
-                        (mode . perl-mode)))
-           ("Python" (or (mode . python-mode)
-                         (mode . ipython-mode)))
-           ("Octave" (or (mode . octave-mode)
-                         (mode . inferior-octave-mode)))
-           ("Scala" (or (mode . scala-mode)
-                        (name . "\\*inferior-scala\\*$")))
-           ("Diff" (mode . diff-mode))
-           ;;      ("Project" (mode . qmake-mode))
-           ("JavaScript" (or (mode . js-mode)
-                             (mode . js2-mode)))
-           ("C++ . C#" (or (mode . c++-mode)
-                           (mode . csharpmode)))
-           ("C"          (mode . c-mode))
-           ("Object-C"   (mode . objc-mode))
-           ("Snippet" (or (mode . snippet-mode)
-                          (name . "*.yas$")))
-           ("newLisp"  (mode . newlisp-mode))
-           ("Common Lisp"   (mode . slime-mode))
-           ("Scheme"  (or (mode . scheme-mode)
-                          (mode . gambit-mode)))
-           ("Clojure" (or (mode . clojure-mode)
-                          (name . "\\*slime-repl clojure\\*")))
-           ("Emacs recipes" (name . "*.rcp$"))
-           ("Emacs" (or (mode . emacs-lisp-mode)
-                        (mode . lisp-interaction-mode)
-                        ))
-           )))
-#+end_src
-Following buffer will not show in iBuffer
-#+begin_src emacs-lisp
-  (setq ibuffer-never-show-predicates
-        (list
-         "^\\*Buffer List\\*$"
-         "^\\*CEDET Global\\*$"
-         "^\\*MiniBuf-*"
-         "^\\*Egg:Select Action\\*$"
-         "^\\*Ido Completions\\*$"
-         "^\\*SPEEDBAR\\*$"
-         "^\\*nav\\*$"
-         "^\\*swank\\*$"
-         "^\\*slime-events\\*$"
-         "^\\*RE-Builder\\*$"
-         "^\\*pomodoro\\*$"
-         "^\\*Project Buffers\\*$"
-         "^eproject$"
-         "\\*fsm-debug\\*$"
-         ;; "^"
-         "^\\*.*\\(-preprocessed\\)\\>\\*"
-         "^\\*ORG.*\\*"
-         "^\\*ac-mode-*"
-         ".loaddefs.el$"
-         "^loaddefs.el$"
-         "\\*GTAGS SELECT\\**"
-         "\\*Symref*"
-         "\\*cscope\\*"
-         "\\*helm*"
-         ))
-#+end_src
-*** Advice
-#+begin_src emacs-lisp
-  ;;;; Advice
-  ;; Reverse group list
-  (defadvice ibuffer-generate-filter-groups (after reverse-ibuffer-groups () activate)
-    (setq ad-return-value (nreverse ad-return-value)))
-
-  ;; Switching to ibuffer puts the cursor on the most recent buffer
-  (defadvice ibuffer (around ibuffer-point-to-most-recent activate)
-    "Open ibuffer with cursor pointed to most recent buffer name"
-    (let ((recent-buffer-name (buffer-name)))
-      ad-do-it
-      (ibuffer-jump-to-buffer recent-buffer-name)))
-
-  ;; Kill ibuffer after quit
-  (defadvice ibuffer-quit (after kill-ibuffer activate)
-    "Kill the ibuffer buffer on exit."
-    (kill-buffer "*Ibuffer*"))
-#+end_src
-*** Keybindings
-#+begin_src emacs-lisp
-  (define-key ibuffer-mode-map (kbd "C-x C-f") 'lusty-file-explorer)
-#+end_src
-*** Functions
-#+begin_src emacs-lisp
-  ;; Use human readable Size column instead of original one
-  (define-ibuffer-column size-h
-    (:name "Size" :inline t)
-    (cond
-     ((> (buffer-size) 1000) (format "%7.3fK" (/ (buffer-size) 1000.0)))
-     ((> (buffer-size) 1000000) (format "%7.3fM" (/ (buffer-size) 1000000.0)))
-     (t (format "%8dB" (buffer-size)))))
-#+end_src
-*** Hooks
-**** enable highlight-line
-#+begin_src emacs-lisp
-  (add-hook 'ibuffer-mode-hook 'hl-line-mode)
-#+end_src
-**** setting default group
-#+begin_src emacs-lisp
-  (add-hook 'ibuffer-mode-hook '(lambda () (ibuffer-switch-to-saved-filter-groups "default")))
-#+end_src
-**** sort filename automatically
-#+begin_src emacs-lisp
-  (add-hook 'ibuffer-mode-hook 'ibuffer-do-sort-by-filename/process)
-#+end_src
-** speedbar
-#+begin_src emacs-lisp
-  (require 'speedbar)
-  (setq speedbar-use-images nil)
-  (require 'sr-speedbar)
-  (setq sr-speedbar-right-side nil)
-  (setq sr-speedbar-refresh-turn-on t)
-#+end_src
-** cua                                                                 :cua:
-#+begin_src emacs-lisp
-  (require 'cua-base)
-  (require 'cua-rect)
-  ;; don't add C-x, C-c, C-v
-  (setq cua-enable-cua-keys nil)
-  (setq cua-rectangle-mark-key (kbd "C-c RET"))
-  ;; Enable cua-mode
-  (cua-mode t)
-
-  (cua--init-rectangles)
-  (cua--rect-M/H-key ?n   'cua-scroll-up)
-  (cua--rect-M/H-key ?N   'cua-sequence-rectangle)
-  (cua--rect-M/H-key ?p   'cua-scroll-down)
-#+end_src
-** slime
-#+begin_src emacs-lisp
-  (require 'slime)
-  (require 'ac-slime)
-  ;; Save REPL history to emacs-cache-dir
-  (setq slime-repl-history-file (concat emacs-cache-dir "slime-hist.dat"))
-
-  ;; REPL history size set to 300
-  (setq slime-repl-history-size 300)
-
-  ;; Use global programming mode
-  (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-#+end_src
-** TODO uniquify
-#+begin_src emacs-lisp
-  (require 'uniquify)
-  (setq uniquify-buffer-name-style 'reverse)
-  (setq uniquify-separator "|")
-  (setq uniquify-after-kill-buffer-p 1)
-  (setq uniquify-ignore-buffers-re "^\\*")
-#+end_src
-
 * 終端機                                                               :term:
 
 ** 基本設定
