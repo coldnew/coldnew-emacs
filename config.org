@@ -2546,12 +2546,6 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
 #+end_src
 
 ** Function
-#+begin_src emacs-lisp
-  (defun helm-c-occur-get-line (s e)
-    "rewrite `helm-c-occur-get-line' to make it color on line-number."
-    (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
-            (format ": %s" (buffer-substring s e))))
-#+end_src
 
 #+BEGIN_SRC emacs-lisp
   (defun helm-create-locatedb ()
@@ -2569,6 +2563,14 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
     (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
     (helm-occur))
 #+end_src
+
+#+begin_src emacs-lisp
+  (defun helm-c-occur-get-line (s e)
+    "rewrite `helm-c-occur-get-line' to make it color on line-number."
+    (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
+            (format ": %s" (buffer-substring s e))))
+#+end_src
+
 
 ** 按鍵設定
 
@@ -3888,17 +3890,8 @@ require 的 snippet, 則添加以下程式
 #+begin_src emacs-lisp
   (eval-after-load 'helm
     '(progn
-       (vim:mode-imap coldnew-editor-map (kbd "M-s")
-                      '(lambda ()
-                         ""
-                         (interactive)
-                         ;; FIXME: is there more elegent way to make temp face?
-                         (set (make-local-variable 'face-remapping-alist)
-                              '((helm-selection-line nil)))
-                         (helm-occur)))
-       ))
+       (vim:mode-imap coldnew-editor-map (kbd "M-s") 'coldnew/helm-occur)))
 #+end_src
-
 
 | 按鍵    | 用途         |
 |---------+--------------|
@@ -6527,11 +6520,9 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 | 按鍵         | 命令               | 用途                      |
 |--------------+--------------------+---------------------------|
 | Shift Return | insert-empty-line  | 插入空白行                |
-| M-s          | coldnew/helm-occur | 使用 occur 查詢當前緩衝區 |
 
 #+begin_src emacs-lisp
   (global-set-key[(shift return)] 'insert-empty-line)
-  (global-set-key (kbd "M-s") 'coldnew/helm-occur)
 #+end_src
 
 ** 關閉預設的按鍵設定
