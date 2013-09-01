@@ -734,7 +734,7 @@ el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維�
   (add-hook 'el-get-post-install-hooks 'emacs-packages-remove-loaddefs)
 #+END_SRC
 
-* 常用的模組/函式庫                                                 :library:
+* 常用的模組 / 函式庫                                               :plugin:
 
 emacs 有一些套件本身不需要配置，或是只是函式庫，這一類的套件我設
 定為預先載入，這樣在後面的設定裏面我就可以直接使用這些套件的功能。
@@ -868,23 +868,57 @@ http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
   (require 'unicad)
 #+end_src
 
+** 使用 doc-present 來播放 PDF 投影片                                  :pdf:
+
+#+BEGIN_SRC emacs-lisp
+  (require 'doc-present)
+  (setq doc-view-resolution 300)
+#+END_SRC
+
+** 透過 Paredit 來簡化 Lisp 類語言編輯                             :paredit:
+
+[[http://www.emacswiki.org/emacs/ParEdit][ParEdit]] 是一個非常好用的括號批配模式，特別是在寫 lisp 程式的時候，使用
+paredit 可以幫助傳寫程式的速度。
+
+這邊設定部分我會用到的 paredit 函數，完整的按鍵綁定則在 [[*%E4%BD%BF%E7%94%A8%20paredit%20%E4%BE%86%E7%B0%A1%E5%8C%96%E6%8B%AC%E8%99%9F%E7%9A%84%E6%93%8D%E4%BD%9C][使用 paredit 來簡化括號的操作]]
+
+- 載入 paredit 套件
+
+  #+BEGIN_SRC emacs-lisp
+    (require 'paredit)
+  #+END_SRC
+
+- 關閉 paredit 預設的閃爍同級括號功能
+
+  #+BEGIN_SRC emacs-lisp
+    (defun paredit-blink-paren-match (another-line-p)
+      "redefine this function, i don't like paredit to blikn math paren")
+  #+END_SRC
+
+- 將 hungry-delete 功能加入到 paredit
+
+  #+BEGIN_SRC emacs-lisp
+    (defadvice paredit-backward-delete (around paredit-backward-delete activate)
+      "Intergrated paredit-backward-delete with hungry-delete."
+      ad-do-it
+      (when (featurep 'hungry-delete)
+        (if (eq (char-before) ?\s)
+            (hungry-delete-backward))))
+
+    (defadvice paredit-forward-delete (around paredit-forward-delete activate)
+      "Intergrated paredit-forward-delete with hungry-delete."
+      ad-do-it
+      (when (featurep 'hungry-delete)
+        (if (eolp)
+            (hungry-delete-forward))))
+  #+END_SRC
+
 ** TODO 其他
 #+begin_src emacs-lisp
   (require 'rainbow-mode)
   ;;(require 'smarter-compile)
   (require 'expand-region)
 #+end_src
-
-* 獨立模組                                                      :application:
-
-這邊放置可以直接呼叫命令，能夠被視為一個 *軟體* 的各式各樣的模組。
-
-** 使用 doc-present 來播放 PDF 投影片
-
-#+BEGIN_SRC emacs-lisp
-  (require 'doc-present)
-  (setq doc-view-resolution 300)
-#+END_SRC
 
 * 自定義函式/方法                                                  :function:
 
@@ -2047,27 +2081,6 @@ Following buffer will not show in iBuffer
   (cua--rect-M/H-key ?n   'cua-scroll-up)
   (cua--rect-M/H-key ?N   'cua-sequence-rectangle)
   (cua--rect-M/H-key ?p   'cua-scroll-down)
-#+end_src
-** paredit
-#+begin_src emacs-lisp
-  (require 'paredit)
-
-  (defun paredit-blink-paren-match (another-line-p)
-    "redefine this function, i don't like paredit to blikn math paren")
-
-  (defadvice paredit-backward-delete (around paredit-backward-delete activate)
-    "Intergrated paredit-backward-delete with hungry-delete."
-    ad-do-it
-    (when (featurep 'hungry-delete)
-      (if (eq (char-before) ?\s)
-          (hungry-delete-backward))))
-
-  (defadvice paredit-forward-delete (around paredit-forward-delete activate)
-    "Intergrated paredit-forward-delete with hungry-delete."
-    ad-do-it
-    (when (featurep 'hungry-delete)
-      (if (eolp)
-          (hungry-delete-forward))))
 #+end_src
 ** slime
 #+begin_src emacs-lisp
@@ -3950,6 +3963,7 @@ require 的 snippet, 則添加以下程式
   (vim:mode-imap coldnew-editor-map (kbd "C-c l")  'org-store-link)
   (vim:mode-imap coldnew-editor-map (kbd "C-c c")  'org-capture)
 #+END_SRC
+
 ** 特殊命令 (super, function)
 
 有些很好用的命令，比如說呼叫 Woman, 或是彈出一個 terminal 視窗，這些我
