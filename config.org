@@ -4128,31 +4128,36 @@ code 變成灰色，這樣在看 code 時比較不會吃力。
 #+begin_src emacs-lisp
   (defun cc-mode:indent-preprocessor ()
     "Indent #ifdef ... #else ... #endf region as if ... else ... statement.
-  This code is based on ppindent.el
+      This code is based on ppindent.el
 
-  Note: you must (require 's) to use this code."
-    (let ((result (catch 'err
-                    (save-excursion
-                      (let ((cnt 0))
-                        (goto-char (point-min))
-                        (while (re-search-forward "^[ \t]*#[ \t]*\\(.*\\)" nil t)
-                          (cond ((s-starts-with? "if" (match-string-no-properties 1))
-                                 (replace-match (concat (make-string cnt ?\s) "#\\1"))
-                                 (incf cnt c-basic-offset))
-                                ((s-starts-with? "el" (match-string-no-properties 1))
-                                 (when (< (- cnt c-basic-offset) 0)
-                                   (throw 'err `(,(line-number-at-pos) "Unmatched #else or #elif")))
-                                 (replace-match (concat (make-string
-                                                         (- cnt c-basic-offset)
-                                                         ?\s) "#\\1")))
-                                ((s-starts-with? "endif" (match-string-no-properties 1))
-                                 (when (< (- cnt c-basic-offset) 0)
-                                   (throw 'err `(,(line-number-at-pos) "Unmatched #endif")))
-                                 (decf cnt c-basic-offset)
-                                 (replace-match (concat (make-string cnt ?\s) "#\\1")))
-                                (t
-                                 (replace-match (concat (make-string cnt ?\s) "#\\1"))))))
-                      ))))
+      Note: you must (require 's) to use this code."
+    (let ((result
+           (catch 'err
+             (save-excursion
+               (let* ((cnt 0)
+                      (file-ext (file-name-extension (buffer-file-name (current-buffer))))
+                      (header-p (or (string= "h" file-ext) (string= "hpp" file-ext))))
+                 (flet ((make-space (x) (if (< x 0) "" (make-string x ?\s))))
+                   (goto-char (point-min))
+                   ;; We decrease cnt when this buffer is headerfile
+                   (if header-p (decf cnt c-basic-offset))
+
+                   (while (re-search-forward "^[ \t]*#[ \t]*\\(.*\\)" nil t)
+                     (cond ((s-starts-with? "if" (match-string-no-properties 1))
+                            (replace-match (concat (make-space cnt) "#\\1"))
+                            (incf cnt c-basic-offset))
+                           ((s-starts-with? "el" (match-string-no-properties 1))
+                            (when (< (- cnt c-basic-offset) 0)
+                              (throw 'err `(,(line-number-at-pos) "Unmatched #else or #elif")))
+                            (replace-match (concat (make-space (- cnt c-basic-offset)) "#\\1")))
+                           ((s-starts-with? "endif" (match-string-no-properties 1))
+                            (when (< (- cnt c-basic-offset) 0)
+                              (throw 'err `(,(line-number-at-pos) "Unmatched #endif")))
+                            (decf cnt c-basic-offset)
+                            (replace-match (concat (make-space cnt) "#\\1")))
+                           (t
+                            (replace-match (concat (make-space cnt) "#\\1"))))))
+                 )))))
       (when result
         (goto-line (car result))
         (error "Error: %s" (cadr result)))))
