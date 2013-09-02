@@ -4147,17 +4147,35 @@ code 變成灰色，這樣在看 code 時比較不會吃力。
                             (replace-match (concat (make-space cnt) "#\\1"))
                             (incf cnt c-basic-offset))
                            ((s-starts-with? "el" (match-string-no-properties 1))
-                            (when (< (- cnt c-basic-offset) 0)
-                              (throw 'err `(,(line-number-at-pos) "Unmatched #else or #elif")))
                             (replace-match (concat (make-space (- cnt c-basic-offset)) "#\\1")))
                            ((s-starts-with? "endif" (match-string-no-properties 1))
-                            (when (< (- cnt c-basic-offset) 0)
-                              (throw 'err `(,(line-number-at-pos) "Unmatched #endif")))
                             (decf cnt c-basic-offset)
                             (replace-match (concat (make-space cnt) "#\\1")))
                            (t
                             (replace-match (concat (make-space cnt) "#\\1"))))))
                  )))))
+      (when result
+        (goto-line (car result))
+        (error "Error: %s" (cadr result)))))
+
+  (defun cc-mode:indent-preprocessor-check-pair ()
+    "Check for #ifdef ... #endif pairs."
+    (let ((result
+           (catch 'err
+             (save-excursion
+               (let* ((cnt 0))
+                 (goto-char (point-min))
+                 (while (re-search-forward "^[ \t]*#[ \t]*\\(.*\\)" nil t)
+                   (cond ((s-starts-with? "if" (match-string-no-properties 1))
+                          (incf cnt c-basic-offset))
+                         ((s-starts-with? "el" (match-string-no-properties 1))
+                          (when (< (- cnt c-basic-offset) 0)
+                            (throw 'err `(,(line-number-at-pos) "Unmatched #else or #elif"))))
+                         ((s-starts-with? "endif" (match-string-no-properties 1))
+                          (when (< (- cnt c-basic-offset) 0)
+                            (throw 'err `(,(line-number-at-pos) "Unmatched #endif")))
+                          (decf cnt c-basic-offset))
+                         )))))))
       (when result
         (goto-line (car result))
         (error "Error: %s" (cadr result)))))
@@ -4168,7 +4186,10 @@ code 變成灰色，這樣在看 code 時比較不會吃力。
     (let ((buffer-major-mode (with-current-buffer (current-buffer) major-mode)))
       (if (or (eq major-mode 'c-mode)
               (eq major-mode 'c++-mode))
-          (cc-mode:indent-preprocessor))))
+          (progn
+            (cc-mode:indent-preprocessor)
+            (cc-mode:indent-preprocessor-check-pair)))))
+
   #+end_src
 
 *** 加入 eldoc 支援
