@@ -4734,11 +4734,10 @@ paredit 可以幫助傳寫程式的速度。
   (vim:mode-imap coldnew-lisp-map (kbd "M-\"") 'paredit-meta-doublequote)
 #+END_SRC
 
-***** 反斜線、分號
+***** 反斜線
 
 #+BEGIN_SRC emacs-lisp
   (vim:mode-imap coldnew-lisp-map (kbd "\\") 'paredit-backslash)
-  (vim:mode-imap coldnew-lisp-map (kbd ";") 'paredit-semicolon)
 #+END_SRC
 
 **** 刪除
