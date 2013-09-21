@@ -6287,7 +6287,7 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
 
 #+begin_src emacs-lisp
   (require 'magit)
-  (require 'magit-flow)
+;;  (require 'magit-flow)
   (require 'git-emacs)
   (require 'gitignore-mode)
   (require 'gitconfig-mode)
@@ -6436,8 +6436,8 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 #+begin_src emacs-lisp
   (vim:map (kbd "C-x vc") 'magit-checkout)
   (vim:map (kbd "C-x vp") 'git-push)
-  (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
-  (vim:map (kbd "C-x ve") 'magit-flow-feature-finish)
+;;  (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
+;;  (vim:map (kbd "C-x ve") 'magit-flow-feature-finish)
 #+end_src
 
 * 檔案備份                                                           :backup:
