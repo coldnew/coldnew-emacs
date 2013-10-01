@@ -6744,6 +6744,18 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
            )
           ))
 #+END_SRC
+** blogit variables
+
+#+BEGIN_SRC emacs-lisp
+  (setq blogit-source-dir "~/SparkleShare/blog-src")
+  (setq blogit-output-dir "~/SparkleShare/coldnew.github.io/blog-new")
+
+  (setq blogit-disqus-shortname "coldnew")
+  (setq blogit-google-analytics-id "UA-42122243-1")
+
+  (setq blogit-site-main-title "coldnew's blog")
+  (setq blogit-site-sub-title "test blogit")
+#+END_SRC
 
 * Local File Variable
 # Local Variables:
