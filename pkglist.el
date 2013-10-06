@@ -53,7 +53,6 @@
 "newlisp"
 "nrepl"
 "offlineimap"
-"org-mode"
 "package"
 "pangu-spacing"
 "paredit"

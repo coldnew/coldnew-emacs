@@ -6755,6 +6755,10 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
   (setq blogit-site-main-title "coldnew's blog")
   (setq blogit-site-sub-title "test blogit")
+  (setq blogit-site-url "http://coldnew.github.com")
+
+  (setq blogit-sanitize-length 5)
+
 #+END_SRC
 
 * Local File Variable
