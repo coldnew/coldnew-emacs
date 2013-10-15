@@ -6720,30 +6720,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 ))
 #+end_src
 
-** 使用 org-publish 產生網頁
-
-#+BEGIN_SRC emacs-lisp
-  (require 'ox-publish)
-  (setq org-publish-project-alist
-        '(
-          ("blog"
-           :base-directory "~/org/blog/"
-           :base-extension "org"
-           :publishing-directory "~/org/.github.com/"
-           :recursive t
-           :publishing-function org-html-publish-to-html
-           :headline-levels 4
-           :section-numbers nil
-           :auto-preamble t
-           :auto-sitemap t                ; Generate sitemap.org automagically...
-           :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
-           :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
-           :author "dayigu"
-           :email "dayigu at gmail dot com"
-           :html-head    "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/worg.css\"/>"
-           )
-          ))
-#+END_SRC
 ** blogit variables
 
 #+BEGIN_SRC emacs-lisp
