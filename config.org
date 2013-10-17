@@ -6726,7 +6726,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
   (setq blogit-project-alist
         '(("blogit"
-          :base-directory "~/SparkleShare/blog-src"
+          :base-directory "~/Workspace/emacs-lisp/emacs-blogit/sample/"
           :publishing-directory "~/SparkleShare/coldnew.github.io/blogit"
           :blog-url "http://coldnew.github.com/blogit"
           :blog-title "emacs blogit"
