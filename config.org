@@ -6739,7 +6739,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
           )
           ("coldnew's blog"
           :base-directory "~/SparkleShare/blog-src"
-          :publishing-directory "~/SparkleShare/coldnew.github.io/blog-new"
+          :publishing-directory "~/SparkleShare/coldnew.github.io/"
           :blog-url "http://coldnew.github.com"
           :blog-title "coldnew's blog"
 
