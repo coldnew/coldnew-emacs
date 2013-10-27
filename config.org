@@ -6727,6 +6727,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (require 'blogit)
 
   (defvar coldnew/blogit-after-publish-hook nil)
+  (defvar coldnew/blog-after-publish-hook nil)
 
   (defun coldnew/blogit-compile-less-source ()
     (let ((output-dir (blogit-project-info :publishing-directory))
@@ -6753,7 +6754,8 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
       (shell-command (concat "cp " rss-file " " index-file))))
 
   (add-hook 'coldnew/blogit-after-publish-hook 'coldnew/blogit-compile-less-source)
-  (add-hook 'coldnew/blogit-after-publish-hook 'coldnew/blogit-copy-rss-to-index)
+  (add-hook 'coldnew/blog-after-publish-hook 'coldnew/blogit-compile-less-source)
+  (add-hook 'coldnew/blog-after-publish-hook 'coldnew/blogit-copy-rss-to-index)
 
   (setq blogit-project-alist
         '(("blogit"
@@ -6776,8 +6778,9 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
            :google-analytics "UA-42122243-1"
            :disqus    "coldnew"
            :lloogg "2b0e4f72854"
-           :after-publish-hook coldnew/blogit-after-publish-hook
+           :after-publish-hook coldnew/blog-after-publish-hook
            )))
+
 #+END_SRC
 
 * Local File Variable
