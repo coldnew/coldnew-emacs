@@ -6742,7 +6742,18 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
       ;; compile blog.less to blog.css and add it to css folder
       (shell-command (concat lessc " -x " input-file " > " output-file))))
 
+  (defun coldnew/blogit-copy-rss-to-index ()
+    (let ((output-dir (blogit-project-info :publishing-directory))
+          (rss-file
+           (concat output-dir "rss.xml"))
+          (index-file
+           (concat output-dir "index.xml")))
+
+      ;; copy rss.xml to index.xml
+      (shell-command (concat "cp " rss-file " " index-file))))
+
   (add-hook 'coldnew/blogit-after-publish-hook 'coldnew/blogit-compile-less-source)
+  (add-hook 'coldnew/blogit-after-publish-hook 'coldnew/blogit-copy-rss-to-index)
 
   (setq blogit-project-alist
         '(("blogit"
