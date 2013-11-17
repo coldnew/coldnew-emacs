@@ -1270,6 +1270,7 @@ Following buffer will not show in iBuffer
   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 #+end_src
 ** TODO uniquify
+
 #+begin_src emacs-lisp
   (require 'uniquify)
   (setq uniquify-buffer-name-style 'reverse)
@@ -1277,7 +1278,6 @@ Following buffer will not show in iBuffer
   (setq uniquify-after-kill-buffer-p 1)
   (setq uniquify-ignore-buffers-re "^\\*")
 #+end_src
-
 * 自定義函式 / 方法                                                :function:
 
 我所自定義或是我的 emacs 設定檔需要用到的 function。
@@ -1827,13 +1827,15 @@ evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死�
 
 直接統一用 insert 模式比較快 :)
 
+準備移植到 evil normal state
+
 #+begin_src emacs-lisp
   (setq evil-default-state 'insert)
+;;  (setq evil-default-state 'normal)
 #+end_src
 
-
 #+begin_src emacs-lisp
-  ;;  (setq evil-motion-state nil)
+    (setq evil-motion-state nil)
   (setq evil-emacs-state-modes nil)
 
   ;;evil-motion-state-modes
@@ -1857,7 +1859,7 @@ normal-state。
 注意到除了 ESC 按鍵本身，使用 C-[ 也具有 ESC 按鍵的效果。
 
 #+begin_src emacs-lisp
-  (define-key evil-insert-state-map[escape] 'evil-normal-state)
+  (define-key evil-insert-state-map [escape] 'evil-normal-state)
 #+end_src
 
 ** 全域性啟用 evil-mode
@@ -2009,12 +2011,15 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
 這邊設定我的 Insert-state 的按鍵，部份會和我原本的 emacs 按鍵設置不太一樣。
 
 #+begin_src emacs-lisp
-;;  (vim:imap (kbd "C-o") 'evil-execute-in-normal-state)
+  ;;  (vim:imap (kbd "C-o") 'evil-execute-in-normal-state)
   (vim:imap (kbd "C-o") 'evil-normal-state)
   (vim:imap (kbd "C-l") 'backward-delete-char)
   (vim:imap (kbd "C-w") 'evil-window-map)
   (vim:imap (kbd "M-w") 'kill-ring-save)
   (vim:imap (kbd "M-k") 'kill-region)
+  (vim:imap (kbd "C-x C-n") 'evil-complete-previous)
+  (vim:imap (kbd "C-x C-n") 'evil-complete-next)
+
 #+end_src
 
 ** Window-sate 按鍵設定
@@ -3774,7 +3779,9 @@ require 的 snippet, 則添加以下程式
     '(progn
        (when (require 'multi-eshell nil 'noerror)
          (vim:mode-map coldnew-editor-map (kbd "M-2")   'multi-eshell)
-         (vim:mode-map coldnew-editor-map (kbd "M-3")   'multi-eshell-switch))))
+         (vim:mode-map coldnew-editor-map (kbd "M-3")   'multi-eshell-switch)
+         (vim:nmap (kbd "M-2") 'multi-eshell)
+         (vim:nmap (kbd "M-3") 'multi-eshell-switch))))
 #+END_SRC
 
 ** 檔案相關 (N) (I)
@@ -4438,10 +4445,10 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 ** Clojure
 *** 載入相關套件
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (require 'clojure-mode)
   (require 'clojure-test-mode)
-  (require 'nrepl)
+  ;;(require 'nrepl)
   (require 'ac-nrepl)
 #+end_src
 
@@ -4453,7 +4460,7 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 
 *** 自動補全設定
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (eval-after-load "auto-complete" '(add-to-list 'ac-modes 'nrepl-mode))
   (add-hook 'clojure-mode-hook 'ac-clojure-mode-setup)
   (add-hook 'nrepl-mode-hook   'ac-clojure-mode-setup)
@@ -4744,7 +4751,7 @@ paredit 可以幫助傳寫程式的速度。
 
 #+BEGIN_SRC emacs-lisp
   (vim:mode-imap coldnew-lisp-map (kbd "C-d") 'paredit-forward-delete)
-  (vim:mode-imap coldnew-lisp-map (kbd "C-l") 'paredit-backword-delete)
+  ;;  (vim:mode-imap coldnew-lisp-map (kbd "C-l") 'paredit-backword-delete)
   (vim:mode-imap coldnew-lisp-map (kbd "C-k") 'paredit-kill)
   (vim:mode-imap coldnew-lisp-map (kbd "M-d") 'paredit-forward-kill-word)
   (vim:mode-imap coldnew-lisp-map (kbd "M-l") 'paredit-backward-kill-word)
