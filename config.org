@@ -4459,10 +4459,10 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 
 #+begin_src emacs-lisp :tangle no
   (require 'clojure-mode)
-  (require 'clojure-test-mode)
+  ;;(require 'clojure-test-mode)
   ;;(require 'nrepl)
   ;;  (require 'ac-nrepl)
-  (require 'cider)
+  (require* 'cider)
 #+end_src
 
 *** 設定 Clojure 檔案的副檔名與對應的模式
