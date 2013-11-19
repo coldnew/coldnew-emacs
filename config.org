@@ -4449,7 +4449,7 @@ C-c  I             对目录中的相关文件建立列表并进行索引
   (require 'clojure-mode)
   (require 'clojure-test-mode)
   ;;(require 'nrepl)
-  (require 'ac-nrepl)
+;;  (require 'ac-nrepl)
 #+end_src
 
 *** 設定 Clojure 檔案的副檔名與對應的模式
@@ -4461,26 +4461,26 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 *** 自動補全設定
 
 #+begin_src emacs-lisp :tangle no
-  (eval-after-load "auto-complete" '(add-to-list 'ac-modes 'nrepl-mode))
-  (add-hook 'clojure-mode-hook 'ac-clojure-mode-setup)
-  (add-hook 'nrepl-mode-hook   'ac-clojure-mode-setup)
-  (add-hook 'nrepl-interaction-mode-hook   'ac-clojure-mode-setup)
-  (defun ac-clojure-mode-setup ()
-    "auto-complete settings for clojure-mode."
-    (setq ac-sources '(
-                       ac-source-nrepl-ns
-                       ac-source-nrepl-vars
-                       ac-source-nrepl-ns-classes
-                       ac-source-nrepl-all-classes
-                       ac-source-nrepl-java-methods
-                       ac-source-nrepl-static-methods
-                       ac-source-dictionary
-                       ac-source-abbrev
-                       ac-source-semantic
-                       ac-source-filename
-                       ac-source-files-in-current-dir
-                       ac-source-words-in-same-mode-buffers
-                       )))
+;;  (eval-after-load "auto-complete" '(add-to-list 'ac-modes 'nrepl-mode))
+;;  (add-hook 'clojure-mode-hook 'ac-clojure-mode-setup)
+;;  (add-hook 'nrepl-mode-hook   'ac-clojure-mode-setup)
+;;  (add-hook 'nrepl-interaction-mode-hook   'ac-clojure-mode-setup)
+;;  (defun ac-clojure-mode-setup ()
+;;    "auto-complete settings for clojure-mode."
+;;    (setq ac-sources '(
+;;                       ac-source-nrepl-ns
+;;                       ac-source-nrepl-vars
+;;                       ac-source-nrepl-ns-classes
+;;                       ac-source-nrepl-all-classes
+;;                       ac-source-nrepl-java-methods
+;;                       ac-source-nrepl-static-methods
+;;                       ac-source-dictionary
+;;                       ac-source-abbrev
+;;                       ac-source-semantic
+;;                       ac-source-filename
+;;                       ac-source-files-in-current-dir
+;;                       ac-source-words-in-same-mode-buffers
+;;                       )))
 #+end_src
 
 ** Clojure Script
