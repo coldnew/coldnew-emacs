@@ -734,6 +734,18 @@ el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維�
   (add-hook 'el-get-post-install-hooks 'emacs-packages-remove-loaddefs)
 #+END_SRC
 
+** 增加載入套件的方式
+
+為了避免我的套件管理方式出錯，另外定義一個當載入套件失敗時，便會用
+el-get 安裝套件的方法，注意到目前這個方案套件名稱必須和 recipes 相同。
+
+#+BEGIN_SRC emacs-lisp
+  (defmacro require* (feature &optional file)
+    "Try to require FEATURE, If failed, use el-get to reinstall it."
+    `(when (not (require ,feature ,file 'noerror))
+       (el-get-reinstall ,feature)))
+#+END_SRC
+
 * 常用的模組 / 函式庫                                               :plugin:
 
 emacs 有一些套件本身不需要配置，或是只是函式庫，這一類的套件我設
