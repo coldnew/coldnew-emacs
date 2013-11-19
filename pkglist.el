@@ -1,5 +1,4 @@
 (
-"ac-nrepl"
 "ac-python"
 "ac-slime"
 "ace-jump-mode"
@@ -52,7 +51,6 @@
 "multi-web-mode"
 "mustache"
 "newlisp"
-"nrepl"
 "offlineimap"
 "package"
 "pangu-spacing"
