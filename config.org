@@ -6754,9 +6754,9 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
           (output-style-dir
            (concat output-dir "/" (blogit-project-info :style-directory-name)))
           (input-file
-           (concat output-style-dir "/source/blogit.less"))
+           (concat output-style-dir "/blogit.less"))
           (output-file
-           (concat output-style-dir "/source/blogit.css"))
+           (concat output-style-dir "/blogit.css"))
           (lessc
            (concat output-style-dir "/less.js/bin/lessc")))
 
@@ -6777,18 +6777,21 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (add-hook 'coldnew/blog-after-publish-hook 'coldnew/blogit-compile-less-source)
   (add-hook 'coldnew/blog-after-publish-hook 'coldnew/blogit-copy-rss-to-index)
 
+  ;; tmp disable blogit post
+  ;; add test post
+
   (setq blogit-project-alist
-        '(("blogit"
-           :base-directory "~/Workspace/emacs-lisp/emacs-blogit/example/"
-           :publishing-directory "~/SparkleShare/coldnew.github.io/blogit"
-           :blog-url "http://coldnew.github.io/blogit"
-           :blog-title "emacs blogit"
-           :default-language "en"
-           :google-analytics "UA-42122243-1"
-           :disqus    "coldnew"
-           :lloogg "2b0e4f72854"
-           :after-publish-hook coldnew/blogit-after-publish-hook
-           )
+        '(;;("blogit"
+          ;; :base-directory "~/Workspace/emacs-lisp/emacs-blogit/example/"
+          ;; :publishing-directory "~/SparkleShare/coldnew.github.io/blogit"
+          ;; :blog-url "http://coldnew.github.io/blogit"
+          ;; :blog-title "emacs blogit"
+          ;; :default-language "en"
+          ;; :google-analytics "UA-42122243-1"
+          ;; :disqus    "coldnew"
+          ;; :lloogg "2b0e4f72854"
+          ;; :after-publish-hook coldnew/blogit-after-publish-hook
+          ;; )
           ("coldnew's blog"
            :base-directory "~/SparkleShare/blog-src"
            :publishing-directory "~/SparkleShare/coldnew.github.io/"
@@ -6799,7 +6802,19 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
            :disqus    "coldnew"
            :lloogg "2b0e4f72854"
            :after-publish-hook coldnew/blog-after-publish-hook
-           )))
+           )
+          ("test"
+           :base-directory "~/SparkleShare/test"
+           :publishing-directory "~/SparkleShare/coldnew.github.io/test"
+           :blog-url "http://coldnew.github.io"
+           :blog-title "coldnew's blog"
+           :default-language "zh_TW"
+           :google-analytics "UA-42122243-1"
+           :disqus    "coldnew"
+           :lloogg "2b0e4f72854"
+           :after-publish-hook coldnew/blog-after-publish-hook
+           )
+          ))
 
 #+END_SRC
 
