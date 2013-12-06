@@ -6815,8 +6815,27 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
            :after-publish-hook coldnew/blog-after-publish-hook
            )
           ))
-
 #+END_SRC
+
+** blog function
+
+#+BEGIN_SRC emacs-lisp
+  (require 'generic-x)
+
+  (define-generic-mode 'u-mode
+    ;; comments
+    '(("//")  ("/*" . "*/"))
+    ;; keywords
+    '("Name" "Tel" "Password")
+    ;; other syntax
+    nil
+    ;; filetype
+    '("\\.u$")
+    ;; init func
+    nil
+    "a emacs major-mode for u-language")
+#+END_SRC
+
 
 * Local File Variable
 # Local Variables:

@@ -14,6 +14,7 @@
 "dash"
 "doc-present"
 "dos"
+"doxymacs"
 "ecb-snapshot"
 "eldoc-extension"
 "elscreen"
