@@ -24,6 +24,7 @@
 "fuzzy"
 "git-emacs"
 "git-gutter-fringe"
+"git-modes"
 "gitconfig-mode"
 "gitignore-mode"
 "go-mode"

@@ -6803,17 +6803,17 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
            :lloogg "2b0e4f72854"
            :after-publish-hook coldnew/blog-after-publish-hook
            )
-          ("test"
-           :base-directory "~/SparkleShare/test"
-           :publishing-directory "~/SparkleShare/coldnew.github.io/test"
-           :blog-url "http://coldnew.github.io"
-           :blog-title "coldnew's blog"
-           :default-language "zh_TW"
-           :google-analytics "UA-42122243-1"
-           :disqus    "coldnew"
-           :lloogg "2b0e4f72854"
-           :after-publish-hook coldnew/blog-after-publish-hook
-           )
+          ;; ("test"
+          ;;  :base-directory "~/SparkleShare/test"
+          ;;  :publishing-directory "~/SparkleShare/coldnew.github.io/test"
+          ;;  :blog-url "http://coldnew.github.io"
+          ;;  :blog-title "coldnew's blog"
+          ;;  :default-language "zh_TW"
+          ;;  :google-analytics "UA-42122243-1"
+          ;;  :disqus    "coldnew"
+          ;;  :lloogg "2b0e4f72854"
+          ;;  :after-publish-hook coldnew/blog-after-publish-hook
+          ;;  )
           ))
 #+END_SRC
 
