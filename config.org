@@ -3736,7 +3736,7 @@ require 的 snippet, 則添加以下程式
 #+BEGIN_SRC emacs-lisp
   (setq enable-local-variables 'safe)
   (setq safe-local-variable-values
-        '(org-export-latex-title-command))
+        '((org-export-latex-title-command . t)))
 #+END_SRC
 
 * 編輯器按鍵設置
