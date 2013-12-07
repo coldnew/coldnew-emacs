@@ -35,6 +35,7 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
 #+begin_src emacs-lisp
   (eval-when-compile (require 'cl))
 #+end_src
+
 ** 複製系統的 PATH 變數
 
 在一開始 emacs 啟動時，複製系統的 Shell PATH 給 emacs 知道，這樣有些額外安
@@ -1673,7 +1674,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
         (set-frame-font (format "%s:pixelsize=%d" english (car size-pair)) t))
 
     (if (font-exist-p chinese)
-        (dolist (charset '(kana han symbol cjk-misc bopomofo))
+        (dolist (charset '(kana han cjk-misc bopomofo))
           (set-fontset-font (frame-parameter nil 'font) charset
                             (font-spec :family chinese :size (cdr size-pair))))))
 
@@ -3729,6 +3730,13 @@ require 的 snippet, 則添加以下程式
   ;; Enable delete-selection-mode
   (delete-selection-mode t)
 #+end_src
+** 允許文件使用特定的區域變數
+
+#+BEGIN_SRC emacs-lisp
+  (setq enable-local-variables 'safe)
+  (setq safe-local-variable-values
+        '(org-export-latex-title-command))
+#+END_SRC
 
 * 編輯器按鍵設置
 
@@ -6835,7 +6843,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
     nil
     "a emacs major-mode for u-language")
 #+END_SRC
-
 
 * Local File Variable
 # Local Variables:
