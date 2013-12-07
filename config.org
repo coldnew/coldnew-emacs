@@ -2217,10 +2217,11 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 #+begin_src emacs-lisp
   ;; use local gpg program instaed of system one
   ;; only work under linux
+
   (cond
    (linux-64bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg")))
    (linux-32bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg-x86")))
-   )
+   (mac-p (setq epg-gpg-program "/usr/local/bin/gpg")))
 
   (setenv "GPG_AGENT_INFO" nil)
 
@@ -6691,13 +6692,13 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
 - 載入相關套件
 
-  #+begin_src emacs-lisp
+  #+begin_src emacs-lisp :tangle no
     (require 'o-blog)
   #+end_src
 
 - 設定我的部若格資料夾位置
 
-  #+begin_src emacs-lisp
+  #+begin_src emacs-lisp :tangle no
     (defvar coldnew-blog-dir
       (concat coldnew-sparkleshare-dir "/coldnew.github.io")
       "My blog directory")
@@ -6705,7 +6706,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
 - 設定我的部若格主檔案資料夾
 
-  #+begin_src emacs-lisp
+  #+begin_src emacs-lisp :tangle no
     (defvar coldnew-blog-src-dir
       (concat coldnew-blog-dir "/blog-src")
       "My blog-src directory")
@@ -6713,14 +6714,14 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
 - 設定我的主要 blog 檔案位置
 
-  #+begin_src emacs-lisp
+  #+begin_src emacs-lisp :tangle no
     (defvar coldnew-blog-file
       (concat coldnew-blog-src-dir "/blog.org"))
   #+end_src
 
 ** 設定網頁連結名稱
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (defun coldnew/ob-sanitize-string (s)
     "Sanitize string s"
     (let* ((avoid-list '("blog" "draft"))
@@ -6733,7 +6734,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
 ** 當更新 blog 時自動重新編譯佈景主題成 css 檔案
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (add-hook 'o-blog-after-publish-hook
             '(lambda ()
                (let* ((style-dir (concat coldnew-blog-dir "/style"))
@@ -6843,8 +6844,3 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
     nil
     "a emacs major-mode for u-language")
 #+END_SRC
-
-* Local File Variable
-# Local Variables:
-# mode: org
-# End:
