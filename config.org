@@ -3733,10 +3733,16 @@ require 的 snippet, 則添加以下程式
 #+end_src
 ** 允許文件使用特定的區域變數
 
+有些時候我會在一些特定的文件使用區域變數，可是 emacs 就會跑過來問我說:
+這個變數很危險，是否要啟用？ 這個功能真是麻煩，於是我決定將我會啟用的
+變數資訊加入到 =safe-local-variable-values= 並且修改
+=enable-local-variables= 的資訊，這樣以後 emacs 就不會再問我同樣的問題
+了。
+
 #+BEGIN_SRC emacs-lisp
-  (setq enable-local-variables 'safe)
+  (setq enable-local-variables :safe)
   (setq safe-local-variable-values
-        '((org-export-latex-title-command . t)))
+        '((org-export-latex-title-command . "")))
 #+END_SRC
 
 * 編輯器按鍵設置
