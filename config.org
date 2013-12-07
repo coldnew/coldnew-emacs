@@ -1673,7 +1673,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
         (set-frame-font (format "%s:pixelsize=%d" english (car size-pair)) t))
 
     (if (font-exist-p chinese)
-        (dolist (charset '(kana han symbol cjk-misc bopomofo))
+        (dolist (charset '(kana han cjk-misc bopomofo))
           (set-fontset-font (frame-parameter nil 'font) charset
                             (font-spec :family chinese :size (cdr size-pair))))))
 
