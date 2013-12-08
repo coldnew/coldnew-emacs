@@ -56,7 +56,6 @@
 "multi-web-mode"
 "mustache"
 "newlisp"
-"offlineimap"
 "org-mode"
 "package"
 "pangu-spacing"
