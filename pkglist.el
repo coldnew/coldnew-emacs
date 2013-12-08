@@ -51,7 +51,6 @@
 "magit"
 "markdown-mode"
 "moz-repl"
-"mu4e"
 "multi-eshell"
 "multi-term"
 "multi-web-mode"
