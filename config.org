@@ -6113,15 +6113,24 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
 #+end_src
 
 * 電子郵件                                                            :email:
+
+在 emacs 中有許多好用的電子郵件閱讀器，在試用之後，我決定選擇 [[http://www.djcbsoftware.nl/code/mu/mu4e.html][mu4e]] 。
+mu4e 是 mu 的 elisp 接口，由 [[http://emacs-fu.blogspot.tw/][emacs-fu]] 的作者 [[http://www.djcbsoftware.nl/][djcb]] 所撰寫。
+
+為什麼選擇使用 mu4e 呢，我的理由有以下幾點:
+
+- 使用外部程式如 offlineimap 下載郵件，不會在下載郵件時讓 emacs 停住
+- 使用 C 語言寫的 mu 進行郵件索引，速度快
+
+總歸一句就是 =速度= ，並且我受不了下載郵件時會停住我的 emacs 這種蠢事
+(emacs 是單線程的程式)。
+
+由於我的信件是使用 offlineimap 進行下載，因此在使用 mu4e 之前，必須先
+安裝 offlineimap，並對他進行配置。
+
 ** offlineimap
 
 offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙下載信件。
-
-*** 載入相關模組
-
-#+begin_src emacs-lisp
-  (require 'offlineimap)
-#+end_src
 
 *** 讓 offlineimap 透過 emacs 取得密碼
 
@@ -6262,31 +6271,31 @@ offlineimap 是 Linux 下很棒的一個 imap 伺服器，可以用他來幫忙�
 *** TODO 未整理
 
 #+begin_src emacs-lisp
-  (setq starttls-use-gnutls t)
+    (setq starttls-use-gnutls t)
 
-  (defun mu4e~view-fontify-diff ()
-    "Colorize diff message."
-    (interactive)
-    (let ((inhibit-read-only t))
-      (save-excursion
-        (goto-char (point-min))
-        ;; consider only lines that heuristically look like a citation line...
-        (while (re-search-forward "^\\(\\(\\+\\)[^+]\\|\\(-\\)[^-]\\)" nil t)
-          (let ((cur-point (or (match-beginning 2) (match-beginning 3)))
-                (color (if (match-beginning 2)
-                           "green"
-                         "deep pink")))
-            (end-of-line)
-            (add-text-properties cur-point (point)
-                                 `(face ((foreground-color . ,color))))))
-        (goto-char (point-min))
-        (while (re-search-forward "^\\(\\+\\+\\+\\|---\\)" nil t)
-          (let ((cur-point (match-beginning 1)))
-            (end-of-line)
-            (add-text-properties cur-point (point)
-                                 '(face ((weight . bold)))))))))
+    (defun mu4e~view-fontify-diff ()
+      "Colorize diff message."
+      (interactive)
+      (let ((inhibit-read-only t))
+        (save-excursion
+          (goto-char (point-min))
+          ;; consider only lines that heuristically look like a citation line...
+          (while (re-search-forward "^\\(\\(\\+\\)[^+]\\|\\(-\\)[^-]\\)" nil t)
+            (let ((cur-point (or (match-beginning 2) (match-beginning 3)))
+                  (color (if (match-beginning 2)
+                             "green"
+                           "deep pink")))
+              (end-of-line)
+              (add-text-properties cur-point (point)
+                                   `(face ((foreground-color . ,color))))))
+          (goto-char (point-min))
+          (while (re-search-forward "^\\(\\+\\+\\+\\|---\\)" nil t)
+            (let ((cur-point (match-beginning 1)))
+              (end-of-line)
+              (add-text-properties cur-point (point)
+                                   '(face ((weight . bold)))))))))
 
-  (add-hook 'mu4e-view-mode-hook 'mu4e~view-fontify-diff)
+    (add-hook 'mu4e-view-mode-hook 'mu4e~view-fontify-diff)
 #+end_src
 
 #+begin_src emacs-lisp
