@@ -3410,9 +3410,10 @@ NOTE: TODO: DONE:
      ))
 #+end_src
 
-** 替數字額外上色
+** TODO 替數字額外上色
 
 vim 預設也會對數字進行別的上色動作。
+ref: https://github.com/patriciogonzalezvivo/dot-emacs/blob/master/live-fontify-hex.el
 
 #+begin_src emacs-lisp
   (dolist (mode coldnew/programming-mode)
