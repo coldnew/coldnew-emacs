@@ -6860,3 +6860,10 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
     nil
     "a emacs major-mode for u-language")
 #+END_SRC
+
+* 其他
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path "~/Workspace/emacs-lisp/org-ioslide")
+  (require 'ox-ioslide)
+#+END_SRC
