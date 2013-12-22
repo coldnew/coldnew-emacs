@@ -35,3 +35,4 @@ lisp/
 tramp
 custom.el
 lisp
+eshell/
