@@ -6771,6 +6771,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (add-to-list 'load-path "~/Workspace/emacs-lisp/emacs-blogit")
   (require 'blogit)
 
+  (setq blogit-publish-draft t)
   (defvar coldnew/blogit-after-publish-hook nil)
   (defvar coldnew/blog-after-publish-hook nil)
 
