@@ -22,6 +22,7 @@
 "erc-highlight-nicknames"
 "eshell-autojump"
 "evil"
+"evil-nerd-commenter"
 "expand-region"
 "fringe-helper"
 "fuzzy"

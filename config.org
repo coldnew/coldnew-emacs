@@ -2044,6 +2044,28 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (vim:wmap "b" 'evil-window-left)
 #+end_src
 
+* Vim 模擬擴充
+
+** 使用 evil-nerd-commenter 更簡單去將程式註解掉
+
+[[https://github.com/redguardtoo/evil-nerd-commenter][evil-nerd-commenter]] 是一個用於 evil-mode 上面的註解輔助工具，使用他以
+後，可以在 Normal-state 下面使用 =﻿,ci= 將當前行註解/反註解。
+
+常用用法:
+
+- =﻿,,,﻿= 註解/反註解當前行
+- =﻿,,9j= 註解/反註解之後 9 行
+- =﻿,,99G= 從當前行開始到 99 行進行註解/反註解
+- =﻿,,a(= 對目前的 s-exp 進行註解
+- =﻿,,ai= 僅註解當前的 s-exp 內容
+- =﻿,,ao= 註解/反註解當前的符號
+- =﻿,,aW= 註解/反註解當前的詞
+
+#+BEGIN_SRC emacs-lisp
+  (require 'evil-nerd-commenter)
+  (evilnc-default-hotkeys)
+#+END_SRC
+
 * 自動補全                                                         :complete:
 ** 載入相關套件
 
