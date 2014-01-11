@@ -6506,7 +6506,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 ;;  (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
 ;;  (vim:map (kbd "C-x ve") 'magit-flow-feature-finish)
 #+end_src
-
 * 檔案備份                                                           :backup:
 
 雖然現在大家都有在使用 git、svn 等檔案管理系統，但我們最好還是有其他的
@@ -6608,6 +6607,26 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (setq auto-save-list-file-prefix (concat emacs-backup-dir "auto-saves-"))
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
 #+end_src
+
+* 遠端編輯                                                            :tramp:
+
+** 設定預設連線方式
+
+#+BEGIN_SRC emacs-lisp
+  (setq tramp-default-method "scp")
+#+END_SRC
+
+** 設定 tramp 自動儲存的資料夾
+
+#+BEGIN_SRC emacs-lisp
+  (setq tramp-auto-save-directory emacs-backup-dir)
+#+END_SRC
+
+** 設定 tramp 備份文件用的資料夾
+
+#+BEGIN_SRC emacs-lisp
+  (setq tramp-backup-directory-alist backup-directory-alist)
+#+END_SRC
 
 * Session                                                              :blog:
 ** saveplace
@@ -6798,25 +6817,25 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (defvar coldnew/blog-after-publish-hook nil)
 
   (defun coldnew/blogit-compile-less-source ()
-    (let ((output-dir (blogit-project-info :publishing-directory))
-          (output-style-dir
-           (concat output-dir "/" (blogit-project-info :style-directory-name)))
-          (input-file
-           (concat output-style-dir "/blogit.less"))
-          (output-file
-           (concat output-style-dir "/blogit.css"))
-          (lessc
-           (concat output-style-dir "/less.js/bin/lessc")))
+    (let* ((output-dir (blogit-project-info :publishing-directory))
+           (output-style-dir
+            (concat output-dir "/" (blogit-project-info :style-directory-name)))
+           (input-file
+            (concat output-style-dir "/blogit.less"))
+           (output-file
+            (concat output-style-dir "/blogit.css"))
+           (lessc
+            (concat output-style-dir "/less.js/bin/lessc")))
 
       ;; compile blog.less to blog.css and add it to css folder
       (shell-command (concat lessc " -x " input-file " > " output-file))))
 
   (defun coldnew/blogit-copy-rss-to-index ()
-    (let ((output-dir (blogit-project-info :publishing-directory))
-          (rss-file
-           (concat output-dir "rss.xml"))
-          (index-file
-           (concat output-dir "index.xml")))
+    (let* ((output-dir (blogit-project-info :publishing-directory))
+           (rss-file
+            (concat output-dir "rss.xml"))
+           (index-file
+            (concat output-dir "index.xml")))
 
       ;; copy rss.xml to index.xml
       (shell-command (concat "cp " rss-file " " index-file))))
@@ -6863,6 +6882,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
           ;;  :after-publish-hook coldnew/blog-after-publish-hook
           ;;  )
           ))
+
 #+END_SRC
 
 ** blog function
