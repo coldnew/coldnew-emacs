@@ -595,8 +595,10 @@ el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維�
 *** 設定 elpa 安裝目錄到 emacs-elpa-dir
 
 #+begin_src emacs-lisp
-  (setq-default package-user-dir emacs-elpa-dir)
+  (setq package-user-dir "~/.emacs.d/lisp/package/elpa/")
   (require 'package)
+
+
 #+end_src
 
 *** 設定我需要的 ELPA 倉庫
