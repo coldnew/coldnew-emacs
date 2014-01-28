@@ -6,6 +6,7 @@
 "auto-complete"
 "auto-complete-clang"
 "bm"
+"cider"
 "cl-lib"
 "clojure-mode"
 "clojurescript-mode"
