@@ -4861,9 +4861,22 @@ paredit 可以幫助傳寫程式的速度。
       (elpy-enable))
   #+end_src
 *** 自動補全
+
 #+begin_src emacs-lisp
-  (require 'ac-python)
+;;  (require 'ac-python)
 #+end_src
+
+*** 使用 jedi 進行自動補全
+
+[[http://tkf.github.io/emacs-jedi/][jedi.el]] 是 emacs 下非常不錯的 python 自動補全方案。
+
+#+BEGIN_SRC emacs-lisp
+  (require 'jedi)
+  (add-hook 'python-mode-hook 'jedi:setup)
+  (setq jedi:setup-keys t)                      ; optional
+  (setq jedi:complete-on-dot t)                 ; optional
+#+END_SRC
+
 ** Markdown
 *** 設定 Markdown 檔案的副檔名與對應的模式
 
