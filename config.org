@@ -4126,7 +4126,9 @@ require 的 snippet, 則添加以下程式
   (setq ecb-auto-compatibility-check nil)
 #+end_src
 
-** Commands
+
+** 使用命令顯示/隱藏 ecb-mode
+
 #+begin_src emacs-lisp
   (defun toggle-ecb-mode ()
     "Toggle ecb-minor-mode and resize window accordingly"
@@ -4502,7 +4504,7 @@ C-c  I             对目录中的相关文件建立列表并进行索引
   ;;(require 'clojure-test-mode)
   ;;(require 'nrepl)
   ;;  (require 'ac-nrepl)
-  (require* 'cider)
+  (require 'cider)
 #+end_src
 
 *** 設定 Clojure 檔案的副檔名與對應的模式
