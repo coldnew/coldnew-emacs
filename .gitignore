@@ -29,8 +29,10 @@ semanticdb/
 config/coldnew-emacs.el*
 themes/coldnew-night-theme.el
 config.el
-local-lisp/
 log/
 url/
 lisp/
 tramp
+custom.el
+lisp
+eshell/

@@ -3,36 +3,41 @@
 
 (message "\nEmacs is powering up... Be patient, Master %s!\n" (getenv "USER"))
 
-;; add directories to emacs's `load-path' recursively.
-(let* ((emacs-dir "~/.emacs.d/")
-       (lisp-dir '("lisp/" "themes/")))
+;; Define emacs-dir where all the files live.
+(defvar emacs-dir
+  (file-name-directory
+   (or load-file-name (buffer-file-name)))
+  "Define where user load this init.el, this variable will be `~/.emacs.d/' in many case.")
+
+;; Add directories to emacs's `load-path' recursively.
+;; if path does not exist, create directory.
+(let* ((lisp-dir '("lisp/" "themes/" "local-lisp/")))
   (dolist (lisp-path lisp-dir)
+    (if (not (file-exists-p lisp-path)) (make-directory (concat emacs-dir lisp-path) t))
     (let* ((load-dir (concat emacs-dir lisp-path))
-	   (default-directory load-dir))
-      (setq load-path (cons load-dir load-path))
-      (normal-top-level-add-subdirs-to-load-path))))
+           (default-directory load-dir))
+      (setq load-path
+            (append
+             (let ((load-path (copy-sequence load-path)))
+	       (append
+		(copy-sequence (normal-top-level-add-to-load-path '(".")))
+		(normal-top-level-add-subdirs-to-load-path)))
+             load-path
+             )))))
 
 ;; define a reload command
 (defun reload-emacs ()
   "reload my emacs settings"
   (interactive)
-  (load-file "~/.emacs.d/init.el") (desktop-revert) (delete-other-windows))
-
-;; When eval org-babel, do not confirm
-(setq org-confirm-babel-evaluate nil)
+  (load-file (concat emacs-dir "init.el")) (desktop-revert) (delete-other-windows))
 
 ;; Load up org-mode and org-babel
-(require 'org-install)
-(require 'ob-tangle)
+(require 'org)
 
-;; Load up all literate org-mode files in config directory
-(mapc #'org-babel-load-file (directory-files "~/.emacs.d/" t "\\.org$"))
+;; Load config.org from emacs-dir
+(org-babel-load-file (expand-file-name "config.org" emacs-dir))
 
-;; After loading allemacs config file, read authorization file
-(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
-
-
+;; Done and done!!
 (message "\nEmacs is ready to serve you, Master %s!\n" (getenv "USER"))
 
 ;;; init.el ends here.
-(put 'narrow-to-region 'disabled nil)

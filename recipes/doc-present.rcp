@@ -1,0 +1,5 @@
+(:name doc-present
+       :description "Presenting slides with Emacs"
+       :features doc-present
+       :type github
+       :pkgname "dengste/doc-present")
