@@ -1,5 +1,0 @@
-(:name org-reveal
-       :description ""
-       :features ox-reveal
-       :type github
-       :pkgname "coldnew/org-reveal")
