@@ -8,6 +8,10 @@
 #+BABEL: :cache yes
 #+OPTIONS: ^:nil
 
+* TODO ----------------- Prepare for re-write ---------------------------------
+
+ref : http://steckerhalter.co.vu/steckemacs.html
+
 * 關於這份檔案
 
 使用 emacs 自 2006 年至今，最初我的 emacs 配置也是英文版，並且分散了許多檔案，
