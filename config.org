@@ -234,6 +234,36 @@ Github: https://github.com/edvorg/req-package
 這樣當套件遺失的時候，req-package 才會呼叫 use-package 的方法來幫你安裝遺
 失的套件。
 
+** 使用 require* 來進行套件載入
+
+雖然 req-package 很好用，不過對我這個喜新厭舊的人來說，說不定某天會看到
+更好用的套件管理方式，因此我自定義我用來載入套件的方式, =require*= 。
+
+require* 實際上就是 req-package 的綁定，只是語法和傳統 emacs 的 require
+相同。
+
+#+BEGIN_SRC emacs-lisp
+  (defmacro require* (feature &rest body)
+    "require FEATURE wrapper for `req-package'.
+  This function is used to abstract package loading."
+    (eval
+     ``(req-package ,,feature ,@body)))
+#+END_SRC
+
+為了讓我的 =require*= 可以很清楚的在 elisp 程式碼中顯示，我替他加上和
+emacs 中的 =require= 相同的色彩，這樣可以很清楚看到我哪些程式是進行套件
+載入使用。
+
+#+BEGIN_SRC emacs-lisp
+  (font-lock-add-keywords 'emacs-lisp-mode
+                          '(("(\\(require\*\\*\\)\\s [ \t']*\\(\\sw+\\)?"
+                             (1 font-lock-keyword-face)
+                             (2 font-lock-constant-face nil t))))
+  (font-lock-add-keywords 'lisp-interaction-mode
+                          '(("(\\(require\*\\*\\)\\s [ \t']*\\(\\sw+\\)?"
+                             (1 font-lock-keyword-face)
+                             (2 font-lock-constant-face nil t))))
+#+END_SRC
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
