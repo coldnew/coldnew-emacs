@@ -248,7 +248,7 @@ Github: https://github.com/edvorg/req-package
 更好用的套件管理方式，因此我自定義我用來載入套件的方式, =require*= 。
 
 require* 實際上就是 req-package 的綁定，只是語法和傳統 emacs 的 require
-相同。
+相同，這樣可以方便我以後切換到不同的套件載入方式。
 
 #+BEGIN_SRC emacs-lisp
   (defmacro require* (feature &rest body)
