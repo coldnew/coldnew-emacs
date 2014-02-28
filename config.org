@@ -37,6 +37,107 @@
 
   (set-exec-path-from-shell-PATH)
 #+END_SRC
+** 關閉一些 emacs 預設的設定
+
+emacs 有一些預設的設定我不太喜歡，這邊先將他們關掉。
+
+*** 不啟用 startup message
+
+啟動 emacs 時會出現的 GNU/Emacs 畫面，這裡將他關閉
+
+#+begin_src emacs-lisp
+  (setq inhibit-startup-message t)
+#+end_src
+
+*** 清空 *scratch* buffer 的文字
+
+預設 =*scratch*= 這個緩衝區裡面會有幾行文字，直接將他清空。
+#+begin_src emacs-lisp
+  (setq initial-scratch-message "")
+#+end_src
+
+*** 關閉蜂鳴器
+
+使用畫面閃爍代替電腦的蜂鳴器叫聲。
+#+begin_src emacs-lisp
+  (setq visible-bell t)
+#+end_src
+
+
+*** 關閉工具列
+
+不顯示工具列。
+#+begin_src emacs-lisp
+  (if (featurep 'tool-bar) (tool-bar-mode -1))
+#+end_src
+
+*** 關閉滾動條
+
+關閉左側或右側的滾動條 (scrool-bar)。
+#+begin_src emacs-lisp
+  (if (featurep 'scroll-bar) (scroll-bar-mode -1))
+#+end_src
+
+*** 關閉游標閃爍與方塊狀的提示
+
+不允許游標閃爍以及 Mac OSX 下的方塊狀提示。
+
+#+begin_src emacs-lisp
+  (blink-cursor-mode -1)
+  (setq ring-bell-function #'ignore)
+#+end_src
+
+*** 關閉選單列
+
+不顯示選單列
+
+#+begin_src emacs-lisp
+  (if (featurep 'menu-bar) (menu-bar-mode -1))
+#+end_src
+
+*** 回答問題時，使用 *y* 和 *n* 代替 *yes/no* 。
+
+預設要使用 *yse* 或是 *no* 來回答問題，這裡將他改成用 *y* 或 *n* 。
+#+begin_src emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+#+end_src
+
+
+** 啟動 emacs-server
+
+當啟用 emacs 時，啟動 emacs-server，如果使用者是 root 或已啟用 server，
+則忽略這個步驟。
+
+#+begin_src emacs-lisp
+  ;; Only start server mode if I'm not root
+  (unless (string-equal "root" (getenv "USER"))
+    (require 'server)
+    (unless (server-running-p) (server-start)))
+#+end_src
+
+** 在 X11 下將 Caps Lock 變成 Contrl
+
+emacs 用很習慣的人都會知道，小拇指按左下角鍵盤的 Ctrl 按鍵久了會很酸，所
+以將 Ctrl 綁到 Caps Lock 是比較好的選擇，這邊在 Linux 下透過系統的
+=setxkbmap= 來將 Caps Lock 變成 Ctrl 按鍵。
+
+#+BEGIN_SRC emacs-lisp
+  ;; only disable capslock and make it as control
+  (cond ((eq window-system 'x)
+         ;; make caps lock a control key
+         (shell-command "setxkbmap -option ctrl:nocaps")))
+#+END_SRC
+
+** 在 Mac OS X 下用 Command 按鍵替代 ALT
+
+在 Mac OS X 下，我只有將 Control 綁定到 Caps lock 按鍵上面，至於原本
+Mac 最常用的 Command 按鍵，在 emacs 下則將他當作是 Alt 按鍵使用，
+至於 option 按鍵，則變成 super 按鍵使用。
+
+#+BEGIN_SRC emacs-lisp
+   (setq mac-option-modifier 'super)
+   (setq mac-command-modifier 'meta)
+#+END_SRC
 
 * 語言與編碼                                                         :locale:
 
@@ -498,119 +599,7 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
        "Return nil if OS is not Windows.")
    #+end_src
 
-** 螢幕解析度測試                                               :resolution:
-
-放置測試螢幕解析度用的變數
-
-#+begin_src emacs-lisp
-  ;; 1280x800
-  (defvar display-1280x800-p   (and (= (display-pixel-width) 1280)
-                                    (= (display-pixel-height) 800))
-    "Return nil if current display's resolution is not 1280x800")
-
-  ;; 1280x1024
-  (defvar display-1280x1024-p  (and (= (display-pixel-width) 1280)
-                                    (= (display-pixel-height) 1024))
-    "Return nil if current display's resolution is not 1280x1024")
-
-  ;; 1920x1080
-  (defvar display-1920x1080-p  (and (= (display-pixel-width) 1920)
-                                    (= (display-pixel-height) 1080))
-    "Return nil if current display's resolution is not 1920x1080")
-#+end_src
-
-*** TODO Shell
-#+begin_src emacs-lisp
-  (defvar emacs-default-shell "/bin/bash"
-    "Default shell for cemacs.")
-  (defvar emacs-popup-shell-window-height 30
-    "Window hight of popup shell.")
-  (defvar emacs-popup-shell-window-position "bottom"
-    "Make popup shell window at buttom by default.")
-#+end_src
-
-#+RESULTS:
-: emacs-popup-shell-window-position
-
-*** TODO Path
-#+begin_src emacs-lisp
-  ;; TODO: make it work on every platform, now only has Linux support
-  (setenv "PATH"
-          (concat
-           emacs-bin-dir ":"
-           "~/.lein/bin" ":"
-           (getenv "PATH")
-           ))
-
-  (setq exec-path (cons emacs-bin-dir exec-path))
-#+end_src
-
-** 使用者介面設定
-
-關閉一些 emacs 預設的 UI 設定。
-
-*** 不啟用 startup message
-
-啟動 emacs 時會出現的 GNU/Emacs 畫面，這裡將他關閉
-#+begin_src emacs-lisp
-  (setq inhibit-startup-message t)
-#+end_src
-
-*** 清空 **scratch** buffer 的文字。
-
-預設 **scratch** 裡面會有幾行文字，直接將他清空。
-#+begin_src emacs-lisp
-  (setq initial-scratch-message "")
-#+end_src
-
-*** 關閉蜂鳴器
-
-使用畫面閃爍代替電腦的蜂鳴器叫聲。
-#+begin_src emacs-lisp
-  (setq visible-bell t)
-#+end_src
-
-*** 關閉工具列
-
-不顯示工具列。
-#+begin_src emacs-lisp
-  (if (featurep 'tool-bar) (tool-bar-mode -1))
-#+end_src
-
-*** 關閉滾動條
-
-關閉左側或右側的滾動條 (scrool-bar)。
-#+begin_src emacs-lisp
-  (if (featurep 'scroll-bar) (scroll-bar-mode -1))
-#+end_src
-
-*** 關閉游標閃爍
-
-不允許游標閃爍。
-#+begin_src emacs-lisp
-  (blink-cursor-mode -1)
-#+end_src
-
-Mac OSX 下會有方塊狀的提示，關掉他
-#+BEGIN_SRC emacs-lisp
-  (setq ring-bell-function #'ignore)
-#+END_SRC
-
-*** 關閉選單列
-
-不顯示選單列
-#+begin_src emacs-lisp
-  (if (featurep 'menu-bar) (menu-bar-mode -1))
-#+end_src
-
-*** 回答問題時，使用 *y* 和 *n* 代替 *yes/no* 。
-
-預設要使用 *yse* 或是 *no* 來回答問題，這裡將他改成用 *y* 或 *n* 。
-#+begin_src emacs-lisp
-  (fset 'yes-or-no-p 'y-or-n-p)
-#+end_src
-
-*** TODO Misc
+** TODO Misc
 
 #+begin_src emacs-lisp
   ;; TODO: add comment
@@ -649,49 +638,12 @@ Mac OSX 下會有方塊狀的提示，關掉他
   (setq scroll-down-aggressively     0.01 )
 #+end_src
 
-** 根據作業系統而外進行的初始化設定
-
-*** 在 X11 下將 Caps Lock 變成 Contrl
-
-#+BEGIN_SRC emacs-lisp
-  (defun make-caps-as-ctrl ()
-    "make capslock as control-key"
-    (interactive)
-    (shell-command "setxkbmap -option ctrl:nocaps"))
-
-  ;; only disable capslock and make it as control
-  (cond ((eq window-system 'x)
-         ;; make caps lock a control key
-         (make-caps-as-ctrl)))
-#+END_SRC
-*** 在 Mac OS X 下用 Command 案件替代 ALT
-
-在 Mac OS X 下，我只有將 Control 榜定到 Caps lock 按鍵上面，至於原本
-Mac 最常用的 Command 按鍵，在 emacs 下則將他當作是 Alt 按鍵使用，
-至於 option 按鍵，則變成 super 按鍵使用。
-
-#+BEGIN_SRC emacs-lisp
-   (setq mac-option-modifier 'super)
-   (setq mac-command-modifier 'meta)
-#+END_SRC
-
 ** 設定 custom-file 到其他檔案
 
 避免使用 *customize-UI* 時，會將設定寫入我的 init.el
 #+begin_src emacs-lisp
   (setq custom-file emacs-custom-file)
 #+end_src
-
-** 啟動 emacs-server
-
-當啟用 emacs 時，啟動 emacs-server，如果使用者是 root 或已啟用 server，則忽略。
-#+begin_src emacs-lisp
-  ;; Only start server mode if I'm not root
-  (unless (string-equal "root" (getenv "USER"))
-    (require 'server)
-    (unless (server-running-p) (server-start)))
-#+end_src
-
 
 * 常用的模組 / 函式庫                                               :plugin:
 
