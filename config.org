@@ -1,12 +1,196 @@
-#+TITLE: coldnew 的 emacs 配置
+#+TITLE: coldnew's emacs
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
 #+STARTUP: overview indent align
-#+PROPERTY: noweb
-#+PROPERTY: tangle yes
-#+PROPERTY: cache yes
 #+BABEL: :cache yes
 #+OPTIONS: ^:nil
+
+#+BEGIN_SRC emacs-lisp
+  (modify-all-frames-parameters '((fullscreen . maximized)))
+#+END_SRC
+
+* 語言與編碼                                                         :locale:
+
+emacs 編碼設定，大部份都設定成 utf-8。
+
+- 系統編碼。
+
+  #+begin_src emacs-lisp
+    (prefer-coding-system 'utf-8 )
+  #+end_src
+
+- 語言環境。
+
+ #+begin_src emacs-lisp
+   (set-language-environment 'utf-8 )
+ #+end_src
+
+- 文件保存時的編碼設置
+
+  #+begin_src emacs-lisp
+    (set-buffer-file-coding-system 'utf-8 )
+  #+end_src
+
+- 鍵盤編碼設定
+
+  #+begin_src emacs-lisp
+    (set-keyboard-coding-system    'utf-8 )
+  #+end_src
+
+- 設定終端機的編碼
+
+  #+begin_src emacs-lisp
+    (set-terminal-coding-system    'utf-8 )
+  #+end_src
+
+- 選擇區域內編碼
+
+  #+begin_src emacs-lisp
+    (set-selection-coding-system   'utf-8 )
+  #+end_src
+
+- 剪貼簿編碼設定
+
+  #+begin_src emacs-lisp
+    (set-clipboard-coding-system   'utf-8 )
+  #+end_src
+
+- 使用 utf-8 編碼顯示文件名
+
+  #+begin_src emacs-lisp
+    (set-file-name-coding-system   'utf-8 )
+  #+end_src
+
+- 設定時間顯示使用英文
+
+  時間顯示中文還是怪怪的，所以這邊設定成英文
+
+  #+begin_src emacs-lisp
+    (setq system-time-locale "en_US" )
+  #+end_src
+
+- 讀寫緩衝區或是檔案時使用的編碼
+
+  #+BEGIN_SRC emacs-lisp
+    (setq coding-system-for-read 'utf-8)
+    (setq coding-system-for-write 'utf-8)
+  #+END_SRC
+
+* 套件管理                                                          :package:
+
+emacs 在 24 版後終於有自己的套件管理器 ELPA，不過有些外部的套件沒
+辦法透過他來安裝，所以我又使用了另外一個非常好用的套件管理器 el-get,
+透過這兩個套件管理器，在 emacs 下安裝新的套件是非常方便的。
+
+** 使用 el-get 進行套件管理
+
+El-Get allows you to install and manage elisp code for Emacs. It
+supports lots of differents types of sources and is able to install
+them, update them and remove them, but more importantly it will init
+them for you. That means it will require the features you need, load
+the necessary files, set the Info paths so that C-h i shows the new
+documentation you now depend on, and finally call your own
+initialisation code for you to setup the extension. Or call it a
+package.
+
+Github: https://github.com/dimitri/el-get
+
+*** 設定安裝套件位置為 ~/.emacs.d/lisp
+
+我不喜歡 el-get 預設使用 =~/.emacs.d/el-get= 目錄來安裝檔案，這邊將他
+改為 =~/.emacs.d/lisp=
+
+#+begin_src emacs-lisp
+  (setq-default el-get-dir "~/.emacs.d/lisp")
+#+end_src
+
+*** 如果 el-get 不存在的話，重新安裝 el-get
+
+曾經有一次手殘不小心砍掉我整個 lisp 資料夾，因此特別加了這個程式來進行
+保護，如果 el-get 不存在，則重新安裝他。
+
+#+begin_src emacs-lisp
+      (unless (require 'el-get nil t)
+        (setq el-get-install-branch "master")
+        (with-current-buffer
+            (url-retrieve-synchronously
+             "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+          (end-of-buffer)
+          (eval-print-last-sexp)))
+#+end_src
+
+*** 如果 elpa 的 recepies 不存在的話，自動建立他
+
+第一次下載 el-get 的時候，並不會自動建立 elpa 的 recipes, 這邊進行檢查，
+若 elpa 的 recipes 不存在，則自動建立他。
+
+#+begin_src emacs-lisp
+  (unless (file-exists-p el-get-recipe-path-elpa)
+    (el-get-elpa-build-local-recipes))
+#+end_src
+
+*** 將我的 recipes 加入 el-get-recipe-path
+
+el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維護另外
+一份 recipes，我自己寫的 recipes 則放置在 =~/.emacs.d/recipes= 。
+
+#+begin_src emacs-lisp
+  (add-to-list 'el-get-recipe-path "~/.emacs.d/recipes")
+#+end_src
+
+*** 設定 el-get 的 recipes 預設使用 emacs-lisp-mode
+
+el-get 的 recipes 使用 *.rcp 來作為其副檔名，這邊將這類檔案設定為
+emacs-lisp-mode。
+
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.rcp$" . emacs-lisp-mode))
+#+end_src
+
+** 使用 packages.el 來進行套件管理
+
+packages.el (或 [[http://elpa.gnu.org/][ELPA]])是 emacs 自版本 24 後自帶的套件管理程式，雖然我是使用
+el-get 進行套件管理，但是實際上 el-get 對於 ELPA 有附帶的套件，還是會透過
+ELPA 進行安裝，因此也要對他進行設定。
+
+URL: http://elpa.gnu.org/
+
+*** 設定安裝套件位置為 ~/.emacs.d/lisp/package/elpa
+
+在 el-get 裡面，好像是將 packages 下載的套件置放到
+=~/.emacs.d/lisp/package/elpa= ，可是預設的 packages 會安裝檔案到
+=~/.emacs.d/elpa= 裡面，這邊將他修改一下，讓我比較好管理我的 emacs。
+
+#+begin_src emacs-lisp
+  (setq package-user-dir "~/.emacs.d/lisp/package/elpa/")
+#+end_src
+
+*** 設定我需要的 packages 倉庫
+
+除了 ELPA 以外，還有許多好用的倉庫可以讓 packages.el 進行下載，這邊將他們
+全部加入到 =package-archives= 裡面。
+
+#+begin_src emacs-lisp
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/") t)
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+#+end_src
+
+*** 初始化 package
+
+設定都完成後，要記得進行 package 的初始化。
+
+#+BEGIN_SRC emacs-lisp
+  (package-initialize)
+#+END_SRC
+
+** 使用 use-package 檢查與初始化套件
+
+use-package 是一套透過 elisp 的巨集功能來進行 emacs 套件管理的套件。
+
+
+Github: https://github.com/jwiegley/use-package
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -472,287 +656,6 @@ Mac 最常用的 Command 按鍵，在 emacs 下則將他當作是 Alt 按鍵使�
 #+begin_src emacs-lisp
   )
 #+end_src
-* 語言與編碼                                                         :locale:
-
-emacs 編碼設定，大部份都設定成 utf-8。
-
-- 系統編碼。
-
-  #+begin_src emacs-lisp
-    (prefer-coding-system 'utf-8 )
-  #+end_src
-
-- 語言環境。
-
- #+begin_src emacs-lisp
-   (set-language-environment 'utf-8 )
- #+end_src
-
-- 文件保存時的編碼設置
-
-  #+begin_src emacs-lisp
-    (set-buffer-file-coding-system 'utf-8 )
-  #+end_src
-
-- 鍵盤編碼設定
-
-  #+begin_src emacs-lisp
-    (set-keyboard-coding-system    'utf-8 )
-  #+end_src
-
-- 設定終端機的編碼
-
-  #+begin_src emacs-lisp
-    (set-terminal-coding-system    'utf-8 )
-  #+end_src
-
-- 選擇區域內編碼
-
-  #+begin_src emacs-lisp
-    (set-selection-coding-system   'utf-8 )
-  #+end_src
-
-- 剪貼簿編碼設定
-
-  #+begin_src emacs-lisp
-    (set-clipboard-coding-system   'utf-8 )
-  #+end_src
-
-- 使用 utf-8 編碼顯示文件名
-
-  #+begin_src emacs-lisp
-    (set-file-name-coding-system   'utf-8 )
-  #+end_src
-
-- 設定時間顯示使用英文
-
-  時間顯示中文還是怪怪的，所以這邊設定成英文
-
-  #+begin_src emacs-lisp
-    (setq system-time-locale "en_US" )
-  #+end_src
-
-- 讀寫緩衝區或是檔案時使用的編碼
-
-  #+BEGIN_SRC emacs-lisp
-    (setq coding-system-for-read 'utf-8)
-    (setq coding-system-for-write 'utf-8)
-  #+END_SRC
-
-* 套件管理                                                          :package:
-
-emacs 在 24 版後終於有自己的套件管理器 ELPA，不過有些外部的套件沒
-辦法透過他來安裝，所以我又使用了另外一個非常好用的套件管理器 el-get,
-透過這兩個套件管理器，在 emacs 下安裝新的套件是非常方便的。
-
-** el-get
-*** 設定 el-get-dir
-
-我不喜歡 el-get 預設使用 el-get 目錄，這裡根據我的 emacs-lisp-dir 重新設定。
-#+begin_src emacs-lisp
-  (setq-default el-get-dir emacs-lisp-dir)
-#+end_src
-
-*** 如果 el-get 不存在的話，重新安裝 el-get
-
-曾經有一次手殘不小心砍掉我整個 lisp 資料夾，因此特別加了這個 function 來進行
-保護，如果 el-get 不存在，則重新安裝他。
-
-#+begin_src emacs-lisp
-      (unless (require 'el-get nil t)
-        (setq el-get-install-branch "master")
-        (with-current-buffer
-            (url-retrieve-synchronously
-             "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-          (end-of-buffer)
-          (eval-print-last-sexp)))
-#+end_src
-
-*** 如果 elpa 的 recepies 不存在的話，自動建立他。
-
-第一次下載 el-get 的時候，並不會自動建立 elpa 的 recipes, 這邊進行檢查，
-若 elpa 的 recipes 不存在，則自動建立他。
-
-#+begin_src emacs-lisp
-  (unless (file-exists-p el-get-recipe-path-elpa)
-    (el-get-elpa-build-local-recipes))
-#+end_src
-
-*** 將我的 recipes 加入 el-get-recipe-path
-
-el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維護另外
-一份 recipes。
-
-#+begin_src emacs-lisp
-  (add-to-list 'el-get-recipe-path emacs-recipes-dir)
-#+end_src
-
-*** 設定 el-get 的 recipes 預設使用 emacs-list-mode
-
-\\.rcp$ 為 el-get 的 recipes 副檔名。
-
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.rcp$" . emacs-lisp-mode))
-#+end_src
-
-** ELPA                                                               :elpa:
-*** 設定 elpa 安裝目錄到 emacs-elpa-dir
-
-#+begin_src emacs-lisp
-  (setq package-user-dir "~/.emacs.d/lisp/package/elpa/")
-  (require 'package)
-
-
-#+end_src
-
-*** 設定我需要的 ELPA 倉庫
-
-#+begin_src emacs-lisp
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  (add-to-list 'package-archives '("ELPA" . "http://tromey.com/elpa/") t)
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
-  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-
-  (package-initialize)
-#+end_src
-
-** 套件檢查
-
-為了避免有套件因為 *意外* 而不見，對套件進行檢查，若不存在則進行重新安裝的動作。
-*注意* ：進行套件檢查時，必須確認 el-get 已經安裝至 emacs 裡面，否則會產生錯誤。
-
-*** 存放套件資訊的變數
-
-此變數用於存放系統裏面必須安裝的 emacs 套件。
-#+begin_src emacs-lisp
-   (defvar emacs-packages-list nil
-     "A list of packages to ensure are installed at launch.")
-#+end_src
-
-*** 存放套件資訊的檔案
-
-此檔案用於將 emacs-packags-list 暫存。
-#+begin_src emacs-lisp
-  (defvar emacs-packages-file
-    (concat emacs-dir "pkglist.el")
-    "Define where to store and read the installed packages list.")
-#+end_src
-
-*** 從硬碟中讀取檔案
-
-#+begin_src emacs-lisp
-  (defun emacs-packages-read-from-file ()
-    "Read from emacs-packages-file and set the contents to emacs-packages-list."
-    (when (file-exists-p emacs-packages-file)
-      (setq emacs-packages-list
-            (car
-             (with-temp-buffer emacs-packages-file
-                               (insert-file-contents-literally emacs-packages-file)
-                               ;; if emacs-packages-file is an empty file
-                               ;; return nil, else return buffer-string
-                               (if (= 0 (buffer-size (current-buffer)))
-                                   nil
-                                 (read-from-string (buffer-string))
-                                 ))))))
-
-  ;; read installed packages info from file
-  (emacs-packages-read-from-file)
-#+end_src
-
-*** 將套件資訊寫入到檔案
-
-#+begin_src emacs-lisp
-  (defun emacs-packages-write-to-file ()
-    "Write emasc-packages-list to files."
-    (with-temp-file emacs-packages-file
-      (let ((l emacs-packages-list))
-        (setq emacs-packages-list (sort l #'string-lessp))
-        (insert (format "%s\n" "("))
-        (dolist (pkg emacs-packages-list)
-          (insert (format "\"%s\"\n" pkg)))
-        (insert ")"))))
-#+end_src
-
-*** 當安裝新的套件時，更新套件資訊
-
-#+begin_src emacs-lisp
-  (defun emacs-packages-install (pkg)
-    (unless (stringp pkg)
-      (setq pkg (symbol-name pkg)))
-    (add-to-list 'emacs-packages-list pkg)
-    (emacs-packages-write-to-file))
-
-  ;; add to hooks
-  (add-hook 'el-get-post-install-hooks 'emacs-packages-install)
-#+end_src
-
-*** 當移除套件時，更新套件資訊
-
-#+begin_src emacs-lisp
-  (defun emacs-packages-remove (pkg)
-    (setq emacs-packages-list (remove pkg emacs-packages-list))
-    (emacs-packages-write-to-file))
-
-  ;; add to hooks
-  (add-hook 'el-get-post-remove-hooks 'emacs-packages-remove)
-#+end_src
-
-*** 檢查套件是否有在 emacs-packages-list 裡
-
-#+begin_src emacs-lisp
-  (defun emacs-packages-installed-p ()
-    (loop for p in emacs-packages-list
-          when (not (el-get-package-is-installed p)) do (return nil)
-          finally (return t)))
-#+end_src
-
-*** 套件檢查，不存在則重新安裝
-
-當發現有套件存在 emacs-package-list 裡面，但是卻被 emacs-packages-installed-p 回報為
-此套件不存在時，重新安裝此套件。
-
-#+begin_src emacs-lisp
-  (defun emacs-packages-install-packages ()
-    (unless (emacs-packages-installed-p)
-      ;; install missing packages
-      (dolist (p emacs-packages-list)
-        (unless (el-get-package-is-installed p)
-          (el-get-reinstall p)))))
-
-  ;; install missing packages
-  (emacs-packages-install-packages)
-#+end_src
-
-*** 安裝套件時，移除 emacs 的 .loaddefs.el 檔案
-
-我發現到使用 SparkleShare 似乎會和 el-get-install 衝突到，原因是因為 emacs
-的 .loaddefs.el* 因為 git 的原因產生某種錯誤，因此解決的最好方式，就是
-在使用 el-get-install 時，刪除 .loaddefs.el 檔案。
-
-#+BEGIN_SRC emacs-lisp
-  (defun emacs-packages-remove-loaddefs (pkg)
-    "Remove .loaddefs.el* according to emacs-lisp-dir"
-    (let ((file (concat emacs-lisp-dir ".loaddefs.el")))
-      (if (file-exists-p file)
-          (progn
-            (delete-file file)
-            (delete-file (concat file "c"))))))
-
-  (add-hook 'el-get-post-install-hooks 'emacs-packages-remove-loaddefs)
-#+END_SRC
-
-** 增加載入套件的方式
-
-為了避免我的套件管理方式出錯，另外定義一個當載入套件失敗時，便會用
-el-get 安裝套件的方法，注意到目前這個方案套件名稱必須和 recipes 相同。
-
-#+BEGIN_SRC emacs-lisp
-  (defmacro require* (feature &optional file)
-    "Try to require FEATURE, If failed, use el-get to reinstall it."
-    `(when (not (require ,feature ,file 'noerror))
-       (el-get-reinstall ,feature)))
-#+END_SRC
-
 * 常用的模組 / 函式庫                                               :plugin:
 
 emacs 有一些套件本身不需要配置，或是只是函式庫，這一類的套件我設
@@ -6666,16 +6569,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (setq recentf-exclude '("\\.elc$" "\\.pyc$" "\\.recentd$" "^/tmp/"))
 #+end_src
 * TODO 全域性按鍵設置                                            :global@key:
-** 文件編輯
-
-| 按鍵         | 命令              | 用途       |
-|--------------+-------------------+------------|
-| Shift Return | insert-empty-line | 插入空白行 |
-
-#+begin_src emacs-lisp
-  (global-set-key[(shift return)] 'insert-empty-line)
-#+end_src
-
 ** 關閉預設的按鍵設定
 
 關閉部份按鍵設定，在後面重新設定他。
@@ -6712,21 +6605,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (global-set-key (kbd "C-x t 7") '(lambda () (interactive) (elscreen-goto 7)))
   (global-set-key (kbd "C-x t 8") '(lambda () (interactive) (elscreen-goto 8)))
   (global-set-key (kbd "C-x t 9") '(lambda () (interactive) (elscreen-goto 9)))
-#+end_src
-
-** Ctrl-x Prefix
-*** Misc
-
-| 按鍵    | 命令    | 用途         |
-|---------+---------+--------------|
-| C-x C-b | ibuffer | 顯示 ibuffer |
-
-#+begin_src emacs-lisp
-
-  (global-set-key (kbd "C-x C-b")  'ibuffer)
-  (global-set-key (kbd "C-x C-d")  'dired)
-  (global-set-key (kbd "C-x F") 'fullscreen-window)
-  (global-set-key (kbd "C-x s") 'shell-command)
 #+end_src
 
 ** Ctrl-r 暫存器、書籤、快速跳轉、矩型處理
@@ -6931,3 +6809,59 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (add-to-list 'load-path "~/Workspace/emacs-lisp/org-ioslide")
   (require 'ox-ioslide nil 'noerror)
 #+END_SRC
+* TODO ----------------- Following are re-write ---------------------------------
+* 按鍵設定
+
+** 將按鍵表格轉換成 HTML 表格以及 elisp
+
+這個設定主要是針對按鍵設定而增加，我希望可以使用表格來管理並分類我不同
+的 emacs 按鍵設定，參照了 [[http://steckerhalter.co.vu/steckemacs.html][steckemacs]] 的設定，增加一些特殊的程式碼來將
+org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
+
+#+NAME: keys-doc
+#+BEGIN_SRC emacs-lisp :var keys=keys :tangle no :results output raw :exports results
+  (let* ((header (car keys))
+         (keys (delq header keys))
+         (category))
+    (pop keys)
+    (mapcar (lambda (l) (if (listp l)
+                       (progn
+                         (unless (string= (nth 0 l) category)
+                           (setq category (nth 0 l))
+                           (princ (format "*** %s\n" category))
+                           (princ "#+ATTR_HTML: :rules all :cellpadding 4\n")
+                           (princ "| / | <r> | | \n")
+                           )
+                         (princ (format "| # | =%s= | %s |\n" (nth 1 l) (nth 2 l))))
+                     (princ "|-\n")))
+            keys))
+  (princ "\n")
+#+END_SRC
+
+#+NAME: gen-keys
+#+BEGIN_SRC emacs-lisp :var keys=keys :results output :tangle no :exports none :colnames nil
+(mapcar (lambda (l)
+          (let* ((key (nth 1 l))
+                 (def (if (string-match "^[[:alnum:]]\\{2\\}$" (format "%s" key))
+                          (format "key-chord-define-global \"%s\"" key)
+                        (format "global-set-key (kbd \"%s\")" key)))
+                 (command (car (last l))))
+                 (princ (format "(%s %s)\n" def command))))
+          keys)
+#+END_SRC
+
+將按鍵設定產生在 config.el
+#+BEGIN_SRC emacs-lisp :noweb yes :results silent
+<<gen-keys()>>
+#+END_SRC
+
+** 全域性按鍵設定 (global-set-key) :noexport:
+
+#+TBLNAME: keys
+| 類別     | 按鍵    | 描述               | 命令               |
+|----------+---------+--------------------+--------------------|
+| 文字編輯 | s-<RET> | 插入空白行         | 'insert-empty-line |
+| 緩衝區   | C-x C-b | 切換到 ibuffer     | 'ibuffer           |
+| 資料夾   | C-x C-d | 切換到 dired       | 'dired             |
+| 視窗切換 | C-x F   | 將視窗切換成全螢幕 | 'fullscreen-window |
+| Shell    | C-x s   | 執行 shell命令     | 'shell-command     |

@@ -34,6 +34,8 @@
 ;; Load up org-mode and org-babel
 (require 'org)
 
+(setq org-confirm-babel-evaluate nil)
+
 ;; Load config.org from emacs-dir
 (org-babel-load-file (expand-file-name "config.org" emacs-dir))
 
