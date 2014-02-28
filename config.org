@@ -258,6 +258,16 @@ require* 實際上就是 req-package 的綁定，只是語法和傳統 emacs 的
      ``(req-package ,,feature ,@body)))
 #+END_SRC
 
+使用時如下，也可以像 req-package 那樣加上參數
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (require* 'dired) ;; you can omit this empty requirement because of dired-single
+
+  (require* 'dired-single
+            :require dired
+            :init (...))
+#+END_SRC
+
 為了讓我的 =require*= 可以很清楚的在 elisp 程式碼中顯示，我替他加上和
 emacs 中的 =require= 相同的色彩，這樣可以很清楚看到我哪些程式是進行套件
 載入使用。
