@@ -195,6 +195,23 @@ use-package 是一套透過 elisp 的巨集功能來進行 emacs 套件管理的
 
 Github: https://github.com/jwiegley/use-package
 
+*** 使用 el-get 自動安裝遺失的套件
+
+在 use-package 原先設定的方法中，是透過 ELPA 來安裝遺失的套件，我偏好這件
+事情交給 el-get 來管理，所以要修改 use-package 的 function call。
+
+這邊透過 defadvice 來修改 use-package 裡面安裝 elpa﻿﻿ 套件的方法，當有安
+裝 el-get 的時候，使用 el-get 的方式來維護套件，反之使用 elpa 的方式來維護套
+件。
+
+#+BEGIN_SRC emacs-lisp
+  (defadvice use-package-ensure-elpa (before package-install (package) activate)
+    (if (require 'el-get nil 'noerror)
+        (unless (el-get-package-installed-p package)
+          (el-get-reinstall package))
+      ad-do-it))
+#+END_SRC
+
 ** 使用 req-package 簡化 use-package 的設定
 
 req-package is a macro wrapper on top of use-package. It's goal is to
@@ -216,6 +233,7 @@ Github: https://github.com/edvorg/req-package
 
 這樣當套件遺失的時候，req-package 才會呼叫 use-package 的方法來幫你安裝遺
 失的套件。
+
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -6889,7 +6907,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 緩衝區   | C-x C-b | 切換到 ibuffer     | 'ibuffer           |
 | 資料夾   | C-x C-d | 切換到 dired       | 'dired             |
 | 視窗切換 | C-x F   | 將視窗切換成全螢幕 | 'fullscreen-window |
-| Shell    | C-x s   | 執行 shell 命令     | 'shell-command     |
+| Shell    | C-x s   | 執行 shell 命令    | 'shell-command     |
 * 最後的初始化設定
 
 在 [[*%E4%BD%BF%E7%94%A8%20req-package%20%E7%B0%A1%E5%8C%96%20use-package%20%E7%9A%84%E8%A8%AD%E5%AE%9A][使用 req-package 簡化 use-package 的設定]] 有提到說要再使用
