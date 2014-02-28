@@ -6719,12 +6719,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 * 部若格                                                      :blog:
 ** 基本設定
 
-- 載入相關套件
-
-  #+begin_src emacs-lisp :tangle no
-    (require 'o-blog)
-  #+end_src
-
 - 設定我的部若格資料夾位置
 
   #+begin_src emacs-lisp :tangle no
@@ -6747,36 +6741,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
     (defvar coldnew-blog-file
       (concat coldnew-blog-src-dir "/blog.org"))
   #+end_src
-
-** 設定網頁連結名稱
-
-#+begin_src emacs-lisp :tangle no
-  (defun coldnew/ob-sanitize-string (s)
-    "Sanitize string s"
-    (let* ((avoid-list '("blog" "draft"))
-           (not-in-list (not (member (ob-sanitize-string s)
-                                     avoid-list))))
-      (if not-in-list
-          (s-left 5 (sha1 s))
-        (ob-sanitize-string s))))
-#+end_src
-
-** 當更新 blog 時自動重新編譯佈景主題成 css 檔案
-
-#+begin_src emacs-lisp :tangle no
-  (add-hook 'o-blog-after-publish-hook
-            '(lambda ()
-               (let* ((style-dir (concat coldnew-blog-dir "/style"))
-                      (source-dir (concat style-dir "/source"))
-                      (less-dir (concat source-dir "/less.js"))
-                      (theme-dir (concat style-dir "/theme")))
-
-                 ;; compile blog.less to blog.css and add it to css folder
-                 (shell-command (concat less-dir "/bin/lessc -x "
-                                        theme-dir "/blog.less" " > " theme-dir "/blog.css"))
-                 )
-))
-#+end_src
 
 ** blogit variables
 
@@ -6938,6 +6902,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 資料夾   | C-x C-d | 切換到 dired       | 'dired             |
 | 視窗切換 | C-x F   | 將視窗切換成全螢幕 | 'fullscreen-window |
 | Shell    | C-x s   | 執行 shell 命令    | 'shell-command     |
+
 * 最後的初始化設定
 
 在 [[*%E4%BD%BF%E7%94%A8%20req-package%20%E7%B0%A1%E5%8C%96%20use-package%20%E7%9A%84%E8%A8%AD%E5%AE%9A][使用 req-package 簡化 use-package 的設定]] 有提到說要再使用
