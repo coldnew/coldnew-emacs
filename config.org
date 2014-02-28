@@ -82,6 +82,10 @@ emacs 在 24 版後終於有自己的套件管理器 ELPA，不過有些外部�
 辦法透過他來安裝，所以我又使用了另外一個非常好用的套件管理器 el-get,
 透過這兩個套件管理器，在 emacs 下安裝新的套件是非常方便的。
 
+我將我的套件都存放在 =~/.emacs.d/lisp= 裡面，但是這個資料夾是不使用 git
+進行管理的(避免沒必要的 commit 以及提高可以移植性)，因此在使用
+=use-package= 以及 =req-package= 來對套件進行管理以及自動安裝。
+
 ** 使用 el-get 進行套件管理
 
 El-Get allows you to install and manage elisp code for Emacs. It
@@ -189,8 +193,29 @@ URL: http://elpa.gnu.org/
 
 use-package 是一套透過 elisp 的巨集功能來進行 emacs 套件管理的套件。
 
-
 Github: https://github.com/jwiegley/use-package
+
+** 使用 req-package 簡化 use-package 的設定
+
+req-package is a macro wrapper on top of use-package. It's goal is to
+simplify package dependencies management, when using use-package for
+your .emacs
+
+Github: https://github.com/edvorg/req-package
+
+#+BEGIN_SRC emacs-lisp
+  (require 'req-package)
+#+END_SRC
+
+使用 req-package 有一點要特別注意，那就是你必須在檔案尾巴加上以下的設
+定
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (req-package-finish)
+#+END_SRC
+
+這樣當套件遺失的時候，req-package 才會呼叫 use-package 的方法來幫你安裝遺
+失的套件。
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -6864,4 +6889,13 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 緩衝區   | C-x C-b | 切換到 ibuffer     | 'ibuffer           |
 | 資料夾   | C-x C-d | 切換到 dired       | 'dired             |
 | 視窗切換 | C-x F   | 將視窗切換成全螢幕 | 'fullscreen-window |
-| Shell    | C-x s   | 執行 shell命令     | 'shell-command     |
+| Shell    | C-x s   | 執行 shell 命令     | 'shell-command     |
+* 最後的初始化設定
+
+在 [[*%E4%BD%BF%E7%94%A8%20req-package%20%E7%B0%A1%E5%8C%96%20use-package%20%E7%9A%84%E8%A8%AD%E5%AE%9A][使用 req-package 簡化 use-package 的設定]] 有提到說要再使用
+=req-package-finish= 來完成所有套件的安裝，因此我們在 emacs 設定檔案最尾
+巴要進行這項工作。
+
+#+BEGIN_SRC emacs-lisp
+  (req-package-finish)
+#+END_SRC
