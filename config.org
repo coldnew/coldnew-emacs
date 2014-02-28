@@ -189,11 +189,18 @@ URL: http://elpa.gnu.org/
   (package-initialize)
 #+END_SRC
 
-** 使用 use-package 檢查與初始化套件
+** 使用 use-package 進行套件管理
 
 use-package 是一套透過 elisp 的巨集功能來進行 emacs 套件管理的套件。
 
 Github: https://github.com/jwiegley/use-package
+
+*** 當 use-package 無法載入時，使用 el-get 自動安裝他
+
+#+BEGIN_SRC emacs-lisp
+  (unless (require 'use-package nil 'noerror)
+    (el-get-reinstall 'use-package))
+#+END_SRC
 
 *** 使用 el-get 自動安裝遺失的套件
 
@@ -221,7 +228,8 @@ your .emacs
 Github: https://github.com/edvorg/req-package
 
 #+BEGIN_SRC emacs-lisp
-  (require 'req-package)
+  (unless (require 'use-package nil 'noerror)
+    (el-get-reinstall 'req-package))
 #+END_SRC
 
 使用 req-package 有一點要特別注意，那就是你必須在檔案尾巴加上以下的設
