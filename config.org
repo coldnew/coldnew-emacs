@@ -102,7 +102,6 @@ emacs 有一些預設的設定我不太喜歡，這邊先將他們關掉。
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
 
-
 ** 啟動 emacs-server
 
 當啟用 emacs 時，啟動 emacs-server，如果使用者是 root 或已啟用 server，
@@ -2509,6 +2508,11 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
             (format ": %s" (buffer-substring s e))))
 #+end_src
 
+** helm-swoop
+
+#+BEGIN_SRC emacs-lisp
+;;(require* 'helm-swoop)
+#+END_SRC
 
 ** 按鍵設定
 
