@@ -9,6 +9,35 @@
   (modify-all-frames-parameters '((fullscreen . maximized)))
 #+END_SRC
 
+* 基礎設置                                                             :base:
+
+初始化的 emacs 設定，包含了加入 PATH 以及一些 OS 相關設定。
+
+** 預先載入 cl 套件。
+
+#+begin_src emacs-lisp
+  (eval-when-compile (require 'cl))
+#+end_src
+
+** 複製系統的 PATH 變數
+
+在一開始 emacs 啟動時，複製系統的 Shell PATH 給 emacs 知道，這樣有些額外安
+裝的程式，比如 OSX 下的 homebrew 路徑，emacs 也可以知道他在那邊，當有需要呼
+叫外部程式的時候會比較方便。
+
+#+BEGIN_SRC emacs-lisp
+  (defun set-exec-path-from-shell-PATH ()
+    "Set up Emacs' `exec-path' and PATH environment variable to match that used by the user's shell.
+
+  This is particularly useful under Mac OSX, where GUI apps are not started from a shell."
+    (interactive)
+    (let ((path-from-shell (replace-regexp-in-string "[ \t\n]*$" "" (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
+      (setenv "PATH" path-from-shell)
+      (setq exec-path (split-string path-from-shell path-separator))))
+
+  (set-exec-path-from-shell-PATH)
+#+END_SRC
+
 * 語言與編碼                                                         :locale:
 
 emacs 編碼設定，大部份都設定成 utf-8。
@@ -228,7 +257,7 @@ your .emacs
 Github: https://github.com/edvorg/req-package
 
 #+BEGIN_SRC emacs-lisp
-  (unless (require 'use-package nil 'noerror)
+  (unless (require 'req-package nil 'noerror)
     (el-get-reinstall 'req-package))
 #+END_SRC
 
@@ -306,33 +335,6 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
                                                                <待續>
 
 * 基礎設置                                                             :base:
-
-這邊放置的是 *初始化* 的設定，為了避免設定衝突，部份 Macro 和 Function 會放置於此。
-
-** 預先載入 cl 套件。
-
-#+begin_src emacs-lisp
-  (eval-when-compile (require 'cl))
-#+end_src
-
-** 複製系統的 PATH 變數
-
-在一開始 emacs 啟動時，複製系統的 Shell PATH 給 emacs 知道，這樣有些額外安
-裝的程式，比如 OSX 下的 homebrew 路徑，emacs 也可以知道他在那邊，當有需要呼
-叫外部程式的時候會比較方便。
-
-#+BEGIN_SRC emacs-lisp
-  (defun set-exec-path-from-shell-PATH ()
-    "Set up Emacs' `exec-path' and PATH environment variable to match that used by the user's shell.
-
-  This is particularly useful under Mac OSX, where GUI apps are not started from a shell."
-    (interactive)
-    (let ((path-from-shell (replace-regexp-in-string "[ \t\n]*$" "" (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
-      (setenv "PATH" path-from-shell)
-      (setq exec-path (split-string path-from-shell path-separator))))
-
-  (set-exec-path-from-shell-PATH)
-#+END_SRC
 
 ** 資料夾相關變數設定                                             :variable:
 
@@ -690,63 +692,7 @@ Mac 最常用的 Command 按鍵，在 emacs 下則將他當作是 Alt 按鍵使�
     (unless (server-running-p) (server-start)))
 #+end_src
 
-** 根據目前螢幕的解析度調整 emacs 視窗的大小。                  :resolution:
 
-整個設定是使用 cond 來進行條件式的判斷，因此加入了 *設定起始位置* 和 *設定終止位置*
-作為保護。
-
-*** 設定起始位置
-#+begin_src emacs-lisp
-  (cond
-#+end_src
-*** 1920x1080
-#+begin_src emacs-lisp
-  (display-1920x1080-p
-   (setq default-frame-alist
-         (append (list
-                  '(width  . 134)
-                  '(height . 45)
-                  '(top    . 90)
-                  '(left   . 500))
-                 default-frame-alist)))
-#+end_src
-*** 1280x1024
-#+begin_src emacs-lisp
-  (display-1280x1024-p
-   (setq default-frame-alist
-         (append (list
-                  '(width  . 114)
-                  '(height . 40)
-                  '(top    . 90)
-                  '(left   . 300))
-                 default-frame-alist)))
-#+end_src
-*** 1280x800
-#+begin_src emacs-lisp
-  (display-1280x800-p
-   (setq default-frame-alist
-         (append (list
-                  '(width  . 114)
-                  '(height . 40)
-                  '(top    . 90)
-                  '(left   . 300))
-                 default-frame-alist)))
-#+end_src
-*** 預設情況
-#+begin_src emacs-lisp
-  (t
-   (setq default-frame-alist
-         (append (list
-                  '(width  . 100)
-                  '(height . 40)
-                  '(top    . 90)
-                  '(left   . 100))
-                 default-frame-alist)))
-#+end_src
-*** 設定終止位置
-#+begin_src emacs-lisp
-  )
-#+end_src
 * 常用的模組 / 函式庫                                               :plugin:
 
 emacs 有一些套件本身不需要配置，或是只是函式庫，這一類的套件我設
