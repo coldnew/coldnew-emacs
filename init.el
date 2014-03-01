@@ -29,7 +29,8 @@
 (defun reload-emacs ()
   "reload my emacs settings"
   (interactive)
-  (load-file (concat emacs-dir "init.el")) (desktop-revert) (delete-other-windows))
+  (load-file (concat emacs-dir "init.el")) (delete-other-windows))
+;;  (load-file (concat emacs-dir "init.el")) (desktop-revert) (delete-other-windows))
 
 ;; Load up org-mode and org-babel
 (require 'org)
