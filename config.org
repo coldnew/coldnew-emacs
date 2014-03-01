@@ -436,6 +436,135 @@ Github: https://github.com/victorhge/iedit
 #+begin_src emacs-lisp
   (require* 'iedit)
 #+end_src
+* Org
+
+org-mode 是非常強大的筆記管理系統，也是這整份 emacs 設定的核心，由於與
+他設定相關的東西太多了，特別將設定獨立出來。
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'org)
+#+END_SRC
+
+如果遇到副檔名為 .org 或是 .org_archive 的情況，則自動將他們認定為
+org-mode 的檔案。
+
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+  (add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
+#+end_src
+
+** 基本設定
+
+- 預設讓 org-mode 使用自動縮排模式
+
+  #+begin_src emacs-lisp
+    (setq org-startup-indented t)
+  #+end_src
+
+- 預設將所有項目都隱藏，只保留最上層的父目錄
+
+  #+begin_src emacs-lisp
+    (setq org-startup-folded t)
+  #+end_src
+
+- 將前面的 *星號* 隱藏，只顯示最後一個
+
+  #+begin_src emacs-lisp
+    (setq org-hide-leading-stars t)
+  #+end_src
+
+- 直接在程式碼欄位上為程式碼上色
+
+  #+begin_src emacs-lisp
+    (setq org-src-fontify-natively t)
+  #+end_src
+
+- 切換成程式碼欄位時使用目前的視窗
+
+  #+begin_src emacs-lisp
+    (setq org-src-window-setup 'current-window)
+  #+end_src
+
+** 加強 org-mode 強調文句的正規表達式
+
+org-mode 裏面的用來強調 (emphasize) 字體的正規表達式有一些缺點，
+比如你想使用下面的表達方式就會出現問題。
+
+: ~target="_self"~   =>  <code>target="_self"</code>
+
+解決的方式有兩個
+
+1. 如果你確定這個文句是要輸出成為 HTML 的話，你可以使用下面的方式強制
+   將他轉換。
+
+   :  @@html:<code> target="_self" </code>@@
+
+   關於更多 @@html: ... @@ 區塊的資訊，請參考 [[http://orgmode.org/manual/Quoting-HTML-tags.html#Quoting-HTML-tags][Quoting-HTML-tags]]
+
+2. 你也可以輸入特別的 Unicode 字元
+
+   : <U200B> /xe2/x80/x8b ZERO WIDTH SPACE
+
+   這個特殊的 Unicode 字元顯示出一個很微小的的空白，基本上你是看不出來
+   的，插入的方式是使用 *C-x 8 RET 200b RET* 來輸入這個 Unicode 字元。
+
+   此外，你也要修改 *org-emphasis-regexp-components* 的規則。
+
+原始的規則如下
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (defcustom org-emphasis-regexp-components
+   '(" ​\t('\"{" "- ​\t.,:!?;'\")}\\" " \t\r\n,\"'" "." 1))
+#+END_SRC
+
+修改成如下 (其中的 *#* 代表剛剛所提及的 <U200B> 字元 )
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (defcustom org-emphasis-regexp-components
+   '(" #​\t('\"{" "- ​\t.,:!?;'\")}\\" " \t\r\n,\"'" "." 1))
+#+END_SRC
+
+因此以下就是我實際上修改過後的 *org-emphasis-regexp-components* 。
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-emphasis-regexp-components '(" ​\t('\"{" "- \t.,:!?;'\")}\\" " \t\r\n,\"'" "." 1))
+#+END_SRC
+
+** 設定 Babel 支援的語言
+
+org-mode 的 Bebel 有一個非常好用的功能，你可以對程式碼區塊使用 =C-c C-c=
+進行運算(eval)，要使用這個功能，必須使用以下的程式碼將該﻿語言的 babel 功
+能打開。
+
+#+BEGIN_SRC emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (C . t)
+     (ditaa . t)
+     (dot . t)
+     (js . t)
+     (latex . t)
+     (perl . t)
+     (python . t)
+     (ruby . t)
+     (sh . t)
+     (plantuml . t)
+     (clojure .t)
+     ))
+#+END_SRC
+
+** 對程式碼區塊進行運算 (eval) 時不再詢問
+
+預設情況下，當你對程式碼區塊使用 =C-c C-c= 進行運算的時候，emacs 會詢問
+你是否真的要這樣作，這是一個很惱人厭的功能(基於安全考量)，我在這邊關掉
+他，這樣我可以直接對這些程式碼區塊進行運算。
+
+#+begin_src emacs-lisp
+  (setq org-confirm-babel-evaluate nil)
+#+end_src
+
+
 
 * 窗口管理                                                           :window:
 
@@ -534,7 +663,6 @@ mu4e 是 mu 的 elisp 接口，由 [[http://emacs-fu.blogspot.tw/][emacs-fu]] �
 : remotepasseval = get_password_emacs("imap.gmail.com")
 
 即可透過 emacs 取得 password 這個密碼。
-
 
 
 
@@ -2685,89 +2813,6 @@ woman 是 emacs 下顯示 manpage 最好的方式。
     (require 'org-latex)
   #+end_src
 
-- 設定 org-mode 檔案的副檔名與對應的模式
-
-  #+begin_src emacs-lisp
-    (add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
-    (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-    (add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
-  #+end_src
-
-- 預設讓 org-mode 使用自動縮排模式
-
-  #+begin_src emacs-lisp
-    (setq org-startup-indented t)
-  #+end_src
-
-- 預設將所有項目都隱藏，只保留最上層的父目錄
-
-  #+begin_src emacs-lisp
-    (setq org-startup-folded t)
-  #+end_src
-
-- 將前面的 *星號* 隱藏，只顯示最後一個
-
-  #+begin_src emacs-lisp
-    (setq org-hide-leading-stars t)
-  #+end_src
-
-- 直接在程式碼欄位上為程式碼上色
-
-  #+begin_src emacs-lisp
-    (setq org-src-fontify-natively t)
-  #+end_src
-
-- 切換成程式碼欄位時使用目前的視窗
-
-  #+begin_src emacs-lisp
-    (setq org-src-window-setup 'current-window)
-  #+end_src
-
-** 加強 org-mode 強調文句的正規表達式
-
-org-mode 裏面的用來強調 (emphasize) 字體的正規表達式有一些缺點，
-比如你想使用下面的表達方式就會出現問題。
-
-: ~target="_self"~   =>  <code>target="_self"</code>
-
-解決的方式有兩個
-
-1. 如果你確定這個文句是要輸出成為 HTML 的話，你可以使用下面的方式強制
-   將他轉換。
-
-   :  @@html:<code> target="_self" </code>@@
-
-   關於更多 @@html: ... @@ 區塊的資訊，請參考 [[http://orgmode.org/manual/Quoting-HTML-tags.html#Quoting-HTML-tags][Quoting-HTML-tags]]
-
-2. 你也可以輸入特別的 Unicode 字元
-
-   : <U200B> /xe2/x80/x8b ZERO WIDTH SPACE
-
-   這個特殊的 Unicode 字元顯示出一個很微小的的空白，基本上你是看不出來
-   的，插入的方式是使用 *C-x 8 RET 200b RET* 來輸入這個 Unicode 字元。
-
-   此外，你也要修改 *org-emphasis-regexp-components* 的規則。
-
-原始的規則如下
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (defcustom org-emphasis-regexp-components
-   '(" ​\t('\"{" "- ​\t.,:!?;'\")}\\" " \t\r\n,\"'" "." 1))
-#+END_SRC
-
-修改成如下 (其中的 *#* 代表剛剛所提及的 <U200B> 字元 )
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (defcustom org-emphasis-regexp-components
-   '(" #​\t('\"{" "- ​\t.,:!?;'\")}\\" " \t\r\n,\"'" "." 1))
-#+END_SRC
-
-因此以下就是我實際上修改過後的 *org-emphasis-regexp-components* 。
-
-#+BEGIN_SRC emacs-lisp
-  (setq org-emphasis-regexp-components '(" ​\t('\"{" "- \t.,:!?;'\")}\\" " \t\r\n,\"'" "." 1))
-#+END_SRC
-
 ** 使用 org-mode 記事                                              :capture:
 
 org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-mdoe 檔案的資料
@@ -3049,33 +3094,6 @@ some packages conflict with org-mode
                   (goto-char point-to-move-to)
                 (show-subtree))))
 #+end_src
-** Babel 支援的語言
-
-org-mode 的 Babel 功能可以實現所謂的 Literacture Programming
-
-#+begin_src emacs-lisp
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (C . t)
-     (ditaa . t)
-     (dot . t)
-     (js . t)
-     (latex . t)
-     (perl . t)
-     (python . t)
-     (ruby . t)
-     (sh . t)
-     (plantuml . t)
-     (clojure .t)
-     ))
-#+end_src
-** 對程式碼區塊進行 eval 時不再詢問
-
-#+begin_src emacs-lisp
-  (setq org-confirm-babel-evaluate nil)
-#+end_src
-
 ** 輸出成 PDF 檔案設定
 
 #+BEGIN_SRC emacs-lisp
