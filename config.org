@@ -436,7 +436,7 @@ Github: https://github.com/victorhge/iedit
 #+begin_src emacs-lisp
   (require* 'iedit)
 #+end_src
-* Org
+* Org                                                                   :org:
 
 org-mode 是非常強大的筆記管理系統，也是這整份 emacs 設定的核心，由於與
 他設定相關的東西太多了，特別將設定獨立出來。
@@ -563,7 +563,51 @@ org-mode 的 Bebel 有一個非常好用的功能，你可以對程式碼區塊�
 #+begin_src emacs-lisp
   (setq org-confirm-babel-evaluate nil)
 #+end_src
+* 終端機                                                               :term:
 
+emacs 本身內建了 term-mode、shell-mode 這類可以讓人在 emacs 當中使用終端機
+功能的模式。
+
+** 基本設定
+
+term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 shell-mode
+來替代 term-mode)，但是我用於串口通訊的 serial-term 仍舊是以 term-mode
+為基礎，基於習慣，這邊會設置基本的 term-mode 配置。
+
+#+begin_src emacs-lisp
+  (require* 'term)
+  (require* 'ansi-color)
+#+end_src
+
+*** 移除 term-mode 預設的前景與背景顏色。
+
+我希望 term-mode 可以和我的 emacs 更完整結合，所以移除掉他的預設文字顏色以
+及背景顏色，這樣會比較好看。
+
+#+begin_src emacs-lisp
+  (setq term-default-bg-color nil)
+  (setq term-default-fg-color nil)
+#+end_src
+
+*** 修正與 yasnippet 相衝的問題
+
+term-mode 似乎會和 yasnippet 的 TAB 按鍵相衝，使用這個設定讓 yasnippet 不
+執行在 term-mode 中。
+
+#+begin_src emacs-lisp
+  (eval-after-load 'yasnippet
+    (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1))))
+#+end_src
+
+*** 讓一些習慣的按鍵在 term-mode 下也有作用
+
+這邊重新設定一下 term-mode 下的按鍵設定，不這樣做的話，很多按鍵不能用
+很麻煩，比如說，在 emacs 下 M-x 不能用像話嘛....
+
+#+begin_src emacs-lisp
+  (define-key term-raw-map (kbd "M-x") 'nil)
+  (define-key term-raw-map (kbd "C-h") 'nil)
+#+end_src
 
 * 窗口管理                                                           :window:
 
@@ -2284,47 +2328,6 @@ auto-complete-mode 的按鍵設定。
     "Make popup shell window at buttom by default.")
 #+end_src
 
-** 基本設定
-
-term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 shell-mode
-來替代 term-mode)，但是我用於串口通訊的 serial-term 仍舊是以 term-mode
-為基礎，基於習慣，這邊會設置基本的 term-mode 配置。
-
-- 載入相依套件
-
-  #+begin_src emacs-lisp
-    (require 'term)
-    (require 'ansi-color)
-  #+end_src
-
-- 色彩配置
-
-  移除 term-mode 預設的前景與背景顏色。
-
-  #+begin_src emacs-lisp
-    (setq term-default-bg-color nil)
-    (setq term-default-fg-color nil)
-  #+end_src
-
-- 修正與 yasnippet 相衝的問題
-
-  term-mode 似乎會和 yasnippet 的 tab 相衝，使用這個設定讓 yasnippet 不
-  執行在 term-mode。
-
-  #+begin_src emacs-lisp
-    (eval-after-load 'yasnippet
-      (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1))))
-  #+end_src
-
-- 讓一些習慣的按鍵在 term-mode 下也有作用
-
-  這邊重新設定一下 term-mode 下的按鍵設定，不這樣做的話，很多按鍵不能用
-  很麻煩，比如說，在 emacs 下 M-x 不能用像話嘛....
-
-  #+begin_src emacs-lisp
-    (define-key term-raw-map (kbd "M-x") 'nil)
-    (define-key term-raw-map (kbd "C-h") 'nil)
-  #+end_src
 
 ** shell-pop
 *** 載入相依套件
