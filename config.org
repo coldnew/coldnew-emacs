@@ -5,10 +5,6 @@
 #+BABEL: :cache yes
 #+OPTIONS: ^:nil
 
-#+BEGIN_SRC emacs-lisp
-  (modify-all-frames-parameters '((fullscreen . maximized)))
-#+END_SRC
-
 * 基礎設置                                                             :base:
 
 初始化的 emacs 設定，包含了加入 PATH 以及一些 OS 相關設定。
@@ -411,6 +407,45 @@ emacs 中的 =require= 相同的色彩，這樣可以很清楚看到我哪些程
                              (1 font-lock-keyword-face)
                              (2 font-lock-constant-face nil t))))
 #+END_SRC
+* 窗口管理                                                           :window:
+
+針對 emacs 視窗大小的設定，以及彈出視窗等設置。
+
+** emacs 啟動後自動將視窗最大化
+
+以前我曾經依據螢幕的解析度來調整視窗大小，仔細檢視過後，我發現最後我都
+還是會將 emacs 視窗對大化，因此還是直接將視窗放到最大比較好。
+
+#+BEGIN_SRC emacs-lisp
+  (modify-all-frames-parameters '((fullscreen . maximized)))
+#+END_SRC
+
+** 使用 winner-mode 快速切換窗口佈局
+
+winner-mode 是 emacs 自帶的窗口佈局管理器，可以對窗口的改變進行
+undo/redo 的動作。
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'winner)
+#+END_SRC
+
+*** 不使用 winner 預設的按鍵
+
+winner-mode 有自己預設好的按鍵方式，我習慣用自己的，因此取消掉他預設的
+按鍵模式。
+
+#+begin_src emacs-lisp
+  (setq winner-dont-bind-my-keys t)
+#+end_src
+
+*** 全域啟用 winner-mode
+
+讓 emacs 啟動後立刻打開 winner-mode，方便進行視窗管理。
+
+#+begin_src emacs-lisp
+  (winner-mode t)
+#+end_src
+
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -5797,40 +5832,6 @@ popwin resolves there problems. Windows of such temporary buffers will be shown 
   (setq display-buffer-function 'popwin:display-buffer)
 #+end_src
 
-** 使用 winner-mode 快速切換窗口佈局
-
-winner-mode 是 emacs 自帶的窗口佈局管理器，可以對窗口的改變進行 undo/redo 的動作。
-
-*** 載入相關套件
-
-#+begin_src emacs-lisp
-  (require 'winner)
-#+end_src
-
-*** 不使用 winner 預設的按鍵
-
-#+begin_src emacs-lisp
-  (setq winner-dont-bind-my-keys t)
-#+end_src
-
-*** 全域啟用 winner-mode
-
-#+begin_src emacs-lisp
-  (winner-mode t)
-#+end_src
-
-*** winner-mode 按鍵設定                                         :global@key:
-
-| 按鍵 | 命令        | 用途                               |
-|------+-------------+------------------------------------|
-| M-[  | winner-undo | 回復上一個窗口佈局                 |
-| M-]  | winner-redo | 切回上一組進行窗口復原時的窗口佈局 |
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "M-[") 'winner-undo)
-  (global-set-key (kbd "M-]") 'winner-redo)
-#+end_src
-
 ** golden-ratio
 
 When working with many windows at the same time, each window has a
@@ -6815,13 +6816,15 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 ** 全域性按鍵設定 (global-set-key) :noexport:
 
 #+TBLNAME: keys
-| 類別     | 按鍵    | 描述               | 命令               |
-|----------+---------+--------------------+--------------------|
-| 文字編輯 | s-<RET> | 插入空白行         | 'insert-empty-line |
-| 緩衝區   | C-x C-b | 切換到 ibuffer     | 'ibuffer           |
-| 資料夾   | C-x C-d | 切換到 dired       | 'dired             |
-| 視窗切換 | C-x F   | 將視窗切換成全螢幕 | 'fullscreen-window |
-| Shell    | C-x s   | 執行 shell 命令    | 'shell-command     |
+| 類別     | 按鍵    | 描述                               | 命令               |
+|----------+---------+------------------------------------+--------------------|
+| 文字編輯 | s-<RET> | 插入空白行                         | 'insert-empty-line |
+| 緩衝區   | C-x C-b | 切換到 ibuffer                     | 'ibuffer           |
+| 資料夾   | C-x C-d | 切換到 dired                       | 'dired             |
+| 視窗切換 | C-x F   | 將視窗切換成全螢幕                 | 'fullscreen-window |
+| 視窗切換 | M-[     | 回復上一個窗口佈局                 | 'winner-undo       |
+| 視窗切換 | M-]     | 切回上一組進行窗口復原時的窗口佈局 | 'winner-redo       |
+| Shell    | C-x s   | 執行 shell 命令                    | 'shell-command     |
 
 * 最後的初始化設定
 
