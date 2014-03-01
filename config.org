@@ -407,6 +407,36 @@ emacs 中的 =require= 相同的色彩，這樣可以很清楚看到我哪些程
                              (1 font-lock-keyword-face)
                              (2 font-lock-constant-face nil t))))
 #+END_SRC
+* 常用的模組 / 函式庫                                               :plugin:
+
+emacs 有一些套件本身不需要配置，或是只是函式庫，這一類的套件我設
+定為預先載入，這樣在後面的設定裏面我就可以直接使用這些套件的功能。
+
+若是設定比較簡單的獨立程式也放在這邊。
+
+** htmlize - 將緩衝區輸出成 html 檔案
+
+htmlize 是 emacs 一個非常好用的模組，可以讓 emacs 輸出檔案成為
+HTML 檔，org-mode 輸出成 html 時也是使用他。
+
+#+begin_src emacs-lisp
+  (require* 'htmlize)
+#+end_src
+
+
+** iedit - 快速修改緩衝區內相同的文字
+
+我們有時候會希望可以快尋尋找某個字，並用新的文字來取代他，iedit-mode
+就是做這種事情的好幫手，先將游標停在要尋找取代的文字上，並輸入
+=M-x iedit-mode= 接著就會發現到同個緩衝區裏面所有和游標底下的文字相同的
+文字都被標記起來，試著更改看看，你會發現到這些文字同時被更改了。
+
+Github: https://github.com/victorhge/iedit
+
+#+begin_src emacs-lisp
+  (require* 'iedit)
+#+end_src
+
 * 窗口管理                                                           :window:
 
 針對 emacs 視窗大小的設定，以及彈出視窗等設置。
@@ -702,15 +732,6 @@ iimage 是讓 emacs 可以直接顯示圖片的模式。
   (require 'iimage)
 #+end_src
 
-** 輸出成 html 檔案
-
-htmlize 是 emacs 一個非常好用的模組，可以讓 emacs 輸出檔案成為
-HTML 檔，org-mode 輸出成 html 時也是使用他。
-
-#+begin_src emacs-lisp
-  (require 'htmlize)
-#+end_src
-
 ** 顯示 ascii 表
 
 ascii 是一個很不錯的 ascii 表顯示工具，你可以使用 ascii-on 來啟用
@@ -739,17 +760,6 @@ smallurl 是一個很棒的短網址工具，他會幫你到遠端的 server 取
 
 #+begin_src emacs-lisp
   (require 'smallurl)
-#+end_src
-
-** 快速更改相同的英文字
-
-我們有時候會希望可以快尋尋找某個字，並用新的文字來取代他，iedit-mode
-就是做這種事情的好幫手，先將游標停在要尋找取代的文字上，並輸入
-M-x iedit-mode 接著就會發現到同個緩衝區裏面所有和游標底下的文字相同的
-文字都被標記起來，試著更改看看，你會發現到這些文字同時被更改了。
-
-#+begin_src emacs-lisp
-  (require 'iedit)
 #+end_src
 
 ** 增強 list 處理的 function
