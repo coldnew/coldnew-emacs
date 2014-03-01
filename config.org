@@ -337,7 +337,7 @@ Github: https://github.com/jwiegley/use-package
 件。
 
 #+BEGIN_SRC emacs-lisp
-  (defadvice use-package-ensure-elpa (before package-install (package) activate)
+  (defadvice use-package-ensure-elpa (around package-install (package) activate)
     (if (require 'el-get nil 'noerror)
         (unless (el-get-package-installed-p package)
           (el-get-reinstall package))
@@ -536,6 +536,17 @@ mu4e 是 mu 的 elisp 接口，由 [[http://emacs-fu.blogspot.tw/][emacs-fu]] �
 即可透過 emacs 取得 password 這個密碼。
 
 
+
+
+* TODO TMP
+#+begin_src emacs-lisp
+  (defvar emacs-default-shell "/bin/bash"
+    "Default shell for cemacs.")
+  (defvar emacs-popup-shell-window-height 30
+    "Window hight of popup shell.")
+  (defvar emacs-popup-shell-window-position "bottom"
+    "Make popup shell window at buttom by default.")
+#+end_src
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -3175,6 +3186,12 @@ org-mode 的 Babel 功能可以實現所謂的 Literacture Programming
   (setq org-mode-expand-alist
         '(("t" . org-insert-export-options-template)
           ))
+#+END_SRC
+
+** screenshot
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'org-screenshot)
 #+END_SRC
 
 * 書籤與暫存器                                                     :bookmark:
