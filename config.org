@@ -565,7 +565,6 @@ org-mode 的 Bebel 有一個非常好用的功能，你可以對程式碼區塊�
 #+end_src
 
 
-
 * 窗口管理                                                           :window:
 
 針對 emacs 視窗大小的設定，以及彈出視窗等設置。
@@ -664,17 +663,6 @@ mu4e 是 mu 的 elisp 接口，由 [[http://emacs-fu.blogspot.tw/][emacs-fu]] �
 
 即可透過 emacs 取得 password 這個密碼。
 
-
-
-* TODO TMP
-#+begin_src emacs-lisp
-  (defvar emacs-default-shell "/bin/bash"
-    "Default shell for cemacs.")
-  (defvar emacs-popup-shell-window-height 30
-    "Window hight of popup shell.")
-  (defvar emacs-popup-shell-window-position "bottom"
-    "Make popup shell window at buttom by default.")
-#+end_src
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -2286,6 +2274,15 @@ auto-complete-mode 的按鍵設定。
   (define-key ac-complete-mode-map[tab] 'ac-expand)
 #+end_src
 * 終端機                                                               :term:
+
+#+begin_src emacs-lisp
+  (defvar emacs-default-shell "/bin/bash"
+    "Default shell for cemacs.")
+  (defvar emacs-popup-shell-window-height 30
+    "Window hight of popup shell.")
+  (defvar emacs-popup-shell-window-position "bottom"
+    "Make popup shell window at buttom by default.")
+#+end_src
 
 ** 基本設定
 
