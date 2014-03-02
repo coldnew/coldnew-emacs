@@ -605,8 +605,12 @@ term-mode 似乎會和 yasnippet 的 TAB 按鍵相衝，使用這個設定讓 ya
 很麻煩，比如說，在 emacs 下 M-x 不能用像話嘛....
 
 #+begin_src emacs-lisp
-  (define-key term-raw-map (kbd "M-x") 'nil)
-  (define-key term-raw-map (kbd "C-h") 'nil)
+  (defun my/term-mode-setup ()
+    "My setup fro term-mode."
+    (define-key term-raw-map (kbd "M-x") 'nil)
+    (define-key term-raw-map (kbd "C-h") 'nil))
+
+  (add-hook 'term-mode-hook 'my/term-mode-setup)
 #+end_src
 
 * 窗口管理                                                           :window:
