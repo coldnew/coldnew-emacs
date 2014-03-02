@@ -632,6 +632,23 @@ global-auto-complete-mode 這個 function 只具有切換全部 buffer 的自動
   (real-global-auto-complete-mode t)
   (global-auto-complete-mode t)
 #+end_src
+** 啟用 ac-comphist 存放補全的歷史紀錄
+
+啟用這項設定，auto-complete 會存放一些常用的資訊到自動補全記錄下。
+
+#+BEGIN_SRC emacs-lisp
+  (setq ac-use-comphist t)
+#+END_SRC
+
+** 設定 ac-comphist 檔案放置的位置
+
+auto-complete-mode 會產生一個名為 =auto-complete.dat= 的檔案來存放自動
+補全的歷史紀錄，預設這個檔案會在 =~/.emacs.d/auto-complete.dat= 下面，
+我不喜歡這樣，所以移到 =~/.emacs.d/cache/auto-complete.dat=
+
+#+BEGIN_SRC emacs-lisp
+  (setq ac-comphist-file "~/.emacs.d/cache/auto-complete.dat")
+#+END_SRC
 
 
 * 終端機                                                               :term:
@@ -2341,12 +2358,6 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
 
   ;; After 0.01 sec, show help window
   (setq ac-quick-help-delay 0.5)
-
-  ;; Enable ac-comphist
-  (setq ac-use-comphist t)
-
-  ;; Setting ac-comphist data
-  (setq ac-comphist-file (concat emacs-cache-dir "auto-complete.dat"))
 
   ;; Show menu
   (setq ac-auto-show-menu t)
