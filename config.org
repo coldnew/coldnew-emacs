@@ -340,6 +340,7 @@ Github: https://github.com/jwiegley/use-package
   (defadvice use-package-ensure-elpa (around package-install (package) activate)
     (if (require 'el-get nil 'noerror)
         (unless (el-get-package-installed-p package)
+;;          (el-get 'sync)
           (el-get-reinstall package))
       ad-do-it))
 #+END_SRC
@@ -563,6 +564,76 @@ org-mode 的 Bebel 有一個非常好用的功能，你可以對程式碼區塊�
 #+begin_src emacs-lisp
   (setq org-confirm-babel-evaluate nil)
 #+end_src
+** 使用 deft 快速瀏覽、尋找筆記
+
+Homepage: http://jblevins.org/projects/deft/
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'deft)
+#+END_SRC
+
+*** 設定尋找得檔案副檔名為 *.org
+
+deft 其實也可以用於 *.text 檔案，不過我更偏好用在 org-mode 上。
+
+#+BEGIN_SRC emacs-lisp
+  (setq deft-extension "org")
+#+END_SRC
+
+*** 尋找的目錄設定為
+* 自動補全
+
+auto-complete-mode 是目前使用 emacs 的人都會安裝的自動補全用的 backend，
+他可以透過許多函式庫來協助你更好的在 emacs 中進行補全。
+
+Github: https://github.com/auto-complete/auto-complete
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'auto-complete)
+  (require 'auto-complete-config)
+#+END_SRC
+
+** 使用 auto-complete-mode 提供的預設設定
+
+auto-complete-mode 本身就提供了一些不錯的設定，這邊直接套用。
+
+#+BEGIN_SRC emacs-lisp
+  (ac-config-default)
+#+END_SRC
+
+** 啟用 fuzzy-match
+
+啟用 fuzzy-match 讓尋找要補全的文字更輕鬆。
+
+#+BEGIN_SRC emacs-lisp
+  (setq ac-use-fuzzy t)
+#+END_SRC
+
+** 不自動啟用自動補全
+
+預設的 auto-complete-mode 會自動啟動自動補全的選單，這邊將他關掉，當我用
+按鍵觸發時再彈出來。
+
+#+begin_src emacs-lisp
+  (setq ac-auto-start nil)
+#+end_src
+
+** 全域性使用自動補全
+
+global-auto-complete-mode 這個 function 只具有切換全部 buffer 的自動補全功能，
+若想要一開始就全部的 mode 都具有自動補全能力，則必須用個 dirty hack 才行。
+
+#+begin_src emacs-lisp
+  (define-globalized-minor-mode real-global-auto-complete-mode
+    auto-complete-mode (lambda ()
+                         (if (not (minibufferp (current-buffer)))
+                             (auto-complete-mode 1))
+                         ))
+  (real-global-auto-complete-mode t)
+  (global-auto-complete-mode t)
+#+end_src
+
+
 * 終端機                                                               :term:
 
 emacs 本身內建了 term-mode、shell-mode 這類可以讓人在 emacs 當中使用終端機
@@ -599,19 +670,21 @@ term-mode 似乎會和 yasnippet 的 TAB 按鍵相衝，使用這個設定讓 ya
     (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1))))
 #+end_src
 
-*** 讓一些習慣的按鍵在 term-mode 下也有作用
 
-這邊重新設定一下 term-mode 下的按鍵設定，不這樣做的話，很多按鍵不能用
-很麻煩，比如說，在 emacs 下 M-x 不能用像話嘛....
+** multi-term 讓你方便管理多個 terminal 緩衝區
+
+EmacsWiki: http://www.emacswiki.org/emacs//multi-term.el
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'multi-term)
+#+END_SRC
+
+*** 使用 bash 作為預設的 shell
 
 #+begin_src emacs-lisp
-  (defun my/term-mode-setup ()
-    "My setup fro term-mode."
-    (define-key term-raw-map (kbd "M-x") 'nil)
-    (define-key term-raw-map (kbd "C-h") 'nil))
-
-  (add-hook 'term-mode-hook 'my/term-mode-setup)
+  (setq multi-term-program "/bin/bash")
 #+end_src
+
 
 * 窗口管理                                                           :window:
 
@@ -2252,43 +2325,10 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (require 'auto-complete-clang)
 #+end_src
 
-** 使用預設的設定。
-
-#+begin_src emacs-lisp
-  (ac-config-default)
-#+end_src
-
-** 不使用 fuzzy-match
-
-#+begin_src emacs-lisp
-  (setq ac-use-fuzzy nil)
-#+end_src
-
-** 不自動啟用自動補全
-
-#+begin_src emacs-lisp
-  (setq ac-auto-start nil)
-#+end_src
-
 ** 加入我自定義的補全字典
 
 #+begin_src emacs-lisp
   (add-to-list 'ac-dictionary-directories (concat emacs-dir "ac-dict"))
-#+end_src
-
-** 全域性使用自動補全
-
-global-auto-complete-mode 這個 function 只具有切換全部 buffer 的自動補全功能，
-若想要一開始就全部的 mode 都具有自動補全能力，則必須用個 dirty hack 才行。
-
-#+begin_src emacs-lisp
-  (define-globalized-minor-mode real-global-auto-complete-mode
-    auto-complete-mode (lambda ()
-                         (if (not (minibufferp (current-buffer)))
-                             (auto-complete-mode 1))
-                         ))
-  (real-global-auto-complete-mode t)
-  (global-auto-complete-mode t)
 #+end_src
 
 ** TODO 位分類
@@ -2355,11 +2395,6 @@ auto-complete-mode 的按鍵設定。
             (shell-pop-out)))))
 #+end_src
 
-** multi-term
-#+begin_src emacs-lisp
-  (require 'multi-term)
-  (setq multi-term-program emacs-default-shell)
-#+end_src
 
 ** shell mode
 
@@ -2572,7 +2607,7 @@ auto-complete-mode 的按鍵設定。
           ))))
 
   ;; Make eshell prompt more colorful
-  (add-to-list 'eshell-output-filter-functions 'coldnew/colorfy-eshell-prompt)
+  (add-hook 'eshell-output-filter-functions 'coldnew/colorfy-eshell-prompt)
   #+end_src
 
 ** TODO 其他設定
