@@ -36,3 +36,4 @@ tramp
 custom.el
 lisp
 eshell/
+.org-id-locations
