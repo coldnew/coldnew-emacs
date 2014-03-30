@@ -595,7 +595,6 @@ deft 其實也可以用於 *.text 檔案，不過我更偏好用在 org-mode 上
   (setq deft-use-filename-as-title t)
 #+END_SRC
 
-
 * 自動補全
 
 auto-complete-mode 是目前使用 emacs 的人都會安裝的自動補全用的 backend，
@@ -665,7 +664,6 @@ auto-complete-mode 會產生一個名為 =auto-complete.dat= 的檔案來存放�
   (setq ac-comphist-file "~/.emacs.d/cache/auto-complete.dat")
 #+END_SRC
 
-
 * 終端機                                                               :term:
 
 emacs 本身內建了 term-mode、shell-mode 這類可以讓人在 emacs 當中使用終端機
@@ -716,7 +714,6 @@ EmacsWiki: http://www.emacswiki.org/emacs//multi-term.el
 #+begin_src emacs-lisp
   (setq multi-term-program "/bin/bash")
 #+end_src
-
 
 * 窗口管理                                                           :window:
 
@@ -815,7 +812,6 @@ mu4e 是 mu 的 elisp 接口，由 [[http://emacs-fu.blogspot.tw/][emacs-fu]] �
 : remotepasseval = get_password_emacs("imap.gmail.com")
 
 即可透過 emacs 取得 password 這個密碼。
-
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -5043,6 +5039,19 @@ paredit 可以幫助傳寫程式的速度。
   (require 'less-css-mode)
   (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
 #+end_src
+
+** SCSS
+
+#+BEGIN_SRC emacs-lisp
+(require* 'scss-mode)
+#+END_SRC
+
+scss-mode 預設會在檔案儲存的時候自動編譯 scss 檔成為 css 檔，這邊關掉這項
+設定。
+
+#+BEGIN_SRC emacs-lisp
+  (setq scss-compile-at-save nil)
+#+END_SRC
 
 ** JavaScript
 
