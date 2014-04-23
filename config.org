@@ -418,7 +418,41 @@ emacs 有一些套件本身不需要配置，或是只是函式庫，這一類�
 
 若是設定比較簡單的獨立程式也放在這邊。
 
-** htmlize - 將緩衝區輸出成 html 檔案
+** 載入部分未被載入的預設套件
+
+在 emacs 中有一些內建套件沒有預設載入，這邊將其載入使用。
+
+#+begin_src emacs-lisp
+  (require* 'misc)
+  (require* 'cc-mode)
+  (require* 'frameset)
+#+end_src
+
+** ascii :: 顯示 ASCII 表
+
+ascii 是一個很不錯的 ascii 表顯示工具，你可以使用 ascii-on 來啟用
+, 他會告訴你目前游標所在位置的 ASCII 碼，使用 ascii-off 可以關閉
+ascii-mode。
+
+#+begin_src emacs-lisp
+  (require* 'ascii)
+#+end_src
+
+增加額外的 function，這樣我可以使用 ascii 或是 ascii-toggle 來切換顯示 ascii 表。
+
+#+begin_src emacs-lisp
+  (eval-after-load 'ascii
+    '(progn
+       ;; ascii-toggle
+       (defun ascii-toggle ()
+         "Toggle ascii-mode."
+         (interactive) (if (not (ascii-off)) (ascii-on)))
+
+       ;; alias ascii to ascii-toggle
+       (defalias 'ascii 'ascii-toggle)))
+#+end_src
+
+** htmlize :: 將緩衝區輸出成 html 檔案
 
 htmlize 是 emacs 一個非常好用的模組，可以讓 emacs 輸出檔案成為
 HTML 檔，org-mode 輸出成 html 時也是使用他。
@@ -427,8 +461,7 @@ HTML 檔，org-mode 輸出成 html 時也是使用他。
   (require* 'htmlize)
 #+end_src
 
-
-** iedit - 快速修改緩衝區內相同的文字
+** iedit :: 快速修改緩衝區內相同的文字
 
 我們有時候會希望可以快尋尋找某個字，並用新的文字來取代他，iedit-mode
 就是做這種事情的好幫手，先將游標停在要尋找取代的文字上，並輸入
@@ -1090,40 +1123,10 @@ emacs 有一些套件本身不需要配置，或是只是函式庫，這一類�
 
 ** 內建套件
 
-有一些內建套件沒有預設載入，這邊將其載入使用。
-
-#+begin_src emacs-lisp
-  (require 'misc)
-  (require 'cc-mode)
-  (require 'frameset nil 'noerror)
-#+end_src
-
 iimage 是讓 emacs 可以直接顯示圖片的模式。
 
 #+begin_src emacs-lisp
   (require 'iimage)
-#+end_src
-
-** 顯示 ascii 表
-
-ascii 是一個很不錯的 ascii 表顯示工具，你可以使用 ascii-on 來啟用
-, 他會告訴你目前游標所在位置的 ASCII 碼，使用 ascii-off 可以關閉
-ascii-mode。
-
-#+begin_src emacs-lisp
-  (require 'ascii)
-#+end_src
-
-增加額外的 function，這樣我可以使用 ascii 或是 ascii-toggle 來切換顯示 ascii 表。
-
-#+begin_src emacs-lisp
-  (when (featurep 'ascii)
-    ;; ascii-toggle
-    (defun ascii-toggle ()
-      (interactive)
-      (if (not (ascii-off)) (ascii-on)))
-    ;; alias ascii to ascii-toggle
-    (defalias 'ascii 'ascii-toggle))
 #+end_src
 
 ** 縮短網址
