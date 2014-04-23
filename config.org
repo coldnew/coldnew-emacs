@@ -815,6 +815,20 @@ mu4e 是 mu 的 elisp 接口，由 [[http://emacs-fu.blogspot.tw/][emacs-fu]] �
 : remotepasseval = get_password_emacs("imap.gmail.com")
 
 即可透過 emacs 取得 password 這個密碼。
+* 程式開發                                                         :language:
+
+
+
+各種不同程式語言開發用的設定。
+
+** Rust
+
+Rust 是由 Mozilla 所開發的語言。
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'rust-mode)
+#+END_SRC
+
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
