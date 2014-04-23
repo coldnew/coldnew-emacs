@@ -477,7 +477,7 @@ Github: https://github.com/victorhge/iedit
 ** scquential-command :: 整合多項命令到按鍵上
 
 #+begin_src emacs-lisp
-  (require 'sequential-command)
+  (require* 'sequential-command)
 #+end_src
 
 sequential-command 這個套件提供了整合多個命令到一個命令的能力，透過這
@@ -500,6 +500,23 @@ sequential-command 這個套件提供了整合多個命令到一個命令的能�
 想要看更多的例子，可以見以下連結:
 
 http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
+
+** dash :: 增強 list 處理用的 function
+
+dash 提供了更多關於 list 處理用的函式，目前已經為許多 emacs plugin 所依
+賴的模組。
+
+#+begin_src emacs-lisp
+  (require* 'dash)
+#+end_src
+
+** s :: 增加字串處理用 function
+
+s 提供了許多關於字串處理的函式
+
+#+begin_src emacs-lisp
+  (require* 's)
+#+end_src
 
 * Org                                                                   :org:
 
@@ -1163,34 +1180,6 @@ smallurl 是一個很棒的短網址工具，他會幫你到遠端的 server 取
 
 #+begin_src emacs-lisp
   (require 'smallurl)
-#+end_src
-
-** 增強 list 處理的 function
-
-dash 提供了更多關於 list 處理用的函式，並且不需依賴 cl.
-
-#+begin_src emacs-lisp
-  (require 'dash)
-#+end_src
-
-dash 提供了主要以下幾種 list 處理功能
-
-- -map (fn list)
-
-  Returns a new list consisting of the result of applying fn to the items in list.
-
-  #+begin_src emacs-lisp :tangle no
-    (-map (lambda (num) (* num num)) '(1 2 3 4)) ;; => '(1 4 9 16)
-    (-map 'square '(1 2 3 4)) ;; => '(1 4 9 16)
-    (--map (* it it) '(1 2 3 4)) ;; => '(1 4 9 16)
-  #+end_src
-
-** 增強 字串 處理的 function
-
-s 提供了許多關於字串處理的函式
-
-#+begin_src emacs-lisp
-  (require 's)
 #+end_src
 
 ** 使用 unicad 讓 emacs 自動識別檔案編碼
