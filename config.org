@@ -473,6 +473,34 @@ Github: https://github.com/victorhge/iedit
 #+begin_src emacs-lisp
   (require* 'iedit)
 #+end_src
+
+** scquential-command :: 整合多項命令到按鍵上
+
+#+begin_src emacs-lisp
+  (require 'sequential-command)
+#+end_src
+
+sequential-command 這個套件提供了整合多個命令到一個命令的能力，透過這
+個套件，你可以使用下面的方式，定義一個名為 my-end 的命令，這個命令整合
+了 end-of-line 以及 end-of-buffer 兩個命令。
+
+#+begin_src emacs-lisp :tangle no
+  (define-sequential-command my-end  end-of-line end-of-buffer)
+#+end_src
+
+定義完 my-end 後，我們將他綁到 C-e 上
+
+#+begin_src emacs-lisp :tangle no
+  (global-set-key "\C-e" 'my-end)
+#+end_src
+
+當你敲下第一次 C-e 的時候，你實際上執行的是 *end-of-line* 這個命令，如
+果你想要執行 end-of-buffer 這個命令的話，使用 C-e C-e 就可以辦到。
+
+想要看更多的例子，可以見以下連結:
+
+http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
+
 * Org                                                                   :org:
 
 org-mode 是非常強大的筆記管理系統，也是這整份 emacs 設定的核心，由於與
@@ -1164,33 +1192,6 @@ s 提供了許多關於字串處理的函式
 #+begin_src emacs-lisp
   (require 's)
 #+end_src
-
-** 使用 sequential-command 來整合許多命令
-
-#+begin_src emacs-lisp
-  (require 'sequential-command)
-#+end_src
-
-sequential-command 這個套件提供了整合多個命令到一個命令的能力，透過這
-個套件，你可以使用下面的方式，定義一個名為 my-end 的命令，這個命令整合
-了 end-of-line 以及 end-of-buffer 兩個命令。
-
-#+begin_src emacs-lisp :tangle no
-  (define-sequential-command my-end  end-of-line end-of-buffer)
-#+end_src
-
-定義完 my-end 後，我們將他綁到 C-e 上
-
-#+begin_src emacs-lisp :tangle no
-  (global-set-key "\C-e" 'my-end)
-#+end_src
-
-當你敲下第一次 C-e 的時候，你實際上執行的是 *end-of-line* 這個命令，如
-果你想要執行 end-of-buffer 這個命令的話，使用 C-e C-e 就可以辦到。
-
-想要看更多的例子，可以見以下連結:
-
-http://www.emacswiki.org/cgi-bin/wiki/download/sequential-command-config.el
 
 ** 使用 unicad 讓 emacs 自動識別檔案編碼
 
