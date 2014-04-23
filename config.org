@@ -2699,7 +2699,7 @@ auto-complete-mode 的按鍵設定。
 
 #+BEGIN_SRC emacs-lisp
   (eval-after-load 'eshell
-    '(when (require 'multi-eshell nil 'noerror)
+    '(when (require* 'multi-eshell)
        ;; setup to eshell
        (setq multi-eshell-shell-function '(eshell))
        (setq multi-eshell-name "*eshell*")))
