@@ -9,11 +9,106 @@
 
 初始化的 emacs 設定，包含了加入 PATH 以及一些 OS 相關設定。
 
-** 預先載入 cl 套件。
+** 預先載入 cl 套件
 
 #+begin_src emacs-lisp
   (eval-when-compile (require 'cl))
 #+end_src
+
+** TODO 資料夾相關變數設定                                        :variable:
+
+這邊設定了各種類型資料夾的路徑。
+
+- emacs 設定檔預設所在的資料夾
+
+  #+begin_src emacs-lisp
+    (defconst emacs-dir "~/.emacs.d/"
+      "The top-level emacs-configure directory.")
+  #+end_src
+
+- 佈景主題的資料夾設定
+
+  #+begin_src emacs-lisp
+    (defconst emacs-themes-dir (concat emacs-dir "themes/")
+      "directory to place emacs theme.")
+  #+end_src
+
+- el-get 安裝套件的路徑
+
+  #+begin_src emacs-lisp
+    (defconst emacs-lisp-dir   (concat emacs-dir "lisp/")
+      "directory to place lisp packages from internet.")
+  #+end_src
+
+- el-get 的 recipes 路徑
+
+  #+begin_src emacs-lisp
+    (defconst emacs-recipes-dir (concat emacs-dir "recipes/")
+      "directory to place local el-get recepies.")
+  #+end_src
+
+- elpa 安裝套件的路徑
+
+  #+begin_src emacs-lisp
+    (defconst emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
+      "directory to place ELPA lisp packages from internet.")
+  #+end_src
+
+- yasnippet 使用的 snippet 路徑
+
+  #+begin_src emacs-lisp
+    (defconst emacs-snippets-dir (concat emacs-dir "snippets/")
+      "directory to place yasnippet files.")
+  #+end_src
+
+- 放置 binary 檔案的資料夾
+
+  #+begin_src emacs-lisp
+    (defconst emacs-bin-dir    (concat emacs-dir "bin/")
+      "directory to place binary staff.")
+  #+end_src
+
+- 放置 cache 等暫存檔案的資料夾
+
+  #+begin_src emacs-lisp
+    (defconst emacs-cache-dir  (concat emacs-dir "cache/")
+      "cache file directory.")
+  #+end_src
+
+- 備份文件的資料夾
+
+  #+begin_src emacs-lisp
+    (defconst emacs-backup-dir (concat emacs-dir "backup/")
+      "directory to backup files.")
+  #+end_src
+
+- 放置紀錄的資料夾
+
+  #+begin_src emacs-lisp
+    (defconst emacs-log-dir (concat emacs-dir "log/")
+      "log file directory.")
+  #+end_src
+
+- 放置 jar 等其他文件的位置
+
+  #+begin_src emacs-lisp
+    (defconst emacs-etc-dir (concat emacs-dir "etc/")
+      "etc file directory.")
+  #+end_src
+
+- Dropbox 資料夾
+
+  #+begin_src emacs-lisp
+    (defconst dropbox-dir "~/Dropbox"
+      "Dropbox directory.")
+  #+end_src
+
+- Sparkleshare 資料夾
+
+  #+begin_src emacs-lisp
+    (defconst sparkleshare-dir "~/SparkleShare"
+      "Sparkleshare directory.")
+  #+end_src
 
 ** 複製系統的 PATH 變數
 
@@ -925,6 +1020,14 @@ Rust 是由 Mozilla 所開發的語言。
 #+BEGIN_SRC emacs-lisp
   (require* 'rust-mode)
 #+END_SRC
+* 檔案備份                                                           :backup:
+
+雖然現在大家都有在使用 git、svn 等檔案管理系統，但我們最好還是有其他的
+備份，這裡設定的是 emacs 內建的備份方式。
+
+注意: 由於內建的備份方式是採用 =明碼= 來備份，所以若是加密的檔案也會直接被備份。
+
+
 
 
 * TODO ----------------- Prepare for re-write ---------------------------------
@@ -950,101 +1053,6 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
                                                                <待續>
 
 * 基礎設置                                                             :base:
-
-** 資料夾相關變數設定                                             :variable:
-
-這邊設定了各種類型資料夾的路徑。
-
-- emacs 設定檔預設所在的資料夾
-
-  #+begin_src emacs-lisp
-    (defconst emacs-dir "~/.emacs.d/"
-      "The top-level emacs-configure directory.")
-  #+end_src
-
-- 佈景主題的資料夾設定
-
-  #+begin_src emacs-lisp
-    (defconst emacs-themes-dir (concat emacs-dir "themes/")
-      "directory to place emacs theme.")
-  #+end_src
-
-- el-get 安裝套件的路徑
-
-  #+begin_src emacs-lisp
-    (defconst emacs-lisp-dir   (concat emacs-dir "lisp/")
-      "directory to place lisp packages from internet.")
-  #+end_src
-
-- el-get 的 recipes 路徑
-
-  #+begin_src emacs-lisp
-    (defconst emacs-recipes-dir (concat emacs-dir "recipes/")
-      "directory to place local el-get recepies.")
-  #+end_src
-
-- elpa 安裝套件的路徑
-
-  #+begin_src emacs-lisp
-    (defconst emacs-elpa-dir   (concat emacs-lisp-dir "elpa/")
-      "directory to place ELPA lisp packages from internet.")
-  #+end_src
-
-- yasnippet 使用的 snippet 路徑
-
-  #+begin_src emacs-lisp
-    (defconst emacs-snippets-dir (concat emacs-dir "snippets/")
-      "directory to place yasnippet files.")
-  #+end_src
-
-- 放置 binary 檔案的資料夾
-
-  #+begin_src emacs-lisp
-    (defconst emacs-bin-dir    (concat emacs-dir "bin/")
-      "directory to place binary staff.")
-  #+end_src
-
-- 放置 cache 等暫存檔案的資料夾
-
-  #+begin_src emacs-lisp
-    (defconst emacs-cache-dir  (concat emacs-dir "cache/")
-      "cache file directory.")
-  #+end_src
-
-- 備份文件的資料夾
-
-  #+begin_src emacs-lisp
-    (defconst emacs-backup-dir (concat emacs-dir "backup/")
-      "directory to backup files.")
-  #+end_src
-
-- 放置紀錄的資料夾
-
-  #+begin_src emacs-lisp
-    (defconst emacs-log-dir (concat emacs-dir "log/")
-      "log file directory.")
-  #+end_src
-
-- 放置 jar 等其他文件的位置
-
-  #+begin_src emacs-lisp
-    (defconst emacs-etc-dir (concat emacs-dir "etc/")
-      "etc file directory.")
-  #+end_src
-
-- Dropbox 資料夾
-
-  #+begin_src emacs-lisp
-    (defconst coldnew-dropbox-dir "~/Dropbox"
-      "Dropbox directory.")
-  #+end_src
-
-- Sparkleshare 資料夾
-
-  #+begin_src emacs-lisp
-    (defconst coldnew-sparkleshare-dir "~/SparkleShare"
-      "Sparkleshare directory.")
-  #+end_src
 
 ** 檔案相關變數設定                                               :variable:
 
@@ -2909,7 +2917,7 @@ org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-
 夾
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-directory (concat coldnew-sparkleshare-dir "/org/"))
+  (setq org-directory (concat sparkleshare-dir "/org/"))
 #+END_SRC
 
 而 agenda 的檔案則直接從 org-mode 檔案所在的資料夾去尋找
@@ -6548,13 +6556,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 #+end_src
 * 檔案備份                                                           :backup:
 
-雖然現在大家都有在使用 git、svn 等檔案管理系統，但我們最好還是有其他的
-備份，這裡設定的是 emacs 內建的備份方式。
-
-*注意*:
-　　由於內建的備份方式是採用明碼來備份，所以若是加密的檔案也會直接被
-   備份。
-
 ** 設定備份檔案的資料夾
 
 這個資料夾將存放所有的備份檔案
@@ -6766,7 +6767,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 
   #+begin_src emacs-lisp :tangle no
     (defvar coldnew-blog-dir
-      (concat coldnew-sparkleshare-dir "/coldnew.github.io")
+      (concat sparkleshare-dir "/coldnew.github.io")
       "My blog directory")
   #+end_src
 
