@@ -59,7 +59,6 @@ emacs 有一些預設的設定我不太喜歡，這邊先將他們關掉。
   (setq visible-bell t)
 #+end_src
 
-
 *** 關閉工具列
 
 不顯示工具列。
@@ -91,9 +90,10 @@ emacs 有一些預設的設定我不太喜歡，這邊先將他們關掉。
   (if (featurep 'menu-bar) (menu-bar-mode -1))
 #+end_src
 
-*** 回答問題時，使用 *y* 和 *n* 代替 *yes/no* 。
+*** 回答問題時，使用 y 和 n 代替 yes/no
 
 預設要使用 *yse* 或是 *no* 來回答問題，這裡將他改成用 *y* 或 *n* 。
+
 #+begin_src emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
 #+end_src
@@ -703,7 +703,6 @@ term-mode 似乎會和 yasnippet 的 TAB 按鍵相衝，使用這個設定讓 ya
     (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1))))
 #+end_src
 
-
 ** multi-term 讓你方便管理多個 terminal 緩衝區
 
 EmacsWiki: http://www.emacswiki.org/emacs//multi-term.el
@@ -756,6 +755,26 @@ winner-mode 有自己預設好的按鍵方式，我習慣用自己的，因此�
 #+begin_src emacs-lisp
   (winner-mode t)
 #+end_src
+* 書籤與暫存器                                                     :bookmark:
+
+** 快速跳轉到檔案                                                 :register:
+
+使用 Ctrl-x r j <char> 就可以進行快速跳轉至檔案，其中 <char> 為以下所設定。
+
+#+begin_src emacs-lisp
+  (dolist
+      (r `(
+           ;; emacs's config.org
+           (?e (file . "~/.emacs.d/config.org"))
+           ;; TODO.org
+           (?t (file . "~/SparkleShare/org/TODO.org"))
+           ;; Offilce
+           (?w (file . "~/SparkleShare/org/Weintek.org"))
+           ;; Note.org
+           (?n (file . "~/SparkleShare/org/Note.org"))))
+    (set-register (car r) (cadr r)))
+#+end_src
+
 * 電子郵件                                                            :email:
 
 在 emacs 中有許多好用的電子郵件閱讀器，在試用之後，我決定選擇 [[http://www.djcbsoftware.nl/code/mu/mu4e.html][mu4e]] 。
@@ -3309,27 +3328,6 @@ some packages conflict with org-mode
 
 #+begin_src emacs-lisp
   (require 'bm)
-#+end_src
-
-** 快速跳轉到檔案                                                 :register:
-
-使用 Ctrl-x r j <char> 就可以進行快速跳轉至檔案，其中 <char> 為以下所設定。
-
-#+begin_src emacs-lisp
-  (dolist
-      (r `(
-           ;; emacs's config.org
-           (?e (file . ,(expand-file-name emacs-config-file)))
-           ;; TODO.org
-           (?t (file . "~/SparkleShare/org/TODO.org"))
-           ;; Offilce
-           (?w (file . "~/SparkleShare/org/Weintek.org"))
-           ;; Note.org
-           (?n (file . "~/SparkleShare/org/Note.org"))
-           ;; blog.org
-           (?b (file . "~/SparkleShare/coldnew.github.io/blog-src/blog.org"))
-           ))
-    (set-register (car r) (cadr r)))
 #+end_src
 
 * 專案管理                                                          :project:
