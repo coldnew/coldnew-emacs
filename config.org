@@ -1010,9 +1010,15 @@ mu4e 是 mu 的 elisp 接口，由 [[http://emacs-fu.blogspot.tw/][emacs-fu]] �
 即可透過 emacs 取得 password 這個密碼。
 * 程式開發                                                         :language:
 
-
-
 各種不同程式語言開發用的設定。
+
+** CMake
+
+#+begin_src emacs-lisp
+  (require* 'cmake-mode)
+  (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode))
+  (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
+#+end_src
 
 ** Rust
 
@@ -1021,6 +1027,59 @@ Rust 是由 Mozilla 所開發的語言。
 #+BEGIN_SRC emacs-lisp
   (require* 'rust-mode)
 #+END_SRC
+
+** Go
+#+begin_src emacs-lisp
+(require* 'go-mode)
+  (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
+#+end_src
+** qmake
+
+#+begin_src emacs-lisp
+  (require* 'qmake-mode)
+  (add-to-list 'auto-mode-alist '("\\.pro$" . qmake-mode))
+#+end_src
+
+** Markdown
+
+#+begin_src emacs-lisp
+  (require* 'markdown-mode)
+  (add-to-list 'auto-mode-alist '("\\.\\(md\\|markdown\\)\\'" . markdown-mode))
+#+end_src
+** Clojure
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'clojure-mode)
+  (require* 'cider)
+#+END_SRC
+
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+#+end_src
+
+** ClojureScript
+#+begin_src emacs-lisp
+  (require* 'clojurescript-mode)
+#+end_src
+
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.cljs$" . clojurescript-mode))
+#+end_src
+
+** newlisp
+
+#+begin_src emacs-lisp
+   (require* 'newlisp)
+    (add-to-list 'auto-mode-alist '("\\.lsp$" . newlisp-mode)))
+#+end_src
+
+** Graphviz
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'graphviz-dot-mode)
+  (defalias 'dot-mode 'graphviz-dot-mode)
+#+END_SRC
+
 * 檔案備份                                                           :backup:
 
 雖然現在大家都有在使用 git、svn 等檔案管理系統，但我們最好還是有其他的
@@ -1116,7 +1175,6 @@ ref : http://steckerhalter.co.vu/steckemacs.html
   (setq scroll-up-aggressively       0.01 )
   (setq scroll-down-aggressively     0.01 )
 #+end_src
-
 
 
 * 常用的模組 / 函式庫                                               :plugin:
@@ -4397,7 +4455,6 @@ ref: http://stackoverflow.com/questions/23172561/c-comment-in-emacs-linux-kernel
 (setq comment-style 'extra-line)
 #+END_SRC
 
-
 ** C
 *** 設定 C 語言 檔案的副檔名與對應的模式
 
@@ -4564,67 +4621,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
  ;; remember to remove
   (define-key c++-mode-map (kbd "C-c f") 'cscope-find-this-file)
 #+end_src
-** CMake
-*** 設定 CMake 檔案的副檔名與對應的模式
-
-#+begin_src emacs-lisp
-  (require 'cmake-mode)
-  (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode))
-  (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
-#+end_src
-
-** Clojure
-*** 載入相關套件
-
-#+BEGIN_SRC emacs-lisp
-  (require* 'clojure-mode)
-  (require* 'cider)
-#+END_SRC
-
-*** 設定 Clojure 檔案的副檔名與對應的模式
-
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
-#+end_src
-
-*** 自動補全設定
-
-#+begin_src emacs-lisp :tangle no
-;;  (eval-after-load "auto-complete" '(add-to-list 'ac-modes 'nrepl-mode))
-;;  (add-hook 'clojure-mode-hook 'ac-clojure-mode-setup)
-;;  (add-hook 'nrepl-mode-hook   'ac-clojure-mode-setup)
-;;  (add-hook 'nrepl-interaction-mode-hook   'ac-clojure-mode-setup)
-;;  (defun ac-clojure-mode-setup ()
-;;    "auto-complete settings for clojure-mode."
-;;    (setq ac-sources '(
-;;                       ac-source-nrepl-ns
-;;                       ac-source-nrepl-vars
-;;                       ac-source-nrepl-ns-classes
-;;                       ac-source-nrepl-all-classes
-;;                       ac-source-nrepl-java-methods
-;;                       ac-source-nrepl-static-methods
-;;                       ac-source-dictionary
-;;                       ac-source-abbrev
-;;                       ac-source-semantic
-;;                       ac-source-filename
-;;                       ac-source-files-in-current-dir
-;;                       ac-source-words-in-same-mode-buffers
-;;                       )))
-#+end_src
-
-** Clojure Script
-*** 載入相關套件
-
-#+begin_src emacs-lisp
-  (require 'clojurescript-mode)
-#+end_src
-
-*** 設定 Clojure Script 檔案的副檔名與對應的模式
-
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.cljs$" . clojurescript-mode))
-#+end_src
-
 ** Emacs Lisp
 
 *** 設定 emacs-lisp 的副檔名與對應的模式
@@ -4704,34 +4700,6 @@ minibuffer 上。
   (add-hook 'emacs-lisp-mode-hook 'remove-elc-when-visit)
 #+end_src
 
-** newlisp
-
-*** 設定 newlisp 的副檔名與對應的模式
-
-#+begin_src emacs-lisp
-  (when (require 'newlisp nil 'noerror)
-    (add-to-list 'auto-mode-alist '("\\.lsp$" . newlisp-mode)))
-#+end_src
-
-** Graphviz
-
-#+BEGIN_SRC emacs-lisp
-  (require 'graphviz-dot-mode)
-  (defalias 'dot-mode 'graphviz-dot-mode)
-#+END_SRC
-** Go
-*** 載入相關套件
-
-#+begin_src emacs-lisp
-(require 'go-mode)
-#+end_src
-
-*** 設定 go 的副檔名與對應的模式
-
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
-#+end_src
-
 ** QML
 *** 設定 QML 的副檔名與對應的模式
 #+begin_src emacs-lisp
@@ -4764,13 +4732,6 @@ minibuffer 上。
             ac-source-words-in-same-mode-buffers
             )))
 #+end_src
-** qmake
-*** 設定 qmake 的副檔名與對應的模式
-#+begin_src emacs-lisp
-  (require 'qmake-mode)
-  (add-to-list 'auto-mode-alist '("\\.pro$" . qmake-mode))
-#+end_src
-
 ** Lisp 通用設定
 
 *** 建立編輯 lisp 程式用的 minor-mode
@@ -4954,14 +4915,6 @@ paredit 可以幫助傳寫程式的速度。
   (setq jedi:setup-keys t)                      ; optional
   (setq jedi:complete-on-dot t)                 ; optional
 #+END_SRC
-
-** Markdown
-*** 設定 Markdown 檔案的副檔名與對應的模式
-
-#+begin_src emacs-lisp
-  (require 'markdown-mode)
-  (add-to-list 'auto-mode-alist '("\\.\\(md\\|markdown\\)\\'" . markdown-mode))
-#+end_src
 
 * 網頁開發                                                               :web:
 ** 網頁開發基本設定
