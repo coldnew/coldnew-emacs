@@ -4390,6 +4390,13 @@ ctypes 這個套件可以識別 C/C++ 裏面的 typdef 定義，自動對他們�
                (when (require 'ctypes nil 'noerror)
                  (ctypes-auto-parse-mode 1))))
 #+end_src
+*** comment
+
+ref: http://stackoverflow.com/questions/23172561/c-comment-in-emacs-linux-kernel-style?sgp=2
+#+BEGIN_SRC emacs-lisp
+(setq comment-style 'extra-line)
+#+END_SRC
+
 
 ** C
 *** 設定 C 語言 檔案的副檔名與對應的模式
