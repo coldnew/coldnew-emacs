@@ -25,6 +25,9 @@
              load-path
              )))))
 
+;; Make customize-ui write file to ~/.emacs.d/custom.el
+(setq custom-file (concat emacs-dir "/custom.el"))
+
 ;; define a reload command
 (defun reload-emacs ()
   "reload my emacs settings"

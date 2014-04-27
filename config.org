@@ -15,9 +15,10 @@
   (eval-when-compile (require 'cl))
 #+end_src
 
-** TODO 資料夾相關變數設定                                        :variable:
+** 資料夾相關變數設定                                             :variable:
 
-這邊設定了各種類型資料夾的路徑。
+這邊設定了各種類型資料夾的路徑，後面使用到的資教牙相關變數都直接定義在
+這。
 
 - emacs 設定檔預設所在的資料夾
 
@@ -1029,55 +1030,11 @@ Rust 是由 Mozilla 所開發的語言。
 
 
 
-
 * TODO ----------------- Prepare for re-write ---------------------------------
 
 ref : http://steckerhalter.co.vu/steckemacs.html
 
-* 關於這份檔案
-
-使用 emacs 自 2006 年至今，最初我的 emacs 配置也是英文版，並且分散了許多檔案，
-直到我知道了 org-mode 以及所謂的文學編程，我二話不說就將我的 emacs 設定移植到
-org-mode 上面，並重新改寫用中文來寫配置的說明。
-
-在這幾年的時間裡，用 emacs 學 emacs 以及配置 emacs 花費了我不少時間，網路上
-太多太多中文的配置都是複製貼上、複製貼上，連用途都不懂就轉用了別人的文章放到
-自己的部若格上，讓我剛開始學 emacs 查找資料時有許多困擾， 為了讓以後有人
-看到我的 emacs 配置，能夠一看就很明白這個配置是做什麼，於是我將所有的配置
-改寫回正體中文。
-
-對現在我而言，修改 emacs 的設定已經開始變成了習慣，就當作自己再寫作文/部若格吧，
-很多配置以及外掛是非常棒的，但是若只是將官方網站上的英文介紹複製過來，不免太無
-趣，經過理解才能成為自己的東西。於是我慢慢著手增加自己配置文件的說明份量。
-
-                                                               <待續>
-
 * 基礎設置                                                             :base:
-
-** 檔案相關變數設定                                               :variable:
-
-這邊設定了各種檔案的路徑。
-
-- emacs 個人配置的檔案，也就是這個檔案
-
-  #+begin_src emacs-lisp
-    (defconst emacs-config-file (concat emacs-dir "config.org")
-      "File to place emacs configs.")
-  #+end_src
-
-- 客制化設定檔的位置
-
-  #+begin_src emacs-lisp
-    (defconst emacs-custom-file (concat emacs-dir "custom.el")
-      "store customize UI config.")
-  #+end_src
-
-- 書籤文件檔案
-
-  #+begin_src emacs-lisp
-    (defconst emacs-bookmark-file (concat emacs-cache-dir "bookmarks")
-      "File to save bookmarks")
-  #+end_src
 
 ** 作業系統測試
 
@@ -1160,12 +1117,7 @@ org-mode 上面，並重新改寫用中文來寫配置的說明。
   (setq scroll-down-aggressively     0.01 )
 #+end_src
 
-** 設定 custom-file 到其他檔案
 
-避免使用 *customize-UI* 時，會將設定寫入我的 init.el
-#+begin_src emacs-lisp
-  (setq custom-file emacs-custom-file)
-#+end_src
 
 * 常用的模組 / 函式庫                                               :plugin:
 
@@ -3324,7 +3276,8 @@ some packages conflict with org-mode
 
 ** Config
 #+begin_src emacs-lisp
-  (setq bookmark-default-file emacs-bookmark-file)
+;;  (setq bookmark-default-file emacs-bookmark-file)
+  (setq bookmark-default-file (concat emacs-cache-dir "bookmarks"))
 #+end_src
 
 #+begin_src emacs-lisp
