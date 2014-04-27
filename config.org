@@ -978,6 +978,28 @@ eshell 相關的資訊。
   #+end_src
 
 
+** 使用 eshell-autojump 快速跳轉資料夾
+
+[[http://www.emacswiki.org/emacs/EshellAutojump][Eshell Autojump]] 提供了一個 =j= 的 eshell 命令，他會根據你之前使用 cd 切
+換資料夾的紀錄，透過 regexp 的方式來批配你要切換的資料夾，舉例來說，
+若我曾經在 eshell 裡面切換到 ~/.emacs.d 過，則只要使用
+
+: j emacs
+
+就可以在 emacs 中切換到 ~/.emacs.d 中了。
+
+你可以使用
+
+: cd =
+
+來查看目前在列表中的資料夾有哪些
+
+Site: http://www.emacswiki.org/emacs/EshellAutojump
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'eshell
+    '(require* 'eshell-autojump))
+#+END_SRC
 
 * 窗口管理                                                           :window:
 
@@ -2929,26 +2951,6 @@ auto-complete-mode 的按鍵設定。
        (setq multi-eshell-name "*eshell*")))
 #+END_SRC
 
-** 使用 eshell-autojump 快速跳轉資料夾
-
-[[http://www.emacswiki.org/emacs/EshellAutojump][Eshell Autojump]] 提供了一個 *j* 的 eshell 命令，他會根據你之前使用 cd 切
-換資料夾的紀錄，透過 regexp 的方式來批配你要切換的資料夾，舉例來說，
-若我曾經在 eshell 裡面切換到 ~/.emacs.d 過，則只要使用
-
-: j emacs
-
-就可以在 emacs 中切換到 ~/.emacs.d 中了。
-
-你可以使用
-
-: cd =
-
-來查看目前在列表中的資料夾有哪些
-
-#+BEGIN_SRC emacs-lisp
-  (eval-after-load 'eshell
-    '(require 'eshell-autojump nil 'noerror))
-#+END_SRC
 
 ** eshell 命令
 
