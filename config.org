@@ -780,14 +780,9 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
 
 #+BEGIN_SRC emacs-lisp
   (require* 'helm)
-#+END_SRC
-
-** 使用預先定義好的 helm 設定
-
-#+BEGIN_SRC emacs-lisp
   (require 'helm-config)
-  (setq helm-config t)
 #+END_SRC
+
 ** 全域性啟用 helm-mode
 
 #+begin_src emacs-lisp
@@ -2963,7 +2958,6 @@ auto-complete-mode 的按鍵設定。
        (setq multi-eshell-shell-function '(eshell))
        (setq multi-eshell-name "*eshell*")))
 #+END_SRC
-
 
 * Helm                                                                 :helm:
 
@@ -6510,26 +6504,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 ;;  (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
 ;;  (vim:map (kbd "C-x ve") 'magit-flow-feature-finish)
 #+end_src
-* 遠端編輯                                                            :tramp:
-
-** 設定預設連線方式
-
-#+BEGIN_SRC emacs-lisp
-  (setq tramp-default-method "scp")
-#+END_SRC
-
-** 設定 tramp 自動儲存的資料夾
-
-#+BEGIN_SRC emacs-lisp
-  (setq tramp-auto-save-directory emacs-backup-dir)
-#+END_SRC
-
-** 設定 tramp 備份文件用的資料夾
-
-#+BEGIN_SRC emacs-lisp
-  (setq tramp-backup-directory-alist backup-directory-alist)
-#+END_SRC
-
 * Session                                                              :blog:
 ** saveplace
 #+begin_src emacs-lisp
