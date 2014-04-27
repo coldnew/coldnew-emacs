@@ -614,6 +614,268 @@ s 提供了許多關於字串處理的函式
   (require* 's)
 #+end_src
 
+* 自定義函式 / 方法                                                :function:
+
+我所自定義或是我的 emacs 設定檔需要用到的 function，這裡面有些 function
+其實可以被 dash.el 或是 s.el 替代掉，只是因為已經加進去了，就先寫在這邊。
+
+** 排序
+*** 使用正規表達式排序行
+
+#+begin_src emacs-lisp
+  (defun sort-lines-regex (reg)
+    "This is a function to sort lines by regex,
+  which are placing near by each other."
+    (interactive)
+    (save-excursion
+      (beginning-of-buffer)
+      (re-search-forward reg)
+      (let ((point (point-to-beginnnig-line)))
+        (while (re-search-forward reg nil t))
+        (sort-lines nil point (point)))))
+#+end_src
+
+*** 快速排序
+
+#+begin_src emacs-lisp
+  (defun quicksort (lst)
+    "Implement the quicksort algorithm."
+    (if (null lst) nil
+      (let* ((spl (car lst))
+             (rst (cdr lst))
+             (smalp (lambda (x)
+                      (< x spl))))
+        (append (quicksort (remove-if-not smalp rst))
+                (list spl)
+                (quicksort (remove-if smalp rst))))))
+#+end_src
+
+** 檔案相關
+
+*** 查詢檔案大小
+
+#+begin_src emacs-lisp
+  (defun file-size (filename)
+    "Return the size in bytes of file named FILENAME, as in integer.
+  Returns nil if no such file."
+    (nth 7 (file-attributes filename)))
+#+end_src
+
+*** 大量打開檔案
+
+#+begin_src emacs-lisp
+  (defun find-files (files)
+    "Open the given files"
+    (foreach (f files) (find-file f)))
+#+end_src
+
+*** 遞迴尋找檔案
+
+若在當前目錄找不到此檔案，則去其父目錄進行尋找。如果該檔案或是目錄不存
+在，則回傳 nil.
+
+#+begin_src emacs-lisp
+  (defun recursive-find-file (file &optional directory)
+    "Find the first FILE in DIRECTORY or it's parents.
+  If file does not exist return nil."
+    (let ((directory (or directory
+                         (file-name-directory (buffer-file-name))
+                         (pwd))))
+      (if (file-exists-p (expand-file-name file directory))
+          (expand-file-name file directory)
+        (unless (string= "/" directory)
+          (recursive-find-file file (expand-file-name ".." directory))))))
+#+end_src
+
+
+** 系統相關
+
+*** 取得目前的 IP 位址
+
+取得目前的 IP 位置，預設為 eth0。（此 function 不能用於 windows 上）
+
+#+begin_src emacs-lisp
+  (defun get-ip-address (&optional dev)
+    "get the IP-address for device DEV (default: eth0)"
+    (let ((dev (if dev dev "eth0")))
+      (format-network-address (car (network-interface-info dev)) t)))
+#+end_src
+
+** 緩衝區相關
+
+*** 取得 major-mode 和要求符合的所有 buffer
+
+假如我們希望可以列出所有為 emacs-lisp-mode 的 buffer，可以這樣做
+
+#+begin_src emacs-lisp :tangle no
+  (get-buffers-matching-mode 'emacs-lisp-mode)
+#+end_src
+
+#+begin_src emacs-lisp
+  (defun get-buffers-matching-mode (mode)
+    "Returns a list of buffers where their major-mode is equal to MODE"
+    (let ((buffer-mode-matches '()))
+      (dolist (buf (buffer-list))
+        (with-current-buffer buf
+          (if (eq mode major-mode)
+              (add-to-list 'buffer-mode-matches buf))))
+      buffer-mode-matches))
+#+end_src
+
+*** 顯示 buffer 目前所處於的 major-mode
+
+#+begin_src emacs-lisp :tangle no
+  (show-buffer-major-mode "*scratch*")
+#+end_src
+
+#+begin_src emacs-lisp
+  (defun show-buffer-major-mode (buffer-or-string)
+    "Returns the major mode associated with a buffer."
+    (with-current-buffer buffer-or-string major-mode))
+#+end_src
+
+** 尋找、取代
+
+*** 向後搜尋一個字元
+
+#+begin_src emacs-lisp
+  (defun search-backward-to-char (chr)
+    "Search backwards to a character"
+    (while (not (= (char-after) chr))
+      (backward-char 1)))
+#+end_src
+
+*** 向前搜尋一個字元
+
+#+begin_src emacs-lisp
+  (defun search-forward-to-char (chr)
+    "Search forwards to a character"
+    (while (not (= (char-before) chr))
+      (forward-char 1)))
+#+end_src
+
+** 鏈表 (list) 處理
+
+處理 List 所用的 function，有些功能 dash.el 也有提供。
+
+*** 將一個 list 變成字串回傳
+
+#+begin_src emacs-lisp
+  (defun list->string (char-list)
+    "RETURN: A new string containing the characters in char-list."
+    (let ((result (make-string (length char-list) 0))
+          (i 0))
+      (dolist (char char-list)
+        (aset result i char)
+        (setq i (1+ i)))
+      result))
+#+end_src
+
+*** 將巢狀的 list 變成單一 list :: flatten
+
+flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 list。
+舉例來說，假如目前有這樣一個 list:
+
+#+begin_example
+(1 (2 3) (4 (5 6 (7))) 8 9)
+#+end_example
+
+則使用 flatten 這個 function 可以將上面的巢狀 list 變成:
+
+#+begin_example
+(1 2 3 4 5 6 7 8 9)
+#+end_example
+
+#+begin_src emacs-lisp
+  (defun flatten (structure)
+    "Flatten the nesting in an arbitrary list of values."
+    (cond ((null structure) nil)
+          ((atom structure) `(,structure))
+          (t (mapcan #'flatten structure))))
+#+end_src
+
+
+
+** 檔案/字串/數值轉換
+
+進行轉換用的 function。
+
+*** 將輸入的 buffer (DOS 格式)　轉換成 UNIX 格式。　
+
+#+begin_src emacs-lisp
+  (defun dos->unix (buf)
+    "Convert buffer file from dos file to unix file."
+    (let* (current-buf (current-buffer))
+      (if (not (eq current-buf buf))
+          (switch-to-buffer buf))
+      (goto-char(point-min))
+      (while (search-forward "\r" nil t) (replace-match ""))))
+#+end_src
+
+*** 將輸入的 buffer (UNIX 格式)　轉換成 DOS 格式。　
+
+#+begin_src emacs-lisp
+  (defun unix->dos (buf)
+    "Convert buffer file from unix file to dos file."
+    (let* (current-buf (current-buffer))
+      (if (not (eq current-buf buf))
+          (switch-to-buffer buf))
+      (goto-char(point-min))
+      (while (search-forward "\n" nil t) (replace-match "\r\n"))))
+#+end_src
+
+*** 將檔案變成字串
+
+此 function 比較適用於該檔案只有一行（或少數幾行）的情況。
+#+begin_src emacs-lisp
+  (defun file->string (file)
+    "Convert file to string in buffer with quote."
+    (when (file-readable-p file)
+      (with-temp-buffer
+        (insert-file-contents file)
+        (buffer-string))))
+#+end_src
+
+*** 十進位轉換成十六進位
+
+#+begin_src emacs-lisp
+  (defun dec->hex (decimal)
+    "Convert decimal to hexdecimal number."
+    (let ((hexstr))
+      (if (stringp decimal)
+          (setq decimal (string-to-number decimal 16)))
+      (cond
+       ;; Use #x as hex prefix (elisp, ....)
+       ((or (eq major-mode 'emacs-lisp-mode)
+            (eq major-mode 'lisp-interaction-mode)) (setq hexstr "#x"))
+       ;; Use # as hex prefix (CSS, ....)
+       ((eq major-mode 'css-mode) (setq hexstr "#"))
+       ;; otherwise use 0x as hexprefix (C, Perl...)
+       (t (setq hexstr "0x")))
+      (format "%s%02X" hexstr decimal)))
+#+end_src
+
+*** 十六進位轉換成十進位
+
+#+begin_src emacs-lisp
+  (defun hex->dec (hex)
+    "Convert hexdecimal number or string to digit-number."
+    (let ((case-fold-search nil)
+          (hex-regexp (rx (or
+                           ;; elisp
+                           (group bol "#x")
+                           ;; C perl
+                           (group bol "0x")
+                           ;; CSS
+                           (group bol "#")))))
+      (if (not (stringp hex))
+          (setq hex (symbol-name hex)))
+      (string-to-number
+       (replace-regexp-in-string hex-regexp "" hex)
+       16)))
+#+end_src
+
+
 * Org                                                                   :org:
 
 org-mode 是非常強大的筆記管理系統，也是這整份 emacs 設定的核心，由於與
@@ -1895,39 +2157,6 @@ Following buffer will not show in iBuffer
 #+end_src
 * 自定義函式 / 方法                                                :function:
 
-我所自定義或是我的 emacs 設定檔需要用到的 function。
-
-** 排序
-*** 使用正規表達式排序行
-
-#+begin_src emacs-lisp
-  (defun sort-lines-regex (reg)
-    "This is a function to sort lines by regex,
-  which are placing near by each other."
-    (interactive)
-    (save-excursion
-      (beginning-of-buffer)
-      (re-search-forward reg)
-      (let ((point (point-to-beginnnig-line)))
-        (while (re-search-forward reg nil t))
-        (sort-lines nil point (point)))))
-#+end_src
-
-*** 快速排序
-
-#+begin_src emacs-lisp
-  (defun quicksort (lst)
-    "Implement the quicksort algorithm."
-    (if (null lst) nil
-      (let* ((spl (car lst))
-             (rst (cdr lst))
-             (smalp (lambda (x)
-                      (< x spl))))
-        (append (quicksort (remove-if-not smalp rst))
-                (list spl)
-                (quicksort (remove-if smalp rst))))))
-#+end_src
-
 ** 測試檔案、變數值
 
 測試用的 function，和測試用的變數很像，但是他允許參數的輸入。
@@ -1943,232 +2172,9 @@ Following buffer will not show in iBuffer
           nil t)))
 #+end_src
 
-** 檔案相關
 
-*** 查詢檔案大小
-
-#+begin_src emacs-lisp
-  (defun file-size (filename)
-    "Return the size in bytes of file named FILENAME, as in integer.
-  Returns nil if no such file."
-    (nth 7 (file-attributes filename)))
-#+end_src
-
-*** 大量打開檔案
-
-#+begin_src emacs-lisp
-  (defun find-files (files)
-    "Open the given files"
-    (foreach (f files) (find-file f)))
-#+end_src
-
-*** 遞迴尋找檔案
-
-若在當前目錄找不到此檔案，則去其父目錄進行尋找。
-如果該檔案或是目錄不存在，則回傳 nil.
-
-#+begin_src emacs-lisp
-  (defun recursive-find-file (file &optional directory)
-    "Find the first FILE in DIRECTORY or it's parents.
-  If file does not exist return nil."
-    (let ((directory (or directory
-                         (file-name-directory (buffer-file-name))
-                         (pwd))))
-      (if (file-exists-p (expand-file-name file directory))
-          (expand-file-name file directory)
-        (unless (string= "/" directory)
-          (recursive-find-file file (expand-file-name ".." directory))))))
-#+end_src
-
-** 系統相關
-
-和系統相關的 function。
-
-*** 取得目前的 IP 位址
-
-取得目前的 IP 位置，預設為 eth0。（此 function 不能用於 windows 上）
-
-#+begin_src emacs-lisp
-  (defun get-ip-address (&optional dev)
-    "get the IP-address for device DEV (default: eth0)"
-    (let ((dev (if dev dev "eth0")))
-      (format-network-address (car (network-interface-info dev)) t)))
-#+end_src
-
-** 檔案/字串/數值轉換
-
-進行轉換用的 function。
-
-*** 將輸入的 buffer (DOS 格式)　轉換成 UNIX 格式。　
-
-#+begin_src emacs-lisp
-  (defun dos->unix (buf)
-    "Convert buffer file from dos file to unix file."
-    (let* (current-buf (current-buffer))
-      (if (not (eq current-buf buf))
-          (switch-to-buffer buf))
-      (goto-char(point-min))
-      (while (search-forward "\r" nil t) (replace-match ""))))
-#+end_src
-
-*** 將輸入的 buffer (UNIX 格式)　轉換成 DOS 格式。　
-
-#+begin_src emacs-lisp
-  (defun unix->dos (buf)
-    "Convert buffer file from unix file to dos file."
-    (let* (current-buf (current-buffer))
-      (if (not (eq current-buf buf))
-          (switch-to-buffer buf))
-      (goto-char(point-min))
-      (while (search-forward "\n" nil t) (replace-match "\r\n"))))
-#+end_src
-
-*** 將檔案變成字串
-
-此 function 比較適用於該檔案只有一行（或少數幾行）的情況。
-#+begin_src emacs-lisp
-  (defun file->string (file)
-    "Convert file to string in buffer with quote."
-    (when (file-readable-p file)
-      (with-temp-buffer
-        (insert-file-contents file)
-        (buffer-string))))
-#+end_src
-
-*** 十進位轉換成十六進位
-
-#+begin_src emacs-lisp
-  (defun dec->hex (decimal)
-    "Convert decimal to hexdecimal number."
-    (let ((hexstr))
-      (if (stringp decimal)
-          (setq decimal (string-to-number decimal 16)))
-      (cond
-       ;; Use #x as hex prefix (elisp, ....)
-       ((or (eq major-mode 'emacs-lisp-mode)
-            (eq major-mode 'lisp-interaction-mode)) (setq hexstr "#x"))
-       ;; Use # as hex prefix (CSS, ....)
-       ((eq major-mode 'css-mode) (setq hexstr "#"))
-       ;; otherwise use 0x as hexprefix (C, Perl...)
-       (t (setq hexstr "0x")))
-      (format "%s%02X" hexstr decimal)))
-#+end_src
-
-*** 十六進位轉換成十進位
-
-#+begin_src emacs-lisp
-  (defun hex->dec (hex)
-    "Convert hexdecimal number or string to digit-number."
-    (let ((case-fold-search nil)
-          (hex-regexp (rx (or
-                           ;; elisp
-                           (group bol "#x")
-                           ;; C perl
-                           (group bol "0x")
-                           ;; CSS
-                           (group bol "#")))))
-      (if (not (stringp hex))
-          (setq hex (symbol-name hex)))
-      (string-to-number
-       (replace-regexp-in-string hex-regexp "" hex)
-       16)))
-#+end_src
-
-** 鏈表 (list) 處理
-
-處理 List 所用的 function，有些功能 dash.el 也有提供。
-
-*** 將一個 list 變成字串回傳
-
-#+begin_src emacs-lisp
-  (defun list->string (char-list)
-    "RETURN: A new string containing the characters in char-list."
-    (let ((result (make-string (length char-list) 0))
-          (i 0))
-      (dolist (char char-list)
-        (aset result i char)
-        (setq i (1+ i)))
-      result))
-#+end_src
-
-** 緩衝區相關
-
-*** 取得 major-mode 和要求符合的所有 buffer
-
-假如我們希望可以列出所有為 emacs-lisp-mode 的 buffer，可以這樣做
-
-#+begin_src emacs-lisp :tangle no
-  (get-buffers-matching-mode 'emacs-lisp-mode)
-#+end_src
-
-#+begin_src emacs-lisp
-  (defun get-buffers-matching-mode (mode)
-    "Returns a list of buffers where their major-mode is equal to MODE"
-    (let ((buffer-mode-matches '()))
-      (dolist (buf (buffer-list))
-        (with-current-buffer buf
-          (if (eq mode major-mode)
-              (add-to-list 'buffer-mode-matches buf))))
-      buffer-mode-matches))
-#+end_src
-
-*** 顯示 buffer 目前所處於的 major-mode
-
-#+begin_src emacs-lisp :tangle no
-  (show-buffer-major-mode "*scratch*")
-#+end_src
-
-#+begin_src emacs-lisp
-  (defun show-buffer-major-mode (buffer-or-string)
-    "Returns the major mode associated with a buffer."
-    (with-current-buffer buffer-or-string major-mode))
-#+end_src
-
-** 尋找、取代
-
-*** 向後搜尋一個字元
-
-#+begin_src emacs-lisp
-  (defun search-backward-to-char (chr)
-    "Search backwards to a character"
-    (while (not (= (char-after) chr))
-      (backward-char 1)))
-#+end_src
-
-*** 向前搜尋一個字元
-
-#+begin_src emacs-lisp
-  (defun search-forward-to-char (chr)
-    "Search forwards to a character"
-    (while (not (= (char-before) chr))
-      (forward-char 1)))
-#+end_src
 
 ** TODO 需整理
-*** List Processing
-**** flatten a list
-
-flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 list。
-舉例來說，假如目前有這樣一個 list:
-
-#+begin_example
-(1 (2 3) (4 (5 6 (7))) 8 9)
-#+end_example
-
-則使用 flatten 這個 function 可以將上面的巢狀 list 變成:
-
-#+begin_example
-(1 2 3 4 5 6 7 8 9)
-#+end_example
-
-#+begin_src emacs-lisp
-  (defun flatten (structure)
-    "Flatten the nesting in an arbitrary list of values."
-    (cond ((null structure) nil)
-          ((atom structure) `(,structure))
-          (t (mapcan #'flatten structure))))
-#+end_src
-
 *** Date
 #+begin_src emacs-lisp
   (defun current-date-time ()
