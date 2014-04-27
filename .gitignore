@@ -23,6 +23,7 @@ var/
 .#*
 swank/
 cache/
+cache
 backup/
 backup
 TAGS
