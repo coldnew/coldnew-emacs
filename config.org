@@ -1087,6 +1087,99 @@ Rust 是由 Mozilla 所開發的語言。
 
 注意: 由於內建的備份方式是採用 =明碼= 來備份，所以若是加密的檔案也會直接被備份。
 
+** 設定備份檔案的資料夾
+
+這個資料夾將存放所有的備份檔案
+
+#+begin_src emacs-lisp
+  (setq backup-directory-alist `(("." . ,emacs-backup-dir)))
+#+end_src
+
+** 如果備份檔案用的資料夾不存在，重新建立他
+
+#+begin_src emacs-lisp
+  (if (not (file-exists-p emacs-backup-dir))
+      (make-directory emacs-backup-dir t))
+#+end_src
+
+** 每當敲擊按鍵 50 下時，進行備份
+
+#+begin_src emacs-lisp
+  (setq auto-save-interval 50)
+#+end_src
+
+** 每 60 秒進行自動儲存
+
+#+begin_src emacs-lisp
+  (setq auto-save-timeout 60)
+#+end_src
+
+** 真的刪除檔案，而不是放入垃圾桶
+
+#+begin_src emacs-lisp
+  (setq delete-by-moving-to-trash nil)
+#+end_src
+
+** 當讀取檔案時，不自動進行檔案儲存
+
+#+begin_src emacs-lisp
+  (setq auto-save-visited-file-name nil)
+#+end_src
+
+** 當緩衝區儲存後，刪除掉自動儲存的檔案
+
+#+begin_src emacs-lisp
+  (setq delete-auto-save-files t)
+#+end_src
+
+** 讓備份檔案具有版本控管的功能
+
+當備份檔案的時候，可以透過設定 kept-old-versions 以及 kept-new-versions 來決定
+要保留多少備份。
+
+#+begin_src emacs-lisp
+  (setq version-control t)
+#+end_src
+
+** 保留舊有的 10 個備份
+
+當新的備份建立起來後，保留舊有的 10 個備份
+
+#+begin_src emacs-lisp
+  (setq kept-old-versions 10)
+#+end_src
+
+** 建立新的 20 個備份
+
+建立新的 20 個備份，當備份數量超過 20 以後，第一個備份會變成舊有的備份。
+
+#+begin_src emacs-lisp
+  (setq kept-new-versions 20)
+#+end_src
+
+** 刪除舊有的備份
+
+刪除非以上所述的 30 個備份
+
+#+begin_src emacs-lisp
+  (setq delete-old-versions t)
+#+end_src
+
+** 使用複製的方式來產生備份檔案
+
+#+begin_src emacs-lisp
+  (setq backup-by-copying t)
+#+end_src
+
+** 其他設置
+
+#+begin_src emacs-lisp
+  (setq auto-save-default    t)           ; auto-save of every file-visiting buffer
+  ;; change auto-save-list setting
+  (setq auto-save-list-file-prefix (concat emacs-backup-dir "auto-saves-"))
+  (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
+#+end_src
+
 
 
 * TODO ----------------- Prepare for re-write ---------------------------------
@@ -6467,101 +6560,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 ;;  (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
 ;;  (vim:map (kbd "C-x ve") 'magit-flow-feature-finish)
 #+end_src
-* 檔案備份                                                           :backup:
-
-** 設定備份檔案的資料夾
-
-這個資料夾將存放所有的備份檔案
-
-#+begin_src emacs-lisp
-  (setq backup-directory-alist `(("." . ,emacs-backup-dir)))
-#+end_src
-
-** 如果備份檔案用的資料夾不存在，重新建立他
-
-#+begin_src emacs-lisp
-  (if (not (file-exists-p emacs-backup-dir))
-      (make-directory emacs-backup-dir t))
-#+end_src
-
-** 每當敲擊按鍵 50 下時，進行備份
-
-#+begin_src emacs-lisp
-  (setq auto-save-interval 50)
-#+end_src
-
-** 每 60 秒進行自動儲存
-
-#+begin_src emacs-lisp
-  (setq auto-save-timeout 60)
-#+end_src
-
-** 真的刪除檔案，而不是放入垃圾桶
-
-#+begin_src emacs-lisp
-  (setq delete-by-moving-to-trash nil)
-#+end_src
-
-** 當讀取檔案時，不自動進行檔案儲存
-
-#+begin_src emacs-lisp
-  (setq auto-save-visited-file-name nil)
-#+end_src
-
-** 當緩衝區儲存後，刪除掉自動儲存的檔案
-
-#+begin_src emacs-lisp
-  (setq delete-auto-save-files t)
-#+end_src
-
-** 讓備份檔案具有版本控管的功能
-
-當備份檔案的時候，可以透過設定 kept-old-versions 以及 kept-new-versions 來決定
-要保留多少備份。
-
-#+begin_src emacs-lisp
-  (setq version-control t)
-#+end_src
-
-** 保留舊有的 10 個備份
-
-當新的備份建立起來後，保留舊有的 10 個備份
-
-#+begin_src emacs-lisp
-  (setq kept-old-versions 10)
-#+end_src
-
-** 建立新的 20 個備份
-
-建立新的 20 個備份，當備份數量超過 20 以後，第一個備份會變成舊有的備份。
-
-#+begin_src emacs-lisp
-  (setq kept-new-versions 20)
-#+end_src
-
-** 刪除舊有的備份
-
-刪除非以上所述的 30 個備份
-
-#+begin_src emacs-lisp
-  (setq delete-old-versions t)
-#+end_src
-
-** 使用複製的方式來產生備份檔案
-
-#+begin_src emacs-lisp
-  (setq backup-by-copying t)
-#+end_src
-
-** 其他設置
-
-#+begin_src emacs-lisp
-  (setq auto-save-default    t)           ; auto-save of every file-visiting buffer
-  ;; change auto-save-list setting
-  (setq auto-save-list-file-prefix (concat emacs-backup-dir "auto-saves-"))
-  (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
-#+end_src
-
 * 遠端編輯                                                            :tramp:
 
 ** 設定預設連線方式
