@@ -772,6 +772,35 @@ deft 其實也可以用於 *.text 檔案，不過我更偏好用在 org-mode 上
   (setq deft-use-filename-as-title t)
 #+END_SRC
 
+* Helm                                                                 :helm:
+
+Helm (領航員) 是 emacs 下非常強大的檔案尋找工具，可以用他快速的找尋已經
+打開的緩衝區、檔案，或是透過 locate 命令來找尋檔案，此外 helm 也提供了
+oscurr 功能，可以直接在目前的檔案裡找相同的字串。
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'helm)
+#+END_SRC
+
+** 使用預先定義好的 helm 設定
+
+#+BEGIN_SRC emacs-lisp
+  (require 'helm-config)
+  (setq helm-config t)
+#+END_SRC
+** 全域性啟用 helm-mode
+
+#+begin_src emacs-lisp
+  (helm-mode 1)
+#+end_src
+
+** 加入 git 支援
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'helm-ls-git)
+#+END_SRC
+
+
 * 自動補全
 
 auto-complete-mode 是目前使用 emacs 的人都會安裝的自動補全用的 backend，
@@ -2873,22 +2902,7 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
 ** 載入相關套件
 
 #+begin_src emacs-lisp
-  (require 'helm)
   (require 'helm-etags+)
-  (require 'helm-ls-git)
-#+end_src
-
-** 使用預先定義好的 helm 設定
-
-#+begin_src emacs-lisp
-  (require 'helm-config)
-  (setq helm-config t)
-#+end_src
-
-** 全域性啟用 helm-mode
-
-#+begin_src emacs-lisp
-  (helm-mode 1)
 #+end_src
 
 ** Function
@@ -2916,12 +2930,6 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
     (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
             (format ": %s" (buffer-substring s e))))
 #+end_src
-
-** helm-swoop
-
-#+BEGIN_SRC emacs-lisp
-;;(require* 'helm-swoop)
-#+END_SRC
 
 ** 按鍵設定
 
