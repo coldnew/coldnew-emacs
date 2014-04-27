@@ -6711,7 +6711,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 
 #+NAME: keys-doc
-#+BEGIN_SRC emacs-lisp :var keys=keys :tangle no :results output raw :exports results
+#+BEGIN_SRC emacs-lisp :var keys=global-keys :tangle no :results output raw :exports results
   (let* ((header (car keys))
          (keys (delq header keys))
          (category))
@@ -6731,34 +6731,37 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 #+END_SRC
 
 #+NAME: gen-keys
-#+BEGIN_SRC emacs-lisp :var keys=keys :results output :tangle no :exports none :colnames nil
-(mapcar (lambda (l)
-          (let* ((key (nth 1 l))
-                 (def (if (string-match "^[[:alnum:]]\\{2\\}$" (format "%s" key))
-                          (format "key-chord-define-global \"%s\"" key)
-                        (format "global-set-key (kbd \"%s\")" key)))
-                 (command (car (last l))))
-                 (princ (format "(%s %s)\n" def command))))
-          keys)
+#+BEGIN_SRC emacs-lisp :results output :tangle no :exports none :colnames nil
+    (mapcar (lambda (l)
+              (let* ((key (nth 1 l))
+                     (def (format "%s (kbd \"%s\")" func key))
+                     (command (car (last l))))
+                (princ (format "(%s '%s)\n" def command))))
+            ;; remove all `hline' tag first line in list
+            (cdr (remove 'hline keys))) )
 #+END_SRC
 
+
 將按鍵設定產生在 config.el
+
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
-<<gen-keys()>>
+<<gen-keys(func="global-set-key", keys=global-keys)>>
 #+END_SRC
+
 
 ** 全域性按鍵設定 (global-set-key) :noexport:
 
-#+TBLNAME: keys
-| 類別     | 按鍵    | 描述                               | 命令               |
-|----------+---------+------------------------------------+--------------------|
-| 文字編輯 | s-<RET> | 插入空白行                         | 'insert-empty-line |
-| 緩衝區   | C-x C-b | 切換到 ibuffer                     | 'ibuffer           |
-| 資料夾   | C-x C-d | 切換到 dired                       | 'dired             |
-| 視窗切換 | C-x F   | 將視窗切換成全螢幕                 | 'fullscreen-window |
-| 視窗切換 | M-[     | 回復上一個窗口佈局                 | 'winner-undo       |
-| 視窗切換 | M-]     | 切回上一組進行窗口復原時的窗口佈局 | 'winner-redo       |
-| Shell    | C-x s   | 執行 shell 命令                    | 'shell-command     |
+#+TBLNAME: global-keys
+| 類別     | 按鍵    | 描述                               | 命令              |
+|----------+---------+------------------------------------+-------------------|
+| 文字編輯 | s-<RET> | 插入空白行                         | insert-empty-line |
+| 緩衝區   | C-x C-b | 切換到 ibuffer                     | ibuffer           |
+| 資料夾   | C-x C-d | 切換到 dired                       | dired             |
+| 視窗切換 | C-x F   | 將視窗切換成全螢幕                 | fullscreen-window |
+| 視窗切換 | M-[     | 回復上一個窗口佈局                 | winner-undo       |
+| 視窗切換 | M-]     | 切回上一組進行窗口復原時的窗口佈局 | winner-redo       |
+| Shell    | C-x s   | 執行 shell 命令                    | shell-command     |
+
 * 最後的初始化設定
 
 在 [[*%E4%BD%BF%E7%94%A8%20req-package%20%E7%B0%A1%E5%8C%96%20use-package%20%E7%9A%84%E8%A8%AD%E5%AE%9A][使用 req-package 簡化 use-package 的設定]] 有提到說要再使用
