@@ -514,14 +514,14 @@ emacs 有一些套件本身不需要配置，或是只是函式庫，這一類�
 
 若是設定比較簡單的獨立程式也放在這邊。
 
-** 載入部分未被載入的預設套件
+** 載入 emacs 未被預設載入的套件
 
 在 emacs 中有一些內建套件沒有預設載入，這邊將其載入使用。
 
 #+begin_src emacs-lisp
-  (require* 'misc)
-  (require* 'cc-mode)
-  (require* 'frameset)
+;;  (require 'misc)
+;;  (require 'cc-mode)
+;;  (require 'frameset)
 #+end_src
 
 ** ascii :: 顯示 ASCII 表
@@ -1070,7 +1070,7 @@ Rust 是由 Mozilla 所開發的語言。
 
 #+begin_src emacs-lisp
    (require* 'newlisp)
-    (add-to-list 'auto-mode-alist '("\\.lsp$" . newlisp-mode)))
+    (add-to-list 'auto-mode-alist '("\\.lsp$" . newlisp-mode))
 #+end_src
 
 ** Graphviz
@@ -1181,7 +1181,6 @@ Rust 是由 Mozilla 所開發的語言。
 #+end_src
 
 
-
 * TODO ----------------- Prepare for re-write ---------------------------------
 
 ref : http://steckerhalter.co.vu/steckemacs.html
@@ -1268,7 +1267,6 @@ ref : http://steckerhalter.co.vu/steckemacs.html
   (setq scroll-up-aggressively       0.01 )
   (setq scroll-down-aggressively     0.01 )
 #+end_src
-
 
 * 常用的模組 / 函式庫                                               :plugin:
 
@@ -2557,7 +2555,6 @@ auto-complete-mode 的按鍵設定。
             (shell-pop-out)))))
 #+end_src
 
-
 ** shell mode
 
 #+begin_src emacs-lisp
@@ -3011,7 +3008,7 @@ woman 是 emacs 下顯示 manpage 最好的方式。
     (require 'org-install)
     (require 'org-table)
     (require 'ob-ditaa)
-    (require 'org-latex)
+;;    (require 'org-latex)
   #+end_src
 
 ** 使用 org-mode 記事                                              :capture:
@@ -4319,10 +4316,6 @@ require 的 snippet, 則添加以下程式
   ;; Additional tag decorations
   (global-semantic-decoration-mode -1)
 
-  ;;;; Enable support for GNU Global
-;;  (semanticdb-enable-gnu-global-databases 'c-mode)
-;;  (semanticdb-enable-gnu-global-databases 'c++-mode)
-
   (setq semanticdb-default-save-directory (concat emacs-cache-dir "semanticdb"))
   (set-default 'semantic-case-fold t)
 
@@ -4346,7 +4339,6 @@ require 的 snippet, 則添加以下程式
 #+begin_src emacs-lisp
   (setq ecb-auto-compatibility-check nil)
 #+end_src
-
 
 ** 使用命令顯示/隱藏 ecb-mode
 
