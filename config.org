@@ -918,6 +918,66 @@ EmacsWiki: http://www.emacswiki.org/emacs//multi-term.el
 #+begin_src emacs-lisp
   (setq multi-term-program "/bin/bash")
 #+end_src
+* eshell
+
+eshell 是 emacs 下一個非常特殊的終端機 (terminal) 模擬軟體，和一般的
+xterm、konsole、gnome terminal 相比，eshell 完全使用 emacs-lisp 實現，
+因此可以非常完整的和 emacs 結合。
+
+#+BEGIN_SRC emacs-lisp
+  (require 'eshell)
+#+END_SRC
+
+** 設定預設的 eshell 資料夾位置
+
+eshell-directory-name 設定了 eshell 的資料夾，裡面可能存放一些和
+eshell 相關的資訊。
+
+#+BEGIN_SRC emacs-lisp
+  (setq eshell-directory-name (concat emacs-cache-dir "eshell"))
+#+END_SRC
+
+** 將 eshell prompt 設定成 bash 預設的模式，並加上顏色
+
+- 將 eshell 的 prompt 設定成和 bash 一樣
+
+  下面這一組 emacs-lisp 可以讓你的 eshell prompt 設定的和 bash 相同，變成 =user@hostname directory $= 的形式。
+
+  #+begin_src emacs-lisp
+    (setq eshell-prompt-function
+          '(lambda ()
+             (concat
+              user-login-name "@" system-name " "
+              (if (search (directory-file-name (expand-file-name (getenv "HOME"))) (eshell/pwd))
+                  (replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
+                (eshell/pwd))
+              (if (= (user-uid) 0) " # " " $ "))))
+  #+end_src
+
+- 替 eshell 的 prompt 上色
+
+  我不喜歡原本 eshell 那樣單一的顏色，用 Gentoo 系統預設的上色方式還比較好看 :)
+
+  #+begin_src emacs-lisp
+    (defun colorfy-eshell-prompt ()
+      (let* ((mpoint)
+             (user-string-regexp (concat "^" user-login-name "@" system-name)))
+        (save-excursion
+          (goto-char (point-min))
+          (while (re-search-forward (concat user-string-regexp ".*[$#]") (point-max) t)
+            (setq mpoint (point))
+            (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "dodger blue")))
+          (goto-char (point-min))
+          (while (re-search-forward user-string-regexp (point-max) t)
+            (setq mpoint (point))
+            (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "green3"))
+            ))))
+
+    ;; Make eshell prompt more colorful
+    (add-hook 'eshell-output-filter-functions 'colorfy-eshell-prompt)
+  #+end_src
+
+
 
 * 窗口管理                                                           :window:
 
@@ -2788,15 +2848,6 @@ auto-complete-mode 的按鍵設定。
     (require 'em-cmpl)
   #+end_src
 
-- 設定預設的 eshell 資料夾位置
-
-  eshell-directory-name 設定了 eshell 的資料夾，裡面可能存放一些和
-  eshell 相關的資訊。
-
-  #+BEGIN_SRC emacs-lisp
-    (setq eshell-directory-name (concat emacs-cache-dir "eshell"))
-  #+END_SRC
-
 - 當離開 eshell 時自動儲存歷史紀錄
 
   設定 eshell 的歷史紀錄檔案大小等資訊
@@ -2806,41 +2857,7 @@ auto-complete-mode 的按鍵設定。
     (setq eshell-save-history-on-exit t)
   #+end_src
 
-** 將 eshell 的 prompt 設定成和 bash 一樣
 
-#+begin_src emacs-lisp
-  (setq eshell-prompt-function
-        '(lambda ()
-           (concat
-            user-login-name "@" system-name " "
-            (if (search (directory-file-name (expand-file-name (getenv "HOME"))) (eshell/pwd))
-                (replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
-              (eshell/pwd))
-            (if (= (user-uid) 0) " # " " $ "))))
-#+end_src
-
-** 替 eshell 的 prompt 上色
-
-我不喜歡原本 eshell 那樣單一的顏色，用 Gentoo 系統預設的上色方式還比較好看 :)
-
-#+begin_src emacs-lisp
-  (defun coldnew/colorfy-eshell-prompt ()
-    (let* ((mpoint)
-           (user-string-regexp (concat "^" user-login-name "@" system-name)))
-      (save-excursion
-        (goto-char (point-min))
-        (while (re-search-forward (concat user-string-regexp ".*[$#]") (point-max) t)
-          (setq mpoint (point))
-          (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "dodger blue")))
-        (goto-char (point-min))
-        (while (re-search-forward user-string-regexp (point-max) t)
-          (setq mpoint (point))
-          (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "green3"))
-          ))))
-
-  ;; Make eshell prompt more colorful
-  (add-hook 'eshell-output-filter-functions 'coldnew/colorfy-eshell-prompt)
-  #+end_src
 
 ** TODO 其他設定
 
