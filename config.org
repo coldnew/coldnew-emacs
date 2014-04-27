@@ -800,7 +800,6 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
   (require* 'helm-ls-git)
 #+END_SRC
 
-
 * 自動補全
 
 auto-complete-mode 是目前使用 emacs 的人都會安裝的自動補全用的 backend，
@@ -1050,6 +1049,84 @@ Site: http://batsov.com/projectile/
   (require* 'projectile)
   ;; Globally enable projectile
 ;;  (projectile-global-mode)
+#+end_src
+
+* TAGS                                                                 :tags:
+
+這邊放置和 tags 相關的功能
+
+** 自動更新 TAGS
+
+ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ctags-update-minor-mode,
+這樣任何模式下，若我有 TAGS 檔案的話，他都會自動幫我更新。
+
+我並沒有為他增加其他配置，因此預設為 5 分鐘更新一次 TAGS。
+
+#+begin_src emacs-lisp
+  (require 'ctags-update)
+#+end_src
+
+很令人討厭的一件事情是, helm-etags-plus 的作者有包了另外一個
+ctags-update.el 檔案，所以如果載入順序出錯的話，會和另外一個同名的
+ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不存在在使
+用 helm-etags-plus 裡面附贈的 ctags-update.el。
+
+#+BEGIN_SRC emacs-lisp
+  ;; Use ctags-update function in ctags-update.el
+  (if (fboundp 'ctags-auto-update-mode)
+      (ctags-auto-update-mode 1)
+    ;; if the function does not exist, use the ctags-update
+    ;; in helm-etags-plus packages.
+    (if (fboundp 'ctags-update-minor-mode)
+        (ctags-update-minor-mode 1)))
+#+END_SRC
+
+** 用來產生 TAGS 的命令                                            :command:
+
+我使用 TAGS 最多的地方應該就是 kernel code 以及 Linux 下的 C code 了，
+由於 kernel code 可以用
+
+: make TAGS
+
+來產生 TAGS 檔案，因此此命令只是添加在這邊，若我有需要的話直接呼叫就可以很方便
+的做出一個新的 TAGS 檔案。
+
+#+begin_src emacs-lisp
+  (defun create-tags ()
+    "Create TAGS file in current directory."
+    (interactive)
+    (let ((dir (read-from-minibuffer "generate tags in: "
+                                     (file-name-directory (or (buffer-file-name)
+                                         default-directory))))
+            (exp (read-from-minibuffer "suffix: ")))
+      ;; if suffix is null, take it as c language
+      (if (string-equal "" exp) (setq exp "*.[ch]"))
+      (with-temp-buffer
+        (shell-command
+         (concat "find " dir " -name \"" exp "\" | xargs etags ")
+         (buffer-name)))))
+#+end_src
+
+** 用來產生 GTAGS 的命令                                           :command:
+
+#+begin_src emacs-lisp
+  (defun create-gtags ()
+    "create or update the gnu global tag file"
+    (interactive)
+    (if (not (= 0 (call-process "global" nil nil nil " -p")))
+        ;; tagfile doesn't exist?
+        (let ((olddir default-directory)
+              (topdir (read-directory-name
+                       "gtags: top of source tree:" default-directory)))
+          (cd topdir)
+          (message "Creating tags table...")
+          (shell-command "gtags")
+          (message "Creating tags table... Done")
+          (cd olddir)) ;; restore
+      ;; tagfile already exists; update it
+      (message "Updating tags table...")
+      (shell-command "global -u")
+      (message "Updating tags table... Done")))
 #+end_src
 
 * 程式開發                                                         :language:
@@ -3405,85 +3482,6 @@ some packages conflict with org-mode
 
 #+begin_src emacs-lisp
   (require 'bm)
-#+end_src
-
-
-* TAGS                                                                 :tags:
-
-這邊放置和 tags 相關的功能
-
-** 自動更新 TAGS
-
-ctags-update 這個擴展會自動幫你更新目前的 TAGS, 這邊我打開 ctags-update-minor-mode,
-這樣任何模式下，若我有 TAGS 檔案的話，他都會自動幫我更新。
-
-我並沒有為他增加其他配置，因此預設為 5 分鐘更新一次 TAGS。
-
-#+begin_src emacs-lisp
-  (require 'ctags-update)
-#+end_src
-
-很令人討厭的一件事情是, helm-etags-plus 的作者有包了另外一個
-ctags-update.el 檔案，所以如果載入順序出錯的話，會和另外一個同名的
-ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不存在在使
-用 helm-etags-plus 裡面附贈的 ctags-update.el。
-
-#+BEGIN_SRC emacs-lisp
-  ;; Use ctags-update function in ctags-update.el
-  (if (fboundp 'ctags-auto-update-mode)
-      (ctags-auto-update-mode 1)
-    ;; if the function does not exist, use the ctags-update
-    ;; in helm-etags-plus packages.
-    (if (fboundp 'ctags-update-minor-mode)
-        (ctags-update-minor-mode 1)))
-#+END_SRC
-
-** 用來產生 TAGS 的命令                                            :command:
-
-我使用 TAGS 最多的地方應該就是 kernel code 以及 Linux 下的 C code 了，
-由於 kernel code 可以用
-
-: make TAGS
-
-來產生 TAGS 檔案，因此此命令只是添加在這邊，若我有需要的話直接呼叫就可以很方便
-的做出一個新的 TAGS 檔案。
-
-#+begin_src emacs-lisp
-  (defun create-tags ()
-    "Create TAGS file in current directory."
-    (interactive)
-    (let ((dir (read-from-minibuffer "generate tags in: "
-                                     (file-name-directory (or (buffer-file-name)
-                                         default-directory))))
-            (exp (read-from-minibuffer "suffix: ")))
-      ;; if suffix is null, take it as c language
-      (if (string-equal "" exp) (setq exp "*.[ch]"))
-      (with-temp-buffer
-        (shell-command
-         (concat "find " dir " -name \"" exp "\" | xargs etags ")
-         (buffer-name)))))
-#+end_src
-
-** 用來產生 GTAGS 的命令                                           :command:
-
-#+begin_src emacs-lisp
-  (defun create-gtags ()
-    "create or update the gnu global tag file"
-    (interactive)
-    (if (not (= 0 (call-process "global" nil nil nil " -p")))
-        ;; tagfile doesn't exist?
-        (let ((olddir default-directory)
-              (topdir (read-directory-name
-                       "gtags: top of source tree:" default-directory)))
-          (cd topdir)
-          (message "Creating tags table...")
-          (shell-command "gtags")
-          (message "Creating tags table... Done")
-          (cd olddir)) ;; restore
-      ;; tagfile already exists; update it
-      (message "Updating tags table...")
-      (shell-command "global -u")
-      (message "Updating tags table... Done")))
 #+end_src
 
 * 編輯器                                                             :editor:
