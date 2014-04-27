@@ -6732,13 +6732,16 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 
 #+NAME: gen-keys
 #+BEGIN_SRC emacs-lisp :results output :tangle no :exports none :colnames nil
-    (mapcar (lambda (l)
-              (let* ((key (nth 1 l))
-                     (def (format "%s (kbd \"%s\")" func key))
-                     (command (car (last l))))
-                (princ (format "(%s '%s)\n" def command))))
-            ;; remove all `hline' tag first line in list
-            (cdr (remove 'hline keys))) )
+  (mapcar (lambda (l)
+            (let* ((key (nth 1 l))
+                   (def (format "%s (kbd \"%s\")" func key))
+                   ;; (if (string-match "^[[:alnum:]]\\{2\\}$" (format "%s" key))
+                   ;;                           (format "key-chord-define-global \"%s\"" key)
+                   ;;                         (format "global-set-key (kbd \"%s\")" key)))
+                   (command (car (last l))))
+              (princ (format "(%s '%s)\n" def command))))
+          ;; remove all `hline' tag first line in list
+          (cdr (remove 'hline keys))) )
 #+END_SRC
 
 
