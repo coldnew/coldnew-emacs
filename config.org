@@ -1389,53 +1389,6 @@ paredit 可以幫助傳寫程式的速度。
        (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil))))
 #+end_src
 
-** TODO elscreen                                                  :elscreen:
-*** 載入相關模組
-
-#+begin_src emacs-lisp
-  (require 'elscreen)
-#+end_src
-
-*** 自動啟用 elscreen
-
-#+begin_src emacs-lisp
-  (elscreen-start)
-#+end_src
-
-*** 分頁上顯示 *控制* 圖示
-
-#+begin_src emacs-lisp
-  (setq elscreen-tab-display-control t)
-#+end_src
-
-*** 分頁上不顯示 *關閉* 圖示
-
-#+begin_src emacs-lisp
-  (setq elscreen-tab-display-kill-screen nil)
-#+end_src
-
-*** 功能強化
-
-當目前只有一個 elscreen-tab 存在時，呼叫 *elscreen-next* 、 *elscreen-previous*
-或是 *elscreen-toggle* 會自動建立另外一個 elscreen-tab。
-#+begin_src emacs-lisp
-  (defmacro elscreen-create-automatically (ad-do-it)
-    (` (if (not (elscreen-one-screen-p))
-           (, ad-do-it)
-         (elscreen-create)
-         (elscreen-notify-screen-modification 'force-immediately)
-         (elscreen-message "New screen is automatically created"))))
-
-  (defadvice elscreen-next (around elscreen-create-automatically activate)
-    (elscreen-create-automatically ad-do-it))
-
-  (defadvice elscreen-previous (around elscreen-create-automatically activate)
-    (elscreen-create-automatically ad-do-it))
-
-  (defadvice elscreen-toggle (around elscreen-create-automatically activate)
-    (elscreen-create-automatically ad-do-it))
-#+end_src
-
 ** TODO 其他
 #+begin_src emacs-lisp
   (require 'rainbow-mode)
@@ -6597,34 +6550,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (global-unset-key (kbd "C-x d"))
 #+end_src
 
-** 分頁切換
-
-| 按鍵        | 命令                     | 用途          |
-|-------------+--------------------------+---------------|
-| C-x t n     | elscreen-next            | 下一個分頁    |
-| C-x t p     | elscreen-previous        | 前一個分頁    |
-| C-x t r     | elscreen-screen-nickname | 更改分頁名稱  |
-| C-x t <NUM> | elscreen-goto <NUM>      | 跳到 <NUM> 頁 |
-| C-x t c     | elscreen-create          | 建立新的分頁  |
-| C-x t k     | elscreen-kill            | 關閉當前分頁  |
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-x t n") 'elscreen-next)
-  (global-set-key (kbd "C-x t p") 'elscreen-previous)
-  (global-set-key (kbd "C-x t r") 'elscreen-screen-nickname)
-  (global-set-key (kbd "C-x t c") 'elscreen-create)
-  (global-set-key (kbd "C-x t k") 'elscreen-kill)
-  (global-set-key (kbd "C-x t 0") '(lambda () (interactive) (elscreen-goto 0)))
-  (global-set-key (kbd "C-x t 1") '(lambda () (interactive) (elscreen-goto 1)))
-  (global-set-key (kbd "C-x t 2") '(lambda () (interactive) (elscreen-goto 2)))
-  (global-set-key (kbd "C-x t 3") '(lambda () (interactive) (elscreen-goto 3)))
-  (global-set-key (kbd "C-x t 4") '(lambda () (interactive) (elscreen-goto 4)))
-  (global-set-key (kbd "C-x t 5") '(lambda () (interactive) (elscreen-goto 5)))
-  (global-set-key (kbd "C-x t 6") '(lambda () (interactive) (elscreen-goto 6)))
-  (global-set-key (kbd "C-x t 7") '(lambda () (interactive) (elscreen-goto 7)))
-  (global-set-key (kbd "C-x t 8") '(lambda () (interactive) (elscreen-goto 8)))
-  (global-set-key (kbd "C-x t 9") '(lambda () (interactive) (elscreen-goto 9)))
-#+end_src
 
 ** Ctrl-r 暫存器、書籤、快速跳轉、矩型處理
 預設的 C-r 其實是 isearch-backward, 這裡將他改掉。
