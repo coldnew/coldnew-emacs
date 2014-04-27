@@ -1008,6 +1008,21 @@ mu4e 是 mu 的 elisp 接口，由 [[http://emacs-fu.blogspot.tw/][emacs-fu]] �
 : remotepasseval = get_password_emacs("imap.gmail.com")
 
 即可透過 emacs 取得 password 這個密碼。
+* 專案管理                                                          :project:
+
+emacs 下有太多太多跟專案管理相關的套件了，目前先一一試用，再來
+決定我要用什麼
+
+** projectile
+
+Site: http://batsov.com/projectile/
+
+#+begin_src emacs-lisp
+  (require* 'projectile)
+  ;; Globally enable projectile
+;;  (projectile-global-mode)
+#+end_src
+
 * 程式開發                                                         :language:
 
 各種不同程式語言開發用的設定。
@@ -3384,16 +3399,6 @@ some packages conflict with org-mode
   (require 'bm)
 #+end_src
 
-* 專案管理                                                          :project:
-
-emacs 下有太多太多跟專案管理相關的套件了，目前先一一試用，再來
-決定我要用什麼
-
-** projectile
-
-#+begin_src emacs-lisp
-  (require 'projectile)
-#+end_src
 
 * TAGS                                                                 :tags:
 
@@ -6775,7 +6780,6 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 視窗切換 | M-[     | 回復上一個窗口佈局                 | 'winner-undo       |
 | 視窗切換 | M-]     | 切回上一組進行窗口復原時的窗口佈局 | 'winner-redo       |
 | Shell    | C-x s   | 執行 shell 命令                    | 'shell-command     |
-
 * 最後的初始化設定
 
 在 [[*%E4%BD%BF%E7%94%A8%20req-package%20%E7%B0%A1%E5%8C%96%20use-package%20%E7%9A%84%E8%A8%AD%E5%AE%9A][使用 req-package 簡化 use-package 的設定]] 有提到說要再使用
