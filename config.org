@@ -1180,7 +1180,6 @@ Rust 是由 Mozilla 所開發的語言。
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
 #+end_src
 
-
 * TODO ----------------- Prepare for re-write ---------------------------------
 
 ref : http://steckerhalter.co.vu/steckemacs.html
