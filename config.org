@@ -977,7 +977,6 @@ eshell 相關的資訊。
     (add-hook 'eshell-output-filter-functions 'colorfy-eshell-prompt)
   #+end_src
 
-
 ** 使用 eshell-autojump 快速跳轉資料夾
 
 [[http://www.emacswiki.org/emacs/EshellAutojump][Eshell Autojump]] 提供了一個 =j= 的 eshell 命令，他會根據你之前使用 cd 切
@@ -1000,6 +999,43 @@ Site: http://www.emacswiki.org/emacs/EshellAutojump
   (eval-after-load 'eshell
     '(require* 'eshell-autojump))
 #+END_SRC
+** eshell 命令 :: emacs
+
+如果在 eshell 中呼叫 emacs 命令，實際上還是會打開另外一個 emacs 程式，
+因此在這邊重弄 emacs 命令，這樣就可以很安心的在 eshell 中用 emacs 打開
+檔案到緩衝區裏面。
+
+#+begin_src emacs-lisp
+  (defun eshell/emacs (&rest args)
+    "Open a file in emacs. Some habits die hard."
+    (if (null args)
+        ;; If I just ran "emacs", I probably expect to be launching
+        ;; Emacs, which is rather silly since I'm already in Emacs.
+        ;; So just pretend to do what I ask.
+        (bury-buffer)
+      ;; We have to expand the file names or else naming a directory in an
+      ;; argument causes later arguments to be looked for in that directory,
+      ;; not the starting directory
+      (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
+
+  (defalias 'eshell/e 'eshell/emacs)
+#+end_src
+**
+**
+**
+** eshell 命令 :: clear
+
+這個命令的作用和 Unix 下的 clear 功用相同，都是用來清空 shell 的內容。
+
+#+begin_src emacs-lisp
+  (defun eshell/clear ()
+    "Clears the shell buffer ala Unix's clear or DOS' cls"
+    ;; the shell prompts are read-only, so clear that for the duration
+    (let ((inhibit-read-only t))
+      ;; simply delete the region
+      (delete-region (point-min) (point-max))))
+#+end_src
+
 
 * 窗口管理                                                           :window:
 
@@ -2880,7 +2916,6 @@ auto-complete-mode 的按鍵設定。
   #+end_src
 
 
-
 ** TODO 其他設定
 
 #+begin_src emacs-lisp
@@ -2902,28 +2937,6 @@ auto-complete-mode 的按鍵設定。
 
 #+end_src
 
-** TODO Command
-#+begin_src emacs-lisp
-  ;; find-file
-  (defun eshell/ef (&rest args) (eshell/emacs args))
-
-  ;; ediff
-  (defun eshell/ed (file1 file2) (ediff file1 file2))
-
-  (defun eshell/info (subject)
-    "Read the Info manual on SUBJECT."
-    (let ((buf (current-buffer)))
-      (Info-directory)
-      (let ((node-exists (ignore-errors (Info-menu subject))))
-        (if node-exists
-            0
-          ;; We want to switch back to *eshell* if the requested
-          ;; Info manual doesn't exist.
-          (switch-to-buffer buf)
-          (eshell-print (format "There is no Info manual on %s.\n"
-                                subject))
-          1))))
-#+end_src
 ** 使用 auto-complete 來補全 eshell 命令
 
 #+begin_src emacs-lisp
@@ -2951,43 +2964,6 @@ auto-complete-mode 的按鍵設定。
        (setq multi-eshell-name "*eshell*")))
 #+END_SRC
 
-
-** eshell 命令
-
-*** 在 eshell 中用 emacs 打開檔案
-
-如果在 eshell 中呼叫 emacs 命令，實際上還是會打開另外一個 emacs 程式，
-因此在這邊重弄 emacs 命令，這樣就可以很安心的在 eshell 中用 emacs 打開
-檔案到緩衝區裏面。
-
-#+begin_src emacs-lisp
-  (defun eshell/emacs (&rest args)
-    "Open a file in emacs. Some habits die hard."
-    (if (null args)
-        ;; If I just ran "emacs", I probably expect to be launching
-        ;; Emacs, which is rather silly since I'm already in Emacs.
-        ;; So just pretend to do what I ask.
-        (bury-buffer)
-      ;; We have to expand the file names or else naming a directory in an
-      ;; argument causes later arguments to be looked for in that directory,
-      ;; not the starting directory
-      (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
-
-  (defalias 'eshell/e 'eshell/emacs)
-#+end_src
-
-*** 清空 eshell 緩衝區
-
-這個命令的作用和 Unix 下的 clear 功用相同，都是用來清空 shell 的內容。
-
-#+begin_src emacs-lisp
-  (defun eshell/clear ()
-    "Clears the shell buffer ala Unix's clear or DOS' cls"
-    ;; the shell prompts are read-only, so clear that for the duration
-    (let ((inhibit-read-only t))
-      ;; simply delete the region
-      (delete-region (point-min) (point-max))))
-#+end_src
 
 * Helm                                                                 :helm:
 
