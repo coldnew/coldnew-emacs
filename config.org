@@ -875,7 +875,6 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
        16)))
 #+end_src
 
-
 * Org                                                                   :org:
 
 org-mode 是非常強大的筆記管理系統，也是這整份 emacs 設定的核心，由於與
@@ -1292,7 +1291,6 @@ Site: http://www.emacswiki.org/emacs/EshellAutojump
       ;; simply delete the region
       (delete-region (point-min) (point-max))))
 #+end_src
-
 
 * 窗口管理                                                           :window:
 
