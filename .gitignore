@@ -31,6 +31,7 @@ config/coldnew-emacs.el*
 themes/coldnew-night-theme.el
 config.el
 log/
+log
 url/
 lisp/
 tramp
