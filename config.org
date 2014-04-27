@@ -6544,7 +6544,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 | C-r r <char>   | copy-rectangle-to-register | 將矩型區域存入暫存器                     |
 | C-r i <char>   | insert-register            | 將暫存器內的東西插入                     |
 | C-r SPC <char> | point-to-register          | 將檔案或是緩衝區位置存入暫存器           |
-| C-r j <char>   | jump-to-register           | 跳轉到暫存的檔案或是緩衝區位置           |
 | C-r n          | cua-sequence-rectangel     | 對選取的矩型區域每行加入相對應的續列數字 |
 
 #+begin_src emacs-lisp
@@ -6552,7 +6551,6 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (global-set-key (kbd "C-r r") 'copy-rectangle-to-register)
   (global-set-key (kbd "C-r i") 'insert-register)
   (global-set-key (kbd "C-r <SPC>") 'point-to-register)
-  (global-set-key (kbd "C-r j") 'jump-to-register)
   (global-set-key (kbd "C-r n") 'cua-sequence-rectangle)
 #+end_src
 
@@ -6724,7 +6722,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
                            (princ "#+ATTR_HTML: :rules all :cellpadding 4\n")
                            (princ "| / | <r> | | \n")
                            )
-                         (princ (format "| # | =%s= | %s |\n" (nth 1 l) (nth 2 l))))
+                         (princ (format "| # | =%s= | %s |\n" (nth 1 l) (nth 3 l))))
                      (princ "|-\n")))
             keys))
   (princ "\n")
@@ -6738,7 +6736,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
                    ;; (if (string-match "^[[:alnum:]]\\{2\\}$" (format "%s" key))
                    ;;                           (format "key-chord-define-global \"%s\"" key)
                    ;;                         (format "global-set-key (kbd \"%s\")" key)))
-                   (command (car (last l))))
+                   (command (nth 2 l)))
               (princ (format "(%s '%s)\n" def command))))
           ;; remove all `hline' tag first line in list
           (cdr (remove 'hline keys))) )
@@ -6747,23 +6745,37 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 
 將按鍵設定產生在 config.el
 
-#+BEGIN_SRC emacs-lisp :noweb yes :results silent
-<<gen-keys(func="global-set-key", keys=global-keys)>>
-#+END_SRC
 
 
 ** 全域性按鍵設定 (global-set-key) :noexport:
 
 #+TBLNAME: global-keys
-| 類別     | 按鍵    | 描述                               | 命令              |
-|----------+---------+------------------------------------+-------------------|
-| 文字編輯 | s-<RET> | 插入空白行                         | insert-empty-line |
-| 緩衝區   | C-x C-b | 切換到 ibuffer                     | ibuffer           |
-| 資料夾   | C-x C-d | 切換到 dired                       | dired             |
-| 視窗切換 | C-x F   | 將視窗切換成全螢幕                 | fullscreen-window |
-| 視窗切換 | M-[     | 回復上一個窗口佈局                 | winner-undo       |
-| 視窗切換 | M-]     | 切回上一組進行窗口復原時的窗口佈局 | winner-redo       |
-| Shell    | C-x s   | 執行 shell 命令                    | shell-command     |
+| 類別     | 按鍵    | 命令              | 描述                               |
+|----------+---------+-------------------+------------------------------------|
+| 文字編輯 | s-<RET> | insert-empty-line | 插入空白行                         |
+| 緩衝區   | C-x C-b | ibuffer           | 切換到 ibuffer                     |
+| 資料夾   | C-x C-d | dired             | 切換到 dired                       |
+| 視窗切換 | C-x F   | fullscreen-window | 將視窗切換成全螢幕                 |
+| 視窗切換 | M-[     | winner-undo       | 回復上一個窗口佈局                 |
+| 視窗切換 | M-]     | winner-redo       | 切回上一組進行窗口復原時的窗口佈局 |
+| Shell    | C-x s   | shell-command     | 執行 shell 命令                    |
+| 暫存器   | C-x rj  | jump-to-register  | 跳轉到暫存的檔案或是緩衝區位置     |
+
+#+BEGIN_SRC emacs-lisp :noweb yes :results silent
+  <<gen-keys(func="global-set-key", keys=global-keys)>>
+#+END_SRC
+
+** Vim 一般模式按鍵設定 (evil-normal-state-map)                   :noexport:
+
+#+TBLNAME: global-evil-normal
+| 類別   | 按鍵 | 命令               | 描述   |
+|--------+------+--------------------+--------|
+| Normal | C-n  | evil-next-line     | 下一行 |
+| Normal | C-p  | evil-previous-line | 上一行 |
+
+#+BEGIN_SRC emacs-lisp :noweb yes :results silent
+  <<gen-keys(func="define-key evil-normal-state-map", keys=global-evil-normal)>>
+#+END_SRC
 
 * 最後的初始化設定
 
