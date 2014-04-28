@@ -603,6 +603,13 @@ s 提供了許多關於字串處理的函式
 #+begin_src emacs-lisp
   (require* 's)
 #+end_src
+** expand-region :: 快速進行區域選擇
+
+GitHub: https://github.com/magnars/expand-region.el
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'expand-region)
+#+END_SRC
 
 * 自定義函式 / 方法                                                :function:
 
@@ -1987,7 +1994,6 @@ paredit 可以幫助傳寫程式的速度。
 #+begin_src emacs-lisp
   (require 'rainbow-mode)
   ;;(require 'smarter-compile)
-  (require 'expand-region)
 #+end_src
 
 ** TODO ibuffer                                                    :ibuffer:
@@ -4161,16 +4167,6 @@ require 的 snippet, 則添加以下程式
     '(progn
       (vim:mode-imap coldnew-editor-map (kbd "C-/") 'undo-tree-undo)
       (vim:mode-imap coldnew-editor-map (kbd "M-/") 'undo-tree-redo)))
-#+end_src
-
-| 按鍵 | 命令          | 用途                       |
-|------+---------------+----------------------------|
-| M-v  | expand-region | 快速選取游標下的文字、區域 |
-
-#+begin_src emacs-lisp
-  (eval-after-load 'expand-region
-    '(progn
-       (vim:mode-imap coldnew-editor-map (kbd "M-v") 'er/expand-region)))
 #+end_src
 
 | 按鍵    | 用途         |
@@ -6737,9 +6733,10 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 ** Vim 輸入模式按鍵設定 (evil-insert-state-map)                    :noexport:
 
 #+TBLNAME: global-evil-insert
-| 類別   | 按鍵 | 命令       | 描述                               |
-|--------+------+------------+------------------------------------|
-| Insert | C-;  | iedit-mode | 使用 iedit-mode 快速修改同樣的字詞 |
+| 類別   | 按鍵 | 命令             | 描述                               |
+|--------+------+------------------+------------------------------------|
+| Insert | C-;  | iedit-mode       | 使用 iedit-mode 快速修改同樣的字詞 |
+| Insert | M-v  | er/expand-region | 快速選取游標下的文字、區域         |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="define-key evil-insert-state-map", keys=global-evil-insert)>>
