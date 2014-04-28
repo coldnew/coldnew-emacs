@@ -3005,38 +3005,6 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
     (helm-locate -1))
   #+END_SRC
 
-** 尋找目前緩衝區所有符合查詢規則的文字、字串                      :command:
-
-#+begin_src emacs-lisp
-  (defun coldnew/helm-occur ()
-    "I don't like highlight when goto lines."
-    (interactive)
-    ;; FIXME: is there more elegent way to make temp face?
-    (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
-    (helm-occur))
-#+end_src
-
-#+begin_src emacs-lisp
-  (defun helm-c-occur-get-line (s e)
-    "rewrite `helm-c-occur-get-line' to make it color on line-number."
-    (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
-            (format ": %s" (buffer-substring s e))))
-#+end_src
-
-** 按鍵設定
-
-#+begin_src emacs-lisp
-    (defun coldnew/helm-mini ()
-      (interactive)
-      (helm-other-buffer '(helm-source-ls-git
-                           helm-source-locate
-                           helm-c-source-buffers-list
-                           helm-c-source-recentf
-                           helm-c-source-buffer-not-found)
-                         "*coldnew helm mini*"))
-    (vim:imap (kbd "C-x p") 'coldnew/helm-mini)
-#+end_src
-
 * 文檔幫助                                                             :info:
 
 這邊放置 manpage、womanpage、info 等幫助文檔模式的設定。
@@ -4135,16 +4103,6 @@ require 的 snippet, 則添加以下程式
   (eval-after-load 'expand-region
     '(progn
        (vim:mode-imap coldnew-editor-map (kbd "M-v") 'er/expand-region)))
-#+end_src
-
-| 按鍵 | 用途                             |
-|------+----------------------------------|
-| M-s  | 快速找尋緩衝區內所有要找尋的文字 |
-
-#+begin_src emacs-lisp
-  (eval-after-load 'helm
-    '(progn
-       (vim:mode-imap coldnew-editor-map (kbd "M-s") 'coldnew/helm-occur)))
 #+end_src
 
 | 按鍵    | 用途         |
@@ -6792,6 +6750,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 視窗切換 | M-]     | winner-redo       | 切回上一組進行窗口復原時的窗口佈局 |
 | Shell    | C-x s   | shell-command     | 執行 shell 命令                    |
 | 暫存器   | C-x rj  | jump-to-register  | 跳轉到暫存的檔案或是緩衝區位置     |
+| 尋找取代 | M-s     | helm-occur        | 使用 helm-occur 來進行尋找         |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="global-set-key", keys=global-keys)>>
