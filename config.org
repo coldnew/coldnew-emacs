@@ -4163,16 +4163,6 @@ require 的 snippet, 則添加以下程式
       (vim:mode-imap coldnew-editor-map (kbd "M-/") 'undo-tree-redo)))
 #+end_src
 
-| 按鍵 | 命令       | 用途                       |
-|------+------------+----------------------------|
-| C-;  | iedit-mode | 快速修改緩衝區內相同的文字 |
-
-#+begin_src emacs-lisp
-  (eval-after-load 'iedit
-    '(progn
-       (vim:mode-imap coldnew-editor-map (kbd "C-;") 'iedit-mode)))
-#+end_src
-
 | 按鍵 | 命令          | 用途                       |
 |------+---------------+----------------------------|
 | M-v  | expand-region | 快速選取游標下的文字、區域 |
@@ -6742,6 +6732,17 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="define-key evil-normal-state-map", keys=global-evil-normal)>>
+#+END_SRC
+
+** Vim 輸入模式按鍵設定 (evil-insert-state-map)                    :noexport:
+
+#+TBLNAME: global-evil-insert
+| 類別   | 按鍵 | 命令       | 描述                               |
+|--------+------+------------+------------------------------------|
+| Insert | C-;  | iedit-mode | 使用 iedit-mode 快速修改同樣的字詞 |
+
+#+BEGIN_SRC emacs-lisp :noweb yes :results silent
+  <<gen-keys-global(func="define-key evil-insert-state-map", keys=global-evil-insert)>>
 #+END_SRC
 
 * 最後的初始化設定
