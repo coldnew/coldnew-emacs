@@ -514,16 +514,6 @@ emacs 有一些套件本身不需要配置，或是只是函式庫，這一類�
 
 若是設定比較簡單的獨立程式也放在這邊。
 
-** 載入 emacs 未被預設載入的套件
-
-在 emacs 中有一些內建套件沒有預設載入，這邊將其載入使用。
-
-#+begin_src emacs-lisp
-;;  (require 'misc)
-;;  (require 'cc-mode)
-;;  (require 'frameset)
-#+end_src
-
 ** ascii :: 顯示 ASCII 表
 
 ascii 是一個很不錯的 ascii 表顯示工具，你可以使用 ascii-on 來啟用
