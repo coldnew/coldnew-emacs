@@ -1674,6 +1674,94 @@ Rust 是由 Mozilla 所開發的語言。
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
 #+end_src
 
+* 互動式命令                                                        :command:
+
+互動式命令就是可以在 emacs 裏面使用 M-x 然後呼叫的那些 command,
+這邊根據其用途進行分類。
+
+*注意* : 這邊的命令可能依賴我所自訂的 function。
+
+** 緩衝區處理                                                       :buffer:
+
+*** 將 unix 格式的文件轉換成 dos 格式
+
+#+begin_src emacs-lisp
+  (defun unix2dos ()
+    "Convert buffer file from unix file to dos file."
+    (interactive)
+    (unix->dos (current-buffer)))
+#+end_src
+
+*** 將 dos 格式的文件轉換成 unix 格式
+
+#+begin_src emacs-lisp
+  (defun dos2unix ()
+    "Convert buffer file from dos file to unix file."
+    (interactive)
+    (dos->unix (current-buffer)))
+#+end_src
+
+*** 將緩衝區的編碼改成 utf8
+
+#+begin_src emacs-lisp
+  (defun encode-buffer-to-utf8 ()
+    "Sets the buffer-file-coding-system to UTF8."
+    (interactive)
+    (set-buffer-file-coding-system 'utf-8 nil))
+#+end_src
+
+*** 讓 emacs 可以一直儲存緩衝區 (即使檔案未經修正)
+
+預設的 save-buffer 在 buffer 沒有變動時，不會進行儲存，
+使用此命令可以使得在呼叫 save-buffer-always 時，將 buffer 變更為修改過，
+並進行儲存。
+
+#+begin_src emacs-lisp
+  (defun save-buffer-always ()
+    "Save the buffer even if it is not modified."
+    (interactive)
+    (set-buffer-modified-p t)
+    (save-buffer))
+#+end_src
+
+*** 關閉除了 **scratch** 以外的所有 buffer。
+
+當我想要讓我的 emacs 變得很乾淨的時候，這命令很好用。
+
+#+begin_src emacs-lisp
+  (defun nuke-all-buffers ()
+    "Kill all buffers, leaving *scratch* only."
+    (interactive)
+    (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
+    (delete-other-windows))
+#+end_src
+
+*** 清除除了目前的緩衝區以外的緩衝區
+
+和 nuke-all-buffers 很像，但是這個命令只會保留目前的緩衝區。
+
+#+begin_src emacs-lisp
+    (defun kill-other-buffers ()
+      "Kill all other buffers."
+      (interactive)
+      (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+#+end_src
+
+*** 縮排整個緩衝區
+
+將整個緩衝區進行縮排的動作，同時移除多餘的空白以及將 TABS 轉換
+成空白
+
+#+begin_src emacs-lisp
+  (defun indent-whole-buffer ()
+    "Indent whole buffer and delete trailing whitespace.
+  This command will also do untabify."
+    (interactive)
+    (delete-trailing-whitespace)
+    (indent-region (point-min) (point-max))
+    (untabify (point-min) (point-max)))
+#+end_src
+
 * TODO ----------------- Prepare for re-write ---------------------------------
 
 ref : http://steckerhalter.co.vu/steckemacs.html
@@ -5173,70 +5261,6 @@ scss-mode 預設會在檔案儲存的時候自動編譯 scss 檔成為 css 檔�
 
 ** 緩衝區處理                                                       :buffer:
 
-*** 將 unix 格式的文件轉換成 dos 格式
-
-#+begin_src emacs-lisp
-  (defun unix2dos ()
-    "Convert buffer file from unix file to dos file."
-    (interactive)
-    (unix->dos (current-buffer)))
-#+end_src
-
-*** 將 dos 格式的文件轉換成 unix 格式
-
-
-#+begin_src emacs-lisp
-  (defun dos2unix ()
-    "Convert buffer file from dos file to unix file."
-    (interactive)
-    (dos->unix (current-buffer)))
-#+end_src
-
-*** 將緩衝區的編碼改成 utf8
-
-#+begin_src emacs-lisp
-  (defun encode-to-utf8 ()
-    "Sets the buffer-file-coding-system to UTF8."
-    (interactive)
-    (set-buffer-file-coding-system 'utf-8 nil))
-#+end_src
-
-*** 讓 emacs 可以一直儲存緩衝區 (即使檔案未經修正)
-
-預設的 save-buffer 在 buffer 沒有變動時，不會進行儲存，
-使用此命令可以使得在呼叫 save-buffer-always 時，將 buffer 變更為修改過，
-並進行儲存。
-#+begin_src emacs-lisp
-  (defun save-buffer-always ()
-    "Save the buffer even if it is not modified."
-    (interactive)
-    (set-buffer-modified-p t)
-    (save-buffer))
-#+end_src
-
-*** 關閉除了 **scratch** 以外的所有 buffer。
-
-當我想要讓我的 emacs 變得很乾淨的時候，這命令很好用。
-
-#+begin_src emacs-lisp
-  (defun nuke-all-buffers ()
-    "Kill all buffers, leaving *scratch* only."
-    (interactive)
-    (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
-    (delete-other-windows))
-#+end_src
-
-*** 清除除了目前的緩衝區以外的緩衝區
-
-和 nuke-all-buffers 很像，但是這個命令只會保留目前的緩衝區。
-
-#+begin_src emacs-lisp
-    (defun kill-other-buffers ()
-      "Kill all other buffers."
-      (interactive)
-      (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
-#+end_src
-
 *** 跳轉到 **scratch**
 
 跳轉目前 buffer 與 **scratch**，假如 **scratch** 不存在，
@@ -5254,21 +5278,6 @@ scss-mode 預設會在檔案儲存的時候自動編譯 scss 檔成為 css 檔�
           (switch-to-buffer scratch-buffer-name)
           (unless (equal major-mode 'lisp-interaction-mode)
             (lisp-interaction-mode))))))
-#+end_src
-
-*** 縮排整個緩衝區
-
-將整個緩衝區進行縮排的動作，同時移除多餘的空白以及將 TABS 轉換
-成空白
-
-#+begin_src emacs-lisp
-  (defun indent-whole-buffer ()
-    "Indent whole buffer and delete trailing whitespace.
-  This command will also do untabify."
-    (interactive)
-    (delete-trailing-whitespace)
-    (indent-region (point-min) (point-max))
-    (untabify (point-min) (point-max)))
 #+end_src
 
 *** 縮牌選擇區域或是整個緩衝區
@@ -6483,27 +6492,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
 #+end_src
 
-** 全域性按鍵設定                                               :global@key:
 
-| 按鍵    | 命令         | 用途                             |
-|---------+--------------+----------------------------------|
-| C-x v l | magit-log    | 使用 magit 察看 log              |
-| C-x v s | magit-status | 使用 magit 查看目前的 git status |
-
-#+begin_src emacs-lisp
-  (vim:imap (kbd "C-x vl") 'magit-log)
-  (vim:imap (kbd "C-x vs") 'magit-status)
-#+end_src
-
-| 按鍵    | 命令                      | 用途                    |
-|---------+---------------------------+-------------------------|
-| C-x v c | magit-checkout            | 切換到其他的 git branch |
-| C-x v p | git-push                  | push 到遠端 repo        |
-
-#+begin_src emacs-lisp
-  (vim:map (kbd "C-x vc") 'magit-checkout)
-  (vim:map (kbd "C-x vp") 'git-push)
-#+end_src
 * Session                                                              :blog:
 ** saveplace
 #+begin_src emacs-lisp
