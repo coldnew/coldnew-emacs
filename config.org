@@ -6723,13 +6723,12 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 視窗切換 | C-x F   | fullscreen-window | 將視窗切換成全螢幕                 |
 | 視窗切換 | M-[     | winner-undo       | 回復上一個窗口佈局                 |
 | 視窗切換 | M-]     | winner-redo       | 切回上一組進行窗口復原時的窗口佈局 |
-| Shell    | C-x s   | shell-command     | 執行 shell 命令                    |
 | 暫存器   | C-x rj  | jump-to-register  | 跳轉到暫存的檔案或是緩衝區位置     |
 | 尋找取代 | M-s     | helm-occur        | 使用 helm-occur 來進行尋找         |
 | 版本管理 | C-x vl  | magit-log         | 查看 git log                       |
 | 版本管理 | C-x vs  | magit-status      | 查看目前的 git status              |
-| 版本管理 | C-x vc  | magit-checkout    | 切換到其他的 git branch             |
-| 版本管理 | C-x vp  | magit-push        | push 到遠端的 repo                  |
+| 版本管理 | C-x vc  | magit-checkout    | 切換到其他的 git branch            |
+| 版本管理 | C-x vp  | magit-push        | push 到遠端的 repo                 |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="global-set-key", keys=global-keys)>>
