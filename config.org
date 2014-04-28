@@ -6499,14 +6499,10 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
 |---------+---------------------------+-------------------------|
 | C-x v c | magit-checkout            | 切換到其他的 git branch |
 | C-x v p | git-push                  | push 到遠端 repo        |
-| C-x v f | magit-flow-feature-create |                         |
-| C-x v e | magit-flow-feature-finish |                         |
 
 #+begin_src emacs-lisp
   (vim:map (kbd "C-x vc") 'magit-checkout)
   (vim:map (kbd "C-x vp") 'git-push)
-;;  (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
-;;  (vim:map (kbd "C-x ve") 'magit-flow-feature-finish)
 #+end_src
 * Session                                                              :blog:
 ** saveplace
@@ -6728,24 +6724,20 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
   (princ "\n")
 #+END_SRC
 
+為了可以更簡單的去定義我的按鍵，我使用以下的 emacs-lisp 去處理 org-mode 的
+表格，並自動將表格在 org-mode 進行 tangle 的時候，將表格變成程式碼輸出到我
+的 emacs 中。
+
 #+NAME: gen-keys
 #+BEGIN_SRC emacs-lisp :results output :tangle no :exports none :colnames nil
   (mapcar (lambda (l)
             (let* ((key (nth 1 l))
                    (def (format "%s (kbd \"%s\")" func key))
-                   ;; (if (string-match "^[[:alnum:]]\\{2\\}$" (format "%s" key))
-                   ;;                           (format "key-chord-define-global \"%s\"" key)
-                   ;;                         (format "global-set-key (kbd \"%s\")" key)))
                    (command (nth 2 l)))
               (princ (format "(%s '%s)\n" def command))))
           ;; remove all `hline' tag first line in list
-          (cdr (remove 'hline keys))) )
+          (cdr (remove 'hline keys)))
 #+END_SRC
-
-
-將按鍵設定產生在 config.el
-
-
 
 ** 全域性按鍵設定 (global-set-key) :noexport:
 
@@ -6760,6 +6752,10 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 視窗切換 | M-]     | winner-redo       | 切回上一組進行窗口復原時的窗口佈局 |
 | Shell    | C-x s   | shell-command     | 執行 shell 命令                    |
 | 暫存器   | C-x rj  | jump-to-register  | 跳轉到暫存的檔案或是緩衝區位置     |
+| 版本管理 | C-x v l | magit-log         | 使用 magit 察看 log                |
+| 版本管理 | C-x v s | magit-status      | 使用 magit 查看目前的 git status   |
+| 版本管理 | C-x v c | magit-checkout    | 切換到其他的 git branch            |
+| 版本管理 | C-x v p | magit-push        | push 到遠端 repo                   |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys(func="global-set-key", keys=global-keys)>>
