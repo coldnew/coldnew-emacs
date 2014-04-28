@@ -4118,7 +4118,6 @@ require 的 snippet, 則添加以下程式
                      (if selective-display nil 1))))
 #+end_src
 
-
 | 按鍵    | 用途              |
 |---------+-------------------|
 | M-<SPC> | 插入 <U200B> 字元 |
@@ -6463,31 +6462,7 @@ emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事�
   (define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
 #+end_src
 
-** 全域性按鍵設定                                               :global@key:
 
-| 按鍵    | 命令         | 用途                             |
-|---------+--------------+----------------------------------|
-| C-x v l | magit-log    | 使用 magit 察看 log              |
-| C-x v s | magit-status | 使用 magit 查看目前的 git status |
-
-#+begin_src emacs-lisp
-  (vim:imap (kbd "C-x vl") 'magit-log)
-  (vim:imap (kbd "C-x vs") 'magit-status)
-#+end_src
-
-| 按鍵    | 命令                      | 用途                    |
-|---------+---------------------------+-------------------------|
-| C-x v c | magit-checkout            | 切換到其他的 git branch |
-| C-x v p | git-push                  | push 到遠端 repo        |
-| C-x v f | magit-flow-feature-create |                         |
-| C-x v e | magit-flow-feature-finish |                         |
-
-#+begin_src emacs-lisp
-  (vim:map (kbd "C-x vc") 'magit-checkout)
-  (vim:map (kbd "C-x vp") 'git-push)
-;;  (vim:map (kbd "C-x vf") 'magit-flow-feature-create)
-;;  (vim:map (kbd "C-x ve") 'magit-flow-feature-finish)
-#+end_src
 * Session                                                              :blog:
 ** saveplace
 #+begin_src emacs-lisp
@@ -6751,6 +6726,10 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | Shell    | C-x s   | shell-command     | 執行 shell 命令                    |
 | 暫存器   | C-x rj  | jump-to-register  | 跳轉到暫存的檔案或是緩衝區位置     |
 | 尋找取代 | M-s     | helm-occur        | 使用 helm-occur 來進行尋找         |
+| 版本管理 | C-x vl  | magit-log         | 查看 git log                       |
+| 版本管理 | C-x vs  | magit-status      | 查看目前的 git status              |
+| 版本管理 | C-x vc  | magit-checkout    | 切換到其他的 git branch             |
+| 版本管理 | C-x vp  | magit-push        | push 到遠端的 repo                  |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="global-set-key", keys=global-keys)>>
