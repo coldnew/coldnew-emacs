@@ -1055,6 +1055,28 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
 #+BEGIN_SRC emacs-lisp
   (require* 'helm-ls-git)
 #+END_SRC
+** 禁止 helm 自動補全
+
+默認的 helm 會自動幫使用者進行補全，但如果遇到名稱接近的資料夾、檔案，這
+個時候 helm 就可能補全錯誤的資訊，解決的方式是使用 =C-<backspace>= 來切
+換 helm 的自動補全模式。
+
+這邊將預設的自動補全關閉，有需要再使用 =C-<backspace>= 來打開。
+
+#+BEGIN_SRC emacs-lisp
+  (setq helm-ff-auto-update-initial-value nil)
+#+END_SRC
+
+** 按鍵設定                                                       :noexport:
+
+#+TBLNAME: helm-keys
+| 按鍵  | 命令                           | 描述                          |
+|-------+--------------------------------+-------------------------------|
+| <tab> | helm-execute-persistent-action | 使用 tab 對 helm 進行自動補全 |
+
+#+BEGIN_SRC emacs-lisp :noweb yes
+  <<gen-keys(func="define-key helm-map", keys=helm-keys)>>
+#+END_SRC
 
 * 自動補全
 
@@ -6731,6 +6753,17 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 #+NAME: gen-keys
 #+BEGIN_SRC emacs-lisp :results output :tangle no :exports none :colnames nil
   (mapcar (lambda (l)
+            (let* ((key (nth 0 l))
+                   (def (format "%s (kbd \"%s\")" func key))
+                   (command (nth 1 l)))
+              (princ (format "(%s '%s)\n" def command))))
+          ;; remove all `hline' tag first line in list
+          (cdr (remove 'hline keys))) )
+#+END_SRC
+
+#+NAME: gen-keys-global
+#+BEGIN_SRC emacs-lisp :results output :tangle no :exports none :colnames nil
+  (mapcar (lambda (l)
             (let* ((key (nth 1 l))
                    (def (format "%s (kbd \"%s\")" func key))
                    ;; (if (string-match "^[[:alnum:]]\\{2\\}$" (format "%s" key))
@@ -6746,8 +6779,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 將按鍵設定產生在 config.el
 
 
-
-** 全域性按鍵設定 (global-set-key) :noexport:
+** 全域性按鍵設定 (global-set-key)                                :noexport:
 
 #+TBLNAME: global-keys
 | 類別     | 按鍵    | 命令              | 描述                               |
@@ -6762,7 +6794,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 暫存器   | C-x rj  | jump-to-register  | 跳轉到暫存的檔案或是緩衝區位置     |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
-  <<gen-keys(func="global-set-key", keys=global-keys)>>
+  <<gen-keys-global(func="global-set-key", keys=global-keys)>>
 #+END_SRC
 
 ** Vim 一般模式按鍵設定 (evil-normal-state-map)                   :noexport:
@@ -6774,7 +6806,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | Normal | C-p  | evil-previous-line | 上一行 |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
-  <<gen-keys(func="define-key evil-normal-state-map", keys=global-evil-normal)>>
+  <<gen-keys-global(func="define-key evil-normal-state-map", keys=global-evil-normal)>>
 #+END_SRC
 
 * 最後的初始化設定
