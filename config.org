@@ -477,10 +477,10 @@ require* 實際上就是 req-package 的綁定，只是語法和傳統 emacs 的
     "require FEATURE wrapper for `req-package'.
   This function is used to abstract package loading."
     ;; require feature first, ignore error
-    `(require ,feature nil 'noerror)
-    ;; use req-pckage to mantain packages
-    (eval
-     ``(req-package ,,feature ,@body)))
+    `(unless (require ,feature nil 'noerror)
+       ;; use req-pckage to mantain packages
+       (eval
+        ``(req-package ,,feature ,@body))))
 #+END_SRC
 
 使用時如下，也可以像 req-package 那樣加上參數
@@ -513,16 +513,6 @@ emacs 有一些套件本身不需要配置，或是只是函式庫，這一類�
 定為預先載入，這樣在後面的設定裏面我就可以直接使用這些套件的功能。
 
 若是設定比較簡單的獨立程式也放在這邊。
-
-** 載入 emacs 未被預設載入的套件
-
-在 emacs 中有一些內建套件沒有預設載入，這邊將其載入使用。
-
-#+begin_src emacs-lisp
-;;  (require 'misc)
-;;  (require 'cc-mode)
-;;  (require 'frameset)
-#+end_src
 
 ** ascii :: 顯示 ASCII 表
 
@@ -613,6 +603,13 @@ s 提供了許多關於字串處理的函式
 #+begin_src emacs-lisp
   (require* 's)
 #+end_src
+** expand-region :: 快速進行區域選擇
+
+GitHub: https://github.com/magnars/expand-region.el
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'expand-region)
+#+END_SRC
 
 * 自定義函式 / 方法                                                :function:
 
@@ -1084,6 +1081,28 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
 
 #+BEGIN_SRC emacs-lisp
   (require* 'helm-ls-git)
+#+END_SRC
+** 禁止 helm 自動補全
+
+默認的 helm 會自動幫使用者進行補全，但如果遇到名稱接近的資料夾、檔案，這
+個時候 helm 就可能補全錯誤的資訊，解決的方式是使用 =C-<backspace>= 來切
+換 helm 的自動補全模式。
+
+這邊將預設的自動補全關閉，有需要再使用 =C-<backspace>= 來打開。
+
+#+BEGIN_SRC emacs-lisp
+  (setq helm-ff-auto-update-initial-value nil)
+#+END_SRC
+
+** 按鍵設定                                                       :noexport:
+
+#+TBLNAME: helm-keys
+| 按鍵  | 命令                           | 描述                          |
+|-------+--------------------------------+-------------------------------|
+| <tab> | helm-execute-persistent-action | 使用 tab 對 helm 進行自動補全 |
+
+#+BEGIN_SRC emacs-lisp :noweb yes
+  <<gen-keys(func="define-key helm-map", keys=helm-keys)>>
 #+END_SRC
 
 * 自動補全
@@ -1604,6 +1623,51 @@ Rust 是由 Mozilla 所開發的語言。
   (defalias 'dot-mode 'graphviz-dot-mode)
 #+END_SRC
 
+* Git 版本管理                                                          :git:
+
+git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最好的，emacs
+有許多好用的 git 套件，諸如 egg, magit, git-emacs 之類，在這邊的設定
+我整合了這幾種工具，選用我最喜歡的功能。
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'magit)
+  (require* 'gitignore-mode)
+  (require* 'gitconfig-mode)
+#+END_SRC
+
+** 當使用 magit 時，不使用 emacs 原生的 vc-mode 來處理和 git 相關的事情
+
+emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事情，但
+是我覺的 magit 比較好用，所以當有載入 magit 時，就將 vc-mode 裏面
+負責處理 git 的部份拿掉。
+
+#+begin_src emacs-lisp
+  (when (featurep 'magit)
+    (setq vc-handled-backends (remq 'git vc-handled-backends)))
+#+end_src
+
+** 在 fringe 顯示 git 的狀況
+
+如果可以在 emacs 的 fringe 顯示文字的增加/減少的資訊，那是最好不過得。
+git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一次的 commit 有
+增加/減少的資訊。
+
+#+begin_src emacs-lisp
+  (require* 'git-gutter-fringe)
+  (global-git-gutter-mode)
+#+end_src
+
+** 按鍵設定                                                       :noexport:
+
+#+TBLNAME: magit-keys
+| 按鍵 | 命令              | 描述            |
+|------+-------------------+-----------------|
+| C-g  | magit-quit-window | 跳出 magit 視窗 |
+
+#+BEGIN_SRC emacs-lisp :noweb yes
+  <<gen-keys(func="define-key magit-mode-map", keys=magit-keys)>>
+#+END_SRC
+
 * 檔案備份                                                           :backup:
 
 雖然現在大家都有在使用 git、svn 等檔案管理系統，但我們最好還是有其他的
@@ -2005,7 +2069,6 @@ paredit 可以幫助傳寫程式的速度。
 #+begin_src emacs-lisp
   (require 'rainbow-mode)
   ;;(require 'smarter-compile)
-  (require 'expand-region)
 #+end_src
 
 ** TODO ibuffer                                                    :ibuffer:
@@ -3065,38 +3128,6 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
     (interactive)
     (helm-locate -1))
   #+END_SRC
-
-** 尋找目前緩衝區所有符合查詢規則的文字、字串                      :command:
-
-#+begin_src emacs-lisp
-  (defun coldnew/helm-occur ()
-    "I don't like highlight when goto lines."
-    (interactive)
-    ;; FIXME: is there more elegent way to make temp face?
-    (set (make-local-variable 'face-remapping-alist) '((helm-selection-line nil)))
-    (helm-occur))
-#+end_src
-
-#+begin_src emacs-lisp
-  (defun helm-c-occur-get-line (s e)
-    "rewrite `helm-c-occur-get-line' to make it color on line-number."
-    (concat (propertize (format "%7d" (line-number-at-pos (1- s))) 'face '((:foreground "red")))
-            (format ": %s" (buffer-substring s e))))
-#+end_src
-
-** 按鍵設定
-
-#+begin_src emacs-lisp
-    (defun coldnew/helm-mini ()
-      (interactive)
-      (helm-other-buffer '(helm-source-ls-git
-                           helm-source-locate
-                           helm-c-source-buffers-list
-                           helm-c-source-recentf
-                           helm-c-source-buffer-not-found)
-                         "*coldnew helm mini*"))
-    (vim:imap (kbd "C-x p") 'coldnew/helm-mini)
-#+end_src
 
 * 文檔幫助                                                             :info:
 
@@ -4178,36 +4209,6 @@ require 的 snippet, 則添加以下程式
       (vim:mode-imap coldnew-editor-map (kbd "M-/") 'undo-tree-redo)))
 #+end_src
 
-| 按鍵 | 命令       | 用途                       |
-|------+------------+----------------------------|
-| C-;  | iedit-mode | 快速修改緩衝區內相同的文字 |
-
-#+begin_src emacs-lisp
-  (eval-after-load 'iedit
-    '(progn
-       (vim:mode-imap coldnew-editor-map (kbd "C-;") 'iedit-mode)))
-#+end_src
-
-| 按鍵 | 命令          | 用途                       |
-|------+---------------+----------------------------|
-| M-v  | expand-region | 快速選取游標下的文字、區域 |
-
-#+begin_src emacs-lisp
-  (eval-after-load 'expand-region
-    '(progn
-       (vim:mode-imap coldnew-editor-map (kbd "M-v") 'er/expand-region)))
-#+end_src
-
-| 按鍵 | 用途                             |
-|------+----------------------------------|
-| M-s  | 快速找尋緩衝區內所有要找尋的文字 |
-
-#+begin_src emacs-lisp
-  (eval-after-load 'helm
-    '(progn
-       (vim:mode-imap coldnew-editor-map (kbd "M-s") 'coldnew/helm-occur)))
-#+end_src
-
 | 按鍵    | 用途         |
 |---------+--------------|
 | C-c C-h | 快速代碼折疊 |
@@ -4220,7 +4221,6 @@ require 的 snippet, 則添加以下程式
                     (set-selective-display
                      (if selective-display nil 1))))
 #+end_src
-
 
 | 按鍵    | 用途              |
 |---------+-------------------|
@@ -6348,146 +6348,6 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
 
   (add-hook 'mu4e-compose-pre-hook 'coldnew/mu4e-set-account)
 #+end_src
-* Git 版本管理                                                          :git:
-
-git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最好的，emacs
-有許多好用的 git 套件，諸如 egg, magit, git-emacs 之類，在這邊的設定
-我整合了這幾種工具，選用我最喜歡的功能。
-
-** 載入套件
-
-我使用了 egg, magit 以及 git-emacs 這幾種套件。
-
-#+begin_src emacs-lisp
-  (require 'magit)
-;;  (require 'magit-flow)
-  (require 'git-emacs)
-  (require 'gitignore-mode)
-  (require 'gitconfig-mode)
-#+end_src
-
-** 命令綁定、縮寫                                                    :alias:
-
-由於我用了很多 git 的程式，這邊綁定命令到我想用的程式去
-
-#+begin_src emacs-lisp
-  (defalias 'git-rebase 'magit-rebase-step)
-  (defalias 'git-push   'magit-push)
-  (defalias 'git-add-remote 'magit-add-remote)
-#+end_src
-
-** 當使用 magit 時，不使用 emacs 原生的 vc 來處理和 git 相關的事情
-
-emacs 本身具有一個 vc-mode 可以幫忙處理和版本管理相關的事情，但
-是我覺的 magit 比較好用，所以當有載入 magit 時，就將 vc-mode 裏面
-負責處理 git 的部份拿掉。
-
-#+begin_src emacs-lisp
-  (when (featurep 'magit)
-    (setq vc-handled-backends (remq 'git vc-handled-backends)))
-#+end_src
-
-** 全域性使用 git-wip
-
-- 關於 git-wip
-
-  git-wip 是一個能夠不斷幫你進行備份檔案的 shell script 程式，會將你正在進行編輯的檔案，
-  放置到 wip branch (Work in Process)，這樣假如你不小心滅掉了你的 commit, 或是某天想找尋
-  某次被遺忘的修改，你都可以透過 git-wip 很簡單的完成他。
-
-- 分支
-
-  git-wip 的分支會有 wip/ 作為前綴, 舉例來說，如果你是在 feature branch 進行修改，
-  則 git-wip 會幫你維護 wip/feature 分支。
-
-  當你第一次執行 git-wip 的時候，你會自動幫你擷取所有已經被追蹤或是忽略的檔案，並建立
-  新的分支。
-
-  #+BEGIN_EXAMPLE
-    --- * --- * --- *           <-- topic
-                   \
-                    ,*          <-- wip/topic
-  #+END_EXAMPLE
-
-  當你使用 git wip save 後 (或是用有提供 git wip 功能的文字編輯器儲存後)，
-  你會注意到 wip/topic 指向了下一次的 commit。
-
-  #+BEGIN_EXAMPLE
-    --- * --- * --- *          <-- topic
-                   \
-                    ,*
-                     \
-                      ,*       <-- wip/topic
-  #+END_EXAMPLE
-
-  當你真正遞交了新的 commit，git wip 會指向你新遞交的 commit, 並且新增加 wip branch。
-
-  #+BEGIN_EXAMPLE
-    --- * --- * --- * --- *    <-- topic
-                   \     \
-                    ,*     *   <-- wip/topic
-                     \
-                      *
-  #+END_EXAMPLE
-
-- 回復
-
-  若要進行回復，首先我們要先找尋我們感興趣的 commit。假設你最近修改的 branch 是 master,
-  那你應該可以找到 wip/master 的參考(reference), 你也可以用以下命令列出 wip/master
-  上面有哪些 wip branch。
-
-  : git reflog show wip/master
-
-  我個人是比較推荐你使用，以下命令來直接看到每次的修改
-
-  : git log -g -p wip/master
-
-  一旦你選定好了某次的 commit, 你必須要取得這些檔案。注意到我們不是直接切換到
-  這個分支，我們只是要取得檔案。
-
-  : git checkout <commit sha1> .
-
-  如果你只是要該分支的某個檔案，你只要修正 . 為檔案名稱就好。
-
-  都完成後，你可以使用以下命令來察看你取回來的檔案和目前的有什麼差別
-
-  : git diff --cached
-
-- 使用 magit-wip-mode
-
-  在啟用 magit-wip-mode 之前，要記得使用
-
-  : git config --add magit.extension wip-save  # or
-  : git config --global --add magit.extension wip-save
-
-  將 git-wip 加到 git 設定中。
-
-  #+begin_src emacs-lisp
-    (eval-after-load 'magit
-      '(progn
-         (require 'magit-wip)
-         (magit-wip-mode 1)
-         (global-magit-wip-save-mode)))
-  #+end_src
-
-** 在 fringe 顯示 git 的狀況
-
-#+begin_src emacs-lisp
-  (require 'git-gutter-fringe)
-  (global-git-gutter-mode)
-#+end_src
-
-** 使用 C-g 離開 git 程式的視窗
-
-我習慣在 emacs 使用 C-g 來跳離視窗，所以這邊也是這樣設定，用來
-逃離 magit, git-emacs 的視窗。
-
-#+begin_src emacs-lisp
-  (define-key magit-mode-map (kbd "C-g") 'magit-quit-window)
-  (define-key git--branch-mode-map (kbd "C-g") 'git--quit-buffer)
-#+end_src
-
-
 * Session                                                              :blog:
 ** saveplace
 #+begin_src emacs-lisp
@@ -6715,6 +6575,17 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 #+NAME: gen-keys
 #+BEGIN_SRC emacs-lisp :results output :tangle no :exports none :colnames nil
   (mapcar (lambda (l)
+            (let* ((key (nth 0 l))
+                   (def (format "%s (kbd \"%s\")" func key))
+                   (command (nth 1 l)))
+              (princ (format "(%s '%s)\n" def command))))
+          ;; remove all `hline' tag first line in list
+          (cdr (remove 'hline keys))) )
+#+END_SRC
+
+#+NAME: gen-keys-global
+#+BEGIN_SRC emacs-lisp :results output :tangle no :exports none :colnames nil
+  (mapcar (lambda (l)
             (let* ((key (nth 1 l))
                    (def (format "%s (kbd \"%s\")" func key))
                    (command (nth 2 l)))
@@ -6734,15 +6605,15 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 視窗切換 | C-x F   | fullscreen-window | 將視窗切換成全螢幕                 |
 | 視窗切換 | M-[     | winner-undo       | 回復上一個窗口佈局                 |
 | 視窗切換 | M-]     | winner-redo       | 切回上一組進行窗口復原時的窗口佈局 |
-| Shell    | C-x s   | shell-command     | 執行 shell 命令                    |
 | 暫存器   | C-x rj  | jump-to-register  | 跳轉到暫存的檔案或是緩衝區位置     |
-| 版本管理 | C-x v l | magit-log         | 使用 magit 察看 log                |
-| 版本管理 | C-x v s | magit-status      | 使用 magit 查看目前的 git status   |
-| 版本管理 | C-x v c | magit-checkout    | 切換到其他的 git branch            |
-| 版本管理 | C-x v p | magit-push        | push 到遠端 repo                   |
+| 尋找取代 | M-s     | helm-occur        | 使用 helm-occur 來進行尋找         |
+| 版本管理 | C-x vl  | magit-log         | 查看 git log                       |
+| 版本管理 | C-x vs  | magit-status      | 查看目前的 git status              |
+| 版本管理 | C-x vc  | magit-checkout    | 切換到其他的 git branch            |
+| 版本管理 | C-x vp  | magit-push        | push 到遠端的 repo                 |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
-  <<gen-keys(func="global-set-key", keys=global-keys)>>
+  <<gen-keys-global(func="global-set-key", keys=global-keys)>>
 #+END_SRC
 
 ** Vim 一般模式按鍵設定 (evil-normal-state-map)                   :noexport:
@@ -6754,7 +6625,19 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | Normal | C-p  | evil-previous-line | 上一行 |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
-  <<gen-keys(func="define-key evil-normal-state-map", keys=global-evil-normal)>>
+  <<gen-keys-global(func="define-key evil-normal-state-map", keys=global-evil-normal)>>
+#+END_SRC
+
+** Vim 輸入模式按鍵設定 (evil-insert-state-map)                    :noexport:
+
+#+TBLNAME: global-evil-insert
+| 類別   | 按鍵 | 命令             | 描述                               |
+|--------+------+------------------+------------------------------------|
+| Insert | C-;  | iedit-mode       | 使用 iedit-mode 快速修改同樣的字詞 |
+| Insert | M-v  | er/expand-region | 快速選取游標下的文字、區域         |
+
+#+BEGIN_SRC emacs-lisp :noweb yes :results silent
+  <<gen-keys-global(func="define-key evil-insert-state-map", keys=global-evil-insert)>>
 #+END_SRC
 
 * 最後的初始化設定
