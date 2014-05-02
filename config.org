@@ -684,7 +684,6 @@ GitHub: https://github.com/magnars/expand-region.el
           (recursive-find-file file (expand-file-name ".." directory))))))
 #+end_src
 
-
 ** 系統相關
 
 *** 取得目前的 IP 位址
@@ -792,7 +791,6 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 #+end_src
 
 
-
 ** 檔案/字串/數值轉換
 
 進行轉換用的 function。
@@ -871,6 +869,20 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
        (replace-regexp-in-string hex-regexp "" hex)
        16)))
 #+end_src
+*** 十進位轉換成二進位
+
+#+BEGIN_SRC emacs-lisp
+  (defun dec->bin (n &optional length)
+    "Convert integer N to bit string (LENGTH, default 8)."
+    (let* ((i 0)
+           (len (or length 8))
+           (s (make-string len ?0)))
+      (while (< i len)
+        (if (not (zerop (logand n (ash 1 i))))
+            (aset s (- len (1+ i)) ?1))
+        (setq i (1+ i)))
+      s))
+#+END_SRC
 
 * Org                                                                   :org:
 
