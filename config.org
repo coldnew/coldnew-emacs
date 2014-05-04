@@ -1100,6 +1100,7 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
 #+BEGIN_SRC emacs-lisp
   (require* 'helm-ls-git)
 #+END_SRC
+
 ** 禁止 helm 自動補全
 
 默認的 helm 會自動幫使用者進行補全，但如果遇到名稱接近的資料夾、檔案，這
@@ -1836,7 +1837,7 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
     (save-buffer))
 #+end_src
 
-*** 關閉除了 **scratch** 以外的所有 buffer。
+*** 關閉除了 *scratch* 以外的所有 buffer
 
 當我想要讓我的 emacs 變得很乾淨的時候，這命令很好用。
 
@@ -1846,6 +1847,25 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
     (interactive)
     (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
     (delete-other-windows))
+#+end_src
+
+*** 跳轉到 *scratch*
+
+跳轉目前 buffer 與 =*scratch*= ，假如 =*scratch*= 不存在，
+則建立一個 major-mode 為 lisp-interaction-mode 的 =*scratch*=
+
+#+begin_src emacs-lisp
+  (defun scratch-toggle ()
+    "Toggle between *scratch* buffer and the current buffer.
+     If the *scratch* buffer does not exist, create it."
+    (interactive)
+    (let ((scratch-buffer-name (get-buffer-create "*scratch*")))
+      (if (equal (current-buffer) scratch-buffer-name)
+          (switch-to-buffer (other-buffer))
+        (progn
+          (switch-to-buffer scratch-buffer-name)
+          (unless (equal major-mode 'lisp-interaction-mode)
+            (lisp-interaction-mode))))))
 #+end_src
 
 *** 清除除了目前的緩衝區以外的緩衝區
@@ -1873,6 +1893,93 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
     (indent-region (point-min) (point-max))
     (untabify (point-min) (point-max)))
 #+end_src
+
+*** 縮牌選擇區域或是整個緩衝區
+
+將整個緩衝區進行縮排的動作，同時移除多餘的空白以及將 TABS 轉換
+成空白，如果有選取區域，則只對區域有效，反之種個緩衝區有效。
+
+#+begin_src emacs-lisp
+  (defun indent-region-or-buffer ()
+    "Indents a region if selected, otherwise the whole buffer."
+    (interactive)
+    (save-excursion
+      (if (region-active-p)
+          (progn
+            (delete-trailing-whitespace (region-beginning) (region-end))
+            (indent-region (region-beginning) (region-end))
+            (untabify (region-beginning) (region-end))
+            (message "Indented selected region."))
+        (progn
+          (indent-region-or-buffer)
+          (message "Indented buffer.")))))
+#+end_src
+
+
+** 視窗操作                                                         :window:
+
+*** 將整個 emacs 全螢幕
+
+有些時候我會很希望我的 emacs 可以全螢幕，用這個命令可以很方便達到我的想法。
+#+begin_src emacs-lisp
+  (defun fullscreen-window ()
+    "Make the window full-screen."
+    (interactive)
+    (let ((current-value (frame-parameter nil 'fullscreen))
+          (old-value nil))
+      (set-frame-parameter nil 'fullscreen
+                           (if (equal 'fullboth current-value)
+                               'old-value
+                             (progn
+                               (setq old-value current-value)
+                               'fullboth)))))
+#+end_src
+
+*** 旋轉視窗
+
+有時候就是希望左右兩邊視窗可以對調，因此弄了以下的命令讓視窗可以進行旋
+轉移動，若只有兩個視窗，則這個命令相當於 swap-windows 的功能，這邊設計
+了兩種類型的旋轉視窗
+
+- rotate-windows - 旋轉視窗，視窗焦點會落在原本的緩衝區內。
+- rotate-windows-only - 旋轉視窗，但是視窗的焦點還是在原本的視窗內。
+
+#+begin_src emacs-lisp
+  (defun rotate-windows-helper (x d)
+    "Helper function for rotate window."
+    (if (equal (cdr x) nil)
+        (set-window-buffer (car x) d)
+      (set-window-buffer (car x) (window-buffer (cadr x)))
+      (rotate-windows-helper (cdr x) d)))
+
+  (defun rotate-windows ()
+    "Rotate window but make the focus on the same bufer."
+    (interactive)
+    (rotate-windows-helper (window-list) (window-buffer (car (window-list))))
+    (select-window (car (last (window-list)))))
+
+  (defun rotate-windows-only ()
+    "Rotate windows only, keep focus at the same window."
+    (interactive)
+    ;; sotre window
+    (let ((cur (car (window-list))))
+      (rotate-windows-helper (window-list) (window-buffer (car (window-list))))
+      (select-window cur)))
+#+end_src
+
+** 系統命令                                                         :system:
+
+*** gitg
+
+雖然很多時候我都會用 magit 來察看 git log, 不過我還是很喜歡 gitg
+
+#+begin_src emacs-lisp
+  (defun gitg ()
+    "Launch gitg in the current directory."
+    (interactive)
+    (start-process "gitg" nil "gitg"))
+  #+end_src
+
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -1945,13 +2052,6 @@ smallurl 是一個很棒的短網址工具，他會幫你到遠端的 server 取
 #+begin_src emacs-lisp
   (require 'unicad)
 #+end_src
-
-** 使用 doc-present 來播放 PDF 投影片                                  :pdf:
-
-#+BEGIN_SRC emacs-lisp
-  (require 'doc-present)
-  (setq doc-view-resolution 300)
-#+END_SRC
 
 ** 透過 Paredit 來簡化 Lisp 類語言編輯                             :paredit:
 
@@ -3119,10 +3219,6 @@ auto-complete-mode 的按鍵設定。
 #+END_SRC
 
 * Helm                                                                 :helm:
-
-Helm (領航員) 是 emacs 下非常強大的檔案尋找工具，可以用他快速的找尋已經
-打開的緩衝區、檔案，或是透過 locate 命令來找尋檔案，此外 helm 也提供了
-oscurr 功能，可以直接在目前的檔案裡找相同的字串。
 
 ** 載入相關套件
 
@@ -5263,48 +5359,6 @@ scss-mode 預設會在檔案儲存的時候自動編譯 scss 檔成為 css 檔�
 
 *注意* : 這邊的命令可能依賴我所自訂的 function。
 
-** 緩衝區處理                                                       :buffer:
-
-*** 跳轉到 **scratch**
-
-跳轉目前 buffer 與 **scratch**，假如 **scratch** 不存在，
-則建立一個 major-mode 為 lisp-interaction-mode 的 **scratch**
-
-#+begin_src emacs-lisp
-  (defun scratch-toggle ()
-    "Toggle between *scratch* buffer and the current buffer.
-     If the *scratch* buffer does not exist, create it."
-    (interactive)
-    (let ((scratch-buffer-name (get-buffer-create "*scratch*")))
-      (if (equal (current-buffer) scratch-buffer-name)
-          (switch-to-buffer (other-buffer))
-        (progn
-          (switch-to-buffer scratch-buffer-name)
-          (unless (equal major-mode 'lisp-interaction-mode)
-            (lisp-interaction-mode))))))
-#+end_src
-
-*** 縮牌選擇區域或是整個緩衝區
-
-將整個緩衝區進行縮排的動作，同時移除多餘的空白以及將 TABS 轉換
-成空白，如果有選取區域，則只對區域有效，反之種個緩衝區有效。
-
-#+begin_src emacs-lisp
-  (defun indent-region-or-buffer ()
-    "Indents a region if selected, otherwise the whole buffer."
-    (interactive)
-    (save-excursion
-      (if (region-active-p)
-          (progn
-            (delete-trailing-whitespace (region-beginning) (region-end))
-            (indent-region (region-beginning) (region-end))
-            (untabify (region-beginning) (region-end))
-            (message "Indented selected region."))
-        (progn
-          (indent-region-or-buffer)
-          (message "Indented buffer.")))))
-#+end_src
-
 ** 檔案處理                                                           :file:
 
 這編放的是和檔案處理，或是和檔案相關的緩衝區處理命令。
@@ -5411,57 +5465,6 @@ logior function 來改變檔案屬性。
       (message "Current buffer does not have an associated file.")))
 #+end_src
 
-** 視窗操作                                                         :window:
-
-*** 將整個 emacs 全螢幕
-
-有些時候我會很希望我的 emacs 可以全螢幕，用這個命令可以很方便達到我的想法。
-#+begin_src emacs-lisp
-  (defun fullscreen-window ()
-    "Make the window full-screen."
-    (interactive)
-    (let ((current-value (frame-parameter nil 'fullscreen))
-          (old-value nil))
-      (set-frame-parameter nil 'fullscreen
-                           (if (equal 'fullboth current-value)
-                               'old-value
-                             (progn
-                               (setq old-value current-value)
-                               'fullboth)))))
-#+end_src
-
-*** 旋轉視窗
-
-有時候就是希望左右兩邊視窗可以對調，因此弄了以下的命令讓視窗可以進行旋
-轉移動，若只有兩個視窗，則這個命令相當於 swap-windows 的功能，這邊設計
-了兩種類型的旋轉視窗
-
-- rotate-windows - 選轉視窗，視窗焦點會落在原本的緩衝區內。
-- rotate-windows-only - 旋轉視窗，但是視窗的焦點還是在原本的視窗內。
-
-#+begin_src emacs-lisp
-  (defun rotate-windows-helper (x d)
-    "Helper function for rotate window."
-    (if (equal (cdr x) nil)
-        (set-window-buffer (car x) d)
-      (set-window-buffer (car x) (window-buffer (cadr x)))
-      (rotate-windows-helper (cdr x) d)))
-
-  (defun rotate-windows ()
-    "Rotate window but make the focus on the same bufer."
-    (interactive)
-    (rotate-windows-helper (window-list) (window-buffer (car (window-list))))
-    (select-window (car (last (window-list)))))
-
-  (defun rotate-windows-only ()
-    "Rotate windows only, keep focus at the same window."
-    (interactive)
-    ;; sotre window
-    (let ((cur (car (window-list))))
-      (rotate-windows-helper (window-list) (window-buffer (car (window-list))))
-      (select-window cur)))
-#+end_src
-
 ** 插入
 
 *** 插入目前的時間
@@ -5505,19 +5508,6 @@ yank-n-times 則可以重複的進行貼上。
           (setq times 1)
         (dotimes 'times (yank)))))
 #+end_src
-** 系統命令
-
-*** gitg
-
-雖然很多時候我都會用 magit 來察看 git log, 不過我還是很喜歡 gitg。
-
-#+begin_src emacs-lisp
-  (defun gitg ()
-    "Launch gitg in the current directory."
-    (interactive)
-    (start-process "gitg" nil "gitg"))
-  #+end_src
-
 ** 強化功能命令
 
 *** 切換按鍵巨集的錄製/停止
