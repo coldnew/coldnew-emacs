@@ -790,12 +790,11 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
           (t (mapcan #'flatten structure))))
 #+end_src
 
-
 ** 檔案/字串/數值轉換
 
 進行轉換用的 function。
 
-*** 將輸入的 buffer (DOS 格式)　轉換成 UNIX 格式。　
+*** 將輸入的 buffer (DOS 格式)　轉換成 UNIX 格式
 
 #+begin_src emacs-lisp
   (defun dos->unix (buf)
@@ -807,7 +806,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
       (while (search-forward "\r" nil t) (replace-match ""))))
 #+end_src
 
-*** 將輸入的 buffer (UNIX 格式)　轉換成 DOS 格式。　
+*** 將輸入的 buffer (UNIX 格式)　轉換成 DOS 格式
 
 #+begin_src emacs-lisp
   (defun unix->dos (buf)
@@ -883,6 +882,43 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
         (setq i (1+ i)))
       s))
 #+END_SRC
+** 作業系統測試
+
+- MacOS X
+
+  #+BEGIN_SRC emacs-lisp
+    (defvar mac-p (eq system-type 'darwin)
+      "Return nil if OS is not Mac.")
+  #+END_SRC
+
+- Linux
+
+  #+BEGIN_SRC emacs-lisp
+    ;; All linux device
+    (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
+      "Return nil if OS is not Linux.")
+
+    ;; linux 32-bit
+    (defvar linux-32bit-p
+      (and (string-match
+            (rx (or bos "x86-" bos "i686-")) system-configuration) linux-p)
+      "Return nil if OS is not 32-bit linux.")
+
+    ;; linux 64-bit
+    (defvar linux-64bit-p
+      (and (string-match (rx bos "x86_64") system-configuration) linux-p)
+      "Return nil if OS is not 64-bit linux.")
+  #+END_SRC
+
+- Windows
+
+  #+BEGIN_SRC emacs-lisp
+    (defvar windows-p (eq system-type 'windows-nt)
+      "Return nil if OS is not Windows.")
+
+    (defvar cygwin-p  (eq system-type 'cygwin)
+      "Return nil if OS is not CygWin.")
+  #+END_SRC
 
 * Org                                                                   :org:
 
@@ -1843,50 +1879,6 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
 ref : http://steckerhalter.co.vu/steckemacs.html
 
 * 基礎設置                                                             :base:
-
-** 作業系統測試
-
-放置用於測試目前 emacs 執行在何種作業系統上的變數。
-
-- MacOS X
-
-  #+begin_src emacs-lisp
-    (defvar mac-p     (eq system-type 'darwin)
-      "Return nil if OS is not Mac.")
-  #+end_src
-
-- Linux
-
-  #+begin_src emacs-lisp
-    ;; linux device
-    (defvar linux-p   (and (eq system-type 'gnu/linux) (not (eq system-type 'drawin)))
-      "Return nil if OS is not Linux.")
-
-    ;; linux 32-bit
-    (defvar linux-32bit-p (and (string-match
-                                (rx (or bos "x86-" bos "i686-")) system-configuration) linux-p)
-      "Return nil if OS is not 32-bit linux.")
-
-    ;; linux 64-bit
-    (defvar linux-64bit-p (and (string-match (rx bos "x86_64") system-configuration) linux-p)
-      "Return nil if OS is not 64-bit linux.")
-  #+end_src
-
-- Cygwin
-
-   #+begin_src emacs-lisp
-     (defvar cygwin-p  (eq system-type 'cygwin)
-       "Return nil if OS is not CygWin.")
-   #+end_src
-
-- Window$
-
-   #+begin_src emacs-lisp
-     (defvar windows-p (eq system-type 'windows-nt)
-       "Return nil if OS is not Windows.")
-   #+end_src
-
-** TODO Misc
 
 #+begin_src emacs-lisp
   ;; TODO: add comment
