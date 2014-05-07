@@ -920,6 +920,36 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
       "Return nil if OS is not CygWin.")
   #+END_SRC
 
+* Vim 摹擬                                                              :vim:
+
+實在不能不佩服 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
+只要一個按鍵就可以呼叫，為了提升編輯效率，套用一些 Vim 的按鍵也是再所難免。
+
+好用的 vim 快速鍵組合：[[http://dnquark.com/blog/2012/02/emacs-evil-ecumenicalism/][Emacs + Evil = ecumenicalism]]
+
+- d/foo[RET] 從目前的游標位置刪除到字串 foo
+- dfa        從目前的游標位置刪除到字元 a，包含 a 本身
+- cta        從目前的游標位置刪除到字元 a，不包含 a 本身
+- viw        將目前游標所在的 "字" 選擇起來
+- vfa        從目前的游標位置選擇到字元 a，包含 a 本身
+- yi)        複製括號內的東西，不包含括號本身
+- di"        刪除雙引號內的文字
+
+Evil 是 emacs 上最好用的 vim 摹擬程式。
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'evil)
+#+END_SRC
+
+evil-mdoe 預設會讓游標變成黑色，這對於習慣使用暗色系佈景主題的
+使用者而言是一件很討厭的事情，設定 evil-default-cursor 為 true
+後就可以使用使用者自訂的佈景主題來改變滑鼠了。
+
+#+begin_src emacs-lisp
+  (setq evil-default-cursor t)
+#+end_src
+
+
 * Org                                                                   :org:
 
 org-mode 是非常強大的筆記管理系統，也是這整份 emacs 設定的核心，由於與
@@ -1967,6 +1997,27 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
       (select-window cur)))
 #+end_src
 
+** 文字編輯 (插入/移除)
+
+*** 刪除重複行
+
+#+BEGIN_SRC emacs-lisp
+  (defun uniquify-all-lines-region (start end)
+    "Find duplicate lines in region START to END keeping first occurrence."
+    (interactive "*r")
+    (save-excursion
+      (let ((end (copy-marker end)))
+        (while
+            (progn
+              (goto-char start)
+              (re-search-forward "^\\(.*\\)\n\\(\\(.*\n\\)*\\)\\1\n" end t))
+          (replace-match "\\1\n\\2")))))
+
+  (defun uniquify-all-lines-buffer ()
+    "Delete duplicate lines in buffer and keep first occurrence."
+    (interactive "*")
+    (uniquify-all-lines-region (point-min) (point-max)))
+#+END_SRC
 ** 系統命令                                                         :system:
 
 *** gitg
@@ -2657,41 +2708,6 @@ Following buffer will not show in iBuffer
 #+end_src
 
 * Vim 摹擬                                                              :vim:
-
-實在不能不佩服 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
-只要一個按鍵就可以呼叫，為了提升編輯效率，套用一些 Vim 的按鍵也是再所難免。
-
-好用的 vim 快速鍵組合[fn:1]：
-
-- d/foo[RET] 從目前的游標位置刪除到字串 foo
-- dfa        從目前的游標位置刪除到字元 a，包含 a 本身
-- cta        從目前的游標位置刪除到字元 a，不包含 a 本身
-- viw        將目前游標所在的 "字" 選擇起來
-- vfa        從目前的游標位置選擇到字元 a，包含 a 本身
-- yi)        複製括號內的東西，不包含括號本身
-- di"        刪除雙引號內的文字
-
-[fn:1] [[http://dnquark.com/blog/2012/02/emacs-evil-ecumenicalism/][Emacs + Evil = ecumenicalism]]
-
-** 載入相關套件
-
-Evil 是 emacs 上最好用的 vim 摹擬程式。
-
-#+begin_src emacs-lisp
-  (require 'evil)
-#+end_src
-
-** 基本設置
-
-- 讓游標使用佈景主題的顏色
-
-  evil-mdoe 預設會讓游標變成黑色，這對於習慣使用暗色系佈景主題的
-  使用者而言是一件很討厭的事情，設定 evil-default-cursor 為 true
-  後就可以使用使用者自訂的佈景主題來改變滑鼠了。
-
-  #+begin_src emacs-lisp
-     (setq evil-default-cursor t)
-  #+end_src
 
 ** 預設使用 Insert state
 
