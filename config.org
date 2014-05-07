@@ -1868,6 +1868,29 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
     (untabify (point-min) (point-max)))
 #+end_src
 
+** 文字編輯 (插入/移除)
+
+*** 刪除重複行
+
+#+BEGIN_SRC emacs-lisp
+  (defun uniquify-all-lines-region (start end)
+    "Find duplicate lines in region START to END keeping first occurrence."
+    (interactive "*r")
+    (save-excursion
+      (let ((end (copy-marker end)))
+        (while
+            (progn
+              (goto-char start)
+              (re-search-forward "^\\(.*\\)\n\\(\\(.*\n\\)*\\)\\1\n" end t))
+          (replace-match "\\1\n\\2")))))
+
+  (defun uniquify-all-lines-buffer ()
+    "Delete duplicate lines in buffer and keep first occurrence."
+    (interactive "*")
+    (uniquify-all-lines-region (point-min) (point-max)))
+#+END_SRC
+
+
 * TODO ----------------- Prepare for re-write ---------------------------------
 
 ref : http://steckerhalter.co.vu/steckemacs.html
