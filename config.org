@@ -1555,6 +1555,12 @@ GitHub:
     (setq eclim-executable "~/Applications/eclipse/eclim"))
 #+END_SRC
 
+** 讓 eclim 可以進行自動儲存
+
+#+BEGIN_SRC emacs-lisp
+  (setq eclim-auto-save t)
+#+END_SRC
+
 * TAGS                                                                 :tags:
 
 這邊放置和 tags 相關的功能
