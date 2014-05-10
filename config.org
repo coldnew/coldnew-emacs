@@ -1637,6 +1637,18 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
 
 各種不同程式語言開發用的設定。
 
+** Android                                                          :android:
+#+begin_src emacs-lisp
+  (require* 'android-mode)
+
+  ;; Set my android-emulator-path
+  (when mac-p
+    (setq android-mode-sdk-dir "~/Workspace/Android/android-sdks/"))
+
+  (when linux-p
+    (setq android-mode-sdk-dir "/opt/android-sdk-update-manager/"))
+#+end_src
+
 ** CMake
 
 #+begin_src emacs-lisp
@@ -4552,12 +4564,6 @@ require 的 snippet, 則添加以下程式
 
 各種不同程式語言開發用的設定。
 
-** Android                                                          :android:
-#+begin_src emacs-lisp
-  (require 'android-mode)
-  ;; Set my android-emulator-path
-  (setq android-mode-sdk-dir "/opt/android-sdk-update-manager/")
-#+end_src
 ** C/C++ 通用設定
 
 C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在這邊。
