@@ -949,7 +949,6 @@ evil-mdoe 預設會讓游標變成黑色，這對於習慣使用暗色系佈景�
   (setq evil-default-cursor t)
 #+end_src
 
-
 * Org                                                                   :org:
 
 org-mode 是非常強大的筆記管理系統，也是這整份 emacs 設定的核心，由於與
@@ -1521,6 +1520,28 @@ Site: http://batsov.com/projectile/
   ;; Globally enable projectile
 ;;  (projectile-global-mode)
 #+end_src
+* Eclim                                                               :eclim:
+
+eclim 是在 emacs 下可以控制 Eclipse 或是透過他來進行 JAVA 等補全的工具
+
+GitHub:
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'eclim)
+  (require* 'eclimd)
+  (global-eclim-mode)
+#+END_SRC
+
+** 設定 Eclipse 的位置
+
+在一些特定的 OS 中，我可能把 eclipse 或是 eclim 置放在不同的地方，這邊針對這
+種情況進行額外的設定。
+
+#+BEGIN_SRC emacs-lisp
+  (when mac-p
+    (setq eclim-eclipse-dirs "~/Applications/eclipse/")
+    (setq eclim-executable "~/Applicatione/eclipse/eclim"))
+#+END_SRC
 
 * TAGS                                                                 :tags:
 
