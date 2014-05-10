@@ -1540,11 +1540,11 @@ GitHub:
 
 #+BEGIN_SRC emacs-lisp
   (require* 'eclim)
-  (require* 'eclimd)
+  (require 'eclimd)
   (global-eclim-mode)
 #+END_SRC
 
-** 設定 Eclipse 的位置
+** 設定 Eclipse 以及 eclim 的位置
 
 在一些特定的 OS 中，我可能把 eclipse 或是 eclim 置放在不同的地方，這邊針對這
 種情況進行額外的設定。
@@ -1552,7 +1552,7 @@ GitHub:
 #+BEGIN_SRC emacs-lisp
   (when mac-p
     (setq eclim-eclipse-dirs "~/Applications/eclipse/")
-    (setq eclim-executable "~/Applicatione/eclipse/eclim"))
+    (setq eclim-executable "~/Applications/eclipse/eclim"))
 #+END_SRC
 
 * TAGS                                                                 :tags:
