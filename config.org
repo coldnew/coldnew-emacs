@@ -1145,12 +1145,12 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
 ** 按鍵設定                                                       :noexport:
 
 #+TBLNAME: helm-keys
-| 按鍵  | 命令                           | 描述                          |
-|-------+--------------------------------+-------------------------------|
-| <tab> | helm-execute-persistent-action | 使用 tab 對 helm 進行自動補全 |
+| map  | 按鍵  | 命令                           | 描述                          |
+|------+-------+--------------------------------+-------------------------------|
+| helm | <tab> | helm-execute-persistent-action | 使用 tab 對 helm 進行自動補全 |
 
 #+BEGIN_SRC emacs-lisp :noweb yes
-  <<gen-keys(func="define-key helm-map", keys=helm-keys)>>
+  <<gen-keys-map(func="define-key", keys=helm-keys)>>
 #+END_SRC
 
 * 自動補全
@@ -1220,6 +1220,18 @@ auto-complete-mode 會產生一個名為 =auto-complete.dat= 的檔案來存放�
 
 #+BEGIN_SRC emacs-lisp
   (setq ac-comphist-file "~/.emacs.d/cache/auto-complete.dat")
+#+END_SRC
+** 按鍵設定
+
+#+TBLNAME: ac-keys
+| map           | 按鍵  | 命令        | 描述           |
+|---------------+-------+-------------+----------------|
+| ac-menu       | C-n   | ac-next     | 下一個補全     |
+| ac-menu       | C-p   | ac-previous | 上一個補全     |
+| ac-completing | \"t\" | ac-complete | 選擇該補全設定 |
+
+#+BEGIN_SRC emacs-lisp :noweb yes
+  <<gen-keys-map(func="define-key", keys=ac-keys)>>
 #+END_SRC
 
 * 終端機                                                               :term:
@@ -2995,14 +3007,7 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   ;; Enable ac-menu-map
   (setq ac-use-menu-map t)
 #+end_src
-** 按鍵設定
-auto-complete-mode 的按鍵設定。
-#+begin_src emacs-lisp
-  (define-key ac-menu-map (kbd "C-n") 'ac-next)
-  (define-key ac-menu-map (kbd "C-p") 'ac-previous)
-  (define-key ac-completing-map "\t" 'ac-complete)
-  (define-key ac-complete-mode-map[tab] 'ac-expand)
-#+end_src
+
 * 終端機                                                               :term:
 
 #+begin_src emacs-lisp
@@ -6616,7 +6621,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
                    (command (nth 1 l)))
               (princ (format "(%s '%s)\n" def command))))
           ;; remove all `hline' tag first line in list
-          (cdr (remove 'hline keys))) )
+          (cdr (remove 'hline keys)))
 #+END_SRC
 
 #+NAME: gen-keys-global
@@ -6629,6 +6634,22 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
           ;; remove all `hline' tag first line in list
           (cdr (remove 'hline keys)))
 #+END_SRC
+
+大部分 minor-mode 都有自己的 keymap，但是有一些會有多種 keymap，因此我定義
+這部份的程式來避免一個 minor 有太多表格。
+
+#+NAME: gen-keys-map
+#+BEGIN_SRC emacs-lisp :results output :tangle no :exports none :colnames nil
+  (mapcar (lambda (l)
+            (let* ((kmap (nth 0 l))
+                   (key (nth 1 l))
+                   (def (format "%s %s-map (kbd \"%s\")" func kmap key))
+                   (command (nth 2 l)))
+              (princ (format "(%s '%s)\n" def command))))
+          ;; remove all `hline' tag first line in list
+          (cdr (remove 'hline keys)))
+#+END_SRC
+
 
 ** 全域性按鍵設定 (global-set-key) :noexport:
 
