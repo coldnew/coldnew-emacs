@@ -1155,14 +1155,28 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
 
 * 自動補全
 
-auto-complete-mode 是目前使用 emacs 的人都會安裝的自動補全用的 backend，
-他可以透過許多函式庫來協助你更好的在 emacs 中進行補全。
+這邊共使用兩種 emacs 使用者最常使用的自動補全設定: auto-complete-mode 和 company-mode。
+
+company-mode 是一個非常強大的補全程式，在 auto-complete-mode 出來之前，他
+應該是最多人使用的。
+
+GitHub: https://github.com/company-mode/company-mode
+
+auto-complete-mode 則是目前使用 emacs 的人都會安裝的自動補全用的 backend，
+他可以透過許多函式庫來協助你更好的在 emacs 中進行補全，此外
+auto-complete-mode 同時可以作為一個 frontend，backend 則使用其他程式來進
+行補全，比如說 company-mode。
 
 Github: https://github.com/auto-complete/auto-complete
 
 #+BEGIN_SRC emacs-lisp
   (require* 'auto-complete)
   (require 'auto-complete-config)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'company)
+(add-hook 'after-init-hook 'global-company-mode)
 #+END_SRC
 
 ** 使用 auto-complete-mode 提供的預設設定
@@ -1744,7 +1758,52 @@ Rust 是由 Mozilla 所開發的語言。
       (elpy-enable))
   #+end_src
 
+**
 
+
+** C
+
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
+  (add-to-list 'auto-mode-alist '("\\.h$" . c-mode))
+#+end_src
+
+
+*** 預設使用 Linux Coding Style
+
+#+begin_src emacs-lisp
+  (add-hook 'c-mode-hook '(lambda () (c-set-style "linux")))
+#+end_src
+
+*** 進行多行註解時，多產生一行註解
+
+預設的 emacs 會將一個區域變成如下的註解形式
+
+#+BEGIN_SRC c :tangle no
+  /*
+   ,* int test_func()
+   ,* {
+   ,*      int i = 0;
+   ,*      printf("i is  %d", i);
+   ,* } */
+#+END_SRC
+
+如果我希望將其變成如下，則要將 =comment-style= 設定成 =extra-line=
+
+#+BEGIN_SRC c :tangle no
+  /*
+   ,* int test_func()
+   ,* {
+   ,*      int i = 0;
+   ,*      printf("i is  %d", i);
+   ,* }
+   */
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'c-mode-hook '(lambda ()
+                            (setq comment-style 'extra-line)))
+#+END_SRC
 
 ** newlisp
 
@@ -2118,7 +2177,6 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
     (interactive)
     (start-process "gitg" nil "gitg"))
   #+end_src
-
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -4776,20 +4834,7 @@ ref: http://stackoverflow.com/questions/23172561/c-comment-in-emacs-linux-kernel
 #+END_SRC
 
 ** C
-*** 設定 C 語言 檔案的副檔名與對應的模式
 
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
-  (add-to-list 'auto-mode-alist '("\\.h$" . c-mode))
-#+end_src
-
-*** 預設使用 Linux Coding Style
-
-#+begin_src emacs-lisp
-  (add-hook 'c-mode-hook
-            '(lambda ()
-               (c-set-style "linux")))
-#+end_src
 
 *** TODO 自動偵測 c-basic-offset
 #+begin_src emacs-lisp
