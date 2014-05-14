@@ -19,9 +19,9 @@
       (setq load-path
             (append
              (let ((load-path (copy-sequence load-path)))
-	       (append
-		(copy-sequence (normal-top-level-add-to-load-path '(".")))
-		(normal-top-level-add-subdirs-to-load-path)))
+               (append
+                (copy-sequence (normal-top-level-add-to-load-path '(".")))
+                (normal-top-level-add-subdirs-to-load-path)))
              load-path
              )))))
 
@@ -34,6 +34,12 @@
   (interactive)
   (load-file (concat emacs-dir "init.el")) (delete-other-windows))
 ;;  (load-file (concat emacs-dir "init.el")) (desktop-revert) (delete-other-windows))
+
+(defun eval-buffer-until-error ()
+  "Evaluate emacs buffer until error occured."
+  (interactive)
+  (goto-char (point-min))
+  (while t (eval (read (current-buffer)))))
 
 ;; Load up org-mode and org-babel
 (require 'org)
