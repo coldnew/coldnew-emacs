@@ -616,6 +616,7 @@ GitHub: https://github.com/flycheck/flycheck
 
 #+BEGIN_SRC emacs-lisp
   (require* 'flycheck)
+  (global-flycheck-mode)
 #+END_SRC
 
 
