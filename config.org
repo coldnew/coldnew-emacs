@@ -1819,9 +1819,9 @@ C++檔案的依據。
                     (and (string= (file-name-extension buffer-file-name) "h")
                          (or (re-search-forward "#include <\\w+>"
                                                 magic-mode-regexp-match-limit t)
-                             (re-search-forward "std::"
-                                                magic-mode-regexp-match-limit t)
                              (re-search-forward "namespace"
+                                                magic-mode-regexp-match-limit t)
+                             (re-search-forward "std::"
                                                 magic-mode-regexp-match-limit t))))
                  . c++-mode))
 #+END_SRC
