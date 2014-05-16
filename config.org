@@ -610,6 +610,14 @@ GitHub: https://github.com/magnars/expand-region.el
 #+BEGIN_SRC emacs-lisp
   (require* 'expand-region)
 #+END_SRC
+** flycheck :: 程式碼檢查工具
+
+GitHub: https://github.com/flycheck/flycheck
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'flycheck)
+#+END_SRC
+
 
 * 自定義函式 / 方法                                                :function:
 
