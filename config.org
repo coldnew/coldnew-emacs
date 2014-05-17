@@ -1503,9 +1503,16 @@ eshell 相關的資訊。
 Site: http://www.emacswiki.org/emacs/EshellAutojump
 
 #+BEGIN_SRC emacs-lisp
-  (eval-after-load 'eshell
-    '(require* 'eshell-autojump))
+  (require* 'eshell-autojump)
 #+END_SRC
+** 使用 multi-eshell 快速切換不同的 eshell
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'multi-eshell)
+  (setq multi-eshell-shell-function '(eshell))
+  (setq multi-eshell-name "*eshell*")
+#+END_SRC
+
 ** eshell 命令 :: emacs
 
 如果在 eshell 中呼叫 emacs 命令，實際上還是會打開另外一個 emacs 程式，
@@ -1527,9 +1534,7 @@ Site: http://www.emacswiki.org/emacs/EshellAutojump
 
   (defalias 'eshell/e 'eshell/emacs)
 #+end_src
-**
-**
-**
+
 ** eshell 命令 :: clear
 
 這個命令的作用和 Unix 下的 clear 功用相同，都是用來清空 shell 的內容。
@@ -3448,79 +3453,6 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (define-key minibuffer-local-map (kbd "M-w") (lambda () (interactive) (kill-line 0) (insert "~/Workspace/")))
   (define-key minibuffer-local-map (kbd "M-s") (lambda () (interactive) (kill-line 0) (insert "~/SparkleShare/")))
 #+end_src
-
-* EShell                                                              :eshell:
-
-** 基本設置
-
-- 載入相關套件
-
-  #+begin_src emacs-lisp
-    (require 'eshell)
-    (require 'em-dirs)
-    (require 'em-hist)
-    (require 'em-prompt)
-    (require 'em-term)
-    (require 'em-cmpl)
-  #+end_src
-
-- 當離開 eshell 時自動儲存歷史紀錄
-
-  設定 eshell 的歷史紀錄檔案大小等資訊
-
-  #+begin_src emacs-lisp
-    (setq eshell-history-size 512)
-    (setq eshell-save-history-on-exit t)
-  #+end_src
-
-
-** TODO 其他設定
-
-#+begin_src emacs-lisp
-  ;; other setting
-  (setq eshell-ask-to-save-last-dir 'always)
-  (setq eshell-hist-ignoredups t)
-  (setq eshell-cmpl-cycle-completions nil)
-  (setq eshell-scroll-to-bottom-on-output t)
-  (setq eshell-show-maximum-output t)
-
-  ;; use helm to complete esehll
-  (when (featurep 'helm)
-    (add-hook 'eshell-mode-hook
-              #'(lambda ()
-                  (define-key eshell-mode-map
-                    [remap pcomplete]
-                    'helm-esh-pcomplete))))
-
-
-#+end_src
-
-** 使用 auto-complete 來補全 eshell 命令
-
-#+begin_src emacs-lisp
-  ;; define ac-source for eshell-pcomplete
-  (ac-define-source eshell-pcomplete
-    '((candidates . pcomplete-completions)
-      (cache)
-      (symbol . "f")))
-
-  (defun ac-eshell-mode-setup ()
-    "auto-complete settings for eshell-mode"
-    (setq ac-sources '(ac-source-eshell-pcomplete)))
-
-  ;; Add to eshell-mode
-  (add-hook 'eshell-mode-hook 'auto-complete-mode)
-  (add-hook 'eshell-mode-hook 'ac-eshell-mode-setup)
-#+end_src
-** 使用 multi-eshell 快速切換不同的 eshell
-
-#+BEGIN_SRC emacs-lisp
-  (eval-after-load 'eshell
-    '(when (require* 'multi-eshell)
-       ;; setup to eshell
-       (setq multi-eshell-shell-function '(eshell))
-       (setq multi-eshell-name "*eshell*")))
-#+END_SRC
 
 * Helm                                                                 :helm:
 
