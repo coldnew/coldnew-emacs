@@ -2523,11 +2523,22 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
   (setq mu4e-maildir "~/Maildir")
 #+end_src
 
-
 ** 使用 offlineimap 取得郵件
 
 #+begin_src emacs-lisp
   (setq mu4e-get-mail-command "offlineimap")
+#+end_src
+
+** 每隔 60 秒 重新抓取郵件
+
+#+begin_src emacs-lisp
+  (setq mu4e-update-interval 60)
+#+end_src
+
+** 在郵件中顯示圖片
+
+#+begin_src emacs-lisp
+  (setq mu4e-view-show-images t)
 #+end_src
 
 
@@ -6288,18 +6299,6 @@ be readable enough to know it's content.
 
   (coldnew/mu4e-set-default-account "Gmail")
 #+end_src
-*** 每隔 60 秒 重新抓取郵件
-
-#+begin_src emacs-lisp
-  (setq mu4e-update-interval 60)
-#+end_src
-
-*** 在郵件中顯示圖片
-
-#+begin_src emacs-lisp
-  (setq mu4e-view-show-images t)
-#+end_src
-
 *** 使用 w3m 將 HTML 轉換為 text 檔
 
 #+begin_src emacs-lisp
