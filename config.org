@@ -2101,7 +2101,6 @@ minibuffer 上。
                (highlight-cl-add-font-lock-keywords)))
 #+end_src
 
-
 * Git 版本管理                                                          :git:
 
 git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最好的，emacs
@@ -2460,6 +2459,18 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
     (interactive)
     (start-process "gitg" nil "gitg"))
   #+end_src
+
+* IRC 聊天通訊
+
+emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
+
+#+begin_src emacs-lisp
+  (require* 'erc)
+  (require* 'erc-notify)
+  (require* 'erc-spelling)
+  (require* 'erc-autoaway)
+#+end_src
+
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -5998,17 +6009,6 @@ be readable enough to know it's content.
 
 * 聊天軟體                                                             :chat:
 ** IRC
-
-emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
-
-*** 載入相依套件
-
-#+begin_src emacs-lisp
-  (require 'erc)
-  (require 'erc-notify)
-  (require 'erc-spelling)
-  (require 'erc-autoaway)
-#+end_src
 
 *** 設定 prompt 為 >>
 
