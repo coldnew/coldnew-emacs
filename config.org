@@ -2021,6 +2021,11 @@ cwarn-mode 會顯示出 C/++ 下面一些致命的錯誤，以下面的程式碼
 
 ** C++
 
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.hpp$" . c++-mode))
+  (add-to-list 'auto-mode-alist '("\\.cpp$" . c++-mode))
+#+END_SRC
+
 *** 透過正規表達式判斷 .h 檔案是否為 C++ 檔案
 
 大部分的 C++ 的標頭黨使用 include 的時候，並不會將副檔名(.h)包進去，此外，很
@@ -2033,7 +2038,7 @@ C++檔案的依據。
                     (and (string= (file-name-extension buffer-file-name) "h")
                          (or (re-search-forward "#include <\\w+>"
                                                 magic-mode-regexp-match-limit t)
-                             (re-search-forward "namespace"
+                             (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
                                                 magic-mode-regexp-match-limit t)
                              (re-search-forward "std::"
                                                 magic-mode-regexp-match-limit t))))
@@ -2053,6 +2058,49 @@ C++檔案的依據。
   (require* 'graphviz-dot-mode)
   (defalias 'dot-mode 'graphviz-dot-mode)
 #+END_SRC
+
+** QML
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'qml-mode)
+  (add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
+#+END_SRC
+
+
+
+** Emacs Lisp
+
+#+begin_src emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
+#+end_src
+
+*** 使用 eldoc 顯示目前所使用的函式宣告在 minibuffer 上面
+
+eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
+minibuffer 上。
+
+#+begin_src emacs-lisp
+  (require* 'eldoc)
+  (add-hook 'emacs-lisp-mode-hook
+            '(lambda ()
+               ;; enable eldoc
+               (turn-on-eldoc-mode)
+               ;; fix for paredit if exist
+               (eval-after-load 'paredit
+                 '(progn
+                    (eldoc-add-command 'paredit-backward-delete
+                                       'paredit-close-round)))))
+#+end_src
+
+*** 高亮屬於 cl.el 套件的 function 或是 macro
+
+#+begin_src emacs-lisp
+  (require* 'highlight-cl)
+  (add-hook 'emacs-lisp-mode-hook
+            '(lambda ()
+               (highlight-cl-add-font-lock-keywords)))
+#+end_src
+
 
 * Git 版本管理                                                          :git:
 
@@ -4799,17 +4847,7 @@ ref: http://stackoverflow.com/questions/23172561/c-comment-in-emacs-linux-kernel
 #+end_src
 
 ** C++
-*** 設定 C++ 語言 檔案的副檔名與對應的模式
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.hpp$" . c++-mode))
-  (add-to-list 'auto-mode-alist '("\\.cpp$" . c++-mode))
-  ;; (add-to-list 'magic-mode-alist
-  ;;              `(,(lambda ()
-  ;;                   (and (string= (file-name-extension buffer-file-name) "h")
-  ;;                        (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
-  ;;                                           magic-mode-regexp-match-limit t)))
-  ;;                . c++-mode))
-#+end_src
+
 *** Codinf Style
 #+begin_src emacs-lisp
     ;;;; CodingStyle
@@ -4909,39 +4947,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 #+end_src
 ** Emacs Lisp
 
-*** 設定 emacs-lisp 的副檔名與對應的模式
-
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
-#+end_src
-
-*** 顯示目前所使用的函式宣告在 minibuffer 上面
-
-eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
-minibuffer 上。
-
-#+begin_src emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook
-            '(lambda ()
-               (when (require 'eldoc nil 'noerror)
-                 (turn-on-eldoc-mode)
-
-                 ;; fix for paredit
-                 (eval-after-load 'paredit
-                   '(progn
-                      (eldoc-add-command 'paredit-backward-delete
-                                         'paredit-close-round))))))
-#+end_src
-
-*** 高亮屬於 cl.el 套件的 function 或是 macro
-
-#+begin_src emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook
-            '(lambda ()
-               (when (require 'highlight-cl nil 'noerror)
-                 (highlight-cl-add-font-lock-keywords))))
-#+end_src
-
 *** 自動補全
 
 #+begin_src emacs-lisp
@@ -4968,30 +4973,9 @@ minibuffer 上。
           ))
 #+end_src
 
-*** 當打開 elisp 檔案的時候，移除 *.elc 檔案
-
-我們會打開 elisp 程式通常都是為了編輯，並重新載入他，因此把 *.elc 檔案
-移除勢必要的，這樣可以避免下次載入到錯誤的 elisp 程式。
-
-#+begin_src emacs-lisp
-  (defun remove-elc-when-visit ()
-    "After visit elisp file, remove .elc extension file."
-    (make-local-variable 'find-file-hook)
-    (add-hook 'find-file-hook
-              (lambda ()
-                (if (and (file-exists-p (concat buffer-file-name "c"))
-                         (file-writable-p (concat buffer-file-name "c")))
-                    (delete-file (concat buffer-file-name "c"))))))
-
-  (add-hook 'emacs-lisp-mode-hook 'remove-elc-when-visit)
-#+end_src
 
 ** QML
-*** 設定 QML 的副檔名與對應的模式
-#+begin_src emacs-lisp
-  (require 'qml-mode)
-  (add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
-#+end_src
+
 *** 快速插入樣板
 #+begin_src emacs-lisp
   (setq qml-mode-expand-alist
