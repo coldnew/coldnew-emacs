@@ -738,6 +738,14 @@ undo-tree 幫 emacs 增加了 redo 的功能。
             '(lambda ()
               (set (make-local-variable 'pangu-spacing-real-insert-separtor) t)))
 #+end_src
+** key-chord :: 快速點擊按鍵呼叫命令
+
+emacswiki: http://www.emacswiki.org/emacs/KeyChord
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'key-chord)
+#+END_SRC
+
 
 * 自定義函式 / 方法                                                :function:
 
