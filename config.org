@@ -2067,7 +2067,6 @@ C++檔案的依據。
 #+END_SRC
 
 
-
 ** Emacs Lisp
 
 #+begin_src emacs-lisp
@@ -2100,6 +2099,37 @@ minibuffer 上。
             '(lambda ()
                (highlight-cl-add-font-lock-keywords)))
 #+end_src
+
+* 網頁開發
+
+** Less-CSS
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'less-css-mode)
+  (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
+#+END_SRC
+
+** SCSS
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'scss-mode)
+  (add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))
+#+END_SRC
+
+scss-mode 預設會在檔案儲存的時候自動編譯 scss 檔成為 css 檔，這邊關掉這項
+設定。
+
+#+BEGIN_SRC emacs-lisp
+  (setq scss-compile-at-save nil)
+#+END_SRC
+
+** CSS
+
+#+begin_src emacs-lisp
+  (require* 'css-mode)
+  (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
+#+end_src
+
 
 * Git 版本管理                                                          :git:
 
@@ -5259,34 +5289,6 @@ paredit 可以幫助傳寫程式的速度。
   (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
   (multi-web-global-mode 1)
 #+end_src
-
-** CSS
-*** 設定 CSS 的副檔名與對應的模式
-
-#+begin_src emacs-lisp
-  (require 'css-mode)
-  (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
-#+end_src
-** Less-CSS
-
-*** 設定 LESS-CSS 的副檔名與對應的模式
-#+begin_src emacs-lisp
-  (require 'less-css-mode)
-  (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
-#+end_src
-
-** SCSS
-
-#+BEGIN_SRC emacs-lisp
-(require* 'scss-mode)
-#+END_SRC
-
-scss-mode 預設會在檔案儲存的時候自動編譯 scss 檔成為 css 檔，這邊關掉這項
-設定。
-
-#+BEGIN_SRC emacs-lisp
-  (setq scss-compile-at-save nil)
-#+END_SRC
 
 ** JavaScript
 
