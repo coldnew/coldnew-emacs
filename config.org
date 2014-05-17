@@ -2499,6 +2499,37 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
   (erc-update-modules)
 #+END_SRC
 
+* 電子郵件
+
+在 emacs 下有許多不錯用的電子郵件軟體，比如 GNUS、wanderlost 等。我則特別
+偏好 mu4e。
+
+mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理並不是 emacs 本身
+處理，並不會因為 emacs 是單一 thread 的程式，而造成整個 emacs 卡住。
+
+#+BEGIN_SRC emacs-lisp
+  (require 'mu4e)
+#+END_SRC
+
+** 設定 mu4e 為預設的 email 系統
+
+#+begin_src emacs-lisp
+  (setq mail-user-agent 'mu4e-user-agent)
+#+end_src
+
+** 郵件資料夾存放位置設定為 ~/Maildir
+
+#+begin_src emacs-lisp
+  (setq mu4e-maildir "~/Maildir")
+#+end_src
+
+
+** 使用 offlineimap 取得郵件
+
+#+begin_src emacs-lisp
+  (setq mu4e-get-mail-command "offlineimap")
+#+end_src
+
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -6219,27 +6250,6 @@ be readable enough to know it's content.
 #+end_src
 
 ** mu4e
-*** 載入套件
-#+begin_src emacs-lisp
-  (require 'mu4e)
-#+end_src
-*** 使用 offlineimap 取得郵件
-
-#+begin_src emacs-lisp
-  (setq mu4e-get-mail-command "offlineimap")
-#+end_src
-
-*** 設定 mu4e 為預設的 email 系統
-
-#+begin_src emacs-lisp
-  (setq mail-user-agent 'mu4e-user-agent)
-#+end_src
-
-*** 設定最頂層的郵件資料夾
-
-#+begin_src emacs-lisp
-  (setq mu4e-maildir "~/Maildir")
-#+end_src
 
 *** 設定我的 email 帳戶列表
 
