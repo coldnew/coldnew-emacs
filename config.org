@@ -1235,6 +1235,67 @@ deft 其實也可以用於 *.text 檔案，不過我更偏好用在 org-mode 上
   (setq deft-use-filename-as-title t)
 #+END_SRC
 
+** 擴充 org-mode 的 easy-template
+
+#+begin_src emacs-lisp
+  (add-to-list 'org-structure-template-alist
+               '("E" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+               (add-to-list 'org-structure-template-alist
+               '("S" "#+BEGIN_SRC sh\n?\n#+END_SRC"))
+               (add-to-list 'org-structure-template-alist
+               '("p" "#+BEGIN_SRC plantuml :file uml.png \n?\n#+END_SRC"))
+#+end_src
+
+** 在 org-mode 裡面加密部分文章                                       :crypt:
+
+用於加密 org-mode 裡面具有 :secret: 這個 TAG 的區塊。
+注意到這需啟用 [[*Easy%20PG][Easy PG]] 才能夠使用。
+
+#+begin_src emacs-lisp
+  (require* 'org-crypt)
+#+end_src
+
+*** 設定要加密的 tag 標籤為 *secret*
+
+#+begin_src emacs-lisp
+  (setq org-crypt-tag-matcher "secret")
+#+end_src
+
+*** 當被加密的部份要存入硬碟時，自動加密回去
+
+如果 emacs 有打開檔案備份，在存回硬碟前必須要先加密在儲存，
+否則加密的部份也會被備份起來。
+
+#+begin_src emacs-lisp
+  (org-crypt-use-before-save-magic)
+#+end_src
+
+*** 避免 encrypt 這個 tag 被子項目繼承
+
+避免 secret 這個 tag 被子項目繼承 造成重複加密
+(但是子項目還是會被加密喔)
+
+#+begin_src emacs-lisp
+  (setq org-tags-exclude-from-inheritance (quote ("secret")))
+#+end_src
+
+*** 設定 org-crypt-disable-auto-save 成 encrypt 模式。
+
+此模式並不會停用 auto-save-mode，反之，當自動儲存時，解密過的區域將會加密回去。
+
+#+begin_src emacs-lisp
+  (setq org-crypt-disable-auto-save 'encrypt)
+#+end_src
+
+*** 設定用於加密的 GPG 金鑰
+
+可以設定任何 ID 或是設成 nil 來使用對稱式加密 (symmetric encryption)
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-crypt-key nil)
+#+END_SRC
+
+
 * Helm                                                                 :helm:
 
 Helm (領航員) 是 emacs 下非常強大的檔案尋找工具，可以用他快速的找尋已經
@@ -3832,17 +3893,6 @@ org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性
   (setq org-export-with-sub-superscripts nil)
 #+end_src
 
-** 增加快速模版
-
-#+begin_src emacs-lisp
-  (add-to-list 'org-structure-template-alist
-               '("E" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
-               (add-to-list 'org-structure-template-alist
-               '("S" "#+BEGIN_SRC sh\n?\n#+END_SRC"))
-               (add-to-list 'org-structure-template-alist
-               '("p" "#+BEGIN_SRC plantuml :file uml.png \n?\n#+END_SRC"))
-#+end_src
-
 ** TODO Config
 
 #+begin_src emacs-lisp
@@ -3869,57 +3919,6 @@ org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性
             '(lambda ()
                (local-set-key (kbd "C-g") 'org-agenda-exit)))
 #+end_src
-
-** 讓 org-mode 裡面可以加密文章                                      :crypt:
-
-用於加密 org-mode 裡面具有 :secret: 這個 TAG 的區塊。
-注意到這需啟用 [[*Easy%20PG][Easy PG]] 才能夠使用。
-
-*** 載入相關模組
-
-#+begin_src emacs-lisp
-  (require 'org-crypt)
-#+end_src
-
-*** 設定要加密的 tag 標籤為 *secret*
-
-#+begin_src emacs-lisp
-  (setq org-crypt-tag-matcher "secret")
-#+end_src
-
-*** 當被加密的部份要存入硬碟時，自動加密回去
-
-如果 emacs 有打開檔案備份，在存回硬碟前必須要先加密在儲存，
-否則加密的部份也會被備份起來。
-
-#+begin_src emacs-lisp
-  (org-crypt-use-before-save-magic)
-#+end_src
-
-*** 避免 encrypt 這個 tag 被子項目繼承
-
-避免 secret 這個 tag 被子項目繼承 造成重複加密
-(但是子項目還是會被加密喔)
-
-#+begin_src emacs-lisp
-  (setq org-tags-exclude-from-inheritance (quote ("secret")))
-#+end_src
-
-*** 設定 org-crypt-disable-auto-save 成 encrypt 模式。
-
-此模式並不會停用 auto-save-mode，反之，當自動儲存時，解密過的區域將會加密回去。
-
-#+begin_src emacs-lisp
-  (setq org-crypt-disable-auto-save 'encrypt)
-#+end_src
-
-*** 設定用於加密的 GPG 金鑰
-
-可以設定任何 ID 或是設成 nil 來使用對稱式加密 (symmetric encryption)
-
-#+BEGIN_SRC emacs-lisp
-  (setq org-crypt-key nil)
-#+END_SRC
 
 ** 在 org-mode 裏面使用 C-c I 切換顯示圖片                          :keymap:
 
