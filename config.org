@@ -2471,6 +2471,34 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
   (require* 'erc-autoaway)
 #+end_src
 
+** 設定 prompt 為 >>
+
+#+begin_src emacs-lisp
+  (setq erc-prompt ">>")
+#+end_src
+
+** 編碼設定為 utf-8
+
+#+begin_src emacs-lisp
+  (setq erc-server-coding-system '(utf-8 . utf-8))
+#+end_src
+
+** 設定聊天時的行寬為 100
+
+就和寫程式一樣，一行不要太寬比較好
+
+#+begin_src emacs-lisp
+  (setq erc-fill-column 100)
+#+end_src
+
+** 為聊天室裡的使用者暱稱上色
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'erc-highlight-nicknames)
+  (add-to-list 'erc-modules 'highlight-nicknames)
+  (erc-update-modules)
+#+END_SRC
+
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -6010,18 +6038,6 @@ be readable enough to know it's content.
 * 聊天軟體                                                             :chat:
 ** IRC
 
-*** 設定 prompt 為 >>
-
-#+begin_src emacs-lisp
-  (setq erc-prompt ">>")
-#+end_src
-
-*** 編碼設定為 utf-8
-
-#+begin_src emacs-lisp
-  (setq erc-server-coding-system '(utf-8 . utf-8))
-#+end_src
-
 *** 當 ERC 啟動時，自動連入 IRC 伺服器
 
 #+begin_src emacs-lisp
@@ -6097,20 +6113,6 @@ be readable enough to know it's content.
     (setq erc-log-write-after-insert t)
   #+end_src
 
-*** 設定聊天時的行寬為 100
-
-#+begin_src emacs-lisp
-  (setq erc-fill-column 100)
-#+end_src
-
-*** 為聊天室裡的使用者暱稱上色
-
-#+begin_src emacs-lisp
-  (and
-   (require 'erc-highlight-nicknames)
-   (add-to-list 'erc-modules 'highlight-nicknames)
-   (erc-update-modules))
-#+end_src
 
 *** Misc
 
