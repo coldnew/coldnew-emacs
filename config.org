@@ -1893,6 +1893,87 @@ Rust 是由 Mozilla 所開發的語言。
 
 **
 
+** C/C++ 通用設定
+
+C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在這邊。
+
+*** 將 #if 0 #endif 區域上色為灰色
+
+emacs 預設不會將 #if 0 到 #endif 之間的區域用其他顏色隔開，這邊將這種類型的
+code 變成灰色，這樣在看 code 時比較不會吃力。
+
+#+begin_src emacs-lisp
+  (defun cc-mode:highlight-if-0 ()
+    "highlight c/c++ #if 0 #endif macros"
+    (interactive)
+    (setq cpp-known-face 'default)
+    (setq cpp-unknown-face 'default)
+    (setq cpp-known-writable 't)
+    (setq cpp-unknown-writable 't)
+    (setq cpp-edit-list '(("0" '(foreground-color . "gray")  default both)
+                          ("1" default font-lock-comment-face both)))
+    (cpp-highlight-buffer t))
+
+  ;; Add to c/c++ mode
+  (add-hook 'c-mode-common-hook 'cc-mode:highlight-if-0)
+#+end_src
+
+*** 加入 eldoc 支援
+
+#+begin_src emacs-lisp
+  (require* 'c-eldoc)
+  (add-hook 'c-mode-common-hook
+            '(lambda ()
+               (setq c-eldoc-includes "`pkg-config gtk+-3.0 --cflags --libs` -I./ -I../")
+               (c-turn-on-eldoc-mode)))
+#+end_src
+
+*** 使用 cwarn-mode 顯示可能有問題的代碼
+
+cwarn-mode 會顯示出 C/++ 下面一些致命的錯誤，以下面的程式碼來說
+
+#+begin_src c :tangle no
+  void test ()
+  {
+          if (x = y);
+                 printf("This is error example\n");
+  }
+#+end_src
+
+這段程式碼包含了兩種致命的錯誤。第一個是 *=* 只有在指派變數的值時才會
+使用到，而不會存在於判斷式裏面，這邊應該要修改成 *==* 。
+
+另外一個問題是，這邊多添加了不必要的分號在 if 判斷式的尾巴，這會讓 if
+判斷式出錯，拿掉就沒問題了。
+
+簡單的來說，cwarn-mode 包含以下幾種語法檢查:
+
+  - Semicolons right after conditions and loops
+
+    #+BEGIN_SRC c :tangle no
+      if (x == y);
+    #+END_SRC
+
+  - Assignments in tests
+
+    #+BEGIN_SRC c :tangle no
+      void test() {
+              if (a = b) foo();
+      }
+    #+END_SRC
+
+  - Functions with reference parameters
+
+    #+begin_src c++ :tangle no
+      void funct(string &p) {
+    #+end_src
+
+這邊將 cwarn-mode 加入到 c-mode-common-hook 裏面。
+
+#+begin_src emacs-lisp
+  (require* 'cwarn)
+  (add-hook 'c-mode-common-hook '(lambda () (cwarn-mode 1)))
+#+end_src
 
 ** C
 
@@ -4585,27 +4666,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 
 C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在這邊。
 
-*** 將 #if 0 #endif 區域上色為灰色
-
-emacs 預設不會將 #if 0 到 #endif 之間的區域用其他顏色隔開，這邊將這種類型的
-code 變成灰色，這樣在看 code 時比較不會吃力。
-
-#+begin_src emacs-lisp
-  (defun cc-mode:highlight-if-0 ()
-    "highlight c/c++ #if 0 #endif macros"
-    (interactive)
-    (setq cpp-known-face 'default)
-    (setq cpp-unknown-face 'default)
-    (setq cpp-known-writable 't)
-    (setq cpp-unknown-writable 't)
-    (setq cpp-edit-list '(("0" '(foreground-color . "gray")  default both)
-                          ("1" default font-lock-comment-face both)))
-    (cpp-highlight-buffer t))
-
-  ;; Add to c/c++ mode
-  (add-hook 'c-mode-common-hook 'cc-mode:highlight-if-0)
-#+end_src
-
 *** 縮排 #ifdef 語句
 
 #+begin_src emacs-lisp
@@ -4675,62 +4735,6 @@ code 變成灰色，這樣在看 code 時比較不會吃力。
 
   #+end_src
 
-*** 加入 eldoc 支援
-
-#+begin_src emacs-lisp
-  (add-hook 'c-mode-common-hook
-            '(lambda ()
-               (when (require 'c-eldoc nil 'noerror)
-                 (setq c-eldoc-includes "`pkg-config gtk+-3.0 --cflags --libs` -I./ -I../")
-                 (c-turn-on-eldoc-mode))))
-#+end_src
-
-*** 使用 cwarn-mode 顯示可能有問題的代碼
-
-cwarn-mode 會顯示出 C/++ 下面一些致命的錯誤，以下面的程式碼來說
-
-#+begin_src c :tangle no
-  void test ()
-  {
-          if (x = y);
-                 printf("This is error example\n");
-  }
-#+end_src
-
-這段程式碼包含了兩種致命的錯誤。第一個是 *=* 只有在指派變數的值時才會
-使用到，而不會存在於判斷式裏面，這邊應該要修改成 *==* 。
-
-另外一個問題是，這邊多添加了不必要的分號在 if 判斷式的尾巴，這會讓 if
-判斷式出錯，拿掉就沒問題了。
-
-簡單的來說，cwarn-mode 包含以下幾種語法檢查:
-
-  - Semicolons right after conditions and loops
-
-    #+BEGIN_SRC c :tangle no
-      if (x == y);
-    #+END_SRC
-
-  - Assignments in tests
-
-    #+BEGIN_SRC c :tangle no
-      void test() {
-              if (a = b) foo();
-      }
-    #+END_SRC
-
-  - Functions with reference parameters
-
-    #+begin_src c++ :tangle no
-      void funct(string &p) {
-    #+end_src
-
-這邊將 cwarn-mode 加入到 c-mode-common-hook 裏面。
-
-#+begin_src emacs-lisp
-  (add-hook 'c-mode-common-hook
-            '(lambda () (cwarn-mode 1)))
-#+end_src
 *** 使用 ctypes 高亮 C/C++ 自行定義的 typedef
 
 ctypes 這個套件可以識別 C/C++ 裏面的 typdef 定義，自動對他們進行語法高
@@ -4742,6 +4746,7 @@ ctypes 這個套件可以識別 C/C++ 裏面的 typdef 定義，自動對他們�
                (when (require 'ctypes nil 'noerror)
                  (ctypes-auto-parse-mode 1))))
 #+end_src
+
 *** comment
 
 ref: http://stackoverflow.com/questions/23172561/c-comment-in-emacs-linux-kernel-style?sgp=2
