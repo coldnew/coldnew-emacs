@@ -1295,7 +1295,6 @@ deft 其實也可以用於 *.text 檔案，不過我更偏好用在 org-mode 上
   (setq org-crypt-key nil)
 #+END_SRC
 
-
 * Helm                                                                 :helm:
 
 Helm (領航員) 是 emacs 下非常強大的檔案尋找工具，可以用他快速的找尋已經
