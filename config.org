@@ -9,6 +9,12 @@
 
 初始化的 emacs 設定，包含了加入 PATH 以及一些 OS 相關設定。
 
+** 打開 lexical-binding 功能
+
+#+BEGIN_SRC emacs-lisp :padline no
+  ;; -*- lexical-binding: t -*-
+#+END_SRC
+
 ** 預先載入 cl 套件
 
 #+begin_src emacs-lisp
@@ -498,14 +504,11 @@ emacs 中的 =require= 相同的色彩，這樣可以很清楚看到我哪些程
 載入使用。
 
 #+BEGIN_SRC emacs-lisp
-  (font-lock-add-keywords 'emacs-lisp-mode
-                          '(("(\\(require\*\\*\\)\\s [ \t']*\\(\\sw+\\)?"
-                             (1 font-lock-keyword-face)
-                             (2 font-lock-constant-face nil t))))
-  (font-lock-add-keywords 'lisp-interaction-mode
-                          '(("(\\(require\*\\*\\)\\s [ \t']*\\(\\sw+\\)?"
-                             (1 font-lock-keyword-face)
-                             (2 font-lock-constant-face nil t))))
+  (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
+    (font-lock-add-keywords mode
+                            '(("(\\(require\*\\*\\)\\s [ \t']*\\(\\sw+\\)?"
+                               (1 font-lock-keyword-face)
+                               (2 font-lock-constant-face nil t)))))
 #+END_SRC
 * 常用的模組 / 函式庫                                               :plugin:
 
@@ -746,6 +749,21 @@ emacswiki: http://www.emacswiki.org/emacs/KeyChord
   (require* 'key-chord)
 #+END_SRC
 
+* 自定義巨集
+
+#+BEGIN_SRC emacs-lisp
+  (defmacro defclosure (name arglist docstring bindings &rest body)
+    "Define NAME as a closure.
+
+          DOCSTRING is *not* optional.
+          BINDINGS is an alist of lexical bindings.
+          The definition is (lambda ARGLIST DOCSTRING BODY...)."
+    (declare (indent defun))
+    `(lexical-let (,@bindings)
+       (defun ,name (,@arglist)
+         ,docstring
+         ,@body)))
+#+END_SRC
 
 * 自定義函式 / 方法                                                :function:
 
@@ -5618,6 +5636,24 @@ yank-n-times 則可以重複的進行貼上。
       (this-command-keys)
       'toggle-kbd-macro-recording-on)
     (end-kbd-macro))
+
+
+
+  (defclosure a ()
+        "Useless and bizar counter"
+        ((a 0))
+        (if (= a 0)
+            (progn (setq a 1)
+                   (message "a 0"))
+          (progn
+            (setq a 0)
+            (message "a 1"))
+            )
+            )
+
+  (a)
+
+
 #+end_src
 
 ** 文字/字詞處理
