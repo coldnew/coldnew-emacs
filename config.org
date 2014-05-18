@@ -2577,6 +2577,21 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
     (interactive)
     (start-process "gitg" nil "gitg"))
   #+end_src
+** 資訊收尋
+
+*** 到 stackoverflow 收尋
+
+#+BEGIN_SRC emacs-lisp
+  (defun stackoverflow-search ()
+    "Searches Stack Overflow for current region, or prompts for query if none exists."
+    (interactive)
+    (browse-url
+     (concat
+      "http://stackoverflow.com/search?q="
+      (active-region-or-prompt "Search Stack Overflow for: "))))
+#+END_SRC
+
+
 
 * IRC 聊天通訊
 
