@@ -749,22 +749,6 @@ emacswiki: http://www.emacswiki.org/emacs/KeyChord
   (require* 'key-chord)
 #+END_SRC
 
-* 自定義巨集
-
-#+BEGIN_SRC emacs-lisp
-  (defmacro defclosure (name arglist docstring bindings &rest body)
-    "Define NAME as a closure.
-
-          DOCSTRING is *not* optional.
-          BINDINGS is an alist of lexical bindings.
-          The definition is (lambda ARGLIST DOCSTRING BODY...)."
-    (declare (indent defun))
-    `(lexical-let (,@bindings)
-       (defun ,name (,@arglist)
-         ,docstring
-         ,@body)))
-#+END_SRC
-
 * 自定義函式 / 方法                                                :function:
 
 我所自定義或是我的 emacs 設定檔需要用到的 function，這裡面有些 function
@@ -2369,6 +2353,25 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
 
 *注意* : 這邊的命令可能依賴我所自訂的 function。
 
+** 巨集相關                                                          :macro:
+
+*** 動態切換開始/結束紀錄巨集
+
+#+BEGIN_SRC emacs-lisp
+  (let ((kbd-macro-state "off"))
+    (defun toggle-kbd-macro-recording ()
+      "Toggle recording on/off emacs kbd macro."
+      (interactive)
+      (cond
+       ((string= "on" kbd-macro-state)
+        (setq kbd-macro-state "off")
+        (end-kbd-macro))
+       ((string= "off" kbd-macro-state)
+        (setq kbd-macro-state "on")
+        (start-kbd-macro nil)))))
+#+END_SRC
+
+
 ** 緩衝區處理                                                       :buffer:
 
 *** 將 unix 格式的文件轉換成 dos 格式
@@ -2489,7 +2492,6 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
           (indent-region-or-buffer)
           (message "Indented buffer.")))))
 #+end_src
-
 
 ** 視窗操作                                                         :window:
 
@@ -4505,16 +4507,16 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 
 ** 按鍵巨集錄製/播放 (N) (I)
 
-| 按鍵  | 命令                          | 用途              |
-|-------+-------------------------------+-------------------|
-| C-x q | toggle-kbd-macro-recording-on | 錄製/停止鍵盤巨集 |
-| C-x e | call-last-kbd-macro           | 播放最後一個巨集  |
-| C-.   | repeat                        | 重複上一個命令    |
+| 按鍵  | 命令                       | 用途              |
+|-------+----------------------------+-------------------|
+| C-x q | toggle-kbd-macro-recording | 錄製/停止鍵盤巨集 |
+| C-x e | call-last-kbd-macro        | 播放最後一個巨集  |
+| C-.   | repeat                     | 重複上一個命令    |
 
 #+begin_src emacs-lisp
-  (vim:mode-map coldnew-editor-map (kbd "C-x q") 'toggle-kbd-macro-recording-on)
-  (vim:mode-map coldnew-editor-map (kbd "C-x e") 'call-last-kbd-macro)
-  (vim:mode-map coldnew-editor-map (kbd "C-.")   'repeat)
+    (vim:mode-map coldnew-editor-map (kbd "C-x q") 'toggle-kbd-macro-recording)
+    (vim:mode-map coldnew-editor-map (kbd "C-x e") 'call-last-kbd-macro)
+    (vim:mode-map coldnew-editor-map (kbd "C-.")   'repeat)
 #+end_src
 
 ** 常用按鍵 (N) (I)
@@ -5614,48 +5616,6 @@ yank-n-times 則可以重複的進行貼上。
           (setq times 1)
         (dotimes 'times (yank)))))
 #+end_src
-** 強化功能命令
-
-*** 切換按鍵巨集的錄製/停止
-
-#+begin_src emacs-lisp
-  (defun toggle-kbd-macro-recording-on ()
-    "One-key keyboard macros: turn recording on."
-    (interactive)
-    (define-key
-      global-map
-      (this-command-keys)
-      'toggle-kbd-macro-recording-off)
-    (start-kbd-macro nil))
-
-  (defun toggle-kbd-macro-recording-off ()
-    "One-key keyboard macros: turn recording off."
-    (interactive)
-    (define-key
-      global-map
-      (this-command-keys)
-      'toggle-kbd-macro-recording-on)
-    (end-kbd-macro))
-
-
-
-  (defclosure a ()
-        "Useless and bizar counter"
-        ((a 0))
-        (if (= a 0)
-            (progn (setq a 1)
-                   (message "a 0"))
-          (progn
-            (setq a 0)
-            (message "a 1"))
-            )
-            )
-
-  (a)
-
-
-#+end_src
-
 ** 文字/字詞處理
 
 *** 將游標下的文字改用絕對路徑表示
