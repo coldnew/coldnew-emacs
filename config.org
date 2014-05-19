@@ -486,7 +486,9 @@ require* 實際上就是 req-package 的綁定，只是語法和傳統 emacs 的
     `(unless (require ,feature nil 'noerror)
        ;; use req-pckage to mantain packages
        (eval
-        ``(req-package ,,feature ,@body))))
+        ``(req-package ,,feature ,@body))
+       ;; Make req-package install missing one
+       (req-package-finish)))
 #+END_SRC
 
 使用時如下，也可以像 req-package 那樣加上參數
@@ -6684,7 +6686,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
   <<gen-keys-global(func="define-key evil-insert-state-map", keys=global-evil-insert)>>
 #+END_SRC
 
-* 最後的初始化設定
+* TODO 最後的初始化設定
 
 在 [[*%E4%BD%BF%E7%94%A8%20req-package%20%E7%B0%A1%E5%8C%96%20use-package%20%E7%9A%84%E8%A8%AD%E5%AE%9A][使用 req-package 簡化 use-package 的設定]] 有提到說要再使用
 =req-package-finish= 來完成所有套件的安裝，因此我們在 emacs 設定檔案最尾
