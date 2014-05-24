@@ -1060,6 +1060,112 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
       "Return nil if OS is not CygWin.")
   #+END_SRC
 
+* 字體設置                                                             :font:
+
+** 英文字體與中文字體設置
+
+- 英文字體
+
+  #+begin_src emacs-lisp
+    (defvar emacs-english-font "Monaco"
+      "The font name of English.")
+  #+end_src
+
+- 中文字體
+
+  #+begin_src emacs-lisp
+    (defvar emacs-cjk-font "Hiragino Sans GB W3"
+      "The font name for CJK.")
+  #+end_src
+
+** 預設字體大小設定
+
+為了可以在 org-mode 的表格中縮放字體也不會有中英文排版亂掉的情況，我的
+字體設定是以 pair 的形式來進行設定，*emacs-font-size-pair* 存放預設的
+字體，若有使用我自訂的字體放大/縮小命令，則這個變數也會更著被修改。
+
+#+BEGIN_SRC emacs-lisp
+  (defvar emacs-font-size-pair '(15 . 18)
+    "Default font size pair for (english . chinese)")
+#+END_SRC
+
+** 在圖形介面下使用我所設定的字體
+
+這邊主要定義 *set-font* 這個函式，他會根據傳送給他的字體資訊，即時設定
+整個 emacs 的字體大小，這樣也不會有切換 buffer，但是字體確沒有跟著之前的
+設定而變大/變小。
+
+#+BEGIN_SRC emacs-lisp
+  (defun font-exist-p (fontname)
+    "test if this font is exist or not."
+    (if (or (not fontname) (string= fontname ""))
+        nil
+      (if (not (x-list-fonts fontname))
+          nil t)))
+
+  (defun set-font (english chinese size-pair)
+    "Setup emacs English and Chinese font on x window-system."
+
+    (if (font-exist-p english)
+        (set-frame-font (format "%s:pixelsize=%d" english (car size-pair)) t))
+
+    (if (font-exist-p chinese)
+        (dolist (charset '(kana han cjk-misc bopomofo))
+          (set-fontset-font (frame-parameter nil 'font) charset
+                            (font-spec :family chinese :size (cdr size-pair))))))
+
+  ;; Setup font size based on emacs-font-size-pair
+  (set-font emacs-english-font emacs-cjk-font emacs-font-size-pair)
+#+END_SRC
+
+** 使用 C-= 或是 C-- 來調整字體大小
+
+這邊設定了一個 *emacs-font-size-pair-list* 變數，這個變數存放了即使使
+用這一對字體大小，org-mode 的表格也不會走樣的中英字體設定。
+
+#+BEGIN_SRC emacs-lisp
+  (defvar emacs-font-size-pair-list
+    '(( 5 .  6) (10 . 12)
+      (13 . 16) (15 . 18) (17 . 20)
+      (19 . 22) (20 . 24) (21 . 26)
+      (24 . 28) (26 . 32) (28 . 34)
+      (30 . 36) (34 . 40) (36 . 44))
+    "This list is used to store matching (englis . chinese) font-size.")
+
+  (defun emacs-step-font-size (step)
+    "Increase/Decrease emacs's font size."
+    (let ((scale-steps emacs-font-size-pair-list))
+      (if (< step 0) (setq scale-steps (reverse scale-steps)))
+      (setq emacs-font-size-pair
+            (or (cadr (member emacs-font-size-pair scale-steps))
+                emacs-font-size-pair))
+      (when emacs-font-size-pair
+        (message "emacs font size set to %.1f" (car emacs-font-size-pair))
+        (set-font emacs-english-font emacs-cjk-font emacs-font-size-pair))))
+
+  (defun increase-emacs-font-size ()
+    "Decrease emacs's font-size acording emacs-font-size-pair-list."
+    (interactive) (emacs-step-font-size 1))
+
+  (defun decrease-emacs-font-size ()
+    "Increase emacs's font-size acording emacs-font-size-pair-list."
+    (interactive) (emacs-step-font-size -1))
+
+  (global-set-key (kbd "C-=") 'increase-emacs-font-size)
+  (global-set-key (kbd "C--") 'decrease-emacs-font-size)
+#+END_SRC
+
+** 設定顯示字體時的格式
+
+使用 *list-face-display* 可以看到所有的 face 顏色與字體。
+
+#+begin_src emacs-lisp
+  (setq list-faces-sample-text
+        (concat
+         "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz\n"
+         "11223344556677889900       壹貳參肆伍陸柒捌玖零"))
+#+end_src
+
 * Vim 摹擬                                                              :vim:
 
 實在不能不佩服 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
@@ -2202,7 +2308,6 @@ scss-mode 預設會在檔案儲存的時候自動編譯 scss 檔成為 css 檔�
   (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
 #+end_src
 
-
 * Git 版本管理                                                          :git:
 
 git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最好的，emacs
@@ -2594,7 +2699,6 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
 #+END_SRC
 
 
-
 * IRC 聊天通訊
 
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
@@ -2675,7 +2779,6 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
 #+begin_src emacs-lisp
   (setq mu4e-view-show-images t)
 #+end_src
-
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -3105,24 +3208,6 @@ Following buffer will not show in iBuffer
   (setq uniquify-ignore-buffers-re "^\\*")
 #+end_src
 * 自定義函式 / 方法                                                :function:
-
-** 測試檔案、變數值
-
-測試用的 function，和測試用的變數很像，但是他允許參數的輸入。
-
-*** 測試這個字體在系統內是否存在。
-
-#+begin_src emacs-lisp
-  (defun font-exist-p (fontname)
-    "test if this font is exist or not."
-    (if (or (not fontname) (string= fontname ""))
-        nil
-    (if (not (x-list-fonts fontname))
-          nil t)))
-#+end_src
-
-
-
 ** TODO 需整理
 *** Date
 #+begin_src emacs-lisp
@@ -3187,104 +3272,6 @@ Following buffer will not show in iBuffer
               (equalp 'forwards dir))
           (list start end)
         (list end start))))
-#+end_src
-* 字體設置                                                             :font:
-
-** 英文字體與中文字體設置
-
-- 英文字體
-
-  #+begin_src emacs-lisp
-    (defvar emacs-english-font "Monaco"
-      "The font name of English.")
-  #+end_src
-
-- 中文字體
-
-  #+begin_src emacs-lisp
-    (defvar emacs-cjk-font "Hiragino Sans GB W3"
-      "The font name for CJK.")
-  #+end_src
-
-** 預設字體大小設定
-
-為了可以在 org-mode 的表格中縮放字體也不會有中英文排版亂掉的情況，我的
-字體設定是以 pair 的形式來進行設定，*emacs-font-size-pair* 存放預設的
-字體，若有使用我自訂的字體放大/縮小命令，則這個變數也會更著被修改。
-
-#+BEGIN_SRC emacs-lisp
-  (defvar emacs-font-size-pair '(15 . 18)
-    "Default font size pair for (english . chinese)")
-#+END_SRC
-
-** 在圖形介面下使用我所設定的字體
-
-這邊主要定義 *set-font* 這個函式，他會根據傳送給他的字體資訊，即時設定
-整個 emacs 的字體大小，這樣也不會有切換 buffer，但是字體確沒有跟著之前的
-設定而變大/變小。
-
-#+BEGIN_SRC emacs-lisp
-  (defun set-font (english chinese size-pair)
-    "Setup emacs English and Chinese font on x window-system."
-
-    (if (font-exist-p english)
-        (set-frame-font (format "%s:pixelsize=%d" english (car size-pair)) t))
-
-    (if (font-exist-p chinese)
-        (dolist (charset '(kana han cjk-misc bopomofo))
-          (set-fontset-font (frame-parameter nil 'font) charset
-                            (font-spec :family chinese :size (cdr size-pair))))))
-
-  ;; Setup font size based on emacs-font-size-pair
-  (set-font emacs-english-font emacs-cjk-font emacs-font-size-pair)
-#+END_SRC
-
-** 使用 C-= 或是 C-- 來調整字體大小
-
-這邊設定了一個 *emacs-font-size-pair-list* 變數，這個變數存放了即使使
-用這一對字體大小，org-mode 的表格也不會走樣的中英字體設定。
-
-#+BEGIN_SRC emacs-lisp
-  (defvar emacs-font-size-pair-list
-    '(( 5 .  6) (10 . 12)
-      (13 . 16) (15 . 18) (17 . 20)
-      (19 . 22) (20 . 24) (21 . 26)
-      (24 . 28) (26 . 32) (28 . 34)
-      (30 . 36) (34 . 40) (36 . 44))
-    "This list is used to store matching (englis . chinese) font-size.")
-
-  (defun emacs-step-font-size (step)
-    "Increase/Decrease emacs's font size."
-    (let ((scale-steps emacs-font-size-pair-list))
-      (if (< step 0) (setq scale-steps (reverse scale-steps)))
-      (setq emacs-font-size-pair
-            (or (cadr (member emacs-font-size-pair scale-steps))
-                emacs-font-size-pair))
-      (when emacs-font-size-pair
-        (message "emacs font size set to %.1f" (car emacs-font-size-pair))
-        (set-font emacs-english-font emacs-cjk-font emacs-font-size-pair))))
-
-  (defun increase-emacs-font-size ()
-    "Decrease emacs's font-size acording emacs-font-size-pair-list."
-    (interactive) (emacs-step-font-size 1))
-
-  (defun decrease-emacs-font-size ()
-    "Increase emacs's font-size acording emacs-font-size-pair-list."
-    (interactive) (emacs-step-font-size -1))
-
-  (global-set-key (kbd "C-=") 'increase-emacs-font-size)
-  (global-set-key (kbd "C--") 'decrease-emacs-font-size)
-#+END_SRC
-
-** 設定顯示字體時的格式
-
-使用 *list-face-display* 可以看到所有的 face 顏色與字體。
-
-#+begin_src emacs-lisp
-  (setq list-faces-sample-text
-        (concat
-         "ABCDEFTHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz\n"
-         "11223344556677889900       壹貳參肆伍陸柒捌玖零"))
 #+end_src
 
 * 佈景主題                                                            :theme:
@@ -6643,20 +6630,22 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 ** 全域性按鍵設定 (global-set-key) :noexport:
 
 #+TBLNAME: global-keys
-| 類別     | 按鍵    | 命令              | 描述                               |
-|----------+---------+-------------------+------------------------------------|
-| 文字編輯 | s-<RET> | insert-empty-line | 插入空白行                         |
-| 緩衝區   | C-x C-b | ibuffer           | 切換到 ibuffer                     |
-| 資料夾   | C-x C-d | dired             | 切換到 dired                       |
-| 視窗切換 | C-x F   | fullscreen-window | 將視窗切換成全螢幕                 |
-| 視窗切換 | M-[     | winner-undo       | 回復上一個窗口佈局                 |
-| 視窗切換 | M-]     | winner-redo       | 切回上一組進行窗口復原時的窗口佈局 |
-| 暫存器   | C-x rj  | jump-to-register  | 跳轉到暫存的檔案或是緩衝區位置     |
-| 尋找取代 | M-s     | helm-occur        | 使用 helm-occur 來進行尋找         |
-| 版本管理 | C-x vl  | magit-log         | 查看 git log                       |
-| 版本管理 | C-x vs  | magit-status      | 查看目前的 git status              |
-| 版本管理 | C-x vc  | magit-checkout    | 切換到其他的 git branch            |
-| 版本管理 | C-x vp  | magit-push        | push 到遠端的 repo                 |
+| 類別     | 按鍵    | 命令                     | 描述                               |
+|----------+---------+--------------------------+------------------------------------|
+| 文字編輯 | s-<RET> | insert-empty-line        | 插入空白行                         |
+| 緩衝區   | C-x C-b | ibuffer                  | 切換到 ibuffer                     |
+| 資料夾   | C-x C-d | dired                    | 切換到 dired                       |
+| 視窗切換 | C-x F   | fullscreen-window        | 將視窗切換成全螢幕                 |
+| 視窗切換 | M-[     | winner-undo              | 回復上一個窗口佈局                 |
+| 視窗切換 | M-]     | winner-redo              | 切回上一組進行窗口復原時的窗口佈局 |
+| 暫存器   | C-x rj  | jump-to-register         | 跳轉到暫存的檔案或是緩衝區位置     |
+| 尋找取代 | M-s     | helm-occur               | 使用 helm-occur 來進行尋找         |
+| 版本管理 | C-x vl  | magit-log                | 查看 git log                       |
+| 版本管理 | C-x vs  | magit-status             | 查看目前的 git status              |
+| 版本管理 | C-x vc  | magit-checkout           | 切換到其他的 git branch            |
+| 版本管理 | C-x vp  | magit-push               | push 到遠端的 repo                 |
+| 文字編輯 | C-=     | increase-emacs-font-size | 放大緩衝區的文字大小               |
+| 文字編輯 | C--     | decrease-emacs-font-size | 縮小緩衝區的文字大小               |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="global-set-key", keys=global-keys)>>
