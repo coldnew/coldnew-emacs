@@ -2213,7 +2213,7 @@ C++檔案的依據。
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'magic-mode-alist
                `(,(lambda ()
-                    (and (string= (file-name-extension buffer-file-name) "h")
+                    (and (string= (file-name-extension (or (buffer-file-name) "")) "h")
                          (or (re-search-forward "#include <\\w+>"
                                                 magic-mode-regexp-match-limit t)
                              (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
@@ -2221,6 +2221,7 @@ C++檔案的依據。
                              (re-search-forward "std::"
                                                 magic-mode-regexp-match-limit t))))
                  . c++-mode))
+
 #+END_SRC
 
 ** newlisp
