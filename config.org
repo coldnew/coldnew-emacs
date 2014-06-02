@@ -750,6 +750,13 @@ emacswiki: http://www.emacswiki.org/emacs/KeyChord
 #+BEGIN_SRC emacs-lisp
   (require* 'key-chord)
 #+END_SRC
+** uzumaki :: 緩衝區切換
+
+#+BEGIN_SRC emacs-lisp
+  (require* 'uzumaki)
+  (uzumaki-minor-mode 1)
+#+END_SRC
+
 
 * 自定義函式 / 方法                                                :function:
 
