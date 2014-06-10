@@ -9,9 +9,13 @@
 
 初始化的 emacs 設定，包含了加入 PATH 以及一些 OS 相關設定。
 
-** 打開 lexical-binding 功能
+** TODO 打開 lexical-binding 功能
 
-#+BEGIN_SRC emacs-lisp :padline no
+打開這個似乎會出現以下錯誤 ?
+
+: void function closure
+
+#+BEGIN_SRC emacs-lisp :padline no :tangle no
   ;; -*- lexical-binding: t -*-
 #+END_SRC
 
