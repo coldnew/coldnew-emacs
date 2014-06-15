@@ -483,16 +483,20 @@ require* 實際上就是 req-package 的綁定，只是語法和傳統 emacs 的
 相同，這樣可以方便我以後切換到不同的套件載入方式。
 
 #+BEGIN_SRC emacs-lisp
-  (defmacro require* (feature &rest body)
-    "require FEATURE wrapper for `req-package'.
-  This function is used to abstract package loading."
-    ;; require feature first, ignore error
-    `(unless (require ,feature nil 'noerror)
-       ;; use req-pckage to mantain packages
-       (eval
-        ``(req-package ,,feature ,@body))
-       ;; Make req-package install missing one
-       (req-package-finish)))
+    (defmacro require* (feature &rest body)
+      "require FEATURE wrapper for `req-package'.
+    This function is used to abstract package loading."
+      ;; require feature first, ignore error
+     `(unless (require ,feature nil 'noerror)
+         ;; use req-pckage to mantain packages
+         (eval
+          `(req-package ,,feature ))
+  ;; TODO: fix body argument
+  ;;        `(req-package ,,feature ,,@body))
+         ;; Make req-package install missing one
+         (req-package-finish)  ))
+  
+  
 #+END_SRC
 
 使用時如下，也可以像 req-package 那樣加上參數
@@ -625,7 +629,7 @@ GitHub: https://github.com/flycheck/flycheck
 
 #+BEGIN_SRC emacs-lisp
   (require* 'flycheck)
-  (global-flycheck-mode)
+  ;;(global-flycheck-mode)
 #+END_SRC
 
 ** yasnippet :: 樣板插入工具
