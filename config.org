@@ -336,7 +336,7 @@ Github: https://github.com/dimitri/el-get
 改為 =~/.emacs.d/lisp=
 
 #+begin_src emacs-lisp
-  (setq-default el-get-dir "~/.emacs.d/lisp")
+  (setq-default el-get-dir (concat emacs-dir "lisp"))
 #+end_src
 
 *** 如果 el-get 不存在的話，重新安裝 el-get
@@ -370,7 +370,7 @@ el-get 雖然好用，但是還是有一些 recipes 沒有，所以我自己維�
 一份 recipes，我自己寫的 recipes 則放置在 =~/.emacs.d/recipes= 。
 
 #+begin_src emacs-lisp
-  (add-to-list 'el-get-recipe-path "~/.emacs.d/recipes")
+  (add-to-list 'el-get-recipe-path (concat emacs-dir "recipes"))
 #+end_src
 
 *** 設定 el-get 的 recipes 預設使用 emacs-lisp-mode
@@ -6687,14 +6687,4 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="define-key evil-insert-state-map", keys=global-evil-insert)>>
-#+END_SRC
-
-* TODO 最後的初始化設定
-
-在 [[*%E4%BD%BF%E7%94%A8%20req-package%20%E7%B0%A1%E5%8C%96%20use-package%20%E7%9A%84%E8%A8%AD%E5%AE%9A][使用 req-package 簡化 use-package 的設定]] 有提到說要再使用
-=req-package-finish= 來完成所有套件的安裝，因此我們在 emacs 設定檔案最尾
-巴要進行這項工作。
-
-#+BEGIN_SRC emacs-lisp
-  (req-package-finish)
 #+END_SRC
