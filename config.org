@@ -355,7 +355,7 @@ Github: https://github.com/dimitri/el-get
 
   ;; ensures that any currently installed packages will be initialized
   ;; and any required packages will be installed
-  (el-get 'sync)
+;;  (el-get 'sync)
 #+end_src
 
 *** 如果 elpa 的 recepies 不存在的話，自動建立他
