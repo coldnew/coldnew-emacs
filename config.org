@@ -1877,9 +1877,9 @@ eclim 是在 emacs 下可以控制 Eclipse 或是透過他來進行 JAVA 等補�
 GitHub:
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'eclim)
-  (require 'eclimd)
-  (global-eclim-mode)
+;;  (require* 'eclim)
+;;  (require 'eclimd)
+;;  (global-eclim-mode)
 #+END_SRC
 
 ** 設定 Eclipse 以及 eclim 的位置
@@ -1896,7 +1896,7 @@ GitHub:
 ** 讓 eclim 可以進行自動儲存
 
 #+BEGIN_SRC emacs-lisp
-  (setq eclim-auto-save t)
+;;  (setq eclim-auto-save t)
 #+END_SRC
 
 * TAGS                                                                 :tags:
