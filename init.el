@@ -30,11 +30,9 @@
 ;; startup just check if these dir exist or not, create the dir if not
 ;; exist.
 (let ((pdir "/tmp/.emacs.d"))
-  (unless (file-exists-p pdir)
-    (make-directory (concat pdir "/backup"))
-    (make-directory (concat pdir "/cache"))
-    (make-directory (concat pdir "/log"))
-    ))
+    (make-directory (concat pdir "/backup") t)
+    (make-directory (concat pdir "/cache")  t)
+    (make-directory (concat pdir "/log")    t))
 
 ;; Make customize-ui write file to ~/.emacs.d/custom.el
 (setq custom-file (concat emacs-dir "/custom.el"))
