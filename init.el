@@ -25,6 +25,17 @@
              load-path
              )))))
 
+;;;; Create some dir in ramdisk
+;; I bind `backup', `cache', `log' dir to /tmp/.emacs.d/, when emacs
+;; startup just check if these dir exist or not, create the dir if not
+;; exist.
+(let ((pdir "/tmp/.emacs.d"))
+  (unless (file-exists-p pdir)
+    (make-directory (concat pdir "/backup"))
+    (make-directory (concat pdir "/cache"))
+    (make-directory (concat pdir "/log"))
+    ))
+
 ;; Make customize-ui write file to ~/.emacs.d/custom.el
 (setq custom-file (concat emacs-dir "/custom.el"))
 

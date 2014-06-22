@@ -22,17 +22,11 @@ var/
 .authinfo.gpg
 .#*
 swank/
-cache/
-cache
-backup/
-backup
 TAGS
 semanticdb/
 config/coldnew-emacs.el*
 themes/coldnew-night-theme.el
 config.el
-log/
-log
 url/
 lisp/
 tramp
