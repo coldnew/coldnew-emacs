@@ -767,7 +767,6 @@ emacswiki: http://www.emacswiki.org/emacs/KeyChord
   (uzumaki-minor-mode 1)
 #+END_SRC
 
-
 * 自定義函式 / 方法                                                :function:
 
 我所自定義或是我的 emacs 設定檔需要用到的 function，這裡面有些 function
@@ -1211,6 +1210,16 @@ evil-mdoe 預設會讓游標變成黑色，這對於習慣使用暗色系佈景�
 #+begin_src emacs-lisp
   (setq evil-default-cursor t)
 #+end_src
+* 緩衝區                                                             :buffer:
+
+** 自動建立 *scratch* 緩衝區
+
+*scratch* 在 emacs 下是非常好用的緩衝區，如果他不存在的話，自動建立他。
+
+#+BEGIN_SRC emacs-lisp
+  (run-with-idle-timer 1 t
+                       '(lambda () (get-buffer-create "*scratch*")))
+#+END_SRC
 
 * Org                                                                   :org:
 
