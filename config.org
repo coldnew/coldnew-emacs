@@ -434,7 +434,7 @@ Github: https://github.com/jwiegley/use-package
 
 #+BEGIN_SRC emacs-lisp
   (unless (require 'use-package nil 'noerror)
-    (el-get-reinstall 'use-package))
+    (el-get 'sync 'use-package))
 #+END_SRC
 
 *** 使用 el-get 自動安裝遺失的套件
@@ -450,8 +450,10 @@ Github: https://github.com/jwiegley/use-package
   (defadvice use-package-ensure-elpa (around package-install (package) activate)
     (if (require 'el-get nil 'noerror)
         (unless (el-get-package-installed-p package)
-;;          (el-get 'sync)
-          (el-get-reinstall package))
+          (el-get-remove package)
+          (el-get 'sync package)
+          ;;          (el-get-reinstall package)
+          )
       ad-do-it))
 #+END_SRC
 
