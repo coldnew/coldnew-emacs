@@ -1803,12 +1803,10 @@ winner-mode 有自己預設好的按鍵方式，我習慣用自己的，因此�
       (r `(
            ;; emacs's config.org
            (?e (file . "~/.emacs.d/config.org"))
-           ;; TODO.org
-           (?t (file . "~/SparkleShare/org/TODO.org"))
            ;; Offilce
-           (?w (file . "~/SparkleShare/org/Weintek.org"))
+           (?w (file . "~/Copy/org/Weintek.org"))
            ;; Note.org
-           (?n (file . "~/SparkleShare/org/Note.org"))))
+           (?n (file . "~/Copy/org/Note.org"))))
     (set-register (car r) (cadr r)))
 #+end_src
 
