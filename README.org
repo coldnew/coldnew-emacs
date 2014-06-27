@@ -12,3 +12,19 @@ try my config, install Cask first
 : curl -fsSkL https://raw.github.com/cask/cask/master/go | python
 
 when finisn, use =cask install= to install elisp dependencies.
+
+* Packages should install in system
+
+
+- OSX
+
+  #+BEGIN_SRC sh
+    brew install mu --with-emacs --HEAD
+    brew install emacs-clang-complete-async
+  #+END_SRC
+
+- Gentoo
+
+  #+BEGIN_SRC sh
+    USE="emacs" emerge net-mail/mu
+  #+END_SRC
