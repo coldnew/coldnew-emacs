@@ -3,6 +3,15 @@
 
 (message "\nEmacs is powering up... Be patient, Master %s!\n" (getenv "USER"))
 
+;; Since I use Cask to mantain emacs config, check if it exist
+(unless (file-exists-p "~/.cask/cask.el")
+  (error "~/.cask/cask.el not found!!! Please install Cask first."))
+
+;; load cask and pallet
+(require 'cask "~/.cask/cask.el")
+(cask-initialize)
+(require 'pallet)
+
 ;; Define emacs-dir where all the files live.
 (defvar emacs-dir
   (file-name-directory
