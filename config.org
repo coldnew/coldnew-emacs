@@ -5102,19 +5102,6 @@ paredit 可以幫助傳寫程式的速度。
                         "BrowserReload();"))
 #+end_src
 
-*** 整合 Javascript/HTML/CSS 色彩
-
-#+begin_src emacs-lisp
-  (require 'multi-web-mode)
-  (setq mweb-default-major-mode 'html-mode)
-  (setq mweb-tags
-        '((php-mode "<\\?php\\|<\\? \\|<\\?=" "\\?>")
-          (js-mode  "<script +\\(type=\"text/javascript\"\\|language=\"javascript\"\\)[^>]*>" "</script>")
-          (css-mode "<style +type=\"text/css\"[^>]*>" "</style>")))
-  (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
-  (multi-web-global-mode 1)
-#+end_src
-
 ** JavaScript
 
 *** 設定 javascript 的副檔名與對應的模式
