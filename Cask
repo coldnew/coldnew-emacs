@@ -98,7 +98,7 @@
 (depends-on "highlight-cl")
 (depends-on "ibuffer-git")
 (depends-on "git-gutter-fringe")
-(depends-on "vala-mode" :git "https://github.com/iamtommo/vala-mode.git")
+(depends-on "vala-mode" :git "https://github.com/coldnew/vala-mode.git")
 (depends-on "sr-speedbar")
 (depends-on "bm")
 (depends-on "guess-offset")
