@@ -2766,9 +2766,9 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
 ** 為聊天室裡的使用者暱稱上色
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'erc-highlight-nicknames)
-  (add-to-list 'erc-modules 'highlight-nicknames)
-  (erc-update-modules)
+  (require 'erc-hl-nicks)
+  ;;(add-to-list 'erc-modules 'highlight-nicknames)
+  ;;(erc-update-modules)
 #+END_SRC
 
 * 電子郵件
