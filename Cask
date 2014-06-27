@@ -43,7 +43,6 @@
 (depends-on "uzumaki")
 (depends-on "yasnippet")
 (depends-on "clojure-mode")
-(depends-on "clojurescript-mode")
 (depends-on "expand-region")
 (depends-on "markdown-mode")
 (depends-on "projectile")
@@ -52,3 +51,4 @@
 (depends-on "yaml-mode")
 (depends-on "ace-jump-mode")
 (depends-on "key-chord")
+(depends-on "cider")
