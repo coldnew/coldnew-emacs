@@ -5680,22 +5680,6 @@ be readable enough to know it's content.
 
   (add-hook 'mu4e-compose-pre-hook 'coldnew/mu4e-set-account)
 #+end_src
-* Session                                                              :blog:
-** saveplace
-#+begin_src emacs-lisp
-  (require 'saveplace)
-  (setq save-place-file (concat emacs-cache-dir "saveplace.dat"))
-  (setq-default save-place t)
-#+end_src
-** recentf
-#+begin_src emacs-lisp
-  (require 'recentf)
-  (require 'recentf-ext)
-  ;; Setting cache file for recentf
-  (setq recentf-save-file (concat emacs-cache-dir "recentf"))
-  ;; Following file won;t contain in recentf
-  (setq recentf-exclude '("\\.elc$" "\\.pyc$" "\\.recentd$" "^/tmp/"))
-#+end_src
 * TODO 全域性按鍵設置                                            :global@key:
 ** 關閉預設的按鍵設定
 
