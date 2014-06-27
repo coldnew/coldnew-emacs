@@ -2661,19 +2661,6 @@ iimage 是讓 emacs 可以直接顯示圖片的模式。
   (require 'iimage)
 #+end_src
 
-** 縮短網址
-
-smallurl 是一個很棒的短網址工具，他會幫你到遠端的 server 取得短網址。
-
-#+begin_src emacs-lisp
- ;; (require 'smallurl)
-#+end_src
-
-** 使用 unicad 讓 emacs 自動識別檔案編碼
-
-#+begin_src emacs-lisp
-;;  (require 'unicad)
-#+end_src
 
 ** 透過 Paredit 來簡化 Lisp 類語言編輯                             :paredit:
 
