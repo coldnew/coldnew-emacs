@@ -1,7 +1,0 @@
-(:name bash-completion
-       :description ""
-       :website ""
-       :type http
-       :url "https://raw.github.com/szermatt/emacs-bash-completion/master/bash-completion.el"
-       :features bash-completion
-       )

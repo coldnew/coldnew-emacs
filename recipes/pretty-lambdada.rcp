@@ -1,6 +1,0 @@
-(:name pretty-lambdada
-       :description "Show the word `lambda' as the Greek letter."
-       :website ""
-       :type emacswiki
-       :features pretty-lambdada
-       )

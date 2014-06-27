@@ -1,5 +1,0 @@
-(:name elscreen
-       :description "This is a fork of ElScreen updated for Emacs 24 and package.el. "
-       :website "https://github.com/shosti/elscreen"
-       :type github
-       :pkgname "shosti/elscreen")

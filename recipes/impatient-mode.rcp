@@ -1,4 +1,0 @@
-(:name impatient-mode
-       :type github
-       :pkgname "skeeto/impatient-mode"
-       :features impatient-mode)

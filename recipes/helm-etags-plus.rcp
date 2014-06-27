@@ -1,4 +1,0 @@
-(:name helm-etags-plus
-       :type github
-       :pkgname "jixiuf/helm-etags-plus"
-       :features ctags-update helm-etags+)

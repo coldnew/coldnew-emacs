@@ -1,7 +1,0 @@
-(:name hungry-delete
-       :description "hungry delete minor mode"
-       :website "https://github.com/nflath/hungry-delete"
-       :type git
-       :url "https://github.com/nflath/hungry-delete.git"
-       :features hungry-delete
-       )

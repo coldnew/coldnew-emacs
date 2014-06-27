@@ -1,5 +1,0 @@
-(:name o-blog
-       :description ""
-       :type git
-       :url "https://github.com/renard/o-blog.git"
-       :features o-blog)

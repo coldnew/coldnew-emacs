@@ -1,4 +1,0 @@
-(:name simple-httpd
-       :type github
-       :pkgname "skeeto/emacs-http-server"
-       :features simple-httpd)

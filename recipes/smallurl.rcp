@@ -1,5 +1,0 @@
-(:name smallurl
-       :description ""
-       :type http
-       :url "http://repo.or.cz/w/ShellArchive.git/blob_plain/90c4e111279ed78ff871c660cff88af46e99c79c:/smallurl.el"
-)

@@ -1,4 +1,0 @@
-(:name qmake-mode
-       :type github
-       :pkgname "coldnew/qmake-mode"
-       :features qmake-mode)

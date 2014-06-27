@@ -1,5 +1,0 @@
-(:name linum-ace
-       :description ""
-       :features linum-ace
-       :type github
-       :pkgname "coldnew/linum-ace")
