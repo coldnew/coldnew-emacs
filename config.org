@@ -336,7 +336,7 @@ Github: https://github.com/dimitri/el-get
 改為 =~/.emacs.d/lisp=
 
 #+begin_src emacs-lisp
-  (setq-default el-get-dir (concat emacs-dir "lisp"))
+;;  (setq-default el-get-dir (concat emacs-dir "lisp"))
 #+end_src
 
 *** 如果 el-get 不存在的話，重新安裝 el-get
@@ -480,59 +480,7 @@ Github: https://github.com/edvorg/req-package
 這樣當套件遺失的時候，req-package 才會呼叫 use-package 的方法來幫你安裝遺
 失的套件。
 
-** 使用 require* 來進行套件載入
 
-雖然 req-package 很好用，不過對我這個喜新厭舊的人來說，說不定某天會看到
-更好用的套件管理方式，因此我自定義我用來載入套件的方式, =require*= 。
-
-require* 實際上就是 req-package 的綁定，只是語法和傳統 emacs 的 require
-相同，這樣可以方便我以後切換到不同的套件載入方式。
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (defmacro require* (feature &rest body)
-    "require FEATURE wrapper for `req-package'.
-    This function is used to abstract package loading."
-    ;; require feature first, ignore error
-    `(let* ((BODY ',body)
-            (HASBODY (not (null BODY))))
-       (unless (require ,feature nil 'noerror)
-         (if HASBODY
-             (eval `(req-package ,,feature ,,@body))
-           (eval `(req-package ,,feature)))
-         ;; Make req-package install missing one
-         (req-package-finish))))
-#+END_SRC
-#+BEGIN_SRC emacs-lisp 
-  (defmacro require* (feature &rest body)
-    "require FEATURE wrapper for `req-package'.
-    This function is used to abstract package loading."
-    ;; require feature first, ignore error
-    `(let* ((BODY ',body)
-            (HASBODY (not (null BODY))))
-        (require ,feature nil 'noerror)))
-#+END_SRC
-
-使用時如下，也可以像 req-package 那樣加上參數
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (require* 'dired) ;; you can omit this empty requirement because of dired-single
-
-  (require* 'dired-single
-            :require dired
-            :init (...))
-#+END_SRC
-
-為了讓我的 =require*= 可以很清楚的在 elisp 程式碼中顯示，我替他加上和
-emacs 中的 =require= 相同的色彩，這樣可以很清楚看到我哪些程式是進行套件
-載入使用。
-
-#+BEGIN_SRC emacs-lisp
-  (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
-    (font-lock-add-keywords mode
-                            '(("(\\(require\*\\*\\)\\s [ \t']*\\(\\sw+\\)?"
-                               (1 font-lock-keyword-face)
-                               (2 font-lock-constant-face nil t)))))
-#+END_SRC
 * 常用的模組 / 函式庫                                               :plugin:
 
 emacs 有一些套件本身不需要配置，或是只是函式庫，這一類的套件我設
@@ -1214,7 +1162,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 Evil 是 emacs 上最好用的 vim 摹擬程式。
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'evil)
+  (require 'evil)
 #+END_SRC
 
 evil-mdoe 預設會讓游標變成黑色，這對於習慣使用暗色系佈景主題的
@@ -1241,7 +1189,7 @@ org-mode 是非常強大的筆記管理系統，也是這整份 emacs 設定的�
 他設定相關的東西太多了，特別將設定獨立出來。
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'org)
+  (require 'org)
 #+END_SRC
 
 如果遇到副檔名為 .org 或是 .org_archive 的情況，則自動將他們認定為
@@ -1367,7 +1315,7 @@ org-mode 的 Bebel 有一個非常好用的功能，你可以對程式碼區塊�
 Homepage: http://jblevins.org/projects/deft/
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'deft)
+  (require 'deft)
 #+END_SRC
 
 *** 設定尋找得檔案副檔名為 *.org
@@ -1410,7 +1358,7 @@ deft 其實也可以用於 *.text 檔案，不過我更偏好用在 org-mode 上
 注意到這需啟用 [[*Easy%20PG][Easy PG]] 才能夠使用。
 
 #+begin_src emacs-lisp
-  (require* 'org-crypt)
+  (require 'org-crypt)
 #+end_src
 
 *** 設定要加密的 tag 標籤為 *secret*
@@ -1460,7 +1408,7 @@ Helm (領航員) 是 emacs 下非常強大的檔案尋找工具，可以用他�
 oscurr 功能，可以直接在目前的檔案裡找相同的字串。
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'helm)
+  (require 'helm)
   (require 'helm-config)
 #+END_SRC
 
@@ -1473,7 +1421,7 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
 ** 加入 git 支援
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'helm-ls-git)
+  (require 'helm-ls-git)
 #+END_SRC
 
 ** 禁止 helm 自動補全
@@ -1516,12 +1464,12 @@ auto-complete-mode 同時可以作為一個 frontend，backend 則使用其他�
 Github: https://github.com/auto-complete/auto-complete
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'auto-complete)
+  (require 'auto-complete)
   (require 'auto-complete-config)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'company)
+  (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
 #+END_SRC
 
@@ -1606,8 +1554,8 @@ term-mode 是 emacs 終端機最基本的 mode (自 emacs 24 之後開始可用 
 為基礎，基於習慣，這邊會設置基本的 term-mode 配置。
 
 #+begin_src emacs-lisp
-  (require* 'term)
-  (require* 'ansi-color)
+  (require 'term)
+  (require 'ansi-color)
 #+end_src
 
 *** 移除 term-mode 預設的前景與背景顏色。
@@ -1635,7 +1583,7 @@ term-mode 似乎會和 yasnippet 的 TAB 按鍵相衝，使用這個設定讓 ya
 EmacsWiki: http://www.emacswiki.org/emacs//multi-term.el
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'multi-term)
+  (require 'multi-term)
 #+END_SRC
 
 *** 使用 bash 作為預設的 shell
@@ -1721,12 +1669,12 @@ eshell 相關的資訊。
 Site: http://www.emacswiki.org/emacs/EshellAutojump
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'eshell-autojump)
+  (require 'eshell-autojump)
 #+END_SRC
 ** 使用 multi-eshell 快速切換不同的 eshell
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'multi-eshell)
+  (require 'multi-eshell)
   (setq multi-eshell-shell-function '(eshell))
   (setq multi-eshell-name "*eshell*")
 #+END_SRC
@@ -1785,7 +1733,7 @@ winner-mode 是 emacs 自帶的窗口佈局管理器，可以對窗口的改變�
 undo/redo 的動作。
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'winner)
+  (require 'winner)
 #+END_SRC
 
 *** 不使用 winner 預設的按鍵
@@ -1891,7 +1839,7 @@ emacs 下有太多太多跟專案管理相關的套件了，目前先一一試�
 Site: http://batsov.com/projectile/
 
 #+begin_src emacs-lisp
-  (require* 'projectile)
+  (require 'projectile)
   ;; Globally enable projectile
 ;;  (projectile-global-mode)
 #+end_src
@@ -1902,7 +1850,7 @@ eclim 是在 emacs 下可以控制 Eclipse 或是透過他來進行 JAVA 等補�
 GitHub:
 
 #+BEGIN_SRC emacs-lisp
-;;  (require* 'eclim)
+;;  (require 'eclim)
 ;;  (require 'eclimd)
 ;;  (global-eclim-mode)
 #+END_SRC
@@ -2042,7 +1990,7 @@ Rust 是由 Mozilla 所開發的語言。
 ** qmake
 
 #+begin_src emacs-lisp
-  (require* 'qmake-mode)
+  (require 'qmake-mode)
   (add-to-list 'auto-mode-alist '("\\.pro$" . qmake-mode))
 #+end_src
 
@@ -2135,7 +2083,7 @@ code 變成灰色，這樣在看 code 時比較不會吃力。
 *** 加入 eldoc 支援
 
 #+begin_src emacs-lisp
-  (require* 'c-eldoc)
+  (require 'c-eldoc)
   (add-hook 'c-mode-common-hook
             '(lambda ()
                (setq c-eldoc-includes "`pkg-config gtk+-3.0 --cflags --libs` -I./ -I../")
@@ -2185,7 +2133,7 @@ cwarn-mode 會顯示出 C/++ 下面一些致命的錯誤，以下面的程式碼
 這邊將 cwarn-mode 加入到 c-mode-common-hook 裏面。
 
 #+begin_src emacs-lisp
-  (require* 'cwarn)
+  (require 'cwarn)
   (add-hook 'c-mode-common-hook '(lambda () (cwarn-mode 1)))
 #+end_src
 
@@ -2263,7 +2211,7 @@ C++檔案的依據。
 ** newlisp
 
 #+begin_src emacs-lisp
-   (require* 'newlisp)
+   (require 'newlisp)
     (add-to-list 'auto-mode-alist '("\\.lsp$" . newlisp-mode))
 #+end_src
 
@@ -2284,7 +2232,7 @@ C++檔案的依據。
 ** Vala
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'vala-mode)
+  (require 'vala-mode)
   (add-to-list 'auto-mode-alist '("\\.vala$" . vala-mode))
 #+END_SRC
 
@@ -2300,7 +2248,7 @@ eldoc 能夠將目前所使用的 elisp function 所需要的 argument 顯示在
 minibuffer 上。
 
 #+begin_src emacs-lisp
-  (require* 'eldoc)
+  (require 'eldoc)
   (add-hook 'emacs-lisp-mode-hook
             '(lambda ()
                ;; enable eldoc
@@ -2315,7 +2263,7 @@ minibuffer 上。
 *** 高亮屬於 cl.el 套件的 function 或是 macro
 
 #+begin_src emacs-lisp
-  (require* 'highlight-cl)
+  (require 'highlight-cl)
   (add-hook 'emacs-lisp-mode-hook
             '(lambda ()
                (highlight-cl-add-font-lock-keywords)))
@@ -2381,7 +2329,7 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
 增加/減少的資訊。
 
 #+begin_src emacs-lisp
-  (require* 'git-gutter-fringe)
+  (require 'git-gutter-fringe)
   (global-git-gutter-mode)
 #+end_src
 
@@ -2747,10 +2695,10 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
 
 #+begin_src emacs-lisp
-  (require* 'erc)
-  (require* 'erc-notify)
-  (require* 'erc-spelling)
-  (require* 'erc-autoaway)
+  (require 'erc)
+  (require 'erc-notify)
+  (require 'erc-spelling)
+  (require 'erc-autoaway)
 #+end_src
 
 ** 設定 prompt 為 >>
@@ -4204,7 +4152,7 @@ some packages conflict with org-mode
 ** screenshot
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'org-screenshot)
+  (require 'org-screenshot)
 #+END_SRC
 
 * 書籤與暫存器                                                     :bookmark:

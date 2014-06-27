@@ -112,3 +112,7 @@
 (depends-on "ht")
 (depends-on "mustache")
 (depends-on "with-namespace")
+(depends-on "helm-ls-git")
+(depends-on "qmake-mode" :git "https://github.com/coldnew/qmake-mode.git")
+(depends-on "eshell-autojump" :git "https://github.com/coldnew/eshell-autojump.git")
+(depends-on "newlisp" :git "https://github.com/coldnew/newlisp-mode.git")
