@@ -363,7 +363,7 @@ Github: https://github.com/dimitri/el-get
 第一次下載 el-get 的時候，並不會自動建立 elpa 的 recipes, 這邊進行檢查，
 若 elpa 的 recipes 不存在，則自動建立他。
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (unless (file-exists-p el-get-recipe-path-elpa)
     (el-get-elpa-build-local-recipes))
 #+end_src
@@ -488,7 +488,7 @@ Github: https://github.com/edvorg/req-package
 require* 實際上就是 req-package 的綁定，只是語法和傳統 emacs 的 require
 相同，這樣可以方便我以後切換到不同的套件載入方式。
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (defmacro require* (feature &rest body)
     "require FEATURE wrapper for `req-package'.
     This function is used to abstract package loading."
@@ -501,6 +501,15 @@ require* 實際上就是 req-package 的綁定，只是語法和傳統 emacs 的
            (eval `(req-package ,,feature)))
          ;; Make req-package install missing one
          (req-package-finish))))
+#+END_SRC
+#+BEGIN_SRC emacs-lisp 
+  (defmacro require* (feature &rest body)
+    "require FEATURE wrapper for `req-package'.
+    This function is used to abstract package loading."
+    ;; require feature first, ignore error
+    `(let* ((BODY ',body)
+            (HASBODY (not (null BODY))))
+        (require ,feature nil 'noerror)))
 #+END_SRC
 
 使用時如下，也可以像 req-package 那樣加上參數
@@ -2056,11 +2065,11 @@ Rust 是由 Mozilla 所開發的語言。
 
 ** ClojureScript
 #+begin_src emacs-lisp
-  (require 'clojurescript-mode)
+;;  (require 'clojurescript-mode)
 #+end_src
 
 #+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.cljs$" . clojurescript-mode))
+ ;; (add-to-list 'auto-mode-alist '("\\.cljs$" . clojurescript-mode))
 #+end_src
 ** Python
 
@@ -2781,7 +2790,7 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
 處理，並不會因為 emacs 是單一 thread 的程式，而造成整個 emacs 卡住。
 
 #+BEGIN_SRC emacs-lisp
-  (require 'mu4e)
+;;  (require 'mu4e)
 #+END_SRC
 
 ** 設定 mu4e 為預設的 email 系統
@@ -2877,13 +2886,13 @@ iimage 是讓 emacs 可以直接顯示圖片的模式。
 smallurl 是一個很棒的短網址工具，他會幫你到遠端的 server 取得短網址。
 
 #+begin_src emacs-lisp
-  (require 'smallurl)
+ ;; (require 'smallurl)
 #+end_src
 
 ** 使用 unicad 讓 emacs 自動識別檔案編碼
 
 #+begin_src emacs-lisp
-  (require 'unicad)
+;;  (require 'unicad)
 #+end_src
 
 ** 透過 Paredit 來簡化 Lisp 類語言編輯                             :paredit:
@@ -3615,7 +3624,7 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
 #+begin_src emacs-lisp
   (require 'auto-complete)
   (require 'auto-complete-config)
-  (require 'auto-complete-clang)
+;;  (require 'auto-complete-clang)
 #+end_src
 
 ** 加入我自定義的補全字典
@@ -3658,12 +3667,12 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
 #+begin_src emacs-lisp
   (require 'shell-pop)
 #+end_src
-*** Config
+*** TODO Config :: rewrite since API change
 #+begin_src emacs-lisp
-  (shell-pop-set-internal-mode "eshell")
-  (shell-pop-set-internal-mode-shell emacs-default-shell)
-  (shell-pop-set-window-height emacs-popup-shell-window-height)
-  (shell-pop-set-window-position emacs-popup-shell-window-position)
+;;  (shell-pop-set-internal-mode "eshell")
+;;  (shell-pop-set-internal-mode-shell emacs-default-shell)
+;;  (shell-pop-set-window-height emacs-popup-shell-window-height)
+;;  (shell-pop-set-window-position emacs-popup-shell-window-position)
 
   (defadvice shell-pop (before kill-dead-term activate)
     "If there is a stopped ansi-term, kill it and create a new one."
@@ -3819,22 +3828,6 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (define-key minibuffer-local-map (kbd "M-w") (lambda () (interactive) (kill-line 0) (insert "~/Workspace/")))
   (define-key minibuffer-local-map (kbd "M-s") (lambda () (interactive) (kill-line 0) (insert "~/SparkleShare/")))
 #+end_src
-
-* Helm                                                                 :helm:
-
-** 載入相關套件
-
-#+begin_src emacs-lisp
-  (require 'helm-etags+)
-#+end_src
-
-** Function
-
-#+BEGIN_SRC emacs-lisp
-  (defun helm-create-locatedb ()
-    (interactive)
-    (helm-locate -1))
-  #+END_SRC
 
 * 文檔幫助                                                             :info:
 
@@ -5080,10 +5073,6 @@ ref: http://stackoverflow.com/questions/23172561/c-comment-in-emacs-linux-kernel
               (lambda () (dtrt-indent-mode t))))
 #+end_src
 *** 自動補全設定
-**** 載入其餘需要使用的套件。
-#+begin_src emacs-lisp
-  (require 'auto-complete-clang)
-#+end_src
 **** 設定用來補全的資訊。
 #+begin_src emacs-lisp
   (add-hook 'c++-mode-hook 'ac-cpp-mode-setup)
