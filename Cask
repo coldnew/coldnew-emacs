@@ -1,6 +1,7 @@
 (source melpa)
 
 (depends-on "ascii")
+(depends-on "el-get")
 (depends-on "auto-complete")
 (depends-on "bind-key")
 (depends-on "c-eldoc")
@@ -69,3 +70,4 @@
 (depends-on "s")
 (depends-on "key-chord")
 (depends-on "uzumaki")
+(depends-on "auto-complete-clang-async")
