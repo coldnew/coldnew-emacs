@@ -1,0 +1,14 @@
+This is coldnew's emacs config file, the main file (config.org) is
+written in Traditional Chinese, feel free to copy.
+
+這是我的 emacs 配置，主要的文件 config.org 全部使用正體中文撰寫，請自由
+的取用他 :)
+
+* NOTE
+
+I start to switch to use Cask to manage this config, If you want to
+try my config, install Cask first
+
+: curl -fsSkL https://raw.github.com/cask/cask/master/go | python
+
+when finisn, use =cask install= to install elisp dependencies.
