@@ -104,7 +104,6 @@
 (depends-on "guess-offset")
 (depends-on "jedi")
 (depends-on "moz")
-(depends-on "multi-web-mode")
 (depends-on "js2-mode")
 (depends-on "saveplace")
 (depends-on "recentf")

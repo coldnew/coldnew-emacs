@@ -2047,6 +2047,13 @@ C++檔案的依據。
   (require 'graphviz-dot-mode)
   (defalias 'dot-mode 'graphviz-dot-mode)
 #+END_SRC
+** javascript
+
+使用 js2-mode 替代原本系統內建的 js-mode。
+#+begin_src emacs-lisp
+  (require 'js2-mode)
+  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+#+end_src
 
 ** QML
 
@@ -5100,49 +5107,6 @@ paredit 可以幫助傳寫程式的速度。
     (interactive)
     (comint-send-string (inferior-moz-process)
                         "BrowserReload();"))
-#+end_src
-
-** JavaScript
-
-*** 設定 javascript 的副檔名與對應的模式
-
-使用 js2-mode 替代原本系統內建的 js-mode。
-#+begin_src emacs-lisp
-  (require 'js2-mode)
-  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-#+end_src
-
-*** 自動補全
-
-#+begin_src emacs-lisp
-  (add-hook 'js-mode-hook 'ac-javascript-mode-setup)
-  (defun ac-javascript-mode-setup ()
-    "auto-complete settings for javascript-mode"
-    (setq ac-sources
-          '(ac-source-dictionary
-            ac-source-filename
-            ac-source-files-in-current-dir
-            ac-source-words-in-same-mode-buffers
-            )))
-#+end_src
-
-*** REPL 設定
-
-使用 js-comint 來設定 REPL 模式。
-**** 設定起始位置
-
-#+begin_src emacs-lisp
-  (when (require 'js-comint nil 'noerror)
-#+end_src
-
-**** 設定 REPL 程式為 node.js
-#+begin_src emacs-lisp
-    (setq inferior-js-program-command "node")
-#+end_src
-
-**** 設定終止位置
-#+begin_src emacs-lisp
-    )
 #+end_src
 
 ** HTML
