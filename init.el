@@ -31,8 +31,7 @@
                (append
                 (copy-sequence (normal-top-level-add-to-load-path '(".")))
                 (normal-top-level-add-subdirs-to-load-path)))
-             load-path
-             )))))
+             load-path)))))
 
 ;;;; Create some dir in ramdisk
 ;; I bind `backup', `cache', `log' dir to /tmp/.emacs.d/, when emacs
