@@ -1996,7 +1996,7 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
 
 ** Android                                                          :android:
 #+begin_src emacs-lisp
-  (require* 'android-mode)
+  (require 'android-mode)
 
   ;; Set my android-emulator-path
   (when mac-p
@@ -2009,7 +2009,7 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
 ** CMake
 
 #+begin_src emacs-lisp
-  (require* 'cmake-mode)
+  (require 'cmake-mode)
   (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode))
   (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
 #+end_src
@@ -2019,12 +2019,12 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
 Rust 是由 Mozilla 所開發的語言。
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'rust-mode)
+  (require 'rust-mode)
 #+END_SRC
 
 ** Go
 #+begin_src emacs-lisp
-(require* 'go-mode)
+(require 'go-mode)
   (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 #+end_src
 ** qmake
@@ -2037,14 +2037,14 @@ Rust 是由 Mozilla 所開發的語言。
 ** Markdown
 
 #+begin_src emacs-lisp
-  (require* 'markdown-mode)
+  (require 'markdown-mode)
   (add-to-list 'auto-mode-alist '("\\.\\(md\\|markdown\\)\\'" . markdown-mode))
 #+end_src
 ** Clojure
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'clojure-mode)
-  (require* 'cider)
+  (require 'clojure-mode)
+  (require 'cider)
 #+END_SRC
 
 #+begin_src emacs-lisp
@@ -2053,7 +2053,7 @@ Rust 是由 Mozilla 所開發的語言。
 
 ** ClojureScript
 #+begin_src emacs-lisp
-  (require* 'clojurescript-mode)
+  (require 'clojurescript-mode)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2094,8 +2094,6 @@ Rust 是由 Mozilla 所開發的語言。
     (when (require 'elpy nil 'noerror)
       (elpy-enable))
   #+end_src
-
-**
 
 ** C/C++ 通用設定
 
@@ -2260,14 +2258,14 @@ C++檔案的依據。
 ** Graphviz
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'graphviz-dot-mode)
+  (require 'graphviz-dot-mode)
   (defalias 'dot-mode 'graphviz-dot-mode)
 #+END_SRC
 
 ** QML
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'qml-mode)
+  (require 'qml-mode)
   (add-to-list 'auto-mode-alist '("\\.qml$" . qml-mode))
 #+END_SRC
 
@@ -2316,14 +2314,14 @@ minibuffer 上。
 ** Less-CSS
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'less-css-mode)
+  (require 'less-css-mode)
   (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
 #+END_SRC
 
 ** SCSS
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'scss-mode)
+  (require 'scss-mode)
   (add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))
 #+END_SRC
 
@@ -2337,7 +2335,7 @@ scss-mode 預設會在檔案儲存的時候自動編譯 scss 檔成為 css 檔�
 ** CSS
 
 #+begin_src emacs-lisp
-  (require* 'css-mode)
+  (require 'css-mode)
   (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
 #+end_src
 
@@ -2348,9 +2346,9 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
 我整合了這幾種工具，選用我最喜歡的功能。
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'magit)
-  (require* 'gitignore-mode)
-  (require* 'gitconfig-mode)
+  (require 'magit)
+  (require 'gitignore-mode)
+  (require 'gitconfig-mode)
 #+END_SRC
 
 ** 當使用 magit 時，不使用 emacs 原生的 vc-mode 來處理和 git 相關的事情
