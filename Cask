@@ -1,5 +1,6 @@
 (source gnu)
 (source melpa)
+(source marmalade)
 
 (depends-on "org")
 (depends-on "ascii")
@@ -90,3 +91,4 @@
 (depends-on "xcscope")
 (depends-on "zencoding-mode")
 (depends-on "popwin")
+(depends-on "org-trello")
