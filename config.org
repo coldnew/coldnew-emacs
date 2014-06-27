@@ -538,7 +538,7 @@ ascii 是一個很不錯的 ascii 表顯示工具，你可以使用 ascii-on 來
 ascii-mode。
 
 #+begin_src emacs-lisp
-  (require* 'ascii)
+  (require 'ascii)
 #+end_src
 
 增加額外的 function，這樣我可以使用 ascii 或是 ascii-toggle 來切換顯示 ascii 表。
@@ -561,7 +561,7 @@ htmlize 是 emacs 一個非常好用的模組，可以讓 emacs 輸出檔案成�
 HTML 檔，org-mode 輸出成 html 時也是使用他。
 
 #+begin_src emacs-lisp
-  (require* 'htmlize)
+  (require 'htmlize)
 #+end_src
 
 ** iedit :: 快速修改緩衝區內相同的文字
@@ -574,13 +574,13 @@ HTML 檔，org-mode 輸出成 html 時也是使用他。
 Github: https://github.com/victorhge/iedit
 
 #+begin_src emacs-lisp
-  (require* 'iedit)
+  (require 'iedit)
 #+end_src
 
 ** scquential-command :: 整合多項命令到按鍵上
 
 #+begin_src emacs-lisp
-  (require* 'sequential-command)
+  (require 'sequential-command)
 #+end_src
 
 sequential-command 這個套件提供了整合多個命令到一個命令的能力，透過這
@@ -610,7 +610,7 @@ dash 提供了更多關於 list 處理用的函式，目前已經為許多 emacs
 賴的模組。
 
 #+begin_src emacs-lisp
-  (require* 'dash)
+  (require 'dash)
 #+end_src
 
 ** s :: 增加字串處理用 function
@@ -618,28 +618,28 @@ dash 提供了更多關於 list 處理用的函式，目前已經為許多 emacs
 s 提供了許多關於字串處理的函式
 
 #+begin_src emacs-lisp
-  (require* 's)
+  (require 's)
 #+end_src
 ** expand-region :: 快速進行區域選擇
 
 GitHub: https://github.com/magnars/expand-region.el
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'expand-region)
+  (require 'expand-region)
 #+END_SRC
 ** flycheck :: 程式碼檢查工具
 
 GitHub: https://github.com/flycheck/flycheck
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'flycheck)
+  (require 'flycheck)
   (global-flycheck-mode)
 #+END_SRC
 
 ** yasnippet :: 樣板插入工具
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'yasnippet)
+  (require 'yasnippet)
   (yas-global-mode 1)
   (add-to-list 'auto-mode-alist '("emacs.+/snippets/" . snippet-mode))
 #+END_SRC
@@ -735,7 +735,7 @@ undo-tree 是 emacs 與 vim 上面都有的一個套件，對於 emacs 使用者
 undo-tree 幫 emacs 增加了 redo 的功能。
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'undo-tree)
+  (require 'undo-tree)
   (global-undo-tree-mode)
 #+END_SRC
 ** pangu-spacing :: 自動在英文與中文之間加入空白
@@ -744,7 +744,7 @@ undo-tree 幫 emacs 增加了 redo 的功能。
 之間自動加入空白符號，讓你使用 emacs 在閱讀文章的時候能夠非常舒適 :)
 
 #+begin_src emacs-lisp
-  (require* 'pangu-spacing)
+  (require 'pangu-spacing)
   (global-pangu-spacing-mode 1)
 #+end_src
 
@@ -760,12 +760,12 @@ undo-tree 幫 emacs 增加了 redo 的功能。
 emacswiki: http://www.emacswiki.org/emacs/KeyChord
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'key-chord)
+  (require 'key-chord)
 #+END_SRC
 ** uzumaki :: 緩衝區切換
 
 #+BEGIN_SRC emacs-lisp
-  (require* 'uzumaki)
+  (require 'uzumaki)
   (uzumaki-minor-mode 1)
 #+END_SRC
 
