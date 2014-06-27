@@ -634,6 +634,9 @@ GitHub: https://github.com/flycheck/flycheck
 #+BEGIN_SRC emacs-lisp
   (require 'flycheck)
   (global-flycheck-mode)
+
+  (eval-after-load 'flycheck
+    '(add-hook 'flycheck-mode-hook #'flycheck-cask-setup))
 #+END_SRC
 
 ** yasnippet :: 樣板插入工具

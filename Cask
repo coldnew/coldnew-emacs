@@ -1,3 +1,4 @@
+(source gnu)
 (source melpa)
 
 (depends-on "ascii")
@@ -71,3 +72,4 @@
 (depends-on "key-chord")
 (depends-on "uzumaki")
 (depends-on "auto-complete-clang-async")
+(depends-on "flycheck-cask")
