@@ -2302,7 +2302,6 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
         (start-kbd-macro nil)))))
 #+END_SRC
 
-
 ** 緩衝區處理                                                       :buffer:
 
 *** 將 unix 格式的文件轉換成 dos 格式
@@ -2424,6 +2423,96 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
           (message "Indented buffer.")))))
 #+end_src
 
+** 檔案處理                                                           :file:
+
+這編放的是和檔案處理，或是和檔案相關的緩衝區處理命令。
+
+*** 刪除目前的檔案與 buffer
+
+有些時候我們不只是想要關掉緩衝區，同時還要順便把這個檔案砍了，
+使用這個命令可以同時將這兩個想法完成。
+
+#+begin_src emacs-lisp
+  (defun delete-file-and-buffer ()
+    "Removes file connected to current buffer and kills buffer."
+    (interactive)
+    (let ((filename (buffer-file-name))
+          (buffer (current-buffer))
+          (name (buffer-name)))
+      (if (not (and filename (file-exists-p filename)))
+          (error "Buffer '%s' is not visiting a file!" name)
+        (when (yes-or-no-p "Are you sure you want to remove this file? ")
+          (delete-file filename)
+          (kill-buffer buffer)
+          (message "File '%s' successfully removed" filename)))))
+#+end_src
+
+*** 使用瀏覽器觀看目前的檔案
+
+透過 emacs 的 browse-url function 來呼叫瀏覽器打開目前的檔案。
+
+#+begin_src emacs-lisp
+  (defun browse-current-file ()
+    "Open the current file as a URL using `browse-url'."
+    (interactive)
+    (browse-url (concat "file://" (buffer-file-name))))
+#+end_src
+
+*** 重新載入緩衝區裏面的檔案
+
+如果沒有設定 =(global-auto-revert-mode 1)= 的話，emacs 式不會自動重新載入檔案的，這個時候就會需要使用命令
+來幫忙將所有緩衝區的檔案進行重新載入，避免寫入檔案時出現錯誤。
+
+#+begin_src emacs-lisp
+(defun revert-all-buffers ()
+  "Revert all non-modified buffers associated with a file.
+This is to update existing buffers after a Git pull of their underlying files."
+  (interactive)
+  (save-current-buffer
+    (mapc (lambda (b)
+            (set-buffer b)
+            (unless (or (null (buffer-file-name)) (buffer-modified-p))
+              (revert-buffer t t)
+              (message "Reverted %s\n" (buffer-file-name))))
+          (buffer-list))))
+#+end_src
+
+*** 複製並開啟檔案
+
+使用這個命令，可以複製目前的緩衝區到另外一個檔案，同時打開那個檔案。
+
+#+begin_src emacs-lisp
+  (defun clone-file-and-open (filename)
+    "Clone the current buffer writing it into FILENAME and open it"
+    (interactive "FClone to file: ")
+    (save-restriction
+      (widen)
+      (write-region (point-min) (point-max) filename nil nil nil 'confirm))
+    (find-file filename))
+#+end_src
+
+*** 將目前緩衝區的檔案加上可執行權限
+
+簡單的來說，這個功能就是
+
+: chmod +x <file>
+
+但是在以下的程式裏面，並未使用 chmod 的命令，而是使用 emacs 的
+logior function 來改變檔案屬性。
+
+這邊我只讓目前使用者可以執行這份檔案，至於群組、其他使用者則維持不動。
+
+#+begin_src emacs-lisp
+  (defun set-file-executable()
+    "Add executable permissions on current file."
+    (interactive)
+    (when (buffer-file-name)
+      (set-file-modes buffer-file-name
+                      (logior (file-modes buffer-file-name) #o100))
+      (message (concat "Made " buffer-file-name " executable"))))
+#+end_src
+
+
 ** 視窗操作                                                         :window:
 
 *** 將整個 emacs 全螢幕
@@ -2496,18 +2585,63 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
     (interactive "*")
     (uniquify-all-lines-region (point-min) (point-max)))
 #+END_SRC
-** 系統命令                                                         :system:
-
-*** gitg
-
-雖然很多時候我都會用 magit 來察看 git log, 不過我還是很喜歡 gitg
+*** 刪除相對應的括號
 
 #+begin_src emacs-lisp
-  (defun gitg ()
-    "Launch gitg in the current directory."
+  (defun delete-between-pair (char)
+    "Delete in between the given pair"
+    (interactive "cDelete between pair: ")
+    (let ((pair-char))
+      (search-backward-to-char char)
+      (forward-char 1)
+      (cond
+       ((char-equal char ?\() (setq pair-char ?\)))
+       ((char-equal char ?\") (setq pair-char ?\"))
+       ((char-equal char ?\') (setq pair-char ?\'))
+       ((char-equal char ?\[) (setq pair-char ?\]))
+       ((char-equal char ?\{) (setq pair-char ?\}))
+       ((char-equal char ?\<) (setq pair-char ?\>)))
+      (zap-up-to-char 1 pair-char)))
+#+end_src
+
+*** 刪除一個 '字'
+
+#+begin_src emacs-lisp
+  (defun delete-word (arg)
+    "Delete characters forward until encountering the end of a word.
+  With argument, do this that many times."
+    (interactive "p")
+    (delete-region (point) (progn (forward-word arg) (point))))
+
+#+end_src
+
+*** 向左刪除一個 '字'
+#+begin_src emacs-lisp
+  (defun backward-delete-word (arg)
+    "Delete characters backward until encountering the end of a word.
+  With argument, do this that many times."
+    (interactive "p")
+    (delete-word (- arg)))
+#+end_src
+
+*** 將游標下的文字改用絕對路徑表示
+
+這個命令可以再當你輸入 ~/ 時，使用他會將他變成絕對路徑。
+
+#+begin_src emacs-lisp
+  (defun resolve-sym-link ()
+    "Replace the string at the point with the true path."
     (interactive)
-    (start-process "gitg" nil "gitg"))
-  #+end_src
+    (beginning-of-line)
+    (let* ((file (buffer-substring (point)
+                                   (save-excursion (end-of-line) (point))))
+           (file-dir (file-name-directory file))
+           (file-true-dir (file-truename file-dir))
+           (file-name (file-name-nondirectory file)))
+      (delete-region (point) (save-excursion (end-of-line) (point)))
+      (insert (concat file-true-dir file-name))))
+#+end_src
+
 ** 資訊收尋
 
 *** 到 stackoverflow 收尋
@@ -5193,112 +5327,6 @@ paredit 可以幫助傳寫程式的速度。
 
 *注意* : 這邊的命令可能依賴我所自訂的 function。
 
-** 檔案處理                                                           :file:
-
-這編放的是和檔案處理，或是和檔案相關的緩衝區處理命令。
-
-*** 刪除目前的檔案與 buffer
-
-有些時候我們不只是想要關掉緩衝區，同時還要順便把這個檔案砍了，
-使用這個命令可以同時將這兩個想法完成。
-
-#+begin_src emacs-lisp
-  (defun delete-file-and-buffer ()
-    "Removes file connected to current buffer and kills buffer."
-    (interactive)
-    (let ((filename (buffer-file-name))
-          (buffer (current-buffer))
-          (name (buffer-name)))
-      (if (not (and filename (file-exists-p filename)))
-          (error "Buffer '%s' is not visiting a file!" name)
-        (when (yes-or-no-p "Are you sure you want to remove this file? ")
-          (delete-file filename)
-          (kill-buffer buffer)
-          (message "File '%s' successfully removed" filename)))))
-#+end_src
-
-*** 使用瀏覽器觀看目前的檔案
-
-透過 emacs 的 browse-url function 來呼叫瀏覽器打開目前的檔案。
-
-#+begin_src emacs-lisp
-  (defun browse-current-file ()
-    "Open the current file as a URL using `browse-url'."
-    (interactive)
-    (browse-url (concat "file://" (buffer-file-name))))
-#+end_src
-
-*** 重新載入緩衝區裏面的檔案
-
-如果沒有設定
-
-: (global-auto-revert-mode 1)
-
-的話，emacs 式不會自動重新載入檔案的，這個時候就會需要使用命令
-來幫忙將所有緩衝區的檔案進行重新載入，避免寫入檔案時出現錯誤。
-
-#+begin_src emacs-lisp
-(defun revert-all-buffers ()
-  "Revert all non-modified buffers associated with a file.
-This is to update existing buffers after a Git pull of their underlying files."
-  (interactive)
-  (save-current-buffer
-    (mapc (lambda (b)
-            (set-buffer b)
-            (unless (or (null (buffer-file-name)) (buffer-modified-p))
-              (revert-buffer t t)
-              (message "Reverted %s\n" (buffer-file-name))))
-          (buffer-list))))
-#+end_src
-
-*** 複製並開啟檔案
-
-使用這個命令，可以複製目前的緩衝區到另外一個檔案，同時打開那個檔案。
-
-#+begin_src emacs-lisp
-  (defun clone-file-and-open (filename)
-    "Clone the current buffer writing it into FILENAME and open it"
-    (interactive "FClone to file: ")
-    (save-restriction
-      (widen)
-      (write-region (point-min) (point-max) filename nil nil nil 'confirm))
-    (find-file filename))
-#+end_src
-
-*** 將目前緩衝區的檔案加上可執行權限
-
-簡單的來說，這個功能就是
-
-: chmod +x <file>
-
-但是在以下的程式裏面，並未使用 chmod 的命令，而是使用 emacs 的
-logior function 來改變檔案屬性。
-
-這邊我只讓目前使用者可以執行這份檔案，至於群組、其他使用者則維持不動。
-
-#+begin_src emacs-lisp
-  (defun set-file-executable()
-    "Add executable permissions on current file."
-    (interactive)
-    (when (buffer-file-name)
-      (set-file-modes buffer-file-name
-                      (logior (file-modes buffer-file-name) #o100))
-      (message (concat "Made " buffer-file-name " executable"))))
-#+end_src
-
-*** TODO 使用 root 權限修改目前正在編輯的檔案
-
-#+begin_src emacs-lisp
-  (defun edit-current-file-as-root ()
-    "Edit the file that is associated with the current buffer as root"
-    (interactive)
-    (if (buffer-file-name)
-        (progn
-          (setq file (concat "/sudo:root@localhost:" (buffer-file-name)))
-          (find-file file))
-      (message "Current buffer does not have an associated file.")))
-#+end_src
-
 ** 插入
 
 *** 插入目前的時間
@@ -5341,441 +5369,6 @@ yank-n-times 則可以重複的進行貼上。
       (if (< times 1)
           (setq times 1)
         (dotimes 'times (yank)))))
-#+end_src
-** 文字/字詞處理
-
-*** 將游標下的文字改用絕對路徑表示
-
-這個命令可以再當你輸入 ~/ 時，使用他會將他變成絕對路徑。
-
-#+begin_src emacs-lisp
-  (defun resolve-sym-link ()
-    "Replace the string at the point with the true path."
-    (interactive)
-    (beginning-of-line)
-    (let* ((file (buffer-substring (point)
-                                   (save-excursion (end-of-line) (point))))
-           (file-dir (file-name-directory file))
-           (file-true-dir (file-truename file-dir))
-           (file-name (file-name-nondirectory file)))
-      (delete-region (point) (save-excursion (end-of-line) (point)))
-      (insert (concat file-true-dir file-name))))
-#+end_src
-
-** TODO 要重新調整
-*** 其他、未歸類
-**** TODO rewrite
-
-#+begin_src emacs-lisp
-  (defun align-code (beg end &optional arg)
-    (interactive "rP")
-    (if (null arg)
-        (align beg end)
-      (let ((end-mark (copy-marker end)))
-        (indent-region beg end-mark nil)
-        (align beg end-mark))))
-#+end_src
-#+begin_src emacs-lisp
-  (defun mark-line (&optional arg)
-    (interactive "p")
-    (beginning-of-line)
-    (let ((here (point)))
-      (dotimes (i arg)
-        (end-of-line))
-      (set-mark (point))
-      (goto-char here)))
-  (defun mark-sentence (&optional arg)
-    (interactive "P")
-    (backward-sentence)
-    (mark-end-of-sentence arg))
-(defun delete-indentation-forward ()
-  (interactive)
-  (delete-indentation t))
-(defun delete-current-line (&optional arg)
-  (interactive "p")
-  (let ((here (point)))
-    (beginning-of-line)
-    (kill-line arg)
-    (goto-char here)))
-#+end_src
-#+begin_src emacs-lisp
-  (defun window-horizontal-to-vertical ()
-    "Switches from a horizontal split to a vertical split."
-    (interactive)
-    (let ((one-buf (window-buffer (selected-window)))
-          (buf-point (point)))
-      (other-window 1)
-      (delete-other-windows)
-      (split-window-horizontally)
-      (switch-to-buffer one-buf)
-      (goto-char buf-point)))
-
-  (defun window-vertical-to-horizontal ()
-    "Switches from a vertical split to a horizontal split."
-    (interactive)
-    (let ((one-buf (window-buffer (selected-window)))
-          (buf-point (point)))
-      (other-window 1)
-      (delete-other-windows)
-      (split-window-vertically)
-      (switch-to-buffer one-buf)
-      (goto-char buf-point)))
-
-  (defun my-column-ruler (width)
-    "Display temp ruler at point."
-    (interactive `(,(+ (window-hscroll)(window-width))))
-    (momentary-string-display
-     (let* ((iterations (/ (1- width) 10))
-            (result1 "|...|....|")
-            (result2 "1   5   10")
-            (inc1 "....|....|")
-            (inc2 "        %d0")
-            (i 1))
-       (while  (<= i iterations)
-         (setq i (1+ i))
-         (setq result1 (concat result1 inc1))
-         (setq result2 (concat result2 (substring (format inc2 i) -10))))
-       (concat (substring result2 0 width) "\n"
-               (substring result1 0 width) "\n"))
-     (line-beginning-position)
-     nil "[space]Clears ruler"))
-
-#+end_src
-
-#+begin_src emacs-lisp
-  (defun swap-with (dir)
-    (interactive)
-    (let ((other-window (windmove-find-other-window dir)))
-      (when other-window
-        (let* ((this-window (selected-window))
-               (this-buffer (window-buffer this-window))
-               (other-buffer (window-buffer other-window))
-               (this-start (window-start this-window))
-               (other-start (window-start other-window)))
-          (set-window-buffer this-window other-buffer)
-          (set-window-buffer other-window this-buffer)
-          (set-window-start this-window other-start)
-          (set-window-start other-window this-start)))))
-
-  ;; (global-set-key (kbd "C-M-J") (lambda () (interactive) (swap-with 'down)))
-  ;; (global-set-key (kbd "C-M-K") (lambda () (interactive) (swap-with 'up)))
-  ;; (global-set-key (kbd "C-M-H") (lambda () (interactive) (swap-with 'left)))
-  ;; (global-set-key (kbd "C-M-L") (lambda () (interactive) (swap-with 'right)))
-
-  ;; (global-set-key (kbd "M-J") (lambda () (interactive) (enlarge-window 1)))
-  ;; (global-set-key (kbd "M-K") (lambda () (interactive) (enlarge-window -1)))
-  ;; (global-set-key (kbd "M-H") (lambda () (interactive) (enlarge-window -1 t)))
-  ;; (global-set-key (kbd "M-L") (lambda () (interactive) (enlarge-window 1 t)))
-
-
-  (defun select-forwards-to-before-match (match)
-    "Selects forwards to just before next match, uses
-  select-region-to-before-match"
-    (interactive "MSelect forwards to just before: ")
-    (select-region-to-before-match match 'forwards))
-
-  (defun select-backwards-to-before-match (match)
-    "Selects backwards to just before next match, uses
-  select-region-to-before-match"
-    (interactive "MSelect backwards to just before: ")
-    (select-region-to-before-match match 'backwards))
-
-  (defun kill-forwards-to-before-match (match)
-    "Selects forwards to just before next match, uses
-  select-region-to-before-match, then kills that region."
-    (interactive "MKill forwards to just before: ")
-    (let* ((positions (select-region-to-before-match match 'forwards))
-           (start (car positions))
-           (end (cadr positions)))
-      (kill-region start end)))
-
-  (defun kill-backwards-to-before-match (match)
-    "Selects backwards to just before next match, uses
-  select-region-to-before-match, then kills that region."
-    (interactive "MKill backwards to just before: ")
-    (let* ((positions (select-region-to-before-match match 'backwards))
-           (start (car positions))
-           (end (cadr positions)))
-      (kill-region start end)))
-
-  (defun match-paren (arg)
-    "Go to the matching paren if on a paren; otherwise insert %."
-    (interactive "p")
-    (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
-          ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
-          (t (self-insert-command (or arg 1)))))
-
-
-  (defadvice kill-ring-save (before slickcopy activate compile)
-    "When called interactively with no active region, copy a single line
-  instead."
-    (interactive
-     (if mark-active (list (region-beginning) (region-end))
-       (list (line-beginning-position)
-             (line-beginning-position 2)))))
-
-  (defadvice kill-region (before slickcut activate compile)
-    "When called interactively with no active region, kill a single line
-  instead."
-    (interactive
-     (if mark-active (list (region-beginning) (region-end))
-       (list (line-beginning-position)
-             (line-beginning-position 2)))))
-
-  (defun zap-up-to-char-backward (arg char)
-    (interactive "p\ncZap up to char backward: ")
-    (zap-up-to-char (- arg) char))
-
-  (defun go-to-char (arg char)
-    (interactive "p\ncGo to char: ")
-    (forward-char 1)
-    (if (if arg
-            (search-forward (char-to-string char) nil nil arg)
-          (search-forward (char-to-string char)))
-        (backward-char 1)))
-
-  (defun go-back-to-char (arg char)
-    (interactive "p\ncGo back to char: ")
-    (forward-char -1)
-    (if arg
-        (search-backward (char-to-string char) nil nil arg)
-      (search-backward (char-to-string char))))
-
-  (defun vjo-forward-current-word-keep-offset ()
-    " (Vagn Johansen 1999)"
-    (interactive)
-    (let ((re-curword) (curword) (offset (point))
-          (old-case-fold-search case-fold-search) )
-      (setq curword (thing-at-point 'symbol))
-      (setq re-curword (concat "\\<" (thing-at-point 'symbol) "\\>") )
-      (beginning-of-thing 'symbol)
-      (setq offset (- offset (point)))    ; offset from start of symbol/word
-      (setq offset (- (length curword) offset)) ; offset from end
-      (forward-char)
-      (setq case-fold-search nil)
-      (if (re-search-forward re-curword nil t)
-          (backward-char offset)
-        ;; else
-        (progn (goto-char (point-min))
-               (if (re-search-forward re-curword nil t)
-                   (progn (message "Searching from top. %s" (what-line))
-                          (backward-char offset))
-                 ;; else
-                 (message "Searching from top: Not found"))
-               ))
-      (setq case-fold-search old-case-fold-search)
-      ))
-
-  (defun vjo-backward-current-word-keep-offset ()
-    " (Vagn Johansen 2002)"
-    (interactive)
-    (let ((re-curword) (curword) (offset (point))
-          (old-case-fold-search case-fold-search) )
-      (setq curword (thing-at-point 'symbol))
-      (setq re-curword (concat "\\<" curword "\\>") )
-      (beginning-of-thing 'symbol)
-      (setq offset (- offset (point)))    ; offset from start of symbol/word
-      (forward-char)
-      (setq case-fold-search nil)
-      (if (re-search-backward re-curword nil t)
-          (forward-char offset)
-        ;; else
-        (progn (goto-char (point-max))
-               (if (re-search-backward re-curword nil t)
-                   (progn (message "Searching from bottom. %s" (what-line))
-                          (forward-char offset))
-                 ;; else
-                 (message "Searching from bottom: Not found"))
-               ))
-      (setq case-fold-search old-case-fold-search)
-      ))
-
-  ;; ;; FIXME: need to test
-  ;; (defun set-frame-size-according-to-resolution ()
-  ;;   (interactive)
-  ;;   (if window-system
-  ;;       (progn
-  ;;      (if (> (x-display-pixel-width) 1500) ;; 1500 is the delimiter marging in px to consider the screen big
-  ;;          (set-frame-width (selected-frame) 237) ;; on the big screen make the fram 237 columns big
-  ;;        (set-frame-width (selected-frame) 177)) ;; on the small screen we use 177 columns
-  ;;      (setq my-height (/ (- (x-display-pixel-height) 150) ;; cut 150 px of the screen height and use the rest as height for the frame
-  ;;                         (frame-char-height)))
-  ;;      (set-frame-height (selected-frame) my-height)
-  ;;      (set-frame-position (selected-frame) 3 90) ;; position the frame 3 pixels left and 90 px down
-  ;;      )))
-
-  ;; (set-frame-size-according-to-resolution)
-  ;;  (global-set-key (kbd "C-x 9") 'set-frame-size-according-to-resolution)
-
-  (defun open-in-largest-window()
-    "Open current buffer in largest window"
-    (interactive)
-    (let ((oldbuf (current-buffer)))
-      (select-window (get-largest-window))
-      (switch-to-buffer oldbuf))
-    )
-  ;;(global-set-key (kbd "C-x 5") 'open-in-largest-window)
-
-#+end_src
-
-**** 將整個 emacs 全螢幕
-
-#+begin_src emacs-lisp
-  (defun collapse-or-expand ()
-    (interactive)
-    (if (> (length (window-list)) 1)
-        (delete-other-windows)
-      (bury-buffer)))
-#+end_src
-#+begin_src emacs-lisp
-  (defun windmove-down-fullscreen ()
-    "Select window below current one and make it fullscreen."
-    (interactive)
-    (if (windmove-down)
-        (delete-other-windows)))
-
-  (defun windmove-up-fullscreen ()
-    "Select window above the current one and make it fullscreen."
-    (interactive)
-    (if (windmove-up)
-        (delete-other-windows)))
-
-  (defun windmove-left-fullscreen ()
-    "Select window left to current one and make it fullscreen."
-    (interactive)
-    (if (windmove-left)
-        (delete-other-windows)))
-
-  (defun windmove-right-fullscreen ()
-    "Select window right to current one and make it fullscreen."
-    (interactive)
-    (if (windmove-right)
-        (delete-other-windows)))
-
-  (defun sudo-edit (&optional arg)
-    "Edit file with sudo in emacs"
-    (interactive "p")
-    (if (or arg (not buffer-file-name))
-        ;; (find-file (concat "/sudo:root@localhost:" (anything-read-file-name "File: ")))
-        (find-file (concat "/sudo:root@localhost:" (read-file-name "File: ")))
-      (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
-
-  (setq tramp-debug-buffer t)
-  (setq tramp-chunksize 500)
-
-
-  (require 'mm-url)
-
-  (defun insert-tinyurl (url)
-    "Insert a shortend URL at point by passed in URL"
-    (interactive "sEnter url: " )
-    (let* ((url (replace-regexp-in-string "^http://" "" url))
-           (tinyurl
-            (save-excursion
-              (with-temp-buffer
-                (mm-url-insert
-                 (concat "http://tinyurl.com/api-create.php?url=http://" url))
-                (kill-ring-save (point-min) (point-max))
-                (buffer-string)))))
-      (insert tinyurl)))
-
-      ;;;; ---------------------------------------------------------------------------
-      ;;;; Search
-      ;;;; ---------------------------------------------------------------------------
-  (defun multi-occur-in-this-mode ()
-    "Show all lines matching REGEXP in buffers with this major mode."
-    (interactive)
-    (multi-occur
-     (get-buffers-matching-mode major-mode)
-     (car (occur-read-primary-args)))
-    (select-window (get-buffer-window "*Occur*")))
-
-      ;;;; ---------------------------------------------------------------------------
-      ;;;; key-macro
-      ;;;; ---------------------------------------------------------------------------
-
-      ;;;; ---------------------------------------------------------------------------
-      ;;;; Commands that define for key-chord
-      ;;;; ---------------------------------------------------------------------------
-  (defun upcase-word-backward ()
-    "upcase word backward."
-    (interactive)
-    (upcase-word -1))
-
-  (defun downcase-word-backward ()
-    "downcase word backward."
-    (interactive)
-    (downcase-word -1))
-
-  (defun capitalize-word-backward ()
-    "captialize word backward."
-    (interactive)
-    (capitalize-word -1))
-
-  (defun backward-kill-line (arg)
-    "Kill chars backward until encountering the end of a line."
-    (interactive "p")
-    (kill-line 0))
-#+end_src
-*** 刪除
-**** 刪除相對應的括號
-#+begin_src emacs-lisp
-  (defun delete-between-pair (char)
-    "Delete in between the given pair"
-    (interactive "cDelete between pair: ")
-    (let ((pair-char))
-      (search-backward-to-char char)
-      (forward-char 1)
-      (cond
-       ((char-equal char ?\() (setq pair-char ?\)))
-       ((char-equal char ?\") (setq pair-char ?\"))
-       ((char-equal char ?\') (setq pair-char ?\'))
-       ((char-equal char ?\[) (setq pair-char ?\]))
-       ((char-equal char ?\{) (setq pair-char ?\}))
-       ((char-equal char ?\<) (setq pair-char ?\>)))
-      (zap-up-to-char 1 pair-char)))
-#+end_src
-
-**** 刪除一個 '字'
-#+begin_src emacs-lisp
-  (defun delete-word (arg)
-    "Delete characters forward until encountering the end of a word.
-  With argument, do this that many times."
-    (interactive "p")
-    (delete-region (point) (progn (forward-word arg) (point))))
-
-#+end_src
-
-**** 向左刪除一個 '字'
-#+begin_src emacs-lisp
-  (defun backward-delete-word (arg)
-    "Delete characters backward until encountering the end of a word.
-  With argument, do this that many times."
-    (interactive "p")
-    (delete-word (- arg)))
-#+end_src
-
-*** 轉換
-
-**** eval-and-replace
-將前面的 sexp 刪除並進行 eval 的動作，如果 eval 失敗則還原前面的 sexp。
-#+begin_src emacs-lisp
-  (defun eval-and-replace ()
-    "Replace the preceding sexp with its value."
-    (interactive)
-    (backward-kill-sexp)
-    (condition-case nil
-        (prin1 (eval (read (current-kill 0)))
-               (current-buffer))
-      (error (message "Invalid expression")
-             (insert (current-kill 0)))))
-#+end_src
-**** expand-last-sexp
-#+begin_src emacs-lisp
-  (defun expand-last-sexp ()
-    "Expand macro from sexp before point;print value in pp eval buffer"
-    (interactive)
-    (pp-eval-expression '(macroexpand (read (thing-at-point 'sexp)))))
 #+end_src
 
 * 窗口管理                                                           :window:
