@@ -523,3 +523,7 @@
 (depends-on "yasnippet")
 (depends-on "zencoding-mode")
 (depends-on "auto-complete-clang")
+(depends-on "vala-mode" :git "https://github.com/coldnew/vala-mode.git")
+(depends-on "qmake-mode" :git "https://github.com/coldnew/qmake-mode.git")
+(depends-on "eshell-autojump" :git "https://github.com/coldnew/eshell-autojump.git")
+(depends-on "newlisp" :git "https://github.com/coldnew/newlisp-mode.git")
