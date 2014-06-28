@@ -10,7 +10,6 @@
 ;; load cask and pallet
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
-(require 'pallet)
 
 ;; Define emacs-dir where all the files live.
 (defvar emacs-dir
