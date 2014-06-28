@@ -2800,7 +2800,10 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
 處理，並不會因為 emacs 是單一 thread 的程式，而造成整個 emacs 卡住。
 
 #+BEGIN_SRC emacs-lisp
-;;  (require 'mu4e)
+  (when mac-p
+    (add-to-list 'load-path "/usr/local/Cellar/mu/0.9.9.5/share/emacs/site-lisp/mu4e"))
+
+  (require 'mu4e)
 #+END_SRC
 
 ** 設定 mu4e 為預設的 email 系統
