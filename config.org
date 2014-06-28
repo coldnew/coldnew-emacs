@@ -1387,6 +1387,21 @@ auto-complete-mode 本身已經包含一些常用的字典了，這邊加上我�
   (add-to-list 'ac-dictionary-directories (concat emacs-dir "ac-dict"))
 #+end_src
 
+** 透過 clang 進行自動補全
+
+#+BEGIN_SRC emacs-lisp
+  (require 'auto-complete-clang-async)
+
+  (defun ac-cc-mode-setup ()
+    (setq ac-clang-complete-executable "~/bin/clang-complete")
+    (setq ac-sources '(ac-source-clang-async))
+    (ac-clang-launch-completion-process))
+
+    (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
+    (add-hook 'auto-complete-mode-hook 'ac-common-setup)
+#+END_SRC
+
+
 ** 按鍵設定
 
 #+TBLNAME: ac-keys
