@@ -129,3 +129,4 @@
 (depends-on "yaml-mode")
 (depends-on "yasnippet")
 (depends-on "zencoding-mode")
+(depends-on "fuzzy")
