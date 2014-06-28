@@ -1841,10 +1841,12 @@ Rust 是由 Mozilla 所開發的語言。
 #+END_SRC
 
 ** Go
+
 #+begin_src emacs-lisp
 (require 'go-mode)
   (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 #+end_src
+
 ** qmake
 
 #+begin_src emacs-lisp
@@ -1858,6 +1860,7 @@ Rust 是由 Mozilla 所開發的語言。
   (require 'markdown-mode)
   (add-to-list 'auto-mode-alist '("\\.\\(md\\|markdown\\)\\'" . markdown-mode))
 #+end_src
+
 ** Clojure
 
 #+BEGIN_SRC emacs-lisp
@@ -1867,16 +1870,9 @@ Rust 是由 Mozilla 所開發的語言。
 
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+  (add-to-list 'auto-mode-alist '("\\.cljs$" . clojure-mode))
 #+end_src
 
-** ClojureScript
-#+begin_src emacs-lisp
-;;  (require 'clojurescript-mode)
-#+end_src
-
-#+begin_src emacs-lisp
- ;; (add-to-list 'auto-mode-alist '("\\.cljs$" . clojurescript-mode))
-#+end_src
 ** Python
 
 #+begin_src emacs-lisp
