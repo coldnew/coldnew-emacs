@@ -1408,7 +1408,6 @@ GitHub: https://github.com/Golevka/emacs-clang-complete-async
     (global-auto-complete-mode t))
 #+END_SRC
 
-
 ** 按鍵設定
 
 #+TBLNAME: ac-keys
@@ -1730,9 +1729,9 @@ eclim 是在 emacs 下可以控制 Eclipse 或是透過他來進行 JAVA 等補�
 GitHub:
 
 #+BEGIN_SRC emacs-lisp
-;;  (require 'eclim)
-;;  (require 'eclimd)
-;;  (global-eclim-mode)
+  (require 'eclim)
+  (require 'eclimd)
+  (global-eclim-mode)
 #+END_SRC
 
 ** 設定 Eclipse 以及 eclim 的位置
@@ -1742,8 +1741,8 @@ GitHub:
 
 #+BEGIN_SRC emacs-lisp
   (when mac-p
-    (setq eclim-eclipse-dirs "~/Applications/eclipse/")
-    (setq eclim-executable "~/Applications/eclipse/eclim"))
+    (setq eclim-eclipse-dirs "/opt/homebrew-cask/Caskroom/eclipse-ide/4.3.2/eclipse/")
+    (setq eclim-executable (concat eclim-eclipse-dirs "/eclim")))
 #+END_SRC
 
 ** 讓 eclim 可以進行自動儲存
