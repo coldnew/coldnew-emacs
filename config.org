@@ -1320,7 +1320,7 @@ Github: https://github.com/auto-complete/auto-complete
 
 #+BEGIN_SRC emacs-lisp
   (require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
+  (add-hook 'after-init-hook 'global-company-mode)
 #+END_SRC
 
 ** 使用 auto-complete-mode 提供的預設設定
@@ -1370,8 +1370,6 @@ global-auto-complete-mode 這個 function 只具有切換全部 buffer 的自動
   (setq ac-use-comphist t)
 #+END_SRC
 
-** 設定 ac-comphist 檔案放置的位置
-
 auto-complete-mode 會產生一個名為 =auto-complete.dat= 的檔案來存放自動
 補全的歷史紀錄，預設這個檔案會在 =~/.emacs.d/auto-complete.dat= 下面，
 我不喜歡這樣，所以移到 =~/.emacs.d/cache/auto-complete.dat=
@@ -1379,6 +1377,16 @@ auto-complete-mode 會產生一個名為 =auto-complete.dat= 的檔案來存放�
 #+BEGIN_SRC emacs-lisp
   (setq ac-comphist-file "~/.emacs.d/cache/auto-complete.dat")
 #+END_SRC
+
+** 加入我自定義的補全字典
+
+auto-complete-mode 本身已經包含一些常用的字典了，這邊加上我自己會用到
+的字典。
+
+#+begin_src emacs-lisp
+  (add-to-list 'ac-dictionary-directories (concat emacs-dir "ac-dict"))
+#+end_src
+
 ** 按鍵設定
 
 #+TBLNAME: ac-keys
@@ -3516,19 +3524,6 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
 #+end_src
 
 * 自動補全                                                         :complete:
-** 載入相關套件
-
-#+begin_src emacs-lisp
-  (require 'auto-complete)
-  (require 'auto-complete-config)
-;;  (require 'auto-complete-clang)
-#+end_src
-
-** 加入我自定義的補全字典
-
-#+begin_src emacs-lisp
-  (add-to-list 'ac-dictionary-directories (concat emacs-dir "ac-dict"))
-#+end_src
 
 ** TODO 位分類
 #+begin_src emacs-lisp
