@@ -1306,6 +1306,11 @@ company-mode 是一個非常強大的補全程式，在 auto-complete-mode 出�
 
 GitHub: https://github.com/company-mode/company-mode
 
+#+BEGIN_SRC emacs-lisp
+  (require 'company)
+  (add-hook 'after-init-hook 'global-company-mode)
+#+END_SRC
+
 auto-complete-mode 則是目前使用 emacs 的人都會安裝的自動補全用的 backend，
 他可以透過許多函式庫來協助你更好的在 emacs 中進行補全，此外
 auto-complete-mode 同時可以作為一個 frontend，backend 則使用其他程式來進
@@ -1316,11 +1321,6 @@ Github: https://github.com/auto-complete/auto-complete
 #+BEGIN_SRC emacs-lisp
   (require 'auto-complete)
   (require 'auto-complete-config)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (require 'company)
-  (add-hook 'after-init-hook 'global-company-mode)
 #+END_SRC
 
 ** 使用 auto-complete-mode 提供的預設設定
