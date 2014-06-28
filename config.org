@@ -2155,6 +2155,9 @@ minibuffer 上。
 
 *** web-mode
 
+URL: http://web-mode.org/
+GitHub: https://github.com/fxbois/web-mode
+
 #+BEGIN_SRC emacs-lisp
   (require 'web-mode)
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
