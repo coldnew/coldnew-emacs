@@ -2132,6 +2132,27 @@ minibuffer 上。
 
 * 網頁開發
 
+** 網頁開發基本設定
+*** 讓 emacs 能與 firefox 溝通
+
+在讓 emacs 和 firefox 能互相溝通之前，兩邊都必須先裝上 moz-repl 這個外掛。
+可以在 firefox 上的 moz-repl 選單，選擇 Active on startup 來確保當 firefox
+啟動時會同時啟動 moz-repl
+
+#+begin_src emacs-lisp
+  (require 'moz)
+#+end_src
+
+*** 令 firefox 更新目前的頁面
+
+#+begin_src emacs-lisp
+  (defun firefox-refresh ()
+    "Refresh the firefox browser"
+    (interactive)
+    (comint-send-string (inferior-moz-process)
+                        "BrowserReload();"))
+#+end_src
+
 ** Less-CSS
 
 #+BEGIN_SRC emacs-lisp
@@ -2158,6 +2179,14 @@ scss-mode 預設會在檔案儲存的時候自動編譯 scss 檔成為 css 檔�
 #+begin_src emacs-lisp
   (require 'css-mode)
   (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
+#+end_src
+
+** HTML
+*** 使用 zencoding-mode 讓寫 HTML 更方便
+
+#+begin_src emacs-lisp
+  (require 'zencoding-mode)
+  (add-hook 'html-mode-hook 'zencoding-mode)
 #+end_src
 
 * Git 版本管理                                                          :git:
@@ -5194,37 +5223,6 @@ paredit 可以幫助傳寫程式的速度。
   (setq jedi:setup-keys t)                      ; optional
   (setq jedi:complete-on-dot t)                 ; optional
 #+END_SRC
-
-* 網頁開發                                                               :web:
-** 網頁開發基本設定
-*** 讓 emacs 能與 firefox 溝通
-
-在讓 emacs 和 firefox 能互相溝通之前，兩邊都必須先裝上 moz-repl 這個外掛。
-可以在 firefox 上的 moz-repl 選單，選擇 Active on startup 來確保當 firefox
-啟動時會同時啟動 moz-repl
-
-#+begin_src emacs-lisp
-  (require 'moz)
-#+end_src
-
-*** 令 firefox 更新目前的頁面
-
-#+begin_src emacs-lisp
-  (defun firefox-refresh ()
-    "Refresh the firefox browser"
-    (interactive)
-    (comint-send-string (inferior-moz-process)
-                        "BrowserReload();"))
-#+end_src
-
-** HTML
-*** 使用 zencoding-mode 讓寫 HTML 更方便
-
-#+begin_src emacs-lisp
-  (require 'zencoding-mode)
-  (add-hook 'html-mode-hook 'zencoding-mode)
-#+end_src
-
 
 * 狀態欄                                                           :modeline:
 ** 顯示主模式
