@@ -35,3 +35,4 @@ lisp
 eshell/
 .org-id-locations
 .cask/
+flycheck_*

@@ -20,7 +20,7 @@
 
 ;; Add directories to emacs's `load-path' recursively.
 ;; if path does not exist, create directory.
-(let* ((lisp-dir '("themes/" "local-lisp/")))
+(let* ((lisp-dir '(".cask/" "themes/" "local-lisp/")))
   (dolist (lisp-path lisp-dir)
     (if (not (file-exists-p lisp-path)) (make-directory (concat emacs-dir lisp-path) t))
     (let* ((load-dir (concat emacs-dir lisp-path))
