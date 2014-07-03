@@ -115,6 +115,7 @@
 (depends-on "solarized-theme")
 (depends-on "multiple-cursors")
 (depends-on "zencoding-mode")
+(depends-on "gist")
 (depends-on "visual-basic-mode" :git "https://github.com/emacsmirror/visual-basic-mode.git")
 (depends-on "vala-mode" :git "https://github.com/coldnew/vala-mode.git")
 (depends-on "qmake-mode" :git "https://github.com/coldnew/qmake-mode.git")
