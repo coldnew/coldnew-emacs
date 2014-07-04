@@ -2150,6 +2150,11 @@ minibuffer 上。
             '(lambda ()
                (highlight-cl-add-font-lock-keywords)))
 #+end_src
+** bitbake
+
+#+BEGIN_SRC emacs-lisp
+  (require 'bitbake)
+#+END_SRC
 
 * 網頁開發
 
