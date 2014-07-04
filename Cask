@@ -121,6 +121,7 @@
 (depends-on "go-eldoc")
 (depends-on "go-errcheck")
 (depends-on "go-lint")
+(depends-on "company-go")
 (depends-on "bitbake" :git "https://github.com/canatella/bitbake-el.git")
 (depends-on "visual-basic-mode" :git "https://github.com/emacsmirror/visual-basic-mode.git")
 (depends-on "vala-mode" :git "https://github.com/coldnew/vala-mode.git")

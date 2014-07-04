@@ -1868,6 +1868,13 @@ Rust 是由 Mozilla 所開發的語言。
   (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 #+end_src
 
+*** 儲存檔案的時候，使用 gofmt 進行格式化
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'before-save-hook 'gofmt-before-save)
+#+END_SRC
+
+
 ** qmake
 
 #+begin_src emacs-lisp

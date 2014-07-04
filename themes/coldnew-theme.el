@@ -122,6 +122,10 @@ names to which it refers are bound."
      (ac-candidate-face ((t (:background ,selection :foreground ,foreground))))
      (ac-selection-face ((t (:background ,highlight :foreground ,background))))
 
+     ;; Company
+     (company-tooltip ((t (:background ,selection :foreground ,foreground))))
+     (company-tooltip-selection ((t (:background ,highlight :foreground ,background))))
+
      ;; Elscreen
      (elscreen-tab-background-face ((t (:background ,background))))
      (elscreen-tab-control-face ((t (:foreground ,foreground :background "black"
