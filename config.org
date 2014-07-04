@@ -3790,7 +3790,7 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (define-key minibuffer-local-map (kbd "M-t") (lambda () (interactive) (kill-line 0) (insert "/tmp/")))
   (define-key minibuffer-local-map (kbd "M-h") (lambda () (interactive) (kill-line 0) (insert "~/")))
   (define-key minibuffer-local-map (kbd "M-w") (lambda () (interactive) (kill-line 0) (insert "~/Workspace/")))
-  (define-key minibuffer-local-map (kbd "M-s") (lambda () (interactive) (kill-line 0) (insert "~/SparkleShare/")))
+  (define-key minibuffer-local-map (kbd "M-s") (lambda () (interactive) (kill-line 0) (insert "~/Copy/")))
 #+end_src
 
 * 文檔幫助                                                             :info:
