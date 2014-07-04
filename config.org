@@ -1312,9 +1312,9 @@ GitHub: https://github.com/company-mode/company-mode
 #+END_SRC
 
 auto-complete-mode 則是目前使用 emacs 的人都會安裝的自動補全用的 backend，
-他可以透過許多函式庫來協助你更好的在 emacs 中進行補全，此外
-auto-complete-mode 同時可以作為一個 frontend，backend 則使用其他程式來進
-行補全，比如說 company-mode。
+他可以透過許多函式庫來協助你更好的在 emacs 中進行補全。在 emacs 中，
+auto-complete 算是最熱門的補全方式，但是根據最近的 commit 紀錄以及 issue 來
+看，進展緩慢，反而是 company-mode 一直有在更新。
 
 Github: https://github.com/auto-complete/auto-complete
 
@@ -1386,27 +1386,6 @@ auto-complete-mode 本身已經包含一些常用的字典了，這邊加上我�
 #+begin_src emacs-lisp
   (add-to-list 'ac-dictionary-directories (concat emacs-dir "ac-dict"))
 #+end_src
-
-** 透過 clang 進行自動補全
-
-GitHub: https://github.com/Golevka/emacs-clang-complete-async
-
-#+BEGIN_SRC emacs-lisp
-  (require 'auto-complete-clang-async)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (defun ac-cc-mode-setup ()
-    (setq ac-clang-complete-executable "~/bin/clang-complete")
-    (setq ac-sources '(ac-source-clang-async))
-    (ac-clang-launch-completion-process)
-  )
-
-  (defun my-ac-config ()
-    (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
-    (add-hook 'auto-complete-mode-hook 'ac-common-setup)
-    (global-auto-complete-mode t))
-#+END_SRC
 
 ** 按鍵設定
 
@@ -4617,14 +4596,12 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 | C-x C-l | recenter            | 將游標至於緩衝區中間          |
 | C-x C-i | indent-whole-buffer | 縮排整個緩衝區                |
 | C-x C-q | toggle-read-only    | 切換緩衝區變成唯讀/可寫的狀況 |
-| C-x C-n | auto-complete       | 自動補全                      |
 
 #+begin_src emacs-lisp
   (vim:mode-imap coldnew-editor-map (kbd "C-x C-y")  'yank-n-times)
   (vim:mode-imap coldnew-editor-map (kbd "C-x C-l")  'recenter)
   (vim:mode-imap coldnew-editor-map (kbd "C-x C-i")  'indent-whole-buffer)
   (vim:mode-imap coldnew-editor-map (kbd "C-x C-q")  'toggle-read-only)
-  (vim:mode-imap coldnew-editor-map (kbd "C-x C-n")  'auto-complete)
 #+end_src
 
 | 按鍵     | 命令                   | 用途         |
@@ -4640,18 +4617,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
        (vim:mode-imap coldnew-editor-map (kbd "C-l") 'hungry-delete-backward)
        (vim:mode-imap coldnew-editor-map (kbd "<delete>") 'hungry-delete-backward)))
   #+end_src
-
-| 按鍵 | 命令           | 用途 |
-|------+----------------+------|
-| C-/  | undo-tree-undo | undo |
-| M-/  | undo-tree-redo | redo |
-
-#+begin_src emacs-lisp
-  (eval-after-load 'undo-tree
-    '(progn
-      (vim:mode-imap coldnew-editor-map (kbd "C-/") 'undo-tree-undo)
-      (vim:mode-imap coldnew-editor-map (kbd "M-/") 'undo-tree-redo)))
-#+end_src
 
 | 按鍵    | 用途         |
 |---------+--------------|
@@ -5964,7 +5929,6 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
           (cdr (remove 'hline keys)))
 #+END_SRC
 
-
 ** 全域性按鍵設定 (global-set-key) :noexport:
 
 #+TBLNAME: global-keys
@@ -6004,10 +5968,13 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 ** Vim 輸入模式按鍵設定 (evil-insert-state-map)                    :noexport:
 
 #+TBLNAME: global-evil-insert
-| 類別   | 按鍵 | 命令             | 描述                               |
-|--------+------+------------------+------------------------------------|
-| Insert | C-;  | iedit-mode       | 使用 iedit-mode 快速修改同樣的字詞 |
-| Insert | M-v  | er/expand-region | 快速選取游標下的文字、區域         |
+| 類別   | 按鍵    | 命令             | 描述                               |
+|--------+---------+------------------+------------------------------------|
+| Insert | C-;     | iedit-mode       | 使用 iedit-mode 快速修改同樣的字詞 |
+| Insert | M-v     | er/expand-region | 快速選取游標下的文字、區域         |
+| Insert | C-x C-p | auto-complete    | 呼叫 auto-complete-mode 的自動補全 |
+| Insert | C-/     | undo-tree-undo   | undo                               |
+| Insert | M-/     | undo-tree-redo   | redo                              |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="define-key evil-insert-state-map", keys=global-evil-insert)>>
