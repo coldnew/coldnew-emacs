@@ -4564,24 +4564,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 
 ** 檔案相關 (N) (I)
 
-| 按鍵    | 命令                   | 用途                         |
-|---------+------------------------+------------------------------|
-| C-x C-f | lusty-file-explorer    | 查詢並打開檔案               |
-| C-x C-r | lusty-sudo-explorer    | 使用 sudo 打開檔案           |
-| C-x C-s | save-buffer-always     | 儲存檔案                     |
-| C-x f x | set-file-executable    | 為目前檔案加上可執行權限     |
-| C-x f c | clone-file-and-open    | 複製目前檔案到其他檔案並打開 |
-| C-x f d | delete-file-and-buffer | 刪除目前的檔案與緩衝區       |
-
-#+begin_src emacs-lisp
-  (vim:mode-map coldnew-editor-map (kbd "C-x C-f")  'lusty-file-explorer)
-  (vim:mode-map coldnew-editor-map (kbd "C-x C-r")  'lusty-sudo-explorer)
-  (vim:mode-map coldnew-editor-map (kbd "C-x C-s")  'save-buffer-always)
-  (vim:mode-map coldnew-editor-map (kbd "C-x fx")  'set-file-executable)
-  (vim:mode-map coldnew-editor-map (kbd "C-x fc")  'clone-file-and-open)
-  (vim:mode-map coldnew-editor-map (kbd "C-x fd")  'delete-file-and-buffer)
-#+end_src
-
 | 按鍵 | 命令              | 用途                        |
 |------+-------------------+-----------------------------|
 | M-o  | coldnew/helm-mini | 使用自訂的 helm-mini 找檔案 |
@@ -4669,18 +4651,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
   (vim:mode-imap coldnew-editor-map (kbd "C-M-.") 'end-of-buffer)
 #+end_src
 
-** 字體調整 (N) (I)
-
-| 按鍵 | 命令                     | 用途               |
-|------+--------------------------+--------------------|
-| C-=  | increase-emacs-font-size | 放大緩衝區內的字體 |
-| C-   | decrease-emacs-font-size | 縮小緩衝區內的字體 |
-
-#+begin_src emacs-lisp
-  (vim:mode-map coldnew-editor-map (kbd "C-=")  'increase-emacs-font-size)
-  (vim:mode-map coldnew-editor-map (kbd "C--")  'decrease-emacs-font-size)
-#+end_src
-
 ** org-mode 相關按鍵
 
 和 org-mode 相關的全域按鍵都整理到這裡
@@ -4695,27 +4665,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
   (vim:mode-imap coldnew-editor-map (kbd "C-c a")  'org-agenda)
   (vim:mode-imap coldnew-editor-map (kbd "C-c l")  'org-store-link)
   (vim:mode-imap coldnew-editor-map (kbd "C-c c")  'org-capture)
-#+END_SRC
-
-** 特殊命令 (super, function)
-
-有些很好用的命令，比如說呼叫 Woman, 或是彈出一個 terminal 視窗，這些我
-將他們綁定到 super 按鍵作為 prefix，這一類按鍵有些會有相對應的 F1 ~ F12
-的按鍵。
-
-| 按鍵       | 命令      | 用途                |
-|------------+-----------+---------------------|
-| s-1 , <F1> | woman     | 使用 woman 查看文檔 |
-| s-2 , <F2> | shell-pop | 彈出 eshell 視窗    |
-
-
-#+BEGIN_SRC emacs-lisp
-  (vim:mode-map coldnew-editor-map (kbd "<f1>")  'woman)
-  (vim:mode-map coldnew-editor-map (kbd "s-1")   'woman)
-
-  (vim:mode-map coldnew-editor-map (kbd "<f2>")  'shell-pop)
-  (vim:mode-map coldnew-editor-map (kbd "s-2")   'shell-pop)
-
 #+END_SRC
 
 ** 復合式按鍵
@@ -5963,6 +5912,18 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 版本管理 | C-x vp  | magit-push               | push 到遠端的 repo                 |
 | 文字編輯 | C-=     | increase-emacs-font-size | 放大緩衝區的文字大小               |
 | 文字編輯 | C--     | decrease-emacs-font-size | 縮小緩衝區的文字大小               |
+| 快速命令 | <f1>    | woman                    | 使用 woman 查看 man 手冊           |
+| 快速命令 | s-1     | woman                    | 使用 woman 查看 man 手冊           |
+| 快速命令 | <f2>    | shell-pop                | 彈出 eshell 視窗                   |
+| 快速命令 | s-2     | shell-pop                | 彈出 eshell 視窗                   |
+| 字體調整 | C-=     | increase-emacs-font-size | 放大字體                           |
+| 字體調整 | C--     | decrease-emacs-font-size | 縮小字體                           |
+| 檔案相關 | C-x C-f | lusty-file-explorer      | 查詢並打開檔案                     |
+| 檔案相關 | C-x C-s | save-buffer-always       | 儲存檔案                           |
+| 檔案相關 | C-x C-r | lusty-sudo-explorer      | 使用 sudo 打開檔案                 |
+| 檔案相關 | C-x f x | set-file-executable      | 為目前檔案加上可執行權限           |
+| 檔案相關 | C-x f c | clone-file-and-open      | 複製目前檔案到其他檔案並打開       |
+| 檔案相關 | C-x f d | delete-file-and-buffer   | 刪除目前的檔案與緩衝區             |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="global-set-key", keys=global-keys)>>
