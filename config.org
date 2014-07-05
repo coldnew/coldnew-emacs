@@ -1297,21 +1297,9 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
   <<gen-keys-map(func="define-key", keys=helm-keys)>>
 #+END_SRC
 
-* 自動補全
+* 自動補全 (AC)
 
-這邊共使用兩種 emacs 使用者最常使用的自動補全設定: auto-complete-mode 和 company-mode。
-
-company-mode 是一個非常強大的補全程式，在 auto-complete-mode 出來之前，他
-應該是最多人使用的。
-
-GitHub: https://github.com/company-mode/company-mode
-
-#+BEGIN_SRC emacs-lisp
-  (require 'company)
-  (add-hook 'after-init-hook 'global-company-mode)
-#+END_SRC
-
-auto-complete-mode 則是目前使用 emacs 的人都會安裝的自動補全用的 backend，
+auto-complete-mode 是目前使用 emacs 的人都會安裝的自動補全用的 backend，
 他可以透過許多函式庫來協助你更好的在 emacs 中進行補全。在 emacs 中，
 auto-complete 算是最熱門的補全方式，但是根據最近的 commit 紀錄以及 issue 來
 看，進展緩慢，反而是 company-mode 一直有在更新。
@@ -1398,6 +1386,33 @@ auto-complete-mode 本身已經包含一些常用的字典了，這邊加上我�
 
 #+BEGIN_SRC emacs-lisp :noweb yes
   <<gen-keys-map(func="define-key", keys=ac-keys)>>
+#+END_SRC
+
+* 自動補全 (Company)
+
+company-mode 是一個非常強大的補全程式，在 auto-complete-mode 出來之前，他
+應該是最多人使用的。
+
+GitHub: https://github.com/company-mode/company-mode
+
+#+BEGIN_SRC emacs-lisp
+  (require 'company)
+  (add-hook 'after-init-hook 'global-company-mode)
+#+END_SRC
+
+** 按鍵設定
+
+#+TBLNAME: company-keys
+| map            | 按鍵  | 命令                       | 描述              |
+|----------------+-------+----------------------------+-------------------|
+| company-active | C-g   | company-abort              | 離開 company-mode |
+| company-active | C-n   | company-select-next        | 下一個補全        |
+| company-active | C-p   | company-select-previous    | 上一個補全        |
+| company-active | TAB   | company-complete-selection | 選擇該補全設定    |
+| company-active | <tab> | company-complete-selection | 選擇該補全設定    |
+
+#+BEGIN_SRC emacs-lisp :noweb yes
+  <<gen-keys-map(func="define-key", keys=company-keys)>>
 #+END_SRC
 
 * 終端機                                                               :term:
@@ -5965,7 +5980,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
   <<gen-keys-global(func="define-key evil-normal-state-map", keys=global-evil-normal)>>
 #+END_SRC
 
-** Vim 輸入模式按鍵設定 (evil-insert-state-map)                    :noexport:
+** Vim 編輯模式按鍵設定 (evil-insert-state-map)                    :noexport:
 
 #+TBLNAME: global-evil-insert
 | 類別   | 按鍵    | 命令             | 描述                               |
@@ -5974,7 +5989,8 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | Insert | M-v     | er/expand-region | 快速選取游標下的文字、區域         |
 | Insert | C-x C-p | auto-complete    | 呼叫 auto-complete-mode 的自動補全 |
 | Insert | C-/     | undo-tree-undo   | undo                               |
-| Insert | M-/     | undo-tree-redo   | redo                              |
+| Insert | M-/     | undo-tree-redo   | redo                               |
+| Insert | C-x C-n | company-complete | 呼叫 company-mode 的自動補全       |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="define-key evil-insert-state-map", keys=global-evil-insert)>>
