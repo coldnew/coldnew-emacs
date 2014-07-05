@@ -1868,7 +1868,6 @@ Rust 是由 Mozilla 所開發的語言。
   (add-hook 'before-save-hook 'gofmt-before-save)
 #+END_SRC
 
-
 ** qmake
 
 #+begin_src emacs-lisp
@@ -2123,6 +2122,7 @@ C++檔案的依據。
 
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.el$" . emacs-lisp-mode))
+  (add-to-list 'auto-mode-alist '("Cask" . emacs-lisp-mode))
 #+end_src
 
 *** 使用 eldoc 顯示目前所使用的函式宣告在 minibuffer 上面
