@@ -1823,6 +1823,92 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
       (message "Updating tags table... Done")))
 #+end_src
 
+* 編輯器
+
+** 基本編輯器設定
+
+- 設定 TAB 的寬度為 8
+
+  #+begin_src emacs-lisp
+    (setq tab-width 8)
+  #+end_src
+
+- 不使用 TAB 進行縮排
+
+  #+begin_src emacs-lisp
+     (setq indent-tabs-mode nil)
+  #+end_src
+- 設定每行之間的間格為 4
+
+  #+begin_src emacs-lisp
+    (setq line-spacing 4)
+  #+end_src
+
+- 在檔案的最後一行加入一空白行
+
+  #+begin_src emacs-lisp
+    (setq require-final-newline t)
+  #+end_src
+
+- 全域使用色彩上色
+
+  #+begin_src emacs-lisp
+    (global-font-lock-mode t)
+  #+end_src
+
+- 高亮匹配的括號
+
+  #+begin_src emacs-lisp
+    (show-paren-mode t)
+  #+end_src
+
+** 建立編輯器的全域性 minor-mode
+
+我希望能夠全域性的使用我所定義的編輯器，因此宣告一個 minor-mode，
+並讓他可以直接啟用。
+
+#+begin_src emacs-lisp
+  (defvar coldnew-editor-map (make-keymap))
+
+  (define-minor-mode coldnew-editor-mode
+    "coldnew's editor minor mode."
+    :init-value t
+    :keymap coldnew-editor-map)
+
+  (define-globalized-minor-mode global-coldnew-editor-mode
+    coldnew-editor-mode (lambda ()
+                          (if (not (minibufferp (current-buffer)))
+                              (coldnew-editor-mode 1))))
+
+  ;; Gloabal enable
+  (global-coldnew-editor-mode t)
+#+end_src
+
+** 存檔前要執行的額外設定
+
+*** 清除多餘的空白
+
+#+begin_src emacs-lisp
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+end_src
+
+*** 將 TAB 轉換為空格
+
+#+BEGIN_SRC emacs-lisp
+  ;; no tabs by default. modes that really need tabs should enable
+  ;; indent-tabs-mode explicitly. makefile-mode already does that, for
+  ;; example.
+  (setq-default indent-tabs-mode nil)
+
+  ;; if indent-tabs-mode is off, untabify before saving
+  (add-hook 'before-save-hook
+            (lambda () (if (not indent-tabs-mode)
+                           (untabify (point-min) (point-max)))
+              nil ))
+#+END_SRC
+
+
+
 * 程式開發                                                         :language:
 
 各種不同程式語言開發用的設定。
@@ -4196,71 +4282,6 @@ some packages conflict with org-mode
 
 * 編輯器                                                             :editor:
 
-** 基本編輯器設定
-
-- 設定 TAB 的寬度為 8
-
-  #+begin_src emacs-lisp
-    (setq tab-width 8)
-  #+end_src
-
-- 不使用 TAB 進行縮排
-
-  #+begin_src emacs-lisp
-     (setq indent-tabs-mode nil)
-  #+end_src
-- 設定每行之間的間格為 4
-
-  #+begin_src emacs-lisp
-    (setq line-spacing 4)
-  #+end_src
-
-- 在檔案的最後一行加入一空白行
-
-  #+begin_src emacs-lisp
-    (setq require-final-newline t)
-  #+end_src
-
-- 全域使用色彩上色
-
-  #+begin_src emacs-lisp
-    (global-font-lock-mode t)
-  #+end_src
-
-- 高亮匹配的括號
-
-  #+begin_src emacs-lisp
-    (show-paren-mode t)
-  #+end_src
-
-** 建立編輯器的全域性 minor-mode
-
-我希望能夠全域性的使用我所定義的編輯器，因此宣告一個 minor-mode，
-並讓他可以直接啟用。
-
-#+begin_src emacs-lisp
-  (defvar coldnew-editor-map (make-keymap))
-
-  (define-minor-mode coldnew-editor-mode
-    "coldnew's editor minor mode."
-    :init-value t
-    :keymap coldnew-editor-map)
-
-  (define-globalized-minor-mode global-coldnew-editor-mode
-    coldnew-editor-mode (lambda ()
-                          (if (not (minibufferp (current-buffer)))
-                              (coldnew-editor-mode 1))))
-
-  ;; Gloabal enable
-  (global-coldnew-editor-mode t)
-#+end_src
-
-** 在存檔前清除多餘的空白
-
-#+begin_src emacs-lisp
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
-#+end_src
-
 ** 宣告寫程式、文學用的 mode list
 
 - 定義寫程式用的 mode
@@ -5656,6 +5677,7 @@ be readable enough to know it's content.
   (global-unset-key (kbd "C-r"))
   (global-unset-key (kbd "C-x e"))
   (global-unset-key (kbd "C-x d"))
+  (global-unset-key (kbd "C-x f"))
 #+end_src
 
 
@@ -5921,9 +5943,9 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 檔案相關 | C-x C-f | lusty-file-explorer      | 查詢並打開檔案                     |
 | 檔案相關 | C-x C-s | save-buffer-always       | 儲存檔案                           |
 | 檔案相關 | C-x C-r | lusty-sudo-explorer      | 使用 sudo 打開檔案                 |
-| 檔案相關 | C-x f x | set-file-executable      | 為目前檔案加上可執行權限           |
-| 檔案相關 | C-x f c | clone-file-and-open      | 複製目前檔案到其他檔案並打開       |
-| 檔案相關 | C-x f d | delete-file-and-buffer   | 刪除目前的檔案與緩衝區             |
+| 檔案相關 | C-x fx  | set-file-executable      | 為目前檔案加上可執行權限           |
+| 檔案相關 | C-x fc  | clone-file-and-open      | 複製目前檔案到其他檔案並打開       |
+| 檔案相關 | C-x fd  | delete-file-and-buffer   | 刪除目前的檔案與緩衝區             |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="global-set-key", keys=global-keys)>>
