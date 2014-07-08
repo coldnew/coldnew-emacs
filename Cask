@@ -123,6 +123,7 @@
 (depends-on "go-lint")
 (depends-on "company-go")
 (depends-on "fuzzy")
+(depends-on "org-redmine")
 (depends-on "dts-mode" :git "https://github.com/coldnew/dts-mode.git")
 (depends-on "bitbake" :git "https://github.com/canatella/bitbake-el.git")
 (depends-on "visual-basic-mode" :git "https://github.com/emacsmirror/visual-basic-mode.git")
