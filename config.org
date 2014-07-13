@@ -3674,28 +3674,6 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
     `(evil-ex-define-cmd ,cmd ,func))
 #+end_src
 
-** Normal-state 按鍵設定
-
-將一些非常慣用的 emacs 按鍵綁到 Normal-state 上面。
-
-#+begin_src emacs-lisp
-  (vim:nmap (kbd "C-n") 'evil-next-line)
-  (vim:nmap (kbd "C-p") 'evil-previous-line)
-#+end_src
-
-| 按鍵 | 命令            | 用途             |
-|------+-----------------+------------------|
-| M-u  | upcase-word     | 將整個英文字大寫 |
-| M-l  | downcase-word   | 將整個英文字小寫 |
-| M-c  | capitalize-word | 將英文字字首大寫 |
-
-#+begin_src emacs-lisp
-  (vim:nmap (kbd "M-u") 'upcase-word)
-  (vim:nmap (kbd "M-l") 'downcase-word)
-  (vim:nmap (kbd "M-c") 'capitalize-word)
-  (vim:nmap (kbd "<SPC>") 'ace-jump-mode)
-#+end_src
-
 ** Insert-state 按鍵設定
 
 這邊設定我的 Insert-state 的按鍵，部份會和我原本的 emacs 按鍵設置不太一樣。
@@ -5884,6 +5862,26 @@ be readable enough to know it's content.
   (add-to-list 'load-path "~/Workspace/emacs-lisp/org-ioslide")
   (require 'ox-ioslide nil 'noerror)
 #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+    (defadvice kill-ring-save (around slick-copy activate)
+          "When called interactively with no active region, copy a single line instead."
+          (if (or (use-region-p) (not (called-interactively-p)))
+              ad-do-it
+            (kill-new (buffer-substring (line-beginning-position)
+                                        (line-beginning-position 2))
+                      nil '(yank-line))
+            (message "Copied line")))
+
+  (defadvice kill-region (around slick-copy activate)
+        "When called interactively with no active region, kill a single line instead."
+        (if (or (use-region-p) (not (called-interactively-p)))
+            ad-do-it
+          (kill-new (filter-buffer-substring (line-beginning-position)
+                                             (line-beginning-position 2) t)
+                    nil '(yank-line))))
+#+END_SRC
+
 * TODO ----------------- Following are re-write ---------------------------------
 * 按鍵設定
 
@@ -5995,10 +5993,14 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 ** Vim 一般模式按鍵設定 (evil-normal-state-map)                   :noexport:
 
 #+TBLNAME: global-evil-normal
-| 類別   | 按鍵 | 命令               | 描述   |
-|--------+------+--------------------+--------|
-| Normal | C-n  | evil-next-line     | 下一行 |
-| Normal | C-p  | evil-previous-line | 上一行 |
+| 類別   | 按鍵  | 命令               | 描述                                  |
+|--------+-------+--------------------+---------------------------------------|
+| Normal | C-n   | evil-next-line     | 下一行                                |
+| Normal | C-p   | evil-previous-line | 上一行                                |
+| Normal | <SPC> | ace-jump-mode      | 使用 ace-jump-mode 快速跳轉到符合的字 |
+| Normal | M-u   | upcase-word        | 將整個英文字大寫                      |
+| Normal | M-l   | downcase-word      | 將整個英文字小寫                      |
+| Normal | M-c   | capitalize-word    | 將英文字字首大寫                      |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="define-key evil-normal-state-map", keys=global-evil-normal)>>
