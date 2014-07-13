@@ -1170,11 +1170,18 @@ Homepage: http://jblevins.org/projects/deft/
 
 *** 設定尋找得檔案副檔名為 *.org
 
-deft 其實也可以用於 *.text 檔案，不過我更偏好用在 org-mode 上。
+deft 其實也可以用於 *.txt 檔案，不過我更偏好用在 org-mode 上。
 
 #+BEGIN_SRC emacs-lisp
   (setq deft-extension "org")
-  (setq deft-text-mode 'org-mode)
+#+END_SRC
+
+建立名為 =deft-note-mode= 的 minor-mode，這個 monor-mode 將用在後面快速
+刪除 deft-mode 的命令上。
+
+#+BEGIN_SRC emacs-lisp
+  (define-minor-mode deft-note-mode "Deft notes" nil " Deft-Notes" nil)
+  (setq deft-text-mode 'deft-note-mode)
 #+END_SRC
 
 *** 尋找的目錄設定為 ~/Copy/org
@@ -1189,6 +1196,30 @@ deft 其實也可以用於 *.text 檔案，不過我更偏好用在 org-mode 上
 
 #+BEGIN_SRC emacs-lisp
   (setq deft-use-filename-as-title t)
+#+END_SRC
+
+*** 快速刪除 deft 的緩衝區                                        :command:
+
+#+BEGIN_SRC emacs-lisp
+  (defun kill-all-deft-notes ()
+    (interactive)
+    (save-excursion
+      (let ((count 0))
+        (dolist (buffer (buffer-list))
+          (set-buffer buffer)
+          (when (not (eq nil deft-note-mode))
+            (setq count (1+ count))
+            (kill-buffer buffer))))))
+#+END_SRC
+
+*** 開啟/關閉 deft                                                :command:
+
+#+BEGIN_SRC emacs-lisp
+  (defun deft-or-close ()
+    (interactive)
+    (if (or (eq major-mode 'deft-mode) (not (eq nil deft-note-mode)))
+        (progn (kill-all-deft-notes) (kill-buffer "*Deft*"))
+      (deft)))
 #+END_SRC
 
 ** 擴充 org-mode 的 easy-template
@@ -1906,8 +1937,6 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
                            (untabify (point-min) (point-max)))
               nil ))
 #+END_SRC
-
-
 
 * 程式開發                                                         :language:
 
@@ -4573,7 +4602,7 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 | M-2  | multi-eshell        | 切換至完整的 eshell 視窗     |
 | M-3  | multi-eshell-switch | 切換目前已打開的 eshell 視窗 |
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (eval-after-load 'eshell
     '(progn
        (when (require 'multi-eshell nil 'noerror)
@@ -5935,9 +5964,11 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 文字編輯 | C-=     | increase-emacs-font-size | 放大緩衝區的文字大小               |
 | 文字編輯 | C--     | decrease-emacs-font-size | 縮小緩衝區的文字大小               |
 | 快速命令 | <f1>    | woman                    | 使用 woman 查看 man 手冊           |
-| 快速命令 | s-1     | woman                    | 使用 woman 查看 man 手冊           |
 | 快速命令 | <f2>    | shell-pop                | 彈出 eshell 視窗                   |
-| 快速命令 | s-2     | shell-pop                | 彈出 eshell 視窗                   |
+| 快速命令 | M-`     | woman                    | 使用 woman 查看 man 手冊           |
+| 快速命令 | M-1     | deft-or-close            | 開啟/關閉 deft-mode                |
+| 快速命令 | M-2     | multi-eshell             | 切換至完整的 eshell 視窗           |
+| 快速命令 | M-3     | multi-eshell-switch      | 切換目前已打開的 eshell 視窗       |
 | 字體調整 | C-=     | increase-emacs-font-size | 放大字體                           |
 | 字體調整 | C--     | decrease-emacs-font-size | 縮小字體                           |
 | 檔案相關 | C-x C-f | lusty-file-explorer      | 查詢並打開檔案                     |
