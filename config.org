@@ -555,6 +555,12 @@ emacswiki: http://www.emacswiki.org/emacs/KeyChord
   (require 'uzumaki)
   (uzumaki-minor-mode 1)
 #+END_SRC
+** rainbow-mode :: 將 CSS 之類的色彩編碼顯示顏色出來
+
+#+BEGIN_SRC emacs-lisp
+  (require 'rainbow-mode)
+#+END_SRC
+
 
 * 自定義函式 / 方法                                                :function:
 
@@ -3310,12 +3316,6 @@ paredit 可以幫助傳寫程式的速度。
        (add-to-list 'helm-completing-read-handlers-alist '(lusty-sudo-explorer . nil))
        (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
        (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil))))
-#+end_src
-
-** TODO 其他
-#+begin_src emacs-lisp
-  (require 'rainbow-mode)
-  ;;(require 'smarter-compile)
 #+end_src
 
 ** TODO ibuffer                                                    :ibuffer:
