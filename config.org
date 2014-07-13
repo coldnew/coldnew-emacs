@@ -1177,12 +1177,12 @@ deft 其實也可以用於 *.text 檔案，不過我更偏好用在 org-mode 上
   (setq deft-text-mode 'org-mode)
 #+END_SRC
 
-*** 尋找的目錄設定為 ~/SparkleShate/org
+*** 尋找的目錄設定為 ~/Copy/org
 
-我將我筆記類的 org-mode 文件都放在 =~/SparkleShare/org/= 裡面。
+我將我筆記類的 org-mode 文件都放在 =~/Copy/org/= 裡面。
 
 #+BEGIN_SRC emacs-lisp
-  (setq deft-directory "~/SparkleShare/org/")
+  (setq deft-directory "~/Copy/org/")
 #+END_SRC
 
 *** 設定檔案名稱即為標題
