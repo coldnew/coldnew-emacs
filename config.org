@@ -5580,10 +5580,10 @@ be readable enough to know it's content.
 
 #+begin_src emacs-lisp
   (defvar smtp-account-list nil)
-    (defun smtp-get-password (account)
-      (require 'netrc)
-      ;;(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
-      (or (netrc-get smtp-account-list account) ""))
+  (defun smtp-get-password (account)
+    (require 'netrc)
+    ;;(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
+    (or (netrc-get smtp-account-list account) ""))
 #+end_src
 
 ** mu4e
