@@ -3023,7 +3023,6 @@ logior function 來改變檔案屬性。
       (message (concat "Made " buffer-file-name " executable"))))
 #+end_src
 
-
 ** 視窗操作                                                         :window:
 
 *** 將整個 emacs 全螢幕
@@ -3151,6 +3150,38 @@ logior function 來改變檔案屬性。
            (file-name (file-name-nondirectory file)))
       (delete-region (point) (save-excursion (end-of-line) (point)))
       (insert (concat file-true-dir file-name))))
+#+end_src
+*** 多次貼上
+
+emacs 本身的 yank 命令是無法使用 universla-argument 的，
+也就是說無法使用 C-u 80 C-y 來貼上複製的東西 80 次，
+而是貼上前幾次紀錄在 kill-ring 的資訊。
+
+yank-n-times 則可以重複的進行貼上。
+
+當沒有使用 universal-argument 指定要貼上多少次時，
+會使用 prompt 詢問貼上的次數。
+
+#+begin_src emacs-lisp
+  (defun yank-n-times (&optional arg)
+    "yank multiple times."
+    (interactive "P")
+    (let ((times (if (equal current-prefix-arg nil)
+                     (read-number "yank repet times: ")
+                   arg)))
+      (if (< times 1)
+          (setq times 1)
+        (dotimes 'times (yank)))))
+#+end_src
+*** 插入空白行
+
+#+begin_src emacs-lisp
+  (defun insert-empty-line ()
+    "Insert an empty line after current line and position cursor on newline."
+    (interactive)
+    (move-end-of-line nil)
+    (open-line 1)
+    (next-line 1))
 #+end_src
 
 ** 資訊收尋
@@ -5339,39 +5370,6 @@ paredit 可以幫助傳寫程式的速度。
     "Insert current-date."
     (interactive)
     (insert (current-date-time)))
-#+end_src
-
-*** 插入空白行
-
-#+begin_src emacs-lisp
-  (defun insert-empty-line ()
-    "Insert an empty line after current line and position cursor on newline."
-    (interactive)
-    (move-end-of-line nil)
-    (open-line 1)
-    (next-line 1))
-#+end_src
-
-*** 多次貼上
-
-emacs 本身的 yank 命令是無法使用 universla-argument 的，
-也就是說無法使用 C-u 80 C-y 來貼上複製的東西 80 次，
-而是貼上前幾次紀錄在 kill-ring 的資訊。
-
-yank-n-times 則可以重複的進行貼上。
-
-當沒有使用 universal-argument 指定要貼上多少次時，
-會使用 prompt 詢問貼上的次數。
-#+begin_src emacs-lisp
-  (defun yank-n-times (&optional arg)
-    "yank multiple times."
-    (interactive "P")
-    (let ((times (if (equal current-prefix-arg nil)
-                     (read-number "yank repet times: ")
-                   arg)))
-      (if (< times 1)
-          (setq times 1)
-        (dotimes 'times (yank)))))
 #+end_src
 
 * 窗口管理                                                           :window:
