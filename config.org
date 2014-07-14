@@ -3209,10 +3209,10 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
   (require 'erc-autoaway)
 #+end_src
 
-** 設定 prompt 為 >>
+** 設定 prompt 為 ->>
 
 #+begin_src emacs-lisp
-  (setq erc-prompt ">>")
+  (setq erc-prompt "->> ")
 #+end_src
 
 ** 編碼設定為 utf-8
