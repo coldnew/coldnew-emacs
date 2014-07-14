@@ -976,6 +976,71 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
          "11223344556677889900       壹貳參肆伍陸柒捌玖零"))
 #+end_src
 
+* 佈景主題                                                            :theme:
+
+佈景主題的設置，包含我自訂的佈景主題以及路徑。
+** 設定佈景主題的位置。
+
+佈景主題的路徑設定在 emacs-themes-dir 裡面。
+#+begin_src emacs-lisp
+  (setq custom-theme-directory emacs-themes-dir)
+#+end_src
+
+** 設定額外的佈景主題變數
+
+#+begin_src emacs-lisp
+  (defface evil-state-normal-face
+    '((t (:inherit font-lock-function-name-face)))
+    "face for vim-string in normal-map on mode-line."
+    :group 'mode-line)
+
+  (defface evil-state-insert-face
+    '((t (:inherit font-lock-constant-face)))
+    "face for vim-string in insert-map on mode-line."
+    :group 'mode-line)
+
+  (defface evil-state-visual-face
+    '((t (:inherit font-lock-variable-name-face)))
+    "face for vim-string in visual-map on mode-line."
+    :group 'mode-line)
+
+  (defface evil-state-emacs-face
+    '((t (:inherit font-lock-string-face)))
+    "face for vim-string in emacs-map on mode-line."
+    :group 'mode-line)
+
+  (defface mode-line-read-only-face
+    '((t (:foreground "#C82829" :bold t)))
+    "face for mode-name-string in modeline."
+    :group 'mode-line)
+
+  (defface mode-line-modified-face
+    '((t (:inherit 'font-lock-function-name-face :bolt t)))
+    "face for mode-name-string in modeline."
+    :group'mode-lin)
+
+  (defface mode-line-mode-name-face
+    '((t (:inherit font-lock-keyword-face)))
+    "face for mode-name-string in modeline."
+    :group 'mode-line)
+
+  (defface font-lock-escape-char-face
+    '((((class color)) (:foreground "seagreen2")))
+    "highlight c escapes char like vim"
+    :group 'font-lock-faces)
+#+end_src
+
+** 設定預設讀取的佈景主題。
+
+這邊載入我新設計的佈景主題。
+
+#+begin_src emacs-lisp
+  (require 'coldnew-theme)
+  ;; TODO: use following to read theme
+  ;;(load-theme 'coldnew-theme-night t)
+  (coldnew-theme--define-theme night)
+#+end_src
+
 * Vim 摹擬                                                              :vim:
 
 實在不能不佩服 vi 系列按鍵使用的高效率，將許多常用的巨集綁到一個按鍵上，
@@ -3460,71 +3525,6 @@ paredit 可以幫助傳寫程式的速度。
               (equalp 'forwards dir))
           (list start end)
         (list end start))))
-#+end_src
-
-* 佈景主題                                                            :theme:
-
-佈景主題的設置，包含我自訂的佈景主題以及路徑。
-** 設定佈景主題的位置。
-
-佈景主題的路徑設定在 emacs-themes-dir 裡面。
-#+begin_src emacs-lisp
-  (setq custom-theme-directory emacs-themes-dir)
-#+end_src
-
-** 設定額外的佈景主題變數
-
-#+begin_src emacs-lisp
-  (defface evil-state-normal-face
-    '((t (:inherit font-lock-function-name-face)))
-    "face for vim-string in normal-map on mode-line."
-    :group 'mode-line)
-
-  (defface evil-state-insert-face
-    '((t (:inherit font-lock-constant-face)))
-    "face for vim-string in insert-map on mode-line."
-    :group 'mode-line)
-
-  (defface evil-state-visual-face
-    '((t (:inherit font-lock-variable-name-face)))
-    "face for vim-string in visual-map on mode-line."
-    :group 'mode-line)
-
-  (defface evil-state-emacs-face
-    '((t (:inherit font-lock-string-face)))
-    "face for vim-string in emacs-map on mode-line."
-    :group 'mode-line)
-
-  (defface mode-line-read-only-face
-    '((t (:foreground "#C82829" :bold t)))
-    "face for mode-name-string in modeline."
-    :group 'mode-line)
-
-  (defface mode-line-modified-face
-    '((t (:inherit 'font-lock-function-name-face :bolt t)))
-    "face for mode-name-string in modeline."
-    :group'mode-lin)
-
-  (defface mode-line-mode-name-face
-    '((t (:inherit font-lock-keyword-face)))
-    "face for mode-name-string in modeline."
-    :group 'mode-line)
-
-  (defface font-lock-escape-char-face
-    '((((class color)) (:foreground "seagreen2")))
-    "highlight c escapes char like vim"
-    :group 'font-lock-faces)
-#+end_src
-
-** 設定預設讀取的佈景主題。
-
-這邊載入我新設計的佈景主題。
-
-#+begin_src emacs-lisp
-  (require 'coldnew-theme)
-  ;; TODO: use following to read theme
-  ;;(load-theme 'coldnew-theme-night t)
-  (coldnew-theme--define-theme night)
 #+end_src
 
 * Vim 摹擬                                                              :vim:
