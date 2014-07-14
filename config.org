@@ -1496,6 +1496,20 @@ deft 其實也可以用於 *.txt 檔案，不過我更偏好用在 org-mode 上�
 #+BEGIN_SRC emacs-lisp
   (setq org-crypt-key nil)
 #+END_SRC
+** 將 plantuml 加入 org-mode
+
+plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前必須將 Garphviz 裝上。
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-plantuml-jar-path (concat emacs-etc-dir "plantuml.jar"))
+#+END_SRC
+
+** 將 ditaa 加入 org-mode
+
+#+BEGIN_SRC emacs-lisp
+  (require 'ob-ditaa)
+  (setq org-ditaa-jar-path (concat emacs-etc-dir "ditaa.jar"))
+#+END_SRC
 
 * Helm                                                                 :helm:
 
@@ -3934,8 +3948,6 @@ woman 是 emacs 下顯示 manpage 最好的方式。
   #+begin_src emacs-lisp
     (require 'org-install)
     (require 'org-table)
-    (require 'ob-ditaa)
-;;    (require 'org-latex)
   #+end_src
 
 ** 使用 org-mode 記事                                              :capture:
@@ -3988,21 +4000,6 @@ org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-
                (local-set-key (kbd "C-g") 'org-capture-kill)
                ))
 
-#+end_src
-
-** 擴充 org-mode 功能
-*** 將 plantuml 加入 org-mode
-
-plantuml 是一個用語言寫出 UML 架構圖的程式，使用他前必須將 Garphviz 裝上。
-
-#+begin_src emacs-lisp
-  (setq org-plantuml-jar-path (concat emacs-etc-dir "plantuml.jar"))
-#+end_src
-
-*** 將 ditaa 加入 org-mode
-
-#+begin_src emacs-lisp
-  (setq org-ditaa-jar-path (concat emacs-etc-dir "ditaa.jar"))
 #+end_src
 
 ** 讓 org-mode 與 cua-mode 相容
