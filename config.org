@@ -1501,6 +1501,13 @@ deft 其實也可以用於 *.txt 檔案，不過我更偏好用在 org-mode 上�
         (progn (kill-all-deft-notes) (kill-buffer "*Deft*"))
       (deft)))
 #+END_SRC
+*** 設定自動儲存的時間
+
+預設的 deft-mode 會自動一段時間對文件進行儲存，這裡將他關閉。
+
+#+BEGIN_SRC emacs-lisp
+  (setq deft-auto-save-interval 0)
+#+END_SRC
 
 ** 擴充 org-mode 的 easy-template
 
