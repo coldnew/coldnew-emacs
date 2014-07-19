@@ -2895,6 +2895,23 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
             (lisp-interaction-mode))))))
 #+end_src
 
+*** 跳轉到 erc 緩衝區
+
+#+BEGIN_SRC emacs-lisp
+  (defun switch-to-irc ()
+    "Switch to an IRC buffer, or run `erc-select'.
+      When called repeatedly, cycle through the buffers."
+    (interactive)
+    (let ((buffers (and (fboundp 'erc-buffer-list)
+                        (erc-buffer-list))))
+      (when (eq (current-buffer) (car buffers))
+        (bury-buffer)
+        (setq buffers (cdr buffers)))
+      (if buffers
+          (switch-to-buffer (car buffers))
+        (call-interactively 'erc-select))))
+#+END_SRC
+
 *** 清除除了目前的緩衝區以外的緩衝區
 
 和 nuke-all-buffers 很像，但是這個命令只會保留目前的緩衝區。
