@@ -1957,6 +1957,7 @@ winner-mode 有自己預設好的按鍵方式，我習慣用自己的，因此�
 #+begin_src emacs-lisp
   (winner-mode t)
 #+end_src
+
 * 書籤與暫存器                                                     :bookmark:
 
 ** 快速跳轉到檔案                                                 :register:
@@ -5423,6 +5424,7 @@ be readable enough to know it's content.
   (setq erc-autojoin-channels-alist
         '(;; english channel
           (".*\\.freenode.net" "#emacs" "#clojure" "#coscup")
+          (".*\\.mozilla.org" "#b2g" "#webapi" "#gaia")
           ;; Chinese channel
           (".*\\.freenode.net" "#emacs.tw" "#tossug")
           (".*\\.oftc.net" "#dot")
