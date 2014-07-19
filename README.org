@@ -20,13 +20,8 @@ when finisn, use =cask install= to install elisp dependencies.
 
   #+BEGIN_SRC sh
     brew install mu --with-emacs --HEAD
-    brew install emacs-clang-complete-async
+    brew install terminal-notifier
   #+END_SRC
-
-  To use =clang-complete=, you must set llvm which install by homebrew
-  to be the system use one, just type:
-
-  : brew link --force llvm
 
 - Gentoo
 

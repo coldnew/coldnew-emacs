@@ -124,6 +124,8 @@
 (depends-on "company-go")
 (depends-on "fuzzy")
 (depends-on "e2wm")
+(depends-on "erc-image")
+(depends-on "erc-terminal-notifier")
 (depends-on "org-redmine")
 (depends-on "dts-mode" :git "https://github.com/coldnew/dts-mode.git")
 (depends-on "bitbake" :git "https://github.com/canatella/bitbake-el.git")
