@@ -4014,6 +4014,12 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
                (define-key ido-completion-map (kbd "C-b") 'ido-prev-match)
                ))
 #+end_src
+
+#+BEGIN_SRC emacs-lisp
+  ;; Ignore .DS_Store files with ido mode ;;-
+  (add-to-list 'ido-ignore-files "\\.DS_Store")
+#+END_SRC
+
 ** 紀錄 Minibuffer 使用過的命令
 
 透過 savehist 套件，我們可以將 Minibuffer 使用過的命令紀錄起來，
