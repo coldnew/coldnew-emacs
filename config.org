@@ -3297,7 +3297,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
   (setq erc-autojoin-channels-alist
         '(
           ;; english channel
-          (".*\\.freenode.net" "#emacs" "#clojure" "##linux")
+          (".*\\.freenode.net" "#emacs" "#clojure" "##linux" "#yocto" "#poky" "#ubuntu-touch")
           (".*\\.mozilla.org" "#b2g")
           ;; Chinese channel
           (".*\\.freenode.net" "#emacs.tw" "#tossug" "#coscup")
@@ -3359,7 +3359,7 @@ GitHub: https://github.com/kidd/erc-image.el
   (add-to-list 'erc-modules 'image)
   (erc-update-modules)
   ;; scale the image preven it too large
-  (set erc-image-inline-rescale 100)
+  (setq erc-image-inline-rescale 100)
 #+END_SRC
 
 * 電子郵件
