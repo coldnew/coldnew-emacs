@@ -1977,6 +1977,14 @@ winner-mode 有自己預設好的按鍵方式，我習慣用自己的，因此�
   (winner-mode t)
 #+end_src
 
+** 使用 e2wm 進行窗口管理
+
+GitHub: https://github.com/kiwanami/emacs-window-manager
+
+#+BEGIN_SRC emacs-lisp
+  (require 'e2wm)
+#+END_SRC
+
 * 書籤與暫存器                                                     :bookmark:
 
 ** 快速跳轉到檔案                                                 :register:
