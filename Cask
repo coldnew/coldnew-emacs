@@ -11,6 +11,7 @@
 (depends-on "auto-complete-clang")
 (depends-on "auto-complete-clang-async")
 (depends-on "bind-key")
+(depends-on "key-chord")
 (depends-on "bm")
 (depends-on "c-eldoc")
 (depends-on "cask")
