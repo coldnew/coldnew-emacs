@@ -6043,6 +6043,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 快速命令 | M-1     | deft-or-close            | 開啟/關閉 deft-mode                |
 | 快速命令 | M-2     | multi-eshell             | 切換至完整的 eshell 視窗           |
 | 快速命令 | M-3     | multi-eshell-switch      | 切換目前已打開的 eshell 視窗       |
+| 快速命令 | M-4     | switch-to-irc            | 切換到 IRC 緩衝區                  |
 | 字體調整 | C-=     | increase-emacs-font-size | 放大字體                           |
 | 字體調整 | C--     | decrease-emacs-font-size | 縮小字體                           |
 | 檔案相關 | C-x C-f | lusty-file-explorer      | 查詢並打開檔案                     |
@@ -6051,6 +6052,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 檔案相關 | C-x fx  | set-file-executable      | 為目前檔案加上可執行權限           |
 | 檔案相關 | C-x fc  | clone-file-and-open      | 複製目前檔案到其他檔案並打開       |
 | 檔案相關 | C-x fd  | delete-file-and-buffer   | 刪除目前的檔案與緩衝區             |
+| 緩衝區   | C-x M-e | erc-iswitchb             | 切換到 IRC 緩衝區                  |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="global-set-key", keys=global-keys)>>
