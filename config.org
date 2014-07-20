@@ -1618,6 +1618,18 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
   (setq helm-ff-auto-update-initial-value nil)
 #+END_SRC
 
+** 設定不啟用 helm-mode 的命令
+
+helm 預設會變成全域性選項，所有 emacs 切換用的命令都會變成使用 helm 作為
+backend，這邊設定某些命令不要使用 helm 作為 backend，而是使用該命令原生的
+方式進行顯示。
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load "helm-mode"
+    '(progn
+       (add-to-list 'helm-completing-read-handlers-alist '(erc-iswitchb . nil))))
+#+END_SRC
+
 ** 按鍵設定                                                       :noexport:
 
 #+TBLNAME: helm-keys
@@ -3222,6 +3234,20 @@ yank-n-times 則可以重複的進行貼上。
       (active-region-or-prompt "Search Stack Overflow for: "))))
 #+END_SRC
 
+** 其他命令
+
+*** 連線到 IRC
+
+#+BEGIN_SRC emacs-lisp
+  (defun irc ()
+    "Connect to IRC"
+    (interactive)
+    (erc :server "irc.freenode.net" :port 6667 :nick erc-nick)
+    (erc :server "irc.debian.org" :port 6667 :nick erc-nick)
+    (erc :server "irc.mozilla.org" :port 6667 :nick erc-nick))
+#+END_SRC
+
+
 * IRC 聊天通訊
 
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
@@ -3327,7 +3353,6 @@ GitHub: https://github.com/kidd/erc-image.el
   (add-to-list 'erc-modules 'image)
   (erc-update-modules)
 #+END_SRC
-
 
 * 電子郵件
 
@@ -5613,16 +5638,6 @@ be readable enough to know it's content.
       (setq erc-send-this nil)))
 
 (add-to-list 'erc-send-pre-hook 'avoid-erc-oops)
-#+end_src
-
-*** Command
-
-#+begin_src emacs-lisp
-    (defun irc ()
-      (interactive)
-      (erc :server "irc.freenode.net" :port 6667 :nick erc-nick)
-      (erc :server "irc.debian.org" :port 6667 :nick erc-nick)
-      (erc :server "irc.mozilla.org" :port 6667 :nick erc-nick))
 #+end_src
 
 * 電子郵件                                                            :email:
