@@ -1078,6 +1078,39 @@ evil-mdoe 預設會讓游標變成黑色，這對於習慣使用暗色系佈景�
   (setq evil-default-cursor t)
 #+end_src
 
+** 將 Emacs 按鍵綁到 Insert 模式上
+
+對我而言，Vim 的 Insert 模式是趨近於無用的，這邊將我的 Emacs 模式下的按鍵綁到
+Insert 模式上，之後再來做其他設置。
+
+#+begin_src emacs-lisp
+  (setcdr evil-insert-state-map nil)
+  (define-key evil-insert-state-map
+    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+#+end_src
+
+將 ESC 綁定成切換為 normal-state-map，因為我用自己的 emacs 按鍵綁定蓋掉了 evil-mode
+裡面的 insert-state 按鍵綁定，所以這邊要先加入這個設定，才能夠用 ESC 來切換到
+normal-state。
+
+注意到除了 ESC 按鍵本身，使用 C-[ 也具有 ESC 按鍵的效果。
+
+#+begin_src emacs-lisp
+  (define-key evil-insert-state-map [escape] 'evil-normal-state)
+#+end_src
+
+** 讓 evil-mode 的區域選擇方式和 Vim 相同
+
+在 emacs 中，最後一個被選擇的字元是游標的前一個字元，但是在 vim 中，卻是在游標
+下的那個字元。
+
+若要使用和 vim 相同的方式，則要進行下面的設定:
+
+#+begin_src emacs-lisp
+  (setq evil-want-visual-char-semi-exclusive t)
+#+end_src
+
+
 * Vim 模擬擴充
 
 ** 使用 evil-nerd-commenter 更簡單去將程式註解掉
@@ -3713,38 +3746,6 @@ evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死�
   (setq evil-emacs-state-modes nil)
 
   ;;evil-motion-state-modes
-#+end_src
-
-** 將 Emacs 按鍵綁到 Insert 模式上
-
-對我而言，Vim 的 Insert 模式是趨近於無用的，這邊將我的 Emacs 模式下的按鍵綁到
-Insert 模式上，之後再來做其他設置。
-
-#+begin_src emacs-lisp
-  (setcdr evil-insert-state-map nil)
-  (define-key evil-insert-state-map
-    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
-#+end_src
-
-將 ESC 綁定成切換為 normal-state-map，因為我用自己的 emacs 按鍵綁定蓋掉了 evil-mode
-裡面的 insert-state 按鍵綁定，所以這邊要先加入這個設定，才能夠用 ESC 來切換到
-normal-state。
-
-注意到除了 ESC 按鍵本身，使用 C-[ 也具有 ESC 按鍵的效果。
-
-#+begin_src emacs-lisp
-  (define-key evil-insert-state-map [escape] 'evil-normal-state)
-#+end_src
-
-** 讓 evil-mode 的區域選擇方式和 Vim 相同
-
-在 emacs 中，最後一個被選擇的字元是游標的前一個字元，但是在 vim 中，卻是在游標
-下的那個字元。
-
-若要使用和 vim 相同的方式，則要進行下面的設定:
-
-#+begin_src emacs-lisp
-  (setq evil-want-visual-char-semi-exclusive t)
 #+end_src
 
 ** 綁定按鍵好用的巨集
