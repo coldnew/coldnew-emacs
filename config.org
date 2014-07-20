@@ -3247,7 +3247,6 @@ yank-n-times 則可以重複的進行貼上。
     (erc :server "irc.mozilla.org" :port 6667 :nick erc-nick))
 #+END_SRC
 
-
 * IRC 聊天通訊
 
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
@@ -3352,6 +3351,8 @@ GitHub: https://github.com/kidd/erc-image.el
   (require 'erc-image)
   (add-to-list 'erc-modules 'image)
   (erc-update-modules)
+  ;; scale the image preven it too large
+  (set erc-image-inline-rescale 100)
 #+END_SRC
 
 * 電子郵件

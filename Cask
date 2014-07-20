@@ -87,6 +87,7 @@
 (depends-on "qmake-mode")
 (depends-on "qml-mode")
 (depends-on "rainbow-mode")
+(depends-on "rainbow-delimiters")
 (depends-on "recentf")
 (depends-on "recentf-ext")
 (depends-on "req-package")
