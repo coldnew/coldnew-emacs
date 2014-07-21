@@ -1110,7 +1110,6 @@ normal-state。
   (setq evil-want-visual-char-semi-exclusive t)
 #+end_src
 
-
 * Vim 模擬擴充
 
 ** 使用 evil-nerd-commenter 更簡單去將程式註解掉
@@ -2855,6 +2854,43 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
   (setq auto-save-list-file-prefix (concat emacs-backup-dir "auto-saves-"))
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
 #+end_src
+* 命令欄 (minibuffer)
+
+** 設定視窗高度最多為 4 行高
+
+#+begin_src emacs-lisp
+  (setq max-mini-window-height 4)
+#+end_src
+
+** 游標改成 bar 的形狀                                             :cursor:
+
+我討厭在 minibuffer 時還是使用方塊狀的游標，這裡將他改變成 Bar 的形狀。
+
+#+begin_src emacs-lisp
+  (add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 'bar)))
+#+end_src
+** 使用 smex 來替代原本的緩衝區功能                            :smex:
+
+#+begin_src emacs-lisp
+  (require 'smex)
+  (smex-initialize)
+#+end_src
+
+設定 smex 暫存檔案在 =emacs-cache-dir= 裡面。
+#+begin_src emacs-lisp
+  (setq smex-save-file (concat emacs-cache-dir "smex.dat"))
+#+end_src
+
+** 紀錄 minibuffer 使用過的命令
+
+透過 savehist 套件，我們可以將 Minibuffer 使用過的命令紀錄起來，
+下次打開 emacs 仍可以知道之前呼叫過哪些 Minubuffer 的命令。
+
+#+begin_src emacs-lisp
+  (require 'savehist)
+  (setq savehist-file (concat emacs-cache-dir "savehist.dat"))
+  (savehist-mode 1)
+#+end_src
 
 * 互動式命令                                                        :command:
 
@@ -3284,7 +3320,7 @@ yank-n-times 則可以重複的進行貼上。
 
 ** 其他命令
 
-*** 連線到 IRC
+*** 連線到 IRC                                                        :irc:
 
 #+BEGIN_SRC emacs-lisp
   (defun irc ()
@@ -3295,7 +3331,7 @@ yank-n-times 則可以重複的進行貼上。
     (erc :server "irc.mozilla.org" :port 6667 :nick erc-nick))
 #+END_SRC
 
-* IRC 聊天通訊
+* IRC 聊天通訊                                                          :irc:
 
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
 
@@ -3399,6 +3435,11 @@ GitHub: https://github.com/kidd/erc-image.el
   (require 'erc-image)
   (add-to-list 'erc-modules 'image)
   (erc-update-modules)
+
+#+END_SRC
+
+縮小圖片大小，避免圖片太大
+#+BEGIN_SRC emacs-lisp
   ;; scale the image preven it too large
   (setq erc-image-inline-rescale 100)
 #+END_SRC
@@ -3974,27 +4015,6 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
 
 * 命令欄                                                         :minibuffer:
 
-** 設定視窗高度最多為 4 行高
-
-#+begin_src emacs-lisp
-  (setq max-mini-window-height 4)
-#+end_src
-
-** 使用 smex 來替代原本的緩衝區功能                            :smex:
-
-#+begin_src emacs-lisp
-  (require 'smex)
-#+end_src
-
-啟動 smex
-#+begin_src emacs-lisp
-  (smex-initialize)
-#+end_src
-
-#+begin_src emacs-lisp
-  (setq smex-save-file (concat emacs-cache-dir "smex.dat"))
-#+end_src
-
 ** 其他
 #+begin_src emacs-lisp
   (setq enable-recursive-minibuffers     t )
@@ -4007,14 +4027,6 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
     "kill the minibuffer"
     (when (and (>= (recursion-depth) 1) (active-minibuffer-window))
       (abort-recursive-edit)))
-#+end_src
-
-** 游標改成 bar 的形狀                                             :cursor:
-
-我討厭在 minibuffer 時還是使用方塊狀的游標，這裡將他改變成 Bar 的形狀。
-
-#+begin_src emacs-lisp
-  (add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 'bar)))
 #+end_src
 
 ** ido
@@ -4035,19 +4047,6 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   ;; Ignore .DS_Store files with ido mode ;;-
   (add-to-list 'ido-ignore-files "\\.DS_Store")
 #+END_SRC
-
-** 紀錄 Minibuffer 使用過的命令
-
-透過 savehist 套件，我們可以將 Minibuffer 使用過的命令紀錄起來，
-下次打開 emacs 仍可以知道之前呼叫過哪些 Minubuffer 的命令。
-
-#+begin_src emacs-lisp
-  (require 'savehist)
-  ;; keep minibuffer history between session
-  (setq savehist-file (concat emacs-cache-dir "savehist.dat"))
-  ;; enable savehist
-  (savehist-mode 1)
-#+end_src
 
 ** 按鍵設定
 
