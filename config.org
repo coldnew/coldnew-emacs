@@ -1359,6 +1359,8 @@ org-mode 是非常強大的筆記管理系統，也是這整份 emacs 設定的�
 
 #+BEGIN_SRC emacs-lisp
   (require 'org)
+  (require 'org-install)
+  (require 'org-table)
 #+END_SRC
 
 如果遇到副檔名為 .org 或是 .org_archive 的情況，則自動將他們認定為
@@ -2018,6 +2020,15 @@ GitHub: https://github.com/kiwanami/emacs-window-manager
 #+END_SRC
 
 * 書籤與暫存器                                                     :bookmark:
+
+| 快捷鍵  | 命令                | 用途                                        |
+|---------+---------------------+---------------------------------------------|
+| C-x r m | bookmark-set        | 設置新的書籤                                |
+| C-x r l | bookmark-bmenu-list | 列出所有已設置的書籤                        |
+| C-x r b | bookmarj-jump       | 跳轉到書籤                                  |
+|         | bookmark-delete     | 刪除書籤                                    |
+|         | bookmark-load       | 讀取已儲存的書籤檔案                        |
+|         | bookmark-save       | 儲存書籤至 bookmark-default-file 指定的地方 |
 
 ** 快速跳轉到檔案                                                 :register:
 
@@ -4111,15 +4122,6 @@ woman 是 emacs 下顯示 manpage 最好的方式。
 
 因為 org-mode 在這個設定檔裡佔有非常重要的比例，所以獨立出來。
 
-** 基本設定
-
-- 載入相關套件
-
-  #+begin_src emacs-lisp
-    (require 'org-install)
-    (require 'org-table)
-  #+end_src
-
 ** 使用 org-mode 記事                                              :capture:
 
 org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-mdoe 檔案的資料
@@ -4443,17 +4445,6 @@ some packages conflict with org-mode
 #+END_SRC
 
 * 書籤與暫存器                                                     :bookmark:
-** Bookmark 說明
-
-| 快捷鍵  | 命令                | 用途                                        |
-|---------+---------------------+---------------------------------------------|
-| C-x r m | bookmark-set        | 設置新的書籤                                |
-| C-x r l | bookmark-bmenu-list | 列出所有已設置的書籤                        |
-| C-x r b | bookmarj-jump       | 跳轉到書籤                                  |
-|         | bookmark-delete     | 刪除書籤                                    |
-|         | bookmark-load       | 讀取已儲存的書籤檔案                        |
-|         | bookmark-save       | 儲存書籤至 bookmark-default-file 指定的地方 |
-
 ** Config
 #+begin_src emacs-lisp
 ;;  (setq bookmark-default-file emacs-bookmark-file)
