@@ -2309,6 +2309,30 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
                            (untabify (point-min) (point-max)))
               nil ))
 #+END_SRC
+** 自動回復檔案
+
+當檔案被別的編輯器修改的時候，自動套用新的檔案到緩衝區上。
+
+#+begin_src emacs-lisp
+  (global-auto-revert-mode 1)
+  (setq global-auto-revert-non-file-buffers t)
+  (setq auto-revert-verbose nil)
+  (setq revert-without-query '(".*")) ;; disable revert query
+#+end_src
+
+** 允許文件使用特定的區域變數
+
+有些時候我會在一些特定的文件使用區域變數，可是 emacs 就會跑過來問我說:
+這個變數很危險，是否要啟用？ 這個功能真是麻煩，於是我決定將我會啟用的
+變數資訊加入到 =safe-local-variable-values= 並且修改
+=enable-local-variables= 的資訊，這樣以後 emacs 就不會再問我同樣的問題
+了。
+
+#+BEGIN_SRC emacs-lisp
+  (setq enable-local-variables :safe)
+  (setq safe-local-variable-values
+        '((org-export-latex-title-command . "")))
+#+END_SRC
 
 * 程式開發                                                         :language:
 
@@ -4591,17 +4615,6 @@ ref: https://github.com/patriciogonzalezvivo/dot-emacs/blob/master/live-fontify-
                   (make-directory dir t))))))
 #+end_src
 
-** 自動回復檔案
-
-當檔案被別的編輯器修改的時候，自動套用新的檔案到緩衝區上。
-
-#+begin_src emacs-lisp
-  (global-auto-revert-mode 1)
-  (setq global-auto-revert-non-file-buffers t)
-  (setq auto-revert-verbose nil)
-  (setq revert-without-query '(".*")) ;; disable revert query
-#+end_src
-
 ** 行號顯示設定
 
 - 預設顯示行號
@@ -4678,20 +4691,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
   ;; Enable delete-selection-mode
   (delete-selection-mode t)
 #+end_src
-** 允許文件使用特定的區域變數
-
-有些時候我會在一些特定的文件使用區域變數，可是 emacs 就會跑過來問我說:
-這個變數很危險，是否要啟用？ 這個功能真是麻煩，於是我決定將我會啟用的
-變數資訊加入到 =safe-local-variable-values= 並且修改
-=enable-local-variables= 的資訊，這樣以後 emacs 就不會再問我同樣的問題
-了。
-
-#+BEGIN_SRC emacs-lisp
-  (setq enable-local-variables :safe)
-  (setq safe-local-variable-values
-        '((org-export-latex-title-command . "")))
-#+END_SRC
-
 * 編輯器按鍵設置
 
 這邊是我定義的 coldnew-editor-mode 的按鍵設定，每個類型的標條都會附註這裏面的
