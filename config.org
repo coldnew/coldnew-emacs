@@ -3321,31 +3321,35 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
   (require 'erc-autoaway)
 #+end_src
 
-** 設定 prompt 為 ->>
+** 基本設定
+*** 設定 prompt 為 ->>
 
 #+begin_src emacs-lisp
   (setq erc-prompt "->> ")
 #+end_src
 
-** 編碼設定為 utf-8
+*** 編碼設定為 utf-8
 
 #+begin_src emacs-lisp
   (setq erc-server-coding-system '(utf-8 . utf-8))
 #+end_src
 
-** 設定聊天時的行寬為 100
-
-就和寫程式一樣，一行不要太寬比較好
+*** 設定聊天時的行寬為 100
 
 #+begin_src emacs-lisp
   (setq erc-fill-column 100)
 #+end_src
 
-** 當 ERC 啟動時，自動連入 IRC 伺服器
+*** 當 ERC 啟動時，自動連入 IRC 伺服器
 
 #+begin_src emacs-lisp
   (erc-autojoin-mode t)
 #+end_src
+*** 自動將太長的一行文字變成多行
+
+#+BEGIN_SRC emacs-lisp
+  (erc-truncate-mode +1)
+#+END_SRC
 
 ** 設定自動連線的伺服器與聊天室
 
@@ -3421,6 +3425,19 @@ GitHub: https://github.com/kidd/erc-image.el
 #+BEGIN_SRC emacs-lisp
   ;; scale the image preven it too large
   (setq erc-image-inline-rescale 100)
+#+END_SRC
+** 讓 erc 忽略一些系統命令
+
+避免在 erc 中不小心輸入一些系統相關的命令，若遇到這些命令，讓 erc 不要
+將他送出去。
+
+#+BEGIN_SRC emacs-lisp
+  (defun avoid-erc-oops (txt)
+    "When encounter following command, ignore it."
+    (when (member txt '("ls" "xb" "cd"))
+        (setq erc-send-this nil)))
+
+  (add-to-list 'erc-send-pre-hook 'avoid-erc-oops)
 #+END_SRC
 
 * 電子郵件                                                            :email:
@@ -3558,7 +3575,6 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
 
   (coldnew/mu4e-set-default-account "Gmail")
 #+end_src
-
 
 
 * TODO ----------------- Prepare for re-write ---------------------------------
@@ -3971,15 +3987,13 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
 這邊設定我的 Insert-state 的按鍵，部份會和我原本的 emacs 按鍵設置不太一樣。
 
 #+begin_src emacs-lisp
-  ;;  (vim:imap (kbd "C-o") 'evil-execute-in-normal-state)
-  (vim:imap (kbd "C-o") 'evil-normal-state)
+  (vim:imap (kbd "C-o") 'evil-execute-in-normal-state)
   (vim:imap (kbd "C-l") 'backward-delete-char)
   (vim:imap (kbd "C-w") 'evil-window-map)
   (vim:imap (kbd "M-w") 'kill-ring-save)
   (vim:imap (kbd "M-k") 'kill-region)
   (vim:imap (kbd "C-x C-n") 'evil-complete-previous)
   (vim:imap (kbd "C-x C-n") 'evil-complete-next)
-
 #+end_src
 
 ** Window-sate 按鍵設定
@@ -4747,53 +4761,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
     (vim:mode-map coldnew-editor-map (kbd "C-.")   'repeat)
 #+end_src
 
-** 常用按鍵 (N) (I)
-
-| 按鍵    | 命令             | 用途                   |
-|---------+------------------+------------------------|
-| C-c C-e | eval-and-replace | eval emacs-lisp 命令   |
-| C-x l   | hl-line-mode     | 將游標目前行加上彩色條 |
-| C-x L   | linum-mode       | 切換顯示行號           |
-
-#+begin_src emacs-lisp
-  (vim:mode-map coldnew-editor-map (kbd "C-c C-e") 'eval-and-replace)
-  (vim:mode-map coldnew-editor-map (kbd "C-x l") 'hl-line-mode)
-  (vim:mode-map coldnew-editor-map (kbd "C-x L") 'linum-mode)
-
-  (when (require 'ace-jump-mode nil 'noerror)
-    (vim:mode-nmap coldnew-editor-map (kbd "<SPC>") 'ace-jump-mode))
-#+end_src
-
-| 按鍵 | 命令                     | 用途             |
-|------+--------------------------+------------------|
-| M-y  | helm-show-kill-ring      | 顯示 kill-ring   |
-| M-x  | smex                     | 顯示 emacs 命令  |
-| s-x  | smex-major-mode-commands | 顯示主模式的命令 |
-
-#+BEGIN_SRC emacs-lisp
-  (when (require 'helm nil 'noerror)
-    (vim:mode-map coldnew-editor-map (kbd "M-y") 'helm-show-kill-ring))
-
-  (when (require 'smex nil 'noerror)
-    (vim:mode-map coldnew-editor-map (kbd "M-x") 'smex)
-    (vim:mode-map coldnew-editor-map (kbd "s-x") 'smex-major-mode-commands))
-#+END_SRC
-
-| 按鍵 | 命令                | 用途                         |
-|------+---------------------+------------------------------|
-| M-2  | multi-eshell        | 切換至完整的 eshell 視窗     |
-| M-3  | multi-eshell-switch | 切換目前已打開的 eshell 視窗 |
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (eval-after-load 'eshell
-    '(progn
-       (when (require 'multi-eshell nil 'noerror)
-         (vim:mode-map coldnew-editor-map (kbd "M-2")   'multi-eshell)
-         (vim:mode-map coldnew-editor-map (kbd "M-3")   'multi-eshell-switch)
-         (vim:nmap (kbd "M-2") 'multi-eshell)
-         (vim:nmap (kbd "M-3") 'multi-eshell-switch))))
-#+END_SRC
-
 ** 檔案相關 (N) (I)
 
 | 按鍵 | 命令              | 用途                        |
@@ -4818,20 +4785,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 #+end_src
 
 ** 緩衝區編輯 (I)
-
-| 按鍵    | 命令                | 用途                          |
-|---------+---------------------+-------------------------------|
-| C-x C-y | yank-n-times        | 多次貼上                      |
-| C-x C-l | recenter            | 將游標至於緩衝區中間          |
-| C-x C-i | indent-whole-buffer | 縮排整個緩衝區                |
-| C-x C-q | toggle-read-only    | 切換緩衝區變成唯讀/可寫的狀況 |
-
-#+begin_src emacs-lisp
-  (vim:mode-imap coldnew-editor-map (kbd "C-x C-y")  'yank-n-times)
-  (vim:mode-imap coldnew-editor-map (kbd "C-x C-l")  'recenter)
-  (vim:mode-imap coldnew-editor-map (kbd "C-x C-i")  'indent-whole-buffer)
-  (vim:mode-imap coldnew-editor-map (kbd "C-x C-q")  'toggle-read-only)
-#+end_src
 
 | 按鍵     | 命令                   | 用途         |
 |----------+------------------------+--------------|
@@ -4871,17 +4824,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
   (vim:mode-imap coldnew-editor-map (kbd "s-<SPC>")
                  '(lambda ()(interactive) (insert "\ufeff")))
 #+END_SRC
-
-
-| 按鍵  | 命令                | 用途           |
-|-------+---------------------+----------------|
-| C-M , | beginning-of-buffer | 回到緩衝區開頭 |
-| C-M . | end-of-buffer       | 回到緩衝區尾巴 |
-
-#+begin_src emacs-lisp
-  (vim:mode-imap coldnew-editor-map (kbd "C-M-,") 'beginning-of-buffer)
-  (vim:mode-imap coldnew-editor-map (kbd "C-M-.") 'end-of-buffer)
-#+end_src
 
 ** org-mode 相關按鍵
 
@@ -5639,8 +5581,6 @@ be readable enough to know it's content.
   (setq erc-save-buffer-on-part t)
   (defadvice save-buffers-kill-emacs (before save-logs (arg) activate)
     (save-some-buffers t (lambda () (when (eq major-mode 'erc-mode) t))))
-  ;; truncate long irc buffers
-  (erc-truncate-mode +1)
   ;; enable spell checking
   (erc-spelling-mode 0)
   ;; autoaway setup
@@ -5679,15 +5619,6 @@ be readable enough to know it's content.
         (erc-send-command nickserv-command))))
 #+end_src
 
-*** Function
-
-#+begin_src emacs-lisp
-(defun avoid-erc-oops (txt)
-  (when (member txt '("ls" "xb" "cd"))
-      (setq erc-send-this nil)))
-
-(add-to-list 'erc-send-pre-hook 'avoid-erc-oops)
-#+end_src
 
 * 電子郵件                                                            :email:
 
@@ -6065,14 +5996,21 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 ** Vim 編輯模式按鍵設定 (evil-insert-state-map)                    :noexport:
 
 #+TBLNAME: global-evil-insert
-| 類別   | 按鍵    | 命令             | 描述                               |
-|--------+---------+------------------+------------------------------------|
-| Insert | C-;     | iedit-mode       | 使用 iedit-mode 快速修改同樣的字詞 |
-| Insert | M-v     | er/expand-region | 快速選取游標下的文字、區域         |
-| Insert | C-x C-p | auto-complete    | 呼叫 auto-complete-mode 的自動補全 |
-| Insert | C-/     | undo-tree-undo   | undo                               |
-| Insert | M-/     | undo-tree-redo   | redo                               |
-| Insert | C-x C-n | company-complete | 呼叫 company-mode 的自動補全       |
+| 類別   | 按鍵    | 命令                | 描述                               |
+|--------+---------+---------------------+------------------------------------|
+| Insert | C-;     | iedit-mode          | 使用 iedit-mode 快速修改同樣的字詞 |
+| Insert | M-v     | er/expand-region    | 快速選取游標下的文字、區域         |
+| Insert | C-x C-p | auto-complete       | 呼叫 auto-complete-mode 的自動補全 |
+| Insert | C-/     | undo-tree-undo      | undo                               |
+| Insert | M-/     | undo-tree-redo      | redo                               |
+| Insert | C-x C-n | company-complete    | 呼叫 company-mode 的自動補全       |
+| Insert | C-c C-e | eval-and-replace    | eval emacs-lisp 命令               |
+| Insert | C-x l   | hl-line-mode        | 將游標目前行加上彩色條             |
+| Insert | C-x L   | linum-mode          | 切換顯示行號                       |
+| Insert | C-x C-y | yank-n-times        | 多次貼上                           |
+| Insert | C-x C-l | recenter            | 將游標至於緩衝區中間               |
+| Insert | C-x C-i | indent-whole-buffer | 縮排整個緩衝區                     |
+| Insert | C-x C-q | toggle-read-only    | 切換緩衝區變成唯讀/可寫的狀況      |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="define-key evil-insert-state-map", keys=global-evil-insert)>>
