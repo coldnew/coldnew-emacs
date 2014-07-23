@@ -3546,22 +3546,21 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
 ** 設定我的 email 帳戶列表
 
 #+begin_src emacs-lisp
-  (setq coldnew/mu4e-account-alist
-        '(("Gmail"
-           (mu4e-sent-folder "/Gmail/Sent")
-           (mu4e-drafts-folder "/Gmail/Drafts")
-           (mu4e-trash-folder "/Gmail/Trash")
-           (user-mail-address "coldnew.tw@gmail.com")
-           (smtpmail-smtp-server "smtp.gmail.com")
-           (smtpmail-smtp-service 587)
-           (smtpmail-smtp-user "coldnew.tw@gmail.com")
-           (smtpmail-auth-credentials (smtp-get-password smtpmail-smtp-user)))
-          ("Weintek"
-           (mu4e-sent-folder "/Weintek/Sent")
-           (mu4e-drafts-folder "/Weintek/Drafts")
-           (mu4e-trash-folder "/Weintek/Trash")
-           (user-mail-address "yenchin@weintek.com"))
-          ))
+    (setq coldnew/mu4e-account-alist
+          '(("Gmail"
+             (mu4e-sent-folder "/Gmail/Sent")
+             (mu4e-drafts-folder "/Gmail/Drafts")
+             (mu4e-trash-folder "/Gmail/Trash")
+             (user-mail-address "coldnew.tw@gmail.com")
+             (smtpmail-smtp-server "smtp.gmail.com")
+             (smtpmail-smtp-service 587)
+             (smtpmail-smtp-user "coldnew.tw@gmail.com"))
+            ("Weintek"
+             (mu4e-sent-folder "/Weintek/Sent")
+             (mu4e-drafts-folder "/Weintek/Drafts")
+             (mu4e-trash-folder "/Weintek/Trash")
+             (user-mail-address "yenchin@weintek.com"))
+            ))
 #+end_src
 
 ** 設定預設的帳戶為 Gmail
@@ -3576,6 +3575,13 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
   (coldnew/mu4e-set-default-account "Gmail")
 #+end_src
 
+** 設定 smtp 讓 emacs 可以發送 mail
+
+#+BEGIN_SRC emacs-lisp
+  (setq message-send-mail-function 'smtpmail-send-it
+        smtpmail-stream-type 'starttls
+        starttls-use-gnutls t)
+#+END_SRC
 
 * TODO ----------------- Prepare for re-write ---------------------------------
 
@@ -5619,36 +5625,12 @@ be readable enough to know it's content.
         (erc-send-command nickserv-command))))
 #+end_src
 
-
 * 電子郵件                                                            :email:
-
-** smtp
-*** 取得 smtp 的密碼
-
-在我的 ~/.authinfo.gpg 檔案內容是像這樣的
-
-#+begin_src emacs-lisp
-  (defvar smtp-account-list nil)
-  (defun smtp-get-password (account)
-    (require 'netrc)
-    ;;(if (file-exists-p emacs-authinfo-file) (load-file emacs-authinfo-file))
-    (or (netrc-get smtp-account-list account) ""))
-#+end_src
-
 ** mu4e
-
-*** 設定我的 email 帳戶列表
-
-#+begin_src emacs-lisp
-  (setq message-send-mail-function 'smtpmail-send-it)
-  (setq smtpmail-stream-type 'starttls)
-#+end_src
 
 *** TODO 未整理
 
 #+begin_src emacs-lisp
-    (setq starttls-use-gnutls t)
-
     (defun mu4e~view-fontify-diff ()
       "Colorize diff message."
       (interactive)
