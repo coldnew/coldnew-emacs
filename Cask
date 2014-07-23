@@ -126,6 +126,7 @@
 (depends-on "company-go")
 (depends-on "fuzzy")
 (depends-on "e2wm")
+(depends-on "helm-dash")
 (depends-on "erc-image")
 (depends-on "erc-terminal-notifier")
 (depends-on "org-redmine")

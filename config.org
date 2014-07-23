@@ -1633,6 +1633,7 @@ oscurr 功能，可以直接在目前的檔案裡找相同的字串。
 #+BEGIN_SRC emacs-lisp
   (require 'helm)
   (require 'helm-config)
+  (require 'helm-dash)
 #+END_SRC
 
 ** 全域性啟用 helm-mode
@@ -3357,13 +3358,15 @@ yank-n-times 則可以重複的進行貼上。
 
 *** 連線到 IRC                                                        :irc:
 
+注意到這邊使用加密(SSL)的 port 6697，而不是非加密的 port 6667
+
 #+BEGIN_SRC emacs-lisp
   (defun irc ()
     "Connect to IRC"
     (interactive)
-    (erc :server "irc.freenode.net" :port 6667 :nick erc-nick)
-    (erc :server "irc.debian.org" :port 6667 :nick erc-nick)
-    (erc :server "irc.mozilla.org" :port 6667 :nick erc-nick))
+    (erc-tls :server "irc.freenode.net" :port 6697 :nick erc-nick)
+    (erc-tls :server "irc.debian.org" :port 6697 :nick erc-nick)
+    (erc-tls :server "irc.mozilla.org" :port 6697 :nick erc-nick))
 #+END_SRC
 
 * IRC 聊天通訊                                                          :irc:
@@ -3409,7 +3412,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
   (setq erc-autojoin-channels-alist
         '(
           ;; english channel
-          (".*\\.freenode.net" "#emacs" "#clojure" "##linux" "#yocto" "#poky" "#ubuntu-touch")
+          (".*\\.freenode.net" "#emacs" "#clojure" "##linux" "#yocto" "#ubuntu-touch")
           (".*\\.mozilla.org" "#b2g")
           ;; Chinese channel
           (".*\\.freenode.net" "#emacs.tw" "#tossug" "#coscup")
