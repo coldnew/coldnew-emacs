@@ -13,8 +13,7 @@
 
 ;; Define emacs-dir where all the files live.
 (defvar emacs-dir
-  (file-name-directory
-   (or load-file-name (buffer-file-name)))
+  (file-name-directory (or load-file-name (buffer-file-name)))
   "Define where user load this init.el, this variable will be `~/.emacs.d/' in many case.")
 
 ;; Add directories to emacs's `load-path' recursively.
@@ -59,7 +58,6 @@
 
 ;; Load up org-mode and org-babel
 (require 'org)
-
 (setq org-confirm-babel-evaluate nil)
 
 ;; Load config.org from emacs-dir

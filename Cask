@@ -127,6 +127,7 @@
 (depends-on "fuzzy")
 (depends-on "e2wm")
 (depends-on "helm-dash")
+(depends-on "git-timemachine")
 (depends-on "erc-image")
 (depends-on "erc-terminal-notifier")
 (depends-on "org-redmine")
