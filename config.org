@@ -3583,6 +3583,58 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
         starttls-use-gnutls t)
 #+END_SRC
 
+** 在使用 mu4e 發送信件之前選擇要用的帳戶
+
+#+BEGIN_SRC emacs-lisp
+  (defun coldnew/mu4e-set-account ()
+    "Set the account for composing a message."
+    (interactive)
+    (let* ((account
+            (if mu4e-compose-parent-message
+                (let ((maildir (mu4e-msg-field mu4e-compose-parent-message :maildir)))
+                  (string-match "/\\(.*?\\)/" maildir)
+                  (match-string 1 maildir))
+              (completing-read (format "Compose with account: (%s) "
+                                       (mapconcat #'(lambda (var) (car var)) coldnew/mu4e-account-alist "/"))
+                               (mapcar #'(lambda (var) (car var)) coldnew/mu4e-account-alist)
+                               nil t nil nil (caar coldnew/mu4e-account-alist))))
+           (account-vars (cdr (assoc account coldnew/mu4e-account-alist))))
+      (if account-vars
+          (mapc #'(lambda (var)
+                    (set (car var) (cadr var)))
+                account-vars))))
+
+  (add-hook 'mu4e-compose-pre-hook 'coldnew/mu4e-set-account)
+#+END_SRC
+
+** 針對看起來是 patch 的信件內容加上顏色
+
+#+BEGIN_SRC emacs-lisp
+  (defun mu4e~view-fontify-diff ()
+    "Colorize diff message."
+    (interactive)
+    (let ((inhibit-read-only t))
+      (save-excursion
+        (goto-char (point-min))
+        ;; consider only lines that heuristically look like a citation line...
+        (while (re-search-forward "^\\(\\(\\+\\)[^+]\\|\\(-\\)[^-]\\)" nil t)
+          (let ((cur-point (or (match-beginning 2) (match-beginning 3)))
+                (color (if (match-beginning 2)
+                           "green"
+                         "deep pink")))
+            (end-of-line)
+            (add-text-properties cur-point (point)
+                                 `(face ((foreground-color . ,color))))))
+        (goto-char (point-min))
+        (while (re-search-forward "^\\(\\+\\+\\+\\|---\\)" nil t)
+          (let ((cur-point (match-beginning 1)))
+            (end-of-line)
+            (add-text-properties cur-point (point)
+                                 '(face ((weight . bold)))))))))
+
+  (add-hook 'mu4e-view-mode-hook 'mu4e~view-fontify-diff)
+#+END_SRC
+
 * TODO ----------------- Prepare for re-write ---------------------------------
 
 ref : http://steckerhalter.co.vu/steckemacs.html
@@ -5625,58 +5677,6 @@ be readable enough to know it's content.
         (erc-send-command nickserv-command))))
 #+end_src
 
-* 電子郵件                                                            :email:
-** mu4e
-
-*** TODO 未整理
-
-#+begin_src emacs-lisp
-    (defun mu4e~view-fontify-diff ()
-      "Colorize diff message."
-      (interactive)
-      (let ((inhibit-read-only t))
-        (save-excursion
-          (goto-char (point-min))
-          ;; consider only lines that heuristically look like a citation line...
-          (while (re-search-forward "^\\(\\(\\+\\)[^+]\\|\\(-\\)[^-]\\)" nil t)
-            (let ((cur-point (or (match-beginning 2) (match-beginning 3)))
-                  (color (if (match-beginning 2)
-                             "green"
-                           "deep pink")))
-              (end-of-line)
-              (add-text-properties cur-point (point)
-                                   `(face ((foreground-color . ,color))))))
-          (goto-char (point-min))
-          (while (re-search-forward "^\\(\\+\\+\\+\\|---\\)" nil t)
-            (let ((cur-point (match-beginning 1)))
-              (end-of-line)
-              (add-text-properties cur-point (point)
-                                   '(face ((weight . bold)))))))))
-
-    (add-hook 'mu4e-view-mode-hook 'mu4e~view-fontify-diff)
-#+end_src
-
-#+begin_src emacs-lisp
-  (defun coldnew/mu4e-set-account ()
-    "Set the account for composing a message."
-    (interactive)
-    (let* ((account
-            (if mu4e-compose-parent-message
-                (let ((maildir (mu4e-msg-field mu4e-compose-parent-message :maildir)))
-                  (string-match "/\\(.*?\\)/" maildir)
-                  (match-string 1 maildir))
-              (completing-read (format "Compose with account: (%s) "
-                                       (mapconcat #'(lambda (var) (car var)) coldnew/mu4e-account-alist "/"))
-                               (mapcar #'(lambda (var) (car var)) coldnew/mu4e-account-alist)
-                               nil t nil nil (caar coldnew/mu4e-account-alist))))
-           (account-vars (cdr (assoc account coldnew/mu4e-account-alist))))
-      (if account-vars
-          (mapc #'(lambda (var)
-                    (set (car var) (cadr var)))
-                account-vars))))
-
-  (add-hook 'mu4e-compose-pre-hook 'coldnew/mu4e-set-account)
-#+end_src
 * TODO 全域性按鍵設置                                            :global@key:
 ** 關閉預設的按鍵設定
 
