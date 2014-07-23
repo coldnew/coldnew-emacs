@@ -122,7 +122,6 @@
 (depends-on "go-mode")
 (depends-on "go-eldoc")
 (depends-on "go-errcheck")
-(depends-on "go-lint")
 (depends-on "company-go")
 (depends-on "fuzzy")
 (depends-on "e2wm")

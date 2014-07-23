@@ -11,6 +11,9 @@
 (require 'cask "~/.cask/cask.el")
 (cask-initialize)
 
+;; Use pallet to install packages in emacs
+(require 'pallet)
+
 ;; Define emacs-dir where all the files live.
 (defvar emacs-dir
   (file-name-directory (or load-file-name (buffer-file-name)))
