@@ -5874,8 +5874,8 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | Insert | C-x C-l | recenter            | 將游標至於緩衝區中間               |
 | Insert | C-x C-i | indent-whole-buffer | 縮排整個緩衝區                     |
 | Insert | C-x C-q | toggle-read-only    | 切換緩衝區變成唯讀/可寫的狀況      |
-| Insert | C-M-,  | beginning-of-buffer | 回到緩衝區開頭                     |
-| Insert | C-M-.  | end-of-buffer       | 回到緩衝區尾巴                     |
+| Insert | C-M-,   | beginning-of-buffer | 回到緩衝區開頭                     |
+| Insert | C-M-.   | end-of-buffer       | 回到緩衝區尾巴                     |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="define-key evil-insert-state-map", keys=global-evil-insert)>>
