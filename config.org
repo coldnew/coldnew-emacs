@@ -3645,6 +3645,33 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
   (add-hook 'mu4e-view-mode-hook 'mu4e~view-fontify-diff)
 #+END_SRC
 
+* 文檔幫助                                                             :help:
+
+這邊放置 manpage、womanpage、info 等幫助文檔模式的設定。
+
+** WoMan                                                             :woman:
+
+woman 是 emacs 下顯示 manpage 最好的方式。
+
+*** WoMan 快取儲存位置設定
+
+#+begin_src emacs-lisp
+  (setq woman-cache-filename (concat emacs-cache-dir "woman.cache"))
+#+end_src
+
+*** 對 WoMan 緩衝區上色
+
+#+begin_src emacs-lisp
+  (setq woman-fontify t)
+#+end_src
+
+*** 設定 WoMan doc 寬度
+
+#+BEGIN_SRC emacs-lisp
+  (setq woman-fill-column 100)
+#+END_SRC
+
+
 * TODO ----------------- Prepare for re-write ---------------------------------
 
 ref : http://steckerhalter.co.vu/steckemacs.html
@@ -4235,32 +4262,6 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (define-key minibuffer-local-map (kbd "M-s") (lambda () (interactive) (kill-line 0) (insert "~/Copy/")))
 #+end_src
 
-* 文檔幫助                                                             :info:
-
-這邊放置 manpage、womanpage、info 等幫助文檔模式的設定。
-
-** WoMan                                                              :woman:
-
-woman 是 emacs 下顯示 manpage 最好的方式。
-
-*** WoMan 快取儲存位置設定
-
-#+begin_src emacs-lisp
-  (setq woman-cache-filename (concat emacs-cache-dir "woman.cache"))
-#+end_src
-
-*** 對 woMan 緩衝區上色
-
-#+begin_src emacs-lisp
-  (setq woman-fontify t)
-#+end_src
-
-*** TODO 其他
-#+begin_src emacs-lisp
-  (setq woman-use-topic-at-point nil)
-  ;; Colorful fonts
-  (setq woman-fill-column 100)
-#+end_src
 * org-mode                                                              :org:
 
 因為 org-mode 在這個設定檔裡佔有非常重要的比例，所以獨立出來。
