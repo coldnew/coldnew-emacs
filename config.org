@@ -1850,6 +1850,37 @@ EmacsWiki: http://www.emacswiki.org/emacs//multi-term.el
 #+begin_src emacs-lisp
   (setq multi-term-program "/bin/bash")
 #+end_src
+** shell-pop 彈出式終端
+
+GitHub: https://github.com/kyagi/shell-pop-el
+
+#+BEGIN_SRC emacs-lisp
+  (require 'shell-pop)
+#+END_SRC
+
+** 設定預設的 shell 為 eshell
+#+BEGIN_SRC emacs-lisp
+  (setq shell-pop-term-shell "/bin/bash")
+#+END_SRC
+
+** 終端機類型設定為 ansi-term
+
+#+BEGIN_SRC emacs-lisp
+  (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell))))
+#+END_SRC
+
+** 設定 shell-pop 保持在最下面視窗
+
+#+BEGIN_SRC emacs-lisp
+(setq shell-pop-window-position "bottom"
+#+END_SRC
+
+** 當 emacs 有許多視窗時，讓 shell-pop 維持在最下面的視窗並最大化
+
+#+BEGIN_SRC emacs-lisp
+  (setq shell-pop-full-span t)
+#+END_SRC
+
 * eshell
 
 eshell 是 emacs 下一個非常特殊的終端機 (terminal) 模擬軟體，和一般的
@@ -4043,45 +4074,6 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (setq ac-use-menu-map t)
 #+end_src
 
-* 終端機                                                               :term:
-
-#+begin_src emacs-lisp
-  (defvar emacs-default-shell "/bin/bash"
-    "Default shell for cemacs.")
-  (defvar emacs-popup-shell-window-height 30
-    "Window hight of popup shell.")
-  (defvar emacs-popup-shell-window-position "bottom"
-    "Make popup shell window at buttom by default.")
-#+end_src
-
-
-** shell-pop
-*** 載入相依套件
-#+begin_src emacs-lisp
-  (require 'shell-pop)
-#+end_src
-*** TODO Config :: rewrite since API change
-#+begin_src emacs-lisp
-;;  (shell-pop-set-internal-mode "eshell")
-;;  (shell-pop-set-internal-mode-shell emacs-default-shell)
-;;  (shell-pop-set-window-height emacs-popup-shell-window-height)
-;;  (shell-pop-set-window-position emacs-popup-shell-window-position)
-
-  (defadvice shell-pop (before kill-dead-term activate)
-    "If there is a stopped ansi-term, kill it and create a new one."
-    (let ((running-p (term-check-proc (buffer-name)))
-          (term-p (string= "term-mode" major-mode)))
-      (if term-p
-          (when (not running-p)
-            (kill-buffer (buffer-name))
-            (shell-pop-out)))))
-#+end_src
-
-** shell mode
-
-#+begin_src emacs-lisp
-  (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-#+end_src
 * 文件加密                                                          :encrypt:
 
 對於一些和隱私比較相關的文件，總是希望可以加密起來，讓自己可以更加放心。
