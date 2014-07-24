@@ -3281,6 +3281,15 @@ yank-n-times 則可以重複的進行貼上。
     (next-line 1))
 #+end_src
 
+*** 插入目前的時間
+
+#+begin_src emacs-lisp
+  (defun insert-date-time ()
+    "Insert current-date."
+    (interactive)
+    (insert (current-date-time)))
+#+end_src
+
 ** 資訊收尋
 
 *** 到 stackoverflow 收尋
@@ -5269,35 +5278,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
           ))
 #+end_src
 
-
-** QML
-
-*** 快速插入樣板
-#+begin_src emacs-lisp
-  (setq qml-mode-expand-alist
-        '(("R" . "Rectangle")
-          ("I" . "Item")
-          ("M" . "MouseArea")
-          ("L" . "ListModel")
-          ("C" . "Component")
-          ("T" . "Text")
-          ("i" . "import")
-          ))
-#+end_src
-*** 自動補全
-#+begin_src emacs-lisp
-  (add-hook 'qml-mode-hook 'ac-qml-mode-setup)
-  (defun ac-qml-mode-setup ()
-    "auto-complete settings for qml-mode"
-    (setq ac-sources
-          '(
-            ac-source-dictionary
-            ac-source-abbrev
-            ac-source-filename
-            ac-source-files-in-current-dir
-            ac-source-words-in-same-mode-buffers
-            )))
-#+end_src
 ** Lisp 通用設定
 
 *** 建立編輯 lisp 程式用的 minor-mode
@@ -5521,24 +5501,6 @@ paredit 可以幫助傳寫程式的速度。
                      "] "
                      )))
 #+end_src
-* 互動式命令                                                        :command:
-
-互動式命令就是可以在 emacs 裏面使用 M-x 然後呼叫的那些 command,
-這邊根據其用途進行分類。
-
-*注意* : 這邊的命令可能依賴我所自訂的 function。
-
-** 插入
-
-*** 插入目前的時間
-
-#+begin_src emacs-lisp
-  (defun insert-date-time ()
-    "Insert current-date."
-    (interactive)
-    (insert (current-date-time)))
-#+end_src
-
 * 窗口管理                                                           :window:
 ** popwin
 
