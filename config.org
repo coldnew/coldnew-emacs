@@ -1872,7 +1872,7 @@ GitHub: https://github.com/kyagi/shell-pop-el
 ** 設定 shell-pop 保持在最下面視窗
 
 #+BEGIN_SRC emacs-lisp
-(setq shell-pop-window-position "bottom"
+(setq shell-pop-window-position "bottom")
 #+END_SRC
 
 ** 當 emacs 有許多視窗時，讓 shell-pop 維持在最下面的視窗並最大化
