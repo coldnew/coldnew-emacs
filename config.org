@@ -3402,7 +3402,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
   (setq erc-hide-list
         '(
           ;; notices
-          "JOIN" "PART" "QUIT" "LEFT" "NICK"
+          "PART" "QUIT" "LEFT" "NICK"
           ;; robot
           "^j[a-z]*bot!" "^fussbot!"
           ))
