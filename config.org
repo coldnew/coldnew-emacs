@@ -3455,7 +3455,7 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
 
 #+BEGIN_SRC emacs-lisp
   (when mac-p
-    (add-to-list 'load-path "/usr/local/Cellar/mu/0.9.9.5/share/emacs/site-lisp/mu4e"))
+    (add-to-list 'load-path "/usr/local/Cellar/mu/HEAD/share/emacs/site-lisp/mu4e"))
 
   (require 'mu4e)
 #+END_SRC
@@ -3496,6 +3496,7 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
 
 #+begin_src emacs-lisp
   (defun offlineimap-get-password (host port)
+    (require 'netrc)
     (let* ((netrc (netrc-parse (expand-file-name "~/.authinfo.gpg")))
            (hostentry (netrc-machine netrc host port port)))
       (when hostentry (netrc-get hostentry "password"))))
