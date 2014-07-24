@@ -3281,14 +3281,6 @@ yank-n-times 則可以重複的進行貼上。
     (next-line 1))
 #+end_src
 
-*** 插入目前的時間
-
-#+begin_src emacs-lisp
-  (defun insert-date-time ()
-    "Insert current-date."
-    (interactive)
-    (insert (current-date-time)))
-#+end_src
 
 ** 資訊收尋
 
@@ -3671,7 +3663,6 @@ woman 是 emacs 下顯示 manpage 最好的方式。
   (setq woman-fill-column 100)
 #+END_SRC
 
-
 * TODO ----------------- Prepare for re-write ---------------------------------
 
 ref : http://steckerhalter.co.vu/steckemacs.html
@@ -3881,73 +3872,6 @@ paredit 可以幫助傳寫程式的速度。
   (setq uniquify-after-kill-buffer-p 1)
   (setq uniquify-ignore-buffers-re "^\\*")
 #+end_src
-* 自定義函式 / 方法                                                :function:
-** TODO 需整理
-*** Date
-#+begin_src emacs-lisp
-  (defun current-date-time ()
-    "return current date in `%Y-%m-%d' format, ex:`2012-04-25'."
-    (let ((system-time-locale "en_US")
-          (format "%Y-%m-%d"))
-      (format-time-string "%Y-%m-%d")))
-
-  (defun day-of-week (year month day)
-    "Returns the day of the week as an integer.
-     Monday is 1."
-    (nth 6 (decode-time (encode-time 0 0 0 day month year))))
-
-  (defun day-of-week-in-string (year month day)
-    "Return the day of the week as day name."
-    (let* ((day-names '("Sunday" "Monday" "Tuesday" "Wednesday"
-                        "Thursday" "Friday" "Saturday"))
-           (day-index (nth 6 (decode-time (encode-time 0 0 0 day month year)))))
-      (nth day-index day-names)))
-#+end_src
-*** other
-#+begin_src emacs-lisp
-  (defun map-define-key (mode-map keylist fname)
-    "Like define-key but the key arg is a list that should be mapped over.
-     For example: (map-define-key '(a b c d) 'function-name)."
-    (mapc (lambda (k) (define-key mode-map k fname))
-          keylist))
-
-  ;;;; ---------------------------------------------------------------------------
-  ;;;; Region
-  ;;;; ---------------------------------------------------------------------------
-  (defun select-region-to-before-match (match &optional dir)
-    "Selects from point to the just before the first match of
-  'match'.  The 'dir' controls direction, if nil or 'forwards then
-  go forwards, if 'backwards go backwards."
-    (let ((start (point))
-          (end nil))
-
-      (transient-mark-mode 1)    ;; Transient mark
-      (push-mark)                ;; Mark the start, where point is now
-
-      (if (or (null dir)
-              (equalp 'forwards dir))
-
-          ;; Move forwards to the next match then back off
-          (progn
-            (search-forward match)
-            (backward-char))
-
-        ;; Or search backwards and move forwards
-        (progn
-          (search-backward match)
-          (forward-char)))
-
-      ;; Store, then hilight
-      (setq end (point))
-      (exchange-point-and-mark)
-
-      ;; And return, swap the start/end depending on direction we're going
-      (if (or (null dir)
-              (equalp 'forwards dir))
-          (list start end)
-        (list end start))))
-#+end_src
-
 * Vim 摹擬                                                              :vim:
 
 ** 預設使用 Insert state
