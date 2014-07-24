@@ -3392,7 +3392,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
           (".*\\.freenode.net" "#emacs" "#clojure" "##linux" "#yocto" "#ubuntu-touch")
           (".*\\.mozilla.org" "#b2g")
           ;; Chinese channel
-          (".*\\.freenode.net" "#emacs.tw" "#tossug" "#coscup")
+          (".*\\.freenode.net" "#emacs.tw" "#tossug" "#coscup" "#g0v.tw")
           (".*\\.oftc.net" "#dot")))
 #+end_src
 
