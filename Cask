@@ -125,6 +125,7 @@
 (depends-on "company-go")
 (depends-on "fuzzy")
 (depends-on "e2wm")
+(depends-on "god-mode")
 (depends-on "helm-dash")
 (depends-on "git-timemachine")
 (depends-on "erc-image")
