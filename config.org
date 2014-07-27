@@ -3389,7 +3389,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
   (setq erc-autojoin-channels-alist
         '(
           ;; english channel
-          (".*\\.freenode.net" "#emacs" "#clojure" "##linux" "#yocto" "#ubuntu-touch")
+          (".*\\.freenode.net" "#emacs" "#clojure" "##linux" "#yocto" "#ubuntu-touch" "#qt")
           (".*\\.mozilla.org" "#b2g")
           ;; Chinese channel
           (".*\\.freenode.net" "#emacs.tw" "#tossug" "#coscup" "#g0v.tw")
@@ -5850,7 +5850,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | Normal | M-l   | downcase-word      | 將整個英文字小寫                      |
 | Normal | M-c   | capitalize-word    | 將英文字字首大寫                      |
 | Normal | j     | next-line          | 下一行                                |
-| Normal | k     | previous-line      | 上一行                                   |
+| Normal | k     | previous-line      | 上一行                                |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="define-key evil-normal-state-map", keys=global-evil-normal)>>
