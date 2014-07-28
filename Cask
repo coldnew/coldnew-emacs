@@ -134,6 +134,8 @@
 (depends-on "erc-terminal-notifier")
 (depends-on "org-redmine")
 (depends-on "deferred")
+(depends-on "powerline")
+(depends-on "powerline-evil")
 (depends-on "dts-mode" :git "https://github.com/coldnew/dts-mode.git")
 (depends-on "bitbake" :git "https://github.com/canatella/bitbake-el.git")
 (depends-on "visual-basic-mode" :git "https://github.com/emacsmirror/visual-basic-mode.git")
