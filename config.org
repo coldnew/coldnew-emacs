@@ -947,7 +947,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
       (19 . 22) (20 . 24) (21 . 26)
       (24 . 28) (26 . 32) (28 . 34)
       (30 . 36) (34 . 40) (36 . 44))
-    "This list is used to store matching (englis . chinese) font-size.")
+    "This list is used to store matching (english . chinese) font-size.")
 
   (defun emacs-step-font-size (step)
     "Increase/Decrease emacs's font size."
