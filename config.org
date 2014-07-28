@@ -2199,7 +2199,7 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
       (message "Updating tags table... Done")))
 #+end_src
 
-* 編輯器
+* 編輯器                                                             :editor:
 
 ** 基本編輯器設定
 
@@ -3401,7 +3401,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
 #+begin_src emacs-lisp
   (setq erc-hide-list
         '(;; notices
-          "PART" "QUIT" "LEFT" "NICK"
+          "JOIN" "PART" "QUIT" "LEFT" "NICK"
           ;; robot
           "^j[a-z]*bot!" "^fussbot!"
           ))
@@ -3456,19 +3456,6 @@ GitHub: https://github.com/kidd/erc-image.el
 #+BEGIN_SRC emacs-lisp
   ;; scale the image preven it too large
   (setq erc-image-inline-rescale 100)
-#+END_SRC
-** 讓 erc 忽略一些系統命令
-
-避免在 erc 中不小心輸入一些系統相關的命令，若遇到這些命令，讓 erc 不要
-將他送出去。
-
-#+BEGIN_SRC emacs-lisp
-  (defun avoid-erc-oops (txt)
-    "When encounter following command, ignore it."
-    (when (member txt '("ls" "xb" "cd"))
-        (setq erc-send-this nil)))
-
-  (add-to-list 'erc-send-pre-hook 'avoid-erc-oops)
 #+END_SRC
 
 * 電子郵件                                                            :email:
@@ -5415,6 +5402,7 @@ paredit 可以幫助傳寫程式的速度。
                      "/"
                      (:eval (propertize "%I" 'face 'font-lock-constant-face)) ;; size
                      "] "
+                     (:eval (aa))
                      )))
 #+end_src
 * 窗口管理                                                           :window:
@@ -5879,4 +5867,12 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="define-key evil-insert-state-map", keys=global-evil-insert)>>
+#+END_SRC
+
+* tmp
+
+#+BEGIN_SRC emacs-lisp
+(defun aa()
+""
+  "1" )
 #+END_SRC
