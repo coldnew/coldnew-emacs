@@ -66,6 +66,11 @@
 ;; Load config.org from emacs-dir
 (org-babel-load-file (expand-file-name "config.org" emacs-dir))
 
+
+;; Load my personal config which can't write on config.org file
+(when (file-exists-p "~/.personal.gpg")
+  (load-file "~/.personal.gpg"))
+
 ;; Done and done!!
 (message "\nEmacs is ready to serve you, Master %s!\n" (getenv "USER"))
 

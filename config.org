@@ -3591,21 +3591,6 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
            (smtpmail-smtp-server "smtp.gmail.com")
            (smtpmail-smtp-service 587)
            (smtpmail-smtp-user "coldnew.tw@gmail.com"))
-          ("Weintek"
-           (mu4e-sent-folder "/Weintek/Sent")
-           (mu4e-drafts-folder "/Weintek/Drafts")
-           (mu4e-trash-folder "/Weintek/Trash")
-           (user-mail-address "yenchin@weintek.com")
-           (smtpmail-smtp-server "www.hibox.hinet.net")
-           (smtpmail-smtp-service 587)
-           (smtpmail-smtp-user "yenchin@weintek.com")
-           (user-full-name "李彥瑾")
-           (mu4e-compose-signature
-            "Best regards,
-  研發一處  李彥瑾(yenchin)
-  Website: www.weintek.com
-  傳真號碼: (886)2-22286771 / 連繫電話: (886)2-22286770
-  新北市 23586 中和區中正路 910 號 9 樓"))
           ))
 #+end_src
 
