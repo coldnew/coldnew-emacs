@@ -568,6 +568,52 @@ emacswiki: http://www.emacswiki.org/emacs/KeyChord
   (require 'rainbow-mode)
 #+END_SRC
 
+** lusty-explorer :: 很棒的檔案尋找程式
+
+#+BEGIN_SRC emacs-lisp
+  (require 'lusty-explorer)
+#+END_SRC
+
+*** 使用 <ENTER> 選擇目前的檔案
+
+#+begin_src emacs-lisp
+  (add-hook 'lusty-setup-hook
+            '(lambda ()
+               (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
+#+end_src
+
+*** 讓 lusty-explorer 能夠使用 sudo 來打開檔案                    :command:
+
+#+begin_src emacs-lisp
+  (defun lusty-sudo-explorer ()
+    "Launch the file/directory mode of LustyExplorer."
+    (interactive)
+    (let ((lusty--active-mode :file-explorer)
+          (lusty-prompt "sudo: >>"))
+      (lusty--define-mode-map)
+      (let* ((lusty--ignored-extensions-regex
+              (concat "\\(?:" (regexp-opt completion-ignored-extensions) "\\)$"))
+             (minibuffer-local-filename-completion-map lusty-mode-map)
+             (file
+              (lusty--run 'read-file-name default-directory "")))
+        (when file
+          (switch-to-buffer
+           (find-file-noselect (concat "/sudo:root@localhost:"
+                                       (expand-file-name file))))))))
+#+end_src
+
+*** 讓 lusty-explorer 使用自己的補全方式，而不是 helm 的補全方式
+
+當 helm-mode 載入完後，將和 lusty-explorer 相關的命令加入至 helm-completing-read-handlers-alist，
+以避免 lusty-explorer 使用 helm-mode 提供的補全方法。
+#+begin_src emacs-lisp
+  (eval-after-load "helm-mode"
+    '(progn
+       (add-to-list 'helm-completing-read-handlers-alist '(lusty-sudo-explorer . nil))
+       (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
+       (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil))))
+#+end_src
+
 * 自定義函式 / 方法                                                :function:
 
 我所自定義或是我的 emacs 設定檔需要用到的 function，這裡面有些 function
@@ -1298,6 +1344,9 @@ normal-state。
                         (mode . lisp-interaction-mode)
                         ))
            )))
+
+  ;; Use this filter groups
+  (add-hook 'ibuffer-mode-hook '(lambda () (ibuffer-switch-to-saved-filter-groups "default")))
 #+END_SRC
 
 *** 設定不顯示在 ibuffer 中的緩衝區名稱
@@ -1332,7 +1381,7 @@ normal-state。
          ))
 #+END_SRC
 
-*** Advice
+*** 修改部分 ibuffer 預設的命令
 
 #+begin_src emacs-lisp
   ;; Reverse group list
@@ -1351,6 +1400,16 @@ normal-state。
     "Kill the ibuffer buffer on exit."
     (kill-buffer "*Ibuffer*"))
 #+end_src
+*** 進入 ibuffer 後將游標當前行上色
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'ibuffer-mode-hook 'hl-line-mode)
+#+END_SRC
+*** 進入 ibuffer 後自動排列檔案名稱
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'ibuffer-mode-hook 'ibuffer-do-sort-by-filename/process)
+#+END_SRC
 
 * Org                                                                   :org:
 
@@ -3817,73 +3876,19 @@ paredit 可以幫助傳寫程式的速度。
             (hungry-delete-forward))))
   #+END_SRC
 
-** TODO lusty-explorer
-
-*** 載入相關套件
-
-#+begin_src emacs-lisp
-  (require 'lusty-explorer)
-#+end_src
-
-*** 使用 <ENTER> 選擇目前的檔案
-
-#+begin_src emacs-lisp
-  (add-hook 'lusty-setup-hook
-            '(lambda ()
-               (define-key lusty-mode-map (kbd "RET") 'lusty-select-current-name)))
-#+end_src
-
-*** 讓 lusty-explorer 能夠使用 sudo 來打開檔案                    :command:
-
-#+begin_src emacs-lisp
-  (defun lusty-sudo-explorer ()
-    "Launch the file/directory mode of LustyExplorer."
-    (interactive)
-    (let ((lusty--active-mode :file-explorer)
-          (lusty-prompt "sudo: >>"))
-      (lusty--define-mode-map)
-      (let* ((lusty--ignored-extensions-regex
-              (concat "\\(?:" (regexp-opt completion-ignored-extensions) "\\)$"))
-             (minibuffer-local-filename-completion-map lusty-mode-map)
-             (file
-              (lusty--run 'read-file-name default-directory "")))
-        (when file
-          (switch-to-buffer
-           (find-file-noselect (concat "/sudo:root@localhost:"
-                                       (expand-file-name file))))))))
-#+end_src
-
-*** 讓 lusty-explorer 使用自己的補全方式，而不是 helm 的補全方式
-
-當 helm-mode 載入完後，將和 lusty-explorer 相關的命令加入至 helm-completing-read-handlers-alist，
-以避免 lusty-explorer 使用 helm-mode 提供的補全方法。
-#+begin_src emacs-lisp
-  (eval-after-load "helm-mode"
-    '(progn
-       (add-to-list 'helm-completing-read-handlers-alist '(lusty-sudo-explorer . nil))
-       (add-to-list 'helm-completing-read-handlers-alist '(lusty-file-explorer . nil))
-       (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil))))
-#+end_src
-
 ** TODO ibuffer                                                    :ibuffer:
 
 *** Keybindings
 #+begin_src emacs-lisp
-  (define-key ibuffer-mode-map (kbd "C-x C-f") 'lusty-file-explorer)
+;;  (define-key ibuffer-mode-map (kbd "C-x C-f") 'lusty-file-explorer)
 #+end_src
 *** Hooks
-**** enable highlight-line
-#+begin_src emacs-lisp
-  (add-hook 'ibuffer-mode-hook 'hl-line-mode)
-#+end_src
+
 **** setting default group
 #+begin_src emacs-lisp
-  (add-hook 'ibuffer-mode-hook '(lambda () (ibuffer-switch-to-saved-filter-groups "default")))
+
 #+end_src
-**** sort filename automatically
-#+begin_src emacs-lisp
-  (add-hook 'ibuffer-mode-hook 'ibuffer-do-sort-by-filename/process)
-#+end_src
+
 ** TODO speedbar
 #+begin_src emacs-lisp
   (require 'speedbar)
