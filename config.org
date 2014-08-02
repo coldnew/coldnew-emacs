@@ -2308,6 +2308,11 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
 #+END_SRC
 * 狀態欄                                                           :modeline:
 
+#+BEGIN_SRC emacs-lisp
+  (require 'powerline)
+  (require 'powerline-coldnew-theme)
+  (powerline-coldnew-theme)
+#+END_SRC
 
 * 程式開發                                                         :language:
 
@@ -5379,7 +5384,7 @@ paredit 可以幫助傳寫程式的速度。
 
 自己定義  mode-line 的樣式。
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (add-to-list 'load-path "~/Workspace/emacs-lisp/emacs-motivation")
 (setq motivation/my-birthday "1988-03-23")
   (require 'motivation)
@@ -5885,11 +5890,4 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="define-key evil-insert-state-map", keys=global-evil-insert)>>
-#+END_SRC
-
-* tmp
-
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'load-path "~/Workspace/emacs-lisp/emacs-motivation")
-  (require 'motivation)
 #+END_SRC
