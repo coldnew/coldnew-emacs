@@ -1110,7 +1110,7 @@ normal-state。
   (setq evil-want-visual-char-semi-exclusive t)
 #+end_src
 
-* Vim 模擬擴充
+* Vim 模擬擴充                                                          :vim:
 
 ** 使用 evil-nerd-commenter 更簡單去將程式註解掉
 
@@ -1683,7 +1683,7 @@ backend，這邊設定某些命令不要使用 helm 作為 backend，而是使�
   <<gen-keys-map(func="define-key", keys=helm-keys)>>
 #+END_SRC
 
-* 自動補全 (AC)
+* 自動補全 (AC)                                                :autocomplete:
 
 auto-complete-mode 是目前使用 emacs 的人都會安裝的自動補全用的 backend，
 他可以透過許多函式庫來協助你更好的在 emacs 中進行補全。在 emacs 中，
@@ -1774,7 +1774,7 @@ auto-complete-mode 本身已經包含一些常用的字典了，這邊加上我�
   <<gen-keys-map(func="define-key", keys=ac-keys)>>
 #+END_SRC
 
-* 自動補全 (Company)
+* 自動補全 (Company)                                                :company:
 
 company-mode 是一個非常強大的補全程式，在 auto-complete-mode 出來之前，他
 應該是最多人使用的。
@@ -1881,7 +1881,7 @@ GitHub: https://github.com/kyagi/shell-pop-el
   (setq shell-pop-full-span t)
 #+END_SRC
 
-* eshell
+* eshell                                                             :eshell:
 
 eshell 是 emacs 下一個非常特殊的終端機 (terminal) 模擬軟體，和一般的
 xterm、konsole、gnome terminal 相比，eshell 完全使用 emacs-lisp 實現，
@@ -2308,6 +2308,8 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
 #+END_SRC
 * 狀態欄                                                           :modeline:
 
+GitHub: https://github.com/milkypostman/powerline
+
 #+BEGIN_SRC emacs-lisp
   (require 'powerline)
   (require 'powerline-coldnew-theme)
@@ -2648,7 +2650,7 @@ minibuffer 上。
   (require 'bitbake)
 #+END_SRC
 
-* 網頁開發
+* 網頁開發                                                              :web:
 
 ** 網頁開發基本設定
 *** 讓 emacs 能與 firefox 溝通
@@ -2869,7 +2871,7 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
   (setq auto-save-list-file-prefix (concat emacs-backup-dir "auto-saves-"))
   (setq auto-save-file-name-transforms `((".*"  ,emacs-backup-dir)))
 #+end_src
-* 命令欄 (minibuffer)
+* 命令欄 (minibuffer)                                            :minibuffer:
 
 ** 設定視窗高度最多為 4 行高
 
@@ -5342,92 +5344,6 @@ paredit 可以幫助傳寫程式的速度。
   (setq jedi:complete-on-dot t)                 ; optional
 #+END_SRC
 
-* 狀態欄                                                           :modeline:
-** 顯示主模式
-
-這個 function 用來定義如何顯示 major-mode，要放入 mode-line-format 才會真的顯示。
-
-#+begin_src emacs-lisp
-  (defun mode-line-major-mode ()
-    "Get major-mode name with << >>."
-    (concat "<< " (propertize mode-name 'face 'mode-line-mode-name-face) " >>"))
-#+end_src
-
-** 顯示 Evil 狀態
-
-這個 function 用來定義如何顯示目前 evil-mode 的狀態，要放入 mode-line-format 才會真的顯示。
-
-#+begin_src emacs-lisp
-  (defun evil-mode-string ()
-    (let ((evil-state-string (substring evil-mode-line-tag 2 3)))
-      (setq evil-state-string-face
-            (cond
-             ((string= "N" evil-state-string) 'evil-state-normal-face)
-             ((string= "I" evil-state-string) 'evil-state-insert-face)
-             ((string= "V" evil-state-string) 'evil-state-visual-face)
-             ((string= "E" evil-state-string) 'evil-state-emacs-face)
-             ))
-      (concat "<" (propertize evil-state-string 'face evil-state-string-face) ">")
-      ))
-#+end_src
-
-** 顯示檔案的權限
-
-#+begin_src emacs-lisp
-  (defun mode-line-buffer-permissions ()
-    "Get buffer-file permissions."
-    (when (buffer-file-name)
-      (format "-%04o-" (file-modes (buffer-file-name)))))
-#+end_src
-
-** 樣式設定
-
-自己定義  mode-line 的樣式。
-
-#+begin_src emacs-lisp :tangle no
-  (add-to-list 'load-path "~/Workspace/emacs-lisp/emacs-motivation")
-(setq motivation/my-birthday "1988-03-23")
-  (require 'motivation)
-  (setq-default mode-line-format
-                  '((" "
-                     mode-line-mule-info
-                     ;; read-only or modified status
-                     (:eval
-                      (cond (buffer-read-only
-                             (propertize "RO" 'face 'mode-line-read-only-face))
-                            ((buffer-modified-p)
-                             (propertize "**" 'face 'mode-line-modified-face))
-                            (t "--")))
-                     "   "
-                     (when (featurep 'evil)
-                       (:eval (evil-mode-string)))
-                     "   "
-                     mode-line-buffer-identification
-                     " " (:eval (mode-line-buffer-permissions))
-                     "   "
-                     ;; major-mode name
-                     (:eval (mode-line-major-mode))
-                     "   "
-                     ;; line and column
-                     "("
-                     (:eval (propertize "%02l" 'face 'font-lock-type-face))
-                     ","
-                     (:eval (propertize "%02c" 'face 'font-lock-type-face))
-                     ")"
-
-                     "   "
-                     (vc-mode vc-mode)
-                     "   "
-                     ;; relative position, size of file
-                     "["
-                     (:eval (propertize "%p" 'face 'font-lock-constant-face)) ;; % above top
-                     "/"
-                     (:eval (propertize "%I" 'face 'font-lock-constant-face)) ;; size
-                     "] "
-                     (when (featurep 'motivation)
-                       (:eval (motivation-display)))
-                     )))
-#+end_src
 * 窗口管理                                                           :window:
 ** popwin
 
@@ -5740,7 +5656,7 @@ be readable enough to know it's content.
 #+END_SRC
 
 * TODO ----------------- Following are re-write ---------------------------------
-* 按鍵設定
+* 按鍵設定                                                           :keymap:
 
 ** 將按鍵表格轉換成 HTML 表格以及 elisp
 
