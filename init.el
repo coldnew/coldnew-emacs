@@ -66,12 +66,10 @@
 ;; Load config.org from emacs-dir
 (org-babel-load-file (expand-file-name "config.org" emacs-dir))
 
-
-;; Load my personal config which can't write on config.org file
-(when (file-exists-p "~/.personal.gpg")
-  (load-file "~/.personal.gpg"))
+;; Load my personal secret config which can't write on config.org file
+(let ((secret-config "~/.personal.gpg"))
+  (when (file-exists-p secret-config) (load-file secret-config)))
 
 ;; Done and done!!
 (message "\nEmacs is ready to serve you, Master %s!\n" (getenv "USER"))
-
 ;;; init.el ends here.
