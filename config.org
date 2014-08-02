@@ -1761,6 +1761,25 @@ auto-complete-mode 本身已經包含一些常用的字典了，這邊加上我�
   (add-to-list 'ac-dictionary-directories (concat emacs-dir "ac-dict"))
 #+end_src
 
+** 自動補全時候忽略大小寫
+
+#+BEGIN_SRC emacs-lisp
+  (setq ac-ignore-case nil)
+#+END_SRC
+
+** 顯示幫助選單
+
+#+BEGIN_SRC emacs-lisp
+  (setq ac-use-quick-help t)
+#+END_SRC
+** 允許設定選單彈出時的按鍵
+
+在按鍵設定中，由於我想要可以設定選單彈出時的按鍵，因此要打開以下選項
+
+#+BEGIN_SRC emacs-lisp
+  (setq ac-use-menu-map t)
+#+END_SRC
+
 ** 按鍵設定
 
 #+TBLNAME: ac-keys
@@ -4060,25 +4079,6 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (vim:wmap "p" 'evil-window-up)
   (vim:wmap "f" 'evil-window-right)
   (vim:wmap "b" 'evil-window-left)
-#+end_src
-
-* 自動補全                                                         :complete:
-
-** TODO 位分類
-#+begin_src emacs-lisp
-  ;; Ignore case if completion target string doesn't include upper characters
-  (setq ac-ignore-case nil)
-
-  ;; Enable auto-complete quick help
-  (setq ac-use-quick-help t)
-
-  ;; After 0.01 sec, show help window
-  (setq ac-quick-help-delay 0.5)
-
-  ;; Show menu
-  (setq ac-auto-show-menu t)
-  ;; Enable ac-menu-map
-  (setq ac-use-menu-map t)
 #+end_src
 
 * 文件加密                                                          :encrypt:
