@@ -67,7 +67,7 @@
 (org-babel-load-file (expand-file-name "config.org" emacs-dir))
 
 ;; Load my personal secret config which can't write on config.org file
-(let ((secret-config "~/.personal.gpg"))
+(let ((secret-config "~/.secret.el.gpg"))
   (when (file-exists-p secret-config) (load-file secret-config)))
 
 ;; Done and done!!
