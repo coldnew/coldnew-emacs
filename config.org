@@ -2306,6 +2306,8 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
   (setq safe-local-variable-values
         '((org-export-latex-title-command . "")))
 #+END_SRC
+* 狀態欄                                                           :modeline:
+
 
 * 程式開發                                                         :language:
 
@@ -5378,6 +5380,9 @@ paredit 可以幫助傳寫程式的速度。
 自己定義  mode-line 的樣式。
 
 #+begin_src emacs-lisp
+  (add-to-list 'load-path "~/Workspace/emacs-lisp/emacs-motivation")
+(setq motivation/my-birthday "1988-03-23")
+  (require 'motivation)
   (setq-default mode-line-format
                   '((" "
                      mode-line-mule-info
@@ -5414,7 +5419,8 @@ paredit 可以幫助傳寫程式的速度。
                      "/"
                      (:eval (propertize "%I" 'face 'font-lock-constant-face)) ;; size
                      "] "
-                     (:eval (aa))
+                     (when (featurep 'motivation)
+                       (:eval (motivation-display)))
                      )))
 #+end_src
 * 窗口管理                                                           :window:
@@ -5884,7 +5890,6 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 * tmp
 
 #+BEGIN_SRC emacs-lisp
-(defun aa()
-""
-  "1" )
+  (add-to-list 'load-path "~/Workspace/emacs-lisp/emacs-motivation")
+  (require 'motivation)
 #+END_SRC
