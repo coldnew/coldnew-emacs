@@ -1,20 +1,24 @@
+* About this config (關於這份配置)
+
 This is coldnew's emacs config file, the main file (config.org) is
 written in Traditional Chinese, feel free to copy.
 
 這是我的 emacs 配置，主要的文件 config.org 全部使用正體中文撰寫，請自由
 的取用他 :)
 
-* NOTE
+* 使用 Cask 安裝依賴的 lisp 套件
 
-I start to switch to use Cask to manage this config, If you want to
-try my config, install Cask first
+如果您想測試我的配置，首先必須安裝 =Cask= 來幫忙下載、取得依賴的 lisp 套
+件。你可以用以下命令將 =Cask= 安裝到您的系統
 
 : curl -fsSkL https://raw.github.com/cask/cask/master/go | python
 
-when finisn, use =cask install= to install elisp dependencies.
+接下來使用 =cask install= 即可將這份 emacs 依賴的檔案安裝進去。
 
-* Packages should install in system
+* 需透過系統命令安裝的套件
 
+這份配置有幾個套件，因為需要編譯或是無法透過 =ELPA= 安裝的，我都是使用
+系統命令去安裝，以下為相關安裝資訊:
 
 - OSX
 
