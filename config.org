@@ -2154,6 +2154,67 @@ them smoothly by typing C-g in anytime.
   (require 'popwin)
   (setq display-buffer-function 'popwin:display-buffer)
 #+END_SRC
+* 文件加密                                                          :encrypt:
+
+對於一些和隱私比較相關的文件，總是希望可以加密起來，讓自己可以更加放心。
+
+在 emacs 中，提供了 [[http://www.emacswiki.org/emacs/EasyPG][Easy PG]] 來協助你加密存文字檔案，你只要很簡單的將你的
+檔案副檔名再加上 *.gpg* ，這樣 emacs 就會向你詢問加密用的密碼。
+
+#+BEGIN_SRC emacs-lisp
+  (require 'epa-file)
+#+END_SRC
+
+** 使用自己設定的密碼加密文件
+
+ 這個變數用來控制 是否彈出選擇密碼類型的視窗 ，他的說明如下
+
+#+BEGIN_EXAMPLE
+  If t, always asks user to select recipients.
+  If nil, query user only when `epa-file-encrypt-to' is not set.
+  If neither t nor nil, doesn't ask user.  In this case, symmetric
+  encryption is used.
+#+END_EXAMPLE
+
+也就是說，如果我們想要加密文件時，使用自己設置的密碼，就將其值設為不是
+t 與 nil 的其他值就好，我的設定如下。
+
+#+BEGIN_SRC emacs-lisp
+  ;; Control whether or not to pop up the key selection dialog.
+  (setq epa-file-select-keys 0)
+#+END_SRC
+
+這樣當你把文件的副檔名加上 .gpg 以後，emacs 會直接要求你輸入密碼，而不是再彈出一個選單來煩你。
+
+** 使用快取來儲存密碼
+
+emacs 預設不會快取你的密碼，也因此每次儲存文件都時候，他都會再來詢問一
+次你的密碼，打開這個變數之後，emacs 就不會一直來詢問你密碼這一回事。
+
+使用快取是否會有危險呢？其實不會，emacs 只會在目前的 session 記住這個密
+碼，你開一個新的 emacs 再來打開這個文件，emacs 還是會要你再輸入一次密碼
+的。
+
+#+BEGIN_SRC emacs-lisp
+  ;; Cache passphrase for symmetric encryption.
+  (setq epa-file-cache-passphrase-for-symmetric-encryption t)
+#+END_SRC
+
+** TODO remove
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; use local gpg program instaed of system one
+  ;; only work under linux
+
+  (cond
+   (linux-64bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg")))
+   (linux-32bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg-x86")))
+   (mac-p (setq epg-gpg-program "/usr/local/bin/gpg")))
+
+  (setenv "GPG_AGENT_INFO" nil)
+
+  (epa-file-enable)
+#+END_SRC
 
 
 * 書籤與暫存器                                                     :bookmark:
@@ -4111,42 +4172,6 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   (vim:wmap "p" 'evil-window-up)
   (vim:wmap "f" 'evil-window-right)
   (vim:wmap "b" 'evil-window-left)
-#+end_src
-
-* 文件加密                                                          :encrypt:
-
-對於一些和隱私比較相關的文件，總是希望可以加密起來，讓自己可以更加放心。
-
-在 emacs 中，提供了 [[http://www.emacswiki.org/emacs/EasyPG][Easy PG]] 來協助你加密存文字檔案，你只要很簡單的將你的
-檔案副檔名再加上 *.gpg* ，這樣 emacs 就會向你詢問加密用的密碼。
-
-** 載入相依套件
-
-#+begin_src emacs-lisp
-  (require 'epa-file)
-#+end_src
-
-** 其他設置
-
-#+begin_src emacs-lisp
-  ;; use local gpg program instaed of system one
-  ;; only work under linux
-
-  (cond
-   (linux-64bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg")))
-   (linux-32bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg-x86")))
-   (mac-p (setq epg-gpg-program "/usr/local/bin/gpg")))
-
-  (setenv "GPG_AGENT_INFO" nil)
-
-  (epa-file-enable)
-
-  ;; Control whether or not to pop up the key selection dialog.
-  (setq epa-file-select-keys 0)
-
-  ;; Cache passphrase for symmetric encryption.
-  (setq epa-file-cache-passphrase-for-symmetric-encryption t)
-
 #+end_src
 
 * 命令欄                                                         :minibuffer:
