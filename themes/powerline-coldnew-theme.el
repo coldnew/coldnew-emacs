@@ -103,8 +103,8 @@
                                  (when vc-mode
                                    (powerline-vc face1)
                                    (powerline-raw " " face1 '1)
-                                   (powerline-narrow face1 'l)
-                                   (funcall separator-left face1 mode-line ))
+                                   (powerline-narrow face1 'l))
+                                 (funcall separator-left face1 mode-line )
                                  (powerline-raw " " mode-line)
                                  (powerline-major-mode mode-line 'l)
                                  (powerline-raw "  " mode-line)
