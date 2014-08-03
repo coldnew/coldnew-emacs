@@ -10,24 +10,8 @@
 (require 'powerline)
 (require 'powerline-evil)
 
-;;;;;;;;;; TODO: remove
-(defun mode-line-major-mode ()
-  "Get major-mode name with << >>."
-  (concat "<< " (propertize mode-name 'face 'mode-line-mode-name-face) " >>"))
-
-(defun evil-mode-string ()
-  (let ((evil-state-string (substring evil-mode-line-tag 2 3)))
-    (setq evil-state-string-face
-          (cond
-           ((string= "N" evil-state-string) 'evil-state-normal-face)
-           ((string= "I" evil-state-string) 'evil-state-insert-face)
-           ((string= "V" evil-state-string) 'evil-state-visual-face)
-           ((string= "E" evil-state-string) 'evil-state-emacs-face)
-           ))
-    (concat "<" (propertize evil-state-string 'face evil-state-string-face) ">")
-    ))
-
-(setq mode-line-format-old
+;; TODO: remove this
+(setq mode-line-format-old-old-old
       '((" "
          mode-line-mule-info
          ;; read-only or modified status
@@ -67,11 +51,13 @@
            (:eval (motivation-display)))
          )))
 
+;; TODO: remove this
 (defun mode-line-buffer-permissions ()
   "Get buffer-file permissions."
   (when (buffer-file-name)
     (format "-%04o-" (file-modes (buffer-file-name)))))
 
+;;;###autoload
 (defun powerline-coldnew-theme ()
   "Powerline's coldnew them with the evil state in color."
   (interactive)
@@ -88,47 +74,65 @@
                           (separator-right (intern (format "powerline-%s-%s"
                                                            powerline-default-separator
                                                            (cdr powerline-default-separator-dir))))
-                          (lhs (list (powerline-raw "%*" nil 'l)
-                                     (powerline-buffer-size nil 'l)
-                                     (powerline-buffer-id nil 'l)
-                                     (powerline-raw " ")
-                                     (funcall separator-left mode-line face1)
-                                     (powerline-narrow face1 'l)
-                                     (powerline-vc face1)))
-                          (rhs (list ;; (powerline-raw global-mode-string face1 'r)
-                                     (powerline-raw "%4l" face1 'r)
-                                     (powerline-raw ":" face1)
-                                     (powerline-raw "%3c" face1 'r)
-                                     (funcall separator-right face1 mode-line)
-                                     (powerline-raw " ")
-                                     (powerline-raw "%6p" nil 'r)
-                                     (powerline-hud face2 face1)))
-                          (center (append (list (powerline-raw " " face1)
-                                                (funcall separator-left face1 face2)
-                                                (when (boundp 'erc-modified-channels-object)
-                                                  (powerline-raw erc-modified-channels-object face2 'l))
-                                                (powerline-major-mode face2 'l)
-                                                (powerline-process face2)
-                                                (powerline-raw " " face2))
-                                          (let ((evil-face (powerline-evil-face)))
-                                            (if (split-string (format-mode-line minor-mode-alist))
-                                                (append (if evil-mode
-                                                            (list (funcall separator-right face2 evil-face)
-                                                                  (powerline-raw (powerline-evil-tag) evil-face 'l)
-                                                                  (powerline-raw " " evil-face)
-                                                                  (funcall separator-left evil-face face2)))
-                                                        (list (powerline-minor-modes face2 'l)
-                                                              (powerline-raw " " face2)
-                                                              (funcall separator-right face2 face1)))
-                                              (list (powerline-raw (powerline-evil-tag) evil-face)
-                                                    (funcall separator-right evil-face face1)))))))
+                          (lhs (append
+                                (let ((evil-face (powerline-evil-face)))
+                                  (append (if evil-mode
+                                              (list (funcall separator-right face2 evil-face)
+                                                    (powerline-raw " " evil-face)
+                                                    (powerline-raw (powerline-evil-tag) evil-face 'l)
+                                                    (powerline-raw " " evil-face)
+                                                    (funcall separator-left evil-face mode-line)))
+
+                                          (list (powerline-minor-modes face2 'l)
+                                                (powerline-raw " " face2)
+                                                (funcall separator-right face2 face1)))
+                                  (list (powerline-raw (powerline-evil-tag) evil-face)
+                                        (funcall separator-left evil-face mode-line)))
+                                (list
+                                 (cond (buffer-read-only
+                                        (propertize "RO" 'face 'mode-line-read-only-face))
+                                       ((buffer-modified-p)
+                                        (propertize "**" 'face 'mode-line-modified-face))
+                                       (t "--"))
+
+                                 (powerline-buffer-id nil 'l)
+                                 (powerline-raw " ")
+                                 (funcall separator-left mode-line face1)
+                                 (powerline-narrow face1 'l)
+                                 (powerline-vc face1)
+                                 (powerline-raw " " face1 '1)
+                                 (powerline-narrow face1 'l)
+                                 (funcall separator-left face1 mode-line )
+                                 (powerline-raw " " mode-line)
+                                 (powerline-major-mode mode-line 'l)
+                                 (powerline-raw "  " mode-line)
+                                 (funcall separator-left mode-line face2)
+                                 ;; (when (and (boundp 'which-func-mode) which-func-mode)
+                                 ;;   (powerline-raw which-func-format face2 'l))
+                                 )))
+                          (rhs (append
+                                (list
+                                 (when (boundp 'erc-modified-channels-object)
+                                   (powerline-raw erc-modified-channels-object face2 'l))
+                                 (powerline-raw "%4l" face1 'r)
+                                 (powerline-raw ":" face1)
+                                 (powerline-raw "%3c" face1 'r)
+                                 (funcall separator-right face1 mode-line)
+                                 (powerline-raw " ")
+                                 (powerline-raw "%6p" nil 'r)
+                                 (powerline-buffer-size nil 'r)
+                                 (powerline-hud face2 face1))))
+                          (center (append (list
+                                           (powerline-process face2)
+                                           (funcall separator-right face2 face1)))))
                      (concat (powerline-render lhs)
-                             (powerline-fill-center face1 (/ (powerline-width center) 2.0))
+                             (powerline-fill-center face2 (/ (powerline-width center) 2))
                              (powerline-render center)
                              (powerline-fill face1 (powerline-width rhs))
                              (powerline-render rhs)))))))
 
 
+(powerline-coldnew-theme)
 
 (provide 'powerline-coldnew-theme)
 ;;; powerline-coldnew-theme.el ends here

@@ -1410,6 +1410,16 @@ normal-state。
 #+BEGIN_SRC emacs-lisp
   (add-hook 'ibuffer-mode-hook 'ibuffer-do-sort-by-filename/process)
 #+END_SRC
+*** 按鍵設定                                                     :noexport:
+
+#+TBLNAME: ibuffer-keys
+| map     | 按鍵    | 命令                | 描述                          |
+|---------+---------+---------------------+-------------------------------|
+| ibuffer-mode | C-x C-f | lusty-file-explorer | 使用 lusty-file-explorer 來尋找檔案|
+
+#+BEGIN_SRC emacs-lisp :noweb yes
+  <<gen-keys-map(func="define-key", keys=ibuffer-keys)>>
+#+END_SRC
 
 * Org                                                                   :org:
 
