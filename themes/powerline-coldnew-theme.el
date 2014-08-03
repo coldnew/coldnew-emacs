@@ -132,7 +132,7 @@
                              (powerline-render rhs)))))))
 
 
-(powerline-coldnew-theme)
+;;(powerline-coldnew-theme)
 
 (provide 'powerline-coldnew-theme)
 ;;; powerline-coldnew-theme.el ends here

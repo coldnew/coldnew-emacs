@@ -1413,9 +1413,9 @@ normal-state。
 *** 按鍵設定                                                     :noexport:
 
 #+TBLNAME: ibuffer-keys
-| map     | 按鍵    | 命令                | 描述                          |
-|---------+---------+---------------------+-------------------------------|
-| ibuffer-mode | C-x C-f | lusty-file-explorer | 使用 lusty-file-explorer 來尋找檔案|
+| map          | 按鍵    | 命令                | 描述                                |
+|--------------+---------+---------------------+-------------------------------------|
+| ibuffer-mode | C-x C-f | lusty-file-explorer | 使用 lusty-file-explorer 來尋找檔案 |
 
 #+BEGIN_SRC emacs-lisp :noweb yes
   <<gen-keys-map(func="define-key", keys=ibuffer-keys)>>
@@ -2138,6 +2138,23 @@ GitHub: https://github.com/kiwanami/emacs-window-manager
 #+BEGIN_SRC emacs-lisp
   (require 'e2wm)
 #+END_SRC
+** 使用 popwin 自動關閉彈出視窗
+
+popwin is a popup window manager for Emacs which makes you free from
+the hell of annoying buffers such like *Help*, *Completions*,
+*compilation*, and etc. Take an example. When you complete file names
+during find-file, the (annoying) *Completions* buffer will appear in a
+newly splitted window. You might understand the necessity of the
+window, but you may wonder why the window still remains after
+completion... popwin resolves there problems. Windows of such
+temporary buffers will be shown as a popup window, and you can close
+them smoothly by typing C-g in anytime.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'popwin)
+  (setq display-buffer-function 'popwin:display-buffer)
+#+END_SRC
+
 
 * 書籤與暫存器                                                     :bookmark:
 
@@ -5358,35 +5375,6 @@ paredit 可以幫助傳寫程式的速度。
   (setq jedi:setup-keys t)                      ; optional
   (setq jedi:complete-on-dot t)                 ; optional
 #+END_SRC
-
-* 窗口管理                                                           :window:
-** popwin
-
-popwin is a popup window manager for Emacs which makes you free from the hell of annoying buffers such like *Help*, *Completions*, *compilation*, and etc.
-Take an example. When you complete file names during find-file, the (annoying) *Completions* buffer will appear in a newly splitted window.
-You might understand the necessity of the window, but you may wonder why the window still remains after completion...
-popwin resolves there problems. Windows of such temporary buffers will be shown as a popup window, and you can close them smoothly by typing C-g in anytime.
-
-#+begin_src emacs-lisp
-  (require 'popwin)
-  (setq display-buffer-function 'popwin:display-buffer)
-#+end_src
-
-** golden-ratio
-
-When working with many windows at the same time, each window has a
-size that is not convenient for editing.
-
-golden-ratio helps on this issue by resizing automatically the windows
-you are working on to the size specified in the "Golden Ratio". The
-window that has the main focus will have the perfect size for editing,
-while the ones that are not being actively edited will be re-sized to
-a smaller size that doesn't get in the way, but at the same time will
-be readable enough to know it's content.
-
-#+begin_src emacs-lisp
-  (require 'golden-ratio nil 'noerror)
-#+end_src
 
 * 聊天軟體                                                             :chat:
 ** IRC
