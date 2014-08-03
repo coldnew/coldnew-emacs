@@ -99,10 +99,12 @@
                                  (powerline-raw " ")
                                  (funcall separator-left mode-line face1)
                                  (powerline-narrow face1 'l)
-                                 (powerline-vc face1)
-                                 (powerline-raw " " face1 '1)
-                                 (powerline-narrow face1 'l)
-                                 (funcall separator-left face1 mode-line )
+                                 ;; Make vc-mode shown only when in vc-mode
+                                 (when vc-mode
+                                   (powerline-vc face1)
+                                   (powerline-raw " " face1 '1)
+                                   (powerline-narrow face1 'l)
+                                   (funcall separator-left face1 mode-line ))
                                  (powerline-raw " " mode-line)
                                  (powerline-major-mode mode-line 'l)
                                  (powerline-raw "  " mode-line)
