@@ -3639,6 +3639,20 @@ GitHub: https://github.com/kidd/erc-image.el
   (setq erc-image-inline-rescale 100)
 #+END_SRC
 
+** 啟用 track-mode
+
+#+BEGIN_SRC emacs-lisp
+  (erc-track-mode t)
+#+END_SRC
+
+** 設定在 erc-track-mode 中不追蹤的訊息類型
+
+#+BEGIN_SRC emacs-lisp
+  (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
+                                  "324" "329" "332" "333" "353" "477"))
+#+END_SRC
+
+
 * 電子郵件                                                            :email:
 
 在 emacs 下有許多不錯用的電子郵件軟體，比如 GNUS、wanderlost 等。我則特別
@@ -5451,10 +5465,7 @@ paredit 可以幫助傳寫程式的速度。
 #+begin_src emacs-lisp
   ;; check channels
   ;; exclude boring stuff from tracking
-  (erc-track-mode t)
-  (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
 
-                                  "324" "329" "332" "333" "353" "477"))
   ;; Interpret mIRC-style color commands in IRC chats
   (setq erc-interpret-mirc-color t)
   ;; The following are commented out by default, but users of other
