@@ -3172,23 +3172,6 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
           (unless (equal major-mode 'lisp-interaction-mode)
             (lisp-interaction-mode))))))
 #+end_src
-*** 跳轉到 erc 緩衝區
-
-#+BEGIN_SRC emacs-lisp
-  (defun switch-to-irc ()
-    "Switch to an IRC buffer, or run `erc-select'.
-      When called repeatedly, cycle through the buffers."
-    (interactive)
-    (let ((buffers (and (fboundp 'erc-buffer-list)
-                        (erc-buffer-list))))
-      (when (eq (current-buffer) (car buffers))
-        (bury-buffer)
-        (setq buffers (cdr buffers)))
-      (if buffers
-          (switch-to-buffer (car buffers))
-        (call-interactively 'erc-select))))
-#+END_SRC
-
 *** 清除除了目前的緩衝區以外的緩衝區
 
 和 nuke-all-buffers 很像，但是這個命令只會保留目前的緩衝區。
@@ -3520,17 +3503,24 @@ yank-n-times 則可以重複的進行貼上。
 
 ** 其他命令
 
-*** 連線到 IRC                                                        :irc:
+*** 連線到 IRC 或是切換到有新資訊的頻道                                  :irc:
 
 注意到這邊使用加密(SSL)的 port 6697，而不是非加密的 port 6667
 
 #+BEGIN_SRC emacs-lisp
-  (defun irc ()
-    "Connect to IRC"
+  (defun erc-start-or-switch ()
+    "Connect to IRC, if already connected, switch to active irc buffer."
     (interactive)
-    (erc-tls :server "irc.freenode.net" :port 6697 :nick erc-nick)
-    (erc-tls :server "irc.debian.org" :port 6697 :nick erc-nick)
-    (erc-tls :server "irc.mozilla.org" :port 6697 :nick erc-nick))
+    (let ((irc-active-p (and (fboundp 'erc-buffer-list)
+                             (erc-buffer-list))))
+      ;; we track irc.freenode.net to make sure erc is already active
+      (if irc-active-p
+          (erc-track-switch-buffer 1)
+        (progn
+          ;; connect to irc server
+          (erc-tls :server "irc.freenode.net" :port 6697 :nick erc-nick)
+          (erc-tls :server "irc.debian.org" :port 6697 :nick erc-nick)
+          (erc-tls :server "irc.mozilla.org" :port 6697 :nick erc-nick)))))
 #+END_SRC
 
 * IRC 聊天通訊                                                          :irc:
@@ -5785,7 +5775,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 快速命令 | M-1     | deft-or-close            | 開啟/關閉 deft-mode                |
 | 快速命令 | M-2     | multi-eshell             | 切換至完整的 eshell 視窗           |
 | 快速命令 | M-3     | multi-eshell-switch      | 切換目前已打開的 eshell 視窗       |
-| 快速命令 | M-4     | switch-to-irc            | 切換到 IRC 緩衝區                  |
+| 快速命令 | M-4     | erc-start-or-switch      | 啟動或切換到 IRC 緩衝區            |
 | 字體調整 | C-=     | increase-emacs-font-size | 放大字體                           |
 | 字體調整 | C--     | decrease-emacs-font-size | 縮小字體                           |
 | 檔案相關 | C-x C-f | lusty-file-explorer      | 查詢並打開檔案                     |
