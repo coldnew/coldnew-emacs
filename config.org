@@ -5795,7 +5795,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 檔案相關 | C-x fx  | set-file-executable      | 為目前檔案加上可執行權限           |
 | 檔案相關 | C-x fc  | clone-file-and-open      | 複製目前檔案到其他檔案並打開       |
 | 檔案相關 | C-x fd  | delete-file-and-buffer   | 刪除目前的檔案與緩衝區             |
-| 緩衝區   | C-x M-e | erc-iswitchb             | 切換到 IRC 緩衝區                  |
+| 緩衝區   | C-x M-4 | erc-iswitchb             | 切換到 IRC 緩衝區                  |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="global-set-key", keys=global-keys)>>
