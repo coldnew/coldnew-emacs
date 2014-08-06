@@ -14,6 +14,7 @@
 (depends-on "bind-key")
 (depends-on "key-chord")
 (depends-on "bm")
+(depends-on "helm-ag")
 (depends-on "c-eldoc")
 (depends-on "cask")
 (depends-on "cider")
