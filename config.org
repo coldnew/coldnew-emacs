@@ -246,6 +246,21 @@ Mac 最常用的 Command 按鍵，在 emacs 下則將他當作是 Alt 按鍵使�
    (setq mac-option-modifier 'super)
    (setq mac-command-modifier 'meta)
 #+END_SRC
+** 關閉 emacs 時不詢問是否要刪除執行中的 process
+
+#+BEGIN_SRC emacs-lisp
+  (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
+    "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+    (flet ((process-list ())) ad-do-it))
+#+END_SRC
+
+** 關閉 process 不進行詢問
+
+#+BEGIN_SRC emacs-lisp
+  (setq kill-buffer-query-functions
+        (remq 'process-kill-buffer-query-function
+              kill-buffer-query-functions))
+#+END_SRC
 
 * 語言與編碼                                                         :locale:
 
