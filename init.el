@@ -72,4 +72,8 @@
 
 ;; Done and done!!
 (message "\nEmacs is ready to serve you, Master %s!\n" (getenv "USER"))
+
+(require 'remote-emacsclient)
+(update-tramp-emacs-server-port-forward tramp-default-method)
+
 ;;; init.el ends here.
