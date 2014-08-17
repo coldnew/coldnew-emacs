@@ -3595,7 +3595,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
           (".*\\.freenode.net" "#emacs" "#clojure" "#wayland" "#libhybris")
           (".*\\.mozilla.org" "#b2g")
           ;; Chinese channel
-          (".*\\.freenode.net" "#emacs.tw" "#tossug" "#coscup" "#g0v.tw")
+          (".*\\.freenode.net" "#emacs.tw" "#tossug" "#coscup" "#g0v.tw" "#clojure.tw" "#lisp.tw")
           (".*\\.oftc.net" "#dot")))
 #+end_src
 
@@ -3673,7 +3673,6 @@ GitHub: https://github.com/kidd/erc-image.el
   (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
                                   "324" "329" "332" "333" "353" "477"))
 #+END_SRC
-
 
 * 電子郵件                                                            :email:
 
