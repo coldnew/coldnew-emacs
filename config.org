@@ -2685,6 +2685,18 @@ cwarn-mode 會顯示出 C/++ 下面一些致命的錯誤，以下面的程式碼
   (add-hook 'c-mode-common-hook '(lambda () (cwarn-mode 1)))
 #+end_src
 
+*** 使用 ctypes 高亮 C/C++ 自行定義的 typedef
+
+ctypes 這個套件可以識別 C/C++ 裏面的 typdef 定義，自動對他們進行語法高
+亮。
+
+#+begin_src emacs-lisp
+  (add-hook 'c-mode-common-hook
+            '(lambda ()
+               (when (require 'ctypes nil 'noerror)
+                 (ctypes-auto-parse-mode 1))))
+#+end_src
+
 ** C
 
 #+begin_src emacs-lisp
@@ -5104,25 +5116,6 @@ C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在�
             (cc-mode:indent-preprocessor-check-pair)))))
 
   #+end_src
-
-*** 使用 ctypes 高亮 C/C++ 自行定義的 typedef
-
-ctypes 這個套件可以識別 C/C++ 裏面的 typdef 定義，自動對他們進行語法高
-亮。
-
-#+begin_src emacs-lisp
-  (add-hook 'c-mode-common-hook
-            '(lambda ()
-               (when (require 'ctypes nil 'noerror)
-                 (ctypes-auto-parse-mode 1))))
-#+end_src
-
-*** comment
-
-ref: http://stackoverflow.com/questions/23172561/c-comment-in-emacs-linux-kernel-style?sgp=2
-#+BEGIN_SRC emacs-lisp
-(setq comment-style 'extra-line)
-#+END_SRC
 
 ** C
 
