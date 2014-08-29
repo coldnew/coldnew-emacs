@@ -3108,6 +3108,54 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
   (savehist-mode 1)
 #+end_src
 
+** 按鍵設定                                                       :noexport:
+
+#+TBLNAME: minibuffer-local-keys
+| map              | 按鍵 | 命令                                | 描述                      |
+|------------------+------+-------------------------------------+---------------------------|
+| minibuffer-local | M-l  | backward-kill-word                  | 刪除前一個詞              |
+| minibuffer-local | M-p  | previous-history-element            | 前一個歷史紀錄            |
+| minibuffer-local | M-n  | next-history-element                | 後一個歷史紀錄            |
+| minibuffer-local | C-g  | minibuffer-keyboard-quit            | 離開 minibuffer           |
+| minibuffer-local | C-u  | coldnew/minibuffer-clear            | 清空 minibuffer           |
+| minibuffer-local | M-t  | coldnew/minibuffer-switch-tmpdir    | 切換到 /tmp 資料夾        |
+| minibuffer-local | M-h  | coldnew/minibuffer-switch-homedir   | 切換到 ~/ 資料夾          |
+| minibuffer-local | M-w  | coldnew/minibuffer-switch-workspace | 切換到 ~/Workspace 資料夾 |
+| minibuffer-local | M-r  | coldnew/minibuffer-switch-rootdir   | 切換到 / 資料夾           |
+
+#+BEGIN_SRC emacs-lisp :noweb yes
+  <<gen-keys-map(func="define-key", keys=minibuffer-local-keys)>>
+#+END_SRC
+
+** 按鍵相關函式/命令
+
+#+BEGIN_SRC emacs-lisp
+  (defun coldnew/minibuffer-clear ()
+    "Clear minibuffer"
+    (interactive) (kill-line 0))
+
+  (defun coldnew/minibuffer-switch-dir (path)
+    "Clear mimibuffer and insert dir path"
+    (kill-line 0) (insert path))
+
+  (defun coldnew/minibuffer-switch-rootdir ()
+    "Switch to tmpdir in minibuffer"
+    (interactive) (coldnew/minibuffer-switch-dir "/"))
+
+  (defun coldnew/minibuffer-switch-tmpdir ()
+    "Switch to tmpdir in minibuffer"
+    (interactive) (coldnew/minibuffer-switch-dir "/tmp"))
+
+  (defun coldnew/minibuffer-switch-homedir ()
+    "Switch to ~/ in minibuffer"
+    (interactive) (coldnew/minibuffer-switch-dir "~/"))
+
+  (defun coldnew/minibuffer-switch-workspace ()
+    "Switch to ~/Workspace in minibuffer"
+    (interactive) (coldnew/minibuffer-switch-dir "~/Workspace"))
+#+END_SRC
+
+
 * 互動式命令                                                        :command:
 
 互動式命令就是可以在 emacs 裏面使用 M-x 然後呼叫的那些 command,
@@ -4244,39 +4292,6 @@ Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define
   ;; Ignore .DS_Store files with ido mode ;;-
   (add-to-list 'ido-ignore-files "\\.DS_Store")
 #+END_SRC
-
-** 按鍵設定
-
-| 按鍵 | 命令                     | 用途               |
-|------+--------------------------+--------------------|
-| M-l  | backward-kill-word       | 刪除前一個詞       |
-| M-p  | previous-history-element | 前一個歷史紀錄     |
-| M-n  | next-history-element     | 後一個歷史紀錄     |
-| C-g  | minibuffer-keyboard-quit | 離開 minibuffer    |
-| C-u  |                          | 清除游標前的文字   |
-| C-t  |                          | 切換到 /tmp 資料夾 |
-| C-h  |                          | 切換到家目錄       |
-
-#+begin_src emacs-lisp
-  (define-key minibuffer-local-map (kbd "M-l") 'backward-kill-word)
-  (define-key minibuffer-local-map (kbd "M-p") 'previous-history-element)
-  (define-key minibuffer-local-map (kbd "M-n") 'next-history-element)
-  (define-key minibuffer-local-map (kbd "C-g") 'minibuffer-keyboard-quit)
-  (define-key minibuffer-local-map (kbd "C-u") (lambda () (interactive) (kill-line 0)))
-#+end_src
-
-
-| 按鍵 | 命令 | 用途               |
-|------+------+--------------------|
-| M-t  |      | 切換到 /tmp 資料夾 |
-| M-h  |      | 切換到家目錄       |
-
-#+begin_src emacs-lisp
-  (define-key minibuffer-local-map (kbd "M-t") (lambda () (interactive) (kill-line 0) (insert "/tmp/")))
-  (define-key minibuffer-local-map (kbd "M-h") (lambda () (interactive) (kill-line 0) (insert "~/")))
-  (define-key minibuffer-local-map (kbd "M-w") (lambda () (interactive) (kill-line 0) (insert "~/Workspace/")))
-  (define-key minibuffer-local-map (kbd "M-s") (lambda () (interactive) (kill-line 0) (insert "~/Copy/")))
-#+end_src
 
 * org-mode                                                              :org:
 
