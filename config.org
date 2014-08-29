@@ -2971,7 +2971,6 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
   <<gen-keys-map2(map="magit-mode", keys=magit-keys)>>
 #+END_SRC
 
-
 * 檔案備份                                                           :backup:
 
 雖然現在大家都有在使用 git、svn 等檔案管理系統，但我們最好還是有其他的
@@ -3145,7 +3144,7 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
 
   (defun coldnew/minibuffer-switch-tmpdir ()
     "Switch to tmpdir in minibuffer"
-    (interactive) (coldnew/minibuffer-switch-dir "/tmp"))
+    (interactive) (coldnew/minibuffer-switch-dir "/tmp/"))
 
   (defun coldnew/minibuffer-switch-homedir ()
     "Switch to ~/ in minibuffer"
@@ -3153,7 +3152,7 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
 
   (defun coldnew/minibuffer-switch-workspace ()
     "Switch to ~/Workspace in minibuffer"
-    (interactive) (coldnew/minibuffer-switch-dir "~/Workspace"))
+    (interactive) (coldnew/minibuffer-switch-dir "~/Workspace/"))
 #+END_SRC
 
 * 互動式命令                                                        :command:
@@ -3604,6 +3603,38 @@ yank-n-times 則可以重複的進行貼上。
           (erc-tls :server "irc.debian.org" :port 6697 :nick erc-nick)
           (erc-tls :server "irc.mozilla.org" :port 6697 :nick erc-nick)))))
 #+END_SRC
+
+*** TODO 切換 Uart 終端機或是目前的緩衝區
+
+#+BEGIN_SRC emacs-lisp
+  (defun serial-term-or-switch ()
+    "Switch to usb serial 1, 2, 3 when exist or switch back to current buffer."
+    (interactive)
+    (let ((serial-list))
+
+      ;; In mac osx, usb serial start at /dev/tty.usbserial
+      (when mac-p
+        (setq serial-list '("/dev/tty.usbserial" "/dev/tty.usbserial1" "/dev/tty.usbserial2")))
+
+      ;; In mac osx, usb serial start at /dev/ttyUSB0
+      (when linux-p
+        (setq serial-list '("/dev/ttyUSB0" "/dev/ttyUSB1" "/dev/ttyUSB2")))
+
+      ;; Check for serial is exist or not, remove from list if not exist
+      (dolist (s serial-list)
+        (unless (and (file-exists-p s) (file-writable-p s))
+          (setq serial-list (delete s serial-list))))
+
+      ;; Do nothing if serial-list is empty list
+      ;;      (unless serial-list
+
+      (message (format "serial: %s" serial-list))
+
+      ))
+  ;;)
+  ;;(serial-term-or-switch)
+#+END_SRC
+
 
 * IRC 聊天通訊                                                          :irc:
 
