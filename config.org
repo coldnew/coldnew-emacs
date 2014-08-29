@@ -1428,12 +1428,12 @@ normal-state。
 *** 按鍵設定                                                     :noexport:
 
 #+TBLNAME: ibuffer-keys
-| map          | 按鍵    | 命令                | 描述                                |
-|--------------+---------+---------------------+-------------------------------------|
-| ibuffer-mode | C-x C-f | lusty-file-explorer | 使用 lusty-file-explorer 來尋找檔案 |
+| 按鍵    | 命令                | 描述                                |
+|---------+---------------------+-------------------------------------|
+| C-x C-f | lusty-file-explorer | 使用 lusty-file-explorer 來尋找檔案 |
 
 #+BEGIN_SRC emacs-lisp :noweb yes
-  <<gen-keys-map(func="define-key", keys=ibuffer-keys)>>
+  <<gen-keys-map2(map="ibuffer-mode", keys=ibuffer-keys)>>
 #+END_SRC
 
 * Org                                                                   :org:
@@ -1759,12 +1759,12 @@ backend，這邊設定某些命令不要使用 helm 作為 backend，而是使�
 ** 按鍵設定                                                       :noexport:
 
 #+TBLNAME: helm-keys
-| map  | 按鍵  | 命令                           | 描述                          |
-|------+-------+--------------------------------+-------------------------------|
-| helm | <tab> | helm-execute-persistent-action | 使用 tab 對 helm 進行自動補全 |
+| 按鍵  | 命令                           | 描述                          |
+|-------+--------------------------------+-------------------------------|
+| <tab> | helm-execute-persistent-action | 使用 tab 對 helm 進行自動補全 |
 
 #+BEGIN_SRC emacs-lisp :noweb yes
-  <<gen-keys-map(func="define-key", keys=helm-keys)>>
+  <<gen-keys-map2(map="helm", keys=helm-keys)>>
 #+END_SRC
 
 * 自動補全 (AC)                                                :autocomplete:
@@ -1892,16 +1892,16 @@ GitHub: https://github.com/company-mode/company-mode
 ** 按鍵設定
 
 #+TBLNAME: company-keys
-| map            | 按鍵  | 命令                       | 描述              |
-|----------------+-------+----------------------------+-------------------|
-| company-active | C-g   | company-abort              | 離開 company-mode |
-| company-active | C-n   | company-select-next        | 下一個補全        |
-| company-active | C-p   | company-select-previous    | 上一個補全        |
-| company-active | TAB   | company-complete-selection | 選擇該補全設定    |
-| company-active | <tab> | company-complete-selection | 選擇該補全設定    |
+| 按鍵  | 命令                       | 描述              |
+|-------+----------------------------+-------------------|
+| C-g   | company-abort              | 離開 company-mode |
+| C-n   | company-select-next        | 下一個補全        |
+| C-p   | company-select-previous    | 上一個補全        |
+| TAB   | company-complete-selection | 選擇該補全設定    |
+| <tab> | company-complete-selection | 選擇該補全設定    |
 
 #+BEGIN_SRC emacs-lisp :noweb yes
-  <<gen-keys-map(func="define-key", keys=company-keys)>>
+  <<gen-keys-map2(map="company-active", keys=company-keys)>>
 #+END_SRC
 
 * 終端機                                                               :term:
@@ -2968,8 +2968,9 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
 | C-g  | magit-quit-window | 跳出 magit 視窗 |
 
 #+BEGIN_SRC emacs-lisp :noweb yes
-  <<gen-keys(func="define-key magit-mode-map", keys=magit-keys)>>
+  <<gen-keys-map2(map="magit-mode", keys=magit-keys)>>
 #+END_SRC
+
 
 * 檔案備份                                                           :backup:
 
@@ -3111,20 +3112,20 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
 ** 按鍵設定                                                       :noexport:
 
 #+TBLNAME: minibuffer-local-keys
-| map              | 按鍵 | 命令                                | 描述                      |
-|------------------+------+-------------------------------------+---------------------------|
-| minibuffer-local | M-l  | backward-kill-word                  | 刪除前一個詞              |
-| minibuffer-local | M-p  | previous-history-element            | 前一個歷史紀錄            |
-| minibuffer-local | M-n  | next-history-element                | 後一個歷史紀錄            |
-| minibuffer-local | C-g  | minibuffer-keyboard-quit            | 離開 minibuffer           |
-| minibuffer-local | C-u  | coldnew/minibuffer-clear            | 清空 minibuffer           |
-| minibuffer-local | M-t  | coldnew/minibuffer-switch-tmpdir    | 切換到 /tmp 資料夾        |
-| minibuffer-local | M-h  | coldnew/minibuffer-switch-homedir   | 切換到 ~/ 資料夾          |
-| minibuffer-local | M-w  | coldnew/minibuffer-switch-workspace | 切換到 ~/Workspace 資料夾 |
-| minibuffer-local | M-r  | coldnew/minibuffer-switch-rootdir   | 切換到 / 資料夾           |
+| 按鍵 | 命令                                | 描述                      |
+|------+-------------------------------------+---------------------------|
+| M-l  | backward-kill-word                  | 刪除前一個詞              |
+| M-p  | previous-history-element            | 前一個歷史紀錄            |
+| M-n  | next-history-element                | 後一個歷史紀錄            |
+| C-g  | minibuffer-keyboard-quit            | 離開 minibuffer           |
+| C-u  | coldnew/minibuffer-clear            | 清空 minibuffer           |
+| M-t  | coldnew/minibuffer-switch-tmpdir    | 切換到 /tmp 資料夾        |
+| M-h  | coldnew/minibuffer-switch-homedir   | 切換到 ~/ 資料夾          |
+| M-w  | coldnew/minibuffer-switch-workspace | 切換到 ~/Workspace 資料夾 |
+| M-r  | coldnew/minibuffer-switch-rootdir   | 切換到 / 資料夾           |
 
 #+BEGIN_SRC emacs-lisp :noweb yes
-  <<gen-keys-map(func="define-key", keys=minibuffer-local-keys)>>
+  <<gen-keys-map2(map="minibuffer-local", keys=minibuffer-local-keys)>>
 #+END_SRC
 
 ** 按鍵相關函式/命令
@@ -3154,7 +3155,6 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
     "Switch to ~/Workspace in minibuffer"
     (interactive) (coldnew/minibuffer-switch-dir "~/Workspace"))
 #+END_SRC
-
 
 * 互動式命令                                                        :command:
 
@@ -5755,13 +5755,13 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 
 #+NAME: gen-keys
 #+BEGIN_SRC emacs-lisp :results output :tangle no :exports none :colnames nil
-  (mapcar (lambda (l)
-            (let* ((key (nth 0 l))
-                   (def (format "%s (kbd \"%s\")" func key))
-                   (command (nth 1 l)))
-              (princ (format "(%s '%s)\n" def command))))
-          ;; remove all `hline' tag first line in list
-          (cdr (remove 'hline keys)))
+    (mapcar (lambda (l)
+              (let* ((key (nth 0 l))
+                     (def (format "%s (kbd \"%s\")" func key))
+                     (command (nth 1 l)))
+                (princ (format "(%s '%s)\n" def command))))
+            ;; remove all `hline' tag first line in list
+            (cdr (remove 'hline keys)))
 #+END_SRC
 
 #+NAME: gen-keys-global
@@ -5789,6 +5789,18 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
           ;; remove all `hline' tag first line in list
           (cdr (remove 'hline keys)))
 #+END_SRC
+
+#+NAME: gen-keys-map2
+#+BEGIN_SRC emacs-lisp :results output :tangle no :exports none :colnames nil
+  (mapcar (lambda (l)
+            (let* ((key (nth 0 l))
+                   (def (format "define-key %s-map (kbd \"%s\")" map key))
+                   (command (nth 1 l)))
+              (princ (format "(%s '%s)\n" def command))))
+          ;; remove all `hline' tag first line in list
+          (cdr (remove 'hline keys)))
+#+END_SRC
+
 
 ** 全域性按鍵設定 (global-set-key) :noexport:
 
