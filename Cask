@@ -6,6 +6,7 @@
 (depends-on "ac-slime")
 (depends-on "ace-jump-mode")
 (depends-on "anzu")
+(depends-on "erc-view-log")
 (depends-on "android-mode")
 (depends-on "ascii")
 (depends-on "auto-complete")
