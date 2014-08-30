@@ -2860,6 +2860,13 @@ minibuffer 上。
   (require 'bitbake)
 #+END_SRC
 
+** Lisp 通用設定
+
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
+
+
 * 網頁開發                                                              :web:
 
 ** 網頁開發基本設定
@@ -5390,19 +5397,6 @@ paredit 可以幫助傳寫程式的速度。
   (vim:mode-imap coldnew-lisp-map (kbd "M-(") 'paredit-wrap-round)
 #+END_SRC
 
-** Python
-
-*** 使用 jedi 進行自動補全
-
-[[http://tkf.github.io/emacs-jedi/][jedi.el]] 是 emacs 下非常不錯的 python 自動補全方案。
-
-#+BEGIN_SRC emacs-lisp
-  (require 'jedi)
-  (add-hook 'python-mode-hook 'jedi:setup)
-  (setq jedi:setup-keys t)                      ; optional
-  (setq jedi:complete-on-dot t)                 ; optional
-#+END_SRC
-
 * 聊天軟體                                                             :chat:
 ** IRC
 
@@ -5772,7 +5766,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 |----------+---------+--------------------------+------------------------------------|
 | 文字編輯 | s-<RET> | insert-empty-line        | 插入空白行                         |
 | 文字編輯 | C-l     | backward-delete-char     | 向前刪除字元                       |
-| 文字編輯 | M-l     | backward-delete-word     | 向前刪除詞                      |
+| 文字編輯 | M-l     | backward-delete-word     | 向前刪除詞                         |
 | 緩衝區   | C-x C-b | ibuffer                  | 切換到 ibuffer                     |
 | 資料夾   | C-x C-d | dired                    | 切換到 dired                       |
 | 視窗切換 | C-x F   | fullscreen-window        | 將視窗切換成全螢幕                 |
