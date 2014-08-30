@@ -5541,18 +5541,9 @@ paredit 可以幫助傳寫程式的速度。
   (global-set-key (kbd "C-r n") 'cua-sequence-rectangle)
 #+end_src
 
-** Ctrl-Meta Prefix
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-M-n") 'scroll-other-window)
-  (global-set-key (kbd "C-M-p") 'scroll-other-window-down)
-#+end_src
-
 ** Meta Prefix
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "M-l") 'backward-delete-word)
-  (global-set-key (kbd "M-n") 'scroll-up)
-  (global-set-key (kbd "M-p") 'scroll-down)
   (global-set-key (kbd "M-.") 'helm-etags+-select)
 #+end_src
 
@@ -5781,6 +5772,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 |----------+---------+--------------------------+------------------------------------|
 | 文字編輯 | s-<RET> | insert-empty-line        | 插入空白行                         |
 | 文字編輯 | C-l     | backward-delete-char     | 向前刪除字元                       |
+| 文字編輯 | M-l     | backward-delete-word     | 向前刪除詞                      |
 | 緩衝區   | C-x C-b | ibuffer                  | 切換到 ibuffer                     |
 | 資料夾   | C-x C-d | dired                    | 切換到 dired                       |
 | 視窗切換 | C-x F   | fullscreen-window        | 將視窗切換成全螢幕                 |
@@ -5818,16 +5810,18 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 ** Vim 一般模式按鍵設定 (evil-normal-state-map)                   :noexport:
 
 #+TBLNAME: global-evil-normal
-| 按鍵  | 命令               | 描述                                  |
-|-------+--------------------+---------------------------------------|
-| C-n   | evil-next-line     | 下一行                                |
-| C-p   | evil-previous-line | 上一行                                |
-| <SPC> | ace-jump-mode      | 使用 ace-jump-mode 快速跳轉到符合的字 |
-| M-u   | upcase-word        | 將整個英文字大寫                      |
-| M-l   | downcase-word      | 將整個英文字小寫                      |
-| M-c   | capitalize-word    | 將英文字字首大寫                      |
-| j     | next-line          | 下一行                                |
-| k     | previous-line      | 上一行                                |
+| 按鍵  | 命令                     | 描述                                  |
+|-------+--------------------------+---------------------------------------|
+| C-n   | evil-next-line           | 下一行                                |
+| C-p   | evil-previous-line       | 上一行                                |
+| <SPC> | ace-jump-mode            | 使用 ace-jump-mode 快速跳轉到符合的字 |
+| M-u   | upcase-word              | 將整個英文字大寫                      |
+| M-l   | downcase-word            | 將整個英文字小寫                      |
+| M-c   | capitalize-word          | 將英文字字首大寫                      |
+| j     | next-line                | 下一行                                |
+| k     | previous-line            | 上一行                                |
+| M-n   | scroll-other-window      | 瀏覽另外一個視窗的下一頁              |
+| M-p   | scroll-other-window-down | 瀏覽另外一個視窗的上一頁              |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-evil(state="normal", keys=global-evil-normal)>>
