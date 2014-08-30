@@ -4039,7 +4039,6 @@ iimage 是讓 emacs 可以直接顯示圖片的模式。
   (require 'iimage)
 #+end_src
 
-
 ** 透過 Paredit 來簡化 Lisp 類語言編輯                             :paredit:
 
 [[http://www.emacswiki.org/emacs/ParEdit][ParEdit]] 是一個非常好用的括號批配模式，特別是在寫 lisp 程式的時候，使用
@@ -4077,19 +4076,6 @@ paredit 可以幫助傳寫程式的速度。
         (if (eolp)
             (hungry-delete-forward))))
   #+END_SRC
-
-** TODO ibuffer                                                    :ibuffer:
-
-*** Keybindings
-#+begin_src emacs-lisp
-;;  (define-key ibuffer-mode-map (kbd "C-x C-f") 'lusty-file-explorer)
-#+end_src
-*** Hooks
-
-**** setting default group
-#+begin_src emacs-lisp
-
-#+end_src
 
 ** TODO speedbar
 #+begin_src emacs-lisp
