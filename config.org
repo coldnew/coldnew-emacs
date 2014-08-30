@@ -3635,7 +3635,6 @@ yank-n-times 則可以重複的進行貼上。
   ;;(serial-term-or-switch)
 #+END_SRC
 
-
 * IRC 聊天通訊                                                          :irc:
 
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
@@ -4139,28 +4138,6 @@ paredit 可以幫助傳寫程式的速度。
 #+end_src
 * Vim 摹擬                                                              :vim:
 
-** 預設使用 Insert state
-
-為什麼要預設使用 Insert 模式？我記得曾經我放棄過一次 evil-mode，因為切換到不同模式時，
-他會跑到我不喜歡的 state，比如 Normal-state，這樣讓我感到很煩，每次到新的 mode 就要加他加入到
-evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死了。
-
-直接統一用 insert 模式比較快 :)
-
-準備移植到 evil normal state
-
-#+begin_src emacs-lisp
-  (setq evil-default-state 'insert)
-;;  (setq evil-default-state 'normal)
-#+end_src
-
-#+begin_src emacs-lisp
-    (setq evil-motion-state nil)
-  (setq evil-emacs-state-modes nil)
-
-  ;;evil-motion-state-modes
-#+end_src
-
 ** 綁定按鍵好用的巨集
 
 我很喜歡以前用 vim-mode 時的按鍵定義方式，所以我定義了以下巨集來簡化
@@ -4254,39 +4231,6 @@ evil-mode 的變數，讓他知道這個 mode 預設是用什麼 state，煩死�
     "Binding keymap to evil-visual-state."
     `(evil-define-key 'normal ,map ,key ,cmd)
     `(evil-define-key 'insert ,map ,key ,cmd))
-#+end_src
-
-** 綁定 ex 命令的巨集
-
-Vim 另外一個好用的東西是 ex 命令，這邊另外綁定 evil-ex-define-cmd。
-
-#+begin_src emacs-lisp
-  (defmacro vim:ex-cmd (cmd func)
-    "Binding to evil-ex-define-cmd."
-    `(evil-ex-define-cmd ,cmd ,func))
-#+end_src
-
-** Insert-state 按鍵設定
-
-這邊設定我的 Insert-state 的按鍵，部份會和我原本的 emacs 按鍵設置不太一樣。
-
-#+begin_src emacs-lisp
-  (vim:imap (kbd "C-o") 'evil-execute-in-normal-state)
-  (vim:imap (kbd "C-l") 'backward-delete-char)
-  (vim:imap (kbd "C-w") 'evil-window-map)
-  (vim:imap (kbd "M-w") 'kill-ring-save)
-  (vim:imap (kbd "M-k") 'kill-region)
-  (vim:imap (kbd "C-x C-n") 'evil-complete-previous)
-  (vim:imap (kbd "C-x C-n") 'evil-complete-next)
-#+end_src
-
-** Window-sate 按鍵設定
-
-#+begin_src emacs-lisp
-  (vim:wmap "n" 'evil-window-down)
-  (vim:wmap "p" 'evil-window-up)
-  (vim:wmap "f" 'evil-window-right)
-  (vim:wmap "b" 'evil-window-left)
 #+end_src
 
 * 命令欄                                                         :minibuffer:
@@ -5832,6 +5776,16 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
           (cdr (remove 'hline keys)))
 #+END_SRC
 
+#+NAME: gen-keys-evil
+#+BEGIN_SRC emacs-lisp :results output :tangle no :exports none :colnames nil
+  (mapcar (lambda (l)
+            (let* ((key (nth 0 l))
+                   (def (format "define-key evil-%s-state-map (kbd \"%s\")" state key))
+                   (command (nth 1 l)))
+              (princ (format "(%s '%s)\n" def command))))
+          ;; remove all `hline' tag first line in list
+          (cdr (remove 'hline keys)))
+#+END_SRC
 
 ** 全域性按鍵設定 (global-set-key) :noexport:
 
@@ -5839,6 +5793,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 類別     | 按鍵    | 命令                     | 描述                               |
 |----------+---------+--------------------------+------------------------------------|
 | 文字編輯 | s-<RET> | insert-empty-line        | 插入空白行                         |
+| 文字編輯 | C-l     | backward-delete-char     | 向前刪除字元                       |
 | 緩衝區   | C-x C-b | ibuffer                  | 切換到 ibuffer                     |
 | 資料夾   | C-x C-d | dired                    | 切換到 dired                       |
 | 視窗切換 | C-x F   | fullscreen-window        | 將視窗切換成全螢幕                 |
@@ -5876,42 +5831,42 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 ** Vim 一般模式按鍵設定 (evil-normal-state-map)                   :noexport:
 
 #+TBLNAME: global-evil-normal
-| 類別   | 按鍵  | 命令               | 描述                                  |
-|--------+-------+--------------------+---------------------------------------|
-| Normal | C-n   | evil-next-line     | 下一行                                |
-| Normal | C-p   | evil-previous-line | 上一行                                |
-| Normal | <SPC> | ace-jump-mode      | 使用 ace-jump-mode 快速跳轉到符合的字 |
-| Normal | M-u   | upcase-word        | 將整個英文字大寫                      |
-| Normal | M-l   | downcase-word      | 將整個英文字小寫                      |
-| Normal | M-c   | capitalize-word    | 將英文字字首大寫                      |
-| Normal | j     | next-line          | 下一行                                |
-| Normal | k     | previous-line      | 上一行                                |
+| 按鍵  | 命令               | 描述                                  |
+|-------+--------------------+---------------------------------------|
+| C-n   | evil-next-line     | 下一行                                |
+| C-p   | evil-previous-line | 上一行                                |
+| <SPC> | ace-jump-mode      | 使用 ace-jump-mode 快速跳轉到符合的字 |
+| M-u   | upcase-word        | 將整個英文字大寫                      |
+| M-l   | downcase-word      | 將整個英文字小寫                      |
+| M-c   | capitalize-word    | 將英文字字首大寫                      |
+| j     | next-line          | 下一行                                |
+| k     | previous-line      | 上一行                                |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
-  <<gen-keys-global(func="define-key evil-normal-state-map", keys=global-evil-normal)>>
+  <<gen-keys-evil(state="normal", keys=global-evil-normal)>>
 #+END_SRC
 
 ** Vim 編輯模式按鍵設定 (evil-insert-state-map)                    :noexport:
 
 #+TBLNAME: global-evil-insert
-| 類別   | 按鍵    | 命令                | 描述                               |
-|--------+---------+---------------------+------------------------------------|
-| Insert | C-;     | iedit-mode          | 使用 iedit-mode 快速修改同樣的字詞 |
-| Insert | M-v     | er/expand-region    | 快速選取游標下的文字、區域         |
-| Insert | C-x C-p | auto-complete       | 呼叫 auto-complete-mode 的自動補全 |
-| Insert | C-/     | undo-tree-undo      | undo                               |
-| Insert | M-/     | undo-tree-redo      | redo                               |
-| Insert | C-x C-n | company-complete    | 呼叫 company-mode 的自動補全       |
-| Insert | C-c C-e | eval-and-replace    | eval emacs-lisp 命令               |
-| Insert | C-x l   | hl-line-mode        | 將游標目前行加上彩色條             |
-| Insert | C-x L   | linum-mode          | 切換顯示行號                       |
-| Insert | C-x C-y | yank-n-times        | 多次貼上                           |
-| Insert | C-x C-l | recenter            | 將游標至於緩衝區中間               |
-| Insert | C-x C-i | indent-whole-buffer | 縮排整個緩衝區                     |
-| Insert | C-x C-q | toggle-read-only    | 切換緩衝區變成唯讀/可寫的狀況      |
-| Insert | C-M-,   | beginning-of-buffer | 回到緩衝區開頭                     |
-| Insert | C-M-.   | end-of-buffer       | 回到緩衝區尾巴                     |
+| 按鍵    | 命令                | 描述                               |
+|---------+---------------------+------------------------------------|
+| C-;     | iedit-mode          | 使用 iedit-mode 快速修改同樣的字詞 |
+| M-v     | er/expand-region    | 快速選取游標下的文字、區域         |
+| C-x C-p | auto-complete       | 呼叫 auto-complete-mode 的自動補全 |
+| C-/     | undo-tree-undo      | undo                               |
+| M-/     | undo-tree-redo      | redo                               |
+| C-x C-n | company-complete    | 呼叫 company-mode 的自動補全       |
+| C-c C-e | eval-and-replace    | eval emacs-lisp 命令               |
+| C-x l   | hl-line-mode        | 將游標目前行加上彩色條             |
+| C-x L   | linum-mode          | 切換顯示行號                       |
+| C-x C-y | yank-n-times        | 多次貼上                           |
+| C-x C-l | recenter            | 將游標至於緩衝區中間               |
+| C-x C-i | indent-whole-buffer | 縮排整個緩衝區                     |
+| C-x C-q | toggle-read-only    | 切換緩衝區變成唯讀/可寫的狀況      |
+| C-M-,   | beginning-of-buffer | 回到緩衝區開頭                     |
+| C-M-.   | end-of-buffer       | 回到緩衝區尾巴                     |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
-  <<gen-keys-global(func="define-key evil-insert-state-map", keys=global-evil-insert)>>
+  <<gen-keys-evil(state="insert", keys=global-evil-insert)>>
 #+END_SRC
