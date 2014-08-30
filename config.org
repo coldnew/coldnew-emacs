@@ -5204,22 +5204,6 @@ C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在�
     (add-hook 'c++-mode-hook
               (lambda () (dtrt-indent-mode t))))
 #+end_src
-*** 自動補全設定
-**** 設定用來補全的資訊。
-#+begin_src emacs-lisp
-  (add-hook 'c++-mode-hook 'ac-cpp-mode-setup)
-  (defun ac-cpp-mode-setup ()
-    "auto-complete settings for c-mode."
-    (setq ac-sources '(
-;;                       ac-source-clang
-                       ac-source-dictionary
-                       ac-source-abbrev
-                       ac-source-semantic
-                       ac-source-filename
-                       ac-source-files-in-current-dir
-                       ac-source-words-in-same-mode-buffers
-                       )))
-#+end_src
 *** Keybinding
 #+begin_src emacs-lisp
   (define-key c++-mode-map (kbd "C-x C-o") 'ff-find-other-file)
@@ -5240,7 +5224,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
  ;; remember to remove
   (define-key c++-mode-map (kbd "C-c f") 'cscope-find-this-file)
 #+end_src
-** Emacs Lisp
 
 *** 自動補全
 
@@ -5257,15 +5240,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
                 ac-source-files-in-current-dir
                 ac-source-words-in-same-mode-buffers
                 )))
-#+end_src
-
-*** 快速插入樣板
-#+begin_src emacs-lisp
-  (setq emacs-lisp-mode-expand-alist
-        '(("r" . "require")
-          ("d" . "defun")
-          ("l" . "lambda")
-          ))
 #+end_src
 
 ** Lisp 通用設定
