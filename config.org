@@ -5807,7 +5807,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
   <<gen-keys-global(func="global-set-key", keys=global-keys)>>
 #+END_SRC
 
-** Vim 一般模式按鍵設定 (evil-normal-state-map)                   :noexport:
+** Vim 一般模式按鍵設定 <Normal>                                   :noexport:
 
 #+TBLNAME: global-evil-normal
 | 按鍵  | 命令                     | 描述                                  |
@@ -5827,7 +5827,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
   <<gen-keys-evil(state="normal", keys=global-evil-normal)>>
 #+END_SRC
 
-** Vim 編輯模式按鍵設定 (evil-insert-state-map)                    :noexport:
+** Vim 編輯模式按鍵設定 <Insert>                                   :noexport:
 
 #+TBLNAME: global-evil-insert
 | 按鍵    | 命令                | 描述                               |
