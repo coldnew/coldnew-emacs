@@ -195,7 +195,7 @@ names to which it refers are bound."
      (cursor ((,class (:background ,cursor))))
      (fringe ((,class (:background ,current-line))))
      (linum ((,class (:foreground ,cursor :background ,background))))
-     (hl-line ((,class (:background ,highlight))))
+     (hl-line ((,class (:background ,selection))))
      ;;     (border ((,class (:background ,current-line))))
      ;;     (border-glyph ((,class (nil))))
      (highlight ((,class (:foreground ,current-line :background ,green))))
