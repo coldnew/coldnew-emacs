@@ -2528,6 +2528,23 @@ NOTE: TODO: DONE:
   (add-hook 'prog-mode-hook 'font-lock-comment-annotations)
 #+end_src
 
+** 替逸脫字元上色 (escape char)
+
+很多語言都有逸脫字元(escape char), 並且語法都是類似 c 語言那樣，這邊也將
+這些字元進行上色。
+
+#+begin_src emacs-lisp
+  (defun font-lock-escape-char ()
+    "Highlight for escape-char
+    This functions should be added to the hooks of major modes for programming."
+    (font-lock-add-keywords
+     nil
+     '(("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
+        0 '(:foreground "seagreen2") prepend))))
+
+  (add-hook 'prog-mode-hook 'font-lock-escape-char)
+#+end_src
+
 * 狀態欄                                                           :modeline:
 
 GitHub: https://github.com/milkypostman/powerline
@@ -4727,18 +4744,6 @@ ref: https://github.com/patriciogonzalezvivo/dot-emacs/blob/master/live-fontify-
             ("[\`^\(){\[,\+\\-\\*/\%><=\s-]\\(-?[0-9]+U?L?L?\\)" 1
              font-lock-constant-face) ; int
             )))
-#+end_src
-
-** 替逸脫字元上色 (escape char)
-
-很多語言都有逸脫字元(escape char), 並且語法都是類似 c 語言那樣，這邊也將
-這些字元進行上色。
-
-#+begin_src emacs-lisp
-  (dolist (mode coldnew/programming-mode)
-    (font-lock-add-keywords mode
-     '(("\\\\\\(?:[abfnrtv'\"?\\0]\\|x[a-fA-F]\\{2\\}\\|[0-7]\\{3\\}\\)"
-        0 '(:foreground "seagreen2") prepend))))
 #+end_src
 
 ** 在寫文件或是程式註解時自動填滿行寬
