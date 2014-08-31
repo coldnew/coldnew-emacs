@@ -2545,6 +2545,24 @@ NOTE: TODO: DONE:
   (add-hook 'prog-mode-hook 'font-lock-escape-char)
 #+end_src
 
+** 行號顯示設定
+
+在大多數的情況下，我會希望行號是可以顯示的
+
+#+begin_src emacs-lisp
+  (global-linum-mode 1)
+#+end_src
+
+設定某些 mode 不顯示行號
+
+#+BEGIN_SRC emacs-lisp
+  (require 'linum-off)
+  (setq linum-disabled-mode-list
+               '(eshell-mode shell-mode term-mode erc-mode compilation-mode
+                 woman-mode w3m-mode calendar-mode org-mode
+                 ))
+#+END_SRC
+
 * 狀態欄                                                           :modeline:
 
 GitHub: https://github.com/milkypostman/powerline
@@ -3716,7 +3734,6 @@ yank-n-times 則可以重複的進行貼上。
         (ecb-minor-mode))))
 #+END_SRC
 
-
 * IRC 聊天通訊                                                          :irc:
 
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
@@ -4785,39 +4802,6 @@ ref: https://github.com/patriciogonzalezvivo/dot-emacs/blob/master/live-fontify-
                            (y-or-n-p (format "Directory %s does not exist. Create it?" dir)))
                   (make-directory dir t))))))
 #+end_src
-
-** 行號顯示設定
-
-- 預設顯示行號
-
-  #+begin_src emacs-lisp
-    (global-linum-mode 1)
-  #+end_src
-
-- 設定某些 Mode 不顯示行號，這邊先設定不顯示行號的 mode-list
-
-  #+begin_src emacs-lisp
-    (setq inhibit-linum-mode-alist
-          '(eshell-mode
-            shell-mode
-            term-mode
-            erc-mode
-            compilation-mode
-            woman-mode
-            w3m-mode
-            calendar-mode
-            org-mode
-            ))
-  #+end_src
-
-- 修正 linum-on 的功能，讓他遇到我們設定不顯示行號的模式時，不啟用 linum-mode
-
-  #+begin_src emacs-lisp
-    (defadvice linum-on (around inhibit-for-modes activate)
-      "Stop turing linum-mode if it is in the inhibit-linum-mode-alist."
-      (unless (member major-mode inhibit-linum-mode-alist)
-        ad-do-it))
-  #+end_src
 
 ** 加入 Doxygen 支援
 
