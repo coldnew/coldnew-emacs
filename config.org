@@ -5389,6 +5389,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 文字編輯 | s-<RET> | insert-empty-line            | 插入空白行                         |
 | 文字編輯 | C-l     | backward-delete-char         | 向前刪除字元                       |
 | 文字編輯 | M-l     | backward-delete-word         | 向前刪除詞                         |
+| 文字編輯 | C-x l   | hl-line-mode                 | 將游標目前行加上彩色條             |
 | 緩衝區   | C-x C-b | ibuffer                      | 切換到 ibuffer                     |
 | 資料夾   | C-x C-d | dired                        | 切換到 dired                       |
 | 視窗切換 | C-x F   | fullscreen-window            | 將視窗切換成全螢幕                 |
@@ -5459,7 +5460,6 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | M-/     | undo-tree-redo                   | redo                               |
 | C-x C-n | company-complete                 | 呼叫 company-mode 的自動補全       |
 | C-c C-e | eval-and-replace                 | eval emacs-lisp 命令               |
-| C-x l   | hl-line-mode                     | 將游標目前行加上彩色條             |
 | C-x L   | linum-mode                       | 切換顯示行號                       |
 | C-x C-y | yank-n-times                     | 多次貼上                           |
 | C-x C-l | recenter                         | 將游標至於緩衝區中間               |
