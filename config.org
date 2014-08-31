@@ -5254,22 +5254,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
   (define-key c++-mode-map (kbd "C-c f") 'cscope-find-this-file)
 #+end_src
 
-*** 自動補全
-
-#+begin_src emacs-lisp
-    (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
-    (defun ac-emacs-lisp-mode-setup ()
-        "auto-complete settings for emacs-lisp-mode"
-        (setq ac-sources
-              '(ac-source-symbols
-                ac-source-variables
-                ac-source-functions
-                ac-source-features
-                ac-source-filename
-                ac-source-files-in-current-dir
-                ac-source-words-in-same-mode-buffers
-                )))
-#+end_src
 
 * 聊天軟體                                                             :chat:
 ** IRC
