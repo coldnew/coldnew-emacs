@@ -2563,6 +2563,23 @@ NOTE: TODO: DONE:
                  ))
 #+END_SRC
 
+** 自動將 lambda 顯示成符號
+
+在 Lisp 程式下，我們很習慣將 lambda 顯示成希臘符號的 λ，由於現在越來越
+多語言也開始引進 lambda 表示式，這邊使用 emacs 24.4 內建的功能來進行
+lambda -> λ 的顯示。
+
+#+BEGIN_SRC emacs-lisp
+  (when (and (>= emacs-major-version 24) (>= emacs-minor-version 4))
+    (global-prettify-symbols-mode 1))
+#+END_SRC
+
+** 對每一個括號進行上色
+
+#+BEGIN_SRC emacs-lisp
+  (global-rainbow-delimiters-mode 1)
+#+END_SRC
+
 * 狀態欄                                                           :modeline:
 
 GitHub: https://github.com/milkypostman/powerline
@@ -2920,10 +2937,6 @@ minibuffer 上。
 #+END_SRC
 
 ** Lisp 通用設定
-
-#+BEGIN_SRC emacs-lisp
-
-#+END_SRC
 
 * 網頁開發                                                              :web:
 
@@ -5234,135 +5247,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
                 ac-source-words-in-same-mode-buffers
                 )))
 #+end_src
-
-** Lisp 通用設定
-
-*** 建立編輯 lisp 程式用的 minor-mode
-
-這個 minor-mode 類似我自己全域使用的 coldnew-editor-mode，但是是針對
-lisp 類語言增加額外的設定。
-
-#+BEGIN_SRC emacs-lisp
-  (defvar coldnew-lisp-map (make-keymap))
-
-  (define-minor-mode coldnew-lisp-mode
-    "coldnew's lisp editing mode."
-    :init-value nil
-    :global nil
-    :keymap coldnew-lisp-map)
-#+END_SRC
-
-定義會被加入到 coldnew-lisp-mode 的 major-mode list
-
-#+begin_src emacs-lisp
-  (defvar coldnew/lisp-mode
-    '(;; emacs
-      emacs-lisp-mode
-      ;; clojure
-      clojure-mode clojurescript-mode clojure-test-mode
-      ;; newlisp
-      newlisp-mode
-      ;; scheme
-      scheme-mode
-      ))
-
-  ;;; Add coldnew/lisp-mode to coldnew-lisp-mode
-  (dolist (mode coldnew/lisp-mode)
-    (let ((hook (intern (concat (symbol-name mode) "-hook"))))
-      (add-hook hook (lambda () (coldnew-lisp-mode 1))
-                ;;    (add-hook hook 'coldnew-lisp-mode)
-                )))
-#+end_src
-
-*** 將 lambdada 以及 fn 變成希臘符號
-
-pretty-lambdada 用來將 lambdada 變成希臘符號
-#+begin_src emacs-lisp
-  (when (require 'pretty-lambdada nil 'noerror)
-    (add-hook 'coldnew-lisp-mode-hook 'pretty-lambda-mode))
-#+end_src
-
-*** 對每一個括號進行上色
-
-#+begin_src emacs-lisp
-  (when (require 'rainbow-delimiters nil 'noerror)
-    (add-hook 'coldnew-lisp-mode-hook '(lambda () (rainbow-delimiters-mode 1))))
-#+end_src
-
-*** 使用 paredit 來簡化括號的操作
-
-[[http://www.emacswiki.org/emacs/ParEdit][ParEdit]] 是一個非常好用的括號批配模式，特別是在寫 lisp 程式的時候，使用
-paredit 可以幫助傳寫程式的速度。
-
-正常來說，要加入 paredit 只需要使用
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (paredit-mode 1)
-#+END_SRC
-
-這樣就足夠了，但是有些按鍵我不希望 paredit 去更改他，因此我重新定義我自
-己習慣的 paredit 案件。*
-
-**** 基本的插入
-
-***** 圓括號
-
-#+BEGIN_SRC emacs-lisp
-  (vim:mode-imap coldnew-lisp-map (kbd "(") 'paredit-open-round)
-  (vim:mode-imap coldnew-lisp-map (kbd ")") 'paredit-close-round)
-  (vim:mode-imap coldnew-lisp-map (kbd "M-)") 'paredit-close-round-and-newline)
-#+END_SRC
-
-***** 方括號
-
-#+BEGIN_SRC emacs-lisp
-  (vim:mode-imap coldnew-lisp-map (kbd "[") 'paredit-open-square)
-  (vim:mode-imap coldnew-lisp-map (kbd "]") 'paredit-close-square)
-#+END_SRC
-
-***** 大括號
-
-#+BEGIN_SRC emacs-lisp
-  (vim:mode-imap coldnew-lisp-map (kbd "{") 'paredit-open-bracket)
-  (vim:mode-imap coldnew-lisp-map (kbd "}") 'paredit-close-bracket)
-#+END_SRC
-
-***** 單、雙引號
-
-#+BEGIN_SRC emacs-lisp
-  (vim:mode-imap coldnew-lisp-map (kbd "\"") 'paredit-doublequote)
-  (vim:mode-imap coldnew-lisp-map (kbd "M-\"") 'paredit-meta-doublequote)
-#+END_SRC
-
-***** 反斜線
-
-#+BEGIN_SRC emacs-lisp
-  (vim:mode-imap coldnew-lisp-map (kbd "\\") 'paredit-backslash)
-#+END_SRC
-
-**** 刪除
-
-#+BEGIN_SRC emacs-lisp
-  (vim:mode-imap coldnew-lisp-map (kbd "C-d") 'paredit-forward-delete)
-  ;;  (vim:mode-imap coldnew-lisp-map (kbd "C-l") 'paredit-backword-delete)
-  (vim:mode-imap coldnew-lisp-map (kbd "C-k") 'paredit-kill)
-  (vim:mode-imap coldnew-lisp-map (kbd "M-d") 'paredit-forward-kill-word)
-  (vim:mode-imap coldnew-lisp-map (kbd "M-l") 'paredit-backward-kill-word)
-#+END_SRC
-
-**** 移動
-
-#+BEGIN_SRC emacs-lisp
-  (vim:mode-imap coldnew-lisp-map (kbd "C-M f") 'paredit-forward)
-  (vim:mode-imap coldnew-lisp-map (kbd "C-M b") 'paredit-backward)
-#+END_SRC
-
-**** 括號等級調整
-
-#+BEGIN_SRC emacs-lisp
-  (vim:mode-imap coldnew-lisp-map (kbd "M-9") 'paredit-wrap-round)
-  (vim:mode-imap coldnew-lisp-map (kbd "M-(") 'paredit-wrap-round)
-#+END_SRC
 
 * 聊天軟體                                                             :chat:
 ** IRC
