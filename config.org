@@ -2460,6 +2460,15 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
   (setq semanticdb-default-save-directory (concat emacs-cache-dir "semanticdb"))
 #+END_SRC
 
+* GDB                                                                   :gdb:
+
+Emacs 本身有內建 GDB 的支援，在這邊主要我使用 realgud 這個重製版的 GDB 套件
+
+GitHub: https://github.com/rocky/emacs-dbgr
+
+#+BEGIN_SRC emacs-lisp
+  (require 'realgud)
+#+END_SRC
 
 * 編輯器                                                             :editor:
 

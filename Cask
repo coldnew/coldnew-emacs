@@ -4,6 +4,7 @@
 (source org)
 
 (depends-on "ac-slime")
+(depends-on "realgud")
 (depends-on "dtrt-indent")
 (depends-on "magit-gitflow")
 (depends-on "linum-off")
