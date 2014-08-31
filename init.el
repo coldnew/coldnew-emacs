@@ -70,6 +70,10 @@
 (let ((secret-config "~/.secret.el.gpg"))
   (when (file-exists-p secret-config) (load-file secret-config)))
 
+;; Some personal config NEED TO REMOVE
+(let ((personal-config "~/.personal.el"))
+  (when (file-exists-p personal-config) (load-file personal-config)))
+
 ;; Done and done!!
 (message "\nEmacs is ready to serve you, Master %s!\n" (getenv "USER"))
 
