@@ -1056,26 +1056,6 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 ** 設定額外的佈景主題變數
 
 #+begin_src emacs-lisp
-  ;; (defface evil-state-normal-face
-  ;;   '((t (:inherit font-lock-function-name-face)))
-  ;;   "face for vim-string in normal-map on mode-line."
-  ;;   :group 'mode-line)
-
-  ;; (defface evil-state-insert-face
-  ;;   '((t (:inherit font-lock-constant-face)))
-  ;;   "face for vim-string in insert-map on mode-line."
-  ;;   :group 'mode-line)
-
-  ;; (defface evil-state-visual-face
-  ;;   '((t (:inherit font-lock-variable-name-face)))
-  ;;   "face for vim-string in visual-map on mode-line."
-  ;;   :group 'mode-line)
-
-  ;; (defface evil-state-emacs-face
-  ;;   '((t (:inherit font-lock-string-face)))
-  ;;   "face for vim-string in emacs-map on mode-line."
-  ;;   :group 'mode-line)
-
   (defface mode-line-read-only-face
     '((t (:foreground "#C82829" :bold t)))
     "face for mode-name-string in modeline."
@@ -5469,7 +5449,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | M-<SPC> | insert-U200B-char                | 插入 <U200B> 字元                  |
 | s-<SPC> | insert-U200B-char                | 插入 <U200B> 字元                  |
 | M-r     | ~rotate-weindow/query-replace    | 旋轉切換視窗/尋找並取代            |
-| C-v     | ~cua-set-mark/cua-rectangle-mark | 選取區域/選取矩形區域                        |
+| C-v     | ~cua-set-mark/cua-rectangle-mark | 選取區域/選取矩形區域              |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-evil(state="insert", keys=global-evil-insert)>>
