@@ -8,6 +8,7 @@
 (depends-on "linum-off")
 (depends-on "evil-paredit")
 (depends-on "ace-jump-mode")
+(depends-on "google-c-style")
 (depends-on "anzu")
 (depends-on "erc-view-log")
 (depends-on "android-mode")

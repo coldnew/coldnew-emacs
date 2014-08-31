@@ -2906,6 +2906,13 @@ C++檔案的依據。
 
 #+END_SRC
 
+*** 預設使用 Google Coding Style
+
+#+BEGIN_SRC emacs-lisp
+  (require 'google-c-style)
+  (add-hook 'cpp-mode-hook 'google-c-style)
+#+END_SRC
+
 ** newlisp
 
 #+begin_src emacs-lisp
@@ -5219,57 +5226,6 @@ C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在�
 #+end_src
 
 ** C++
-
-*** Codinf Style
-#+begin_src emacs-lisp
-    ;;;; CodingStyle
-  (add-hook 'c++-mode-hook
-            '(lambda ()
-
-               ;; TODO: add comment here
-               (setq c-macro-shrink-window-flag t)
-               (setq c-macro-preprocessor "cpp")
-               (setq c-macro-cppflags " ")
-               (setq c-macro-prompt-flag t)
-
-               ;; Use linux-kernel style
-               (c-set-style "linux")
-
-               ;; Setting indentation lvel
-               (setq c-basic-offset 4)
-
-               ;; Make TAB equivilent to 4 spaces
-               (setq tab-width 4)
-
-               ;; Use spaces to indent instead of tabs.
-               (setq indent-tabs-mode nil)
-
-               ;; Indent the continuation by 2
-               (setq c-continued-statement-offset 2)
-
-               ;; Brackets should be at same indentation level as the statements they open
-               ;; for example:
-               ;;                 if (0)        becomes        if (0)
-               ;;                     {                        {
-               ;;                        ;                         ;
-               ;;                     }                        }
-               (c-set-offset 'substatement-open '0)
-               ;; make open-braces after a case
-               (c-set-offset 'case-label '+)
-
-               ))
-
-#+end_src
-#+begin_src emacs-lisp
-      ;; Default clang completion flags
-    ;;    (setq clang-completion-flags
-    (setq ac-clang-flags
-          (split-string
-           (concat
-            "-pthread -I./ -I../ "
-            (shell-command-to-string "pkg-config --cflags-only-I opencv gtk+-3.0"))))
-#+end_src
-
 *** Hooks
 **** 自動猜測縮排風格
 #+begin_src emacs-lisp
