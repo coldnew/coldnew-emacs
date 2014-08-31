@@ -2504,6 +2504,30 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
   (setq safe-local-variable-values
         '((org-export-latex-title-command . "")))
 #+END_SRC
+** 替 FIXME 等關鍵字上色
+
+很多時候我們會再程式碼裏面加上了 FIXME: 等字樣，這邊額外定義我需要高亮的文字。
+
+我設定了對以下關鍵字上色
+
+FIXME: BUG: HACK:
+NOTE: TODO: DONE:
+
+#+begin_src emacs-lisp
+  (defun font-lock-comment-annotations ()
+    "Highlight a bunch of well known comment annotations.
+  This functions should be added to the hooks of major modes for programming."
+    (font-lock-add-keywords
+     nil
+     '(("\\<\\(FIX\\(ME\\)?\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)
+       ("\\<\\(NOTE\\):" 1 'org-level-2 t)
+       ("\\<\\(TODO\\):" 1 'org-todo t)
+       ("\\<\\(DONE\\):" 1 'org-done t))
+     ))
+
+  (add-hook 'prog-mode-hook 'font-lock-comment-annotations)
+#+end_src
+
 * 狀態欄                                                           :modeline:
 
 GitHub: https://github.com/milkypostman/powerline
@@ -2865,7 +2889,6 @@ minibuffer 上。
 #+BEGIN_SRC emacs-lisp
 
 #+END_SRC
-
 
 * 網頁開發                                                              :web:
 
@@ -4679,25 +4702,6 @@ some packages conflict with org-mode
       '(org-mode text-mode latex-mode)
       "Major mode that i will use for writting")
   #+end_src
-
-** 替 FIXME 等關鍵字上色
-
-很多時候我們會再程式碼裏面加上了 FIXME: 等字樣，這邊額外定義我需要高亮的文字。
-
-我設定了對以下關鍵字上色
-
-FIXME: BUG: HACK:
-NOTE: TODO: DONE:
-
-#+begin_src emacs-lisp
-  (dolist (mode coldnew/programming-mode)
-    (font-lock-add-keywords mode
-     '(("\\<\\(FIXME\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)
-       ("\\<\\(NOTE\\):" 1 'org-level-2 t)
-       ("\\<\\(TODO\\):" 1 'org-todo t)
-       ("\\<\\(DONE\\):" 1 'org-done t))
-     ))
-#+end_src
 
 ** TODO 替數字額外上色
 
