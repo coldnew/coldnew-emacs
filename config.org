@@ -5206,40 +5206,6 @@ C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在�
 
   #+end_src
 
-** C
-
-*** 快速插入樣板
-
-#+begin_src emacs-lisp :tangle no
-    (defun c-mode:insert-inc-or-if ()
-      "If at the start of line. add `inc' and expand it,
-    else add `if' and expand it."
-      (interactive)
-      (let* ((current (point))
-             (begin (line-beginning-position)))
-        (if (eq current begin)
-            (progn
-              (c-mode:insert-include)
-              (newline-and-indent))
-          (progn
-            (insert "if")
-            (yas/expand)))))
-
-  (setq c-mode-expand-alist
-        '(("i" . c-mode:insert-inc-or-if)
-          ("m" . "main")
-          ))
-#+end_src
-
-*** make define indent in if
-
-#+begin_src emacs-lisp :tangle no
-  (defun cc-mode:tmp ()
-    (c-set-offset 'cpp-macro 0))
-
-  (add-hook 'c-mode-hook 'cc-mode:tmp)
-#+end_src
-
 * 聊天軟體                                                             :chat:
 ** IRC
 
