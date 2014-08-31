@@ -5125,7 +5125,7 @@ C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在�
 
 *** 縮排 #ifdef 語句
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (defun cc-mode:indent-preprocessor ()
     "Indent #ifdef ... #else ... #endf region as if ... else ... statement.
       This code is based on ppindent.el
