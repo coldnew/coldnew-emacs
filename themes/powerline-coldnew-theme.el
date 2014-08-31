@@ -57,6 +57,15 @@
   (when (buffer-file-name)
     (format "-%04o-" (file-modes (buffer-file-name)))))
 
+
+(defun powerline-simpler-vc-mode (s)
+  ;; (if s
+  ;;     (replace-regexp-in-string "Git:" ":" s)
+  ;;   s)
+
+
+  )
+
 ;;;###autoload
 (defun powerline-coldnew-theme ()
   "Powerline's coldnew them with the evil state in color."
@@ -98,17 +107,22 @@
                                  (powerline-buffer-id nil 'l)
                                  (powerline-raw " ")
                                  (funcall separator-left mode-line face1)
-                                 (powerline-narrow face1 'l)
-                                 ;; Make vc-mode shown only when in vc-mode
-                                 (when vc-mode
-                                   (powerline-vc face1)
-                                   (powerline-raw " " face1 '1)
-                                   (powerline-narrow face1 'l))
+                                 ;; (powerline-narrow face1 'l)
+
+                                 ;;   (powerline-vc face1)
+                                 ;;   (powerline-raw " " face1 '1)
+                                 ;;   (powerline-narrow face1 'l)
+
                                  (funcall separator-left face1 mode-line )
                                  (powerline-raw " " mode-line)
                                  (powerline-major-mode mode-line 'l)
                                  (powerline-raw "  " mode-line)
                                  (funcall separator-left mode-line face2)
+
+                                   (powerline-vc face2)
+                                   (powerline-raw " " face2 '1)
+                                   (powerline-narrow face2 'l)
+
                                  ;; (when (and (boundp 'which-func-mode) which-func-mode)
                                  ;;   (powerline-raw which-func-format face2 'l))
                                  )))
