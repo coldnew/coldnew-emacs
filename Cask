@@ -17,6 +17,7 @@
 (depends-on "auto-complete-clang")
 (depends-on "auto-complete-clang-async")
 (depends-on "bind-key")
+(depends-on "o-blog")
 (depends-on "key-chord")
 (depends-on "bm")
 (depends-on "helm-ag")
