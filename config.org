@@ -5515,6 +5515,8 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 版本管理 | C-x vp  | magit-push                   | push 到遠端的 repo                 |
 | 版本管理 | C-x vf  | magit-gitflow-feature-start  | 使用 git-flow 建立新的特色分支     |
 | 版本管理 | C-x vF  | magit-gitflow-feature-finish | 使用 git-flow 結束新的特色分支     |
+| 版本管理 | C-x vh  | magit-gitflow-hotfix-start   | 使用 git-flow 建立新的 hotfix 分支 |
+| 版本管理 | C-x vH  | magit-gitflow-hotfix-finish  | 使用 git-flow 結束新的 hotfix 分支 |
 | 文字編輯 | C-=     | increase-emacs-font-size     | 放大緩衝區的文字大小               |
 | 文字編輯 | C--     | decrease-emacs-font-size     | 縮小緩衝區的文字大小               |
 | 快速命令 | <f1>    | woman                        | 使用 woman 查看 man 手冊           |
