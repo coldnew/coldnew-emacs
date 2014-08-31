@@ -3109,8 +3109,8 @@ scss-mode 預設會在檔案儲存的時候自動編譯 scss 檔成為 css 檔�
 * 版本管理                                                               :vc:
 
 #+BEGIN_SRC emacs-lisp
-  ;; follow symlinks and don't ask
   (setq vc-follow-symlinks t)
+(setq magit-commit-signoff t)
 #+END_SRC
 
 ** Git                                                                 :git:
@@ -3148,7 +3148,6 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
   (require 'git-gutter-fringe)
   (global-git-gutter-mode)
 #+end_src
-
 *** 使用 git-flow
 
 [[http://nvie.com/posts/a-successful-git-branching-model/][git-flow]] 是一套很推薦使用的 git 版本管理流程
