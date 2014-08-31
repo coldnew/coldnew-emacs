@@ -2447,6 +2447,20 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
   (setq cscope-program "gtags-cscope")
 #+END_SRC
 
+* Cedet                                                               :cedet:
+
+#+BEGIN_SRC emacs-lisp
+  (require 'semantic)
+  (semantic-mode 1)
+#+END_SRC
+
+** 設定 semantic database 存放位置
+
+#+BEGIN_SRC emacs-lisp
+  (setq semanticdb-default-save-directory (concat emacs-cache-dir "semanticdb"))
+#+END_SRC
+
+
 * 編輯器                                                             :editor:
 
 ** 基本編輯器設定
@@ -5098,11 +5112,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 
 * Cedet                                                                :cedet:
 #+begin_src emacs-lisp
-  (require 'semantic)
-
-  ;; Enable Semantic features
-  (semantic-mode 1)
-
   ;; Maintain tag database
   (global-semanticdb-minor-mode 1)
   ;; Reparse buffer when idle
@@ -5121,9 +5130,7 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
   ;; Additional tag decorations
   (global-semantic-decoration-mode -1)
 
-  (setq semanticdb-default-save-directory (concat emacs-cache-dir "semanticdb"))
   (set-default 'semantic-case-fold t)
-
 #+end_src
 
 * 程式開發                                                         :language:
