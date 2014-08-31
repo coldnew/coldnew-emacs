@@ -5315,36 +5315,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
   (setq erc-autoaway-use-emacs-idle t)
 #+end_src
 
-*** Commands
-
-#+begin_src emacs-lisp
-  (defun erc-cmd-WII (nick &rest ignore)
-    "`/WHOIS' command with extra user information."
-    (erc-send-command (mapconcat #'identity
-                                 (list "WHOIS" nick nick) " ")))
-  (defun erc-cmd-IDENTIFY (password &rest ignore)
-    "Short-hand alias for `/msg NickServ identify PASS'."
-    (erc-send-command (mapconcat #'identity
-                                 (list "identify" password) " ")))
-  (defun erc-cmd-CS (&rest args)
-    "Short alias for `/chanserv ARGS'."
-    (let ((command-args (append (list "CHANSERV") args)))
-      (let ((chanserv-command (mapconcat #'identity command-args " ")))
-        (erc-send-command chanserv-command))))
-
-  (defun erc-cmd-MS (&rest args)
-    "Short alias for `/memoserv ARGS'."
-    (let ((command-args (append (list "MEMOSERV") args)))
-      (let ((memoserv-command (mapconcat #'identity command-args " ")))
-        (erc-send-command memoserv-command))))
-
-  (defun erc-cmd-NS (&rest args)
-    "Short alias for `/nickserv ARGS'."
-    (let ((command-args (append (list "NICKSERV") args)))
-      (let ((nickserv-command (mapconcat #'identity command-args " ")))
-        (erc-send-command nickserv-command))))
-#+end_src
-
 * TODO 全域性按鍵設置                                            :global@key:
 ** 關閉預設的按鍵設定
 
