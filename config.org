@@ -5194,11 +5194,6 @@ C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在�
 
 ** C
 
-
-*** TODO 自動偵測 c-basic-offset
-#+begin_src emacs-lisp
-  (require 'guess-offset)
-#+end_src
 *** 快速插入樣板
 
 #+begin_src emacs-lisp
