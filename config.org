@@ -2441,6 +2441,12 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
   (setq cscope-do-not-update-database t)
 #+END_SRC
 
+** 使用 Global 替代原本的 cscope
+
+#+BEGIN_SRC emacs-lisp
+  (setq cscope-program "gtags-cscope")
+#+END_SRC
+
 * 編輯器                                                             :editor:
 
 ** 基本編輯器設定
