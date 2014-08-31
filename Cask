@@ -32,7 +32,6 @@
 (depends-on "diminish")
 (depends-on "dos")
 (depends-on "ecb")
-(depends-on "el-get")
 (depends-on "emacs-eclim")
 (depends-on "epl")
 (depends-on "erc-hl-nicks")

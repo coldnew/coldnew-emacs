@@ -4180,9 +4180,9 @@ paredit 可以幫助傳寫程式的速度。
 #+begin_src emacs-lisp
   (require 'speedbar)
   (setq speedbar-use-images nil)
-  (require 'sr-speedbar)
-  (setq sr-speedbar-right-side nil)
-  (setq sr-speedbar-refresh-turn-on t)
+;;  (require 'sr-speedbar)
+;;  (setq sr-speedbar-right-side nil)
+;;  (setq sr-speedbar-refresh-turn-on t)
 #+end_src
 ** TODO cua                                                            :cua:
 #+begin_src emacs-lisp
