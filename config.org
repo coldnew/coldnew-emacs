@@ -473,7 +473,6 @@ dropdown-list 的形式。
                                yas-ido-prompt))
 #+END_SRC
 
-
 *** 使用 yasnippet 達到 org-mode 的 easy-template 功能
 
 org-mode 的 easy-template 提供使用者輸入 <e 再按下 TAB 就可以進行自動補全的功能,
@@ -2222,22 +2221,6 @@ emacs 預設不會快取你的密碼，也因此每次儲存文件都時候，�
 #+BEGIN_SRC emacs-lisp
   ;; Cache passphrase for symmetric encryption.
   (setq epa-file-cache-passphrase-for-symmetric-encryption t)
-#+END_SRC
-
-** TODO remove
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; use local gpg program instaed of system one
-  ;; only work under linux
-
-  (cond
-   (linux-64bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg")))
-   (linux-32bit-p (setq epg-gpg-program (concat emacs-bin-dir "gpg-x86")))
-   (mac-p (setq epg-gpg-program "/usr/local/bin/gpg")))
-
-  (setenv "GPG_AGENT_INFO" nil)
-
-  (epa-file-enable)
 #+END_SRC
 
 * 書籤與暫存器                                                     :bookmark:
