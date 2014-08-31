@@ -3071,6 +3071,17 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
   (global-git-gutter-mode)
 #+end_src
 
+*** 使用 git-flow
+
+[[http://nvie.com/posts/a-successful-git-branching-model/][git-flow]] 是一套很推薦使用的 git 版本管理流程
+
+GitHub: https://github.com/jtatarik/magit-gitflow
+
+#+BEGIN_SRC emacs-lisp
+  (require 'magit-gitflow)
+  (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
+#+END_SRC
+
 *** 按鍵設定                                                     :noexport:
 
 #+TBLNAME: magit-keys
