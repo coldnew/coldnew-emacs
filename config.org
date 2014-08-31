@@ -1171,6 +1171,12 @@ normal-state。
   (setq evil-want-visual-char-semi-exclusive t)
 #+end_src
 
+** 在 emacs-state 時將游標設定為 (red bar)
+
+#+BEGIN_SRC emacs-lisp
+  (setq evil-emacs-state-cursor '("red" bar))
+#+END_SRC
+
 * Vim 模擬擴充                                                          :vim:
 
 ** 使用 evil-nerd-commenter 更簡單去將程式註解掉
