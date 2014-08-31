@@ -3791,6 +3791,7 @@ emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作�
   (require 'erc-notify)
   (require 'erc-spelling)
   (require 'erc-autoaway)
+  (require 'erc-log)
 #+end_src
 
 ** 基本設定
@@ -3909,6 +3910,30 @@ GitHub: https://github.com/kidd/erc-image.el
 #+BEGIN_SRC emacs-lisp
   (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
                                   "324" "329" "332" "333" "353" "477"))
+#+END_SRC
+
+** 自動對 IRC 聊天進行紀錄
+
+#+BEGIN_SRC emacs-lisp
+  (erc-log-mode 1)
+#+END_SRC
+
+設定紀錄檔的位置，如果該資料夾不存在則自動建立他
+#+BEGIN_SRC emacs-lisp
+  (setq erc-log-channels-directory emacs-log-dir)
+  (unless (file-exists-p erc-log-channels-directory)
+    (mkdir erc-log-channels-directory t))
+#+END_SRC
+
+所有紀錄檔案編碼都該為 utf-8
+#+BEGIN_SRC emacs-lisp
+  (setq erc-log-file-coding-system 'utf-8)
+#+END_SRC
+
+除此之外，當送出或是收到新的訊息時，將訊息寫入到 log 中
+#+BEGIN_SRC emacs-lisp
+    (setq erc-log-write-after-send t)
+    (setq erc-log-write-after-insert t)
 #+END_SRC
 
 * 電子郵件                                                            :email:
@@ -5260,51 +5285,6 @@ C-c  I             对目录中的相关文件建立列表并进行索引
 
 * 聊天軟體                                                             :chat:
 ** IRC
-
-*** 紀錄聊天訊息
-
-- 載入相依套件
-
-#+begin_src emacs-lisp
-  (require 'erc-log)
-#+end_src
-
-- 啟動 erc-log-mode
-
-  #+begin_src emacs-lisp
-    (erc-log-mode 1)
-  #+end_src
-
-- 設定紀錄檔儲存位置
-
-  #+begin_src emacs-lisp
-    (setq erc-log-channels-directory emacs-log-dir)
-  #+end_src
-
-- 如果儲存紀錄檔的資料夾不存在，建立他
-
-  #+begin_src emacs-lisp
-    (unless (file-exists-p erc-log-channels-directory)
-      (mkdir erc-log-channels-directory t))
-  #+end_src
-
-- 紀錄檔編碼為 utf-8
-
-  #+begin_src emacs-lisp
-    (setq erc-log-file-coding-system 'utf-8)
-  #+end_src
-
-- 送出訊息後寫入到 log
-
-  #+begin_src emacs-lisp
-    (setq erc-log-write-after-send t)
-  #+end_src
-
-- 當有新訊息時，寫入到 log
-
-  #+begin_src emacs-lisp
-    (setq erc-log-write-after-insert t)
-  #+end_src
 
 *** Misc
 
