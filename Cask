@@ -4,6 +4,7 @@
 (source org)
 
 (depends-on "ac-slime")
+(depends-on "linum-off")
 (depends-on "ace-jump-mode")
 (depends-on "anzu")
 (depends-on "erc-view-log")
