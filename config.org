@@ -3780,6 +3780,16 @@ yank-n-times 則可以重複的進行貼上。
     (insert "\ufeff"))
 #+END_SRC
 
+*** 快速折疊程式碼
+
+#+BEGIN_SRC emacs-lisp
+  (defun quick-folding-source ()
+    "Use emacs buildin easy to folding code."
+    (interactive)
+    (set-selective-display
+     (if selective-display nil 1)))
+#+END_SRC
+
 ** 資訊收尋
 
 *** 到 stackoverflow 收尋
@@ -5059,19 +5069,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
        (vim:mode-imap coldnew-editor-map (kbd "<delete>") 'hungry-delete-backward)))
   #+end_src
 
-| 按鍵    | 用途         |
-|---------+--------------|
-| C-c C-h | 快速代碼折疊 |
-
-#+begin_src emacs-lisp
-  (vim:mode-imap coldnew-editor-map (kbd "C-c C-h")
-                 '(lambda ()
-                    ""
-                    (interactive)
-                    (set-selective-display
-                     (if selective-display nil 1))))
-#+end_src
-
 ** org-mode 相關按鍵
 
 和 org-mode 相關的全域按鍵都整理到這裡
@@ -5358,6 +5355,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 文字編輯 | C-l     | backward-delete-char         | 向前刪除字元                       |
 | 文字編輯 | M-l     | backward-delete-word         | 向前刪除詞                         |
 | 文字編輯 | C-x l   | hl-line-mode                 | 將游標目前行加上彩色條             |
+| 文字編輯 | C-c C-h | quick-folding-source         | 快速折疊程式碼                     |
 | 緩衝區   | C-x C-b | ibuffer                      | 切換到 ibuffer                     |
 | 資料夾   | C-x C-d | dired                        | 切換到 dired                       |
 | 視窗切換 | C-x F   | fullscreen-window            | 將視窗切換成全螢幕                 |
