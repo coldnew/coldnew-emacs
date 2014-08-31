@@ -1056,25 +1056,25 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 ** 設定額外的佈景主題變數
 
 #+begin_src emacs-lisp
-  (defface evil-state-normal-face
-    '((t (:inherit font-lock-function-name-face)))
-    "face for vim-string in normal-map on mode-line."
-    :group 'mode-line)
+  ;; (defface evil-state-normal-face
+  ;;   '((t (:inherit font-lock-function-name-face)))
+  ;;   "face for vim-string in normal-map on mode-line."
+  ;;   :group 'mode-line)
 
-  (defface evil-state-insert-face
-    '((t (:inherit font-lock-constant-face)))
-    "face for vim-string in insert-map on mode-line."
-    :group 'mode-line)
+  ;; (defface evil-state-insert-face
+  ;;   '((t (:inherit font-lock-constant-face)))
+  ;;   "face for vim-string in insert-map on mode-line."
+  ;;   :group 'mode-line)
 
-  (defface evil-state-visual-face
-    '((t (:inherit font-lock-variable-name-face)))
-    "face for vim-string in visual-map on mode-line."
-    :group 'mode-line)
+  ;; (defface evil-state-visual-face
+  ;;   '((t (:inherit font-lock-variable-name-face)))
+  ;;   "face for vim-string in visual-map on mode-line."
+  ;;   :group 'mode-line)
 
-  (defface evil-state-emacs-face
-    '((t (:inherit font-lock-string-face)))
-    "face for vim-string in emacs-map on mode-line."
-    :group 'mode-line)
+  ;; (defface evil-state-emacs-face
+  ;;   '((t (:inherit font-lock-string-face)))
+  ;;   "face for vim-string in emacs-map on mode-line."
+  ;;   :group 'mode-line)
 
   (defface mode-line-read-only-face
     '((t (:foreground "#C82829" :bold t)))
@@ -1177,6 +1177,16 @@ normal-state。
 
 #+BEGIN_SRC emacs-lisp
   (setq evil-emacs-state-cursor '(bar))
+#+END_SRC
+
+** 將原本為 emacs-state 的緩衝區變成使用 insert-state
+
+在我的設定中，insert-state 和 emacs-state 是相同的按鍵設定，因此直接榜定
+到 insert-state，這樣要切換到 normal-state 也比較方便
+
+#+BEGIN_SRC emacs-lisp
+  (dolist (m evil-emacs-state-modes)
+    (add-to-list 'evil-insert-state-modes m))
 #+END_SRC
 
 * Vim 模擬擴充                                                          :vim:
