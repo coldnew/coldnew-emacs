@@ -2579,7 +2579,7 @@ lambda -> λ 的顯示。
 ** 對每一個括號進行上色
 
 #+BEGIN_SRC emacs-lisp
-  (global-rainbow-delimiters-mode 1)
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 #+END_SRC
 
 ** 存檔後自動建立資料夾
