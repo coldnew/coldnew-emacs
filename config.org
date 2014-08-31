@@ -1171,10 +1171,13 @@ normal-state。
   (setq evil-want-visual-char-semi-exclusive t)
 #+end_src
 
-** 在 emacs-state 時將游標設定為 (red bar)
+** 在 emacs-state 時將游標設定為 bar 形狀
+
+在我的設定裡面 eacs-state 相當於 insert-state，因此使用相同的游標型態會
+比較好
 
 #+BEGIN_SRC emacs-lisp
-  (setq evil-emacs-state-cursor '("red" bar))
+  (setq evil-emacs-state-cursor '(bar))
 #+END_SRC
 
 * Vim 模擬擴充                                                          :vim:
