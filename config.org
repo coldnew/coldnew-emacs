@@ -2835,6 +2835,17 @@ ctypes 這個套件可以識別 C/C++ 裏面的 typdef 定義，自動對他們�
                  (ctypes-auto-parse-mode 1))))
 #+end_src
 
+*** 使用 dtrt-indent 自動猜測 coding style
+
+GitHub: https://github.com/jscheid/dtrt-indent
+
+#+BEGIN_SRC emacs-lisp
+  (require 'dtrt-indent)
+  (add-hook 'c-mode-common-hook
+            (lambda()
+              (dtrt-indent-mode t)))
+#+END_SRC
+
 ** C
 
 #+begin_src emacs-lisp
@@ -5226,13 +5237,6 @@ C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在�
 #+end_src
 
 ** C++
-*** Hooks
-**** 自動猜測縮排風格
-#+begin_src emacs-lisp
-  (when (require 'dtrt-indent nil 'noerror)
-    (add-hook 'c++-mode-hook
-              (lambda () (dtrt-indent-mode t))))
-#+end_src
 *** Keybinding
 #+begin_src emacs-lisp
   (define-key c++-mode-map (kbd "C-x C-o") 'ff-find-other-file)
