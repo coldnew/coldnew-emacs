@@ -628,6 +628,27 @@ emacswiki: http://www.emacswiki.org/emacs/KeyChord
        (add-to-list 'helm-completing-read-handlers-alist '(lusty-buffer-explorer . nil))))
 #+end_src
 
+** guide-key :: 自動提示可用熱鍵的好工具
+
+emacs 最大的缺點，就是可以用的熱鍵太多會讓人記不起來，guide-key 是幫助
+你記憶的好幫手。
+
+GitHub: https://github.com/kai2nenobu/guide-key
+
+#+BEGIN_SRC emacs-lisp
+  (require 'guide-key)
+  (guide-key-mode 1)
+#+END_SRC
+
+以我個人的感覺，0.3 秒後顯示 guide-key 是最合適的情況
+#+BEGIN_SRC emacs-lisp
+  (setq guide-key/idle-delay 0.3)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (setq guide-key/guide-key-sequence '("C-c" "C-x"))
+#+END_SRC
+
 * 自定義函式 / 方法                                                :function:
 
 我所自定義或是我的 emacs 設定檔需要用到的 function，這裡面有些 function
@@ -2645,6 +2666,7 @@ lambda -> λ 的顯示。
                              (y-or-n-p (format "Directory %s does not exist. Create it?" dir)))
                     (make-directory dir t))))))
 #+end_src
+
 
 * 狀態欄                                                           :modeline:
 
