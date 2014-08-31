@@ -995,8 +995,10 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 
 #+BEGIN_SRC emacs-lisp
   (defun font-exist-p (fontname)
-    "test if this font is exist or not."
-    (if (or (not fontname) (string= fontname ""))
+    "Test if this font is exist or not.
+  This function only work on GUI mode, on terminal it just
+  return nil since you can't set font for emacs on it."
+    (if (or (not fontname) (string= fontname "") (not (display-graphic-p)))
         nil
       (if (not (x-list-fonts fontname))
           nil t)))
@@ -2666,7 +2668,6 @@ lambda -> λ 的顯示。
                              (y-or-n-p (format "Directory %s does not exist. Create it?" dir)))
                     (make-directory dir t))))))
 #+end_src
-
 
 * 狀態欄                                                           :modeline:
 
