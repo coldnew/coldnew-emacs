@@ -32,3 +32,9 @@ written in Traditional Chinese, feel free to copy.
   #+BEGIN_SRC sh
     USE="emacs" emerge net-mail/mu
   #+END_SRC
+
+- Ubuntu/Debian
+
+  #+BEGIN_SRC sh
+    sudo apt-get install mu4e
+  #+END_SRC
