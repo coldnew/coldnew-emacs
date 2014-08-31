@@ -2580,6 +2580,19 @@ lambda -> λ 的顯示。
   (global-rainbow-delimiters-mode 1)
 #+END_SRC
 
+** 存檔後自動建立資料夾
+
+當存檔的時候，如果這個緩衝區的父資料夾不存在，自動建立他。
+#+begin_src emacs-lisp
+  (add-hook 'before-save-hook
+            (lambda ()
+              (when buffer-file-name
+                (let ((dir (file-name-directory buffer-file-name)))
+                  (when (and (not (file-exists-p dir))
+                             (y-or-n-p (format "Directory %s does not exist. Create it?" dir)))
+                    (make-directory dir t))))))
+#+end_src
+
 * 狀態欄                                                           :modeline:
 
 GitHub: https://github.com/milkypostman/powerline
@@ -4802,19 +4815,6 @@ ref: https://github.com/patriciogonzalezvivo/dot-emacs/blob/master/live-fontify-
                            (not (eq (get-text-property (point) 'face)
                                     'font-lock-comment-face))))))))
   #+end_src
-
-** 存檔後自動建立資料夾
-
-當存檔的時候，如果這個緩衝區的父資料夾不存在，自動建立他。
-#+begin_src emacs-lisp
-(add-hook 'before-save-hook
-          (lambda ()
-            (when buffer-file-name
-              (let ((dir (file-name-directory buffer-file-name)))
-                (when (and (not (file-exists-p dir))
-                           (y-or-n-p (format "Directory %s does not exist. Create it?" dir)))
-                  (make-directory dir t))))))
-#+end_src
 
 ** 加入 Doxygen 支援
 
