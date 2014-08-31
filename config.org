@@ -3043,6 +3043,8 @@ git 是我最喜歡用的版本管理器，當然能夠在 emacs 下使用是最
 有許多好用的 git 套件，諸如 egg, magit, git-emacs 之類，在這邊的設定
 我整合了這幾種工具，選用我最喜歡的功能。
 
+Magit Cheatsheet: http://daemianmack.com/magit-cheatsheet.html
+
 #+BEGIN_SRC emacs-lisp
   (require 'magit)
   (require 'gitignore-mode)
@@ -4926,6 +4928,7 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 #+end_src
 
 ** 檔案相關 (N) (I)
+
 
 | 按鍵 | 命令              | 用途                        |
 |------+-------------------+-----------------------------|
