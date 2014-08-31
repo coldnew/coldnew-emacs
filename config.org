@@ -3851,6 +3851,33 @@ yank-n-times 則可以重複的進行貼上。
         (ecb-minor-mode))))
 #+END_SRC
 
+** 複合式命令
+
+這邊的命令比較特別，是 *複合式* 的，代表一個命令可能依據使用
+的方式不同，而具有不同的功能。
+
+*** 旋轉切換視窗/尋找並取代
+
+#+BEGIN_SRC emacs-lisp
+  (defun ~rotate-weindow/query-replace ()
+    "If in region, us query replace, else use rotate-window-only."
+    (interactive)
+    (if (or mark-active (= (length (window-list)) 1))
+        (call-interactively 'query-replace-regexp)
+      (rotate-windows-only)))
+#+END_SRC
+
+*** 選取區域/選取矩形區域
+
+#+BEGIN_SRC emacs-lisp
+  (defun ~cua-set-mark/cua-rectangle-mark ()
+    "toggle between cua-set-mark or cua-rectangle-mark"
+    (interactive)
+    (if (not mark-active)
+        (call-interactively 'cua-set-mark)
+      (cua-toggle-rectangle-mark)))
+#+END_SRC
+
 * IRC 聊天通訊                                                          :irc:
 
 emacs 底下最常用的 IRC 軟體為 ERC 和 RCIRC，這邊我選用 ERC 作為 IRC 客戶端。
@@ -5063,42 +5090,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
   (vim:mode-imap coldnew-editor-map (kbd "C-c c")  'org-capture)
 #+END_SRC
 
-** 復合式按鍵
-
-這邊的按鍵呼叫的功能比較特別，是 *複合式* 的，代表一個命令可能依據使用
-的方式不同，而具有不同的功能。
-
-因為這邊的命令也是特別的，因此同時定義在這裡
-
-| 按鍵 | 用途 1       | 用途 2       |
-|------+--------------+--------------|
-| M-r  | 旋轉切換視窗 | 尋找並取代   |
-| C-v  | 選取區域     | 選取矩型區域 |
-
-- 旋轉切換視窗 or 尋找並取代
-
-  #+begin_src emacs-lisp
-    (vim:mode-imap coldnew-editor-map (kbd "M-r")
-                   '(lambda ()
-                      "If in region, us query replace, else use rotate-window-only."
-                      (interactive)
-                      (if (or mark-active (= (length (window-list)) 1))
-                          (call-interactively 'query-replace-regexp)
-                        (rotate-windows-only))))
-  #+end_src
-
-- 選取區域 or 選取矩型區域
-
-  #+begin_src emacs-lisp
-    (vim:mode-imap coldnew-editor-map (kbd "C-v")
-                   '(lambda ()
-                      "toggle between cua-set-mark or cua-rectangle-mark"
-                      (interactive)
-                      (if (not mark-active)
-                          (call-interactively 'cua-set-mark)
-                        (cua-toggle-rectangle-mark))))
-  #+end_src
-
 * Cedet                                                                :cedet:
 #+begin_src emacs-lisp
   (require 'semantic)
@@ -5436,25 +5427,27 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 ** Vim 編輯模式按鍵設定 <Insert>                                   :noexport:
 
 #+TBLNAME: global-evil-insert
-| 按鍵    | 命令                | 描述                               |
-|---------+---------------------+------------------------------------|
-| C-;     | iedit-mode          | 使用 iedit-mode 快速修改同樣的字詞 |
-| M-v     | er/expand-region    | 快速選取游標下的文字、區域         |
-| C-x C-p | auto-complete       | 呼叫 auto-complete-mode 的自動補全 |
-| C-/     | undo-tree-undo      | undo                               |
-| M-/     | undo-tree-redo      | redo                               |
-| C-x C-n | company-complete    | 呼叫 company-mode 的自動補全       |
-| C-c C-e | eval-and-replace    | eval emacs-lisp 命令               |
-| C-x l   | hl-line-mode        | 將游標目前行加上彩色條             |
-| C-x L   | linum-mode          | 切換顯示行號                       |
-| C-x C-y | yank-n-times        | 多次貼上                           |
-| C-x C-l | recenter            | 將游標至於緩衝區中間               |
-| C-x C-i | indent-whole-buffer | 縮排整個緩衝區                     |
-| C-x C-q | toggle-read-only    | 切換緩衝區變成唯讀/可寫的狀況      |
-| C-M-,   | beginning-of-buffer | 回到緩衝區開頭                     |
-| C-M-.   | end-of-buffer       | 回到緩衝區尾巴                     |
-| M-<SPC> | insert-U200B-char   | 插入 <U200B> 字元                  |
-| s-<SPC> | insert-U200B-char   | 插入 <U200B> 字元                  |
+| 按鍵    | 命令                             | 描述                               |
+|---------+----------------------------------+------------------------------------|
+| C-;     | iedit-mode                       | 使用 iedit-mode 快速修改同樣的字詞 |
+| M-v     | er/expand-region                 | 快速選取游標下的文字、區域         |
+| C-x C-p | auto-complete                    | 呼叫 auto-complete-mode 的自動補全 |
+| C-/     | undo-tree-undo                   | undo                               |
+| M-/     | undo-tree-redo                   | redo                               |
+| C-x C-n | company-complete                 | 呼叫 company-mode 的自動補全       |
+| C-c C-e | eval-and-replace                 | eval emacs-lisp 命令               |
+| C-x l   | hl-line-mode                     | 將游標目前行加上彩色條             |
+| C-x L   | linum-mode                       | 切換顯示行號                       |
+| C-x C-y | yank-n-times                     | 多次貼上                           |
+| C-x C-l | recenter                         | 將游標至於緩衝區中間               |
+| C-x C-i | indent-whole-buffer              | 縮排整個緩衝區                     |
+| C-x C-q | toggle-read-only                 | 切換緩衝區變成唯讀/可寫的狀況      |
+| C-M-,   | beginning-of-buffer              | 回到緩衝區開頭                     |
+| C-M-.   | end-of-buffer                    | 回到緩衝區尾巴                     |
+| M-<SPC> | insert-U200B-char                | 插入 <U200B> 字元                  |
+| s-<SPC> | insert-U200B-char                | 插入 <U200B> 字元                  |
+| M-r     | ~rotate-weindow/query-replace    | 旋轉切換視窗/尋找並取代            |
+| C-v     | ~cua-set-mark/cua-rectangle-mark | 選取區域/選取矩形區域                        |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-evil(state="insert", keys=global-evil-insert)>>
