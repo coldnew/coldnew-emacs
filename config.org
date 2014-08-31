@@ -2428,6 +2428,19 @@ ctags-update.el 衝突到，我這邊使用獨立的 ctags-update.el，當他不
       (message "Updating tags table... Done")))
 #+end_src
 
+* Cscope                                                             :cscope:
+
+#+BEGIN_SRC emacs-lisp
+  (require 'xcscope)
+  (cscope-setup)
+#+END_SRC
+
+** 設定 cscope 不要自動更新索引
+
+#+BEGIN_SRC emacs-lisp
+  (setq cscope-do-not-update-database t)
+#+END_SRC
+
 * 編輯器                                                             :editor:
 
 ** 基本編輯器設定
@@ -2890,6 +2903,13 @@ GitHub: https://github.com/jscheid/dtrt-indent
                             (setq comment-style 'extra-line)))
 #+END_SRC
 
+*** 快速插入樣板
+
+#+BEGIN_SRC emacs-lisp
+  (setq c-mode-expand-alist
+        '(("m" . "main")
+          ))
+#+END_SRC
 ** C++
 
 #+BEGIN_SRC emacs-lisp
@@ -5109,12 +5129,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 
 #+end_src
 
-* Cscope                                                             :cscope:
-** 載入和 cscope 相關的 package
-#+begin_src emacs-lisp
-  (require 'xcscope)
-  (setq cscope-do-not-update-database t)
-#+end_src
 * 程式開發                                                         :language:
 
 各種不同程式語言開發用的設定。
@@ -5196,7 +5210,7 @@ C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在�
 
 *** 快速插入樣板
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
     (defun c-mode:insert-inc-or-if ()
       "If at the start of line. add `inc' and expand it,
     else add `if' and expand it."
@@ -5217,42 +5231,14 @@ C/C++ 語言基本上很多設定都沒有差，因此將通用的設定寫在�
           ))
 #+end_src
 
-*** 按鍵配置                                                       :keymap:
-#+begin_src emacs-lisp
-  (define-key c-mode-map (kbd "C-x C-o") 'ff-find-other-file)
-#+end_src
-
 *** make define indent in if
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (defun cc-mode:tmp ()
     (c-set-offset 'cpp-macro 0))
 
   (add-hook 'c-mode-hook 'cc-mode:tmp)
 #+end_src
-
-** C++
-*** Keybinding
-#+begin_src emacs-lisp
-  (define-key c++-mode-map (kbd "C-x C-o") 'ff-find-other-file)
-#+end_src
-C-c  s             序找符号
-C-c  g             寻找全局的定义
-C-c  c             看看指定函数被哪些函数所调用
-C-c  C             看看指定函数调用了哪些函数
-C-c  e             寻找正则表达式
-C-c  f             寻找文件
-C-c  i             看看指定的文件被哪些文件 include
-C-c  a             设定初始化的目录，一般是你代码的根目录
-C-c  I             对目录中的相关文件建立列表并进行索引
-#+begin_src emacs-lisp
-  (define-key c++-mode-map (kbd "C-c s") 'cscope-find-this-symbol)
-  (define-key c++-mode-map (kbd "C-c g") 'cscope-find-global-definition)
-  (define-key c++-mode-map (kbd "C-c I") 'cscope-create-list-of-files-to-index)
- ;; remember to remove
-  (define-key c++-mode-map (kbd "C-c f") 'cscope-find-this-file)
-#+end_src
-
 
 * 聊天軟體                                                             :chat:
 ** IRC
