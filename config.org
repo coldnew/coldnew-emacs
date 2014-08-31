@@ -1201,6 +1201,16 @@ normal-state。
   (evilnc-default-hotkeys)
 #+END_SRC
 
+** 使用 evil-numbers 遞增/遞減數字
+
+evil-numbers 提供了更簡單的方式對數字進行遞增/遞減的動作
+
+GitHub: https://github.com/cofi/evil-numbers
+
+#+BEGIN_SRC emacs-lisp
+  (require 'evil-numbers)
+#+END_SRC
+
 * 緩衝區                                                             :buffer:
 
 ** 自動建立 *scratch* 緩衝區
