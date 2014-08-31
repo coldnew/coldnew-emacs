@@ -7,7 +7,6 @@
 (depends-on "magit-gitflow")
 (depends-on "linum-off")
 (depends-on "evil-paredit")
-(depends-on "evil-tabs")
 (depends-on "ace-jump-mode")
 (depends-on "anzu")
 (depends-on "erc-view-log")
