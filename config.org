@@ -1221,6 +1221,25 @@ GitHub: https://github.com/cofi/evil-numbers
   (require 'evil-numbers)
 #+END_SRC
 
+** 使用 evil-surround 快速切換配對符號
+
+| 原本內文              | 命令    | 修改後的內文              |
+|-----------------------+---------+---------------------------|
+| "Hello *world!"       | ds"     | Hello world!              |
+| [123+4*56]/2          | cs])    | (123+456)/2               |
+| "Look ma, I'm *HTML!" | cs"<q>  | <q>Look ma, I'm HTML!</q> |
+| if *x>3 {             | ysW(    | if ( x>3 ) {              |
+| my $str = *whee!;     | vlllls' | my $str = 'whee!';        |
+| <div>Yo!*</div>       | dst     | Yo!                       |
+| <div>Yo!*</div>       | cst<p>  | <p>Yo!</p>                |
+
+GitHub: https://github.com/timcharper/evil-surround
+
+#+BEGIN_SRC emacs-lisp
+  (require 'evil-surround)
+  (global-evil-surround-mode 1)
+#+END_SRC
+
 * 緩衝區                                                             :buffer:
 
 ** 自動建立 *scratch* 緩衝區
