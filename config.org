@@ -5497,40 +5497,42 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 ** 全域性按鍵設定 (global-set-key) :noexport:
 
 #+TBLNAME: global-keys
-| 類別     | 按鍵    | 命令                     | 描述                               |
-|----------+---------+--------------------------+------------------------------------|
-| 文字編輯 | s-<RET> | insert-empty-line        | 插入空白行                         |
-| 文字編輯 | C-l     | backward-delete-char     | 向前刪除字元                       |
-| 文字編輯 | M-l     | backward-delete-word     | 向前刪除詞                         |
-| 緩衝區   | C-x C-b | ibuffer                  | 切換到 ibuffer                     |
-| 資料夾   | C-x C-d | dired                    | 切換到 dired                       |
-| 視窗切換 | C-x F   | fullscreen-window        | 將視窗切換成全螢幕                 |
-| 視窗切換 | M-[     | winner-undo              | 回復上一個窗口佈局                 |
-| 視窗切換 | M-]     | winner-redo              | 切回上一組進行窗口復原時的窗口佈局 |
-| 暫存器   | C-x rj  | jump-to-register         | 跳轉到暫存的檔案或是緩衝區位置     |
-| 尋找取代 | M-s     | helm-occur               | 使用 helm-occur 來進行尋找         |
-| 版本管理 | C-x vl  | magit-log                | 查看 git log                       |
-| 版本管理 | C-x vs  | magit-status             | 查看目前的 git status              |
-| 版本管理 | C-x vc  | magit-checkout           | 切換到其他的 git branch            |
-| 版本管理 | C-x vp  | magit-push               | push 到遠端的 repo                 |
-| 文字編輯 | C-=     | increase-emacs-font-size | 放大緩衝區的文字大小               |
-| 文字編輯 | C--     | decrease-emacs-font-size | 縮小緩衝區的文字大小               |
-| 快速命令 | <f1>    | woman                    | 使用 woman 查看 man 手冊           |
-| 快速命令 | <f2>    | shell-pop                | 彈出 eshell 視窗                   |
-| 快速命令 | M-`     | woman                    | 使用 woman 查看 man 手冊           |
-| 快速命令 | M-1     | deft-or-close            | 開啟/關閉 deft-mode                |
-| 快速命令 | M-2     | multi-eshell             | 切換至完整的 eshell 視窗           |
-| 快速命令 | M-3     | multi-eshell-switch      | 切換目前已打開的 eshell 視窗       |
-| 快速命令 | M-4     | erc-start-or-switch      | 啟動或切換到 IRC 緩衝區            |
-| 字體調整 | C-=     | increase-emacs-font-size | 放大字體                           |
-| 字體調整 | C--     | decrease-emacs-font-size | 縮小字體                           |
-| 檔案相關 | C-x C-f | lusty-file-explorer      | 查詢並打開檔案                     |
-| 檔案相關 | C-x C-s | save-buffer-always       | 儲存檔案                           |
-| 檔案相關 | C-x C-r | lusty-sudo-explorer      | 使用 sudo 打開檔案                 |
-| 檔案相關 | C-x fx  | set-file-executable      | 為目前檔案加上可執行權限           |
-| 檔案相關 | C-x fc  | clone-file-and-open      | 複製目前檔案到其他檔案並打開       |
-| 檔案相關 | C-x fd  | delete-file-and-buffer   | 刪除目前的檔案與緩衝區             |
-| 緩衝區   | C-x M-4 | erc-iswitchb             | 切換到 IRC 緩衝區                  |
+| 類別     | 按鍵    | 命令                         | 描述                               |
+|----------+---------+------------------------------+------------------------------------|
+| 文字編輯 | s-<RET> | insert-empty-line            | 插入空白行                         |
+| 文字編輯 | C-l     | backward-delete-char         | 向前刪除字元                       |
+| 文字編輯 | M-l     | backward-delete-word         | 向前刪除詞                         |
+| 緩衝區   | C-x C-b | ibuffer                      | 切換到 ibuffer                     |
+| 資料夾   | C-x C-d | dired                        | 切換到 dired                       |
+| 視窗切換 | C-x F   | fullscreen-window            | 將視窗切換成全螢幕                 |
+| 視窗切換 | M-[     | winner-undo                  | 回復上一個窗口佈局                 |
+| 視窗切換 | M-]     | winner-redo                  | 切回上一組進行窗口復原時的窗口佈局 |
+| 暫存器   | C-x rj  | jump-to-register             | 跳轉到暫存的檔案或是緩衝區位置     |
+| 尋找取代 | M-s     | helm-occur                   | 使用 helm-occur 來進行尋找         |
+| 版本管理 | C-x vl  | magit-log                    | 查看 git log                       |
+| 版本管理 | C-x vs  | magit-status                 | 查看目前的 git status              |
+| 版本管理 | C-x vc  | magit-checkout               | 切換到其他的 git branch            |
+| 版本管理 | C-x vp  | magit-push                   | push 到遠端的 repo                 |
+| 版本管理 | C-x vf  | magit-gitflow-feature-start  | 使用 git-flow 建立新的特色分支     |
+| 版本管理 | C-x vF  | magit-gitflow-feature-finish | 使用 git-flow 結束新的特色分支     |
+| 文字編輯 | C-=     | increase-emacs-font-size     | 放大緩衝區的文字大小               |
+| 文字編輯 | C--     | decrease-emacs-font-size     | 縮小緩衝區的文字大小               |
+| 快速命令 | <f1>    | woman                        | 使用 woman 查看 man 手冊           |
+| 快速命令 | <f2>    | shell-pop                    | 彈出 eshell 視窗                   |
+| 快速命令 | M-`     | woman                        | 使用 woman 查看 man 手冊           |
+| 快速命令 | M-1     | deft-or-close                | 開啟/關閉 deft-mode                |
+| 快速命令 | M-2     | multi-eshell                 | 切換至完整的 eshell 視窗           |
+| 快速命令 | M-3     | multi-eshell-switch          | 切換目前已打開的 eshell 視窗       |
+| 快速命令 | M-4     | erc-start-or-switch          | 啟動或切換到 IRC 緩衝區            |
+| 字體調整 | C-=     | increase-emacs-font-size     | 放大字體                           |
+| 字體調整 | C--     | decrease-emacs-font-size     | 縮小字體                           |
+| 檔案相關 | C-x C-f | lusty-file-explorer          | 查詢並打開檔案                     |
+| 檔案相關 | C-x C-s | save-buffer-always           | 儲存檔案                           |
+| 檔案相關 | C-x C-r | lusty-sudo-explorer          | 使用 sudo 打開檔案                 |
+| 檔案相關 | C-x fx  | set-file-executable          | 為目前檔案加上可執行權限           |
+| 檔案相關 | C-x fc  | clone-file-and-open          | 複製目前檔案到其他檔案並打開       |
+| 檔案相關 | C-x fd  | delete-file-and-buffer       | 刪除目前的檔案與緩衝區             |
+| 緩衝區   | C-x M-4 | erc-iswitchb                 | 切換到 IRC 緩衝區                  |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-global(func="global-set-key", keys=global-keys)>>
