@@ -3383,24 +3383,6 @@ GitHub: https://github.com/jtatarik/magit-gitflow
 
 *注意* : 這邊的命令可能依賴我所自訂的 function。
 
-** 巨集相關                                                          :macro:
-
-*** 動態切換開始/結束紀錄巨集
-
-#+BEGIN_SRC emacs-lisp
-  (let ((kbd-macro-state "off"))
-    (defun toggle-kbd-macro-recording ()
-      "Toggle recording on/off emacs kbd macro."
-      (interactive)
-      (cond
-       ((string= "on" kbd-macro-state)
-        (setq kbd-macro-state "off")
-        (end-kbd-macro))
-       ((string= "off" kbd-macro-state)
-        (setq kbd-macro-state "on")
-        (start-kbd-macro nil)))))
-#+END_SRC
-
 ** 緩衝區處理                                                       :buffer:
 
 *** 將 unix 格式的文件轉換成 dos 格式
@@ -5036,20 +5018,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
 
 這邊是我定義的 coldnew-editor-mode 的按鍵設定，每個類型的標條都會附註這裏面的
 按鍵是 Normal, Insert 或是其他模式下才會有的按鍵。
-
-** 按鍵巨集錄製/播放 (N) (I)
-
-| 按鍵  | 命令                       | 用途              |
-|-------+----------------------------+-------------------|
-| C-x q | toggle-kbd-macro-recording | 錄製/停止鍵盤巨集 |
-| C-x e | call-last-kbd-macro        | 播放最後一個巨集  |
-| C-.   | repeat                     | 重複上一個命令    |
-
-#+begin_src emacs-lisp
-    (vim:mode-map coldnew-editor-map (kbd "C-x q") 'toggle-kbd-macro-recording)
-    (vim:mode-map coldnew-editor-map (kbd "C-x e") 'call-last-kbd-macro)
-    (vim:mode-map coldnew-editor-map (kbd "C-.")   'repeat)
-#+end_src
 
 ** 檔案相關 (N) (I)
 
