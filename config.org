@@ -640,9 +640,9 @@ GitHub: https://github.com/kai2nenobu/guide-key
   (guide-key-mode 1)
 #+END_SRC
 
-以我個人的感覺，0.3 秒後顯示 guide-key 是最合適的情況
+以我個人的感覺，0.5 秒後顯示 guide-key 是最合適的情況
 #+BEGIN_SRC emacs-lisp
-  (setq guide-key/idle-delay 0.3)
+  (setq guide-key/idle-delay 0.5)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
