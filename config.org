@@ -3049,6 +3049,13 @@ minibuffer 上。
 #+BEGIN_SRC emacs-lisp
   (require 'bitbake)
 #+END_SRC
+** device tree
+
+#+BEGIN_SRC emacs-lisp
+  (require 'dts-mode)
+  (add-to-list 'auto-mode-alist '("\\.dts$"  . dts-mode))
+  (add-to-list 'auto-mode-alist '("\\.dtsi$" . dts-mode))
+#+END_SRC
 
 ** Lisp 通用設定
 
