@@ -2891,6 +2891,15 @@ GitHub: https://github.com/jscheid/dtrt-indent
               (dtrt-indent-mode t)))
 #+END_SRC
 
+*** 加入 gtags 支援
+
+#+BEGIN_SRC emacs-lisp
+  (require 'ggtags)
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (ggtags-mode 1)))
+#+END_SRC
+
 ** C
 
 #+begin_src emacs-lisp
