@@ -8,6 +8,7 @@
 (depends-on "guide-key-tip")
 (depends-on "indent-guide")
 (depends-on "ycmd")
+(depends-on "cmake-ide")
 (depends-on "realgud")
 (depends-on "dtrt-indent")
 (depends-on "magit-gitflow")
