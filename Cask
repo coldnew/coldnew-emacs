@@ -14,6 +14,7 @@
 (depends-on "magit-gitflow")
 (depends-on "linum-off")
 (depends-on "evil-paredit")
+(depends-on "paradox")
 (depends-on "ace-jump-mode")
 (depends-on "google-c-style")
 (depends-on "anzu")
