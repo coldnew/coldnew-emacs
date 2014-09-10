@@ -6,6 +6,7 @@
 (depends-on "ac-slime")
 (depends-on "guide-key")
 (depends-on "guide-key-tip")
+(depends-on "indent-guide")
 (depends-on "realgud")
 (depends-on "dtrt-indent")
 (depends-on "magit-gitflow")
