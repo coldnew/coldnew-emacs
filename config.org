@@ -3149,7 +3149,6 @@ scss-mode 預設會在檔案儲存的時候自動編譯 scss 檔成為 css 檔�
 
 #+BEGIN_SRC emacs-lisp
   (setq vc-follow-symlinks t)
-(setq magit-commit-signoff t)
 #+END_SRC
 
 ** Git                                                                 :git:
@@ -3187,7 +3186,7 @@ git-gutter-fringe 就是這樣的好東西，他可以顯示哪些行和上一�
   (require 'git-gutter-fringe)
   (global-git-gutter-mode)
 #+end_src
-*** 使用 git-flow
+*** git-flow 支援
 
 [[http://nvie.com/posts/a-successful-git-branching-model/][git-flow]] 是一套很推薦使用的 git 版本管理流程
 
@@ -3197,6 +3196,14 @@ GitHub: https://github.com/jtatarik/magit-gitflow
   (require 'magit-gitflow)
   (add-hook 'magit-mode-hook 'turn-on-magit-gitflow)
 #+END_SRC
+*** 使用 git-messenger 顯示當前行的 commit 訊息
+
+GitHub: https://github.com/syohex/emacs-git-messenger
+
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
+
 
 *** 按鍵設定                                                     :noexport:
 
@@ -4289,6 +4296,45 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
 
   (add-hook 'mu4e-view-mode-hook 'mu4e~view-fontify-diff)
 #+END_SRC
+
+** 整合 mu4e 和 evil 的按鍵                                             :evil:
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'evil
+    '(progn
+       (add-to-list 'evil-normal-state-modes 'mu4e-main-mode)
+       (add-to-list 'evil-normal-state-modes 'mu4e-view-mode)
+       (add-to-list 'evil-normal-state-modes 'mu4e-headers-mode)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'mu4e
+    '(progn
+       ;; use the standard bindings as a base
+       (evil-make-overriding-map mu4e-view-mode-map 'normal t)
+       (evil-make-overriding-map mu4e-main-mode-map 'normal t)
+       (evil-make-overriding-map mu4e-headers-mode-map 'normal t)
+
+       (evil-add-hjkl-bindings mu4e-view-mode-map 'normal
+         "J" 'mu4e~headers-jump-to-maildir
+         "j" 'evil-next-line
+         "C" 'mu4e-compose-new
+         "o" 'mu4e-view-message
+         "Q" 'mu4e-raw-view-quit-buffer)
+
+       (evil-add-hjkl-bindings mu4e-headers-mode-map 'normal
+         "J" 'mu4e~headers-jump-to-maildir
+         "j" 'evil-next-line
+         "C" 'mu4e-compose-new
+         "o" 'mu4e-view-message
+         )
+       (evil-add-hjkl-bindings mu4e-main-mode-map 'normal
+         "J" 'mu4e~headers-jump-to-maildir
+         "j" 'evil-next-line
+         "RET" 'mu4e-view-message)
+       ))
+#+END_SRC
+
 
 * 文檔幫助                                                             :help:
 
