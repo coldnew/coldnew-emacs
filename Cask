@@ -53,6 +53,7 @@
 (depends-on "dash")
 (depends-on "deft")
 (depends-on "diminish")
+(depends-on "org-toc")
 (depends-on "dos")
 (depends-on "ecb")
 (depends-on "emacs-eclim")
