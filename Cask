@@ -13,6 +13,7 @@
 (depends-on "realgud")
 (depends-on "minimap")
 (depends-on "vlf")
+(depends-on "eide")
 (depends-on "dtrt-indent")
 (depends-on "magit-gitflow")
 (depends-on "bbdb-csv-import")
