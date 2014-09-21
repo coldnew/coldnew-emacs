@@ -2899,6 +2899,16 @@ GitHub: https://github.com/jscheid/dtrt-indent
             (lambda ()
               (ggtags-mode 1)))
 #+END_SRC
+*** 整合 C/C++ 和 CMake 專案
+
+GitHub: https://github.com/redguardtoo/cpputils-cmake
+
+#+BEGIN_SRC emacs-lisp
+  (require 'cpputils-cmake)
+  (add-hook 'c-mode-common-hook
+            (lambda () (when (derived-mode-p 'c-mode 'c++-mode) (cppcm-reload-all))))
+#+END_SRC
+
 
 ** C
 
@@ -4334,7 +4344,6 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
          "RET" 'mu4e-view-message)
        ))
 #+END_SRC
-
 
 * 文檔幫助                                                             :help:
 
