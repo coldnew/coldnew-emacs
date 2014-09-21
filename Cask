@@ -4,6 +4,7 @@
 (source org)
 
 (depends-on "ac-slime")
+(depends-on "smartrep")
 (depends-on "guide-key")
 (depends-on "guide-key-tip")
 (depends-on "indent-guide")
