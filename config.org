@@ -5529,6 +5529,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | s-<SPC> | insert-U200B-char                | 插入 <U200B> 字元                  |
 | M-r     | ~rotate-weindow/query-replace    | 旋轉切換視窗/尋找並取代            |
 | C-v     | ~cua-set-mark/cua-rectangle-mark | 選取區域/選取矩形區域              |
+| C-o     | evil-execute-in-normal-state     | 暫時性切換到 Normal 模式           |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-evil(state="insert", keys=global-evil-insert)>>
