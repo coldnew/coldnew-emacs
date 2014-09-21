@@ -45,6 +45,8 @@
 (depends-on "company")
 (depends-on "creole")
 (depends-on "skewer-mode")
+(depends-on "demo-it")
+(depends-on "emms")
 (depends-on "css-mode")
 (depends-on "ctags-update")
 (depends-on "dash")
