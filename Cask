@@ -60,6 +60,7 @@
 (depends-on "epl")
 (depends-on "erc-hl-nicks")
 (depends-on "eshell-autojump")
+(depends-on "company-c-headers")
 (depends-on "esxml")
 (depends-on "evil")
 (depends-on "evil-nerd-commenter")
