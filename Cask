@@ -83,6 +83,7 @@
 (depends-on "graphviz-dot-mode")
 (depends-on "guess-offset")
 (depends-on "helm")
+(depends-on "helm-projectile")
 (depends-on "helm-ls-git")
 (depends-on "highlight-cl")
 (depends-on "ht")
