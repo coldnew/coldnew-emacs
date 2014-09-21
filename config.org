@@ -5447,7 +5447,7 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 | 文字編輯 | M-l     | backward-delete-word         | 向前刪除詞                         |
 | 文字編輯 | C-x l   | hl-line-mode                 | 將游標目前行加上彩色條             |
 | 文字編輯 | C-c C-h | quick-folding-source         | 快速折疊程式碼                     |
-| 緩衝區   | C-x C-b | ibuffer                      | 切換到 ibuffer                     |
+| 緩衝區   | C-x C-b | projectile-ibuffer           | 根據目前的 project 切換到 ibuffer  |
 | 資料夾   | C-x C-d | dired                        | 切換到 dired                       |
 | 視窗切換 | C-x F   | fullscreen-window            | 將視窗切換成全螢幕                 |
 | 視窗切換 | M-[     | winner-undo                  | 回復上一個窗口佈局                 |
