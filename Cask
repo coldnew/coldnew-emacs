@@ -11,6 +11,8 @@
 (depends-on "ycmd")
 (depends-on "cmake-ide")
 (depends-on "realgud")
+(depends-on "minimap")
+(depends-on "vlf")
 (depends-on "dtrt-indent")
 (depends-on "magit-gitflow")
 (depends-on "bbdb-csv-import")
