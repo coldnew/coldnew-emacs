@@ -34,6 +34,7 @@
 (depends-on "o-blog")
 (depends-on "key-chord")
 (depends-on "bm")
+(depends-on "neotree")
 (depends-on "helm-ag")
 (depends-on "c-eldoc")
 (depends-on "cask")
