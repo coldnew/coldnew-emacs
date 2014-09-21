@@ -44,6 +44,7 @@
 (depends-on "cmake-mode")
 (depends-on "company")
 (depends-on "creole")
+(depends-on "skewer-mode")
 (depends-on "css-mode")
 (depends-on "ctags-update")
 (depends-on "dash")
