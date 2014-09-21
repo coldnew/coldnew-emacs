@@ -48,6 +48,7 @@
 (depends-on "demo-it")
 (depends-on "emms")
 (depends-on "css-mode")
+(depends-on "cpputils-cmake")
 (depends-on "ctags-update")
 (depends-on "dash")
 (depends-on "deft")
