@@ -3,6 +3,7 @@
 (source melpa)
 (source org)
 
+(depends-on "howdoi")
 (depends-on "ac-slime")
 (depends-on "es-windows")
 (depends-on "irony")
