@@ -1939,6 +1939,15 @@ GitHub: https://github.com/company-mode/company-mode
   (add-hook 'after-init-hook 'global-company-mode)
 #+END_SRC
 
+** 使用 Company 補全 C/C++ 的標頭檔
+
+GitHub: https://github.com/randomphrase/company-c-headers
+
+#+BEGIN_SRC emacs-lisp
+  (require 'company-c-headers)
+  (add-to-list 'company-backends 'company-c-headers)
+#+END_SRC
+
 ** 按鍵設定
 
 #+TBLNAME: company-keys
