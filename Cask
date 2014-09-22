@@ -4,6 +4,7 @@
 (source org)
 
 (depends-on "ac-slime")
+(depends-on "es-windows")
 (depends-on "irony")
 (depends-on "company-irony")
 (depends-on "smartrep")
