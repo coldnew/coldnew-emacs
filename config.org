@@ -2228,6 +2228,14 @@ them smoothly by typing C-g in anytime.
   (require 'popwin)
   (setq display-buffer-function 'popwin:display-buffer)
 #+END_SRC
+** TODO 使用 es-windows
+
+GitHub: https://github.com/sabof/es-windows
+
+#+BEGIN_SRC emacs-lisp
+  (require 'es-windows)
+#+END_SRC
+
 * 文件加密                                                          :encrypt:
 
 對於一些和隱私比較相關的文件，總是希望可以加密起來，讓自己可以更加放心。
@@ -2918,14 +2926,12 @@ GitHub: https://github.com/redguardtoo/cpputils-cmake
             (lambda () (when (derived-mode-p 'c-mode 'c++-mode) (cppcm-reload-all))))
 #+END_SRC
 
-
 ** C
 
 #+begin_src emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
   (add-to-list 'auto-mode-alist '("\\.h$" . c-mode))
 #+end_src
-
 
 *** 預設使用 Linux Coding Style
 
@@ -2963,11 +2969,31 @@ GitHub: https://github.com/redguardtoo/cpputils-cmake
                             (setq comment-style 'extra-line)))
 #+END_SRC
 
+*** asd
+
+#+BEGIN_SRC emacs-lisp
+  (defun c-mode:insert-inc-or-if ()
+    "If at the start of line. add `inc' and expand it,
+        else add `if' and expand it."
+    (interactive)
+    (let* ((current (point))
+           (begin (line-beginning-position)))
+      (if (eq current begin)
+          (progn
+            (insert "#include ")
+            ;;      (newline-and-indent)
+            )
+        (progn
+          (insert "if")
+          (yas/expand)))))
+#+END_SRC
+
 *** 快速插入樣板
 
 #+BEGIN_SRC emacs-lisp
   (setq c-mode-expand-alist
         '(("m" . "main")
+          ("i" . c-mode:insert-inc-or-if)
           ))
 #+END_SRC
 ** C++
