@@ -4,6 +4,8 @@
 (source org)
 
 (depends-on "ac-slime")
+(depends-on "irony")
+(depends-on "company-irony")
 (depends-on "smartrep")
 (depends-on "guide-key")
 (depends-on "guide-key-tip")
