@@ -3,6 +3,7 @@
 (source melpa)
 (source org)
 
+(depends-on "clean-aindent-mode")
 (depends-on "howdoi")
 (depends-on "ac-slime")
 (depends-on "es-windows")
@@ -184,3 +185,4 @@
 (depends-on "qmake-mode" :git "https://github.com/coldnew/qmake-mode.git")
 (depends-on "eshell-autojump" :git "https://github.com/coldnew/eshell-autojump.git")
 (depends-on "newlisp" :git "https://github.com/coldnew/newlisp-mode.git")
+(depends-on "4clojure")
