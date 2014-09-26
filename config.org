@@ -3027,7 +3027,7 @@ C++檔案的依據。
 
 #+BEGIN_SRC emacs-lisp
   (require 'google-c-style)
-  (add-hook 'cpp-mode-hook 'google-c-style)
+  (add-hook 'c++-mode-hook 'google-set-c-style)
 #+END_SRC
 
 ** newlisp
