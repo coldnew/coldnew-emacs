@@ -1210,8 +1210,8 @@ normal-state。
 - =﻿,,aW= 註解/反註解當前的詞
 
 #+BEGIN_SRC emacs-lisp
-  (require 'evil-nerd-commenter)
-  (evilnc-default-hotkeys)
+;;  (require 'evil-nerd-commenter)
+;;  (evilnc-default-hotkeys)
 #+END_SRC
 
 ** 使用 evil-numbers 遞增/遞減數字
@@ -5227,22 +5227,6 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
        ))
 #+end_src
 
-** 緩衝區編輯 (I)
-
-| 按鍵     | 命令                   | 用途         |
-|----------+------------------------+--------------|
-| C-d      | hyngry-delete-forward  | 向右貪婪刪除 |
-| C-l      | hyngry-delete-backward | 向左貪婪刪除 |
-| <delete> | hyngry-delete-backward | 向左貪婪刪除 |
-
-#+begin_src emacs-lisp
-  (eval-after-load 'hungry-delete
-    '(progn
-       (vim:mode-imap coldnew-editor-map (kbd "C-d") 'hungry-delete-forward)
-       (vim:mode-imap coldnew-editor-map (kbd "C-l") 'hungry-delete-backward)
-       (vim:mode-imap coldnew-editor-map (kbd "<delete>") 'hungry-delete-backward)))
-  #+end_src
-
 ** org-mode 相關按鍵
 
 和 org-mode 相關的全域按鍵都整理到這裡
@@ -5592,27 +5576,30 @@ org-mode 的表格轉換成 emacs 的按鍵設定程式碼。
 ** Vim 編輯模式按鍵設定 <Insert>                                   :noexport:
 
 #+TBLNAME: global-evil-insert
-| 按鍵    | 命令                             | 描述                               |
-|---------+----------------------------------+------------------------------------|
-| C-;     | iedit-mode                       | 使用 iedit-mode 快速修改同樣的字詞 |
-| M-v     | er/expand-region                 | 快速選取游標下的文字、區域         |
-| C-x C-p | auto-complete                    | 呼叫 auto-complete-mode 的自動補全 |
-| C-/     | undo-tree-undo                   | undo                               |
-| M-/     | undo-tree-redo                   | redo                               |
-| C-x C-n | company-complete                 | 呼叫 company-mode 的自動補全       |
-| C-c C-e | eval-and-replace                 | eval emacs-lisp 命令               |
-| C-x L   | linum-mode                       | 切換顯示行號                       |
-| C-x C-y | yank-n-times                     | 多次貼上                           |
-| C-x C-l | recenter                         | 將游標至於緩衝區中間               |
-| C-x C-i | indent-whole-buffer              | 縮排整個緩衝區                     |
-| C-x C-q | toggle-read-only                 | 切換緩衝區變成唯讀/可寫的狀況      |
-| C-M-,   | beginning-of-buffer              | 回到緩衝區開頭                     |
-| C-M-.   | end-of-buffer                    | 回到緩衝區尾巴                     |
-| M-<SPC> | insert-U200B-char                | 插入 <U200B> 字元                  |
-| s-<SPC> | insert-U200B-char                | 插入 <U200B> 字元                  |
-| M-r     | ~rotate-weindow/query-replace    | 旋轉切換視窗/尋找並取代            |
-| C-v     | ~cua-set-mark/cua-rectangle-mark | 選取區域/選取矩形區域              |
-| C-o     | evil-execute-in-normal-state     | 暫時性切換到 Normal 模式           |
+| 按鍵     | 命令                             | 描述                               |
+|----------+----------------------------------+------------------------------------|
+| C-;      | iedit-mode                       | 使用 iedit-mode 快速修改同樣的字詞 |
+| M-v      | er/expand-region                 | 快速選取游標下的文字、區域         |
+| C-x C-p  | auto-complete                    | 呼叫 auto-complete-mode 的自動補全 |
+| C-/      | undo-tree-undo                   | undo                               |
+| M-/      | undo-tree-redo                   | redo                               |
+| C-x C-n  | company-complete                 | 呼叫 company-mode 的自動補全       |
+| C-c C-e  | eval-and-replace                 | eval emacs-lisp 命令               |
+| C-x L    | linum-mode                       | 切換顯示行號                       |
+| C-x C-y  | yank-n-times                     | 多次貼上                           |
+| C-x C-l  | recenter                         | 將游標至於緩衝區中間               |
+| C-x C-i  | indent-whole-buffer              | 縮排整個緩衝區                     |
+| C-x C-q  | toggle-read-only                 | 切換緩衝區變成唯讀/可寫的狀況      |
+| C-M-,    | beginning-of-buffer              | 回到緩衝區開頭                     |
+| C-M-.    | end-of-buffer                    | 回到緩衝區尾巴                     |
+| M-<SPC>  | insert-U200B-char                | 插入 <U200B> 字元                  |
+| s-<SPC>  | insert-U200B-char                | 插入 <U200B> 字元                  |
+| M-r      | ~rotate-weindow/query-replace    | 旋轉切換視窗/尋找並取代            |
+| C-v      | ~cua-set-mark/cua-rectangle-mark | 選取區域/選取矩形區域              |
+| C-o      | evil-execute-in-normal-state     | 暫時性切換到 Normal 模式           |
+| C-d      | hungry-delete-forward            | 向右貪婪刪除                       |
+| C-l      | hungry-delete-backward           | 向左貪婪刪除                       |
+| <delete> | hungry-delete-backward           | 向左貪婪刪除                       |
 
 #+BEGIN_SRC emacs-lisp :noweb yes :results silent
   <<gen-keys-evil(state="insert", keys=global-evil-insert)>>
