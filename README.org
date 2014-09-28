@@ -23,18 +23,24 @@ written in Traditional Chinese, feel free to copy.
 - OSX
 
   #+BEGIN_SRC sh
-    brew install mu --with-emacs --HEAD
-    brew install terminal-notifier
+    brew install \
+         mu --with-emacs --HEAD \
+         terminal-notifier \
+         doxymacs doxygen
   #+END_SRC
 
 - Gentoo
 
   #+BEGIN_SRC sh
-    USE="emacs" emerge net-mail/mu
+    USE="emacs" emerge \
+       net-mail/mu \
+       app-emacs/doxymacs app-doc/doxygen
   #+END_SRC
 
 - Ubuntu/Debian
 
   #+BEGIN_SRC sh
-    sudo apt-get install mu4e
+    sudo apt-get install \
+         mu4e \
+         doxymacs doxygen
   #+END_SRC
