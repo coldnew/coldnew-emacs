@@ -1582,6 +1582,53 @@ org-mode 裏面的用來強調 (emphasize) 字體的正規表達式有一些缺�
   (setq org-emphasis-regexp-components '(" ​\t('\"{" "- \t.,:!?;'\")}\\" " \t\r\n,\"'" "." 1))
 #+END_SRC
 
+** 使用 org-mode 記事
+
+org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-mdoe 檔案的資料
+夾
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-directory (concat "~/Org/"))
+#+END_SRC
+
+而 agenda 的檔案則直接從 org-mode 檔案所在的資料夾去尋找
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-files (list org-directory))
+#+END_SRC
+
+*** 當從 TODO 轉變成 DONE 的時候，加上時間標記 (logdone)
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-log-done 'time)
+#+END_SRC
+
+*** 設定預設的筆記檔案
+
+我使用 TODO.org 當作預設的記事檔案。
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-default-notes-file (concat org-directory "TODO.org"))
+#+END_SRC
+
+*** 設定常用的記事快捷鍵
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-capture-templates '(("t" "TODO" entry (file+headline "" "Tasks")
+                                 "* TODO %?\n %i\n")
+                                ("c" "Contacts" entry (file "~/Org/contacts.org")
+   "* %(org-contacts-template-name)
+   :PROPERTIES:
+   :ORGANIZE:
+   :EMAIL: %(org-contacts-template-email)
+   :PHONE:
+   :NICKNAME:
+   :ADDRESS:
+   :BIRTHDAY:
+   :END:")
+  ))
+#+END_SRC
+
 ** 設定 Babel 支援的語言
 
 org-mode 的 Bebel 有一個非常好用的功能，你可以對程式碼區塊使用 =C-c C-c=
@@ -4314,6 +4361,22 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
   (add-hook 'mu4e-compose-pre-hook 'coldnew/mu4e-set-account)
 #+END_SRC
 
+** 使用 org-contacts 對收信人進行自動補全
+
+emacs 下管理電子郵件位址紀錄分別有 bbdb 和 org-contacts 這兩個工具，我個人
+偏好 org-contacts，因為他是屬於明碼儲存資訊，比較方便編輯。
+
+這邊設定我預設的 org-contacts 檔案，這樣在 mu4e 中，可以使用 =a o= 將使用
+者資訊加入到我的 org-contacts 中。
+
+#+BEGIN_SRC emacs-lisp
+  (setq mu4e-org-contacts-file "~/Org/contacts.org")
+  (add-to-list 'mu4e-headers-actions
+    '("org-contact-add" . mu4e-action-add-org-contact) t)
+  (add-to-list 'mu4e-view-actions
+    '("org-contact-add" . mu4e-action-add-org-contact) t)
+#+END_SRC
+
 ** 針對看起來是 patch 的信件內容加上顏色
 
 #+BEGIN_SRC emacs-lisp
@@ -4684,33 +4747,6 @@ paredit 可以幫助傳寫程式的速度。
 因為 org-mode 在這個設定檔裡佔有非常重要的比例，所以獨立出來。
 
 ** 使用 org-mode 記事                                              :capture:
-
-org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-mdoe 檔案的資料
-夾
-
-#+BEGIN_SRC emacs-lisp
-  (setq org-directory (concat sparkleshare-dir "/org/"))
-#+END_SRC
-
-而 agenda 的檔案則直接從 org-mode 檔案所在的資料夾去尋找
-
-#+BEGIN_SRC emacs-lisp
-  (setq org-agenda-files (list org-directory))
-#+END_SRC
-
-*** 當從 TODO 轉變成 DONE 的時候，加上時間標記 (logdone)
-
-#+BEGIN_SRC emacs-lisp
-  (setq org-log-done 'time)
-#+END_SRC
-
-*** 設定預設的筆記檔案
-
-我使用 TODO.org 當作預設的記事檔案。
-
-#+BEGIN_SRC emacs-lisp
-  (setq org-default-notes-file (concat org-directory "TODO.org"))
-#+END_SRC
 
 *** TODO 加上去
 
