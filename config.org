@@ -1582,7 +1582,7 @@ org-mode 裏面的用來強調 (emphasize) 字體的正規表達式有一些缺�
   (setq org-emphasis-regexp-components '(" ​\t('\"{" "- \t.,:!?;'\")}\\" " \t\r\n,\"'" "." 1))
 #+END_SRC
 
-** 使用 org-mode 記事
+** 使用 org-mode 記事                                              :capture:
 
 org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-mdoe 檔案的資料
 夾
@@ -1628,6 +1628,29 @@ org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-
    :END:")
   ))
 #+END_SRC
+
+** 使用 org-mode 進行日程管理                                         :agenda:
+
+*** 設定 Agenda 顯示在目前的 window 上
+
+#+begin_src emacs-lisp
+  (setq org-agenda-window-setup 'current-window)
+#+end_src
+
+*** 在 Agenda mode 時啟用 hl-line
+
+#+begin_src emacs-lisp
+  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
+#+end_src
+
+*** 使用 C-g 離開 Agenda
+
+#+begin_src emacs-lisp
+  (add-hook 'org-agenda-mode-hook
+            '(lambda ()
+               (local-set-key (kbd "C-g") 'org-agenda-exit)))
+#+end_src
+
 
 ** 設定 Babel 支援的語言
 
@@ -4790,26 +4813,6 @@ org-mode 預設會把 A_2 變成下標形式，這邊設置這個變數全域性
 #+begin_src emacs-lisp
   (setq org-pretty-entities t)
   (setq org-use-speed-commands t)
-#+end_src
-
-** 設定 Agenda 顯示在目前的 window 上。
-
-#+begin_src emacs-lisp
-  (setq org-agenda-window-setup 'current-window)
-#+end_src
-
-** 在 Agenda mode 時啟用 hl-line
-
-#+begin_src emacs-lisp
-  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
-#+end_src
-
-** 使用 C-g 離開 Agenda
-
-#+begin_src emacs-lisp
-  (add-hook 'org-agenda-mode-hook
-            '(lambda ()
-               (local-set-key (kbd "C-g") 'org-agenda-exit)))
 #+end_src
 
 ** 在 org-mode 裏面使用 C-c I 切換顯示圖片                          :keymap:
