@@ -3,6 +3,7 @@
 (source melpa)
 (source org)
 
+(depends-on "arduino-mode")
 (depends-on "clean-aindent-mode")
 (depends-on "howdoi")
 (depends-on "ac-slime")
