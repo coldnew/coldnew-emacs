@@ -654,10 +654,11 @@ GitHub: https://github.com/kai2nenobu/guide-key
 Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxymacs, 可以
 將 doxygen 的語法進行上色的動作。
 
+在這邊我將 doxymacs 的功能加入到所有和程式相關的模式中。
 #+BEGIN_SRC emacs-lisp
   (require 'doxymacs)
+  (add-hook 'prog-mode-hook '(lambda () (doxymacs-mode)))
 #+END_SRC
-
 
 * 自定義函式 / 方法                                                :function:
 
@@ -5164,15 +5165,6 @@ ref: https://github.com/patriciogonzalezvivo/dot-emacs/blob/master/live-fontify-
                            (not (eq (get-text-property (point) 'face)
                                     'font-lock-comment-face))))))))
   #+end_src
-
-** 加入 Doxygen 支援
-
-#+begin_src emacs-lisp
-  (add-hook 'coldnew-editor-mode-hook
-            '(lambda ()
-               (when (require 'doxymacs nil 'noerror)
-                 (doxymacs-mode))))
-#+end_src
 
 ** 加上貪婪刪除功能                                               :hungry@delete:
 
