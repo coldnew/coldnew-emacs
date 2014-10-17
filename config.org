@@ -2317,6 +2317,16 @@ GitHub: https://github.com/sabof/es-windows
   (require 'es-windows)
 #+END_SRC
 
+* 檔案瀏覽器 (dired)
+
+** vim 支援
+
+#+BEGIN_SRC emacs-lisp
+;;  (evil-add-hjkl-bindings dired-mode-map 'normal
+;;    "i" 'wdired-change-to-dired-mode
+;;    )
+#+END_SRC
+
 * 文件加密                                                          :encrypt:
 
 對於一些和隱私比較相關的文件，總是希望可以加密起來，讓自己可以更加放心。
@@ -3104,12 +3114,11 @@ C++檔案的依據。
 
 #+END_SRC
 
-*** 預設使用 Google Coding Style
+*** 預設使用 stroustrup Coding Style
 
-#+BEGIN_SRC emacs-lisp
-  (require 'google-c-style)
-  (add-hook 'c++-mode-hook 'google-set-c-style)
-#+END_SRC
+#+begin_src emacs-lisp
+  (add-hook 'c++-mode-hook '(lambda () (c-set-style "stroustrup")))
+#+end_src
 
 ** newlisp
 
