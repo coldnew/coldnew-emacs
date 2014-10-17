@@ -3114,10 +3114,11 @@ C++檔案的依據。
 
 #+END_SRC
 
-*** 預設使用 stroustrup Coding Style
+*** 預設使用 Google Coding Style
 
 #+begin_src emacs-lisp
-  (add-hook 'c++-mode-hook '(lambda () (c-set-style "stroustrup")))
+  (require 'google-c-style)
+  (add-hook 'c++-mode-hook 'google-set-c-style)
 #+end_src
 
 ** newlisp
