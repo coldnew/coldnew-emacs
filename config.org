@@ -2850,9 +2850,8 @@ Rust 是由 Mozilla 所開發的語言。
 
 #+BEGIN_SRC emacs-lisp
   (require 'clojure-mode)
-  (require 'clojurescript-mode)
   (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
-  (add-to-list 'auto-mode-alist '("\\.cljs$" . clojurescript-mode))
+  (add-to-list 'auto-mode-alist '("\\.cljs$" . clojure-mode))
 #+END_SRC
 
 *** 使用 cider 讓 emacs 和 clojure 互動
@@ -2870,7 +2869,16 @@ GitHub: https://github.com/clojure-emacs/cider
   (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 #+END_SRC
 
+*** 按鍵設定
 
+#+TBLNAME: clojure-keys
+| 按鍵    | 命令          | 描述                               |
+|---------+---------------+------------------------------------|
+| C-c M-j | cider-jack-in | 讓 cider 與目前的 clojure 專案連線 |
+
+#+BEGIN_SRC emacs-lisp :noweb yes
+  <<gen-keys-map2(map="clojure-mode", keys=clojure-keys)>>
+#+END_SRC
 
 ** Python
 
