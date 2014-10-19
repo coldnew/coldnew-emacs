@@ -2846,17 +2846,31 @@ Rust 是由 Mozilla 所開發的語言。
   (add-to-list 'auto-mode-alist '("\\.\\(md\\|markdown\\)\\'" . markdown-mode))
 #+end_src
 
-** Clojure
+** Clojure/Clojurescript
 
 #+BEGIN_SRC emacs-lisp
   (require 'clojure-mode)
+  (require 'clojurescript-mode)
+  (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+  (add-to-list 'auto-mode-alist '("\\.cljs$" . clojurescript-mode))
+#+END_SRC
+
+*** 使用 cider 讓 emacs 和 clojure 互動
+
+GitHub: https://github.com/clojure-emacs/cider
+
+#+BEGIN_SRC emacs-lisp
   (require 'cider)
 #+END_SRC
 
-#+begin_src emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
-  (add-to-list 'auto-mode-alist '("\\.cljs$" . clojure-mode))
-#+end_src
+**** 加入 eldoc 顯示函式資訊在 minibuffer 上
+
+#+BEGIN_SRC emacs-lisp
+  (require 'eldoc)
+  (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+#+END_SRC
+
+
 
 ** Python
 
