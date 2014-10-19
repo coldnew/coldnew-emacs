@@ -23,6 +23,8 @@
 (depends-on "dtrt-indent")
 (depends-on "magit-gitflow")
 (depends-on "bbdb-csv-import")
+(depends-on "impatient-mode")
+(depends-on "simple-httpd")
 (depends-on "linum-off")
 (depends-on "ggtags")
 (depends-on "evil-paredit")
