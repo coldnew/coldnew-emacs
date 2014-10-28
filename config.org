@@ -3136,11 +3136,38 @@ C++檔案的依據。
 
 #+END_SRC
 
-*** 預設使用 Google Coding Style
+*** 使用我自己定義的 C++ style
 
 #+begin_src emacs-lisp
-  (require 'google-c-style)
-  (add-hook 'c++-mode-hook 'google-set-c-style)
+  (add-hook 'c++-mode-hook
+            '(lambda ()
+
+               ;; Use stroustrup style
+               (c-set-style "stroustrup")
+
+               ;; Setting indentation lvel
+               (setq c-basic-offset 4)
+
+               ;; Make TAB equivilent to 4 spaces
+               (setq tab-width 4)
+
+               ;; Use spaces to indent instead of tabs.
+               (setq indent-tabs-mode nil)
+
+               ;; Indent the continuation by 2
+               (setq c-continued-statement-offset 2)
+
+               ;; Brackets should be at same indentation level as the statements they open
+               ;; for example:
+               ;;                 if (0)        becomes        if (0)
+               ;;                     {                        {
+               ;;                        ;                         ;
+               ;;                     }                        }
+               (c-set-offset 'substatement-open '0)
+               ;; make open-braces after a case
+               (c-set-offset 'case-label '+)
+
+               ))
 #+end_src
 
 ** newlisp
