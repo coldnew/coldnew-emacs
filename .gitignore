@@ -36,3 +36,5 @@ eshell/
 .org-id-locations
 .cask/
 flycheck_*
+log/
+cache/
