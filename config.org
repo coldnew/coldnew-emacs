@@ -3330,6 +3330,13 @@ scss-mode 預設會在檔案儲存的時候自動編譯 scss 檔成為 css 檔�
   (add-hook 'html-mode-hook 'zencoding-mode)
 #+end_src
 
+** HBS
+
+#+begin_src emacs-lisp
+  (require web-mode)
+  (add-to-list 'auto-mode-alist '("\\.hbs$" . web-mode))
+#+end_src
+
 * 版本管理                                                               :vc:
 
 #+BEGIN_SRC emacs-lisp
