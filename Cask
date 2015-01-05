@@ -6,6 +6,7 @@
 (depends-on "arduino-mode")
 (depends-on "clean-aindent-mode")
 (depends-on "howdoi")
+(depends-on "scad-mode")
 (depends-on "ac-slime")
 (depends-on "es-windows")
 (depends-on "irony")
