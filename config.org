@@ -3333,7 +3333,7 @@ scss-mode 預設會在檔案儲存的時候自動編譯 scss 檔成為 css 檔�
 ** HBS
 
 #+begin_src emacs-lisp
-  (require web-mode)
+  (require 'web-mode)
   (add-to-list 'auto-mode-alist '("\\.hbs$" . web-mode))
 #+end_src
 
