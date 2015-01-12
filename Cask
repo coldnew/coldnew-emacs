@@ -4,6 +4,7 @@
 (source org)
 
 (depends-on "arduino-mode")
+(depends-on "adoc-mode")
 (depends-on "clean-aindent-mode")
 (depends-on "howdoi")
 (depends-on "scad-mode")
