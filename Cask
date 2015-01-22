@@ -8,6 +8,7 @@
 (depends-on "string-inflection")
 (depends-on "ox-reveal")
 (depends-on "pandoc-mode")
+(depends-on "lispy")
 (depends-on "adoc-mode")
 (depends-on "clean-aindent-mode")
 (depends-on "howdoi")
