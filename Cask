@@ -4,6 +4,7 @@
 (source org)
 
 (depends-on "arduino-mode")
+(depends-on "org-download")
 (depends-on "string-inflection")
 (depends-on "ox-reveal")
 (depends-on "pandoc-mode")
