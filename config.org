@@ -660,6 +660,15 @@ Doxygen 是一套非常棒的註解產生文件的程式，emacs 底下有 doxym
   (add-hook 'prog-mode-hook '(lambda () (doxymacs-mode)))
 #+END_SRC
 
+** string-inflection :: 切換不同變數命名規則幫手
+
+GitHub: https://github.com/akicho8/string-inflection
+
+#+BEGIN_SRC emacs-lisp
+  (require 'string-inflection)
+#+END_SRC
+
+
 * 自定義函式 / 方法                                                :function:
 
 我所自定義或是我的 emacs 設定檔需要用到的 function，這裡面有些 function
