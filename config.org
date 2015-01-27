@@ -4424,7 +4424,7 @@ mu4e 透過外部程式去取得 email 並進行 index，由於這邊的處理�
            (smtpmail-smtp-service 587)
            (smtpmail-smtp-user "coldnew.tw@gmail.com")
            (user-full-name "Yen-Chin, Lee")
-           (mu4e-compose-signature "Sent from emacs with mu4e"))))
+           (mu4e-compose-signature ""))))
 #+end_src
 
 ** 設定預設的帳戶為 Gmail
