@@ -668,7 +668,6 @@ GitHub: https://github.com/akicho8/string-inflection
   (require 'string-inflection)
 #+END_SRC
 
-
 * 自定義函式 / 方法                                                :function:
 
 我所自定義或是我的 emacs 設定檔需要用到的 function，這裡面有些 function
@@ -2038,6 +2037,13 @@ GitHub: https://github.com/randomphrase/company-c-headers
   (add-to-list 'company-backends 'company-c-headers)
 #+END_SRC
 
+** 使用浮動視窗顯示函數 doc
+
+#+BEGIN_SRC emacs-lisp
+  (require 'company-quickhelp)
+  (company-quickhelp-mode 1)i
+#+END_SRC
+
 ** 按鍵設定
 
 #+TBLNAME: company-keys
@@ -3117,7 +3123,7 @@ GitHub: https://github.com/redguardtoo/cpputils-cmake
                            c-lineup-gcc-asm-reg
                            c-lineup-arglist-tabs-only))))))
 
-  (defun coldnew/linux-kernel-source-hook
+  (defun coldnew/linux-kernel-source-hook ()
       (let ((filename (buffer-file-name)))
         ;; Enable kernel mode for the appropriate files
         (when (and filename
