@@ -3,6 +3,18 @@
 
 (message "\nEmacs is powering up... Be patient, Master %s!\n" (getenv "USER"))
 
+;; Define emacs-dir where all the files live.
+;; We set `user-emacs-directory' here so we can use command-line
+;; switch different emacs configuration like following:
+;;
+;;    emacs -q -l ~/.coldnew-emacs/init.el
+;;
+(setq user-emacs-directory
+      (file-name-directory (or load-file-name (buffer-file-name))))
+
+(defvar emacs-dir user-emacs-directory
+  "Define where user load this init.el, this variable will be `~/.emacs.d/' in many case.")
+
 ;; Since I use Cask to mantain emacs config, check if it exist
 (unless (file-exists-p "~/.cask/cask.el")
   (error "~/.cask/cask.el not found!!! Please install Cask first."))
@@ -13,11 +25,6 @@
 
 ;; Use pallet to install packages in emacs
 (require 'pallet)
-
-;; Define emacs-dir where all the files live.
-(defvar emacs-dir
-  (file-name-directory (or load-file-name (buffer-file-name)))
-  "Define where user load this init.el, this variable will be `~/.emacs.d/' in many case.")
 
 ;; Add directories to emacs's `load-path' recursively.
 ;; if path does not exist, create directory.
@@ -39,9 +46,9 @@
 ;; startup just check if these dir exist or not, create the dir if not
 ;; exist.
 (let ((pdir "/tmp/.emacs.d"))
-    (make-directory (concat pdir "/backup") t)
-    (make-directory (concat pdir "/cache")  t)
-    (make-directory (concat pdir "/log")    t))
+  (make-directory (concat pdir "/backup") t)
+  (make-directory (concat pdir "/cache")  t)
+  (make-directory (concat pdir "/log")    t))
 
 ;; Make customize-ui write file to ~/.emacs.d/custom.el
 (setq custom-file (concat emacs-dir "/custom.el"))
