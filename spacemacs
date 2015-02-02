@@ -9,12 +9,15 @@
 (setq-default
  ;; List of additional paths where to look for configuration layers.
  ;; Paths must have a trailing slash (ie. `~/.mycontribs/')
- dotspacemacs-configuration-layer-path '()
- ;; List of configuration layers to load.
- dotspacemacs-configuration-layers '()
+ dotspacemacs-configuration-layer-path '( "~/.emacs.d/private/")
+ ;; list of configuration layers to load.
+ dotspacemacs-configuration-layers '(osx
+                                     git
+                                     coldnew-editor
+                                     )
  ;; A list of packages and/or extensions that will not be install and loaded.
  dotspacemacs-excluded-packages '()
-)
+ )
 
 ;; Settings
 ;; --------
@@ -28,10 +31,10 @@
  ;; List of themes, the first of the list is loaded when spacemacs starts.
  ;; Press <SPC> T n to cycle to the next theme in the list (works great
  ;; with 2 themes variants, one dark and one light)
- dotspacemacs-themes '(solarized-light
+ dotspacemacs-themes '(monokai
+                       solarized-light
                        solarized-dark
                        leuven
-                       monokai
                        zenburn)
  ;; Default font. The powerline-offset allows to quickly tweak the mode-line
  ;; size to make separators look not too crappy.
