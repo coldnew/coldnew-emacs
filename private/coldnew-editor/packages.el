@@ -11,6 +11,8 @@
 ;;
 ;;; License: GPLv3
 
+(require 'delsel)
+
 (defvar coldnew-editor-packages
   '(
     ;; package coldnew-editors go here
