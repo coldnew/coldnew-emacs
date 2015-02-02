@@ -20,6 +20,7 @@
     undo-tree
     pangu-spacing
     ascii
+    rainbow-mode
     )
   "List of all packages to install and/or initialize. Built-in packages
 which require an initialization must be listed explicitly in the list.")
@@ -39,6 +40,11 @@ which require an initialization must be listed explicitly in the list.")
 
                  ;; alias ascii to ascii-toggle
                  (defalias 'ascii 'ascii-toggle))))
+
+;;; rainbow-mode
+(defun coldnew-editor/init-rainbow-mode ()
+  "Initialize ascii"
+  (use-package rainbow-mode :defer t))
 
 ;;; hungry-delete
 (defun coldnew-editor/init-hungry-delete ()
