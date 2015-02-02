@@ -32,3 +32,17 @@
             "M-l" 'backward-delete-word
             "M-d" 'forward-delete-word
             )
+
+
+;;; minibuffer
+(my/set-key minibuffer-local-map
+            "M-l" 'backward-kill-word
+            "M-p" 'previous-history-element
+            "M-n" 'next-history-element
+            "C-g" 'minibuffer-keyboard-quit
+            "C-u" 'coldnew/minibuffer-clear
+            "M-t" 'coldnew/minibuffer-switch-tmpdir
+            "M-h" 'coldnew/minibuffer-switch-homedir
+            "M-w" 'coldnew/minibuffer-switch-workspace
+            "M-r" 'coldnew/minibuffer-switch-rootdir
+            )

@@ -22,4 +22,30 @@
   (interactive)
   (insert "\ufeff"))
 
+;;;; Commands (private)
+
+(defun coldnew/minibuffer-clear ()
+  "Clear minibuffer"
+  (interactive) (kill-line 0))
+
+(defun coldnew/minibuffer-switch-dir (path)
+  "Clear mimibuffer and insert dir path"
+  (kill-line 0) (insert path))
+
+(defun coldnew/minibuffer-switch-rootdir ()
+  "Switch to tmpdir in minibuffer"
+  (interactive) (coldnew/minibuffer-switch-dir "/"))
+
+(defun coldnew/minibuffer-switch-tmpdir ()
+  "Switch to tmpdir in minibuffer"
+  (interactive) (coldnew/minibuffer-switch-dir "/tmp/"))
+
+(defun coldnew/minibuffer-switch-homedir ()
+  "Switch to ~/ in minibuffer"
+  (interactive) (coldnew/minibuffer-switch-dir "~/"))
+
+(defun coldnew/minibuffer-switch-workspace ()
+  "Switch to ~/Workspace in minibuffer"
+  (interactive) (coldnew/minibuffer-switch-dir "~/Workspace/"))
+
 ;;;; Commands
