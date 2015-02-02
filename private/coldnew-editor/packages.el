@@ -93,15 +93,10 @@ which require an initialization must be listed explicitly in the list.")
                         (with-current-buffer (get-buffer-create "*scratch*")
                           (lisp-interaction-mode))))
 
-;; evil
-
-
-;; For each package, define a function coldnew-editor/init-<package-coldnew-editor>
-;;
-;; (defun coldnew-editor/init-my-package ()
-;;   "Initialize my package"
-;;   )
-;;
-;; Often the body of an initialize function uses `use-package'
-;; For more info on `use-package', see readme:
-;; https://github.com/jwiegley/use-package
+;;; Easy PG
+(eval-after-load 'epa-file
+  '(progn
+     ;; Control whether or not to pop up the key selection dialog.
+     (setq epa-file-select-keys 0)
+     ;; Cache passphrase for symmetric encryption.
+     (setq epa-file-cache-passphrase-for-symmetric-encryption t)))
