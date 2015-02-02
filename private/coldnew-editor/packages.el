@@ -25,8 +25,8 @@ which require an initialization must be listed explicitly in the list.")
 (defvar coldnew-editor-excluded-packages '()
   "List of packages to exclude.")
 
-(defun my/set-key (map key def &rest bindings)
-  (evil-leader--def-keys map key def bindings))
+(defun my/set-key (keymap key def &rest bindings)
+  (evil-leader--def-keys keymap key def bindings))
 
 ;; evil
 (defun coldnew-editor/init-evil ()
