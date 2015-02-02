@@ -19,12 +19,26 @@
     hungry-delete
     undo-tree
     pangu-spacing
+    ascii
     )
   "List of all packages to install and/or initialize. Built-in packages
 which require an initialization must be listed explicitly in the list.")
 
 (defvar coldnew-editor-excluded-packages '()
   "List of packages to exclude.")
+
+;;; ascii
+(defun coldnew-editor/init-ascii ()
+  "Initialize ascii"
+  (use-package ascii :defer t :init
+               (progn
+                 ;; ascii-toggle
+                 (defun ascii-toggle ()
+                   "Toggle ascii-mode."
+                   (interactive) (if (not (ascii-off)) (ascii-on)))
+
+                 ;; alias ascii to ascii-toggle
+                 (defalias 'ascii 'ascii-toggle))))
 
 ;;; hungry-delete
 (defun coldnew-editor/init-hungry-delete ()
