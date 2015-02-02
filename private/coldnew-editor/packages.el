@@ -23,6 +23,7 @@
     pangu-spacing
     ascii
     rainbow-mode
+    linum-off
     )
   "List of all packages to install and/or initialize. Built-in packages
 which require an initialization must be listed explicitly in the list.")
@@ -70,6 +71,23 @@ which require an initialization must be listed explicitly in the list.")
                            '(lambda ()
                               (set (make-local-variable 'pangu-spacing-real-insert-separtor) t)))
                  )))
+
+;;; linum-off
+(defun coldnew-editor/init-linum-off ()
+  (use-package pangu-spacing
+               :defer t
+               :init (setq linum-disabled-mode-list
+                           '(eshell-mode shell-mode term-mode erc-mode compilation-mode
+                                         woman-mode w3m-mode calendar-mode org-mode
+                                         ))))
+
+;;; minibuffer
+;; use bar type cursor instead of box
+(add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 'bar)))
+
+
+;; evil
+
 
 ;; For each package, define a function coldnew-editor/init-<package-coldnew-editor>
 ;;
