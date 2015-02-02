@@ -26,4 +26,9 @@
             "C-p" 'evil-previous-line
             "C-f" 'evil-forward-char
             "C-b" 'evil-backward-char
+            "M-<SPC>" 'insert-U200B-char
+            "s-<SPC>" 'insert-U200B-char
+            "C-x C-l" 'recenter
+            "M-l" 'backward-delete-word
+            "M-d" 'forward-delete-word
             )

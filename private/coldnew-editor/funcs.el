@@ -11,5 +11,15 @@
 ;;
 ;;; License: GPLv3
 
+;;;; Local functions
 (defun my/set-key (keymap key def &rest bindings)
   (evil-leader--def-keys keymap key def bindings))
+
+;;;; Commands
+
+(defun insert-U200B-char ()
+  "Insert <U200B> char, this character is nice use in org-mode."
+  (interactive)
+  (insert "\ufeff"))
+
+;;;; Commands

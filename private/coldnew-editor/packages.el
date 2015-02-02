@@ -18,6 +18,7 @@
     evil-leader
     hungry-delete
     undo-tree
+    pangu-spacing
     )
   "List of all packages to install and/or initialize. Built-in packages
 which require an initialization must be listed explicitly in the list.")
@@ -35,6 +36,18 @@ which require an initialization must be listed explicitly in the list.")
                (progn
                  ;; only horizontal whitespace
                  (setq-default hungry-delete-chars-to-skip " \t\f\v"))))
+
+;;; pangu-spacing
+(defun coldnew-editor/init-pangu-spacing ()
+  (use-package pangu-spacing
+               :defer t
+               :init (global-pangu-spacing-mode 1)
+               :config
+               (progn
+                 (add-hook 'org-mode-hook
+                           '(lambda ()
+                              (set (make-local-variable 'pangu-spacing-real-insert-separtor) t)))
+                 )))
 
 ;; For each package, define a function coldnew-editor/init-<package-coldnew-editor>
 ;;
