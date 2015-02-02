@@ -16,7 +16,7 @@
 (defun my/set-key (keymap key def &rest bindings)
   (evil-leader--def-keys keymap key def bindings))
 
-(defun my/set-ex-cmd (cmd fn &rest bindings)
+(defun my/set-ex-cmd (nothing cmd fn &rest bindings)
   (flet ((set-ex-cmd (cmd fn bindings)
                      (while cmd
                        (evil-ex-define-cmd cmd fn)
