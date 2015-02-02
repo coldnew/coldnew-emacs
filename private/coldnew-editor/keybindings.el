@@ -11,6 +11,22 @@
 ;;
 ;;; License: GPLv3
 
+;;; X11
+
+;; When under X11, make caps as control
+(cond ((eq window-system 'x)
+       ;; make caps lock a control key
+       (shell-command "setxkbmap -option ctrl:nocaps")))
+
+;;; Mac OSX
+;;
+;; Bind key under OSX as following
+;;    Option  -> Super
+;;    Command -> Meta
+
+(setq mac-option-modifier 'super)
+(setq mac-command-modifier 'meta)
+
 ;; Normal
 
 ;; Insert
@@ -34,9 +50,9 @@
             )
 
 ;;; ex
-(my/set-ex-cmd
- "ag" 'helm-ag-this-file
- )
+(my/set-ex-cmd 'nil
+               "ag" 'helm-ag-this-file
+               )
 
 ;;; minibuffer
 (my/set-key minibuffer-local-map
