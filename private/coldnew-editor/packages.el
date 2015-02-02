@@ -28,8 +28,13 @@ which require an initialization must be listed explicitly in the list.")
 ;;; hungry-delete
 (defun coldnew-editor/init-hungry-delete ()
   "Initialize hungry-delete"
-  (use-package hungry-delete :defer t ))
-
+  (use-package hungry-delete
+               :defer t
+               :init (global-hungry-delete-mode)
+               :config
+               (progn
+                 ;; only horizontal whitespace
+                 (setq-default hungry-delete-chars-to-skip " \t\f\v"))))
 
 ;; For each package, define a function coldnew-editor/init-<package-coldnew-editor>
 ;;

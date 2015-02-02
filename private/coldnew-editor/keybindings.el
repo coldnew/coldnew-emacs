@@ -14,7 +14,9 @@
 (defun my/set-key (keymap key def &rest bindings)
   (evil-leader--def-keys keymap key def bindings))
 
-;; Bind my familier emacs keybinding
+;; Normal
+
+;; Insert
 (my/set-key evil-insert-state-map
             "C-a" 'beginning-of-line
             "C-e" 'end-of-line
