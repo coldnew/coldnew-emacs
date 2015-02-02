@@ -11,9 +11,6 @@
 ;;
 ;;; License: GPLv3
 
-(defun my/set-key (keymap key def &rest bindings)
-  (evil-leader--def-keys keymap key def bindings))
-
 ;; Normal
 
 ;; Insert
