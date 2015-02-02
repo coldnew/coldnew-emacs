@@ -87,6 +87,12 @@ which require an initialization must be listed explicitly in the list.")
 (add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 'bar)))
 
 
+;; never die scratch
+(run-with-idle-timer 1 t
+                     '(lambda ()
+                        (with-current-buffer (get-buffer-create "*scratch*")
+                          (lisp-interaction-mode))))
+
 ;; evil
 
 
