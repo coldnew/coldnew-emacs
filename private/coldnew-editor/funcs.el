@@ -12,8 +12,17 @@
 ;;; License: GPLv3
 
 ;;;; Local functions
+
 (defun my/set-key (keymap key def &rest bindings)
   (evil-leader--def-keys keymap key def bindings))
+
+(defun my/set-ex-cmd (cmd fn &rest bindings)
+  (flet ((set-ex-cmd (cmd fn bindings)
+                     (while cmd
+                       (evil-ex-define-cmd cmd fn)
+                       (setq cmd (pop bindings)
+                             fn (pop bindings)))))
+    (set-ex-cmd cmd fn bindings)))
 
 ;;;; Commands
 

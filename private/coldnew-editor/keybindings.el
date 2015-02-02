@@ -33,6 +33,10 @@
             "M-d" 'forward-delete-word
             )
 
+;;; ex
+(my/set-ex-cmd
+ "ag" 'helm-ag-this-file
+ )
 
 ;;; minibuffer
 (my/set-key minibuffer-local-map
