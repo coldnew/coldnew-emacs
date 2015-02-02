@@ -22,8 +22,9 @@
 ;; Create *scratch* automatically
 (run-with-idle-timer 1 t
                      '(lambda ()
-                        (with-current-buffer (get-buffer-create "*scratch*")
-                          (lisp-interaction-mode))))
+                        (unless (get-buffer "*scratch*")
+                          (with-current-buffer (get-buffer-create "*scratch*")
+                            (lisp-interaction-mode)))))
 
 ;;; Easy PG
 (eval-after-load 'epa-file
