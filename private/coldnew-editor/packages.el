@@ -74,12 +74,13 @@ which require an initialization must be listed explicitly in the list.")
 
 ;;; linum-off
 (defun coldnew-editor/init-linum-off ()
-  (use-package pangu-spacing
-               :defer t
-               :init (setq linum-disabled-mode-list
-                           '(eshell-mode shell-mode term-mode erc-mode compilation-mode
-                                         woman-mode w3m-mode calendar-mode org-mode
-                                         ))))
+  (use-package linum-off
+               :init
+               (setq linum-disabled-mode-list
+                     '(eshell-mode shell-mode term-mode erc-mode compilation-mode
+                                   woman-mode w3m-mode calendar-mode org-mode
+                                   ))))
+
 
 ;;; minibuffer
 ;; use bar type cursor instead of box
