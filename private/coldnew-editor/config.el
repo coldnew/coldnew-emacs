@@ -32,3 +32,8 @@
      (setq epa-file-select-keys 0)
      ;; Cache passphrase for symmetric encryption.
      (setq epa-file-cache-passphrase-for-symmetric-encryption t)))
+
+;;; linum
+(eval-after-load 'linum
+  '(progn
+     (global-linum-mode 1)))
