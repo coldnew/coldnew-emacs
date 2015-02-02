@@ -11,7 +11,6 @@
 ;;
 ;;; License: GPLv3
 
-(require 'delsel)
 
 (defvar coldnew-editor-packages
   '(
@@ -80,23 +79,3 @@ which require an initialization must be listed explicitly in the list.")
                      '(eshell-mode shell-mode term-mode erc-mode compilation-mode
                                    woman-mode w3m-mode calendar-mode org-mode
                                    ))))
-
-
-;;; minibuffer
-;; use bar type cursor instead of box
-(add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 'bar)))
-
-
-;; never die scratch
-(run-with-idle-timer 1 t
-                     '(lambda ()
-                        (with-current-buffer (get-buffer-create "*scratch*")
-                          (lisp-interaction-mode))))
-
-;;; Easy PG
-(eval-after-load 'epa-file
-  '(progn
-     ;; Control whether or not to pop up the key selection dialog.
-     (setq epa-file-select-keys 0)
-     ;; Cache passphrase for symmetric encryption.
-     (setq epa-file-cache-passphrase-for-symmetric-encryption t)))
