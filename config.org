@@ -3137,7 +3137,7 @@ GitHub: https://github.com/redguardtoo/cpputils-cmake
           (c-set-style "linux-tabs-only")
           (message "Setting up indentation for the linux kernel"))))
 
-  (add-hook 'c-mode-hook 'coldnew/linux-kernel-source-hook)
+  ;;(add-hook 'c-mode-hook 'coldnew/linux-kernel-source-hook)
 #+END_SRC
 
 *** asd
