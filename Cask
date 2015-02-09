@@ -4,6 +4,7 @@
 (source org)
 
 (depends-on "arduino-mode")
+(depends-on "auto-yasnippet")
 (depends-on "company-quickhelp")
 (depends-on "org-download")
 (depends-on "string-inflection")
