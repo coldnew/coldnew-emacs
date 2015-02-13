@@ -991,7 +991,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 - 中文字體
 
   #+begin_src emacs-lisp
-    (defvar emacs-cjk-font "Hiragino Sans GB W3"
+    (defvar emacs-cjk-font "Hiragino Sans GB"
       "The font name for CJK.")
   #+end_src
 
@@ -1002,7 +1002,7 @@ flatten a list 是一種方法，可以用來將巢狀的 list 變成單一個 l
 字體，若有使用我自訂的字體放大/縮小命令，則這個變數也會更著被修改。
 
 #+BEGIN_SRC emacs-lisp
-  (defvar emacs-font-size-pair '(15 . 18)
+  (defvar emacs-font-size-pair '(13 . 16)
     "Default font size pair for (english . chinese)")
 #+END_SRC
 
