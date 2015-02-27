@@ -1,3 +1,12 @@
+* 暫停維護
+
+我最近重新用英文寫了新版本的設定，因此這份會暫時停止維護。
+
+新的設定是基於 [[https://github.com/syl20bnr/spacemacs][spacemacs]] 並使用英文重寫，同樣是使用 org-mode 來進行設定
+檔案的維護。
+
+GitHub: https://github.com/coldnew/coldnew-spacemacs
+
 * About this config (關於這份配置)
 
 This is coldnew's emacs config file, the main file (config.org) is
