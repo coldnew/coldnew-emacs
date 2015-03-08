@@ -1670,7 +1670,6 @@ org-mode 也是非常強大的記事工具，我在這邊先設定我擺放 org-
                (local-set-key (kbd "C-g") 'org-agenda-exit)))
 #+end_src
 
-
 ** 設定 Babel 支援的語言
 
 org-mode 的 Bebel 有一個非常好用的功能，你可以對程式碼區塊使用 =C-c C-c=
@@ -2262,6 +2261,17 @@ Site: http://www.emacswiki.org/emacs/EshellAutojump
       (delete-region (point-min) (point-max))))
 #+end_src
 
+** eshell commands
+
+#+BEGIN_SRC emacs-lisp
+  (defun eshell/.. (&optional level)
+    "Go up LEVEL directories"
+    (interactive)
+    (let ((level (or level 1)))
+      (eshell/cd (make-string (1+ level) ?.))
+      (eshell/ls)))
+#+END_SRC
+
 * 窗口管理                                                           :window:
 
 針對 emacs 視窗大小的設定，以及彈出視窗等設置。
@@ -2659,7 +2669,7 @@ GitHub: https://github.com/rocky/emacs-dbgr
 
 ** 存檔前要執行的額外設定
 
-*** 清除多餘的空白
+ 清除多餘的空白
 
 #+begin_src emacs-lisp
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -5262,7 +5272,19 @@ ref: https://github.com/patriciogonzalezvivo/dot-emacs/blob/master/live-fontify-
             ("[\`^\(){\[,\+\\-\\*/\%><=\s-]\\(-?[0-9]+U?L?L?\\)" 1
              font-lock-constant-face) ; int
             )))
+
 #+end_src
+
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (font-lock-add-keywords
+   'verilog-mode
+   '(("\\(\\<[1-9][0-9_]*\\)?'h[0-9_a-fxz]+\\>" . font-lock-string-face) ; 16進数
+     ("\\(\\<[1-9][0-9_]*\\)?'d[0-9_xz]+\\>" . font-lock-string-face) ; 10進数
+     ("\\(\\<[1-9][0-9_]*\\)?'o[0-7_xz]+\\>" . font-lock-string-face) ; 8進数
+     ("\\(\\<[1-9][0-9_]*\\)?'b[01_xz]+\\>" . font-lock-string-face) ; 2進数
+     ("\\<[0-9][0-9_]*\\>" . font-lock-string-face))) ; 基数なし
+#+END_SRC
 
 ** 在寫文件或是程式註解時自動填滿行寬
 
