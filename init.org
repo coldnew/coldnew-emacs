@@ -2308,6 +2308,12 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
      auto-mode-alist))
 #+END_SRC
 
+** yaml
+
+#+BEGIN_SRC emacs-lisp
+  (req-package yaml-mode)
+#+END_SRC
+
 * LISP Development
 
 Though =LISP= has many dialet, it still is the best programming
