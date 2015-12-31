@@ -2082,6 +2082,19 @@ GitHub: https://github.com/AdamClements/latest-clojure-libraries
   (req-package latest-clojure-libraries)
 #+END_SRC
 
+*** Search on Clojars more easily
+
+This Emacs extension allows you to search for projects on clojars.org
+and copies your selection to the kill ring in a format suitable for
+your =project.clj=.
+
+GitHub: https://github.com/joshuamiller/clojars.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package clojars)
+#+END_SRC
+
+
 * Web Development                                                       :web:
 
 #+BEGIN_SRC emacs-lisp
