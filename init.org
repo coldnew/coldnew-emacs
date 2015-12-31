@@ -2292,7 +2292,7 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
            ("\\.rake\\'"  . ruby-mode)
            ("\\.rjs\\'"   . ruby-mode)
            ("\\.ru\\'"    . ruby-mode)
-           ("\\.rxml\\'"  . ruby-mode))
+           ("\\.rxml\\'"  . ruby-mode)))
 #+END_SRC
 
 ** nxml
