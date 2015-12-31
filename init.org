@@ -73,11 +73,11 @@ are =optional= but can make this configuration work more nicely.
 
 *** Mac OSX
 
-#+BEGIN_SRC sh :tangle no
-  brew install the_silver_searcher
+#+BEGIN_SRC sh :tangle no :noweb yes
   brew install fasd
-  brew install docmacs
+  brew install doxymacs
   brew install aspell --with-lang-en
+  <<install-in-macosx>>
 #+END_SRC
 
 *** Gentoo Linux
@@ -85,11 +85,11 @@ are =optional= but can make this configuration work more nicely.
 In Gentoo Linux, don't forget to enable ~USE=emacs~ to make gentoo auto install
 emacs-related packages.
 
-#+BEGIN_SRC sh :tangle no
-  emerge sys-apps/the_silver_searcher
+#+BEGIN_SRC sh :tangle no :noweb yes
   emerge app-shells/fasd
   emerge app-shells/doxymacs
   emerge app-shells/aspell
+  <<install-in-gentoo>>
 #+END_SRC
 
 * Initialization Emacs
@@ -545,6 +545,20 @@ GitHub: https://github.com/Wilfred/ag.el
 #+BEGIN_SRC emacs-lisp
   (req-package ag
     :if (executable-find "ag"))
+#+END_SRC
+
+To use [[https://github.com/Wilfred/ag.el][ag.el]] we also need to install [[https://github.com/ggreer/the_silver_searcher][the_silver_searcher]] in system.
+
+For Mac OSX, just type
+
+#+BEGIN_SRC sh :tangle no :noweb-ref install-in-macosx
+  brew install the_silver_searcher
+#+END_SRC
+
+If you use Gentoo Linux, you can use following command to install this package
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-gentoo
+  emerge sys-apps/the_silver_searcher
 #+END_SRC
 
 ** ascii
