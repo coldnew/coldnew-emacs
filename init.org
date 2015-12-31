@@ -1538,6 +1538,13 @@ GitHub: https://github.com/dgutov/highlight-escape-sequences
   (add-hook 'prog-mode-hook 'font-lock-comment-annotations)
 #+end_src
 
+** Visualization of matching parens
+
+#+BEGIN_SRC emacs-lisp
+  (show-paren-mode 1)
+  (setq show-paren-delay 0)               ; no delay
+#+END_SRC
+
 ** Use god-mode for entering commands withoud modifier keys     :keybinding:
 
 This is a global minor mode for entering Emacs commands without
