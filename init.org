@@ -1625,6 +1625,29 @@ to let emacs re-create it automatically.
                               (lisp-interaction-mode)))))
 #+END_SRC
 
+** Make buffer names unique
+
+The library uniquify overrides Emacs' default mechanism for making
+buffer names unique (using suffixes like <2>, <3> etc.) with a more
+sensible behaviour which use parts of the file names to make the
+buffer names distinguishable.
+
+For instance, buffers visiting =/u/mernst/tmp/Makefile= and
+=/usr/projects/zaphod/Makefile= would be named =Makefile|tmp= and
+=Makefile|zaphod=, respectively (instead of =Makefile= and
+=Makefile<2>=).
+
+#+BEGIN_SRC emacs-lisp
+  (req-package uniquify
+    :config
+    ;; starting separator for buffer name components
+    (setq uniquify-separator " • ")
+    ;; rerationalize buffer names after a buffer has been killed.
+    (setq uniquify-after-kill-buffer-p t)
+    ;; ignore non file buffers
+    (setq uniquify-ignore-buffers-re "^\\*"))
+#+END_SRC
+
 * Helm
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
