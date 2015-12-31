@@ -1917,6 +1917,18 @@ GitHub: https://github.com/magit/magit
 
 * Terminal Emulator                                                    :term:
 
+** ansi-term
+
+*** Close ansi-term buffer after exit
+
+After the ansi-term process ends it should leaves a buffer.
+
+#+BEGIN_SRC emacs-lisp
+  (defadvice term-handle-exit (after kill-buffer-after-exit activate)
+    "Kill the term buffer if the process finished."
+    (kill-buffer (current-buffer)))
+#+END_SRC
+
 ** Sane Term
 
 Ansi Term with sane options and the ability to cycle/create terms.
