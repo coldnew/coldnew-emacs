@@ -39,6 +39,7 @@ compile: init.el
 
 init.html: init.el
 	${CASK} exec ${EMACS} -q -l init.el -batch \
+		--eval "(require 'ox-html)" \
 		--visit init.org -f org-html-export-to-html
 
 init.el.html: init.el
