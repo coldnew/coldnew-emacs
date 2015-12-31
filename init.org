@@ -2268,6 +2268,24 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
            ("SConscript\\'" . python-mode)))
 #+END_SRC
 
+** ruby
+
+#+BEGIN_SRC emacs-lisp
+  (req-package ruby-mode
+    :mode (("Gemfile\\'"  . ruby-mode)
+           ("Kirkfile\\'" . ruby-mode)
+           ("Rakefile\\'" . ruby-mode)
+           ("Vagrantfile\\'" . ruby-mode)
+           ("\\.builder\\'"  . ruby-mode)
+           ("\\.gemspec\\'"  . ruby-mode)
+           ("\\.irbrc\\'" . ruby-mode)
+           ("\\.pryrc\\'" . ruby-mode)
+           ("\\.rake\\'"  . ruby-mode)
+           ("\\.rjs\\'"   . ruby-mode)
+           ("\\.ru\\'"    . ruby-mode)
+           ("\\.rxml\\'"  . ruby-mode))
+#+END_SRC
+
 ** nxml
 
 #+BEGIN_SRC emacs-lisp
