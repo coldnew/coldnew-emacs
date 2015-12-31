@@ -1445,6 +1445,12 @@ GitHub: https://github.com/company-mode/company-statistics
   (setq yas/snippet-dirs (concat user-emacs-directory "snippets"))
 #+END_SRC
 
+** Prevent yasnippet conflict with term-mode
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref yasnippet-config
+  (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1)))
+#+END_SRC
+
 ** Implement org-mode's easy-template like function
 
 I really like org-mode's =easy-template= function, so I implement one
@@ -1544,6 +1550,367 @@ to let emacs re-create it automatically.
              ("<tab>" . helm-execute-persistent-action)
              ("C-w"   . backward-kill-word))
 #+END_SRC
+
+* Org
+
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
+  (req-package org
+    :mode (("\\.org\\'" . org-mode)
+           ("\\.org_archive\\'" . org-mode))
+    :config
+    <<org-config>>)
+#+END_SRC
+
+** Basic setup
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  ;; Always enable auto indent mode
+  (setq org-indent-mode t)
+  ;; fontify source code
+  (setq org-src-fontify-natively t)
+  ;; Use current window when switch to source block
+  (setq org-src-window-setup 'current-window)
+  ;; Disable prompting to evaluate babel blocks
+  (setq org-confirm-babel-evaluate nil)
+  ;; Disable add validation link when export to HTML
+  (setq org-html-validation-link nil)
+#+END_SRC
+
+** Extend org-mode's easy templates
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (add-to-list 'org-structure-template-alist
+               '("E" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+  (add-to-list 'org-structure-template-alist
+               '("S" "#+BEGIN_SRC sh\n?\n#+END_SRC"))
+  (add-to-list 'org-structure-template-alist
+               '("p" "#+BEGIN_SRC plantuml :file uml.png \n?\n#+END_SRC"))
+#+END_SRC
+
+** Extend babel support languages
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (C . t)
+     (ditaa . t)
+     (dot . t)
+     (js . t)
+     (latex . t)
+     (perl . t)
+     (python . t)
+     (ruby . t)
+     (sh . t)
+     (plantuml . t)
+     (clojure . t)))
+  ;; make dot work as graphviz-dot
+  (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
+#+END_SRC
+
+** Setup link abbreviations
+
+[[https://www.gnu.org/software/emacs/manual/html_node/org/Link-abbreviations.html][Link abbreviations]]
+
+An abbreviated link looks like
+
+: [[linkword:tag][description]]
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (setq org-link-abbrev-alist
+        '(("google" . "http://www.google.com/search?q=")
+          ("google-map" . "http://maps.google.com/maps?q=%s")
+          ))
+#+END_SRC
+
+** Capture and Agenda
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  ;; make agenda show on current window
+  (setq org-agenda-window-setup 'current-window)
+  ;; highlight current in agenda
+  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
+  ;; Setup files for agenda
+  (setq org-agenda-files (list "~/Org/task/Office.org" "~/Org/task/Personal.org"))
+  ;;
+  (setq org-directory "~/Org")
+  (setq org-default-notes-file (f-join org-directory "task" "Office.org"))
+
+  ;; Always use `C-g' to exit agenda
+  (add-hook 'org-agenda-mode-hook
+            '(lambda ()
+               (local-set-key (kbd "C-g") 'org-agenda-exit)))
+#+END_SRC
+
+
+
+
+
+
+** Make spell-checking tool ignore some org-mode section
+
+see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-org-mode
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (eval-after-load 'ispell
+    '(progn
+       (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+       (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+       ))
+#+END_SRC
+** Latex Export
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (setq org-format-latex-options
+        '(:forground "black" :background "white"
+                     :scale 1.5
+                     :html-foreground "Black" :html-background "Transparent"
+                     :html-scale 1.0
+                     :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+#+END_SRC
+
+** Setup keybindings                                          :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (bind-keys org-mode-map
+             ("C-c b" . org-metaleft)
+             ("C-c f" . org-metaright)
+             ("C-c p" . org-metaup)
+             ("C-c n" . org-metadown)
+             ("C-c i" . org-insertlink)
+             ("C-c I" . org-toggle-inline-images))
+#+END_SRC
+
+* Version Control
+
+** Git
+
+*** Add support for git configuration files
+
+#+BEGIN_SRC emacs-lisp
+  (req-package gitconfig-mode
+    :require (flyspell)
+    :mode (("/\\.?git/?config\\'" . gitconfig-mode)
+           ("/\\.gitmodules\\'" . gitconfig-mode)
+           ("/_gitconfig\\'" . gitconfig-mode))
+    :config
+    (add-hook 'gitconfig-mode-hook 'flyspell-mode))
+#+END_SRC
+
+*** Add support for gitignore files
+
+#+BEGIN_SRC emacs-lisp
+  (req-package gitignore-mode
+    :mode (("/\\.gitignore\\'" . gitignore-mode)
+           ("/\\.git/info/exclude\\'" . gitignore-mode)
+           ("/git/ignore\\'" . gitignore-mode)))
+#+END_SRC
+
+* Terminal Emulator                                                    :term:
+
+** Sane Term
+
+Ansi Term with sane options and the ability to cycle/create terms.
+
+GitHub: https://github.com/adamrt/sane-term
+
+#+BEGIN_SRC emacs-lisp
+  (req-package sane-term
+    :config
+    ;; shell to use for sane-term
+    (setq sane-term-shell-command "/bin/bash")
+    ;; sane-term will create first term if none exist
+    (setq sane-term-initial-create t)
+    ;; `C-d' or `exit' will kill the term buffer.
+    (setq sane-term-kill-on-exit t)
+    ;; After killing a term buffer, not cycle to another.
+    (setq sane-term-next-on-kill nil))
+#+END_SRC
+
+** Eshell                                                           :eshell:
+
+eshell is not really a system shell, it's written in pure lisp. What I
+like is it fully integrated with emacs.
+
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
+  (req-package eshell
+    :config
+    ;; extra eshell configs
+    <<eshell-config>>)
+#+END_SRC
+
+*** Setup eshell file to cache directory
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref eshell-config
+  ;; move eshell cache dir to ~/.emacs.d/.cache
+  (setq eshell-directory-name (concat user-cache-directory "eshell"))
+#+END_SRC
+
+*** Use bash like prompt with color
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref eshell-config
+  ;; Make eshell prompt look likes default bash prompt
+  (setq eshell-prompt-function
+        '(lambda ()
+           (concat
+            user-login-name "@" system-name " "
+            (if (search (directory-file-name (expand-file-name (getenv "HOME"))) (eshell/pwd))
+                (replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
+              (eshell/pwd))
+            (if (= (user-uid) 0) " # " " $ "))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref eshell-config
+  ;; Add color for eshell prompt like Gentoo does
+  (defun colorfy-eshell-prompt ()
+    (let* ((mpoint)
+           (user-string-regexp (concat "^" user-login-name "@" system-name)))
+      (save-excursion
+        (goto-char (point-min))
+        (while (re-search-forward (concat user-string-regexp ".*[$#]") (point-max) t)
+          (setq mpoint (point))
+          (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "dodger blue")))
+        (goto-char (point-min))
+        (while (re-search-forward user-string-regexp (point-max) t)
+          (setq mpoint (point))
+          (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "green3"))))))
+  ;; Make eshell prompt more colorful
+  (add-hook 'eshell-output-filter-functions 'colorfy-eshell-prompt)
+#+END_SRC
+
+*** Use ansi-term to render visual commands
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref eshell-config
+  (setq eshell-visual-commands
+        '("less" "tmux" "htop" "top" "bash" "zsh" "fish" "ssh" "tail"))
+
+  (setq eshell-visual-subcommands
+        '(("git" "log" "diff" "show")))
+#+END_SRC
+
+*** Support for multi-eshell instance
+
+#+BEGIN_SRC emacs-lisp
+  (req-package multi-eshell
+    :require eshell
+    :config
+    (setq multi-eshell-shell-function '(eshell))
+    (setq multi-eshell-name "*eshell*"))
+#+END_SRC
+
+*** Add autojump command
+
+[[https://github.com/coldnew/eshell-autojump][Eshell Autojump]] is an [[https://github.com/joelthelion/autojump][autojump]] like command written in pure elisp,
+which add a =j= command to let you jump to folder you has been access.
+
+GitHub: https://github.com/coldnew/eshell-autojump
+
+#+BEGIN_SRC emacs-lisp
+  (req-package eshell-autojump :require eshell)
+#+END_SRC
+
+*** Eshell commands setup
+
+**** ..
+
+#+BEGIN_SRC emacs-lisp
+  (defun eshell/.. (&optional level)
+    "Go up LEVEL directories"
+    (interactive)
+    (let ((level (or level 1)))
+      (eshell/cd (make-string (1+ level) ?.))
+      (eshell/ls)))
+#+END_SRC
+
+**** clear
+
+#+BEGIN_SRC emacs-lisp
+  (defun eshell/clear ()
+    "Clears the shell buffer ala Unix's clear or DOS' cls"
+    ;; the shell prompts are read-only, so clear that for the duration
+    (let ((inhibit-read-only t))
+      ;; simply delete the region
+      (delete-region (point-min) (point-max))))
+#+END_SRC
+
+**** emacs
+
+#+BEGIN_SRC emacs-lisp
+  (defun eshell/emacs (&rest args)
+    "Open a file in emacs. Some habits die hard."
+    (if (null args)
+        ;; If I just ran "emacs", I probably expect to be launching
+        ;; Emacs, which is rather silly since I'm already in Emacs.
+        ;; So just pretend to do what I ask.
+        (bury-buffer)
+      ;; We have to expand the file names or else naming a directory in an
+      ;; argument causes later arguments to be looked for in that directory,
+      ;; not the starting directory
+      (mapc #'find-file (mapcar #'expand-file-name (eshell-flatten-list (reverse args))))))
+
+  (defalias 'eshell/e 'eshell/emacs)
+#+END_SRC
+
+**** unpack
+
+#+BEGIN_SRC emacs-lisp
+  (defun eshell/unpack (file)
+    (let ((command (some (lambda (x)
+                           (if (string-match-p (car x) file)
+                               (cadr x)))
+                         '((".*\.tar.bz2" "tar xjf")
+                           (".*\.tar.gz" "tar xzf")
+                           (".*\.bz2" "bunzip2")
+                           (".*\.rar" "unrar x")
+                           (".*\.gz" "gunzip")
+                           (".*\.tar" "tar xf")
+                           (".*\.tbz2" "tar xjf")
+                           (".*\.tgz" "tar xzf")
+                           (".*\.zip" "unzip")
+                           (".*\.Z" "uncompress")
+                           (".*" "echo 'Could not unpack the file:'")))))
+      (eshell-command-result (concat command " " file))))
+#+END_SRC
+
+* Window Management                                                  :window:
+
+** Maximized window after emacs start
+
+#+BEGIN_SRC emacs-lisp
+  (modify-all-frames-parameters '((fullscreen . maximized)))
+#+END_SRC
+
+** winner-mode                                                      :winner:
+
+#+BEGIN_SRC emacs-lisp
+  (req-package winner
+    :config
+    ;; I use my own keymap for winner-mode
+    (setq winner-dont-bind-my-keys t)
+    ;; Start winner-mode globally
+    (winner-mode t))
+#+END_SRC
+
+* Keybinding                                                     :keybinding:
+
+Create my minor-mode to control all keybindings
+
+#+begin_src emacs-lisp
+  (defvar coldnew-editor-map (make-keymap))
+
+  (define-minor-mode coldnew-editor-mode
+    "coldnew's editor minor mode."
+    :init-value t
+    :keymap coldnew-editor-map)
+
+  (define-globalized-minor-mode global-coldnew-editor-mode
+    coldnew-editor-mode (lambda ()
+                          (if (not (minibufferp (current-buffer)))
+                              (coldnew-editor-mode 1))))
+
+  ;; Gloabal enable
+  (global-coldnew-editor-mode t)
+#+end_src
 
 * End of configuration
 
