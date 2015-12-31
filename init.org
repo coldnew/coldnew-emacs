@@ -2586,6 +2586,16 @@ GitHub: https://github.com/magit/magit
            ("/git/ignore\\'" . gitignore-mode)))
 #+END_SRC
 
+*** Add GitGutter on fringe
+
+GitHub: https://github.com/syohex/emacs-git-gutter-fringe
+
+#+BEGIN_SRC emacs-lisp
+  (req-package git-gutter-fringe
+    :if window-system                     ; git-gutter-fringe only work on GUI
+    :require fringe-helper)
+#+END_SRC
+
 * Terminal Emulator                                                    :term:
 
 ** ansi-term
