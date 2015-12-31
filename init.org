@@ -2259,6 +2259,15 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
     :mode "\\.php\\'")
 #+END_SRC
 
+** python
+
+#+BEGIN_SRC emacs-lisp
+  (req-package python
+    :mode (("\\.py\\'" . python-mode)
+           ("SConstruct\\'" . python-mode)
+           ("SConscript\\'" . python-mode)))
+#+END_SRC
+
 ** nxml
 
 #+BEGIN_SRC emacs-lisp
