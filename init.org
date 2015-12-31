@@ -1646,7 +1646,6 @@ An abbreviated link looks like
 
 
 
-
 ** Make spell-checking tool ignore some org-mode section
 
 see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-org-mode
@@ -1685,11 +1684,24 @@ see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-
 
 ** Git
 
+Magit is an interface to the version control system [[http://git-scm.com/][Git]], implemented as an [[http://www.gnu.org/software/emacs][Emacs]]
+package. Magit aspires to be a complete Git porcelain. While we cannot (yet)
+claim that Magit wraps and improves upon each and every Git command, it is
+complete enough to allow even experienced Git users to perform almost all of
+their daily version control tasks directly from within Emacs. While many fine
+Git clients exist, only Magit and Git itself deserve to be called porcelains.
+
+GitHub: https://github.com/magit/magit
+
+#+BEGIN_SRC emacs-lisp
+  (req-package magit)
+#+END_SRC
+
 *** Add support for git configuration files
 
 #+BEGIN_SRC emacs-lisp
   (req-package gitconfig-mode
-    :require (flyspell)
+    :require flyspell
     :mode (("/\\.?git/?config\\'" . gitconfig-mode)
            ("/\\.gitmodules\\'" . gitconfig-mode)
            ("/_gitconfig\\'" . gitconfig-mode))
