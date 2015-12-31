@@ -228,7 +228,6 @@ looks like this:
   (depends-on "pallet")
   (depends-on "async")
   (depends-on "req-package")
-  (depends-on "clojure-mode")             ; TODO:
 #+END_SRC
 
 Then run the following command in your =.emacs.d= directory to set up
@@ -516,14 +515,6 @@ For language, though Traditional Chinese is my mothertone, I still prefer use
 
 Most of emacs packages do not need many configs or just provide
 commands/functions to use, I put them here.
-
-** 4clojure
-
-[[https://github.com/losingkeys/4clojure.el][4clojure.el]] let you open and evaluate [[http://www.4clojure.com/][4clojure]] questions.
-
-#+BEGIN_SRC emacs-lisp
-  (req-package 4clojure)
-#+END_SRC
 
 ** ascii
 
@@ -2085,6 +2076,99 @@ GitHub: https://github.com/Fuco1/litable
   (add-hook 'emacs-lisp-mode-hook 'remove-elc-on-save)
 #+END_SRC
 
+** Clojure
+
+#+BEGIN_SRC emacs-lisp
+  (req-package clojure-mode
+    :require (clojure-mode-extra-font-locking flycheck-clojure)
+    :mode "\\.\\(clj\\|boot\\|cljx\\|edn\\|cljs\\|cljs.hl\\)\\'")
+#+END_SRC
+
+*** Add refactor function support
+
+https://github.com/clojure-emacs/clj-refactor.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package clj-refactor
+    :config
+    ;; Add clj-refactor to clojure-mode
+    (add-hook 'clojure-mode-hook '(lambda () (clj-refactor-mode 1)))
+    ;; Use `C-c C-x' as prefix
+    (cljr-add-keybindings-with-prefix "C-c C-x"))
+#+END_SRC
+
+*** Use cider for interactive development
+
+[[https://github.com/clojure-emacs/cider][cider]] is a Clojure Interactive Development Environment that Rocks for Emacs
+
+#+BEGIN_SRC emacs-lisp
+  (req-package cider
+    :require (cider-decompile cider-eval-sexp-fu eldoc projectile)
+    :config
+
+    ;; Enable eldoc in Clojure buffers
+    (eval-after-load 'eldoc
+      '(progn
+         (add-hook 'cider-mode-hook #'eldoc-mode)))
+
+    ;; Hide `*nrepl-connection*' and `*nrepl-server*' buffers from appearing
+    ;; in some buffer switching commands like switch-to-buffer
+    (setq nrepl-hide-special-buffers t)
+
+    ;; Enabling CamelCase support for editing commands(like forward-word,
+    ;; backward-word, etc) in the REPL is quite useful since we often have
+    ;; to deal with Java class and method names. The built-in Emacs minor
+    ;; mode subword-mode provides such functionality
+    (add-hook 'cider-repl-mode-hook #'subword-mode)
+
+    ;; The use of paredit when editing Clojure (or any other Lisp) code is
+    ;; highly recommended. You're probably using it already in your
+    ;; clojure-mode buffers (if you're not you probably should). You might
+    ;; also want to enable paredit in the REPL buffer as well.
+    ;; (add-hook 'cider-repl-mode-hook #'paredit-mode)
+
+    ;; Auto-select the error buffer when it's displayed:
+    (setq cider-auto-select-error-buffer t)
+
+    ;; Controls whether to pop to the REPL buffer on connect.
+    (setq cider-repl-pop-to-buffer-on-connect nil)
+
+    ;; Controls whether to auto-select the error popup buffer.
+    (setq cider-auto-select-error-buffer t)
+
+    ;; T to wrap history around when the end is reached.
+    (setq cider-repl-wrap-history t)
+
+    ;; Log protocol messages to the `nrepl-message-buffer-name' buffer.
+    (setq nrepl-log-messages t)
+
+    ;; Toggle between test and implementation, instead of showing test report buffer.
+    (eval-adter-load 'projectile
+                     (define-key cider-mode-map (kbd "C-c C-t") 'projectile-toggle-between-implementation-and-test))
+    )
+#+END_SRC
+
+*** Insert libraries in project more easily
+
+[[https://github.com/AdamClements/latest-clojure-libraries][latest-clojure-libraries]] helps to looks up the latest version of clojure
+libraries on clojars/maven and automatically populates the buffer with the
+appropriate dependency vector. Optionally uses pomegranate to load the
+dependency directly into your running nrepl.
+
+To use this plugin, you need to edit your =~/.lein/profiles.clj= :plugins vector
+to include =[lein-ancient "0.5.1"]= and optionally add
+=[com.cemerick/pomegranate "0.2.0"]= to your :dependencies vector if you want
+the feature which automatically adds the library to your classpath without
+restarting the repl.
+
+After all step done, use =M-x latest-clojure-libraries-insert-dependency= to
+insert latest clojure libraries to your project.
+
+GitHub: https://github.com/AdamClements/latest-clojure-libraries
+
+#+BEGIN_SRC emacs-lisp
+  (req-package latest-clojure-libraries)
+#+END_SRC
 
 * Keybindings                                                    :keybinding:
 
