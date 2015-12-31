@@ -509,7 +509,20 @@ For language, though Traditional Chinese is my mothertone, I still prefer use
   (setq system-time-locale "en_US")
 #+END_SRC
 
-* Packages                                                         :packages:
+* Buildin Packages
+
+Some buildin packages need to some setup.
+
+** request
+
+#+BEGIN_SRC emacs-lisp
+  (req-package request
+    :config
+    (setq request-storage-directory
+          (concat user-cache-directory "request")))
+#+END_SRC
+
+* External Packages                                                :packages:
 
 Most of emacs packages do not need many configs or just provide
 commands/functions to use, I put them here.
