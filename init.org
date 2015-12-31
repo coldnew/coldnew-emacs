@@ -2079,6 +2079,20 @@ GitHub: https://github.com/nschum/window-numbering.el
   (req-package window-numbering)
 #+END_SRC
 
+* Programming Languages
+
+** gnuplot
+
+A major mode for Emacs for interacting with Gnuplot
+
+GitHub: https://github.com/bruceravel/gnuplot-mode
+
+#+BEGIN_SRC emacs-lisp
+  (req-package gnuplot
+    :commands gnuplot-mode
+    :mode "\\.gp$")
+#+END_SRC
+
 * LISP Development
 
 Though =LISP= has many dialet, it still is the best programming
