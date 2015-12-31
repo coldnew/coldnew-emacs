@@ -1275,7 +1275,9 @@ adhere to defined styles. EditorConfig files are easily readable and
 they work nicely with version control systems.
 
 #+BEGIN_SRC emacs-lisp
-  (require 'editorconfig nil 'noerror)
+  (req-package 'editorconfig
+    :if (executable-find "editorconfig")
+    :mode ("\\.editorconfig\\'" . conf-unix-mode))
 #+END_SRC
 
 ** En/Decrypt files by EasyPG
