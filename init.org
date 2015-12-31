@@ -1654,6 +1654,9 @@ to let emacs re-create it automatically.
 
 ** Extend org-mode's easy templates
 
+org-mode make it easy to insert blocks by typing =<s[TAB]= ...etc. I
+defined some extra easy-templates I need to use here.
+
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
   (add-to-list 'org-structure-template-alist
                '("E" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
@@ -1717,7 +1720,6 @@ An abbreviated link looks like
             '(lambda ()
                (local-set-key (kbd "C-g") 'org-agenda-exit)))
 #+END_SRC
-
 
 
 
@@ -1996,9 +1998,101 @@ GitHub: https://github.com/wasamasa/eyebrowse
     (eyebrowse-mode t))
 #+END_SRC
 
-* Keybinding                                                     :keybinding:
+** window-numbering
 
-Create my minor-mode to control all keybindings
+Numbered window shortcuts for Emacs.
+
+Enable =window-numbering-mode= and use =M-1= through =M-0= to navigate.
+
+If you want to affect the numbers, use window-numbering-before-hook or
+window-numbering-assign-func. For instance, to always assign the
+calculator window the number 9, add the following to your .emacs:
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (setq window-numbering-assign-func
+        (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
+#+END_SRC
+
+GitHub: https://github.com/nschum/window-numbering.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package window-numbering)
+#+END_SRC
+
+* LISP Development
+
+Though =LISP= has many dialet, it still is the best programming
+language I ever met.
+
+** Emacs Lisp
+
+*** Add eldoc support                              
+
+#+BEGIN_SRC emacs-lisp
+  (req-package eldoc
+    :init
+    (add-hook 'emacs-lisp-mode-hook
+              '(lambda ()
+                 ;; enable eldoc
+                 (turn-on-eldoc-mode)
+                 ;; fix for paredit if exist
+                 (eval-after-load 'paredit
+                   '(progn
+                      (eldoc-add-command 'paredit-backward-delete
+                                         'paredit-close-round))))))
+#+END_SRC
+
+*** Additional flavour to emacs-lisp programming   
+
+el-spice is a minor mode that provides additional configuration to make
+programming in Emacs Lisp more enjoyable.
+
+GitHub: https://github.com/vedang/el-spice
+
+#+BEGIN_SRC emacs-lisp
+  (req-package el-spice)
+#+END_SRC
+
+*** On-the-fly evaluation/substitution of emacs lisp code 
+
+[[https://github.com/Fuco1/litable][litable]] keeps a list of pure functions as a safeguard for unwanted evaluations.
+A function must first be accepted into this list (using =M-x litable-accept-as-pure=)
+before it can be evaluated on-the-fly.
+
+You should take care of what function you accept as pure to avoid any
+unfortunate accidents. Also, note that the pure functions list persists across
+sessions.
+
+GitHub: https://github.com/Fuco1/litable
+
+#+BEGIN_SRC emacs-lisp
+  (req-package litable
+    :config
+    (litable-mode))
+#+END_SRC
+
+*** Remove *.elc when save
+
+#+BEGIN_SRC emacs-lisp
+  (defun remove-elc-on-save ()
+    "If you're saving an elisp file, likely the .elc is no longer valid."
+    (make-local-variable 'after-save-hook)
+    (add-hook 'after-save-hook
+              (lambda ()
+                (if (file-exists-p (concat buffer-file-name "c"))
+                    (delete-file (concat buffer-file-name "c"))))))
+
+  (add-hook 'emacs-lisp-mode-hook 'remove-elc-on-save)
+#+END_SRC
+
+
+* Keybindings                                                    :keybinding:
+
+** Global Keybinding
+
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
 
 ** Normal State
 
