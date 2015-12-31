@@ -1388,6 +1388,15 @@ GitHub: https://github.com/company-mode/company-mode
     (add-to-list 'company-backends 'company-c-headers))
 #+END_SRC
 
+** Fuzzy matching for company
+
+#+BEGIN_SRC emacs-lisp
+  (req-package company-flx
+    :require company
+    :config
+    (company-flx-mode +1))
+#+END_SRC
+
 ** Sort completion candidates by previous completion choices
 
 Company-statistics is a global minor mode built on top of the in-buffer
