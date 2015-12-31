@@ -1638,6 +1638,14 @@ GitHub: https://github.com/timcharper/evil-surround
 
 * Programming Languages
 
+** bash
+
+#+BEGIN_SRC emacs-lisp
+  (req-package flymake-shell
+    :require (flymake shell)
+    :config (add-hook 'sh-set-shell-hook 'flymake-shell-load))
+#+END_SRC
+
 ** crontab
 
 #+BEGIN_SRC emacs-lisp
@@ -1678,7 +1686,21 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
 
 #+BEGIN_SRC emacs-lisp
   (req-package graphviz-dot-mode
-    :mode "\\.dot\\'")
+    :mode "\\.dot\\'"
+    :config
+    ;; alias `dot-mode' to graphviz-dot-mode
+    (defalias 'dot-mode 'graphviz-dot-mode))
+#+END_SRC
+
+** glsl
+
+#+BEGIN_SRC emacs-lisp
+  (req-package glsl-mode
+    :mode (("\\.vs\\'" . glsl-mode)
+           ("\\.fs\\'" . glsl-mode)
+           ("\\.gs\\'" . glsl-mode))
+    :config
+    (setq glsl-other-file-alist '(("\\.fs$" (".vs")) ("\\.vs$" (".fs")))))
 #+END_SRC
 
 ** javascript
@@ -1696,6 +1718,19 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
   (req-package jsx-mode
     :mode "\\.jsx\\'")
 #+END_SRC
+
+*** Simplify importing JS modules
+
+=import-js= is a tool to automatically import dependencies in your JavaScript
+project. Use it in Vim or Emacs by placing your cursor on a variable and hit
+=<leader>j (Vim)=, or =(M-x) import-js-import (Emacs)=.
+
+GitHub: https://github.com/trotzig/import-js
+
+#+BEGIN_SRC emacs-lisp
+  (req-package import-js)
+#+END_SRC
+
 
 ** json
 
@@ -1745,6 +1780,13 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
            ("SConscript\\'" . python-mode)))
 #+END_SRC
 
+** qml
+
+#+BEGIN_SRC emacs-lisp
+  (req-package qml-mode
+    :mode "\\.qml$")
+#+END_SRC
+
 ** ruby
 
 #+BEGIN_SRC emacs-lisp
@@ -1760,7 +1802,29 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
            ("\\.rake\\'"  . ruby-mode)
            ("\\.rjs\\'"   . ruby-mode)
            ("\\.ru\\'"    . ruby-mode)
-           ("\\.rxml\\'"  . ruby-mode)))
+           ("\\.rxml\\'"  . ruby-mode))
+    :config
+    ;; We never want to edit Rubinius bytecode
+    (add-to-list 'completion-ignored-extensions ".rbc"))
+#+END_SRC
+** rust
+
+[[https://github.com/rust-lang/rust-mode][rust-mode]] is a major emacs-mode for editing Rust source code.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package rust-mode
+    :mode "\\.rs\\'")
+#+END_SRC
+** scala
+
+#+BEGIN_SRC emacs-lisp
+  (req-package scala-mode
+    :mode (("\\.scala$" . scala-mode)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (req-package sbt-mode
+    :mode (("\\.sbt$" . sbt-mode)))
 #+END_SRC
 
 ** ssh config
@@ -1789,7 +1853,8 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
            ("\\.svg\\'"   . nxml-mode)
            ("\\.xml\\'"   . nxml-mode)
            ("\\.xsd\\'"   . nxml-mode)
-           ("\\.xslt\\'"  . nxml-mode))
+           ("\\.xslt\\'"  . nxml-mode)
+           ("\\.pom$"     . nxml-mode))
     :config
     ;; Any file start with xml will be treat as nxml-mode
     (add-to-list 'magic-mode-alist '("<\\?xml" . nxml-mode))
@@ -1808,7 +1873,7 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
   (req-package yaml-mode)
 #+END_SRC
 
-* LISP Development
+* LISP Development                                                     :lisp:
 
 Though =LISP= has many dialet, it still is the best programming
 language I ever met.
@@ -1995,6 +2060,88 @@ GitHub: https://github.com/AdamClements/latest-clojure-libraries
 
 #+BEGIN_SRC emacs-lisp
   (req-package latest-clojure-libraries)
+#+END_SRC
+
+* Web Development                                                       :web:
+
+#+BEGIN_SRC emacs-lisp
+  (req-package web-mode
+    :mode (("\\.html?\\'" . web-mode)
+           ("\\.ejs?\\'" . web-mode)))
+#+END_SRC
+
+** CSS                                                                 :css:
+
+#+BEGIN_SRC emacs-lisp
+  (req-package css-mode :mode "\\.css\\'")
+#+END_SRC
+
+*** Add support for eldoc                                           :eldoc:
+
+#+BEGIN_SRC emacs-lisp
+  (req-package css-eldoc
+    :config
+    (progn
+      (add-hook 'css-mode-hook 'turn-on-css-eldoc)
+      (add-hook 'scss-mode-hook 'turn-on-css-eldoc)
+      (add-hook 'less-css-mode-hook 'turn-on-css-eldoc)))
+#+END_SRC
+
+** Less                                                               :less:
+
+#+BEGIN_SRC emacs-lisp
+  (req-package less-css-mode
+    :init (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
+    :mode "\\.less$")
+#+END_SRC
+
+** SCSS                                                           :css:scss:
+
+#+BEGIN_SRC emacs-lisp
+  (req-package scss-mode
+    :mode "\\.scss\\'"
+    :config
+    (progn
+      ;; dont' build scss to css after save file
+      (setq scss-compile-at-save nil)))
+#+END_SRC
+
+** mustache                                                       :mustache:
+
+Sometimes we will use [[https://mustache.github.io/][mustache]] as template system, [[https://github.com/mustache/emacs][mustache-mode]] is a nice
+helper.
+
+GitHub: https://github.com/mustache/emacs
+
+#+BEGIN_SRC emacs-lisp
+  (req-package mustache-mode :mode "\\.mustache$")
+#+END_SRC
+
+** Use emmet-mode to add Zen Coding support
+
+[[https://github.com/smihica/emmet-mode][emmet-mode]] is a fork of [[https://github.com/rooney/zencoding][zencoding-mode]] which add minor mode providing support
+for Zen Coding by producing HTML from CSS-like selectors.
+
+GitHub: https://github.com/smihica/emmet-mode
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (req-package emmet-mode
+    :config
+    (progn
+      ;; Following mode support emmet-mode
+      (add-hook 'html-mode-hook 'emmet-mode)
+      (add-hook 'sgml-mode-hook 'emmet-mode)
+      (add-hook 'nxml-mode-hook 'emmet-mode)
+      (add-hook 'css-mode-hook  'emmet-mode)
+
+      ;; Move cursor between quotes after expand
+      (add-hook 'emmt-mode-hook
+                '(lambda()
+                   (setq emmet-move-cursor-between-quotes t)))
+
+      ;; Make tab can also expand emmt instead of use yasnippet directly
+      (define-key emmt-mode-keymap (kbd "TAB") 'emmt-expand-yas)
+      (define-key emmt-mode-keymap (kbd "<tab>") 'emmt-expand-yas)))
 #+END_SRC
 
 * Completion
