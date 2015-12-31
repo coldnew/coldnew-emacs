@@ -1517,6 +1517,18 @@ GitHub: https://github.com/cofi/evil-leader
     <<evil-leader-keybindings>>)
 #+END_SRC
 
+** evil-surround
+
+This package emulates [[https://github.com/tpope/vim-surround][surround.vim by Tim Pope]]. The functionality is wrapped into a minor mode.
+
+GitHub: https://github.com/timcharper/evil-surround
+
+#+BEGIN_SRC emacs-lisp
+  (req-package evil-surround
+    :config
+    (global-evil-surround-mode 1)
+#+END_SRC
+
 * Completion
 
 [[http://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for "complete
