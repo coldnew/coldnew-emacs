@@ -2301,6 +2301,24 @@ GitHub: https://github.com/Fuco1/litable
     (setq litable-list-file (concat user-cache-directory ".litable-lists.el")))
 #+END_SRC
 
+*** Syntax highlighting for Emacs' cl-lib
+
+This library adds all of the familiar highlighting to =cl-lib= macros
+=(cl-defun, cl-loop, etc.)= that were originally provided for =cl=.
+
+It's not simply throwing in all the symbols as keywords. They're being
+added using the same regular expressions that =cl= gets, so function
+names get highlighted with =cl-defun=, type names get highlighted with
+=cl-defstruct=, etc.
+
+GitHub: https://github.com/skeeto/cl-lib-highlight
+
+#+BEGIN_SRC emacs-lisp
+  (req-package cl-lib-highlight
+    :config
+    (cl-lib-highlight-initialize))
+#+END_SRC
+
 *** Remove *.elc when save
 
 #+BEGIN_SRC emacs-lisp
