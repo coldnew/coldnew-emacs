@@ -596,6 +596,16 @@ GitHub: https://github.com/magnars/expand-region.el
     :bind (("M-v" . er/expand-region)))
 #+END_SRC
 
+** esup
+
+Benchmark Emacs Startup time without ever leaving your Emacs.
+
+GitHub: https://github.com/jschaf/esup
+
+#+BEGIN_SRC emacs-lisp
+  (req-package esup)
+#+END_SRC
+
 ** guide-key
 
 =guide-key.el= displays the available key bindings automatically and
