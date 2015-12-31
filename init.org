@@ -2364,7 +2364,7 @@ Show lambda as λ.
 
 #+BEGIN_SRC emacs-lisp
   (req-package eldoc
-    :init
+    :config
     (add-hook 'emacs-lisp-mode-hook
               '(lambda ()
                  ;; enable eldoc
