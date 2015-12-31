@@ -164,7 +164,6 @@ Setup the cache directory to store some cache content.
             tmp)))
     "My ramdisk path in system.")
 #+END_SRC
-
 * Package Management                                               :packages:
 
 The main package magement in my emacs is [[https://github.com/cask/cask][Cask]], which is a really nice package
@@ -229,6 +228,7 @@ looks like this:
   (depends-on "noflet")
   (depends-on "pallet")
   (depends-on "async")
+  (depends-on "benchmark-init")
   (depends-on "req-package")
 #+END_SRC
 
@@ -344,6 +344,22 @@ spacemacs, you can skip following code.
 
 Some basic setup to disabe/enable default feature before we start. The
 configuration here only depends on valina emacs's buildin libraries.
+
+** Benchmark my emcas configuration
+
+This is a simple benchmark of calls to Emacs require and load
+functions. It can be used to keep track of where time is being spent
+during Emacs startup in order to optimize startup times.
+
+The code was originally based on [[https://github.com/purcell/emacs.d/blob/master/lisp/init-benchmarking.el][init-benchmarking.el]] by Steve Purcell
+but several modification has gone into it since.
+
+GitHub: https://github.com/dholm/benchmark-init-el
+
+#+BEGIN_SRC emacs-lisp
+  (require 'benchmark-init)
+  (benchmark-init/activate)
+#+END_SRC
 
 ** Startup emacs server
 
