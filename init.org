@@ -1526,7 +1526,7 @@ GitHub: https://github.com/timcharper/evil-surround
 #+BEGIN_SRC emacs-lisp
   (req-package evil-surround
     :config
-    (global-evil-surround-mode 1)
+    (global-evil-surround-mode 1))
 #+END_SRC
 
 * Completion
@@ -2163,10 +2163,34 @@ GitHub: https://github.com/bbatsov/projectile
 #+BEGIN_SRC emacs-lisp
   (req-package projectile
     :config
-    (projectile-global-mode)
+    (projectile-global-mode))
 #+END_SRC
 
 * Programming Languages
+
+** graphviz dot
+
+#+BEGIN_SRC emacs-lisp
+  (req-package graphviz-dot-mode
+    :mode "\\.dot\\'")
+#+END_SRC
+
+** crontab
+
+#+BEGIN_SRC emacs-lisp
+  (req-package crontab-mode
+    :mode "\\.?cron\\(tab\\)?\\'")
+#+END_SRC
+
+** elixir
+
+#+BEGIN_SRC emacs-lisp
+  (req-package elixir)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (req-package alchemist)
+#+END_SRC
 
 ** gnuplot
 
