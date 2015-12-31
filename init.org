@@ -1442,6 +1442,24 @@ We also need to make all emacs-state buffer become to insert-state.
     (add-to-list 'evil-insert-state-modes m))
 #+END_SRC
 
+** evil-leader
+
+Evil Leader provides the =<leader>= feature from Vim that provides an
+easy way to bind keys under a variable prefix key. For an experienced
+Emacs User it is nothing more than a convoluted key map, but for a
+Evil user coming from Vim it means an easier start.
+
+GitHub: https://github.com/cofi/evil-leader
+
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
+  (req-package evil-leader
+    :config
+    ;; enable evil-leader globally
+    (global-evil-leader-mode)
+    ;; extra keybindings defined in `Keybinding' section
+    <<evil-leader-keybindings>>)
+#+END_SRC
+
 * Completion
 
 [[http://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for "complete
