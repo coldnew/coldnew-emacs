@@ -2252,6 +2252,13 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
     :mode "\\.\\(md\\|markdown\\)\\'")
 #+END_SRC
 
+** php
+
+#+BEGIN_SRC emacs-lisp
+  (req-package php-mode
+    :mode "\\.php\\'")
+#+END_SRC
+
 ** nxml
 
 #+BEGIN_SRC emacs-lisp
@@ -2273,7 +2280,6 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
            (setcdr pair 'nxml-mode)))
      auto-mode-alist))
 #+END_SRC
-
 
 * LISP Development
 
