@@ -1336,8 +1336,12 @@ GitHub: https://github.com/chrisdone/god-mode
 
 #+BEGIN_SRC emacs-lisp
   (req-package god-mode
-      :bind
-      ("M-o" . god-local-mode))
+    :bind
+    ("M-o" . god-local-mode)
+    :config
+    (bind-keys :map god-local-mode-map
+               ("z" . repeat)
+               ("i" . god-local-mode)))
 #+END_SRC
 
 * Vim Emulation
@@ -1351,7 +1355,10 @@ Though I am really familier with emacs, I still like some vim command.
     ;; enable evil-mode globally
     (evil-mode t)
     ;; some configs setup later
-    <<evil-config>>)
+    <<evil-config>>
+    ;; extra keybindings defined in `Keybinding' section
+    <<evil-keybindings>>
+    <<evil-ex-commands>>)
 #+END_SRC
 
 ** Setup default state to insert-state
@@ -1941,6 +1948,93 @@ GitHub: https://github.com/coldnew/eshell-autojump
     (setq winner-dont-bind-my-keys t)
     ;; Start winner-mode globally
     (winner-mode t))
+#+END_SRC
+
+* Keybinding                                                     :keybinding:
+
+Create my minor-mode to control all keybindings
+
+** Normal State
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-keybindings
+  (evil-define-key 'normal coldnew-editor-map
+      (kbd "C-x C-f") 'helm-find-files
+      (kbd "C-x C-q") 'read-only-mode
+      (kbd "C-x C-s") 'save-buffer-always
+      (kbd "C-x M-1") 'deft-or-close
+      (kbd "C-x M-2") 'multi-eshell
+      (kbd "C-x M-3") 'mu4e
+      (kbd "C-x M-4") 'erc-start-or-switch
+      (kbd "C-x vl") 'magit-log
+      (kbd "C-x vp") 'magit-push
+      (kbd "C-x vs") 'magit-status
+      (kbd "C-x b") 'helm-buffers-list
+      (kbd "M-[") 'winner-undo
+      (kbd "M-]") 'winner-redo
+      (kbd "M-x") 'helm-M-x
+      (kbd "M-s") 'helm-occur
+      (kbd "C-x C-o") 'other-frame
+      (kbd "M-o") 'other-window
+      (kbd "C--") 'text-scale-decrease
+      (kbd "C-=") 'text-scale-increase
+      )
+#+END_SRC
+
+** Insert State
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-keybindings
+  (evil-define-key 'insert coldnew-editor-map
+    (kbd "<delete>") 'hungry-delete-backward
+   ;; (kbd "TAB") 'yas/expand
+    (kbd "C-;") 'iedit-mode
+    (kbd "C-d") 'hungry-delete-forward
+    (kbd "C-l") 'hungry-delete-backward
+    (kbd "C-n") 'evil-next-line
+    (kbd "M-z")   'zzz-to-char
+    (kbd "C-o") 'evil-execute-in-normal-state
+    (kbd "C-p") 'evil-previous-line
+    (kbd "C-w") 'backward-kill-word
+    (kbd "C-x C-f") 'helm-find-files
+    (kbd "C-x C-n") 'company-complete
+    (kbd "C-x C-q") 'read-only-mode
+    (kbd "C-x C-s") 'save-buffer-always
+    (kbd "C-x M-1") 'deft-or-close
+    (kbd "C-x M-2") 'multi-eshell
+    (kbd "C-x M-3") 'mu4e
+    (kbd "C-x M-4") 'erc-start-or-switch
+    (kbd "C-x vl") 'magit-log
+    (kbd "C-x vp") 'magit-push
+    (kbd "C-x vs") 'magit-status
+    (kbd "C-x b") 'helm-buffers-list
+    (kbd "M-<SPC>") 'insert-U200B-char
+    (kbd "M-[") 'winner-undo
+    (kbd "M-]") 'winner-redo
+    (kbd "M-s") 'helm-occur
+    (kbd "s-<RET>") 'insert-empty-line
+    (kbd "s-<SPC>") 'insert-U200B-char
+    (kbd "C-v") 'set-mark-mode/rectangle-mark-mode
+    (kbd "C-x C-i") 'indent-region-or-buffer-and-cleanup
+    (kbd "M-v") 'er/expand-region
+    (kbd "M-x") 'helm-M-x
+    (kbd "M-y") 'helm-show-kill-ring
+    ;; (kbd "M-o") 'other-window
+    (kbd "C-x C-o") 'other-frame
+    (kbd "C--") 'text-scale-decrease
+    (kbd "C-x t") 'sane-term
+    (kbd "C-x T") 'sane-term
+    )
+#+END_SRC
+
+** Ex Command
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-ex-commands
+  (evil-ex-define-cmd "ag" 'helm-ag)
+  (evil-ex-define-cmd "agp[roject]" 'helm-projectile-ag)
+  (evil-ex-define-cmd "agi[nteractive]" 'helm-do-ag)
+  (evil-ex-define-cmd "google" 'helm-google)
+  (evil-ex-define-cmd "google-suggest" 'helm-google-suggest)
+  (evil-ex-define-cmd "gtag" 'ggtags-create-tags)
+  (evil-ex-define-cmd "howdoi" 'howdoi-query)
 #+END_SRC
 
 * End of configuration
