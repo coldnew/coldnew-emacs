@@ -806,6 +806,16 @@ with the color they represent as background.
   (req-package rainbow-mode)
 #+END_SRC
 
+** string-inflection
+
+underscore -> UPCASE -> CamelCase conversion of names.
+
+GitHub: https://github.com/akicho8/string-inflection
+
+#+BEGIN_SRC emacs-lisp
+  (req-package string-inflection)
+#+END_SRC
+
 ** sx
 
 [[https://github.com/vermiculus/sx.el/][SX]] is a full featured Stack Exchange mode for GNU Emacs 24+. Using the official
@@ -1827,7 +1837,6 @@ An abbreviated link looks like
             '(lambda ()
                (local-set-key (kbd "C-g") 'org-agenda-exit)))
 #+END_SRC
-
 
 
 
