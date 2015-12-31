@@ -2302,6 +2302,16 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
            ("\\.rxml\\'"  . ruby-mode)))
 #+END_SRC
 
+** ssh config
+
+#+BEGIN_SRC emacs-lisp
+  (req-package ssh-config-mode
+    :mode ((".ssh/config\\'"       . ssh-config-mode)
+           ("sshd?_config\\'"      . ssh-config-mode)
+           ("known_hosts\\'"       . ssh-known-hosts-mode)
+           ("authorized_keys2?\\'" . ssh-authorized-keys-mode)))
+#+END_SRC
+
 ** nxml
 
 #+BEGIN_SRC emacs-lisp
