@@ -20,13 +20,9 @@ var/
 swank/
 TAGS
 semanticdb/
-config/coldnew-emacs.el*
-themes/coldnew-night-theme.el
-config.el
 url/
 lisp/
 tramp
-custom.el
 lisp
 eshell/
 .org-id-locations

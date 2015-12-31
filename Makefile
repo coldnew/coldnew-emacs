@@ -38,8 +38,7 @@ compile: init.el
 		--eval '(byte-recompile-directory (expand-file-name (getenv "PWD")) 0)'
 
 init.html: init.el
-	${CASK} exec ${EMACS} -q -l init.el -batch \
-		--eval "(require 'ox-html)" \
+	${CASK} exec ${EMACS} -Q -l init.el -batch \
 		--visit init.org -f org-html-export-to-html
 
 init.el.html: init.el
