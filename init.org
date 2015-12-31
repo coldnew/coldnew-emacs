@@ -221,17 +221,12 @@ looks like this:
   (source gnu)
   (source melpa)
 
-  (depends-on "evil")
-  (depends-on "org")
   (depends-on "f")
   (depends-on "s")
   (depends-on "dash")
   (depends-on "noflet")
   (depends-on "pallet")
   (depends-on "async")
-  (depends-on "quelpa")
-  (depends-on "quelpa-use-package")
-  (depends-on "use-package")
   (depends-on "req-package")
   (depends-on "clojure-mode")             ; TODO:
 #+END_SRC
@@ -310,26 +305,6 @@ of emacs config.
 #+END_SRC
 
 You can take a look at [[*End%20of%20configuration][End of configuration]] section.
-
-** quelpa
-
-[[https://github.com/quelpa/quelpa][quelpa]] is another package manager which can help you builds an ELPA compatible
-package and installs that locally.
-
-GitHub: https://github.com/quelpa/quelpa
-
-#+BEGIN_SRC emacs-lisp
-  ;; save quelpa builds and packages in .cache/quelpa
-  (setq-default quelpa-dir (expand-file-name "quelpa" user-cache-directory))
-  ;; Install quelpa if missing
-  (unless (require 'quelpa nil t)
-    (message "asdadad")
-    (with-temp-buffer
-      (url-insert-file-contents "https://raw.github.com/quelpa/quelpa/master/bootstrap.el")
-      (eval-buffer)))
-  ;; Integrate use-package with quelpa
-  (require 'quelpa-use-package)           ; Installed by Cask
-#+END_SRC
 
 * Load Path
 
