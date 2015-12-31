@@ -1748,7 +1748,12 @@ GitHub: https://github.com/bbatsov/helm-projectile
 
 #+BEGIN_SRC emacs-lisp
   (req-package helm-projectile
-    :require (helm projectile))
+    :require (helm projectile)
+    :config
+    ;; make projectile use helm as completion system
+    (setq projectile-completion-system 'helm)
+    ;; start helm-projectile
+    (helm-projectile-on))
 #+END_SRC
 
 ** Setup keybindings                                          :keybinding:
