@@ -1906,6 +1906,124 @@ GitHub: https://github.com/trotzig/import-js
   (req-package yaml-mode)
 #+END_SRC
 
+* C / C++ Development
+
+#+BEGIN_SRC emacs-lisp :noweb no-export
+  (req-package cc-mode
+    :mode
+    (("\\.h\\'" . c-mode)
+     ("\\.c\\'" . c-mode)
+     ("\\.hpp\\'" . c++-mode)
+     ("\\.cpp\\'" . c++-mode))
+    :config
+    <<cc-mode-config>>)
+#+END_SRC
+
+** Use regexp to find header is C++ header or not
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
+  (add-to-list 'magic-mode-alist
+               `(,(lambda ()
+                    (and (string= (file-name-extension (or (buffer-file-name) "")) "h")
+                         (or (re-search-forward "#include <\\w+>"
+                                                magic-mode-regexp-match-limit t)
+                             (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
+                                                magic-mode-regexp-match-limit t)
+                             (re-search-forward "std::"
+                                                magic-mode-regexp-match-limit t))))
+                 . c++-mode))
+#+END_SRC
+
+** Use dummy-h-mode to help detect header's major mode
+
+[[https://github.com/yascentur/dummy-h-mode-el][dummy-h-mode]] is an major-mode to help switch major mode to c/c++/objc-mode on .h
+file.
+
+GitHub: https://github.com/yascentur/dummy-h-mode-el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package dummy-h-mode
+    :require cc-mode
+    :mode "\\.h$"
+    :config
+    (add-hook 'dummy-h-mode-hook
+              (lambda ()
+                ;; use c-mode by default
+                (setq dummy-h-mode-default-major-mode 'c-mode)
+                ;; setup search limit
+                (setq dummy-h-mode-search-limit 60000))))
+#+END_SRC
+
+** Add eldoc support for C/C++                                       :eldoc:
+
+#+BEGIN_SRC emacs-lisp
+  (req-package c-eldoc
+    :require eldoc
+    :config
+    (add-hook 'c-mode-common-hook
+              '(lambda ()
+                 (setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
+                 (c-turn-on-eldoc-mode))))
+#+END_SRC
+
+** Highlight a few dangerous types in C/C++                          :cwarn:
+
+[[http://www.emacswiki.org/emacs/CWarnMode][cwarn-mode]] is a minor mode that ca highlight a few dangerous types in C/C++.
+
+By default it highlights:
+
+- Semicolons right after conditions and loops (e.g. ~if (x == y);~)
+- Assignments in tests (e.g. ~if (x = y) {~)
+- Functions with reference parameters (e.g. ~void funct(string &p) {~)
+
+#+BEGIN_SRC emacs-lisp
+  (req-package cwarn
+    :config
+    (add-hook 'c-mode-common-hook '(lambda () (cwarn-mode 1))))
+#+END_SRC
+
+** Extra highlight keywords for C/C++
+
+Extra hightlight for =stdint.h=
+
+#+BEGIN_SRC emacs-lisp
+  (dolist (m '(c-mode c++-mode))
+    (font-lock-add-keywords
+     m
+     '(("\\<\\(int8_t\\|int16_t\\|int32_t\\|int64_t\\|uint8_t\\|uint16_t\\|uint32_t\\|uint64_t\\)\\>" . font-lock-keyword-face))))
+#+END_SRC
+
+** Syntax check and code-completion with CMake project               :cmake:
+
+[[https://github.com/redguardtoo/cpputils-cmake][cpputils-cmake]] is a nice tool for cmake project.
+
+GitHub: https://github.com/redguardtoo/cpputils-cmake
+
+#+BEGIN_SRC emacs-lisp
+  (req-package cpputils-cmake
+    :require (flymake flycheck)
+    :config
+    (add-hook 'c-mode-common-hook
+              (lambda ()
+                (when (derived-mode-p 'c-mode 'c++-mode)
+                  (cppcm-reload-all)))))
+#+END_SRC
+
+** Quick switch between header and source file in C/C++         :keybinding:
+
+This extension allows to quickly switch between header and a source file with
+the same name located in the directory tree or repository. It is an alternatife
+to =ff-find-other-file=.
+
+GitHub: https://github.com/fourier/cff
+
+#+BEGIN_SRC emacs-lisp
+  (req-package cff
+    :config
+    (bind-keys :map c-mode-base-map
+               ("C-c C-o" . cff-find-other-file)))
+#+END_SRC
+
 * LISP Development                                                     :lisp:
 
 Though =LISP= has many dialet, it still is the best programming
@@ -2106,7 +2224,6 @@ GitHub: https://github.com/joshuamiller/clojars.el
 #+BEGIN_SRC emacs-lisp
   (req-package clojars)
 #+END_SRC
-
 
 * Web Development                                                       :web:
 
