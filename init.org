@@ -2252,6 +2252,28 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
     :mode "\\.\\(md\\|markdown\\)\\'")
 #+END_SRC
 
+** nxml
+
+#+BEGIN_SRC emacs-lisp
+  (use-package nxml-mode
+    :mode (("\\.plist\\'" . nxml-mode)
+           ("\\.rss\\'"   . nxml-mode)
+           ("\\.svg\\'"   . nxml-mode)
+           ("\\.xml\\'"   . nxml-mode)
+           ("\\.xsd\\'"   . nxml-mode)
+           ("\\.xslt\\'"  . nxml-mode))
+    :config
+    ;; Any file start with xml will be treat as nxml-mode
+    (add-to-list 'magic-mode-alist '("<\\?xml" . nxml-mode))
+    ;; Use nxml-mode instead of sgml, xml or html mode.
+    (mapc
+     (lambda (pair)
+       (if (or (eq (cdr pair) 'xml-mode)
+               (eq (cdr pair) 'sgml-mode))
+           (setcdr pair 'nxml-mode)))
+     auto-mode-alist))
+#+END_SRC
+
 
 * LISP Development
 
