@@ -2549,6 +2549,16 @@ GitHub: https://github.com/bbatsov/helm-projectile
     (helm-projectile-on))
 #+END_SRC
 
+** Integrate helm with gtags
+
+=helm-gtags.el= is GNU GLOBAL helm interface.
+
+GitHub: https://github.com/syohex/emacs-helm-gtags
+
+#+BEGIN_SRC emacs-lisp
+  (req-package helm-gtags)
+#+END_SRC
+
 ** Setup keybindings                                          :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
