@@ -2168,13 +2168,6 @@ GitHub: https://github.com/bbatsov/projectile
 
 * Programming Languages
 
-** graphviz dot
-
-#+BEGIN_SRC emacs-lisp
-  (req-package graphviz-dot-mode
-    :mode "\\.dot\\'")
-#+END_SRC
-
 ** crontab
 
 #+BEGIN_SRC emacs-lisp
@@ -2202,6 +2195,29 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
   (req-package gnuplot
     :commands gnuplot-mode
     :mode "\\.gp$")
+#+END_SRC
+
+** graphviz dot
+
+#+BEGIN_SRC emacs-lisp
+  (req-package graphviz-dot-mode
+    :mode "\\.dot\\'")
+#+END_SRC
+
+** javascript
+
+#+BEGIN_SRC emacs-lisp
+(req-package js2-mode
+  :mode "\\.js\\'")
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (req-package js2-refactor)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (req-package jsx-mode
+    :mode "\\.jsx\\'")
 #+END_SRC
 
 * LISP Development
