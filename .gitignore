@@ -1,0 +1,29 @@
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+# elpa packages
+/elpa/
+
+# reftex files
+*.rel
+
+# AUCTeX auto folder
+/auto/
+
+# cask packages
+.cask/
+*~
+*.elc
+*.pyc
+/*.zip
+*.db
+python-*-docs-html
