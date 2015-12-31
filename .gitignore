@@ -6,10 +6,6 @@
 *.so
 *.out
 *.exe
-CMakeCache.txt
-CMakeFiles
-cmake_install.cmake
-Makefile
 system/
 *.dat$
 auto-save-list/
