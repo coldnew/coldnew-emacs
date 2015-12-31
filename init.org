@@ -222,6 +222,7 @@ looks like this:
   (source melpa)
 
   (depends-on "evil")
+  (depends-on "org")
   (depends-on "f")
   (depends-on "s")
   (depends-on "dash")
