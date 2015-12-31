@@ -6,7 +6,7 @@
 #+STARTUP: overview indent align
 #+BABEL: :cache yes
 #+OPTIONS: ^:nil num:nil tags:nil
-#+PROPERTY: header-args :comments link
+#+SETUPFILE: assets/readtheorg.setup
 
 # Badge
 [[http://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg?dummy]]
@@ -574,82 +574,6 @@ Convert simple ASCII art drawings (and org-tables) to beautiful Unicode.
   (req-package ascii-art-to-unicode)
 #+END_SRC
 
-** iedit                                                        :keybinding:
-
-[[https://github.com/victorhge/iedit][iedit]] let you edit multiple regions in the same way simultaneously.
-
-GitHub: https://github.com/victorhge/iedit
-
-#+BEGIN_SRC emacs-lisp
-  (req-package iedit
-    :bind (("C-;" . iedit-mode)))
-#+END_SRC
-
-** pangu-spacing
-
-[[https://github.com/coldnew/pangu-spacing][pangu-spcing]] is an minor-mode to auto add =space= between Chinese and English
-characters. Note that these white-space characters are not really added to the
-contents, it just like to do so.
-
-#+BEGIN_SRC emacs-lisp
-  (req-package pangu-spacing
-    :config
-    ;; start pangu-spacing globally
-    (global-pangu-spacing-mode 1)
-    ;; Always insert `real' space in org-mode.
-    (add-hook 'org-mode-hook
-              '(lambda ()
-                 (set (make-local-variable 'pangu-spacing-real-insert-separtor) t))))
-#+END_SRC
-
-** sx
-
-[[https://github.com/vermiculus/sx.el/][SX]] is a full featured Stack Exchange mode for GNU Emacs 24+. Using the official
-API, it provides a versatile experience for the Stack Exchange network within
-Emacs itself.
-
-#+BEGIN_SRC emacs-lisp
-  (req-package sx :require sx-load)
-#+END_SRC
-
-** hungry-delete
-
-[[https://github.com/nflath/hungry-delete][hungry-delete]] borrows hungry deletion from =cc-mode=, which will causes deletion
-to delete all whitespace in the direction you are deleting.
-
-#+BEGIN_SRC emacs-lisp
-  (req-package hungry-delete
-    :config
-    (global-hungry-delete-mode))
-#+END_SRC
-
-** rainbow-mode
-
-[[https://julien.danjou.info/projects/emacs-packages][rainbow-mode]] s a minor mode for Emacs which displays strings representing colors
-with the color they represent as background.
-
-#+BEGIN_SRC emacs-lisp
-  (req-package rainbow-mode)
-#+END_SRC
-
-** TODO doxymacs
-
-#+BEGIN_SRC emacs-lisp
-  (when (require 'doxymacs nil 'noerror)
-    (add-hook 'prog-mode-hook '(lambda () (doxymacs-mode))))
-#+END_SRC
-
-** password-generator
-
-[[https://github.com/zargener/emacs-password-genarator][password-generator]] provides simple functions to create passwords and insert them
-inside buffer immediately.
-
-GitHub: https://github.com/zargener/emacs-password-genarator
-
-#+BEGIN_SRC emacs-lisp
-  (req-package password-generator :defer t)
-#+END_SRC
-
 ** discover-my-major
 
 [[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
@@ -661,15 +585,11 @@ GitHub: https://github.com/steckerhalter/discover-my-major
   (req-package discover-my-major)
 #+END_SRC
 
-** howdoi
-
-[[https://github.com/atykhonov/emacs-howdoi][howdoi]] is a way to query Stack Overflow directly from the Emacs and get back the
-most upvoted answer to the first question that comes up for that query.
-
-GitHub: https://github.com/atykhonov/emacs-howdoi
+** TODO doxymacs
 
 #+BEGIN_SRC emacs-lisp
-  (req-package howdoi)
+  (when (require 'doxymacs nil 'noerror)
+    (add-hook 'prog-mode-hook '(lambda () (doxymacs-mode))))
 #+END_SRC
 
 ** exec-path-from-shell
@@ -695,6 +615,57 @@ GitHub: https://github.com/purcell/exec-path-from-shell
       (exec-path-from-shell-initialize)))
 #+END_SRC
 
+** expand-region                                                :keybinding:
+
+Expand region increases the selected region by semantic units. Just keep
+pressing the key until it selects what you want.
+
+GitHub: https://github.com/magnars/expand-region.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package expand-region
+    :bind (("M-v" . er/expand-region)))
+#+END_SRC
+
+** howdoi
+
+[[https://github.com/atykhonov/emacs-howdoi][howdoi]] is a way to query Stack Overflow directly from the Emacs and get back the
+most upvoted answer to the first question that comes up for that query.
+
+GitHub: https://github.com/atykhonov/emacs-howdoi
+
+#+BEGIN_SRC emacs-lisp
+  (req-package howdoi)
+#+END_SRC
+
+** htmlize
+
+#+BEGIN_SRC emacs-lisp
+  (req-package htmlize)
+#+END_SRC
+
+** hungry-delete
+
+[[https://github.com/nflath/hungry-delete][hungry-delete]] borrows hungry deletion from =cc-mode=, which will causes deletion
+to delete all whitespace in the direction you are deleting.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package hungry-delete
+    :config
+    (global-hungry-delete-mode))
+#+END_SRC
+
+** iedit                                                        :keybinding:
+
+[[https://github.com/victorhge/iedit][iedit]] let you edit multiple regions in the same way simultaneously.
+
+GitHub: https://github.com/victorhge/iedit
+
+#+BEGIN_SRC emacs-lisp
+  (req-package iedit
+    :bind (("C-;" . iedit-mode)))
+#+END_SRC
+
 ** manage-minor-mode
 
 [[https://github.com/ShingoFukuyama/manage-minor-mode][manage-minor-mode]] let you manage your minor-mode on the dedicated interface
@@ -702,6 +673,16 @@ buffer.
 
 #+BEGIN_SRC emacs-lisp
   (req-package manage-minor-mode)
+#+END_SRC
+
+** mustache
+
+A mustache templating library in Emacs Lisp.
+
+GitHub: https://github.com/Wilfred/mustache.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package mustache)
 #+END_SRC
 
 ** noflet
@@ -722,26 +703,51 @@ GitHub: https://github.com/nicferrier/emacs-noflet
   (req-package noflet)
 #+END_SRC
 
-** mustache
+** pangu-spacing
 
-A mustache templating library in Emacs Lisp.
-
-GitHub: https://github.com/Wilfred/mustache.el
+[[https://github.com/coldnew/pangu-spacing][pangu-spcing]] is an minor-mode to auto add =space= between Chinese and English
+characters. Note that these white-space characters are not really added to the
+contents, it just like to do so.
 
 #+BEGIN_SRC emacs-lisp
-  (req-package mustache)
+  (req-package pangu-spacing
+    :config
+    ;; start pangu-spacing globally
+    (global-pangu-spacing-mode 1)
+    ;; Always insert `real' space in org-mode.
+    (add-hook 'org-mode-hook
+              '(lambda ()
+                 (set (make-local-variable 'pangu-spacing-real-insert-separtor) t))))
 #+END_SRC
 
-** expand-region                                                :keybinding:
+** password-generator
 
-Expand region increases the selected region by semantic units. Just keep
-pressing the key until it selects what you want.
+[[https://github.com/zargener/emacs-password-genarator][password-generator]] provides simple functions to create passwords and insert them
+inside buffer immediately.
 
-GitHub: https://github.com/magnars/expand-region.el
+GitHub: https://github.com/zargener/emacs-password-genarator
 
 #+BEGIN_SRC emacs-lisp
-  (req-package expand-region
-    :bind (("M-v" . er/expand-region)))
+  (req-package password-generator :defer t)
+#+END_SRC
+
+** rainbow-mode
+
+[[https://julien.danjou.info/projects/emacs-packages][rainbow-mode]] s a minor mode for Emacs which displays strings representing colors
+with the color they represent as background.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package rainbow-mode)
+#+END_SRC
+
+** sx
+
+[[https://github.com/vermiculus/sx.el/][SX]] is a full featured Stack Exchange mode for GNU Emacs 24+. Using the official
+API, it provides a versatile experience for the Stack Exchange network within
+Emacs itself.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package sx :require sx-load)
 #+END_SRC
 
 ** verify-url
