@@ -1747,6 +1747,15 @@ For instance, buffers visiting =/u/mernst/tmp/Makefile= and
   (setq helm-ff-file-name-history-use-recentf t)
 #+END_SRC
 
+** Integrate helm with projectile
+
+GitHub: https://github.com/bbatsov/helm-projectile
+
+#+BEGIN_SRC emacs-lisp
+  (req-package helm-projectile
+    :require (helm projectile))
+#+END_SRC
+
 ** Setup keybindings                                          :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
