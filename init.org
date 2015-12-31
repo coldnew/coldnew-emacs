@@ -1,0 +1,1605 @@
+#+TITLE: coldnew's emacs
+#+AUTHOR: Yen-Chin, Lee <coldnew>
+#+email: coldnew.tw at gmail.com
+#+DESCRIPTION: A literate programming style exposition of my Emacs configuration
+#+LANGUAGE: en
+#+STARTUP: overview indent align
+#+BABEL: :cache yes
+#+OPTIONS: ^:nil num:nil tags:nil
+#+PROPERTY: header-args :comments link
+
+# Badge
+[[http://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg?dummy]]
+[[https://travis-ci.org/coldnew/coldnew-emacs][https://travis-ci.org/coldnew/coldnew-emacs.svg?branch=master]]
+
+* Introduction
+
+This is my emacs configuration. Feel free to use it :).
+
+** Install emacs
+
+My emacs is running under =Mac OSX= and =Gentoo Linux= and I really like them,
+following are some record for how I installed my emacs.
+
+*** Mac OSX
+
+In Mac OSX, I use [[http://brew.sh/][homebrew]] to mantain opensource packages, I always install latest
+version of emacs via following command
+
+#+BEGIN_EXAMPLE
+  brew install emacs --HEAD --use-git-head --with-cocoa --with-gnutls --with-rsvg --with-imagemagick
+  brew linkapps
+#+END_EXAMPLE
+
+*** Gentoo Linux
+
+[[https://www.gentoo.org/][Gentoo Linux]] is the best linux distrobution I ever used and it's really easy to install latest apps.
+
+#+BEGIN_EXAMPLE
+  USE="X gtk3 inotify xft imagemagick" emerge app-editors/emacs
+#+END_EXAMPLE
+
+** Install or testing this config
+
+- First use git to download whole repo
+
+  : git clone https://github.com/coldnew/coldnew-emacs.git
+
+- Then use git submodule to download the spacemacs
+
+  : git submodule init
+  : git submodule update
+
+- You also need to install [[https://github.com/cask/cask][Cask]] for package management
+
+  : curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
+
+- Then use the =make= command bootstrap this config
+
+  : make bootstrap
+
+- If you only want to generate the =init.el=, jut type
+
+  : make init.el
+
+- If you do not put this repo on =~/.emacs.d=, you need to use following
+  command to start emacs
+
+  : emacs -q -l ~/coldnew-emacs/init.el
+** Packages need to install in system (Optional)
+
+Some extra packages need to be installed in the system manually. These packages
+are =optional= but can make this configuration work more nicely.
+
+*** Mac OSX
+
+#+BEGIN_SRC sh :tangle no
+  brew install the_silver_searcher
+  brew install fasd
+  brew install docmacs
+  brew install aspell --with-lang-en
+#+END_SRC
+
+*** Gentoo Linux
+
+In Gentoo Linux, don't forget to enable ~USE=emacs~ to make gentoo auto install
+emacs-related packages.
+
+#+BEGIN_SRC sh :tangle no
+  emerge sys-apps/the_silver_searcher
+  emerge app-shells/fasd
+  emerge app-shells/doxymacs
+  emerge app-shells/aspell
+#+END_SRC
+
+* Initialization Emacs
+
+There are some configurations I need to put at the beginning of the emacs
+config. These configurations are derived from my original init.el file.
+
+** Use lexical binding
+
+For some of my functions, and general coolness, =lexical binding= is a must.
+Without it, closures cannot be made for example.
+
+This line needs to appear at the beginning of the file to work. Just to keep
+things looking nice I put it at the beginning of the file.
+
+#+BEGIN_SRC emacs-lisp :padline no
+  ;; -*- lexical-binding: t -*-
+#+END_SRC
+
+** Prevent load outdated .elc files
+
+Since emacs 24.4, new option =load-prefer-newer= has been introduce, which make
+me never accidentally using outdated compiled files.
+
+#+BEGIN_SRC emacs-lisp
+  (setq load-prefer-newer t)
+#+END_SRC
+
+** Setup user-emacs-directory variable
+
+In this configuration, =user-emacs-directory= always refer to the emacs
+configuration's init.el parent directory.
+
+#+BEGIN_SRC emacs-lisp
+  ;; We set `user-emacs-directory' here so we can use command-line
+  ;; switch different emacs configuration like following:
+  ;;
+  ;;    emacs -q -l ~/coldnew-spacemacs/init.el
+  (defconst user-emacs-directory
+    (file-name-directory (or load-file-name (buffer-file-name)))
+    "My emacs config directory.")
+#+END_SRC
+
+** Setup user-cache-directory variable
+
+Setup the cache directory to store some cache content.
+
+#+BEGIN_SRC emacs-lisp
+  (defconst user-cache-directory
+    (file-name-as-directory (concat user-emacs-directory ".cache"))
+    "My emacs storage area for persistent files.")
+  ;; create the `user-cache-directory' if not exists
+  (make-directory user-cache-directory t)
+#+END_SRC
+
+** Setup user-ramdisk-directory variable
+
+#+BEGIN_SRC emacs-lisp
+
+  (defconst user-ramdisk-directory
+      (let ((ramdisk "/Volumes/ramdisk/")
+            (user-ramdisk                   ; ~/ramdisk/
+             (concat (getenv "HOME") "/ramdisk/"))
+            (tmp "/tmp/"))
+        (if (eq system-type 'darwin)
+            ramdisk
+          ;; if ~/ramdisk/ exist, use it
+          (if (file-exists-p user-ramdisk)
+              user-ramdisk
+            ;; since I only use UNIX-like OS, fallback to /tmp if can't find
+            ;; suitable path
+            tmp)))
+    "My ramdisk path in system.")
+#+END_SRC
+
+* Package Management                                               :packages:
+
+Before we start this section, we need to initialize =package.el= first.
+
+#+BEGIN_SRC emacs-lisp
+  ;; This must come before configurations of installed packages.
+  ;; Don't delete this line. If you don't want it, just comment it out by adding a
+  ;; semicolon to the start of the line. You may delete these explanatory
+  ;; comments.
+  (package-initialize)
+#+END_SRC
+
+The main package magement in my emacs is [[https://github.com/cask/cask][Cask]], which is a really nice package
+like npm, cargo ...etc.
+
+[[https://github.com/cask/cask][Cask]] can also install packages according to your emacs version, so you don't be
+afraid to get version conflicts after upgrade emacs.
+
+Take my emacs as example, after initialize [[https://github.com/cask/cask][Cask]], all package install by
+=package.el= just save to =.cask= folder according to your emacs version.
+
+#+BEGIN_EXAMPLE
+  coldnew@Sara ~/.emacs.d $ tree -L 1 .cask/
+  .cask/
+  ├── 24.5.1
+  ├── 25.0.50.1
+  └── 25.1.50.1
+
+  3 directories, 0 files
+#+END_EXAMPLE
+
+** Cask and Pallet
+
+[[https://github.com/rdallasgray/pallet][Pallet]] is a wonderful little tool built on [[https://github.com/cask/cask][Cask]], a dependency management tool
+for Emacs packages. Pallet adds automatic updating of the =Caskfile= when
+packages are installed and deleted.
+
+*** Installing Cask
+
+Just run this command in your terminal of choice:
+
+#+BEGIN_SRC sh :tangle no
+  curl -fsSkL https://raw.github.com/cask/cask/master/go | python
+#+END_SRC
+
+then add =~/.cask/bin= to your =PATH= so that you can use =cask=.
+
+*** Creating a Caskfile                                          :caskfile:
+
+For now, we just need a minimal =Cask= to get Pallet set up. Mine
+looks like this:
+
+#+BEGIN_SRC emacs-lisp :tangle (if (file-exists-p "Cask") "no" "Cask")
+  (source gnu)
+  (source melpa)
+
+  (depends-on "evil")
+  (depends-on "f")
+  (depends-on "s")
+  (depends-on "dash")
+  (depends-on "noflet")
+  (depends-on "pallet")
+  (depends-on "async")
+  (depends-on "quelpa")
+  (depends-on "quelpa-use-package")
+  (depends-on "use-package")
+  (depends-on "req-package")
+  (depends-on "clojure-mode")             ; TODO:
+#+END_SRC
+
+Then run the following command in your =.emacs.d= directory to set up
+[[https://github.com/rdallasgray/pallet][Pallet]].
+
+#+BEGIN_SRC sh :tangle no
+  cask install
+#+END_SRC
+
+Since the =Cask= file is just emacs-lisp file, add it to mode-alist.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'auto-mode-alist '("Cask$" . emacs-lisp-mode))
+#+END_SRC
+
+*** Initialize Cask
+
+Finally, we add the following lines to our init file:
+
+#+BEGIN_SRC emacs-lisp
+  (require 'cask "~/.cask/cask.el")
+  (cask-initialize)
+#+END_SRC
+
+*** Initialize Pallet
+
+Since we already install pallet via cask, we just need to use the following code
+to initialize pallet.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'pallet)
+  (pallet-mode t)
+#+END_SRC
+
+** use-package
+
+The =use-package= macro allows you to isolate package configuration in your =.emacs=
+file in a way that is both performance-oriented and, well, tidy. I created it
+because I have over 80 packages that I use in Emacs, and things were getting
+difficult to manage. Yet with this utility my total load time is around 2
+seconds, with no loss of functionality!
+
+GitHub: https://github.com/jwiegley/use-package
+
+#+BEGIN_SRC emacs-lisp
+  (require 'use-package)                  ; Installed by Cask
+#+END_SRC
+** req-package
+
+[[https://github.com/edvorg/req-package][req-package]] is a wrapper on top of [[https://github.com/jwiegley/use-package][use-package]], a package dependency management
+tool. The documentation for =use-package= is immensely helpful for figuring out
+how to describe package dependencies and settings. =req-package= adds the
+=:require= keyword which allows us to define dependencies between related
+packages.
+
+GitHub: https://github.com/edvorg/req-package
+
+*** Initialize req-package
+
+With the preceding process complete, we just need to add the following
+line to our init file to begin using =req-package=:
+
+#+BEGIN_SRC emacs-lisp
+  (require 'req-package)
+#+END_SRC
+
+*** Start loading packages in right order
+
+To start loading packages in right order, we need to added following in the last
+of emacs config.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (req-package-finish)
+#+END_SRC
+
+You can take a look at [[*End%20of%20configuration][End of configuration]] section.
+
+** quelpa
+
+[[https://github.com/quelpa/quelpa][quelpa]] is another package manager which can help you builds an ELPA compatible
+package and installs that locally.
+
+GitHub: https://github.com/quelpa/quelpa
+
+#+BEGIN_SRC emacs-lisp
+  ;; save quelpa builds and packages in .cache/quelpa
+  (setq-default quelpa-dir (expand-file-name "quelpa" user-cache-directory))
+  ;; Install quelpa if missing
+  (unless (require 'quelpa nil t)
+    (message "asdadad")
+    (with-temp-buffer
+      (url-insert-file-contents "https://raw.github.com/quelpa/quelpa/master/bootstrap.el")
+      (eval-buffer)))
+  ;; Integrate use-package with quelpa
+  (require 'quelpa-use-package)           ; Installed by Cask
+#+END_SRC
+
+* Load Path
+
+The variable =load-path= lists all the directories where Emacs should look for
+Elisp files.
+
+Though I use =Cask= as package management in my emacs, some local packages like
+my own theme or others can't fetch by elpa need to add to load-path, this will
+help emacs find them.
+
+Following are my method to add directories to load-path ~recursively~, this
+function also create directory to prevent directory not exist.
+
+If you don't have any local elisp and all packages is mantain by cask or elpa or
+spacemacs, you can skip following code.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Add directories to emacs's `load-path' recursively.
+  ;; if path does not exist, create directory.
+  (let* ((lisp-dir '("local-lisp/" "themes/")))
+    (dolist (lisp-path lisp-dir)
+      (when (not (file-exists-p lisp-path))
+        (make-directory (concat user-emacs-directory lisp-path) t))
+      (let* ((load-dir (concat user-emacs-directory lisp-path))
+             (default-directory load-dir))
+        (setq load-path
+              (append
+               (let ((load-path (copy-sequence load-path)))
+                 (append
+                  (copy-sequence (normal-top-level-add-to-load-path '(".")))
+                  (normal-top-level-add-subdirs-to-load-path)))
+               load-path)))))
+#+END_SRC
+
+* Basic setup
+
+Some basic setup to disabe/enable default feature before we start. The
+configuration here only depends on valina emacs's buildin libraries.
+
+** Startup emacs server
+
+#+BEGIN_SRC emacs-lisp
+  ;; Only start server mode if I'm not root
+  (unless (string-equal "root" (getenv "USER"))
+    (require 'server)
+    (unless (server-running-p) (server-start)))
+#+END_SRC
+
+** Under Mac OSX use Command key as ALT
+
+Under Mac OSX, I always bind =Caps lock= as Control key, and make the =Command=
+key as =ALT= key like I done in Linux.
+
+The =Option= key will be setup as =Super=.
+
+I also disable some keys like =⌘-h= bypass to system in emacs-mac port.
+
+#+BEGIN_SRC emacs-lisp
+  (setq mac-option-modifier 'super)
+  (setq mac-command-modifier 'meta)
+  (setq mac-pass-command-to-system nil)
+#+END_SRC
+
+** Don't ask me when close emacs with process is running
+
+When I type =C-x C-c= which means I want to quit emacs, don't stand in my way.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package noflet
+    :config
+    (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
+      "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+      (noflet ((process-list ())) ad-do-it)))
+#+END_SRC
+
+** Don't ask me when kill process buffer
+
+#+BEGIN_SRC emacs-lisp
+  (setq kill-buffer-query-functions
+        (remq 'process-kill-buffer-query-function
+              kill-buffer-query-functions))
+#+END_SRC
+
+** Save custom-file as cache
+
+Most of my config is written in this file, it's no need to tracking the emacs's
+custom-setting.
+
+I move the file to cache-dir and make git ignore it.
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default custom-file (concat user-cache-directory "custom.el"))
+  ;; load custom-file only when file exist
+  (when (file-exists-p custom-file)
+    (load-file custom-file))
+#+END_SRC
+
+** Async rebuild init.el after save
+
+#+BEGIN_SRC emacs-lisp
+  (require 'async)   ; Installed by Cask
+  ;; If I'm edit my init.org, async generate init.el when save.
+  (defun tangle-init ()
+    "If the current buffer is 'init.org' the code-blocks are tangled."
+    (let ((buffer-name "async-make-init.el"))
+      (when (equal (buffer-file-name)
+                   (expand-file-name (concat user-emacs-directory "init.org")))
+        ;; If previous building buffer exist, discard it
+        (when (get-buffer (concat "*" buffer-name "*"))
+          (kill-buffer (concat "*" buffer-name "*")))
+        ;; build with `make init.el' command
+        (async-start-process buffer-name "make" 'ignore "init.el"))))
+  ;; Add to hook
+  (add-hook 'after-save-hook 'tangle-init)
+#+END_SRC
+
+** Disable some default stuff
+
+Some emacs feature is not really useful
+
+*** Turn-off menu bar
+
+The menu bar is one of the UI elements which work best with mouses.
+
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'menu-bar) (menu-bar-mode -1))
+#+END_SRC
+
+*** Turn-off tool bar
+
+I never use the tool bar, it's really no need.
+
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'tool-bar) (tool-bar-mode -1))
+#+END_SRC
+
+*** Turn-off blinking cursor
+
+I hate the blinking cursor actually, it's really annoying.
+
+#+BEGIN_SRC emacs-lisp
+  (blink-cursor-mode -1)
+#+END_SRC
+
+*** Turn-off scroll bar
+
+Actually when you familier with emacs, you don't need to use scroll-bar anymore.
+
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'scroll-bar) (scroll-bar-mode -1))
+#+END_SRC
+
+*** Turn-off startup screen
+
+I don't want to enter the startup screen after initialize emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-screen t)
+#+END_SRC
+
+*** Turn-off cursor blink
+
+#+BEGIN_SRC emacs-lisp
+  (blink-cursor-mode -1)
+#+END_SRC
+
+*** Turn-off Alarm Bell
+
+#+BEGIN_SRC emacs-lisp
+  (setq ring-bell-function #'ignore)
+#+END_SRC
+
+*** Clean scratch buffer messages
+
+Leave me a clean **scratch** buffer and I'll be more happy :)
+
+#+BEGIN_SRC emacs-lisp
+  (setq initial-scratch-message "")
+#+END_SRC
+
+*** Use visible bell instead of buzzer
+
+#+BEGIN_SRC emacs-lisp
+  (setq visible-bell t)
+#+END_SRC
+
+*** Ask for y or n, not yes or no
+
+Emacs starts out asking for you to type yes or no with most important questions.
+Just let me use =y= or =n= with no =RET= required an I'm quite happy.
+
+#+BEGIN_SRC emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+* Languages and Encodings
+
+Since current Emacs default run on UTF-8, it's no need to setup the encoding.
+
+For language, though Traditional Chinese is my mothertone, I still prefer use
+=en_US= to display time info.
+
+#+BEGIN_SRC emacs-lisp
+  (prefer-coding-system 'utf-8)
+  (setq system-time-locale "en_US")
+#+END_SRC
+
+* Packages                                                         :packages:
+
+Most of emacs packages do not need many configs or just provide
+commands/functions to use, I put them here.
+
+** 4clojure
+
+[[https://github.com/losingkeys/4clojure.el][4clojure.el]] let you open and evaluate [[http://www.4clojure.com/][4clojure]] questions.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package 4clojure)
+#+END_SRC
+
+** ascii
+
+[[http://www.emacswiki.org/emacs/AsciiMode][Ascii]] provides a way to display ASCII code on a window, that is, display in
+another window an ASCII table highlighting the current character code.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package ascii
+    :config
+    (defun ascii-toggle ()
+      "Toggle ascii-mode."
+      (interactive)
+      (if (not (ascii-off)) (ascii-on)))
+
+    ;; alias ascii to ascii-toggle
+    (defalias 'ascii 'ascii-toggle))
+#+END_SRC
+
+** ascii-art-to-unicode
+
+Convert simple ASCII art drawings (and org-tables) to beautiful Unicode.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package ascii-art-to-unicode)
+#+END_SRC
+
+** iedit                                                        :keybinding:
+
+[[https://github.com/victorhge/iedit][iedit]] let you edit multiple regions in the same way simultaneously.
+
+GitHub: https://github.com/victorhge/iedit
+
+#+BEGIN_SRC emacs-lisp
+  (req-package iedit
+    :bind (("C-;" . iedit-mode)))
+#+END_SRC
+
+** pangu-spacing
+
+[[https://github.com/coldnew/pangu-spacing][pangu-spcing]] is an minor-mode to auto add =space= between Chinese and English
+characters. Note that these white-space characters are not really added to the
+contents, it just like to do so.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package pangu-spacing
+    :config
+    ;; start pangu-spacing globally
+    (global-pangu-spacing-mode 1)
+    ;; Always insert `real' space in org-mode.
+    (add-hook 'org-mode-hook
+              '(lambda ()
+                 (set (make-local-variable 'pangu-spacing-real-insert-separtor) t))))
+#+END_SRC
+
+** sx
+
+[[https://github.com/vermiculus/sx.el/][SX]] is a full featured Stack Exchange mode for GNU Emacs 24+. Using the official
+API, it provides a versatile experience for the Stack Exchange network within
+Emacs itself.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package sx :require sx-load)
+#+END_SRC
+
+** hungry-delete
+
+[[https://github.com/nflath/hungry-delete][hungry-delete]] borrows hungry deletion from =cc-mode=, which will causes deletion
+to delete all whitespace in the direction you are deleting.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package hungry-delete
+    :config
+    (global-hungry-delete-mode))
+#+END_SRC
+
+** rainbow-mode
+
+[[https://julien.danjou.info/projects/emacs-packages][rainbow-mode]] s a minor mode for Emacs which displays strings representing colors
+with the color they represent as background.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package rainbow-mode)
+#+END_SRC
+
+** TODO doxymacs
+
+#+BEGIN_SRC emacs-lisp
+  (when (require 'doxymacs nil 'noerror)
+    (add-hook 'prog-mode-hook '(lambda () (doxymacs-mode))))
+#+END_SRC
+
+** password-generator
+
+[[https://github.com/zargener/emacs-password-genarator][password-generator]] provides simple functions to create passwords and insert them
+inside buffer immediately.
+
+GitHub: https://github.com/zargener/emacs-password-genarator
+
+#+BEGIN_SRC emacs-lisp
+  (req-package password-generator :defer t)
+#+END_SRC
+
+** discover-my-major
+
+[[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
+current Emacs major mode.
+
+GitHub: https://github.com/steckerhalter/discover-my-major
+
+#+BEGIN_SRC emacs-lisp
+  (req-package discover-my-major)
+#+END_SRC
+
+** howdoi
+
+[[https://github.com/atykhonov/emacs-howdoi][howdoi]] is a way to query Stack Overflow directly from the Emacs and get back the
+most upvoted answer to the first question that comes up for that query.
+
+GitHub: https://github.com/atykhonov/emacs-howdoi
+
+#+BEGIN_SRC emacs-lisp
+  (req-package howdoi)
+#+END_SRC
+
+** exec-path-from-shell
+
+[[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell]] is A GNU Emacs library to ensure environment variables
+inside Emacs look the same as in the user's shell.
+
+Ever find that a command works in your shell, but not in Emacs?
+
+This happens a lot on OS X, where an Emacs instance started from the GUI
+inherits a default set of environment variables.
+
+This library works solves this problem by copying important environment
+variables from the user's shell: it works by asking your shell to print out the
+variables of interest, then copying them into the Emacs environment.
+
+GitHub: https://github.com/purcell/exec-path-from-shell
+
+#+BEGIN_SRC emacs-lisp
+  (req-package exec-path-from-shell
+    :config
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
+#+END_SRC
+
+** manage-minor-mode
+
+[[https://github.com/ShingoFukuyama/manage-minor-mode][manage-minor-mode]] let you manage your minor-mode on the dedicated interface
+buffer.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package manage-minor-mode)
+#+END_SRC
+
+** noflet
+
+=noflet= is dynamic, local, advice for Emacs-Lisp code.
+
+=noflet= also has an Emacs indentation function for =flet= like macros.
+
+It's great for test code when you need to mock another function.
+
+This is useful for definining functions that overide a base definition in some
+way. You get access to the original (before you re-defined it) function through
+a different name.
+
+GitHub: https://github.com/nicferrier/emacs-noflet
+
+#+BEGIN_SRC emacs-lisp
+  (req-package noflet)
+#+END_SRC
+
+** mustache
+
+A mustache templating library in Emacs Lisp.
+
+GitHub: https://github.com/Wilfred/mustache.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package mustache)
+#+END_SRC
+
+** expand-region                                                :keybinding:
+
+Expand region increases the selected region by semantic units. Just keep
+pressing the key until it selects what you want.
+
+GitHub: https://github.com/magnars/expand-region.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package expand-region
+    :bind (("M-v" . er/expand-region)))
+#+END_SRC
+
+** verify-url
+
+verify-url is a little tool that used to find out invalid urls in the buffer or
+region.
+
+Use =M-x verify-url= to find invalid urls in current buffer.
+
+After executed command, you can use =verify-url/next-invalid-url= to goto next
+invalid-url or =verify-url/previous-invalid-url= to goto previous one.
+
+GitHub: https://github.com/lujun9972/verify-url
+
+#+BEGIN_SRC emacs-lisp
+  (req-package verify-url)
+#+END_SRC
+
+** zzz-to-char                                                  :keybinding:
+
+This package provides two new commands: =zzz-to-char= and =zzz-up-to-char= which
+work like built-ins zap-to-char and zap-up-to-char, but allow you quickly select
+exact character you want to “zzz” to.
+
+The commands are minimalistic and often work like built-in ones when there is
+only one occurrence of target character (except they automatically work in
+backward direction too). You can also specify how many characters to scan from
+each side of point, see =zzz-to-char-reach=.
+
+This package uses avy as backend.
+
+GitHub: https://github.com/mrkkrp/zzz-to-char
+
+#+BEGIN_SRC emacs-lisp
+  (req-package zzz-to-char
+    :bind (("M-z" . zzz-to-char)))
+#+END_SRC
+
+* Interactive Commands                                              :command:
+
+In emacs, we can use =M-x= to execute interactive commands, I
+implement some of them to make my emacs more easy to use.
+
+** Buffers                                                          :buffer:
+
+*** Kill all buffers except *scratch* buffer
+
+Sometimes I just want to kill all buffers, this command will kill all
+of them and make =*scratch*= buffer alone.
+
+#+BEGIN_SRC emacs-lisp
+  (defun nuke-all-buffers ()
+    "Kill all buffers, leaving *scratch* only."
+    (interactive)
+    (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
+    (delete-other-windows))
+#+END_SRC
+
+*** Make emacs can always save buffers (even if file is not modified)
+
+The default command *save-buffer* will not really save file when it
+untouched, use this command can let me force save file even if file is
+not modified.
+
+#+BEGIN_SRC emacs-lisp
+  (defun save-buffer-always ()
+    "Save the buffer even if it is not modified."
+    (interactive)
+    (set-buffer-modified-p t)
+    (save-buffer))
+#+END_SRC
+
+*** Abort minibuffer recursive edit
+
+#+BEGIN_SRC emacs-lisp
+  (defun minibuffer-keyboard-quit ()
+    "Abort recursive edit.
+  In Delete Selection mode, if the mark is active, just deactivate it;
+  then it takes a second \\[keyboard-quit] to abort the minibuffer."
+    (interactive)
+    (if (and delete-selection-mode transient-mark-mode mark-active)
+        (setq deactivate-mark t)
+      (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+      (abort-recursive-edit)))
+#+END_SRC
+
+*** Make buffer untabify
+
+#+BEGIN_SRC emacs-lisp
+  (defun untabify-buffer ()
+    (interactive)
+    (save-excursion
+      (untabify (point-min) (point-max))))
+#+END_SRC
+
+*** Indent whole buffer
+
+#+BEGIN_SRC emacs-lisp
+  (defun indent-whole-buffer ()
+    "Indent whole buffer."
+    (interactive)
+    (save-excursion
+      (indent-region (point-min) (point-max))))
+#+END_SRC
+
+*** Remove buffers trailing whitespace and untabify
+
+#+BEGIN_SRC emacs-lisp
+  (defun cleanup-buffer ()
+    "Perform a bunch of operations on the whitespace content of a buffer."
+    (interactive)
+    (save-excursion
+      (delete-trailing-whitespace)
+      (indent-region (point-min) (point-max))
+      (untabify (point-min) (point-max))))
+#+END_SRC
+
+*** Replace the preceding sexp with its value
+
+#+BEGIN_SRC emacs-lisp
+  (defun eval-and-replace ()
+    "Replace the preceding sexp with its value."
+    (interactive)
+    (backward-kill-sexp)
+    (condition-case nil
+        (prin1 (eval (read (current-kill 0)))
+               (current-buffer))
+      (error (message "Invalid expression")
+             (insert (current-kill 0)))))
+#+END_SRC
+
+*** Quick folding source block
+
+#+BEGIN_SRC emacs-lisp
+  (defun quick-folding-source ()
+    "Use emacs buildin easy to folding code."
+    (interactive)
+    (set-selective-display
+     (if selective-display nil 1)))
+#+END_SRC
+
+** Edit (Insert/Remove)
+
+*** Insert U200B char
+
+=<U200B>= character is a =zero width space character= which is nice to
+use under org-mode.
+
+For more info, please see: [[https://lists.gnu.org/archive/html/emacs-orgmode/2012-09/msg00155.html][suggestion for org-emphasis-regexp-components: *U*nited *N*ations]]
+
+#+BEGIN_SRC emacs-lisp
+  (defun insert-U200B-char ()
+    "Insert <U200B> char, this character is nice use in org-mode."
+    (interactive)
+    (insert "\ufeff"))
+#+END_SRC
+
+*** Insert empty line after current line
+
+#+BEGIN_SRC emacs-lisp
+  (defun insert-empty-line ()
+    "Insert an empty line after current line and position cursor on newline."
+    (interactive)
+    (move-end-of-line nil)
+    (open-line 1)
+    (next-line 1))
+#+END_SRC
+
+*** Insert lorem ipsum
+
+#+BEGIN_SRC emacs-lisp
+  (defun insert-lorem ()
+    "Insert a lorem ipsum."
+    (interactive)
+    (insert "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do "
+            "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim"
+            "ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut "
+            "aliquip ex ea commodo consequat. Duis aute irure dolor in "
+            "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla "
+            "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in "
+            "culpa qui officia deserunt mollit anim id est laborum."))
+#+END_SRC
+
+*** Delete word
+
+#+BEGIN_SRC emacs-lisp
+  (defun delete-word (arg)
+    "Delete characters forward until encountering the end of a word.
+  With argument, do this that many times."
+    (interactive "p")
+    (delete-region (point) (progn (forward-word arg) (point))))
+#+END_SRC
+
+*** Backward delete word
+
+#+BEGIN_SRC emacs-lisp
+  (defun backward-delete-word (arg)
+    "Delete characters backward until encountering the end of a word.
+  With argument, do this that many times."
+    (interactive "p")
+    (delete-word (- arg)))
+#+END_SRC
+
+*** Set mark or expand region
+
+#+BEGIN_SRC emacs-lisp
+  (defun set-mark-mode/rectangle-mark-mode ()
+    "toggle between set-mark-command or rectangle-mark-mode"
+    (interactive)
+    (if (not mark-active)
+       (call-interactively 'set-mark-command)
+      (call-interactively 'rectangle-mark-mode)))
+#+END_SRC
+
+*** Indent region/buffer and cleanup
+
+#+BEGIN_SRC emacs-lisp
+  (defun indent-region-or-buffer-and-cleanup ()
+    "Indents a region if selected, otherwise the whole buffer."
+    (interactive)
+    (cl-flet ((format-fn (BEG END) (indent-region BEG END) (untabify BEG END)))
+      (save-excursion
+        (if (region-active-p)
+            (progn
+              (delete-trailing-whitespace (region-beginning) (region-end))
+              (format-fn (region-beginning) (region-end))
+              (message "Indented selected region and clear whitespace and untabify."))
+          (progn
+            (delete-trailing-whitespace)
+            (format-fn (point-min) (point-max))
+            (message "Indented whole buffer and clear whitespace and untabify."))))))
+#+END_SRC
+
+** File Handle
+
+*** Reopen file as root
+
+#+BEGIN_SRC emacs-lisp
+  (defun file-reopen-as-root ()
+    (interactive)
+    (when buffer-file-name
+      (find-alternate-file
+       (concat "/sudo:root@localhost:"
+               buffer-file-name))))
+#+END_SRC
+
+*** Delete current buffer file
+
+#+BEGIN_SRC emacs-lisp
+  (defun delete-current-buffer-file ()
+    "Removes file connected to current buffer and kills buffer."
+    (interactive)
+    (let ((filename (buffer-file-name))
+          (buffer (current-buffer))
+          (name (buffer-name)))
+      (if (not (and filename (file-exists-p filename)))
+          (ido-kill-buffer)
+        (when (yes-or-no-p "Are you sure you want to remove this file? ")
+          (delete-file filename)
+          (kill-buffer buffer)
+          (message "File '%s' successfully removed" filename)))))
+#+END_SRC
+
+*** Rename current Buffer and file
+
+#+BEGIN_SRC emacs-lisp
+  (defun rename-current-buffer-file ()
+    "Renames current buffer and file it is visiting."
+    (interactive)
+    (let ((name (buffer-name))
+          (filename (buffer-file-name)))
+      (if (not (and filename (file-exists-p filename)))
+          (error "Buffer '%s' is not visiting a file!" name)
+        (let ((new-name (read-file-name "New name: " filename)))
+          (if (get-buffer new-name)
+              (error "A buffer named '%s' already exists!" new-name)
+            (rename-file filename new-name 1)
+            (rename-buffer new-name)
+            (set-visited-file-name new-name)
+            (set-buffer-modified-p nil)
+            (message "File '%s' successfully renamed to '%s'"
+                     name (file-name-nondirectory new-name)))))))
+#+END_SRC
+
+*** Add executable attribute to file
+
+Actually this command is the same as =chmod +x= but it doesn't use any shell
+command, it use emacs's logior function to change file attribute.
+
+I only make =owener= can has executable permission, not change it for gourp or
+others user.
+
+#+BEGIN_SRC emacs-lisp
+  (defun set-file-executable()
+    "Add executable permissions on current file."
+    (interactive)
+    (when (buffer-file-name)
+      (set-file-modes buffer-file-name
+                      (logior (file-modes buffer-file-name) #o100))
+      (message (concat "Made " buffer-file-name " executable"))))
+#+END_SRC
+
+*** Clone current file to new one
+
+#+BEGIN_SRC emacs-lisp
+  (defun clone-file-and-open (filename)
+    "Clone the current buffer writing it into FILENAME and open it"
+    (interactive "FClone to file: ")
+    (save-restriction
+      (widen)
+      (write-region (point-min) (point-max) filename nil nil nil 'confirm))
+    (find-file filename))
+#+END_SRC
+
+** Debug
+
+*** Eval emacs buffer until error
+
+A really nice command help me to find error on elisp buffer.
+
+#+BEGIN_SRC emacs-lisp
+  (defun eval-buffer-until-error ()
+    "Evaluate emacs buffer until error occured."
+    (interactive)
+    (goto-char (point-min))
+    (while t (eval (read (current-buffer)))))
+#+END_SRC
+
+* Theme                                                               :theme:
+
+I always want to customize everything on my own, so I build another
+emacs theme called =coldnew-theme-night= and =coldnew-theme-day=, you can find
+them at [[file:theme/coldnew-theme.el]].
+
+Before use emacs's =load-theme= function, I advise it to it fully
+unload previous theme before loading a new one.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Make `load-theme' fully unload previous theme before loading a new one.
+  (defadvice load-theme
+      (before theme-dont-propagate activate)
+    (mapc #'disable-theme custom-enabled-themes))
+
+  ;; My light theme
+  (req-package coldnew-theme-day-theme
+    :require (powerline powerline-evil))
+
+  ;; My night them (default)
+  (req-package coldnew-theme-night-theme
+    :config (coldnew-theme-night))
+
+  (req-package coldnew-modeline-config
+    :require (powerline powerline-evil))
+  ;; TODO:
+  ;;(req-package spaceline)
+#+END_SRC
+
+* Minibuffer                                                :minibuffer:
+
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
+  (req-package minibuffer                  ; buildin
+    :config
+    <<minibuffer-config>>)
+#+END_SRC
+
+** Make cursor in minibufer use bar shape
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
+  ;; only use `bar' type of cursor shape
+  (add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 'bar)))
+#+END_SRC
+
+** Some helper function to let me insert quick in minibuffer
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
+  ;; define some helper function to insert to minibuffer quickly
+  (defun local/minibuffer-insert (p)
+    (kill-line 0) (insert p))
+
+  (defun local/minibuffer-switch-to-ramdisk ()
+    "Insert ramdisk path according to system type"
+    (interactive)
+    (local/minibuffer-insert user-ramdisk-directory))
+
+  (defun local/minibuffer-switch-to-home ()
+    "Insert $HOME path."
+    (interactive)
+    (local/minibuffer-insert (file-name-as-directory (getenv "HOME"))))
+
+  (defun local/minibuffer-switch-to-rootdir ()
+    "Insert / path."
+    (interactive)
+    (local/minibuffer-insert "/"))
+
+  (defun local/minibuffer-switch-to-tramp ()
+    "Insert /ssh:."
+    (interactive)
+    (local/minibuffer-insert "/ssh:"))
+#+END_SRC
+
+** Setup Keybindings                                            :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
+  (bind-keys minibuffer-local-map
+             ("C-w" . backward-kill-word)
+             ("M-p" . previous-history-element)
+             ("M-n" . next-history-element)
+             ("C-g" . minibuffer-keyboard-quit)
+             ("M-t" . local/minibuffer-switch-to-ramdisk)
+             ("M-h" . local/minibuffer-switch-to-home)
+             ("M-/" . local/minibuffer-switch-to-rootdir)
+             ("M-s" . local/minibuffer-switch-to-rootdir))
+#+END_SRC
+
+* Editors
+
+Why emacs config has an editor section, doesn't means emacs is not an editor ?
+Yes, Emacs is an OS :)
+
+I put some editor/IDE relative functions and packages here.
+
+** Line Numbers
+
+In most case, I'll make line numers display globally by =linum=.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package linum :init (global-linum-mode 1))
+#+END_SRC
+
+Disable line number in some mode, for example, since =org-mode= can
+has many lines, it's not recommand to enable linum-mode.
+
+I use =linum-off= to disable some mode.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package linum-off
+    :config
+    (progn
+      (setq linum-disabled-mode-list
+            '(eshell-mode shell-mode term-mode erc-mode compilation-mode
+                          woman-mode w3m-mode calendar-mode org-mode
+                          ))))
+#+END_SRC
+
+
+
+** Keeping files in sync
+
+By default, Emacs will not update the contents of open buffers when a file
+changes on disk. This is inconvenient when switching branches in Git - as you’d
+risk editing stale buffers.
+
+This problem can be solved by:
+
+#+BEGIN_SRC emacs-lisp
+  (global-auto-revert-mode 1)
+  (setq global-auto-revert-non-file-buffers t)
+  (setq auto-revert-verbose nil)
+  (setq revert-without-query '(".*")) ;; disable revert query
+#+END_SRC
+
+** Colorfy delimters
+
+[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]] is a "rainbow parentheses"-like mode which
+highlights delimiters such as parentheses, brackets or braces
+according to their depth. Each successive level is highlighted in a
+different color. This makes it easy to spot matching delimiters,
+orient yourself in the code, and tell which statements are at a given
+depth.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package rainbow-delimiters
+    :config
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+#+END_SRC
+
+** Add support for editorconfig                               :editorconfig:
+
+[[http://editorconfig.org/][EditorConfig]] helps developers define and maintain consistent coding
+styles between different editors and IDEs. The EditorConfig project
+consists of a file format for defining coding styles and a collection
+of text editor plugins that enable editors to read the file format and
+adhere to defined styles. EditorConfig files are easily readable and
+they work nicely with version control systems.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'editorconfig nil 'noerror)
+#+END_SRC
+
+** En/Decrypt files by EasyPG
+
+#+BEGIN_SRC emacs-lisp
+  (req-package epa-file
+    :config
+    (epa-file-enable)
+    ;; Control whether or not to pop up the key selection dialog.
+    (setq epa-file-select-keys 0)
+    ;; Cache passphrase for symmetric encryption.
+    (setq epa-file-cache-passphrase-for-symmetric-encryption t))
+#+END_SRC
+
+** Remote file editing
+
+#+BEGIN_SRC emacs-lisp
+  (req-package tramp
+    :config
+    (setq tramp-default-method "rsync"))
+#+END_SRC
+
+** Intelligently call whitespace-cleanup on save
+
+This Emacs library minor mode will intelligently call =whitespace-cleanup= before
+buffers are saved.
+
+=whitespace-cleanup= is a handy function, but putting it in =before-save-hook=
+for every buffer is overkill, and causes messy diffs when editing third-party
+code that did not initially have clean whitespace.
+
+Additionally, whitespace preferences are often project-specific, and it's
+inconvenient to set up =before-save-hook= in a =.dir-locals.el= file.
+
+=whitespace-cleanup-mode= is a minor mode which calls =whitespace-cleanup=
+before saving the current buffer, but only if the whitespace in the buffer was
+initially clean. It determines this by quickly checking to see if
+=whitespace-cleanup= would have any effect on the buffer.
+
+GitHub: https://github.com/purcell/whitespace-cleanup-mode
+
+#+BEGIN_SRC emacs-lisp
+  (req-package whitespace-cleanup-mode
+    :config
+    (add-hook 'prog-mode-hook 'whitespace-cleanup-mode))
+#+END_SRC
+
+** Highlight numbers
+
+=highlight-numbers= is an Emacs minor mode that highlights numeric literals in
+source code.
+
+GitHub: https://github.com/Fanael/highlight-numbers
+
+#+BEGIN_SRC emacs-lisp
+  (req-package highlight-numbers
+    :config
+    ;; json-mode has it's own highlight numbers method
+    (add-hook 'prog-mode-hook '(lambda()
+                                 (if (not (derived-mode-p 'json-mode))
+                                     (highlight-numbers-mode)))))
+#+END_SRC
+
+** Highlight escape charset
+
+GitHub: https://github.com/dgutov/highlight-escape-sequences
+
+#+BEGIN_SRC emacs-lisp
+  (req-package highlight-escape-sequences
+    :config
+    ;; Make face the same as builtin face
+    (put 'font-lock-regexp-grouping-backslash 'face-alias 'font-lock-builtin-face)
+
+    ;; Add extra modes
+    (add-to-list 'hes-simple-modes 'c-mode)
+    (add-to-list 'hes-simple-modes 'c++-mode)
+
+    ;; Enable globally
+    (hes-mode 1))
+#+END_SRC
+
+** Highlight FIXME, TODO
+
+#+begin_src emacs-lisp
+  (defun font-lock-comment-annotations ()
+    "Highlight a bunch of well known comment annotations.
+  This functions should be added to the hooks of major modes for programming."
+    (font-lock-add-keywords
+     nil
+     '(("\\<\\(FIX\\(ME\\)?\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)
+       ("\\<\\(NOTE\\):" 1 'org-level-2 t)
+       ("\\<\\(TODO\\):" 1 'org-todo t)
+       ("\\<\\(DONE\\):" 1 'org-done t))
+     ))
+
+  (add-hook 'prog-mode-hook 'font-lock-comment-annotations)
+#+end_src
+
+* Vim Emulation
+
+Though I am really familier with emacs, I still like some vim command.
+
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
+  (req-package evil
+    :require (undo-tree)
+    :config
+    ;; enable evil-mode globally
+    (evil-mode t)
+    ;; some configs setup later
+    <<evil-config>>)
+#+END_SRC
+
+** Setup default state to insert-state
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
+  ;; default state set to insert-state
+  (setq evil-default-state 'insert)
+#+END_SRC
+
+** Make insert-state the same as emacs-state
+
+To me, vim's insert state is useless, so I mapping all my emacs keybinding to
+insert-state.
+
+First, bind all emacs-state key to insert state
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
+  (setcdr evil-insert-state-map nil)
+  (define-key evil-insert-state-map
+    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+#+END_SRC
+
+Make sure =ESC= key in insert-state will call =evil-normal-state=.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
+  (define-key evil-insert-state-map [escape] 'evil-normal-state)
+#+END_SRC
+
+We also need to make all emacs-state buffer become to insert-state.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
+  (dolist (m evil-emacs-state-modes)
+    (add-to-list 'evil-insert-state-modes m))
+#+END_SRC
+
+* Completion
+
+[[http://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for "complete
+anything". It uses pluggable back-ends and front-ends to retrieve and display
+completion candidates.
+
+GitHub: https://github.com/company-mode/company-mode
+
+#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
+  (req-package company
+    :config
+    ;; enable globally
+    (global-company-mode 1)
+    ;; some configuration add here by noweb
+    <<company-config>> )
+#+END_SRC
+
+** Do not show company menu until I trigger it
+
+#+BEGIN_SRC emacs-lisp :tangle :no :noweb-ref company-config
+  (setq company-idle-delay nil)
+#+END_SRC
+
+** Completion C/C++ headers
+
+#+BEGIN_SRC emacs-lisp
+  (req-package company-c-headers
+    :require company
+    :config
+    (add-to-list 'company-backends 'company-c-headers))
+#+END_SRC
+
+** Sort completion candidates by previous completion choices
+
+Company-statistics is a global minor mode built on top of the in-buffer
+completion system company-mode. The idea is to keep a log of a certain number of
+completions you choose, along with some context information, and use that to
+rank candidates the next time you have to choose — hopefully showing you
+likelier candidates at the top of the list.
+
+GitHub: https://github.com/company-mode/company-statistics
+
+#+BEGIN_SRC emacs-lisp
+  (req-package company-statistics
+    :config
+    ;; save cache file to `user-cache-directory'
+    (setq company-statistics-file (concat user-cache-directory
+                                          "company-statistics-cache.el"))
+    ;; start company-statictics-mode after init
+    (add-hook 'after-init-hook 'company-statistics-mode))
+#+END_SRC
+
+** Setup keybindings                                            :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref company-config
+  (bind-keys company-active-map
+             ("C-g" . company-abort)
+             ("M-p" . company-select-next)
+             ("C-p" . company-select-previouse)
+             ("TAB" . company-complete-selction)
+             ("<tab>" . company-complete-selction))
+#+END_SRC
+
+* Snippets
+
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
+  (req-package yasnippet
+    :mode ("emacs.+/snippets/" . snippet-mode)
+    :config
+    ;; enable yasnippet globally
+    (yas-global-mode 1)
+    ;; extra yasnipet configs
+    <<yasnippet-config>>)
+#+END_SRC
+
+** Setup yasnippet prompt method
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref yasnippet-config
+  (setq yas/prompt-functions '(yas-dropdown-prompt
+                               yas-completing-prompt
+                               yas-ido-prompt))
+#+END_SRC
+
+** Setup yasnippet snippet dirs
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref yasnippet-config
+  (setq yas/snippet-dirs (concat user-emacs-directory "snippets"))
+#+END_SRC
+
+** Implement org-mode's easy-template like function
+
+I really like org-mode's =easy-template= function, so I implement one
+called =major-mode-expand= which will let you use easy-template like
+function in any major-mode.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref yasnippet-config
+  (defadvice yas-expand (around major-mode-expand activate)
+    "Try to complete a structure template before point like org-mode does.
+  This looks for strings like \"<e\" on an otherwise empty line and
+  expands them.
+  Before use this function, you must setup `major-mode-name'-expand-alist variable.
+
+  Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
+  in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
+
+   (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
+    (let* ((l (buffer-substring (point-at-bol) (point)))
+           (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
+           (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
+           a)
+      (when (and (looking-at "[ \t]*$")
+                 (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
+                 (setq a (assoc (match-string 1 l) expand-alist)))
+        (backward-delete-char (1+ (length (car-safe a))))
+        (if (symbolp (cdr-safe a))
+            (funcall (cdr-safe a))
+          (insert (cdr-safe a)))
+        t)
+      ad-do-it))
+#+END_SRC
+
+Take emacs-lisp-mode as example, if I want to use =<r= and press =TAB=
+then yasnippet will expand the command, just add following code:
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (setq emacs-lisp-mode-expand-alist '(("r" . "require")))
+#+END_SRC
+
+For c-mode, just do the same but change the relative
+*major-mode-expand-alist* like following
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (setq c-mode-expand-alist '(("i" . "include")))
+#+END_SRC
+
+* Buffer                                                             :buffer:
+** Create *scratch* automatically
+
+Sometimes I'll clean the =*scratch*= buffer by kill it, add following function
+to let emacs re-create it automatically.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Create *scratch* automatically
+  (run-with-idle-timer 1 t
+                       '(lambda ()
+                          (unless (get-buffer "*scratch*")
+                            (with-current-buffer (get-buffer-create "*scratch*")
+                              (lisp-interaction-mode)))))
+#+END_SRC
+
+* Helm
+
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
+  (req-package helm
+    :require helm-config
+    :config
+    ;; enable helm globally
+    (helm-mode 1)
+    ;; extra helm configs
+    <<helm-config>>)
+#+END_SRC
+
+** Use fuzzy match in helm
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+  ;; Use fuzzy match in helm
+  (setq helm-M-x-fuzzy-match t)
+  (setq helm-buffers-fuzzy-matching t)
+  (setq helm-recentf-fuzzy-match t)
+#+END_SRC
+
+** Make helm can select anything even not match
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+  ;; make helm can select anything even not match
+  (setq helm-move-to-line-cycle-in-source nil)
+  (setq helm-ff-search-library-in-sexp t)
+  (setq helm-ff-file-name-history-use-recentf t)
+#+END_SRC
+
+** Setup keybindings                                          :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+  (bind-keys helm-map
+             ("TAB"   . helm-execute-persistent-action)
+             ("<tab>" . helm-execute-persistent-action)
+             ("C-w"   . backward-kill-word))
+#+END_SRC
+
+* End of configuration
+
+Oh YA!! We finish loading emacs configuration :)
+
+However, since we use =req-package= for loading and installing packages, be sure
+to execute following line to send =req-package= on its merry way.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package-finish)
+#+END_SRC
+
+In the end of configuration, I'll load my private config from =~/.personal.el=,
+which contains something like password or account settings.
+
+#+BEGIN_SRC emacs-lisp
+  (let ((secret "~/.personal.el"))
+    (when (file-exists-p secret) (load-file secret)))
+#+END_SRC
+
+* Reference
+
+Following link is refrence for my emacs config.
+
+~[1]~ https://github.com/r0man/.emacs.d/blob/master/init.el.org
+
+~[2]~ https://github.com/bodil/emacs.d
+
+~[3]~ https://github.com/mgalgs/.emacs.d
+
+~[4]~ https://raw.githubusercontent.com/sbisaacson/literate-emacs/master/README.org
+
+~[5]~ https://github.com/jhenahan/emacs.d/blob/master/emacs-init.org
+
+~[6]~ https://ryuslash.org/dotfiles/emacs/init.html
+
+~[7]~ http://www.wisdomandwonder.com/wordpress/wp-content/uploads/2014/03/C3F.org_.txt
+
+~[8]~ https://github.com/howardabrams/dot-files
+
+~[9]~ https://github.com/larstvei/dot-emacs/blob/master/init.org
