@@ -2238,6 +2238,13 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
     (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
 #+END_SRC
 
+** lua
+
+#+BEGIN_SRC emacs-lisp
+  (req-package lua-mode
+    :mode "\\.lua$")
+#+END_SRC
+
 * LISP Development
 
 Though =LISP= has many dialet, it still is the best programming
