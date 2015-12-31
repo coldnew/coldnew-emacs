@@ -667,32 +667,6 @@ GitHub: https://github.com/magnars/expand-region.el
     :bind (("M-v" . er/expand-region)))
 #+END_SRC
 
-** guide-key
-
-=guide-key.el= displays the available key bindings automatically and
-dynamically. guide-key aims to be an alternative of [[http://www.emacswiki.org/emacs/OneKey][one-key.el]]
-
-Here are some features of this library.
-
-- guide-key automatically pops up the keys following your favorite
-  prefixes. Moreover, even if you change key bindings, guide-key
-  follows the change dynamically.
-
-- guide-key can highlight particular commands. This makes it easy to
-  find a command you are looking for, and to learn its key binding.
-
-- guide-key doesn’t overwrite existing commands and key bindings, so
-  there is no interference with describe-key and describe-bindings.
-
-GitHub: https://github.com/kai2nenobu/guide-key
-
-#+BEGIN_SRC emacs-lisp
-  (req-package guide-key
-    :config
-    ;; Enable guide-key-mode globally
-    (guide-key-mode 1))
-#+END_SRC
-
 ** howdoi
 
 [[https://github.com/atykhonov/emacs-howdoi][howdoi]] is a way to query Stack Overflow directly from the Emacs and get back the
