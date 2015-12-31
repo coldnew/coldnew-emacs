@@ -121,12 +121,8 @@
 
 (setq powerline-default-separator 'arrow)
 
-(setq mode-line-format
-      '("%e" (:eval (coldnew/mode-line-prepare))))
-
-(defun spacemacs/mode-line-prepare ()
-  "Overwrite spacemacs's mode-line-prepare so I can use my own modeline."
-  (coldnew/mode-line-prepare))
+(setq-default mode-line-format
+              '("%e" (:eval (coldnew/mode-line-prepare))))
 
 
 (provide 'coldnew-modeline-config)
