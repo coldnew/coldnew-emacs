@@ -561,6 +561,16 @@ GitHub: https://github.com/steckerhalter/discover-my-major
     (add-hook 'prog-mode-hook '(lambda () (doxymacs-mode))))
 #+END_SRC
 
+** esup
+
+Benchmark Emacs Startup time without ever leaving your Emacs.
+
+GitHub: https://github.com/jschaf/esup
+
+#+BEGIN_SRC emacs-lisp
+  (req-package esup)
+#+END_SRC
+
 ** exec-path-from-shell
 
 [[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell]] is A GNU Emacs library to ensure environment variables
@@ -594,16 +604,6 @@ GitHub: https://github.com/magnars/expand-region.el
 #+BEGIN_SRC emacs-lisp
   (req-package expand-region
     :bind (("M-v" . er/expand-region)))
-#+END_SRC
-
-** esup
-
-Benchmark Emacs Startup time without ever leaving your Emacs.
-
-GitHub: https://github.com/jschaf/esup
-
-#+BEGIN_SRC emacs-lisp
-  (req-package esup)
 #+END_SRC
 
 ** guide-key
