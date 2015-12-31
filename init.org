@@ -1127,7 +1127,7 @@ unload previous theme before loading a new one.
 ** Setup Keybindings                                            :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
-  (bind-keys minibuffer-local-map
+  (bind-keys :map minibuffer-local-map
              ("C-w" . backward-kill-word)
              ("M-p" . previous-history-element)
              ("M-n" . next-history-element)
@@ -1411,7 +1411,7 @@ GitHub: https://github.com/company-mode/company-statistics
 ** Setup keybindings                                            :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref company-config
-  (bind-keys company-active-map
+  (bind-keys :map company-active-map
              ("C-g" . company-abort)
              ("M-p" . company-select-next)
              ("C-p" . company-select-previouse)
@@ -1545,7 +1545,7 @@ to let emacs re-create it automatically.
 ** Setup keybindings                                          :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
-  (bind-keys helm-map
+  (bind-keys :map helm-map
              ("TAB"   . helm-execute-persistent-action)
              ("<tab>" . helm-execute-persistent-action)
              ("C-w"   . backward-kill-word))
@@ -1672,7 +1672,7 @@ see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-
 ** Setup keybindings                                          :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (bind-keys org-mode-map
+  (bind-keys :map org-mode-map
              ("C-c b" . org-metaleft)
              ("C-c f" . org-metaright)
              ("C-c p" . org-metaup)
