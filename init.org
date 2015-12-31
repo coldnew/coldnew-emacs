@@ -75,7 +75,6 @@ are =optional= but can make this configuration work more nicely.
 
 #+BEGIN_SRC sh :tangle no :noweb yes
   brew install fasd
-  brew install doxymacs
   brew install aspell --with-lang-en
   <<install-in-macosx>>
 #+END_SRC
@@ -87,7 +86,6 @@ emacs-related packages.
 
 #+BEGIN_SRC sh :tangle no :noweb yes
   emerge app-shells/fasd
-  emerge app-shells/doxymacs
   emerge app-shells/aspell
   <<install-in-gentoo>>
 #+END_SRC
@@ -597,11 +595,31 @@ GitHub: https://github.com/steckerhalter/discover-my-major
   (req-package discover-my-major)
 #+END_SRC
 
-** TODO doxymacs
+** doxymacs
+
+Doxygen is a system for extracting documentation from source code. It
+supports a variety of programming languages, human languages and
+output formats. You can find it at http://www.doxygen.org.
+
+[[http://doxymacs.sourceforge.net/][doxymacs]] is emacs's wrapper for Doxygen.
 
 #+BEGIN_SRC emacs-lisp
   (when (require 'doxymacs nil 'noerror)
     (add-hook 'prog-mode-hook '(lambda () (doxymacs-mode))))
+#+END_SRC
+
+To use [[http://doxymacs.sourceforge.net/][doxymacs]] we also need to install it in system manually.
+
+For Mac OSX, just type
+
+#+BEGIN_SRC sh :tangle no :noweb-ref install-in-macosx
+  brew install doxymacs
+#+END_SRC
+
+If you use Gentoo Linux, you can use following command to install this package
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-gentoo
+  emerge app-shells/doxymacs
 #+END_SRC
 
 ** esup
