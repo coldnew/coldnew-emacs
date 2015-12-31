@@ -2220,6 +2220,24 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
     :mode "\\.jsx\\'")
 #+END_SRC
 
+** json
+
+#+BEGIN_SRC emacs-lisp
+  (req-package json-mode
+    :mode "\\.json\\'")
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (req-package json-reformat :commands json-reformat-region)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (req-package flymake-json
+    :require flymake
+    :config
+    (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
+#+END_SRC
+
 * LISP Development
 
 Though =LISP= has many dialet, it still is the best programming
