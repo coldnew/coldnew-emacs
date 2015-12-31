@@ -1145,6 +1145,25 @@ Yes, Emacs is an OS :)
 
 I put some editor/IDE relative functions and packages here.
 
+** Create minor-mode to controll all keybindings                :keybinding:
+
+#+begin_src emacs-lisp
+  (defvar coldnew-editor-map (make-keymap))
+
+  (define-minor-mode coldnew-editor-mode
+    "coldnew's editor minor mode."
+    :init-value t
+    :keymap coldnew-editor-map)
+
+  (define-globalized-minor-mode global-coldnew-editor-mode
+    coldnew-editor-mode (lambda ()
+                          (if (not (minibufferp (current-buffer)))
+                              (coldnew-editor-mode 1))))
+
+  ;; Gloabal enable
+  (global-coldnew-editor-mode t)
+#+end_src
+
 ** Line Numbers
 
 In most case, I'll make line numers display globally by =linum=.
@@ -1167,8 +1186,6 @@ I use =linum-off= to disable some mode.
                           woman-mode w3m-mode calendar-mode org-mode
                           ))))
 #+END_SRC
-
-
 
 ** Keeping files in sync
 
@@ -1308,6 +1325,20 @@ GitHub: https://github.com/dgutov/highlight-escape-sequences
 
   (add-hook 'prog-mode-hook 'font-lock-comment-annotations)
 #+end_src
+
+** Use god-mode for entering commands withoud modifier keys     :keybinding:
+
+This is a global minor mode for entering Emacs commands without
+modifier keys. It's similar to Vim's separation of commands and
+insertion mode.
+
+GitHub: https://github.com/chrisdone/god-mode
+
+#+BEGIN_SRC emacs-lisp
+  (req-package god-mode
+      :bind
+      ("M-o" . god-local-mode))
+#+END_SRC
 
 * Vim Emulation
 
@@ -1911,27 +1942,6 @@ GitHub: https://github.com/coldnew/eshell-autojump
     ;; Start winner-mode globally
     (winner-mode t))
 #+END_SRC
-
-* Keybinding                                                     :keybinding:
-
-Create my minor-mode to control all keybindings
-
-#+begin_src emacs-lisp
-  (defvar coldnew-editor-map (make-keymap))
-
-  (define-minor-mode coldnew-editor-mode
-    "coldnew's editor minor mode."
-    :init-value t
-    :keymap coldnew-editor-map)
-
-  (define-globalized-minor-mode global-coldnew-editor-mode
-    coldnew-editor-mode (lambda ()
-                          (if (not (minibufferp (current-buffer)))
-                              (coldnew-editor-mode 1))))
-
-  ;; Gloabal enable
-  (global-coldnew-editor-mode t)
-#+end_src
 
 * End of configuration
 
