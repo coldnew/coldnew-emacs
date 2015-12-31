@@ -2185,6 +2185,14 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
 Though =LISP= has many dialet, it still is the best programming
 language I ever met.
 
+** Prettify symbols
+
+Show lambda as λ.
+
+#+BEGIN_SRC emacs-lisp
+  (global-prettify-symbols-mode 1)
+#+END_SRC
+
 ** Emacs Lisp
 
 *** Add eldoc support                              
