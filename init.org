@@ -2312,6 +2312,13 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
            ("authorized_keys2?\\'" . ssh-authorized-keys-mode)))
 #+END_SRC
 
+** toml
+
+#+BEGIN_SRC emacs-lisp
+  (req-package toml-mode
+    :mode "\\.toml$")
+#+END_SRC
+
 ** nxml
 
 #+BEGIN_SRC emacs-lisp
