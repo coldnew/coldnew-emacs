@@ -371,11 +371,10 @@ I also disable some keys like =⌘-h= bypass to system in emacs-mac port.
 When I type =C-x C-c= which means I want to quit emacs, don't stand in my way.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package noflet
-    :config
-    (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
-      "Prevent annoying \"Active processes exist\" query when you quit Emacs."
-      (noflet ((process-list ())) ad-do-it)))
+  (require 'noflet)
+  (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
+    "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+    (noflet ((process-list ())) ad-do-it))
 #+END_SRC
 
 ** Don't ask me when kill process buffer
