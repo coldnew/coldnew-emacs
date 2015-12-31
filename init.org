@@ -772,6 +772,17 @@ GitHub: https://github.com/akicho8/string-inflection
   (req-package string-inflection)
 #+END_SRC
 
+** smartparens
+
+Smartparens is a minor mode for dealing with pairs in Emacs.
+
+GitHub: https://github.com/Fuco1/smartparens
+
+#+BEGIN_SRC emacs-lisp
+  (req-package smartparens
+    :require smartparens-config)
+#+END_SRC
+
 ** sx
 
 [[https://github.com/vermiculus/sx.el/][SX]] is a full featured Stack Exchange mode for GNU Emacs 24+. Using the official
