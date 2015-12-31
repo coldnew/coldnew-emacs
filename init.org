@@ -780,7 +780,9 @@ GitHub: https://github.com/Fuco1/smartparens
 
 #+BEGIN_SRC emacs-lisp
   (req-package smartparens
-    :require smartparens-config)
+    :require smartparens-config
+    :config
+    (smartparens-mode 1))
 #+END_SRC
 
 ** sx
