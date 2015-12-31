@@ -2061,7 +2061,10 @@ GitHub: https://github.com/Fuco1/litable
 #+BEGIN_SRC emacs-lisp
   (req-package litable
     :config
-    (litable-mode))
+    ;; Enable litable-mode globally
+    (litable-mode)
+    ;; Save cache file to `user-cache-direcotry'
+    (setq litable-list-file (concat user-cache-directory ".litable-lists.el")))
 #+END_SRC
 
 *** Remove *.elc when save
