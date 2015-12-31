@@ -808,6 +808,22 @@ Emacs itself.
   (req-package sx :require sx-load)
 #+END_SRC
 
+** travis
+
+An Emacs client for TravisCI.
+
+GitHub: https://github.com/nlamirault/emacs-travis
+
+#+BEGIN_SRC emacs-lisp
+  (req-package travis)
+#+END_SRC
+
+Befor execute =M-x travis-show-projects= you must setup your github token
+
+#+BEGIN_SRC sh :tangle no
+  export TRAVIS_TOKEN=XXXXXXX
+#+END_SRC
+
 ** verify-url
 
 verify-url is a little tool that used to find out invalid urls in the buffer or
