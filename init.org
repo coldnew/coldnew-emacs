@@ -774,6 +774,16 @@ GitHub: https://github.com/larstvei/Focus
   (req-package focus)
 #+END_SRC
 
+** google-translate
+
+This package allows to translate the strings using Google Translate service directly from GNU Emacs.
+
+GitHub: https://github.com/atykhonov/google-translate
+
+#+BEGIN_SRC emacs-lisp
+  (req-package google-translate)
+#+END_SRC
+
 ** howdoi
 
 [[https://github.com/atykhonov/emacs-howdoi][howdoi]] is a way to query Stack Overflow directly from the Emacs and get back the
