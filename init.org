@@ -1673,11 +1673,6 @@ GitHub: https://github.com/dgutov/highlight-escape-sequences
     :config
     ;; Make face the same as builtin face
     (put 'font-lock-regexp-grouping-backslash 'face-alias 'font-lock-builtin-face)
-
-    ;; Add extra modes
-    (add-to-list 'hes-simple-modes 'c-mode)
-    (add-to-list 'hes-simple-modes 'c++-mode)
-
     ;; Enable globally
     (hes-mode 1))
 #+END_SRC
