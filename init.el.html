@@ -256,10 +256,21 @@
 <span class="rainbow-delimiters-depth-1">(</span>prefer-coding-system 'utf-8<span class="rainbow-delimiters-depth-1">)</span>
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> system-time-locale <span class="string">"en_US"</span><span class="rainbow-delimiters-depth-1">)</span>
 
-<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">request</span>
-  <span class="builtin">:config</span>
-  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> request-storage-directory
-        <span class="rainbow-delimiters-depth-3">(</span>concat user-cache-directory <span class="string">"request"</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+<span class="rainbow-delimiters-depth-1">(</span>eval-after-load 'bookmark
+  '<span class="rainbow-delimiters-depth-2">(</span><span class="keyword">progn</span>
+     <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">setq</span> bookmark-default-file
+           <span class="rainbow-delimiters-depth-4">(</span>concat user-cache-directory <span class="string">"bookmarks"</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span>eval-after-load 'request
+  '<span class="rainbow-delimiters-depth-2">(</span><span class="keyword">progn</span>
+     <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">setq</span> request-storage-directory
+           <span class="rainbow-delimiters-depth-4">(</span>concat user-cache-directory <span class="string">"request"</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span>eval-after-load 'pcache
+  '<span class="rainbow-delimiters-depth-2">(</span><span class="keyword">progn</span>
+     <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">setq</span> pcache-directory
+           <span class="rainbow-delimiters-depth-4">(</span>file-name-as-directory
+            <span class="rainbow-delimiters-depth-5">(</span>concat user-cache-directory <span class="string">"pcache"</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">ag</span>
   <span class="builtin">:if</span> <span class="rainbow-delimiters-depth-2">(</span>executable-find <span class="string">"ag"</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
@@ -317,6 +328,19 @@
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">manage-minor-mode</span><span class="rainbow-delimiters-depth-1">)</span>
 
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">know-your-http-well</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">kurecolor</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">lentic</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">link-hint</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">mwim</span>
+  <span class="builtin">:bind</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-a"</span> . mwim-beginning-of-code-or-line<span class="rainbow-delimiters-depth-3">)</span>
+   <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-e"</span> . mwim-end-of-code-or-line<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">mustache</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">noflet</span><span class="rainbow-delimiters-depth-1">)</span>
@@ -341,7 +365,11 @@
   <span class="builtin">:config</span>
   <span class="rainbow-delimiters-depth-2">(</span>smartparens-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">url-shortener</span><span class="rainbow-delimiters-depth-1">)</span>
+
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">sx</span> <span class="builtin">:require</span> sx-load<span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">spray</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">travis</span><span class="rainbow-delimiters-depth-1">)</span>
 
@@ -350,6 +378,8 @@
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">which-key</span>
   <span class="builtin">:config</span>
   <span class="rainbow-delimiters-depth-2">(</span>which-key-mode<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">xkcd</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">zzz-to-char</span>
   <span class="builtin">:bind</span> <span class="rainbow-delimiters-depth-2">(</span><span class="rainbow-delimiters-depth-3">(</span><span class="string">"M-z"</span> . zzz-to-char<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
@@ -730,11 +760,6 @@ With argument, do this that many times."</span>
   <span class="builtin">:config</span>
   <span class="comment-delimiter">;; </span><span class="comment">Make face the same as builtin face
 </span>  <span class="rainbow-delimiters-depth-2">(</span>put 'font-lock-regexp-grouping-backslash 'face-alias 'font-lock-builtin-face<span class="rainbow-delimiters-depth-2">)</span>
-
-  <span class="comment-delimiter">;; </span><span class="comment">Add extra modes
-</span>  <span class="rainbow-delimiters-depth-2">(</span>add-to-list 'hes-simple-modes 'c-mode<span class="rainbow-delimiters-depth-2">)</span>
-  <span class="rainbow-delimiters-depth-2">(</span>add-to-list 'hes-simple-modes 'c++-mode<span class="rainbow-delimiters-depth-2">)</span>
-
   <span class="comment-delimiter">;; </span><span class="comment">Enable globally
 </span>  <span class="rainbow-delimiters-depth-2">(</span>hes-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
@@ -750,6 +775,19 @@ This functions should be added to the hooks of major modes for programming."</sp
    <span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span>add-hook 'prog-mode-hook 'font-lock-comment-annotations<span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">keyfreq</span>
+  <span class="builtin">:config</span>
+  <span class="comment-delimiter">;; </span><span class="comment">setup cache file
+</span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> keyfreq-file <span class="rainbow-delimiters-depth-3">(</span>concat user-cache-directory <span class="string">"keyfreq"</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> keyfreq-file-lock <span class="rainbow-delimiters-depth-3">(</span>concat keyfreq-file <span class="string">".lock"</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="comment-delimiter">;; </span><span class="comment">enable globally
+</span>  <span class="rainbow-delimiters-depth-2">(</span>keyfreq-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span>keyfreq-autosave-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">indent-guide</span>
+  <span class="builtin">:config</span>
+  <span class="rainbow-delimiters-depth-2">(</span>indent-guide-global-mode<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">electric-spacing</span>
   <span class="builtin">:config</span>
@@ -980,17 +1018,26 @@ This functions should be added to the hooks of major modes for programming."</sp
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">rust-mode</span>
   <span class="builtin">:mode</span> <span class="string">"\\.rs\\'"</span><span class="rainbow-delimiters-depth-1">)</span>
 
-<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">scala-mode</span>
-  <span class="builtin">:mode</span> <span class="rainbow-delimiters-depth-2">(</span><span class="rainbow-delimiters-depth-3">(</span><span class="string">"\\.scala$"</span> . scala-mode<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">llvm-mode</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">lua-mode</span>
+  <span class="builtin">:mode</span> <span class="string">"\\.lua$"</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">scala-mode2</span>
+  <span class="builtin">:mode</span> <span class="string">"\\.scala$"</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">sbt-mode</span>
-  <span class="builtin">:mode</span> <span class="rainbow-delimiters-depth-2">(</span><span class="rainbow-delimiters-depth-3">(</span><span class="string">"\\.sbt$"</span> . sbt-mode<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+  <span class="builtin">:mode</span> <span class="string">"\\.sbt$"</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">ssh-config-mode</span>
   <span class="builtin">:mode</span> <span class="rainbow-delimiters-depth-2">(</span><span class="rainbow-delimiters-depth-3">(</span><span class="string">".ssh/config\\'"</span>       . ssh-config-mode<span class="rainbow-delimiters-depth-3">)</span>
          <span class="rainbow-delimiters-depth-3">(</span><span class="string">"sshd?_config\\'"</span>      . ssh-config-mode<span class="rainbow-delimiters-depth-3">)</span>
          <span class="rainbow-delimiters-depth-3">(</span><span class="string">"known_hosts\\'"</span>       . ssh-known-hosts-mode<span class="rainbow-delimiters-depth-3">)</span>
          <span class="rainbow-delimiters-depth-3">(</span><span class="string">"authorized_keys2?\\'"</span> . ssh-authorized-keys-mode<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">swift-mode</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">systemd</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">toml-mode</span>
   <span class="builtin">:mode</span> <span class="string">"\\.toml$"</span><span class="rainbow-delimiters-depth-1">)</span>
@@ -1328,7 +1375,19 @@ This functions should be added to the hooks of major modes for programming."</sp
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">helm-gtags</span><span class="rainbow-delimiters-depth-1">)</span>
 
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">helm-bm</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">helm-yasnippet</span>
+  <span class="builtin">:require</span> <span class="rainbow-delimiters-depth-2">(</span>helm yasnippet<span class="rainbow-delimiters-depth-2">)</span>
+  <span class="builtin">:config</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> helm-yas-space-match-any-greedy t<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">fontawesome</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">helm-swoop</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">helm-dash</span>
+  <span class="builtin">:require</span> helm<span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">magit</span><span class="rainbow-delimiters-depth-1">)</span>
 
