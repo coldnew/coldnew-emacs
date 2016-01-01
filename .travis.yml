@@ -2,7 +2,7 @@ language: emacs-lisp
 sudo: true
 env:
   matrix:
-    - EMACS=emacs24        EMACS_PPA=ppa:cassou/emacs
+#    - EMACS=emacs24        EMACS_PPA=ppa:cassou/emacs
     - EMACS=emacs-snapshot EMACS_PPA=ppa:ubuntu-elisp/ppa
   global:
     - GH_REPO: github.com/coldnew/coldnew-emacs.git
