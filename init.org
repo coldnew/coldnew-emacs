@@ -1857,6 +1857,13 @@ GitHub: https://github.com/timcharper/evil-surround
     :mode "Dockerfile\\'")
 #+END_SRC
 
+** dts
+
+#+BEGIN_SRC emacs-lisp
+  (req-package dts-mode
+    :mode ("\\.dts\\'" "\\.dtsi\\'"))
+#+END_SRC
+
 ** elixir
 
 #+BEGIN_SRC emacs-lisp
