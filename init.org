@@ -983,6 +983,16 @@ Emacs itself.
   (req-package sx :require sx-load)
 #+END_SRC
 
+** spray
+
+A speed reading mode for Emacs.
+
+GitHub: https://github.com/ian-kelling/spray
+
+#+BEGIN_SRC emacs-lisp
+  (req-package spray)
+#+END_SRC
+
 ** travis
 
 An Emacs client for TravisCI.
