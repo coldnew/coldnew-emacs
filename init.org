@@ -2842,6 +2842,18 @@ GitHub: https://github.com/syohex/emacs-fontawesome
   (req-package fontawesome)
 #+END_SRC
 
+** Efficiently hopping squeezed lines powered by Emacs helm interface
+
+List match lines to another buffer, which is able to squeeze by any
+words you input. At the same time, the original buffer's cursor is
+jumping line to line according to moving up and down the line list.
+
+GitHub: https://github.com/ShingoFukuyama/helm-swoop
+
+#+BEGIN_SRC emacs-lisp
+  (req-package helm-swoop)
+#+END_SRC
+
 ** Browse Dash docsets inside emacs
 
 This package uses [[http://www.kapeli.com/dash][Dash]] docsets inside emacs to browse documentation. Here's an article explaining the basic usage of it.
