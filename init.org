@@ -2813,6 +2813,14 @@ GitHub: https://github.com/syohex/emacs-helm-gtags
   (req-package helm-gtags)
 #+END_SRC
 
+** Integrate helm with bm.el
+
+GitHub: https://github.com/yasuyk/helm-bm
+
+#+BEGIN_SRC emacs-lisp
+  (req-package helm-bm)
+#+END_SRC
+
 ** Insert fontawesome with helm interface
 
 Emacs [[http://fortawesome.github.io/Font-Awesome/][fontawesome]] utility.
