@@ -1784,6 +1784,13 @@ GitHub: https://github.com/timcharper/evil-surround
     :mode ("\\.y\\'" "\\.l\\'" "\\.jison\\'"))
 #+END_SRC
 
+** brainfuck
+
+#+BEGIN_SRC emacs-lisp
+  (req-package brainfuck-mode
+    :mode "\\.bf\\'")
+#+END_SRC
+
 ** crontab
 
 #+BEGIN_SRC emacs-lisp
