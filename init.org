@@ -606,6 +606,16 @@ GitHub: https://github.com/Malabarba/aggressive-indent-mode
     (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
 #+END_SRC
 
+** avy
+
+=avy= is a GNU Emacs package for jumping to visible text using a char-based decision tree. See also [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] and [[https://github.com/Lokaltog/vim-easymotion][vim-easymotion]] - =avy= uses the same idea.
+
+GitHub: https://github.com/abo-abo/avy
+
+#+BEGIN_SRC emacs-lisp
+  (req-package avy)
+#+END_SRC
+
 ** discover-my-major
 
 [[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
