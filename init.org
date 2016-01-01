@@ -1830,6 +1830,16 @@ GitHub: https://github.com/timcharper/evil-surround
     (setq android-mode-sdk-dir (getenv "ANDROID_HOME")))
 #+END_SRC
 
+*** Integrate logcat with emacs
+
+logcat interface for emacs based on android-mode.
+
+GitHub: https://github.com/youngker/elogcat.el
+
+#+BEGIN_SRC emacs-lisp
+  (require elogcat)
+#+END_SRC
+
 ** bash
 
 #+BEGIN_SRC emacs-lisp
