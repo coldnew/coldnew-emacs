@@ -872,6 +872,19 @@ GitHub: https://github.com/noctuid/link-hint.el
   (req-package link-hint)
 #+END_SRC
 
+** mwim
+
+This Emacs package provides commands for moving to the beginning/end of code or line.
+
+GitHub: https://github.com/alezost/mwim.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package mwim
+    :bind
+    (("C-a" . mwim-beginning-of-code-or-line)
+     ("C-e" . mwim-end-of-code-or-line)))
+#+END_SRC
+
 ** mustache
 
 A mustache templating library in Emacs Lisp.
