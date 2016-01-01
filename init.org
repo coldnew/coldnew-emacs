@@ -822,6 +822,17 @@ buffer.
   (req-package manage-minor-mode)
 #+END_SRC
 
+** know-your-http-well
+
+HTTP encodings, headers, media types, methods, relations and status
+codes, all summarized and linking to their specification.
+
+GitHub: https://github.com/for-GET/know-your-http-well
+
+#+BEGIN_SRC emacs-lisp
+  (req-package know-your-http-well)
+#+END_SRC
+
 ** mustache
 
 A mustache templating library in Emacs Lisp.
