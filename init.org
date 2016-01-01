@@ -227,6 +227,7 @@ looks like this:
   (depends-on "pallet")
   (depends-on "async")
   (depends-on "req-package")
+  (depends-on "font-utils")
 #+END_SRC
 
 Then run the following command in your =.emacs.d= directory to set up
