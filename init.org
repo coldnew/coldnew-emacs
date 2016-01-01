@@ -581,6 +581,26 @@ If you use Gentoo Linux, you can use following command to install this package
   emerge sys-apps/the_silver_searcher
 #+END_SRC
 
+** aggressive-indent-mode
+
+=electric-indent-mode= is enough to keep your code nicely aligned when
+all you do is type. However, once you start shifting blocks around,
+transposing lines, or slurping and barfing sexps, indentation is bound
+to go wrong.
+
+=aggressive-indent-mode= is a minor mode that keeps your code *always*
+indented. It reindents after every change, making it more reliable
+than =electric-indent-mode=.
+
+GitHub: https://github.com/Malabarba/aggressive-indent-mode
+
+#+BEGIN_SRC emacs-lisp
+  (req-package aggressive-indent
+    :config
+    (global-aggressive-indent-mode 1)
+    (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+#+END_SRC
+
 ** ascii
 
 [[http://www.emacswiki.org/emacs/AsciiMode][Ascii]] provides a way to display ASCII code on a window, that is, display in
@@ -604,26 +624,6 @@ Convert simple ASCII art drawings (and org-tables) to beautiful Unicode.
 
 #+BEGIN_SRC emacs-lisp
   (req-package ascii-art-to-unicode)
-#+END_SRC
-
-** aggressive-indent-mode
-
-=electric-indent-mode= is enough to keep your code nicely aligned when
-all you do is type. However, once you start shifting blocks around,
-transposing lines, or slurping and barfing sexps, indentation is bound
-to go wrong.
-
-=aggressive-indent-mode= is a minor mode that keeps your code *always*
-indented. It reindents after every change, making it more reliable
-than =electric-indent-mode=.
-
-GitHub: https://github.com/Malabarba/aggressive-indent-mode
-
-#+BEGIN_SRC emacs-lisp
-  (req-package aggressive-indent
-    :config
-    (global-aggressive-indent-mode 1)
-    (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
 #+END_SRC
 
 ** avy
@@ -823,15 +823,6 @@ GitHub: https://github.com/victorhge/iedit
     :bind (("C-;" . iedit-mode)))
 #+END_SRC
 
-** manage-minor-mode
-
-[[https://github.com/ShingoFukuyama/manage-minor-mode][manage-minor-mode]] let you manage your minor-mode on the dedicated interface
-buffer.
-
-#+BEGIN_SRC emacs-lisp
-  (req-package manage-minor-mode)
-#+END_SRC
-
 ** know-your-http-well
 
 HTTP encodings, headers, media types, methods, relations and status
@@ -882,6 +873,25 @@ GitHub: https://github.com/noctuid/link-hint.el
   (req-package link-hint)
 #+END_SRC
 
+** manage-minor-mode
+
+[[https://github.com/ShingoFukuyama/manage-minor-mode][manage-minor-mode]] let you manage your minor-mode on the dedicated interface
+buffer.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package manage-minor-mode)
+#+END_SRC
+
+** mustache
+
+A mustache templating library in Emacs Lisp.
+
+GitHub: https://github.com/Wilfred/mustache.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package mustache)
+#+END_SRC
+
 ** mwim
 
 This Emacs package provides commands for moving to the beginning/end of code or line.
@@ -893,16 +903,6 @@ GitHub: https://github.com/alezost/mwim.el
     :bind
     (("C-a" . mwim-beginning-of-code-or-line)
      ("C-e" . mwim-end-of-code-or-line)))
-#+END_SRC
-
-** mustache
-
-A mustache templating library in Emacs Lisp.
-
-GitHub: https://github.com/Wilfred/mustache.el
-
-#+BEGIN_SRC emacs-lisp
-  (req-package mustache)
 #+END_SRC
 
 ** noflet
@@ -960,16 +960,6 @@ with the color they represent as background.
   (req-package rainbow-mode)
 #+END_SRC
 
-** string-inflection
-
-underscore -> UPCASE -> CamelCase conversion of names.
-
-GitHub: https://github.com/akicho8/string-inflection
-
-#+BEGIN_SRC emacs-lisp
-  (req-package string-inflection)
-#+END_SRC
-
 ** smartparens
 
 Smartparens is a minor mode for dealing with pairs in Emacs.
@@ -983,19 +973,24 @@ GitHub: https://github.com/Fuco1/smartparens
     (smartparens-mode 1))
 #+END_SRC
 
-** url-shortener
+** spray
 
-This package can convert long url to tiny url and expand tiny url to long url ,support:
+A speed reading mode for Emacs.
 
-- bit.ly
-- goo.gl
-- dwz.cn
-- 126.am
-
-GitHub: https://github.com/yuyang0/url-shortener
+GitHub: https://github.com/ian-kelling/spray
 
 #+BEGIN_SRC emacs-lisp
-  (req-package url-shortener)
+  (req-package spray)
+#+END_SRC
+
+** string-inflection
+
+underscore -> UPCASE -> CamelCase conversion of names.
+
+GitHub: https://github.com/akicho8/string-inflection
+
+#+BEGIN_SRC emacs-lisp
+  (req-package string-inflection)
 #+END_SRC
 
 ** sx
@@ -1006,16 +1001,6 @@ Emacs itself.
 
 #+BEGIN_SRC emacs-lisp
   (req-package sx :require sx-load)
-#+END_SRC
-
-** spray
-
-A speed reading mode for Emacs.
-
-GitHub: https://github.com/ian-kelling/spray
-
-#+BEGIN_SRC emacs-lisp
-  (req-package spray)
 #+END_SRC
 
 ** travis
@@ -1032,6 +1017,21 @@ Befor execute =M-x travis-show-projects= you must setup your github token
 
 #+BEGIN_SRC sh :tangle no
   export TRAVIS_TOKEN=XXXXXXX
+#+END_SRC
+
+** url-shortener
+
+This package can convert long url to tiny url and expand tiny url to long url ,support:
+
+- bit.ly
+- goo.gl
+- dwz.cn
+- 126.am
+
+GitHub: https://github.com/yuyang0/url-shortener
+
+#+BEGIN_SRC emacs-lisp
+  (req-package url-shortener)
 #+END_SRC
 
 ** verify-url
