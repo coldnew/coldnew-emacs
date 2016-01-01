@@ -2343,6 +2343,22 @@ GitHub: https://github.com/skeeto/cl-lib-highlight
     (cl-lib-highlight-initialize))
 #+END_SRC
 
+*** Display ^L glyphs as horizontal lines
+
+form-feed is a minor mode that displays pesky =^L= glyphs certain
+developers use to delimit pages in the form of lines spanning the
+entire window width. It is also possible to display a less wide line
+by customizing =form-line-width= before loading the package, see its
+docstring for possible options.
+
+GitHub: https://github.com/wasamasa/form-feed
+
+#+BEGIN_SRC emacs-lisp
+  (req-package form-feed
+    :config
+    (add-hook 'emacs-lisp-mode-hook 'form-feed-mode))
+#+END_SRC
+
 *** Remove *.elc when save
 
 #+BEGIN_SRC emacs-lisp
