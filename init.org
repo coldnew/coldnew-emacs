@@ -1566,6 +1566,22 @@ they work nicely with version control systems.
     :mode ("\\.editorconfig\\'" . conf-unix-mode))
 #+END_SRC
 
+** Adapt to foreign indentation offsets
+
+An Emacs minor mode that guesses the indentation offset originally
+used for creating source code files and transparently adjusts the
+corresponding settings in Emacs, making it more convenient to edit
+foreign files.
+
+GitHub: https://github.com/jscheid/dtrt-indent
+
+#+BEGIN_SRC emacs-lisp
+  (req-package dtrt-indent
+    :config
+    ;; enable dtrt-indent-mode globally
+    (dtrt-indent-mode 1))
+#+END_SRC
+
 ** En/Decrypt files by EasyPG
 
 #+BEGIN_SRC emacs-lisp
