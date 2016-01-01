@@ -1724,6 +1724,14 @@ GitHub: https://github.com/timcharper/evil-surround
 
 * Programming Languages
 
+** android
+
+#+BEGIN_SRC emacs-lisp
+  (req-package android-mode
+    :config
+    (setq android-mode-sdk-dir (getenv "ANDROID_HOME")))
+#+END_SRC
+
 ** bash
 
 #+BEGIN_SRC emacs-lisp
@@ -1816,7 +1824,6 @@ GitHub: https://github.com/trotzig/import-js
 #+BEGIN_SRC emacs-lisp
   (req-package import-js)
 #+END_SRC
-
 
 ** json
 
