@@ -1811,6 +1811,22 @@ GitHub: https://github.com/dgutov/highlight-escape-sequences
   (add-hook 'prog-mode-hook 'font-lock-comment-annotations)
 #+end_src
 
+** Use undo-tree for undo/redo
+
+Standard Emacs undo is kind of confusing. [[http://www.dr-qubit.org/emacs.php#undo-tree][undo-tree]] replaces this with a simpler tree structure. It also allows us to visualize the tree directly.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package undo-tree
+    :config
+    ;; Persistent undo-tree history across emacs sessions
+    (let ((dir
+           (file-name-as-directory (concat user-cache-directory "undo-tree"))))
+      (setq undo-tree-history-directory-alist `(("." . ,dir))))
+    (setq undo-tree-auto-save-history t)
+    ;; global enable undo-tree
+    (global-undo-tree-mode))
+#+END_SRC
+
 ** Track Emacs commands frequency
 
 Use =keyfreq-show= to see how many times you used a command.
