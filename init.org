@@ -833,6 +833,19 @@ GitHub: https://github.com/for-GET/know-your-http-well
   (req-package know-your-http-well)
 #+END_SRC
 
+** kurecolor
+
+A collection of color tools aimed at those working with (normal 6
+digit) hex color codes, useful for CSS, Emacs themes, etc. etc.
+
+View the presentation at https://github.com/emacsfodder/kurecolor
+
+GitHub: https://github.com/emacsfodder/kurecolor
+
+#+BEGIN_SRC emacs-lisp
+  (req-package kurecolor)
+#+END_SRC
+
 ** mustache
 
 A mustache templating library in Emacs Lisp.
