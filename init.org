@@ -671,6 +671,27 @@ GitHub: https://github.com/lukhas/buffer-move
   (req-package buffer-move)
 #+END_SRC
 
+** bpr
+
+This package provides logic for async process execution.
+
+It's similar to =async-shell-command=, but:
+
+- =bpr= spawns processes asynchronously without displaying output buffers.
+- =bpr= shows progress messages for running processes in echo area.
+- =bpr= can display buffer with process output in case of errors.
+- =bpr= can use projectile for assigning process directory.
+- =bpr= can format process output (understands ansi escape codes).
+- it's possible to set different options for different processes.
+
+=bpr= is very handy for running tests/builds, but you can run any processes with it. 
+
+GitHub: https://github.com/ilya-babanov/emacs-bpr
+
+#+BEGIN_SRC emacs-lisp
+  (req-package bpr)
+#+END_SRC
+
 ** cbm
 
 Cycle by major - Cycle through buffers with the same major-mode.
