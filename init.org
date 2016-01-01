@@ -1744,6 +1744,13 @@ GitHub: https://github.com/timcharper/evil-surround
 
 * Programming Languages
 
+** arduino
+
+#+BEGIN_SRC emacs-lisp
+    (req-package arduino-mode
+      :mode ("\\.pde\\'" "\\.ino\\'"))
+#+END_SRC
+
 ** android
 
 #+BEGIN_SRC emacs-lisp
