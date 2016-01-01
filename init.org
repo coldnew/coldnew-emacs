@@ -1061,6 +1061,16 @@ GitHub: https://github.com/justbur/emacs-which-key
     (which-key-mode))
 #+END_SRC
 
+** xkcd
+
+Read [[https://xkcd.com/][xkcd]] from Emacs.
+
+GitHub: https://github.com/vibhavp/emacs-xkcd
+
+#+BEGIN_SRC emacs-lisp
+  (req-package xkcd)
+#+END_SRC
+
 ** zzz-to-char                                                  :keybinding:
 
 This package provides two new commands: =zzz-to-char= and =zzz-up-to-char= which
