@@ -1777,6 +1777,13 @@ GitHub: https://github.com/timcharper/evil-surround
     :config (add-hook 'sh-set-shell-hook 'flymake-shell-load))
 #+END_SRC
 
+** bison
+
+#+BEGIN_SRC emacs-lisp
+  (req-package bison-mode
+    :mode ("\\.y\\'" "\\.l\\'" "\\.jison\\'"))
+#+END_SRC
+
 ** crontab
 
 #+BEGIN_SRC emacs-lisp
