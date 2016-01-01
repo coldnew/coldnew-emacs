@@ -651,6 +651,16 @@ GitHub: https://github.com/lukhas/buffer-move
   (req-package buffer-move)
 #+END_SRC
 
+** cbm
+
+Cycle by major - Cycle through buffers with the same major-mode.
+
+GitHub: https://github.com/akermu/cbm.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package cbm)
+#+END_SRC
+
 ** discover-my-major
 
 [[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
