@@ -539,14 +539,14 @@ Some buildin packages need to some setup.
              (concat user-cache-directory "request"))))
 #+END_SRC
 
-** pcache
+** url
 
 #+BEGIN_SRC emacs-lisp
-  (eval-after-load 'pcache
+  (eval-after-load 'url
     '(progn
-       (setq pcache-directory
+       (setq url-configuration-directory
              (file-name-as-directory
-              (concat user-cache-directory "pcache")))))
+              (concat user-cache-directory "url")))))
 #+END_SRC
 
 * External Packages                                                :packages:
@@ -1078,7 +1078,10 @@ Read [[https://xkcd.com/][xkcd]] from Emacs.
 GitHub: https://github.com/vibhavp/emacs-xkcd
 
 #+BEGIN_SRC emacs-lisp
-  (req-package xkcd)
+  (req-package xkcd
+    :config
+    (setq xkcd-cache-dir
+          (file-name-as-directory (concat user-cache-directory "xkcd"))))
 #+END_SRC
 
 ** zzz-to-char                                                  :keybinding:
