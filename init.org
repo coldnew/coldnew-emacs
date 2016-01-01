@@ -2821,6 +2821,17 @@ GitHub: https://github.com/yasuyk/helm-bm
   (req-package helm-bm)
 #+END_SRC
 
+** Integrate helm with yasnippet
+
+GitHub: https://github.com/emacs-jp/helm-c-yasnippet
+
+#+BEGIN_SRC emacs-lisp
+  (req-package helm-yasnippet
+    :require (helm yasnippet)
+    :config
+    (setq helm-yas-space-match-any-greedy t))
+#+END_SRC
+
 ** Insert fontawesome with helm interface
 
 Emacs [[http://fortawesome.github.io/Font-Awesome/][fontawesome]] utility.
