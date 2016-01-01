@@ -1890,6 +1890,18 @@ GitHub: https://github.com/timcharper/evil-surround
   (req-package alchemist)
 #+END_SRC
 
+** elmacro
+
+Shows keyboard macros or latest interactive commands as emacs lisp.
+
+GitHub: https://github.com/Silex/elmacro
+
+#+BEGIN_SRC emacs-lisp
+  (req-package elmacro
+    :config
+    (elmacro-mode))
+#+END_SRC
+
 ** gnuplot
 
 A major mode for Emacs for interacting with Gnuplot
