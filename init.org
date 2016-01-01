@@ -2158,6 +2158,12 @@ GitHub: https://github.com/trotzig/import-js
   (req-package rust-mode
     :mode "\\.rs\\'")
 #+END_SRC
+** llvm
+
+#+BEGIN_SRC emacs-lisp
+  (req-package llvm-mode)
+#+END_SRC
+
 ** scala
 
 #+BEGIN_SRC emacs-lisp
