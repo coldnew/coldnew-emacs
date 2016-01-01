@@ -14,7 +14,7 @@
 
 * Introduction
 
-This is my emacs configuration. Feel free to use it :).
+This is my emacs configuration, you can find it on [[https://github.com/coldnew][GitHub]] or read [[http://coldnew.github.io/coldnew-emacs][HTML]] and generated [[https://coldnew.github.io/coldnew-emacs/init.el.htmlb][init.el]] directly.
 
 ** Install emacs
 
