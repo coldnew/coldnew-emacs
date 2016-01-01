@@ -860,6 +860,18 @@ GitHub: https://github.com/phillord/lentic
   (req-package lentic)
 #+END_SRC
 
+** link-hint
+
+=link-hint.el= is inspired by the link hinting functionality in vim-like
+browsers and browser plugins such as pentadactyl. It provides commands
+for using avy to open or copy "links."
+
+GitHub: https://github.com/noctuid/link-hint.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package link-hint)
+#+END_SRC
+
 ** mustache
 
 A mustache templating library in Emacs Lisp.
