@@ -1754,6 +1754,13 @@ GitHub: https://github.com/timcharper/evil-surround
     :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
 #+END_SRC
 
+** docker
+
+#+BEGIN_SRC emacs-lisp
+  (req-package dockerfile-mode
+    :mode "Dockerfile\\'")
+#+END_SRC
+
 ** elixir
 
 #+BEGIN_SRC emacs-lisp
