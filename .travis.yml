@@ -22,6 +22,7 @@ before_install:
 install:
   - '"$EMACS" --version'
 script:
+  - rm -rf .cask/
   - make clean
   - make bootstrap
   - make init.html
