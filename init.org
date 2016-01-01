@@ -1908,6 +1908,7 @@ GitHub: https://github.com/syohex/vi-tilde-fringe
 
 #+BEGIN_SRC emacs-lisp
   (req-package vi-tilde-fringe
+    :if window-system
     :config
     (global-vi-tilde-fringe-mode))
 #+END_SRC
