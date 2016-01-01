@@ -524,10 +524,20 @@ Some buildin packages need to some setup.
 ** request
 
 #+BEGIN_SRC emacs-lisp
-  (req-package request
-    :config
-    (setq request-storage-directory
-          (concat user-cache-directory "request")))
+  (eval-after-load 'request
+    '(progn
+       (setq request-storage-directory
+             (concat user-cache-directory "request"))))
+#+END_SRC
+
+** pcache
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'pcache
+    '(progn
+       (setq pcache-directory
+             (file-name-as-directory
+              (concat user-cache-directory "pcache")))))
 #+END_SRC
 
 * External Packages                                                :packages:
