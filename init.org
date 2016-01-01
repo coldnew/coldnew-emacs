@@ -2222,6 +2222,12 @@ GitHub: https://github.com/trotzig/import-js
   (req-package swift-mode)
 #+END_SRC
 
+** systemd
+
+#+BEGIN_SRC emacs-lisp
+  (req-package systemd)
+#+END_SRC
+
 ** toml
 
 #+BEGIN_SRC emacs-lisp
