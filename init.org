@@ -586,6 +586,26 @@ Convert simple ASCII art drawings (and org-tables) to beautiful Unicode.
   (req-package ascii-art-to-unicode)
 #+END_SRC
 
+** aggressive-indent-mode
+
+=electric-indent-mode= is enough to keep your code nicely aligned when
+all you do is type. However, once you start shifting blocks around,
+transposing lines, or slurping and barfing sexps, indentation is bound
+to go wrong.
+
+=aggressive-indent-mode= is a minor mode that keeps your code *always*
+indented. It reindents after every change, making it more reliable
+than =electric-indent-mode=.
+
+GitHub: https://github.com/Malabarba/aggressive-indent-mode
+
+#+BEGIN_SRC emacs-lisp
+  (req-package aggressive-indent
+    :config
+    (global-aggressive-indent-mode 1)
+    (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
+#+END_SRC
+
 ** discover-my-major
 
 [[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
