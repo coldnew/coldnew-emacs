@@ -1694,6 +1694,16 @@ GitHub: https://github.com/dgutov/highlight-escape-sequences
   (add-hook 'prog-mode-hook 'font-lock-comment-annotations)
 #+end_src
 
+** Show vertical lines to guide indentation
+
+GitHub: https://github.com/zk-phi/indent-guide
+
+#+BEGIN_SRC emacs-lisp
+  (req-package indent-guide
+    :config
+    (indent-guide-global-mode))
+#+END_SRC
+
 ** Automatically add spacing around operators
 
 For example typing
