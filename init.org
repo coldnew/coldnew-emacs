@@ -521,6 +521,15 @@ For language, though Traditional Chinese is my mothertone, I still prefer use
 
 Some buildin packages need to some setup.
 
+** bookmark
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'bookmark
+    '(progn
+       (setq bookmark-default-file
+             (concat user-cache-directory "bookmarks"))))
+#+END_SRC
+
 ** request
 
 #+BEGIN_SRC emacs-lisp
