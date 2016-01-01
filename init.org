@@ -2187,13 +2187,13 @@ GitHub: https://github.com/trotzig/import-js
 ** scala
 
 #+BEGIN_SRC emacs-lisp
-  (req-package scala-mode
-    :mode (("\\.scala$" . scala-mode)))
+  (req-package scala-mode2
+    :mode "\\.scala$")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
   (req-package sbt-mode
-    :mode (("\\.sbt$" . sbt-mode)))
+    :mode "\\.sbt$")
 #+END_SRC
 
 ** ssh config
