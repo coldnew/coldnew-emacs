@@ -2042,6 +2042,24 @@ By default it highlights:
     (add-hook 'c-mode-common-hook '(lambda () (cwarn-mode 1))))
 #+END_SRC
 
+** Comment #if 0 #endif region
+
+#+BEGIN_SRC emacs-lisp
+  (defun cc-mode:highlight-if-0 ()
+    "highlight c/c++ #if 0 #endif macros"
+    (interactive)
+    (setq cpp-known-face 'default)
+    (setq cpp-unknown-face 'default)
+    (setq cpp-known-writable 't)
+    (setq cpp-unknown-writable 't)
+    (setq cpp-edit-list '(("0" '(foreground-color . "gray")  default both)
+                          ("1" default font-lock-comment-face both)))
+    (cpp-highlight-buffer t))
+
+  ;; Add to c/c++ mode
+  (add-hook 'c-mode-common-hook 'cc-mode:highlight-if-0)
+#+END_SRC
+
 ** Extra highlight keywords for C/C++
 
 Extra hightlight for =stdint.h=
