@@ -1848,7 +1848,7 @@ logcat interface for emacs based on android-mode.
 GitHub: https://github.com/youngker/elogcat.el
 
 #+BEGIN_SRC emacs-lisp
-  (require elogcat)
+  (req-package elogcat)
 #+END_SRC
 
 ** bash
