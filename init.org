@@ -2842,6 +2842,19 @@ GitHub: https://github.com/syohex/emacs-fontawesome
   (req-package fontawesome)
 #+END_SRC
 
+** Browse Dash docsets inside emacs
+
+This package uses [[http://www.kapeli.com/dash][Dash]] docsets inside emacs to browse documentation. Here's an article explaining the basic usage of it.
+
+It doesn't require Dash app.
+
+GitHub: https://github.com/areina/helm-dash
+
+#+BEGIN_SRC emacs-lisp
+  (req-package helm-dash
+    :require helm)
+#+END_SRC
+
 ** Setup keybindings                                          :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
