@@ -846,6 +846,20 @@ GitHub: https://github.com/emacsfodder/kurecolor
   (req-package kurecolor)
 #+END_SRC
 
+** lentic
+
+Lentic allows two buffers to share the same or similar content but
+otherwise operate independently. This can be used for several
+different purposes. Different buffers can be in the same mode, with
+different locations of point, even different text sizes -- in effect,
+providing multiple persistent views.
+
+GitHub: https://github.com/phillord/lentic
+
+#+BEGIN_SRC emacs-lisp
+  (req-package lentic)
+#+END_SRC
+
 ** mustache
 
 A mustache templating library in Emacs Lisp.
