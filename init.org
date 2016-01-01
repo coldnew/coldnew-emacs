@@ -1703,6 +1703,23 @@ GitHub: https://github.com/dgutov/highlight-escape-sequences
   (add-hook 'prog-mode-hook 'font-lock-comment-annotations)
 #+end_src
 
+** Track Emacs commands frequency
+
+Use =keyfreq-show= to see how many times you used a command.
+
+GitHub: https://github.com/dacap/keyfreq
+
+#+BEGIN_SRC emacs-lisp
+  (req-package keyfreq
+    :config
+    ;; setup cache file
+    (setq keyfreq-file (concat user-cache-directory "keyfreq"))
+    (setq keyfreq-file-lock (concat keyfreq-file ".lock"))
+    ;; enable globally
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1))
+#+END_SRC
+
 ** Show vertical lines to guide indentation
 
 GitHub: https://github.com/zk-phi/indent-guide
