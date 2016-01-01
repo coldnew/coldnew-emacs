@@ -1575,7 +1575,7 @@ see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-
        (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
        ))
 #+END_SRC
-a** Latex Export
+** Latex Export
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
   (setq org-format-latex-options
