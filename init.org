@@ -2164,6 +2164,13 @@ GitHub: https://github.com/trotzig/import-js
   (req-package llvm-mode)
 #+END_SRC
 
+** lua
+
+#+BEGIN_SRC emacs-lisp
+  (req-package lua-mode
+    :mode "\\.lua$")
+#+END_SRC
+
 ** scala
 
 #+BEGIN_SRC emacs-lisp
