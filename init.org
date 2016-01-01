@@ -418,6 +418,13 @@ I move the file to cache-dir and make git ignore it.
   (add-hook 'after-save-hook 'tangle-init)
 #+END_SRC
 
+** Setup auto-save directory
+
+#+BEGIN_SRC emacs-lisp
+  (setq auto-save-list-file-prefix
+        (concat user-cache-directory "auto-save-list/.saves-"))
+#+END_SRC
+
 ** Disable some default stuff
 
 Some emacs feature is not really useful
