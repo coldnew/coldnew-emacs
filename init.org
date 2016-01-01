@@ -2216,6 +2216,12 @@ GitHub: https://github.com/trotzig/import-js
            ("authorized_keys2?\\'" . ssh-authorized-keys-mode)))
 #+END_SRC
 
+** swift
+
+#+BEGIN_SRC emacs-lisp
+  (req-package swift-mode)
+#+END_SRC
+
 ** toml
 
 #+BEGIN_SRC emacs-lisp
