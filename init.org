@@ -2787,6 +2787,16 @@ GitHub: https://github.com/syohex/emacs-helm-gtags
   (req-package helm-gtags)
 #+END_SRC
 
+** Insert fontawesome with helm interface
+
+Emacs [[http://fortawesome.github.io/Font-Awesome/][fontawesome]] utility.
+
+GitHub: https://github.com/syohex/emacs-fontawesome
+
+#+BEGIN_SRC emacs-lisp
+  (req-package fontawesome)
+#+END_SRC
+
 ** Setup keybindings                                          :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
