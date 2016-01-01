@@ -616,6 +616,41 @@ GitHub: https://github.com/abo-abo/avy
   (req-package avy)
 #+END_SRC
 
+** buffer-move
+
+This file is for lazy people wanting to swap buffers without typing C-x b on each window. This is useful when you have :
+
++--------------+-------------+
+|              |             |
+|    #emacs    |    #gnus    |
+|              |             |
++--------------+-------------+
+|                            |
+|           .emacs           |
+|                            |
++----------------------------+
+
+and you want to have :
+
++--------------+-------------+
+|              |             |
+|    #gnus     |   .emacs    |
+|              |             |
++--------------+-------------+
+|                            |
+|           #emacs           |
+|                            |
++----------------------------+
+
+With buffer-move, just go in #gnus, do =buf-move-left=, go to #emacs (which now should be on top right) and do =buf-move-down=.
+
+
+GitHub: https://github.com/lukhas/buffer-move
+
+#+BEGIN_SRC emacs-lisp
+  (req-package buffer-move)
+#+END_SRC
+
 ** discover-my-major
 
 [[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
