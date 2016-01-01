@@ -973,6 +973,21 @@ GitHub: https://github.com/Fuco1/smartparens
     (smartparens-mode 1))
 #+END_SRC
 
+** url-shortener
+
+This package can convert long url to tiny url and expand tiny url to long url ,support:
+
+- bit.ly
+- goo.gl
+- dwz.cn
+- 126.am
+
+GitHub: https://github.com/yuyang0/url-shortener
+
+#+BEGIN_SRC emacs-lisp
+  (req-package url-shortener)
+#+END_SRC
+
 ** sx
 
 [[https://github.com/vermiculus/sx.el/][SX]] is a full featured Stack Exchange mode for GNU Emacs 24+. Using the official
