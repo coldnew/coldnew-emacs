@@ -539,6 +539,16 @@ Some buildin packages need to some setup.
              (concat user-cache-directory "request"))))
 #+END_SRC
 
+** nsm
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'nsm
+    '(progn
+       (setq nsm-settings-file
+             (file-name-as-directory
+              (concat user-cache-directory "network-security.data")))))
+#+END_SRC
+
 ** url
 
 #+BEGIN_SRC emacs-lisp
