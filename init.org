@@ -2936,7 +2936,7 @@ GitHub: https://github.com/company-mode/company-statistics
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref company-config
   (bind-keys :map company-active-map
              ("C-g" . company-abort)
-             ("M-p" . company-select-next)
+             ("C-n" . company-select-next)
              ("C-p" . company-select-previouse)
              ("TAB" . company-complete-selction)
              ("<tab>" . company-complete-selction))
