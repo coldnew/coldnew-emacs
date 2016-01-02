@@ -2556,6 +2556,20 @@ GitHub: https://github.com/fourier/cff
                ("C-c C-o" . cff-find-other-file)))
 #+END_SRC
 
+** Setup C keybinding                                            :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
+  (bind-keys :map c-mode-map
+             ("C-c '" . narrow-or-widen-dwim))
+#+END_SRC
+
+** Setup C++ keybinding                                          :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
+  (bind-keys :map c++-mode-map
+             ("C-c '" . narrow-or-widen-dwim))
+#+END_SRC
+
 * LISP Development                                                     :lisp:
 
 Though =LISP= has many dialet, it still is the best programming
