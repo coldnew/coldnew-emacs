@@ -266,14 +266,21 @@
      <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">setq</span> request-storage-directory
            <span class="rainbow-delimiters-depth-4">(</span>concat user-cache-directory <span class="string">"request"</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
-<span class="rainbow-delimiters-depth-1">(</span>eval-after-load 'pcache
+<span class="rainbow-delimiters-depth-1">(</span>eval-after-load 'url
   '<span class="rainbow-delimiters-depth-2">(</span><span class="keyword">progn</span>
-     <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">setq</span> pcache-directory
+     <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">setq</span> url-configuration-directory
            <span class="rainbow-delimiters-depth-4">(</span>file-name-as-directory
-            <span class="rainbow-delimiters-depth-5">(</span>concat user-cache-directory <span class="string">"pcache"</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+            <span class="rainbow-delimiters-depth-5">(</span>concat user-cache-directory <span class="string">"url"</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">lispy</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">ag</span>
   <span class="builtin">:if</span> <span class="rainbow-delimiters-depth-2">(</span>executable-find <span class="string">"ag"</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">aggressive-indent</span>
+  <span class="builtin">:config</span>
+  <span class="rainbow-delimiters-depth-2">(</span>global-aggressive-indent-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span>add-to-list 'aggressive-indent-excluded-modes 'html-mode<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">ascii</span>
   <span class="builtin">:config</span>
@@ -287,14 +294,11 @@
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">ascii-art-to-unicode</span><span class="rainbow-delimiters-depth-1">)</span>
 
-<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">aggressive-indent</span>
-  <span class="builtin">:config</span>
-  <span class="rainbow-delimiters-depth-2">(</span>global-aggressive-indent-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-2">)</span>
-  <span class="rainbow-delimiters-depth-2">(</span>add-to-list 'aggressive-indent-excluded-modes 'html-mode<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
-
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">avy</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">buffer-move</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">bpr</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">cbm</span><span class="rainbow-delimiters-depth-1">)</span>
 
@@ -313,7 +317,11 @@
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">expand-region</span>
   <span class="builtin">:bind</span> <span class="rainbow-delimiters-depth-2">(</span><span class="rainbow-delimiters-depth-3">(</span><span class="string">"M-v"</span> . er/expand-region<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">fancy-narrow</span><span class="rainbow-delimiters-depth-1">)</span>
+
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">focus</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">google-translate</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">howdoi</span><span class="rainbow-delimiters-depth-1">)</span>
 
@@ -326,8 +334,6 @@
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">iedit</span>
   <span class="builtin">:bind</span> <span class="rainbow-delimiters-depth-2">(</span><span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-;"</span> . iedit-mode<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
-<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">manage-minor-mode</span><span class="rainbow-delimiters-depth-1">)</span>
-
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">know-your-http-well</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">kurecolor</span><span class="rainbow-delimiters-depth-1">)</span>
@@ -336,12 +342,14 @@
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">link-hint</span><span class="rainbow-delimiters-depth-1">)</span>
 
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">manage-minor-mode</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">mustache</span><span class="rainbow-delimiters-depth-1">)</span>
+
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">mwim</span>
   <span class="builtin">:bind</span>
   <span class="rainbow-delimiters-depth-2">(</span><span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-a"</span> . mwim-beginning-of-code-or-line<span class="rainbow-delimiters-depth-3">)</span>
    <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-e"</span> . mwim-end-of-code-or-line<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
-
-<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">mustache</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">noflet</span><span class="rainbow-delimiters-depth-1">)</span>
 
@@ -358,20 +366,20 @@
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">rainbow-mode</span><span class="rainbow-delimiters-depth-1">)</span>
 
-<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">string-inflection</span><span class="rainbow-delimiters-depth-1">)</span>
-
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">smartparens</span>
   <span class="builtin">:require</span> smartparens-config
   <span class="builtin">:config</span>
   <span class="rainbow-delimiters-depth-2">(</span>smartparens-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
-<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">url-shortener</span><span class="rainbow-delimiters-depth-1">)</span>
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">spray</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">string-inflection</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">sx</span> <span class="builtin">:require</span> sx-load<span class="rainbow-delimiters-depth-1">)</span>
 
-<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">spray</span><span class="rainbow-delimiters-depth-1">)</span>
-
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">travis</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">url-shortener</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">verify-url</span><span class="rainbow-delimiters-depth-1">)</span>
 
@@ -379,7 +387,10 @@
   <span class="builtin">:config</span>
   <span class="rainbow-delimiters-depth-2">(</span>which-key-mode<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
-<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">xkcd</span><span class="rainbow-delimiters-depth-1">)</span>
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">xkcd</span>
+  <span class="builtin">:config</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> xkcd-cache-dir
+        <span class="rainbow-delimiters-depth-3">(</span>file-name-as-directory <span class="rainbow-delimiters-depth-4">(</span>concat user-cache-directory <span class="string">"xkcd"</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">zzz-to-char</span>
   <span class="builtin">:bind</span> <span class="rainbow-delimiters-depth-2">(</span><span class="rainbow-delimiters-depth-3">(</span><span class="string">"M-z"</span> . zzz-to-char<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
@@ -440,6 +451,31 @@ then it takes a second \\[</span><span class="doc"><span class="constant">keyboa
   <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">interactive</span><span class="rainbow-delimiters-depth-2">)</span>
   <span class="rainbow-delimiters-depth-2">(</span>set-selective-display
    <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">if</span> selective-display nil <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">defun</span> <span class="function-name">narrow-or-widen-dwim</span> <span class="rainbow-delimiters-depth-2">(</span>p<span class="rainbow-delimiters-depth-2">)</span>
+  <span class="doc">"Widen if buffer is narrowed, narrow-dwim otherwise.
+Dwim means: region, org-src-block, org-subtree, or defun,
+whichever applies first. Narrowing to org-src-block actually
+calls `</span><span class="doc"><span class="constant">org-edit-src-code</span></span><span class="doc">'.
+
+With prefix P, don't widen, just narrow even if buffer is
+already narrowed."</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">interactive</span> <span class="string">"P"</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">declare</span> <span class="rainbow-delimiters-depth-3">(</span>interactive-only<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">cond</span> <span class="rainbow-delimiters-depth-3">(</span><span class="rainbow-delimiters-depth-4">(</span><span class="keyword">and</span> <span class="rainbow-delimiters-depth-5">(</span>buffer-narrowed-p<span class="rainbow-delimiters-depth-5">)</span> <span class="rainbow-delimiters-depth-5">(</span>not p<span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span> <span class="rainbow-delimiters-depth-4">(</span>widen<span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span>
+        <span class="rainbow-delimiters-depth-3">(</span><span class="rainbow-delimiters-depth-4">(</span>region-active-p<span class="rainbow-delimiters-depth-4">)</span>
+         <span class="rainbow-delimiters-depth-4">(</span>narrow-to-region <span class="rainbow-delimiters-depth-5">(</span>region-beginning<span class="rainbow-delimiters-depth-5">)</span> <span class="rainbow-delimiters-depth-5">(</span>region-end<span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span>
+        <span class="rainbow-delimiters-depth-3">(</span><span class="rainbow-delimiters-depth-4">(</span>derived-mode-p 'org-mode<span class="rainbow-delimiters-depth-4">)</span>
+         <span class="comment-delimiter">;; </span><span class="comment">`</span><span class="comment"><span class="constant">org-edit-src-code</span></span><span class="comment">' is not a real narrowing
+</span>         <span class="comment-delimiter">;; </span><span class="comment">command. Remove this first conditional if you
+</span>         <span class="comment-delimiter">;; </span><span class="comment">don't want it.
+</span>         <span class="rainbow-delimiters-depth-4">(</span><span class="keyword">cond</span> <span class="rainbow-delimiters-depth-5">(</span><span class="rainbow-delimiters-depth-6">(</span><span class="keyword">ignore-errors</span> <span class="rainbow-delimiters-depth-7">(</span>org-edit-src-code<span class="rainbow-delimiters-depth-7">)</span><span class="rainbow-delimiters-depth-6">)</span>
+                <span class="rainbow-delimiters-depth-6">(</span>delete-other-windows<span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span>
+               <span class="rainbow-delimiters-depth-5">(</span><span class="rainbow-delimiters-depth-6">(</span><span class="keyword">ignore-errors</span> <span class="rainbow-delimiters-depth-7">(</span>org-narrow-to-block<span class="rainbow-delimiters-depth-7">)</span> t<span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span>
+               <span class="rainbow-delimiters-depth-5">(</span>t <span class="rainbow-delimiters-depth-6">(</span>org-narrow-to-subtree<span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span>
+        <span class="rainbow-delimiters-depth-3">(</span><span class="rainbow-delimiters-depth-4">(</span>derived-mode-p 'latex-mode<span class="rainbow-delimiters-depth-4">)</span>
+         <span class="rainbow-delimiters-depth-4">(</span>LaTeX-narrow-to-environment<span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span>
+        <span class="rainbow-delimiters-depth-3">(</span>t <span class="rainbow-delimiters-depth-4">(</span>narrow-to-defun<span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">defun</span> <span class="function-name">insert-U200B-char</span> <span class="rainbow-delimiters-depth-2">()</span>
   <span class="doc">"Insert &lt;U200B&gt; char, this character is nice use in org-mode."</span>
@@ -688,7 +724,9 @@ With argument, do this that many times."</span>
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c p"</span> . org-metaup<span class="rainbow-delimiters-depth-3">)</span>
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c n"</span> . org-metadown<span class="rainbow-delimiters-depth-3">)</span>
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c i"</span> . org-insertlink<span class="rainbow-delimiters-depth-3">)</span>
-             <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c I"</span> . org-toggle-inline-images<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+             <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c I"</span> . org-toggle-inline-images<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">bind-keys</span> <span class="builtin">:map</span> org-src-mode-map
+             <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c C-c"</span> . org-edit-src-exit<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">defvar</span> <span class="variable-name">coldnew-editor-map</span> <span class="rainbow-delimiters-depth-2">(</span>make-keymap<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
@@ -709,11 +747,9 @@ With argument, do this that many times."</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">linum-off</span>
   <span class="builtin">:config</span>
-  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">progn</span>
-    <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">setq</span> linum-disabled-mode-list
-          '<span class="rainbow-delimiters-depth-4">(</span>eshell-mode shell-mode term-mode erc-mode compilation-mode
-                        woman-mode w3m-mode calendar-mode org-mode
-                        <span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+    <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> linum-disabled-mode-list
+          '<span class="rainbow-delimiters-depth-3">(</span>eshell-mode shell-mode term-mode erc-mode compilation-mode
+                        woman-mode w3m-mode calendar-mode org-mode<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span>global-auto-revert-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-1">)</span>
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> global-auto-revert-non-file-buffers t<span class="rainbow-delimiters-depth-1">)</span>
@@ -776,6 +812,16 @@ This functions should be added to the hooks of major modes for programming."</sp
 
 <span class="rainbow-delimiters-depth-1">(</span>add-hook 'prog-mode-hook 'font-lock-comment-annotations<span class="rainbow-delimiters-depth-1">)</span>
 
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">undo-tree</span>
+  <span class="builtin">:config</span>
+  <span class="comment-delimiter">;; </span><span class="comment">Persistent undo-tree history across emacs sessions
+</span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">let</span> <span class="rainbow-delimiters-depth-3">(</span><span class="rainbow-delimiters-depth-4">(</span>dir
+         <span class="rainbow-delimiters-depth-5">(</span>file-name-as-directory <span class="rainbow-delimiters-depth-6">(</span>concat user-cache-directory <span class="string">"undo-tree"</span><span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span>
+    <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">setq</span> undo-tree-history-directory-alist `<span class="rainbow-delimiters-depth-4">(</span><span class="rainbow-delimiters-depth-5">(</span><span class="string">"."</span> . ,dir<span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> undo-tree-auto-save-history t<span class="rainbow-delimiters-depth-2">)</span>
+  <span class="comment-delimiter">;; </span><span class="comment">global enable undo-tree
+</span>  <span class="rainbow-delimiters-depth-2">(</span>global-undo-tree-mode<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">keyfreq</span>
   <span class="builtin">:config</span>
   <span class="comment-delimiter">;; </span><span class="comment">setup cache file
@@ -784,6 +830,28 @@ This functions should be added to the hooks of major modes for programming."</sp
   <span class="comment-delimiter">;; </span><span class="comment">enable globally
 </span>  <span class="rainbow-delimiters-depth-2">(</span>keyfreq-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-2">)</span>
   <span class="rainbow-delimiters-depth-2">(</span>keyfreq-autosave-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">ethan-wspace</span>
+  <span class="builtin">:config</span>
+  <span class="comment-delimiter">;; </span><span class="comment">Turn off `</span><span class="comment"><span class="constant">mode-require-final-newline</span></span><span class="comment">' since ethan-wspace
+</span>  <span class="comment-delimiter">;; </span><span class="comment">supersedes `</span><span class="comment"><span class="constant">require-final-newline</span></span><span class="comment">'.
+</span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> mode-require-final-newline nil<span class="rainbow-delimiters-depth-2">)</span>
+
+  <span class="comment-delimiter">;; </span><span class="comment">Enable ethan-wspace globally
+</span>  <span class="rainbow-delimiters-depth-2">(</span>global-ethan-wspace-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-2">)</span>
+
+  <span class="comment-delimiter">;; </span><span class="comment">Prevent etha-wspace touch my TAB on makefile mode
+</span>  <span class="rainbow-delimiters-depth-2">(</span>add-hook 'makefile-mode-hook
+            '<span class="rainbow-delimiters-depth-3">(</span>lambda<span class="rainbow-delimiters-depth-4">()</span>
+               <span class="rainbow-delimiters-depth-4">(</span><span class="keyword">setq</span> ethan-wspace-errors <span class="rainbow-delimiters-depth-5">(</span>remove 'tabs ethan-wspace-errors<span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+
+  <span class="comment-delimiter">;; </span><span class="comment">Not use in diff-mode since it breaking my syntax-highlight
+</span>  <span class="rainbow-delimiters-depth-2">(</span>add-hook 'diff-mode-hook
+            '<span class="rainbow-delimiters-depth-3">(</span>lambda<span class="rainbow-delimiters-depth-4">()</span>
+               <span class="rainbow-delimiters-depth-4">(</span>ethan-wspace-mode <span class="highlight-numbers-number">-1</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+
+  <span class="comment-delimiter">;; </span><span class="comment">Ignore no trailing newline error
+</span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq-default</span> ethan-wspace-errors <span class="rainbow-delimiters-depth-3">(</span>remove 'no-nl-eof ethan-wspace-errors<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">indent-guide</span>
   <span class="builtin">:config</span>
@@ -807,6 +875,7 @@ This functions should be added to the hooks of major modes for programming."</sp
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"i"</span> . god-local-mode<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">vi-tilde-fringe</span>
+  <span class="builtin">:if</span> window-system
   <span class="builtin">:config</span>
   <span class="rainbow-delimiters-depth-2">(</span>global-vi-tilde-fringe-mode<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
@@ -1079,7 +1148,11 @@ This functions should be added to the hooks of major modes for programming."</sp
                                                 magic-mode-regexp-match-limit t<span class="rainbow-delimiters-depth-7">)</span>
                              <span class="rainbow-delimiters-depth-7">(</span>re-search-forward <span class="string">"std::"</span>
                                                 magic-mode-regexp-match-limit t<span class="rainbow-delimiters-depth-7">)</span><span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span>
-                 . c++-mode<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+                 . c++-mode<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">bind-keys</span> <span class="builtin">:map</span> c-mode-map
+             <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c '"</span> . narrow-or-widen-dwim<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">bind-keys</span> <span class="builtin">:map</span> c++-mode-map
+             <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c '"</span> . narrow-or-widen-dwim<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">dummy-h-mode</span>
   <span class="builtin">:require</span> cc-mode
@@ -1272,7 +1345,7 @@ This functions should be added to the hooks of major modes for programming."</sp
 </span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> company-idle-delay nil<span class="rainbow-delimiters-depth-2">)</span>
   <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">bind-keys</span> <span class="builtin">:map</span> company-active-map
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-g"</span> . company-abort<span class="rainbow-delimiters-depth-3">)</span>
-             <span class="rainbow-delimiters-depth-3">(</span><span class="string">"M-p"</span> . company-select-next<span class="rainbow-delimiters-depth-3">)</span>
+             <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-n"</span> . company-select-next<span class="rainbow-delimiters-depth-3">)</span>
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-p"</span> . company-select-previouse<span class="rainbow-delimiters-depth-3">)</span>
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"TAB"</span> . company-complete-selction<span class="rainbow-delimiters-depth-3">)</span>
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"&lt;tab&gt;"</span> . company-complete-selction<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span> <span class="rainbow-delimiters-depth-1">)</span>
@@ -1406,7 +1479,10 @@ This functions should be added to the hooks of major modes for programming."</sp
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">git-gutter-fringe</span>
   <span class="builtin">:if</span> window-system                     <span class="comment-delimiter">; </span><span class="comment">git-gutter-fringe only work on GUI
-</span>  <span class="builtin">:require</span> fringe-helper<span class="rainbow-delimiters-depth-1">)</span>
+</span>  <span class="builtin">:require</span> fringe-helper
+  <span class="builtin">:config</span>
+  <span class="comment-delimiter">;; </span><span class="comment">enable globally
+</span>  <span class="rainbow-delimiters-depth-2">(</span>git-gutter-mode<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">defadvice</span> <span class="function-name">term-handle-exit</span> <span class="rainbow-delimiters-depth-2">(</span>after kill-buffer-after-exit activate<span class="rainbow-delimiters-depth-2">)</span>
   <span class="doc">"Kill the term buffer if the process finished."</span>
@@ -1533,6 +1609,12 @@ This functions should be added to the hooks of major modes for programming."</sp
   <span class="comment-delimiter">;; </span><span class="comment">save projectile-known-projects-file in cache folder
 </span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> projectile-known-projects-file
         <span class="rainbow-delimiters-depth-3">(</span>concat user-cache-directory <span class="string">"projectile-bookmarks.eld"</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">defun</span> <span class="function-name">offlineimap-get-password</span> <span class="rainbow-delimiters-depth-2">(</span>host port<span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">require</span> '<span class="constant">netrc</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">let*</span> <span class="rainbow-delimiters-depth-3">(</span><span class="rainbow-delimiters-depth-4">(</span>netrc <span class="rainbow-delimiters-depth-5">(</span>netrc-parse <span class="rainbow-delimiters-depth-6">(</span>expand-file-name <span class="string">"~/.authinfo.gpg"</span><span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span>
+         <span class="rainbow-delimiters-depth-4">(</span>hostentry <span class="rainbow-delimiters-depth-5">(</span>netrc-machine netrc host port port<span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span>
+    <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">when</span> hostentry <span class="rainbow-delimiters-depth-4">(</span>netrc-get hostentry <span class="string">"password"</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 
 
