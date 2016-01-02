@@ -1244,6 +1244,37 @@ not modified.
      (if selective-display nil 1)))
 #+END_SRC
 
+*** Narrowing to code more wisely
+
+ref: http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
+
+#+BEGIN_SRC emacs-lisp
+  (defun narrow-or-widen-dwim (p)
+    "Widen if buffer is narrowed, narrow-dwim otherwise.
+  Dwim means: region, org-src-block, org-subtree, or defun,
+  whichever applies first. Narrowing to org-src-block actually
+  calls `org-edit-src-code'.
+
+  With prefix P, don't widen, just narrow even if buffer is
+  already narrowed."
+    (interactive "P")
+    (declare (interactive-only))
+    (cond ((and (buffer-narrowed-p) (not p)) (widen))
+          ((region-active-p)
+           (narrow-to-region (region-beginning) (region-end)))
+          ((derived-mode-p 'org-mode)
+           ;; `org-edit-src-code' is not a real narrowing
+           ;; command. Remove this first conditional if you
+           ;; don't want it.
+           (cond ((ignore-errors (org-edit-src-code))
+                  (delete-other-windows))
+                 ((ignore-errors (org-narrow-to-block) t))
+                 (t (org-narrow-to-subtree))))
+          ((derived-mode-p 'latex-mode)
+           (LaTeX-narrow-to-environment))
+          (t (narrow-to-defun))))
+#+END_SRC
+
 ** Edit (Insert/Remove)
 
 *** Insert U200B char
@@ -1650,7 +1681,7 @@ see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-
              ("C-c I" . org-toggle-inline-images))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
   (bind-keys :map org-src-mode-map
              ("C-c C-c" . org-edit-src-exit))
 #+END_SRC
