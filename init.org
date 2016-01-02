@@ -1650,6 +1650,11 @@ see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-
              ("C-c I" . org-toggle-inline-images))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  (bind-keys :map org-src-mode-map
+             ("C-c C-c" . org-edit-src-exit))
+#+END_SRC
+
 * Editors
 
 Why emacs config has an editor section, doesn't means emacs is not an editor ?
