@@ -3170,7 +3170,10 @@ GitHub: https://github.com/syohex/emacs-git-gutter-fringe
 #+BEGIN_SRC emacs-lisp
   (req-package git-gutter-fringe
     :if window-system                     ; git-gutter-fringe only work on GUI
-    :require fringe-helper)
+    :require fringe-helper
+    :config
+    ;; enable globally
+    (git-gutter-mode))
 #+END_SRC
 
 * Terminal Emulator                                                    :term:
