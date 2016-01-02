@@ -161,6 +161,9 @@ Also bind `class' to ((class color) (min-colors 89))."
      (custom-state ((t (:foreground ,green))))
      (custom-variable-tag ((t (:foreground ,base1))))
 
+     ;; mu4e
+     (mu4e-highlight-face ((t :inherit font-lock-builtin-face :bold t)))
+
      ;; emacs-wiki
      (emacs-wiki-bad-link-face ((t (:foreground ,red))))
      (emacs-wiki-link-face ((t (:foreground ,blue :underline t))))
