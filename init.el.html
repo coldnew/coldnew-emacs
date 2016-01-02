@@ -44,6 +44,10 @@
         /* font-lock-keyword-face */
         color: #aaffaa;
       }
+      .negation-char {
+        /* font-lock-negation-char-face */
+        color: #ff3333;
+      }
       .org-todo {
         /* org-todo */
         color: #ff3333;
@@ -265,6 +269,12 @@
   '<span class="rainbow-delimiters-depth-2">(</span><span class="keyword">progn</span>
      <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">setq</span> request-storage-directory
            <span class="rainbow-delimiters-depth-4">(</span>concat user-cache-directory <span class="string">"request"</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span>eval-after-load 'nsm
+  '<span class="rainbow-delimiters-depth-2">(</span><span class="keyword">progn</span>
+     <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">setq</span> nsm-settings-file
+           <span class="rainbow-delimiters-depth-4">(</span>file-name-as-directory
+            <span class="rainbow-delimiters-depth-5">(</span>concat user-cache-directory <span class="string">"network-security.data"</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span>eval-after-load 'url
   '<span class="rainbow-delimiters-depth-2">(</span><span class="keyword">progn</span>
@@ -723,7 +733,7 @@ With argument, do this that many times."</span>
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c f"</span> . org-metaright<span class="rainbow-delimiters-depth-3">)</span>
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c p"</span> . org-metaup<span class="rainbow-delimiters-depth-3">)</span>
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c n"</span> . org-metadown<span class="rainbow-delimiters-depth-3">)</span>
-             <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c i"</span> . org-insertlink<span class="rainbow-delimiters-depth-3">)</span>
+             <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c i"</span> . org-insert-link<span class="rainbow-delimiters-depth-3">)</span>
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c I"</span> . org-toggle-inline-images<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
   <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">bind-keys</span> <span class="builtin">:map</span> org-src-mode-map
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c C-c"</span> . org-edit-src-exit<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
@@ -1609,6 +1619,99 @@ This functions should be added to the hooks of major modes for programming."</sp
   <span class="comment-delimiter">;; </span><span class="comment">save projectile-known-projects-file in cache folder
 </span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> projectile-known-projects-file
         <span class="rainbow-delimiters-depth-3">(</span>concat user-cache-directory <span class="string">"projectile-bookmarks.eld"</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="comment-delimiter">;; </span><span class="comment">setup loadpath later
+</span><span class="rainbow-delimiters-depth-1">(</span><span class="keyword">when</span> <span class="rainbow-delimiters-depth-2">(</span>eq system-type 'darwin<span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span>add-to-list 'load-path <span class="string">"/usr/local/Cellar/mu/HEAD/share/emacs/site-lisp/mu4e"</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">mu4e</span>
+  <span class="builtin">:config</span>
+  <span class="comment-delimiter">;; </span><span class="comment">Use mu4e as default mail agent
+</span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> mail-user-agent 'mu4e-user-agent<span class="rainbow-delimiters-depth-2">)</span>
+  <span class="comment-delimiter">;; </span><span class="comment">Mail folder set to ~/Maildir
+</span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> mu4e-maildir <span class="string">"~/Maildir"</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="comment-delimiter">;; </span><span class="comment">Fetch mail by offlineimap
+</span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> mu4e-get-mail-command <span class="string">"offlineimap"</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="comment-delimiter">;; </span><span class="comment">Fetch mail in 60 sec interval
+</span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> mu4e-update-interval <span class="highlight-numbers-number">60</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="comment-delimiter">;; </span><span class="comment">Setup default mu4e search result mails list, if I want to see
+</span>  <span class="comment-delimiter">;; </span><span class="comment">more, use M-x `</span><span class="comment"><span class="constant">mu4e-headers-toggle-full-search</span></span><span class="comment">' to make mi4e show all mails
+</span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> mu4e-headers-results-limit <span class="highlight-numbers-number">1000</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">req-package</span> '<span class="constant">mu4e-contrib</span>
+    <span class="builtin">:config</span>
+    <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">setq</span> mu4e-html2text-command 'mu4e-shr2text<span class="rainbow-delimiters-depth-3">)</span>
+    <span class="comment-delimiter">;; </span><span class="comment">try to emulate some of the eww key-bindings
+</span>    <span class="rainbow-delimiters-depth-3">(</span>add-hook 'mu4e-view-mode-hook
+              <span class="rainbow-delimiters-depth-4">(</span><span class="keyword">lambda</span> <span class="rainbow-delimiters-depth-5">()</span>
+                <span class="rainbow-delimiters-depth-5">(</span>local-set-key <span class="rainbow-delimiters-depth-6">(</span>kbd <span class="string">"&lt;tab&gt;"</span><span class="rainbow-delimiters-depth-6">)</span> 'shr-next-link<span class="rainbow-delimiters-depth-5">)</span>
+                <span class="rainbow-delimiters-depth-5">(</span>local-set-key <span class="rainbow-delimiters-depth-6">(</span>kbd <span class="string">"&lt;backtab&gt;"</span><span class="rainbow-delimiters-depth-6">)</span> 'shr-previous-link<span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="comment-delimiter">;; </span><span class="comment">SMTP setup
+</span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> message-send-mail-function 'smtpmail-send-it
+        smtpmail-stream-type 'starttls
+        starttls-use-gnutls t<span class="rainbow-delimiters-depth-2">)</span>
+  <span class="comment-delimiter">;; </span><span class="comment">don't save messages to Sent Messages, Gmail/IMAP takes care of this
+</span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> mu4e-sent-messages-behavior 'delete<span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> coldnew/mu4e-account-alist
+        '<span class="rainbow-delimiters-depth-3">(</span><span class="rainbow-delimiters-depth-4">(</span><span class="string">"Gmail"</span>
+           <span class="rainbow-delimiters-depth-5">(</span>mu4e-sent-folder <span class="string">"/Gmail/Sent"</span><span class="rainbow-delimiters-depth-5">)</span>
+           <span class="rainbow-delimiters-depth-5">(</span>mu4e-drafts-folder <span class="string">"/Gmail/Drafts"</span><span class="rainbow-delimiters-depth-5">)</span>
+           <span class="rainbow-delimiters-depth-5">(</span>mu4e-trash-folder <span class="string">"/Gmail/Trash"</span><span class="rainbow-delimiters-depth-5">)</span>
+           <span class="rainbow-delimiters-depth-5">(</span>user-mail-address <span class="string">"coldnew.tw@gmail.com"</span><span class="rainbow-delimiters-depth-5">)</span>
+           <span class="rainbow-delimiters-depth-5">(</span>smtpmail-smtp-server <span class="string">"smtp.gmail.com"</span><span class="rainbow-delimiters-depth-5">)</span>
+           <span class="rainbow-delimiters-depth-5">(</span>smtpmail-smtp-service <span class="highlight-numbers-number">587</span><span class="rainbow-delimiters-depth-5">)</span>
+           <span class="rainbow-delimiters-depth-5">(</span>smtpmail-smtp-user <span class="string">"coldnew.tw@gmail.com"</span><span class="rainbow-delimiters-depth-5">)</span>
+           <span class="rainbow-delimiters-depth-5">(</span>user-full-name <span class="string">"Yen-Chin, Lee"</span><span class="rainbow-delimiters-depth-5">)</span>
+           <span class="rainbow-delimiters-depth-5">(</span>mu4e-compose-signature <span class="string">""</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">defun</span> <span class="function-name">coldnew/mu4e-set-default-account</span> <span class="rainbow-delimiters-depth-3">(</span>account<span class="rainbow-delimiters-depth-3">)</span>
+    <span class="doc">"Setup the default account based on coldnew/mu4e-account-alist."</span>
+    <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">let*</span> <span class="rainbow-delimiters-depth-4">(</span><span class="rainbow-delimiters-depth-5">(</span>account <span class="rainbow-delimiters-depth-6">(</span>cdr <span class="rainbow-delimiters-depth-7">(</span>assoc account coldnew/mu4e-account-alist<span class="rainbow-delimiters-depth-7">)</span><span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span>
+      <span class="rainbow-delimiters-depth-4">(</span><span class="keyword">when</span> account <span class="rainbow-delimiters-depth-5">(</span>mapc #'<span class="rainbow-delimiters-depth-6">(</span>lambda <span class="rainbow-delimiters-depth-7">(</span>a<span class="rainbow-delimiters-depth-7">)</span>
+                              <span class="rainbow-delimiters-depth-7">(</span>set <span class="rainbow-delimiters-depth-8">(</span>car a<span class="rainbow-delimiters-depth-8">)</span> <span class="rainbow-delimiters-depth-8">(</span><span class="keyword">if</span> <span class="rainbow-delimiters-depth-9">(</span>stringp <span class="rainbow-delimiters-depth-1">(</span>cadr a<span class="rainbow-delimiters-depth-1">)</span><span class="rainbow-delimiters-depth-9">)</span> <span class="rainbow-delimiters-depth-9">(</span>cadr a<span class="rainbow-delimiters-depth-9">)</span> <span class="rainbow-delimiters-depth-9">(</span>eval <span class="rainbow-delimiters-depth-1">(</span>cadr a<span class="rainbow-delimiters-depth-1">)</span><span class="rainbow-delimiters-depth-9">)</span><span class="rainbow-delimiters-depth-8">)</span><span class="rainbow-delimiters-depth-7">)</span><span class="rainbow-delimiters-depth-6">)</span> <span class="warning">account</span><span class="warning"><span class="rainbow-delimiters-depth-5">)</span></span><span class="warning"><span class="rainbow-delimiters-depth-4">)</span></span><span class="warning"><span class="rainbow-delimiters-depth-3">)</span></span><span class="warning"><span class="rainbow-delimiters-depth-2">)</span></span>
+  
+  <span class="comment-delimiter">;; </span><span class="comment">set Gmail to default
+</span>  <span class="rainbow-delimiters-depth-2">(</span>coldnew/mu4e-set-default-account <span class="string">"Gmail"</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">defun</span> <span class="function-name">coldnew/mu4e-set-account</span> <span class="rainbow-delimiters-depth-3">()</span>
+    <span class="doc">"Set the account for composing a message."</span>
+    <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">interactive</span><span class="rainbow-delimiters-depth-3">)</span>
+    <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">let*</span> <span class="rainbow-delimiters-depth-4">(</span><span class="rainbow-delimiters-depth-5">(</span>account
+            <span class="rainbow-delimiters-depth-6">(</span><span class="keyword">if</span> mu4e-compose-parent-message
+                <span class="rainbow-delimiters-depth-7">(</span><span class="keyword">let</span> <span class="rainbow-delimiters-depth-8">(</span><span class="rainbow-delimiters-depth-9">(</span>maildir <span class="rainbow-delimiters-depth-1">(</span>mu4e-msg-field mu4e-compose-parent-message <span class="builtin">:maildir</span><span class="rainbow-delimiters-depth-1">)</span><span class="rainbow-delimiters-depth-9">)</span><span class="rainbow-delimiters-depth-8">)</span>
+                  <span class="rainbow-delimiters-depth-8">(</span>string-match <span class="string">"/</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">(</span></span><span class="string">.*?</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">)</span></span><span class="string">/"</span> maildir<span class="rainbow-delimiters-depth-8">)</span>
+                  <span class="rainbow-delimiters-depth-8">(</span>match-string <span class="highlight-numbers-number">1</span> maildir<span class="rainbow-delimiters-depth-8">)</span><span class="rainbow-delimiters-depth-7">)</span>
+              <span class="rainbow-delimiters-depth-7">(</span>completing-read <span class="rainbow-delimiters-depth-8">(</span>format <span class="string">"Compose with account: (%s) "</span>
+                                       <span class="rainbow-delimiters-depth-9">(</span>mapconcat #'<span class="rainbow-delimiters-depth-1">(</span>lambda <span class="rainbow-delimiters-depth-2">(</span>var<span class="rainbow-delimiters-depth-2">)</span> <span class="rainbow-delimiters-depth-2">(</span>car var<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span> coldnew/mu4e-account-alist <span class="string">"/"</span><span class="rainbow-delimiters-depth-9">)</span><span class="rainbow-delimiters-depth-8">)</span>
+                               <span class="rainbow-delimiters-depth-8">(</span>mapcar #'<span class="rainbow-delimiters-depth-9">(</span>lambda <span class="rainbow-delimiters-depth-1">(</span>var<span class="rainbow-delimiters-depth-1">)</span> <span class="rainbow-delimiters-depth-1">(</span>car var<span class="rainbow-delimiters-depth-1">)</span><span class="rainbow-delimiters-depth-9">)</span> coldnew/mu4e-account-alist<span class="rainbow-delimiters-depth-8">)</span>
+                               nil t nil nil <span class="rainbow-delimiters-depth-8">(</span>caar coldnew/mu4e-account-alist<span class="rainbow-delimiters-depth-8">)</span><span class="rainbow-delimiters-depth-7">)</span><span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span>
+           <span class="rainbow-delimiters-depth-5">(</span>account-vars <span class="rainbow-delimiters-depth-6">(</span>cdr <span class="rainbow-delimiters-depth-7">(</span>assoc account coldnew/mu4e-account-alist<span class="rainbow-delimiters-depth-7">)</span><span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span>
+      <span class="rainbow-delimiters-depth-4">(</span><span class="keyword">if</span> account-vars
+          <span class="rainbow-delimiters-depth-5">(</span>mapc #'<span class="rainbow-delimiters-depth-6">(</span>lambda <span class="rainbow-delimiters-depth-7">(</span>var<span class="rainbow-delimiters-depth-7">)</span>
+                    <span class="rainbow-delimiters-depth-7">(</span>set <span class="rainbow-delimiters-depth-8">(</span>car var<span class="rainbow-delimiters-depth-8">)</span> <span class="rainbow-delimiters-depth-8">(</span>cadr var<span class="rainbow-delimiters-depth-8">)</span><span class="rainbow-delimiters-depth-7">)</span><span class="rainbow-delimiters-depth-6">)</span>
+                account-vars<span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  
+  <span class="rainbow-delimiters-depth-2">(</span>add-hook 'mu4e-compose-pre-hook 'coldnew/mu4e-set-account<span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">defun</span> <span class="function-name">mu4e~view-fontify-diff</span> <span class="rainbow-delimiters-depth-3">()</span>
+    <span class="doc">"Colorize diff message."</span>
+    <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">interactive</span><span class="rainbow-delimiters-depth-3">)</span>
+    <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">let</span> <span class="rainbow-delimiters-depth-4">(</span><span class="rainbow-delimiters-depth-5">(</span>inhibit-read-only t<span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span>
+      <span class="rainbow-delimiters-depth-4">(</span><span class="keyword">save-excursion</span>
+        <span class="rainbow-delimiters-depth-5">(</span>goto-char <span class="rainbow-delimiters-depth-6">(</span>point-min<span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span>
+        <span class="comment-delimiter">;; </span><span class="comment">consider only lines that heuristically look like a citation line...
+</span>        <span class="rainbow-delimiters-depth-5">(</span><span class="keyword">while</span> <span class="rainbow-delimiters-depth-6">(</span>re-search-forward <span class="string">"^</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">(</span></span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">(</span></span><span class="string">\\+</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">)</span></span><span class="string">[</span><span class="string"><span class="negation-char">^</span></span><span class="string">+]</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">|</span></span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">(</span></span><span class="string">-</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">)</span></span><span class="string">[</span><span class="string"><span class="negation-char">^</span></span><span class="string">-]</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">)</span></span><span class="string">"</span> nil t<span class="rainbow-delimiters-depth-6">)</span>
+          <span class="rainbow-delimiters-depth-6">(</span><span class="keyword">let</span> <span class="rainbow-delimiters-depth-7">(</span><span class="rainbow-delimiters-depth-8">(</span>cur-point <span class="rainbow-delimiters-depth-9">(</span><span class="keyword">or</span> <span class="rainbow-delimiters-depth-1">(</span>match-beginning <span class="highlight-numbers-number">2</span><span class="rainbow-delimiters-depth-1">)</span> <span class="rainbow-delimiters-depth-1">(</span>match-beginning <span class="highlight-numbers-number">3</span><span class="rainbow-delimiters-depth-1">)</span><span class="rainbow-delimiters-depth-9">)</span><span class="rainbow-delimiters-depth-8">)</span>
+                <span class="rainbow-delimiters-depth-8">(</span>color <span class="rainbow-delimiters-depth-9">(</span><span class="keyword">if</span> <span class="rainbow-delimiters-depth-1">(</span>match-beginning <span class="highlight-numbers-number">2</span><span class="rainbow-delimiters-depth-1">)</span>
+                           <span class="string">"green"</span>
+                         <span class="string">"deep pink"</span><span class="rainbow-delimiters-depth-9">)</span><span class="rainbow-delimiters-depth-8">)</span><span class="rainbow-delimiters-depth-7">)</span>
+            <span class="rainbow-delimiters-depth-7">(</span>end-of-line<span class="rainbow-delimiters-depth-7">)</span>
+            <span class="rainbow-delimiters-depth-7">(</span>add-text-properties cur-point <span class="rainbow-delimiters-depth-8">(</span>point<span class="rainbow-delimiters-depth-8">)</span>
+                                 `<span class="rainbow-delimiters-depth-8">(</span>face <span class="rainbow-delimiters-depth-9">(</span><span class="rainbow-delimiters-depth-1">(</span>foreground-color . ,color<span class="rainbow-delimiters-depth-1">)</span><span class="rainbow-delimiters-depth-9">)</span><span class="rainbow-delimiters-depth-8">)</span><span class="rainbow-delimiters-depth-7">)</span><span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span>
+        <span class="rainbow-delimiters-depth-5">(</span>goto-char <span class="rainbow-delimiters-depth-6">(</span>point-min<span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span>
+        <span class="rainbow-delimiters-depth-5">(</span><span class="keyword">while</span> <span class="rainbow-delimiters-depth-6">(</span>re-search-forward <span class="string">"^</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">(</span></span><span class="string">\\+\\+\\+</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">|</span></span><span class="string">---</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">)</span></span><span class="string">"</span> nil t<span class="rainbow-delimiters-depth-6">)</span>
+          <span class="rainbow-delimiters-depth-6">(</span><span class="keyword">let</span> <span class="rainbow-delimiters-depth-7">(</span><span class="rainbow-delimiters-depth-8">(</span>cur-point <span class="rainbow-delimiters-depth-9">(</span>match-beginning <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-9">)</span><span class="rainbow-delimiters-depth-8">)</span><span class="rainbow-delimiters-depth-7">)</span>
+            <span class="rainbow-delimiters-depth-7">(</span>end-of-line<span class="rainbow-delimiters-depth-7">)</span>
+            <span class="rainbow-delimiters-depth-7">(</span>add-text-properties cur-point <span class="rainbow-delimiters-depth-8">(</span>point<span class="rainbow-delimiters-depth-8">)</span>
+                                 '<span class="rainbow-delimiters-depth-8">(</span>face <span class="rainbow-delimiters-depth-9">(</span><span class="rainbow-delimiters-depth-1">(</span>weight . bold<span class="rainbow-delimiters-depth-1">)</span><span class="rainbow-delimiters-depth-9">)</span><span class="rainbow-delimiters-depth-8">)</span><span class="rainbow-delimiters-depth-7">)</span><span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  
+  <span class="rainbow-delimiters-depth-2">(</span>add-hook 'mu4e-view-mode-hook 'mu4e~view-fontify-diff<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">defun</span> <span class="function-name">offlineimap-get-password</span> <span class="rainbow-delimiters-depth-2">(</span>host port<span class="rainbow-delimiters-depth-2">)</span>
   <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">require</span> '<span class="constant">netrc</span><span class="rainbow-delimiters-depth-2">)</span>
