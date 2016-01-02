@@ -1677,7 +1677,7 @@ see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-
              ("C-c f" . org-metaright)
              ("C-c p" . org-metaup)
              ("C-c n" . org-metadown)
-             ("C-c i" . org-insertlink)
+             ("C-c i" . org-insert-link)
              ("C-c I" . org-toggle-inline-images))
 #+END_SRC
 
