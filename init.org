@@ -1516,7 +1516,6 @@ A really nice command help me to find error on elisp buffer.
       (if face (message "Face: %s" face) (message "No face at %d" pos))))
 #+END_SRC
 
-
 * Theme                                                               :theme:
 
 I always want to customize everything on my own, so I build another
@@ -2731,18 +2730,15 @@ GitHub: https://github.com/skeeto/cl-lib-highlight
 
 *** Display ^L glyphs as horizontal lines
 
-form-feed is a minor mode that displays pesky =^L= glyphs certain
-developers use to delimit pages in the form of lines spanning the
-entire window width. It is also possible to display a less wide line
-by customizing =form-line-width= before loading the package, see its
-docstring for possible options.
+This Emacs library provides a global mode which displays ugly form feed characters as tidy horizontal rules.
 
-GitHub: https://github.com/wasamasa/form-feed
+GitHub: https://github.com/purcell/page-break-lines
 
 #+BEGIN_SRC emacs-lisp
-  (req-package form-feed
+  (req-package page-break-line
     :config
-    (add-hook 'emacs-lisp-mode-hook 'form-feed-mode))
+    ;; enable globally
+    (global-page-break-lines-mode 1))
 #+END_SRC
 
 *** Remove *.elc when save
