@@ -24,8 +24,7 @@ install:
 script:
   - make clean
   - make bootstrap
-  - make init.html
-  - make init.el.html
+  - make doc
 
 after_success:
   - ./scripts/deploy-gh-pages.sh

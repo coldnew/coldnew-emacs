@@ -37,16 +37,9 @@ compile: init.el
 		--eval '(setq byte-compile-error-on-warn nil)' \
 		--eval '(byte-recompile-directory (expand-file-name (getenv "PWD")) 0)'
 
-init.html: init.el
-	${CASK} exec ${EMACS} -Q -l init.el -batch init.org \
-		--eval "(require 'org)" \
-		--eval "(require 'ox-html)" \
-		--eval '(org-html-export-to-html)'
-
-init.el.html: init.el
+doc: init.el
 	${CASK} exec ${EMACS} -Q -l init.el -batch \
-		--eval '(set-background-color "#202020")' \
-		--eval '(set-foreground-color "#c6cccc")' \
-		--eval '(htmlize-file "init.el")'
+		--eval '(load (concat user-emacs-directory "assets/export-script.el"))' \
+		--eval '(generate-doc-files)'
 
-.PHONY: all bootstrap init.el test unit compile
+.PHONY: all bootstrap init.el compile doc
