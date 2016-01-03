@@ -3911,3 +3911,5 @@ Following link is refrence for my emacs config.
 ~[8]~ https://github.com/howardabrams/dot-files
 
 ~[9]~ https://github.com/larstvei/dot-emacs/blob/master/init.org
+
+~[10]~ https://gitlab.com/romo/emacs.d/raw/master/emacs.org
