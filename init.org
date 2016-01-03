@@ -424,6 +424,39 @@ I move the file to cache-dir and make git ignore it.
 #+BEGIN_SRC emacs-lisp
   (setq auto-save-list-file-prefix
         (concat user-cache-directory "auto-save-list/.saves-"))
+
+  (setq auto-save-interval 100)
+  (setq auto-save-timeout  60)
+  (setq auto-save-visited-file-name nil)
+  (setq delete-auto-save-files t)
+#+END_SRC
+
+** Setup backup files
+
+By default Emacs saves =BackupFiles= under the original name with a tilde =~= appended. Example: Editing README will result in README and README~ in the same directory.
+
+This is primitive and boring.
+
+I save my backup files to =~/.emacs.d/.cache/backup= and since is always ignore by version control system, it's a nice place to store backup files.
+
+#+BEGIN_SRC emacs-lisp
+  (let ((back-dir (concat user-cache-directory "backup")))
+    ;; Move backup file to `~/.emacs.d/.cache/backup'
+    (setq backup-directory-alist `(("." . ,back-dir)))
+    ;; Makesure backup directory exist
+    (when (not (file-exists-p backup-dir))
+      (make-directory backup-dir t)))
+#+END_SRC
+
+Also setup some backup settings.
+
+#+BEGIN_SRC emacs-lisp
+  (setq delete-by-moving-to-trash nil)
+  (setq version-control t)
+  (setq kept-old-versions 10)
+  (setq kept-new-versions 20)
+  (setq delete-old-versions t)
+  (setq backup-by-copying t)
 #+END_SRC
 
 ** Disable some default stuff
@@ -1847,6 +1880,15 @@ GitHub: https://github.com/purcell/whitespace-cleanup-mode
   (req-package whitespace-cleanup-mode
     :config
     (add-hook 'prog-mode-hook 'whitespace-cleanup-mode))
+#+END_SRC
+
+** Wrape Lines at word boundary
+
+Call =visual-line-mode= to have soft-wrap.
+
+#+BEGIN_SRC emacs-lisp
+  (global-visual-line-mode 1)
+   (setq line-move-visual nil)
 #+END_SRC
 
 ** Highlight numbers
