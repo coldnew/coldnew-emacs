@@ -1580,6 +1580,20 @@ unload previous theme before loading a new one.
     (local/minibuffer-insert "/ssh:"))
 #+END_SRC
 
+** Save history of minibuffer :tangle no :noweb-ref minibuffer-config
+
+When Savehist mode is enabled, minibuffer history is saved
+periodically and when exiting Emacs.  When Savehist mode is enabled
+for the first time in an Emacs session, it loads the previous
+minibuffer history from ‘savehist-file’.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package savehist
+    :config
+    (setq savehist-file (concat user-cache-directory "savehist.dat"))
+    (savehist-mode 1))
+#+END_SRC
+
 ** Setup Keybindings                                            :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
