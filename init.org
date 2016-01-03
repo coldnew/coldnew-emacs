@@ -2632,8 +2632,7 @@ language I ever met.
 Show lambda as λ.
 
 #+BEGIN_SRC emacs-lisp
-  (when (and (>= emacs-major-version 24) (>= emacs-minor-version 4))
-    (global-prettify-symbols-mode 1))
+    (global-prettify-symbols-mode 1)
 #+END_SRC
 
 ** Emacs Lisp
