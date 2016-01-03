@@ -237,6 +237,25 @@
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> auto-save-list-file-prefix
       <span class="rainbow-delimiters-depth-2">(</span>concat user-cache-directory <span class="string">"auto-save-list/.saves-"</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> auto-save-interval <span class="highlight-numbers-number">100</span><span class="rainbow-delimiters-depth-1">)</span>
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> auto-save-timeout  <span class="highlight-numbers-number">60</span><span class="rainbow-delimiters-depth-1">)</span>
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> auto-save-visited-file-name nil<span class="rainbow-delimiters-depth-1">)</span>
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> delete-auto-save-files t<span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">let</span> <span class="rainbow-delimiters-depth-2">(</span><span class="rainbow-delimiters-depth-3">(</span>backup-dir <span class="rainbow-delimiters-depth-4">(</span>concat user-cache-directory <span class="string">"backup"</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="comment-delimiter">;; </span><span class="comment">Move backup file to `</span><span class="comment"><span class="constant">~/.emacs.d/.cache/backup</span></span><span class="comment">'
+</span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> backup-directory-alist `<span class="rainbow-delimiters-depth-3">(</span><span class="rainbow-delimiters-depth-4">(</span><span class="string">"."</span> . ,backup-dir<span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="comment-delimiter">;; </span><span class="comment">Makesure backup directory exist
+</span>  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">when</span> <span class="rainbow-delimiters-depth-3">(</span>not <span class="rainbow-delimiters-depth-4">(</span>file-exists-p backup-dir<span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span>
+    <span class="rainbow-delimiters-depth-3">(</span>make-directory backup-dir t<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> delete-by-moving-to-trash nil<span class="rainbow-delimiters-depth-1">)</span>
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> version-control t<span class="rainbow-delimiters-depth-1">)</span>
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> kept-old-versions <span class="highlight-numbers-number">10</span><span class="rainbow-delimiters-depth-1">)</span>
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> kept-new-versions <span class="highlight-numbers-number">20</span><span class="rainbow-delimiters-depth-1">)</span>
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> delete-old-versions t<span class="rainbow-delimiters-depth-1">)</span>
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> backup-by-copying t<span class="rainbow-delimiters-depth-1">)</span>
+
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">when</span> <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">featurep</span> '<span class="constant">menu-bar</span><span class="rainbow-delimiters-depth-2">)</span> <span class="rainbow-delimiters-depth-2">(</span>menu-bar-mode <span class="highlight-numbers-number">-1</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">when</span> <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">featurep</span> '<span class="constant">tool-bar</span><span class="rainbow-delimiters-depth-2">)</span> <span class="rainbow-delimiters-depth-2">(</span>tool-bar-mode <span class="highlight-numbers-number">-1</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
@@ -603,6 +622,13 @@ With argument, do this that many times."</span>
   <span class="rainbow-delimiters-depth-2">(</span>goto-char <span class="rainbow-delimiters-depth-3">(</span>point-min<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
   <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">while</span> t <span class="rainbow-delimiters-depth-3">(</span>eval <span class="rainbow-delimiters-depth-4">(</span>read <span class="rainbow-delimiters-depth-5">(</span>current-buffer<span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">defun</span> <span class="function-name">what-face</span> <span class="rainbow-delimiters-depth-2">(</span>pos<span class="rainbow-delimiters-depth-2">)</span>
+  <span class="doc">"Display face found at the current point."</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">interactive</span> <span class="string">"d"</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">let</span> <span class="rainbow-delimiters-depth-3">(</span><span class="rainbow-delimiters-depth-4">(</span>face <span class="rainbow-delimiters-depth-5">(</span><span class="keyword">or</span> <span class="rainbow-delimiters-depth-6">(</span>get-char-property <span class="rainbow-delimiters-depth-7">(</span>point<span class="rainbow-delimiters-depth-7">)</span> 'read-face-name<span class="rainbow-delimiters-depth-6">)</span>
+                  <span class="rainbow-delimiters-depth-6">(</span>get-char-property <span class="rainbow-delimiters-depth-7">(</span>point<span class="rainbow-delimiters-depth-7">)</span> 'face<span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span>
+    <span class="rainbow-delimiters-depth-3">(</span><span class="keyword">if</span> face <span class="rainbow-delimiters-depth-4">(</span>message <span class="string">"Face: %s"</span> face<span class="rainbow-delimiters-depth-4">)</span> <span class="rainbow-delimiters-depth-4">(</span>message <span class="string">"No face at %d"</span> pos<span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
 <span class="comment-delimiter">;; </span><span class="comment">Make `</span><span class="comment"><span class="constant">load-theme</span></span><span class="comment">' fully unload previous theme before loading a new one.
 </span><span class="rainbow-delimiters-depth-1">(</span><span class="keyword">defadvice</span> <span class="function-name">load-theme</span>
     <span class="rainbow-delimiters-depth-2">(</span>before theme-dont-propagate activate<span class="rainbow-delimiters-depth-2">)</span>
@@ -660,6 +686,11 @@ With argument, do this that many times."</span>
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"M-h"</span> . local/minibuffer-switch-to-home<span class="rainbow-delimiters-depth-3">)</span>
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"M-/"</span> . local/minibuffer-switch-to-rootdir<span class="rainbow-delimiters-depth-3">)</span>
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"M-s"</span> . local/minibuffer-switch-to-rootdir<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">savehist</span>
+  <span class="builtin">:config</span>
+  <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">setq</span> savehist-file <span class="rainbow-delimiters-depth-3">(</span>concat user-cache-directory <span class="string">"savehist.dat"</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
+  <span class="rainbow-delimiters-depth-2">(</span>savehist-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">org</span>
   <span class="builtin">:mode</span> <span class="rainbow-delimiters-depth-2">(</span><span class="rainbow-delimiters-depth-3">(</span><span class="string">"\\.org\\'"</span> . org-mode<span class="rainbow-delimiters-depth-3">)</span>
@@ -794,6 +825,9 @@ With argument, do this that many times."</span>
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">whitespace-cleanup-mode</span>
   <span class="builtin">:config</span>
   <span class="rainbow-delimiters-depth-2">(</span>add-hook 'prog-mode-hook 'whitespace-cleanup-mode<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+
+<span class="rainbow-delimiters-depth-1">(</span>global-visual-line-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-1">)</span>
+ <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">setq</span> line-move-visual nil<span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">highlight-numbers</span>
   <span class="builtin">:config</span>
@@ -1219,8 +1253,7 @@ This functions should be added to the hooks of major modes for programming."</sp
   <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">bind-keys</span> <span class="builtin">:map</span> c-mode-base-map
              <span class="rainbow-delimiters-depth-3">(</span><span class="string">"C-c C-o"</span> . cff-find-other-file<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
-<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">when</span> <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">and</span> <span class="rainbow-delimiters-depth-3">(</span>&gt;= emacs-major-version <span class="highlight-numbers-number">24</span><span class="rainbow-delimiters-depth-3">)</span> <span class="rainbow-delimiters-depth-3">(</span>&gt;= emacs-minor-version <span class="highlight-numbers-number">4</span><span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span>
-  <span class="rainbow-delimiters-depth-2">(</span>global-prettify-symbols-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+<span class="rainbow-delimiters-depth-1">(</span>global-prettify-symbols-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">eldoc</span>
   <span class="builtin">:config</span>
@@ -1247,9 +1280,10 @@ This functions should be added to the hooks of major modes for programming."</sp
   <span class="builtin">:config</span>
   <span class="rainbow-delimiters-depth-2">(</span>cl-lib-highlight-initialize<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
-<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">form-feed</span>
+<span class="rainbow-delimiters-depth-1">(</span><span class="keyword">req-package</span> <span class="constant">page-break-line</span>
   <span class="builtin">:config</span>
-  <span class="rainbow-delimiters-depth-2">(</span>add-hook 'emacs-lisp-mode-hook 'form-feed-mode<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
+  <span class="comment-delimiter">;; </span><span class="comment">enable globally
+</span>  <span class="rainbow-delimiters-depth-2">(</span>global-page-break-lines-mode <span class="highlight-numbers-number">1</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span>
 
 <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">defun</span> <span class="function-name">remove-elc-on-save</span> <span class="rainbow-delimiters-depth-2">()</span>
   <span class="doc">"If you're saving an elisp file, likely the .elc is no longer valid."</span>
