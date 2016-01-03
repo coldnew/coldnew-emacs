@@ -1505,6 +1505,18 @@ A really nice command help me to find error on elisp buffer.
     (while t (eval (read (current-buffer)))))
 #+END_SRC
 
+*** Display face found at the current point
+
+#+BEGIN_SRC emacs-lisp
+  (defun what-face (pos)
+    "Display face found at the current point."
+    (interactive "d")
+    (let ((face (or (get-char-property (point) 'read-face-name)
+                    (get-char-property (point) 'face))))
+      (if face (message "Face: %s" face) (message "No face at %d" pos))))
+#+END_SRC
+
+
 * Theme                                                               :theme:
 
 I always want to customize everything on my own, so I build another
