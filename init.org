@@ -440,9 +440,9 @@ This is primitive and boring.
 I save my backup files to =~/.emacs.d/.cache/backup= and since is always ignore by version control system, it's a nice place to store backup files.
 
 #+BEGIN_SRC emacs-lisp
-  (let ((back-dir (concat user-cache-directory "backup")))
+  (let ((backup-dir (concat user-cache-directory "backup")))
     ;; Move backup file to `~/.emacs.d/.cache/backup'
-    (setq backup-directory-alist `(("." . ,back-dir)))
+    (setq backup-directory-alist `(("." . ,backup-dir)))
     ;; Makesure backup directory exist
     (when (not (file-exists-p backup-dir))
       (make-directory backup-dir t)))
