@@ -1567,28 +1567,28 @@ unload previous theme before loading a new one.
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
   ;; define some helper function to insert to minibuffer quickly
-  (defun local/minibuffer-insert (p)
+  (defun my/minibuffer-insert (p)
     (kill-line 0) (insert p))
 
-  (defun local/minibuffer-switch-to-ramdisk ()
+  (defun my/minibuffer-switch-to-ramdisk ()
     "Insert ramdisk path according to system type"
     (interactive)
-    (local/minibuffer-insert user-ramdisk-directory))
+    (my/minibuffer-insert user-ramdisk-directory))
 
-  (defun local/minibuffer-switch-to-home ()
+  (defun my/minibuffer-switch-to-home ()
     "Insert $HOME path."
     (interactive)
-    (local/minibuffer-insert (file-name-as-directory (getenv "HOME"))))
+    (my/minibuffer-insert (file-name-as-directory (getenv "HOME"))))
 
-  (defun local/minibuffer-switch-to-rootdir ()
+  (defun my/minibuffer-switch-to-rootdir ()
     "Insert / path."
     (interactive)
-    (local/minibuffer-insert "/"))
+    (my/minibuffer-insert "/"))
 
-  (defun local/minibuffer-switch-to-tramp ()
+  (defun my/minibuffer-switch-to-tramp ()
     "Insert /ssh:."
     (interactive)
-    (local/minibuffer-insert "/ssh:"))
+    (my/minibuffer-insert "/ssh:"))
 #+END_SRC
 
 ** Save history of minibuffer :tangle no :noweb-ref minibuffer-config
@@ -1613,10 +1613,10 @@ minibuffer history from ‘savehist-file’.
              ("M-p" . previous-history-element)
              ("M-n" . next-history-element)
              ("C-g" . minibuffer-keyboard-quit)
-             ("M-t" . local/minibuffer-switch-to-ramdisk)
-             ("M-h" . local/minibuffer-switch-to-home)
-             ("M-/" . local/minibuffer-switch-to-rootdir)
-             ("M-s" . local/minibuffer-switch-to-rootdir))
+             ("M-t" . my/minibuffer-switch-to-ramdisk)
+             ("M-h" . my/minibuffer-switch-to-home)
+             ("M-/" . my/minibuffer-switch-to-rootdir)
+             ("M-s" . my/minibuffer-switch-to-tramp))
 #+END_SRC
 
 * Org
@@ -3245,7 +3245,11 @@ GitHub: https://github.com/areina/helm-dash
   (bind-keys :map helm-map
              ("TAB"   . helm-execute-persistent-action)
              ("<tab>" . helm-execute-persistent-action)
-             ("C-w"   . backward-kill-word))
+             ("C-w"   . backward-kill-word)
+             ("M-t" . my/minibuffer-switch-to-ramdisk)
+             ("M-h" . my/minibuffer-switch-to-home)
+             ("M-/" . my/minibuffer-switch-to-rootdir)
+             ("M-s" . my/minibuffer-switch-to-tramp))
 #+END_SRC
 
 * Version Control
@@ -3778,6 +3782,14 @@ I always use mu4e to read maliing-list, it's really nice to fontify diff content
                                  '(face ((weight . bold)))))))))
 
   (add-hook 'mu4e-view-mode-hook 'mu4e~view-fontify-diff)
+#+END_SRC
+
+*** Setup Keybinfings                                          :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref mu4e-config
+  (bind-keys :map mu4e-view-mode-map
+             ("C-f" . evil-scroll-page-down)
+             ("C-b" . evil-scroll-page-up))
 #+END_SRC
 
 * Keybindings                                                    :keybinding:
