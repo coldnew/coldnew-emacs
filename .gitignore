@@ -38,3 +38,4 @@ log/
 /projectile-bookmarks.eld
 /.gh-pages/
 /network-security.data
+/.build/
