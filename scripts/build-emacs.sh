@@ -50,6 +50,11 @@ do_install () {
     make install
 }
 
+do_clean () {
+    make distclean
+    make mantainer-clean
+}
+
 ################################################################################
 
 # building emacs
