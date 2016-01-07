@@ -34,7 +34,12 @@ do_configure_osx () {
 }
 
 do_configure_linux () {
-    :
+    ./configure --prefix=${INSDIR} --with-modules \
+		--without-ns --disable-ns-self-contained \
+		--with-gnutls \
+		--with-rsvg \
+		--with-imagemagick \
+		--with-dbus --with-x
 }
 
 do_make () {
