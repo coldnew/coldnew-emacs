@@ -2646,7 +2646,7 @@ GitHub: https://github.com/fourier/cff
 
 I always use =linux coding style= for c language by default.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
   (add-hook 'c-mode-hook
             '(lambda ()
                (c-set-style "linux")
@@ -2664,7 +2664,7 @@ kernel directories.
 
 This coding style is document in https://www.kernel.org/doc/Documentation/CodingStyle.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
   (defun c-lineup-arglist-tabs-only (ignored)
     "Line up argument lists by tabs, not spaces"
     (let* ((anchor (c-langelem-pos c-syntactic-element))
@@ -2703,7 +2703,7 @@ This coding style is document in https://www.kernel.org/doc/Documentation/Coding
 
 Use my C++ coding style.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
   (add-hook 'c++-mode-hook
             '(lambda ()
 
