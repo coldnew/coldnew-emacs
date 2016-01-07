@@ -2577,9 +2577,8 @@ By default it highlights:
 ** Comment #if 0 #endif region
 
 #+BEGIN_SRC emacs-lisp
-  (defun cc-mode:highlight-if-0 ()
+  (defun my/cc-mode/highlight-if-0 ()
     "highlight c/c++ #if 0 #endif macros"
-    (interactive)
     (setq cpp-known-face 'default)
     (setq cpp-unknown-face 'default)
     (setq cpp-known-writable 't)
@@ -2589,7 +2588,15 @@ By default it highlights:
     (cpp-highlight-buffer t))
 
   ;; Add to c/c++ mode
-  (add-hook 'c-mode-common-hook 'cc-mode:highlight-if-0)
+  (add-hook 'c-mode-common-hook 'my/cc-mode/highlight-if-0)
+
+  ;; Refresh buffer when save
+  (defun my/cc-mode/after-save-hook ()
+    (when (or (eq major-mode 'c-mode)
+              (eq major-mode 'c++-mode))
+      (my/cc-mode/highlight-if-0)))
+
+  (add-hook 'after-save-hook #'my/cc-mode/after-save-hook)
 #+END_SRC
 
 ** Extra highlight keywords for C/C++
@@ -2619,7 +2626,7 @@ GitHub: https://github.com/redguardtoo/cpputils-cmake
                   (cppcm-reload-all)))))
 #+END_SRC
 
-** Quick switch between header and source file in C/C++         :keybinding:
+** Quick switch between header and source file in C/C++
 
 This extension allows to quickly switch between header and a source file with
 the same name located in the directory tree or repository. It is an alternatife
@@ -2627,25 +2634,24 @@ to =ff-find-other-file=.
 
 GitHub: https://github.com/fourier/cff
 
-#+BEGIN_SRC emacs-lisp
-  (req-package cff
-    :config
-    (bind-keys :map c-mode-base-map
-               ("C-c C-o" . cff-find-other-file)))
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
+  (req-package cff)
 #+END_SRC
 
 ** Setup C keybinding                                            :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
   (bind-keys :map c-mode-map
-             ("C-c '" . narrow-or-widen-dwim))
+             ("C-c '" . narrow-or-widen-dwim)
+             ("C-c C-o" . cff-find-other-file))
 #+END_SRC
 
 ** Setup C++ keybinding                                          :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
   (bind-keys :map c++-mode-map
-             ("C-c '" . narrow-or-widen-dwim))
+             ("C-c '" . narrow-or-widen-dwim)
+             ("C-c C-o" . cff-find-other-file))
 #+END_SRC
 
 * LISP Development                                                     :lisp:
