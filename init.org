@@ -2860,7 +2860,7 @@ This Emacs library provides a global mode which displays ugly form feed characte
 GitHub: https://github.com/purcell/page-break-lines
 
 #+BEGIN_SRC emacs-lisp
-  (req-package page-break-line
+  (req-package page-break-lines
     :config
     ;; enable globally
     (global-page-break-lines-mode 1))
