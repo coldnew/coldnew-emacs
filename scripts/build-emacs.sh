@@ -52,8 +52,8 @@ do_install_osx() {
     rm $INSDIR/bin/emacs -f
     cp -rf $SRCDIR/nextstep/Emacs.app $INSDIR
     cat <<-EOF > $INSDIR/bin/emacs
-    #!/usr/bin/env bash
-    exec $INSDIR/Emacs.app/Contents/MacOS/Emacs "$@"
+#!/usr/bin/env bash
+exec $INSDIR/Emacs.app/Contents/MacOS/Emacs "\$@"
 EOF
     chmod +x $INSDIR/bin/emacs
 }
