@@ -43,11 +43,29 @@ do_configure_linux () {
 }
 
 do_make () {
+    make bootstrap
     make -j9
+}
+
+do_install_osx() {
+    # Replace the symlink with one that avoids starting Cocoa.
+    rm $INSDIR/bin/emacs -f
+    cp -rf $SRCDIR/nextstep/Emacs.app $INSDIR
+    cat <<-EOF > $INSDIR/bin/emacs
+    #!/usr/bin/env bash
+    exec $INSDIR/Emacs.app/Contents/MacOS/Emacs "$@"
+EOF
+    chmod +x $INSDIR/bin/emacs
 }
 
 do_install () {
     make install
+    # special hack for different os
+    case $(uname) in
+	"Darwin") do_install_osx ;;
+	*) ;;
+    esac
+
 }
 
 do_clean () {
