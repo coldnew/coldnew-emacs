@@ -680,7 +680,7 @@ GitHub: https://github.com/Malabarba/aggressive-indent-mode
 #+BEGIN_SRC emacs-lisp
   (req-package aggressive-indent
     :config
-    (global-aggressive-indent-mode 1)
+    ;; (global-aggressive-indent-mode 1)
     (add-to-list 'aggressive-indent-excluded-modes 'html-mode))
 #+END_SRC
 
