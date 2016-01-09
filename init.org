@@ -564,6 +564,15 @@ Some buildin packages need to some setup.
              (concat user-cache-directory "bookmarks"))))
 #+END_SRC
 
+** idlwave
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'dilwave
+    '(progn
+       (setq idlwave-config-directory
+             (concat user-cache-directory "idlwave"))))
+#+END_SRC
+
 ** request
 
 #+BEGIN_SRC emacs-lisp
