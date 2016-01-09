@@ -3025,6 +3025,13 @@ GitHub: https://github.com/joshuamiller/clojars.el
   (req-package clojars)
 #+END_SRC
 
+** newlisp
+
+#+BEGIN_SRC emacs-lisp
+  (req-package newlisp-mode
+    :mode "\\.lisp\\'")
+#+END_SRC
+
 * Web Development                                                       :web:
 
 #+BEGIN_SRC emacs-lisp
