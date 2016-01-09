@@ -3203,6 +3203,7 @@ GitHub: https://github.com/company-mode/company-statistics
   (bind-keys :map company-active-map
              ("C-g" . company-abort)
              ("C-n" . company-select-next)
+             ("C-s" . company-filter-candidates)
              ("C-p" . company-select-previouse)
              ("TAB" . company-complete-selction)
              ("<tab>" . company-complete-selction))
