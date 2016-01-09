@@ -768,7 +768,7 @@ It's similar to =async-shell-command=, but:
 - =bpr= can format process output (understands ansi escape codes).
 - it's possible to set different options for different processes.
 
-=bpr= is very handy for running tests/builds, but you can run any processes with it. 
+=bpr= is very handy for running tests/builds, but you can run any processes with it.
 
 GitHub: https://github.com/ilya-babanov/emacs-bpr
 
@@ -2866,7 +2866,7 @@ language I ever met.
 Show lambda as λ.
 
 #+BEGIN_SRC emacs-lisp
-    (global-prettify-symbols-mode 1)
+  (global-prettify-symbols-mode 1)
 #+END_SRC
 
 ** Emacs Lisp
@@ -2877,7 +2877,7 @@ Show lambda as λ.
     <<emacs-lisp-mode-config>>)
 #+END_SRC
 
-*** Add eldoc support                              
+*** Add eldoc support
 
 #+BEGIN_SRC emacs-lisp
   (req-package eldoc
@@ -2893,7 +2893,7 @@ Show lambda as λ.
                                          'paredit-close-round))))))
 #+END_SRC
 
-*** Additional flavour to emacs-lisp programming   
+*** Additional flavour to emacs-lisp programming
 
 el-spice is a minor mode that provides additional configuration to make
 programming in Emacs Lisp more enjoyable.
@@ -2904,7 +2904,7 @@ GitHub: https://github.com/vedang/el-spice
   (req-package el-spice)
 #+END_SRC
 
-*** On-the-fly evaluation/substitution of emacs lisp code 
+*** On-the-fly evaluation/substitution of emacs lisp code
 
 [[https://github.com/Fuco1/litable][litable]] keeps a list of pure functions as a safeguard for unwanted evaluations.
 A function must first be accepted into this list (using =M-x litable-accept-as-pure=)
