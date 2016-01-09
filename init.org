@@ -240,7 +240,7 @@ looks like this:
   (depends-on "pallet")
   (depends-on "async")
   (depends-on "req-package")
-  (depends-on "font-utils")
+  (depends-on "paradox")
 #+END_SRC
 
 Then run the following command in your =.emacs.d= directory to set up
@@ -319,6 +319,16 @@ of emacs config.
 #+END_SRC
 
 You can take a look at [[*End%20of%20configuration][End of configuration]] section.
+
+** paradox
+
+Project for modernizing Emacs' Package Menu. With improved appearance, mode-line information. Github integration, customizability, asynchronous upgrading, and more.
+
+GitHub: https://github.com/Malabarba/paradox
+
+#+BEGIN_SRC emacs-lisp
+  (require 'paradox)                  ; Installed by Cask
+#+END_SRC
 
 * Load Path
 
