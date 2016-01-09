@@ -287,6 +287,8 @@ GitHub: https://github.com/jwiegley/use-package
 
 #+BEGIN_SRC emacs-lisp
   (require 'use-package)                  ; Installed by Cask
+  ;; Auto install non-installed packages.
+  ;; (setq use-package-always-ensure t)
 #+END_SRC
 ** req-package
 
