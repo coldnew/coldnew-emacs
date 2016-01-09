@@ -2246,6 +2246,15 @@ GitHub: https://github.com/bbatsov/projectile
           (concat user-cache-directory "projectile-bookmarks.eld")))
 #+END_SRC
 
+** semantic
+
+#+BEGIN_SRC emacs-lisp
+  (req-package semantic
+    :config
+    (setq semanticdb-default-save-directory
+          (concat user-cache-directory "semanticdb/")))
+#+END_SRC
+
 * Programming Languages
 
 ** arduino
