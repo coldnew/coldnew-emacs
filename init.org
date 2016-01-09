@@ -2222,6 +2222,30 @@ GitHub: https://github.com/timcharper/evil-surround
     (global-evil-surround-mode 1))
 #+END_SRC
 
+* IDE Features
+
+emacs has some IDE feature, add here.
+
+** projectile
+
+=Projectile= is a project interaction library for Emacs. Its goal is to
+provide a nice set of features operating on a project level without
+introducing external dependencies(when feasible). For instance -
+finding project files has a portable implementation written in pure
+Emacs Lisp without the use of GNU find (but for performance sake an
+indexing mechanism backed by external commands exists as well).
+
+GitHub: https://github.com/bbatsov/projectile
+
+#+BEGIN_SRC emacs-lisp
+  (req-package projectile
+    :config
+    (projectile-global-mode)
+    ;; save projectile-known-projects-file in cache folder
+    (setq projectile-known-projects-file
+          (concat user-cache-directory "projectile-bookmarks.eld")))
+#+END_SRC
+
 * Programming Languages
 
 ** arduino
@@ -3748,28 +3772,6 @@ GitHub: https://github.com/nschum/window-numbering.el
 
 #+BEGIN_SRC emacs-lisp
   (req-package window-numbering)
-#+END_SRC
-
-* Project Management
-
-** projectile
-
-=Projectile= is a project interaction library for Emacs. Its goal is to
-provide a nice set of features operating on a project level without
-introducing external dependencies(when feasible). For instance -
-finding project files has a portable implementation written in pure
-Emacs Lisp without the use of GNU find (but for performance sake an
-indexing mechanism backed by external commands exists as well).
-
-GitHub: https://github.com/bbatsov/projectile
-
-#+BEGIN_SRC emacs-lisp
-  (req-package projectile
-    :config
-    (projectile-global-mode)
-    ;; save projectile-known-projects-file in cache folder
-    (setq projectile-known-projects-file
-          (concat user-cache-directory "projectile-bookmarks.eld")))
 #+END_SRC
 
 * Email
