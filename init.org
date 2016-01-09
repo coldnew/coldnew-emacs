@@ -196,6 +196,18 @@ Before we start this section, we need to initialize =package.el= first.
   (package-initialize)
 #+END_SRC
 
+Add [[http://melpa.org][melpa]] to package list.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+#+END_SRC
+
+Also add [[http://orgmode.org][org]] to it.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+#+END_SRC
+
 ** Cask and Pallet
 
 [[https://github.com/rdallasgray/pallet][Pallet]] is a wonderful little tool built on [[https://github.com/cask/cask][Cask]], a dependency management tool
