@@ -158,9 +158,8 @@ Setup the cache directory to store some cache content.
           ;; if ~/ramdisk/ exist, use it
           (if (file-exists-p user-ramdisk)
               user-ramdisk
-            ;; since I only use UNIX-like OS, fallback to /tmp if can't find
-            ;; suitable path
-            tmp)))
+            ;; fallcack to system default ramdisk dir
+            temporary-file-directory)))
     "My ramdisk path in system.")
 #+END_SRC
 * Package Management                                               :packages:
