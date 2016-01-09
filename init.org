@@ -2721,6 +2721,15 @@ GitHub: https://github.com/fourier/cff
   (req-package cff)
 #+END_SRC
 
+** Use subword-mode for C/C++ project
+
+In most C/C++ project, we naming variable in camelCase, subword-mode can help us treat =helloWorld= as two words.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
+  ;; subword-mode, e.g., someThing is treated as two words
+  (add-hook 'c-mode-common-hook '(lambda () (subword-mode 1)))
+#+END_SRC
+
 ** Coding Styles (C)
 
 *** General C Coding Style
