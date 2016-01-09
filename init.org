@@ -1195,10 +1195,9 @@ GitHub: https://github.com/vibhavp/emacs-xkcd
 #+BEGIN_SRC emacs-lisp
   (req-package xkcd
     :init
-    (setq xkcd-cache-dir
-          (let ((dir (concat user-cache-directory "xkcd/")))
-            (make-directory dir :parents)
-            dir)))
+    (setq xkcd-cache-dir (concat user-cache-directory "xkcd/"))
+    (when (not (file-directory-p xkcd-cache-dir))
+      (make-directory xkcd-cache-dir :parents)))
 #+END_SRC
 
 ** zzz-to-char                                                  :keybinding:
