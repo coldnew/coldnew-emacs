@@ -2805,7 +2805,7 @@ Show lambda as λ.
 ** Emacs Lisp
 
 #+BEGIN_SRC emacs-lisp :noweb no-export
-  (req-package cc-mode
+  (req-package emacs-lisp-mode
     :config
     <<emacs-lisp-mode-config>>)
 #+END_SRC
