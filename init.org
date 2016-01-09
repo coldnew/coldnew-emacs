@@ -3027,6 +3027,27 @@ GitHub: https://github.com/joshuamiller/clojars.el
   (req-package clojars)
 #+END_SRC
 
+** Scheme
+
+#+BEGIN_SRC emacs-lisp :noweb no-export
+  (req-package scheme
+    :mode "\\.scm\\'"
+    :config
+    <<scheme-mode-config>>)
+#+END_SRC
+
+*** Use geiser to interaction wich scheme
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref scheme-mode-config
+  (req-package geiser
+    :require scheme
+    :init
+    ;; On opening a scheme file, Geiser will try to guess its Scheme,
+    ;; defaulting to the first in the list. Use `C-c C-s' to select the
+    ;; implementation by hand (on a per file basis).
+    (setq geiser-active-implementations '(guile chicken)))
+#+END_SRC
+
 ** newlisp
 
 #+BEGIN_SRC emacs-lisp
