@@ -436,8 +436,8 @@ I move the file to cache-dir and make git ignore it.
       (when (equal (buffer-file-name)
                    (expand-file-name (concat user-emacs-directory "init.org")))
         ;; If previous building buffer exist, discard it
-        (when (get-buffer (concat "*" buffer-name "*"))
-          (kill-buffer (concat "*" buffer-name "*")))
+        ;; (when (get-buffer (concat "*" buffer-name "*"))
+        ;;   (kill-buffer (concat "*" buffer-name "*")))
         ;; build with `make init.el' command
         (async-start-process buffer-name "make"
                              '(lambda (result)
