@@ -3207,6 +3207,10 @@ GitHub: https://github.com/company-mode/company-statistics
              ("C-p" . company-select-previouse)
              ("TAB" . company-complete-selction)
              ("<tab>" . company-complete-selction))
+
+  (bind-keys :map company-search-map
+             ("C-n" . company-select-next)
+             ("C-p" . company-select-previous))
 #+END_SRC
 
 * Snippets
@@ -3988,10 +3992,30 @@ I always use mu4e to read maliing-list, it's really nice to fontify diff content
 
 * Keybindings                                                    :keybinding:
 
+** Packages for setup keybindings
+
+*** Smartrep
+
+=smartrep= is a sequential command interface library. It enables the omittance of typing prefix keys. (e.g., C-c C-n C-n C-n … instead of C-c C-n C-c C-n C-c C-n …)
+
+GitHub: https://github.com/myuhe/smartrep.el
+
+#+BEGIN_SRC emacs-lisp :noweb no-export
+  (req-package smartrep
+    :config
+    <<smartrep-config>>)
+#+END_SRC
+
 ** Global Keybinding
 
 #+BEGIN_SRC emacs-lisp
 
+#+END_SRC
+
+** Smartrep
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref smartrep-config
+;; TODO:
 #+END_SRC
 
 ** Normal State
