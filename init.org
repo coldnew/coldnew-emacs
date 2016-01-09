@@ -4100,22 +4100,24 @@ which contains something like password or account settings.
 
 Following link is refrence for my emacs config.
 
-~[1]~ https://github.com/r0man/.emacs.d/blob/master/init.el.org
+~[01]~ https://github.com/r0man/.emacs.d/blob/master/init.el.org
 
-~[2]~ https://github.com/bodil/emacs.d
+~[02]~ https://github.com/bodil/emacs.d
 
-~[3]~ https://github.com/mgalgs/.emacs.d
+~[03]~ https://github.com/mgalgs/.emacs.d
 
-~[4]~ https://raw.githubusercontent.com/sbisaacson/literate-emacs/master/README.org
+~[04]~ https://raw.githubusercontent.com/sbisaacson/literate-emacs/master/README.org
 
-~[5]~ https://github.com/jhenahan/emacs.d/blob/master/emacs-init.org
+~[05]~ https://github.com/jhenahan/emacs.d/blob/master/emacs-init.org
 
-~[6]~ https://ryuslash.org/dotfiles/emacs/init.html
+~[06]~ https://ryuslash.org/dotfiles/emacs/init.html
 
-~[7]~ http://www.wisdomandwonder.com/wordpress/wp-content/uploads/2014/03/C3F.org_.txt
+~[07]~ http://www.wisdomandwonder.com/wordpress/wp-content/uploads/2014/03/C3F.org_.txt
 
-~[8]~ https://github.com/howardabrams/dot-files
+~[08]~ https://github.com/howardabrams/dot-files
 
-~[9]~ https://github.com/larstvei/dot-emacs/blob/master/init.org
+~[09]~ https://github.com/larstvei/dot-emacs/blob/master/init.org
 
 ~[10]~ https://gitlab.com/romo/emacs.d/raw/master/emacs.org
+
+~[11]~ https://github.com/bixuanzju/emacs.d/blob/master/emacs-init.org
