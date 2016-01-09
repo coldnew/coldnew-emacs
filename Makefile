@@ -24,9 +24,7 @@ clean:
 # we first tangle the org-mode file to init.el~ the rename it.
 # this can make use use async task to create another init.el after save.
 init.el:
-	${EMACS} -Q -batch \
-		--eval '(load (concat user-emacs-directory "scripts/makefile-script.el"))' \
-		-f make-init-el
+	${EMACS} -Q --script "scripts/makefile-script.el" -f make-init-el
 
 compile: init.el
 	${CASK} exec ${EMACS} -Q -batch \
@@ -34,8 +32,7 @@ compile: init.el
 		--eval '(byte-recompile-directory (expand-file-name (getenv "PWD")) 0)'
 
 doc: init.el
-	${CASK} exec ${EMACS} -Q -l init.el -batch \
-		--eval '(load (concat user-emacs-directory "assets/export-script.el"))' \
-		--eval '(generate-doc-files)'
+	${CASK} exec ${EMACS} -Q -l init.el \
+		--script "assets/export-script.el" -f generate-doc-files
 
 .PHONY: all bootstrap init.el compile doc
