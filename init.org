@@ -4090,7 +4090,8 @@ GitHub: https://github.com/myuhe/smartrep.el
 ** Global Keybinding
 
 #+BEGIN_SRC emacs-lisp
-
+  (bind-keys :map global-map
+             ("M-g" . avy-goto-char-2))
 #+END_SRC
 
 ** Smartrep
