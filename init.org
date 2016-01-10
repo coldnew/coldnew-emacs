@@ -3483,7 +3483,15 @@ GitHub: https://github.com/bbatsov/helm-projectile
 GitHub: https://github.com/syohex/emacs-helm-gtags
 
 #+BEGIN_SRC emacs-lisp
-  (req-package helm-gtags)
+  (req-package helm-gtags
+    :config
+    (setq helm-gtags-ignore-case t)
+    (setq helm-gtags-auto-update t)
+    (setq helm-gtags-use-input-at-cursor t)
+    (setq helm-gtags-pulse-at-cursor t)
+    ;; add to following modes
+    (add-hook 'c-mode-hook #'helm-gtags-mode)
+    (add-hook 'c++-mode-hook #'helm-gtags-mode))
 #+END_SRC
 
 ** Integrate helm with bm.el
