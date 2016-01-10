@@ -1567,6 +1567,21 @@ A really nice command help me to find error on elisp buffer.
       (if face (message "Face: %s" face) (message "No face at %d" pos))))
 #+END_SRC
 
+** Window
+
+*** Switch to other window or split it
+
+If other window does not exist, split it, else switch to it.
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/other-window-or-split ()
+    "Switch to other window or split it."
+    (interactive)
+    (when (one-window-p)
+      (split-window-horizontally))
+    (other-window 1))
+#+END_SRC
+
 * Theme                                                               :theme:
 
 I always want to customize everything on my own, so I build another
