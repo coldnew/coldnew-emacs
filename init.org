@@ -776,6 +776,16 @@ GitHub: https://github.com/ilya-babanov/emacs-bpr
   (req-package bpr)
 #+END_SRC
 
+** calfw
+
+Calfw - A calendar framework for Emacs.
+
+GitHub: https://github.com/kiwanami/emacs-calfw
+
+#+BEGIN_SRC emacs-lisp
+  (req-package calfw)
+#+END_SRC
+
 ** cbm
 
 Cycle by major - Cycle through buffers with the same major-mode.
