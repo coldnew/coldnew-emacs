@@ -1140,7 +1140,10 @@ tldr is a collection of simplified and community-driven man pages.
 GitHub: https://github.com/kuanyui/tldr.el
 
 #+BEGIN_SRC emacs-lisp
-  (req-package tldr)
+  (req-package tldr
+    :init
+    (setq tldr-directory-path (concat user-cache-directory "tldr/"))
+    (setq tldr-saved-zip-path (concat user-cache-directory "tldr-source.zip")))
 #+END_SRC
 
 ** travis
