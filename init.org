@@ -2357,7 +2357,7 @@ GitHub: https://github.com/youngker/elogcat.el
 
 #+BEGIN_SRC emacs-lisp
   (req-package bitbake
-    :mode ("\\.bb\\'" "\\.bbappend\\"))
+    :mode ("\\.bb\\'" "\\.bbappend\\'"))
 #+END_SRC
 
 ** brainfuck
