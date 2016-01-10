@@ -1974,6 +1974,8 @@ GitHub: https://github.com/jscheid/dtrt-indent
 
 #+BEGIN_SRC emacs-lisp
   (req-package tramp
+    :init
+    (setq tramp-persistency-file-name (concat user-cache-directory "tramp"))
     :config
     (setq tramp-default-method "rsync"))
 #+END_SRC
