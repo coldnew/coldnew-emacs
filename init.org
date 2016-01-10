@@ -1133,6 +1133,16 @@ Emacs itself.
   (req-package sx :require sx-load)
 #+END_SRC
 
+** tldr
+
+tldr is a collection of simplified and community-driven man pages.
+
+GitHub: https://github.com/kuanyui/tldr.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package tldr)
+#+END_SRC
+
 ** travis
 
 An Emacs client for TravisCI.
