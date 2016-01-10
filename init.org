@@ -2299,6 +2299,17 @@ GitHub: https://github.com/bbatsov/projectile
     (add-hook 'c++-mode-hook #'ggtags-mode))
 #+END_SRC
 
+** GDB
+
+#+BEGIN_SRC emacs-lisp
+  (req-package gdb
+    :config
+    ;; Use many window in gdb
+    (setq gdb-many-windows t)
+    ;; Display source file containing the main routine at startup.
+    ;; Also display the main routine in the disassembly buffer if present.
+    (setq gdb-show-main t))
+#+END_SRC
 
 * Programming Languages
 
