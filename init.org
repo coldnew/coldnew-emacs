@@ -2255,6 +2255,16 @@ GitHub: https://github.com/bbatsov/projectile
           (concat user-cache-directory "semanticdb/")))
 #+END_SRC
 
+** Tags
+
+#+BEGIN_SRC emacs-lisp
+  (req-package ggtags
+    :config
+    (add-hook 'c-mode-hook #'ggtags-mode)
+    (add-hook 'c++-mode-hook #'ggtags-mode))
+#+END_SRC
+
+
 * Programming Languages
 
 ** arduino
