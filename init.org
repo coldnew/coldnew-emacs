@@ -1542,6 +1542,26 @@ others user.
     (find-file filename))
 #+END_SRC
 
+*** Show current buffer-file information
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/file-info ()
+    "Show current buffer information."
+    (interactive)
+    (if (buffer-file-name (current-buffer))
+        (progn
+          (let* ((file-name (buffer-file-name (current-buffer)))
+                 (f-attr (file-attributes file-name))
+                 (f-size (nth 7 f-attr))  ; ファイルサイズ
+                 (f-mode (nth 8 f-attr))  ; ファイル属性
+                 (mes1 (format "file path: %s\n" file-name))
+                 (mes2 (format "file size: %s byte\n" f-size))
+                 (mes3 (format "file type: %s" f-mode))
+                 (mess (concat mes1 mes2 mes3)))
+            (message "%s" mess)))
+      nil))
+#+END_SRC
+
 ** Debug
 
 *** Eval emacs buffer until error
