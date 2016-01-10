@@ -4123,7 +4123,7 @@ GitHub: https://github.com/myuhe/smartrep.el
 ** Smartrep
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref smartrep-config
-;; TODO:
+
 #+END_SRC
 
 ** Normal State
