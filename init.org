@@ -2353,6 +2353,13 @@ GitHub: https://github.com/youngker/elogcat.el
     :mode ("\\.y\\'" "\\.l\\'" "\\.jison\\'"))
 #+END_SRC
 
+** bitbake
+
+#+BEGIN_SRC emacs-lisp
+  (req-package bitbake
+    :mode ("\\.bb\\'" "\\.bbappend\\"))
+#+END_SRC
+
 ** brainfuck
 
 #+BEGIN_SRC emacs-lisp
