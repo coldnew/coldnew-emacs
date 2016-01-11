@@ -2979,6 +2979,11 @@ Use my C++ coding style.
              ("C-c '" . narrow-or-widen-dwim)
              ("C-c C-g" . gdb)
              ("C-c C-o" . cff-find-other-file))
+
+  ;; Some keys may override global map add here
+  (bind-keys :map c-mode-map
+             ("M-." . helm-gtags-dwim)
+             ("M-," . helm-gtags-pop-stack))
 #+END_SRC
 
 ** Setup C++ keybinding                                          :keybinding:
@@ -2988,6 +2993,11 @@ Use my C++ coding style.
              ("C-c '" . narrow-or-widen-dwim)
              ("C-c C-g" . gdb)
              ("C-c C-o" . cff-find-other-file))
+
+  ;; Some keys may override global map add here
+  (bind-keys :map c++-mode-map
+             ("M-." . helm-gtags-dwim)
+             ("M-," . helm-gtags-pop-stack))
 #+END_SRC
 
 * LISP Development                                                     :lisp:
