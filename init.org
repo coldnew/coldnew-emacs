@@ -1624,6 +1624,15 @@ A really nice command help me to find error on elisp buffer.
       (if face (message "Face: %s" face) (message "No face at %d" pos))))
 #+END_SRC
 
+*** Reload emacs init config
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/reload-init ()
+    "Reload init.el file"
+    (interactive)
+    (load-file user-init-file))
+#+END_SRC
+
 ** Window
 
 *** Switch to other window or split it
