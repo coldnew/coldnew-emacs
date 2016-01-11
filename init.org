@@ -3225,6 +3225,11 @@ GitHub: https://github.com/joshuamiller/clojars.el
     <<scheme-mode-config>>)
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  (req-package racket-mode
+    :mode "\\.rkt[dl]?\\'")
+#+END_SRC
+
 *** Use geiser to interaction wich scheme
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref scheme-mode-config
