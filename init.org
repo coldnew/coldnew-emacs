@@ -2336,6 +2336,20 @@ GitHub: https://github.com/bbatsov/projectile
     (setq gdb-show-main t))
 #+END_SRC
 
+** realgud
+
+A modular GNU Emacs front-end for interacting with external debuggers.
+
+See https://github.com/rocky/emacs-dbgr/wiki/Debuggers-Supported for a list of debuggers supported.
+
+A debugger can be run out of a comint process buffer, or you can use a =M-x realgud-track-mode= inside an existing shell, or eshell buffer.
+
+GitHub: https://github.com/rocky/emacs-dbgr
+
+#+BEGIN_SRC emacs-lisp
+  (req-package realgud)
+#+END_SRC
+
 * Programming Languages
 
 ** arduino
