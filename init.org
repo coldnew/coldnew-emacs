@@ -4196,6 +4196,17 @@ GitHub: https://github.com/myuhe/smartrep.el
     <<smartrep-config>>)
 #+END_SRC
 
+*** Hydra
+
+This is a package for GNU Emacs that can be used to tie related commands into a family of short bindings with a common prefix - a Hydra.
+
+GitHub: https://github.com/abo-abo/hydra
+
+#+BEGIN_SRC emacs-lisp  :noweb no-export
+  (req-package hydra
+      <<hydra-config>>)
+#+END_SRC
+
 ** Global Keybinding
 
 #+BEGIN_SRC emacs-lisp
@@ -4206,6 +4217,12 @@ GitHub: https://github.com/myuhe/smartrep.el
 ** Smartrep
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref smartrep-config
+
+#+END_SRC
+
+** Hydra
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref hydra-config
 
 #+END_SRC
 
