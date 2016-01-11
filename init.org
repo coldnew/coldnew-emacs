@@ -2373,6 +2373,17 @@ GitHub: https://github.com/rocky/emacs-dbgr
   (req-package realgud)
 #+END_SRC
 
+** cscope
+
+#+BEGIN_SRC emacs-lisp
+  (req-package xcscope
+    :config
+    ;; Use gtas's cscope command
+    (setq cscope-program "gtags-cscope")
+    ;; basic setup
+    (cscope-setup))
+#+END_SRC
+
 * Programming Languages
 
 ** arduino
@@ -3587,6 +3598,20 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
     :require (helm yasnippet)
     :config
     (setq helm-yas-space-match-any-greedy t))
+#+END_SRC
+
+** Integrate with cscope
+
+=helm-cscope.el= is a helm interface for xcscope.el. You can search cscope database and narrow selection using helm interface.
+
+Helm-cscope shares most functions with xcscope.el. It just provide =M-x helm-cscope-find-*= commands as helm version alternatives for =M-x cscope-find-*=
+
+GitHub: https://github.com/alpha22jp/helm-cscope.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package helm-cscope
+    :config
+    (add-hook 'c-mode-common-hook 'helm-cscope-mode))
 #+END_SRC
 
 ** Insert fontawesome with helm interface
