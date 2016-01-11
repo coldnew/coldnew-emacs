@@ -3954,6 +3954,15 @@ GitHub: https://github.com/nschum/window-numbering.el
 #+END_SRC
 
 * Email
+** bbdb
+
+#+BEGIN_SRC emacs-lisp
+  (req-package bbdb
+    :init
+    (setq bbdb-file (concat user-cache-directory "bbdb"))
+    :config
+    (bbdb-initialize))
+#+END_SRC
 
 ** mu4e
 
