@@ -2812,7 +2812,7 @@ By default it highlights:
     (cpp-highlight-buffer t))
 
   ;; Add to c/c++ mode
-  (defun my/cc-mode/highlight-if-0-hook
+  (defun my/cc-mode/highlight-if-0-hook ()
     (when (or (eq major-mode 'c++-mode) (eq major-mode 'c-mode))
       (my/cc-mode/highlight-if-0)))
   (add-hook 'after-save-hook #'my/cc-mode/highlight-if-0-hook)
