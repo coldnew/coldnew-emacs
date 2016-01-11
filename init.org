@@ -2759,15 +2759,11 @@ By default it highlights:
     (cpp-highlight-buffer t))
 
   ;; Add to c/c++ mode
-  (add-hook 'c-mode-common-hook 'my/cc-mode/highlight-if-0)
-
-  ;; Refresh buffer when save
-  (defun my/cc-mode/after-save-hook ()
-    (when (or (eq major-mode 'c-mode)
-              (eq major-mode 'c++-mode))
-      (my/cc-mode/highlight-if-0)))
-
-  (add-hook 'after-save-hook #'my/cc-mode/after-save-hook)
+  (add-hook 'c-mode-common-hook
+    (lambda ()
+      (my/cc-mode/after-save-hook)
+      ;; Refresh buffer when save
+      (add-hook 'after-save-hook 'my/cc-mode/after-save-hook 'append 'local)))
 #+END_SRC
 
 ** Extra highlight keywords for C/C++
