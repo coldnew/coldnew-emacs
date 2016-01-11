@@ -1048,6 +1048,20 @@ GitHub: https://github.com/nicferrier/emacs-noflet
   (req-package noflet)
 #+END_SRC
 
+** nand2tetris
+
+The aim of this package is to be best emacs tool to accompany you on your nand2tetris journey in [[https://www.coursera.org/course/nand2tetris1][coursearea]], or the [[http://www.nand2tetris.org/][Official Website]] for it.
+
+GitHub: https://github.com/CestDiego/nand2tetris.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package nand2tetris
+    :require (company company-nand2tetris nand2tetris-assembler)
+    :if (file-exists-p "~/Workspace/nand2tetris")
+    :config
+    (setq nand2tetris-core-base-dir "~/Workspace/nand2tetris"))
+#+END_SRC
+
 ** pangu-spacing
 
 [[https://github.com/coldnew/pangu-spacing][pangu-spcing]] is an minor-mode to auto add =space= between Chinese and English
