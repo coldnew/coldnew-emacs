@@ -2972,30 +2972,16 @@ Use my C++ coding style.
                ))
 #+END_SRC
 
-** Setup C keybinding                                            :keybinding:
+** Setup C/C++ Keybinding                                       :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
-  (bind-keys :map c-mode-map
+  (bind-keys :map c-mode-base-map
              ("C-c '" . narrow-or-widen-dwim)
              ("C-c C-g" . gdb)
              ("C-c C-o" . cff-find-other-file))
 
   ;; Some keys may override global map add here
-  (bind-keys :map c-mode-map
-             ("M-." . helm-gtags-dwim)
-             ("M-," . helm-gtags-pop-stack))
-#+END_SRC
-
-** Setup C++ keybinding                                          :keybinding:
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
-  (bind-keys :map c++-mode-map
-             ("C-c '" . narrow-or-widen-dwim)
-             ("C-c C-g" . gdb)
-             ("C-c C-o" . cff-find-other-file))
-
-  ;; Some keys may override global map add here
-  (bind-keys :map c++-mode-map
+  (bind-keys :map c-mode-base-map
              ("M-." . helm-gtags-dwim)
              ("M-," . helm-gtags-pop-stack))
 #+END_SRC
