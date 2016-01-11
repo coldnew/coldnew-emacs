@@ -1235,7 +1235,19 @@ GitHub: https://github.com/justbur/emacs-which-key
 #+BEGIN_SRC emacs-lisp
   (req-package which-key
     :config
-    (which-key-mode))
+    ;; enable globally
+    (which-key-mode)
+    ;;
+    (setq which-key-description-replacement-alist
+          '(("Prefix Command" . "prefix")
+            ("which-key-show-next-page" . "wk next pg")
+            ("\\`calc-" . "") ; Hide "calc-" prefixes when listing M-x calc keys
+            ("/body\\'" . "") ; Remove display the "/body" portion of hydra fn names
+            ("modi/" . "m/") ; The car is intentionally not "\\`modi/" to cover
+                                          ; cases like `hydra-toggle/modi/..'.
+            ("\\`hydra-" . "+h/")
+            ("\\`org-babel-" . "ob/")
+            ("\\`my/" . ""))))
 #+END_SRC
 
 ** xkcd
