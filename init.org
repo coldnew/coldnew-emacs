@@ -4230,7 +4230,14 @@ GitHub: https://github.com/abo-abo/hydra
 
 #+BEGIN_SRC emacs-lisp  :noweb no-export
   (req-package hydra
+   :config
       <<hydra-config>>)
+#+END_SRC
+
+**** Hydra
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref hydra-config
+
 #+END_SRC
 
 ** Global Keybinding
@@ -4243,12 +4250,6 @@ GitHub: https://github.com/abo-abo/hydra
 ** Smartrep
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref smartrep-config
-
-#+END_SRC
-
-** Hydra
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref hydra-config
 
 #+END_SRC
 
