@@ -4094,7 +4094,7 @@ After all is done, add following line in =~/.offlineimaprc= and we can get passw
 *** Use eww for html file render
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref mu4e-config
-  (req-package 'mu4e-contrib
+  (req-package mu4e-contrib
     :config
     (setq mu4e-html2text-command 'mu4e-shr2text)
     ;; try to emulate some of the eww key-bindings
