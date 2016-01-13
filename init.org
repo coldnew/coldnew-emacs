@@ -4358,6 +4358,7 @@ We *should not* use mouse when play with emacs.
     (kbd "C--") 'text-scale-decrease
     (kbd "C-x t") 'sane-term
     (kbd "C-x T") 'sane-term
+    (kbd "M-y") 'helm-show-kill-ring
     )
 #+END_SRC
 
