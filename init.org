@@ -2626,6 +2626,22 @@ GitHub: https://github.com/trotzig/import-js
     :mode "\\.\\(md\\|markdown\\)\\'")
 #+END_SRC
 
+** po
+
+#+BEGIN_SRC emacs-lisp
+  (req-package po-mode
+    :mode "\\.po\\'\\|\\.po\\."
+    :config
+
+    ;; To use the right coding system automatically under Emacs 20 or newer,
+    ;; also add:
+    (modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\."
+                                'po-find-file-coding-system)
+    (autoload 'po-find-file-coding-system "po-mode")
+    ;; http://www.gnu.org/software/gettext/manual/gettext.html#PO-Mode
+    )
+#+END_SRC
+
 ** php
 
 #+BEGIN_SRC emacs-lisp
