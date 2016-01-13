@@ -2187,26 +2187,6 @@ GitHub: https://github.com/zk-phi/indent-guide
     (indent-guide-global-mode))
 #+END_SRC
 
-** Automatically add spacing around operators
-
-For example typing
-
-: a=10*5+2
-
-results in
-
-: a = 10 * 5 + 2
-
-GitHub: https://github.com/xwl/electric-spacing
-
-#+BEGIN_SRC emacs-lisp
-  (req-package electric-spacing
-    :config
-    (add-hook 'c-mode-hook #'electric-spacing-mode)
-    (add-hook 'c++-mode-hook #'electric-spacing-mode)
-    (add-hook 'python-mode-hook #'electric-spacing-mode))
-#+END_SRC
-
 ** Visualization of matching parens
 
 #+BEGIN_SRC emacs-lisp
