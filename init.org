@@ -362,17 +362,20 @@ spacemacs, you can skip following code.
                load-path)))))
 #+END_SRC
 
-In Mac OSX, since I use homebrew install packages in my system, I need to add package to the load-path.
+Sometimes package manager will install some emacs-lisp file to system path, add them to my emacs's load-path.
 
 #+BEGIN_SRC emacs-lisp
-  (defun add-system-load-path (pkgname)
-    (let* ((pkgpath (concat "/usr/local/Cellar/" pkgname))
-           (aversion (directory-files pkgpath nil "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))
-           (version  (car (last aversion)))
-           (loadpath (concat "/usr/local/Cellar/" pkgname "/" version "/share/emacs/site-lisp/" pkgname)))
-      (add-to-list 'load-path loadpath)))
+  ;;;; add some system site-lisp to my load-path
 
-  (add-system-load-path "gettext")
+  ;; Mac OSX
+  (when (equal system-type 'darwin)
+    (let ((default-directory "/usr/local/share/emacs/site-lisp/"))
+      (normal-top-level-add-subdirs-to-load-path)))
+
+  ;; Linux
+  (when (equal system-type 'gnu/linux)
+    (let ((default-directory "/usr/share/emacs/site-lisp/"))
+      (normal-top-level-add-subdirs-to-load-path)))
 #+END_SRC
 
 * Basic setup
