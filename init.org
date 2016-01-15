@@ -4316,15 +4316,33 @@ GitHub: https://github.com/abo-abo/hydra
 ;;(global-set-key (kbd "C-x w") 'hydra-window/body)
 #+END_SRC
 
+**** Font Setup
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref hydra-config
+    (defhydra hydra-font-setup ()
+      "
+    Font Size^^
+    ----------------------------------------------------------------
+    _=_ ↑
+    _\-_ ↓
+    "
+      ("=" text-scale-increase)
+      ("-" text-scale-decrease))
+#+END_SRC
+
 ** Global Keybinding
 
 #+BEGIN_SRC emacs-lisp
   (bind-keys :map global-map
-             ("C--" . text-scale-decrease)
-             ("C-=" . text-scale-increase)
              ("C-x C-s" . my/save-buffer-always)
              ("M-g" . avy-goto-char-2))
 #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (bind-keys :map global-map
+             ("C-=" . hydra-font-setup/body))
+#+END_SRC
+
 
 *** Disable All mouse input to force me familier with keyboard
 
