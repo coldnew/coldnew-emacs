@@ -383,6 +383,15 @@ Sometimes package manager will install some emacs-lisp file to system path, add 
 Some basic setup to disabe/enable default feature before we start. The
 configuration here only depends on valina emacs's buildin libraries.
 
+** Personal Information
+
+Some information about myself.
+
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "Yen-Chin, Lee")
+  (setq user-mail-address "coldnew.tw@gmail.com")
+#+END_SRC
+
 ** Startup emacs server
 
 #+BEGIN_SRC emacs-lisp
