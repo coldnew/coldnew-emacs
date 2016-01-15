@@ -2615,10 +2615,9 @@ GitHub: https://github.com/trotzig/import-js
 
     ;; To use the right coding system automatically under Emacs 20 or newer,
     ;; also add:
-    (modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\."
-                                'po-find-file-coding-system)
-    (autoload 'po-find-file-coding-system "po-mode")
-    ;; http://www.gnu.org/software/gettext/manual/gettext.html#PO-Mode
+    (when (require 'po nil 'noerror)
+      (modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\."
+                                  'po-find-file-coding-system))
     )
 #+END_SRC
 
