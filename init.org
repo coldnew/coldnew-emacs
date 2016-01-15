@@ -4362,10 +4362,7 @@ We *should not* use mouse when play with emacs.
       (kbd "M-x") 'helm-M-x
       (kbd "M-s") 'helm-occur
       (kbd "C-x C-o") 'other-frame
-      (kbd "M-o") 'other-window
-      (kbd "C--") 'text-scale-decrease
-      (kbd "C-=") 'text-scale-increase
-      )
+      (kbd "M-o") 'other-window)
 #+END_SRC
 
 ** Insert State
@@ -4406,7 +4403,6 @@ We *should not* use mouse when play with emacs.
     (kbd "M-y") 'helm-show-kill-ring
     ;; (kbd "M-o") 'other-window
     (kbd "C-x C-o") 'other-frame
-    (kbd "C--") 'text-scale-decrease
     (kbd "C-x t") 'sane-term
     (kbd "C-x T") 'sane-term
     (kbd "M-y") 'helm-show-kill-ring
