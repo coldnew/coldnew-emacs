@@ -1794,6 +1794,26 @@ minibuffer history from ‘savehist-file’.
   (setq org-html-validation-link nil)
 #+END_SRC
 
+*** Pretty Bullets
+
+Show org-mode bullets as UTF-8 characters.
+
+GitHub: https://github.com/sabof/org-bullets
+
+#+BEGIN_SRC emacs-lisp
+  (req-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+END_SRC
+
+*** Fancy Todo States
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
+  (setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "✔ DONE(d)")
+                            (sequence "⚑ WAITING(w)" "|")
+                            (sequence "|" "✘ CANCELED(c)")))
+#+END_SRC
+
 ** Extend org-mode's easy templates
 
 org-mode make it easy to insert blocks by typing =<s[TAB]= ...etc. I
