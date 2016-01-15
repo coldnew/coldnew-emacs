@@ -1307,7 +1307,7 @@ untouched, use this command can let me force save file even if file is
 not modified.
 
 #+BEGIN_SRC emacs-lisp
-  (defun save-buffer-always ()
+  (defun my/save-buffer-always ()
     "Save the buffer even if it is not modified."
     (interactive)
     (set-buffer-modified-p t)
@@ -4265,6 +4265,7 @@ GitHub: https://github.com/abo-abo/hydra
 
 #+BEGIN_SRC emacs-lisp
   (bind-keys :map global-map
+             ("C-x C-s" . my/save-buffer-always)
              ("M-g" . avy-goto-char-2))
 #+END_SRC
 
@@ -4291,7 +4292,6 @@ We *should not* use mouse when play with emacs.
   (evil-define-key 'normal coldnew-editor-map
       (kbd "C-x C-f") 'helm-find-files
       (kbd "C-x C-q") 'read-only-mode
-      (kbd "C-x C-s") 'save-buffer-always
       (kbd "C-x M-1") 'deft-or-close
       (kbd "C-x M-2") 'multi-eshell
       (kbd "C-x M-3") 'mu4e
@@ -4328,7 +4328,6 @@ We *should not* use mouse when play with emacs.
     (kbd "C-x C-f") 'helm-find-files
     (kbd "C-x C-n") 'company-complete
     (kbd "C-x C-q") 'read-only-mode
-    (kbd "C-x C-s") 'save-buffer-always
     (kbd "C-x M-1") 'deft-or-close
     (kbd "C-x M-2") 'multi-eshell
     (kbd "C-x M-3") 'mu4e
