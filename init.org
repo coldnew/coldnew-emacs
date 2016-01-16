@@ -4236,6 +4236,124 @@ I always use mu4e to read maliing-list, it's really nice to fontify diff content
              ("C-b" . evil-scroll-page-up))
 #+END_SRC
 
+* IRC                                                                   :irc:
+
+I always use =ERC= as my irc client, which is bundle with emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package erc
+    :require (erc-notify)
+    :config
+    (progn
+      ;; set prompt to ->>
+      (setq erc-prompt "->> ")
+      ;; Encoding with utf-8
+      (setq erc-server-coding-system '(utf-8 . utf-8))
+      ;; column with is 100
+      (setq erc-fill-column 100)
+      ;; Auto join irc server when erc start
+      (erc-autojoin-mode t)
+      ;; truncate too long line
+      (erc-truncate-mode +1)
+      ;; Interpret mIRC-style color commands in IRC chats
+      (setq erc-interpret-mirc-color t)
+      ;; Kill buffers for channels after /part
+      (setq erc-kill-buffer-on-part t)
+      ;; Kill buffers for private queries after quitting the server
+      (setq erc-kill-queries-on-quit t)
+      ;; Kill buffers for server messages after quitting the server
+      (setq erc-kill-server-buffer-on-quit t)
+      ;; open query buffers in the current window
+      (setq erc-query-display 'buffer)
+      (setq erc-save-buffer-on-part t)))
+#+END_SRC
+
+** Setup default irc room I want to join
+
+#+begin_src emacs-lisp
+  (setq erc-autojoin-channels-alist
+        '(
+          ;; english channel
+          (".*\\.freenode.net" "#clojure" "#wayland" "#libhybris" "#webos-ports")
+          (".*\\.mozilla.org" "#b2g")
+          ;; Chinese channel
+          (".*\\.freenode.net" "#emacs.tw" "#cschat.tw" "#clojure.tw" "#lisp.tw")
+          (".*\\.oftc.net" "#dot")))
+#+end_src
+
+** Hide some sort of message
+
+#+begin_src emacs-lisp
+  (setq erc-hide-list
+        '(;; notices
+          "JOIN" "PART" "QUIT" "LEFT" "NICK"
+          ;; robot
+          "^j[a-z]*bot!" "^fussbot!"))
+#+end_src
+
+** Add timestamp for messages
+
+#+BEGIN_SRC emacs-lisp
+  (erc-timestamp-mode 1)
+  (setq erc-insert-timestamp-function 'erc-insert-timestamp-left)
+#+END_SRC
+
+** Coloify user's nickname
+
+#+BEGIN_SRC emacs-lisp
+  (req-package erc-hl-nicks)
+#+END_SRC
+
+** Enable track-mode for erc
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'erc
+    '(progn
+       ;; enable track-mode
+       (erc-track-mode t)
+       ;; do not track some type of message
+       (setq erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
+                                       "324" "329" "332" "333" "353" "477"))))
+#+END_SRC
+
+** Enable spell checking
+
+#+BEGIN_SRC emacs-lisp
+  (req-package erc-spelling
+    :config
+    (progn
+      (erc-spelling-mode 0)))
+#+END_SRC
+
+** Autoaway setup
+
+#+BEGIN_SRC emacs-lisp
+  (req-package erc-autoaway
+    :config
+    (progn
+      (setq erc-auto-discard-away t)
+      (setq erc-autoaway-idle-seconds 600)
+      (setq erc-autoaway-use-emacs-idle t)))
+#+END_SRC
+
+** Quick start/switch erc with one command                         :command:
+
+#+BEGIN_SRC emacs-lisp
+  (defun erc-start-or-switch ()
+    "Connect to IRC, if already connected, switch to active irc buffer."
+    (interactive)
+    (let ((irc-active-p (and (fboundp 'erc-buffer-list)
+                             (erc-buffer-list))))
+      ;; we track irc.freenode.net to make sure erc is already active
+      (if irc-active-p
+          (erc-track-switch-buffer 1)
+        (progn
+          ;; connect to irc server
+          (erc-tls :server "irc.freenode.net" :port 6697 :nick erc-nick)
+          (erc-tls :server "irc.debian.org" :port 6697 :nick erc-nick)
+          (erc-tls :server "irc.mozilla.org" :port 6697 :nick erc-nick)))))
+#+END_SRC
+
 * Keybindings                                                    :keybinding:
 
 ** Packages for setup keybindings
@@ -4325,6 +4443,52 @@ GitHub: https://github.com/abo-abo/hydra
 ;;(global-set-key (kbd "C-x w") 'hydra-window/body)
 #+END_SRC
 
+**** Window/Buffer Management
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref hydra-config
+  (defhydra hydra-window-buffer (:color red :hint nil)
+  "
+   ^Window^             ^Buffer^           ^Frame^
+  ^^^^^^^^---------------------------------------------------
+   ^hjkl^: move         _p_: previous      _u_: winner undo      ....../ \-.   .
+   _s_: split below     _n_: next          _r_: winner redo   .-/     (    o\.//
+   _v_: split right     _b_: switch        _w_: revert all     |  ...  \./\---'
+   _c_: delete this     _;_: last          ^ ^                 |.||  |.||
+   _o_: delete other    _K_: kill current  ^ ^
+  ^^^^^^^^
+  "
+    ("w" revert-all-buffers :color blue)
+
+    ("u" winner-undo)
+    ("r" winner-redo)
+
+    ("h" windmove-left)
+    ("j" windmove-down)
+    ("k" windmove-up)
+    ("l" windmove-right)
+
+    ("p" previous-buffer)
+    ("n" next-buffer)
+    ("b" ido-switch-buffer)
+    (";" mode-line-other-buffer :color blue)
+
+    ("s" split-window-below)
+    ("v" split-window-right)
+
+    ("K" kill-this-buffer)
+
+    ("c" delete-window)
+    ("o" delete-other-windows :color blue)
+
+    ;; ("H" hydra-move-splitter-left)
+    ;; ("J" hydra-move-splitter-down)
+    ;; ("K" hydra-move-splitter-up)
+    ;; ("L" hydra-move-splitter-right)
+
+    ("q" nil))
+    (global-set-key (kbd "C-x w") 'hydra-window-buffer/body)
+#+END_SRC
+
 **** Font Setup
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref hydra-config
@@ -4338,6 +4502,46 @@ GitHub: https://github.com/abo-abo/hydra
       ("=" text-scale-increase)
       ("-" text-scale-decrease))
 #+END_SRC
+
+**** NEED REVIEW
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (defhydra hydra-multiple-cursors (:hint nil)
+    "
+   ^Up^            ^Down^        ^Miscellaneous^
+  ----------------------------------------------
+  [_p_]   Next    [_n_]   Next    [_l_] Edit lines
+  [_P_]   Skip    [_N_]   Skip    [_a_] Mark all
+  [_M-p_] Unmark  [_M-n_] Unmark  [_q_] Quit"
+    ("l" mc/edit-lines :exit t)
+    ("a" mc/mark-all-like-this :exit t)
+    ("n" mc/mark-next-like-this)
+    ("N" mc/skip-to-next-like-this)
+    ("M-n" mc/unmark-next-like-this)
+    ("p" mc/mark-previous-like-this)
+    ("P" mc/skip-to-previous-like-this)
+    ("M-p" mc/unmark-previous-like-this)
+    ("q" nil))
+
+  (defhydra hydra-org (:color red :hint nil)
+    "
+  Navigation^
+  ---------------------------------------------------------
+  _j_ next heading
+  _k_ prev heading
+  _h_ next heading (same level)
+  _l_ prev heading (same level)
+  _u_p higher heading
+  _g_o to
+  "
+    ("j" outline-next-visible-heading)
+    ("k" outline-previous-visible-heading)
+    ("h" org-forward-heading-same-level)
+    ("l" org-backward-heading-same-level)
+    ("u" outline-up-heading)
+    ("g" org-goto :exit t))
+#+END_SRC
+
 
 ** Global Keybinding
 
