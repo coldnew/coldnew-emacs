@@ -1035,6 +1035,16 @@ GitHub: https://github.com/alezost/mwim.el
      ("C-e" . mwim-end-of-code-or-line)))
 #+END_SRC
 
+** moedict
+
+Look up (Tranditional) Chinese vocabulary with MOE dict ([[https://moedict.tw/][萌典]]) in Emacs.
+
+GitHub: https://github.com/kuanyui/moedict.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package moedict)
+#+END_SRC
+
 ** noflet
 
 =noflet= is dynamic, local, advice for Emacs-Lisp code.
