@@ -3166,10 +3166,12 @@ GitHub: https://github.com/purcell/page-break-lines
 #+END_SRC
 ** Clojure
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :noweb no-export
   (req-package clojure-mode
     :require (clojure-mode-extra-font-locking flycheck-clojure)
-    :mode "\\.\\(clj\\|boot\\|cljx\\|edn\\|cljs\\|cljs.hl\\)\\'")
+    :mode "\\.\\(clj\\|boot\\|cljx\\|edn\\|cljs\\|cljs.hl\\)\\'"
+    :config
+    <<clojure-config>>)
 #+END_SRC
 
 *** Add refactor function support
@@ -3268,6 +3270,13 @@ GitHub: https://github.com/joshuamiller/clojars.el
 
 #+BEGIN_SRC emacs-lisp
   (req-package clojars)
+#+END_SRC
+
+*** Setup Clojure Keybinding                                   :keybinding:
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref clojure-config
+  (bind-keys :map clojure-mode-map
+             ("C-c '" . my/narrow-or-widen-dwim))
 #+END_SRC
 
 ** Scheme
