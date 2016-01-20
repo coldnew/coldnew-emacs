@@ -3291,11 +3291,20 @@ GitHub: https://github.com/joshuamiller/clojars.el
   (req-package clojars)
 #+END_SRC
 
+*** Search Clojure Cheatsheet
+
+GitHub:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
+  (req-package clojure-cheatsheet)
+#+END_SRC
+
 *** Setup Clojure Keybinding                                   :keybinding:
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref clojure-config
   (bind-keys :map clojure-mode-map
-             ("C-c '" . my/narrow-or-widen-dwim))
+             ("C-c '" . my/narrow-or-widen-dwim)
+             ("C-c h" . clojure-cheatsheet))
 #+END_SRC
 
 ** Scheme
