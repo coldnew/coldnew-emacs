@@ -3313,7 +3313,7 @@ GitHub:
   (req-package scheme
     :mode "\\.scm\\'"
     :config
-    <<scheme-mode-config>>)
+    <<scheme-config>>)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -3323,9 +3323,8 @@ GitHub:
 
 *** Use geiser to interaction wich scheme
 
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref scheme-mode-config
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref scheme-config
   (req-package geiser
-    :require scheme
     :init
     ;; On opening a scheme file, Geiser will try to guess its Scheme,
     ;; defaulting to the first in the list. Use `C-c C-s' to select the
