@@ -2924,6 +2924,12 @@ In most C/C++ project, we naming variable in camelCase, subword-mode can help us
   (add-hook 'c-mode-common-hook '(lambda () (subword-mode 1)))
 #+END_SRC
 
+** Auto pair parentheses with electric-pair
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'c-mode-common-hook 'electric-pair-mode)
+#+END_SRC
+
 ** Coding Styles (C)
 
 *** General C Coding Style
@@ -4497,6 +4503,17 @@ GitHub: https://github.com/abo-abo/hydra
 ;;(global-set-key (kbd "C-x w") 'hydra-window/body)
 #+END_SRC
 
+**** Buffer Movement
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref hydra-config
+  (defhydra hydra-movement ()
+  ""
+    )
+
+;;(global-set-key (kbd "C-x e") 'hydra-toggles-macro/body)
+#+END_SRC
+
+
 **** Window/Buffer Management
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref hydra-config
@@ -4594,6 +4611,17 @@ GitHub: https://github.com/abo-abo/hydra
     ("l" org-backward-heading-same-level)
     ("u" outline-up-heading)
     ("g" org-goto :exit t))
+
+(defhydra hydra-toggles-macro  (:color blue :hint nil )
+     "macro commands
+     "
+     ("s" start-kbd-macro  "start macro" )
+     ("e"   "end macro" )
+     ("e" kmacro-end-and-call-macro  "use C-x e" )
+     ("n" name-last-kbd-macro  "name macro" )
+     ("i" insert-kbd-macro  "insert macro" )
+     ("q" nil "cancel" nil)
+)
 #+END_SRC
 
 
