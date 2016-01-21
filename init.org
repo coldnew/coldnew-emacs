@@ -3045,6 +3045,7 @@ Use my C++ coding style.
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
   (bind-keys :map c-mode-base-map
              ("C-c '" . my/narrow-or-widen-dwim)
+             ("C-c C-c" . compile)
              ("C-c C-g" . gdb)
              ("C-c C-o" . cff-find-other-file))
 
