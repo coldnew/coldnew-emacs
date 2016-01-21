@@ -2395,15 +2395,6 @@ GitHub: https://github.com/bbatsov/projectile
     (semantic-mode 1))
 #+END_SRC
 
-** Tags
-
-#+BEGIN_SRC emacs-lisp
-  (req-package ggtags
-    :config
-    (add-hook 'c-mode-hook #'ggtags-mode)
-    (add-hook 'c++-mode-hook #'ggtags-mode))
-#+END_SRC
-
 ** GDB
 
 #+BEGIN_SRC emacs-lisp
