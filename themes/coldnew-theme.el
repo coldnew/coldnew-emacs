@@ -446,7 +446,7 @@ Also bind `class' to ((class color) (min-colors 89))."
      (rcirc-timestamp ((t (:foreground ,base01))))
 
      ;; erc
-     (erc-input-face ((t (:foreground ,base01))))
+     ;;(erc-input-face ((t (:foreground ,base01))))
      (erc-keyword-face ((t (:foreground ,yellow :weight bold))))
      (erc-my-nick-face ((t (:foreground ,blue))))
      (erc-nick-defaunoctilux-face ((t (:foreground ,cyan))))
