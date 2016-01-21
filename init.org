@@ -657,12 +657,6 @@ Some buildin packages need to some setup.
 Most of emacs packages do not need many configs or just provide
 commands/functions to use, I put them here.
 
-** lispy
-
-#+BEGIN_SRC emacs-lisp
-  (req-package lispy)
-#+END_SRC
-
 ** ag
 
 [[https://github.com/Wilfred/ag.el][ag.el]] allows you to search using [[https://github.com/ggreer/the_silver_searcher][the_silver_searcher]] from inside
@@ -3074,6 +3068,22 @@ Show lambda as λ.
 
 #+BEGIN_SRC emacs-lisp
   (global-prettify-symbols-mode 1)
+#+END_SRC
+
+** lispy
+
+This package reimagines Paredit - a popular method to navigate and edit LISP code in Emacs.
+
+GitHub: https://github.com/abo-abo/lispy
+
+#+BEGIN_SRC emacs-lisp
+  (req-package lispy
+    :config
+    (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+    (add-hook 'lisp-interaction-mode-hook (lambda () (lispy-mode 1)))
+    (add-hook 'clojure-mode-hook (lambda () (lispy-mode 1)))
+    (add-hook 'scheme-mode-hook (lambda () (lispy-mode 1)))
+    (add-hook 'lisp-mode-hook (lambda () (lispy-mode 1))))
 #+END_SRC
 
 ** Emacs Lisp
