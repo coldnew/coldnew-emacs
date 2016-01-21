@@ -4325,8 +4325,7 @@ I always use =ERC= as my irc client, which is bundle with emacs.
           (".*\\.freenode.net" "#clojure" "#wayland" "#libhybris" "#webos-ports")
           (".*\\.mozilla.org" "#b2g")
           ;; Chinese channel
-          (".*\\.freenode.net" "#emacs.tw" "#cschat.tw" "#clojure.tw" "#lisp.tw")
-          (".*\\.oftc.net" "#dot")))
+          (".*\\.freenode.net" "#emacs.tw" "#cschat.tw" "#clojure.tw" "#lisp.tw")))
 #+end_src
 
 ** Hide some sort of message
