@@ -4067,6 +4067,27 @@ GitHub: https://github.com/nschum/window-numbering.el
   (req-package stumpwm-mode)
 #+END_SRC
 
+* Web Browser
+
+** Firefox
+
+In firefox-controller, we have two different modes:
+
+- firefox-controller-remote-mode
+
+  This is based on the original moz-controller, but the number of available commands increases from 11 to more than 30, and simpler key bindings and a better UI are also provided.
+
+- firefox-controller-direct-mode
+
+  In this mode, you can send the keys directly to firefox.
+
+GitHub: https://github.com/cute-jumper/emacs-firefox-controller
+
+#+BEGIN_SRC emacs-lisp
+  (req-package firefox-controller)
+#+END_SRC
+
+
 * Email
 ** bbdb
 
