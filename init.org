@@ -657,12 +657,6 @@ Some buildin packages need to some setup.
 Most of emacs packages do not need many configs or just provide
 commands/functions to use, I put them here.
 
-** lispy
-
-#+BEGIN_SRC emacs-lisp
-  (req-package lispy)
-#+END_SRC
-
 ** ag
 
 [[https://github.com/Wilfred/ag.el][ag.el]] allows you to search using [[https://github.com/ggreer/the_silver_searcher][the_silver_searcher]] from inside
@@ -1035,6 +1029,16 @@ GitHub: https://github.com/alezost/mwim.el
      ("C-e" . mwim-end-of-code-or-line)))
 #+END_SRC
 
+** moedict
+
+Look up (Tranditional) Chinese vocabulary with MOE dict ([[https://moedict.tw/][萌典]]) in Emacs.
+
+GitHub: https://github.com/kuanyui/moedict.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package moedict)
+#+END_SRC
+
 ** noflet
 
 =noflet= is dynamic, local, advice for Emacs-Lisp code.
@@ -1397,7 +1401,7 @@ not modified.
 ref: http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
 
 #+BEGIN_SRC emacs-lisp
-  (defun narrow-or-widen-dwim (p)
+  (defun my/narrow-or-widen-dwim (p)
     "Widen if buffer is narrowed, narrow-dwim otherwise.
   Dwim means: region, org-src-block, org-subtree, or defun,
   whichever applies first. Narrowing to org-src-block actually
@@ -1410,6 +1414,7 @@ ref: http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
     (cond ((and (buffer-narrowed-p) (not p)) (widen))
           ((region-active-p)
            (narrow-to-region (region-beginning) (region-end)))
+          ;; org-mode
           ((derived-mode-p 'org-mode)
            ;; `org-edit-src-code' is not a real narrowing
            ;; command. Remove this first conditional if you
@@ -1418,6 +1423,7 @@ ref: http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
                   (delete-other-windows))
                  ((ignore-errors (org-narrow-to-block) t))
                  (t (org-narrow-to-subtree))))
+          ;; latex-mode
           ((derived-mode-p 'latex-mode)
            (LaTeX-narrow-to-environment))
           (t (narrow-to-defun))))
@@ -1762,6 +1768,25 @@ minibuffer history from ‘savehist-file’.
     :config
     (setq savehist-file (concat user-cache-directory "savehist.dat"))
     (savehist-mode 1))
+#+END_SRC
+
+** Increase Garbage Collector Value in minibuffer
+
+By binding this temporarily to a large number, you can effectively prevent garbage collection during a part of the program. I increase the value when enter minibuffer, this will help to improve minibuffer speed with large package like helm, flx.
+
+ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
+  (eval-after-load 'minibuffer
+    '(progn
+       (lexical-let ((default-threshold gc-cons-threshold))
+         (defun my/minibuffer-gc-setup-hook ()
+           (setq gc-cons-threshold most-positive-fixnum))
+         (add-hook 'minibuffer-setup-hook #'my/minibuffer-gc-setup-hook)
+         ;; When exit, set back to default threshold
+         (defun my/minibuffer-gc-exit-hook ()
+           (setq gc-cons-threshold default-threshold))
+         (add-hook 'minibuffer-exit-hook #'my/minibuffer-gc-exit-hook))))
 #+END_SRC
 
 ** Setup Keybindings                                            :keybinding:
@@ -2368,15 +2393,6 @@ GitHub: https://github.com/bbatsov/projectile
     (global-semantic-idle-scheduler-mode 1)
 
     (semantic-mode 1))
-#+END_SRC
-
-** Tags
-
-#+BEGIN_SRC emacs-lisp
-  (req-package ggtags
-    :config
-    (add-hook 'c-mode-hook #'ggtags-mode)
-    (add-hook 'c++-mode-hook #'ggtags-mode))
 #+END_SRC
 
 ** GDB
@@ -3022,7 +3038,7 @@ Use my C++ coding style.
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
   (bind-keys :map c-mode-base-map
-             ("C-c '" . narrow-or-widen-dwim)
+             ("C-c '" . my/narrow-or-widen-dwim)
              ("C-c C-g" . gdb)
              ("C-c C-o" . cff-find-other-file))
 
@@ -3043,6 +3059,22 @@ Show lambda as λ.
 
 #+BEGIN_SRC emacs-lisp
   (global-prettify-symbols-mode 1)
+#+END_SRC
+
+** lispy
+
+This package reimagines Paredit - a popular method to navigate and edit LISP code in Emacs.
+
+GitHub: https://github.com/abo-abo/lispy
+
+#+BEGIN_SRC emacs-lisp
+  (req-package lispy
+    :config
+    (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+    (add-hook 'lisp-interaction-mode-hook (lambda () (lispy-mode 1)))
+    (add-hook 'clojure-mode-hook (lambda () (lispy-mode 1)))
+    (add-hook 'scheme-mode-hook (lambda () (lispy-mode 1)))
+    (add-hook 'lisp-mode-hook (lambda () (lispy-mode 1))))
 #+END_SRC
 
 ** Emacs Lisp
@@ -3154,10 +3186,12 @@ GitHub: https://github.com/purcell/page-break-lines
 #+END_SRC
 ** Clojure
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :noweb no-export
   (req-package clojure-mode
     :require (clojure-mode-extra-font-locking flycheck-clojure)
-    :mode "\\.\\(clj\\|boot\\|cljx\\|edn\\|cljs\\|cljs.hl\\)\\'")
+    :mode "\\.\\(clj\\|boot\\|cljx\\|edn\\|cljs\\|cljs.hl\\)\\'"
+    :config
+    <<clojure-config>>)
 #+END_SRC
 
 *** Add refactor function support
@@ -3258,13 +3292,29 @@ GitHub: https://github.com/joshuamiller/clojars.el
   (req-package clojars)
 #+END_SRC
 
+*** Search Clojure Cheatsheet
+
+GitHub:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
+  (req-package clojure-cheatsheet)
+#+END_SRC
+
+*** Setup Clojure Keybinding                                   :keybinding:
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref clojure-config
+  (bind-keys :map clojure-mode-map
+             ("C-c '" . my/narrow-or-widen-dwim)
+             ("C-c h" . clojure-cheatsheet))
+#+END_SRC
+
 ** Scheme
 
 #+BEGIN_SRC emacs-lisp :noweb no-export
   (req-package scheme
     :mode "\\.scm\\'"
     :config
-    <<scheme-mode-config>>)
+    <<scheme-config>>)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -3274,9 +3324,8 @@ GitHub: https://github.com/joshuamiller/clojars.el
 
 *** Use geiser to interaction wich scheme
 
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref scheme-mode-config
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref scheme-config
   (req-package geiser
-    :require scheme
     :init
     ;; On opening a scheme file, Geiser will try to guess its Scheme,
     ;; defaulting to the first in the list. Use `C-c C-s' to select the
@@ -4283,8 +4332,7 @@ I always use =ERC= as my irc client, which is bundle with emacs.
           (".*\\.freenode.net" "#clojure" "#wayland" "#libhybris" "#webos-ports")
           (".*\\.mozilla.org" "#b2g")
           ;; Chinese channel
-          (".*\\.freenode.net" "#emacs.tw" "#cschat.tw" "#clojure.tw" "#lisp.tw")
-          (".*\\.oftc.net" "#dot")))
+          (".*\\.freenode.net" "#emacs.tw" "#cschat.tw" "#clojure.tw" "#lisp.tw")))
 #+end_src
 
 ** Hide some sort of message
