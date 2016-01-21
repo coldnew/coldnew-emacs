@@ -2113,6 +2113,16 @@ GitHub: https://github.com/purcell/whitespace-cleanup-mode
     (add-hook 'prog-mode-hook 'whitespace-cleanup-mode))
 #+END_SRC
 
+** Save recent file info
+
+#+BEGIN_SRC emacs-lisp
+  (req-package recentf
+    :init
+    (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
+    :config
+    (recentf-mode 1))
+#+END_SRC
+
 ** Wrape Lines at word boundary
 
 Call =visual-line-mode= to have soft-wrap.
