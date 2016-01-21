@@ -4087,7 +4087,6 @@ GitHub: https://github.com/cute-jumper/emacs-firefox-controller
   (req-package firefox-controller)
 #+END_SRC
 
-
 * Email
 ** bbdb
 
@@ -4450,18 +4449,6 @@ I always use =ERC= as my irc client, which is bundle with emacs.
 
 ** Packages for setup keybindings
 
-*** Smartrep
-
-=smartrep= is a sequential command interface library. It enables the omittance of typing prefix keys. (e.g., C-c C-n C-n C-n … instead of C-c C-n C-c C-n C-c C-n …)
-
-GitHub: https://github.com/myuhe/smartrep.el
-
-#+BEGIN_SRC emacs-lisp :noweb no-export
-  (req-package smartrep
-    :config
-    <<smartrep-config>>)
-#+END_SRC
-
 *** Hydra
 
 This is a package for GNU Emacs that can be used to tie related commands into a family of short bindings with a common prefix - a Hydra.
@@ -4730,12 +4717,6 @@ We *should not* use mouse when play with emacs.
   (global-unset-key (kbd "<mouse-1>"))
   (global-unset-key (kbd "<down-mouse-3>"))
   (global-unset-key (kbd "<mouse-3>"))
-#+END_SRC
-
-** Smartrep
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref smartrep-config
-
 #+END_SRC
 
 ** Normal State
