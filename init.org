@@ -3330,7 +3330,7 @@ GitHub: https://github.com/joshuamiller/clojars.el
 
 *** Search Clojure Cheatsheet
 
-GitHub:
+GitHub: https://github.com/clojure-emacs/clojure-cheatsheet
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
   (req-package clojure-cheatsheet)
