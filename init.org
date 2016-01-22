@@ -1948,12 +1948,15 @@ see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-
                      :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
 #+END_SRC
 
-** Setup keybindings                                          :keybinding:
+** Setup Org Keybindings                                         :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
   (bind-keys :map org-mode-map
              ("M-p"   . org-previous-visible-heading)
              ("M-n"   . org-next-visible-heading)
+             ("C-c a" . org-agenda)
+             ("C-c c" . org-capture)
+             ("C-c l" . org-stored-links)
              ("C-c b" . org-metaleft)
              ("C-c f" . org-metaright)
              ("C-c p" . org-metaup)
