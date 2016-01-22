@@ -2388,7 +2388,9 @@ GitHub: https://github.com/bbatsov/projectile
     (projectile-global-mode)
     ;; save projectile-known-projects-file in cache folder
     (setq projectile-known-projects-file
-          (concat user-cache-directory "projectile-bookmarks.eld")))
+          (concat user-cache-directory "projectile-bookmarks.eld"))
+    (setq projectile-cache-file
+          (concat user-cache-directory "projectile.cache")))
 #+END_SRC
 
 ** semantic
