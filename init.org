@@ -2461,6 +2461,15 @@ GitHub: https://github.com/rocky/emacs-dbgr
     (cscope-setup))
 #+END_SRC
 
+** flycheck
+
+#+BEGIN_SRC emacs-lisp
+  (req-package flycheck
+    :config
+    ;; enable globally
+    (global-flycheck-mode))
+#+END_SRC
+
 * Programming Languages
 
 ** arduino
