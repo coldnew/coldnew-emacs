@@ -4271,6 +4271,8 @@ After all is done, add following line in =~/.offlineimaprc= and we can get passw
   ;; Setup default mu4e search result mails list, if I want to see
   ;; more, use M-x `mu4e-headers-toggle-full-search' to make mi4e show all mails
   (setq mu4e-headers-results-limit 1000)
+  ;; Make mu4e does not show the "Indexing..." message
+  (setq mu4e-hide-index-messages t)
 #+END_SRC
 
 *** Use eww for html file render
