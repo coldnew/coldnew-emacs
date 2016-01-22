@@ -4124,12 +4124,6 @@ GitHub: https://github.com/nschum/window-numbering.el
   (req-package window-numbering)
 #+END_SRC
 
-* X11 Window Management
-
-#+BEGIN_SRC emacs-lisp
-  (req-package stumpwm-mode)
-#+END_SRC
-
 * Web Browser
 
 ** Firefox
