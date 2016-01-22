@@ -3357,7 +3357,7 @@ GitHub:
 *** Setup Scheme Keybinding                                    :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref scheme-config
-  (bind-keys :map scheme-mode-ma
+  (bind-keys :map scheme-mode-map
              ("C-c '" . my/narrow-or-widen-dwim))
 #+END_SRC
 
