@@ -5,7 +5,7 @@ SDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Configration
 INSDIR="${SDIR}/../.build"
-SRCDIR="${SDIR}/../src/emacs"
+SRCDIR="${SDIR}/../modules/emacs"
 
 ################################################################################
 # Any subsequent(*) commands which fail will cause the shell script to exit immediately
