@@ -2724,6 +2724,22 @@ GitHub: https://github.com/trotzig/import-js
     :mode "\\.lua$")
 #+END_SRC
 
+** Haskell
+
+#+BEGIN_SRC emacs-lisp :noweb no-export
+  (req-package haskell-mode
+    :mode "\\.hs\\'"
+    :config
+    <<haskell-config>>)
+#+END_SRC
+
+*** Setup Haskell Keybinding                                   :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref haskell-config
+  (bind-keys :map haskell-mode-map
+             ("C-c '" . my/narrow-or-widen-dwim))
+#+END_SRC
+
 ** scala
 
 #+BEGIN_SRC emacs-lisp
