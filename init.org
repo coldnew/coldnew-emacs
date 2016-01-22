@@ -4555,57 +4555,20 @@ GitHub: https://github.com/abo-abo/hydra
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref hydra-config
   (defhydra hydra-movement ()
-  ""
+    "
+       ^Forward^          ^Backward^      ^Up^     ^Down^   ^Char^
+      ^^^^^^^^---------------------------------------------------
+                         _c_: char
+      ^^^^^^^^
+       _n_: scroll down  _p_: scroll up
+      "
+    ("c" avy-goto-char)
+    ;; others
+    ("n" evil-scroll-page-down)
+    ("p" evil-scroll-page-up)
     )
 
-;;(global-set-key (kbd "C-x e") 'hydra-toggles-macro/body)
-#+END_SRC
-
-
-**** Window/Buffer Management
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref hydra-config
-  (defhydra hydra-window-buffer (:color red :hint nil)
-  "
-   ^Window^             ^Buffer^           ^Frame^
-  ^^^^^^^^---------------------------------------------------
-   ^hjkl^: move         _p_: previous      _u_: winner undo      ....../ \-.   .
-   _s_: split below     _n_: next          _r_: winner redo   .-/     (    o\.//
-   _v_: split right     _b_: switch        _w_: revert all     |  ...  \./\---'
-   _c_: delete this     _;_: last          ^ ^                 |.||  |.||
-   _o_: delete other    _K_: kill current  ^ ^
-  ^^^^^^^^
-  "
-    ("w" revert-all-buffers :color blue)
-
-    ("u" winner-undo)
-    ("r" winner-redo)
-
-    ("h" windmove-left)
-    ("j" windmove-down)
-    ("k" windmove-up)
-    ("l" windmove-right)
-
-    ("p" previous-buffer)
-    ("n" next-buffer)
-    ("b" ido-switch-buffer)
-    (";" mode-line-other-buffer :color blue)
-
-    ("s" split-window-below)
-    ("v" split-window-right)
-
-    ("K" kill-this-buffer)
-
-    ("c" delete-window)
-    ("o" delete-other-windows :color blue)
-
-    ;; ("H" hydra-move-splitter-left)
-    ;; ("J" hydra-move-splitter-down)
-    ;; ("K" hydra-move-splitter-up)
-    ;; ("L" hydra-move-splitter-right)
-
-    ("q" nil))
-    (global-set-key (kbd "C-x w") 'hydra-window-buffer/body)
+  ;;(global-set-key (kbd "C-x m") 'hydra-movement/body)
 #+END_SRC
 
 **** Font Setup
@@ -4625,13 +4588,41 @@ GitHub: https://github.com/abo-abo/hydra
 **** NEED REVIEW
 
 #+BEGIN_SRC emacs-lisp :tangle no
+  (defhydra ig-hydra-windows (:color pink
+                                     :hint nil)
+    "
+        ^Move          ^^^^^Swap      ^^^Resize                  ^^^^^^Del
+        _<up>_            ^^^_k_         ^^_K_      ^_r_: new ⮞     _d_: cur     _SPC_: quit
+  _<left>_   _<right>_    _h_   _l_     _H_   _L_    _n_: new ⮟     _x_: buf
+       _<down>_           ^^^_j_         ^^_J_      ^_b_: bury buf  _o_: other
+  "
+    ("<left>" windmove-left)
+    ("<down>" windmove-down)
+    ("<up>" windmove-up)
+    ("<right>" windmove-right)
+    ("h" buf-move-left)
+    ("j" buf-move-down)
+    ("k" buf-move-up)
+    ("l" buf-move-right)
+    ("H" hydra-move-splitter-left)
+    ("J" hydra-move-splitter-down)
+    ("K" hydra-move-splitter-up)
+    ("L" hydra-move-splitter-right)
+    ("r" (lambda () (interactive) (split-window-right)(windmove-right)) :color blue)
+    ("n" (lambda () (interactive) (split-window-below)(windmove-down)) :color blue)
+    ("d" delete-window :color blue)
+    ("o" delete-other-windows :color blue)
+    ("x" kill-this-buffer :color blue)
+    ("b" bury-buffer :color blue)
+    ("SPC" hydra-keyboard-quit :color blue))
+
   (defhydra hydra-multiple-cursors (:hint nil)
     "
-   ^Up^            ^Down^        ^Miscellaneous^
-  ----------------------------------------------
-  [_p_]   Next    [_n_]   Next    [_l_] Edit lines
-  [_P_]   Skip    [_N_]   Skip    [_a_] Mark all
-  [_M-p_] Unmark  [_M-n_] Unmark  [_q_] Quit"
+     ^Up^            ^Down^        ^Miscellaneous^
+    ----------------------------------------------
+    [_p_]   Next    [_n_]   Next    [_l_] Edit lines
+    [_P_]   Skip    [_N_]   Skip    [_a_] Mark all
+    [_M-p_] Unmark  [_M-n_] Unmark  [_q_] Quit"
     ("l" mc/edit-lines :exit t)
     ("a" mc/mark-all-like-this :exit t)
     ("n" mc/mark-next-like-this)
@@ -4642,34 +4633,34 @@ GitHub: https://github.com/abo-abo/hydra
     ("M-p" mc/unmark-previous-like-this)
     ("q" nil))
 
-  (defhydra hydra-org (:color red :hint nil)
+    (defhydra hydra-org (:color red :hint nil)
+      "
+    Navigation^
+    ---------------------------------------------------------
+    _j_ next heading
+    _k_ prev heading
+    _h_ next heading (same level)
+    _l_ prev heading (same level)
+    _u_p higher heading
+    _g_o to
     "
-  Navigation^
-  ---------------------------------------------------------
-  _j_ next heading
-  _k_ prev heading
-  _h_ next heading (same level)
-  _l_ prev heading (same level)
-  _u_p higher heading
-  _g_o to
-  "
-    ("j" outline-next-visible-heading)
-    ("k" outline-previous-visible-heading)
-    ("h" org-forward-heading-same-level)
-    ("l" org-backward-heading-same-level)
-    ("u" outline-up-heading)
-    ("g" org-goto :exit t))
+      ("j" outline-next-visible-heading)
+      ("k" outline-previous-visible-heading)
+      ("h" org-forward-heading-same-level)
+      ("l" org-backward-heading-same-level)
+      ("u" outline-up-heading)
+      ("g" org-goto :exit t))
 
-(defhydra hydra-toggles-macro  (:color blue :hint nil )
-     "macro commands
-     "
-     ("s" start-kbd-macro  "start macro" )
-     ("e"   "end macro" )
-     ("e" kmacro-end-and-call-macro  "use C-x e" )
-     ("n" name-last-kbd-macro  "name macro" )
-     ("i" insert-kbd-macro  "insert macro" )
-     ("q" nil "cancel" nil)
-)
+  (defhydra hydra-toggles-macro  (:color blue :hint nil )
+       "macro commands
+       "
+       ("s" start-kbd-macro  "start macro" )
+       ("e"   "end macro" )
+       ("e" kmacro-end-and-call-macro  "use C-x e" )
+       ("n" name-last-kbd-macro  "name macro" )
+       ("i" insert-kbd-macro  "insert macro" )
+       ("q" nil "cancel" nil)
+  )
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp :tangle no
@@ -4722,6 +4713,51 @@ GitHub: https://github.com/abo-abo/hydra
 (global-set-key (kbd "M-g") 'hydra-goto/body)
 #+END_SRC
 
+***** Window/Buffer Management
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref hydra-config
+  (defhydra hydra-window-buffer (:color red :hint nil)
+  "
+   ^Window^             ^Buffer^           ^Frame^
+  ^^^^^^^^---------------------------------------------------
+   ^hjkl^: move         _p_: previous      _u_: winner undo      ....../ \-.   .
+   _s_: split below     _n_: next          _r_: winner redo   .-/     (    o\.//
+   _v_: split right     _b_: switch        _w_: revert all     |  ...  \./\---'
+   _c_: delete this     _;_: last          ^ ^                 |.||  |.||
+   _o_: delete other    _K_: kill current  ^ ^
+  ^^^^^^^^
+  "
+    ("w" revert-all-buffers :color blue)
+
+    ("u" winner-undo)
+    ("r" winner-redo)
+
+    ("h" windmove-left)
+    ("j" windmove-down)
+    ("k" windmove-up)
+    ("l" windmove-right)
+
+    ("p" previous-buffer)
+    ("n" next-buffer)
+    ("b" ido-switch-buffer)
+    (";" mode-line-other-buffer :color blue)
+
+    ("s" split-window-below)
+    ("v" split-window-right)
+
+    ("K" kill-this-buffer)
+
+    ("c" delete-window)
+    ("o" delete-other-windows :color blue)
+
+    ;; ("H" hydra-move-splitter-left)
+    ;; ("J" hydra-move-splitter-down)
+    ;; ("K" hydra-move-splitter-up)
+    ;; ("L" hydra-move-splitter-right)
+
+    ("q" nil))
+    (global-set-key (kbd "C-x w") 'hydra-window-buffer/body)
+#+END_SRC
 
 ** Global Keybinding
 
