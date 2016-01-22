@@ -2248,6 +2248,9 @@ GitHub: https://github.com/zk-phi/indent-guide
 #+BEGIN_SRC emacs-lisp
   (req-package indent-guide
     :config
+    ;; Only show indent-guide in idle-time.
+    (setq indent-guide-delay 0.1)
+    ;; global enable `indent-guide-mode'
     (indent-guide-global-mode))
 #+END_SRC
 
