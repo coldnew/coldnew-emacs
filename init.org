@@ -3364,8 +3364,7 @@ GitHub:
 ** newlisp
 
 #+BEGIN_SRC emacs-lisp
-  (req-package newlisp-mode
-    :mode "\\.lisp\\'")
+  (req-package newlisp-mode)
 #+END_SRC
 
 * Web Development                                                       :web:
