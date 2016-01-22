@@ -1255,7 +1255,7 @@ GitHub: https://github.com/justbur/emacs-which-key
     :config
     ;; enable globally
     (which-key-mode)
-    ;;
+    ;; Hide/Modify some function prefix in which-key show menu
     (setq which-key-description-replacement-alist
           '(("Prefix Command" . "prefix")
             ("which-key-show-next-page" . "wk next pg")
