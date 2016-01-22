@@ -3817,8 +3817,16 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
 
 GitHub: https://github.com/magit/magit
 
-#+BEGIN_SRC emacs-lisp
-  (req-package magit)
+#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
+  (req-package magit
+    :config
+    <<magit-config>>)
+#+END_SRC
+
+*** Setup default commit arguments
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref magit-config
+  (setq magit-commit-arguments '("--verbose" "--signoff"))
 #+END_SRC
 
 *** Add support for git configuration files
