@@ -2552,18 +2552,6 @@ GitHub: https://github.com/youngker/elogcat.el
   (req-package alchemist)
 #+END_SRC
 
-** elmacro
-
-Shows keyboard macros or latest interactive commands as emacs lisp.
-
-GitHub: https://github.com/Silex/elmacro
-
-#+BEGIN_SRC emacs-lisp
-  (req-package elmacro
-    :config
-    (elmacro-mode))
-#+END_SRC
-
 ** gnuplot
 
 A major mode for Emacs for interacting with Gnuplot
@@ -3209,6 +3197,16 @@ GitHub: https://github.com/purcell/page-break-lines
                     (delete-file (concat buffer-file-name "c"))))))
 
   (add-hook 'emacs-lisp-mode-hook 'remove-elc-on-save)
+#+END_SRC
+
+*** Shows keyboard macros or latest interactive commands as emacs lisp.
+
+GitHub: https://github.com/Silex/elmacro
+
+#+BEGIN_SRC emacs-lisp
+  (req-package elmacro
+    :config
+    (elmacro-mode))
 #+END_SRC
 
 *** Setup Emacs-Lisp Keybinfons                                  :keybinding:
