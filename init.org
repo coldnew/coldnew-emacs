@@ -4841,3 +4841,5 @@ Following link is refrence for my emacs config.
 ~[10]~ https://gitlab.com/romo/emacs.d/raw/master/emacs.org
 
 ~[11]~ https://github.com/bixuanzju/emacs.d/blob/master/emacs-init.org
+
+~[12]~ [[https://github.com/cheunghy/emacs-easy-ide]]
