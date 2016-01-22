@@ -378,6 +378,15 @@ Sometimes package manager will install some emacs-lisp file to system path, add 
       (normal-top-level-add-subdirs-to-load-path)))
 #+END_SRC
 
+I think I'll write some dynamic module extension, which will save to =~/.emacs.d/modules=, use a helper script to help me load them.
+
+#+BEGIN_SRC emacs-lisp
+  ;; load the `load-modules.el' file which help me load external modulept
+  (let ((script (concat user-emacs-directory "/modules/load-modules.el")))
+    (when (file-exists-p script)
+      (load script)))
+#+END_SRC
+
 * Basic setup
 
 Some basic setup to disabe/enable default feature before we start. The
