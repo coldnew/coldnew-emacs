@@ -3199,7 +3199,7 @@ GitHub: https://github.com/purcell/page-break-lines
   (add-hook 'emacs-lisp-mode-hook 'remove-elc-on-save)
 #+END_SRC
 
-*** Setup Keybinfons                                           :keybinding:
+*** Setup Emacs-Lisp Keybinfons                                  :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref emacs-lisp-mode-config
   (bind-keys :map emacs-lisp-mode-map
@@ -3352,6 +3352,13 @@ GitHub:
     ;; defaulting to the first in the list. Use `C-c C-s' to select the
     ;; implementation by hand (on a per file basis).
     (setq geiser-active-implementations '(guile chicken)))
+#+END_SRC
+
+*** Setup Scheme Keybinding                                    :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref scheme-config
+  (bind-keys :map scheme-mode-ma
+             ("C-c '" . my/narrow-or-widen-dwim))
 #+END_SRC
 
 ** newlisp
