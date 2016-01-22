@@ -3361,6 +3361,15 @@ GitHub:
              ("C-c '" . my/narrow-or-widen-dwim))
 #+END_SRC
 
+** Common Lisp
+
+#+BEGIN_SRC emacs-lisp :noweb no-export
+  (req-package lisp-mode
+    :mode "\\.lisp\\'"
+    :config
+    <<common-lisp-config>>)
+#+END_SRC
+
 ** newlisp
 
 #+BEGIN_SRC emacs-lisp
