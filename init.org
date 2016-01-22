@@ -382,7 +382,7 @@ I think I'll write some dynamic module extension, which will save to =~/.emacs.d
 
 #+BEGIN_SRC emacs-lisp
   ;; load the `load-modules.el' file which help me load external modulept
-  (let ((script (concat user-emacs-directory "/modules/load-modules.el")))
+  (let ((script (concat user-emacs-directory "modules/load-modules.el")))
     (when (file-exists-p script)
       (load script)))
 #+END_SRC
