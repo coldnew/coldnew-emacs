@@ -3844,10 +3844,11 @@ GitHub: https://github.com/Silex/elmacro
 
 *** Add refactor function support
 
-https://github.com/clojure-emacs/clj-refactor.el
+GitHub: https://github.com/clojure-emacs/clj-refactor.el
 
 #+BEGIN_SRC emacs-lisp
   (req-package clj-refactor
+    :require (helm cljr-helm)
     :config
     ;; Add clj-refactor to clojure-mode
     (add-hook 'clojure-mode-hook '(lambda () (clj-refactor-mode 1)))
