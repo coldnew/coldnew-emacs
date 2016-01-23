@@ -3097,28 +3097,34 @@ Use my C++ coding style.
 Though =LISP= has many dialet, it still is the best programming
 language I ever met.
 
-** Prettify symbols
+** Plugins
 
-Show lambda as λ.
+Common setup for LISP development.
 
-#+BEGIN_SRC emacs-lisp
-  (global-prettify-symbols-mode 1)
-#+END_SRC
-
-** lispy
+*** lispy
 
 This package reimagines Paredit - a popular method to navigate and edit LISP code in Emacs.
 
 GitHub: https://github.com/abo-abo/lispy
 
+For more info to control lispy, please refer: http://oremacs.com/lispy/
+
 #+BEGIN_SRC emacs-lisp
   (req-package lispy
+    :require hungry-delete
     :config
     (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
     (add-hook 'lisp-interaction-mode-hook (lambda () (lispy-mode 1)))
     (add-hook 'clojure-mode-hook (lambda () (lispy-mode 1)))
     (add-hook 'scheme-mode-hook (lambda () (lispy-mode 1)))
     (add-hook 'lisp-mode-hook (lambda () (lispy-mode 1))))
+#+END_SRC
+*** Prettify symbols
+
+Show lambda as λ.
+
+#+BEGIN_SRC emacs-lisp
+  (global-prettify-symbols-mode 1)
 #+END_SRC
 
 ** Emacs Lisp
@@ -3242,7 +3248,7 @@ GitHub: https://github.com/Silex/elmacro
 
 #+BEGIN_SRC emacs-lisp :noweb no-export
   (req-package clojure-mode
-    :require (clojure-mode-extra-font-locking flycheck-clojure)
+    :require (clojure-mode-extra-font-locking flycheck-clojure lispy)
     :mode "\\.\\(clj\\|boot\\|cljx\\|edn\\|cljs\\|cljs.hl\\)\\'"
     :config
     <<clojure-config>>)
