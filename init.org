@@ -4866,6 +4866,20 @@ We *should not* use mouse when play with emacs.
     )
 #+END_SRC
 
+** Space State
+
+For =space= state, I use evil-leader to achive this goal.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-leader-keybindings
+  (evil-leader/set-leader "<SPC>")
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-leader-keybindings
+  (evil-leader/set-key
+    ;; "1" 'select-window-1
+    )
+#+END_SRC
+
 ** Ex Command
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-ex-commands
