@@ -235,6 +235,7 @@ looks like this:
   (depends-on "req-package")
   (depends-on "paradox")
   (depends-on "org")
+  (depends-on "htmlize")
 #+END_SRC
 
 Then run the following command in your =.emacs.d= directory to set up
