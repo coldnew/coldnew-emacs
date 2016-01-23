@@ -941,7 +941,7 @@ to delete all whitespace in the direction you are deleting.
     (global-hungry-delete-mode))
 #+END_SRC
 
-** hydra
+** hydra                                                        :keybinding:
 
 This is a package for GNU Emacs that can be used to tie related commands into a family of short bindings with a common prefix - a Hydra.
 
