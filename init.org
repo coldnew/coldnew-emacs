@@ -201,12 +201,6 @@ Add [[http://melpa.org][melpa]] to package list.
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 #+END_SRC
 
-Also add [[http://orgmode.org][org]] to it.
-
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-#+END_SRC
-
 ** Cask and Pallet
 
 [[https://github.com/rdallasgray/pallet][Pallet]] is a wonderful little tool built on [[https://github.com/cask/cask][Cask]], a dependency management tool
@@ -240,6 +234,7 @@ looks like this:
   (depends-on "async")
   (depends-on "req-package")
   (depends-on "paradox")
+  (depends-on "org")
 #+END_SRC
 
 Then run the following command in your =.emacs.d= directory to set up
