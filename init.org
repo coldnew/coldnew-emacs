@@ -3944,13 +3944,27 @@ Some interactive commands for clojure-mode.
 
 *** Setup Clojure Keybinding                                   :keybinding:
 
+#+BEGIN_SRC emacs-lisp
+  (use-package hydra
+    :ensure t
+    :config
+    (defhydra hydra-clojure-docs (clojure-mode-map "C-c d" :color blue)
+      "Clojure Documentation"
+      ("f" cider-code "functional")
+      ("g" cider-grimoire "grimoire")
+      ("w" cider-grimoire-web "web examples")
+      ("c" clojure-cheatsheet "cheatsheet")
+      ("d" dash-at-point "dash")))
+#+END_SRC
+
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
   (bind-keys :map clojure-mode-map
              ;; M-m     . u
              ("C-c M-c" . cider-connect)
              ("C-c M-j" . cider-jack-in)
              ("C-c '"   . my/narrow-or-widen-dwim)
-             ("C-c h"   . clojure-cheatsheet)
+             ("C-c d"   . hydra/clojure-docs/body)
+             ("C-c h"   . helm-dash)
              ("C-x C-e" . cider-eval-last-sexp)
              ("C-c C-v" . my/cider-send-and-evaluate-sexp)
              ("C-c C-t" . projectile-toggle-between-implementation-and-test))
