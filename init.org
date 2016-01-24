@@ -3949,9 +3949,8 @@ Some interactive commands for clojure-mode.
 
 #+BEGIN_SRC emacs-lisp
   (use-package hydra
-    :ensure t
     :config
-    (defhydra hydra-clojure-docs (clojure-mode-map "C-c d" :color blue)
+    (defhydra hydra-clojure-docs (:color blue)
       "Clojure Documentation"
       ("f" cider-code "functional")
       ("g" cider-grimoire "grimoire")
