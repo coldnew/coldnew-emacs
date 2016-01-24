@@ -3953,6 +3953,7 @@ Some interactive commands for clojure-mode.
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
   (bind-keys :map clojure-mode-map
              ;; M-m     . refactor command
+             ("C-c C-f" . projectile-find-file)
              ("C-c M-c" . cider-connect)
              ("C-c M-j" . cider-jack-in)
              ("C-c '"   . my/narrow-or-widen-dwim)
