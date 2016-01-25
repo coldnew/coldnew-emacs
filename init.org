@@ -800,6 +800,16 @@ GitHub: https://github.com/akermu/cbm.el
   (req-package cbm)
 #+END_SRC
 
+** darkroom
+
+Remove visual distractions and focus on writing.
+
+GitHub: https://github.com/capitaomorte/darkroom
+
+#+BEGIN_SRC emacs-lisp
+  (req-package darkroom)
+#+END_SRC
+
 ** discover-my-major
 
 [[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
