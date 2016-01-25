@@ -1442,6 +1442,14 @@ GitHub: https://github.com/ian-kelling/spray
   (req-package spray)
 #+END_SRC
 
+** sicp
+
+Reading sicp in emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package sicp)
+#+END_SRC
+
 ** string-inflection
 
 underscore -> UPCASE -> CamelCase conversion of names.
