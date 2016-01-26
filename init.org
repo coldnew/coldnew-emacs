@@ -2555,9 +2555,7 @@ GitHub: https://github.com/zk-phi/indent-guide
   (req-package indent-guide
     :config
     ;; Only show indent-guide in idle-time.
-    (setq indent-guide-delay 0.1)
-    ;; global enable `indent-guide-mode'
-    (indent-guide-global-mode))
+    (setq indent-guide-delay 0.1))
 #+END_SRC
 
 ** Visualization of matching parens
@@ -3731,6 +3729,19 @@ For more info to control lispy, please refer: http://oremacs.com/lispy/
     (add-hook 'scheme-mode-hook #'my/lispy-mode)
     (add-hook 'lisp-mode-hook #'my/lispy-mode))
 #+END_SRC
+*** indent-guide
+
+#+BEGIN_SRC emacs-lisp
+  (use-package indent-guide
+    :ensure t
+    :config
+    (add-hook 'emacs-lisp-mode-hook #'indent-guide-mode)
+    (add-hook 'lisp-interaction-mode-hook #'indent-guide-mode)
+    (add-hook 'clojure-mode-hook #'indent-guide-mode)
+    (add-hook 'scheme-mode-hook #'indent-guide-mode)
+    (add-hook 'lisp-mode-hook #'indent-guide-mode))
+#+END_SRC
+
 *** Prettify symbols
 
 Show lambda as λ.
