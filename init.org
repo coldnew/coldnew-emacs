@@ -643,8 +643,7 @@ Some buildin packages need to some setup.
   (eval-after-load 'nsm
     '(progn
        (setq nsm-settings-file
-             (file-name-as-directory
-              (concat user-cache-directory "network-security.data")))))
+             (concat user-cache-directory "network-security.data"))))
 #+END_SRC
 
 ** url
