@@ -3543,7 +3543,7 @@ to =ff-find-other-file=.
 GitHub: https://github.com/fourier/cff
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
-  (req-package cff)
+  (use-package cff :ensure t)
 #+END_SRC
 
 ** Use subword-mode for C/C++ project
