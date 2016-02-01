@@ -799,6 +799,16 @@ GitHub: https://github.com/akermu/cbm.el
   (req-package cbm)
 #+END_SRC
 
+** crux
+
+A Collection of Ridiculously Useful eXtensions for Emacs. crux bundles a few useful interactive commands to enhance your overall Emacs experience.
+
+GitHub: https://github.com/bbatsov/crux
+
+#+BEGIN_SRC emacs-lisp
+  (req-package crux)
+#+END_SRC
+
 ** darkroom
 
 Remove visual distractions and focus on writing.
