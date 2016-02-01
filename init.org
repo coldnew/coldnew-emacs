@@ -2109,7 +2109,9 @@ ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-thresho
 * Org
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
-  (req-package org
+  (use-package org
+    :ensure t
+    :pin gnu                              ; fetch fron `gnu'
     :mode (("\\.org\\'" . org-mode)
            ("\\.org_archive\\'" . org-mode))
     :config
