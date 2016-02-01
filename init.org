@@ -2254,6 +2254,22 @@ see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-
                      :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
 #+END_SRC
 
+** Crypt contents in org-mode
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
+  (use-package org-crypt
+    :config
+    ;; Auto encrypt when save file
+    (org-crypt-use-before-save-magic)
+    ;; Encrypt with tagname: `secret'
+    (setq org-crypt-tag-matcher "secret")
+    ;; Prevent the `secret' tag inherit by child
+    ;; (The child item still will be encrypt)
+    (setq org-tags-exclude-from-inheritance (quote ("secret")))
+    ;; Use my own password to encrypt
+    (setq org-crypt-key nil))
+#+END_SRC
+
 ** Setup Org Keybindings                                         :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
