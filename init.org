@@ -2383,6 +2383,20 @@ GitHub: https://github.com/jscheid/dtrt-indent
     (setq epa-file-cache-passphrase-for-symmetric-encryption t))
 #+END_SRC
 
+*** Install gnupg to system
+
+For Mac OSX, just type
+
+#+BEGIN_SRC sh :tangle no :noweb-ref install-in-macosx
+  brew install gpg
+#+END_SRC
+
+Most Linux already shipped with gnupg, if you use Gentoo Linux, you can use following command to install it
+
+#+BEGIN_SRC sh :tangle no :noweb-ref install-in-gentoo
+  emerge app-crypt/gnupg
+#+END_SRC
+
 ** Remote file editing
 
 #+BEGIN_SRC emacs-lisp
