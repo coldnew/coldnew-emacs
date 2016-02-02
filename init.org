@@ -2120,7 +2120,6 @@ ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-thresho
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package org
-    :ensure t
     :pin gnu                              ; fetch fron `gnu'
     :mode (("\\.org\\'" . org-mode)
            ("\\.org_archive\\'" . org-mode))
@@ -2131,8 +2130,6 @@ ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-thresho
 ** Basic setup
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  ;; Always enable auto indent mode
-  (setq org-indent-mode t)
   ;; fontify source code
   (setq org-src-fontify-natively t)
   ;; Use current window when switch to source block
@@ -2141,6 +2138,15 @@ ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-thresho
   (setq org-confirm-babel-evaluate nil)
   ;; Disable add validation link when export to HTML
   (setq org-html-validation-link nil)
+#+END_SRC
+
+*** Indention setup
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
+  ;; Always enable auto indent mode
+  (use-package org-indent
+    :config
+    (setq org-indent-mode t))
 #+END_SRC
 
 *** Pretty Bullets
