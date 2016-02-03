@@ -5121,3 +5121,5 @@ Following link is refrence for my emacs config.
 ~[11]~ https://github.com/bixuanzju/emacs.d/blob/master/emacs-init.org
 
 ~[12]~ [[https://github.com/cheunghy/emacs-easy-ide]]
+
+~[13]~ https://github.com/tsu-nera/dotfiles/tree/master/.emacs.d/inits
