@@ -2292,6 +2292,19 @@ GitHub: https://github.com/gongo/org-redmine
     (setq org-redmine-auth-netrc-use t))
 #+END_SRC
 
+** Plugins
+
+*** ox-textile
+
+An Org Mode Exporter Backend For Textile.
+
+GitHub: https://github.com/yashi/org-textile
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (use-package ox-textile
+    :ensure t)
+#+END_SRC
+
 ** Setup Org Keybindings                                         :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
