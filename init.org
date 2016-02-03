@@ -5132,3 +5132,5 @@ Following link is refrence for my emacs config.
 ~[12]~ [[https://github.com/cheunghy/emacs-easy-ide]]
 
 ~[13]~ https://github.com/tsu-nera/dotfiles/tree/master/.emacs.d/inits
+
+~[14]~ https://github.com/aaronbieber/dotfiles/tree/master/configs/emacs.d/lisp
