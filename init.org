@@ -3497,7 +3497,7 @@ GitHub: https://github.com/trotzig/import-js
 * C / C++ Development
 
 #+BEGIN_SRC emacs-lisp :noweb no-export
-  (req-package cc-mode
+  (use-package cc-mode
     :mode
     (("\\.h\\'" . c-mode)
      ("\\.c\\'" . c-mode)
@@ -3642,6 +3642,17 @@ In most C/C++ project, we naming variable in camelCase, subword-mode can help us
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'c-mode-common-hook 'electric-pair-mode)
+#+END_SRC
+
+** Add refactor function support
+
+Semantic Refactor is a C/C++ refactoring tool based on Semantic parser framework.
+
+GitHub: https://github.com/tuhdo/semantic-refactor
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
+  (use-package srefactor
+    :ensure t)
 #+END_SRC
 
 ** Coding Styles (C)
