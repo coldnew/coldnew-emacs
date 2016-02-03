@@ -628,6 +628,16 @@ Some buildin packages need to some setup.
              (concat user-cache-directory "idlwave"))))
 #+END_SRC
 
+** srecode
+
+#+BEGIN_SRC emacs-lisp
+  ;; change srecode cache file path
+  (eval-after-load 'srecode
+    '(progn
+       (setq srecode-map-save-file
+             (concat user-cache-directory "srecode-map.el")))
+#+END_SRC
+
 ** request
 
 #+BEGIN_SRC emacs-lisp
