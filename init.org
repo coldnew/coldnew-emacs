@@ -2276,6 +2276,22 @@ see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-
     (setq org-crypt-key nil))
 #+END_SRC
 
+** Integrate with redmine
+
+GitHub: https://github.com/gongo/org-redmine
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (use-package org-redmine
+    :ensure t
+    :config
+    ;; NOTE: in personal private setting
+    (setq org-redmine-uri nil)
+    (setq org-redmine-auth-api-key nil)
+    (setq org-redmine-auth-password nil)  ;
+    ;; read account/password from ~/.authinfo.gpg
+    (setq org-redmine-auth-netrc-use t))
+#+END_SRC
+
 ** Setup Org Keybindings                                         :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
