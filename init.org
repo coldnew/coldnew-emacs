@@ -2292,9 +2292,9 @@ GitHub: https://github.com/gongo/org-redmine
     (setq org-redmine-auth-netrc-use t))
 #+END_SRC
 
-** Plugins
+** Exporter Setup
 
-*** ox-textile
+*** Textile
 
 An Org Mode Exporter Backend For Textile.
 
