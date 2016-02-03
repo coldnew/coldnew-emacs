@@ -2169,6 +2169,14 @@ GitHub: https://github.com/sabof/org-bullets
                             (sequence "|" "✘ CANCELED(c)")))
 #+END_SRC
 
+*** Enable word-wrap
+
+Call =visual-line-mode= to have soft-wrap.
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
+  (add-hook 'org-mode-hook #'visual-line-mode)
+#+END_SRC
+
 ** Extend org-mode's easy templates
 
 org-mode make it easy to insert blocks by typing =<s[TAB]= ...etc. I
@@ -2249,17 +2257,6 @@ see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-
        (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
        ))
 #+END_SRC
-** Latex Export
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (setq org-format-latex-options
-        '(:forground "black" :background "white"
-                     :scale 1.5
-                     :html-foreground "Black" :html-background "Transparent"
-                     :html-scale 1.0
-                     :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
-#+END_SRC
-
 ** Crypt contents in org-mode
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
@@ -2293,6 +2290,16 @@ GitHub: https://github.com/gongo/org-redmine
 #+END_SRC
 
 ** Exporter Setup
+*** Latex Export
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (setq org-format-latex-options
+        '(:forground "black" :background "white"
+                     :scale 1.5
+                     :html-foreground "Black" :html-background "Transparent"
+                     :html-scale 1.0
+                     :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+#+END_SRC
 
 *** Textile
 
@@ -2503,15 +2510,6 @@ GitHub: https://github.com/purcell/whitespace-cleanup-mode
     (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
     :config
     (recentf-mode 1))
-#+END_SRC
-
-** Wrape Lines at word boundary
-
-Call =visual-line-mode= to have soft-wrap.
-
-#+BEGIN_SRC emacs-lisp
-  (global-visual-line-mode 1)
-   (setq line-move-visual nil)
 #+END_SRC
 
 ** Highlight numbers
