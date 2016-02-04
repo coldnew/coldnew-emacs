@@ -4108,7 +4108,7 @@ Some interactive commands for clojure-mode.
 
 #+BEGIN_SRC emacs-lisp :noweb no-export
   (use-package scheme
-    :mode "\\.scm\\'"
+    :mode ("\\.scm\\'" . scheme-mode)
     :config
     <<scheme-config>>)
 #+END_SRC
