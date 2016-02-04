@@ -635,7 +635,7 @@ Some buildin packages need to some setup.
   (eval-after-load 'srecode
     '(progn
        (setq srecode-map-save-file
-             (concat user-cache-directory "srecode-map.el")))
+             (concat user-cache-directory "srecode-map.el"))))
 #+END_SRC
 
 ** request
