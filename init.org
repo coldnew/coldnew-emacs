@@ -4107,21 +4107,23 @@ Some interactive commands for clojure-mode.
 ** Scheme
 
 #+BEGIN_SRC emacs-lisp :noweb no-export
-  (req-package scheme
+  (use-package scheme
     :mode "\\.scm\\'"
     :config
     <<scheme-config>>)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (req-package racket-mode
+  (use-package racket-mode
+    :ensure t
     :mode "\\.rkt[dl]?\\'")
 #+END_SRC
 
 *** Use geiser to interaction wich scheme
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref scheme-config
-  (req-package geiser
+  (use-package geiser
+    :ensure t
     :init
     ;; On opening a scheme file, Geiser will try to guess its Scheme,
     ;; defaulting to the first in the list. Use `C-c C-s' to select the
