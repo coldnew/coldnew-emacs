@@ -3414,9 +3414,21 @@ GitHub: https://github.com/trotzig/import-js
 
 ** qml
 
+#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
+  (use-package qml-mode
+    :ensure t
+    :mode "\\.qml$"
+    :config
+    <<qml-config>>)
+#+END_SRC
+
+*** indent-guide  :tangle no :noweb-ref qml-config
+
 #+BEGIN_SRC emacs-lisp
-  (req-package qml-mode
-    :mode "\\.qml$")
+  (use-package indent-guide
+    :ensure t
+    :config
+    (add-hook 'qml-mode-hook #'indent-guide-mode))
 #+END_SRC
 
 ** ruby
