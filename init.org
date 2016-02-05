@@ -2705,8 +2705,8 @@ GitHub: https://github.com/syohex/vi-tilde-fringe
 Though I am really familier with emacs, I still like some vim command.
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
-  (req-package evil
-    :require (undo-tree)
+  (use-package evil
+    :ensure t
     :config
     ;; enable evil-mode globally
     (evil-mode t)
@@ -2759,8 +2759,9 @@ Evil user coming from Vim it means an easier start.
 
 GitHub: https://github.com/cofi/evil-leader
 
-#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
-  (req-package evil-leader
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code :tangle no :noweb-ref evil-config
+  (use-package evil-leader
+    :ensure t
     :config
     ;; enable evil-leader globally
     (global-evil-leader-mode)
@@ -2774,10 +2775,22 @@ This package emulates [[https://github.com/tpope/vim-surround][surround.vim by T
 
 GitHub: https://github.com/timcharper/evil-surround
 
-#+BEGIN_SRC emacs-lisp
-  (req-package evil-surround
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
+  (use-package evil-surround
+    :ensure t
     :config
     (global-evil-surround-mode 1))
+#+END_SRC
+
+** evil-org
+
+Supplemental evil-mode key-bindings to Emacs org-mode. This is a work in progress, expect improvements and don’t be afraid to contribute patches.
+
+GitHub: https://github.com/edwtjo/evil-org-mode
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-config
+  (use-package evil-org
+    :ensure t)
 #+END_SRC
 
 * IDE Features
