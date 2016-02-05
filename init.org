@@ -2051,7 +2051,7 @@ unload previous theme before loading a new one.
 * Minibuffer                                                :minibuffer:
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
-  (req-package minibuffer                  ; buildin
+  (use-package minibuffer                  ; buildin
     :config
     <<minibuffer-config>>)
 #+END_SRC
@@ -2098,8 +2098,8 @@ periodically and when exiting Emacs.  When Savehist mode is enabled
 for the first time in an Emacs session, it loads the previous
 minibuffer history from ‘savehist-file’.
 
-#+BEGIN_SRC emacs-lisp
-  (req-package savehist
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref minibuffer-config
+  (use-package savehist
     :config
     (setq savehist-file (concat user-cache-directory "savehist.dat"))
     (savehist-mode 1))
