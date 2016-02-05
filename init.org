@@ -3422,9 +3422,9 @@ GitHub: https://github.com/trotzig/import-js
     <<qml-config>>)
 #+END_SRC
 
-*** indent-guide  :tangle no :noweb-ref qml-config
+*** indent-guide
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref qml-config
   (use-package indent-guide
     :ensure t
     :config
