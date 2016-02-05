@@ -3008,7 +3008,8 @@ GitHub: https://github.com/areina/helm-dash
              ("M-t" . my/minibuffer-switch-to-ramdisk)
              ("M-h" . my/minibuffer-switch-to-home)
              ("M-/" . my/minibuffer-switch-to-rootdir)
-             ("M-s" . my/minibuffer-switch-to-tramp))
+             ("M-s" . my/minibuffer-switch-to-tramp)
+             ("C-z" . helm-select-action))
 #+END_SRC
 
 * Completion
