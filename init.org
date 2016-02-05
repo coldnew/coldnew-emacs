@@ -2341,6 +2341,17 @@ GitHub: https://github.com/yashi/org-textile
     :ensure t)
 #+END_SRC
 
+*** reStructuredText (RST)
+
+reStructuredText Back-End for Org Export Engine.
+
+GitHub: https://github.com/masayuko/ox-rst
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (use-package ox-rst
+    :ensure t)
+#+END_SRC
+
 ** Setup Org Keybindings                                         :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
