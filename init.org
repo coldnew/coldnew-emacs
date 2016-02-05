@@ -2317,15 +2317,17 @@ GitHub: https://github.com/gongo/org-redmine
 #+END_SRC
 
 ** Exporter Setup
-*** Latex Export
+*** Latex
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (setq org-format-latex-options
-        '(:forground "black" :background "white"
-                     :scale 1.5
-                     :html-foreground "Black" :html-background "Transparent"
-                     :html-scale 1.0
-                     :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+  (use-package ox-latex
+    :config
+    (setq org-format-latex-options
+          '(:forground "black" :background "white"
+                       :scale 1.5
+                       :html-foreground "Black" :html-background "Transparent"
+                       :html-scale 1.0
+                       :matchers ("begin" "$1" "$" "$$" "\\(" "\\["))))
 #+END_SRC
 
 *** Textile
