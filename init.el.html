@@ -80,6 +80,21 @@
                 <span style="color: #795548;">(</span>normal-top-level-add-subdirs-to-load-path<span style="color: #795548;">)</span><span style="color: #ff8888;">)</span><span style="color: #fff59d;">)</span>
              load-path<span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
+<span style="color: #5f5f5f; font-style: italic;">;;;; </span><span style="color: #9ac; font-style: italic;">add some system site-lisp to my load-path
+</span>
+<span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Mac OSX
+</span><span style="color: #aadddd;">(</span><span style="color: #aaffaa;">when</span> <span style="color: #81d4fa;">(</span>equal system-type 'darwin<span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">let</span> <span style="color: #aaccff;">(</span><span style="color: #aaeecc;">(</span>default-directory <span style="color: #aadddd;">"/usr/local/share/emacs/site-lisp/"</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span>normal-top-level-add-subdirs-to-load-path<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Linux
+</span><span style="color: #aadddd;">(</span><span style="color: #aaffaa;">when</span> <span style="color: #81d4fa;">(</span>equal system-type 'gnu/linux<span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">let</span> <span style="color: #aaccff;">(</span><span style="color: #aaeecc;">(</span>default-directory <span style="color: #aadddd;">"/usr/share/emacs/site-lisp/"</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span>normal-top-level-add-subdirs-to-load-path<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">setq</span> user-full-name <span style="color: #aadddd;">"Yen-Chin, Lee"</span><span style="color: #aadddd;">)</span>
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">setq</span> user-mail-address <span style="color: #aadddd;">"coldnew.tw@gmail.com"</span><span style="color: #aadddd;">)</span>
+
 <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Only start server mode if I'm not root
 </span><span style="color: #aadddd;">(</span><span style="color: #aaffaa;">unless</span> <span style="color: #81d4fa;">(</span>string-equal <span style="color: #aadddd;">"root"</span> <span style="color: #aaccff;">(</span>getenv <span style="color: #aadddd;">"USER"</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">require</span> '<span style="color: #ccaaff;">server</span><span style="color: #81d4fa;">)</span>
@@ -192,15 +207,8 @@
            <span style="color: #aaeecc;">(</span>file-name-as-directory
             <span style="color: #ccaaff;">(</span>concat user-cache-directory <span style="color: #aadddd;">"url"</span><span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
-<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">lispy</span><span style="color: #aadddd;">)</span>
-
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">ag</span>
   <span style="color: #ccaaff;">:if</span> <span style="color: #81d4fa;">(</span>executable-find <span style="color: #aadddd;">"ag"</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
-
-<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">aggressive-indent</span>
-  <span style="color: #ccaaff;">:config</span>
-  <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">(global-aggressive-indent-mode 1)
-</span>  <span style="color: #81d4fa;">(</span>add-to-list 'aggressive-indent-excluded-modes 'html-mode<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">ascii</span>
   <span style="color: #ccaaff;">:config</span>
@@ -219,6 +227,8 @@
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">buffer-move</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">bpr</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">calfw</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">cbm</span><span style="color: #aadddd;">)</span>
 
@@ -271,7 +281,15 @@
   <span style="color: #81d4fa;">(</span><span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-a"</span> . mwim-beginning-of-code-or-line<span style="color: #aaccff;">)</span>
    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-e"</span> . mwim-end-of-code-or-line<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">moedict</span><span style="color: #aadddd;">)</span>
+
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">noflet</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">nand2tetris</span>
+  <span style="color: #ccaaff;">:require</span> <span style="color: #81d4fa;">(</span>company company-nand2tetris nand2tetris-assembler<span style="color: #81d4fa;">)</span>
+  <span style="color: #ccaaff;">:if</span> <span style="color: #81d4fa;">(</span>file-exists-p <span style="color: #aadddd;">"~/Workspace/nand2tetris"</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #ccaaff;">:config</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> nand2tetris-core-base-dir <span style="color: #aadddd;">"~/Workspace/nand2tetris"</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">pangu-spacing</span>
   <span style="color: #ccaaff;">:config</span>
@@ -300,6 +318,11 @@
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">sx</span> <span style="color: #ccaaff;">:require</span> sx-load<span style="color: #aadddd;">)</span>
 
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">tldr</span>
+  <span style="color: #ccaaff;">:init</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> tldr-directory-path <span style="color: #aaccff;">(</span>concat user-cache-directory <span style="color: #aadddd;">"tldr/"</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> tldr-saved-zip-path <span style="color: #aaccff;">(</span>concat user-cache-directory <span style="color: #aadddd;">"tldr-source.zip"</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">travis</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">url-shortener</span><span style="color: #aadddd;">)</span>
@@ -308,7 +331,19 @@
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">which-key</span>
   <span style="color: #ccaaff;">:config</span>
-  <span style="color: #81d4fa;">(</span>which-key-mode<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+  <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">enable globally
+</span>  <span style="color: #81d4fa;">(</span>which-key-mode<span style="color: #81d4fa;">)</span>
+  <span style="color: #5f5f5f; font-style: italic;">;;</span><span style="color: #9ac; font-style: italic;">
+</span>  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> which-key-description-replacement-alist
+        '<span style="color: #aaccff;">(</span><span style="color: #aaeecc;">(</span><span style="color: #aadddd;">"Prefix Command"</span> . <span style="color: #aadddd;">"prefix"</span><span style="color: #aaeecc;">)</span>
+          <span style="color: #aaeecc;">(</span><span style="color: #aadddd;">"which-key-show-next-page"</span> . <span style="color: #aadddd;">"wk next pg"</span><span style="color: #aaeecc;">)</span>
+          <span style="color: #aaeecc;">(</span><span style="color: #aadddd;">"\\`calc-"</span> . <span style="color: #aadddd;">""</span><span style="color: #aaeecc;">)</span> <span style="color: #5f5f5f; font-style: italic;">; </span><span style="color: #9ac; font-style: italic;">Hide "calc-" prefixes when listing M-x calc keys
+</span>          <span style="color: #aaeecc;">(</span><span style="color: #aadddd;">"/body\\'"</span> . <span style="color: #aadddd;">""</span><span style="color: #aaeecc;">)</span> <span style="color: #5f5f5f; font-style: italic;">; </span><span style="color: #9ac; font-style: italic;">Remove display the "/body" portion of hydra fn names
+</span>          <span style="color: #aaeecc;">(</span><span style="color: #aadddd;">"modi/"</span> . <span style="color: #aadddd;">"m/"</span><span style="color: #aaeecc;">)</span> <span style="color: #5f5f5f; font-style: italic;">; </span><span style="color: #9ac; font-style: italic;">The car is intentionally not "\\`modi/" to cover
+</span>                                        <span style="color: #5f5f5f; font-style: italic;">; </span><span style="color: #9ac; font-style: italic;">cases like `</span><span style="color: #ccaaff; font-style: italic;">hydra-toggle/modi/..</span><span style="color: #9ac; font-style: italic;">'.
+</span>          <span style="color: #aaeecc;">(</span><span style="color: #aadddd;">"\\`hydra-"</span> . <span style="color: #aadddd;">"+h/"</span><span style="color: #aaeecc;">)</span>
+          <span style="color: #aaeecc;">(</span><span style="color: #aadddd;">"\\`org-babel-"</span> . <span style="color: #aadddd;">"ob/"</span><span style="color: #aaeecc;">)</span>
+          <span style="color: #aaeecc;">(</span><span style="color: #aadddd;">"\\`my/"</span> . <span style="color: #aadddd;">""</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">xkcd</span>
   <span style="color: #ccaaff;">:init</span>
@@ -325,7 +360,7 @@
   <span style="color: #81d4fa;">(</span>mapcar <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">lambda</span> <span style="color: #aaeecc;">(</span>x<span style="color: #aaeecc;">)</span> <span style="color: #aaeecc;">(</span>kill-buffer x<span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span> <span style="color: #aaccff;">(</span>buffer-list<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
   <span style="color: #81d4fa;">(</span>delete-other-windows<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
-<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">defun</span> <span style="color: #aaccff;">save-buffer-always</span> <span style="color: #81d4fa;">()</span>
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">defun</span> <span style="color: #aaccff;">my/save-buffer-always</span> <span style="color: #81d4fa;">()</span>
   <span style="color: #97abc6; font-style: italic;">"Save the buffer even if it is not modified."</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">interactive</span><span style="color: #81d4fa;">)</span>
   <span style="color: #81d4fa;">(</span>set-buffer-modified-p t<span style="color: #81d4fa;">)</span>
@@ -376,7 +411,7 @@ then it takes a second \\[</span><span style="color: #ccaaff; font-style: italic
   <span style="color: #81d4fa;">(</span>set-selective-display
    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">if</span> selective-display nil <span style="color: #ccaaff;">1</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
-<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">defun</span> <span style="color: #aaccff;">narrow-or-widen-dwim</span> <span style="color: #81d4fa;">(</span>p<span style="color: #81d4fa;">)</span>
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">defun</span> <span style="color: #aaccff;">my/narrow-or-widen-dwim</span> <span style="color: #81d4fa;">(</span>p<span style="color: #81d4fa;">)</span>
   <span style="color: #97abc6; font-style: italic;">"Widen if buffer is narrowed, narrow-dwim otherwise.
 Dwim means: region, org-src-block, org-subtree, or defun,
 whichever applies first. Narrowing to org-src-block actually
@@ -389,7 +424,8 @@ already narrowed."</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">cond</span> <span style="color: #aaccff;">(</span><span style="color: #aaeecc;">(</span><span style="color: #aaffaa;">and</span> <span style="color: #ccaaff;">(</span>buffer-narrowed-p<span style="color: #ccaaff;">)</span> <span style="color: #ccaaff;">(</span>not p<span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span> <span style="color: #aaeecc;">(</span>widen<span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
         <span style="color: #aaccff;">(</span><span style="color: #aaeecc;">(</span>region-active-p<span style="color: #aaeecc;">)</span>
          <span style="color: #aaeecc;">(</span>narrow-to-region <span style="color: #ccaaff;">(</span>region-beginning<span style="color: #ccaaff;">)</span> <span style="color: #ccaaff;">(</span>region-end<span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
-        <span style="color: #aaccff;">(</span><span style="color: #aaeecc;">(</span>derived-mode-p 'org-mode<span style="color: #aaeecc;">)</span>
+        <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">org-mode
+</span>        <span style="color: #aaccff;">(</span><span style="color: #aaeecc;">(</span>derived-mode-p 'org-mode<span style="color: #aaeecc;">)</span>
          <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">`</span><span style="color: #ccaaff; font-style: italic;">org-edit-src-code</span><span style="color: #9ac; font-style: italic;">' is not a real narrowing
 </span>         <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">command. Remove this first conditional if you
 </span>         <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">don't want it.
@@ -397,7 +433,8 @@ already narrowed."</span>
                 <span style="color: #fff59d;">(</span>delete-other-windows<span style="color: #fff59d;">)</span><span style="color: #ccaaff;">)</span>
                <span style="color: #ccaaff;">(</span><span style="color: #fff59d;">(</span><span style="color: #aaffaa;">ignore-errors</span> <span style="color: #ff8888;">(</span>org-narrow-to-block<span style="color: #ff8888;">)</span> t<span style="color: #fff59d;">)</span><span style="color: #ccaaff;">)</span>
                <span style="color: #ccaaff;">(</span>t <span style="color: #fff59d;">(</span>org-narrow-to-subtree<span style="color: #fff59d;">)</span><span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
-        <span style="color: #aaccff;">(</span><span style="color: #aaeecc;">(</span>derived-mode-p 'latex-mode<span style="color: #aaeecc;">)</span>
+        <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">latex-mode
+</span>        <span style="color: #aaccff;">(</span><span style="color: #aaeecc;">(</span>derived-mode-p 'latex-mode<span style="color: #aaeecc;">)</span>
          <span style="color: #aaeecc;">(</span>LaTeX-narrow-to-environment<span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
         <span style="color: #aaccff;">(</span>t <span style="color: #aaeecc;">(</span>narrow-to-defun<span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
@@ -457,6 +494,12 @@ With argument, do this that many times."</span>
           <span style="color: #fff59d;">(</span>delete-trailing-whitespace<span style="color: #fff59d;">)</span>
           <span style="color: #fff59d;">(</span>format-fn <span style="color: #ff8888;">(</span>point-min<span style="color: #ff8888;">)</span> <span style="color: #ff8888;">(</span>point-max<span style="color: #ff8888;">)</span><span style="color: #fff59d;">)</span>
           <span style="color: #fff59d;">(</span>message <span style="color: #aadddd;">"Indented whole buffer and clear whitespace and untabify."</span><span style="color: #fff59d;">)</span><span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">defun</span> <span style="color: #aaccff;">my/copy-and-comment</span> <span style="color: #81d4fa;">()</span>
+  <span style="color: #97abc6; font-style: italic;">"Copy region and comment it."</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">interactive</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span>kill-ring-save <span style="color: #aaccff;">(</span>region-beginning<span style="color: #aaccff;">)</span> <span style="color: #aaccff;">(</span>region-end<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span>comment-dwim nil<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">defun</span> <span style="color: #aaccff;">file-reopen-as-root</span> <span style="color: #81d4fa;">()</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">interactive</span><span style="color: #81d4fa;">)</span>
@@ -540,6 +583,11 @@ With argument, do this that many times."</span>
                   <span style="color: #fff59d;">(</span>get-char-property <span style="color: #ff8888;">(</span>point<span style="color: #ff8888;">)</span> 'face<span style="color: #fff59d;">)</span><span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
     <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">if</span> face <span style="color: #aaeecc;">(</span>message <span style="color: #aadddd;">"Face: %s"</span> face<span style="color: #aaeecc;">)</span> <span style="color: #aaeecc;">(</span>message <span style="color: #aadddd;">"No face at %d"</span> pos<span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">defun</span> <span style="color: #aaccff;">my/reload-init</span> <span style="color: #81d4fa;">()</span>
+  <span style="color: #97abc6; font-style: italic;">"Reload init.el file"</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">interactive</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span>load-file user-init-file<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">defun</span> <span style="color: #aaccff;">my/other-window-or-split</span> <span style="color: #81d4fa;">()</span>
   <span style="color: #97abc6; font-style: italic;">"Switch to other window or split it."</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">interactive</span><span style="color: #81d4fa;">)</span>
@@ -595,6 +643,16 @@ With argument, do this that many times."</span>
     <span style="color: #97abc6; font-style: italic;">"Insert /ssh:."</span>
     <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">interactive</span><span style="color: #aaccff;">)</span>
     <span style="color: #aaccff;">(</span>my/minibuffer-insert <span style="color: #aadddd;">"/ssh:"</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span>eval-after-load 'minibuffer
+    '<span style="color: #aaccff;">(</span><span style="color: #aaffaa;">progn</span>
+       <span style="color: #aaeecc;">(</span><span style="color: #aaffaa;">lexical-let</span> <span style="color: #ccaaff;">(</span><span style="color: #fff59d;">(</span>default-threshold gc-cons-threshold<span style="color: #fff59d;">)</span><span style="color: #ccaaff;">)</span>
+         <span style="color: #ccaaff;">(</span><span style="color: #aaffaa;">defun</span> <span style="color: #aaccff;">my/minibuffer-gc-setup-hook</span> <span style="color: #fff59d;">()</span>
+           <span style="color: #fff59d;">(</span><span style="color: #aaffaa;">setq</span> gc-cons-threshold most-positive-fixnum<span style="color: #fff59d;">)</span><span style="color: #ccaaff;">)</span>
+         <span style="color: #ccaaff;">(</span>add-hook 'minibuffer-setup-hook #'my/minibuffer-gc-setup-hook<span style="color: #ccaaff;">)</span>
+         <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">When exit, set back to default threshold
+</span>         <span style="color: #ccaaff;">(</span><span style="color: #aaffaa;">defun</span> <span style="color: #aaccff;">my/minibuffer-gc-exit-hook</span> <span style="color: #fff59d;">()</span>
+           <span style="color: #fff59d;">(</span><span style="color: #aaffaa;">setq</span> gc-cons-threshold default-threshold<span style="color: #fff59d;">)</span><span style="color: #ccaaff;">)</span>
+         <span style="color: #ccaaff;">(</span>add-hook 'minibuffer-exit-hook #'my/minibuffer-gc-exit-hook<span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">bind-keys</span> <span style="color: #ccaaff;">:map</span> minibuffer-local-map
              <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-w"</span> . backward-kill-word<span style="color: #aaccff;">)</span>
              <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"M-p"</span> . previous-history-element<span style="color: #aaccff;">)</span>
@@ -624,6 +682,9 @@ With argument, do this that many times."</span>
 </span>  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> org-confirm-babel-evaluate nil<span style="color: #81d4fa;">)</span>
   <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Disable add validation link when export to HTML
 </span>  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> org-html-validation-link nil<span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> org-todo-keywords '<span style="color: #aaccff;">(</span><span style="color: #aaeecc;">(</span>sequence <span style="color: #aadddd;">"&#9755; TODO(t)"</span> <span style="color: #aadddd;">"|"</span> <span style="color: #aadddd;">"&#10004; DONE(d)"</span><span style="color: #aaeecc;">)</span>
+                            <span style="color: #aaeecc;">(</span>sequence <span style="color: #aadddd;">"&#9873; WAITING(w)"</span> <span style="color: #aadddd;">"|"</span><span style="color: #aaeecc;">)</span>
+                            <span style="color: #aaeecc;">(</span>sequence <span style="color: #aadddd;">"|"</span> <span style="color: #aadddd;">"&#10008; CANCELED(c)"</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
   <span style="color: #81d4fa;">(</span>add-to-list 'org-structure-template-alist
                '<span style="color: #aaccff;">(</span><span style="color: #aadddd;">"E"</span> <span style="color: #aadddd;">"#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
   <span style="color: #81d4fa;">(</span>add-to-list 'org-structure-template-alist
@@ -687,6 +748,10 @@ With argument, do this that many times."</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">bind-keys</span> <span style="color: #ccaaff;">:map</span> org-src-mode-map
              <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-c C-c"</span> . org-edit-src-exit<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">org-bullets</span>
+  <span style="color: #ccaaff;">:config</span>
+  <span style="color: #81d4fa;">(</span>add-hook 'org-mode-hook <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">lambda</span> <span style="color: #aaeecc;">()</span> <span style="color: #aaeecc;">(</span>org-bullets-mode <span style="color: #ccaaff;">1</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">defvar</span> <span style="color: #aaccff;">coldnew-editor-map</span> <span style="color: #81d4fa;">(</span>make-keymap<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">define-minor-mode</span> <span style="color: #aaccff;">coldnew-editor-mode</span>
@@ -737,12 +802,20 @@ With argument, do this that many times."</span>
 </span>  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> epa-file-cache-passphrase-for-symmetric-encryption t<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">tramp</span>
+  <span style="color: #ccaaff;">:init</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> tramp-persistency-file-name <span style="color: #aaccff;">(</span>concat user-cache-directory <span style="color: #aadddd;">"tramp"</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
   <span style="color: #ccaaff;">:config</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> tramp-default-method <span style="color: #aadddd;">"rsync"</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">whitespace-cleanup-mode</span>
   <span style="color: #ccaaff;">:config</span>
   <span style="color: #81d4fa;">(</span>add-hook 'prog-mode-hook 'whitespace-cleanup-mode<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">recentf</span>
+  <span style="color: #ccaaff;">:init</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> recentf-save-file <span style="color: #aaccff;">(</span>expand-file-name <span style="color: #aadddd;">"recentf"</span> user-cache-directory<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #ccaaff;">:config</span>
+  <span style="color: #81d4fa;">(</span>recentf-mode <span style="color: #ccaaff;">1</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span>global-visual-line-mode <span style="color: #ccaaff;">1</span><span style="color: #aadddd;">)</span>
  <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">setq</span> line-move-visual nil<span style="color: #aadddd;">)</span>
@@ -819,12 +892,6 @@ This functions should be added to the hooks of major modes for programming."</sp
   <span style="color: #ccaaff;">:config</span>
   <span style="color: #81d4fa;">(</span>indent-guide-global-mode<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
-<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">electric-spacing</span>
-  <span style="color: #ccaaff;">:config</span>
-  <span style="color: #81d4fa;">(</span>add-hook 'c-mode-hook #'electric-spacing-mode<span style="color: #81d4fa;">)</span>
-  <span style="color: #81d4fa;">(</span>add-hook 'c++-mode-hook #'electric-spacing-mode<span style="color: #81d4fa;">)</span>
-  <span style="color: #81d4fa;">(</span>add-hook 'python-mode-hook #'electric-spacing-mode<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
-
 <span style="color: #aadddd;">(</span>show-paren-mode <span style="color: #ccaaff;">1</span><span style="color: #aadddd;">)</span>
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">setq</span> show-paren-delay <span style="color: #ccaaff;">0</span><span style="color: #aadddd;">)</span>               <span style="color: #5f5f5f; font-style: italic;">; </span><span style="color: #9ac; font-style: italic;">no delay
 </span>
@@ -859,7 +926,6 @@ This functions should be added to the hooks of major modes for programming."</sp
 </span>  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">evil-define-key</span> 'normal coldnew-editor-map
       <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x C-f"</span><span style="color: #aaccff;">)</span> 'helm-find-files
       <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x C-q"</span><span style="color: #aaccff;">)</span> 'read-only-mode
-      <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x C-s"</span><span style="color: #aaccff;">)</span> 'save-buffer-always
       <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x M-1"</span><span style="color: #aaccff;">)</span> 'deft-or-close
       <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x M-2"</span><span style="color: #aaccff;">)</span> 'multi-eshell
       <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x M-3"</span><span style="color: #aaccff;">)</span> 'mu4e
@@ -873,10 +939,7 @@ This functions should be added to the hooks of major modes for programming."</sp
       <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"M-x"</span><span style="color: #aaccff;">)</span> 'helm-M-x
       <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"M-s"</span><span style="color: #aaccff;">)</span> 'helm-occur
       <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x C-o"</span><span style="color: #aaccff;">)</span> 'other-frame
-      <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"M-o"</span><span style="color: #aaccff;">)</span> 'other-window
-      <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C--"</span><span style="color: #aaccff;">)</span> 'text-scale-decrease
-      <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-="</span><span style="color: #aaccff;">)</span> 'text-scale-increase
-      <span style="color: #81d4fa;">)</span>
+      <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"M-o"</span><span style="color: #aaccff;">)</span> 'other-window<span style="color: #81d4fa;">)</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">evil-define-key</span> 'insert coldnew-editor-map
     <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"&lt;delete&gt;"</span><span style="color: #aaccff;">)</span> 'hungry-delete-backward
    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">(kbd "TAB") 'yas/expand
@@ -891,7 +954,6 @@ This functions should be added to the hooks of major modes for programming."</sp
     <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x C-f"</span><span style="color: #aaccff;">)</span> 'helm-find-files
     <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x C-n"</span><span style="color: #aaccff;">)</span> 'company-complete
     <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x C-q"</span><span style="color: #aaccff;">)</span> 'read-only-mode
-    <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x C-s"</span><span style="color: #aaccff;">)</span> 'save-buffer-always
     <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x M-1"</span><span style="color: #aaccff;">)</span> 'deft-or-close
     <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x M-2"</span><span style="color: #aaccff;">)</span> 'multi-eshell
     <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x M-3"</span><span style="color: #aaccff;">)</span> 'mu4e
@@ -913,9 +975,9 @@ This functions should be added to the hooks of major modes for programming."</sp
     <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"M-y"</span><span style="color: #aaccff;">)</span> 'helm-show-kill-ring
     <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">(kbd "M-o") 'other-window
 </span>    <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x C-o"</span><span style="color: #aaccff;">)</span> 'other-frame
-    <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C--"</span><span style="color: #aaccff;">)</span> 'text-scale-decrease
     <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x t"</span><span style="color: #aaccff;">)</span> 'sane-term
     <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x T"</span><span style="color: #aaccff;">)</span> 'sane-term
+    <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"M-y"</span><span style="color: #aaccff;">)</span> 'helm-show-kill-ring
     <span style="color: #81d4fa;">)</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">evil-ex-define-cmd</span> <span style="color: #aadddd;">"ag"</span> 'helm-ag<span style="color: #81d4fa;">)</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">evil-ex-define-cmd</span> <span style="color: #aadddd;">"agp[roject]"</span> 'helm-projectile-ag<span style="color: #81d4fa;">)</span>
@@ -941,17 +1003,21 @@ This functions should be added to the hooks of major modes for programming."</sp
   <span style="color: #81d4fa;">(</span>projectile-global-mode<span style="color: #81d4fa;">)</span>
   <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">save projectile-known-projects-file in cache folder
 </span>  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> projectile-known-projects-file
-        <span style="color: #aaccff;">(</span>concat user-cache-directory <span style="color: #aadddd;">"projectile-bookmarks.eld"</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+        <span style="color: #aaccff;">(</span>concat user-cache-directory <span style="color: #aadddd;">"projectile-bookmarks.eld"</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> projectile-cache-file
+        <span style="color: #aaccff;">(</span>concat user-cache-directory <span style="color: #aadddd;">"projectile.cache"</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Enable projectile globally
+</span>  <span style="color: #81d4fa;">(</span>projectile-global-mode<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">semantic</span>
   <span style="color: #ccaaff;">:config</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> semanticdb-default-save-directory
-        <span style="color: #aaccff;">(</span>concat user-cache-directory <span style="color: #aadddd;">"semanticdb/"</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+        <span style="color: #aaccff;">(</span>concat user-cache-directory <span style="color: #aadddd;">"semanticdb/"</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
 
-<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">ggtags</span>
-  <span style="color: #ccaaff;">:config</span>
-  <span style="color: #81d4fa;">(</span>add-hook 'c-mode-hook #'ggtags-mode<span style="color: #81d4fa;">)</span>
-  <span style="color: #81d4fa;">(</span>add-hook 'c++-mode-hook #'ggtags-mode<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+  <span style="color: #81d4fa;">(</span>global-semanticdb-minor-mode <span style="color: #ccaaff;">1</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span>global-semantic-idle-scheduler-mode <span style="color: #ccaaff;">1</span><span style="color: #81d4fa;">)</span>
+
+  <span style="color: #81d4fa;">(</span>semantic-mode <span style="color: #ccaaff;">1</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">gdb</span>
   <span style="color: #ccaaff;">:config</span>
@@ -960,6 +1026,15 @@ This functions should be added to the hooks of major modes for programming."</sp
   <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Display source file containing the main routine at startup.
 </span>  <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Also display the main routine in the disassembly buffer if present.
 </span>  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> gdb-show-main t<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">realgud</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">xcscope</span>
+  <span style="color: #ccaaff;">:config</span>
+  <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Use gtas's cscope command
+</span>  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> cscope-program <span style="color: #aadddd;">"gtags-cscope"</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">basic setup
+</span>  <span style="color: #81d4fa;">(</span>cscope-setup<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">arduino-mode</span>
   <span style="color: #ccaaff;">:mode</span> <span style="color: #81d4fa;">(</span><span style="color: #aadddd;">"\\.pde\\'"</span> <span style="color: #aadddd;">"\\.ino\\'"</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
@@ -1046,6 +1121,17 @@ This functions should be added to the hooks of major modes for programming."</sp
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">markdown-mode</span>
   <span style="color: #ccaaff;">:mode</span> <span style="color: #aadddd;">"\\.</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">(</span><span style="color: #aadddd;">md</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">|</span><span style="color: #aadddd;">markdown</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">)</span><span style="color: #aadddd;">\\'"</span><span style="color: #aadddd;">)</span>
 
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">po-mode</span>
+  <span style="color: #ccaaff;">:mode</span> <span style="color: #aadddd;">"\\.po\\'</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">|</span><span style="color: #aadddd;">\\.po\\."</span>
+  <span style="color: #ccaaff;">:config</span>
+
+  <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">To use the right coding system automatically under Emacs 20 or newer,
+</span>  <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">also add:
+</span>  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">when</span> <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">require</span> '<span style="color: #ccaaff;">po</span> nil 'noerror<span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span>modify-coding-system-alist 'file <span style="color: #aadddd;">"\\.po\\'</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">|</span><span style="color: #aadddd;">\\.po\\."</span>
+                                'po-find-file-coding-system<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #aadddd;">)</span>
+
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">php-mode</span>
   <span style="color: #ccaaff;">:mode</span> <span style="color: #aadddd;">"\\.php\\'"</span><span style="color: #aadddd;">)</span>
 
@@ -1078,8 +1164,6 @@ This functions should be added to the hooks of major modes for programming."</sp
   <span style="color: #ccaaff;">:mode</span> <span style="color: #aadddd;">"\\.rs\\'"</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">llvm-mode</span><span style="color: #aadddd;">)</span>
-
-<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">setq</span> nand2tetris-core-base-dir <span style="color: #aadddd;">"~/Workspace"</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">lua-mode</span>
   <span style="color: #ccaaff;">:mode</span> <span style="color: #aadddd;">"\\.lua$"</span><span style="color: #aadddd;">)</span>
@@ -1226,14 +1310,16 @@ This functions should be added to the hooks of major modes for programming."</sp
 </span>               <span style="color: #5f5f5f; font-style: italic;">;;                </span><span style="color: #9ac; font-style: italic;">}
 </span>               <span style="color: #aaeecc;">(</span>c-set-offset 'innamespace <span style="color: #ccaaff;">0</span><span style="color: #aaeecc;">)</span>
                <span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
-  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">bind-keys</span> <span style="color: #ccaaff;">:map</span> c-mode-map
-             <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-c '"</span> . narrow-or-widen-dwim<span style="color: #aaccff;">)</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">bind-keys</span> <span style="color: #ccaaff;">:map</span> c-mode-base-map
+             <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-c '"</span> . my/narrow-or-widen-dwim<span style="color: #aaccff;">)</span>
+             <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-c C-c"</span> . compile<span style="color: #aaccff;">)</span>
              <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-c C-g"</span> . gdb<span style="color: #aaccff;">)</span>
              <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-c C-o"</span> . cff-find-other-file<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
-  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">bind-keys</span> <span style="color: #ccaaff;">:map</span> c++-mode-map
-             <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-c '"</span> . narrow-or-widen-dwim<span style="color: #aaccff;">)</span>
-             <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-c C-g"</span> . gdb<span style="color: #aaccff;">)</span>
-             <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-c C-o"</span> . cff-find-other-file<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+  
+  <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Some keys may override global map add here
+</span>  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">bind-keys</span> <span style="color: #ccaaff;">:map</span> c-mode-base-map
+             <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"M-."</span> . helm-gtags-dwim<span style="color: #aaccff;">)</span>
+             <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"M-,"</span> . helm-gtags-pop-stack<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">dummy-h-mode</span>
   <span style="color: #ccaaff;">:require</span> cc-mode
@@ -1269,15 +1355,10 @@ This functions should be added to the hooks of major modes for programming."</sp
   <span style="color: #81d4fa;">(</span>cpp-highlight-buffer t<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Add to c/c++ mode
-</span><span style="color: #aadddd;">(</span>add-hook 'c-mode-common-hook 'my/cc-mode/highlight-if-0<span style="color: #aadddd;">)</span>
-
-<span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Refresh buffer when save
-</span><span style="color: #aadddd;">(</span><span style="color: #aaffaa;">defun</span> <span style="color: #aaccff;">my/cc-mode/after-save-hook</span> <span style="color: #81d4fa;">()</span>
-  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">when</span> <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">or</span> <span style="color: #aaeecc;">(</span>eq major-mode 'c-mode<span style="color: #aaeecc;">)</span>
-            <span style="color: #aaeecc;">(</span>eq major-mode 'c++-mode<span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
+</span><span style="color: #aadddd;">(</span><span style="color: #aaffaa;">defun</span> <span style="color: #aaccff;">my/cc-mode/highlight-if-0-hook</span> <span style="color: #81d4fa;">()</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">when</span> <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">or</span> <span style="color: #aaeecc;">(</span>eq major-mode 'c++-mode<span style="color: #aaeecc;">)</span> <span style="color: #aaeecc;">(</span>eq major-mode 'c-mode<span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
     <span style="color: #aaccff;">(</span>my/cc-mode/highlight-if-0<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
-
-<span style="color: #aadddd;">(</span>add-hook 'after-save-hook #'my/cc-mode/after-save-hook<span style="color: #aadddd;">)</span>
+<span style="color: #aadddd;">(</span>add-hook 'after-save-hook #'my/cc-mode/highlight-if-0-hook<span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">dolist</span> <span style="color: #81d4fa;">(</span>m '<span style="color: #aaccff;">(</span>c-mode c++-mode<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
   <span style="color: #81d4fa;">(</span>font-lock-add-keywords
@@ -1292,7 +1373,17 @@ This functions should be added to the hooks of major modes for programming."</sp
               <span style="color: #aaeecc;">(</span><span style="color: #aaffaa;">when</span> <span style="color: #ccaaff;">(</span>derived-mode-p 'c-mode 'c++-mode<span style="color: #ccaaff;">)</span>
                 <span style="color: #ccaaff;">(</span>cppcm-reload-all<span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
+<span style="color: #aadddd;">(</span>add-hook 'c-mode-common-hook 'electric-pair-mode<span style="color: #aadddd;">)</span>
+
 <span style="color: #aadddd;">(</span>global-prettify-symbols-mode <span style="color: #ccaaff;">1</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">lispy</span>
+  <span style="color: #ccaaff;">:config</span>
+  <span style="color: #81d4fa;">(</span>add-hook 'emacs-lisp-mode-hook <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">lambda</span> <span style="color: #aaeecc;">()</span> <span style="color: #aaeecc;">(</span>lispy-mode <span style="color: #ccaaff;">1</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span>add-hook 'lisp-interaction-mode-hook <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">lambda</span> <span style="color: #aaeecc;">()</span> <span style="color: #aaeecc;">(</span>lispy-mode <span style="color: #ccaaff;">1</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span>add-hook 'clojure-mode-hook <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">lambda</span> <span style="color: #aaeecc;">()</span> <span style="color: #aaeecc;">(</span>lispy-mode <span style="color: #ccaaff;">1</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span>add-hook 'scheme-mode-hook <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">lambda</span> <span style="color: #aaeecc;">()</span> <span style="color: #aaeecc;">(</span>lispy-mode <span style="color: #ccaaff;">1</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span>add-hook 'lisp-mode-hook <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">lambda</span> <span style="color: #aaeecc;">()</span> <span style="color: #aaeecc;">(</span>lispy-mode <span style="color: #ccaaff;">1</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">emacs-lisp-mode</span>
   <span style="color: #ccaaff;">:config</span>
@@ -1341,7 +1432,12 @@ This functions should be added to the hooks of major modes for programming."</sp
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">clojure-mode</span>
   <span style="color: #ccaaff;">:require</span> <span style="color: #81d4fa;">(</span>clojure-mode-extra-font-locking flycheck-clojure<span style="color: #81d4fa;">)</span>
-  <span style="color: #ccaaff;">:mode</span> <span style="color: #aadddd;">"\\.</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">(</span><span style="color: #aadddd;">clj</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">|</span><span style="color: #aadddd;">boot</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">|</span><span style="color: #aadddd;">cljx</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">|</span><span style="color: #aadddd;">edn</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">|</span><span style="color: #aadddd;">cljs</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">|</span><span style="color: #aadddd;">cljs.hl</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">)</span><span style="color: #aadddd;">\\'"</span><span style="color: #aadddd;">)</span>
+  <span style="color: #ccaaff;">:mode</span> <span style="color: #aadddd;">"\\.</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">(</span><span style="color: #aadddd;">clj</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">|</span><span style="color: #aadddd;">boot</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">|</span><span style="color: #aadddd;">cljx</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">|</span><span style="color: #aadddd;">edn</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">|</span><span style="color: #aadddd;">cljs</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">|</span><span style="color: #aadddd;">cljs.hl</span><span style="color: #ccaaff;">\\</span><span style="color: #ff8888;">)</span><span style="color: #aadddd;">\\'"</span>
+  <span style="color: #ccaaff;">:config</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">clojure-cheatsheet</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">bind-keys</span> <span style="color: #ccaaff;">:map</span> clojure-mode-map
+             <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-c '"</span> . my/narrow-or-widen-dwim<span style="color: #aaccff;">)</span>
+             <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-c h"</span> . clojure-cheatsheet<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">clj-refactor</span>
   <span style="color: #ccaaff;">:config</span>
@@ -1403,15 +1499,24 @@ This functions should be added to the hooks of major modes for programming."</sp
   <span style="color: #ccaaff;">:mode</span> <span style="color: #aadddd;">"\\.scm\\'"</span>
   <span style="color: #ccaaff;">:config</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">geiser</span>
-    <span style="color: #ccaaff;">:require</span> scheme
     <span style="color: #ccaaff;">:init</span>
     <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">On opening a scheme file, Geiser will try to guess its Scheme,
 </span>    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">defaulting to the first in the list. Use `C-c C-s' to select the
 </span>    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">implementation by hand (on a per file basis).
-</span>    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> geiser-active-implementations '<span style="color: #aaeecc;">(</span>guile chicken<span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+</span>    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> geiser-active-implementations '<span style="color: #aaeecc;">(</span>guile chicken<span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">bind-keys</span> <span style="color: #ccaaff;">:map</span> scheme-mode-map
+             <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-c '"</span> . my/narrow-or-widen-dwim<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
-<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">newlisp-mode</span>
-  <span style="color: #ccaaff;">:mode</span> <span style="color: #aadddd;">"\\.lisp\\'"</span><span style="color: #aadddd;">)</span>
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">racket-mode</span>
+  <span style="color: #ccaaff;">:mode</span> <span style="color: #aadddd;">"\\.rkt[dl]?\\'"</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">lisp-mode</span>
+  <span style="color: #ccaaff;">:mode</span> <span style="color: #aadddd;">"\\.lisp\\'"</span>
+  <span style="color: #ccaaff;">:config</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">bind-keys</span> <span style="color: #ccaaff;">:map</span> lisp-mode-map
+             <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"C-c '"</span> . my/narrow-or-widen-dwim<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">newlisp-mode</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">web-mode</span>
   <span style="color: #ccaaff;">:mode</span> <span style="color: #81d4fa;">(</span><span style="color: #aaccff;">(</span><span style="color: #aadddd;">"\\.html?\\'"</span> . web-mode<span style="color: #aaccff;">)</span>
@@ -1574,6 +1679,10 @@ This functions should be added to the hooks of major modes for programming."</sp
   <span style="color: #ccaaff;">:config</span>
   <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> helm-yas-space-match-any-greedy t<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">helm-cscope</span>
+  <span style="color: #ccaaff;">:config</span>
+  <span style="color: #81d4fa;">(</span>add-hook 'c-mode-common-hook 'helm-cscope-mode<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">fontawesome</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">helm-swoop</span><span style="color: #aadddd;">)</span>
@@ -1722,6 +1831,16 @@ This functions should be added to the hooks of major modes for programming."</sp
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">window-numbering</span><span style="color: #aadddd;">)</span>
 
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">stumpwm-mode</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">firefox-controller</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">bbdb</span>
+  <span style="color: #ccaaff;">:init</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> bbdb-file <span style="color: #aaccff;">(</span>concat user-cache-directory <span style="color: #aadddd;">"bbdb"</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #ccaaff;">:config</span>
+  <span style="color: #81d4fa;">(</span>bbdb-initialize<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
 <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">setup loadpath later
 </span><span style="color: #aadddd;">(</span><span style="color: #aaffaa;">when</span> <span style="color: #81d4fa;">(</span>eq system-type 'darwin<span style="color: #81d4fa;">)</span>
   <span style="color: #81d4fa;">(</span>add-to-list 'load-path <span style="color: #aadddd;">"/usr/local/Cellar/mu/HEAD/share/emacs/site-lisp/mu4e"</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
@@ -1739,7 +1858,7 @@ This functions should be added to the hooks of major modes for programming."</sp
   <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Setup default mu4e search result mails list, if I want to see
 </span>  <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">more, use M-x `</span><span style="color: #ccaaff; font-style: italic;">mu4e-headers-toggle-full-search</span><span style="color: #9ac; font-style: italic;">' to make mi4e show all mails
 </span>  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">setq</span> mu4e-headers-results-limit <span style="color: #ccaaff;">1000</span><span style="color: #81d4fa;">)</span>
-  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">req-package</span> '<span style="color: #ccaaff;">mu4e-contrib</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">mu4e-contrib</span>
     <span style="color: #ccaaff;">:config</span>
     <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> mu4e-html2text-command 'mu4e-shr2text<span style="color: #aaccff;">)</span>
     <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">try to emulate some of the eww key-bindings
@@ -1824,13 +1943,210 @@ This functions should be added to the hooks of major modes for programming."</sp
          <span style="color: #aaeecc;">(</span>hostentry <span style="color: #ccaaff;">(</span>netrc-machine netrc host port port<span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
     <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">when</span> hostentry <span style="color: #aaeecc;">(</span>netrc-get hostentry <span style="color: #aadddd;">"password"</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
-<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">smartrep</span>
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">erc</span>
+  <span style="color: #ccaaff;">:require</span> <span style="color: #81d4fa;">(</span>erc-notify<span style="color: #81d4fa;">)</span>
   <span style="color: #ccaaff;">:config</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">progn</span>
+    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">set prompt to -&gt;&gt;
+</span>    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> erc-prompt <span style="color: #aadddd;">"-&gt;&gt; "</span><span style="color: #aaccff;">)</span>
+    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Encoding with utf-8
+</span>    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> erc-server-coding-system '<span style="color: #aaeecc;">(</span>utf-8 . utf-8<span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
+    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">column with is 100
+</span>    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> erc-fill-column <span style="color: #ccaaff;">100</span><span style="color: #aaccff;">)</span>
+    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Auto join irc server when erc start
+</span>    <span style="color: #aaccff;">(</span>erc-autojoin-mode t<span style="color: #aaccff;">)</span>
+    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">truncate too long line
+</span>    <span style="color: #aaccff;">(</span>erc-truncate-mode <span style="color: #ccaaff;">+1</span><span style="color: #aaccff;">)</span>
+    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Interpret mIRC-style color commands in IRC chats
+</span>    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> erc-interpret-mirc-color t<span style="color: #aaccff;">)</span>
+    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Kill buffers for channels after /part
+</span>    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> erc-kill-buffer-on-part t<span style="color: #aaccff;">)</span>
+    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Kill buffers for private queries after quitting the server
+</span>    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> erc-kill-queries-on-quit t<span style="color: #aaccff;">)</span>
+    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Kill buffers for server messages after quitting the server
+</span>    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> erc-kill-server-buffer-on-quit t<span style="color: #aaccff;">)</span>
+    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">open query buffers in the current window
+</span>    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> erc-query-display 'buffer<span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> erc-save-buffer-on-part t<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">setq</span> erc-autojoin-channels-alist
+      '<span style="color: #81d4fa;">(</span>
+        <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">english channel
+</span>        <span style="color: #aaccff;">(</span><span style="color: #aadddd;">".*\\.freenode.net"</span> <span style="color: #aadddd;">"#clojure"</span> <span style="color: #aadddd;">"#wayland"</span> <span style="color: #aadddd;">"#libhybris"</span> <span style="color: #aadddd;">"#webos-ports"</span><span style="color: #aaccff;">)</span>
+        <span style="color: #aaccff;">(</span><span style="color: #aadddd;">".*\\.mozilla.org"</span> <span style="color: #aadddd;">"#b2g"</span><span style="color: #aaccff;">)</span>
+        <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">Chinese channel
+</span>        <span style="color: #aaccff;">(</span><span style="color: #aadddd;">".*\\.freenode.net"</span> <span style="color: #aadddd;">"#emacs.tw"</span> <span style="color: #aadddd;">"#cschat.tw"</span> <span style="color: #aadddd;">"#clojure.tw"</span> <span style="color: #aadddd;">"#lisp.tw"</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">setq</span> erc-hide-list
+      '<span style="color: #81d4fa;">(</span><span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">notices
+</span>        <span style="color: #aadddd;">"JOIN"</span> <span style="color: #aadddd;">"PART"</span> <span style="color: #aadddd;">"QUIT"</span> <span style="color: #aadddd;">"LEFT"</span> <span style="color: #aadddd;">"NICK"</span>
+        <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">robot
+</span>        <span style="color: #aadddd;">"^j[a-z]*bot!"</span> <span style="color: #aadddd;">"^fussbot!"</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span>erc-timestamp-mode <span style="color: #ccaaff;">1</span><span style="color: #aadddd;">)</span>
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">setq</span> erc-insert-timestamp-function 'erc-insert-timestamp-left<span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">erc-hl-nicks</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span>eval-after-load 'erc
+  '<span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">progn</span>
+     <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">enable track-mode
+</span>     <span style="color: #aaccff;">(</span>erc-track-mode t<span style="color: #aaccff;">)</span>
+     <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">do not track some type of message
+</span>     <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> erc-track-exclude-types '<span style="color: #aaeecc;">(</span><span style="color: #aadddd;">"JOIN"</span> <span style="color: #aadddd;">"NICK"</span> <span style="color: #aadddd;">"PART"</span> <span style="color: #aadddd;">"QUIT"</span> <span style="color: #aadddd;">"MODE"</span>
+                                     <span style="color: #aadddd;">"324"</span> <span style="color: #aadddd;">"329"</span> <span style="color: #aadddd;">"332"</span> <span style="color: #aadddd;">"333"</span> <span style="color: #aadddd;">"353"</span> <span style="color: #aadddd;">"477"</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">erc-spelling</span>
+  <span style="color: #ccaaff;">:config</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">progn</span>
+    <span style="color: #aaccff;">(</span>erc-spelling-mode <span style="color: #ccaaff;">0</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">erc-autoaway</span>
+  <span style="color: #ccaaff;">:config</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">progn</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> erc-auto-discard-away t<span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> erc-autoaway-idle-seconds <span style="color: #ccaaff;">600</span><span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">setq</span> erc-autoaway-use-emacs-idle t<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">defun</span> <span style="color: #aaccff;">erc-start-or-switch</span> <span style="color: #81d4fa;">()</span>
+  <span style="color: #97abc6; font-style: italic;">"Connect to IRC, if already connected, switch to active irc buffer."</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">interactive</span><span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">let</span> <span style="color: #aaccff;">(</span><span style="color: #aaeecc;">(</span>irc-active-p <span style="color: #ccaaff;">(</span><span style="color: #aaffaa;">and</span> <span style="color: #fff59d;">(</span>fboundp 'erc-buffer-list<span style="color: #fff59d;">)</span>
+                           <span style="color: #fff59d;">(</span>erc-buffer-list<span style="color: #fff59d;">)</span><span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
+    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">we track irc.freenode.net to make sure erc is already active
+</span>    <span style="color: #aaccff;">(</span><span style="color: #aaffaa;">if</span> irc-active-p
+        <span style="color: #aaeecc;">(</span>erc-track-switch-buffer <span style="color: #ccaaff;">1</span><span style="color: #aaeecc;">)</span>
+      <span style="color: #aaeecc;">(</span><span style="color: #aaffaa;">progn</span>
+        <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">connect to irc server
+</span>        <span style="color: #ccaaff;">(</span>erc-tls <span style="color: #ccaaff;">:server</span> <span style="color: #aadddd;">"irc.freenode.net"</span> <span style="color: #ccaaff;">:port</span> <span style="color: #ccaaff;">6697</span> <span style="color: #ccaaff;">:nick</span> erc-nick<span style="color: #ccaaff;">)</span>
+        <span style="color: #ccaaff;">(</span>erc-tls <span style="color: #ccaaff;">:server</span> <span style="color: #aadddd;">"irc.debian.org"</span> <span style="color: #ccaaff;">:port</span> <span style="color: #ccaaff;">6697</span> <span style="color: #ccaaff;">:nick</span> erc-nick<span style="color: #ccaaff;">)</span>
+        <span style="color: #ccaaff;">(</span>erc-tls <span style="color: #ccaaff;">:server</span> <span style="color: #aadddd;">"irc.mozilla.org"</span> <span style="color: #ccaaff;">:port</span> <span style="color: #ccaaff;">6697</span> <span style="color: #ccaaff;">:nick</span> erc-nick<span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">req-package</span> <span style="color: #ccaaff;">hydra</span>
+  <span style="color: #ccaaff;">:config</span>
+    <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">defhydra</span> hydra-window <span style="color: #aaccff;">()</span>
+       <span style="color: #aadddd;">"
+    Movement^^        ^Split^         ^Switch^      ^Resize^
+    ----------------------------------------------------------------
+    _h_ &#8592;         _v_ertical      _b_uffer        _q_ X&#8592;
+    _j_ &#8595;         _x_ horizontal  _f_ind files    _w_ X&#8595;
+    _k_ &#8593;         _z_ undo        _a_ce 1     _e_ X&#8593;
+    _l_ &#8594;         _Z_ reset       _s_wap      _r_ X&#8594;
+    _F_ollow        _D_lt Other     _S_ave      max_i_mize
+    _SPC_ cancel    _o_nly this     _d_elete
+    "</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"h"</span> windmove-left <span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"j"</span> windmove-down <span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"k"</span> windmove-up <span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"l"</span> windmove-right <span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"q"</span> hydra-move-splitter-left<span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"w"</span> hydra-move-splitter-down<span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"e"</span> hydra-move-splitter-up<span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"r"</span> hydra-move-splitter-right<span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"b"</span> helm-mini<span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"f"</span> helm-find-files<span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"F"</span> follow-mode<span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"a"</span> <span style="color: #aaeecc;">(</span><span style="color: #aaffaa;">lambda</span> <span style="color: #ccaaff;">()</span>
+              <span style="color: #ccaaff;">(</span><span style="color: #aaffaa;">interactive</span><span style="color: #ccaaff;">)</span>
+              <span style="color: #ccaaff;">(</span>ace-window <span style="color: #ccaaff;">1</span><span style="color: #ccaaff;">)</span>
+              <span style="color: #ccaaff;">(</span>add-hook 'ace-window-end-once-hook
+                        'hydra-window/body<span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"v"</span> <span style="color: #aaeecc;">(</span><span style="color: #aaffaa;">lambda</span> <span style="color: #ccaaff;">()</span>
+              <span style="color: #ccaaff;">(</span><span style="color: #aaffaa;">interactive</span><span style="color: #ccaaff;">)</span>
+              <span style="color: #ccaaff;">(</span>split-window-right<span style="color: #ccaaff;">)</span>
+              <span style="color: #ccaaff;">(</span>windmove-right<span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"x"</span> <span style="color: #aaeecc;">(</span><span style="color: #aaffaa;">lambda</span> <span style="color: #ccaaff;">()</span>
+              <span style="color: #ccaaff;">(</span><span style="color: #aaffaa;">interactive</span><span style="color: #ccaaff;">)</span>
+              <span style="color: #ccaaff;">(</span>split-window-below<span style="color: #ccaaff;">)</span>
+              <span style="color: #ccaaff;">(</span>windmove-down<span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"s"</span> <span style="color: #aaeecc;">(</span><span style="color: #aaffaa;">lambda</span> <span style="color: #ccaaff;">()</span>
+              <span style="color: #ccaaff;">(</span><span style="color: #aaffaa;">interactive</span><span style="color: #ccaaff;">)</span>
+              <span style="color: #ccaaff;">(</span>ace-window <span style="color: #ccaaff;">4</span><span style="color: #ccaaff;">)</span>
+              <span style="color: #ccaaff;">(</span>add-hook 'ace-window-end-once-hook
+                        'hydra-window/body<span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"S"</span> save-buffer<span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"d"</span> delete-window<span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"D"</span> <span style="color: #aaeecc;">(</span><span style="color: #aaffaa;">lambda</span> <span style="color: #ccaaff;">()</span>
+              <span style="color: #ccaaff;">(</span><span style="color: #aaffaa;">interactive</span><span style="color: #ccaaff;">)</span>
+              <span style="color: #ccaaff;">(</span>ace-window <span style="color: #ccaaff;">16</span><span style="color: #ccaaff;">)</span>
+              <span style="color: #ccaaff;">(</span>add-hook 'ace-window-end-once-hook
+                        'hydra-window/body<span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"o"</span> delete-other-windows<span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"i"</span> ace-maximize-window<span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"z"</span> <span style="color: #aaeecc;">(</span><span style="color: #aaffaa;">progn</span>
+              <span style="color: #ccaaff;">(</span>winner-undo<span style="color: #ccaaff;">)</span>
+              <span style="color: #ccaaff;">(</span><span style="color: #aaffaa;">setq</span> this-command 'winner-undo<span style="color: #ccaaff;">)</span><span style="color: #aaeecc;">)</span><span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"Z"</span> winner-redo<span style="color: #aaccff;">)</span>
+       <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"SPC"</span> nil<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
   
-  <span style="color: #aadddd;">)</span>
+  <span style="color: #5f5f5f; font-style: italic;">;;</span><span style="color: #9ac; font-style: italic;">(global-set-key (kbd "C-x w") 'hydra-window/body)
+</span>    <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">defhydra</span> hydra-movement <span style="color: #aaccff;">()</span>
+    <span style="color: #aadddd;">""</span>
+      <span style="color: #81d4fa;">)</span>
+  
+  <span style="color: #5f5f5f; font-style: italic;">;;</span><span style="color: #9ac; font-style: italic;">(global-set-key (kbd "C-x e") 'hydra-toggles-macro/body)
+</span>  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">defhydra</span> hydra-window-buffer <span style="color: #aaccff;">(</span><span style="color: #ccaaff;">:color</span> red <span style="color: #ccaaff;">:hint</span> nil<span style="color: #aaccff;">)</span>
+  <span style="color: #aadddd;">"
+   ^Window^             ^Buffer^           ^Frame^
+  ^^^^^^^^---------------------------------------------------
+   ^hjkl^: move         _p_: previous      _u_: winner undo      ....../ \-.   .
+   _s_: split below     _n_: next          _r_: winner redo   .-/     (    o\.//
+   _v_: split right     _b_: switch        _w_: revert all     |  ...  \./\---'
+   _c_: delete this     _;_: last          ^ ^                 |.||  |.||
+   _o_: delete other    _K_: kill current  ^ ^
+  ^^^^^^^^
+  "</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"w"</span> revert-all-buffers <span style="color: #ccaaff;">:color</span> blue<span style="color: #aaccff;">)</span>
+  
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"u"</span> winner-undo<span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"r"</span> winner-redo<span style="color: #aaccff;">)</span>
+  
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"h"</span> windmove-left<span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"j"</span> windmove-down<span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"k"</span> windmove-up<span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"l"</span> windmove-right<span style="color: #aaccff;">)</span>
+  
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"p"</span> previous-buffer<span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"n"</span> next-buffer<span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"b"</span> ido-switch-buffer<span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">";"</span> mode-line-other-buffer <span style="color: #ccaaff;">:color</span> blue<span style="color: #aaccff;">)</span>
+  
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"s"</span> split-window-below<span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"v"</span> split-window-right<span style="color: #aaccff;">)</span>
+  
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"K"</span> kill-this-buffer<span style="color: #aaccff;">)</span>
+  
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"c"</span> delete-window<span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"o"</span> delete-other-windows <span style="color: #ccaaff;">:color</span> blue<span style="color: #aaccff;">)</span>
+  
+    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">("H" hydra-move-splitter-left)
+</span>    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">("J" hydra-move-splitter-down)
+</span>    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">("K" hydra-move-splitter-up)
+</span>    <span style="color: #5f5f5f; font-style: italic;">;; </span><span style="color: #9ac; font-style: italic;">("L" hydra-move-splitter-right)
+</span>  
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"q"</span> nil<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span>
+    <span style="color: #81d4fa;">(</span>global-set-key <span style="color: #aaccff;">(</span>kbd <span style="color: #aadddd;">"C-x w"</span><span style="color: #aaccff;">)</span> 'hydra-window-buffer/body<span style="color: #81d4fa;">)</span>
+  <span style="color: #81d4fa;">(</span><span style="color: #aaffaa;">defhydra</span> hydra-font-setup <span style="color: #aaccff;">()</span>
+    <span style="color: #aadddd;">"
+  Font Size^^
+  ----------------------------------------------------------------
+  _=_ &#8593;
+  _\-_ &#8595;
+  "</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"="</span> text-scale-increase<span style="color: #aaccff;">)</span>
+    <span style="color: #aaccff;">(</span><span style="color: #aadddd;">"-"</span> text-scale-decrease<span style="color: #aaccff;">)</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span><span style="color: #aaffaa;">bind-keys</span> <span style="color: #ccaaff;">:map</span> global-map
+           <span style="color: #81d4fa;">(</span><span style="color: #aadddd;">"C-x C-s"</span> . my/save-buffer-always<span style="color: #81d4fa;">)</span>
            <span style="color: #81d4fa;">(</span><span style="color: #aadddd;">"M-g"</span> . avy-goto-char-2<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span><span style="color: #aaffaa;">bind-keys</span> <span style="color: #ccaaff;">:map</span> global-map
+           <span style="color: #81d4fa;">(</span><span style="color: #aadddd;">"C-="</span> . hydra-font-setup/body<span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+
+<span style="color: #aadddd;">(</span>global-unset-key <span style="color: #81d4fa;">(</span>kbd <span style="color: #aadddd;">"&lt;down-mouse-1&gt;"</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+<span style="color: #aadddd;">(</span>global-unset-key <span style="color: #81d4fa;">(</span>kbd <span style="color: #aadddd;">"&lt;mouse-1&gt;"</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+<span style="color: #aadddd;">(</span>global-unset-key <span style="color: #81d4fa;">(</span>kbd <span style="color: #aadddd;">"&lt;down-mouse-3&gt;"</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
+<span style="color: #aadddd;">(</span>global-unset-key <span style="color: #81d4fa;">(</span>kbd <span style="color: #aadddd;">"&lt;mouse-3&gt;"</span><span style="color: #81d4fa;">)</span><span style="color: #aadddd;">)</span>
 
 <span style="color: #aadddd;">(</span>req-package-finish<span style="color: #aadddd;">)</span>
 
