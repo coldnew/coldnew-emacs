@@ -162,6 +162,18 @@ Setup the cache directory to store some cache content.
             temporary-file-directory)))
     "My ramdisk path in system.")
 #+END_SRC
+
+** Method to load secret file
+
+Some of my password stored in a secret file with gnupg encrypt, I add this function here so I can inject some emacs-command which hass password/account setting.
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/load-secret ()
+    "Load my secret setting include password... etc."
+    (let ((secret "~/.secret.el.gpg"))
+      (when (file-exists-p secret) (load-file secret))))
+#+END_SRC
+
 * Package Management                                               :packages:
 
 The main package magement in my emacs is [[https://github.com/cask/cask][Cask]], which is a really nice package
@@ -2294,9 +2306,13 @@ GitHub: https://github.com/gongo/org-redmine
     ;; NOTE: in personal private setting
     (setq org-redmine-uri nil)
     (setq org-redmine-auth-api-key nil)
-    (setq org-redmine-auth-password nil)  ;
-    ;; read account/password from ~/.authinfo.gpg
-    (setq org-redmine-auth-netrc-use t))
+    (setq org-redmine-auth-password nil)
+                                          ;
+    ;; Advice org-remine function so it will load my private config
+    (defadvice org-redmine-get-issue (before load-password activate)
+      (my/load-secret))
+    (defadvice org-redmine-anything-show-issue-all (before load-password activate)
+      (my/load-secret)))
 #+END_SRC
 
 ** Exporter Setup
