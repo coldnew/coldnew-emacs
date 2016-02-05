@@ -4858,32 +4858,37 @@ I always use mu4e to read maliing-list, it's really nice to fontify diff content
 
 I always use =ERC= as my irc client, which is bundle with emacs.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :noweb no-export
   (req-package erc
     :require (erc-notify)
     :config
-    (progn
-      ;; set prompt to ->>
-      (setq erc-prompt "->> ")
-      ;; Encoding with utf-8
-      (setq erc-server-coding-system '(utf-8 . utf-8))
-      ;; column with is 100
-      (setq erc-fill-column 100)
-      ;; Auto join irc server when erc start
-      (erc-autojoin-mode t)
-      ;; truncate too long line
-      (erc-truncate-mode +1)
-      ;; Interpret mIRC-style color commands in IRC chats
-      (setq erc-interpret-mirc-color t)
-      ;; Kill buffers for channels after /part
-      (setq erc-kill-buffer-on-part t)
-      ;; Kill buffers for private queries after quitting the server
-      (setq erc-kill-queries-on-quit t)
-      ;; Kill buffers for server messages after quitting the server
-      (setq erc-kill-server-buffer-on-quit t)
-      ;; open query buffers in the current window
-      (setq erc-query-display 'buffer)
-      (setq erc-save-buffer-on-part t)))
+    <<erc-config>>)
+#+END_SRC
+
+** Basic setup
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref erc-config
+  ;; set prompt to ->>
+  (setq erc-prompt "->> ")
+  ;; Encoding with utf-8
+  (setq erc-server-coding-system '(utf-8 . utf-8))
+  ;; column with is 100
+  (setq erc-fill-column 100)
+  ;; Auto join irc server when erc start
+  (erc-autojoin-mode t)
+  ;; truncate too long line
+  (erc-truncate-mode +1)
+  ;; Interpret mIRC-style color commands in IRC chats
+  (setq erc-interpret-mirc-color t)
+  ;; Kill buffers for channels after /part
+  (setq erc-kill-buffer-on-part t)
+  ;; Kill buffers for private queries after quitting the server
+  (setq erc-kill-queries-on-quit t)
+  ;; Kill buffers for server messages after quitting the server
+  (setq erc-kill-server-buffer-on-quit t)
+  ;; open query buffers in the current window
+  (setq erc-query-display 'buffer)
+  (setq erc-save-buffer-on-part t)
 #+END_SRC
 
 ** Setup default irc room I want to join
