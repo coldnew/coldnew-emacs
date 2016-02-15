@@ -2375,9 +2375,9 @@ GitHub: https://github.com/masayuko/ox-rst
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
-  (bind-keys :prefix-map org-src-mode-map
-             :prefix "M-m"
-             ("n" . org-edit-src-exit))
+  ;; (bind-keys :prefix-map org-src-mode-map
+  ;;            :prefix "M-m"
+  ;;            ("n" . org-edit-src-exit))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
