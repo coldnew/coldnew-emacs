@@ -2247,8 +2247,9 @@ An abbreviated link looks like
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
   (setq org-link-abbrev-alist
-        '(("google" . "http://www.google.com/search?q=")
-          ("google-map" . "http://maps.google.com/maps?q=%s")
+        '(("google" . "http://www.google.com/search?q=")      ; ex: [[google:hi emacs]]
+          ("google-map" . "http://maps.google.com/maps?q=%s") ; ex: [[google-map:taiwan]]
+          ("wiki" . "https://en.wikipedia.org/wiki/%s")       ; ex: [[wiki:emacs]]
           ))
 #+END_SRC
 
@@ -2381,7 +2382,6 @@ GitHub: https://github.com/masayuko/ox-rst
              :prefix "M-m"
              ("n" . my/narrow-or-widen-dwim))
 #+END_SRC
-
 
 * Editors
 
