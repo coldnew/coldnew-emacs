@@ -1750,6 +1750,8 @@ ref: http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
           ((region-active-p)
            (narrow-to-region (region-beginning) (region-end)))
           ;; org-mode
+          ((and (boundp 'org-src-mode) org-src-mode (not p))
+           (org-edit-src-exit))
           ((derived-mode-p 'org-mode)
            ;; `org-edit-src-code' is not a real narrowing
            ;; command. Remove this first conditional if you
@@ -2372,12 +2374,6 @@ GitHub: https://github.com/masayuko/ox-rst
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
   (bind-keys :map org-src-mode-map
              ("C-c C-c" . org-edit-src-exit))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
-  ;; (bind-keys :prefix-map org-src-mode-map
-  ;;            :prefix "M-m"
-  ;;            ("n" . org-edit-src-exit))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
