@@ -2374,6 +2374,19 @@ GitHub: https://github.com/masayuko/ox-rst
              ("C-c C-c" . org-edit-src-exit))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
+  (bind-keys :prefix-map org-src-mode-map
+             :prefix "M-m"
+             ("n" . org-edit-src-exit))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
+  (bind-keys :prefix-map org-mode-map
+             :prefix "M-m"
+             ("n" . my/narrow-or-widen-dwim))
+#+END_SRC
+
+
 * Editors
 
 Why emacs config has an editor section, doesn't means emacs is not an editor ?
