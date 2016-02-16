@@ -2378,7 +2378,8 @@ GitHub: https://github.com/masayuko/ox-rst
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
-  (bind-keys :prefix-map org-mode-map
+  (bind-keys :map org-mode-map
+             :prefix-map my-org-mode-map
              :prefix "M-m"
              ("n" . my/narrow-or-widen-dwim))
 #+END_SRC
@@ -3412,7 +3413,7 @@ GitHub: https://github.com/trotzig/import-js
     :mode "\\.php\\'")
 #+END_SRC
 
-** python
+** Python
 
 #+BEGIN_SRC emacs-lisp
   (req-package python
@@ -4244,10 +4245,9 @@ Some interactive commands for clojure-mode.
 #+BEGIN_SRC emacs-lisp
   (req-package css-eldoc
     :config
-    (progn
-      (add-hook 'css-mode-hook 'turn-on-css-eldoc)
-      (add-hook 'scss-mode-hook 'turn-on-css-eldoc)
-      (add-hook 'less-css-mode-hook 'turn-on-css-eldoc)))
+    (add-hook 'css-mode-hook 'turn-on-css-eldoc)
+    (add-hook 'scss-mode-hook 'turn-on-css-eldoc)
+    (add-hook 'less-css-mode-hook 'turn-on-css-eldoc))
 #+END_SRC
 
 ** Less                                                               :less:
