@@ -2091,6 +2091,11 @@ unload previous theme before loading a new one.
     "Insert /ssh:."
     (interactive)
     (my/minibuffer-insert "/ssh:"))
+
+  (defun my/minibuffer-switch-to-vm ()
+    "Insert /ssh:vm:."
+    (interactive)
+    (my/minibuffer-insert "/ssh:vm:"))
 #+END_SRC
 
 ** Save history of minibuffer :tangle no :noweb-ref minibuffer-config
@@ -2137,7 +2142,8 @@ ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-thresho
              ("M-t" . my/minibuffer-switch-to-ramdisk)
              ("M-h" . my/minibuffer-switch-to-home)
              ("M-/" . my/minibuffer-switch-to-rootdir)
-             ("M-s" . my/minibuffer-switch-to-tramp))
+             ("M-s" . my/minibuffer-switch-to-tramp)
+             ("M-v" . my/minibuffer-switch-to-vm))
 #+END_SRC
 
 * Org
@@ -3046,6 +3052,7 @@ GitHub: https://github.com/areina/helm-dash
              ("M-h" . my/minibuffer-switch-to-home)
              ("M-/" . my/minibuffer-switch-to-rootdir)
              ("M-s" . my/minibuffer-switch-to-tramp)
+             ("M-v" . my/minibuffer-switch-to-vm)
              ("C-z" . helm-select-action))
 #+END_SRC
 
