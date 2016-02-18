@@ -3833,7 +3833,6 @@ Use my C++ coding style.
   (req-package swift-mode)
 #+END_SRC
 
-
 * JVM / Android Development
 
 Note that =Clojure= is setting in =LISP Development= section.
@@ -3857,6 +3856,17 @@ GitHub: https://github.com/youngker/elogcat.el
 #+END_SRC
 
 ** Java
+
+*** eclim
+
+#+BEGIN_SRC emacs-lisp
+  (use-package emacs-eclim
+    :ensure t
+    :config
+    (use-package eclimd)                  ; bundle with eclim
+    ;; (add-hook 'java-mode-hook (lambda () (eclim-mode 1)))
+    )
+#+END_SRC
 
 ** Scala
 
