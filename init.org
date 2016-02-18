@@ -3220,24 +3220,6 @@ For c-mode, just do the same but change the relative
       :mode ("\\.pde\\'" "\\.ino\\'"))
 #+END_SRC
 
-** android
-
-#+BEGIN_SRC emacs-lisp
-  (req-package android-mode
-    :config
-    (setq android-mode-sdk-dir (getenv "ANDROID_HOME")))
-#+END_SRC
-
-*** Integrate logcat with emacs
-
-logcat interface for emacs based on android-mode.
-
-GitHub: https://github.com/youngker/elogcat.el
-
-#+BEGIN_SRC emacs-lisp
-  (req-package elogcat)
-#+END_SRC
-
 ** bash
 
 #+BEGIN_SRC emacs-lisp
@@ -3505,18 +3487,6 @@ GitHub: https://github.com/trotzig/import-js
              ("C-c '" . my/narrow-or-widen-dwim))
 #+END_SRC
 
-** scala
-
-#+BEGIN_SRC emacs-lisp
-  (req-package scala-mode2
-    :mode "\\.scala$")
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (req-package sbt-mode
-    :mode "\\.sbt$")
-#+END_SRC
-
 ** ssh config
 
 #+BEGIN_SRC emacs-lisp
@@ -3525,12 +3495,6 @@ GitHub: https://github.com/trotzig/import-js
            ("sshd?_config\\'"      . ssh-config-mode)
            ("known_hosts\\'"       . ssh-known-hosts-mode)
            ("authorized_keys2?\\'" . ssh-authorized-keys-mode)))
-#+END_SRC
-
-** swift
-
-#+BEGIN_SRC emacs-lisp
-  (req-package swift-mode)
 #+END_SRC
 
 ** systemd
@@ -3859,6 +3823,51 @@ Use my C++ coding style.
   (bind-keys :map c-mode-base-map
              ("M-." . helm-gtags-dwim)
              ("M-," . helm-gtags-pop-stack))
+#+END_SRC
+
+* iOS / Mac OSX Development
+
+** Swift
+
+#+BEGIN_SRC emacs-lisp
+  (req-package swift-mode)
+#+END_SRC
+
+
+* JVM / Android Development
+
+Note that =Clojure= is setting in =LISP Development= section.
+
+** Android
+
+#+BEGIN_SRC emacs-lisp
+  (req-package android-mode
+    :config
+    (setq android-mode-sdk-dir (getenv "ANDROID_HOME")))
+#+END_SRC
+
+*** Integrate logcat with emacs
+
+logcat interface for emacs based on android-mode.
+
+GitHub: https://github.com/youngker/elogcat.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package elogcat)
+#+END_SRC
+
+** Java
+
+** Scala
+
+#+BEGIN_SRC emacs-lisp
+  (req-package scala-mode2
+    :mode "\\.scala$")
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (req-package sbt-mode
+    :mode "\\.sbt$")
 #+END_SRC
 
 * LISP Development                                                     :lisp:
