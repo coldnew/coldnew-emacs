@@ -2630,23 +2630,6 @@ Standard Emacs undo is kind of confusing. [[http://www.dr-qubit.org/emacs.php#un
     (global-undo-tree-mode))
 #+END_SRC
 
-** Track Emacs commands frequency
-
-Use =keyfreq-show= to see how many times you used a command.
-
-GitHub: https://github.com/dacap/keyfreq
-
-#+BEGIN_SRC emacs-lisp
-  (req-package keyfreq
-    :config
-    ;; setup cache file
-    (setq keyfreq-file (concat user-cache-directory "keyfreq"))
-    (setq keyfreq-file-lock (concat keyfreq-file ".lock"))
-    ;; enable globally
-    (keyfreq-mode 1)
-    (keyfreq-autosave-mode 1))
-#+END_SRC
-
 ** Takes care of trailing whitespaces (removal, highlighting)
 
 The definitive emacs customizations for people who are OCD about whitespace .
