@@ -1,0 +1,24 @@
+general:
+  branches:
+    ignore:
+      - gh-pages
+
+machine:
+  timezone: Asia/Taipei
+
+dependencies:
+  pre:
+    - sudo apt-get update; sudo apt-get build-dep emacs
+    - ./script/build-emacs.sh
+  cache_directories:
+    - node_modules
+    - resources/bower_components
+    - $HOME/.m2
+    - $HOME/.lein
+    - $HOME/bin
+    - .build
+
+test:
+  override:
+    - make init.el
+    - make doc
