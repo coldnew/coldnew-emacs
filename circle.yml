@@ -25,6 +25,7 @@ checkout:
     - git config --global pack.windowMemory "100m"
     - git config --global pack.packSizeLimit "100m"
     - git config --global pack.threads "1"
+    - git config --global pack.window "0"
     - git submodule init
     - git submodule update
 
