@@ -10,7 +10,6 @@ SRCDIR="${SDIR}/../modules/emacs"
 ################################################################################
 # Any subsequent(*) commands which fail will cause the shell script to exit immediately
 set -e
-
 ################################################################################
 
 do_autogen () {
@@ -77,6 +76,20 @@ do_clean () {
 
 # building emacs
 cd $SRCDIR
+
+# check commit id, if already build, it's no need to rebuild
+if [ -f "$INSDIR/commit-id" ]; then
+    OLD_ID=$(cat "$INSDIR/commit-id")
+    NEW_ID=$(git rev-parse --short HEAD)
+    if [ $OLD_ID == $NEW_ID ]; then
+	echo "Your emacs is match to commit-id, no need to rebuild."
+	exit 0 # quit
+    else
+	echo -ne "$NEW_ID" > "$INSDIR/commit-id"
+	echo "Start rebuilding emacs..."
+    fi
+fi
+
 do_autogen
 
 # configure according to platform
