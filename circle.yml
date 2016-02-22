@@ -8,8 +8,9 @@ machine:
 
 dependencies:
   pre:
-    - sudo apt-get update
-    - sudo apt-get build-dep emacs24
+    - sudo add-apt-repository -y ppa:ubuntu-elisp/ppa
+    - sudo apt-get update -qq
+    - sudo apt-get build-dep emacs-snapshot-nox -qq
     - ./script/build-emacs.sh
   cache_directories:
     - node_modules
@@ -18,6 +19,11 @@ dependencies:
     - $HOME/.lein
     - $HOME/bin
     - .build
+
+checkout:
+  post:
+    - git submodule init
+    - git submodule update
 
 test:
   override:
