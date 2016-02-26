@@ -4238,7 +4238,8 @@ Some interactive commands for clojure-mode.
 * Web Development                                                       :web:
 
 #+BEGIN_SRC emacs-lisp
-  (req-package web-mode
+  (use-package web-mode
+    :ensure t
     :mode (("\\.html?\\'" . web-mode)
            ("\\.ejs?\\'" . web-mode)))
 #+END_SRC
@@ -4246,13 +4247,16 @@ Some interactive commands for clojure-mode.
 ** CSS                                                                 :css:
 
 #+BEGIN_SRC emacs-lisp
-  (req-package css-mode :mode "\\.css\\'")
+  (use-package css-mode
+    :ensure t
+    :mode "\\.css\\'")
 #+END_SRC
 
 *** Add support for eldoc                                           :eldoc:
 
 #+BEGIN_SRC emacs-lisp
-  (req-package css-eldoc
+  (use-package css-eldoc
+    :ensure t
     :config
     (add-hook 'css-mode-hook 'turn-on-css-eldoc)
     (add-hook 'scss-mode-hook 'turn-on-css-eldoc)
@@ -4262,20 +4266,20 @@ Some interactive commands for clojure-mode.
 ** Less                                                               :less:
 
 #+BEGIN_SRC emacs-lisp
-  (req-package less-css-mode
-    :init (add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
-    :mode "\\.less$")
+  (use-package less-css-mode
+    :ensure t
+    :mode ("\\.less$" . less-css-mode))
 #+END_SRC
 
 ** SCSS                                                           :css:scss:
 
 #+BEGIN_SRC emacs-lisp
-  (req-package scss-mode
+  (use-package scss-mode
+    :ensure t
     :mode "\\.scss\\'"
     :config
-    (progn
-      ;; dont' build scss to css after save file
-      (setq scss-compile-at-save nil)))
+    ;; dont' build scss to css after save file
+    (setq scss-compile-at-save nil))
 #+END_SRC
 
 ** mustache                                                       :mustache:
