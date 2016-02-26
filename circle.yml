@@ -27,7 +27,7 @@ checkout:
     - git config --global pack.threads "1"
     - git config --global pack.window "0"
     - rm -rf `git rev-parse --show-toplevel`/.git/modules
-    - git submodule update —init
+    - git submodule update --init
 
 test:
   override:
