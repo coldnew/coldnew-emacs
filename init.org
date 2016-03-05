@@ -23,7 +23,7 @@ following are some record for how I installed my emacs.
 
 *** Mac OSX
 
-In Mac OSX, I use [[http://brew.sh/][homebrew]] to mantain opensource packages, I always install latest
+In Mac OSX, I use [[http://brew.sh/][homebrew]] to maintain opensource packages, I always install latest
 version of emacs via following command
 
 #+BEGIN_SRC sh :tangle no
@@ -349,7 +349,7 @@ help emacs find them.
 Following are my method to add directories to load-path ~recursively~, this
 function also create directory to prevent directory not exist.
 
-If you don't have any local elisp and all packages is mantain by cask or elpa or
+If you don't have any local elisp and all packages is maintain by cask or elpa or
 spacemacs, you can skip following code.
 
 #+BEGIN_SRC emacs-lisp
