@@ -5,6 +5,8 @@ general:
 
 machine:
   timezone: Asia/Taipei
+  services:
+    - docker
 
 dependencies:
   pre:
@@ -22,11 +24,6 @@ dependencies:
 
 checkout:
   post:
-    - git config --global pack.windowMemory "100m"
-    - git config --global pack.packSizeLimit "100m"
-    - git config --global pack.threads "1"
-    - git config --global pack.window "0"
-    - rm -rf `git rev-parse --show-toplevel`/.git/modules
     - git submodule update --init
 
 test:
