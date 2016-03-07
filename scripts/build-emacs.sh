@@ -74,6 +74,11 @@ do_clean () {
 
 ################################################################################
 
+# check if submodule already exist
+if [ ! -d $SRCDIR ]; then
+    git submodule update --init
+fi
+
 # building emacs
 cd $SRCDIR
 

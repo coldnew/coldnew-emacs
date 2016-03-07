@@ -25,11 +25,7 @@ dependencies:
     - $HOME/bin
     - .build
 
-checkout:
-  post:
-    - git submodule update --init
-
 test:
   override:
-    - make init.el
+    - make bootstrap
     - make doc
