@@ -93,8 +93,8 @@ fi
 do_autogen
 
 # configure according to platform
-if [ $CI == "true"]; then
-    do_configure_ci
+if [ $CI == "true" ]; then
+    do_configure_cli
 else
     case $(uname) in
 	"Darwin")

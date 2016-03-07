@@ -1401,9 +1401,8 @@ GitHub: https://github.com/CestDiego/nand2tetris.el
 #+BEGIN_SRC emacs-lisp
   (req-package nand2tetris
     :require (company company-nand2tetris nand2tetris-assembler)
-    :if (file-exists-p "~/Workspace/nand2tetris")
-    :config
-    (setq nand2tetris-core-base-dir "~/Workspace/nand2tetris"))
+    :if   (file-exists-p "~/Workspace/nand2tetris")
+    :init (setq nand2tetris-core-base-dir "~/Workspace/nand2tetris"))
 #+END_SRC
 
 ** pangu-spacing
@@ -3375,7 +3374,7 @@ Finally, install =js-beautify= to do automatic code formatting:
 
 Be sure to have the =e4x= option set to true on your =.jsbeautifyrc= here it is my configuration as an example:
 
-#+BEGIN_SRC json
+#+BEGIN_SRC json :tangle no
   {
     "indent_size": 2,
     "indent_char": " ",
