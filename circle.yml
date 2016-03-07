@@ -10,9 +10,8 @@ machine:
 
 dependencies:
   pre:
-    - sudo add-apt-repository -y ppa:ubuntu-elisp/ppa
-    - sudo apt-get update -qq
-    - sudo apt-get build-dep emacs-snapshot-nox -qq
+    - ./scripts/install-build-deps-ubuntu.sh
+    - source ./scripts/envsetup-evm.sh
     - ./script/build-emacs.sh
   cache_directories:
     - node_modules
