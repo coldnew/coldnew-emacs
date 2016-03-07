@@ -14,7 +14,7 @@ machine:
 dependencies:
   pre:
     - ./scripts/install-build-deps-ubuntu.sh || true
-    - ./script/build-emacs.sh
+    - ./scripts/build-emacs.sh
     - . ./scripts/envsetup-evm.sh
   cache_directories:
     - node_modules

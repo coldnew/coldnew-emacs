@@ -1399,10 +1399,17 @@ The aim of this package is to be best emacs tool to accompany you on your nand2t
 GitHub: https://github.com/CestDiego/nand2tetris.el
 
 #+BEGIN_SRC emacs-lisp
-  (req-package nand2tetris
-    :require (company company-nand2tetris nand2tetris-assembler)
+  (use-package nand2tetris
+    :ensure t
     :if   (file-exists-p "~/Workspace/nand2tetris")
-    :init (setq nand2tetris-core-base-dir "~/Workspace/nand2tetris"))
+    :init
+    (setq nand2tetris-core-base-dir "~/Workspace/nand2tetris")
+    :config
+    ;; add company completion support
+    (use-package company-nand2tetris
+      :ensure t
+      :config
+      (push 'company-nand2tetris company-backends-nand2tetris-mode)))
 #+END_SRC
 
 ** pangu-spacing
