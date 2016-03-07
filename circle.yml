@@ -8,8 +8,8 @@ machine:
   services:
     - docker
   environment:
-    - PATH="$HOME/.cask/bin:$PATH"
-    - EMACS="./.build/bin/emacs"
+    PATH: "$HOME/.cask/bin:$PATH"
+    EMACS: "./.build/bin/emacs"
 
 dependencies:
   pre:
