@@ -7,17 +7,21 @@ machine:
   timezone: Asia/Taipei
   services:
     - docker
+  environment:
+    - PATH="$HOME/.cask/bin:$PATH"
+    - EMACS="./.build/bin/emacs"
 
 dependencies:
   pre:
     - ./scripts/install-build-deps-ubuntu.sh || true
-    - source ./scripts/envsetup-evm.sh
     - ./script/build-emacs.sh
+    - . ./scripts/envsetup-evm.sh
   cache_directories:
     - node_modules
     - resources/bower_components
     - $HOME/.m2
     - $HOME/.lein
+    - $HOME/.cask
     - $HOME/bin
     - .build
 
