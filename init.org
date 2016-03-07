@@ -91,6 +91,14 @@ emacs-related packages.
   <<install-in-gentoo>>
 #+END_SRC
 
+*** All platform
+
+Some package like =npm= use the same rule to install in any platform, here list what I need to install.
+
+#+BEGIN_SRC sh :tangle no :noweb yes
+  <<install-in-all>>
+#+END_SRC
+
 * Initialization Emacs
 
 There are some configurations I need to put at the beginning of the emacs
@@ -3313,17 +3321,76 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
 ** javascript
 
 #+BEGIN_SRC emacs-lisp
-(req-package js2-mode
-  :mode "\\.js\\'")
+  (use-package js2-mode
+    :ensure t
+    :mode "\\.js\\'")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (req-package js2-refactor)
+  (use-package js2-refactor
+    :ensure t)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (req-package jsx-mode
+  (use-package jsx-mode
+    :ensure t
     :mode "\\.jsx\\'")
+#+END_SRC
+
+*** Packages we need to install in system
+
+To make emacs work with javascript more nicer, we need to install some packages in system.
+
+**** tern
+
+=tern= for auto-completion and documentation features:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-all
+  npm install -g tern
+#+END_SRC
+
+**** eslint
+
+We also install =eslint= with babel and react support, to use =eslint= you need to add =.eslintrc= to your project, here's a good example: [[https://github.com/airbnb/javascript/blob/master/linters/.eslintrc][.eslintrc]] .
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-all
+  npm install -g eslint babel-eslint eslint-plugin-react
+#+END_SRC
+
+**** js-beautify
+
+Finally, install =js-beautify= to do automatic code formatting:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-all
+  npm install -g js-beautify
+#+END_SRC
+
+Be sure to have the =e4x= option set to true on your =.jsbeautifyrc= here it is my configuration as an example:
+
+#+BEGIN_SRC json
+  {
+    "indent_size": 2,
+    "indent_char": " ",
+    "eol": "\n",
+    "indent_level": 0,
+    "indent_with_tabs": false,
+    "preserve_newlines": true,
+    "max_preserve_newlines": 2,
+    "jslint_happy": false,
+    "space_after_anon_function": false,
+    "brace_style": "collapse",
+    "keep_array_indentation": false,
+    "keep_function_indentation": false,
+    "space_before_conditional": true,
+    "break_chained_methods": true,
+    "eval_code": false,
+    "unescape_strings": false,
+    "wrap_line_length": 80,
+    "wrap_attributes": "auto",
+    "wrap_attributes_indent_size": 2,
+    "e4x": true,
+    "end_with_newline": true
+  }
 #+END_SRC
 
 *** Simplify importing JS modules
