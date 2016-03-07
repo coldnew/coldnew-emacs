@@ -93,18 +93,22 @@ fi
 do_autogen
 
 # configure according to platform
-case $(uname) in
-    "Darwin")
-	do_configure_osx
-	;;
-    "Linux")
-	do_configure_linux
-	;;
-    *)
-	echo "This building script only support Linux and Darwin"
-	exit -1
-	;;
-esac
+if [ $CI == "true"]; then
+    do_configure_ci
+else
+    case $(uname) in
+	"Darwin")
+	    do_configure_osx
+	    ;;
+	"Linux")
+	    do_configure_linux
+	    ;;
+	*)
+	    echo "This building script only support Linux and Darwin"
+	    exit -1
+	    ;;
+    esac
+fi
 
 # You need to set --with-modules to enable dynamic modules feature
 do_make
