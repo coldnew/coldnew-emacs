@@ -3357,6 +3357,14 @@ We also install =eslint= with babel and react support, to use =eslint= you need 
   npm install -g eslint babel-eslint eslint-plugin-react
 #+END_SRC
 
+**** jsxhint
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-all
+  npm install -g jsxhint
+#+END_SRC
+
+ref: http://umi-uyura.hatenablog.com/entry/2015/05/13/214629
+
 **** js-beautify
 
 Finally, install =js-beautify= to do automatic code formatting:
