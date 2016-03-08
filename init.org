@@ -3140,7 +3140,8 @@ GitHub: https://github.com/company-mode/company-statistics
 * Snippets
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
-  (req-package yasnippet
+  (use-package yasnippet
+    :ensure t
     :mode ("emacs.+/snippets/" . snippet-mode)
     :config
     ;; enable yasnippet globally
