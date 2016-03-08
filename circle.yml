@@ -28,4 +28,3 @@ dependencies:
 test:
   override:
     - make bootstrap
-    - make doc
