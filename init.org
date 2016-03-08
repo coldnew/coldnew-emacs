@@ -3343,6 +3343,12 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
     :mode "\\.jsx\\'")
 #+END_SRC
 
+*** Manage Node versions within Emacs
+
+#+BEGIN_SRC emacs-lisp
+  (use-package nvm :ensure t)
+#+END_SRC
+
 *** Packages we need to install in system
 
 To make emacs work with javascript more nicer, we need to install some packages in system.
