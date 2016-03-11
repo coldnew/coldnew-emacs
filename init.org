@@ -4153,7 +4153,10 @@ GitHub: https://github.com/Silex/elmacro
 #+BEGIN_SRC emacs-lisp :noweb no-export
   (req-package clojure-mode
     :require (clojure-mode-extra-font-locking flycheck-clojure lispy)
-    :mode "\\.\\(clj\\|boot\\|cljx\\|edn\\|cljs\\|cljs.hl\\)\\'"
+    ;; NOTE: comment out this due to:
+    ;;    https://github.com/overtone/emacs-live/issues/228
+    ;;    https://github.com/clojure-emacs/cider-nrepl/issues/301
+    ;; :mode "\\.\\(clj\\|boot\\|cljx\\|edn\\|cljs\\|cljs.hl\\)\\'"
     :config
     <<clojure-config>>)
 #+END_SRC
