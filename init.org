@@ -3979,6 +3979,29 @@ For more info to control lispy, please refer: http://oremacs.com/lispy/
   (req-package lispy
     :require (hungry-delete projectile)
     :config
+
+    (defun my/up-list (&optional arg)
+      "My special lisp moving stragedy."
+      (interactive)
+      (or arg (setq arg -1))
+      (condition-case ex
+          (up-list arg)
+        ('error (progn
+                  (lispy-backward arg)
+                  (beginning-of-line)
+                  (up-list arg)))))
+
+    (defun my/down-list (&optional arg)
+      "My special lisp moving stragedy."
+      (interactive)
+      (or arg (setq arg 1))
+      (condition-case ex
+          (down-list arg)
+        ('error (progn
+                  (lispy-forward arg)
+                  (end-of-line)
+                  (down-list arg)))))
+
     ;; My special hack for lispy-mode
     (defun my/lispy-mode ()
       (lispy-mode 1)
@@ -3989,7 +4012,10 @@ For more info to control lispy, please refer: http://oremacs.com/lispy/
       (define-key lispy-mode-map (kbd "C-c s") 'lispy-splice)
       ;; `[' and `]' just insert them
       (define-key lispy-mode-map (kbd "[") 'lispy-open-square)
-      (define-key lispy-mode-map (kbd "]") 'lispy-close-square))
+      (define-key lispy-mode-map (kbd "]") 'lispy-close-square)
+      ;; My special lisp moving cmd
+      (define-key lispy-mode-map (kbd "C-M-f") 'my/down-list)
+      (define-key lispy-mode-map (kbd "C-M-b") 'my/up-list))
 
     ;; Use projectile to find file
     (setq lispy-visit-method 'projectile)
