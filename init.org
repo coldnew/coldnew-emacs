@@ -256,6 +256,7 @@ looks like this:
   (depends-on "paradox")
   (depends-on "org")
   (depends-on "htmlize")
+  (depends-on "yasnippet")
 #+END_SRC
 
 Then run the following command in your =.emacs.d= directory to set up
@@ -2166,7 +2167,7 @@ ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-thresho
              ("M-c" . my/minibuffer-switch-to-cluster))
 #+END_SRC
 
-* Org
+* Org                                                                   :org:
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package org
@@ -2733,7 +2734,7 @@ GitHub: https://github.com/syohex/vi-tilde-fringe
     (global-vi-tilde-fringe-mode))
 #+END_SRC
 
-* Vim Emulation
+* Vim Emulation                                                        :evil:
 
 Though I am really familier with emacs, I still like some vim command.
 
@@ -2914,7 +2915,7 @@ GitHub: https://github.com/rocky/emacs-dbgr
     (global-flycheck-mode))
 #+END_SRC
 
-* Helm
+* Helm                                                                 :helm:
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (req-package helm
@@ -3137,7 +3138,7 @@ GitHub: https://github.com/company-mode/company-statistics
              ("C-p" . company-select-previous))
 #+END_SRC
 
-* Snippets
+* Snippets                                                        :yasnippet:
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package yasnippet
@@ -4726,7 +4727,7 @@ GitHub: https://github.com/coldnew/eshell-autojump
 ** winner-mode                                                      :winner:
 
 #+BEGIN_SRC emacs-lisp
-  (req-package winner
+  (use-package winner                     ; builtin
     :config
     ;; I use my own keymap for winner-mode
     (setq winner-dont-bind-my-keys t)
@@ -4745,7 +4746,8 @@ state in the modeline by default. The behaviour is modeled after
 GitHub: https://github.com/wasamasa/eyebrowse
 
 #+BEGIN_SRC emacs-lisp
-  (req-package eyebrowse
+  (use-package eyebrowse
+    :ensure t
     :config
     ;; enable eyebrowse globally
     (eyebrowse-mode t))
@@ -4769,7 +4771,8 @@ calculator window the number 9, add the following to your .emacs:
 GitHub: https://github.com/nschum/window-numbering.el
 
 #+BEGIN_SRC emacs-lisp
-  (req-package window-numbering)
+  (use-package window-numbering
+    :ensure t)
 #+END_SRC
 
 * Web Browser
@@ -4789,11 +4792,12 @@ In firefox-controller, we have two different modes:
 GitHub: https://github.com/cute-jumper/emacs-firefox-controller
 
 #+BEGIN_SRC emacs-lisp
-  (req-package firefox-controller)
+  (use-package firefox-controller
+    :ensure t)
 #+END_SRC
 
 * Email
-** bbdb
+** bbdb                                                               :bbdb:
 
 #+BEGIN_SRC emacs-lisp
   (req-package bbdb
@@ -4803,7 +4807,7 @@ GitHub: https://github.com/cute-jumper/emacs-firefox-controller
     (bbdb-initialize))
 #+END_SRC
 
-** mu4e
+** mu4e                                                               :mu4e:
 
 [[http://www.djcbsoftware.nl/code/mu][mu]] is really nice tool to help me read and search email in emacs.
 
