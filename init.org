@@ -4273,8 +4273,8 @@ GitHub: https://github.com/clojure-emacs/clj-refactor.el
     ;; Controls whether to pop to the REPL buffer on connect.
     (setq cider-repl-pop-to-buffer-on-connect nil)
 
-    ;; Controls whether to auto-select the error popup buffer.
-    (setq cider-auto-select-error-buffer t)
+    ;; Make cider not prompt to save the corresponding file when loading a buffer.
+    (setq cider-prompt-save-file-on-load nil)
 
     ;; T to wrap history around when the end is reached.
     (setq cider-repl-wrap-history t)
