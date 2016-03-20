@@ -5398,3 +5398,5 @@ Following link is refrence for my emacs config.
 ~[15]~ https://github.com/howardabrams/dot-files
 
 ~[16]~ [[https://github.com/xiaohanyu/oh-my-emacs/]]
+
+~[17]~ https://github.com/jouyouyun/emacs.d/tree/master
