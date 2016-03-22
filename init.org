@@ -2289,7 +2289,45 @@ An abbreviated link looks like
     ;; default use org-mode
     (setq deft-default-extension "org")
     ;; default directory set to ~/Org
-    (setq deft-directory "~/Org"))
+    (setq deft-directory "~/Org")
+    ;; Do not make deft automatically save file
+    (setq deft-auto-save-interval 0)
+    ;; No need to recursive search
+    (setq deft-recursive nil)
+
+    ;; setup an minor-mode to quickly kill all deft buffers
+    (define-minor-mode deft-note-mode "Deft notes" nil " Deft-Notes" nil)
+    (setq deft-text-mode 'deft-note-mode)
+
+    ;; Quickly kill deft buffers
+    (defun my/kill-all-deft-notes ()
+      (interactive)
+      (save-excursion
+        (let ((count 0))
+          (dolist (buffer (buffer-list))
+            (set-buffer buffer)
+            (when (not (eq nil deft-note-mode))
+              (setq count (1+ count))
+              (kill-buffer buffer))))))
+
+    ;; Enable/Disable defts
+    (defun deft-or-close ()
+      (interactive)
+      (if (or (eq major-mode 'deft-mode) (not (eq nil deft-note-mode)))
+          (progn (my/kill-all-deft-notes) (kill-buffer "*Deft*"))
+          (deft)))
+
+    (defun my/deft-draft ()
+      "Use deft to quickly see my blog drafts."
+      (interactive)
+      (let ((deft-directory "~/Org/draft"))
+        (deft)))
+
+    (defun my/deft-office ()
+      "Use deft to quickly see my office notes."
+      (interactive)
+      (let ((deft-directory "~/Org/office"))
+        (deft))))
 #+END_SRC
 
 ** Capture and Agenda
