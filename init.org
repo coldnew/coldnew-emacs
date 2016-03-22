@@ -2280,6 +2280,18 @@ An abbreviated link looks like
           ))
 #+END_SRC
 
+** Setup deft
+
+#+BEGIN_SRC emacs-lisp
+  (use-package deft
+    :ensure t
+    :config
+    ;; default use org-mode
+    (setq deft-default-extension "org")
+    ;; default directory set to ~/Org
+    (setq deft-directory "~/Org"))
+#+END_SRC
+
 ** Capture and Agenda
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
