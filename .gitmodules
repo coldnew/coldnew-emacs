@@ -1,3 +1,6 @@
 [submodule "src/emacs"]
 	path = modules/emacs
 	url = http://git.sv.gnu.org/r/emacs.git
+[submodule "modules/ycmd"]
+	path = modules/ycmd
+	url = git@github.com:Valloric/ycmd.git
