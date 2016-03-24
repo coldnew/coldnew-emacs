@@ -3188,6 +3188,23 @@ GitHub: https://github.com/company-mode/company-statistics
              ("C-p" . company-select-previous))
 #+END_SRC
 
+* YouCompleteMe
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ycmd
+    :ensure t
+    :config
+    (set-variable 'ycmd-server-command  `("python" ,(concat user-emacs-directory "modules/ycmd/ycmd")))
+    (set-variable 'ycmd-extra-conf-whitelist '("~/ramdisk/*" "~/Workspace")))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company-ycmd
+    :ensure t
+    :config
+    (company-ycmd-setup))
+#+END_SRC
+
 * Snippets                                                        :yasnippet:
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
