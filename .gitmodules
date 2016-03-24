@@ -4,3 +4,6 @@
 [submodule "modules/ycmd"]
 	path = modules/ycmd
 	url = git@github.com:Valloric/ycmd.git
+[submodule "modules/YCM-Generator"]
+	path = modules/YCM-Generator
+	url = git@github.com:rdnetto/YCM-Generator.git
