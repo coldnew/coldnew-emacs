@@ -3205,6 +3205,13 @@ GitHub: https://github.com/company-mode/company-statistics
     (company-ycmd-setup))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck-ycmd
+    :ensure t
+    :config
+    (flycheck-ycmd-setup))
+#+END_SRC
+
 * Snippets                                                        :yasnippet:
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
