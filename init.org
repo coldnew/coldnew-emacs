@@ -4146,15 +4146,15 @@ TODO: integrate back tp C++ setting.
                irony-additional-clang-options))))
 
 
-    (use-package company-irony
-      :init
-      (with-eval-after-load 'company
-        (add-to-list 'company-backends 'company-irony)))
+    ;; (use-package company-irony
+    ;;   :init
+    ;;   (with-eval-after-load 'company
+    ;;     (add-to-list 'company-backends 'company-irony)))
 
-    (use-package company-irony-c-headers
-      :init
-      (with-eval-after-load 'company
-        (add-to-list 'company-backends 'company-irony-c-headers)))
+    ;; (use-package company-irony-c-headers
+    ;;   :init
+    ;;   (with-eval-after-load 'company
+    ;;     (add-to-list 'company-backends 'company-irony-c-headers)))
 
     (use-package flycheck-irony
       :config
