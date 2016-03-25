@@ -3261,15 +3261,6 @@ My [[https://github.com/Valloric/ycmd][ycmd]] is cloned to =~/.emacs.d/modules/y
     (flycheck-ycmd-setup))
 #+END_SRC
 
-** eldoc integration
-
-#+BEGIN_SRC emacs-lisp
-  (use-package ycmd-eldoc
-    :ensure t
-    :config
-    (add-hook 'ycmd-mode-hook 'ycmd-eldoc-setup))
-#+END_SRC
-
 * Snippets                                                        :yasnippet:
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
