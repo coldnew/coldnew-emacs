@@ -659,6 +659,16 @@ Some buildin packages need to some setup.
              (concat user-cache-directory "srecode-map.el"))))
 #+END_SRC
 
+** tramp
+
+#+BEGIN_SRC emacs-lisp
+  ;; Override tramp history file path
+  (eval-after-load 'tramp
+    '(progn
+       (setq tramp-histfile-override
+             (concat user-cache-directory ".tramp_history"))))
+#+END_SRC
+
 ** request
 
 #+BEGIN_SRC emacs-lisp
