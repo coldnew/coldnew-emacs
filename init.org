@@ -2280,6 +2280,7 @@ defined some extra easy-templates I need to use here.
      (ruby . t)
      (sh . t)
      (plantuml . t)
+     (R . t)
      (clojure . t)))
   ;; make dot work as graphviz-dot
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
