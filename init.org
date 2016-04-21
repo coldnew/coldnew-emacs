@@ -3648,14 +3648,6 @@ GitHub: https://github.com/trotzig/import-js
     ;; We never want to edit Rubinius bytecode
     (add-to-list 'completion-ignored-extensions ".rbc"))
 #+END_SRC
-** rust
-
-[[https://github.com/rust-lang/rust-mode][rust-mode]] is a major emacs-mode for editing Rust source code.
-
-#+BEGIN_SRC emacs-lisp
-  (req-package rust-mode
-    :mode "\\.rs\\'")
-#+END_SRC
 ** llvm
 
 #+BEGIN_SRC emacs-lisp
@@ -4215,7 +4207,6 @@ TODO: integrate back tp C++ setting.
     (add-hook 'qml-mode-hook #'indent-guide-mode))
 #+END_SRC
 
-
 * iOS / Mac OSX Development
 
 ** Swift
@@ -4269,6 +4260,15 @@ GitHub: https://github.com/youngker/elogcat.el
 #+BEGIN_SRC emacs-lisp
   (req-package sbt-mode
     :mode "\\.sbt$")
+#+END_SRC
+
+* Rust Development
+
+[[https://github.com/rust-lang/rust-mode][rust-mode]] is a major emacs-mode for editing Rust source code.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package rust-mode
+    :mode "\\.rs\\'")
 #+END_SRC
 
 * LISP Development                                                     :lisp:
