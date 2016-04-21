@@ -73,7 +73,7 @@
 (defun find-org-files (dirname)
   "Return a list store all .org file in DIRNAME."
   (thread-last
-      (directory-files dirname nil "\\.org$")
+      (directory-files dirname nil "^[^\\.#].*\\.org$")
     (mapcar (lambda (fn) (format "%s/%s" dirname fn)))))
 
 (defun find-tmp-el-files ()
