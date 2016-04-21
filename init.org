@@ -5372,7 +5372,7 @@ I always use =ERC= as my irc client, which is bundle with emacs.
         '(
           ;; english channel
           (".*\\.freenode.net" "#clojure" "#wayland" "#libhybris" "#webos-ports")
-          (".*\\.mozilla.org" "#b2g")
+          (".*\\.mozilla.org" "#b2g" "#servo" "#rust")
           ;; Chinese channel
           (".*\\.freenode.net" "#emacs.tw" "#cschat.tw" "#clojure.tw" "#lisp.tw")))
 #+end_src
