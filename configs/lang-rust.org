@@ -8,9 +8,115 @@
 #+OPTIONS: ^:nil num:nil tags:nil
 #+SETUPFILE: ../assets/readtheorg.setup
 
-[[https://github.com/rust-lang/rust-mode][rust-mode]] is a major emacs-mode for editing Rust source code.
+[[https://www.rust-lang.org/][Rust]] is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety.
 
-#+BEGIN_SRC emacs-lisp
-  (req-package rust-mode
-    :mode "\\.rs\\'")
+#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
+  (use-package rust-mode
+    :mode "\\.rs\\'"
+    :config
+    <<rust-mode-config>>
+    )
+#+END_SRC
+
+* Install Rust
+
+  To get start with programming [[https://www.rust-lang.org/][Rust]], we need to install it.
+
+  Install Rust is really simple, just copy and paste following command line to your terminal (MacOSX, Linux)
+
+  : curl -sSf https://static.rust-lang.org/rustup.sh | sh
+
+  If you want to uninstall it, just use uninstall script =/usr/local/lib/rustlib/uninstall.sh=.
+
+  Now you can create a minimal example to test Rust, let's create =hello.rs=.
+
+  #+BEGIN_SRC rust :tangle no
+    fn main() {
+        print!("Hello Rust!!!");
+    }
+  #+END_SRC
+
+  And use =rustc= to compile it.
+
+  : rustc hello.rs
+
+  After compile, we find a new file =hello= create, let's execute it.
+
+  #+BEGIN_EXAMPLE
+    ./hello
+    Hello Rust!!!
+  #+END_EXAMPLE
+
+  That's all, let's start programming [[https://www.rust-lang.org/][Rust]].
+
+* Auto-Completion for Rust
+
+  To do auto-completion, you need to install [[https://github.com/phildawes/racer][Racer]], a code completion tool for [[https://www.rust-lang.org/][Rust]]. The binary file will be install to =~/.cargo/bin/racer=.
+
+  : cargo install racer
+
+  We also need to download Rust source code to make [[https://github.com/phildawes/racer][Racer]] can parse it, just download it [[https://www.rust-lang.org/downloads.html][here]]. Or you can download it by =git=.
+
+  : git clone https://github.com/rust-lang/rust.git ~/Workspace/src/rust
+
+  After download source code, you can set =RUST_SRC_PATH= environment variable to make your emacs more portable, add following to your =~/.bashrc=.
+
+  #+BEGIN_SRC sh :tangle no
+    export RUST_SRC_PATH=$HOME/Workspace/src/rust
+  #+END_SRC
+
+  On emacs, we can use [[https://github.com/racer-rust/emacs-racer][emacs-racer]] as racer's wrapper.
+
+  #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref rust-mode-config
+    (use-package racer
+      :ensure t
+      :config
+      ;; Use `cargo install racer' to install it
+      (setq racer-cmd "~/.cargo/bin/racer")
+      ;; Don't forget to download rust source code, I save it to `$RUST_SRC_PATH'
+      (setq racer-rust-src-path (getenv "RUST_SRC_PATH"))
+      ;; Configure Emacs to activate racer when rust-mode starts
+      (add-hook 'rust-mode-hook #'racer-mode)
+      (add-hook 'racer-mode-hook #'eldoc-mode))
+  #+END_SRC
+
+  I also use [[http://company-mode.github.io/][company-mode]] as completion backend.
+
+  #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref rust-mode-config
+    (use-package company-racer
+      :ensure t
+      :config
+      (add-hook 'racer-mode-hook #'company-mode)
+      ;; Setting up configurations when you load rust-mode
+      (add-hook 'rust-mode-hook
+                ;; Use company-racer in rust mode
+                (lambda ()
+                  (set (make-local-variable 'company-backends) (cons 'company-racer company-backends)))))
+  #+END_SRC
+
+* Syntax Checker
+
+  [[https://github.com/flycheck/flycheck-rust][flycheck-rust]] is [[https://github.com/flycheck/flycheck][flycheck]] backend for Rust, which can let use setup Rust more easily.
+
+  #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref rust-mode-config
+    (use-package flycheck-rust
+      :ensure t
+      :config
+      (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+  #+END_SRC
+
+  From [[https://github.com/flycheck/flycheck-rust][flycheck-rust]]'s doc, there's something we should notice:
+
+  #+BEGIN_QUOTE
+  Note:
+  You must run cargo build initially to install all dependencies. If you add new dependencies to Cargo.toml you need to run cargo build again. Otherwise you will see spurious errors about missing crates.
+  #+END_QUOTE
+
+* Setup Rust Keybinding
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref rust-mode-config
+  (bind-keys :map rust-mode-map
+             ("M-." . racer-find-definition)    ; Jump to method definition
+             ("TAB" . racer-complete-or-indent) ; auto complete and intent
+             )
 #+END_SRC
