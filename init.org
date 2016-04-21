@@ -4244,11 +4244,8 @@ GitHub: https://github.com/youngker/elogcat.el
 
 * Rust Development
 
-[[https://github.com/rust-lang/rust-mode][rust-mode]] is a major emacs-mode for editing Rust source code.
-
 #+BEGIN_SRC emacs-lisp
-  (req-package rust-mode
-    :mode "\\.rs\\'")
+  (load (concat user-emacs-directory "configs/lang-rust.el"))
 #+END_SRC
 
 * LISP Development                                                     :lisp:

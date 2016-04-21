@@ -1,0 +1,16 @@
+#+TITLE: Rust Development
+#+AUTHOR: Yen-Chin, Lee <coldnew>
+#+email: coldnew.tw at gmail.com
+#+DESCRIPTION: Rust programming language setup
+#+LANGUAGE: en
+#+STARTUP: overview indent align
+#+BABEL: :cache yes
+#+OPTIONS: ^:nil num:nil tags:nil
+#+SETUPFILE: ../assets/readtheorg.setup
+
+[[https://github.com/rust-lang/rust-mode][rust-mode]] is a major emacs-mode for editing Rust source code.
+
+#+BEGIN_SRC emacs-lisp
+  (req-package rust-mode
+    :mode "\\.rs\\'")
+#+END_SRC
