@@ -18,11 +18,17 @@
   "Overwrite the spacemacs's `spacemacs/check-for-new-version' to
   makt it useless since I use git submodule to bundle spacemacs with my emacs.")
 
+;; Load spacemacs
 (require 'f)
 (let* ((spacemacs-dir
-	(directory-file-name (f-join user-emacs-directory "modules" "spacemacs")))
+        (directory-file-name (f-join user-emacs-directory "modules" "spacemacs")))
        (spacemacs-init
-	(concat (file-name-as-directory spacemacs-dir) "init.el"))
+        (concat (file-name-as-directory spacemacs-dir) "init.el"))
        (user-emacs-directory (file-name-directory spacemacs-init)))
   ;; Initial spacemacs, our emacs run on top of it
   (load spacemacs-init))
+
+;;;; Set helm input area in minibuffer
+;; I `really' hate spacemacs default echo the helm input in header line, it's really annoying.
+(setq helm-echo-input-in-header-line nil)
+(remove-hook 'helm-minibuffer-set-up-hook 'helm-hide-minibuffer-maybe)
