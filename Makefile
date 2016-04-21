@@ -1,7 +1,7 @@
 EMACS ?= emacs
 CASK ?= cask
 
-all: compile
+all: init.el
 
 test: clean
 	${MAKE} all
