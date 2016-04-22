@@ -404,6 +404,12 @@ I think I'll write some dynamic module extension, which will save to =~/.emacs.d
       (load script)))
 #+END_SRC
 
+* Spacemacs
+
+#+BEGIN_SRC emacs-lisp
+  (load (concat user-emacs-directory "configs/core-spacemacs.el"))
+#+END_SRC
+
 * Basic setup
 
 Some basic setup to disabe/enable default feature before we start. The
