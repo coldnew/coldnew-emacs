@@ -26,14 +26,14 @@ We don't need to install [[https://clojure.org][Clojure]] to our system directly
 
 To install it, you need to download the [[https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein][lein script]] (on on Windows [[https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein.bat][lein.bat]]) to your system, I always put it on =~/bin= folder.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :tangle no
   mkdir -p ~/bin
   wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein -O ~/bin/lein && chmod +x $_
 #+END_SRC
 
 Don't forget change =lein= to executable script (=chmod +x=) and makre sure you =~/bin= is in your =$PATH= environment variables.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :tangle no
   export PATH="~/bin:$PATH"
 #+END_SRC
 
@@ -43,7 +43,7 @@ After all things done, we can use [[http://leiningen.org/][Leinigen]] to create 
 
 [[http://leiningen.org/][Leinigen]] will create a sample project with this directory structure
 
-#+BEGIN_EXAMPLE
+#+BEGIN_EXAMPLE  :tangle no
 .
 ├── CHANGELOG.md
 ├── LICENSE
@@ -64,7 +64,7 @@ After all things done, we can use [[http://leiningen.org/][Leinigen]] to create 
 
 Just modify the =src/hellowrold/core.clj= like this
 
-#+BEGIN_SRC clojure
+#+BEGIN_SRC clojure  :tangle no
   (ns hellowrold.core)
 
   (defn -main []
@@ -73,7 +73,7 @@ Just modify the =src/hellowrold/core.clj= like this
 
 Then use =lein run -m hello.core= to execute our main function
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh  :tangle no
   lein run -m hello.core
   Hello, Clojure!!!
 #+END_SRC
