@@ -24,18 +24,18 @@
 
 *** Use regexp to find header is C++ header or not
 
-    #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
-      (add-to-list 'magic-mode-alist
-                   `(,(lambda ()
-                        (and (string= (file-name-extension (or (buffer-file-name) "")) "h")
-                             (or (re-search-forward "#include <\\w+>"
-                                                    magic-mode-regexp-match-limit t)
-                                 (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
-                                                    magic-mode-regexp-match-limit t)
-                                 (re-search-forward "std::"
-                                                    magic-mode-regexp-match-limit t))))
-                     . c++-mode))
-    #+END_SRC
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
+  (add-to-list 'magic-mode-alist
+               `(,(lambda ()
+                    (and (string= (file-name-extension (or (buffer-file-name) "")) "h")
+                         (or (re-search-forward "#include <\\w+>"
+                                                magic-mode-regexp-match-limit t)
+                             (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
+                                                magic-mode-regexp-match-limit t)
+                             (re-search-forward "std::"
+                                                magic-mode-regexp-match-limit t))))
+                 . c++-mode))
+#+END_SRC
 
 *** Use dummy-h-mode to help detect header's major mode
 
@@ -59,52 +59,51 @@
 
 ** ElDoc supports
 
-   #+BEGIN_SRC emacs-lisp
-     (use-package c-eldoc
-       :ensure t
-       :config
-       (add-hook 'c-mode-common-hook
-                 '(lambda ()
-                    (setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
-                    (c-turn-on-eldoc-mode))))
-   #+END_SRC
-
+#+BEGIN_SRC emacs-lisp
+  (use-package c-eldoc
+    :ensure t
+    :config
+    (add-hook 'c-mode-common-hook
+              '(lambda ()
+                 (setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
+                 (c-turn-on-eldoc-mode))))
+#+END_SRC
 
 ** Highlight a few dangerous types in C/C++
 
-   [[http://www.emacswiki.org/emacs/CWarnMode][cwarn-mode]] is a minor mode that ca highlight a few dangerous types in C/C++.
+[[http://www.emacswiki.org/emacs/CWarnMode][cwarn-mode]] is a minor mode that ca highlight a few dangerous types in C/C++.
 
-   By default it highlights:
+By default it highlights:
 
-   - Semicolons right after conditions and loops (e.g. ~if (x == y);~)
-   - Assignments in tests (e.g. ~if (x = y) {~)
-   - Functions with reference parameters (e.g. ~void funct(string &p) {~)
+- Semicolons right after conditions and loops (e.g. ~if (x == y);~)
+- Assignments in tests (e.g. ~if (x = y) {~)
+- Functions with reference parameters (e.g. ~void funct(string &p) {~)
 
-   #+BEGIN_SRC emacs-lisp
-     (use-package cwarn
-       :config
-       (add-hook 'c-mode-common-hook '(lambda () (cwarn-mode 1))))
-   #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package cwarn
+    :config
+    (add-hook 'c-mode-common-hook '(lambda () (cwarn-mode 1))))
+#+END_SRC
 
 ** Comment #if 0 #endif region
 
-   #+BEGIN_SRC emacs-lisp
-     (defun my/cc-mode/highlight-if-0 ()
-       "highlight c/c++ #if 0 #endif macros"
-       (setq cpp-known-face 'default)
-       (setq cpp-unknown-face 'default)
-       (setq cpp-known-writable 't)
-       (setq cpp-unknown-writable 't)
-       (setq cpp-edit-list '(("0" '(foreground-color . "gray")  default both)
-                             ("1" default font-lock-comment-face both)))
-       (cpp-highlight-buffer t))
+#+BEGIN_SRC emacs-lisp
+  (defun my/cc-mode/highlight-if-0 ()
+    "highlight c/c++ #if 0 #endif macros"
+    (setq cpp-known-face 'default)
+    (setq cpp-unknown-face 'default)
+    (setq cpp-known-writable 't)
+    (setq cpp-unknown-writable 't)
+    (setq cpp-edit-list '(("0" '(foreground-color . "gray")  default both)
+                          ("1" default font-lock-comment-face both)))
+    (cpp-highlight-buffer t))
 
-     ;; Add to c/c++ mode
-     (defun my/cc-mode/highlight-if-0-hook ()
-       (when (or (eq major-mode 'c++-mode) (eq major-mode 'c-mode))
-         (my/cc-mode/highlight-if-0)))
-     (add-hook 'after-save-hook #'my/cc-mode/highlight-if-0-hook)
-  #+END_SRC
+  ;; Add to c/c++ mode
+  (defun my/cc-mode/highlight-if-0-hook ()
+    (when (or (eq major-mode 'c++-mode) (eq major-mode 'c-mode))
+      (my/cc-mode/highlight-if-0)))
+  (add-hook 'after-save-hook #'my/cc-mode/highlight-if-0-hook)
+#+END_SRC
 
 ** Use subword-mode for C/C++ project
 
@@ -123,46 +122,45 @@ In most C/C++ project, we naming variable in camelCase, subword-mode can help us
 
 ** Add refactor function support
 
-   Semantic Refactor is a C/C++ refactoring tool based on Semantic parser framework.
+Semantic Refactor is a C/C++ refactoring tool based on Semantic parser framework.
 
-   GitHub: https://github.com/tuhdo/semantic-refactor
+GitHub: https://github.com/tuhdo/semantic-refactor
 
-   #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
-     (use-package srefactor
-       :ensure t)
-   #+END_SRC
-
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
+  (use-package srefactor
+    :ensure t)
+#+END_SRC
 
 ** Quick switch between header and source file in C/C++
 
-   This extension allows to quickly switch between header and a source file with
-   the same name located in the directory tree or repository. It is an alternatife
-   to =ff-find-other-file=.
+This extension allows to quickly switch between header and a source file with
+the same name located in the directory tree or repository. It is an alternatife
+to =ff-find-other-file=.
 
-   GitHub: https://github.com/fourier/cff
+GitHub: https://github.com/fourier/cff
 
-   #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
-     (use-package cff :ensure t)
-   #+END_SRC
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
+  (use-package cff :ensure t)
+#+END_SRC
 
 * Extra Syntax Highlight
 
-  Some syntax highlight may not support in default emacs, set it here.
+Some syntax highlight may not support in default emacs, set it here.
 
 ** Highlights stdint types
 
-   Extra hightlight for =stdint.h=
+Extra hightlight for =stdint.h=
 
-   #+BEGIN_SRC emacs-lisp
-     (dolist (m '(c-mode c++-mode))
-       (font-lock-add-keywords
-        m
-        '(("\\<\\(int8_t\\|int16_t\\|int32_t\\|int64_t\\|uint8_t\\|uint16_t\\|uint32_t\\|uint64_t\\)\\>" . font-lock-keyword-face))))
-   #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (dolist (m '(c-mode c++-mode))
+    (font-lock-add-keywords
+     m
+     '(("\\<\\(int8_t\\|int16_t\\|int32_t\\|int64_t\\|uint8_t\\|uint16_t\\|uint32_t\\|uint64_t\\)\\>" . font-lock-keyword-face))))
+#+END_SRC
 
 * Coding Styles
 
-  Since C/C++ has too many coding styles, I need to set it up.
+Since C/C++ has too many coding styles, I need to set it up.
 
 ** C
 *** General C Coding Style
@@ -223,54 +221,55 @@ This coding style is document in https://www.kernel.org/doc/Documentation/Coding
 #+END_SRC
 
 ** C++
-   Use my C++ coding style.
 
-   #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
-     (add-hook 'c++-mode-hook
-               '(lambda ()
+Use my C++ coding style.
 
-                  ;; Use stroustrup style
-                  (c-set-style "stroustrup")
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
+  (add-hook 'c++-mode-hook
+            '(lambda ()
 
-                  ;; Setting indentation lvel
-                  (setq c-basic-offset 4)
+               ;; Use stroustrup style
+               (c-set-style "stroustrup")
 
-                  ;; Make TAB equivilent to 4 spaces
-                  (setq tab-width 4)
+               ;; Setting indentation lvel
+               (setq c-basic-offset 4)
 
-                  ;; Use spaces to indent instead of tabs.
-                  (setq indent-tabs-mode nil)
+               ;; Make TAB equivilent to 4 spaces
+               (setq tab-width 4)
 
-                  ;; Indent the continuation by 2
-                  (setq c-continued-statement-offset 2)
+               ;; Use spaces to indent instead of tabs.
+               (setq indent-tabs-mode nil)
 
-                  ;; Brackets should be at same indentation level as the statements they open
-                  ;; for example:
-                  ;;                 if (0)        becomes        if (0)
-                  ;;                     {                        {
-                  ;;                        ;                         ;
-                  ;;                     }                        }
-                  (c-set-offset 'substatement-open 0)
+               ;; Indent the continuation by 2
+               (setq c-continued-statement-offset 2)
 
-                  ;; make open-braces after a case
-                  (c-set-offset 'case-label '+)
+               ;; Brackets should be at same indentation level as the statements they open
+               ;; for example:
+               ;;                 if (0)        becomes        if (0)
+               ;;                     {                        {
+               ;;                        ;                         ;
+               ;;                     }                        }
+               (c-set-offset 'substatement-open 0)
 
-                  ;; Not indent code inside a namespace
-                  ;; for example:
-                  ;;                namespace A {
-                  ;;
-                  ;;                int namespace_global_variable;
-                  ;;
-                  ;;                class Class {
-                  ;;
-                  ;;                Class();
-                  ;;                //...
-                  ;;                };
-                  ;;
-                  ;;                }
-                  (c-set-offset 'innamespace 0)
-                  ))
-       #+END_SRC
+               ;; make open-braces after a case
+               (c-set-offset 'case-label '+)
+
+               ;; Not indent code inside a namespace
+               ;; for example:
+               ;;                namespace A {
+               ;;
+               ;;                int namespace_global_variable;
+               ;;
+               ;;                class Class {
+               ;;
+               ;;                Class();
+               ;;                //...
+               ;;                };
+               ;;
+               ;;                }
+               (c-set-offset 'innamespace 0)
+               ))
+#+END_SRC
 
 * Setup C/C++ Keybinding
 
