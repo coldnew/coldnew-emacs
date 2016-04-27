@@ -485,6 +485,7 @@ I move the file to cache-dir and make git ignore it.
 
 #+BEGIN_SRC emacs-lisp
   (require 'async)   ; Installed by Cask
+  (require 's)       ; Installed by Cask
   ;; If I'm edit my init.org, async generate init.el when save.
   (defun tangle-init ()
     "If the current buffer is 'init.org' or `org-mode' files in `configs' dir, execute makefile to create new configs."
@@ -492,8 +493,8 @@ I move the file to cache-dir and make git ignore it.
           (default-directory user-emacs-directory))
       (when (or (equal (buffer-file-name)
                        (expand-file-name (concat user-emacs-directory "init.org")))
-                (equal (file-name-directory (buffer-file-name))
-                       (file-name-directory (concat user-emacs-directory "configs/"))))
+                (s-starts-with? (file-name-directory (concat user-emacs-directory "configs/"))
+                                (file-name-directory (buffer-file-name))))
 
         ;; build with `make init.el' command
         (async-start-process buffer-name "make"
