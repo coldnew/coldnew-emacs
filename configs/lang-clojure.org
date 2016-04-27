@@ -1,0 +1,199 @@
+#+TITLE: Clojure Development
+#+AUTHOR: Yen-Chin, Lee <coldnew>
+#+email: coldnew.tw at gmail.com
+#+DESCRIPTION: CLojure programming language setup
+#+LANGUAGE: en
+#+STARTUP: overview indent align
+#+BABEL: :cache yes
+#+OPTIONS: ^:nil num:nil tags:nil
+#+SETUPFILE: ../assets/readtheorg.setup
+
+
+#+BEGIN_SRC emacs-lisp :noweb no-export
+  (use-package clojure-mode
+    :ensure t
+    :config
+    <<clojure-config>>)
+#+END_SRC
+
+* Install Clojure's building system: Leinigen
+
+We don't need to install [[https://clojure.org][Clojure]] to our system directly, we just install the building system: [[http://leiningen.org/][Leinigen]].
+
+[[http://leiningen.org/][Leinigen]] is a tool to help you automating Clojure projects.
+
+** Install Leinigen
+
+To install it, you need to download the [[https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein][lein script]] (on on Windows [[https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein.bat][lein.bat]]) to your system, I always put it on =~/bin= folder.
+
+#+BEGIN_SRC sh
+  mkdir -p ~/bin
+  wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein -O ~/bin/lein && chmod +x $_
+#+END_SRC
+
+Don't forget change =lein= to executable script (=chmod +x=) and makre sure you =~/bin= is in your =$PATH= environment variables.
+
+#+BEGIN_SRC sh
+  export PATH="~/bin:$PATH"
+#+END_SRC
+
+After all things done, we can use [[http://leiningen.org/][Leinigen]] to create our first Clojure project:
+
+: lein new hellowrold
+
+[[http://leiningen.org/][Leinigen]] will create a sample project with this directory structure
+
+#+BEGIN_EXAMPLE
+.
+├── CHANGELOG.md
+├── LICENSE
+├── README.md
+├── doc
+│   └── intro.md
+├── project.clj
+├── resources
+├── src
+│   └── hellowrold
+│       └── core.clj
+└── test
+    └── hellowrold
+        └── core_test.clj
+
+6 directories, 7 files
+#+END_EXAMPLE
+
+Just modify the =src/hellowrold/core.clj= like this
+
+#+BEGIN_SRC clojure
+  (ns hellowrold.core)
+
+  (defn -main []
+    (println "Hello Clojure!!!"))
+#+END_SRC
+
+Then use =lein run -m hello.core= to execute our main function
+
+#+BEGIN_SRC sh
+  lein run -m hello.core
+  Hello, Clojure!!!
+#+END_SRC
+
+YA! Our first Clojure project is work :).
+
+
+* Use cider for interactive development
+
+[[https://github.com/clojure-emacs/cider][cider]] is a Clojure Interactive Development Environment that Rocks for Emacs
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
+  (req-package cider
+    :require (cider-decompile cider-eval-sexp-fu eldoc projectile)
+    :config
+
+    ;; Enable eldoc in Clojure buffers
+    (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+
+    ;; Hide `*nrepl-connection*' and `*nrepl-server*' buffers from appearing
+    ;; in some buffer switching commands like switch-to-buffer
+    (setq nrepl-hide-special-buffers t)
+
+    ;; Enabling CamelCase support for editing commands(like forward-word,
+    ;; backward-word, etc) in the REPL is quite useful since we often have
+    ;; to deal with Java class and method names. The built-in Emacs minor
+    ;; mode subword-mode provides such functionality
+    (add-hook 'cider-repl-mode-hook #'subword-mode)
+
+    ;; The use of paredit when editing Clojure (or any other Lisp) code is
+    ;; highly recommended. You're probably using it already in your
+    ;; clojure-mode buffers (if you're not you probably should). You might
+    ;; also want to enable paredit in the REPL buffer as well.
+    ;; (add-hook 'cider-repl-mode-hook #'paredit-mode)
+
+    ;; Auto-select the error buffer when it's displayed:
+    (setq cider-auto-select-error-buffer t)
+
+    ;; Controls whether to pop to the REPL buffer on connect.
+    (setq cider-repl-pop-to-buffer-on-connect nil)
+
+    ;; Make cider not prompt to save the corresponding file when loading a buffer.
+    (setq cider-prompt-save-file-on-load nil)
+
+    ;; T to wrap history around when the end is reached.
+    (setq cider-repl-wrap-history t)
+
+    ;; Log protocol messages to the `nrepl-message-buffer-name' buffer.
+    (setq nrepl-log-messages t))
+#+END_SRC
+
+* Add refactor function support
+
+GitHub: https://github.com/clojure-emacs/clj-refactor.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package clj-refactor
+    :require (helm cljr-helm)
+    :config
+    ;; Add clj-refactor to clojure-mode
+    (add-hook 'clojure-mode-hook '(lambda () (clj-refactor-mode 1)))
+    ;; Use `C-c C-x' as prefix
+    (cljr-add-keybindings-with-prefix "M-m"))
+#+END_SRC
+
+
+* Search on Clojars more easily
+
+This Emacs extension allows you to search for projects on clojars.org
+and copies your selection to the kill ring in a format suitable for
+your =project.clj=.
+
+GitHub: https://github.com/joshuamiller/clojars.el
+
+#+BEGIN_SRC emacs-lisp
+  (req-package clojars)
+#+END_SRC
+
+* Search Clojure Cheatsheet
+
+GitHub: https://github.com/clojure-emacs/clojure-cheatsheet
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
+  (req-package clojure-cheatsheet)
+#+END_SRC
+
+* Interactive Commands                                              :command:
+
+Some interactive commands for clojure-mode.
+
+** Send S-Expression and evaluate it there
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
+  (defun my/cider-send-and-evaluate-sexp ()
+    "Sends the s-expression located before the point or the active
+    region to the REPL and evaluates it. Then the Clojure buffer is
+    activated as if nothing happened."
+    (interactive)
+    (if (not (region-active-p))
+        (cider-insert-last-sexp-in-repl)
+      (cider-insert-in-repl
+       (buffer-substring (region-beginning) (region-end)) nil))
+    (cider-switch-to-repl-buffer)
+    (cider-repl-closing-return)
+    (cider-switch-to-last-clojure-buffer)
+    (message ""))
+#+END_SRC
+
+* Setup Clojure Keybindings                                      :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
+  (bind-keys :map clojure-mode-map
+             ;; M-m     . refactor command
+             ("C-c C-f" . projectile-find-file)
+             ("C-c M-c" . cider-connect)
+             ("C-c M-j" . cider-jack-in)
+             ("C-c '"   . my/narrow-or-widen-dwim)
+             ("C-c h"   . clojure-cheatsheet)
+             ("C-c C-k" . cider-load-buffer)
+             ("C-x C-e" . cider-eval-last-sexp)
+             ("C-c C-v" . my/cider-send-and-evaluate-sexp)
+             ("C-c C-t" . projectile-toggle-between-implementation-and-test))
+#+END_SRC
