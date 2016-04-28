@@ -2715,12 +2715,7 @@ For c-mode, just do the same but change the relative
     :mode ("\\.bb\\'" "\\.bbappend\\'"))
 #+END_SRC
 
-** brainfuck
-
-#+BEGIN_SRC emacs-lisp
-  (req-package brainfuck-mode
-    :mode "\\.bf\\'")
-#+END_SRC
+** [[file:configs/lang/brainfuck.org][Brainfuck]]
 
 ** crontab
 
