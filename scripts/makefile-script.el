@@ -73,7 +73,7 @@
 (defun find-org-files (dirname)
   "Return a list store all .org file in DIRNAME."
   (thread-last (find-lisp-find-files dirname "^[^\\.#].*\\.org$")
-    (mapcar (lambda (f) (replace-regexp-in-string user-emacs-directory "" f)))))
+    (mapcar (lambda (f) (replace-regexp-in-string (expand-file-name user-emacs-directory) "" f)))))
 
 (defun find-tmp-el-files ()
   "Return a list store all .pid files."
