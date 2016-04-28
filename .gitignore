@@ -39,4 +39,4 @@ log/
 /.gh-pages/
 /network-security.data
 /.build/
-configs/*.el
+configs/**/*.el
