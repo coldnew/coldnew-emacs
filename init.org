@@ -1792,12 +1792,6 @@ ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-thresho
              ("M-c" . my/minibuffer-switch-to-cluster))
 #+END_SRC
 
-* Org                                                                   :org:
-
-#+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang/org.el"))
-#+END_SRC
-
 * Editors
 
 Why emacs config has an editor section, doesn't means emacs is not an editor ?
@@ -2679,6 +2673,19 @@ For c-mode, just do the same but change the relative
 
 * Programming Languages
 
+** [[file:configs/lang/org.org][Org]]
+
+#+BEGIN_SRC emacs-lisp
+  (load (concat user-emacs-directory "configs/lang/org.el"))
+#+END_SRC
+
+** [[file:configs/lang/c-cpp.org][C / C++]]
+
+#+BEGIN_SRC emacs-lisp
+  (load (concat user-emacs-directory "configs/lang/c-cpp.el"))
+#+END_SRC
+
+
 ** arduino
 
 #+BEGIN_SRC emacs-lisp
@@ -3083,12 +3090,6 @@ GitHub: https://github.com/trotzig/import-js
 
 #+BEGIN_SRC emacs-lisp
   (req-package yaml-mode)
-#+END_SRC
-
-* C / C++ Development
-
-#+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang/c-cpp.el"))
 #+END_SRC
 
 * Qt (C++) Development
