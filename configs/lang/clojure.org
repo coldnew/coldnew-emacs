@@ -86,8 +86,8 @@ YA! Our first Clojure project is work :).
 [[https://github.com/clojure-emacs/cider][cider]] is a Clojure Interactive Development Environment that Rocks for Emacs
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
-  (req-package cider
-    :require (cider-decompile cider-eval-sexp-fu eldoc projectile)
+  (use-package cider
+    :ensure t
     :config
 
     ;; Enable eldoc in Clojure buffers
@@ -130,8 +130,8 @@ YA! Our first Clojure project is work :).
 GitHub: https://github.com/clojure-emacs/clj-refactor.el
 
 #+BEGIN_SRC emacs-lisp
-  (req-package clj-refactor
-    :require (helm cljr-helm)
+  (use-package clj-refactor
+    :ensure t
     :config
     ;; Add clj-refactor to clojure-mode
     (add-hook 'clojure-mode-hook '(lambda () (clj-refactor-mode 1)))
@@ -149,7 +149,8 @@ your =project.clj=.
 GitHub: https://github.com/joshuamiller/clojars.el
 
 #+BEGIN_SRC emacs-lisp
-  (req-package clojars)
+  (use-package clojars
+    :ensure t)
 #+END_SRC
 
 * Search Clojure Cheatsheet
@@ -157,7 +158,8 @@ GitHub: https://github.com/joshuamiller/clojars.el
 GitHub: https://github.com/clojure-emacs/clojure-cheatsheet
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
-  (req-package clojure-cheatsheet)
+  (use-package clojure-cheatsheet
+    :ensure t)
 #+END_SRC
 
 * Interactive Commands                                              :command:
