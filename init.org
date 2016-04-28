@@ -3377,7 +3377,7 @@ GitHub: https://github.com/trotzig/import-js
 * C / C++ Development
 
 #+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang-c-cpp.el"))
+  (load (concat user-emacs-directory "configs/lang/c-cpp.el"))
 #+END_SRC
 
 * Qt (C++) Development
@@ -3589,7 +3589,7 @@ GitHub: https://github.com/youngker/elogcat.el
 * Rust Development
 
 #+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang-rust.el"))
+  (load (concat user-emacs-directory "configs/lang/rust.el"))
 #+END_SRC
 
 * LISP Development                                                     :lisp:
@@ -3811,7 +3811,7 @@ GitHub: https://github.com/Silex/elmacro
 ** Clojure
 
 #+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang-clojure.el"))
+  (load (concat user-emacs-directory "configs/lang/clojure.el"))
 #+END_SRC
 
 ** Scheme

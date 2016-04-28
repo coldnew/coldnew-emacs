@@ -72,9 +72,8 @@
 
 (defun find-org-files (dirname)
   "Return a list store all .org file in DIRNAME."
-  (thread-last
-      (directory-files dirname nil "^[^\\.#].*\\.org$")
-    (mapcar (lambda (fn) (format "%s/%s" dirname fn)))))
+  (thread-last (find-lisp-find-files dirname "^[^\\.#].*\\.org$")
+    (mapcar (lambda (f) (replace-regexp-in-string user-emacs-directory "" f)))))
 
 (defun find-tmp-el-files ()
   "Return a list store all .pid files."
@@ -112,7 +111,7 @@
   (let* ((bdir (or (file-name-directory forg) ""))
          (base (file-name-base forg))
          (dir  (dirjoin *workdir* bdir))
-         (fel  (dirjoin dir (concat base ".el" "." *pid*)))
+         (fel  (dirjoin dir (format "%s.el.%s" base *pid*)))
          (fel2 (dirjoin bdir (concat base ".el"))))
     (message (format "Create %s from %s..." fel2 forg))
     (rename-file fel fel2 t)))
