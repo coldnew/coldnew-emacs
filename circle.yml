@@ -13,6 +13,7 @@ machine:
 
 dependencies:
   pre:
+    - curl -fsSkL "https://raw.github.com/cask/cask/master/go" | python
     - ./scripts/install-build-deps-ubuntu.sh || true
     - ./scripts/build-emacs.sh
     - . ./scripts/envsetup-evm.sh
