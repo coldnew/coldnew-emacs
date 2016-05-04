@@ -10,8 +10,7 @@
 
 
 #+BEGIN_SRC emacs-lisp :noweb no-export
-  (use-package lisp-mode
-    :ensure t
+  (use-package lisp-mode                  ; builtin
     :mode "\\.lisp\\'"
     :config
     <<common-lisp-config>>)
