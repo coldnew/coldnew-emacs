@@ -10,6 +10,5 @@
 
 #+BEGIN_SRC emacs-lisp
   (use-package newlisp-mode
-    :ensure t
-    :mode "\\.lisp\\'")
+    :ensure t)
 #+END_SRC
