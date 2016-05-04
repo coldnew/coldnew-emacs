@@ -1,0 +1,15 @@
+#+TITLE: NewLisp Development
+#+AUTHOR: Yen-Chin, Lee <coldnew>
+#+email: coldnew.tw at gmail.com
+#+DESCRIPTION: NewLisp programming language setup
+#+LANGUAGE: en
+#+STARTUP: overview indent align
+#+BABEL: :cache yes
+#+OPTIONS: ^:nil num:nil tags:nil
+#+SETUPFILE: ../assets/readtheorg.setup
+
+#+BEGIN_SRC emacs-lisp
+  (use-package newlisp-mode
+    :ensure t
+    :mode "\\.lisp\\'")
+#+END_SRC

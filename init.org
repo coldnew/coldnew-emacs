@@ -3464,8 +3464,9 @@ Show lambda as λ.
 ** newlisp
 
 #+BEGIN_SRC emacs-lisp
-  (req-package newlisp-mode)
+  (load (concat user-emacs-directory "configs/lang/newlisp.el"))
 #+END_SRC
+
 
 * Web Development                                                       :web:
 
