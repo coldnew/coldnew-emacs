@@ -1,7 +1,7 @@
 #+TITLE: Clojure Development
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
-#+DESCRIPTION: CLojure programming language setup
+#+DESCRIPTION: Clojure programming language setup
 #+LANGUAGE: en
 #+STARTUP: overview indent align
 #+BABEL: :cache yes
@@ -80,7 +80,6 @@ Then use =lein run -m hello.core= to execute our main function
 
 YA! Our first Clojure project is work :).
 
-
 * Use cider for interactive development
 
 [[https://github.com/clojure-emacs/cider][cider]] is a Clojure Interactive Development Environment that Rocks for Emacs
@@ -138,7 +137,6 @@ GitHub: https://github.com/clojure-emacs/clj-refactor.el
     ;; Use `C-c C-x' as prefix
     (cljr-add-keybindings-with-prefix "M-m"))
 #+END_SRC
-
 
 * Search on Clojars more easily
 
