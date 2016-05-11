@@ -14,7 +14,7 @@ Emacs.
 I make my emacs on top of spacemacs since I also use vim keymap.
 
 In my config file, the original =~/.spacemacs= file has moved to
-=~/.emacs.d/local-lisp/spacemacs.d/init.el= , I also advice spacemacs funtion to
+=~/.emacs.d/spacemacs.d/init.el= , I also advice spacemacs funtion to
 prevent orphan packages deleted by spacemacs.
 
 After all spacemacs init done, switch back to =*scratch*= buffer.
@@ -26,7 +26,7 @@ file.
 
 #+BEGIN_SRC emacs-lisp
   (require 'f)
-  (setenv "SPACEMACSDIR" (f-join user-emacs-directory "local-lisp" "spacemacs.d"))
+  (setenv "SPACEMACSDIR" (f-join user-emacs-directory "spacemacs.d"))
 #+END_SRC
 
 * Overwrite spacemacs function to let it not remove my packages
