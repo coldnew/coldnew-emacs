@@ -160,6 +160,35 @@ GitHub: https://github.com/clojure-emacs/clojure-cheatsheet
     :ensure t)
 #+END_SRC
 
+* Pretty Symbols
+
+Pretty symbols for anonymous functions, set literals and partial, like =(λ [a] (+ a 5))=, =ƒ(+ % 5)=, =∈{2 4 6}= and =Ƥ=.
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/clojure/fancify-symbols (mode)
+    "Pretty symbols for Clojure's anonymous functions and sets,
+     like (λ [a] (+ a 5)), ƒ(+ % 5), and ∈{2 4 6}."
+    (font-lock-add-keywords mode
+                            `(("(\\(fn\\)[\[[:space:]]"
+                               (0 (progn (compose-region (match-beginning 1)
+                                                         (match-end 1) "λ"))))
+                              ("(\\(partial\\)[\[[:space:]]"
+                               (0 (progn (compose-region (match-beginning 1)
+                                                         (match-end 1) "Ƥ"))))
+                              ("(\\(comp\\)[\[[:space:]]"
+                               (0 (progn (compose-region (match-beginning 1)
+                                                         (match-end 1) "∘"))))
+                              ("\\(#\\)("
+                               (0 (progn (compose-region (match-beginning 1)
+                                                         (match-end 1) "ƒ"))))
+                              ("\\(#\\){"
+                               (0 (progn (compose-region (match-beginning 1)
+                                                         (match-end 1) "∈")))))))
+
+  (dolist (m '(clojure-mode clojurescript-mode clojurec-mode clojurex-mode cider-repl-mode))
+    (my/clojure/fancify-symbols m))
+#+END_SRC
+
 * Interactive Commands                                              :command:
 
 Some interactive commands for clojure-mode.
