@@ -93,6 +93,32 @@ Create =~/.lein/profiles.clj= with following content:
                          [org.clojure/tools.nrepl "0.2.12"]]}}
 #+END_SRC
 
+* Install Clojure's building system: boot
+
+[[http://boot-clj.com/][Boot]] is another building tool for Clojure.
+
+** Install Boot
+
+To install it, you need to download the [[https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh][boot script]] to your system, I always put it on =~/bin= folder.
+
+#+BEGIN_SRC sh :tangle no
+  mkdir -p ~/bin
+  curl -fsSLo ~/bin/boot https://github.com/boot-clj/boot-bin/releases/download/latest/boot.sh
+  && chmod +x $_
+#+END_SRC
+
+Don't forget change =lein= to executable script (=chmod +x=) and makre sure you =~/bin= is in your =$PATH= environment variables.
+
+#+BEGIN_SRC sh :tangle no
+  export PATH="~/bin:$PATH"
+#+END_SRC
+
+Now we can use =boot repl= to start clojure's repl for test
+
+#+BEGIN_SRC sh :tangle no
+  boot repl
+#+END_SRC
+
 * Use cider for interactive development
 
 [[https://github.com/clojure-emacs/cider][cider]] is a Clojure Interactive Development Environment that Rocks for Emacs
