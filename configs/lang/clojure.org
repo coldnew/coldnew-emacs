@@ -80,6 +80,19 @@ Then use =lein run -m hello.core= to execute our main function
 
 YA! Our first Clojure project is work :).
 
+** Setup your leinigen profiles
+
+After we install leinigen, we need to add =cider-nrepl= and =refactor-nrepl= to your lein profile.
+
+Create =~/.lein/profiles.clj= with following content:
+
+#+BEGIN_SRC clojure :tangle no
+  {:repl {:plugins [[cider/cider-nrepl "0.10.0-SNAPSHOT"]
+                    [refactor-nrepl "2.0.0-SNAPSHOT"]]
+          :dependencies [[alembic "0.3.2"]
+                         [org.clojure/tools.nrepl "0.2.12"]]}}
+#+END_SRC
+
 * Use cider for interactive development
 
 [[https://github.com/clojure-emacs/cider][cider]] is a Clojure Interactive Development Environment that Rocks for Emacs
