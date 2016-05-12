@@ -206,6 +206,8 @@ see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
   (use-package org-crypt
     :config
+    ;; Disable `auto-save-mode' for org-mode buffer prior to decrypting an entry.
+    (setq org-crypt-disable-auto-save t)
     ;; Auto encrypt when save file
     (org-crypt-use-before-save-magic)
     ;; Encrypt with tagname: `secret'
