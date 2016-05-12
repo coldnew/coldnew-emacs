@@ -1103,20 +1103,6 @@ GitHub: https://github.com/abo-abo/hydra
   ;;(global-set-key (kbd "C-x m") 'hydra-movement/body)
 #+END_SRC
 
-*** Font Setup
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref hydra-config
-    (defhydra hydra-font-setup ()
-      "
-    Font Size^^
-    ----------------------------------------------------------------
-    _=_ ↑
-    _\-_ ↓
-    "
-      ("=" text-scale-increase)
-      ("-" text-scale-decrease))
-#+END_SRC
-
 *** ☛ TODO NEED REVIEW
 
 #+BEGIN_SRC emacs-lisp :tangle no
@@ -4276,7 +4262,8 @@ I always use =ERC= as my irc client, which is bundle with emacs.
 
 #+BEGIN_SRC emacs-lisp
   (bind-keys :map global-map
-             ("C-=" . hydra-font-setup/body))
+             ("C-=" . text-scale-increase)
+             ("C--" . text-scale-decrease))
 #+END_SRC
 
 Window Selection
