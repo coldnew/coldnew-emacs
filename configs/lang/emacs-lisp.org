@@ -55,6 +55,17 @@ GitHub: https://github.com/vedang/el-spice
                                          'paredit-close-round))))))
 #+END_SRC
 
+* Check paren on save
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref emacs-lisp-mode-config
+  (defun my/elisp/check-parens-on-save ()
+    "Run `check-parens' when the current buffer is saved."
+    (add-hook 'after-save-hook #'check-parens nil 'make-it-local))
+
+  (add-hook 'emacs-lis-mode
+            (lambda () (my/emacs-lisp/enable-check-parens-on-save)))
+#+END_SRC
+
 * On-the-fly evaluation/substitution of emacs lisp code
 
 [[https://github.com/Fuco1/litable][litable]] keeps a list of pure functions as a safeguard for unwanted evaluations.
