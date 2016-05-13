@@ -1099,8 +1099,6 @@ GitHub: https://github.com/abo-abo/hydra
     ("n" evil-scroll-page-down)
     ("p" evil-scroll-page-up)
     )
-
-  ;;(global-set-key (kbd "C-x m") 'hydra-movement/body)
 #+END_SRC
 
 ** iedit                                                        :keybinding:
