@@ -407,7 +407,7 @@ I think I'll write some dynamic module extension, which will save to =~/.emacs.d
 * Spacemacs
 
 #+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/core-spacemacs.el"))
+  (load (concat user-emacs-directory "configs/core/spacemacs.el"))
 #+END_SRC
 
 * Basic setup
@@ -1477,7 +1477,7 @@ GitHub: https://github.com/mrkkrp/zzz-to-char
 * Interactive Commands                                              :command:
 
 #+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/core-commands.el"))
+  (load (concat user-emacs-directory "configs/core/commands.el"))
 #+END_SRC
 
 * Theme                                                               :theme:
