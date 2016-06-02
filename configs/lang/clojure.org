@@ -129,7 +129,7 @@ Now we can use =boot repl= to start clojure's repl for test
     :config
 
     ;; Enable eldoc in Clojure buffers
-    (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+    (add-hook 'cider-mode-hook 'eldoc-mode)
 
     ;; Hide `*nrepl-connection*' and `*nrepl-server*' buffers from appearing
     ;; in some buffer switching commands like switch-to-buffer
