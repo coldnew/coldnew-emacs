@@ -2498,7 +2498,7 @@ For c-mode, just do the same but change the relative
 ** [[file:configs/lang/org.org][Org]]
 
 #+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang/org.el"))
+  (load (concat user-emacs-directory "configs/lang/org"))
 #+END_SRC
 
 ** [[file:configs/lang/c-cpp.org][C / C++]]
