@@ -5,7 +5,7 @@
 ;; Author: coldnew <coldnew.tw@gmail.com>
 ;; Keywords: converience
 ;; X-URL: http://github.com/coldnew/coldnew-emacs
-;; Version: 0.1
+;; Version: 0.2
 
 ;; This file is not part of GNU Emacs.
 
@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 ;;
-;; This file is desinged to used by Makefile.
+;; This file is desinged to used by Makefile and coldnew's Emacs.
 
 ;;; Code:
 (require 'org)
