@@ -8,6 +8,8 @@
 #+OPTIONS: ^:nil num:nil tags:nil
 #+SETUPFILE: assets/readtheorg.setup
 
+Actually, I start to rewrite this single org-mode config to multiple org-mode configs, you can find my configs in =config= folder.
+
 # Badge
 [[http://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg?dummy]]
 [[https://travis-ci.org/coldnew/coldnew-emacs][https://travis-ci.org/coldnew/coldnew-emacs.svg?branch=master]]
