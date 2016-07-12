@@ -1,7 +1,7 @@
 EMACS ?= emacs
 CASK ?= cask
 
-all: init.el
+all: init.el compile
 
 test: clean
 	${MAKE} all
@@ -20,16 +20,12 @@ clean:
 	$(RM) *.elc
 	$(RM) */*.elc
 
-# Use emacs to generate init.el from init.org
-# we first tangle the org-mode file to init.el~ the rename it.
-# this can make use use async task to create another init.el after save.
+# Use function defiled in scripts/makefile-script.el to build the init file.
 init.el:
 	${EMACS} -Q --script "scripts/makefile-script.el" -f make-init-el
 
 compile: init.el
-	${CASK} exec ${EMACS} -Q -batch \
-		--eval '(setq byte-compile-error-on-warn nil)' \
-		--eval '(byte-recompile-directory (expand-file-name (getenv "PWD")) 0)'
+	${EMACS} -Q --script "scripts/makefile-script.el" -f byte-compile-configs
 
 doc: init.el
 	${CASK} exec ${EMACS} -Q -l init.el \
