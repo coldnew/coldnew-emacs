@@ -121,6 +121,13 @@
   (cons "init.org"
         (find-org-files "configs")))
 
+(defun check-if-process-end ()
+  "Check if current process's pid match to `*lockfile*', remove all tmp files and exit when failed."
+  (unless (string= *pid* (read-lockfile))
+    (message "Current pid not match to *lockfile*, exit.")
+    (delete-tmp-files)
+    (kill-emacs)))
+
 (defun make-init-el ()
   "Build all .org configs to emacs-lisp file."
   (setq org-confirm-babel-evaluate nil)
@@ -130,18 +137,15 @@
   (let ((configs (find-all-org-configs)))
     ;; tangle all .org files
     (dolist (config configs)
+      ;; if current process pid not match to lockfile, remove tmpfiles and exist.
+      (check-if-process-end)
+      ;; tangle org-mode files.
       (org->el config))
-    ;; Since tnagle may use so many time, check if lock file still has
-    ;; the same pid as this process.
-    ;; If not, which means current process is really old, just delete the generate files and exit.
-    ;; Move all generate .el files after success.
-    (if (string= *pid* (read-lockfile))
-        ;; when pid the same, create our .el files
-        (progn
-          (message "OK, time to update all .el files.")
-          (dolist (config configs)
-            (update-config config)))
-        ;; else just kill old one
-        (delete-tmp-files))))
+    ;; check if current process pid match to lock file again
+    (check-if-process-end)
+    ;; Since we think current process pid is the same as lockfile, update all generate .el file to emacs-config.
+    (message "OK, time to update all .el files.")
+    (dolist (config configs)
+      (update-config config))))
 
 ;;; makefile-script.el ends here
