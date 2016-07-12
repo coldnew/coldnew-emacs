@@ -2,11 +2,8 @@
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
 #+DESCRIPTION: Fish shell script setup
-#+LANGUAGE: en
-#+STARTUP: overview indent align
-#+BABEL: :cache yes
-#+OPTIONS: ^:nil num:nil tags:nil
-#+SETUPFILE: ../assets/readtheorg.setup
+
+#+SETUPFILE: configs.setup
 
 [[https://fishshell.com/][Fish]] is a smart and user-friendly command line shell for OS X, Linux, and the rest of the family.
 

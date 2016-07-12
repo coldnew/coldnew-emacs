@@ -2,11 +2,8 @@
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
 #+DESCRIPTION: ag.el setup
-#+LANGUAGE: en
-#+STARTUP: overview indent align
-#+BABEL: :cache yes
-#+OPTIONS: ^:nil num:nil tags:nil
-#+SETUPFILE: ../../assets/readtheorg.setup
+
+#+SETUPFILE: configs.setup
 
 [[https://github.com/Wilfred/ag.el][ag.el]] allows you to search using [[https://github.com/ggreer/the_silver_searcher][the_silver_searcher]] from inside Emacs. You can filter by file type, edit results inline, or find files.
 

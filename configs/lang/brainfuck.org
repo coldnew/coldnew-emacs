@@ -2,11 +2,8 @@
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
 #+DESCRIPTION: Brainfuck programming language setup
-#+LANGUAGE: en
-#+STARTUP: overview indent align
-#+BABEL: :cache yes
-#+OPTIONS: ^:nil num:nil tags:nil
-#+SETUPFILE: ../assets/readtheorg.setup
+
+#+SETUPFILE: configs.setup
 
 [[https://en.wikipedia.org/wiki/Brainfuck][Brainfuck]] is an [[https://en.wikipedia.org/wiki/Esoteric_programming_language][esoteric programming language]] created in 1993 by Urban Müller, and notable for its extreme minimalism.
 

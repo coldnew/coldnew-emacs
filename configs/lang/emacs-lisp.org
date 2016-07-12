@@ -2,11 +2,8 @@
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
 #+DESCRIPTION: Emacs-lisp programming language setup
-#+LANGUAGE: en
-#+STARTUP: overview indent align
-#+BABEL: :cache yes
-#+OPTIONS: ^:nil num:nil tags:nil
-#+SETUPFILE: ../assets/readtheorg.setup
+
+#+SETUPFILE: configs.setup
 
 
 #+BEGIN_SRC emacs-lisp :noweb no-export

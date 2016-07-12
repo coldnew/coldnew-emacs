@@ -2,11 +2,8 @@
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
 #+DESCRIPTION: Rust programming language setup
-#+LANGUAGE: en
-#+STARTUP: overview indent align
-#+BABEL: :cache yes
-#+OPTIONS: ^:nil num:nil tags:nil
-#+SETUPFILE: ../assets/readtheorg.setup
+
+#+SETUPFILE: configs.setup
 
 [[https://www.rust-lang.org/][Rust]] is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety.
 

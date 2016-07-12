@@ -2,11 +2,8 @@
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
 #+DESCRIPTION: Integrate spacemacs with coldnew's emacs
-#+LANGUAGE: en
-#+STARTUP: overview indent align
-#+BABEL: :cache yes
-#+OPTIONS: ^:nil num:nil tags:nil
-#+SETUPFILE: ../assets/readtheorg.setup
+
+#+SETUPFILE: configs.setup
 
 [[https://github.com/syl20bnr/spacemacs][Spacemacs]] is an emacs starterkit focus on [[https://gitorious.org/evil/pages/Home][Evil]], which emulate vim keymap on
 Emacs.

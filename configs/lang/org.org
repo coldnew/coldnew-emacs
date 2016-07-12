@@ -2,11 +2,8 @@
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
 #+DESCRIPTION: Org-mode setup
-#+LANGUAGE: en
-#+STARTUP: overview indent align
-#+BABEL: :cache yes
-#+OPTIONS: ^:nil num:nil tags:nil
-#+SETUPFILE: ../assets/readtheorg.setup
+
+#+SETUPFILE: configs.setup
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package org
@@ -67,7 +64,6 @@ Call =visual-line-mode= to have soft-wrap.
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
   (add-hook 'org-mode-hook #'visual-line-mode)
 #+END_SRC
-
 
 * Extend org-mode's easy templates
 

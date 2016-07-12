@@ -2,11 +2,8 @@
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
 #+DESCRIPTION: ascii.el setup
-#+LANGUAGE: en
-#+STARTUP: overview indent align
-#+BABEL: :cache yes
-#+OPTIONS: ^:nil num:nil tags:nil
-#+SETUPFILE: ../../assets/readtheorg.setup
+
+#+SETUPFILE: configs.setup
 
 [[http://www.emacswiki.org/emacs/AsciiMode][ascii.el]] provides a way to display ASCII code on a window, that is, display in another window an ASCII table highlighting the current character code.
 
