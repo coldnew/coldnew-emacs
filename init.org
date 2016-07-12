@@ -502,7 +502,7 @@ I move the file to cache-dir and make git ignore it.
         ;; build with `make init.el' command
         (async-start-process buffer-name "make"
                              '(lambda (result)
-                                (message "Re-Generate init.el")) "init.el"))))
+                                (message "Re-Generate init.el")) "all"))))
   ;; Add to hook
   (add-hook 'after-save-hook 'tangle-init)
 #+END_SRC
