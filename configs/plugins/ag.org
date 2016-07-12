@@ -23,7 +23,7 @@ To use [[https://github.com/Wilfred/ag.el][ag.el]] we also need to install [[htt
 
 ** Mac OSX
 
-For Mac OSX, just type
+It's recommand to use [[http://brew.sh/][homebrew]] to install [[https://github.com/ggreer/the_silver_searcher][the_silver_searcher]] under Mac OSX.
 
 #+BEGIN_SRC sh :tangle no :noweb-ref install-in-macosx
   brew install the_silver_searcher
@@ -31,7 +31,7 @@ For Mac OSX, just type
 
 ** Gentoo Linux
 
-If you use Gentoo Linux, you can use following command to install this package
+If you use Gentoo Linux, you can use portage to install it.
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-gentoo
   emerge sys-apps/the_silver_searcher
