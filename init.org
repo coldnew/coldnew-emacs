@@ -711,31 +711,8 @@ Some buildin packages need to some setup.
 Most of emacs packages do not need many configs or just provide
 commands/functions to use, I put them here.
 
-** ag
-
-[[https://github.com/Wilfred/ag.el][ag.el]] allows you to search using [[https://github.com/ggreer/the_silver_searcher][the_silver_searcher]] from inside
-Emacs. You can filter by file type, edit results inline, or find
-files.
-
-GitHub: https://github.com/Wilfred/ag.el
-
 #+BEGIN_SRC emacs-lisp
-  (req-package ag
-    :if (executable-find "ag"))
-#+END_SRC
-
-To use [[https://github.com/Wilfred/ag.el][ag.el]] we also need to install [[https://github.com/ggreer/the_silver_searcher][the_silver_searcher]] in system.
-
-For Mac OSX, just type
-
-#+BEGIN_SRC sh :tangle no :noweb-ref install-in-macosx
-  brew install the_silver_searcher
-#+END_SRC
-
-If you use Gentoo Linux, you can use following command to install this package
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-gentoo
-  emerge sys-apps/the_silver_searcher
+  (load (concat user-emacs-directory "configs/plugins/ag.el"))
 #+END_SRC
 
 ** ascii
