@@ -162,7 +162,7 @@ Also bind `class' to ((class color) (min-colors 89))."
      (custom-variable-tag ((t (:foreground ,base1))))
 
      ;; mu4e
-     (mu4e-highlight-face ((t :inherit font-lock-builtin-face :bold t)))
+     (mu4e-highlight-face ((t (:inherit font-lock-builtin-face :bold t))))
 
      ;; emacs-wiki
      (emacs-wiki-bad-link-face ((t (:foreground ,red))))
@@ -454,8 +454,8 @@ Also bind `class' to ((class color) (min-colors 89))."
      (erc-timestamp-face ((t (:foreground ,base01))))
 
      ;; evil
-     (evil-ex-lazy-highlight ((t :inherit lazy-highlight)))
-     (evil-ex-search ((t :inherit isearch)))
+     (evil-ex-lazy-highlight ((t (:inherit lazy-highlight))))
+     (evil-ex-search ((t (:inherit isearch))))
      (evil-ex-substitute-matches ((t (:foreground ,orange))))
      (evil-ex-substitute-replacement ((t (:foreground ,red :underline t))))
 
