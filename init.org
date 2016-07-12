@@ -638,72 +638,8 @@ For language, though Traditional Chinese is my mothertone, I still prefer use
 
 * Buildin Packages
 
-Some buildin packages need to some setup.
-
-** bookmark
-
 #+BEGIN_SRC emacs-lisp
-  (eval-after-load 'bookmark
-    '(progn
-       (setq bookmark-default-file
-             (concat user-cache-directory "bookmarks"))))
-#+END_SRC
-
-** idlwave
-
-#+BEGIN_SRC emacs-lisp
-  (eval-after-load 'dilwave
-    '(progn
-       (setq idlwave-config-directory
-             (concat user-cache-directory "idlwave"))))
-#+END_SRC
-
-** srecode
-
-#+BEGIN_SRC emacs-lisp
-  ;; change srecode cache file path
-  (eval-after-load 'srecode
-    '(progn
-       (setq srecode-map-save-file
-             (concat user-cache-directory "srecode-map.el"))))
-#+END_SRC
-
-** tramp
-
-#+BEGIN_SRC emacs-lisp
-  ;; Override tramp history file path
-  (eval-after-load 'tramp
-    '(progn
-       (setq tramp-histfile-override
-             (concat user-cache-directory ".tramp_history"))))
-#+END_SRC
-
-** request
-
-#+BEGIN_SRC emacs-lisp
-  (eval-after-load 'request
-    '(progn
-       (setq request-storage-directory
-             (concat user-cache-directory "request"))))
-#+END_SRC
-
-** nsm
-
-#+BEGIN_SRC emacs-lisp
-  (eval-after-load 'nsm
-    '(progn
-       (setq nsm-settings-file
-             (concat user-cache-directory "network-security.data"))))
-#+END_SRC
-
-** url
-
-#+BEGIN_SRC emacs-lisp
-  (eval-after-load 'url
-    '(progn
-       (setq url-configuration-directory
-             (file-name-as-directory
-              (concat user-cache-directory "url")))))
+  (load (concat user-emacs-directory "configs/core/buildin.el"))
 #+END_SRC
 
 * External Packages                                                :packages:
