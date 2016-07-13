@@ -655,7 +655,7 @@ commands/functions to use, I put them here.
   (load (concat user-emacs-directory "configs/plugins/avy.el"))
   (load (concat user-emacs-directory "configs/plugins/buffer-move.el"))
   (load (concat user-emacs-directory "configs/plugins/calfw.el"))
-  (load (concat user-emacs-directory "configs/plugins/darmroom.el"))
+  (load (concat user-emacs-directory "configs/plugins/darkroom.el"))
 #+END_SRC
 
 ** ascii-art-to-unicode
