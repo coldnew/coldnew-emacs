@@ -2308,6 +2308,10 @@ For c-mode, just do the same but change the relative
 
 ** [[file:configs/lang/brainfuck.org][Brainfuck]]
 
+#+BEGIN_SRC emacs-lisp
+  (load (concat user-emacs-directory "configs/lang/brainfuck"))
+#+END_SRC
+
 ** crontab
 
 #+BEGIN_SRC emacs-lisp
