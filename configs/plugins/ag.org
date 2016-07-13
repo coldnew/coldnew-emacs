@@ -37,7 +37,7 @@ If you use Gentoo Linux, you can use portage to install it.
   emerge sys-apps/the_silver_searcher
 #+END_SRC
 
-* Plugins Setup
+* Core package Setup
 
 Since this libraries depends on [[https://github.com/ggreer/the_silver_searcher][the_silver_searcher]] , which need to be installed in system, it should only be loaded when the executable find.
 

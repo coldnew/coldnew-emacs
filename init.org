@@ -652,6 +652,7 @@ commands/functions to use, I put them here.
 #+BEGIN_SRC emacs-lisp
   (load (concat user-emacs-directory "configs/plugins/ag.el"))
   (load (concat user-emacs-directory "configs/plugins/ascii.el"))
+  (load (concat user-emacs-directory "configs/plugins/avy.el"))
 #+END_SRC
 
 ** ascii-art-to-unicode
@@ -660,16 +661,6 @@ Convert simple ASCII art drawings (and org-tables) to beautiful Unicode.
 
 #+BEGIN_SRC emacs-lisp
   (req-package ascii-art-to-unicode)
-#+END_SRC
-
-** avy
-
-=avy= is a GNU Emacs package for jumping to visible text using a char-based decision tree. See also [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] and [[https://github.com/Lokaltog/vim-easymotion][vim-easymotion]] - =avy= uses the same idea.
-
-GitHub: https://github.com/abo-abo/avy
-
-#+BEGIN_SRC emacs-lisp
-  (req-package avy)
 #+END_SRC
 
 ** buffer-move

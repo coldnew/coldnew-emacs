@@ -19,7 +19,7 @@ To install these libraries, you only need to use =M-x package-install= command.
 
 It's no need to install any futher packages for this setup.
 
-* Plugins Setup
+* Core package Setup
 
 Some setup for [[http://www.emacswiki.org/emacs/AsciiMode][ascii.el]] , since it doesn't has toggle command, I add one called =ascii-toggle= to toggle the =ascii-mode= 。
 
