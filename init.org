@@ -653,6 +653,7 @@ commands/functions to use, I put them here.
   (load (concat user-emacs-directory "configs/plugins/ag.el"))
   (load (concat user-emacs-directory "configs/plugins/ascii.el"))
   (load (concat user-emacs-directory "configs/plugins/avy.el"))
+  (load (concat user-emacs-directory "configs/plugins/buffer-move.el"))
 #+END_SRC
 
 ** ascii-art-to-unicode
@@ -661,41 +662,6 @@ Convert simple ASCII art drawings (and org-tables) to beautiful Unicode.
 
 #+BEGIN_SRC emacs-lisp
   (req-package ascii-art-to-unicode)
-#+END_SRC
-
-** buffer-move
-
-This file is for lazy people wanting to swap buffers without typing C-x b on each window. This is useful when you have :
-
-+--------------+-------------+
-|              |             |
-|    #emacs    |    #gnus    |
-|              |             |
-+--------------+-------------+
-|                            |
-|           .emacs           |
-|                            |
-+----------------------------+
-
-and you want to have :
-
-+--------------+-------------+
-|              |             |
-|    #gnus     |   .emacs    |
-|              |             |
-+--------------+-------------+
-|                            |
-|           #emacs           |
-|                            |
-+----------------------------+
-
-With buffer-move, just go in #gnus, do =buf-move-left=, go to #emacs (which now should be on top right) and do =buf-move-down=.
-
-
-GitHub: https://github.com/lukhas/buffer-move
-
-#+BEGIN_SRC emacs-lisp
-  (req-package buffer-move)
 #+END_SRC
 
 ** bpr

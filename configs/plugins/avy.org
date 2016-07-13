@@ -23,7 +23,7 @@ It's no need to install extra packages here, just skip it.a
 
 * Core package Setup
 
-Since this libraries depends on [[https://github.com/ggreer/the_silver_searcher][the_silver_searcher]] , which need to be installed in system, it should only be loaded when the executable find.
+So..., here's my setup for this library.
 
 #+BEGIN_SRC emacs-lisp
   (use-package avy)
