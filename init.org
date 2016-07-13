@@ -654,6 +654,7 @@ commands/functions to use, I put them here.
   (load (concat user-emacs-directory "configs/plugins/ascii.el"))
   (load (concat user-emacs-directory "configs/plugins/avy.el"))
   (load (concat user-emacs-directory "configs/plugins/buffer-move.el"))
+  (load (concat user-emacs-directory "configs/plugins/calfw.el"))
 #+END_SRC
 
 ** ascii-art-to-unicode
@@ -683,16 +684,6 @@ GitHub: https://github.com/ilya-babanov/emacs-bpr
 
 #+BEGIN_SRC emacs-lisp
   (req-package bpr)
-#+END_SRC
-
-** calfw
-
-Calfw - A calendar framework for Emacs.
-
-GitHub: https://github.com/kiwanami/emacs-calfw
-
-#+BEGIN_SRC emacs-lisp
-  (req-package calfw)
 #+END_SRC
 
 ** cbm

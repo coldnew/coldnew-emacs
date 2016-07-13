@@ -1,20 +1,20 @@
-#+TITLE: avy.el setups
+#+TITLE: calfw.el setups
 #+AUTHOR: Yen-Chin, Lee <coldnew>
 #+email: coldnew.tw at gmail.com
-#+DESCRIPTION: avy.el setup
+#+DESCRIPTION: calfw.el setup
 
 #+SETUPFILE: configs.setup
 
-=avy= is a GNU Emacs package for jumping to visible text using a char-based decision tree. See also [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] and [[https://github.com/Lokaltog/vim-easymotion][vim-easymotion]] - =avy= uses the same idea.
+Calfw - A calendar framework for Emacs.
 
-GitHub: https://github.com/abo-abo/avy
+GitHub: https://github.com/kiwanami/emacs-calfw
 
 * Install libraries
 
 To install these libraries, you only need to use =M-x package-install= command.
 
 #+BEGIN_SRC emacs-lisp
-  (package-install 'avy)
+  (package-install 'calfw)
 #+END_SRC
 
 * Install System packages
@@ -26,5 +26,5 @@ It's no need to install extra packages here, just skip it.
 So..., here's my setup for this library.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package avy)
+  (use-package calfw)
 #+END_SRC
