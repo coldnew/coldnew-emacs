@@ -655,6 +655,7 @@ commands/functions to use, I put them here.
   (load (concat user-emacs-directory "configs/plugins/avy.el"))
   (load (concat user-emacs-directory "configs/plugins/buffer-move.el"))
   (load (concat user-emacs-directory "configs/plugins/calfw.el"))
+  (load (concat user-emacs-directory "configs/plugins/darmroom.el"))
 #+END_SRC
 
 ** ascii-art-to-unicode
@@ -704,16 +705,6 @@ GitHub: https://github.com/bbatsov/crux
 
 #+BEGIN_SRC emacs-lisp
   (req-package crux)
-#+END_SRC
-
-** darkroom
-
-Remove visual distractions and focus on writing.
-
-GitHub: https://github.com/capitaomorte/darkroom
-
-#+BEGIN_SRC emacs-lisp
-  (req-package darkroom)
 #+END_SRC
 
 ** discover-my-major

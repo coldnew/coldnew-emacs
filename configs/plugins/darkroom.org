@@ -1,0 +1,30 @@
+#+TITLE: darkroom.el setups
+#+AUTHOR: Yen-Chin, Lee <coldnew>
+#+email: coldnew.tw at gmail.com
+#+DESCRIPTION: darkroom.el setup
+
+#+SETUPFILE: configs.setup
+
+Remove visual distractions and focus on writing.
+
+GitHub: https://github.com/capitaomorte/darkroom
+
+* Install libraries
+
+To install these libraries, you only need to use =M-x package-install= command.
+
+#+BEGIN_SRC emacs-lisp
+  (package-install 'darkroom)
+#+END_SRC
+
+* Install System packages
+
+It's no need to install extra packages here, just skip it.
+
+* Core package Setup
+
+So..., here's my setup for this library.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package darkroom)
+#+END_SRC
