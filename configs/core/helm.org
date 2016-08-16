@@ -137,7 +137,9 @@ GitHub: https://github.com/bbatsov/helm-projectile
     ;; make projectile use helm as completion system
     (setq projectile-completion-system 'helm)
     ;; start helm-projectile
-    (helm-projectile-on))
+    (helm-projectile-on)
+    ;; helm-projectile-find-file is really slow, use cache here
+    (setq projectile-enable-caching t))
 #+END_SRC
 
 ** helm-swoop
