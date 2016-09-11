@@ -1896,7 +1896,11 @@ GitHub: https://github.com/bbatsov/projectile
 #+BEGIN_SRC emacs-lisp
   (req-package projectile
     :config
-    (projectile-global-mode)
+    ;; FIX hange issue with tramp
+    ;; see: https://github.com/bbatsov/prelude/issues/594
+    ;; (projectile-global-mode)
+    (add-hook 'text-mode-hook 'projectile-mode)
+    (add-hook 'prog-mode-hook 'projectile-mode)
     ;; save projectile-known-projects-file in cache folder
     (setq projectile-known-projects-file
           (concat user-cache-directory "projectile-bookmarks.eld"))
