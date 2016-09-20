@@ -1464,6 +1464,10 @@ ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-thresho
 
 * Editors
 
+#+BEGIN_SRC emacs-lisp
+  (load (concat user-emacs-directory "configs/core/editorconfig.el"))
+#+END_SRC
+
 Why emacs config has an editor section, doesn't means emacs is not an editor ?
 Yes, Emacs is an OS :)
 
