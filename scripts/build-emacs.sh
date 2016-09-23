@@ -38,7 +38,8 @@ do_configure_linux () {
 		--with-gnutls \
 		--with-rsvg \
 		--with-imagemagick \
-		--with-dbus --with-x --with-x-toolkit=gtk3 --with-xwidgets
+		--with-dbus --with-x --with-x-toolkit=gtk3 --with-xwidgets \
+    --with-cairo
 }
 
 do_make () {
