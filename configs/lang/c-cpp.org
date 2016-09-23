@@ -5,6 +5,23 @@
 
 #+SETUPFILE: configs.setup
 
+* Install libraries
+
+To install these libraries, you only need to use =M-x package-install= command.
+
+#+BEGIN_SRC emacs-lisp
+  (package-install 'c-eldoc)              ; eldoc for c
+  (package-install 'dummy-h-mode)
+  (package-install 'srefactor)
+  (package-install 'cff)
+#+END_SRC
+
+* Install System packages
+
+So... which package should we install to our system ?
+
+* Basic Mode Setups
+
 #+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
   (use-package cc-mode
     :mode
@@ -16,7 +33,6 @@
     <<cc-mode-config>>)
 #+END_SRC
 
-* Basic Setups
 ** C/C++ headers detect
 
 *** Use regexp to find header is C++ header or not

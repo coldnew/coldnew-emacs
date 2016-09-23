@@ -14,6 +14,8 @@ Actually, I start to rewrite this single org-mode config to multiple org-mode co
 [[http://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg?dummy]]
 [[https://travis-ci.org/coldnew/coldnew-emacs][https://travis-ci.org/coldnew/coldnew-emacs.svg?branch=master]]
 
+
+* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 * Introduction
 
 This is my emacs configuration, you can find it on [[https://github.com/coldnew][GitHub]] or read in [[http://coldnew.github.io/coldnew-emacs][HTML]] or [[https://coldnew.github.io/coldnew-emacs/init.el.html][init.el]] directly.
@@ -2789,6 +2791,10 @@ TODO: integrate back tp C++ setting.
 
 Note that =Clojure= is setting in =LISP Development= section.
 
+#+BEGIN_SRC emacs-lisp
+  (load (concat user-emacs-directory "configs/lang/java.el"))
+#+END_SRC
+
 ** Android
 
 #+BEGIN_SRC emacs-lisp
@@ -2805,19 +2811,6 @@ GitHub: https://github.com/youngker/elogcat.el
 
 #+BEGIN_SRC emacs-lisp
   (req-package elogcat)
-#+END_SRC
-
-** Java
-
-*** eclim
-
-#+BEGIN_SRC emacs-lisp
-  (use-package emacs-eclim
-    :ensure t
-    :config
-    (use-package eclimd)                  ; bundle with eclim
-    ;; (add-hook 'java-mode-hook (lambda () (eclim-mode 1)))
-    )
 #+END_SRC
 
 ** Scala

@@ -1,0 +1,16 @@
+#+TITLE: Java Development
+#+AUTHOR: Yen-Chin, Lee <coldnew>
+#+email: coldnew.tw at gmail.com
+#+DESCRIPTION: Java programming language setup
+
+#+SETUPFILE: configs.setup
+
+* Install libraries
+
+To install these libraries, you only need to use =M-x package-install= command.
+
+#+BEGIN_SRC emacs-lisp
+  (package-install 'jdee)
+#+END_SRC
+
+* Install System packages
