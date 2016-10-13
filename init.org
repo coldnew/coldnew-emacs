@@ -1334,30 +1334,33 @@ Before use emacs's =load-theme= function, I advise it to it fully
 unload previous theme before loading a new one.
 
 #+BEGIN_SRC emacs-lisp
-  ;; Make `load-theme' fully unload previous theme before loading a new one.
-  (defadvice load-theme
-      (before theme-dont-propagate activate)
-    (mapc #'disable-theme custom-enabled-themes))
+    ;; Make `load-theme' fully unload previous theme before loading a new one.
+    (defadvice load-theme
+        (before theme-dont-propagate activate)
+      (mapc #'disable-theme custom-enabled-themes))
 
-  ;; My light theme
-  ;; (req-package coldnew-theme-day-theme
-  ;;   :require (powerline powerline-evil))
-  (use-package powerline :ensure t)
-  (use-package powerline-evil :ensure t)
+    ;; My light theme
+    ;; (req-package coldnew-theme-day-theme
+    ;;   :require (powerline powerline-evil))
+    (use-package powerline :ensure t)
+    (use-package powerline-evil :ensure t)
 
-;;  (require 'coldnew-theme-day-theme)
+  ;;  (require 'coldnew-theme-day-theme)
 
-  ;; My night them (default)
-;;  (require 'coldnew-theme-night-theme)
+    ;; My night them (default)
+  ;;  (require 'coldnew-theme-night-theme)
 
-  ;;(req-package coldnew-modeline-config
-  ;;  :require (powerline powerline-evil))
-  ;; TODO:
-  (use-package spaceline
-    :ensure t
-    :config
-    (require 'spaceline-config)
-    (spaceline-spacemacs-theme))
+  (require 'coldnew-theme-night-theme)
+  (load-theme 'coldnew-theme-night t 'noerror)
+
+    ;;(req-package coldnew-modeline-config
+    ;;  :require (powerline powerline-evil))
+    ;; TODO:
+    (use-package spaceline
+      :ensure t
+      :config
+      (require 'spaceline-config)
+      (spaceline-spacemacs-theme))
 #+END_SRC
 
 * Minibuffer                                                :minibuffer:
@@ -3781,7 +3784,6 @@ I always use =ERC= as my irc client, which is bundle with emacs.
 
 #+BEGIN_SRC emacs-lisp
   (use-package erc-autoaway
-    :ensure t
     :config
     (progn
       (setq erc-auto-discard-away t)
