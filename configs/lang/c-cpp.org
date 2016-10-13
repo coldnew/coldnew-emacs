@@ -58,16 +58,16 @@ So... which package should we install to our system ?
  GitHub: https://github.com/yascentur/dummy-h-mode-el
 
  #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
-   (use-package dummy-h-mode
-     :ensure t
-     :mode "\\.h$"
-     :config
-     (add-hook 'dummy-h-mode-hook
-               (lambda ()
-                 ;; use c-mode by default
-                 (setq dummy-h-mode-default-major-mode 'c-mode)
-                 ;; setup search limit
-                 (setq dummy-h-mode-search-limit 60000))))
+;;   (use-package dummy-h-mode
+;;     :ensure t
+;;     :mode "\\.h$"
+;;     :config
+;;     (add-hook 'dummy-h-mode-hook
+;;               (lambda ()
+;;                 ;; use c-mode by default
+;;                 (setq dummy-h-mode-default-major-mode 'c-mode)
+;;                 ;; setup search limit
+;;                 (setq dummy-h-mode-search-limit 60000))))
  #+END_SRC
 
 ** ElDoc supports

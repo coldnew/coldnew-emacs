@@ -15,6 +15,11 @@ Actually, I start to rewrite this single org-mode config to multiple org-mode co
 [[https://travis-ci.org/coldnew/coldnew-emacs][https://travis-ci.org/coldnew/coldnew-emacs.svg?branch=master]]
 
 
+Design:
+
+Most use package locate in core config, other in plugin config ?
+
+
 * ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 * Introduction
 
@@ -665,7 +670,7 @@ commands/functions to use, I put them here.
 Convert simple ASCII art drawings (and org-tables) to beautiful Unicode.
 
 #+BEGIN_SRC emacs-lisp
-  (req-package ascii-art-to-unicode)
+  (use-package ascii-art-to-unicode :ensure t)
 #+END_SRC
 
 ** bpr
@@ -686,7 +691,7 @@ It's similar to =async-shell-command=, but:
 GitHub: https://github.com/ilya-babanov/emacs-bpr
 
 #+BEGIN_SRC emacs-lisp
-  (req-package bpr)
+  (use-package bpr :ensure t)
 #+END_SRC
 
 ** cbm
@@ -696,7 +701,7 @@ Cycle by major - Cycle through buffers with the same major-mode.
 GitHub: https://github.com/akermu/cbm.el
 
 #+BEGIN_SRC emacs-lisp
-  (req-package cbm)
+  (use-package cbm :ensure t)
 #+END_SRC
 
 ** crux
@@ -706,7 +711,7 @@ A Collection of Ridiculously Useful eXtensions for Emacs. crux bundles a few use
 GitHub: https://github.com/bbatsov/crux
 
 #+BEGIN_SRC emacs-lisp
-  (req-package crux)
+  (use-package crux :ensure t)
 #+END_SRC
 
 ** discover-my-major
@@ -717,7 +722,7 @@ current Emacs major mode.
 GitHub: https://github.com/steckerhalter/discover-my-major
 
 #+BEGIN_SRC emacs-lisp
-  (req-package discover-my-major)
+  (use-package discover-my-major :ensure t)
 #+END_SRC
 
 ** doxymacs
@@ -754,7 +759,7 @@ Benchmark Emacs Startup time without ever leaving your Emacs.
 GitHub: https://github.com/jschaf/esup
 
 #+BEGIN_SRC emacs-lisp
-  (req-package esup)
+  (use-package esup :ensure t)
 #+END_SRC
 
 ** exec-path-from-shell
@@ -774,7 +779,8 @@ variables of interest, then copying them into the Emacs environment.
 GitHub: https://github.com/purcell/exec-path-from-shell
 
 #+BEGIN_SRC emacs-lisp
-  (req-package exec-path-from-shell
+  (use-package exec-path-from-shell
+    :ensure t
     :config
     (when (memq window-system '(mac ns x))
       (exec-path-from-shell-initialize)))
@@ -788,7 +794,8 @@ pressing the key until it selects what you want.
 GitHub: https://github.com/magnars/expand-region.el
 
 #+BEGIN_SRC emacs-lisp
-  (req-package expand-region
+  (use-package expand-region
+    :ensure t
     :bind (("M-v" . er/expand-region)))
 #+END_SRC
 
@@ -799,7 +806,7 @@ Emacs package to immitate [[http://bruce-connor.github.io/emacs-online-documenta
 GitHub: https://github.com/Malabarba/fancy-narrow
 
 #+BEGIN_SRC emacs-lisp
-  (req-package fancy-narrow)
+  (use-package fancy-narrow :ensure t)
 #+END_SRC
 
 ** focus
@@ -809,7 +816,7 @@ Focus provides =focus-mode= that dims the text of surrounding sections, similar 
 GitHub: https://github.com/larstvei/Focus
 
 #+BEGIN_SRC emacs-lisp
-  (req-package focus)
+  (use-package focus :ensure t)
 #+END_SRC
 
 ** google-translate
@@ -819,7 +826,7 @@ This package allows to translate the strings using Google Translate service dire
 GitHub: https://github.com/atykhonov/google-translate
 
 #+BEGIN_SRC emacs-lisp
-  (req-package google-translate)
+  (use-package google-translate :ensure t)
 #+END_SRC
 
 ** howdoi
@@ -830,13 +837,13 @@ most upvoted answer to the first question that comes up for that query.
 GitHub: https://github.com/atykhonov/emacs-howdoi
 
 #+BEGIN_SRC emacs-lisp
-  (req-package howdoi)
+  (use-package howdoi :ensure t)
 #+END_SRC
 
 ** htmlize
 
 #+BEGIN_SRC emacs-lisp
-  (req-package htmlize)
+  (use-package htmlize :ensure t)
 #+END_SRC
 
 ** hungry-delete
@@ -845,7 +852,8 @@ GitHub: https://github.com/atykhonov/emacs-howdoi
 to delete all whitespace in the direction you are deleting.
 
 #+BEGIN_SRC emacs-lisp
-  (req-package hungry-delete
+  (use-package hungry-delete
+    :ensure t
     :config
     (global-hungry-delete-mode))
 #+END_SRC
@@ -857,7 +865,8 @@ This is a package for GNU Emacs that can be used to tie related commands into a 
 GitHub: https://github.com/abo-abo/hydra
 
 #+BEGIN_SRC emacs-lisp  :noweb no-export
-  (req-package hydra
+  (use-package hydra
+    :ensure t
     :config
     <<hydra-config>>)
 #+END_SRC
@@ -948,7 +957,8 @@ GitHub: https://github.com/abo-abo/hydra
 GitHub: https://github.com/victorhge/iedit
 
 #+BEGIN_SRC emacs-lisp
-  (req-package iedit
+  (use-package iedit
+    :ensure t
     :bind (("C-;" . iedit-mode)))
 #+END_SRC
 
@@ -960,7 +970,7 @@ codes, all summarized and linking to their specification.
 GitHub: https://github.com/for-GET/know-your-http-well
 
 #+BEGIN_SRC emacs-lisp
-  (req-package know-your-http-well)
+  (use-package know-your-http-well :ensure t)
 #+END_SRC
 
 ** kurecolor
@@ -973,22 +983,9 @@ View the presentation at https://github.com/emacsfodder/kurecolor
 GitHub: https://github.com/emacsfodder/kurecolor
 
 #+BEGIN_SRC emacs-lisp
-  (req-package kurecolor)
+  (use-package kurecolor :ensure t)
 #+END_SRC
 
-** lentic
-
-Lentic allows two buffers to share the same or similar content but
-otherwise operate independently. This can be used for several
-different purposes. Different buffers can be in the same mode, with
-different locations of point, even different text sizes -- in effect,
-providing multiple persistent views.
-
-GitHub: https://github.com/phillord/lentic
-
-#+BEGIN_SRC emacs-lisp
-  (req-package lentic)
-#+END_SRC
 
 ** link-hint
 
@@ -999,7 +996,7 @@ for using avy to open or copy "links."
 GitHub: https://github.com/noctuid/link-hint.el
 
 #+BEGIN_SRC emacs-lisp
-  (req-package link-hint)
+  (use-package link-hint :ensure t)
 #+END_SRC
 
 ** manage-minor-mode
@@ -1008,7 +1005,7 @@ GitHub: https://github.com/noctuid/link-hint.el
 buffer.
 
 #+BEGIN_SRC emacs-lisp
-  (req-package manage-minor-mode)
+  (use-package manage-minor-mode :ensure t)
 #+END_SRC
 
 ** mustache
@@ -1018,7 +1015,7 @@ A mustache templating library in Emacs Lisp.
 GitHub: https://github.com/Wilfred/mustache.el
 
 #+BEGIN_SRC emacs-lisp
-  (req-package mustache)
+  (use-package mustache :ensure t)
 #+END_SRC
 
 ** mwim
@@ -1028,20 +1025,11 @@ This Emacs package provides commands for moving to the beginning/end of code or 
 GitHub: https://github.com/alezost/mwim.el
 
 #+BEGIN_SRC emacs-lisp
-  (req-package mwim
+  (use-package mwim
+    :ensure t
     :bind
     (("C-a" . mwim-beginning-of-code-or-line)
      ("C-e" . mwim-end-of-code-or-line)))
-#+END_SRC
-
-** moedict
-
-Look up (Tranditional) Chinese vocabulary with MOE dict ([[https://moedict.tw/][萌典]]) in Emacs.
-
-GitHub: https://github.com/kuanyui/moedict.el
-
-#+BEGIN_SRC emacs-lisp
-  (req-package moedict)
 #+END_SRC
 
 ** noflet
@@ -1059,7 +1047,7 @@ a different name.
 GitHub: https://github.com/nicferrier/emacs-noflet
 
 #+BEGIN_SRC emacs-lisp
-  (req-package noflet)
+  (use-package noflet :ensure t)
 #+END_SRC
 
 ** pangu-spacing
@@ -1069,7 +1057,8 @@ characters. Note that these white-space characters are not really added to the
 contents, it just like to do so.
 
 #+BEGIN_SRC emacs-lisp
-  (req-package pangu-spacing
+  (use-package pangu-spacing
+    :ensure t
     :config
     ;; start pangu-spacing globally
     (global-pangu-spacing-mode 1)
@@ -1087,7 +1076,7 @@ inside buffer immediately.
 GitHub: https://github.com/zargener/emacs-password-genarator
 
 #+BEGIN_SRC emacs-lisp
-  (req-package password-generator :defer t)
+  (use-package password-generator :ensure t)
 #+END_SRC
 
 ** sprunge
@@ -1118,7 +1107,7 @@ GitHub: https://github.com/pashky/restclient.el
 with the color they represent as background.
 
 #+BEGIN_SRC emacs-lisp
-  (req-package rainbow-mode)
+  (use-package rainbow-mode :ensure t)
 #+END_SRC
 
 ** reveal-in-osx-finder
@@ -1132,7 +1121,8 @@ with the color they represent as background.
 GitHub: https://github.com/kaz-yos/reveal-in-osx-finder
 
 #+BEGIN_SRC emacs-lisp
-  (req-package reveal-in-osx-finder
+  (use-package reveal-in-osx-finder
+    :ensure t
     :when (eq system-type 'darwin))
 #+END_SRC
 
@@ -1143,8 +1133,8 @@ Smartparens is a minor mode for dealing with pairs in Emacs.
 GitHub: https://github.com/Fuco1/smartparens
 
 #+BEGIN_SRC emacs-lisp
-  (req-package smartparens
-    :require smartparens-config
+  (use-package smartparens
+    :ensure t
     :config
     (smartparens-mode 1))
 #+END_SRC
@@ -1156,7 +1146,7 @@ A speed reading mode for Emacs.
 GitHub: https://github.com/ian-kelling/spray
 
 #+BEGIN_SRC emacs-lisp
-  (req-package spray)
+  (use-package spray :ensure t)
 #+END_SRC
 
 ** sicp
@@ -1164,7 +1154,7 @@ GitHub: https://github.com/ian-kelling/spray
 Reading sicp in emacs.
 
 #+BEGIN_SRC emacs-lisp
-  (req-package sicp)
+  (use-package sicp :ensure t)
 #+END_SRC
 
 ** string-inflection
@@ -1174,7 +1164,7 @@ underscore -> UPCASE -> CamelCase conversion of names.
 GitHub: https://github.com/akicho8/string-inflection
 
 #+BEGIN_SRC emacs-lisp
-  (req-package string-inflection)
+  (use-package string-inflection :ensure t)
 #+END_SRC
 
 ** sx
@@ -1184,7 +1174,7 @@ API, it provides a versatile experience for the Stack Exchange network within
 Emacs itself.
 
 #+BEGIN_SRC emacs-lisp
-  (req-package sx :require sx-load)
+  (use-package sx :ensure t)
 #+END_SRC
 
 ** tldr
@@ -1194,8 +1184,9 @@ tldr is a collection of simplified and community-driven man pages.
 GitHub: https://github.com/kuanyui/tldr.el
 
 #+BEGIN_SRC emacs-lisp
-  (req-package tldr
-    :init
+  (use-package tldr
+    :ensure t
+    :config
     (setq tldr-directory-path (concat user-cache-directory "tldr/"))
     (setq tldr-saved-zip-path (concat user-cache-directory "tldr-source.zip")))
 #+END_SRC
@@ -1207,7 +1198,7 @@ An Emacs client for TravisCI.
 GitHub: https://github.com/nlamirault/emacs-travis
 
 #+BEGIN_SRC emacs-lisp
-  (req-package travis)
+  (use-package travis :ensure t)
 #+END_SRC
 
 Befor execute =M-x travis-show-projects= you must setup your github token
@@ -1228,7 +1219,7 @@ This package can convert long url to tiny url and expand tiny url to long url ,s
 GitHub: https://github.com/yuyang0/url-shortener
 
 #+BEGIN_SRC emacs-lisp
-  (req-package url-shortener)
+  (use-package url-shortener :ensure t)
 #+END_SRC
 
 ** verify-url
@@ -1244,7 +1235,7 @@ invalid-url or =verify-url/previous-invalid-url= to goto previous one.
 GitHub: https://github.com/lujun9972/verify-url
 
 #+BEGIN_SRC emacs-lisp
-  (req-package verify-url)
+  (use-package verify-url :ensure t)
 #+END_SRC
 
 ** which-key
@@ -1263,7 +1254,8 @@ extent.
 GitHub: https://github.com/justbur/emacs-which-key
 
 #+BEGIN_SRC emacs-lisp
-  (req-package which-key
+  (use-package which-key
+    :ensure t
     :config
     ;; enable globally
     (which-key-mode)
@@ -1287,7 +1279,8 @@ Read [[https://xkcd.com/][xkcd]] from Emacs.
 GitHub: https://github.com/vibhavp/emacs-xkcd
 
 #+BEGIN_SRC emacs-lisp
-  (req-package xkcd
+  (use-package xkcd
+    :ensure t
     :init
     (setq xkcd-cache-dir (concat user-cache-directory "xkcd/"))
     (when (not (file-directory-p xkcd-cache-dir))
@@ -1310,7 +1303,8 @@ This package uses avy as backend.
 GitHub: https://github.com/mrkkrp/zzz-to-char
 
 #+BEGIN_SRC emacs-lisp
-  (req-package zzz-to-char
+  (use-package zzz-to-char
+    :ensure t
     :bind (("M-z" . zzz-to-char)))
 #+END_SRC
 
@@ -1321,7 +1315,7 @@ Emacs [[http://fortawesome.github.io/Font-Awesome/][fontawesome]] utility.
 GitHub: https://github.com/syohex/emacs-fontawesome
 
 #+BEGIN_SRC emacs-lisp
-  (req-package fontawesome)
+  (use-package fontawesome :ensure t)
 #+END_SRC
 
 * Interactive Commands                                              :command:
@@ -1346,17 +1340,21 @@ unload previous theme before loading a new one.
     (mapc #'disable-theme custom-enabled-themes))
 
   ;; My light theme
-  (req-package coldnew-theme-day-theme
-    :require (powerline powerline-evil))
+  ;; (req-package coldnew-theme-day-theme
+  ;;   :require (powerline powerline-evil))
+  (use-package powerline :ensure t)
+  (use-package powerline-evil :ensure t)
+
+;;  (require 'coldnew-theme-day-theme)
 
   ;; My night them (default)
-  (req-package coldnew-theme-night-theme
-    :config (coldnew-theme-night))
+;;  (require 'coldnew-theme-night-theme)
 
   ;;(req-package coldnew-modeline-config
   ;;  :require (powerline powerline-evil))
   ;; TODO:
-  (req-package spaceline
+  (use-package spaceline
+    :ensure t
     :config
     (require 'spaceline-config)
     (spaceline-spacemacs-theme))
@@ -1499,7 +1497,7 @@ I put some editor/IDE relative functions and packages here.
 In most case, I'll make line numers display globally by =linum=.
 
 #+BEGIN_SRC emacs-lisp
-  (req-package linum :init (global-linum-mode 1))
+  (use-package linum :ensure t :init (global-linum-mode 1))
 #+END_SRC
 
 Disable line number in some mode, for example, since =org-mode= can
@@ -1508,7 +1506,8 @@ has many lines, it's not recommand to enable linum-mode.
 I use =linum-off= to disable some mode.
 
 #+BEGIN_SRC emacs-lisp
-  (req-package linum-off
+  (use-package linum-off
+    :ensure t
     :config
       (setq linum-disabled-mode-list
             '(eshell-mode shell-mode term-mode erc-mode compilation-mode
@@ -1540,7 +1539,8 @@ orient yourself in the code, and tell which statements are at a given
 depth.
 
 #+BEGIN_SRC emacs-lisp
-  (req-package rainbow-delimiters
+  (use-package rainbow-delimiters
+    :ensure t
     :config
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+END_SRC
@@ -1554,7 +1554,8 @@ adhere to defined styles. EditorConfig files are easily readable and they work n
 see: http://editorconfig.org/
 
 #+BEGIN_SRC emacs-lisp
-  (req-package 'editorconfig
+  (use-package editorconfig
+    :ensure t
     :if (executable-find "editorconfig")
     :mode ("\\.editorconfig\\'" . conf-unix-mode))
 #+END_SRC
@@ -1569,7 +1570,8 @@ foreign files.
 GitHub: https://github.com/jscheid/dtrt-indent
 
 #+BEGIN_SRC emacs-lisp
-  (req-package dtrt-indent
+  (use-package dtrt-indent
+    :ensure t
     :config
     ;; enable dtrt-indent-mode globally
     (dtrt-indent-mode 1))
@@ -1578,7 +1580,7 @@ GitHub: https://github.com/jscheid/dtrt-indent
 ** En/Decrypt files by EasyPG
 
 #+BEGIN_SRC emacs-lisp
-  (req-package epa-file
+  (use-package epa-file
     :config
     (epa-file-enable)
     ;; Control whether or not to pop up the key selection dialog.
@@ -1604,7 +1606,8 @@ Most Linux already shipped with gnupg, if you use Gentoo Linux, you can use foll
 ** Remote file editing
 
 #+BEGIN_SRC emacs-lisp
-  (req-package tramp
+  (use-package tramp
+    :ensure t
     :init
     (setq tramp-persistency-file-name (concat user-cache-directory "tramp"))
     :config
@@ -1631,7 +1634,8 @@ initially clean. It determines this by quickly checking to see if
 GitHub: https://github.com/purcell/whitespace-cleanup-mode
 
 #+BEGIN_SRC emacs-lisp
-  (req-package whitespace-cleanup-mode
+  (use-package whitespace-cleanup-mode
+    :ensure t
     :config
     (add-hook 'prog-mode-hook 'whitespace-cleanup-mode))
 #+END_SRC
@@ -1639,7 +1643,8 @@ GitHub: https://github.com/purcell/whitespace-cleanup-mode
 ** Save recent file info
 
 #+BEGIN_SRC emacs-lisp
-  (req-package recentf
+  (use-package recentf
+    :ensure t
     :init
     (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
     :config
@@ -1654,7 +1659,8 @@ source code.
 GitHub: https://github.com/Fanael/highlight-numbers
 
 #+BEGIN_SRC emacs-lisp
-  (req-package highlight-numbers
+  (use-package highlight-numbers
+    :ensure t
     :config
     ;; json-mode has it's own highlight numbers method
     (add-hook 'prog-mode-hook '(lambda()
@@ -1667,7 +1673,8 @@ GitHub: https://github.com/Fanael/highlight-numbers
 GitHub: https://github.com/dgutov/highlight-escape-sequences
 
 #+BEGIN_SRC emacs-lisp
-  (req-package highlight-escape-sequences
+  (use-package highlight-escape-sequences
+    :ensure t
     :config
     ;; Make face the same as builtin face
     (put 'font-lock-regexp-grouping-backslash 'face-alias 'font-lock-builtin-face)
@@ -1697,7 +1704,8 @@ GitHub: https://github.com/dgutov/highlight-escape-sequences
 Standard Emacs undo is kind of confusing. [[http://www.dr-qubit.org/emacs.php#undo-tree][undo-tree]] replaces this with a simpler tree structure. It also allows us to visualize the tree directly.
 
 #+BEGIN_SRC emacs-lisp
-  (req-package undo-tree
+  (use-package undo-tree
+    :ensure t
     :config
     ;; Persistent undo-tree history across emacs sessions
     (let ((dir
@@ -1715,7 +1723,8 @@ The definitive emacs customizations for people who are OCD about whitespace .
 GitHub: https://github.com/glasserc/ethan-wspace
 
 #+BEGIN_SRC emacs-lisp
-  (req-package ethan-wspace
+  (use-package ethan-wspace
+    :ensure t
     :config
     ;; Turn off `mode-require-final-newline' since ethan-wspace
     ;; supersedes `require-final-newline'.
@@ -1743,7 +1752,8 @@ GitHub: https://github.com/glasserc/ethan-wspace
 GitHub: https://github.com/zk-phi/indent-guide
 
 #+BEGIN_SRC emacs-lisp
-  (req-package indent-guide
+  (use-package indent-guide
+    :ensure t
     :config
     ;; Only show indent-guide in idle-time.
     (setq indent-guide-delay 0.1))
@@ -1771,7 +1781,8 @@ insertion mode.
 GitHub: https://github.com/chrisdone/god-mode
 
 #+BEGIN_SRC emacs-lisp
-  (req-package god-mode
+  (use-package god-mode
+    :ensure t
     :bind
     ("M-o" . god-local-mode)
     :config
@@ -1785,7 +1796,8 @@ GitHub: https://github.com/chrisdone/god-mode
 GitHub: https://github.com/syohex/vi-tilde-fringe
 
 #+BEGIN_SRC emacs-lisp
-  (req-package vi-tilde-fringe
+  (use-package vi-tilde-fringe
+    :ensure t
     :if window-system
     :config
     (global-vi-tilde-fringe-mode))
@@ -1900,7 +1912,8 @@ indexing mechanism backed by external commands exists as well).
 GitHub: https://github.com/bbatsov/projectile
 
 #+BEGIN_SRC emacs-lisp
-  (req-package projectile
+  (use-package projectile
+    :ensure t
     :config
     ;; FIX hange issue with tramp
     ;; see: https://github.com/bbatsov/prelude/issues/594
@@ -1919,7 +1932,8 @@ GitHub: https://github.com/bbatsov/projectile
 ** semantic
 
 #+BEGIN_SRC emacs-lisp
-  (req-package semantic
+  (use-package semantic
+    :ensure t
     :config
     (setq semanticdb-default-save-directory
           (concat user-cache-directory "semanticdb/"))
@@ -1933,7 +1947,7 @@ GitHub: https://github.com/bbatsov/projectile
 ** GDB
 
 #+BEGIN_SRC emacs-lisp
-  (req-package gdb
+  (use-package gdb
     :config
     ;; Use many window in gdb
     (setq gdb-many-windows t)
@@ -1953,13 +1967,14 @@ A debugger can be run out of a comint process buffer, or you can use a =M-x real
 GitHub: https://github.com/rocky/emacs-dbgr
 
 #+BEGIN_SRC emacs-lisp
-  (req-package realgud)
+  (use-package realgud :ensure t)
 #+END_SRC
 
 ** cscope
 
 #+BEGIN_SRC emacs-lisp
-  (req-package xcscope
+  (use-package xcscope
+    :ensure t
     :config
     ;; Use gtas's cscope command
     (setq cscope-program "gtags-cscope")
@@ -1970,7 +1985,8 @@ GitHub: https://github.com/rocky/emacs-dbgr
 ** flycheck
 
 #+BEGIN_SRC emacs-lisp
-  (req-package flycheck
+  (use-package flycheck
+    :ensure t
     :config
     ;; enable globally
     (global-flycheck-mode))
@@ -1991,7 +2007,8 @@ completion candidates.
 GitHub: https://github.com/company-mode/company-mode
 
 #+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
-  (req-package company
+  (use-package company
+    :ensure t
     :config
     ;; enable globally
     (global-company-mode 1)
@@ -2008,8 +2025,8 @@ GitHub: https://github.com/company-mode/company-mode
 ** Completion C/C++ headers
 
 #+BEGIN_SRC emacs-lisp
-  (req-package company-c-headers
-    :require company
+  (use-package company-c-headers
+    :ensure t
     :config
     (add-to-list 'company-backends 'company-c-headers))
 #+END_SRC
@@ -2017,8 +2034,8 @@ GitHub: https://github.com/company-mode/company-mode
 ** Fuzzy matching for company
 
 #+BEGIN_SRC emacs-lisp
-  (req-package company-flx
-    :require company
+  (use-package company-flx
+    :ensure t
     :config
     (company-flx-mode +1))
 #+END_SRC
@@ -2034,7 +2051,8 @@ likelier candidates at the top of the list.
 GitHub: https://github.com/company-mode/company-statistics
 
 #+BEGIN_SRC emacs-lisp
-  (req-package company-statistics
+  (use-package company-statistics
+    :ensure t
     :config
     ;; save cache file to `user-cache-directory'
     (setq company-statistics-file (concat user-cache-directory
@@ -2109,7 +2127,7 @@ My [[https://github.com/Valloric/ycmd][ycmd]] is cloned to =~/.emacs.d/modules/y
     ;; setup ycmd server path `~/.emacs.d/modules/ycmd/ycmd'
     (set-variable 'ycmd-server-command  `("python" ,(concat user-emacs-directory "modules/ycmd/ycmd")))
     ;; When source in these place, load extra config `.ycm_extra_conf.py'
-    (set-variable 'ycmd-extra-conf-whitelist '("~/ramdisk" "~/Workspace"))
+    (set-variable 'ycmd-extra-conf-whitelist '("~/ramdisk" "~/Workspace" "~/Weintek"))
     ;; start ycmd globally
     (add-hook 'after-init-hook #'global-ycmd-mode))
 #+END_SRC
@@ -2229,29 +2247,31 @@ For c-mode, just do the same but change the relative
 ** arduino
 
 #+BEGIN_SRC emacs-lisp
-    (req-package arduino-mode
+    (use-package arduino-mode :ensure t
       :mode ("\\.pde\\'" "\\.ino\\'"))
 #+END_SRC
 
 ** bash
 
 #+BEGIN_SRC emacs-lisp
-  (req-package flymake-shell
-    :require (flymake shell)
+  (use-package flymake-shell
+    :ensure t
     :config (add-hook 'sh-set-shell-hook 'flymake-shell-load))
 #+END_SRC
 
 ** bison
 
 #+BEGIN_SRC emacs-lisp
-  (req-package bison-mode
+  (use-package bison-mode
+    :ensure t
     :mode ("\\.y\\'" "\\.l\\'" "\\.jison\\'"))
 #+END_SRC
 
 ** bitbake
 
 #+BEGIN_SRC emacs-lisp
-  (req-package bitbake
+  (use-package bitbake
+    :ensure t
     :mode ("\\.bb\\'" "\\.bbappend\\'"))
 #+END_SRC
 
@@ -2264,32 +2284,34 @@ For c-mode, just do the same but change the relative
 ** crontab
 
 #+BEGIN_SRC emacs-lisp
-  (req-package crontab-mode
+  (use-package crontab-mode
+    :ensure t
     :mode "\\.?cron\\(tab\\)?\\'")
 #+END_SRC
 
 ** docker
 
 #+BEGIN_SRC emacs-lisp
-  (req-package dockerfile-mode
+  (use-package dockerfile-mode
+    :ensure t
     :mode "Dockerfile\\'")
 #+END_SRC
 
 ** dts
 
 #+BEGIN_SRC emacs-lisp
-  (req-package dts-mode
+  (use-package dts-mode :ensure t
     :mode ("\\.dts\\'" "\\.dtsi\\'"))
 #+END_SRC
 
 ** elixir
 
 #+BEGIN_SRC emacs-lisp
-  (req-package elixir-mode)
+  (use-package elixir-mode :ensure t)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (req-package alchemist)
+  (use-package alchemist :ensure t)
 #+END_SRC
 
 ** gnuplot
@@ -2299,7 +2321,7 @@ A major mode for Emacs for interacting with Gnuplot
 GitHub: https://github.com/bruceravel/gnuplot-mode
 
 #+BEGIN_SRC emacs-lisp
-  (req-package gnuplot
+  (use-package gnuplot :ensure t
     :commands gnuplot-mode
     :mode "\\.gp$")
 #+END_SRC
@@ -2307,7 +2329,7 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
 ** graphviz dot
 
 #+BEGIN_SRC emacs-lisp
-  (req-package graphviz-dot-mode
+  (use-package graphviz-dot-mode :ensure t
     :mode "\\.dot\\'"
     :config
     ;; alias `dot-mode' to graphviz-dot-mode
@@ -2317,7 +2339,7 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
 ** glsl
 
 #+BEGIN_SRC emacs-lisp
-  (req-package glsl-mode
+  (use-package glsl-mode :ensure t
     :mode (("\\.vs\\'" . glsl-mode)
            ("\\.fs\\'" . glsl-mode)
            ("\\.gs\\'" . glsl-mode))
@@ -2423,23 +2445,22 @@ project. Use it in Vim or Emacs by placing your cursor on a variable and hit
 GitHub: https://github.com/trotzig/import-js
 
 #+BEGIN_SRC emacs-lisp
-  (req-package import-js)
+  (use-package import-js :ensure t)
 #+END_SRC
 
 ** json
 
 #+BEGIN_SRC emacs-lisp
-  (req-package json-mode
+  (use-package json-mode :ensure t
     :mode "\\.json\\'")
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (req-package json-reformat :commands json-reformat-region)
+  (use-package json-reformat :ensure t :commands json-reformat-region)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (req-package flymake-json
-    :require flymake
+  (use-package flymake-json :ensure t
     :config
     (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
 #+END_SRC
@@ -2447,21 +2468,21 @@ GitHub: https://github.com/trotzig/import-js
 ** lua
 
 #+BEGIN_SRC emacs-lisp
-  (req-package lua-mode
+  (use-package lua-mode :ensure t
     :mode "\\.lua$")
 #+END_SRC
 
 ** markdown
 
 #+BEGIN_SRC emacs-lisp
-  (req-package markdown-mode
+  (use-package markdown-mode :ensure t
     :mode "\\.\\(md\\|markdown\\)\\'")
 #+END_SRC
 
 ** po
 
 #+BEGIN_SRC emacs-lisp
-  (req-package po-mode
+  (use-package po-mode :ensure t
     :mode "\\.po\\'\\|\\.po\\."
     :config
 
@@ -2476,7 +2497,7 @@ GitHub: https://github.com/trotzig/import-js
 ** php
 
 #+BEGIN_SRC emacs-lisp
-  (req-package php-mode
+  (use-package php-mode :ensure t
     :mode "\\.php\\'")
 #+END_SRC
 
@@ -2489,7 +2510,7 @@ GitHub: https://github.com/trotzig/import-js
 ** ruby
 
 #+BEGIN_SRC emacs-lisp
-  (req-package ruby-mode
+  (use-package ruby-mode :ensure t
     :mode (("Gemfile\\'"  . ruby-mode)
            ("Kirkfile\\'" . ruby-mode)
            ("Rakefile\\'" . ruby-mode)
@@ -2509,7 +2530,7 @@ GitHub: https://github.com/trotzig/import-js
 ** llvm
 
 #+BEGIN_SRC emacs-lisp
-  (req-package llvm-mode)
+  (use-package llvm-mode :ensure t)
 #+END_SRC
 
 ** go
@@ -2556,14 +2577,14 @@ GitHub: https://github.com/trotzig/import-js
 ** lua
 
 #+BEGIN_SRC emacs-lisp
-  (req-package lua-mode
+  (use-package lua-mode :ensure t
     :mode "\\.lua$")
 #+END_SRC
 
 ** Haskell
 
 #+BEGIN_SRC emacs-lisp :noweb no-export
-  (req-package haskell-mode
+  (use-package haskell-mode :ensure t
     :mode "\\.hs\\'"
     :config
     <<haskell-config>>)
@@ -2579,7 +2600,7 @@ GitHub: https://github.com/trotzig/import-js
 ** ssh config
 
 #+BEGIN_SRC emacs-lisp
-  (req-package ssh-config-mode
+  (use-package ssh-config-mode :ensure t
     :mode ((".ssh/config\\'"       . ssh-config-mode)
            ("sshd?_config\\'"      . ssh-config-mode)
            ("known_hosts\\'"       . ssh-known-hosts-mode)
@@ -2589,13 +2610,13 @@ GitHub: https://github.com/trotzig/import-js
 ** systemd
 
 #+BEGIN_SRC emacs-lisp
-  (req-package systemd)
+  (use-package systemd :ensure t)
 #+END_SRC
 
 ** toml
 
 #+BEGIN_SRC emacs-lisp
-  (req-package toml-mode
+  (use-package toml-mode :ensure t
     :mode "\\.toml$")
 #+END_SRC
 
@@ -2625,7 +2646,7 @@ GitHub: https://github.com/trotzig/import-js
 ** yaml
 
 #+BEGIN_SRC emacs-lisp
-  (req-package yaml-mode)
+  (use-package yaml-mode :ensure t)
 #+END_SRC
 
 * Qt (C++) Development
@@ -2637,8 +2658,7 @@ TODO: integrate back tp C++ setting.
 #+BEGIN_SRC emacs-lisp
   (use-package cmake-mode
     :ensure t
-    :mode (("CMakeLists\\.txt\\'" . cmake-mode) ("\\.cmake\\'" . cmake-mode))
-    :init (push 'company-cmake company-backends-cmake-mode))
+    :mode (("CMakeLists\\.txt\\'" . cmake-mode) ("\\.cmake\\'" . cmake-mode)))
 #+END_SRC
 
 
@@ -2784,7 +2804,7 @@ TODO: integrate back tp C++ setting.
 ** Swift
 
 #+BEGIN_SRC emacs-lisp
-  (req-package swift-mode)
+  (use-package swift-mode :ensure t)
 #+END_SRC
 
 * JVM / Android Development
@@ -2798,7 +2818,8 @@ Note that =Clojure= is setting in =LISP Development= section.
 ** Android
 
 #+BEGIN_SRC emacs-lisp
-  (req-package android-mode
+  (use-package android-mode
+    :ensure t
     :config
     (setq android-mode-sdk-dir (getenv "ANDROID_HOME")))
 #+END_SRC
@@ -2810,18 +2831,14 @@ logcat interface for emacs based on android-mode.
 GitHub: https://github.com/youngker/elogcat.el
 
 #+BEGIN_SRC emacs-lisp
-  (req-package elogcat)
+  (use-package elogcat :ensure t)
 #+END_SRC
 
 ** Scala
 
-#+BEGIN_SRC emacs-lisp
-  (req-package scala-mode2
-    :mode "\\.scala$")
-#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (req-package sbt-mode
+  (use-package sbt-mode :ensure t
     :mode "\\.sbt$")
 #+END_SRC
 
@@ -2849,8 +2866,8 @@ GitHub: https://github.com/abo-abo/lispy
 For more info to control lispy, please refer: http://oremacs.com/lispy/
 
 #+BEGIN_SRC emacs-lisp
-  (req-package lispy
-    :require (hungry-delete projectile)
+  (use-package lispy
+    :ensure t
     :config
 
     (defun my/up-list (&optional arg)
@@ -2978,7 +2995,6 @@ Show lambda as λ.
   (load (concat user-emacs-directory "configs/lang/newlisp.el"))
 #+END_SRC
 
-
 * Web Development                                                       :web:
 
 #+BEGIN_SRC emacs-lisp
@@ -3034,7 +3050,7 @@ helper.
 GitHub: https://github.com/mustache/emacs
 
 #+BEGIN_SRC emacs-lisp
-  (req-package mustache-mode :mode "\\.mustache$")
+  (use-package mustache-mode :mode "\\.mustache$" :ensure t)
 #+END_SRC
 
 ** Use emmet-mode to add Zen Coding support
@@ -3045,7 +3061,7 @@ for Zen Coding by producing HTML from CSS-like selectors.
 GitHub: https://github.com/smihica/emmet-mode
 
 #+BEGIN_SRC emacs-lisp :tangle no
-  (req-package emmet-mode
+  (use-package emmet-mode :ensure t
     :config
     (progn
       ;; Following mode support emmet-mode
@@ -3092,7 +3108,7 @@ For instance, buffers visiting =/u/mernst/tmp/Makefile= and
 =Makefile<2>=).
 
 #+BEGIN_SRC emacs-lisp
-  (req-package uniquify
+  (use-package uniquify
     :config
     ;; starting separator for buffer name components
     (setq uniquify-separator " • ")
@@ -3116,7 +3132,8 @@ Git clients exist, only Magit and Git itself deserve to be called porcelains.
 GitHub: https://github.com/magit/magit
 
 #+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
-  (req-package magit
+  (use-package magit
+    :ensure t
     :config
     <<magit-config>>)
 #+END_SRC
@@ -3130,8 +3147,8 @@ GitHub: https://github.com/magit/magit
 *** Add support for git configuration files
 
 #+BEGIN_SRC emacs-lisp
-  (req-package gitconfig-mode
-    :require flyspell
+  (use-package gitconfig-mode
+    :ensure t
     :mode (("/\\.?git/?config\\'" . gitconfig-mode)
            ("/\\.gitmodules\\'" . gitconfig-mode)
            ("/_gitconfig\\'" . gitconfig-mode))
@@ -3142,7 +3159,8 @@ GitHub: https://github.com/magit/magit
 *** Add support for gitignore files
 
 #+BEGIN_SRC emacs-lisp
-  (req-package gitignore-mode
+  (use-package gitignore-mode
+    :ensure t
     :mode (("/\\.gitignore\\'" . gitignore-mode)
            ("/\\.git/info/exclude\\'" . gitignore-mode)
            ("/git/ignore\\'" . gitignore-mode)))
@@ -3153,9 +3171,9 @@ GitHub: https://github.com/magit/magit
 GitHub: https://github.com/syohex/emacs-git-gutter-fringe
 
 #+BEGIN_SRC emacs-lisp
-  (req-package git-gutter-fringe
+  (use-package git-gutter-fringe
+    :ensure t
     :if window-system                     ; git-gutter-fringe only work on GUI
-    :require fringe-helper
     :config
     ;; enable globally
     (git-gutter-mode))
@@ -3182,7 +3200,8 @@ Ansi Term with sane options and the ability to cycle/create terms.
 GitHub: https://github.com/adamrt/sane-term
 
 #+BEGIN_SRC emacs-lisp
-  (req-package sane-term
+  (use-package sane-term
+    :ensure t
     :config
     ;; shell to use for sane-term
     (setq sane-term-shell-command "/bin/bash")
@@ -3200,7 +3219,7 @@ eshell is not really a system shell, it's written in pure lisp. What I
 like is it fully integrated with emacs.
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
-  (req-package eshell
+  (use-package eshell
     :config
     ;; extra eshell configs
     <<eshell-config>>)
@@ -3258,8 +3277,8 @@ like is it fully integrated with emacs.
 *** Support for multi-eshell instance
 
 #+BEGIN_SRC emacs-lisp
-  (req-package multi-eshell
-    :require eshell
+  (use-package multi-eshell
+    :ensure t
     :config
     (setq multi-eshell-shell-function '(eshell))
     (setq multi-eshell-name "*eshell*"))
@@ -3273,7 +3292,7 @@ which add a =j= command to let you jump to folder you has been access.
 GitHub: https://github.com/coldnew/eshell-autojump
 
 #+BEGIN_SRC emacs-lisp
-  (req-package eshell-autojump :require eshell)
+  (use-package eshell-autojump :ensure t)
 #+END_SRC
 
 *** Eshell commands setup
@@ -3423,7 +3442,8 @@ GitHub: https://github.com/cute-jumper/emacs-firefox-controller
 ** bbdb                                                               :bbdb:
 
 #+BEGIN_SRC emacs-lisp
-  (req-package bbdb
+  (use-package bbdb
+    :ensure t
     :init
     (setq bbdb-file (concat user-cache-directory "bbdb"))
     :config
@@ -3440,7 +3460,7 @@ GitHub: https://github.com/djcb/mu
   ;; setup loadpath later
   <<mu4e-load-path>>
 
-  (req-package mu4e
+  (use-package mu4e
     :config
     <<mu4e-config>>)
 #+END_SRC
@@ -3550,7 +3570,7 @@ After all is done, add following line in =~/.offlineimaprc= and we can get passw
 *** Use eww for html file render
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref mu4e-config
-  (req-package mu4e-contrib
+  (use-package mu4e-contrib
     :config
     (setq mu4e-html2text-command 'mu4e-shr2text)
     ;; try to emulate some of the eww key-bindings
@@ -3667,9 +3687,11 @@ I always use mu4e to read maliing-list, it's really nice to fontify diff content
 I always use =ERC= as my irc client, which is bundle with emacs.
 
 #+BEGIN_SRC emacs-lisp :noweb no-export
-  (req-package erc
-    :require (erc-notify)
+
+  (use-package erc
+    :ensure t
     :config
+    (use-package erc-notify)
     <<erc-config>>)
 #+END_SRC
 
@@ -3731,7 +3753,7 @@ I always use =ERC= as my irc client, which is bundle with emacs.
 ** Coloify user's nickname
 
 #+BEGIN_SRC emacs-lisp
-  (req-package erc-hl-nicks)
+  (use-package erc-hl-nicks :ensure t)
 #+END_SRC
 
 ** Enable track-mode for erc
@@ -3749,7 +3771,7 @@ I always use =ERC= as my irc client, which is bundle with emacs.
 ** Enable spell checking
 
 #+BEGIN_SRC emacs-lisp
-  (req-package erc-spelling
+  (use-package erc-spelling
     :config
     (progn
       (erc-spelling-mode 0)))
@@ -3758,7 +3780,8 @@ I always use =ERC= as my irc client, which is bundle with emacs.
 ** Autoaway setup
 
 #+BEGIN_SRC emacs-lisp
-  (req-package erc-autoaway
+  (use-package erc-autoaway
+    :ensure t
     :config
     (progn
       (setq erc-auto-discard-away t)

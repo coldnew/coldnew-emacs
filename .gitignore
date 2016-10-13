@@ -40,3 +40,4 @@ log/
 /network-security.data
 /.build/
 configs/**/*.el
+elpa
