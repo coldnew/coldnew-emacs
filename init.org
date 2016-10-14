@@ -19,11 +19,9 @@ Design:
 
 Most use package locate in core config, other in plugin config ?
 
-
-* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 * Introduction
 
-This is my emacs configuration, you can find it on [[https://github.com/coldnew][GitHub]] or read in [[http://coldnew.github.io/coldnew-emacs][HTML]] or [[https://coldnew.github.io/coldnew-emacs/init.el.html][init.el]] directly.
+This is my emacs configuration, feel free to use it :)
 
 ** Install emacs
 
@@ -49,6 +47,17 @@ version of emacs via following command
   USE="X gtk3 inotify xft imagemagick" emerge app-editors/emacs
 #+END_SRC
 
+
+*** Building with script
+
+My emacs configuration already shipped an update-to-date version of emacs based on git submodule, if your system can build emacs from source you can use my [[file:scripts/build-emacs.sh]] script to build latested emacs.
+
+#+BEGIN_EXAMPLE
+  git submodule init
+  git submodule update
+  ./scripts/build-emacs.sh
+#+END_EXAMPLE
+
 ** Install or testing this config
 
 - First use git to download whole repo
@@ -70,12 +79,18 @@ version of emacs via following command
 
 - If you only want to generate the =init.el=, jut type
 
-  : make init.el
+  : make
 
 - If you do not put this repo on =~/.emacs.d=, you need to use following
   command to start emacs
 
   : emacs -q -l ~/coldnew-emacs/init.el
+
+* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
+* Introduction
+
+This is my emacs configuration, you can find it on [[https://github.com/coldnew][GitHub]] or read in [[http://coldnew.github.io/coldnew-emacs][HTML]] or [[https://coldnew.github.io/coldnew-emacs/init.el.html][init.el]] directly.
+
 ** Packages need to install in system (Optional)
 
 Some extra packages need to be installed in the system manually. These packages
