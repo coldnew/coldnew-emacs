@@ -44,7 +44,7 @@ Show org-mode bullets as UTF-8 characters.
 GitHub: https://github.com/sabof/org-bullets
 
 #+BEGIN_SRC emacs-lisp
-  (req-package org-bullets
+  (use-package org-bullets
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC

@@ -276,7 +276,6 @@ looks like this:
   (depends-on "noflet")
   (depends-on "pallet")
   (depends-on "async")
-  (depends-on "req-package")
   (depends-on "paradox")
   (depends-on "org")
   (depends-on "htmlize")
@@ -330,36 +329,6 @@ GitHub: https://github.com/jwiegley/use-package
   ;; Auto install non-installed packages.
   ;; (setq use-package-always-ensure t)
 #+END_SRC
-** req-package
-
-[[https://github.com/edvorg/req-package][req-package]] is a wrapper on top of [[https://github.com/jwiegley/use-package][use-package]], a package dependency management
-tool. The documentation for =use-package= is immensely helpful for figuring out
-how to describe package dependencies and settings. =req-package= adds the
-=:require= keyword which allows us to define dependencies between related
-packages.
-
-GitHub: https://github.com/edvorg/req-package
-
-*** Initialize req-package
-
-With the preceding process complete, we just need to add the following
-line to our init file to begin using =req-package=:
-
-#+BEGIN_SRC emacs-lisp
-  (require 'req-package)
-#+END_SRC
-
-*** Start loading packages in right order
-
-To start loading packages in right order, we need to added following in the last
-of emacs config.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (req-package-finish)
-#+END_SRC
-
-You can take a look at [[*End%20of%20configuration][End of configuration]] section.
-
 ** paradox
 
 Project for modernizing Emacs' Package Menu. With improved appearance, mode-line information. Github integration, customizability, asynchronous upgrading, and more.
@@ -1355,8 +1324,6 @@ unload previous theme before loading a new one.
       (mapc #'disable-theme custom-enabled-themes))
 
     ;; My light theme
-    ;; (req-package coldnew-theme-day-theme
-    ;;   :require (powerline powerline-evil))
     (use-package powerline :ensure t)
     (use-package powerline-evil :ensure t)
 
@@ -1368,8 +1335,6 @@ unload previous theme before loading a new one.
   (require 'coldnew-theme-night-theme)
   (load-theme 'coldnew-theme-night t 'noerror)
 
-    ;;(req-package coldnew-modeline-config
-    ;;  :require (powerline powerline-evil))
     ;; TODO:
     (use-package spaceline
       :ensure t
@@ -3970,13 +3935,6 @@ For =space= state, I use evil-leader to achive this goal.
 * End of configuration
 
 Oh YA!! We finish loading emacs configuration :)
-
-However, since we use =req-package= for loading and installing packages, be sure
-to execute following line to send =req-package= on its merry way.
-
-#+BEGIN_SRC emacs-lisp
-  (req-package-finish)
-#+END_SRC
 
 In the end of configuration, I'll load my private config from =~/.personal.el=,
 which contains something like password or account settings.
