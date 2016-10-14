@@ -32,7 +32,6 @@ You also can use OS's package manager to install it
   brew install editorconfig
 #+END_SRC
 
-
 ** Gentoo Linux
 
 I write a ebuild for editorconfig [[https://github.com/coldnew/coldnew-overlay/tree/master/app-editors/editorconfig][here]].
@@ -45,7 +44,6 @@ I write a ebuild for editorconfig [[https://github.com/coldnew/coldnew-overlay/t
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package editorconfig
-    :ensure t
     :init
     (add-hook 'prog-mode-hook (editorconfig-mode 1))
     (add-hook 'text-mode-hook (editorconfig-mode 1)))
