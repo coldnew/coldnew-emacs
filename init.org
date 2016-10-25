@@ -3983,3 +3983,5 @@ Following link is refrence for my emacs config.
 ~[17]~ https://github.com/jouyouyun/emacs.d/tree/master
 
 ~[18]~ https://emacsgifs.github.io
+
+~[19]~ https://github.com/jonnay/emagicians-starter-kit
