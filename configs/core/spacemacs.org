@@ -78,8 +78,6 @@ spacemacs is really awesome, but there's something I don't like.
   (global-hl-line-mode -1)
 #+END_SRC
 
-#+RESULTS:
-
 ** switch back to `*scratch*' buffer after loading spacemacs finished
 
 #+BEGIN_SRC emacs-lisp

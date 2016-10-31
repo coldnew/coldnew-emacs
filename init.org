@@ -160,6 +160,14 @@ Some of my password stored in a secret file with gnupg encrypt, I add this funct
 #+END_SRC
 
 
+* Loading Modules
+
+I split my configs to many org-mode files
+
+#+BEGIN_SRC emacs-lisp
+  (load (concat user-emacs-directory "configs/core/packages.el"))
+#+END_SRC
+
 * ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 * Introduction
 
@@ -197,7 +205,7 @@ Some package like =npm= use the same rule to install in any platform, here list 
   <<install-in-all>>
 #+END_SRC
 
-* Package Management                                               :packages:
+* COMMENT Package Management                                               :packages:
 
 The main package magement in my emacs is [[https://github.com/cask/cask][Cask]], which is a really nice package
 like npm, cargo ...etc.
@@ -222,7 +230,7 @@ Take my emacs as example, after initialize [[https://github.com/cask/cask][Cask]
 
 Before we start this section, we need to initialize =package.el= first.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   ;; This must come before configurations of installed packages.
   ;; Don't delete this line. If you don't want it, just comment it out by adding a
   ;; semicolon to the start of the line. You may delete these explanatory
@@ -232,7 +240,7 @@ Before we start this section, we need to initialize =package.el= first.
 
 Add [[http://melpa.org][melpa]] to package list.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 #+END_SRC
 
@@ -257,7 +265,7 @@ then add =~/.cask/bin= to your =PATH= so that you can use =cask=.
 For now, we just need a minimal =Cask= to get Pallet set up. Mine
 looks like this:
 
-#+BEGIN_SRC emacs-lisp :tangle (if (file-exists-p "Cask") "no" "Cask")
+#+BEGIN_SRC emacs-lisp :tangle no
   (source gnu)
   (source melpa)
 
@@ -282,7 +290,7 @@ Then run the following command in your =.emacs.d= directory to set up
 
 Since the =Cask= file is just emacs-lisp file, add it to mode-alist.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (add-to-list 'auto-mode-alist '("Cask$" . emacs-lisp-mode))
 #+END_SRC
 
@@ -290,7 +298,7 @@ Since the =Cask= file is just emacs-lisp file, add it to mode-alist.
 
 Finally, we add the following lines to our init file:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (require 'cask "~/.cask/cask.el")
   (cask-initialize)
 #+END_SRC
@@ -300,7 +308,7 @@ Finally, we add the following lines to our init file:
 Since we already install pallet via cask, we just need to use the following code
 to initialize pallet.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (require 'pallet)
   (pallet-mode t)
 #+END_SRC
@@ -315,7 +323,7 @@ seconds, with no loss of functionality!
 
 GitHub: https://github.com/jwiegley/use-package
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (require 'use-package)                  ; Installed by Cask
   ;; Auto install non-installed packages.
   ;; (setq use-package-always-ensure t)
@@ -326,7 +334,7 @@ Project for modernizing Emacs' Package Menu. With improved appearance, mode-line
 
 GitHub: https://github.com/Malabarba/paradox
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (require 'paradox)                  ; Installed by Cask
 #+END_SRC
 
