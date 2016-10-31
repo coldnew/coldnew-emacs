@@ -6,6 +6,17 @@
 #+SETUPFILE: configs.setup
 
 In emacs, we can use =M-x= to execute interactive commands, I implement some of them to make my emacs more easy to use.
+* Use lexical binding
+
+For some of my functions, and general coolness, =lexical binding= is a must.
+Without it, closures cannot be made for example.
+
+This line needs to appear at the beginning of the file to work. Just to keep
+things looking nice I put it at the beginning of the file.
+
+#+BEGIN_SRC emacs-lisp :padline no
+  ;; -*- lexical-binding: t -*-
+#+END_SRC
 
 * Buffers                                                            :buffer:
 

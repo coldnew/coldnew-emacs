@@ -86,59 +86,10 @@ My emacs configuration already shipped an update-to-date version of emacs based 
 
   : emacs -q -l ~/coldnew-emacs/init.el
 
-* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
-* Introduction
-
-This is my emacs configuration, you can find it on [[https://github.com/coldnew][GitHub]] or read in [[http://coldnew.github.io/coldnew-emacs][HTML]] or [[https://coldnew.github.io/coldnew-emacs/init.el.html][init.el]] directly.
-
-** Packages need to install in system (Optional)
-
-Some extra packages need to be installed in the system manually. These packages
-are =optional= but can make this configuration work more nicely.
-
-*** Mac OSX
-
-#+BEGIN_SRC sh :tangle no :noweb yes
-  brew install fasd
-  brew install aspell --with-lang-en
-  <<install-in-macosx>>
-#+END_SRC
-
-*** Gentoo Linux
-
-In Gentoo Linux, don't forget to enable ~USE=emacs~ to make gentoo auto install
-emacs-related packages.
-
-#+BEGIN_SRC sh :tangle no :noweb yes
-  emerge app-shells/fasd
-  emerge app-shells/aspell
-  <<install-in-gentoo>>
-#+END_SRC
-
-*** All platform
-
-Some package like =npm= use the same rule to install in any platform, here list what I need to install.
-
-#+BEGIN_SRC sh :tangle no :noweb yes
-  <<install-in-all>>
-#+END_SRC
-
 * Initialization Emacs
 
 There are some configurations I need to put at the beginning of the emacs
 config. These configurations are derived from my original init.el file.
-
-** Use lexical binding
-
-For some of my functions, and general coolness, =lexical binding= is a must.
-Without it, closures cannot be made for example.
-
-This line needs to appear at the beginning of the file to work. Just to keep
-things looking nice I put it at the beginning of the file.
-
-#+BEGIN_SRC emacs-lisp :padline no
-  ;; -*- lexical-binding: t -*-
-#+END_SRC
 
 ** Prevent load outdated .elc files
 
@@ -178,8 +129,9 @@ Setup the cache directory to store some cache content.
 
 ** Setup user-ramdisk-directory variable
 
-#+BEGIN_SRC emacs-lisp
+I specify a ramdisk path to make my emacs can save som temporary file to it. The ramdisk path should be =~/ramdisk=, if the directory not found, use =/tmp= as fallback.
 
+#+BEGIN_SRC emacs-lisp
   (defconst user-ramdisk-directory
       (let ((ramdisk "/Volumes/ramdisk/")
             (user-ramdisk                   ; ~/ramdisk/
@@ -195,6 +147,7 @@ Setup the cache directory to store some cache content.
     "My ramdisk path in system.")
 #+END_SRC
 
+
 ** Method to load secret file
 
 Some of my password stored in a secret file with gnupg encrypt, I add this function here so I can inject some emacs-command which hass password/account setting.
@@ -204,6 +157,44 @@ Some of my password stored in a secret file with gnupg encrypt, I add this funct
     "Load my secret setting include password... etc."
     (let ((secret "~/.secret.el.gpg"))
       (when (file-exists-p secret) (load-file secret))))
+#+END_SRC
+
+
+* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
+* Introduction
+
+This is my emacs configuration, you can find it on [[https://github.com/coldnew][GitHub]] or read in [[http://coldnew.github.io/coldnew-emacs][HTML]] or [[https://coldnew.github.io/coldnew-emacs/init.el.html][init.el]] directly.
+
+** Packages need to install in system (Optional)
+
+Some extra packages need to be installed in the system manually. These packages
+are =optional= but can make this configuration work more nicely.
+
+*** Mac OSX
+
+#+BEGIN_SRC sh :tangle no :noweb yes
+  brew install fasd
+  brew install aspell --with-lang-en
+  <<install-in-macosx>>
+#+END_SRC
+
+*** Gentoo Linux
+
+In Gentoo Linux, don't forget to enable ~USE=emacs~ to make gentoo auto install
+emacs-related packages.
+
+#+BEGIN_SRC sh :tangle no :noweb yes
+  emerge app-shells/fasd
+  emerge app-shells/aspell
+  <<install-in-gentoo>>
+#+END_SRC
+
+*** All platform
+
+Some package like =npm= use the same rule to install in any platform, here list what I need to install.
+
+#+BEGIN_SRC sh :tangle no :noweb yes
+  <<install-in-all>>
 #+END_SRC
 
 * Package Management                                               :packages:
@@ -632,7 +623,8 @@ For language, though Traditional Chinese is my mothertone, I still prefer use
 * Buildin Packages
 
 #+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/core/buildin.el"))
+   (load (concat user-emacs-directory "configs/core/buildin.el"))
+  ;;(require 'my-core-buildin)
 #+END_SRC
 
 * External Packages                                                :packages:
