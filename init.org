@@ -262,6 +262,13 @@ Before we start to use =package.el=, we need to initialize it first.
   (package-initialize)
 #+END_SRC
 
+Auto refresh packages info when no archive available.
+
+#+BEGIN_SRC emacs-lisp
+  (when (not package-archive-contents)
+    (package-refresh-contents))
+#+END_SRC
+
 ** Install use-package
 
 The =use-package= macro allows you to isolate package configuration in your =.emacs=
