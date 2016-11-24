@@ -6,6 +6,7 @@
 #+STARTUP: overview indent align
 #+BABEL: :cache yes
 #+OPTIONS: ^:nil num:nil tags:nil
+#+PROPERTY: header-args  :comments org
 #+SETUPFILE: assets/readtheorg.setup
 
 Actually, I start to rewrite this single org-mode config to multiple org-mode configs, you can find my configs in =config= folder.
@@ -13,11 +14,6 @@ Actually, I start to rewrite this single org-mode config to multiple org-mode co
 # Badge
 [[http://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg?dummy]]
 [[https://travis-ci.org/coldnew/coldnew-emacs][https://travis-ci.org/coldnew/coldnew-emacs.svg?branch=master]]
-
-
-Design:
-
-Most use package locate in core config, other in plugin config ?
 
 * Introduction
 
@@ -47,7 +43,6 @@ version of emacs via following command
   USE="X gtk3 inotify xft imagemagick" emerge app-editors/emacs
 #+END_SRC
 
-
 *** Building with script
 
 My emacs configuration already shipped an update-to-date version of emacs based on git submodule, if your system can build emacs from source you can use my [[file:scripts/build-emacs.sh]] script to build latested emacs.
@@ -66,18 +61,16 @@ My emacs configuration already shipped an update-to-date version of emacs based 
 
 - Then use git submodule to download the spacemacs
 
-  : git submodule init
-  : git submodule update
+  #+BEGIN_EXAMPLE
+    git submodule init
+    git submodule update
+  #+END_EXAMPLE
 
 - You also need to install [[https://github.com/cask/cask][Cask]] for package management
 
   : curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 
-- Then use the =make= command bootstrap this config
-
-  : make bootstrap
-
-- If you only want to generate the =init.el=, jut type
+- To generate the =init.el=, jut type
 
   : make
 
@@ -86,10 +79,54 @@ My emacs configuration already shipped an update-to-date version of emacs based 
 
   : emacs -q -l ~/coldnew-emacs/init.el
 
+** Packages need to be installed in system (Optional)
+
+Some extra packages need to be installed in the system manually. These packages are =optional= but can make this configuration work more nicely.
+
+*** Mac OSX
+
+In Mac OSX, I use [[http://brew.sh/][homebrew]] to install opensource packages.
+
+#+BEGIN_SRC sh :tangle no :noweb yes
+  #brew install fasd
+  #brew install aspell --with-lang-en
+  <<install-in-macosx>>
+#+END_SRC
+
+*** Gentoo Linux
+
+In Gentoo Linux, don't forget to enable ~USE=emacs~ to make Gentoo auto install emacs-related packages.
+
+#+BEGIN_SRC sh :tangle no :noweb yes
+  #emerge app-shells/fasd
+  #emerge app-shells/aspell
+  <<install-in-gentoo>>
+#+END_SRC
+
+*** All platform
+
+Some package like =npm= use the same rule to install in any platform, here list what I need to install.
+
+#+BEGIN_SRC sh :tangle no :noweb yes
+  <<install-in-all>>
+#+END_SRC
+
 * Initialization Emacs
 
 There are some configurations I need to put at the beginning of the emacs
 config. These configurations are derived from my original init.el file.
+
+** Use lexical binding
+
+For some of my functions, and general coolness, =lexical binding= is a must.
+Without it, closures cannot be made for example.
+
+This line needs to appear at the beginning of the file to work. Just to keep
+things looking nice I put it at the beginning of the file.
+
+#+BEGIN_SRC emacs-lisp :padline no
+  ;; -*- lexical-binding: t -*-
+#+END_SRC
 
 ** Prevent load outdated .elc files
 
@@ -100,7 +137,7 @@ me never accidentally using outdated compiled files.
   (setq load-prefer-newer t)
 #+END_SRC
 
-** Setup user-emacs-directory variable
+** Setup user-emacs-directory variable                            :variable:
 
 In this configuration, =user-emacs-directory= always refer to the emacs
 configuration's init.el parent directory.
@@ -115,7 +152,7 @@ configuration's init.el parent directory.
     "My emacs config directory.")
 #+END_SRC
 
-** Setup user-cache-directory variable
+** Setup user-cache-directory variable                            :variable:
 
 Setup the cache directory to store some cache content.
 
@@ -127,7 +164,7 @@ Setup the cache directory to store some cache content.
   (make-directory user-cache-directory t)
 #+END_SRC
 
-** Setup user-ramdisk-directory variable
+** Setup user-ramdisk-directory variable                          :variable:
 
 I specify a ramdisk path to make my emacs can save som temporary file to it. The ramdisk path should be =~/ramdisk=, if the directory not found, use =/tmp= as fallback.
 
@@ -147,216 +184,23 @@ I specify a ramdisk path to make my emacs can save som temporary file to it. The
     "My ramdisk path in system.")
 #+END_SRC
 
+** Load path
 
-** Method to load secret file
+The variable =load-path= lists all the directories where Emacs should look for emacs-lisp files.
 
-Some of my password stored in a secret file with gnupg encrypt, I add this function here so I can inject some emacs-command which hass password/account setting.
+Following are my method to add directories to load-path ~recursively~, this function also create directory to prevent directory not exist.
 
-#+BEGIN_SRC emacs-lisp
-  (defun my/load-secret ()
-    "Load my secret setting include password... etc."
-    (let ((secret "~/.secret.el.gpg"))
-      (when (file-exists-p secret) (load-file secret))))
-#+END_SRC
-
-
-* Loading Modules
-
-I split my configs to many org-mode files
-
-#+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/core/packages.el"))
-#+END_SRC
-
-* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
-* Introduction
-
-This is my emacs configuration, you can find it on [[https://github.com/coldnew][GitHub]] or read in [[http://coldnew.github.io/coldnew-emacs][HTML]] or [[https://coldnew.github.io/coldnew-emacs/init.el.html][init.el]] directly.
-
-** Packages need to install in system (Optional)
-
-Some extra packages need to be installed in the system manually. These packages
-are =optional= but can make this configuration work more nicely.
-
-*** Mac OSX
-
-#+BEGIN_SRC sh :tangle no :noweb yes
-  brew install fasd
-  brew install aspell --with-lang-en
-  <<install-in-macosx>>
-#+END_SRC
-
-*** Gentoo Linux
-
-In Gentoo Linux, don't forget to enable ~USE=emacs~ to make gentoo auto install
-emacs-related packages.
-
-#+BEGIN_SRC sh :tangle no :noweb yes
-  emerge app-shells/fasd
-  emerge app-shells/aspell
-  <<install-in-gentoo>>
-#+END_SRC
-
-*** All platform
-
-Some package like =npm= use the same rule to install in any platform, here list what I need to install.
-
-#+BEGIN_SRC sh :tangle no :noweb yes
-  <<install-in-all>>
-#+END_SRC
-
-* COMMENT Package Management                                               :packages:
-
-The main package magement in my emacs is [[https://github.com/cask/cask][Cask]], which is a really nice package
-like npm, cargo ...etc.
-
-[[https://github.com/cask/cask][Cask]] can also install packages according to your emacs version, so you don't be
-afraid to get version conflicts after upgrade emacs.
-
-Take my emacs as example, after initialize [[https://github.com/cask/cask][Cask]], all package install by
-=package.el= just save to =.cask= folder according to your emacs version.
-
-#+BEGIN_EXAMPLE
-  coldnew@Sara ~/.emacs.d $ tree -L 1 .cask/
-  .cask/
-  ├── 24.5.1
-  ├── 25.0.50.1
-  └── 25.1.50.1
-
-  3 directories, 0 files
-#+END_EXAMPLE
-
-** Initialize package.el
-
-Before we start this section, we need to initialize =package.el= first.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; This must come before configurations of installed packages.
-  ;; Don't delete this line. If you don't want it, just comment it out by adding a
-  ;; semicolon to the start of the line. You may delete these explanatory
-  ;; comments.
-  (package-initialize)
-#+END_SRC
-
-Add [[http://melpa.org][melpa]] to package list.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-#+END_SRC
-
-** Cask and Pallet
-
-[[https://github.com/rdallasgray/pallet][Pallet]] is a wonderful little tool built on [[https://github.com/cask/cask][Cask]], a dependency management tool
-for Emacs packages. Pallet adds automatic updating of the =Caskfile= when
-packages are installed and deleted.
-
-*** Installing Cask
-
-Just run this command in your terminal of choice:
-
-#+BEGIN_SRC sh :tangle no
-  curl -fsSkL https://raw.github.com/cask/cask/master/go | python
-#+END_SRC
-
-then add =~/.cask/bin= to your =PATH= so that you can use =cask=.
-
-*** Creating a Caskfile                                          :caskfile:
-
-For now, we just need a minimal =Cask= to get Pallet set up. Mine
-looks like this:
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (source gnu)
-  (source melpa)
-
-  (depends-on "f")
-  (depends-on "s")
-  (depends-on "dash")
-  (depends-on "noflet")
-  (depends-on "pallet")
-  (depends-on "async")
-  (depends-on "paradox")
-  (depends-on "org")
-  (depends-on "htmlize")
-  (depends-on "yasnippet")
-#+END_SRC
-
-Then run the following command in your =.emacs.d= directory to set up
-[[https://github.com/rdallasgray/pallet][Pallet]].
-
-#+BEGIN_SRC sh :tangle no
-  cask install
-#+END_SRC
-
-Since the =Cask= file is just emacs-lisp file, add it to mode-alist.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (add-to-list 'auto-mode-alist '("Cask$" . emacs-lisp-mode))
-#+END_SRC
-
-*** Initialize Cask
-
-Finally, we add the following lines to our init file:
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (require 'cask "~/.cask/cask.el")
-  (cask-initialize)
-#+END_SRC
-
-*** Initialize Pallet
-
-Since we already install pallet via cask, we just need to use the following code
-to initialize pallet.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (require 'pallet)
-  (pallet-mode t)
-#+END_SRC
-
-** use-package
-
-The =use-package= macro allows you to isolate package configuration in your =.emacs=
-file in a way that is both performance-oriented and, well, tidy. I created it
-because I have over 80 packages that I use in Emacs, and things were getting
-difficult to manage. Yet with this utility my total load time is around 2
-seconds, with no loss of functionality!
-
-GitHub: https://github.com/jwiegley/use-package
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (require 'use-package)                  ; Installed by Cask
-  ;; Auto install non-installed packages.
-  ;; (setq use-package-always-ensure t)
-#+END_SRC
-** paradox
-
-Project for modernizing Emacs' Package Menu. With improved appearance, mode-line information. Github integration, customizability, asynchronous upgrading, and more.
-
-GitHub: https://github.com/Malabarba/paradox
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (require 'paradox)                  ; Installed by Cask
-#+END_SRC
-
-* Load Path
-
-The variable =load-path= lists all the directories where Emacs should look for
-Elisp files.
-
-Though I use =Cask= as package management in my emacs, some local packages like
-my own theme or others can't fetch by elpa need to add to load-path, this will
-help emacs find them.
-
-Following are my method to add directories to load-path ~recursively~, this
-function also create directory to prevent directory not exist.
-
-If you don't have any local elisp and all packages is maintain by cask or elpa or
-spacemacs, you can skip following code.
+If you don't have any local elisp and all packages is maintain by cask or elpa or spacemacs, you can skip following code.
 
 #+BEGIN_SRC emacs-lisp
   ;; Add directories to emacs's `load-path' recursively.
   ;; if path does not exist, create directory.
-  (let* ((lisp-dir '("local-lisp/" "themes/")))
+  (let* ((lisp-dir (append '("local-lisp/" "themes/")
+                           (cl-ecase system-type   ; add some system site-lisp to load-path
+                             ((darwin) '("/usr/local/share/emacs/site-lisp/"))
+                             ((gnu/linux) '("/usr/share/emacs/site-lisp/"))
+                             ;; FIXME: not supported platform
+                             (t nil)))))
     (dolist (lisp-path lisp-dir)
       (when (not (file-exists-p lisp-path))
         (make-directory (concat user-emacs-directory lisp-path) t))
@@ -371,20 +215,96 @@ spacemacs, you can skip following code.
                load-path)))))
 #+END_SRC
 
-Sometimes package manager will install some emacs-lisp file to system path, add them to my emacs's load-path.
+** Method to load secret file                                     :function:
+
+Some of my password stored in a secret file with gnupg encrypt, I add this function here so I can inject some emacs-command which hass password/account setting.
 
 #+BEGIN_SRC emacs-lisp
-  ;;;; add some system site-lisp to my load-path
+  (defun my/load-secret ()
+    "Load my secret setting include password... etc."
+    (let ((secret "~/.secret.el.gpg"))
+      (when (file-exists-p secret) (load-file secret))))
+#+END_SRC
 
-  ;; Mac OSX
-  (when (equal system-type 'darwin)
-    (let ((default-directory "/usr/local/share/emacs/site-lisp/"))
-      (normal-top-level-add-subdirs-to-load-path)))
+* Package Management
 
-  ;; Linux
-  (when (equal system-type 'gnu/linux)
-    (let ((default-directory "/usr/share/emacs/site-lisp/"))
-      (normal-top-level-add-subdirs-to-load-path)))
+The main package manager I use is emacs's =package.el=, it's really nice and easy to use.
+
+** Add melpa to package list
+
+[[http://melpa.org][melpa]] contains many community packages that not contribute to emacs's elpa, we add it here.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'package)                      ; built-in
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+  ;; For important compatibility libraries like cl-lib
+  (when (< emacs-major-version 24)
+    (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
+#+END_SRC
+
+** Initialize package.el
+
+Before we start to use =package.el=, we need to initialize it first.
+
+#+BEGIN_SRC emacs-lisp
+  ;; This must come before configurations of installed packages.
+  ;; Don't delete this line. If you don't want it, just comment it out by adding a
+  ;; semicolon to the start of the line. You may delete these explanatory
+  ;; comments.
+  (package-initialize)
+#+END_SRC
+
+** Install use-package
+
+The =use-package= macro allows you to isolate package configuration in your =.emacs=
+file in a way that is both performance-oriented and, well, tidy. I created it
+because I have over 80 packages that I use in Emacs, and things were getting
+difficult to manage. Yet with this utility my total load time is around 2
+seconds, with no loss of functionality!
+
+GitHub: https://github.com/jwiegley/use-package
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (package-install 'use-package)              ; Installed by packages.el
+  (require 'use-package)
+  ;; Auto install non-installed packages.
+  (setq use-package-always-ensure t)
+#+END_SRC
+
+** Install paradox
+
+Project for modernizing Emacs' Package Menu. With improved appearance, mode-line information. Github integration, customizability, asynchronous upgrading, and more.
+
+GitHub: https://github.com/Malabarba/paradox
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (package-install 'paradox)              ; Installed by packages.el
+  (require 'paradox)
+#+END_SRC
+
+** Install some common libraries
+
+#+BEGIN_SRC emacs-lisp
+  (package-install 'f)
+  (package-install 's)
+  (package-install 'dash)
+  (package-install 'noflet)
+  (package-install 'htmlize)
+  (package-install 'async)
+#+END_SRC
+
+
+
+* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
+
+* Loading Modules
+
+I split my configs to many org-mode files
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/load-config (pkg)
+    (load (format "%sconfigs/%s" user-emacs-directory pkg)))
 #+END_SRC
 
 I think I'll write some dynamic module extension, which will save to =~/.emacs.d/modules=, use a helper script to help me load them.
@@ -1448,7 +1368,7 @@ ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-thresho
 * Editors
 
 #+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/core/editorconfig.el"))
+  (load (concat user-emacs-directory "configs/plugins/editorconfig.el"))
 #+END_SRC
 
 Why emacs config has an editor section, doesn't means emacs is not an editor ?
