@@ -400,32 +400,9 @@ I don't like the =ido-mode=.
    (remove-hook 'helm-minibuffer-set-up-hook 'helm-hide-minibuffer-maybe)
  #+END_SRC
 
+* Basic Setup
 
-* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
-
-* Loading Modules
-
-I split my configs to many org-mode files
-
-#+BEGIN_SRC emacs-lisp
-  (defun my/load-config (pkg)
-    (load (format "%sconfigs/%s" user-emacs-directory pkg)))
-#+END_SRC
-
-I think I'll write some dynamic module extension, which will save to =~/.emacs.d/modules=, use a helper script to help me load them.
-
-#+BEGIN_SRC emacs-lisp
-  ;; load the `load-modules.el' file which help me load external modulept
-  (let ((script (concat user-emacs-directory "modules/load-modules.el")))
-    (when (file-exists-p script)
-      (load script)))
-#+END_SRC
-
-
-* Basic setup
-
-Some basic setup to disabe/enable default feature before we start. The
-configuration here only depends on valina emacs's buildin libraries.
+Some basic setup to disabe/enable default feature before we start. The configuration here only depends on vanilla emacs's buildin libraries.
 
 ** Personal Information
 
@@ -438,6 +415,8 @@ Some information about myself.
 
 ** Startup emacs server
 
+Start the emacs daemon after init, we can use =emacsclient= to edit file with emacs server.
+
 #+BEGIN_SRC emacs-lisp
   ;; Only start server mode if I'm not root
   (unless (string-equal "root" (getenv "USER"))
@@ -447,8 +426,7 @@ Some information about myself.
 
 ** Under Mac OSX use Command key as ALT
 
-Under Mac OSX, I always bind =Caps lock= as Control key, and make the =Command=
-key as =ALT= key like I done in Linux.
+Under Mac OSX, I always bind =Caps lock= as Control key, and make the =Command= key as =ALT= key like I done in Linux.
 
 The =Option= key will be setup as =Super=.
 
@@ -482,8 +460,7 @@ When I type =C-x C-c= which means I want to quit emacs, don't stand in my way.
 
 ** Save custom-file as cache
 
-Most of my config is written in this file, it's no need to tracking the emacs's
-custom-setting.
+Most of my config is written in this file, it's no need to tracking the emacs's custom-setting.
 
 I move the file to cache-dir and make git ignore it.
 
@@ -493,30 +470,6 @@ I move the file to cache-dir and make git ignore it.
   (when (file-exists-p custom-file)
     (load-file custom-file))
 #+END_SRC
-
-** Async rebuild init.el after save
-
-#+BEGIN_SRC emacs-lisp
-  (require 'async)   ; Installed by Cask
-  (require 's)       ; Installed by Cask
-  ;; If I'm edit my init.org, async generate init.el when save.
-  (defun tangle-init ()
-    "If the current buffer is 'init.org' or `org-mode' files in `configs' dir, execute makefile to create new configs."
-    (let ((buffer-name "async-make-init.el")
-          (default-directory user-emacs-directory))
-      (when (or (equal (buffer-file-name)
-                       (expand-file-name (concat user-emacs-directory "init.org")))
-                (s-starts-with? (file-name-directory (concat user-emacs-directory "configs/"))
-                                (file-name-directory (buffer-file-name))))
-
-        ;; build with `make init.el' command
-        (async-start-process buffer-name "make"
-                             '(lambda (result)
-                                (message "Re-Generate init.el")) "all"))))
-  ;; Add to hook
-  (add-hook 'after-save-hook 'tangle-init)
-#+END_SRC
-
 ** Setup auto-save directory
 
 #+BEGIN_SRC emacs-lisp
@@ -636,23 +589,130 @@ Just let me use =y= or =n= with no =RET= required an I'm quite happy.
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
+** Async rebuild init.el after save
+
+#+BEGIN_SRC emacs-lisp
+  (require 'async)   ; part of my emacs deps
+  (require 's)       ; part of my emacs deps
+  ;; If I'm edit my init.org, async generate init.el when save.
+  (defun tangle-init ()
+    "If the current buffer is 'init.org' or `org-mode' files in `configs' dir, execute makefile to create new configs."
+    (let ((buffer-name "async-make-init.el")
+          (default-directory user-emacs-directory))
+      (when (or (equal (buffer-file-name)
+                       (expand-file-name (concat user-emacs-directory "init.org")))
+                (s-starts-with? (file-name-directory (concat user-emacs-directory "configs/"))
+                                (file-name-directory (buffer-file-name))))
+
+        ;; build with `make init.el' command
+        (async-start-process buffer-name "make"
+                             '(lambda (result)
+                                (message "Re-Generate init.el")) "all"))))
+  ;; Add to hook
+  (add-hook 'after-save-hook 'tangle-init)
+#+END_SRC
+
 * Languages and Encodings
 
 Since current Emacs default run on UTF-8, it's no need to setup the encoding.
 
-For language, though Traditional Chinese is my mothertone, I still prefer use
-=en_US= to display time info.
+For language, though Traditional Chinese is my mothertone, I still prefer use =en_US= to display time info.
 
 #+BEGIN_SRC emacs-lisp
   (prefer-coding-system 'utf-8)
   (setq system-time-locale "en_US")
 #+END_SRC
 
-* Buildin Packages
+* Built-in Packages
+
+Some buildin packages need to add extra setups for my emacs setting.
+
+** bookmark
 
 #+BEGIN_SRC emacs-lisp
-   (load (concat user-emacs-directory "configs/core/buildin.el"))
-  ;;(require 'my-core-buildin)
+  (eval-after-load 'bookmark
+    '(progn
+       (setq bookmark-default-file
+             (concat user-cache-directory "bookmarks"))))
+#+END_SRC
+
+
+** idlwave
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'dilwave
+    '(progn
+       (setq idlwave-config-directory
+             (concat user-cache-directory "idlwave"))))
+#+END_SRC
+
+** srecode
+
+#+BEGIN_SRC emacs-lisp
+  ;; change srecode cache file path
+  (eval-after-load 'srecode
+    '(progn
+       (setq srecode-map-save-file
+             (concat user-cache-directory "srecode-map.el"))))
+#+END_SRC
+
+** tramp
+
+#+BEGIN_SRC emacs-lisp
+  ;; Override tramp history file path
+  (eval-after-load 'tramp
+    '(progn
+       (setq tramp-histfile-override
+             (concat user-cache-directory ".tramp_history"))))
+#+END_SRC
+
+** request
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'request
+    '(progn
+       (setq request-storage-directory
+             (concat user-cache-directory "request"))))
+#+END_SRC
+
+** nsm
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'nsm
+    '(progn
+       (setq nsm-settings-file
+             (concat user-cache-directory "network-security.data"))))
+#+END_SRC
+
+** url
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'url
+    '(progn
+       (setq url-configuration-directory
+             (file-name-as-directory
+              (concat user-cache-directory "url")))))
+#+END_SRC
+
+
+* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
+
+* Loading Modules
+
+I split my configs to many org-mode files
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/load-config (pkg)
+    (load (format "%sconfigs/%s" user-emacs-directory pkg)))
+#+END_SRC
+
+I think I'll write some dynamic module extension, which will save to =~/.emacs.d/modules=, use a helper script to help me load them.
+
+#+BEGIN_SRC emacs-lisp
+  ;; load the `load-modules.el' file which help me load external modulept
+  (let ((script (concat user-emacs-directory "modules/load-modules.el")))
+    (when (file-exists-p script)
+      (load script)))
 #+END_SRC
 
 * External Packages                                                :packages:
