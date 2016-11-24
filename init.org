@@ -6,7 +6,6 @@
 #+STARTUP: overview indent align
 #+BABEL: :cache yes
 #+OPTIONS: ^:nil num:nil tags:nil
-#+PROPERTY: header-args  :comments org
 #+SETUPFILE: assets/readtheorg.setup
 
 Actually, I start to rewrite this single org-mode config to multiple org-mode configs, you can find my configs in =config= folder.
@@ -374,12 +373,15 @@ spacemacs is really awesome, but there's something I don't like.
 
 *** switch back to `*scratch*' buffer after loading spacemacs finished
 
+After spacemacs loading finished, switch back to =*scratch*= buffer and make sure it's in =lisp-interaction-mode=.
+
 #+BEGIN_SRC emacs-lisp
-  ;; After spacemacs loading finished, switch back to `*scratch*' buffer
-  ;; and make sure it's in `lisp-interaction-mode'
-  (switch-to-buffer "*scratch*")
+  ; kill *scratch* first since spacemacs switch it to text-mode
+  (kill-buffer "*scratch*")
+  ;; create *scratch* buffer
   (with-current-buffer (get-buffer-create "*scratch*")
     (lisp-interaction-mode))
+  (switch-to-buffer "*scratch*")
 #+END_SRC
 
 *** Don't use ido-mode
@@ -1780,7 +1782,6 @@ GitHub: https://github.com/syohex/emacs-fontawesome
 #+BEGIN_SRC emacs-lisp
   (use-package fontawesome :ensure t)
 #+END_SRC
-
 
 * Theme                                                               :theme:
 
