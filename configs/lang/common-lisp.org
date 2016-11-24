@@ -6,7 +6,8 @@
 #+SETUPFILE: configs.setup
 
 #+BEGIN_SRC emacs-lisp :noweb no-export
-  (use-package lisp-mode                  ; builtin
+  (use-package lisp-mode
+    :ensure nil                           ; built-in
     :mode "\\.lisp\\'"
     :config
     <<common-lisp-config>>)

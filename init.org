@@ -275,8 +275,14 @@ GitHub: https://github.com/jwiegley/use-package
 #+BEGIN_SRC emacs-lisp
   (package-install 'use-package)              ; Installed by packages.el
   (require 'use-package)
+#+END_SRC
 
-  ;; Auto install non-installed packages.
+You can setup =use-package-always-ensure= variable to =t= if you want to make =use-package= auto install packages.
+
+However, since we need to initialize =spacemacs= first, we need to setup this variable after spacemacs init.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref spacemacs-later-init
+  ;; make `use-package' auto install non-installed packages.
   (setq use-package-always-ensure t)
 #+END_SRC
 
@@ -365,6 +371,10 @@ Instead, I move it to =~/.emacs.d/modules/spacemacs= so I can use org-mode with 
 ** Some function should execute after loading spacemacs-init.
 
 spacemacs is really awesome, but there's something I don't like.
+
+#+BEGIN_SRC emacs-lisp :noweb yes
+  <<spacemacs-later-init>>
+#+END_SRC
 
 *** Disable global highlight by default
 
@@ -638,7 +648,6 @@ Some buildin packages need to add extra setups for my emacs setting.
        (setq bookmark-default-file
              (concat user-cache-directory "bookmarks"))))
 #+END_SRC
-
 
 ** idlwave
 
@@ -1095,6 +1104,38 @@ If other window does not exist, split it, else switch to it.
 
 
 
+* Buffer                                                             :buffer:
+** Create *scratch* automatically
+
+Sometimes I'll clean the =*scratch*= buffer by kill it, add following function
+to let emacs re-create it automatically.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Create *scratch* automatically
+  (run-with-idle-timer 1 t
+                       '(lambda ()
+                          (unless (get-buffer "*scratch*")
+                            (with-current-buffer (get-buffer-create "*scratch*")
+                              (lisp-interaction-mode)))))
+#+END_SRC
+
+** Make buffer names unique
+
+The library uniquify overrides Emacs' default mechanism for making buffer names unique (using suffixes like <2>, <3> etc.) with a more sensible behaviour which use parts of the file names to make the buffer names distinguishable.
+
+For instance, buffers visiting =/tmp/Makefile= and =/projects/coldnew/Makefile= would be named =Makefile|tmp= and =Makefile|coldnew=, respectively (instead of =Makefile= and =Makefile<2>=).
+
+#+BEGIN_SRC emacs-lisp
+  (use-package uniquify
+    :ensure nil                           ; built-in
+    :config
+    ;; starting separator for buffer name components
+    (setq uniquify-separator " • ")
+    ;; rerationalize buffer names after a buffer has been killed.
+    (setq uniquify-after-kill-buffer-p t)
+    ;; ignore non file buffers
+    (setq uniquify-ignore-buffers-re "^\\*"))
+#+END_SRC
 
 
 * ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
@@ -1822,8 +1863,7 @@ unload previous theme before loading a new one.
 * Minibuffer                                                :minibuffer:
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
-  (use-package minibuffer                  ; buildin
-    :config
+  (when (require 'minibuffer)                  ; buildin
     <<minibuffer-config>>)
 #+END_SRC
 
@@ -2039,8 +2079,7 @@ GitHub: https://github.com/jscheid/dtrt-indent
 ** En/Decrypt files by EasyPG
 
 #+BEGIN_SRC emacs-lisp
-  (use-package epa-file
-    :config
+  (when (require 'epa-file)
     (epa-file-enable)
     ;; Control whether or not to pop up the key selection dialog.
     (setq epa-file-select-keys 0)
@@ -2406,8 +2445,7 @@ GitHub: https://github.com/bbatsov/projectile
 ** GDB
 
 #+BEGIN_SRC emacs-lisp
-  (use-package gdb
-    :config
+  (when (require 'gdb-mi)
     ;; Use many window in gdb
     (setq gdb-many-windows t)
     ;; Display source file containing the main routine at startup.
@@ -3083,6 +3121,7 @@ GitHub: https://github.com/trotzig/import-js
 
 #+BEGIN_SRC emacs-lisp
   (use-package nxml-mode
+    :ensure nil                  ; emacs built-in
     :mode (("\\.plist\\'" . nxml-mode)
            ("\\.rss\\'"   . nxml-mode)
            ("\\.svg\\'"   . nxml-mode)
@@ -3539,43 +3578,6 @@ GitHub: https://github.com/smihica/emmet-mode
       (define-key emmt-mode-keymap (kbd "<tab>") 'emmt-expand-yas)))
 #+END_SRC
 
-* Buffer                                                             :buffer:
-** Create *scratch* automatically
-
-Sometimes I'll clean the =*scratch*= buffer by kill it, add following function
-to let emacs re-create it automatically.
-
-#+BEGIN_SRC emacs-lisp
-  ;; Create *scratch* automatically
-  (run-with-idle-timer 1 t
-                       '(lambda ()
-                          (unless (get-buffer "*scratch*")
-                            (with-current-buffer (get-buffer-create "*scratch*")
-                              (lisp-interaction-mode)))))
-#+END_SRC
-
-** Make buffer names unique
-
-The library uniquify overrides Emacs' default mechanism for making
-buffer names unique (using suffixes like <2>, <3> etc.) with a more
-sensible behaviour which use parts of the file names to make the
-buffer names distinguishable.
-
-For instance, buffers visiting =/u/mernst/tmp/Makefile= and
-=/usr/projects/zaphod/Makefile= would be named =Makefile|tmp= and
-=Makefile|zaphod=, respectively (instead of =Makefile= and
-=Makefile<2>=).
-
-#+BEGIN_SRC emacs-lisp
-  (use-package uniquify
-    :config
-    ;; starting separator for buffer name components
-    (setq uniquify-separator " • ")
-    ;; rerationalize buffer names after a buffer has been killed.
-    (setq uniquify-after-kill-buffer-p t)
-    ;; ignore non file buffers
-    (setq uniquify-ignore-buffers-re "^\\*"))
-#+END_SRC
 
 * Version Control
 
@@ -3920,6 +3922,7 @@ GitHub: https://github.com/djcb/mu
   <<mu4e-load-path>>
 
   (use-package mu4e
+    :ensure nil                           ; this package can't be installed by elpa
     :config
     <<mu4e-config>>)
 #+END_SRC
@@ -4148,7 +4151,7 @@ I always use =ERC= as my irc client, which is bundle with emacs.
 #+BEGIN_SRC emacs-lisp :noweb no-export
 
   (use-package erc
-    :ensure t
+    :ensure nil                           ; built-in
     :config
     (use-package erc-notify)
     <<erc-config>>)
@@ -4231,6 +4234,7 @@ I always use =ERC= as my irc client, which is bundle with emacs.
 
 #+BEGIN_SRC emacs-lisp
   (use-package erc-spelling
+    :ensure nil                           ; built-in
     :config
     (progn
       (erc-spelling-mode 0)))
@@ -4240,6 +4244,7 @@ I always use =ERC= as my irc client, which is bundle with emacs.
 
 #+BEGIN_SRC emacs-lisp
   (use-package erc-autoaway
+    :ensure nil                           ; built-in
     :config
     (progn
       (setq erc-auto-discard-away t)
