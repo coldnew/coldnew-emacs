@@ -203,7 +203,7 @@ If you don't have any local elisp and all packages is maintain by cask or elpa o
   ;; Add directories to emacs's `load-path' recursively.
   ;; if path does not exist, try to create directory.
   (let* ((my-lisp-dir (list (concat user-emacs-directory "local-lisp/")
-                            (concat user-emacs-directory "themes/")))
+                            (concat user-emacs-directory "styles/")))
          (sys-lisp-dir (cl-ecase system-type ; add some system site-lisp to load-path
                          ((darwin)    '("/usr/local/share/emacs/site-lisp/"))
                          ((gnu/linux) '("/usr/share/emacs/site-lisp/"))
@@ -534,52 +534,6 @@ Also setup some backup settings.
 
 Some emacs feature is not really useful
 
-*** Turn-off menu bar
-
-The menu bar is one of the UI elements which work best with mouses.
-
-#+BEGIN_SRC emacs-lisp
-  (when (featurep 'menu-bar) (menu-bar-mode -1))
-#+END_SRC
-
-*** Turn-off tool bar
-
-I never use the tool bar, it's really no need.
-
-#+BEGIN_SRC emacs-lisp
-  (when (featurep 'tool-bar) (tool-bar-mode -1))
-#+END_SRC
-
-*** Turn-off blinking cursor
-
-I hate the blinking cursor actually, it's really annoying.
-
-#+BEGIN_SRC emacs-lisp
-  (blink-cursor-mode -1)
-#+END_SRC
-
-*** Turn-off scroll bar
-
-Actually when you familier with emacs, you don't need to use scroll-bar anymore.
-
-#+BEGIN_SRC emacs-lisp
-  (when (featurep 'scroll-bar) (scroll-bar-mode -1))
-#+END_SRC
-
-*** Turn-off startup screen
-
-I don't want to enter the startup screen after initialize emacs.
-
-#+BEGIN_SRC emacs-lisp
-  (setq inhibit-startup-screen t)
-#+END_SRC
-
-*** Turn-off cursor blink
-
-#+BEGIN_SRC emacs-lisp
-  (blink-cursor-mode -1)
-#+END_SRC
-
 *** Turn-off Alarm Bell
 
 #+BEGIN_SRC emacs-lisp
@@ -609,7 +563,7 @@ Just let me use =y= or =n= with no =RET= required an I'm quite happy.
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
-** TODO Async rebuild init.el after save
+** ☛ TODO Async rebuild init.el after save
 
 https://www.reddit.com/r/emacs/comments/5ej8by/asynchronous_tangle_and_compile_of_configorg/
 
@@ -715,7 +669,51 @@ Some buildin packages need to add extra setups for my emacs setting.
               (concat user-cache-directory "url")))))
 #+END_SRC
 
-* Extra Packages
+* External Packages
+
+Packages that use as libraries or commands put here.
+
+** discover-my-major
+
+[[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
+current Emacs major mode.
+
+GitHub: https://github.com/steckerhalter/discover-my-major
+
+#+BEGIN_SRC emacs-lisp
+  (use-package discover-my-major :ensure t)
+#+END_SRC
+
+** doxymacs
+
+Doxygen is a system for extracting documentation from source code. It supports a variety of programming languages, human languages and output formats. You can find it at http://www.doxygen.org.
+
+[[http://doxymacs.sourceforge.net/][doxymacs]] is emacs's wrapper for Doxygen.
+
+#+BEGIN_SRC emacs-lisp
+  (when (require 'doxymacs nil 'noerror)
+    (add-hook 'prog-mode-hook '(lambda () (doxymacs-mode))))
+#+END_SRC
+
+*** Install System Packages
+
+To use [[http://doxymacs.sourceforge.net/][doxymacs]] we also need to install it in system manually.
+
+**** Mac OSX
+
+For Mac OSX, just type
+
+#+BEGIN_SRC sh :tangle no :noweb-ref install-in-macosx
+  brew install doxymacs
+#+END_SRC
+
+**** Gentoo Linux
+
+If you use Gentoo Linux, you can use following command to install this package
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-gentoo
+  emerge app-shells/doxymacs
+#+END_SRC
 
 ** editorconfig
 
@@ -732,7 +730,7 @@ GitHub: https://github.com/editorconfig/editorconfig-emacs
     (add-hook 'text-mode-hook (editorconfig-mode 1)))
 #+END_SRC
 
-*** Install System packages
+*** Install System Packages
 
 Download the [[https://github.com/editorconfig/editorconfig-core-c][EditorConfig C Core]] and follow the instructions in the README and INSTALL files to install it.
 
@@ -750,6 +748,179 @@ You also can use OS's package manager to install it
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-gentoo
   emerge app-text/editorconfig-core-c
+#+END_SRC
+
+** exec-path-from-shell
+
+[[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell]] is A GNU Emacs library to ensure environment variables inside Emacs look the same as in the user's shell.
+
+Ever find that a command works in your shell, but not in Emacs?
+
+This happens a lot on OS X, where an Emacs instance started from the GUI inherits a default set of environment variables.
+
+This library works solves this problem by copying important environment variables from the user's shell: it works by asking your shell to print out the variables of interest, then copying them into the Emacs environment.
+
+GitHub: https://github.com/purcell/exec-path-from-shell
+
+#+BEGIN_SRC emacs-lisp
+  (use-package exec-path-from-shell
+    :ensure t
+    :config
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
+#+END_SRC
+
+** expand-region                                                :keybinding:
+
+Expand region increases the selected region by semantic units. Just keep
+pressing the key until it selects what you want.
+
+GitHub: https://github.com/magnars/expand-region.el
+
+#+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :ensure t
+    :bind (("M-v" . er/expand-region)))
+#+END_SRC
+
+** fancy-narrow
+
+Emacs package to immitate [[http://bruce-connor.github.io/emacs-online-documentation/Fun%252Fnarrow-to-region.html][narrow-to-region]] with more eye-candy.
+
+GitHub: https://github.com/Malabarba/fancy-narrow
+
+#+BEGIN_SRC emacs-lisp
+  (use-package fancy-narrow :ensure t)
+#+END_SRC
+
+** google-translate
+
+This package allows to translate the strings using Google Translate service directly from GNU Emacs.
+
+GitHub: https://github.com/atykhonov/google-translate
+
+#+BEGIN_SRC emacs-lisp
+  (use-package google-translate :ensure t)
+#+END_SRC
+
+** hungry-delete
+
+[[https://github.com/nflath/hungry-delete][hungry-delete]] borrows hungry deletion from =cc-mode=, which will causes deletion
+to delete all whitespace in the direction you are deleting.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package hungry-delete
+    :ensure t
+    :config
+    (global-hungry-delete-mode))
+#+END_SRC
+** iedit                                                        :keybinding:
+
+[[https://github.com/victorhge/iedit][iedit]] let you edit multiple regions in the same way simultaneously.
+
+GitHub: https://github.com/victorhge/iedit
+
+#+BEGIN_SRC emacs-lisp
+  (use-package iedit
+    :ensure t
+    :bind (("C-;" . iedit-mode)))
+#+END_SRC
+
+** noflet
+
+=noflet= is dynamic, local, advice for Emacs-Lisp code.
+
+=noflet= also has an Emacs indentation function for =flet= like macros.
+
+It's great for test code when you need to mock another function.
+
+This is useful for definining functions that overide a base definition in some way. You get access to the original (before you re-defined it) function through a different name.
+
+GitHub: https://github.com/nicferrier/emacs-noflet
+
+#+BEGIN_SRC emacs-lisp
+  (use-package noflet :ensure t)
+#+END_SRC
+
+** pangu-spacing
+
+[[https://github.com/coldnew/pangu-spacing][pangu-spcing]] is an minor-mode to auto add =space= between Chinese and English characters. Note that these white-space characters are not really added to the contents, it just like to do so.
+
+GitHub: https://github.com/coldnew/pangu-spacing
+
+#+BEGIN_SRC emacs-lisp
+  (use-package pangu-spacing
+    :ensure t
+    :config
+    ;; start pangu-spacing globally
+    (global-pangu-spacing-mode 1)
+    ;; Always insert `real' space in org-mode.
+    (add-hook 'org-mode-hook
+              '(lambda ()
+                 (set (make-local-variable 'pangu-spacing-real-insert-separtor) t))))
+#+END_SRC
+
+** rainbow-mode
+
+[[https://julien.danjou.info/projects/emacs-packages][rainbow-mode]] s a minor mode for Emacs which displays strings representing colors with the color they represent as background.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-mode :ensure t)
+#+END_SRC
+
+** restclient
+
+This is a tool to manually explore and test HTTP REST webservices. Runs queries from a plain-text query sheet, displays results as a pretty-printed XML, JSON and even images.
+
+GitHub: https://github.com/pashky/restclient.el
+
+#+BEGIN_SRC emacs-lisp
+  (use-package restclient
+    :ensure t)
+#+END_SRC
+
+** undo-tree
+
+Standard Emacs undo is kind of confusing. [[http://www.dr-qubit.org/emacs.php#undo-tree][undo-tree]] replaces this with a simpler tree structure. It also allows us to visualize the tree directly.
+
+GitHub: https://github.com/emacsmirror/undo-tree
+
+#+BEGIN_SRC emacs-lisp
+  (use-package undo-tree
+    :ensure t
+    :config
+    ;; Persistent undo-tree history across emacs sessions
+    (let ((dir
+           (file-name-as-directory (concat user-cache-directory "undo-tree"))))
+      (setq undo-tree-history-directory-alist `(("." . ,dir))))
+    ;; Make undo-tree save history
+    (setq undo-tree-auto-save-history t)
+    ;; global enable undo-tree
+    (global-undo-tree-mode))
+#+END_SRC
+
+** verify-url
+
+[[https://github.com/lujun9972/verify-url][verify-url]] is a little tool that used to find out invalid urls in the buffer or region.
+
+Use =M-x verify-url= to find invalid urls in current buffer.
+
+After executed command, you can use =verify-url/next-invalid-url= to goto next invalid-url or =verify-url/previous-invalid-url= to goto previous one.
+
+GitHub: https://github.com/lujun9972/verify-url
+
+#+BEGIN_SRC emacs-lisp
+  (use-package verify-url :ensure t)
+#+END_SRC
+
+** visual-regexp
+
+visual-regexp for Emacs is like replace-regexp, but with live visual feedback directly in the buffer. Check out [[https://github.com/benma/visual-regexp-steroids.el/][visual-regexp-steroids]] if you want to use modern regular expressions instead of Emacs-style regular expressions.
+
+GitHub: https://github.com/benma/visual-regexp.el
+
+#+BEGIN_SRC emacs-lisp
+  (use-package visual-regexp :ensure t)
 #+END_SRC
 
 * Interactive Commands                                              :command:
@@ -1148,6 +1319,87 @@ If other window does not exist, split it, else switch to it.
 #+END_SRC
 
 
+* Styles                                                              :style:
+
+** General Setups
+
+Some emacs's default UI feature setup.
+
+*** Turn-off menu bar
+
+The menu bar is one of the UI elements which work best with mouses.
+
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'menu-bar) (menu-bar-mode -1))
+#+END_SRC
+
+*** Turn-off tool bar
+
+I never use the tool bar, it's really no need.
+
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'tool-bar) (tool-bar-mode -1))
+#+END_SRC
+
+
+*** Turn-off blinking cursor
+
+I hate the blinking cursor actually, it's really annoying.
+
+#+BEGIN_SRC emacs-lisp
+  (blink-cursor-mode -1)
+#+END_SRC
+
+*** Turn-off scroll bar
+
+Actually when you familier with emacs, you don't need to use scroll-bar anymore.
+
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'scroll-bar) (scroll-bar-mode -1))
+#+END_SRC
+
+*** Turn-off startup screen
+
+I don't want to enter the startup screen after initialize emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-screen t)
+#+END_SRC
+
+** Theme
+
+Before use emacs's =load-theme= function, I advise it to make it fully unload previous theme before loading a new one.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Make `load-theme' fully unload previous theme before loading a new one.
+  (defadvice load-theme
+      (before theme-dont-propagate activate)
+    (mapc #'disable-theme custom-enabled-themes))
+#+END_SRC
+
+I always want to customize everything on my own, so I build my own emacs theme called =night-coldnew= and =day-coldnew=, you can find
+them at [[file:styles/coldnew-theme.el]].
+
+#+BEGIN_SRC emacs-lisp
+  ;; FIXME:
+  (require 'night-coldnew-theme)
+  (load-theme 'night-coldnew t 'noerror)
+#+END_SRC
+
+** mode-line
+
+#+BEGIN_SRC emacs-lisp
+  ;; My own theme depends on following packages
+  (use-package powerline :ensure t)
+  (use-package powerline-evil :ensure t)
+
+  ;; TODO: use my own replace spacemacs one
+  (use-package spaceline
+    :ensure t
+    :config
+    (require 'spaceline-config)
+    (spaceline-spacemacs-theme))
+#+END_SRC
 
 * Buffer                                                             :buffer:
 ** Create *scratch* automatically
@@ -1180,6 +1432,44 @@ For instance, buffers visiting =/tmp/Makefile= and =/projects/coldnew/Makefile= 
     (setq uniquify-after-kill-buffer-p t)
     ;; ignore non file buffers
     (setq uniquify-ignore-buffers-re "^\\*"))
+#+END_SRC
+
+
+* Programming Languages
+
+** Brainfuck
+
+[[https://en.wikipedia.org/wiki/Brainfuck][Brainfuck]] is an [[https://en.wikipedia.org/wiki/Esoteric_programming_language][esoteric programming language]] created in 1993 by Urban Müller, and notable for its extreme minimalism.
+
+The language consists of only eight simple commands and an [[https://en.wikipedia.org/wiki/Instruction_pointer][instruction pointer]]. While it is fully [[https://en.wikipedia.org/wiki/Turing-complete][Turing-complete]], it is not intended for practical use, but to challenge and amuse [[https://en.wikipedia.org/wiki/Programmers][programmers]].
+
+The language's name is a reference to the slang term "brain fuck", which refers to things so complicated or unusual that they exceed the limits of one's understanding.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package brainfuck-mode
+    :ensure t
+    :mode "\\.bf\\'")
+#+END_SRC
+
+
+* ☛ TODO Spelling
+
+flyspell ?
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ispell
+    :ensure t
+    :config
+    (cond
+     ;; aspell
+     ((executable-find "aspell") (setq ispell-program-name "aspell"
+                                       ispell-dictionary "en_US"
+                                       ispell-really-aspell t
+                                       ispell-really-hunspell nil))
+     ;; hunspell
+     ((executable-find "hunspell") (setq ispell-program-name "hunspell"
+                                         ispell-really-aspell nil
+                                         ispell-really-hunspell t))))
 #+END_SRC
 
 
@@ -1266,43 +1556,6 @@ GitHub: https://github.com/bbatsov/crux
   (use-package crux :ensure t)
 #+END_SRC
 
-** discover-my-major
-
-[[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
-current Emacs major mode.
-
-GitHub: https://github.com/steckerhalter/discover-my-major
-
-#+BEGIN_SRC emacs-lisp
-  (use-package discover-my-major :ensure t)
-#+END_SRC
-
-** doxymacs
-
-Doxygen is a system for extracting documentation from source code. It
-supports a variety of programming languages, human languages and
-output formats. You can find it at http://www.doxygen.org.
-
-[[http://doxymacs.sourceforge.net/][doxymacs]] is emacs's wrapper for Doxygen.
-
-#+BEGIN_SRC emacs-lisp
-  (when (require 'doxymacs nil 'noerror)
-    (add-hook 'prog-mode-hook '(lambda () (doxymacs-mode))))
-#+END_SRC
-
-To use [[http://doxymacs.sourceforge.net/][doxymacs]] we also need to install it in system manually.
-
-For Mac OSX, just type
-
-#+BEGIN_SRC sh :tangle no :noweb-ref install-in-macosx
-  brew install doxymacs
-#+END_SRC
-
-If you use Gentoo Linux, you can use following command to install this package
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-gentoo
-  emerge app-shells/doxymacs
-#+END_SRC
 
 ** esup
 
@@ -1314,52 +1567,6 @@ GitHub: https://github.com/jschaf/esup
   (use-package esup :ensure t)
 #+END_SRC
 
-** exec-path-from-shell
-
-[[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell]] is A GNU Emacs library to ensure environment variables
-inside Emacs look the same as in the user's shell.
-
-Ever find that a command works in your shell, but not in Emacs?
-
-This happens a lot on OS X, where an Emacs instance started from the GUI
-inherits a default set of environment variables.
-
-This library works solves this problem by copying important environment
-variables from the user's shell: it works by asking your shell to print out the
-variables of interest, then copying them into the Emacs environment.
-
-GitHub: https://github.com/purcell/exec-path-from-shell
-
-#+BEGIN_SRC emacs-lisp
-  (use-package exec-path-from-shell
-    :ensure t
-    :config
-    (when (memq window-system '(mac ns x))
-      (exec-path-from-shell-initialize)))
-#+END_SRC
-
-** expand-region                                                :keybinding:
-
-Expand region increases the selected region by semantic units. Just keep
-pressing the key until it selects what you want.
-
-GitHub: https://github.com/magnars/expand-region.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package expand-region
-    :ensure t
-    :bind (("M-v" . er/expand-region)))
-#+END_SRC
-
-** fancy-narrow
-
-Emacs package to immitate [[http://bruce-connor.github.io/emacs-online-documentation/Fun%252Fnarrow-to-region.html][narrow-to-region]] with more eye-candy.
-
-GitHub: https://github.com/Malabarba/fancy-narrow
-
-#+BEGIN_SRC emacs-lisp
-  (use-package fancy-narrow :ensure t)
-#+END_SRC
 
 ** focus
 
@@ -1371,15 +1578,6 @@ GitHub: https://github.com/larstvei/Focus
   (use-package focus :ensure t)
 #+END_SRC
 
-** google-translate
-
-This package allows to translate the strings using Google Translate service directly from GNU Emacs.
-
-GitHub: https://github.com/atykhonov/google-translate
-
-#+BEGIN_SRC emacs-lisp
-  (use-package google-translate :ensure t)
-#+END_SRC
 
 ** howdoi
 
@@ -1398,17 +1596,6 @@ GitHub: https://github.com/atykhonov/emacs-howdoi
   (use-package htmlize :ensure t)
 #+END_SRC
 
-** hungry-delete
-
-[[https://github.com/nflath/hungry-delete][hungry-delete]] borrows hungry deletion from =cc-mode=, which will causes deletion
-to delete all whitespace in the direction you are deleting.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package hungry-delete
-    :ensure t
-    :config
-    (global-hungry-delete-mode))
-#+END_SRC
 
 ** hydra                                                        :keybinding:
 
@@ -1502,17 +1689,6 @@ GitHub: https://github.com/abo-abo/hydra
     )
 #+END_SRC
 
-** iedit                                                        :keybinding:
-
-[[https://github.com/victorhge/iedit][iedit]] let you edit multiple regions in the same way simultaneously.
-
-GitHub: https://github.com/victorhge/iedit
-
-#+BEGIN_SRC emacs-lisp
-  (use-package iedit
-    :ensure t
-    :bind (("C-;" . iedit-mode)))
-#+END_SRC
 
 ** know-your-http-well
 
@@ -1584,41 +1760,7 @@ GitHub: https://github.com/alezost/mwim.el
      ("C-e" . mwim-end-of-code-or-line)))
 #+END_SRC
 
-** noflet
 
-=noflet= is dynamic, local, advice for Emacs-Lisp code.
-
-=noflet= also has an Emacs indentation function for =flet= like macros.
-
-It's great for test code when you need to mock another function.
-
-This is useful for definining functions that overide a base definition in some
-way. You get access to the original (before you re-defined it) function through
-a different name.
-
-GitHub: https://github.com/nicferrier/emacs-noflet
-
-#+BEGIN_SRC emacs-lisp
-  (use-package noflet :ensure t)
-#+END_SRC
-
-** pangu-spacing
-
-[[https://github.com/coldnew/pangu-spacing][pangu-spcing]] is an minor-mode to auto add =space= between Chinese and English
-characters. Note that these white-space characters are not really added to the
-contents, it just like to do so.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package pangu-spacing
-    :ensure t
-    :config
-    ;; start pangu-spacing globally
-    (global-pangu-spacing-mode 1)
-    ;; Always insert `real' space in org-mode.
-    (add-hook 'org-mode-hook
-              '(lambda ()
-                 (set (make-local-variable 'pangu-spacing-real-insert-separtor) t))))
-#+END_SRC
 
 ** password-generator
 
@@ -1642,25 +1784,7 @@ GitHub: https://github.com/tomjakubowski/sprunge.el
     :ensure t)
 #+END_SRC
 
-** restclient
 
-This is a tool to manually explore and test HTTP REST webservices. Runs queries from a plain-text query sheet, displays results as a pretty-printed XML, JSON and even images.
-
-GitHub: https://github.com/pashky/restclient.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package restclient
-    :ensure t)
-#+END_SRC
-
-** rainbow-mode
-
-[[https://julien.danjou.info/projects/emacs-packages][rainbow-mode]] s a minor mode for Emacs which displays strings representing colors
-with the color they represent as background.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package rainbow-mode :ensure t)
-#+END_SRC
 
 ** reveal-in-osx-finder
 
@@ -1774,21 +1898,6 @@ GitHub: https://github.com/yuyang0/url-shortener
   (use-package url-shortener :ensure t)
 #+END_SRC
 
-** verify-url
-
-verify-url is a little tool that used to find out invalid urls in the buffer or
-region.
-
-Use =M-x verify-url= to find invalid urls in current buffer.
-
-After executed command, you can use =verify-url/next-invalid-url= to goto next
-invalid-url or =verify-url/previous-invalid-url= to goto previous one.
-
-GitHub: https://github.com/lujun9972/verify-url
-
-#+BEGIN_SRC emacs-lisp
-  (use-package verify-url :ensure t)
-#+END_SRC
 
 ** which-key
 
@@ -1868,41 +1977,6 @@ GitHub: https://github.com/syohex/emacs-fontawesome
 
 #+BEGIN_SRC emacs-lisp
   (use-package fontawesome :ensure t)
-#+END_SRC
-
-* Theme                                                               :theme:
-
-I always want to customize everything on my own, so I build another
-emacs theme called =coldnew-theme-night= and =coldnew-theme-day=, you can find
-them at [[file:theme/coldnew-theme.el]].
-
-Before use emacs's =load-theme= function, I advise it to it fully
-unload previous theme before loading a new one.
-
-#+BEGIN_SRC emacs-lisp
-    ;; Make `load-theme' fully unload previous theme before loading a new one.
-    (defadvice load-theme
-        (before theme-dont-propagate activate)
-      (mapc #'disable-theme custom-enabled-themes))
-
-    ;; My light theme
-    (use-package powerline :ensure t)
-    (use-package powerline-evil :ensure t)
-
-  ;;  (require 'coldnew-theme-day-theme)
-
-    ;; My night them (default)
-  ;;  (require 'coldnew-theme-night-theme)
-
-  (require 'coldnew-theme-night-theme)
-  (load-theme 'coldnew-theme-night t 'noerror)
-
-    ;; TODO:
-    (use-package spaceline
-      :ensure t
-      :config
-      (require 'spaceline-config)
-      (spaceline-spacemacs-theme))
 #+END_SRC
 
 * Minibuffer                                                :minibuffer:
@@ -2241,23 +2315,6 @@ GitHub: https://github.com/dgutov/highlight-escape-sequences
 
   (add-hook 'prog-mode-hook 'font-lock-comment-annotations)
 #+end_src
-
-** Use undo-tree for undo/redo
-
-Standard Emacs undo is kind of confusing. [[http://www.dr-qubit.org/emacs.php#undo-tree][undo-tree]] replaces this with a simpler tree structure. It also allows us to visualize the tree directly.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package undo-tree
-    :ensure t
-    :config
-    ;; Persistent undo-tree history across emacs sessions
-    (let ((dir
-           (file-name-as-directory (concat user-cache-directory "undo-tree"))))
-      (setq undo-tree-history-directory-alist `(("." . ,dir))))
-    (setq undo-tree-auto-save-history t)
-    ;; global enable undo-tree
-    (global-undo-tree-mode))
-#+END_SRC
 
 ** Takes care of trailing whitespaces (removal, highlighting)
 
@@ -2815,12 +2872,6 @@ For c-mode, just do the same but change the relative
   (use-package bitbake
     :ensure t
     :mode ("\\.bb\\'" "\\.bbappend\\'"))
-#+END_SRC
-
-** [[file:configs/lang/brainfuck.org][Brainfuck]]
-
-#+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang/brainfuck"))
 #+END_SRC
 
 ** crontab
@@ -4078,6 +4129,7 @@ After all is done, add following line in =~/.offlineimaprc= and we can get passw
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref mu4e-config
   (use-package mu4e-contrib
+    :ensure nil                           ; part of mu4e
     :config
     (setq mu4e-html2text-command 'mu4e-shr2text)
     ;; try to emulate some of the eww key-bindings
@@ -4514,4 +4566,5 @@ Following link is refrence for my emacs config.
 
 # Local Variables:
 # after-save-hook: my/async-tangle-init
+# eval: visual-line-mode
 # End:

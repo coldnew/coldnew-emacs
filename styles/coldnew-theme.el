@@ -1,11 +1,11 @@
 ;;; coldnew-theme.el --- coldnew's emacs color-theme.
 ;;
-;; Copyright (C) 2011-2015 Yen-Chin, Lee
+;; Copyright (C) 2011-2016 Yen-Chin, Lee
 ;; Author: coldnew <coldnew.tw@gmail.com>
 ;; Kyewords: themes
-;; Version: 0.1
+;; Version: 0.3
 ;; X-Original-Version: 0.1
-;; Package-Requires: ((emacs "24.1"))
+;; Package-Requires: ((emacs "24.3"))
 
 ;; This file is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -32,28 +32,25 @@
 ;; http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 
 ;;; Code:
+(require 'cl-lib)
 
-(require 'noflet)
-
-;; NOTE:
-;; This vairable is filled by other file.
+;; NOTE: This vairable is filled by other file.
 (defvar coldnew-theme-colors
   '( )
-  "This is a table of all the colors used by the coldnew color
-   theme. Each column is a different set, one of which will be
-   chosen based on term capabilities, etc.")
+  "This is a table of all the colors used by the coldnew color theme.
+Each column is a different set, one of which will be chosen based on term capabilities, etc.")
 
 (defun coldnew-theme--build-colors-alist (mode)
-  ;;  (mapcar (lambda (x) (list (symbol-name (car x)) (nth 1 (cdr x))))
-  (noflet ((find-color (color)
-                       ;; 1: window system , 2: terminal
-                       (let* ((index (if window-system 1 2)))
-                         (nth index color))))
+  "Build color list according to mode MODE."
+  (cl-flet ((find-color (color)
+                        ;; 1: window system , 2: terminal
+                        (let* ((index (if window-system 1 2)))
+                          (nth index color))))
     (mapcar (lambda (x) (list (symbol-name (car x)) (find-color x)))
             (cdr (assoc (cadr `,mode) coldnew-theme-colors)))))
 
 (defmacro coldnew-theme--with-colors (mode &rest body)
-  "`let' bind all colors defined in `coldnew-theme-colors' around BODY.
+  "Bind all colors defined in `coldnew-theme-colors' with mode MODE around BODY.
 Also bind `class' to ((class color) (min-colors 89))."
   (declare (indent 0))
   `(let ((class '((class color) (min-colors 89)))
@@ -63,8 +60,9 @@ Also bind `class' to ((class color) (min-colors 89))."
      ,@body))
 
 (defmacro coldnew-theme--face-specs ()
+  "The real theme defined macro."
   (quote
-   `(;; Ensure sufficient contrast on low-color terminals.
+   `( ;; Ensure sufficient contrast on low-color terminals.
      (default ((((class color) (min-colors 4096))
                 (:foreground ,foreground :background ,background))
                (((class color) (min-colors 256))
@@ -74,7 +72,7 @@ Also bind `class' to ((class color) (min-colors 89))."
      ;; Basic
      (bold ((t (:weight bold))))
      (bold-italic ((t (:weight bold :slant italic))))
-     (cursor ((t (:foreground ,base0 :background ,white))))
+     (cursor ((t (:foreground ,base04 :background ,white))))
      (error ((t (:foreground ,red :bold t))))
      (italic ((t (:slant italic))))
      (shadow ((t (:foreground ,comment))))
@@ -127,8 +125,8 @@ Also bind `class' to ((class color) (min-colors 89))."
      (minibuffer-prompt ((t (:foreground ,cyan :weight bold))))
 
      ;; modeline
-     (mode-line ((t (:foreground ,base0 :background ,base02 :weight bold :box nil))))
-     (mode-line-inactive ((t (:foreground ,base01 :background ,base03 :weight bold :box nil))))
+     (mode-line ((t (:foreground ,base04 :background ,base01 :weight bold :box nil))))
+     (mode-line-inactive ((t (:foreground ,base02 :background ,base00 :weight bold :box nil))))
 
      ;; comint
      (comint-highlight-prompt ((t (:foreground ,blue))))
@@ -142,24 +140,24 @@ Also bind `class' to ((class color) (min-colors 89))."
 
      ;; custom
      (custom-button
-      ((t (:foreground ,base1 :background ,base02
+      ((t (:foreground ,base05 :background ,base01
                        :box (:line-width 2 :style released-button)))))
      (custom-button-mouse
-      ((t (:foreground ,base1 :background ,base02 :inherit custom-button))))
+      ((t (:foreground ,base05 :background ,base01 :inherit custom-button))))
      (custom-button-pressed
-      ((t (:foreground ,base1 :background ,base02
+      ((t (:foreground ,base05 :background ,base01
                        :box (:line-width 2 :style pressed-button)
                        :inherit custom-button-mouse))))
-     (custom-changed ((t (:foreground ,blue :background ,base3))))
-     (custom-comment ((t (:foreground ,base1 :background ,base02))))
-     (custom-comment-tag ((t (:foreground ,base1 :background ,base02))))
+     (custom-changed ((t (:foreground ,blue :background ,base07))))
+     (custom-comment ((t (:foreground ,base05 :background ,base01))))
+     (custom-comment-tag ((t (:foreground ,base05 :background ,base01))))
      (custom-documentation ((t (:inherit default))))
-     (custom-group-tag ((t (:foreground ,base1))))
-     (custom-group-tag-1 ((t (:foreground ,base1 :weight bold))))
-     (custom-invalid ((t (:foreground ,red :background ,base3))))
+     (custom-group-tag ((t (:foreground ,base05))))
+     (custom-group-tag-1 ((t (:foreground ,base05 :weight bold))))
+     (custom-invalid ((t (:foreground ,red :background ,base07))))
      (custom-link ((t (:foreground ,magenta))))
      (custom-state ((t (:foreground ,green))))
-     (custom-variable-tag ((t (:foreground ,base1))))
+     (custom-variable-tag ((t (:foreground ,base05))))
 
      ;; mu4e
      (mu4e-highlight-face ((t (:inherit font-lock-builtin-face :bold t))))
@@ -167,15 +165,15 @@ Also bind `class' to ((class color) (min-colors 89))."
      ;; emacs-wiki
      (emacs-wiki-bad-link-face ((t (:foreground ,red))))
      (emacs-wiki-link-face ((t (:foreground ,blue :underline t))))
-     (emacs-wiki-verbatim-face ((t (:foreground ,base00 :underline t))))
+     (emacs-wiki-verbatim-face ((t (:foreground ,base03 :underline t))))
 
      ;; diff-mode
      (diff-added ((t (:foreground ,green :weight bold))))
      (diff-changed ((t (:foreground ,yellow :weight bold))))
      (diff-removed ((t (:foreground ,red :weight bold))))
-     (diff-refine-change ((t (:foreground ,blue :background ,base03 :weight bold))))
-     (diff-file-header ((t (:background ,base03))))
-     (diff-header ((t (:foreground ,base1 :background ,base03))))
+     (diff-refine-change ((t (:foreground ,blue :background ,base00 :weight bold))))
+     (diff-file-header ((t (:background ,base00))))
+     (diff-header ((t (:foreground ,base05 :background ,base00))))
 
      ;; ido
      (ido-only-match ((t (:foreground ,green))))
@@ -185,24 +183,24 @@ Also bind `class' to ((class color) (min-colors 89))."
      ;; helm
      (helm-M-x-key ((t (:foreground ,magenta))))
      (helm-buffer-directory ((t (:foreground, yellow :weight bold))))
-     (helm-buffer-file ((t (:foreground ,base0))))
+     (helm-buffer-file ((t (:foreground ,base04))))
      (helm-buffer-not-saved ((t (:foreground ,red :slant italic ))))
      (helm-buffer-process ((t (:foregorund ,blue))))
      (helm-buffer-saved-out ((t (:foreground ,cyan))))
      (helm-buffer-size ((t (:foreground ,magenta))))
-     (helm-candidate-number ((t (:foreground ,red :background ,base02 :weight bold))))
+     (helm-candidate-number ((t (:foreground ,red :background ,base01 :weight bold))))
      (helm-header-line-left-margin ((t (:foreground ,red))))
      (helm-ff-directory ((t (:foreground ,blue :weight bold))))
      (helm-ff-dotted-directory ((t (:foreground ,red))))
-     (helm-ff-executable ((t (:foreground ,base0 :weight bold))))
-     (helm-ff-file ((t (:foreground ,base0))))
-     (helm-ff-invalid-symlink ((t (:foreground ,red :background ,base02 :underline t))))
+     (helm-ff-executable ((t (:foreground ,base04 :weight bold))))
+     (helm-ff-file ((t (:foreground ,base04))))
+     (helm-ff-invalid-symlink ((t (:foreground ,red :background ,base01 :underline t))))
      (helm-ff-prefix ((t (:foreground ,yellow :weight bold))))
-     (helm-ff-symlink ((t (:foreground ,blue :background ,base02 :weight bold))))
+     (helm-ff-symlink ((t (:foreground ,blue :background ,base01 :weight bold))))
      (helm-match ((t (:foreground ,red :underline t))))
-     (helm-selection ((t (:foreground ,green :background ,base01))))
+     (helm-selection ((t (:foreground ,green :background ,base02))))
      (helm-source-header ((t (:foreground ,cyan :weight bold ))))
-     (helm-visible-mark ((t (:foreground ,blue :background ,base02))))
+     (helm-visible-mark ((t (:foreground ,blue :background ,base01))))
 
      ;; mmm-mode
      (mmm-code-submode-face ((,class (:background ,current-line))))
@@ -218,8 +216,8 @@ Also bind `class' to ((class color) (min-colors 89))."
      (outline-2 ((t (:foreground ,cyan))))
      (outline-3 ((t (:foreground ,yellow))))
      (outline-4 ((t (:foreground ,red))))
-     (outline-5 ((t (:foreground ,base0))))
-     (outline-6 ((t (:foreground ,base01))))
+     (outline-5 ((t (:foreground ,base04))))
+     (outline-6 ((t (:foreground ,base02))))
      (outline-7 ((t (:foreground ,orange))))
      (outline-8 ((t (:foreground ,magenta))))
 
@@ -231,13 +229,13 @@ Also bind `class' to ((class color) (min-colors 89))."
 
      ;; fringe
      ;; (fringe ((t (:background ,current-line))))
-     (fringe ((t (:foreground ,base01 :background ,base02))))
+     (fringe ((t (:foreground ,base02 :background ,base01))))
 
      ;; header
-     (header-line ((t (:foreground ,base0 :background ,base02 :weight bold))))
+     (header-line ((t (:foreground ,base04 :background ,base01 :weight bold))))
 
      ;; linum
-     (linum ((t (:foreground ,base01 :background ,base02))))
+     (linum ((t (:foreground ,base02 :background ,base01))))
 
      ;; org
      (org-level-1 ((t (:inherit outline-1 :bold t))))
@@ -252,46 +250,46 @@ Also bind `class' to ((class color) (min-colors 89))."
      (org-block ((,class (:foreground ,green :background ,far-background))))
      (org-block-background ((,t (:background ,far-background))))
 
-     (org-hide ((t (:foreground ,base03))))
+     (org-hide ((t (:foreground ,base00))))
      (org-link ((t (:inherit link))))
-     ;; (org-todo ((t (:foreground ,base03 :background ,red :weight bold))))
+     ;; (org-todo ((t (:foreground ,base00 :background ,red :weight bold))))
      (org-todo ((t (:foreground ,red :bold t))))
      (org-done ((t (:foreground ,green :weight bold))))
-     (org-todo-kwd-face ((t (:foreground ,red :background ,base03))))
-     (org-done-kwd-face ((t (:foreground ,green :background ,base03))))
-     (org-project-kwd-face ((t (:foreground ,magenta :background ,base03))))
-     (org-waiting-kwd-face ((t (:foreground ,orange :background ,base03))))
-     (org-someday-kwd-face ((t (:foreground ,blue :background ,base03))))
-     (org-started-kwd-face ((t (:foreground ,yellow :background ,base03))))
-     (org-cancelled-kwd-face ((t (:foreground ,green :background ,base03))))
-     (org-delegated-kwd-face ((t (:foreground ,cyan  :background ,base03))))
+     (org-todo-kwd-face ((t (:foreground ,red :background ,base00))))
+     (org-done-kwd-face ((t (:foreground ,green :background ,base00))))
+     (org-project-kwd-face ((t (:foreground ,magenta :background ,base00))))
+     (org-waiting-kwd-face ((t (:foreground ,orange :background ,base00))))
+     (org-someday-kwd-face ((t (:foreground ,blue :background ,base00))))
+     (org-started-kwd-face ((t (:foreground ,yellow :background ,base00))))
+     (org-cancelled-kwd-face ((t (:foreground ,green :background ,base00))))
+     (org-delegated-kwd-face ((t (:foreground ,cyan  :background ,base00))))
 
      ;; table
-     (table-cell ((t (:foreground ,base0 :background ,base03))))
+     (table-cell ((t (:foreground ,base04 :background ,base00))))
 
      ;; speedbar
-     (speedbar-button-face ((t (:foreground ,base1))))
+     (speedbar-button-face ((t (:foreground ,base05))))
      (speedbar-directory-face ((t (:foreground ,orange))))
      (speedbar-file-face ((t (:foreground ,green))))
-     (speedbar-highlight-face ((t (:background ,base02))))
+     (speedbar-highlight-face ((t (:background ,base01))))
      (speedbar-selected-face ((t (:foreground ,yellow :underline t))))
      (speedbar-separator-face ((t (:inherit default))))
      (speedbar-tag-face ((t (:foreground ,blue))))
 
      ;; show-paren
-     (show-paren-match ((t (:foreground ,cyan :background ,base02 :weight bold :underline t))))
+     (show-paren-match ((t (:foreground ,cyan :background ,base01 :weight bold :underline t))))
      (show-paren-mismatch ((t (:inherit error))))
 
      ;; bm visual bookmarks
-     (bm-fringe-face ((t (:foreground ,base03 :background ,orange))))
-     (bm-fringe-persistent-face ((t (:foreground ,base03 :background ,blue))))
+     (bm-fringe-face ((t (:foreground ,base00 :background ,orange))))
+     (bm-fringe-persistent-face ((t (:foreground ,base00 :background ,blue))))
 
      ;; Flymake
      (flymake-errline ((t (:underline (:color ,red :style wave) :inherit default)))) ; ErrorMsg
      (flymake-warnline ((t (:underline (:color ,orange :style wave) :inherit default)))) ; WarningMsg
 
      ;; column-marker
-     (column-marker-1 ((t (:background ,base01))))
+     (column-marker-1 ((t (:background ,base02))))
      (column-marker-2 ((t (:background ,cyan))))
      (column-marker-3 ((t (:background ,magenta))))
 
@@ -302,14 +300,14 @@ Also bind `class' to ((class color) (min-colors 89))."
      (jabber-chat-prompt-foreign ((t (:foreground ,red :weight bold))))
      (jabber-chat-prompt-local ((t (:foreground ,blue :weight bold))))
      (jabber-chat-prompt-system ((t (:foreground ,green :weight bold))))
-     (jabber-chat-text-foreign ((t (:foreground ,base1))))
-     (jabber-chat-text-local ((t (:foreground ,base0))))
+     (jabber-chat-text-foreign ((t (:foreground ,base05))))
+     (jabber-chat-text-local ((t (:foreground ,base04))))
      (jabber-chat-rare-time-face ((t (:foreground ,green :underline t))))
      (jabber-roster-user-away ((t (:foreground ,green :slant italic))))
      (jabber-roster-user-chatty ((t (:foreground ,orange :weight bold))))
      (jabber-roster-user-dnd ((t (:foreground ,red :slant italic))))
      (jabber-roster-user-error ((t (:foregournd ,red :weight light :slant italic))))
-     (jabber-roster-user-offline ((t (:foreground ,base01))))
+     (jabber-roster-user-offline ((t (:foreground ,base02))))
      (jabber-roster-user-online ((t (:foreground ,blue :weight bold ))))
      (jabber-roster-user-xa ((t (:foreground ,magenta :slant italic))))
 
@@ -327,37 +325,37 @@ Also bind `class' to ((class color) (min-colors 89))."
      (gnus-cite-6 ((t (:foreground ,magenta))))
      (gnus-cite-7 ((t (:foreground ,green))))
      (gnus-cite-8 ((t (:foreground ,magenta))))
-     (gnus-cite-9 ((t (:foreground ,base00))))
-     (gnus-cite-10 ((t (:foreground ,base01))))
-     (gnus-cite-11 ((t (:foreground ,base02))))
-     (gnus-group-mail-1 ((t (:foreground ,base3 :weight bold))))
-     (gnus-group-mail-1-empty ((t (:foreground ,base3))))
-     (gnus-group-mail-2 ((t (:foreground ,base2 :weight bold))))
-     (gnus-group-mail-2-empty ((t (:foreground ,base2))))
+     (gnus-cite-9 ((t (:foreground ,base03))))
+     (gnus-cite-10 ((t (:foreground ,base02))))
+     (gnus-cite-11 ((t (:foreground ,base01))))
+     (gnus-group-mail-1 ((t (:foreground ,base07 :weight bold))))
+     (gnus-group-mail-1-empty ((t (:foreground ,base07))))
+     (gnus-group-mail-2 ((t (:foreground ,base06 :weight bold))))
+     (gnus-group-mail-2-empty ((t (:foreground ,base06))))
      (gnus-group-mail-3 ((t (:foreground ,magenta :weight bold))))
      (gnus-group-mail-3-empty ((t (:foreground ,magenta))))
-     (gnus-group-mail-low ((t (:foreground ,base00 :weight bold))))
-     (gnus-group-mail-low-empty ((t (:foreground ,base00))))
-     (gnus-group-news-1 ((t (:foreground ,base1 :weight bold))))
-     (gnus-group-news-1-empty ((t (:foreground ,base1))))
+     (gnus-group-mail-low ((t (:foreground ,base03 :weight bold))))
+     (gnus-group-mail-low-empty ((t (:foreground ,base03))))
+     (gnus-group-news-1 ((t (:foreground ,base05 :weight bold))))
+     (gnus-group-news-1-empty ((t (:foreground ,base05))))
      (gnus-group-news-2 ((t (:foreground ,blue :weight bold))))
      (gnus-group-news-2-empty ((t (:foreground ,blue))))
      (gnus-group-news-low ((t (:foreground ,magenta :weight bold))))
      (gnus-group-news-low-empty ((t (:foreground ,magenta))))
      (gnus-emphasis-highlight-words  ((t (:foreground ,yellow))))
-     (gnus-header-content ((t (:foreground ,base01)))) ; hdrdefault
-     (gnus-header-from ((t (:foreground ,base00)))) ; header ^From
-     (gnus-header-name ((t (:foregrund ,base01)))) ; hdrdefault
-     (gnus-header-newsgroups ((t (:foreground ,base02))))
+     (gnus-header-content ((t (:foreground ,base02)))) ; hdrdefault
+     (gnus-header-from ((t (:foreground ,base03))))    ; header ^From
+     (gnus-header-name ((t (:foregrund ,base02))))     ; hdrdefault
+     (gnus-header-newsgroups ((t (:foreground ,base01))))
      (gnus-header-subject ((t (:foreground ,blue))))
-     (gnus-server-agent ((t (:foreground ,base3 :weight bold))))
-     (gnus-server-closed ((t (:foreground ,base1 :slant italic))))
-     (gnus-server-denied ((t (:foreground ,base2 :weight bold))))
+     (gnus-server-agent ((t (:foreground ,base07 :weight bold))))
+     (gnus-server-closed ((t (:foreground ,base05 :slant italic))))
+     (gnus-server-denied ((t (:foreground ,base06 :weight bold))))
 
      (gnus-server-offline ((t (:foreground ,green :weight bold))))
      (gnus-server-opened ((t (:foreground ,cyan :weight bold))))
-     (gnus-signature ((t (:foreground ,base01))))
-     (gnus-splash ((t (:foreground ,base2))))
+     (gnus-signature ((t (:foreground ,base02))))
+     (gnus-splash ((t (:foreground ,base06))))
      (gnus-summary-cancelled  ((t (:foreground ,red))))
      (gnus-summary-high-ancient ((t (:weight bold :inherit gnus-summary-normal-ancient))))
      (gnus-summary-high-read ((t (:weight bold :inherit gnus-summary-normal-read))))
@@ -370,11 +368,11 @@ Also bind `class' to ((class color) (min-colors 89))."
      (gnus-summary-low-ticked ((t (:slant italic :inherit gnus-summary-normal-ancient))))
      (gnus-summary-low-undownloaded ((t (:slant italic :inherit gnus-summary-normal-ancient))))
      (gnus-summary-normal-ancient  ((t (:foreground ,blue))))
-     (gnus-summary-normal-read  ((t (:foreground ,base01))))
+     (gnus-summary-normal-read  ((t (:foreground ,base02))))
      (gnus-summary-normal-ticked  ((t (:foreground ,red))))
-     (gnus-summary-normal-undownloaded ((t (:foreground ,base2))))
+     (gnus-summary-normal-undownloaded ((t (:foreground ,base06))))
      (gnus-summary-normal-unread ((t (:foreground ,blue))))
-     (gnus-summary-selected ((t (:foreground ,base03 :background ,yellow))))
+     (gnus-summary-selected ((t (:foreground ,base00 :background ,yellow))))
 
      ;; magit
      (magit-bisect-bad ((t (:foreground ,red))))
@@ -383,14 +381,14 @@ Also bind `class' to ((class color) (min-colors 89))."
      (magit-branch-current ((t (:foreground ,green))))
      (magit-branch-local ((t (:foreground ,cyan))))
      (magit-branch-remote ((t (:foreground ,yellow))))
-     (magit-cherry-equivalent ((t (:foreground ,base0))))
+     (magit-cherry-equivalent ((t (:foreground ,base04))))
      (magit-cherry-unmatched ((t (:foreground ,orange))))
-     (magit-dimmed ((t (:foregrund ,base01 :slant italic))))
-     (magit-hash ((t (:foreground ,base2))))
+     (magit-dimmed ((t (:foregrund ,base02 :slant italic))))
+     (magit-hash ((t (:foreground ,base06))))
      (magit-header-line ((t (:foreground ,blue :weight bold))))
      (magit-log-author ((t (:foregrund ,cyan))))
      (magit-log-date ((t (:foreground ,blue))))
-     (magit-log-graph ((t (:foreground ,base01))))
+     (magit-log-graph ((t (:foreground ,base02))))
      (magit-process-ng ((t (:foreground ,red :weight bold))))
      (magit-process-ok ((t (:foreground ,green :weight bold))))
      (magit-refname ((t (:foreground ,magenta))))
@@ -403,38 +401,38 @@ Also bind `class' to ((class color) (min-colors 89))."
 
      ;; message
      (message-mml ((t (:foreground ,blue))))
-     (message-cited-text ((t (:foreground ,base2))))
-     (message-separator ((t (:foreground ,base3))))
+     (message-cited-text ((t (:foreground ,base06))))
+     (message-separator ((t (:foreground ,base07))))
      (message-header-xheader ((t (:foreground ,magenta))))
      (message-header-name ((t (:foreground ,cyan))))
      (message-header-other ((t (:foreground ,red))))
      (message-header-newsgroups ((t (:foreground ,yellow :weight bold))))
-     (message-header-subject ((t (:foreground ,base00))))
+     (message-header-subject ((t (:foreground ,base03))))
      (message-header-cc ((t (:foreground ,green :weight bold))))
-     (message-header-to ((t (:foreground ,base1 :weight bold))))
+     (message-header-to ((t (:foreground ,base05 :weight bold))))
 
      ;; parenface
-     (paren-face ((t (:foreground ,base01))))
+     (paren-face ((t (:foreground ,base02))))
 
      ;; slime
      (slime-error-face ((t (:foreground ,red :inverse-video t)))) ; ErrorMsg
      (slime-note-face ((t (:foreground ,yellow))))
      (slime-repl-inputted-output-face ((t (:foreground ,red))))
-     (slime-repl-output-mouseover-face ((t (:box (:color ,base3)))))
+     (slime-repl-output-mouseover-face ((t (:box (:color ,base07)))))
      (slime-style-warning-face ((t (:foreground ,orange :weight bold))))
      (slime-warning-face ((t (:foreground ,red :weight bold)))) ; WarningMsg
 
      ;; whitespace
      (whitespace-empty ((t (:foreground ,red))))
      (whitespace-hspace ((t (:foreground ,orange))))
-     (whitespace-indentation ((t (:foreground ,base02))))
-     (whitespace-space ((t (:foreground ,base02))))
+     (whitespace-indentation ((t (:foreground ,base01))))
+     (whitespace-space ((t (:foreground ,base01))))
      (whitespace-space-after-tab ((t (:foreground ,cyan))))
      (whitespace-space-before-tab ((t (:foreground ,red :weight bold))))
-     (whitespace-tab ((t (:foreground ,base02))))
-     (whitespace-trailing ((t (:foreground ,red :background ,base02 :weight bold))))
+     (whitespace-tab ((t (:foreground ,base01))))
+     (whitespace-trailing ((t (:foreground ,red :background ,base01 :weight bold))))
      (whitespace-highlight-face ((t (:foreground ,@red :background ,blue))))
-     (whitespace-line ((t (:foreground ,magenta :background ,base03))))
+     (whitespace-line ((t (:foreground ,magenta :background ,base00))))
 
      ;; rcirc
      (rcirc-my-nick ((t (:foreground ,blue))))
@@ -442,16 +440,16 @@ Also bind `class' to ((class color) (min-colors 89))."
      (rcirc-other-nick ((t (:foreground ,green))))
      (rcirc-prompt ((t (:foreground ,yellow))))
      (rcirc-bright-nick ((t (:foreground ,magenta))))
-     (rcirc-server ((t (:foreground ,base1))))
-     (rcirc-timestamp ((t (:foreground ,base01))))
+     (rcirc-server ((t (:foreground ,base05))))
+     (rcirc-timestamp ((t (:foreground ,base02))))
 
      ;; erc
-     ;;(erc-input-face ((t (:foreground ,base01))))
+     ;;(erc-input-face ((t (:foreground ,base02))))
      (erc-keyword-face ((t (:foreground ,yellow :weight bold))))
      (erc-my-nick-face ((t (:foreground ,blue))))
      (erc-nick-defaunoctilux-face ((t (:foreground ,cyan))))
      (erc-notice-face ((t (:foreground ,blue))))
-     (erc-timestamp-face ((t (:foreground ,base01))))
+     (erc-timestamp-face ((t (:foreground ,base02))))
 
      ;; evil
      (evil-ex-lazy-highlight ((t (:inherit lazy-highlight))))
@@ -468,17 +466,17 @@ Also bind `class' to ((class color) (min-colors 89))."
      (flyspell-duplicate ((t (:foreground ,yellow))))
 
      ;; company-mode
-     (company-tooltip ((t (:foreground ,base0 :background ,base02))))
-     (company-tooltip-selection ((t (:foreground ,base0 :background ,base01))))
-     (company-tooltip-mouse ((t (:background ,base02))))
-     (company-tooltip-common ((t (:foreground ,magenta :background ,base02))))
-     (company-tooltip-common-selection ((t (:foreground ,magenta :background ,base01))))
-     (company-tooltip-annotation ((t (:foreground ,base0 :background ,base02))))
-     (company-scrollbar-fg ((t (:background ,base01))))
-     (company-scrollbar-bg ((t (:background ,base3))))
-     (company-preview ((t (:foreground ,base0 :background ,base01))))
-     (company-preview-common ((t (:foreground ,base0 :background ,base01))))
-     (company-preview-search ((t (:foreground ,magenta :background ,base01))))
+     (company-tooltip ((t (:foreground ,base04 :background ,base01))))
+     (company-tooltip-selection ((t (:foreground ,base04 :background ,base02))))
+     (company-tooltip-mouse ((t (:background ,base01))))
+     (company-tooltip-common ((t (:foreground ,magenta :background ,base01))))
+     (company-tooltip-common-selection ((t (:foreground ,magenta :background ,base02))))
+     (company-tooltip-annotation ((t (:foreground ,base04 :background ,base01))))
+     (company-scrollbar-fg ((t (:background ,base02))))
+     (company-scrollbar-bg ((t (:background ,base07))))
+     (company-preview ((t (:foreground ,base04 :background ,base02))))
+     (company-preview-common ((t (:foreground ,base04 :background ,base02))))
+     (company-preview-search ((t (:foreground ,magenta :background ,base02))))
      (company-echo ((t nil)))
      (company-echo-common ((t (:foreground ,magenta))))
 
@@ -493,23 +491,23 @@ Also bind `class' to ((class color) (min-colors 89))."
      (term-color-white ((t (:foreground ,white))))
 
 
-     ;;;; Following need to re-check
-     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Following need to re-check
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
      (escape-glyph-face ((,class (:foreground ,red))))
 
-     (isearch ((t (:foreground ,orange :backbround ,base03 :weight normal :slant normal  :underline nil :inverse-video t)))) ; IncSearch
-     (isearch-fail ((t (:foreground ,orange :background ,base03 :weight normal :slant normal  :underline nil :inverse-video t)))) ; IncSearch
-     (lazy-highlight ((t (:foreground ,yellow :background ,base03 :weight normal :slant normal :underline nil :inverse-video t)))) ; Search
+     (isearch ((t (:foreground ,orange :backbround ,base00 :weight normal :slant normal  :underline nil :inverse-video t)))) ; IncSearch
+     (isearch-fail ((t (:foreground ,orange :background ,base00 :weight normal :slant normal  :underline nil :inverse-video t)))) ; IncSearch
+     (lazy-highlight ((t (:foreground ,yellow :background ,base00 :weight normal :slant normal :underline nil :inverse-video t)))) ; Search
 
 
-     (menu ((t (:foreground ,base0 :background ,base02))))
+     (menu ((t (:foreground ,base04 :background ,base01))))
 
-;;     (region ((t (:foreground ,base01 :background ,base03 :weight bold :slant normal :underline nil  :inverse-video t)))) ; Visual
-     (secondary-selection ((t (:background ,base02))))
-;;     (shadow ((t (:foreground ,base01))))
+     ;;     (region ((t (:foreground ,base02 :background ,base00 :weight bold :slant normal :underline nil  :inverse-video t)))) ; Visual
+     (secondary-selection ((t (:background ,base01))))
+     ;;     (shadow ((t (:foreground ,base02))))
      (trailing-whitespace ((t (:foreground ,red :weight normal :slant normal  :underline nil :inverse-video t))))
-     (vertical-border ((t (:foreground ,base0))))
+     (vertical-border ((t (:foreground ,base04))))
 
      ;; (outline-4 ((,class (:slant normal :foreground ,comment))))
 
@@ -929,48 +927,14 @@ Also bind `class' to ((class color) (min-colors 89))."
 
      )))
 
-(defun coldnew-theme--theme-name (mode)
-  (intern (format "coldnew-theme-%s" (symbol-name mode))))
-
-(defmacro coldnew-theme--define-theme (mode)
-  "Define a theme for the coldnew variant `MODE'."
-  (let ((name (coldnew-theme--theme-name mode))
-        (doc (format "coldnew's personal color theme (%s version)" mode)))
-    `(progn
-       (deftheme ,name ,doc)
-       (put ',name 'theme-immediate t)
-       (message (format "%s : %s" (symbol-name ',name) ,doc))
-       (coldnew-theme--with-colors
-         ',mode
-         (apply 'custom-theme-set-faces ',name
-                (coldnew-theme--face-specs))
-         (custom-theme-set-variables
-          ',name
-          `(ansi-color-names-vector (vector ,foreground ,red ,green ,yellow ,blue ,magenta ,cyan ,background))
-          '(ansi-color-faces-vector [default bold shadow italic underline bold bold-italic bold])))
-       (provide-theme ',name))))
-
-(defun coldnew-theme--load-theme (mode)
-  (if (fboundp 'load-theme)
-      (let ((name (coldnew-theme--theme-name mode)))
-        (if (> emacs-major-version 23)
-            (load-theme name t)
-          (load-theme name)))
-    ;; not support for older emace.
-    (error "emacs should support load-theme to make coldnew-theme work.")))
-
-;; ;;;; Mode-line
-
-
 ;;;###autoload
 (when (boundp 'custom-theme-load-path)
   (add-to-list 'custom-theme-load-path
                (file-name-as-directory (file-name-directory (or load-file-name (buffer-file-name))))))
 
 (provide 'coldnew-theme)
+;;; coldnew-theme.el ends here
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not cl-functions)
 ;; End:
-
-;;; coldnew-theme.el ends here

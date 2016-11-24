@@ -1,12 +1,12 @@
-;;; coldnew-theme-night-theme.el --- coldnew's emacs color-theme night version.
+;;; night-coldnew-theme.el --- coldnew's emacs color-theme night version.
 
-;; Copyright (C) 2015 Yen-Chin, Lee.
+;; Copyright (C) 2016 Yen-Chin, Lee.
 
 ;; Author: coldnew <coldnew.tw@gmail.com>
 ;; Kyewords: themes
-;; Version: 0.1
-;; X-Original-Version: 0.1
-;; Package-Requires: ((emacs "24.1"))
+;; Version: 0.3
+;; X-Original-Version: 0.3
+;; Package-Requires: ((emacs "24.3"))
 
 ;; This file is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -26,9 +26,7 @@
 ;;; Code:
 (require 'coldnew-theme)
 
-(deftheme coldnew-theme-night
-  "coldnew's night theme")
-
+;; Add color definition
 (add-to-list
  'coldnew-theme-colors
  '(night
@@ -54,14 +52,14 @@
       (string            "#aadddd" "#aadddd")
 
       ;; extra color
-      (base03         "#202020"  "#202020")
-      (base02         "#292929"  "#292929")
-      (base01         "#5f5f5f"  "#5f5f5f")
-      (base00         "#999999"  "#999999")
-      (base0          "#cccccc"  "#cccccc")
-      (base1          "#aaaaaa"  "#aaaaaa")
-      (base2          "#e9e2cb"  "#e9e2cb")
-      (base3          "#fcf4dc"  "#fcf4dc")
+      (base00         "#202020"  "#202020")
+      (base01         "#292929"  "#292929")
+      (base02         "#5f5f5f"  "#5f5f5f")
+      (base03         "#999999"  "#999999")
+      (base04         "#cccccc"  "#cccccc")
+      (base05         "#aaaaaa"  "#aaaaaa")
+      (base06         "#e9e2cb"  "#e9e2cb")
+      (base07         "#fcf4dc"  "#fcf4dc")
 
       ;; terminal color
       (red            "#ff3333" "#ff3333")
@@ -87,19 +85,20 @@
       (rainbow-9      "#827717" "#827717")
       )))
 
+
+;; Create color theme
+(deftheme night-coldnew "coldnew's night theme")
+
 (coldnew-theme--with-colors
   'night
-  (apply 'custom-theme-set-faces 'coldnew-theme-night
+  (apply 'custom-theme-set-faces 'night-coldnew
          (coldnew-theme--face-specs))
   (custom-theme-set-variables
-   'coldnew-theme-night
+   'night-coldnew
    `(ansi-color-names-vector (vector ,foreground ,red ,green ,yellow ,blue ,magenta ,cyan ,background))
    '(ansi-color-faces-vector [default bold shadow italic underline bold bold-italic bold])))
 
-;;;###autoload
-(defun coldnew-theme-night ()
-  (interactive)
-  (coldnew-theme--load-theme 'night))
+(provide-theme 'night-coldnew)
 
-(provide 'coldnew-theme-night-theme)
-;;; coldnew-theme-night-theme.el ends here.
+(provide 'night-coldnew-theme)
+;;; night-coldnew-theme.el ends here
