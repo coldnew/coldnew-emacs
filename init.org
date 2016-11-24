@@ -128,6 +128,14 @@ things looking nice I put it at the beginning of the file.
   ;; -*- lexical-binding: t -*-
 #+END_SRC
 
+** Use Common Lisp Extension
+
+Some of my function may need the Common Lisp Extension, let's import libraries first.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'cl-lib)                       ; built-in
+#+END_SRC
+
 ** Prevent load outdated .elc files
 
 Since emacs 24.4, new option =load-prefer-newer= has been introduce, which make
@@ -194,18 +202,18 @@ If you don't have any local elisp and all packages is maintain by cask or elpa o
 
 #+BEGIN_SRC emacs-lisp
   ;; Add directories to emacs's `load-path' recursively.
-  ;; if path does not exist, create directory.
-  (let* ((lisp-dir (append '("local-lisp/" "themes/")
-                           (cl-ecase system-type   ; add some system site-lisp to load-path
-                             ((darwin) '("/usr/local/share/emacs/site-lisp/"))
-                             ((gnu/linux) '("/usr/share/emacs/site-lisp/"))
-                             ;; FIXME: not supported platform
-                             (t nil)))))
+  ;; if path does not exist, try to create directory.
+  (let* ((my-lisp-dir (list (concat user-emacs-directory "local-lisp/")
+                            (concat user-emacs-directory "themes/")))
+         (sys-lisp-dir (cl-ecase system-type ; add some system site-lisp to load-path
+                         ((darwin)    '("/usr/local/share/emacs/site-lisp/"))
+                         ((gnu/linux) '("/usr/share/emacs/site-lisp/"))
+                         (t nil))) ; FIXME: Add more platform support
+         (lisp-dir (append my-lisp-dir sys-lisp-dir)))
     (dolist (lisp-path lisp-dir)
       (when (not (file-exists-p lisp-path))
-        (make-directory (concat user-emacs-directory lisp-path) t))
-      (let* ((load-dir (concat user-emacs-directory lisp-path))
-             (default-directory load-dir))
+        (make-directory lisp-path t))
+      (let* ((default-directory lisp-path))
         (setq load-path
               (append
                (let ((load-path (copy-sequence load-path)))
@@ -294,6 +302,103 @@ GitHub: https://github.com/Malabarba/paradox
   (package-install 'async)
 #+END_SRC
 
+* Spacemacs
+
+[[https://github.com/syl20bnr/spacemacs][Spacemacs]] is an emacs starterkit focus on [[https://gitorious.org/evil/pages/Home][Evil]], which emulate vim keymap on Emacs.
+
+I make my emacs on top of spacemacs since I also use vim keymap.
+
+In my config file, the original =~/.spacemacs= file has moved to =~/.emacs.d/spacemacs.d/init.el= , I also advice spacemacs funtion to
+prevent orphan packages deleted by spacemacs.
+
+After all spacemacs init done, switch back to =*scratch*= buffer.
+
+** Load basic spacemacs configuration file
+
+Latest spacemacs can setup =SPACEMACSDIR= to load customize spacemacs init.el
+file.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'f)                            ; part of my emacs's deps
+  (setenv "SPACEMACSDIR" (f-join user-emacs-directory "spacemacs.d"))
+#+END_SRC
+
+** Overwrite spacemacs function to let it not remove my packages
+
+No package should deleted by spacemacs.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Make spacemacs not remove my packages.
+  (defadvice configuration-layer/delete-orphan-packages (around null-func activate)
+    "Overwrite the spacemacs's `configuration-layer/delete-orphan-packages'
+    to make it not remove any orphan packages.")
+#+END_SRC
+
+** Spacemacs no need to check newer version
+
+Since my spacemacs is installed as submodule, it's no need to check for newer version, I'll handle this myself.
+
+#+BEGIN_SRC emacs-lisp
+  (defadvice spacemacs/check-for-new-version (around null-func activate)
+    "Overwrite the spacemacs's `spacemacs/check-for-new-version' to
+    makt it useless since I use git submodule to bundle spacemacs with my emacs.")
+#+END_SRC
+** Load spacemacs
+
+The original spacemacs is suggest to clone it to =~/.emacs.d=, I really don't like this.
+Instead, I move it to =~/.emacs.d/modules/spacemacs= so I can use org-mode with literature programming.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Make a fake entry point for spacemacs, also modify the
+  ;; `user-emacs-directory' temporary to mislead spacemacs real emacs
+  ;; directory.
+  (require 'f)
+  (let* ((spacemacs-dir
+          (directory-file-name (f-join user-emacs-directory "modules" "spacemacs")))
+         (spacemacs-init
+          (concat (file-name-as-directory spacemacs-dir) "init.el"))
+         (user-emacs-directory (file-name-directory spacemacs-init)))
+    ;; Initial spacemacs, our emacs run on top of it
+    (load spacemacs-init))
+#+END_SRC
+
+** Some function should execute after loading spacemacs-init.
+
+spacemacs is really awesome, but there's something I don't like.
+
+*** Disable global highlight by default
+
+#+BEGIN_SRC emacs-lisp
+  (global-hl-line-mode -1)
+#+END_SRC
+
+*** switch back to `*scratch*' buffer after loading spacemacs finished
+
+#+BEGIN_SRC emacs-lisp
+  ;; After spacemacs loading finished, switch back to `*scratch*' buffer
+  ;; and make sure it's in `lisp-interaction-mode'
+  (switch-to-buffer "*scratch*")
+  (with-current-buffer (get-buffer-create "*scratch*")
+    (lisp-interaction-mode))
+#+END_SRC
+
+*** Don't use ido-mode
+
+I don't like the =ido-mode=.
+
+#+BEGIN_SRC emacs-lisp
+  (ido-mode -1)
+#+END_SRC
+
+*** Move helm input in minibuffer
+
+ I *really* hate spacemacs default echo the helm input in header line, it's
+ really annoying.
+
+ #+BEGIN_SRC emacs-lisp
+   (setq helm-echo-input-in-header-line nil)
+   (remove-hook 'helm-minibuffer-set-up-hook 'helm-hide-minibuffer-maybe)
+ #+END_SRC
 
 
 * ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
@@ -316,11 +421,6 @@ I think I'll write some dynamic module extension, which will save to =~/.emacs.d
       (load script)))
 #+END_SRC
 
-* Spacemacs
-
-#+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/core/spacemacs.el"))
-#+END_SRC
 
 * Basic setup
 
