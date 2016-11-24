@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -253,3 +254,17 @@ you should place you code here."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (evil-evilified-state async dash s f zzz-to-char yaml-mode xkcd ws-butler window-numbering whitespace-cleanup-mode which-key web-mode vi-tilde-fringe verify-url use-package url-shortener travis toml-mode tldr systemd sx swift-mode string-inflection ssh-config-mode srefactor sprunge spray spacemacs-theme spaceline smartparens sicp scss-mode sbt-mode sane-term reveal-in-osx-finder restclient restart-emacs realgud ranger rainbow-mode rainbow-delimiters racket-mode quelpa qml-mode powerline-evil po-mode php-mode password-generator paradox pangu-spacing page-break-lines ox-textile ox-rst org-redmine openwith nvm noflet newlisp-mode mwim mustache-mode mustache multi-eshell manage-minor-mode magit macrostep lua-mode llvm-mode litable lispy linum-off link-hint less-css-mode kurecolor know-your-http-well jsx-mode json-mode js2-refactor jdee indent-guide import-js ido-vertical-mode hungry-delete htmlize howdoi hl-todo highlight-numbers highlight-escape-sequences help-fns+ helm-swoop helm-projectile helm-gtags helm-flx helm-descbinds helm-dash helm-cscope helm-c-yasnippet helm-bm haskell-mode graphviz-dot-mode google-translate god-mode gnuplot glsl-mode gitignore-mode gitconfig-mode git-gutter-fringe fontawesome focus flymake-shell flymake-json flycheck-ycmd firefox-controller fill-column-indicator fancy-narrow eyebrowse expand-region exec-path-from-shell evil-visualstar evil-tabs evil-surround evil-org evil-escape ethan-wspace esup eshell-autojump erc-hl-nicks elogcat elmacro elisp-slime-nav el-spice editorconfig dummy-h-mode dts-mode dtrt-indent dockerfile-mode discover-my-major dired-ranger dired-open deft darkroom css-eldoc crux crontab-mode company-ycmd company-statistics company-irony company-go company-flx company-c-headers cmake-mode clojure-cheatsheet clojars clj-refactor cl-lib-highlight cff cbm calfw c-eldoc buffer-move brainfuck-mode bpr bookmark+ bitbake bison-mode bind-map bbdb auto-compile ascii-art-to-unicode ascii arduino-mode android-mode alchemist ag))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

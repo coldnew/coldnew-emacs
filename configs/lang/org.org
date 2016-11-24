@@ -33,6 +33,7 @@
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
   ;; Always enable auto indent mode
   (use-package org-indent
+    :ensure nil
     :config
     (setq org-indent-mode t))
 #+END_SRC
@@ -163,7 +164,7 @@ An abbreviated link looks like
     (defun my/deft-office ()
       "Use deft to quickly see my office notes."
       (interactive)
-      (let ((deft-directory "~/Org/office"))
+      (let ((deft-directory "~/Org/Weintek"))
         (deft))))
 #+END_SRC
 
@@ -201,6 +202,7 @@ see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
   (use-package org-crypt
+    :ensure nil
     :config
     ;; Disable `auto-save-mode' for org-mode buffer prior to decrypting an entry.
     (setq org-crypt-disable-auto-save t)
@@ -240,6 +242,7 @@ GitHub: https://github.com/gongo/org-redmine
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
   (use-package ox-latex
+    :ensure nil
     :config
     (setq org-format-latex-options
           '(:forground "black" :background "white"

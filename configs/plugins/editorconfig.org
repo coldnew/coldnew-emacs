@@ -48,8 +48,9 @@ I write a ebuild for editorconfig [[https://github.com/coldnew/coldnew-overlay/t
     (add-hook 'prog-mode-hook (editorconfig-mode 1))
     (add-hook 'text-mode-hook (editorconfig-mode 1)))
 #+END_SRC
+
 * End of configuration
 
 #+BEGIN_SRC emacs-lisp
-  (provide 'configs/plugins/editorconfig)
+  (provide 'configs-plugins-editorconfig)
 #+END_SRC
