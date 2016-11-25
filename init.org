@@ -1464,6 +1464,36 @@ The language's name is a reference to the slang term "brain fuck", which refers 
     :mode "\\.bf\\'")
 #+END_SRC
 
+** Markdown
+
+[[https://en.wikipedia.org/wiki/Markdown][Markdown]]  is a lightweight markup language with plain text formatting syntax designed so that it can be converted to HTML and many other formats using a tool by the same name. Markdown is often used to format readme files, for writing messages in online discussion forums, and to create rich text using a plain text editor.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :ensure t
+    :mode "\\.\\(md\\|markdown\\)\\'")
+#+END_SRC
+
+** TOML
+
+[[https://github.com/toml-lang/toml][TOML]] aims to be a minimal configuration file format that's easy to read due to obvious semantics. TOML is designed to map unambiguously to a hash table. TOML should be easy to parse into data structures in a wide variety of languages.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package toml-mode
+    :ensure t
+    :mode "\\.toml$")
+#+END_SRC
+
+** YAML
+
+[[https://en.wikipedia.org/wiki/YAML][YAML]] is a human-readable data serialization language. It is commonly used for configuration files, but could be used in many applications where data is being stored (e.g. debugging output) or transmitted (e.g. document headers). YAML targets many of the same communications applications as XML, but has taken a more minimal approach which intentionally breaks compatibility with SGML.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yaml-mode
+    :ensure t
+    :mode "\\.yml$")
+#+END_SRC
+
 
 * ☛ TODO Spelling
 
@@ -3078,13 +3108,6 @@ GitHub: https://github.com/trotzig/import-js
     :mode "\\.lua$")
 #+END_SRC
 
-** markdown
-
-#+BEGIN_SRC emacs-lisp
-  (use-package markdown-mode :ensure t
-    :mode "\\.\\(md\\|markdown\\)\\'")
-#+END_SRC
-
 ** po
 
 #+BEGIN_SRC emacs-lisp
@@ -3219,13 +3242,6 @@ GitHub: https://github.com/trotzig/import-js
   (use-package systemd :ensure t)
 #+END_SRC
 
-** toml
-
-#+BEGIN_SRC emacs-lisp
-  (use-package toml-mode :ensure t
-    :mode "\\.toml$")
-#+END_SRC
-
 ** nxml
 
 #+BEGIN_SRC emacs-lisp
@@ -3250,11 +3266,6 @@ GitHub: https://github.com/trotzig/import-js
      auto-mode-alist))
 #+END_SRC
 
-** yaml
-
-#+BEGIN_SRC emacs-lisp
-  (use-package yaml-mode :ensure t)
-#+END_SRC
 
 * Qt (C++) Development
 
