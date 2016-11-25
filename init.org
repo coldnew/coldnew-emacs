@@ -1378,12 +1378,24 @@ Before use emacs's =load-theme= function, I advise it to make it fully unload pr
 #+END_SRC
 
 I always want to customize everything on my own, so I build my own emacs theme called =night-coldnew= and =day-coldnew=, you can find
-them at [[file:styles/coldnew-theme.el]].
+them at
+
+- [[file:styles/coldnew-theme.el]]
+
+  Basic utils and macros to define coldnew-theme.
+
+- [[file:styles/day-coldnew-theme.el]]
+
+  My day theme.
+
+- [[file:styles/night-coldnew-theme.el]]
+
+  My night theme.
 
 #+BEGIN_SRC emacs-lisp
-  ;; FIXME:
+  (require 'day-coldnew-theme)
   (require 'night-coldnew-theme)
-  (load-theme 'night-coldnew t 'noerror)
+  (load-theme 'night-coldnew t 'noerror)  ; default use `night-coldnew-theme'
 #+END_SRC
 
 ** mode-line
