@@ -923,6 +923,27 @@ GitHub: https://github.com/benma/visual-regexp.el
   (use-package visual-regexp :ensure t)
 #+END_SRC
 
+** webpaste
+
+webpaste.el allows to paste whole buffers or parts of buffers to pastebin-like services. It supports more than one service and will failover if one service fails. More services can easily be added over time and prefered services can easily be configured.
+
+Supported platform:
+
+  - [X] ix.io
+  - [X] dpaste.com
+  - [X] sprunge.us
+  - [X] dpaste.de
+  - [ ] paste.pound-python.org
+  - [ ] paste.debian.net
+  - [ ] bpaste.net
+
+GitHub: https://github.com/etu/webpaste.el
+
+#+BEGIN_SRC emacs-lisp
+  (use-package webpaste
+    :ensure t)
+#+END_SRC
+
 * Interactive Commands                                              :command:
 
 In emacs, we can use =M-x= to execute interactive commands, I implement some of them to make my emacs more easy to use.
