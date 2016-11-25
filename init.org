@@ -1450,6 +1450,18 @@ For instance, buffers visiting =/tmp/Makefile= and =/projects/coldnew/Makefile= 
 
 * Programming Languages
 
+** Bison
+
+[[https://www.gnu.org/software/bison/][Bison]] s a general-purpose parser generator that converts an annotated context-free grammar into a deterministic LR or generalized LR (GLR) parser employing LALR(1) parser tables. As an experimental feature, Bison can also generate IELR(1) or canonical LR(1) parser tables. Once you are proficient with Bison, you can use it to develop a wide range of language parsers, from those used in simple desk calculators to complex programming languages.
+
+Bison is upward compatible with Yacc: all properly-written Yacc grammars ought to work with Bison with no change. Anyone familiar with Yacc should be able to use Bison with little trouble. You need to be fluent in C or C++ programming in order to use Bison. Java is also supported as an experimental feature.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package bison-mode
+    :ensure t
+    :mode ("\\.y\\'" "\\.l\\'" "\\.jison\\'"))
+#+END_SRC
+
 ** Brainfuck
 
 [[https://en.wikipedia.org/wiki/Brainfuck][Brainfuck]] is an [[https://en.wikipedia.org/wiki/Esoteric_programming_language][esoteric programming language]] created in 1993 by Urban Müller, and notable for its extreme minimalism.
@@ -1494,6 +1506,44 @@ The language's name is a reference to the slang term "brain fuck", which refers 
     :mode "\\.yml$")
 #+END_SRC
 
+
+* Configration Files
+
+Since emacs not built-in all configration files syntax highlight support, we need to install manually.
+
+** Crontab
+
+#+BEGIN_SRC emacs-lisp
+  (use-package crontab-mode
+    :ensure t
+    :mode "\\.?cron\\(tab\\)?\\'")
+#+END_SRC
+
+** Docker
+
+#+BEGIN_SRC emacs-lisp
+  (use-package dockerfile-mode
+    :ensure t
+    :mode "Dockerfile\\'")
+#+END_SRC
+
+** SSH
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ssh-config-mode
+    :ensure t
+    :mode ((".ssh/config\\'"       . ssh-config-mode)
+           ("sshd?_config\\'"      . ssh-config-mode)
+           ("known_hosts\\'"       . ssh-known-hosts-mode)
+           ("authorized_keys\\'"   . ssh-authorized-keys-mode)))
+#+END_SRC
+
+** Systemd
+
+#+BEGIN_SRC emacs-lisp
+  (use-package systemd
+    :ensure t)
+#+END_SRC
 
 * ☛ TODO Spelling
 
@@ -2910,36 +2960,12 @@ For c-mode, just do the same but change the relative
     :config (add-hook 'sh-set-shell-hook 'flymake-shell-load))
 #+END_SRC
 
-** bison
-
-#+BEGIN_SRC emacs-lisp
-  (use-package bison-mode
-    :ensure t
-    :mode ("\\.y\\'" "\\.l\\'" "\\.jison\\'"))
-#+END_SRC
-
 ** bitbake
 
 #+BEGIN_SRC emacs-lisp
   (use-package bitbake
     :ensure t
     :mode ("\\.bb\\'" "\\.bbappend\\'"))
-#+END_SRC
-
-** crontab
-
-#+BEGIN_SRC emacs-lisp
-  (use-package crontab-mode
-    :ensure t
-    :mode "\\.?cron\\(tab\\)?\\'")
-#+END_SRC
-
-** docker
-
-#+BEGIN_SRC emacs-lisp
-  (use-package dockerfile-mode
-    :ensure t
-    :mode "Dockerfile\\'")
 #+END_SRC
 
 ** dts
@@ -3233,22 +3259,6 @@ GitHub: https://github.com/trotzig/import-js
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref haskell-config
   (bind-keys :map haskell-mode-map
              ("C-c '" . my/narrow-or-widen-dwim))
-#+END_SRC
-
-** ssh config
-
-#+BEGIN_SRC emacs-lisp
-  (use-package ssh-config-mode :ensure t
-    :mode ((".ssh/config\\'"       . ssh-config-mode)
-           ("sshd?_config\\'"      . ssh-config-mode)
-           ("known_hosts\\'"       . ssh-known-hosts-mode)
-           ("authorized_keys2?\\'" . ssh-authorized-keys-mode)))
-#+END_SRC
-
-** systemd
-
-#+BEGIN_SRC emacs-lisp
-  (use-package systemd :ensure t)
 #+END_SRC
 
 ** nxml
