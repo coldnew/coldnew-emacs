@@ -1,5 +1,4 @@
 EMACS ?= emacs
-CASK ?= cask
 
 all: init.el compile
 
@@ -9,14 +8,9 @@ test: clean
 bootstrap:
 	${MAKE} clean
 	${MAKE} init.el
-	${CASK} install
-
-Cask:
-	${RM} Cask
-	${MAKE} init.el
 
 clean:
-	$(RM) init.el Cask
+	$(RM) init.el
 	$(RM) *.elc
 	$(RM) */*.elc
 
@@ -28,7 +22,7 @@ compile: init.el
 	${EMACS} -Q --script "scripts/makefile-script.el" -f byte-compile-configs
 
 doc: init.el
-	${CASK} exec ${EMACS} -Q -l init.el \
-		--script "assets/export-script.el" -f generate-doc-files
+	${EMACS} -Q -l init.el \
+			--script "assets/export-script.el" -f generate-doc-files
 
 .PHONY: all bootstrap init.el compile doc
