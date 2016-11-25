@@ -87,7 +87,7 @@
 
 
 ;; Create color theme
-(deftheme night-coldnew "coldnew's day theme")
+(deftheme day-coldnew "coldnew's day theme")
 
 (coldnew-theme--with-colors
   'day
