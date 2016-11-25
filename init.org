@@ -4592,6 +4592,8 @@ Following link is refrence for my emacs config.
 
 ~[19]~ https://github.com/jonnay/emagicians-starter-kit
 
+* Local Variables                                                  :noexport:
+
 # Local Variables:
 # after-save-hook: my/async-tangle-init
 # eval: visual-line-mode
