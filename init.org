@@ -1321,6 +1321,8 @@ If other window does not exist, split it, else switch to it.
 
 * Styles                                                              :style:
 
+My own emacs, my own style :)
+
 ** General Setups
 
 Some emacs's default UI feature setup.
@@ -1340,7 +1342,6 @@ I never use the tool bar, it's really no need.
 #+BEGIN_SRC emacs-lisp
   (when (featurep 'tool-bar) (tool-bar-mode -1))
 #+END_SRC
-
 
 *** Turn-off blinking cursor
 
@@ -1378,7 +1379,7 @@ Before use emacs's =load-theme= function, I advise it to make it fully unload pr
 #+END_SRC
 
 I always want to customize everything on my own, so I build my own emacs theme called =night-coldnew= and =day-coldnew=, you can find
-them at
+them at styles dir.
 
 - [[file:styles/coldnew-theme.el]]
 
