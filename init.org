@@ -1516,6 +1516,15 @@ flyspell ?
 #+END_SRC
 
 
+* Window Management                                                  :window:
+
+** Maximized window after emacs start
+
+#+BEGIN_SRC emacs-lisp
+  (modify-all-frames-parameters '((fullscreen . maximized)))
+#+END_SRC
+
+
 * ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 
 * Loading Modules
@@ -3941,11 +3950,6 @@ GitHub: https://github.com/coldnew/eshell-autojump
 
 * Window Management                                                  :window:
 
-** Maximized window after emacs start
-
-#+BEGIN_SRC emacs-lisp
-  (modify-all-frames-parameters '((fullscreen . maximized)))
-#+END_SRC
 
 ** winner-mode                                                      :winner:
 
