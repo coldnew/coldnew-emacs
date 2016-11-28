@@ -1598,6 +1598,26 @@ flyspell ?
 #+END_SRC
 
 
+* File Management                                              :dired:
+
+** Open file with system's default browser
+
+The dired's =dired-open-file= will not use system's default tool to open file, thus I rebind it with =xdg-open= or =open= command.
+
+#+BEGIN_SRC emacs-lisp
+  (defun dired-open-file ()
+    "Open files using Mac OS X open command or Linux xdg-open command"
+    (interactive)
+    (let ((file-name (dired-get-file-for-visit)))
+      (if (file-exists-p file-name)
+          ;; FIXME: windows support ?
+          (cond ((eq system-type 'darwin)
+                 (call-process "open" nil 0 nil file-name))
+                ((eq system-type 'gnu/linux)
+                 (call-process "xdg-open" nil 0 nil file-name))))))
+#+END_SRC
+
+
 * Window Management                                                  :window:
 
 ** Maximized window after emacs start
