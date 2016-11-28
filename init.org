@@ -1480,6 +1480,54 @@ For instance, buffers visiting =/tmp/Makefile= and =/projects/coldnew/Makefile= 
 #+END_SRC
 
 
+* Editor                                                             :editor:
+
+** Keeping files in sync
+
+By default, Emacs will not update the contents of open buffers when a file changes on disk. This is inconvenient when switching branches in Git - as you’d risk editing stale buffers.
+
+This problem can be solved by:
+
+#+BEGIN_SRC emacs-lisp
+  (global-auto-revert-mode 1)
+  (setq global-auto-revert-non-file-buffers t)
+  (setq auto-revert-verbose nil)
+  (setq revert-without-query '(".*")) ;; disable revert query
+#+END_SRC
+
+** Add support for editorconfig                               :editorconfig:
+
+[[http://editorconfig.org/][EditorConfig]] helps developers define and maintain consistent coding styles between different editors and IDEs. The EditorConfig project consists of a file format for defining coding styles and a collection of text editor plugins that enable editors to read the file format and adhere to defined styles. EditorConfig files are easily readable and they work nicely with version control systems.
+
+see: http://editorconfig.org/
+
+#+BEGIN_SRC emacs-lisp
+  (use-package editorconfig
+    :ensure t
+    :if (executable-find "editorconfig")
+    :mode ("\\.editorconfig\\'" . conf-unix-mode))
+#+END_SRC
+
+*** Install System Packages
+
+To use [[https://editorconfig.org][editorconfig]] we also need to install it in system manually.
+
+**** Mac OSX
+
+For Mac OSX, just type
+
+#+BEGIN_SRC sh :tangle no :noweb-ref install-in-macosx
+  brew install editorconfig
+#+END_SRC
+
+**** Gentoo Linux
+
+If you use Gentoo Linux, you can use following command to install this package
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-gentoo
+  emerge app-text/editorconfig-core-c
+#+END_SRC
+
 * Programming Languages
 
 ** Bison
@@ -2286,20 +2334,6 @@ I use =linum-off= to disable some mode.
                           woman-mode w3m-mode calendar-mode org-mode)))
 #+END_SRC
 
-** Keeping files in sync
-
-By default, Emacs will not update the contents of open buffers when a file
-changes on disk. This is inconvenient when switching branches in Git - as you’d
-risk editing stale buffers.
-
-This problem can be solved by:
-
-#+BEGIN_SRC emacs-lisp
-  (global-auto-revert-mode 1)
-  (setq global-auto-revert-non-file-buffers t)
-  (setq auto-revert-verbose nil)
-  (setq revert-without-query '(".*")) ;; disable revert query
-#+END_SRC
 
 ** Colorfy delimters
 
@@ -2315,21 +2349,6 @@ depth.
     :ensure t
     :config
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
-#+END_SRC
-
-** Add support for editorconfig                               :editorconfig:
-
-[[http://editorconfig.org/][EditorConfig]] helps developers define and maintain consistent coding styles between different editors and IDEs. The EditorConfig project
-consists of a file format for defining coding styles and a collection of text editor plugins that enable editors to read the file format and
-adhere to defined styles. EditorConfig files are easily readable and they work nicely with version control systems.
-
-see: http://editorconfig.org/
-
-#+BEGIN_SRC emacs-lisp
-  (use-package editorconfig
-    :ensure t
-    :if (executable-find "editorconfig")
-    :mode ("\\.editorconfig\\'" . conf-unix-mode))
 #+END_SRC
 
 ** Adapt to foreign indentation offsets
