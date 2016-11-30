@@ -1668,6 +1668,66 @@ flyspell ?
 #+END_SRC
 
 
+* Version Control
+
+** Git
+
+Magit is an interface to the version control system [[http://git-scm.com/][Git]], implemented as an [[http://www.gnu.org/software/emacs][Emacs]] package. Magit aspires to be a complete Git porcelain. While we cannot (yet)
+claim that Magit wraps and improves upon each and every Git command, it is complete enough to allow even experienced Git users to perform almost all of
+their daily version control tasks directly from within Emacs. While many fine Git clients exist, only Magit and Git itself deserve to be called porcelains.
+
+GitHub: https://github.com/magit/magit
+
+#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
+  (use-package magit
+    :ensure t
+    :config
+    <<magit-config>>)
+#+END_SRC
+
+*** Setup default commit arguments
+
+I always add =sign-off= to the commit and make magit verbose.
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref magit-config
+  (setq magit-commit-arguments '("--verbose" "--signoff"))
+#+END_SRC
+
+*** Add support for git configuration files
+
+#+BEGIN_SRC emacs-lisp
+  (use-package gitconfig-mode
+    :ensure t
+    :mode (("/\\.?git/?config\\'" . gitconfig-mode)
+           ("/\\.gitmodules\\'" . gitconfig-mode)
+           ("/_gitconfig\\'" . gitconfig-mode))
+    :config
+    (add-hook 'gitconfig-mode-hook 'flyspell-mode))
+#+END_SRC
+
+*** Add support for gitignore files
+
+#+BEGIN_SRC emacs-lisp
+  (use-package gitignore-mode
+    :ensure t
+    :mode (("/\\.gitignore\\'" . gitignore-mode)
+           ("/\\.git/info/exclude\\'" . gitignore-mode)
+           ("/git/ignore\\'" . gitignore-mode)))
+#+END_SRC
+
+*** Add GitGutter on fringe
+
+GitHub: https://github.com/syohex/emacs-git-gutter-fringe
+
+#+BEGIN_SRC emacs-lisp
+  (use-package git-gutter-fringe
+    :ensure t
+    :if window-system                     ; git-gutter-fringe only work on GUI
+    :config
+    ;; enable globally
+    (git-gutter-mode))
+#+END_SRC
+
 * File Management                                              :dired:
 
 ** Open file with system's default browser
@@ -3813,67 +3873,6 @@ GitHub: https://github.com/smihica/emmet-mode
       (define-key emmt-mode-keymap (kbd "<tab>") 'emmt-expand-yas)))
 #+END_SRC
 
-
-* Version Control
-
-** Git
-
-Magit is an interface to the version control system [[http://git-scm.com/][Git]], implemented as an [[http://www.gnu.org/software/emacs][Emacs]]
-package. Magit aspires to be a complete Git porcelain. While we cannot (yet)
-claim that Magit wraps and improves upon each and every Git command, it is
-complete enough to allow even experienced Git users to perform almost all of
-their daily version control tasks directly from within Emacs. While many fine
-Git clients exist, only Magit and Git itself deserve to be called porcelains.
-
-GitHub: https://github.com/magit/magit
-
-#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
-  (use-package magit
-    :ensure t
-    :config
-    <<magit-config>>)
-#+END_SRC
-
-*** Setup default commit arguments
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref magit-config
-  (setq magit-commit-arguments '("--verbose" "--signoff"))
-#+END_SRC
-
-*** Add support for git configuration files
-
-#+BEGIN_SRC emacs-lisp
-  (use-package gitconfig-mode
-    :ensure t
-    :mode (("/\\.?git/?config\\'" . gitconfig-mode)
-           ("/\\.gitmodules\\'" . gitconfig-mode)
-           ("/_gitconfig\\'" . gitconfig-mode))
-    :config
-    (add-hook 'gitconfig-mode-hook 'flyspell-mode))
-#+END_SRC
-
-*** Add support for gitignore files
-
-#+BEGIN_SRC emacs-lisp
-  (use-package gitignore-mode
-    :ensure t
-    :mode (("/\\.gitignore\\'" . gitignore-mode)
-           ("/\\.git/info/exclude\\'" . gitignore-mode)
-           ("/git/ignore\\'" . gitignore-mode)))
-#+END_SRC
-
-*** Add GitGutter on fringe
-
-GitHub: https://github.com/syohex/emacs-git-gutter-fringe
-
-#+BEGIN_SRC emacs-lisp
-  (use-package git-gutter-fringe
-    :ensure t
-    :if window-system                     ; git-gutter-fringe only work on GUI
-    :config
-    ;; enable globally
-    (git-gutter-mode))
-#+END_SRC
 
 * Terminal Emulator                                                    :term:
 
