@@ -1480,6 +1480,28 @@ For instance, buffers visiting =/tmp/Makefile= and =/projects/coldnew/Makefile= 
 #+END_SRC
 
 
+* Bookmarks
+
+** Set up default registers
+
+In emacs, there's a =jump-to-register (C-x r j)= command which can quickly switch to the file you setup.
+
+For more info, you can refer to: [[https://www.emacswiki.org/emacs/Registers][EmacsWiki: Registers]]
+
+#+BEGIN_SRC emacs-lisp
+  (dolist
+      (r `(
+           ;; emacs's config.org
+           (?e (file . "~/.emacs.d/init.org"))
+           ;; Offilce docs
+           (?w (file . "~/Org/Weintek/Weintek.org"))
+           ;; My personal note
+           (?n (file . "~/Org/Note.org"))
+           ;; blogging ideas
+           (?b (file . "~/Org/blog.org"))))
+    (set-register (car r) (cadr r)))
+#+END_SRC
+
 * Editor                                                             :editor:
 
 ** Keeping files in sync
