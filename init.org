@@ -1732,7 +1732,7 @@ GitHub: https://github.com/syohex/emacs-git-gutter-fringe
 
 ** Open file with system's default browser
 
-The dired's =dired-open-file= will not use system's default tool to open file, thus I rebind it with =xdg-open= or =open= command.
+The dired's =dired-open-file= will not use system's default tool to open file, thus I build a new one which use =xdg-open= and =open= command for none directory files.
 
 #+BEGIN_SRC emacs-lisp
   (defun my/dired-find-file ()
