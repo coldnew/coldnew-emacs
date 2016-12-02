@@ -1735,7 +1735,7 @@ GitHub: https://github.com/syohex/emacs-git-gutter-fringe
 The dired's =dired-open-file= will not use system's default tool to open file, thus I rebind it with =xdg-open= or =open= command.
 
 #+BEGIN_SRC emacs-lisp
-  (defun dired-find-file ()
+  (defun my/dired-find-file ()
     "Open files using Mac OS X open command or Linux xdg-open command"
     (interactive)
     (let ((file-name (dired-get-file-for-visit)))
@@ -1746,10 +1746,16 @@ The dired's =dired-open-file= will not use system's default tool to open file, t
                 ((eq system-type 'gnu/linux)
                  (call-process "xdg-open" nil 0 nil file-name)))
           ;; for directory, use dired's default method
-          (let ((find-file-run-dired t))
-            (find-file (dired-get-file-for-visit))))))
+          (dired-find-file))))
 #+END_SRC
 
+** Setup Keybindings                                           :keybinding:
+
+#+BEGIN_SRC emacs-lisp
+  (bind-keys :map dired-mode-map
+             ("r"   . widred-change-to-wdired-mode)
+             ("RET" . my/dired-find-file))
+#+END_SRC
 
 * Window Management                                                  :window:
 
