@@ -1582,6 +1582,8 @@ The language's name is a reference to the slang term "brain fuck", which refers 
 
 [[https://en.wikipedia.org/wiki/Markdown][Markdown]]  is a lightweight markup language with plain text formatting syntax designed so that it can be converted to HTML and many other formats using a tool by the same name. Markdown is often used to format readme files, for writing messages in online discussion forums, and to create rich text using a plain text editor.
 
+Here I use [[http://jblevins.org/projects/markdown-mode/][markdown-mode]] to help me integrate markdown with emacs, the README.md is bind to =gfm-mode= for github's markdown flavor.
+
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
     :ensure t
