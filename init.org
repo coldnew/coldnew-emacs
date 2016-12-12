@@ -1584,19 +1584,21 @@ The language's name is a reference to the slang term "brain fuck", which refers 
 
 Here I use [[http://jblevins.org/projects/markdown-mode/][markdown-mode]] to help me integrate markdown with emacs, the README.md is bind to =gfm-mode= for github's markdown flavor.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package markdown-mode
     :ensure t
     :commands (markdown-mode gfm-mode)
     :mode (("README\\.md\\'" . gfm-mode)
            ("\\.md\\'" . markdown-mode)
            ("\\.markdown\\'" . markdown-mode))
-    :init (setq markdown-command "multimarkdown"))
+    :init (setq markdown-command "multimarkdown")
+    :config
+    <<markdown-config>>)
 #+END_SRC
 
 *** Setup Markdown keybinding                                  :keybinding:
 
-#+BEGIN_SRC emacs-lisp
+ #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref markdown-config
   (bind-keys :map markdown-mode-map
              ("C-c i" . markdown-insert-link))
 
