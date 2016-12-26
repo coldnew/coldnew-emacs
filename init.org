@@ -5016,6 +5016,8 @@ Following link is refrence for my emacs config.
 
 ~[19]~ https://github.com/jonnay/emagicians-starter-kit
 
+~[20]~ https://github.com/jonnay/emagicians-starter-kit/blob/master/Eshell-Magick.org
+
 * Local Variables                                                  :noexport:
 
 # Local Variables:
