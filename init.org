@@ -1479,6 +1479,173 @@ For instance, buffers visiting =/tmp/Makefile= and =/projects/coldnew/Makefile= 
     (setq uniquify-ignore-buffers-re "^\\*"))
 #+END_SRC
 
+* Helm                                                                 :helm:
+
+#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
+  (use-package helm
+    :ensure t
+    :config
+    <<helm-config>>)
+#+END_SRC
+
+** Install System packages
+
+Since [[https://github.com/emacs-helm/helm][helm]] integrate some external tool like [[https://www.gnu.org/software/global/][gtags]], [[http://cscope.sourceforge.net/][cscope]] ...etc. We need to install these tools to our system.
+
+*** Mac OSX
+
+It's recommand to use [[http://brew.sh/][homebrew]] to install [[https://github.com/ggreer/the_silver_searcher][the_silver_searcher]] under Mac OSX.
+
+#+BEGIN_SRC sh :tangle no :noweb-ref install-in-macosx
+  brew install global
+  brew install cscope
+#+END_SRC
+
+*** Gentoo Linux
+
+If you use Gentoo Linux, you can use portage to install it.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-gentoo
+  emerge dev-util/cscope
+  emerge dev-util/global
+#+END_SRC
+
+**
+
+** Basic setup
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+  ;; load default helm setup
+  (require 'helm-config)
+  ;; enable helm globally
+  (helm-mode 1)
+#+END_SRC
+** Use fuzzy match in helm
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+  ;; Use fuzzy match in helm
+  (setq helm-M-x-fuzzy-match t)
+  (setq helm-buffers-fuzzy-matching t)
+  (setq helm-recentf-fuzzy-match t)
+#+END_SRC
+
+
+** Make helm can select anything even not match
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+  ;; make helm can select anything even not match
+  (setq helm-move-to-line-cycle-in-source nil)
+  (setq helm-ff-search-library-in-sexp t)
+  (setq helm-ff-file-name-history-use-recentf t)
+#+END_SRC
+
+** helm-bm
+
+GitHub: https://github.com/yasuyk/helm-bm
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+  (use-package helm-bm :ensure t)
+#+END_SRC
+
+** helm-cscope
+
+=helm-cscope.el= is a helm interface for xcscope.el. You can search cscope database and narrow selection using helm interface.
+
+Helm-cscope shares most functions with xcscope.el. It just provide =M-x helm-cscope-find-*= commands as helm version alternatives for =M-x cscope-find-*=
+
+GitHub: https://github.com/alpha22jp/helm-cscope.el
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+  (use-package helm-cscope
+    :ensure t
+    :config
+    (add-hook 'c-mode-common-hook 'helm-cscope-mode))
+#+END_SRC
+
+** helm-dash
+
+This package uses [[http://www.kapeli.com/dash][Dash]] docsets inside emacs to browse documentation. Here's an article explaining the basic usage of it.
+
+It doesn't require Dash app.
+
+GitHub: https://github.com/areina/helm-dash
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+  (use-package helm-dash :ensure t)
+#+END_SRC
+
+** helm-gtags
+
+=helm-gtags.el= is GNU GLOBAL helm interface.
+
+GitHub: https://github.com/syohex/emacs-helm-gtags
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+  (use-package helm-gtags
+    :ensure t
+    :config
+    (setq helm-gtags-ignore-case t)
+    (setq helm-gtags-auto-update t)
+    (setq helm-gtags-use-input-at-cursor t)
+    (setq helm-gtags-pulse-at-cursor t)
+    ;; add to following modes
+    (add-hook 'c-mode-hook #'helm-gtags-mode)
+    (add-hook 'c++-mode-hook #'helm-gtags-mode))
+#+END_SRC
+
+** helm-projectile
+
+GitHub: https://github.com/bbatsov/helm-projectile
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-projectile
+    :ensure t
+    :config
+    ;; make projectile use helm as completion system
+    (setq projectile-completion-system 'helm)
+    ;; start helm-projectile
+    (helm-projectile-on)
+    ;; helm-projectile-find-file is really slow, use cache here
+    (setq projectile-enable-caching t))
+#+END_SRC
+
+
+** helm-swoop
+
+List match lines to another buffer, which is able to squeeze by any words you input. At the same time, the original buffer's cursor is jumping line to line according to moving up and down the line list.
+
+GitHub: https://github.com/ShingoFukuyama/helm-swoop
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+  (use-package helm-swoop :ensure t)
+#+END_SRC
+
+** helm-c-yasnippet
+
+GitHub: https://github.com/emacs-jp/helm-c-yasnippet
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-c-yasnippet
+    :ensure t
+    :config
+    (setq helm-yas-space-match-any-greedy t))
+#+END_SRC
+
+** Setup Helm Keybindings                                       :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+  (bind-keys :map helm-map
+             ("TAB"   . helm-execute-persistent-action)
+             ("<tab>" . helm-execute-persistent-action)
+             ("C-w"   . backward-kill-word)
+             ("M-t" . my/minibuffer-switch-to-ramdisk)
+             ("M-h" . my/minibuffer-switch-to-home)
+             ("M-/" . my/minibuffer-switch-to-rootdir)
+             ("M-s" . my/minibuffer-switch-to-tramp)
+             ("M-v" . my/minibuffer-switch-to-vm)
+             ("M-c" . my/minibuffer-switch-to-cluster)
+             ("C-z" . helm-select-action))
+#+END_SRC
 
 * Bookmarks
 
@@ -3172,11 +3339,6 @@ GitHub: https://github.com/rocky/emacs-dbgr
     (global-flycheck-mode))
 #+END_SRC
 
-* Helm                                                                 :helm:
-
-#+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/core/helm.el"))
-#+END_SRC
 
 * Completion
 
