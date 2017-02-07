@@ -1671,7 +1671,7 @@ For more info, you can refer to: [[https://www.emacswiki.org/emacs/Registers][Em
            ;; blogging ideas
            (?b (file . "~/Org/blog.org"))
            ;; google-interview-university
-           (?b (file . "~/Org/note/google-interview-university.org"))
+           (?g (file . "~/Org/note/google-interview-university.org"))
          ))
     (set-register (car r) (cadr r)))
 #+END_SRC
