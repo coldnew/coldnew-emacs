@@ -1669,7 +1669,10 @@ For more info, you can refer to: [[https://www.emacswiki.org/emacs/Registers][Em
            ;; My personal note
            (?n (file . "~/Org/Note.org"))
            ;; blogging ideas
-           (?b (file . "~/Org/blog.org"))))
+           (?b (file . "~/Org/blog.org"))
+           ;; google-interview-university
+           (?b (file . "~/Org/note/google-interview-university.org"))
+         ))
     (set-register (car r) (cadr r)))
 #+END_SRC
 
