@@ -1667,6 +1667,24 @@ For more info, you can refer to: [[https://www.emacswiki.org/emacs/Registers][Em
 #+END_SRC
 
 * Editor                                                             :editor:
+** Create minor-mode to controll all keybindings                :keybinding:
+
+#+begin_src emacs-lisp
+  (defvar coldnew-editor-map (make-keymap))
+
+  (define-minor-mode coldnew-editor-mode
+    "coldnew's editor minor mode."
+    :init-value t
+    :keymap coldnew-editor-map)
+
+  (define-globalized-minor-mode global-coldnew-editor-mode
+    coldnew-editor-mode (lambda ()
+                          (if (not (minibufferp (current-buffer)))
+                              (coldnew-editor-mode 1))))
+
+  ;; Gloabal enable
+  (global-coldnew-editor-mode t)
+#+end_src
 
 ** Keeping files in sync
 
@@ -1713,6 +1731,171 @@ If you use Gentoo Linux, you can use following command to install this package
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-gentoo
   emerge app-text/editorconfig-core-c
 #+END_SRC
+
+** En/Decrypt files by EasyPG
+
+#+BEGIN_SRC emacs-lisp
+  (when (require 'epa-file)
+    (epa-file-enable)
+    ;; Control whether or not to pop up the key selection dialog.
+    (setq epa-file-select-keys 0)
+    ;; Cache passphrase for symmetric encryption.
+    (setq epa-file-cache-passphrase-for-symmetric-encryption t))
+#+END_SRC
+
+*** Install gnupg to system
+
+For Mac OSX, just type
+
+#+BEGIN_SRC sh :tangle no :noweb-ref install-in-macosx
+  brew install gpg
+#+END_SRC
+
+Most Linux already shipped with gnupg, if you use Gentoo Linux, you can use following command to install it
+
+#+BEGIN_SRC sh :tangle no :noweb-ref install-in-gentoo
+  emerge app-crypt/gnupg
+#+END_SRC
+
+** Remote file editing
+
+#+BEGIN_SRC emacs-lisp
+  (use-package tramp
+    :ensure t
+    :init
+    (setq tramp-persistency-file-name (concat user-cache-directory "tramp"))
+    :config
+    (setq tramp-default-method "rsync"))
+#+END_SRC
+
+** Line Numbers
+
+In most case, I'll make line numers display globally by =linum=.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package linum :ensure t :init (global-linum-mode 1))
+#+END_SRC
+
+Disable line number in some mode, for example, since =org-mode= can
+has many lines, it's not recommand to enable linum-mode.
+
+I use =linum-off= to disable some mode.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package linum-off
+    :ensure t
+    :config
+      (setq linum-disabled-mode-list
+            '(eshell-mode shell-mode term-mode erc-mode compilation-mode
+                          woman-mode w3m-mode calendar-mode org-mode)))
+#+END_SRC
+
+** Colorfy delimters
+
+[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]] is a "rainbow parentheses"-like mode which
+highlights delimiters such as parentheses, brackets or braces
+according to their depth. Each successive level is highlighted in a
+different color. This makes it easy to spot matching delimiters,
+orient yourself in the code, and tell which statements are at a given
+depth.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t
+    :config
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+#+END_SRC
+
+** Save recent file info
+
+#+BEGIN_SRC emacs-lisp
+  (use-package recentf
+    :ensure t
+    :init
+    (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
+    :config
+    (recentf-mode 1))
+#+END_SRC
+
+** Highlight numbers
+
+=highlight-numbers= is an Emacs minor mode that highlights numeric literals in
+source code.
+
+GitHub: https://github.com/Fanael/highlight-numbers
+
+#+BEGIN_SRC emacs-lisp
+  (use-package highlight-numbers
+    :ensure t
+    :config
+    ;; json-mode has it's own highlight numbers method
+    (add-hook 'prog-mode-hook '(lambda()
+                                 (if (not (derived-mode-p 'json-mode))
+                                     (highlight-numbers-mode)))))
+#+END_SRC
+
+** Highlight escape charset
+
+GitHub: https://github.com/dgutov/highlight-escape-sequences
+
+#+BEGIN_SRC emacs-lisp
+  (use-package highlight-escape-sequences
+    :ensure t
+    :config
+    ;; Make face the same as builtin face
+    (put 'font-lock-regexp-grouping-backslash 'face-alias 'font-lock-builtin-face)
+    ;; Enable globally
+    (hes-mode 1))
+#+END_SRC
+
+** Highlight FIXME, TODO
+
+#+begin_src emacs-lisp
+  (defun font-lock-comment-annotations ()
+    "Highlight a bunch of well known comment annotations.
+  This functions should be added to the hooks of major modes for programming."
+    (font-lock-add-keywords
+     nil
+     '(("\\<\\(FIX\\(ME\\)?\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)
+       ("\\<\\(NOTE\\):" 1 'org-level-2 t)
+       ("\\<\\(TODO\\):" 1 'org-todo t)
+       ("\\<\\(DONE\\):" 1 'org-done t))
+     ))
+
+  (add-hook 'prog-mode-hook 'font-lock-comment-annotations)
+#+end_src
+
+** Show vertical lines to guide indentation
+
+GitHub: https://github.com/zk-phi/indent-guide
+
+#+BEGIN_SRC emacs-lisp
+  (use-package indent-guide
+    :ensure t
+    :config
+    ;; Only show indent-guide in idle-time.
+    (setq indent-guide-delay 0.1))
+#+END_SRC
+
+** Visualization of matching parens
+
+#+BEGIN_SRC emacs-lisp
+  (show-paren-mode 1)
+  (setq show-paren-delay 0)               ; no delay
+#+END_SRC
+
+** Displays tildes in the fringe on empty lines a la Vi
+
+GitHub: https://github.com/syohex/vi-tilde-fringe
+
+#+BEGIN_SRC emacs-lisp
+  (use-package vi-tilde-fringe
+    :ensure t
+    :if window-system
+    :config
+    (global-vi-tilde-fringe-mode))
+#+END_SRC
+
 
 * Programming Languages
 
@@ -2865,63 +3048,7 @@ Yes, Emacs is an OS :)
 
 I put some editor/IDE relative functions and packages here.
 
-** Create minor-mode to controll all keybindings                :keybinding:
 
-#+begin_src emacs-lisp
-  (defvar coldnew-editor-map (make-keymap))
-
-  (define-minor-mode coldnew-editor-mode
-    "coldnew's editor minor mode."
-    :init-value t
-    :keymap coldnew-editor-map)
-
-  (define-globalized-minor-mode global-coldnew-editor-mode
-    coldnew-editor-mode (lambda ()
-                          (if (not (minibufferp (current-buffer)))
-                              (coldnew-editor-mode 1))))
-
-  ;; Gloabal enable
-  (global-coldnew-editor-mode t)
-#+end_src
-
-** Line Numbers
-
-In most case, I'll make line numers display globally by =linum=.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package linum :ensure t :init (global-linum-mode 1))
-#+END_SRC
-
-Disable line number in some mode, for example, since =org-mode= can
-has many lines, it's not recommand to enable linum-mode.
-
-I use =linum-off= to disable some mode.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package linum-off
-    :ensure t
-    :config
-      (setq linum-disabled-mode-list
-            '(eshell-mode shell-mode term-mode erc-mode compilation-mode
-                          woman-mode w3m-mode calendar-mode org-mode)))
-#+END_SRC
-
-
-** Colorfy delimters
-
-[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]] is a "rainbow parentheses"-like mode which
-highlights delimiters such as parentheses, brackets or braces
-according to their depth. Each successive level is highlighted in a
-different color. This makes it easy to spot matching delimiters,
-orient yourself in the code, and tell which statements are at a given
-depth.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package rainbow-delimiters
-    :ensure t
-    :config
-    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
-#+END_SRC
 
 ** Adapt to foreign indentation offsets
 
@@ -2938,42 +3065,6 @@ GitHub: https://github.com/jscheid/dtrt-indent
     :config
     ;; enable dtrt-indent-mode globally
     (dtrt-indent-mode 1))
-#+END_SRC
-
-** En/Decrypt files by EasyPG
-
-#+BEGIN_SRC emacs-lisp
-  (when (require 'epa-file)
-    (epa-file-enable)
-    ;; Control whether or not to pop up the key selection dialog.
-    (setq epa-file-select-keys 0)
-    ;; Cache passphrase for symmetric encryption.
-    (setq epa-file-cache-passphrase-for-symmetric-encryption t))
-#+END_SRC
-
-*** Install gnupg to system
-
-For Mac OSX, just type
-
-#+BEGIN_SRC sh :tangle no :noweb-ref install-in-macosx
-  brew install gpg
-#+END_SRC
-
-Most Linux already shipped with gnupg, if you use Gentoo Linux, you can use following command to install it
-
-#+BEGIN_SRC sh :tangle no :noweb-ref install-in-gentoo
-  emerge app-crypt/gnupg
-#+END_SRC
-
-** Remote file editing
-
-#+BEGIN_SRC emacs-lisp
-  (use-package tramp
-    :ensure t
-    :init
-    (setq tramp-persistency-file-name (concat user-cache-directory "tramp"))
-    :config
-    (setq tramp-default-method "rsync"))
 #+END_SRC
 
 ** Intelligently call whitespace-cleanup on save
@@ -3001,65 +3092,6 @@ GitHub: https://github.com/purcell/whitespace-cleanup-mode
     :config
     (add-hook 'prog-mode-hook 'whitespace-cleanup-mode))
 #+END_SRC
-
-** Save recent file info
-
-#+BEGIN_SRC emacs-lisp
-  (use-package recentf
-    :ensure t
-    :init
-    (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
-    :config
-    (recentf-mode 1))
-#+END_SRC
-
-** Highlight numbers
-
-=highlight-numbers= is an Emacs minor mode that highlights numeric literals in
-source code.
-
-GitHub: https://github.com/Fanael/highlight-numbers
-
-#+BEGIN_SRC emacs-lisp
-  (use-package highlight-numbers
-    :ensure t
-    :config
-    ;; json-mode has it's own highlight numbers method
-    (add-hook 'prog-mode-hook '(lambda()
-                                 (if (not (derived-mode-p 'json-mode))
-                                     (highlight-numbers-mode)))))
-#+END_SRC
-
-** Highlight escape charset
-
-GitHub: https://github.com/dgutov/highlight-escape-sequences
-
-#+BEGIN_SRC emacs-lisp
-  (use-package highlight-escape-sequences
-    :ensure t
-    :config
-    ;; Make face the same as builtin face
-    (put 'font-lock-regexp-grouping-backslash 'face-alias 'font-lock-builtin-face)
-    ;; Enable globally
-    (hes-mode 1))
-#+END_SRC
-
-** Highlight FIXME, TODO
-
-#+begin_src emacs-lisp
-  (defun font-lock-comment-annotations ()
-    "Highlight a bunch of well known comment annotations.
-  This functions should be added to the hooks of major modes for programming."
-    (font-lock-add-keywords
-     nil
-     '(("\\<\\(FIX\\(ME\\)?\\|BUG\\|HACK\\):" 1 font-lock-warning-face t)
-       ("\\<\\(NOTE\\):" 1 'org-level-2 t)
-       ("\\<\\(TODO\\):" 1 'org-todo t)
-       ("\\<\\(DONE\\):" 1 'org-done t))
-     ))
-
-  (add-hook 'prog-mode-hook 'font-lock-comment-annotations)
-#+end_src
 
 ** Takes care of trailing whitespaces (removal, highlighting)
 
@@ -3092,25 +3124,6 @@ GitHub: https://github.com/glasserc/ethan-wspace
     (setq-default ethan-wspace-errors (remove 'no-nl-eof ethan-wspace-errors)))
 #+END_SRC
 
-** Show vertical lines to guide indentation
-
-GitHub: https://github.com/zk-phi/indent-guide
-
-#+BEGIN_SRC emacs-lisp
-  (use-package indent-guide
-    :ensure t
-    :config
-    ;; Only show indent-guide in idle-time.
-    (setq indent-guide-delay 0.1))
-#+END_SRC
-
-** Visualization of matching parens
-
-#+BEGIN_SRC emacs-lisp
-  (show-paren-mode 1)
-  (setq show-paren-delay 0)               ; no delay
-#+END_SRC
-
 ** Setup TABS
 
 #+BEGIN_SRC emacs-lisp
@@ -3136,17 +3149,6 @@ GitHub: https://github.com/chrisdone/god-mode
                ("i" . god-local-mode)))
 #+END_SRC
 
-** Displays tildes in the fringe on empty lines a la Vi
-
-GitHub: https://github.com/syohex/vi-tilde-fringe
-
-#+BEGIN_SRC emacs-lisp
-  (use-package vi-tilde-fringe
-    :ensure t
-    :if window-system
-    :config
-    (global-vi-tilde-fringe-mode))
-#+END_SRC
 
 * Vim Emulation                                                        :evil:
 
@@ -3890,7 +3892,8 @@ GitHub: https://github.com/trotzig/import-js
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref haskell-config
   (bind-keys :map haskell-mode-map
-             ("C-c '" . my/narrow-or-widen-dwim))
+             ;;("C-c '" . my/narrow-or-widen-dwim)
+)
 #+END_SRC
 
 ** nxml
@@ -4249,7 +4252,8 @@ Show lambda as λ.
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref scheme-config
   (bind-keys :map scheme-mode-map
-             ("C-c '" . my/narrow-or-widen-dwim))
+;;             ("C-c '" . my/narrow-or-widen-dwim)
+)
 #+END_SRC
 
 ** Common Lisp
