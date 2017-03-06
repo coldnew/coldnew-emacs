@@ -2278,6 +2278,15 @@ GitHub: https://github.com/masayuko/ox-rst
     :mode "\\.yml$")
 #+END_SRC
 
+** R
+
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
+  (use-package ess
+    :ensure t
+    :mode ("\\.[rR]\\'" . R-mode)
+    :config
+    <<R-config>>)
+#+END_SRC
 
 * Configration Files
 
