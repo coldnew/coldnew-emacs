@@ -10,3 +10,6 @@
 [submodule "modules/spacemacs"]
 	path = modules/spacemacs
 	url = https://github.com/syl20bnr/spacemacs.git
+[submodule "modules/hexo.el"]
+	path = modules/hexo.el
+	url = https://github.com/coldnew/hexo.el.git

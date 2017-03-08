@@ -2459,6 +2459,9 @@ The dired's =dired-open-file= will not use system's default tool to open file, t
 * Blogging
 
 #+BEGIN_SRC emacs-lisp
+  ;; Use my fork of hexo.el, save to `modules/hexo.el'
+  (add-to-list 'load-path
+               (directory-file-name (f-join user-emacs-directory "modules" "hexo.el")))
   (use-package hexo
     :ensure t)
 #+END_SRC
