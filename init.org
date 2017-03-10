@@ -2080,8 +2080,8 @@ An abbreviated link looks like
     (setq deft-directory "~/Org")
     ;; Do not make deft automatically save file
     (setq deft-auto-save-interval 0)
-    ;; No need to recursive search
-    (setq deft-recursive nil)
+    ;; Recursive search
+    (setq deft-recursive t)
 
     ;; setup an minor-mode to quickly kill all deft buffers
     (define-minor-mode deft-note-mode "Deft notes" nil " Deft-Notes" nil)
@@ -2109,9 +2109,8 @@ An abbreviated link looks like
       "Use deft to quickly see my blog drafts."
       (interactive)
       (let ((deft-directory "~/Workspace/practice")
-            (deft-extensions '("md" "org"))
-            (deft-recursive t)))
-        (deft)))
+            (deft-extensions '("md" "org"))))
+      (deft)))
 #+END_SRC
 
 *** Capture and Agenda
