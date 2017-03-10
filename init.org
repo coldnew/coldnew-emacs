@@ -2068,7 +2068,7 @@ An abbreviated link looks like
           ))
 #+END_SRC
 
-*** Setup deft
+*** Deft for Note-taking
 
 #+BEGIN_SRC emacs-lisp
   (use-package deft
@@ -2105,19 +2105,14 @@ An abbreviated link looks like
           (progn (my/kill-all-deft-notes) (kill-buffer "*Deft*"))
           (deft)))
 
-    (defun my/deft-draft ()
+    (defun my/deft-practice ()
       "Use deft to quickly see my blog drafts."
       (interactive)
-      (let ((deft-directory "~/Org/draft"))
+      (let ((deft-directory "~/Workspace/practice")
+            (deft-extensions '("md" "org"))
+            (deft-recursive t)))
         (deft)))
-
-    (defun my/deft-office ()
-      "Use deft to quickly see my office notes."
-      (interactive)
-      (let ((deft-directory "~/Org/Weintek"))
-        (deft))))
 #+END_SRC
-
 
 *** Capture and Agenda
 
