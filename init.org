@@ -2241,7 +2241,7 @@ GitHub: https://github.com/masayuko/ox-rst
              ("M-n"   . org-next-visible-heading)
              ("C-c a" . org-agenda)
              ("C-c c" . org-capture)
-             ("C-c l" . org-stored-links)
+             ("C-c l" . org-stored-link)
              ("C-c b" . org-metaleft)
              ("C-c f" . org-metaright)
              ("C-c p" . org-metaup)
