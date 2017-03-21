@@ -1953,6 +1953,12 @@ Here I use [[http://jblevins.org/projects/markdown-mode/][markdown-mode]] to hel
              ("C-c i" . markdown-insert-link))
 #+END_SRC
 
+** NASM
+
+#+BEGIN_SRC emacs-lisp
+  (use-package nasm-mode :ensure t)
+#+END_SRC
+
 ** Org-mode
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
