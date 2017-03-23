@@ -2360,6 +2360,19 @@ flyspell ?
 
 * Version Control
 
+** vc-mode
+
+[[http://stackoverflow.com/questions/5748814/how-does-one-disable-vc-git-in-emacs][How does one disable vc-git in emacs? - Stack Overflow]]
+
+[[https://superuser.com/questions/341723/how-can-disable-emacs-vc-integration-on-mounted-volumes][git - How can disable emacs' vc integration on mounted volumes? - Super User]]
+
+#+BEGIN_SRC emacs-lisp
+  ;; (eval-after-load "vc" '(remove-hook 'find-file-hooks 'vc-find-file-hook))
+  ;; Disable git backend to speed up sshfs file load among other things
+  ;; (setq vc-handled-backends (quote (RCS CVS SVN SCCS Bzr Hg Mtn Arch)))
+  (setq vc-handled-backends (remove 'Git vc-handled-backends))
+#+END_SRC
+
 ** Git
 
 Magit is an interface to the version control system [[http://git-scm.com/][Git]], implemented as an [[http://www.gnu.org/software/emacs][Emacs]] package. Magit aspires to be a complete Git porcelain. While we cannot (yet)
