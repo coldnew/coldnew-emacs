@@ -2299,6 +2299,76 @@ GitHub: https://github.com/masayuko/ox-rst
     <<R-config>>)
 #+END_SRC
 
+** Java
+
+#+BEGIN_SRC emacs-lisp
+  (use-package meghanada
+    :ensure nil
+    :mode (("\\.java\\'" . java-mode))
+    :config
+    <<java-config>>)
+#+END_SRC
+
+*** Setup meghanada
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref java-config
+  (use-package meghanada
+    :ensure t
+    :commands meghanada-mode
+    :config
+    (setq meghanada-server-install-dir (concat user-cache-directory "meghanada/")))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package meghanada
+    :ensure t
+    :init
+    ;; Don't auto-start
+    (setq meghanada-auto-start nil)
+    (require 'company-meghanada)
+    (add-hook 'meghanada-mode-hook
+              '(lambda ()
+
+                 (setq-local company-backends '((company-meghanada
+                                                 company-yasnippet
+                                                 :with
+                                                 company-keywords
+                                                 company-abbrev
+                                                 company-dabbrev-code
+                                                 company-dabbrev
+                                                 company-dict
+                                                 company-files)))))
+    ;; (add-hook 'java-mode-hook #'meghanada-mode)
+    ;; (add-hook 'java-mode-hook 'flycheck-mode)
+    )
+#+END_SRC
+*** Setup JDEE
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref java-config
+  (use-package jdee
+    :ensure t
+    :commands jdee-mode
+    :config
+    ;; I put jdee-server source as submodule in `~/.emacs.d/modules/jdee-server`, to prevent the result file not found
+    ;; I add following function to build the jdee-server
+    (defun my/build-jdee-server ()
+      "Build jdee-server file."
+      (interactive)
+      (require 'f)
+      (let ((jdee-server-dir (f-join user-emacs-directory "modules" "jdee-server")))
+        (shell-command (concat "cd " jdee-server-dir "; mvn -DskipTests=true assembly:assembly")  "*build-jdee-server*")))
+
+    (setq jdee-server-dir (f-join user-emacs-directory "modules" "jdee-server" "target")))
+#+END_SRC
+
+*** Setup Java Keybinding                                      :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (bind-keys :map java-mode-map
+             ("C-c i" . jdee-import-find-and-import)
+             )
+#+END_SRC
+
 * Configration Files
 
 Since emacs not built-in all configration files syntax highlight support, we need to install manually.

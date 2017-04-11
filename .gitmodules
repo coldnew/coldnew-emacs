@@ -13,3 +13,6 @@
 [submodule "modules/hexo.el"]
 	path = modules/hexo.el
 	url = https://github.com/coldnew/hexo.el.git
+[submodule "modules/jdee-server"]
+	path = modules/jdee-server
+	url = https://github.com/jdee-emacs/jdee-server.git
