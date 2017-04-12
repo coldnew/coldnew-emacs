@@ -2366,6 +2366,7 @@ GitHub: https://github.com/masayuko/ox-rst
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
   (bind-keys :map java-mode-map
              ("C-c i" . jdee-import-find-and-import)
+             ("C-c g" . jdee-gen-get-set)
              )
 #+END_SRC
 
