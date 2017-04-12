@@ -2440,7 +2440,9 @@ flyspell ?
   ;; (eval-after-load "vc" '(remove-hook 'find-file-hooks 'vc-find-file-hook))
   ;; Disable git backend to speed up sshfs file load among other things
   ;; (setq vc-handled-backends (quote (RCS CVS SVN SCCS Bzr Hg Mtn Arch)))
-  (setq vc-handled-backends (remove 'Git vc-handled-backends))
+  ;(setq vc-handled-backends (remove 'Git vc-handled-backends))
+;; disable "VC" (emacs internal version control stuff)
+(setq vc-handled-backends nil)
 #+END_SRC
 
 ** Git
