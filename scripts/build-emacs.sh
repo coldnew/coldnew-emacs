@@ -29,7 +29,7 @@ do_configure_osx () {
 		--with-gnutls \
 		--with-rsvg \
 		--with-imagemagick \
-		--without-dbus --without-x
+		--without-dbus --without-x --without-makeinfo
 }
 
 do_configure_linux () {
