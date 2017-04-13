@@ -233,8 +233,6 @@ Some of my password stored in a secret file with gnupg encrypt, I add this funct
       (when (file-exists-p secret) (load-file secret))))
 #+END_SRC
 
-* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
-
 * Package Management
 
 The main package manager I use is emacs's =package.el=, it's really nice and easy to use.
@@ -273,11 +271,8 @@ Auto refresh packages info when no archive available.
 
 ** Install use-package
 
-The =use-package= macro allows you to isolate package configuration in your =.emacs=
-file in a way that is both performance-oriented and, well, tidy. I created it
-because I have over 80 packages that I use in Emacs, and things were getting
-difficult to manage. Yet with this utility my total load time is around 2
-seconds, with no loss of functionality!
+The =use-package= macro allows you to isolate package configuration in your =.emacs= file in a way that is both performance-oriented and, well, tidy. I created it
+because I have over 80 packages that I use in Emacs, and things were getting difficult to manage. Yet with this utility my total load time is around 2 seconds, with no loss of functionality!
 
 GitHub: https://github.com/jwiegley/use-package
 
@@ -308,6 +303,8 @@ GitHub: https://github.com/Malabarba/paradox
 
 ** Install some common libraries
 
+Some common libraries I'll use in my personal's command or anything else.
+
 #+BEGIN_SRC emacs-lisp
   (package-install 'f)
   (package-install 's)
@@ -316,6 +313,8 @@ GitHub: https://github.com/Malabarba/paradox
   (package-install 'htmlize)
   (package-install 'async)
 #+END_SRC
+
+* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 
 * Spacemacs
 
