@@ -8,23 +8,26 @@
 #+OPTIONS: ^:nil num:nil tags:nil
 #+SETUPFILE: assets/readtheorg.setup
 
+#+LINK: emacs     https://www.gnu.org/s/emacs
+#+LINK: spaceemacs https://github.com/syl20bnr/spacemacs
+
 # Badge
 [[http://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg?dummy]]
 [[https://travis-ci.org/coldnew/coldnew-emacs][https://travis-ci.org/coldnew/coldnew-emacs.svg?branch=master]]
 
 * Introduction
 
-This is my emacs configuration, feel free to use it :)
+This is my emacs configuration, which is based on top of [[spacemacs][Spacemacs]].
+
+You may find I already have another emacs configuration in [[https://github.com/coldnew/coldnew-emacs][here]], the main difference between this configuration and [[https://github.com/coldnew/coldnew-emacs][coldnew-emacs]] is that this config is fully depends on [[spacemacs][Spacemacs]], which means I'll reuse most settings provided by [[spacemacs][spacemacs]].
 
 ** Install emacs
 
-My emacs is running under =Mac OSX= and =Gentoo Linux= and I really like them,
-following are some record for how I installed my emacs.
+My emacs is running under =Mac OSX= and =Gentoo Linux= and I really like them, following are some record for how I installed my emacs.
 
 *** Mac OSX
 
-In Mac OSX, I use [[http://brew.sh/][homebrew]] to maintain opensource packages, I always install latest
-version of emacs via following command
+In Mac OSX, I use [[http://brew.sh/][homebrew]] to maintain opensource packages, I always install latest version of emacs via following command:
 
 #+BEGIN_SRC sh :tangle no
   # change --HEAD to --devel for current development version
@@ -45,8 +48,6 @@ version of emacs via following command
 My emacs configuration already shipped an update-to-date version of emacs based on git submodule, if your system can build emacs from source you can use my [[file:scripts/build-emacs.sh]] script to build latested emacs.
 
 #+BEGIN_EXAMPLE
-  git submodule init
-  git submodule update
   ./scripts/build-emacs.sh
 #+END_EXAMPLE
 
@@ -62,10 +63,6 @@ My emacs configuration already shipped an update-to-date version of emacs based 
     git submodule init
     git submodule update
   #+END_EXAMPLE
-
-- You also need to install [[https://github.com/cask/cask][Cask]] for package management
-
-  : curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 
 - To generate the =init.el=, jut type
 
