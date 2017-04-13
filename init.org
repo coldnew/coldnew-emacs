@@ -108,6 +108,8 @@ Some package like =npm= use the same rule to install in any platform, here list 
   <<install-in-all>>
 #+END_SRC
 
+* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
+
 * Initialization Emacs
 
 There are some configurations I need to put at the beginning of the emacs
