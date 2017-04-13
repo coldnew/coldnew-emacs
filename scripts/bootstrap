@@ -1,0 +1,134 @@
+#!/usr/bin/env emacs -Q -q --script
+":"; exec emacs -Q -q --script "$0" "$@" # -*- mode: emacs-lisp; lexical-binding: t; -*-
+;;; bootstrap --- coldnew's emacs's bootstrap script.
+
+;; Copyright (c) 2017 Yen-Chin, Lee. (coldnew) <coldnew.tw@gmail.com>
+;;
+;; Author: coldnew <coldnew.tw@gmail.com>
+;; Keywords:
+;; X-URL: http://github.com/coldnew/coldnew-emacs
+;; Version: 0.1
+;; Package-Requires: ()
+
+;; This file is not part of GNU Emacs.
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program; if not, write to the Free Software
+;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+;;; Commentary:
+
+;;; Code:
+
+
+;; Init
+
+(require 'subr-x)
+
+;; Enable debug message
+(setq debug-on-error t)
+
+
+;; Logging functions
+
+(defun format-error (msg)
+  "Format MSG as red color in console."
+  (format "\e[1m\e[31m%s\e[0m" msg))
+
+(defun format-info (msg)
+  "Format MSG as green color in console."
+  (format "\e[1m\e[32m%s\e[0m" msg))
+
+(defun format-warning (msg)
+  "Format MSG as yellow color in console."
+  (format "\e[1m\e[33m%s\e[0m" msg))
+
+(defun log-error (msg)
+  "Display error MSG."
+  (message (format "%s: %s" (format-error "ERROR") msg)))
+
+(defun log-warnning (msg)
+  "Display warning MSG."
+  (message (format "%s: %s" (format-warnning "WARNNING") msg)))
+
+(defun log-info (msg)
+  "Display info MSG."
+  (message (format "%s: %s" (format-info "INFO") msg)))
+
+(defun log-cmd (msg)
+  "Display execute shell command MSG."
+  (message (format "%s: %s" (format-info "CMD") msg)))
+
+
+;; Step-by-step function
+
+(defun call-command (cmd)
+  "Execute CMD in shell, stop the script while error occured."
+  (let ((buffer-stderr "*Shell Command Error Output*"))
+
+    (princ (format "  %s" cmd))
+
+    ;; execute shell command
+    (shell-command cmd t buffer-stderr)
+
+    (when (not (get-buffer buffer-stderr))
+      (princ (format " [ %s ]\n" (format-info "OK"))))
+
+    ;; Throw error
+    (when (get-buffer buffer-stderr)
+      (princ (format " [ %s ]\n" (format-error "FAIL")))
+      (let ((result (with-current-buffer buffer-stderr (buffer-string))))
+        (unless (string-empty-p result)
+          (log-error (format "%s" result))))
+      ;; stop this script when error occured
+      (kill-emacs)
+      )))
+
+(defun check-git-submodule ()
+  "Check git submodule in up-to-date."
+  (message "Check git-submodule status:")
+  (call-command "git submodule init")
+  (call-command "git submodule update"))
+
+(defun build-jdee-server ()
+  "Build jdee-server for java development."
+  (message "Build jdee-server:")
+  (let ((default-directory (concat default-directory "/modules/jdee-server")))
+    (call-command "mvn -DskipTests=true assembly:assembly")))
+
+(defun build-ycmd ()
+  "Build ycmd for code complete."
+    (message "Build ycmd:")
+  (let ((default-directory (concat default-directory "/modules/ycmd")))
+    (call-command "./build.py --all")))
+
+
+;; Start Bootstrap
+
+;; Step 0: display a newline
+(message "")
+
+;; Step 1: check submodule is up-to-date
+(check-git-submodule)
+
+;; Step 2: Build jdee-server
+(build-jdee-server)
+
+;; Step 3:
+(build-ycmd)
+
+;; Step ∞: display a newline
+(message "")
+
+(provide 'bootstrap)
+;;; bootstrap ends here
