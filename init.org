@@ -1968,6 +1968,7 @@ Here I use [[http://jblevins.org/projects/markdown-mode/][markdown-mode]] to hel
     :mode (("\\.org\\'" . org-mode)
            ("\\.org_archive\\'" . org-mode))
     :config
+(setq org-url-hexify-p nil)
     <<org-config>>)
 #+END_SRC
 
@@ -2138,7 +2139,6 @@ An abbreviated link looks like
                (local-set-key (kbd "C-g") 'org-agenda-exit)))
 #+END_SRC
 
-
 *** Make spell-checking tool ignore some org-mode section
 
 see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-org-mode
@@ -2238,7 +2238,6 @@ GitHub: https://github.com/masayuko/ox-rst
     :ensure t)
 #+END_SRC
 
-
 *** Setup Org-mode Keybindings                                   :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
@@ -2267,7 +2266,6 @@ GitHub: https://github.com/masayuko/ox-rst
              :prefix "M-m"
              ("n" . my/narrow-or-widen-dwim))
 #+END_SRC
-
 
 ** TOML
 
@@ -2301,7 +2299,7 @@ GitHub: https://github.com/masayuko/ox-rst
 
 ** Java
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package meghanada
     :ensure nil
     :mode (("\\.java\\'" . java-mode))
@@ -2585,12 +2583,12 @@ Most of emacs packages do not need many configs or just provide
 commands/functions to use, I put them here.
 
 #+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/plugins/ag.el"))
-  (load (concat user-emacs-directory "configs/plugins/ascii.el"))
-  (load (concat user-emacs-directory "configs/plugins/avy.el"))
-  (load (concat user-emacs-directory "configs/plugins/buffer-move.el"))
-  (load (concat user-emacs-directory "configs/plugins/calfw.el"))
-  (load (concat user-emacs-directory "configs/plugins/darkroom.el"))
+  ;;(load (concat user-emacs-directory "configs/plugins/ag.el"))
+  ;;(load (concat user-emacs-directory "configs/plugins/ascii.el"))
+  ;;(load (concat user-emacs-directory "configs/plugins/avy.el"))
+  ;;(load (concat user-emacs-directory "configs/plugins/buffer-move.el"))
+  ;;(load (concat user-emacs-directory "configs/plugins/calfw.el"))
+  ;;(load (concat user-emacs-directory "configs/plugins/darkroom.el"))
 #+END_SRC
 
 ** ascii-art-to-unicode

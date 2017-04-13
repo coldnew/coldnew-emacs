@@ -148,5 +148,6 @@ GitHub: https://github.com/Silex/elmacro
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref emacs-lisp-mode-config
     (bind-keys :map emacs-lisp-mode-map
-               ("C-c '" . my/narrow-or-widen-dwim))
+;;               ("C-c '" . my/narrow-or-widen-dwim)
+)
 #+END_SRC
