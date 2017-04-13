@@ -105,20 +105,15 @@ Some package like =npm= use the same rule to install in any platform, here list 
   <<install-in-all>>
 #+END_SRC
 
-* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
+* Initialize Emacs
 
-* Initialization Emacs
-
-There are some configurations I need to put at the beginning of the emacs
-config. These configurations are derived from my original init.el file.
+There are some configurations I need to put at the beginning of the emacs config. These configurations are derived from my original init.el file.
 
 ** Use lexical binding
 
-For some of my functions, and general coolness, =lexical binding= is a must.
-Without it, closures cannot be made for example.
+For some of my functions, and general coolness, =lexical binding= is a must. Without it, closures cannot be made for example.
 
-This line needs to appear at the beginning of the file to work. Just to keep
-things looking nice I put it at the beginning of the file.
+This line needs to appear at the beginning of the file to work. Just to keep things looking nice I put it at the beginning of the file.
 
 #+BEGIN_SRC emacs-lisp :padline no
   ;; -*- lexical-binding: t -*-
@@ -134,8 +129,7 @@ Some of my function may need the Common Lisp Extension, let's import libraries f
 
 ** Prevent load outdated .elc files
 
-Since emacs 24.4, new option =load-prefer-newer= has been introduce, which make
-me never accidentally using outdated compiled files.
+Since emacs 24.4, new option =load-prefer-newer= has been introduce, which make me never accidentally using outdated compiled files.
 
 #+BEGIN_SRC emacs-lisp
   (setq load-prefer-newer t)
@@ -166,6 +160,15 @@ Setup the cache directory to store some cache content.
     "My emacs storage area for persistent files.")
   ;; create the `user-cache-directory' if not exists
   (make-directory user-cache-directory t)
+#+END_SRC
+** Setup user-modules-directory variable                         :variable:
+
+Setup the modules directory to store some submodules and extra packages.
+
+#+BEGIN_SRC emacs-lisp
+  (defconst user-modules-directory
+    (file-name-as-directory (concat user-emacs-directory "modules"))
+    "My emacs storage area for modules.")
 #+END_SRC
 
 ** Setup user-ramdisk-directory variable                          :variable:
@@ -229,6 +232,8 @@ Some of my password stored in a secret file with gnupg encrypt, I add this funct
     (let ((secret "~/.secret.el.gpg"))
       (when (file-exists-p secret) (load-file secret))))
 #+END_SRC
+
+* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 
 * Package Management
 
