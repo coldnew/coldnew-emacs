@@ -314,8 +314,6 @@ Some common libraries I'll use in my personal's command or anything else.
   (package-install 'async)
 #+END_SRC
 
-* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
-
 * Spacemacs
 
 [[https://github.com/syl20bnr/spacemacs][Spacemacs]] is an emacs starterkit focus on [[https://gitorious.org/evil/pages/Home][Evil]], which emulate vim keymap on Emacs.
@@ -366,9 +364,8 @@ Instead, I move it to =~/.emacs.d/modules/spacemacs= so I can use org-mode with 
   ;; Make a fake entry point for spacemacs, also modify the
   ;; `user-emacs-directory' temporary to mislead spacemacs real emacs
   ;; directory.
-  (require 'f)
   (let* ((spacemacs-dir
-          (directory-file-name (f-join user-emacs-directory "modules" "spacemacs")))
+          (directory-file-name (concat user-modules-directory "spacemacs")))
          (spacemacs-init
           (concat (file-name-as-directory spacemacs-dir) "init.el"))
          (user-emacs-directory (file-name-directory spacemacs-init)))
@@ -420,6 +417,8 @@ I don't like the =ido-mode=.
    (setq helm-echo-input-in-header-line nil)
    (remove-hook 'helm-minibuffer-set-up-hook 'helm-hide-minibuffer-maybe)
  #+END_SRC
+
+* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 
 * Basic Setup
 
