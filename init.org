@@ -2054,6 +2054,7 @@ defined some extra easy-templates I need to use here.
      (python . t)
      (ruby . t)
      (sh . t)
+     (shell . t)
      (plantuml . t)
      (R . t)
      (clojure . t)))
