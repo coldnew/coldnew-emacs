@@ -340,8 +340,8 @@ Latest spacemacs can setup =SPACEMACSDIR= to load customize spacemacs init.el
 file.
 
 #+BEGIN_SRC emacs-lisp
-  (require 'f)                            ; part of my emacs's deps
-  (setenv "SPACEMACSDIR" (f-join user-emacs-directory "spacemacs.d"))
+  ;; override spacemacs's config path to `~/.emacs.d/spacemacs.el'
+  (setq-default dotspacemacs-filepath (concat user-emacs-directory "spacemacs.el"))
 #+END_SRC
 
 ** Overwrite spacemacs function to let it not remove my packages
