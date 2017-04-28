@@ -427,6 +427,17 @@ I don't like the =ido-mode=.
    (remove-hook 'helm-minibuffer-set-up-hook 'helm-hide-minibuffer-maybe)
  #+END_SRC
 
+* Languages and Encodings
+
+Since current Emacs default run on UTF-8, it's no need to setup the encoding.
+
+For language, though Traditional Chinese is my mothertone, I still prefer use =en_US= to display time info.
+
+#+BEGIN_SRC emacs-lisp
+  (prefer-coding-system 'utf-8)
+  (setq system-time-locale "en_US")
+#+END_SRC
+
 * ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 
 * Basic Setup
