@@ -572,30 +572,6 @@ Just let me use =y= or =n= with no =RET= required an I'm quite happy.
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
-** TODO Async rebuild init.el after save
-
-https://www.reddit.com/r/emacs/comments/5ej8by/asynchronous_tangle_and_compile_of_configorg/
-
-#+BEGIN_SRC emacs-lisp
-  (require 'async)   ; part of my emacs deps
-  (require 's)       ; part of my emacs deps
-  ;; If I'm edit my init.org, async generate init.el when save.
-  (defun my/async-tangle-init ()
-    "If the current buffer is 'init.org' or `org-mode' files in `configs' dir, execute makefile to create new configs."
-    (let ((buffer-name "async-make-init.el")
-          (default-directory user-emacs-directory))
-      (when (or (equal (buffer-file-name)
-                       (expand-file-name (concat user-emacs-directory "init.org")))
-                (s-starts-with? (file-name-directory (concat user-emacs-directory "configs/"))
-                                (file-name-directory (buffer-file-name))))
-
-        ;; build with `make init.el' command
-        (async-start-process buffer-name "make"
-                             '(lambda (result)
-                                (message "Re-Generate init.el")) "all"))))
-  ;; Add to hook
-  (add-hook 'after-save-hook 'my/async-tangle-init)
-#+END_SRC
 
 * Languages and Encodings
 
