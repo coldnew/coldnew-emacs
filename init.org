@@ -191,7 +191,7 @@ I specify a ramdisk path to make my emacs can save som temporary file to it. The
     "My ramdisk path in system.")
 #+END_SRC
 
-** Load path
+** Setup Load path
 
 The variable =load-path= lists all the directories where Emacs should look for emacs-lisp files.
 
@@ -222,6 +222,42 @@ If you don't have any local elisp and all packages is maintain by cask or elpa o
                load-path)))))
 #+END_SRC
 
+** Personal Information
+
+Some information about myself.
+
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "Yen-Chin, Lee")
+  (setq user-mail-address "coldnew.tw@gmail.com")
+#+END_SRC
+
+** Under Mac OSX use Command key as ALT
+
+Under Mac OSX, I always bind =Caps lock= as Control key, and make the =Command= key as =ALT= key like I done in Linux.
+
+The =Option= key will be setup as =Super=.
+
+I also disable some keys like =⌘-h= bypass to system in emacs-mac port.
+
+#+BEGIN_SRC emacs-lisp
+  (when (eq system-type 'darwin)
+    (setq mac-option-modifier 'super)
+    (setq mac-command-modifier 'meta)
+    (setq mac-pass-command-to-system nil))
+#+END_SRC
+
+** Save custom-file as cache
+
+Most of my config is written in this file, it's no need to tracking the emacs's custom-setting.
+
+I move the file to cache-dir and make git ignore it.
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default custom-file (concat user-cache-directory "custom.el"))
+  ;; load custom-file only when file exist
+  (when (file-exists-p custom-file)
+    (load-file custom-file))
+#+END_SRC
 ** Method to load secret file                                     :function:
 
 Some of my password stored in a secret file with gnupg encrypt, I add this function here so I can inject some emacs-command which hass password/account setting.
@@ -439,150 +475,6 @@ For language, though Traditional Chinese is my mothertone, I still prefer use =e
 #+END_SRC
 
 * ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
-
-* Basic Setup
-
-Some basic setup to disabe/enable default feature before we start. The configuration here only depends on vanilla emacs's buildin libraries.
-
-** Personal Information
-
-Some information about myself.
-
-#+BEGIN_SRC emacs-lisp
-  (setq user-full-name "Yen-Chin, Lee")
-  (setq user-mail-address "coldnew.tw@gmail.com")
-#+END_SRC
-
-** Startup emacs server
-
-Start the emacs daemon after init, we can use =emacsclient= to edit file with emacs server.
-
-#+BEGIN_SRC emacs-lisp
-  ;; Only start server mode if I'm not root
-  (unless (string-equal "root" (getenv "USER"))
-    (require 'server)
-    (unless (server-running-p) (server-start)))
-#+END_SRC
-
-** Under Mac OSX use Command key as ALT
-
-Under Mac OSX, I always bind =Caps lock= as Control key, and make the =Command= key as =ALT= key like I done in Linux.
-
-The =Option= key will be setup as =Super=.
-
-I also disable some keys like =⌘-h= bypass to system in emacs-mac port.
-
-#+BEGIN_SRC emacs-lisp
-  (when (eq system-type 'darwin)
-    (setq mac-option-modifier 'super)
-    (setq mac-command-modifier 'meta)
-    (setq mac-pass-command-to-system nil))
-#+END_SRC
-
-** Don't ask me when close emacs with process is running
-
-When I type =C-x C-c= which means I want to quit emacs, don't stand in my way.
-
-#+BEGIN_SRC emacs-lisp
-  (require 'noflet)
-  (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
-    "Prevent annoying \"Active processes exist\" query when you quit Emacs."
-    (noflet ((process-list ())) ad-do-it))
-#+END_SRC
-
-** Don't ask me when kill process buffer
-
-#+BEGIN_SRC emacs-lisp
-  (setq kill-buffer-query-functions
-        (remq 'process-kill-buffer-query-function
-              kill-buffer-query-functions))
-#+END_SRC
-
-** Save custom-file as cache
-
-Most of my config is written in this file, it's no need to tracking the emacs's custom-setting.
-
-I move the file to cache-dir and make git ignore it.
-
-#+BEGIN_SRC emacs-lisp
-  (setq-default custom-file (concat user-cache-directory "custom.el"))
-  ;; load custom-file only when file exist
-  (when (file-exists-p custom-file)
-    (load-file custom-file))
-#+END_SRC
-** Setup auto-save directory
-
-#+BEGIN_SRC emacs-lisp
-  (setq auto-save-list-file-prefix
-        (concat user-cache-directory "auto-save-list/.saves-"))
-
-  (setq auto-save-interval 100)
-  (setq auto-save-timeout  60)
-  (setq auto-save-visited-file-name nil)
-  (setq delete-auto-save-files t)
-#+END_SRC
-
-** Setup backup files
-
-By default Emacs saves =BackupFiles= under the original name with a tilde =~= appended. Example: Editing README will result in README and README~ in the same directory.
-
-This is primitive and boring.
-
-I save my backup files to =~/.emacs.d/.cache/backup= and since is always ignore by version control system, it's a nice place to store backup files.
-
-#+BEGIN_SRC emacs-lisp
-  (let ((backup-dir (concat user-cache-directory "backup")))
-    ;; Move backup file to `~/.emacs.d/.cache/backup'
-    (setq backup-directory-alist `(("." . ,backup-dir)))
-    ;; Makesure backup directory exist
-    (when (not (file-exists-p backup-dir))
-      (make-directory backup-dir t)))
-#+END_SRC
-
-Also setup some backup settings.
-
-#+BEGIN_SRC emacs-lisp
-  (setq delete-by-moving-to-trash nil)
-  (setq version-control t)
-  (setq kept-old-versions 10)
-  (setq kept-new-versions 20)
-  (setq delete-old-versions t)
-  (setq backup-by-copying t)
-#+END_SRC
-
-** Disable some default stuff
-
-Some emacs feature is not really useful
-
-*** Turn-off Alarm Bell
-
-#+BEGIN_SRC emacs-lisp
-  (setq ring-bell-function #'ignore)
-#+END_SRC
-
-*** Clean scratch buffer messages
-
-Leave me a clean **scratch** buffer and I'll be more happy :)
-
-#+BEGIN_SRC emacs-lisp
-  (setq initial-scratch-message "")
-#+END_SRC
-
-*** Use visible bell instead of buzzer
-
-#+BEGIN_SRC emacs-lisp
-  (setq visible-bell t)
-#+END_SRC
-
-*** Ask for y or n, not yes or no
-
-Emacs starts out asking for you to type yes or no with most important questions.
-Just let me use =y= or =n= with no =RET= required an I'm quite happy.
-
-#+BEGIN_SRC emacs-lisp
-  (defalias 'yes-or-no-p 'y-or-n-p)
-#+END_SRC
-
 
 * External Packages
 
