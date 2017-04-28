@@ -237,13 +237,22 @@ Some of my password stored in a secret file with gnupg encrypt, I add this funct
 
 The main package manager I use is emacs's =package.el=, it's really nice and easy to use.
 
-** Add melpa to package list
+** Add my extra package list
 
 [[http://melpa.org][melpa]] contains many community packages that not contribute to emacs's elpa, we add it here.
 
+I also add [[http://orgmode.org/elpa.html][org-mode elpa]] so I can use latest org-mode.
+
 #+BEGIN_SRC emacs-lisp
   (require 'package)                      ; built-in
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+  ;; melpa
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/") t)
+
+  ;; org
+  (add-to-list 'package-archives
+               '("org" . "http://orgmode.org/elpa/") t)
 
   ;; For important compatibility libraries like cl-lib
   (when (< emacs-major-version 24)
