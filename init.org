@@ -1240,17 +1240,47 @@ them at styles dir.
 
 ** mode-line
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   ;; My own theme depends on following packages
   (use-package powerline :ensure t)
   (use-package powerline-evil :ensure t)
-
+  ;; (use-package spaceline-all-the-icons :ensure t)
   ;; TODO: use my own replace spacemacs one
   (use-package spaceline
     :ensure t
     :config
     (require 'spaceline-config)
-    (spaceline-spacemacs-theme))
+    (setq powerline-default-separator 'slant)
+                                          ;(spaceline-spacemacs-theme)
+    )
+
+  (use-package spaceline-all-the-icons
+    :after spaceline
+    :config
+    (spaceline-all-the-icons-theme)
+    ;;
+    (setq spaceline-all-the-icons-separators-type 'slant))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package spaceline
+    :ensure t)
+
+    (require 'coldnew-modeline-config)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package spaceline :ensure t :config     (require 'spaceline-config))
+
+  ;; (use-package spaceline-all-the-icons
+  ;;   :after spaceline
+
+  ;;   :config
+  ;;   (spaceline-all-the-icons-theme)
+  ;;   ;;
+  ;;   (setq spaceline-all-the-icons-separators-type 'slant)
+  ;;   )
+
 #+END_SRC
 
 * Buffer                                                             :buffer:
@@ -1316,8 +1346,6 @@ If you use Gentoo Linux, you can use portage to install it.
   emerge dev-util/cscope
   emerge dev-util/global
 #+END_SRC
-
-**
 
 ** Basic setup
 
