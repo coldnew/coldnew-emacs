@@ -8,7 +8,6 @@
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package org
     :ensure t
-    :pin gnu                              ; fetch fron `gnu'
     :mode (("\\.org\\'" . org-mode)
            ("\\.org_archive\\'" . org-mode))
     :config
