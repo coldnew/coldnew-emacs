@@ -535,7 +535,6 @@ Some buildin packages need to add extra setups for my emacs setting.
 #+END_SRC
 
 >>>>>>> parent of 3ecf6017... I think I don't need to specify cachedir
-* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 * External Packages
 
 Packages that use as libraries or commands put here.
@@ -822,6 +821,8 @@ GitHub: https://github.com/etu/webpaste.el
     :ensure t)
 #+END_SRC
 
+
+* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 * Interactive Commands                                              :command:
 
 In emacs, we can use =M-x= to execute interactive commands, I implement some of them to make my emacs more easy to use.
