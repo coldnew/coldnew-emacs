@@ -5221,3 +5221,5 @@ Following link is refrence for my emacs config.
 ~[20]~ https://github.com/jonnay/emagicians-starter-kit/blob/master/Eshell-Magick.org
 
 ~[21]~ [[https://writequit.org/eos/eos.html][The Emacs Operating System (EOS)]]
+
+~[22]~ [[https://github.com/manuel-uberti/.emacs.d][manuel-uberti/.emacs.d: My GNU Emacs configuration]]
