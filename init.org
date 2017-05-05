@@ -832,11 +832,11 @@ GitHub: https://github.com/etu/webpaste.el
     :ensure t)
 #+END_SRC
 
-
-* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 * Interactive Commands                                              :command:
 
 In emacs, we can use =M-x= to execute interactive commands, I implement some of them to make my emacs more easy to use.
+
+All my =commands= starts with =my/= prefix.
 
 ** Buffers                                                          :buffer:
 
@@ -846,7 +846,7 @@ Sometimes I just want to kill all buffers, this command will kill all
 of them and make =*scratch*= buffer alone.
 
 #+BEGIN_SRC emacs-lisp
-  (defun nuke-all-buffers ()
+  (defun my/nuke-all-buffers ()
     "Kill all buffers, leaving *scratch* only."
     (interactive)
     (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
@@ -870,7 +870,7 @@ not modified.
 *** Abort minibuffer recursive edit
 
 #+BEGIN_SRC emacs-lisp
-  (defun minibuffer-keyboard-quit ()
+  (defun my/minibuffer-keyboard-quit ()
     "Abort recursive edit.
   In Delete Selection mode, if the mark is active, just deactivate it;
   then it takes a second \\[keyboard-quit] to abort the minibuffer."
@@ -884,7 +884,7 @@ not modified.
 *** Make buffer untabify
 
 #+BEGIN_SRC emacs-lisp
-  (defun untabify-buffer ()
+  (defun my/untabify-buffer ()
     (interactive)
     (save-excursion
       (untabify (point-min) (point-max))))
@@ -893,7 +893,7 @@ not modified.
 *** Indent whole buffer
 
 #+BEGIN_SRC emacs-lisp
-  (defun indent-whole-buffer ()
+  (defun my/indent-whole-buffer ()
     "Indent whole buffer."
     (interactive)
     (save-excursion
@@ -903,7 +903,7 @@ not modified.
 *** Remove buffers trailing whitespace and untabify
 
 #+BEGIN_SRC emacs-lisp
-  (defun cleanup-buffer ()
+  (defun my/cleanup-buffer ()
     "Perform a bunch of operations on the whitespace content of a buffer."
     (interactive)
     (save-excursion
@@ -915,7 +915,7 @@ not modified.
 *** Replace the preceding sexp with its value
 
 #+BEGIN_SRC emacs-lisp
-  (defun eval-and-replace ()
+  (defun my/eval-and-replace ()
     "Replace the preceding sexp with its value."
     (interactive)
     (backward-kill-sexp)
@@ -929,7 +929,7 @@ not modified.
 *** Quick folding source block
 
 #+BEGIN_SRC emacs-lisp
-  (defun quick-folding-source ()
+  (defun my/quick-folding-source ()
     "Use emacs buildin easy to folding code."
     (interactive)
     (set-selective-display
@@ -971,7 +971,6 @@ ref: http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
           (t (narrow-to-defun))))
 #+END_SRC
 
-
 ** Edit (Insert/Remove)                                               :edit:
 
 *** Insert U200B char
@@ -982,7 +981,7 @@ use under org-mode.
 For more info, please see: [[https://lists.gnu.org/archive/html/emacs-orgmode/2012-09/msg00155.html][suggestion for org-emphasis-regexp-components: *U*nited *N*ations]]
 
 #+BEGIN_SRC emacs-lisp
-  (defun insert-U200B-char ()
+  (defun my/insert-U200B-char ()
     "Insert <U200B> char, this character is nice use in org-mode."
     (interactive)
     (insert "\ufeff"))
@@ -991,7 +990,7 @@ For more info, please see: [[https://lists.gnu.org/archive/html/emacs-orgmode/20
 *** Insert empty line after current line
 
 #+BEGIN_SRC emacs-lisp
-  (defun insert-empty-line ()
+  (defun my/insert-empty-line ()
     "Insert an empty line after current line and position cursor on newline."
     (interactive)
     (move-end-of-line nil)
@@ -1002,7 +1001,7 @@ For more info, please see: [[https://lists.gnu.org/archive/html/emacs-orgmode/20
 *** Insert lorem ipsum
 
 #+BEGIN_SRC emacs-lisp
-  (defun insert-lorem ()
+  (defun my/insert-lorem ()
     "Insert a lorem ipsum."
     (interactive)
     (insert "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do "
@@ -1017,7 +1016,7 @@ For more info, please see: [[https://lists.gnu.org/archive/html/emacs-orgmode/20
 *** Delete word
 
 #+BEGIN_SRC emacs-lisp
-  (defun delete-word (arg)
+  (defun my/delete-word (arg)
     "Delete characters forward until encountering the end of a word.
   With argument, do this that many times."
     (interactive "p")
@@ -1027,7 +1026,7 @@ For more info, please see: [[https://lists.gnu.org/archive/html/emacs-orgmode/20
 *** Backward delete word
 
 #+BEGIN_SRC emacs-lisp
-  (defun backward-delete-word (arg)
+  (defun my/backward-delete-word (arg)
     "Delete characters backward until encountering the end of a word.
   With argument, do this that many times."
     (interactive "p")
@@ -1037,7 +1036,7 @@ For more info, please see: [[https://lists.gnu.org/archive/html/emacs-orgmode/20
 *** Set mark or expand region
 
 #+BEGIN_SRC emacs-lisp
-  (defun set-mark-mode/rectangle-mark-mode ()
+  (defun my/set-mark-mode/rectangle-mark-mode ()
     "toggle between set-mark-command or rectangle-mark-mode"
     (interactive)
     (if (not mark-active)
@@ -1048,7 +1047,7 @@ For more info, please see: [[https://lists.gnu.org/archive/html/emacs-orgmode/20
 *** Indent region/buffer and cleanup
 
 #+BEGIN_SRC emacs-lisp
-  (defun indent-region-or-buffer-and-cleanup ()
+  (defun my/indent-region-or-buffer-and-cleanup ()
     "Indents a region if selected, otherwise the whole buffer."
     (interactive)
     (cl-flet ((format-fn (BEG END) (indent-region BEG END) (untabify BEG END)))
@@ -1075,13 +1074,12 @@ For more info, please see: [[https://lists.gnu.org/archive/html/emacs-orgmode/20
 #+END_SRC
 
 
-
 ** File Handle                                                        :file:
 
 *** Reopen file as root
 
 #+BEGIN_SRC emacs-lisp
-  (defun file-reopen-as-root ()
+  (defun my/file-reopen-as-root ()
     (interactive)
     (when buffer-file-name
       (find-alternate-file
@@ -1092,7 +1090,7 @@ For more info, please see: [[https://lists.gnu.org/archive/html/emacs-orgmode/20
 *** Delete current buffer file
 
 #+BEGIN_SRC emacs-lisp
-  (defun delete-current-buffer-file ()
+  (defun my/delete-current-buffer-file ()
     "Removes file connected to current buffer and kills buffer."
     (interactive)
     (let ((filename (buffer-file-name))
@@ -1109,7 +1107,7 @@ For more info, please see: [[https://lists.gnu.org/archive/html/emacs-orgmode/20
 *** Rename current Buffer and file
 
 #+BEGIN_SRC emacs-lisp
-  (defun rename-current-buffer-file ()
+  (defun my/rename-current-buffer-file ()
     "Renames current buffer and file it is visiting."
     (interactive)
     (let ((name (buffer-name))
@@ -1136,7 +1134,7 @@ I only make =owener= can has executable permission, not change it for gourp or
 others user.
 
 #+BEGIN_SRC emacs-lisp
-  (defun set-file-executable()
+  (defun my/set-file-executable()
     "Add executable permissions on current file."
     (interactive)
     (when (buffer-file-name)
@@ -1148,7 +1146,7 @@ others user.
 *** Clone current file to new one
 
 #+BEGIN_SRC emacs-lisp
-  (defun clone-file-and-open (filename)
+  (defun my/clone-file-and-open (filename)
     "Clone the current buffer writing it into FILENAME and open it"
     (interactive "FClone to file: ")
     (save-restriction
@@ -1177,7 +1175,6 @@ others user.
       nil))
 #+END_SRC
 
-
 ** Debug                                                             :debug:
 
 *** Eval emacs buffer until error
@@ -1185,7 +1182,7 @@ others user.
 A really nice command help me to find error on elisp buffer.
 
 #+BEGIN_SRC emacs-lisp
-  (defun eval-buffer-until-error ()
+  (defun my/eval-buffer-until-error ()
     "Evaluate emacs buffer until error occured."
     (interactive)
     (goto-char (point-min))
@@ -1195,7 +1192,7 @@ A really nice command help me to find error on elisp buffer.
 *** Display face found at the current point
 
 #+BEGIN_SRC emacs-lisp
-  (defun what-face (pos)
+  (defun my/what-face (pos)
     "Display face found at the current point."
     (interactive "d")
     (let ((face (or (get-char-property (point) 'read-face-name)
@@ -1211,7 +1208,6 @@ A really nice command help me to find error on elisp buffer.
     (interactive)
     (load-file user-init-file))
 #+END_SRC
-
 
 
 ** Window                                                           :window:
@@ -1230,6 +1226,7 @@ If other window does not exist, split it, else switch to it.
 #+END_SRC
 
 
+* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 * Styles                                                              :style:
 
 My own emacs, my own style :)
