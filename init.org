@@ -258,6 +258,17 @@ I move the file to cache-dir and make git ignore it.
   (when (file-exists-p custom-file)
     (load-file custom-file))
 #+END_SRC
+** Loading Modules
+
+I think I'll write some dynamic module extension, which will save to =~/.emacs.d/modules=, use a helper script to help me load them.
+
+#+BEGIN_SRC emacs-lisp
+  ;; load the `load-modules.el' file which help me load external modulept
+  (let ((script (concat user-modules-directory "load-modules.el")))
+    (when (file-exists-p script)
+      (load script)))
+#+END_SRC
+
 ** Method to load secret file                                     :function:
 
 Some of my password stored in a secret file with gnupg encrypt, I add this function here so I can inject some emacs-command which hass password/account setting.
@@ -2473,18 +2484,6 @@ The dired's =dired-open-file= will not use system's default tool to open file, t
 
 
 * ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
-
-* Loading Modules
-
-I split my configs to many org-mode files
-I think I'll write some dynamic module extension, which will save to =~/.emacs.d/modules=, use a helper script to help me load them.
-
-#+BEGIN_SRC emacs-lisp
-  ;; load the `load-modules.el' file which help me load external modulept
-  (let ((script (concat user-emacs-directory "modules/load-modules.el")))
-    (when (file-exists-p script)
-      (load script)))
-#+END_SRC
 
 * External Packages                                                :packages:
 
