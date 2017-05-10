@@ -1225,8 +1225,6 @@ If other window does not exist, split it, else switch to it.
     (other-window 1))
 #+END_SRC
 
-
-* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 * Styles                                                              :style:
 
 My own emacs, my own style :)
@@ -1352,6 +1350,8 @@ them at styles dir.
 
 #+END_SRC
 
+
+* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 * Buffer                                                             :buffer:
 ** Create *scratch* automatically
 
@@ -5111,7 +5111,7 @@ We *should not* use mouse when play with emacs.
     (kbd "s-<RET>") 'insert-empty-line
     (kbd "s-<SPC>") 'insert-U200B-char
     (kbd "C-v") 'set-mark-mode/rectangle-mark-mode
-    (kbd "C-x C-i") 'indent-region-or-buffer-and-cleanup
+    (kbd "C-x C-i") 'my/indent-region-or-buffer-and-cleanup
     (kbd "M-v") 'er/expand-region
     (kbd "M-x") 'helm-M-x
     (kbd "M-y") 'helm-show-kill-ring
