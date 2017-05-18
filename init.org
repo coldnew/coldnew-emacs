@@ -2109,6 +2109,44 @@ GitHub: https://github.com/masayuko/ox-rst
              )
 #+END_SRC
 
+* Configration Files
+
+Since emacs not built-in all configration files syntax highlight support, we need to install manually.
+
+** Crontab
+
+#+BEGIN_SRC emacs-lisp
+  (use-package crontab-mode
+    :ensure t
+    :mode "\\.?cron\\(tab\\)?\\'")
+#+END_SRC
+
+** Docker
+
+#+BEGIN_SRC emacs-lisp
+  (use-package dockerfile-mode
+    :ensure t
+    :mode "Dockerfile\\'")
+#+END_SRC
+
+** SSH
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ssh-config-mode
+    :ensure t
+    :mode ((".ssh/config\\'"       . ssh-config-mode)
+           ("sshd?_config\\'"      . ssh-config-mode)
+           ("known_hosts\\'"       . ssh-known-hosts-mode)
+           ("authorized_keys\\'"   . ssh-authorized-keys-mode)))
+#+END_SRC
+
+** Systemd
+
+#+BEGIN_SRC emacs-lisp
+  (use-package systemd
+    :ensure t)
+#+END_SRC
+
 
 * Lisp Development
 
@@ -2436,43 +2474,6 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
              ("C-z" . helm-select-action))
 #+END_SRC
 
-* Configration Files
-
-Since emacs not built-in all configration files syntax highlight support, we need to install manually.
-
-** Crontab
-
-#+BEGIN_SRC emacs-lisp
-  (use-package crontab-mode
-    :ensure t
-    :mode "\\.?cron\\(tab\\)?\\'")
-#+END_SRC
-
-** Docker
-
-#+BEGIN_SRC emacs-lisp
-  (use-package dockerfile-mode
-    :ensure t
-    :mode "Dockerfile\\'")
-#+END_SRC
-
-** SSH
-
-#+BEGIN_SRC emacs-lisp
-  (use-package ssh-config-mode
-    :ensure t
-    :mode ((".ssh/config\\'"       . ssh-config-mode)
-           ("sshd?_config\\'"      . ssh-config-mode)
-           ("known_hosts\\'"       . ssh-known-hosts-mode)
-           ("authorized_keys\\'"   . ssh-authorized-keys-mode)))
-#+END_SRC
-
-** Systemd
-
-#+BEGIN_SRC emacs-lisp
-  (use-package systemd
-    :ensure t)
-#+END_SRC
 
 * TODO Spelling
 
