@@ -2110,6 +2110,159 @@ GitHub: https://github.com/masayuko/ox-rst
 #+END_SRC
 
 
+* Lisp Development
+
+Though =LISP= has many dialet, it still is the best programming language I ever met.
+
+** Emacs Lisp
+
+#+BEGIN_SRC emacs-lisp :noweb no-export
+  (use-package elisp-mode
+    :ensure nil            ; built-in
+    :config
+    <<emacs-lisp-mode-config>>)
+#+END_SRC
+
+*** Interactive macro-expander for Emacs
+
+=macrostep= is an Emacs minor mode for interactively stepping through the expansion of macros in Emacs Lisp source code. It lets you see exactly what happens at each step of the expansion process by pretty-printing the expanded forms inline in the source buffer, which is temporarily read-only while macro expansions are visible. You can expand and collapse macro forms one step at a time, and evaluate or instrument the expansions for debugging with Edebug as normal (but see “Bugs and known limitations”, below). Single-stepping through the expansion is particularly useful for debugging macros that expand into another macro form. These can be difficult to debug with Emacs’ built-in macroexpand, which continues expansion until the top-level form is no longer a macro call.
+
+GitHub: https://github.com/joddie/macrostep
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref emacs-lisp-mode-config
+  (use-package macrostep
+    :ensure t)
+#+END_SRC
+
+*** Additional flavour to emacs-lisp programming
+
+el-spice is a minor mode that provides additional configuration to make
+programming in Emacs Lisp more enjoyable.
+
+GitHub: https://github.com/vedang/el-spice
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref emacs-lisp-mode-config
+  (use-package el-spice
+    :ensure t)
+#+END_SRC
+
+*** Add eldoc support                                               :eldoc:
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref emacs-lisp-mode-config
+  (use-package eldoc
+    :ensure t
+    :config
+    (add-hook 'emacs-lisp-mode-hook
+              '(lambda ()
+                 ;; enable eldoc
+                 (turn-on-eldoc-mode)
+                 ;; fix for paredit if exist
+                 (eval-after-load 'paredit
+                   '(progn
+                      (eldoc-add-command 'paredit-backward-delete
+                                         'paredit-close-round))))))
+#+END_SRC
+
+*** Check paren on save
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref emacs-lisp-mode-config
+  (defun my/elisp/check-parens-on-save ()
+    "Run `check-parens' when the current buffer is saved."
+    (add-hook 'after-save-hook #'check-parens nil 'make-it-local))
+
+  (add-hook 'emacs-lis-mode
+            (lambda () (my/emacs-lisp/enable-check-parens-on-save)))
+#+END_SRC
+
+*** On-the-fly evaluation/substitution of emacs lisp code
+
+[[https://github.com/Fuco1/litable][litable]] keeps a list of pure functions as a safeguard for unwanted evaluations.
+A function must first be accepted into this list (using =M-x litable-accept-as-pure=)
+before it can be evaluated on-the-fly.
+
+You should take care of what function you accept as pure to avoid any
+unfortunate accidents. Also, note that the pure functions list persists across
+sessions.
+
+GitHub: https://github.com/Fuco1/litable
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref emacs-lisp-mode-config
+  (use-package litable
+    :ensure t
+    :config
+    ;; Save cache file to `user-cache-direcotry'
+    (setq litable-list-file (concat user-cache-directory ".litable-lists.el"))
+    ;; Enable litable-mode globally
+    (litable-mode))
+#+END_SRC
+
+*** Syntax highlighting for Emacs' cl-lib
+
+This library adds all of the familiar highlighting to =cl-lib= macros
+=(cl-defun, cl-loop, etc.)= that were originally provided for =cl=.
+
+It's not simply throwing in all the symbols as keywords. They're being
+added using the same regular expressions that =cl= gets, so function
+names get highlighted with =cl-defun=, type names get highlighted with
+=cl-defstruct=, etc.
+
+GitHub: https://github.com/skeeto/cl-lib-highlight
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref emacs-lisp-mode-config
+  (use-package cl-lib-highlight
+    :ensure t
+    :config
+    (cl-lib-highlight-initialize))
+#+END_SRC
+
+*** Display ^L glyphs as horizontal lines
+
+This Emacs library provides a global mode which displays ugly form feed characters as tidy horizontal rules.
+
+GitHub: https://github.com/purcell/page-break-lines
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref emacs-lisp-mode-config
+  (use-package page-break-lines
+    :ensure t
+    :config
+    ;; enable globally
+    (global-page-break-lines-mode 1))
+#+END_SRC
+
+*** Remove *.elc when save
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref emacs-lisp-mode-config
+  (defun my/remove-elc-on-save ()
+    "If you're saving an elisp file, likely the .elc is no longer valid."
+    (make-local-variable 'after-save-hook)
+    (add-hook 'after-save-hook
+              (lambda ()
+                (if (file-exists-p (concat buffer-file-name "c"))
+                    (delete-file (concat buffer-file-name "c"))))))
+
+  (add-hook 'emacs-lisp-mode-hook 'my/remove-elc-on-save)
+#+END_SRC
+
+*** Shows keyboard macros or latest interactive commands as emacs lisp.
+
+GitHub: https://github.com/Silex/elmacro
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref emacs-lisp-mode-config
+  (use-package elmacro
+    :ensure t
+    :config
+    (elmacro-mode))
+#+END_SRC
+
+*** Setup Emacs-Lisp Keybindings                               :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref emacs-lisp-mode-config
+    (bind-keys :map emacs-lisp-mode-map
+;;               ("C-c '" . my/narrow-or-widen-dwim)
+)
+#+END_SRC
+
+
 * ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 * Helm                                                                 :helm:
 
@@ -4236,12 +4389,6 @@ Show lambda as λ.
 
 #+BEGIN_SRC emacs-lisp
   (global-prettify-symbols-mode 1)
-#+END_SRC
-
-** Emacs Lisp
-
-#+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang/emacs-lisp.el"))
 #+END_SRC
 
 ** Clojure
