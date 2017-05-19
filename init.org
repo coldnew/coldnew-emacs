@@ -2109,6 +2109,26 @@ GitHub: https://github.com/masayuko/ox-rst
              )
 #+END_SRC
 
+** QML
+
+#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
+  (use-package qml-mode
+    :ensure t
+    :mode "\\.qml$"
+    :config
+    <<qml-config>>)
+#+END_SRC
+
+*** indent-guide
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref qml-config
+  (use-package indent-guide
+    :ensure t
+    :config
+    (add-hook 'qml-mode-hook #'indent-guide-mode))
+#+END_SRC
+
+
 * Configration Files
 
 Since emacs not built-in all configration files syntax highlight support, we need to install manually.
@@ -2147,6 +2167,295 @@ Since emacs not built-in all configration files syntax highlight support, we nee
     :ensure t)
 #+END_SRC
 
+** CMake
+
+#+BEGIN_SRC emacs-lisp
+  (use-package cmake-mode
+    :ensure t
+    :mode (("CMakeLists\\.txt\\'" . cmake-mode) ("\\.cmake\\'" . cmake-mode)))
+#+END_SRC
+
+
+* C/C++ Development
+
+#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
+  (use-package cc-mode
+    :mode
+    (("\\.h\\'" . c-mode)
+     ("\\.c\\'" . c-mode)
+     ("\\.hpp\\'" . c++-mode)
+     ("\\.cpp\\'" . c++-mode))
+    :config
+    <<cc-mode-config>>)
+#+END_SRC
+
+** C/C++ headers detect
+
+*** Use regexp to find header is C++ header or not
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
+  (add-to-list 'magic-mode-alist
+               `(,(lambda ()
+                    (and (string= (file-name-extension (or (buffer-file-name) "")) "h")
+                         (or (re-search-forward "#include <\\w+>"
+                                                magic-mode-regexp-match-limit t)
+                             (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
+                                                magic-mode-regexp-match-limit t)
+                             (re-search-forward "std::"
+                                                magic-mode-regexp-match-limit t))))
+                 . c++-mode))
+#+END_SRC
+
+*** Use dummy-h-mode to help detect header's major mode
+
+ [[https://github.com/yascentur/dummy-h-mode-el][dummy-h-mode]] is an major-mode to help switch major mode to c/c++/objc-mode on .h
+ file.
+
+ GitHub: https://github.com/yascentur/dummy-h-mode-el
+
+ #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
+;;   (use-package dummy-h-mode
+;;     :ensure t
+;;     :mode "\\.h$"
+;;     :config
+;;     (add-hook 'dummy-h-mode-hook
+;;               (lambda ()
+;;                 ;; use c-mode by default
+;;                 (setq dummy-h-mode-default-major-mode 'c-mode)
+;;                 ;; setup search limit
+;;                 (setq dummy-h-mode-search-limit 60000))))
+ #+END_SRC
+
+** ElDoc supports                                                    :eldoc:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package c-eldoc
+    :ensure t
+    :config
+    (add-hook 'c-mode-common-hook
+              '(lambda ()
+                 (setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
+                 (c-turn-on-eldoc-mode))))
+#+END_SRC
+
+** Highlight a few dangerous types in C/C++
+
+[[http://www.emacswiki.org/emacs/CWarnMode][cwarn-mode]] is a minor mode that ca highlight a few dangerous types in C/C++.
+
+By default it highlights:
+
+- Semicolons right after conditions and loops (e.g. ~if (x == y);~)
+- Assignments in tests (e.g. ~if (x = y) {~)
+- Functions with reference parameters (e.g. ~void funct(string &p) {~)
+
+#+BEGIN_SRC emacs-lisp
+  (use-package cwarn
+    :config
+    (add-hook 'c-mode-common-hook '(lambda () (cwarn-mode 1))))
+#+END_SRC
+
+** Comment #if 0 #endif region
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/cc-mode/highlight-if-0 ()
+    "highlight c/c++ #if 0 #endif macros"
+    (setq cpp-known-face 'default)
+    (setq cpp-unknown-face 'default)
+    (setq cpp-known-writable 't)
+    (setq cpp-unknown-writable 't)
+    (setq cpp-edit-list '(("0" '(foreground-color . "gray")  default both)
+                          ("1" default font-lock-comment-face both)))
+    (cpp-highlight-buffer t))
+
+  ;; Add to c/c++ mode
+  (defun my/cc-mode/highlight-if-0-hook ()
+    (when (or (eq major-mode 'c++-mode) (eq major-mode 'c-mode))
+      (my/cc-mode/highlight-if-0)))
+  (add-hook 'after-save-hook #'my/cc-mode/highlight-if-0-hook)
+#+END_SRC
+
+** Use subword-mode for C/C++ project
+
+In most C/C++ project, we naming variable in camelCase, subword-mode can help us treat =helloWorld= as two words.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
+  ;; subword-mode, e.g., someThing is treated as two words
+  (add-hook 'c-mode-common-hook '(lambda () (subword-mode 1)))
+#+END_SRC
+
+** Auto pair parentheses with electric-pair
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'c-mode-common-hook 'electric-pair-mode)
+#+END_SRC
+
+** Add refactor function support
+
+Semantic Refactor is a C/C++ refactoring tool based on Semantic parser framework.
+
+GitHub: https://github.com/tuhdo/semantic-refactor
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
+  (use-package srefactor
+    :ensure t)
+#+END_SRC
+
+** Quick switch between header and source file in C/C++
+
+This extension allows to quickly switch between header and a source file with
+the same name located in the directory tree or repository. It is an alternatife
+to =ff-find-other-file=.
+
+GitHub: https://github.com/fourier/cff
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
+  (use-package cff :ensure t)
+#+END_SRC
+
+** Extra Syntax Highlight
+
+Some syntax highlight may not support in default emacs, set it here.
+
+*** Highlights stdint types
+
+Extra hightlight for =stdint.h=
+
+#+BEGIN_SRC emacs-lisp
+  (dolist (m '(c-mode c++-mode))
+    (font-lock-add-keywords
+     m
+     '(("\\<\\(int8_t\\|int16_t\\|int32_t\\|int64_t\\|uint8_t\\|uint16_t\\|uint32_t\\|uint64_t\\)\\>" . font-lock-keyword-face))))
+#+END_SRC
+
+** Coding Styles
+
+Since C/C++ has too many coding styles, I need to set it up.
+
+*** C
+**** General C Coding Style
+
+I always use =linux coding style= for c language by default.
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
+  (add-hook 'c-mode-hook
+            '(lambda ()
+               (c-set-style "linux")
+               (setq c-basic-offset 8)
+               ;; Make TAB equivilent to 8 spaces
+               (setq tab-width 8)))
+#+END_SRC
+
+**** Linux Kernel C Coding Style
+
+As part of Linux Kernel developer, I add =linux-kernel= coding style rule, which
+use =tabs= as indent and follow linux kernel development rules. Use following
+code to make emacs switch to =linux-kernel= style automatically when enter linux
+kernel directories.
+
+This coding style is document in https://www.kernel.org/doc/Documentation/CodingStyle.
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
+  (defun c-lineup-arglist-tabs-only (ignored)
+    "Line up argument lists by tabs, not spaces"
+    (let* ((anchor (c-langelem-pos c-syntactic-element))
+           (column (c-langelem-2nd-pos c-syntactic-element))
+           (offset (- (1+ column) anchor))
+           (steps (floor offset c-basic-offset)))
+      (* (max steps 1)
+         c-basic-offset)))
+
+  ;; Add Linux kernel style
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (c-add-style "linux-kernel"
+                           '("linux" (c-offsets-alist
+                                      (arglist-cont-nonempty
+                                       c-lineup-gcc-asm-reg
+                                       c-lineup-arglist-tabs-only))))))
+
+  (defun linux-kernel-development-setup ()
+    (let ((filename (buffer-file-name)))
+      ;; Enable kernel mode for the appropriate files
+      (when (and filename
+                 (or (locate-dominating-file filename "Kbuild")
+                     (locate-dominating-file filename "Kconfig")
+                     (save-excursion (goto-char 0)
+                                     (search-forward-regexp "^#include <linux/\\(module\\|kernel\\)\\.h>$" nil t))))
+        (setq indent-tabs-mode t)
+        (setq tab-width 8)
+        (setq c-basic-offset 8)
+        (c-set-style "linux-kernel")
+        (message "Setting up indentation for the linux kernel"))))
+
+  (add-hook 'c-mode-hook 'linux-kernel-development-setup)
+#+END_SRC
+
+*** C++
+
+Use my C++ coding style.
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
+  (add-hook 'c++-mode-hook
+            '(lambda ()
+
+               ;; Use stroustrup style
+               (c-set-style "stroustrup")
+
+               ;; Setting indentation lvel
+               (setq c-basic-offset 4)
+
+               ;; Make TAB equivilent to 4 spaces
+               (setq tab-width 4)
+
+               ;; Use spaces to indent instead of tabs.
+               (setq indent-tabs-mode nil)
+
+               ;; Indent the continuation by 2
+               (setq c-continued-statement-offset 2)
+
+               ;; Brackets should be at same indentation level as the statements they open
+               ;; for example:
+               ;;                 if (0)        becomes        if (0)
+               ;;                     {                        {
+               ;;                        ;                         ;
+               ;;                     }                        }
+               (c-set-offset 'substatement-open 0)
+
+               ;; make open-braces after a case
+               (c-set-offset 'case-label '+)
+
+               ;; Not indent code inside a namespace
+               ;; for example:
+               ;;                namespace A {
+               ;;
+               ;;                int namespace_global_variable;
+               ;;
+               ;;                class Class {
+               ;;
+               ;;                Class();
+               ;;                //...
+               ;;                };
+               ;;
+               ;;                }
+               (c-set-offset 'innamespace 0)
+               ))
+#+END_SRC
+
+
+** Setup C/C++ Keybinding
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
+  (bind-keys :map c-mode-base-map
+             ;;("C-c '" . my/narrow-or-widen-dwim)
+             ("C-c C-c" . compile)
+             ("C-c C-g" . gdb)
+             ("C-c C-o" . cff-find-other-file))
+
+  ;; Some keys may override global map add here
+  (bind-keys :map c-mode-base-map
+             ("M-." . helm-gtags-dwim)
+             ("M-," . helm-gtags-pop-stack))
+#+END_SRC
 
 * Lisp Development
 
@@ -3762,13 +4071,6 @@ For c-mode, just do the same but change the relative
 
 * Programming Languages
 
-** [[file:configs/lang/c-cpp.org][C / C++]]
-
-#+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang/c-cpp.el"))
-#+END_SRC
-
-
 ** arduino
 
 #+BEGIN_SRC emacs-lisp
@@ -4110,38 +4412,6 @@ GitHub: https://github.com/trotzig/import-js
      auto-mode-alist))
 #+END_SRC
 
-
-* Qt (C++) Development
-
-TODO: integrate back tp C++ setting.
-
-** CMake setup
-
-#+BEGIN_SRC emacs-lisp
-  (use-package cmake-mode
-    :ensure t
-    :mode (("CMakeLists\\.txt\\'" . cmake-mode) ("\\.cmake\\'" . cmake-mode)))
-#+END_SRC
-
-
-** QML Setup
-
-#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
-  (use-package qml-mode
-    :ensure t
-    :mode "\\.qml$"
-    :config
-    <<qml-config>>)
-#+END_SRC
-
-*** indent-guide
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref qml-config
-  (use-package indent-guide
-    :ensure t
-    :config
-    (add-hook 'qml-mode-hook #'indent-guide-mode))
-#+END_SRC
 
 * iOS / Mac OSX Development
 
