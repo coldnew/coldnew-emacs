@@ -18,27 +18,27 @@ do_autogen () {
 
 do_configure_cli () {
     ./configure --prefix=${INSDIR} --with-modules \
-		--without-x \
-		--without-ns \
+                --without-x \
+                --without-ns \
 
 }
 
 do_configure_osx () {
     ./configure --prefix=${INSDIR} --with-modules \
-		--with-ns --disable-ns-self-contained \
-		--with-gnutls \
-		--with-rsvg \
-		--with-imagemagick \
-		--without-dbus --without-x --without-makeinfo
+                --with-ns --disable-ns-self-contained \
+                --with-gnutls \
+                --with-rsvg \
+                --with-imagemagick \
+                --without-dbus --without-x --without-makeinfo
 }
 
 do_configure_linux () {
     ./configure --prefix=${INSDIR} --with-modules \
-		--without-ns --disable-ns-self-contained \
-		--with-gnutls \
-		--with-rsvg \
-		--with-imagemagick \
-		--with-dbus --with-x --with-x-toolkit=gtk3 --with-xwidgets 
+                --without-ns --disable-ns-self-contained \
+                --with-gnutls \
+                --with-rsvg \
+                --with-imagemagick \
+                --with-dbus --with-x --with-x-toolkit=gtk3 --with-xwidgets
 }
 
 do_make () {
@@ -61,8 +61,8 @@ do_install () {
     make install
     # special hack for different os
     case $(uname) in
-	"Darwin") do_install_osx ;;
-	*) ;;
+        "Darwin") do_install_osx ;;
+        *) ;;
     esac
 
 }
@@ -88,31 +88,31 @@ if [ -f "$INSDIR/commit-id" ]; then
     OLD_ID=$(cat "$INSDIR/commit-id")
     NEW_ID=$(git rev-parse --short HEAD)
     if [ $OLD_ID == $NEW_ID ]; then
-	echo "Your emacs is match to commit-id, no need to rebuild."
-	exit 0 # quit
+        echo "Your emacs is match to commit-id, no need to rebuild."
+        exit 0 # quit
     else
-	echo -ne "$NEW_ID" > "$INSDIR/commit-id"
-	echo "Start rebuilding emacs..."
+        echo -ne "$NEW_ID" > "$INSDIR/commit-id"
+        echo "Start rebuilding emacs..."
     fi
 fi
 
 do_autogen
 
 # configure according to platform
-if [ $CI == "true" ]; then
+if [[ $CI == "true" ]]; then
     do_configure_cli
 else
     case $(uname) in
-	"Darwin")
-	    do_configure_osx
-	    ;;
-	"Linux")
-	    do_configure_linux
-	    ;;
-	*)
-	    echo "This building script only support Linux and Darwin"
-	    exit -1
-	    ;;
+        "Darwin")
+            do_configure_osx
+            ;;
+        "Linux")
+            do_configure_linux
+            ;;
+        *)
+            echo "This building script only support Linux and Darwin"
+            exit -1
+            ;;
     esac
 fi
 
