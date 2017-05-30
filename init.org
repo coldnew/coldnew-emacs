@@ -2695,9 +2695,6 @@ Create =~/.lein/profiles.clj= with following content:
                          [org.clojure/tools.nrepl "0.2.12"]]}}
 #+END_SRC
 
-
-
-
 *** Install Clojure's building system: boot
 
 [[http://boot-clj.com/][Boot]] is another building tool for Clojure.
@@ -2724,7 +2721,6 @@ Now we can use =boot repl= to start clojure's repl for test
   boot repl
 #+END_SRC
 
-
 *** Use cider for interactive development
 
 [[https://github.com/clojure-emacs/cider][cider]] is a Clojure Interactive Development Environment that Rocks for Emacs
@@ -2732,6 +2728,7 @@ Now we can use =boot repl= to start clojure's repl for test
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
   (use-package cider
     :ensure t
+    :after clojure-mode
     :config
 
     ;; Enable eldoc in Clojure buffers
@@ -2769,7 +2766,6 @@ Now we can use =boot repl= to start clojure's repl for test
     (setq nrepl-log-messages t))
 #+END_SRC
 
-
 *** Add refactor function support
 
 GitHub: https://github.com/clojure-emacs/clj-refactor.el
@@ -2777,13 +2773,13 @@ GitHub: https://github.com/clojure-emacs/clj-refactor.el
 #+BEGIN_SRC emacs-lisp
   (use-package clj-refactor
     :ensure t
+    :after clojure-mode
     :config
     ;; Add clj-refactor to clojure-mode
     (add-hook 'clojure-mode-hook '(lambda () (clj-refactor-mode 1)))
     ;; Use `C-c C-x' as prefix
     (cljr-add-keybindings-with-prefix "M-m"))
 #+END_SRC
-
 
 *** Search on Clojars more easily
 
@@ -2798,7 +2794,6 @@ GitHub: https://github.com/joshuamiller/clojars.el
     :ensure t)
 #+END_SRC
 
-
 *** Search Clojure Cheatsheet
 
 GitHub: https://github.com/clojure-emacs/clojure-cheatsheet
@@ -2807,7 +2802,6 @@ GitHub: https://github.com/clojure-emacs/clojure-cheatsheet
   (use-package clojure-cheatsheet
     :ensure t)
 #+END_SRC
-
 
 *** Pretty Symbols
 
@@ -2838,7 +2832,6 @@ Pretty symbols for anonymous functions, set literals and partial, like =(λ [a] 
     (my/clojure/fancify-symbols m))
 #+END_SRC
 
-
 *** Interactive Commands                                          :command:
 
 Some interactive commands for clojure-mode.
@@ -2860,8 +2853,6 @@ Some interactive commands for clojure-mode.
     (cider-switch-to-last-clojure-buffer)
     (message ""))
 #+END_SRC
-
-***
 
 *** Setup Clojure Keybindings                                  :keybinding:
 
