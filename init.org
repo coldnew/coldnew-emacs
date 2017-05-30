@@ -3148,7 +3148,14 @@ Now we can use =boot repl= to start clojure's repl for test
     (setq cider-repl-wrap-history t)
 
     ;; Log protocol messages to the `nrepl-message-buffer-name' buffer.
-    (setq nrepl-log-messages t))
+    (setq nrepl-log-messages t)
+
+    ;; Make `cider-jack-in-clojurescript' directly connect with figwheel
+    ;; https://github.com/bhauman/lein-figwheel/wiki/Using-the-Figwheel-REPL-within-NRepl#leiningen
+    (setq cider-cljs-lein-repl
+          "(do (require 'figwheel-sidecar.repl-api)
+               (figwheel-sidecar.repl-api/start-figwheel!)
+               (figwheel-sidecar.repl-api/cljs-repl))"))
 #+END_SRC
 
 *** Add refactor function support
