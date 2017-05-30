@@ -550,6 +550,121 @@ Some buildin packages need to add extra setups for my emacs setting.
 
 Packages that use as libraries or commands put here.
 
+** ag
+
+[[https://github.com/Wilfred/ag.el][ag.el]] allows you to search using [[https://github.com/ggreer/the_silver_searcher][the_silver_searcher]] from inside Emacs. You can filter by file type, edit results inline, or find files.
+
+GitHub: https://github.com/Wilfred/ag.el
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ag
+    :ensure t
+    ;; only use this package when `the_silver_seacher' install in system.
+    :if (executable-find "ag"))
+#+END_SRC
+
+*** Install System packages
+
+To use [[https://github.com/Wilfred/ag.el][ag.el]] we also need to install [[https://github.com/ggreer/the_silver_searcher][the_silver_searcher]] in system.
+
+**** Mac OSX
+
+It's recommand to use [[http://brew.sh/][homebrew]] to install [[https://github.com/ggreer/the_silver_searcher][the_silver_searcher]] under Mac OSX.
+
+#+BEGIN_SRC sh :tangle no :noweb-ref install-in-macosx
+  brew install the_silver_searcher
+#+END_SRC
+
+**** Gentoo Linux
+
+If you use Gentoo Linux, you can use portage to install it.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref install-in-gentoo
+  emerge sys-apps/the_silver_searcher
+#+END_SRC
+
+** ascii
+
+[[http://www.emacswiki.org/emacs/AsciiMode][ascii.el]] provides a way to display ASCII code on a window, that is, display in another window an ASCII table highlighting the current character code.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ascii
+    :config
+
+    ;; A simple toggle command
+    (defun ascii-toggle ()
+      "Toggle ascii-mode."
+      (interactive)
+      (if (not (ascii-off)) (ascii-on)))
+
+    ;; alias ascii to ascii-toggle
+    (defalias 'ascii 'ascii-toggle))
+#+END_SRC
+
+** avy
+
+=avy= is a GNU Emacs package for jumping to visible text using a char-based decision tree. See also [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] and [[https://github.com/Lokaltog/vim-easymotion][vim-easymotion]] - =avy= uses the same idea.
+
+GitHub: https://github.com/abo-abo/avy
+
+#+BEGIN_SRC emacs-lisp
+  (use-package avy :ensure t)
+#+END_SRC
+
+** buffer-move
+
+This file is for lazy people wanting to swap buffers without typing C-x b on each window. This is useful when you have :
+
++--------------+-------------+
+|              |             |
+|    #emacs    |    #gnus    |
+|              |             |
++--------------+-------------+
+|                            |
+|           .emacs           |
+|                            |
++----------------------------+
+
+and you want to have :
+
++--------------+-------------+
+|              |             |
+|    #gnus     |   .emacs    |
+|              |             |
++--------------+-------------+
+|                            |
+|           #emacs           |
+|                            |
++----------------------------+
+
+With buffer-move, just go in #gnus, do =buf-move-left=, go to #emacs (which now should be on top right) and do =buf-move-down=.
+
+
+GitHub: https://github.com/lukhas/buffer-move
+
+#+BEGIN_SRC emacs-lisp
+  (use-package buffer-move :ensure t)
+#+END_SRC
+
+** calfw
+
+Calfw - A calendar framework for Emacs.
+
+GitHub: https://github.com/kiwanami/emacs-calfw
+
+#+BEGIN_SRC emacs-lisp
+  (use-package calfw :ensure t)
+#+END_SRC
+** darkroom
+
+Remove visual distractions and focus on writing.
+
+GitHub: https://github.com/capitaomorte/darkroom
+
+#+BEGIN_SRC emacs-lisp
+  (use-package darkroom :ensure t)
+#+END_SRC
+
 ** discover-my-major
 
 [[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
@@ -3214,15 +3329,6 @@ The dired's =dired-open-file= will not use system's default tool to open file, t
 Most of emacs packages do not need many configs or just provide
 commands/functions to use, I put them here.
 
-#+BEGIN_SRC emacs-lisp
-  ;;(load (concat user-emacs-directory "configs/plugins/ag.el"))
-  ;;(load (concat user-emacs-directory "configs/plugins/ascii.el"))
-  ;;(load (concat user-emacs-directory "configs/plugins/avy.el"))
-  ;;(load (concat user-emacs-directory "configs/plugins/buffer-move.el"))
-  ;;(load (concat user-emacs-directory "configs/plugins/calfw.el"))
-  ;;(load (concat user-emacs-directory "configs/plugins/darkroom.el"))
-#+END_SRC
-
 ** ascii-art-to-unicode
 
 Convert simple ASCII art drawings (and org-tables) to beautiful Unicode.
@@ -3272,7 +3378,6 @@ GitHub: https://github.com/bbatsov/crux
   (use-package crux :ensure t)
 #+END_SRC
 
-
 ** esup
 
 Benchmark Emacs Startup time without ever leaving your Emacs.
@@ -3283,7 +3388,6 @@ GitHub: https://github.com/jschaf/esup
   (use-package esup :ensure t)
 #+END_SRC
 
-
 ** focus
 
 Focus provides =focus-mode= that dims the text of surrounding sections, similar to [[https://ia.net/writer][iA Writer's]] Focus Mode.
@@ -3293,7 +3397,6 @@ GitHub: https://github.com/larstvei/Focus
 #+BEGIN_SRC emacs-lisp
   (use-package focus :ensure t)
 #+END_SRC
-
 
 ** howdoi
 
@@ -3311,7 +3414,6 @@ GitHub: https://github.com/atykhonov/emacs-howdoi
 #+BEGIN_SRC emacs-lisp
   (use-package htmlize :ensure t)
 #+END_SRC
-
 
 ** hydra                                                        :keybinding:
 
@@ -3405,7 +3507,6 @@ GitHub: https://github.com/abo-abo/hydra
     )
 #+END_SRC
 
-
 ** know-your-http-well
 
 HTTP encodings, headers, media types, methods, relations and status
@@ -3429,7 +3530,6 @@ GitHub: https://github.com/emacsfodder/kurecolor
 #+BEGIN_SRC emacs-lisp
   (use-package kurecolor :ensure t)
 #+END_SRC
-
 
 ** link-hint
 
@@ -3477,7 +3577,6 @@ GitHub: https://github.com/alezost/mwim.el
 #+END_SRC
 
 
-
 ** password-generator
 
 [[https://github.com/zargener/emacs-password-genarator][password-generator]] provides simple functions to create passwords and insert them
@@ -3499,7 +3598,6 @@ GitHub: https://github.com/tomjakubowski/sprunge.el
   (use-package sprunge
     :ensure t)
 #+END_SRC
-
 
 
 ** reveal-in-osx-finder
@@ -3613,7 +3711,6 @@ GitHub: https://github.com/yuyang0/url-shortener
 #+BEGIN_SRC emacs-lisp
   (use-package url-shortener :ensure t)
 #+END_SRC
-
 
 ** which-key
 
