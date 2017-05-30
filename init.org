@@ -1451,6 +1451,106 @@ them at styles dir.
     (require 'coldnew-modeline-config)
 #+END_SRC
 
+* Minibuffer                                                :minibuffer:
+
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
+  (when (require 'minibuffer)                  ; buildin
+    <<minibuffer-config>>)
+#+END_SRC
+
+** Make cursor in minibufer use bar shape
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
+  ;; only use `bar' type of cursor shape
+  (add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 'bar)))
+#+END_SRC
+
+** Some helper function to let me insert quick in minibuffer
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
+  ;; define some helper function to insert to minibuffer quickly
+  (defun my/minibuffer-insert (p)
+    (kill-line 0) (insert p))
+
+  (defun my/minibuffer-switch-to-ramdisk ()
+    "Insert ramdisk path according to system type"
+    (interactive)
+    (my/minibuffer-insert user-ramdisk-directory))
+
+  (defun my/minibuffer-switch-to-home ()
+    "Insert $HOME path."
+    (interactive)
+    (my/minibuffer-insert (file-name-as-directory (getenv "HOME"))))
+
+  (defun my/minibuffer-switch-to-rootdir ()
+    "Insert / path."
+    (interactive)
+    (my/minibuffer-insert "/"))
+
+  (defun my/minibuffer-switch-to-tramp ()
+    "Insert /ssh:."
+    (interactive)
+    (my/minibuffer-insert "/ssh:"))
+
+  (defun my/minibuffer-switch-to-vm ()
+    "Insert /ssh:vm:."
+    (interactive)
+    (my/minibuffer-insert "/ssh:vm:"))
+
+  (defun my/minibuffer-switch-to-cluster ()
+    "Insert /ssh:cluster:."
+    (interactive)
+    (my/minibuffer-insert "/ssh:cluster:"))
+#+END_SRC
+
+** Save history of minibuffer :tangle no :noweb-ref minibuffer-config
+
+When Savehist mode is enabled, minibuffer history is saved
+periodically and when exiting Emacs.  When Savehist mode is enabled
+for the first time in an Emacs session, it loads the previous
+minibuffer history from ‘savehist-file’.
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref minibuffer-config
+  (use-package savehist
+    :config
+    (setq savehist-file (concat user-cache-directory "savehist.dat"))
+    (savehist-mode 1))
+#+END_SRC
+
+** Increase Garbage Collector Value in minibuffer
+
+By binding this temporarily to a large number, you can effectively prevent garbage collection during a part of the program. I increase the value when enter minibuffer, this will help to improve minibuffer speed with large package like helm, flx.
+
+ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
+  (eval-after-load 'minibuffer
+    '(progn
+       (lexical-let ((default-threshold gc-cons-threshold))
+         (defun my/minibuffer-gc-setup-hook ()
+           (setq gc-cons-threshold most-positive-fixnum))
+         (add-hook 'minibuffer-setup-hook #'my/minibuffer-gc-setup-hook)
+         ;; When exit, set back to default threshold
+         (defun my/minibuffer-gc-exit-hook ()
+           (setq gc-cons-threshold default-threshold))
+         (add-hook 'minibuffer-exit-hook #'my/minibuffer-gc-exit-hook))))
+#+END_SRC
+
+** Setup Keybindings                                            :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
+  (bind-keys :map minibuffer-local-map
+             ("C-w" . backward-kill-word)
+             ("M-p" . previous-history-element)
+             ("M-n" . next-history-element)
+             ("C-g" . minibuffer-keyboard-quit)
+             ("M-t" . my/minibuffer-switch-to-ramdisk)
+             ("M-h" . my/minibuffer-switch-to-home)
+             ("M-/" . my/minibuffer-switch-to-rootdir)
+             ("M-s" . my/minibuffer-switch-to-tramp)
+             ("M-v" . my/minibuffer-switch-to-vm)
+             ("M-c" . my/minibuffer-switch-to-cluster))
+#+END_SRC
 
 * Buffer                                                             :buffer:
 ** Create *scratch* automatically
@@ -3792,106 +3892,6 @@ GitHub: https://github.com/syohex/emacs-fontawesome
   (use-package fontawesome :ensure t)
 #+END_SRC
 
-* Minibuffer                                                :minibuffer:
-
-#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
-  (when (require 'minibuffer)                  ; buildin
-    <<minibuffer-config>>)
-#+END_SRC
-
-** Make cursor in minibufer use bar shape
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
-  ;; only use `bar' type of cursor shape
-  (add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 'bar)))
-#+END_SRC
-
-** Some helper function to let me insert quick in minibuffer
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
-  ;; define some helper function to insert to minibuffer quickly
-  (defun my/minibuffer-insert (p)
-    (kill-line 0) (insert p))
-
-  (defun my/minibuffer-switch-to-ramdisk ()
-    "Insert ramdisk path according to system type"
-    (interactive)
-    (my/minibuffer-insert user-ramdisk-directory))
-
-  (defun my/minibuffer-switch-to-home ()
-    "Insert $HOME path."
-    (interactive)
-    (my/minibuffer-insert (file-name-as-directory (getenv "HOME"))))
-
-  (defun my/minibuffer-switch-to-rootdir ()
-    "Insert / path."
-    (interactive)
-    (my/minibuffer-insert "/"))
-
-  (defun my/minibuffer-switch-to-tramp ()
-    "Insert /ssh:."
-    (interactive)
-    (my/minibuffer-insert "/ssh:"))
-
-  (defun my/minibuffer-switch-to-vm ()
-    "Insert /ssh:vm:."
-    (interactive)
-    (my/minibuffer-insert "/ssh:vm:"))
-
-  (defun my/minibuffer-switch-to-cluster ()
-    "Insert /ssh:cluster:."
-    (interactive)
-    (my/minibuffer-insert "/ssh:cluster:"))
-#+END_SRC
-
-** Save history of minibuffer :tangle no :noweb-ref minibuffer-config
-
-When Savehist mode is enabled, minibuffer history is saved
-periodically and when exiting Emacs.  When Savehist mode is enabled
-for the first time in an Emacs session, it loads the previous
-minibuffer history from ‘savehist-file’.
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref minibuffer-config
-  (use-package savehist
-    :config
-    (setq savehist-file (concat user-cache-directory "savehist.dat"))
-    (savehist-mode 1))
-#+END_SRC
-
-** Increase Garbage Collector Value in minibuffer
-
-By binding this temporarily to a large number, you can effectively prevent garbage collection during a part of the program. I increase the value when enter minibuffer, this will help to improve minibuffer speed with large package like helm, flx.
-
-ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
-  (eval-after-load 'minibuffer
-    '(progn
-       (lexical-let ((default-threshold gc-cons-threshold))
-         (defun my/minibuffer-gc-setup-hook ()
-           (setq gc-cons-threshold most-positive-fixnum))
-         (add-hook 'minibuffer-setup-hook #'my/minibuffer-gc-setup-hook)
-         ;; When exit, set back to default threshold
-         (defun my/minibuffer-gc-exit-hook ()
-           (setq gc-cons-threshold default-threshold))
-         (add-hook 'minibuffer-exit-hook #'my/minibuffer-gc-exit-hook))))
-#+END_SRC
-
-** Setup Keybindings                                            :keybinding:
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
-  (bind-keys :map minibuffer-local-map
-             ("C-w" . backward-kill-word)
-             ("M-p" . previous-history-element)
-             ("M-n" . next-history-element)
-             ("C-g" . minibuffer-keyboard-quit)
-             ("M-t" . my/minibuffer-switch-to-ramdisk)
-             ("M-h" . my/minibuffer-switch-to-home)
-             ("M-/" . my/minibuffer-switch-to-rootdir)
-             ("M-s" . my/minibuffer-switch-to-tramp)
-             ("M-v" . my/minibuffer-switch-to-vm)
-             ("M-c" . my/minibuffer-switch-to-cluster))
-#+END_SRC
 
 * Editors
 
