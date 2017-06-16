@@ -118,6 +118,13 @@ This line needs to appear at the beginning of the file to work. Just to keep thi
 #+BEGIN_SRC emacs-lisp :padline no
   ;; -*- lexical-binding: t -*-
 #+END_SRC
+** Make Emacs-26 compatible with Emacs-25
+
+Emacs 26 introduce new =switch= bytecode which not contains in emacs-25, disable it so I can test both emacs-25 and emacs-26.
+
+#+BEGIN_SRC emacs-lisp
+  (setq byte-compile-cond-use-jump-table nil)
+#+END_SRC
 
 ** Use Common Lisp Extension
 
