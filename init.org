@@ -5566,7 +5566,7 @@ I always use =ERC= as my irc client, which is bundle with emacs.
   (use-package erc
     :ensure nil                           ; built-in
     :config
-    (use-package erc-notify)
+    ;;(use-package erc-notify)
     <<erc-config>>)
 #+END_SRC
 
