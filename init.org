@@ -552,10 +552,9 @@ Some buildin packages need to add extra setups for my emacs setting.
               (concat user-cache-directory "url")))))
 #+END_SRC
 
->>>>>>> parent of 3ecf6017... I think I don't need to specify cachedir
-* External Packages
+* External Packages                                                :packages:
 
-Packages that use as libraries or commands put here.
+Most of emacs packages do not need many configs or just provide commands/functions to use, I put them here.
 
 ** ag
 
@@ -608,6 +607,13 @@ If you use Gentoo Linux, you can use portage to install it.
     (defalias 'ascii 'ascii-toggle))
 #+END_SRC
 
+** ascii-art-to-unicode
+
+Convert simple ASCII art drawings (and org-tables) to beautiful Unicode.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ascii-art-to-unicode :ensure t)
+#+END_SRC
 ** avy
 
 =avy= is a GNU Emacs package for jumping to visible text using a char-based decision tree. See also [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] and [[https://github.com/Lokaltog/vim-easymotion][vim-easymotion]] - =avy= uses the same idea.
@@ -616,6 +622,27 @@ GitHub: https://github.com/abo-abo/avy
 
 #+BEGIN_SRC emacs-lisp
   (use-package avy :ensure t)
+#+END_SRC
+
+** bpr
+
+This package provides logic for async process execution.
+
+It's similar to =async-shell-command=, but:
+
+- =bpr= spawns processes asynchronously without displaying output buffers.
+- =bpr= shows progress messages for running processes in echo area.
+- =bpr= can display buffer with process output in case of errors.
+- =bpr= can use projectile for assigning process directory.
+- =bpr= can format process output (understands ansi escape codes).
+- it's possible to set different options for different processes.
+
+=bpr= is very handy for running tests/builds, but you can run any processes with it.
+
+GitHub: https://github.com/ilya-babanov/emacs-bpr
+
+#+BEGIN_SRC emacs-lisp
+  (use-package bpr :ensure t)
 #+END_SRC
 
 ** buffer-move
@@ -662,6 +689,26 @@ GitHub: https://github.com/kiwanami/emacs-calfw
 #+BEGIN_SRC emacs-lisp
   (use-package calfw :ensure t)
 #+END_SRC
+** cbm
+
+Cycle by major - Cycle through buffers with the same major-mode.
+
+GitHub: https://github.com/akermu/cbm.el
+
+#+BEGIN_SRC emacs-lisp
+  (use-package cbm :ensure t)
+#+END_SRC
+
+** crux
+
+A Collection of Ridiculously Useful eXtensions for Emacs. crux bundles a few useful interactive commands to enhance your overall Emacs experience.
+
+GitHub: https://github.com/bbatsov/crux
+
+#+BEGIN_SRC emacs-lisp
+  (use-package crux :ensure t)
+#+END_SRC
+
 ** darkroom
 
 Remove visual distractions and focus on writing.
@@ -749,6 +796,16 @@ You also can use OS's package manager to install it
   emerge app-text/editorconfig-core-c
 #+END_SRC
 
+** esup
+
+Benchmark Emacs Startup time without ever leaving your Emacs.
+
+GitHub: https://github.com/jschaf/esup
+
+#+BEGIN_SRC emacs-lisp
+  (use-package esup :ensure t)
+#+END_SRC
+
 ** exec-path-from-shell
 
 [[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell]] is A GNU Emacs library to ensure environment variables inside Emacs look the same as in the user's shell.
@@ -792,6 +849,26 @@ GitHub: https://github.com/Malabarba/fancy-narrow
   (use-package fancy-narrow :ensure t)
 #+END_SRC
 
+** focus
+
+Focus provides =focus-mode= that dims the text of surrounding sections, similar to [[https://ia.net/writer][iA Writer's]] Focus Mode.
+
+GitHub: https://github.com/larstvei/Focus
+
+#+BEGIN_SRC emacs-lisp
+  (use-package focus :ensure t)
+#+END_SRC
+
+** fontawesome
+
+Emacs [[http://fortawesome.github.io/Font-Awesome/][fontawesome]] utility.
+
+GitHub: https://github.com/syohex/emacs-fontawesome
+
+#+BEGIN_SRC emacs-lisp
+  (use-package fontawesome :ensure t)
+#+END_SRC
+
 ** google-translate
 
 This package allows to translate the strings using Google Translate service directly from GNU Emacs.
@@ -813,6 +890,23 @@ GitHub: https://github.com/camdez/goto-last-change.el
     :ensure t)
 #+END_SRC
 
+** howdoi
+
+[[https://github.com/atykhonov/emacs-howdoi][howdoi]] is a way to query Stack Overflow directly from the Emacs and get back the
+most upvoted answer to the first question that comes up for that query.
+
+GitHub: https://github.com/atykhonov/emacs-howdoi
+
+#+BEGIN_SRC emacs-lisp
+  (use-package howdoi :ensure t)
+#+END_SRC
+
+** htmlize
+
+#+BEGIN_SRC emacs-lisp
+  (use-package htmlize :ensure t)
+#+END_SRC
+
 ** hungry-delete
 
 [[https://github.com/nflath/hungry-delete][hungry-delete]] borrows hungry deletion from =cc-mode=, which will causes deletion
@@ -824,6 +918,98 @@ to delete all whitespace in the direction you are deleting.
     :config
     (global-hungry-delete-mode))
 #+END_SRC
+** hydra                                                        :keybinding:
+
+This is a package for GNU Emacs that can be used to tie related commands into a family of short bindings with a common prefix - a Hydra.
+
+GitHub: https://github.com/abo-abo/hydra
+
+#+BEGIN_SRC emacs-lisp  :noweb no-export
+  (use-package hydra
+    :ensure t
+    :config
+    <<hydra-config>>)
+#+END_SRC
+
+*** Window Management
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref hydra-config
+  (defhydra hydra-window ()
+     "
+  Movement^^        ^Split^         ^Switch^      ^Resize^
+  ----------------------------------------------------------------
+  _h_ ←         _v_ertical      _b_uffer        _q_ X←
+  _j_ ↓         _x_ horizontal  _f_ind files    _w_ X↓
+  _k_ ↑         _z_ undo        _a_ce 1     _e_ X↑
+  _l_ →         _Z_ reset       _s_wap      _r_ X→
+  _F_ollow        _D_lt Other     _S_ave      max_i_mize
+  _SPC_ cancel    _o_nly this     _d_elete
+  "
+     ("h" windmove-left )
+     ("j" windmove-down )
+     ("k" windmove-up )
+     ("l" windmove-right )
+     ("q" hydra-move-splitter-left)
+     ("w" hydra-move-splitter-down)
+     ("e" hydra-move-splitter-up)
+     ("r" hydra-move-splitter-right)
+     ("b" helm-mini)
+     ("f" helm-find-files)
+     ("F" follow-mode)
+     ("a" (lambda ()
+            (interactive)
+            (ace-window 1)
+            (add-hook 'ace-window-end-once-hook
+                      'hydra-window/body)))
+     ("v" (lambda ()
+            (interactive)
+            (split-window-right)
+            (windmove-right)))
+     ("x" (lambda ()
+            (interactive)
+            (split-window-below)
+            (windmove-down)))
+     ("s" (lambda ()
+            (interactive)
+            (ace-window 4)
+            (add-hook 'ace-window-end-once-hook
+                      'hydra-window/body)))
+     ("S" save-buffer)
+     ("d" delete-window)
+     ("D" (lambda ()
+            (interactive)
+            (ace-window 16)
+            (add-hook 'ace-window-end-once-hook
+                      'hydra-window/body)))
+     ("o" delete-other-windows)
+     ("i" ace-maximize-window)
+     ("z" (progn
+            (winner-undo)
+            (setq this-command 'winner-undo)))
+     ("Z" winner-redo)
+     ("SPC" nil))
+
+;;(global-set-key (kbd "C-x w") 'hydra-window/body)
+#+END_SRC
+
+*** Buffer Movement
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref hydra-config
+  (defhydra hydra-movement ()
+    "
+       ^Forward^          ^Backward^      ^Up^     ^Down^   ^Char^
+      ^^^^^^^^---------------------------------------------------
+                         _c_: char
+      ^^^^^^^^
+       _n_: scroll down  _p_: scroll up
+      "
+    ("c" avy-goto-char)
+    ;; others
+    ("n" evil-scroll-page-down)
+    ("p" evil-scroll-page-up)
+    )
+#+END_SRC
+
 ** iedit                                                        :keybinding:
 
 [[https://github.com/victorhge/iedit][iedit]] let you edit multiple regions in the same way simultaneously.
@@ -834,6 +1020,75 @@ GitHub: https://github.com/victorhge/iedit
   (use-package iedit
     :ensure t
     :bind (("C-;" . iedit-mode)))
+#+END_SRC
+
+** know-your-http-well
+
+HTTP encodings, headers, media types, methods, relations and status
+codes, all summarized and linking to their specification.
+
+GitHub: https://github.com/for-GET/know-your-http-well
+
+#+BEGIN_SRC emacs-lisp
+  (use-package know-your-http-well :ensure t)
+#+END_SRC
+
+** kurecolor
+
+A collection of color tools aimed at those working with (normal 6
+digit) hex color codes, useful for CSS, Emacs themes, etc. etc.
+
+View the presentation at https://github.com/emacsfodder/kurecolor
+
+GitHub: https://github.com/emacsfodder/kurecolor
+
+#+BEGIN_SRC emacs-lisp
+  (use-package kurecolor :ensure t)
+#+END_SRC
+
+** link-hint
+
+=link-hint.el= is inspired by the link hinting functionality in vim-like
+browsers and browser plugins such as pentadactyl. It provides commands
+for using avy to open or copy "links."
+
+GitHub: https://github.com/noctuid/link-hint.el
+
+#+BEGIN_SRC emacs-lisp
+  (use-package link-hint :ensure t)
+#+END_SRC
+
+** manage-minor-mode
+
+[[https://github.com/ShingoFukuyama/manage-minor-mode][manage-minor-mode]] let you manage your minor-mode on the dedicated interface
+buffer.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package manage-minor-mode :ensure t)
+#+END_SRC
+
+** mustache
+
+A mustache templating library in Emacs Lisp.
+
+GitHub: https://github.com/Wilfred/mustache.el
+
+#+BEGIN_SRC emacs-lisp
+  (use-package mustache :ensure t)
+#+END_SRC
+
+** mwim                                                        :keybinding:
+
+This Emacs package provides commands for moving to the beginning/end of code or line.
+
+GitHub: https://github.com/alezost/mwim.el
+
+#+BEGIN_SRC emacs-lisp
+  (use-package mwim
+    :ensure t
+    :bind
+    (("C-a" . mwim-beginning-of-code-or-line)
+     ("C-e" . mwim-end-of-code-or-line)))
 #+END_SRC
 
 ** noflet
@@ -870,6 +1125,17 @@ GitHub: https://github.com/coldnew/pangu-spacing
                  (set (make-local-variable 'pangu-spacing-real-insert-separtor) t))))
 #+END_SRC
 
+** password-generator
+
+[[https://github.com/zargener/emacs-password-genarator][password-generator]] provides simple functions to create passwords and insert them
+inside buffer immediately.
+
+GitHub: https://github.com/zargener/emacs-password-genarator
+
+#+BEGIN_SRC emacs-lisp
+  (use-package password-generator :ensure t)
+#+END_SRC
+
 ** rainbow-mode
 
 [[https://julien.danjou.info/projects/emacs-packages][rainbow-mode]] s a minor mode for Emacs which displays strings representing colors with the color they represent as background.
@@ -887,6 +1153,113 @@ GitHub: https://github.com/pashky/restclient.el
 #+BEGIN_SRC emacs-lisp
   (use-package restclient
     :ensure t)
+#+END_SRC
+
+** reveal-in-osx-finder
+
+- If =M-x reveal-in-osx-finder= is invoked in a file-associated buffer, it will open the folder enclosing the file in the OS X Finder. It will also highlight the file the buffer is associated with within the folder.
+
+- If =M-x reveal-in-osx-finder= is invoked in a dired buffer, it will open the current folder in the OS X Finder. It will also highlight the file at point if available.
+
+- If =M-x reveal-in-osx-finder= is invoked in a buffer not associated with a file, it will open the folder defined in the default-directory variable.
+
+GitHub: https://github.com/kaz-yos/reveal-in-osx-finder
+
+#+BEGIN_SRC emacs-lisp
+  (use-package reveal-in-osx-finder
+    :ensure t
+    :when (eq system-type 'darwin))
+#+END_SRC
+
+** sicp
+
+Reading sicp in emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package sicp :ensure t)
+#+END_SRC
+
+** smartparens
+
+Smartparens is a minor mode for dealing with pairs in Emacs.
+
+GitHub: https://github.com/Fuco1/smartparens
+
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :ensure t
+    :config
+    (smartparens-mode 1))
+#+END_SRC
+** spray
+
+A speed reading mode for Emacs.
+
+GitHub: https://github.com/ian-kelling/spray
+
+#+BEGIN_SRC emacs-lisp
+  (use-package spray :ensure t)
+#+END_SRC
+
+** sprunge
+
+Upload pastes to http://sprunge.us/
+
+GitHub: https://github.com/tomjakubowski/sprunge.el
+
+#+BEGIN_SRC emacs-lisp
+  (use-package sprunge
+    :ensure t)
+#+END_SRC
+
+** string-inflection
+
+underscore -> UPCASE -> CamelCase conversion of names.
+
+GitHub: https://github.com/akicho8/string-inflection
+
+#+BEGIN_SRC emacs-lisp
+  (use-package string-inflection :ensure t)
+#+END_SRC
+
+** sx
+
+[[https://github.com/vermiculus/sx.el/][SX]] is a full featured Stack Exchange mode for GNU Emacs 24+. Using the official
+API, it provides a versatile experience for the Stack Exchange network within
+Emacs itself.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package sx :ensure t)
+#+END_SRC
+
+** tldr
+
+tldr is a collection of simplified and community-driven man pages.
+
+GitHub: https://github.com/kuanyui/tldr.el
+
+#+BEGIN_SRC emacs-lisp
+  (use-package tldr
+    :ensure t
+    :config
+    (setq tldr-directory-path (concat user-cache-directory "tldr/"))
+    (setq tldr-saved-zip-path (concat user-cache-directory "tldr-source.zip")))
+#+END_SRC
+
+** travis
+
+An Emacs client for TravisCI.
+
+GitHub: https://github.com/nlamirault/emacs-travis
+
+#+BEGIN_SRC emacs-lisp
+  (use-package travis :ensure t)
+#+END_SRC
+
+Befor execute =M-x travis-show-projects= you must setup your github token
+
+#+BEGIN_SRC sh :tangle no
+  export TRAVIS_TOKEN=XXXXXXX
 #+END_SRC
 
 ** undo-tree
@@ -907,6 +1280,21 @@ GitHub: https://github.com/emacsmirror/undo-tree
     (setq undo-tree-auto-save-history t)
     ;; global enable undo-tree
     (global-undo-tree-mode))
+#+END_SRC
+
+** url-shortener
+
+This package can convert long url to tiny url and expand tiny url to long url ,support:
+
+- bit.ly
+- goo.gl
+- dwz.cn
+- 126.am
+
+GitHub: https://github.com/yuyang0/url-shortener
+
+#+BEGIN_SRC emacs-lisp
+  (use-package url-shortener :ensure t)
 #+END_SRC
 
 ** verify-url
@@ -952,6 +1340,76 @@ GitHub: https://github.com/etu/webpaste.el
 #+BEGIN_SRC emacs-lisp
   (use-package webpaste
     :ensure t)
+#+END_SRC
+
+** which-key
+
+which-key is a minor mode for Emacs that displays the key bindings
+following your currently entered incomplete command (a prefix) in a
+popup. For example, after enabling the minor mode if you enter C-x and
+wait for the default of 1 second the minibuffer will expand with all
+of the available key bindings that follow C-x (or as many as space
+allows given your settings). This includes prefixes like C-x 8 which
+are shown in a different face. Screenshots of what the popup will look
+like are included below. which-key started as a rewrite of
+[[https://github.com/kai2nenobu/guide-key][gude-key-mode]], but the feature sets have diverged to a certain
+extent.
+
+GitHub: https://github.com/justbur/emacs-which-key
+
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :ensure t
+    :config
+    ;; enable globally
+    (which-key-mode)
+    ;; Hide/Modify some function prefix in which-key show menu
+    (setq which-key-description-replacement-alist
+          '(("Prefix Command" . "prefix")
+            ("which-key-show-next-page" . "wk next pg")
+            ("\\`calc-" . "") ; Hide "calc-" prefixes when listing M-x calc keys
+            ("/body\\'" . "") ; Remove display the "/body" portion of hydra fn names
+            ("modi/" . "m/") ; The car is intentionally not "\\`modi/" to cover
+                                          ; cases like `hydra-toggle/modi/..'.
+            ("\\`hydra-" . "+h/")
+            ("\\`org-babel-" . "ob/")
+            ("\\`my/" . ""))))
+#+END_SRC
+
+** xkcd
+
+Read [[https://xkcd.com/][xkcd]] from Emacs.
+
+GitHub: https://github.com/vibhavp/emacs-xkcd
+
+#+BEGIN_SRC emacs-lisp
+  (use-package xkcd
+    :ensure t
+    :init
+    (setq xkcd-cache-dir (concat user-cache-directory "xkcd/"))
+    (when (not (file-directory-p xkcd-cache-dir))
+      (make-directory xkcd-cache-dir :parents)))
+#+END_SRC
+
+** zzz-to-char                                                  :keybinding:
+
+This package provides two new commands: =zzz-to-char= and =zzz-up-to-char= which
+work like built-ins zap-to-char and zap-up-to-char, but allow you quickly select
+exact character you want to “zzz” to.
+
+The commands are minimalistic and often work like built-in ones when there is
+only one occurrence of target character (except they automatically work in
+backward direction too). You can also specify how many characters to scan from
+each side of point, see =zzz-to-char-reach=.
+
+This package uses avy as backend.
+
+GitHub: https://github.com/mrkkrp/zzz-to-char
+
+#+BEGIN_SRC emacs-lisp
+  (use-package zzz-to-char
+    :ensure t
+    :bind (("M-z" . zzz-to-char)))
 #+END_SRC
 
 * Interactive Commands                                              :command:
@@ -3300,6 +3758,15 @@ However, I use my fork of [[https://github.com/coldnew/hexo.el][hexo.el]] since 
 #+END_SRC
 
 
+* Window Management                                                  :window:
+
+** Maximized window after emacs start
+
+#+BEGIN_SRC emacs-lisp
+  (modify-all-frames-parameters '((fullscreen . maximized)))
+#+END_SRC
+
+
 * ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 
 
@@ -3427,485 +3894,9 @@ The dired's =dired-open-file= will not use system's default tool to open file, t
              ("RET" . my/dired-find-file))
 #+END_SRC
 
-* Window Management                                                  :window:
-
-** Maximized window after emacs start
-
-#+BEGIN_SRC emacs-lisp
-  (modify-all-frames-parameters '((fullscreen . maximized)))
-#+END_SRC
 
 
 * ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
-
-* External Packages                                                :packages:
-
-Most of emacs packages do not need many configs or just provide
-commands/functions to use, I put them here.
-
-** ascii-art-to-unicode
-
-Convert simple ASCII art drawings (and org-tables) to beautiful Unicode.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package ascii-art-to-unicode :ensure t)
-#+END_SRC
-
-** bpr
-
-This package provides logic for async process execution.
-
-It's similar to =async-shell-command=, but:
-
-- =bpr= spawns processes asynchronously without displaying output buffers.
-- =bpr= shows progress messages for running processes in echo area.
-- =bpr= can display buffer with process output in case of errors.
-- =bpr= can use projectile for assigning process directory.
-- =bpr= can format process output (understands ansi escape codes).
-- it's possible to set different options for different processes.
-
-=bpr= is very handy for running tests/builds, but you can run any processes with it.
-
-GitHub: https://github.com/ilya-babanov/emacs-bpr
-
-#+BEGIN_SRC emacs-lisp
-  (use-package bpr :ensure t)
-#+END_SRC
-
-** cbm
-
-Cycle by major - Cycle through buffers with the same major-mode.
-
-GitHub: https://github.com/akermu/cbm.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package cbm :ensure t)
-#+END_SRC
-
-** crux
-
-A Collection of Ridiculously Useful eXtensions for Emacs. crux bundles a few useful interactive commands to enhance your overall Emacs experience.
-
-GitHub: https://github.com/bbatsov/crux
-
-#+BEGIN_SRC emacs-lisp
-  (use-package crux :ensure t)
-#+END_SRC
-
-** esup
-
-Benchmark Emacs Startup time without ever leaving your Emacs.
-
-GitHub: https://github.com/jschaf/esup
-
-#+BEGIN_SRC emacs-lisp
-  (use-package esup :ensure t)
-#+END_SRC
-
-** focus
-
-Focus provides =focus-mode= that dims the text of surrounding sections, similar to [[https://ia.net/writer][iA Writer's]] Focus Mode.
-
-GitHub: https://github.com/larstvei/Focus
-
-#+BEGIN_SRC emacs-lisp
-  (use-package focus :ensure t)
-#+END_SRC
-
-** howdoi
-
-[[https://github.com/atykhonov/emacs-howdoi][howdoi]] is a way to query Stack Overflow directly from the Emacs and get back the
-most upvoted answer to the first question that comes up for that query.
-
-GitHub: https://github.com/atykhonov/emacs-howdoi
-
-#+BEGIN_SRC emacs-lisp
-  (use-package howdoi :ensure t)
-#+END_SRC
-
-** htmlize
-
-#+BEGIN_SRC emacs-lisp
-  (use-package htmlize :ensure t)
-#+END_SRC
-
-** hydra                                                        :keybinding:
-
-This is a package for GNU Emacs that can be used to tie related commands into a family of short bindings with a common prefix - a Hydra.
-
-GitHub: https://github.com/abo-abo/hydra
-
-#+BEGIN_SRC emacs-lisp  :noweb no-export
-  (use-package hydra
-    :ensure t
-    :config
-    <<hydra-config>>)
-#+END_SRC
-
-*** Window Management
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref hydra-config
-  (defhydra hydra-window ()
-     "
-  Movement^^        ^Split^         ^Switch^      ^Resize^
-  ----------------------------------------------------------------
-  _h_ ←         _v_ertical      _b_uffer        _q_ X←
-  _j_ ↓         _x_ horizontal  _f_ind files    _w_ X↓
-  _k_ ↑         _z_ undo        _a_ce 1     _e_ X↑
-  _l_ →         _Z_ reset       _s_wap      _r_ X→
-  _F_ollow        _D_lt Other     _S_ave      max_i_mize
-  _SPC_ cancel    _o_nly this     _d_elete
-  "
-     ("h" windmove-left )
-     ("j" windmove-down )
-     ("k" windmove-up )
-     ("l" windmove-right )
-     ("q" hydra-move-splitter-left)
-     ("w" hydra-move-splitter-down)
-     ("e" hydra-move-splitter-up)
-     ("r" hydra-move-splitter-right)
-     ("b" helm-mini)
-     ("f" helm-find-files)
-     ("F" follow-mode)
-     ("a" (lambda ()
-            (interactive)
-            (ace-window 1)
-            (add-hook 'ace-window-end-once-hook
-                      'hydra-window/body)))
-     ("v" (lambda ()
-            (interactive)
-            (split-window-right)
-            (windmove-right)))
-     ("x" (lambda ()
-            (interactive)
-            (split-window-below)
-            (windmove-down)))
-     ("s" (lambda ()
-            (interactive)
-            (ace-window 4)
-            (add-hook 'ace-window-end-once-hook
-                      'hydra-window/body)))
-     ("S" save-buffer)
-     ("d" delete-window)
-     ("D" (lambda ()
-            (interactive)
-            (ace-window 16)
-            (add-hook 'ace-window-end-once-hook
-                      'hydra-window/body)))
-     ("o" delete-other-windows)
-     ("i" ace-maximize-window)
-     ("z" (progn
-            (winner-undo)
-            (setq this-command 'winner-undo)))
-     ("Z" winner-redo)
-     ("SPC" nil))
-
-;;(global-set-key (kbd "C-x w") 'hydra-window/body)
-#+END_SRC
-
-*** Buffer Movement
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref hydra-config
-  (defhydra hydra-movement ()
-    "
-       ^Forward^          ^Backward^      ^Up^     ^Down^   ^Char^
-      ^^^^^^^^---------------------------------------------------
-                         _c_: char
-      ^^^^^^^^
-       _n_: scroll down  _p_: scroll up
-      "
-    ("c" avy-goto-char)
-    ;; others
-    ("n" evil-scroll-page-down)
-    ("p" evil-scroll-page-up)
-    )
-#+END_SRC
-
-** know-your-http-well
-
-HTTP encodings, headers, media types, methods, relations and status
-codes, all summarized and linking to their specification.
-
-GitHub: https://github.com/for-GET/know-your-http-well
-
-#+BEGIN_SRC emacs-lisp
-  (use-package know-your-http-well :ensure t)
-#+END_SRC
-
-** kurecolor
-
-A collection of color tools aimed at those working with (normal 6
-digit) hex color codes, useful for CSS, Emacs themes, etc. etc.
-
-View the presentation at https://github.com/emacsfodder/kurecolor
-
-GitHub: https://github.com/emacsfodder/kurecolor
-
-#+BEGIN_SRC emacs-lisp
-  (use-package kurecolor :ensure t)
-#+END_SRC
-
-** link-hint
-
-=link-hint.el= is inspired by the link hinting functionality in vim-like
-browsers and browser plugins such as pentadactyl. It provides commands
-for using avy to open or copy "links."
-
-GitHub: https://github.com/noctuid/link-hint.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package link-hint :ensure t)
-#+END_SRC
-
-** manage-minor-mode
-
-[[https://github.com/ShingoFukuyama/manage-minor-mode][manage-minor-mode]] let you manage your minor-mode on the dedicated interface
-buffer.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package manage-minor-mode :ensure t)
-#+END_SRC
-
-** mustache
-
-A mustache templating library in Emacs Lisp.
-
-GitHub: https://github.com/Wilfred/mustache.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package mustache :ensure t)
-#+END_SRC
-
-** mwim
-
-This Emacs package provides commands for moving to the beginning/end of code or line.
-
-GitHub: https://github.com/alezost/mwim.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package mwim
-    :ensure t
-    :bind
-    (("C-a" . mwim-beginning-of-code-or-line)
-     ("C-e" . mwim-end-of-code-or-line)))
-#+END_SRC
-
-
-** password-generator
-
-[[https://github.com/zargener/emacs-password-genarator][password-generator]] provides simple functions to create passwords and insert them
-inside buffer immediately.
-
-GitHub: https://github.com/zargener/emacs-password-genarator
-
-#+BEGIN_SRC emacs-lisp
-  (use-package password-generator :ensure t)
-#+END_SRC
-
-** sprunge
-
-Upload pastes to http://sprunge.us/
-
-GitHub: https://github.com/tomjakubowski/sprunge.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package sprunge
-    :ensure t)
-#+END_SRC
-
-
-** reveal-in-osx-finder
-
-- If =M-x reveal-in-osx-finder= is invoked in a file-associated buffer, it will open the folder enclosing the file in the OS X Finder. It will also highlight the file the buffer is associated with within the folder.
-
-- If =M-x reveal-in-osx-finder= is invoked in a dired buffer, it will open the current folder in the OS X Finder. It will also highlight the file at point if available.
-
-- If =M-x reveal-in-osx-finder= is invoked in a buffer not associated with a file, it will open the folder defined in the default-directory variable.
-
-GitHub: https://github.com/kaz-yos/reveal-in-osx-finder
-
-#+BEGIN_SRC emacs-lisp
-  (use-package reveal-in-osx-finder
-    :ensure t
-    :when (eq system-type 'darwin))
-#+END_SRC
-
-** smartparens
-
-Smartparens is a minor mode for dealing with pairs in Emacs.
-
-GitHub: https://github.com/Fuco1/smartparens
-
-#+BEGIN_SRC emacs-lisp
-  (use-package smartparens
-    :ensure t
-    :config
-    (smartparens-mode 1))
-#+END_SRC
-
-** spray
-
-A speed reading mode for Emacs.
-
-GitHub: https://github.com/ian-kelling/spray
-
-#+BEGIN_SRC emacs-lisp
-  (use-package spray :ensure t)
-#+END_SRC
-
-** sicp
-
-Reading sicp in emacs.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package sicp :ensure t)
-#+END_SRC
-
-** string-inflection
-
-underscore -> UPCASE -> CamelCase conversion of names.
-
-GitHub: https://github.com/akicho8/string-inflection
-
-#+BEGIN_SRC emacs-lisp
-  (use-package string-inflection :ensure t)
-#+END_SRC
-
-** sx
-
-[[https://github.com/vermiculus/sx.el/][SX]] is a full featured Stack Exchange mode for GNU Emacs 24+. Using the official
-API, it provides a versatile experience for the Stack Exchange network within
-Emacs itself.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package sx :ensure t)
-#+END_SRC
-
-** tldr
-
-tldr is a collection of simplified and community-driven man pages.
-
-GitHub: https://github.com/kuanyui/tldr.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package tldr
-    :ensure t
-    :config
-    (setq tldr-directory-path (concat user-cache-directory "tldr/"))
-    (setq tldr-saved-zip-path (concat user-cache-directory "tldr-source.zip")))
-#+END_SRC
-
-** travis
-
-An Emacs client for TravisCI.
-
-GitHub: https://github.com/nlamirault/emacs-travis
-
-#+BEGIN_SRC emacs-lisp
-  (use-package travis :ensure t)
-#+END_SRC
-
-Befor execute =M-x travis-show-projects= you must setup your github token
-
-#+BEGIN_SRC sh :tangle no
-  export TRAVIS_TOKEN=XXXXXXX
-#+END_SRC
-
-** url-shortener
-
-This package can convert long url to tiny url and expand tiny url to long url ,support:
-
-- bit.ly
-- goo.gl
-- dwz.cn
-- 126.am
-
-GitHub: https://github.com/yuyang0/url-shortener
-
-#+BEGIN_SRC emacs-lisp
-  (use-package url-shortener :ensure t)
-#+END_SRC
-
-** which-key
-
-which-key is a minor mode for Emacs that displays the key bindings
-following your currently entered incomplete command (a prefix) in a
-popup. For example, after enabling the minor mode if you enter C-x and
-wait for the default of 1 second the minibuffer will expand with all
-of the available key bindings that follow C-x (or as many as space
-allows given your settings). This includes prefixes like C-x 8 which
-are shown in a different face. Screenshots of what the popup will look
-like are included below. which-key started as a rewrite of
-[[https://github.com/kai2nenobu/guide-key][gude-key-mode]], but the feature sets have diverged to a certain
-extent.
-
-GitHub: https://github.com/justbur/emacs-which-key
-
-#+BEGIN_SRC emacs-lisp
-  (use-package which-key
-    :ensure t
-    :config
-    ;; enable globally
-    (which-key-mode)
-    ;; Hide/Modify some function prefix in which-key show menu
-    (setq which-key-description-replacement-alist
-          '(("Prefix Command" . "prefix")
-            ("which-key-show-next-page" . "wk next pg")
-            ("\\`calc-" . "") ; Hide "calc-" prefixes when listing M-x calc keys
-            ("/body\\'" . "") ; Remove display the "/body" portion of hydra fn names
-            ("modi/" . "m/") ; The car is intentionally not "\\`modi/" to cover
-                                          ; cases like `hydra-toggle/modi/..'.
-            ("\\`hydra-" . "+h/")
-            ("\\`org-babel-" . "ob/")
-            ("\\`my/" . ""))))
-#+END_SRC
-
-** xkcd
-
-Read [[https://xkcd.com/][xkcd]] from Emacs.
-
-GitHub: https://github.com/vibhavp/emacs-xkcd
-
-#+BEGIN_SRC emacs-lisp
-  (use-package xkcd
-    :ensure t
-    :init
-    (setq xkcd-cache-dir (concat user-cache-directory "xkcd/"))
-    (when (not (file-directory-p xkcd-cache-dir))
-      (make-directory xkcd-cache-dir :parents)))
-#+END_SRC
-
-** zzz-to-char                                                  :keybinding:
-
-This package provides two new commands: =zzz-to-char= and =zzz-up-to-char= which
-work like built-ins zap-to-char and zap-up-to-char, but allow you quickly select
-exact character you want to “zzz” to.
-
-The commands are minimalistic and often work like built-in ones when there is
-only one occurrence of target character (except they automatically work in
-backward direction too). You can also specify how many characters to scan from
-each side of point, see =zzz-to-char-reach=.
-
-This package uses avy as backend.
-
-GitHub: https://github.com/mrkkrp/zzz-to-char
-
-#+BEGIN_SRC emacs-lisp
-  (use-package zzz-to-char
-    :ensure t
-    :bind (("M-z" . zzz-to-char)))
-#+END_SRC
-
-** fontawesome
-
-Emacs [[http://fortawesome.github.io/Font-Awesome/][fontawesome]] utility.
-
-GitHub: https://github.com/syohex/emacs-fontawesome
-
-#+BEGIN_SRC emacs-lisp
-  (use-package fontawesome :ensure t)
-#+END_SRC
-
 
 * Editors
 
@@ -5751,6 +5742,8 @@ We *should not* use mouse when play with emacs.
 ** Insert State
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-keybindings
+(global-unset-key (kbd "M-s"))
+(global-set-key (kbd "M-s") 'helm-occur)
   (evil-define-key 'insert coldnew-editor-map
     (kbd "<delete>") 'hungry-delete-backward
     ;; (kbd "TAB") 'yas/expand
