@@ -468,11 +468,25 @@ Some buildin packages need to add extra setups for my emacs setting.
 
 #+BEGIN_SRC emacs-lisp
   (eval-after-load 'server
-    '(progn
-       (setq server-auth-dir
-             (file-name-as-directory
-              (concat user-cache-directory "server")))))
+      '(progn
+         (setq server-auth-dir
+               (file-name-as-directory
+                (concat user-cache-directory "server")))))
+#+END_SRC
 
+** startup
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'startup
+    '(progn
+       (setq auto-save-list-file-prefix
+             (cond ((eq system-type 'ms-dos)
+                    ;; MS-DOS cannot have initial dot, and allows only 8.3 names
+                    (file-name-as-directory
+                     (concat user-cache-directory "auto-save.list/_s")))
+                   (t
+                    (file-name-as-directory
+                     (concat user-cache-directory "auto-save-list/.saves-")))))))
 #+END_SRC
 
 * External Packages                                                :packages:
