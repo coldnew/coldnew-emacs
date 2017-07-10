@@ -4649,6 +4649,14 @@ GitHub: https://github.com/trotzig/import-js
      auto-mode-alist))
 #+END_SRC
 
+** GraphQL
+
+#+BEGIN_SRC emacs-lisp
+  (use-package graphql-mode
+   :ensure t
+   :init
+   (setq graphql-url "http://localhost:7000/graphql"))
+#+END_SRC
 
 * iOS / Mac OSX Development
 
