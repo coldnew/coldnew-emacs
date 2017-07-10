@@ -377,7 +377,7 @@ Some common libraries I'll use in my personal's command or anything else.
   (use-package async :ensure t)
 #+END_SRC
 
-* Spacemacs
+* COMMENT Spacemacs
 
 [[https://github.com/syl20bnr/spacemacs][Spacemacs]] is an emacs starterkit focus on [[https://gitorious.org/evil/pages/Home][Evil]], which emulate vim keymap on Emacs.
 
@@ -388,7 +388,7 @@ prevent orphan packages deleted by spacemacs.
 
 After all spacemacs init done, switch back to =*scratch*= buffer.
 
-** Load basic spacemacs configuration file
+** COMMENT Load basic spacemacs configuration file
 
 Latest spacemacs can setup =SPACEMACSDIR= to load customize spacemacs init.el
 file.
@@ -398,7 +398,7 @@ file.
   (setq-default dotspacemacs-filepath (concat user-emacs-directory "spacemacs.el"))
 #+END_SRC
 
-** Overwrite spacemacs function to let it not remove my packages
+** COMMENT Overwrite spacemacs function to let it not remove my packages
 
 No package should deleted by spacemacs.
 
@@ -409,7 +409,7 @@ No package should deleted by spacemacs.
     to make it not remove any orphan packages.")
 #+END_SRC
 
-** Spacemacs no need to check newer version
+** COMMENT Spacemacs no need to check newer version
 
 Since my spacemacs is installed as submodule, it's no need to check for newer version, I'll handle this myself.
 
@@ -418,12 +418,12 @@ Since my spacemacs is installed as submodule, it's no need to check for newer ve
     "Overwrite the spacemacs's `spacemacs/check-for-new-version' to
     makt it useless since I use git submodule to bundle spacemacs with my emacs.")
 #+END_SRC
-** Load spacemacs
+** COMMENT Load spacemacs
 
 The original spacemacs is suggest to clone it to =~/.emacs.d=, I really don't like this.
 Instead, I move it to =~/.emacs.d/modules/spacemacs= so I can use org-mode with literature programming.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   ;; Make a fake entry point for spacemacs, also modify the
   ;; `user-emacs-directory' temporary to mislead spacemacs real emacs
   ;; directory.
@@ -436,7 +436,7 @@ Instead, I move it to =~/.emacs.d/modules/spacemacs= so I can use org-mode with 
     (load spacemacs-init))
 #+END_SRC
 
-** Some function should execute after loading spacemacs-init.
+** COMMENT Some function should execute after loading spacemacs-init.
 
 spacemacs is really awesome, but there's something I don't like.
 
@@ -2246,6 +2246,12 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
 #+END_SRC
 
 * Editor                                                             :editor:
+
+Why emacs config has an editor section, doesn't means emacs is not an editor ?
+Yes, Emacs is an OS :)
+
+I put some editor/IDE relative functions and packages here.
+
 ** Create minor-mode to controll all keybindings                :keybinding:
 
 #+begin_src emacs-lisp
@@ -2475,6 +2481,106 @@ GitHub: https://github.com/syohex/vi-tilde-fringe
     (global-vi-tilde-fringe-mode))
 #+END_SRC
 
+** Adapt to foreign indentation offsets
+
+An Emacs minor mode that guesses the indentation offset originally
+used for creating source code files and transparently adjusts the
+corresponding settings in Emacs, making it more convenient to edit
+foreign files.
+
+GitHub: https://github.com/jscheid/dtrt-indent
+
+#+BEGIN_SRC emacs-lisp
+  (use-package dtrt-indent
+    :ensure t
+    :config
+    ;; enable dtrt-indent-mode globally
+    (dtrt-indent-mode 1))
+#+END_SRC
+
+** Intelligently call whitespace-cleanup on save
+
+This Emacs library minor mode will intelligently call =whitespace-cleanup= before
+buffers are saved.
+
+=whitespace-cleanup= is a handy function, but putting it in =before-save-hook=
+for every buffer is overkill, and causes messy diffs when editing third-party
+code that did not initially have clean whitespace.
+
+Additionally, whitespace preferences are often project-specific, and it's
+inconvenient to set up =before-save-hook= in a =.dir-locals.el= file.
+
+=whitespace-cleanup-mode= is a minor mode which calls =whitespace-cleanup=
+before saving the current buffer, but only if the whitespace in the buffer was
+initially clean. It determines this by quickly checking to see if
+=whitespace-cleanup= would have any effect on the buffer.
+
+GitHub: https://github.com/purcell/whitespace-cleanup-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package whitespace-cleanup-mode
+    :ensure t
+    :config
+    (add-hook 'prog-mode-hook 'whitespace-cleanup-mode))
+#+END_SRC
+
+** Takes care of trailing whitespaces (removal, highlighting)
+
+The definitive emacs customizations for people who are OCD about whitespace .
+
+GitHub: https://github.com/glasserc/ethan-wspace
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ethan-wspace
+    :ensure t
+    :config
+    ;; Turn off `mode-require-final-newline' since ethan-wspace
+    ;; supersedes `require-final-newline'.
+    (setq mode-require-final-newline nil)
+
+    ;; Enable ethan-wspace globally
+    (global-ethan-wspace-mode 1)
+
+    ;; Prevent etha-wspace touch my TAB on makefile mode
+    (add-hook 'makefile-mode-hook
+              '(lambda()
+                 (setq ethan-wspace-errors (remove 'tabs ethan-wspace-errors))))
+
+    ;; Not use in diff-mode since it breaking my syntax-highlight
+    (add-hook 'diff-mode-hook
+              '(lambda()
+                 (ethan-wspace-mode -1)))
+
+    ;; Ignore no trailing newline error
+    (setq-default ethan-wspace-errors (remove 'no-nl-eof ethan-wspace-errors)))
+#+END_SRC
+
+** Setup TABS
+
+#+BEGIN_SRC emacs-lisp
+  (setq tab-always-indent 'complete)
+#+END_SRC
+
+** Use god-mode for entering commands withoud modifier keys     :keybinding:
+
+This is a global minor mode for entering Emacs commands without
+modifier keys. It's similar to Vim's separation of commands and
+insertion mode.
+
+GitHub: https://github.com/chrisdone/god-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package god-mode
+    :ensure t
+    :bind
+    ("M-o" . god-local-mode)
+    :config
+    (bind-keys :map god-local-mode-map
+               ("z" . repeat)
+               ("i" . god-local-mode)))
+#+END_SRC
+
+
 * Programming Languages
 
 ** Prolog
@@ -2641,7 +2747,7 @@ defined some extra easy-templates I need to use here.
      (perl . t)
      (python . t)
      (ruby . t)
-     (sh . t)
+     ;; (sh . t)
      (shell . t)
      (plantuml . t)
      (R . t)
@@ -2978,7 +3084,6 @@ GitHub: https://github.com/masayuko/ox-rst
     (add-hook 'qml-mode-hook #'indent-guide-mode))
 #+END_SRC
 
-
 * Configration Files
 
 Since emacs not built-in all configration files syntax highlight support, we need to install manually.
@@ -3024,7 +3129,6 @@ Since emacs not built-in all configration files syntax highlight support, we nee
     :ensure t
     :mode (("CMakeLists\\.txt\\'" . cmake-mode) ("\\.cmake\\'" . cmake-mode)))
 #+END_SRC
-
 
 * C/C++ Development
 
@@ -3727,7 +3831,6 @@ Some interactive commands for clojure-mode.
              ("C-c C-t" . projectile-toggle-between-implementation-and-test))
 #+END_SRC
 
-
 * Blogging
 
 I now use [[https://hexo.io][Hexo]] with my fork of [[http://github.com/coldnew/hexo-renderer-org][hexo-renderer-org]] for blogging, [[http://github.com/kuanyui/hexo.el][hexo.el]] is a nice plugin to control hexo blog post in Emacs.
@@ -3757,7 +3860,6 @@ However, I use my fork of [[https://github.com/coldnew/hexo.el][hexo.el]] since 
     )
 #+END_SRC
 
-
 * Window Management                                                  :window:
 
 ** Maximized window after emacs start
@@ -3766,29 +3868,15 @@ However, I use my fork of [[https://github.com/coldnew/hexo.el][hexo.el]] since 
   (modify-all-frames-parameters '((fullscreen . maximized)))
 #+END_SRC
 
+* File Management                                              :dired:
 
-* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
-
-
-* TODO Spelling
-
-flyspell ?
+** Setup Keybindings                                           :keybinding:
 
 #+BEGIN_SRC emacs-lisp
-  (use-package ispell
-    :ensure t
-    :config
-    (cond
-     ;; aspell
-     ((executable-find "aspell") (setq ispell-program-name "aspell"
-                                       ispell-dictionary "en_US"
-                                       ispell-really-aspell t
-                                       ispell-really-hunspell nil))
-     ;; hunspell
-     ((executable-find "hunspell") (setq ispell-program-name "hunspell"
-                                         ispell-really-aspell nil
-                                         ispell-really-hunspell t))))
+  (bind-keys :map dired-mode-map
+             ("r"   . widred-change-to-wdired-mode))
 #+END_SRC
+
 
 * Version Control
 
@@ -3865,150 +3953,30 @@ GitHub: https://github.com/syohex/emacs-git-gutter-fringe
     (git-gutter-mode))
 #+END_SRC
 
-* File Management                                              :dired:
 
-** Open file with system's default browser
+* TODO Spelling Check
 
-The dired's =dired-open-file= will not use system's default tool to open file, thus I build a new one which use =xdg-open= and =open= command for none directory files.
-
-#+BEGIN_SRC emacs-lisp
-  (defun my/dired-find-file ()
-    "Open files using Mac OS X open command or Linux xdg-open command"
-    (interactive)
-    (let ((file-name (dired-get-file-for-visit)))
-      (if (and (file-exists-p file-name) (dired-nondirectory-p file-name))
-          (cond ((eq system-type 'darwin)
-                 (call-process "open" nil 0 nil file-name))
-                ;; FIXME: windows support ?
-                ((eq system-type 'gnu/linux)
-                 (call-process "xdg-open" nil 0 nil file-name)))
-          ;; for directory, use dired's default method
-          (dired-find-file))))
-#+END_SRC
-
-** Setup Keybindings                                           :keybinding:
+flyspell ?
 
 #+BEGIN_SRC emacs-lisp
-  (bind-keys :map dired-mode-map
-             ("r"   . widred-change-to-wdired-mode)
-             ("RET" . my/dired-find-file))
+  (use-package ispell
+    :ensure t
+    :config
+    (cond
+     ;; aspell
+     ((executable-find "aspell") (setq ispell-program-name "aspell"
+                                       ispell-dictionary "en_US"
+                                       ispell-really-aspell t
+                                       ispell-really-hunspell nil))
+     ;; hunspell
+     ((executable-find "hunspell") (setq ispell-program-name "hunspell"
+                                         ispell-really-aspell nil
+                                         ispell-really-hunspell t))))
 #+END_SRC
 
 
 
 * ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
-
-* Editors
-
-#+BEGIN_SRC emacs-lisp
-;;  (load (concat user-emacs-directory "configs/plugins/editorconfig.el"))
-#+END_SRC
-
-Why emacs config has an editor section, doesn't means emacs is not an editor ?
-Yes, Emacs is an OS :)
-
-I put some editor/IDE relative functions and packages here.
-
-
-
-** Adapt to foreign indentation offsets
-
-An Emacs minor mode that guesses the indentation offset originally
-used for creating source code files and transparently adjusts the
-corresponding settings in Emacs, making it more convenient to edit
-foreign files.
-
-GitHub: https://github.com/jscheid/dtrt-indent
-
-#+BEGIN_SRC emacs-lisp
-  (use-package dtrt-indent
-    :ensure t
-    :config
-    ;; enable dtrt-indent-mode globally
-    (dtrt-indent-mode 1))
-#+END_SRC
-
-** Intelligently call whitespace-cleanup on save
-
-This Emacs library minor mode will intelligently call =whitespace-cleanup= before
-buffers are saved.
-
-=whitespace-cleanup= is a handy function, but putting it in =before-save-hook=
-for every buffer is overkill, and causes messy diffs when editing third-party
-code that did not initially have clean whitespace.
-
-Additionally, whitespace preferences are often project-specific, and it's
-inconvenient to set up =before-save-hook= in a =.dir-locals.el= file.
-
-=whitespace-cleanup-mode= is a minor mode which calls =whitespace-cleanup=
-before saving the current buffer, but only if the whitespace in the buffer was
-initially clean. It determines this by quickly checking to see if
-=whitespace-cleanup= would have any effect on the buffer.
-
-GitHub: https://github.com/purcell/whitespace-cleanup-mode
-
-#+BEGIN_SRC emacs-lisp
-  (use-package whitespace-cleanup-mode
-    :ensure t
-    :config
-    (add-hook 'prog-mode-hook 'whitespace-cleanup-mode))
-#+END_SRC
-
-** Takes care of trailing whitespaces (removal, highlighting)
-
-The definitive emacs customizations for people who are OCD about whitespace .
-
-GitHub: https://github.com/glasserc/ethan-wspace
-
-#+BEGIN_SRC emacs-lisp
-  (use-package ethan-wspace
-    :ensure t
-    :config
-    ;; Turn off `mode-require-final-newline' since ethan-wspace
-    ;; supersedes `require-final-newline'.
-    (setq mode-require-final-newline nil)
-
-    ;; Enable ethan-wspace globally
-    (global-ethan-wspace-mode 1)
-
-    ;; Prevent etha-wspace touch my TAB on makefile mode
-    (add-hook 'makefile-mode-hook
-              '(lambda()
-                 (setq ethan-wspace-errors (remove 'tabs ethan-wspace-errors))))
-
-    ;; Not use in diff-mode since it breaking my syntax-highlight
-    (add-hook 'diff-mode-hook
-              '(lambda()
-                 (ethan-wspace-mode -1)))
-
-    ;; Ignore no trailing newline error
-    (setq-default ethan-wspace-errors (remove 'no-nl-eof ethan-wspace-errors)))
-#+END_SRC
-
-** Setup TABS
-
-#+BEGIN_SRC emacs-lisp
-  (setq tab-always-indent 'complete)
-#+END_SRC
-
-** Use god-mode for entering commands withoud modifier keys     :keybinding:
-
-This is a global minor mode for entering Emacs commands without
-modifier keys. It's similar to Vim's separation of commands and
-insertion mode.
-
-GitHub: https://github.com/chrisdone/god-mode
-
-#+BEGIN_SRC emacs-lisp
-  (use-package god-mode
-    :ensure t
-    :bind
-    ("M-o" . god-local-mode)
-    :config
-    (bind-keys :map god-local-mode-map
-               ("z" . repeat)
-               ("i" . god-local-mode)))
-#+END_SRC
 
 
 * Vim Emulation                                                        :evil:
@@ -5739,11 +5707,10 @@ We *should not* use mouse when play with emacs.
       (kbd "M-o") 'other-window)
 #+END_SRC
 
+
 ** Insert State
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-keybindings
-(global-unset-key (kbd "M-s"))
-(global-set-key (kbd "M-s") 'helm-occur)
   (evil-define-key 'insert coldnew-editor-map
     (kbd "<delete>") 'hungry-delete-backward
     ;; (kbd "TAB") 'yas/expand
