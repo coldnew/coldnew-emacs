@@ -377,110 +377,6 @@ Some common libraries I'll use in my personal's command or anything else.
   (use-package async :ensure t)
 #+END_SRC
 
-* COMMENT Spacemacs
-
-[[https://github.com/syl20bnr/spacemacs][Spacemacs]] is an emacs starterkit focus on [[https://gitorious.org/evil/pages/Home][Evil]], which emulate vim keymap on Emacs.
-
-I make my emacs on top of spacemacs since I also use vim keymap.
-
-In my config file, the original =~/.spacemacs= file has moved to =~/.emacs.d/spacemacs.d/init.el= , I also advice spacemacs funtion to
-prevent orphan packages deleted by spacemacs.
-
-After all spacemacs init done, switch back to =*scratch*= buffer.
-
-** COMMENT Load basic spacemacs configuration file
-
-Latest spacemacs can setup =SPACEMACSDIR= to load customize spacemacs init.el
-file.
-
-#+BEGIN_SRC emacs-lisp
-  ;; override spacemacs's config path to `~/.emacs.d/spacemacs.el'
-  (setq-default dotspacemacs-filepath (concat user-emacs-directory "spacemacs.el"))
-#+END_SRC
-
-** COMMENT Overwrite spacemacs function to let it not remove my packages
-
-No package should deleted by spacemacs.
-
-#+BEGIN_SRC emacs-lisp
-  ;; Make spacemacs not remove my packages.
-  (defadvice configuration-layer/delete-orphan-packages (around null-func activate)
-    "Overwrite the spacemacs's `configuration-layer/delete-orphan-packages'
-    to make it not remove any orphan packages.")
-#+END_SRC
-
-** COMMENT Spacemacs no need to check newer version
-
-Since my spacemacs is installed as submodule, it's no need to check for newer version, I'll handle this myself.
-
-#+BEGIN_SRC emacs-lisp
-  (defadvice spacemacs/check-for-new-version (around null-func activate)
-    "Overwrite the spacemacs's `spacemacs/check-for-new-version' to
-    makt it useless since I use git submodule to bundle spacemacs with my emacs.")
-#+END_SRC
-** COMMENT Load spacemacs
-
-The original spacemacs is suggest to clone it to =~/.emacs.d=, I really don't like this.
-Instead, I move it to =~/.emacs.d/modules/spacemacs= so I can use org-mode with literature programming.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; Make a fake entry point for spacemacs, also modify the
-  ;; `user-emacs-directory' temporary to mislead spacemacs real emacs
-  ;; directory.
-  (let* ((spacemacs-dir
-          (directory-file-name (concat user-modules-directory "spacemacs")))
-         (spacemacs-init
-          (concat (file-name-as-directory spacemacs-dir) "init.el"))
-         (user-emacs-directory (file-name-directory spacemacs-init)))
-    ;; Initial spacemacs, our emacs run on top of it
-    (load spacemacs-init))
-#+END_SRC
-
-** COMMENT Some function should execute after loading spacemacs-init.
-
-spacemacs is really awesome, but there's something I don't like.
-
-#+BEGIN_SRC emacs-lisp :noweb yes
-  <<spacemacs-later-init>>
-#+END_SRC
-
-*** Disable global highlight by default
-
-#+BEGIN_SRC emacs-lisp
-  (global-hl-line-mode -1)
-#+END_SRC
-
-*** switch back to `*scratch*' buffer after loading spacemacs finished
-
-After spacemacs loading finished, switch back to =*scratch*= buffer and make sure it's in =lisp-interaction-mode=.
-
-#+BEGIN_SRC emacs-lisp
-  ; kill *scratch* first since spacemacs switch it to text-mode
-  (kill-buffer "*scratch*")
-  ;; create *scratch* buffer
-  (with-current-buffer (get-buffer-create "*scratch*")
-    (lisp-interaction-mode))
-  (switch-to-buffer "*scratch*")
-#+END_SRC
-
-*** Don't use ido-mode
-
-I don't like the =ido-mode=.
-
-#+BEGIN_SRC emacs-lisp
-  (ido-mode -1)
-#+END_SRC
-
-*** Move helm input in minibuffer
-
- I *really* hate spacemacs default echo the helm input in header line, it's
- really annoying.
-
- #+BEGIN_SRC emacs-lisp
-   (setq helm-echo-input-in-header-line nil)
-   (remove-hook 'helm-minibuffer-set-up-hook 'helm-hide-minibuffer-maybe)
- #+END_SRC
-
 * Languages and Encodings
 
 Since current Emacs default run on UTF-8, it's no need to setup the encoding.
@@ -2245,6 +2141,111 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
              ("C-z" . helm-select-action))
 #+END_SRC
 
+* Vim Emulation                                                        :evil:
+
+Though I am really familier with emacs, I still like some vim command.
+
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
+  (use-package evil
+    :ensure t
+    :config
+    ;; enable evil-mode globally
+    (evil-mode t)
+    ;; some configs setup later
+    <<evil-config>>
+    ;; extra keybindings defined in `Keybinding' section
+    <<evil-keybindings>>
+    <<evil-ex-commands>>)
+#+END_SRC
+
+** Setup default state to insert-state
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
+  ;; default state set to insert-state
+  (setq evil-default-state 'insert)
+#+END_SRC
+
+** Make insert-state the same as emacs-state
+
+To me, vim's insert state is useless, so I mapping all my emacs keybinding to
+insert-state.
+
+First, bind all emacs-state key to insert state
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
+  (setcdr evil-insert-state-map nil)
+  (define-key evil-insert-state-map
+    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+#+END_SRC
+
+Make sure =ESC= key in insert-state will call =evil-normal-state=.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
+  (define-key evil-insert-state-map [escape] 'evil-normal-state)
+#+END_SRC
+
+We also need to make all emacs-state buffer become to insert-state.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
+  (dolist (m evil-emacs-state-modes)
+    (add-to-list 'evil-insert-state-modes m))
+#+END_SRC
+
+** evil-leader
+
+Evil Leader provides the =<leader>= feature from Vim that provides an
+easy way to bind keys under a variable prefix key. For an experienced
+Emacs User it is nothing more than a convoluted key map, but for a
+Evil user coming from Vim it means an easier start.
+
+GitHub: https://github.com/cofi/evil-leader
+
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code :tangle no :noweb-ref evil-config
+  (use-package evil-leader
+    :ensure t
+    :config
+    ;; enable evil-leader globally
+    (global-evil-leader-mode)
+    ;; extra keybindings defined in `Keybinding' section
+    <<evil-leader-keybindings>>)
+#+END_SRC
+
+** evil-surround
+
+This package emulates [[https://github.com/tpope/vim-surround][surround.vim by Tim Pope]]. The functionality is wrapped into a minor mode.
+
+GitHub: https://github.com/timcharper/evil-surround
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
+  (use-package evil-surround
+    :ensure t
+    :config
+    (global-evil-surround-mode 1))
+#+END_SRC
+
+** evil-org
+
+Supplemental evil-mode key-bindings to Emacs org-mode. This is a work in progress, expect improvements and don’t be afraid to contribute patches.
+
+GitHub: https://github.com/edwtjo/evil-org-mode
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-config
+  (use-package evil-org
+    :ensure t)
+#+END_SRC
+
+** Displays tildes in the fringe on empty lines a la Vi
+
+GitHub: https://github.com/syohex/vi-tilde-fringe
+
+#+BEGIN_SRC emacs-lisp
+  (use-package vi-tilde-fringe
+    :ensure t
+    :if window-system
+    :config
+    (global-vi-tilde-fringe-mode))
+#+END_SRC
+
 * Editor                                                             :editor:
 
 Why emacs config has an editor section, doesn't means emacs is not an editor ?
@@ -2469,18 +2470,6 @@ GitHub: https://github.com/zk-phi/indent-guide
   (setq show-paren-delay 0)               ; no delay
 #+END_SRC
 
-** Displays tildes in the fringe on empty lines a la Vi
-
-GitHub: https://github.com/syohex/vi-tilde-fringe
-
-#+BEGIN_SRC emacs-lisp
-  (use-package vi-tilde-fringe
-    :ensure t
-    :if window-system
-    :config
-    (global-vi-tilde-fringe-mode))
-#+END_SRC
-
 ** Adapt to foreign indentation offsets
 
 An Emacs minor mode that guesses the indentation offset originally
@@ -2579,7 +2568,6 @@ GitHub: https://github.com/chrisdone/god-mode
                ("z" . repeat)
                ("i" . god-local-mode)))
 #+END_SRC
-
 
 * Programming Languages
 
@@ -3979,99 +3967,6 @@ flyspell ?
 * ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 
 
-* Vim Emulation                                                        :evil:
-
-Though I am really familier with emacs, I still like some vim command.
-
-#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
-  (use-package evil
-    :ensure t
-    :config
-    ;; enable evil-mode globally
-    (evil-mode t)
-    ;; some configs setup later
-    <<evil-config>>
-    ;; extra keybindings defined in `Keybinding' section
-    <<evil-keybindings>>
-    <<evil-ex-commands>>)
-#+END_SRC
-
-** Setup default state to insert-state
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
-  ;; default state set to insert-state
-  (setq evil-default-state 'insert)
-#+END_SRC
-
-** Make insert-state the same as emacs-state
-
-To me, vim's insert state is useless, so I mapping all my emacs keybinding to
-insert-state.
-
-First, bind all emacs-state key to insert state
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
-  (setcdr evil-insert-state-map nil)
-  (define-key evil-insert-state-map
-    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
-#+END_SRC
-
-Make sure =ESC= key in insert-state will call =evil-normal-state=.
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
-  (define-key evil-insert-state-map [escape] 'evil-normal-state)
-#+END_SRC
-
-We also need to make all emacs-state buffer become to insert-state.
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
-  (dolist (m evil-emacs-state-modes)
-    (add-to-list 'evil-insert-state-modes m))
-#+END_SRC
-
-** evil-leader
-
-Evil Leader provides the =<leader>= feature from Vim that provides an
-easy way to bind keys under a variable prefix key. For an experienced
-Emacs User it is nothing more than a convoluted key map, but for a
-Evil user coming from Vim it means an easier start.
-
-GitHub: https://github.com/cofi/evil-leader
-
-#+BEGIN_SRC emacs-lisp :noweb no-export :exports code :tangle no :noweb-ref evil-config
-  (use-package evil-leader
-    :ensure t
-    :config
-    ;; enable evil-leader globally
-    (global-evil-leader-mode)
-    ;; extra keybindings defined in `Keybinding' section
-    <<evil-leader-keybindings>>)
-#+END_SRC
-
-** evil-surround
-
-This package emulates [[https://github.com/tpope/vim-surround][surround.vim by Tim Pope]]. The functionality is wrapped into a minor mode.
-
-GitHub: https://github.com/timcharper/evil-surround
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-config
-  (use-package evil-surround
-    :ensure t
-    :config
-    (global-evil-surround-mode 1))
-#+END_SRC
-
-** evil-org
-
-Supplemental evil-mode key-bindings to Emacs org-mode. This is a work in progress, expect improvements and don’t be afraid to contribute patches.
-
-GitHub: https://github.com/edwtjo/evil-org-mode
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-config
-  (use-package evil-org
-    :ensure t)
-#+END_SRC
-
 * IDE Features
 
 emacs has some IDE feature, add here.
@@ -4166,7 +4061,6 @@ GitHub: https://github.com/rocky/emacs-dbgr
     ;; enable globally
     (global-flycheck-mode))
 #+END_SRC
-
 
 * Completion
 
@@ -4621,12 +4515,6 @@ GitHub: https://github.com/trotzig/import-js
     :mode "\\.php\\'")
 #+END_SRC
 
-** [[file:configs/lang/python.org][python]]
-
-#+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang/python"))
-#+END_SRC
-
 ** ruby
 
 #+BEGIN_SRC emacs-lisp
@@ -4755,10 +4643,6 @@ GitHub: https://github.com/trotzig/import-js
 
 Note that =Clojure= is setting in =LISP Development= section.
 
-#+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang/java.el"))
-#+END_SRC
-
 ** Android
 
 #+BEGIN_SRC emacs-lisp
@@ -4788,9 +4672,123 @@ GitHub: https://github.com/youngker/elogcat.el
 
 * Rust Development
 
-#+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang/rust.el"))
+[[https://www.rust-lang.org/][Rust]] is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety.
+
+#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
+  (use-package rust-mode
+    :mode "\\.rs\\'"
+    :config
+    <<rust-mode-config>>
+    )
 #+END_SRC
+
+** Install Rust
+
+  To get start with programming [[https://www.rust-lang.org/][Rust]], we need to install it.
+
+  Install Rust is really simple, just copy and paste following command line to your terminal (MacOSX, Linux)
+
+  : curl -sSf https://static.rust-lang.org/rustup.sh | sh
+
+  If you want to uninstall it, just use uninstall script =/usr/local/lib/rustlib/uninstall.sh=.
+
+  Now you can create a minimal example to test Rust, let's create =hello.rs=.
+
+  #+BEGIN_SRC rust :tangle no
+    fn main() {
+        print!("Hello Rust!!!");
+    }
+  #+END_SRC
+
+  And use =rustc= to compile it.
+
+  : rustc hello.rs
+
+  After compile, we find a new file =hello= create, let's execute it.
+
+  #+BEGIN_EXAMPLE
+    ./hello
+    Hello Rust!!!
+  #+END_EXAMPLE
+
+  That's all, let's start programming [[https://www.rust-lang.org/][Rust]].
+
+
+** Auto-Completion for Rust
+
+  To do auto-completion, you need to install [[https://github.com/phildawes/racer][Racer]], a code completion tool for [[https://www.rust-lang.org/][Rust]]. The binary file will be install to =~/.cargo/bin/racer=.
+
+  : cargo install racer
+
+  We also need to download Rust source code to make [[https://github.com/phildawes/racer][Racer]] can parse it, just download it [[https://www.rust-lang.org/downloads.html][here]]. Or you can download it by =git=.
+
+  : git clone https://github.com/rust-lang/rust.git ~/Workspace/src/rust
+
+  After download source code, you can set =RUST_SRC_PATH= environment variable to make your emacs more portable, add following to your =~/.bashrc=.
+
+  #+BEGIN_SRC sh :tangle no
+    export RUST_SRC_PATH=$HOME/Workspace/src/rust
+  #+END_SRC
+
+  On emacs, we can use [[https://github.com/racer-rust/emacs-racer][emacs-racer]] as racer's wrapper.
+
+  #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref rust-mode-config
+    (use-package racer
+      :ensure t
+      :config
+      ;; Use `cargo install racer' to install it
+      (setq racer-cmd "~/.cargo/bin/racer")
+      ;; Don't forget to download rust source code, I save it to `$RUST_SRC_PATH'
+      (setq racer-rust-src-path (getenv "RUST_SRC_PATH"))
+      ;; Configure Emacs to activate racer when rust-mode starts
+      (add-hook 'rust-mode-hook #'racer-mode)
+      (add-hook 'racer-mode-hook #'eldoc-mode))
+  #+END_SRC
+
+  I also use [[http://company-mode.github.io/][company-mode]] as completion backend.
+
+  #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref rust-mode-config
+    (use-package company-racer
+      :ensure t
+      :config
+      (add-hook 'racer-mode-hook #'company-mode)
+      ;; Setting up configurations when you load rust-mode
+      (add-hook 'rust-mode-hook
+                ;; Use company-racer in rust mode
+                (lambda ()
+                  (set (make-local-variable 'company-backends) (cons 'company-racer company-backends)))))
+  #+END_SRC
+
+**
+
+** Syntax Checker
+
+  [[https://github.com/flycheck/flycheck-rust][flycheck-rust]] is [[https://github.com/flycheck/flycheck][flycheck]] backend for Rust, which can let use setup Rust more easily.
+
+  #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref rust-mode-config
+    (use-package flycheck-rust
+      :ensure t
+      :config
+      (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+  #+END_SRC
+
+  From [[https://github.com/flycheck/flycheck-rust][flycheck-rust]]'s doc, there's something we should notice:
+
+  #+BEGIN_QUOTE
+  Note:
+  You must run cargo build initially to install all dependencies. If you add new dependencies to Cargo.toml you need to run cargo build again. Otherwise you will see spurious errors about missing crates.
+  #+END_QUOTE
+
+
+** Setup Rust Keybinding
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref rust-mode-config
+  (bind-keys :map rust-mode-map
+             ("M-." . racer-find-definition)    ; Jump to method definition
+             ("TAB" . racer-complete-or-indent) ; auto complete and intent
+             )
+#+END_SRC
+
 
 * LISP Development                                                     :lisp:
 
@@ -4918,15 +4916,29 @@ Show lambda as λ.
 
 ** Common Lisp
 
-#+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang/common-lisp.el"))
+#+BEGIN_SRC emacs-lisp :noweb no-export
+  (use-package lisp-mode
+    :ensure nil                           ; built-in
+    :mode "\\.lisp\\'"
+    :config
+    <<common-lisp-config>>)
 #+END_SRC
+
+*** Setup Common Lisp Keybinding                               :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref common-lisp-config
+  (bind-keys :map lisp-mode-map
+             ("C-c '" . my/narrow-or-widen-dwim))
+#+END_SRC
+
 
 ** newlisp
 
 #+BEGIN_SRC emacs-lisp
-  (load (concat user-emacs-directory "configs/lang/newlisp.el"))
+  (use-package newlisp-mode
+    :ensure t)
 #+END_SRC
+
 
 * Web Development                                                       :web:
 
@@ -5196,7 +5208,6 @@ GitHub: https://github.com/coldnew/eshell-autojump
 #+END_SRC
 
 * Window Management                                                  :window:
-
 
 ** winner-mode                                                      :winner:
 
