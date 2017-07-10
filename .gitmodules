@@ -7,9 +7,6 @@
 [submodule "modules/emacs"]
 	path = modules/emacs
 	url = https://github.com/emacs-mirror/emacs.git
-[submodule "modules/spacemacs"]
-	path = modules/spacemacs
-	url = https://github.com/syl20bnr/spacemacs.git
 [submodule "modules/hexo.el"]
 	path = modules/hexo.el
 	url = https://github.com/coldnew/hexo.el.git

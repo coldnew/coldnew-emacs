@@ -1,8 +1,0 @@
-# -*- mode: org; -*-
-# General setups for all configs
-
-#+LANGUAGE: en
-#+STARTUP: overview indent align
-#+BABEL: :cache yes
-#+OPTIONS: ^:nil num:nil tags:nil
-#+PROPERTY: header-args  :comments org
