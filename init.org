@@ -184,17 +184,13 @@ I specify a ramdisk path to make my emacs can save som temporary file to it. The
 
 #+BEGIN_SRC emacs-lisp
   (defconst user-ramdisk-directory
-      (let ((ramdisk "/Volumes/ramdisk/")
-            (user-ramdisk                   ; ~/ramdisk/
-             (concat (getenv "HOME") "/ramdisk/"))
-            (tmp "/tmp/"))
-        (if (eq system-type 'darwin)
-            ramdisk
-          ;; if ~/ramdisk/ exist, use it
-          (if (file-exists-p user-ramdisk)
-              user-ramdisk
-            ;; fallcack to system default ramdisk dir
-            temporary-file-directory)))
+    (let ( (user-ramdisk                   ; ~/ramdisk/
+            (concat (getenv "HOME") "/ramdisk/")))
+      ;; if ~/ramdisk/ exist, use it
+      (if (file-exists-p user-ramdisk)
+          user-ramdisk
+          ;; fallcack to system default ramdisk dir
+          temporary-file-directory))
     "My ramdisk path in system.")
 #+END_SRC
 
@@ -446,6 +442,17 @@ Some buildin packages need to add extra setups for my emacs setting.
        (setq url-configuration-directory
              (file-name-as-directory
               (concat user-cache-directory "url")))))
+#+END_SRC
+
+** server
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'server
+    '(progn
+       (setq server-auth-dir
+             (file-name-as-directory
+              (concat user-cache-directory "server")))))
+
 #+END_SRC
 
 * External Packages                                                :packages:
