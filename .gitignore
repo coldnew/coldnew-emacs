@@ -41,3 +41,4 @@ log/
 /.build/
 configs/**/*.el
 elpa/
+/server/server

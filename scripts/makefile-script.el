@@ -116,10 +116,16 @@
     (message (format "Create %s from %s..." fel2 forg))
     (rename-file fel fel2 t)))
 
+;; (defun find-all-org-configs ()
+;;   "Return a list store all `org-mode' configs."
+;;   (cons "init.org"
+;;         (find-org-files "configs")))
+
 (defun find-all-org-configs ()
   "Return a list store all `org-mode' configs."
-  (cons "init.org"
-        (find-org-files "configs")))
+  (list "init.org"))
+
+
 
 (defun check-if-process-end ()
   "Check if current process's pid match to `*lockfile*', remove all tmp files and exit when failed."
@@ -151,7 +157,8 @@
 (defun byte-compile-configs ()
   "`byte-compile' all .el files in `~/.emacs.d/configs'."
   (setq byte-compile-error-on-warn nil)
-  (byte-recompile-directory (dirjoin (expand-file-name (getenv "PWD")) "configs") 0))
+  ;; (byte-recompile-directory (dirjoin (expand-file-name (getenv "PWD")) "configs") 0)
+  )
 
 
 ;;; makefile-script.el ends here
