@@ -3875,19 +3875,14 @@ However, I use my fork of [[https://github.com/coldnew/hexo.el][hexo.el]] since 
 
 * Version Control
 
-** vc-mode
+** Disable all vc-mode feature
 
-[[http://stackoverflow.com/questions/5748814/how-does-one-disable-vc-git-in-emacs][How does one disable vc-git in emacs? - Stack Overflow]]
+Emacs's builtin =vc-mode= is not really useful, and will make emacs slow when edit file over =sshfs=.
 
-[[https://superuser.com/questions/341723/how-can-disable-emacs-vc-integration-on-mounted-volumes][git - How can disable emacs' vc integration on mounted volumes? - Super User]]
+I disable all setting handled by vc-mode here since I only use git and don't want vc-mode bother with other version control system.
 
 #+BEGIN_SRC emacs-lisp
-  ;; (eval-after-load "vc" '(remove-hook 'find-file-hooks 'vc-find-file-hook))
-  ;; Disable git backend to speed up sshfs file load among other things
-  ;; (setq vc-handled-backends (quote (RCS CVS SVN SCCS Bzr Hg Mtn Arch)))
-  ;(setq vc-handled-backends (remove 'Git vc-handled-backends))
-;; disable "VC" (emacs internal version control stuff)
-(setq vc-handled-backends nil)
+  (setq vc-handled-backends nil)
 #+END_SRC
 
 ** Git
