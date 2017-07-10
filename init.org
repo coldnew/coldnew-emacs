@@ -271,6 +271,16 @@ I think I'll write some dynamic module extension, which will save to =~/.emacs.d
       (load script)))
 #+END_SRC
 
+** Startup emacs server
+
+Only start server mode if I'm not root
+
+#+BEGIN_SRC emacs-lisp
+  (unless (string-equal "root" (getenv "USER"))
+    (require 'server)
+    (unless (server-running-p) (server-start)))
+#+END_SRC
+
 ** Method to load secret file                                     :function:
 
 Some of my password stored in a secret file with gnupg encrypt, I add this function here so I can inject some emacs-command which hass password/account setting.
@@ -5766,7 +5776,6 @@ We *should not* use mouse when play with emacs.
       (kbd "C-x C-o") 'other-frame
       (kbd "M-o") 'other-window)
 #+END_SRC
-
 
 ** Insert State
 
