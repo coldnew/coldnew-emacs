@@ -375,12 +375,27 @@ Some common libraries I'll use in my personal's command or anything else.
 
 * Languages and Encodings
 
-Since current Emacs default run on UTF-8, it's no need to setup the encoding.
-
-For language, though Traditional Chinese is my mothertone, I still prefer use =en_US= to display time info.
+Add UTF8 at the front of the priority list for automatic detection.
 
 #+BEGIN_SRC emacs-lisp
   (prefer-coding-system 'utf-8)
+#+END_SRC
+
+Set up multilingual environment to use UTF-8.
+
+#+BEGIN_SRC emacs-lisp
+  (set-language-environment "UTF-8")
+#+END_SRC
+
+Set default value of various coding systems to UTF-8.
+
+#+BEGIN_SRC emacs-lisp
+  (set-default-coding-systems 'utf-8)
+#+END_SRC
+
+Use =en_US= for display time info.
+
+#+BEGIN_SRC emacs-lisp
   (setq system-time-locale "en_US")
 #+END_SRC
 
