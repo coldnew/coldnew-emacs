@@ -4144,6 +4144,14 @@ GitHub: https://github.com/company-mode/company-statistics
     (add-hook 'after-init-hook 'company-statistics-mode))
 #+END_SRC
 
+** Documentation popup for company-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company-quickhelp
+    :ensure t
+    :init (company-quickhelp-mode 1))
+#+END_SRC
+
 ** Setup keybindings                                            :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref company-config
