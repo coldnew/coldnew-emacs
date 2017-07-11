@@ -474,16 +474,6 @@ Some buildin packages need to add extra setups for my emacs setting.
               (concat user-cache-directory "url")))))
 #+END_SRC
 
-** server
-
-#+BEGIN_SRC emacs-lisp
-  (eval-after-load 'server
-      '(progn
-         (setq server-auth-dir
-               (file-name-as-directory
-                (concat user-cache-directory "server")))))
-#+END_SRC
-
 ** startup
 
 #+BEGIN_SRC emacs-lisp
