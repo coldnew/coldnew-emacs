@@ -5763,42 +5763,42 @@ We *should not* use mouse when play with emacs.
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-keybindings
   (evil-define-key 'insert coldnew-editor-map
     (kbd "<delete>") 'hungry-delete-backward
-    ;; (kbd "TAB") 'yas/expand
     (kbd "C-;") 'iedit-mode
     (kbd "C-d") 'hungry-delete-forward
     (kbd "C-l") 'hungry-delete-backward
     (kbd "C-n") 'evil-next-line
-    (kbd "M-z")   'zzz-to-char
     (kbd "C-o") 'evil-execute-in-normal-state
     (kbd "C-p") 'evil-previous-line
+    (kbd "C-v") 'set-mark-mode/rectangle-mark-mode
     (kbd "C-w") 'backward-kill-word
     (kbd "C-x C-f") 'helm-find-files
+    (kbd "C-x C-i") 'my/indent-region-or-buffer-and-cleanup
     (kbd "C-x C-n") 'company-complete
+    (kbd "C-x C-o") 'other-frame
     (kbd "C-x C-q") 'read-only-mode
     (kbd "C-x M-1") 'deft-or-close
     (kbd "C-x M-2") 'multi-eshell
     (kbd "C-x M-3") 'mu4e
     (kbd "C-x M-4") 'erc-start-or-switch
+    (kbd "C-x T") 'sane-term
+    (kbd "C-x b") 'helm-buffers-list
+    (kbd "C-x t") 'sane-term
     (kbd "C-x vl") 'magit-log
     (kbd "C-x vp") 'magit-push
     (kbd "C-x vs") 'magit-status
-    (kbd "C-x b") 'helm-buffers-list
     (kbd "M-<SPC>") 'insert-U200B-char
     (kbd "M-[") 'winner-undo
     (kbd "M-]") 'winner-redo
     (kbd "M-s") 'helm-occur
-    (kbd "s-<RET>") 'insert-empty-line
-    (kbd "s-<SPC>") 'insert-U200B-char
-    (kbd "C-v") 'set-mark-mode/rectangle-mark-mode
-    (kbd "C-x C-i") 'my/indent-region-or-buffer-and-cleanup
     (kbd "M-v") 'er/expand-region
     (kbd "M-x") 'helm-M-x
     (kbd "M-y") 'helm-show-kill-ring
-    ;; (kbd "M-o") 'other-window
-    (kbd "C-x C-o") 'other-frame
-    (kbd "C-x t") 'sane-term
-    (kbd "C-x T") 'sane-term
     (kbd "M-y") 'helm-show-kill-ring
+    (kbd "M-z")   'zzz-to-char
+    (kbd "s-<RET>") 'insert-empty-line
+    (kbd "s-<SPC>") 'insert-U200B-char
+    ;; (kbd "M-o") 'other-window
+    ;; (kbd "TAB") 'yas/expand
     )
 #+END_SRC
 
