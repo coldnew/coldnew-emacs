@@ -4056,6 +4056,16 @@ GitHub: https://github.com/bbatsov/projectile
     (projectile-global-mode))
 #+END_SRC
 
+*** Setup Keybindings                                         :keinbinding:
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-keybindings
+  (evil-define-key 'insert coldnew-editor-map
+    (kbd "M-p f") 'projectile-find-file
+    (kbd "M-p a") 'projectile-ag
+    (kbd "M-p g") 'projectile-grep
+    (kbd "M-p s") 'projectile-run-eshell)
+#+END_SRC
+
 ** semantic
 
 #+BEGIN_SRC emacs-lisp
