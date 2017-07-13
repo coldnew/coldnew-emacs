@@ -1850,18 +1850,7 @@ them at styles dir.
 ** mode-line
 
 #+BEGIN_SRC emacs-lisp
-  ;; My own theme depends on following packages
-  (use-package powerline :ensure t)
-  (use-package powerline-evil :ensure t)
-  ;; (use-package spaceline-all-the-icons :ensure t)
-  ;; TODO: use my own replace spacemacs one
-  (use-package spaceline
-    :ensure t
-    :config
-;    (require 'spaceline-config)
-;    (setq powerline-default-separator 'slant)
-                                          ;(spaceline-spacemacs-theme)
-    )
+  (use-package spaceline :ensure t)
 
   (use-package spaceline-all-the-icons
     :after spaceline
@@ -1869,13 +1858,6 @@ them at styles dir.
     (spaceline-all-the-icons-theme)
     ;;
     (setq spaceline-all-the-icons-separators-type 'slant))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (use-package spaceline
-    :ensure t)
-
-    (require 'coldnew-modeline-config)
 #+END_SRC
 
 * Minibuffer                                                :minibuffer:
