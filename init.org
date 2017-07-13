@@ -5289,6 +5289,13 @@ GitHub: https://github.com/coldnew/eshell-autojump
       (eshell-command-result (concat command " " file))))
 #+END_SRC
 
+*** Setup Keybindings                                          :keybinding:
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref eshell-config
+  (bind-keys :map eshell-mode-map
+             ("C-u" . eshell-kill-input))
+#+END_SRC
+
 * Window Management                                                  :window:
 
 ** winner-mode                                                      :winner:
