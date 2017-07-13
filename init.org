@@ -281,6 +281,34 @@ Only start server mode if I'm not root
     (unless (server-running-p) (server-start)))
 #+END_SRC
 
+** Setup backup files
+
+By default Emacs saves =BackupFiles= under the original name with a tilde =~= appended. Example: Editing README will result in README and README~ in the same directory.
+
+This is primitive and boring.
+
+I save my backup files to =~/.emacs.d/.cache/backup= and since is always ignore by version control system, it's a nice place to store backup files.
+
+#+BEGIN_SRC emacs-lisp
+  (let ((backup-dir (concat user-cache-directory "backup")))
+    ;; Move backup file to `~/.emacs.d/.cache/backup'
+    (setq backup-directory-alist `(("." . ,backup-dir)))
+    ;; Makesure backup directory exist
+    (when (not (file-exists-p backup-dir))
+      (make-directory backup-dir t)))
+#+END_SRC
+
+Also setup some backup settings.
+
+#+BEGIN_SRC emacs-lisp
+  (setq delete-by-moving-to-trash nil)
+  (setq version-control t)
+  (setq kept-old-versions 10)
+  (setq kept-new-versions 20)
+  (setq delete-old-versions t)
+  (setq backup-by-copying t)
+#+END_SRC
+
 ** Method to load secret file                                     :function:
 
 Some of my password stored in a secret file with gnupg encrypt, I add this function here so I can inject some emacs-command which hass password/account setting.
