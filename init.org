@@ -3926,7 +3926,6 @@ However, I use my fork of [[https://github.com/coldnew/hexo.el][hexo.el]] since 
              ("r"   . widred-change-to-wdired-mode))
 #+END_SRC
 
-
 * Version Control
 
 ** Disable all vc-mode feature
@@ -3997,7 +3996,6 @@ GitHub: https://github.com/syohex/emacs-git-gutter-fringe
     (git-gutter-mode))
 #+END_SRC
 
-
 * TODO Spelling Check
 
 flyspell ?
@@ -4017,10 +4015,6 @@ flyspell ?
                                          ispell-really-aspell nil
                                          ispell-really-hunspell t))))
 #+END_SRC
-
-
-
-* ------------------------ FOLLOWING WILL BE REWRITE ---------------------------
 
 
 * IDE Features
@@ -4871,7 +4865,6 @@ GitHub: https://github.com/youngker/elogcat.el
              )
 #+END_SRC
 
-
 * LISP Development                                                     :lisp:
 
 Though =LISP= has many dialet, it still is the best programming
@@ -5021,7 +5014,6 @@ Show lambda as λ.
     :ensure t)
 #+END_SRC
 
-
 * Web Development                                                       :web:
 
 #+BEGIN_SRC emacs-lisp
@@ -5106,7 +5098,6 @@ GitHub: https://github.com/smihica/emmet-mode
       (define-key emmt-mode-keymap (kbd "TAB") 'emmt-expand-yas)
       (define-key emmt-mode-keymap (kbd "<tab>") 'emmt-expand-yas)))
 #+END_SRC
-
 
 * Terminal Emulator                                                    :term:
 
