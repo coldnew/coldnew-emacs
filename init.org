@@ -1341,21 +1341,6 @@ GitHub: https://github.com/justbur/emacs-which-key
             ("\\`my/" . ""))))
 #+END_SRC
 
-** xkcd
-
-Read [[https://xkcd.com/][xkcd]] from Emacs.
-
-GitHub: https://github.com/vibhavp/emacs-xkcd
-
-#+BEGIN_SRC emacs-lisp
-  (use-package xkcd
-    :ensure t
-    :init
-    (setq xkcd-cache-dir (concat user-cache-directory "xkcd/"))
-    (when (not (file-directory-p xkcd-cache-dir))
-      (make-directory xkcd-cache-dir :parents)))
-#+END_SRC
-
 ** zzz-to-char                                                  :keybinding:
 
 This package provides two new commands: =zzz-to-char= and =zzz-up-to-char= which
