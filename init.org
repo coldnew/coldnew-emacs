@@ -2000,6 +2000,8 @@ For more info, you can refer to: [[https://www.emacswiki.org/emacs/Registers][Em
            (?b (file . "~/Org/blog.org"))
            ;; google-interview-university
            (?g (file . "~/Workspace/google-interview-university/index.org"))
+           ;; embedded-summer-2017
+           (?s (file . "~/Workspace/embedded-2017/README.org")
          ))
     (set-register (car r) (cadr r)))
 #+END_SRC
