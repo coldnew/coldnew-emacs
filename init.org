@@ -2745,6 +2745,18 @@ Here I use [[http://jblevins.org/projects/markdown-mode/][markdown-mode]] to hel
     <<markdown-config>>)
 #+END_SRC
 
+*** Edit markdown code block in a separate buffer
+
+When place cursor inside code block in markddown-mode, we can use =C-c '= to switch to separate buffer like org-mode does.
+
+GitHub: https://github.com/emacs-pe/markdown-edit-indirect.el
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref markdown-config
+  (use-package markdown-edit-indirect
+    :ensure t
+    :after markdown-mode)
+#+END_SRC
+
 *** Syntax highlighting on code blocks
 
 [[http://jblevins.org/log/mmm][Syntax highlighting for code blocks in Emacs Markdown Mode]] give us some hint to use =mmm-mode= syntax highlight code block on markdown-mode.
@@ -2775,11 +2787,13 @@ Here I use [[http://jblevins.org/projects/markdown-mode/][markdown-mode]] to hel
 *** Setup Markdown keybinding                                  :keybinding:
 
  #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref markdown-config
-  (bind-keys :map markdown-mode-map
-             ("C-c i" . markdown-insert-link))
+   (bind-keys :map markdown-mode-map
+              ("C-c i" . markdown-insert-link)
+              ("C-c '" . markdown-edit-indirect))
 
-  (bind-keys :map gfm-mode-map
-             ("C-c i" . markdown-insert-link))
+   (bind-keys :map gfm-mode-map
+              ("C-c i" . markdown-insert-link)
+              ("C-c '" . markdown-edit-indirect))
 #+END_SRC
 
 ** NASM
