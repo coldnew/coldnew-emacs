@@ -2072,20 +2072,20 @@ I put some editor/IDE relative functions and packages here.
 ** Create minor-mode to controll all keybindings                :keybinding:
 
 #+begin_src emacs-lisp
-  (defvar coldnew-editor-map (make-keymap))
+  (defvar my-editor-map (make-keymap))
 
-  (define-minor-mode coldnew-editor-mode
-    "coldnew's editor minor mode."
+  (define-minor-mode my-editor-mode
+    "My editor minor mode."
     :init-value t
-    :keymap coldnew-editor-map)
+    :keymap my-editor-map)
 
-  (define-globalized-minor-mode global-coldnew-editor-mode
-    coldnew-editor-mode (lambda ()
+  (define-globalized-minor-mode global-my-editor-mode
+    my-editor-mode (lambda ()
                           (if (not (minibufferp (current-buffer)))
-                              (coldnew-editor-mode 1))))
+                              (my-editor-mode 1))))
 
   ;; Gloabal enable
-  (global-coldnew-editor-mode t)
+  (global-my-editor-mode t)
 #+end_src
 
 ** Keeping files in sync
@@ -2508,7 +2508,7 @@ For more info, you can refer to: [[https://www.emacswiki.org/emacs/Registers][Em
 ** Setup Keybinding                                             :keybinding:
 
 #+BEGIN_SRC emacs-lisp
-  (bind-keys :map coldnew-editor-map
+  (bind-keys :map my-editor-map
              ("C-x n" . bm-next)
              ("C-x p" . bm-previous)
              ("C-x ." . bm-toggle))
@@ -4146,7 +4146,7 @@ GitHub: https://github.com/bbatsov/projectile
 *** Setup Keybindings                                         :keinbinding:
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-keybindings
-  (evil-define-key 'insert coldnew-editor-map
+  (evil-define-key 'insert my-editor-map
     (kbd "M-p f") 'projectile-find-file
     (kbd "M-p a") 'projectile-ag
     (kbd "M-p g") 'projectile-grep
@@ -5872,7 +5872,7 @@ We *should not* use mouse when play with emacs.
 ** Normal State
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-keybindings
-  (evil-define-key 'normal coldnew-editor-map
+  (evil-define-key 'normal my-editor-map
       (kbd "C-x C-f") 'helm-find-files
       (kbd "C-x C-q") 'read-only-mode
       (kbd "C-x M-1") 'deft-or-close
@@ -5894,7 +5894,7 @@ We *should not* use mouse when play with emacs.
 ** Insert State
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-keybindings
-  (evil-define-key 'insert coldnew-editor-map
+  (evil-define-key 'insert my-editor-map
     (kbd "<delete>") 'hungry-delete-backward
     (kbd "C-;") 'iedit-mode
     (kbd "C-d") 'hungry-delete-forward
