@@ -2797,7 +2797,7 @@ GitHub: https://github.com/emacs-pe/markdown-edit-indirect.el
   (use-package nasm-mode :ensure t)
 #+END_SRC
 
-** Org-mode
+** Org-mode                                                            :org:
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package org
@@ -3091,7 +3091,8 @@ GitHub: https://github.com/masayuko/ox-rst
              ("C-c p" . org-metaup)
              ("C-c n" . org-metadown)
              ("C-c i" . org-insert-link)
-             ("C-c I" . org-toggle-inline-images))
+             ("C-c I" . org-toggle-inline-images)
+             ("C-c C-." . org-babel-remove-result-one-or-many))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
