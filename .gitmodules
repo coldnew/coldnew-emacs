@@ -13,3 +13,6 @@
 [submodule "modules/jdee-server"]
 	path = modules/jdee-server
 	url = https://github.com/jdee-emacs/jdee-server.git
+[submodule "modules/ProofGeneral"]
+	path = modules/ProofGeneral
+	url = https://github.com/ProofGeneral/PG.git
