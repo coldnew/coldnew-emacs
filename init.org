@@ -2004,7 +2004,7 @@ Evil user coming from Vim it means an easier start.
 
 GitHub: https://github.com/cofi/evil-leader
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
   (use-package evil-leader
     :ensure t
     :after evil
@@ -2012,7 +2012,7 @@ GitHub: https://github.com/cofi/evil-leader
     ;; enable evil-leader globally
     (global-evil-leader-mode)
     ;; extra keybindings defined in `Keybinding' section
-    <<evil-leader-keybindings>>)
+    <<evil-leader-keybindings>> )
 #+END_SRC
 
 ** evil-surround
