@@ -5377,8 +5377,13 @@ GitHub: https://github.com/coldnew/eshell-autojump
 *** Setup Keybindings                                          :keybinding:
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref eshell-config
-  (bind-keys :map eshell-mode-map
-             ("C-u" . eshell-kill-input))
+  ;; FIXME: why this will still global-map ?
+  ;; (bind-keys :map eshell-mode-map
+  ;;            ("C-u" . eshell-kill-input))
+
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (define-key eshell-mode-map (kbd "C-u") 'eshell-kill-input)))
 #+END_SRC
 
 * Window Management                                                  :window:
