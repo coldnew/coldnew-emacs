@@ -5864,17 +5864,6 @@ Window Selection
              ("M-0" . select-window-0))
 #+END_SRC
 
-*** Disable All mouse input to force me familier with keyboard
-
-We *should not* use mouse when play with emacs.
-
-#+BEGIN_SRC emacs-lisp
-  (global-unset-key (kbd "<down-mouse-1>"))
-  (global-unset-key (kbd "<mouse-1>"))
-  (global-unset-key (kbd "<down-mouse-3>"))
-  (global-unset-key (kbd "<mouse-3>"))
-#+END_SRC
-
 ** Normal State
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-keybindings
