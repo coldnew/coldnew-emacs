@@ -5925,6 +5925,7 @@ Window Selection
     (kbd "M-z")   'zzz-to-char
     (kbd "s-<RET>") 'insert-empty-line
     (kbd "s-<SPC>") 'insert-U200B-char
+    (kbd "C-M-;") 'avy-goto-char
     ;; (kbd "M-o") 'other-window
     ;; (kbd "TAB") 'yas/expand
     )
