@@ -36,6 +36,14 @@
 
   (setq spaceline-all-the-icons-separators-type 'slant)
 
+  ;; faces
+  ;; (setq spaceline-all-the-icons-sunrise-face
+  ;; 	'((t (:foreground "#06c175" :inherit powerline-active2)))
+  ;; 	)
+
+  ;; (setq spaceline-all-the-icons-sunset-face
+  ;; 	'((t (:foreground "#cd7714" :inherit powerline-active2))))
+
   (defvar org-clock-current-task)
 
   ;; Org task
@@ -79,7 +87,7 @@
 		   org-timer-countdown-timer
 		   (org-at-item-timer-p))))
 
-  ;;; Full Modeline Definition
+;;; Full Modeline Definition
   (defconst spaceline-coldnew-theme '("%e" (:eval (spaceline-ml-coldnew)))
     "Constant version of variable `spaceline-coldnew-theme' to allow to be set manually.")
 
