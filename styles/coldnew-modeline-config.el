@@ -36,7 +36,50 @@
 
   (setq spaceline-all-the-icons-separators-type 'slant)
 
-;;; Full Modeline Definition
+  (defvar org-clock-current-task)
+
+  ;; Org task
+  (require 'org-clock)
+  (spaceline-define-segment all-the-icons-org-clock-current-task
+    "An `all-the-icons' segment to display the current org-clock task."
+    (let ((face `(:height ,(spaceline-all-the-icons--height 0.9) :inherit)))
+      (propertize
+       (concat
+        (propertize (all-the-icons-faicon "check-circle" :v-adjust 0.1)
+                    'face `(:height ,(spaceline-all-the-icons--height 1.1) :family ,(all-the-icons-faicon-family) :inherit))
+        " "
+        (propertize (truncate-string-to-width org-clock-current-task 20 nil nil "…")
+                    'face face
+                    'display '(raise 0.1)))
+       'help-echo "Go to task"
+       'mouse-face (spaceline-all-the-icons--highlight)
+       'local-map (make-mode-line-mouse-map 'mouse-1 #'org-clock-goto)))
+    :when (and active
+               org-clock-current-task))
+
+  (spaceline-define-segment all-the-icons-org-timer-task
+    "An `all-the-icons' segment to display the current org-timer task."
+    (let* ( (face `(:height ,(spaceline-all-the-icons--height 0.9) :inherit))
+	    )
+      (propertize
+       (concat
+        (propertize (all-the-icons-faicon "clock-o" :v-adjust 0.1)
+                    'face `(:height ,(spaceline-all-the-icons--height 1.1) :family ,(all-the-icons-faicon-family) :inherit))
+        " "
+        (propertize ;; (truncate-string-to-width org-clock-current-task 20 nil nil "…")
+         (format "%s" ;; org-timer-mode-line-string
+		 (substring (org-timer-value-string) 0 -1))
+         'face face
+         'display '(raise 0.1)))
+       'help-echo "Go to task"
+       'mouse-face (spaceline-all-the-icons--highlight)
+       'local-map (make-mode-line-mouse-map 'mouse-1 #'org-clock-goto)))
+    :when (and active
+               (or org-timer-mode-line-timer
+		   org-timer-countdown-timer
+		   (org-at-item-timer-p))))
+
+  ;;; Full Modeline Definition
   (defconst spaceline-coldnew-theme '("%e" (:eval (spaceline-ml-coldnew)))
     "Constant version of variable `spaceline-coldnew-theme' to allow to be set manually.")
 
@@ -48,90 +91,93 @@ Add ADDITIONAL-SEGMENTS to the end of the theme."
     (spaceline-compile
       "coldnew"
       '((all-the-icons-anzu
-	 :face mode-line
-	 :skip-alternate t)
+         :face mode-line
+         :skip-alternate t)
 
-	((all-the-icons-modified
-	  all-the-icons-bookmark
-	  all-the-icons-dedicated
-	  all-the-icons-window-number
-	  all-the-icons-buffer-size) :face highlight-face :skip-alternate t)
+        ((all-the-icons-modified
+          all-the-icons-bookmark
+          all-the-icons-dedicated
+          all-the-icons-window-number
+          all-the-icons-buffer-size) :face highlight-face :skip-alternate t)
 
-	all-the-icons-separator-left-active-1
+        all-the-icons-separator-left-active-1
 
-	((all-the-icons-projectile
-	  all-the-icons-mode-icon
-	  ((all-the-icons-buffer-path
+        ((all-the-icons-projectile
+          all-the-icons-mode-icon
+          ((all-the-icons-buffer-path
             all-the-icons-buffer-id) :separator ""))
-	 :face default-face)
+         :face default-face)
 
-	all-the-icons-separator-left-active-2
+        all-the-icons-separator-left-active-2
 
-	((all-the-icons-process
-	  all-the-icons-position
-	  all-the-icons-region-info
-	  all-the-icons-fullscreen
-	  all-the-icons-text-scale
-	  all-the-icons-narrowed
-	  all-the-icons-multiple-cursors)
-	 :face highlight-face
-	 :separator (spaceline-all-the-icons--separator spaceline-all-the-icons-primary-separator " "))
+        ((all-the-icons-process
+          all-the-icons-position
+          all-the-icons-region-info
+          all-the-icons-fullscreen
+          all-the-icons-text-scale
+          all-the-icons-narrowed
+          all-the-icons-multiple-cursors)
+         :face highlight-face
+         :separator (spaceline-all-the-icons--separator spaceline-all-the-icons-primary-separator " "))
 
-	all-the-icons-separator-left-active-3
-	all-the-icons-separator-left-inactive
+        all-the-icons-separator-left-active-3
+        all-the-icons-separator-left-inactive
 
-	((all-the-icons-vc-icon
-	  all-the-icons-vc-status
-	  ((all-the-icons-git-ahead
+        ((all-the-icons-vc-icon
+          all-the-icons-vc-status
+          ((all-the-icons-git-ahead
             all-the-icons-git-status) :separator " ")
-	  ((all-the-icons-flycheck-status
+          ((all-the-icons-flycheck-status
             all-the-icons-flycheck-status-info) :separator " ")
-	  all-the-icons-package-updates)
-	 :face other-face
-	 :separator (spaceline-all-the-icons--separator spaceline-all-the-icons-secondary-separator " "))
+          all-the-icons-package-updates)
+         :face other-face
+         :separator (spaceline-all-the-icons--separator spaceline-all-the-icons-secondary-separator " "))
 
-	all-the-icons-separator-left-active-4
+        all-the-icons-separator-left-active-4
 
-	((all-the-icons-separator-minor-mode-left
-	  all-the-icons-minor-modes
-	  all-the-icons-separator-minor-mode-right)
-	 :tight t
-	 :face highlight-face
-	 :when spaceline-all-the-icons-minor-modes-p)
+        ((all-the-icons-separator-minor-mode-left
+          all-the-icons-minor-modes
+          all-the-icons-separator-minor-mode-right)
+         :tight t
+         :face highlight-face
+         :when spaceline-all-the-icons-minor-modes-p)
 
-	((all-the-icons-which-function)
-	 :face powerline-active2
-	 :separator ""))
+        ((all-the-icons-which-function)
+         :face powerline-active2
+         :separator ""))
 
       `(((,@additional-segments) :when active :face powerline-active2)
-	((,@additional-segments) :when (not active) :face powerline-inactive2)
+        ((,@additional-segments) :when (not active) :face powerline-inactive2)
 
-	((all-the-icons-weather
-	  all-the-icons-temperature
-	  all-the-icons-sunrise
-	  all-the-icons-sunset)
-	 :face powerline-active2
-	 :separator (spaceline-all-the-icons--separator spaceline-all-the-icons-secondary-separator " "))
+        ((all-the-icons-weather
+          all-the-icons-temperature
+          all-the-icons-sunrise
+          all-the-icons-sunset)
+         :face powerline-active2
+         :separator (spaceline-all-the-icons--separator spaceline-all-the-icons-secondary-separator " "))
 
-	((all-the-icons-player-volume
-	  all-the-icons-player-controls
-	  all-the-icons-track
-	  all-the-icons-player-controls-shuffle)
-	 :face powerline-active2)
-
-	all-the-icons-separator-right-active-1
-	((all-the-icons-hud
-	  all-the-icons-buffer-position)
-	 :separator " " :when active)
+        ((all-the-icons-player-volume
+          all-the-icons-player-controls
+          all-the-icons-track
+          all-the-icons-player-controls-shuffle)
+         :face powerline-active2)
 
 
-	all-the-icons-separator-right-active-2
-	all-the-icons-separator-right-inactive
+        all-the-icons-separator-right-active-1
+        ((all-the-icons-hud
+          all-the-icons-buffer-position)
+         :separator " " :when active)
 
-	((all-the-icons-battery-status
-	  all-the-icons-time)
-	 :separator (spaceline-all-the-icons--separator spaceline-all-the-icons-primary-separator " ")
-	 :face default-face)))
+
+        all-the-icons-separator-right-active-2
+        all-the-icons-separator-right-inactive
+
+        ((all-the-icons-org-timer-task
+	  all-the-icons-org-clock-current-task
+          all-the-icons-battery-status
+          all-the-icons-time)
+         :separator (spaceline-all-the-icons--separator spaceline-all-the-icons-primary-separator " ")
+         :face default-face)))
 
     (setq-default mode-line-format spaceline-coldnew-theme))
 
