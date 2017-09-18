@@ -32,7 +32,9 @@
 
 (use-package spaceline-all-the-icons
   :ensure t
+  :after org
   :config
+
 
   (setq spaceline-all-the-icons-separators-type 'slant)
 
@@ -65,6 +67,7 @@
     :when (and active
                org-clock-current-task))
 
+  (require 'org-timer)
   (spaceline-define-segment all-the-icons-org-timer-task
     "An `all-the-icons' segment to display the current org-timer task."
     (let* ( (face `(:height ,(spaceline-all-the-icons--height 0.9) :inherit))
