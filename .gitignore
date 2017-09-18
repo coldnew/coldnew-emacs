@@ -42,3 +42,6 @@ log/
 configs/**/*.el
 elpa/
 /server/server
+/.DS_Store
+/abbrev_defs
+/persp-confs/persp-auto-save
