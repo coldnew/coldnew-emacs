@@ -4204,6 +4204,20 @@ I always add =sign-off= to the commit and make magit verbose.
   (setq magit-commit-arguments '("--verbose" "--signoff"))
 #+END_SRC
 
+*** Enable diff-highlight
+
+If you use git in command line, you can turn on diff-highlight by following command
+
+#+BEGIN_SRC sh :tangls no
+  git config --global core.pager "diff-highlight | less --tabs=4 -RFX"
+#+END_SRC
+
+With magit, we can use =M-x magit-toggle-diff-refine-hunk= or make it enable by default:
+
+#+BEGIN_SRC emacs-lisp
+  (setq magit-diff-refine-hunk 'all)
+#+END_SRC
+
 *** Add support for git configuration files
 
 #+BEGIN_SRC emacs-lisp
