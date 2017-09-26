@@ -4840,6 +4840,13 @@ GitHub: https://github.com/trotzig/import-js
     :mode "\\.php\\'")
 #+END_SRC
 
+** python
+
+#+BEGIN_SRC emacs-lisp
+  (use-package python
+    :mode (("SCons\\(truct\\|cript\\)\\'" . python-mode)))
+#+END_SRC
+
 ** ruby
 
 #+BEGIN_SRC emacs-lisp
