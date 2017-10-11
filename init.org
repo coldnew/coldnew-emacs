@@ -436,10 +436,10 @@ Set default value of various coding systems to UTF-8.
   (set-default-coding-systems 'utf-8)
 #+END_SRC
 
-Use =en_US= for display time info.
+Use =C= as locale for display time info (Actually it will display English).
 
 #+BEGIN_SRC emacs-lisp
-  (setq system-time-locale "en_US")
+  (setq system-time-locale "C")
 #+END_SRC
 
 * Built-in Packages
@@ -1500,6 +1500,24 @@ ref: http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
            (LaTeX-narrow-to-environment))
           (t (narrow-to-defun))))
 #+END_SRC
+
+*** Convert file format between DOS and UNIX
+
+Some of my partner's file are in DOS format, so I need command to convert buffer between dos format and unix format.
+
+#+begin_src emacs-lisp
+  (defun my/dos2unix ()
+    "Convert buffer file from dos file to unix file."
+    (interactive)
+    (set-buffer-file-coding-system 'undecided-unix 't) )
+#+end_src
+
+#+begin_src emacs-lisp
+  (defun my/unix2dos ()
+    "Convert buffer file from unix file to dos file."
+    (interactive)
+    (set-buffer-file-coding-system 'undecided-dos 't))
+#+end_src
 
 ** Edit (Insert/Remove)                                               :edit:
 
