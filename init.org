@@ -51,6 +51,12 @@ My emacs configuration already shipped an update-to-date version of emacs based 
   ./scripts/build-emacs.sh
 #+END_EXAMPLE
 
+Note that if your are building under =Mac OSX=, don't forget to install xcode tools:
+
+#+BEGIN_SRC sh
+  xcode-select --install
+#+END_SRC
+
 ** Install or testing this config
 
 - First use git to download whole repo
