@@ -53,7 +53,7 @@ My emacs configuration already shipped an update-to-date version of emacs based 
 
 Note that if your are building under =Mac OSX=, don't forget to install xcode tools:
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :tangle no
   xcode-select --install
 #+END_SRC
 
