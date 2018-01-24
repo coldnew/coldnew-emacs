@@ -3111,6 +3111,40 @@ An abbreviated link looks like
           ))
 #+END_SRC
 
+*** Capture and Agenda
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  ;; make agenda show on current window
+  (setq org-agenda-window-setup 'current-window)
+  ;; highlight current in agenda
+  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
+
+  ;; Setup files for agenda
+  (setq org-directory "~/Org")
+  ;; U all .org files in `org-directory'
+  (setq org-agenda-files
+        (find-lisp-find-files org-directory "\.org$"))
+  ;;
+  (setq org-default-notes-file (f-join org-directory "tasks" "TODO.org"))
+
+  ;; Always use `C-g' to exit agenda
+  (add-hook 'org-agenda-mode-hook
+            '(lambda ()
+               (local-set-key (kbd "C-g") 'org-agenda-exit)))
+
+  ;; Enable `org-indent-mode' by default
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  ;; Use speed command to quick navigating
+  (setq org-use-speed-commands t)
+
+  (setq org-capture-templates
+        '(("t" "TODO"     entry (file+headline "" "Tasks") "* TODO %?\n %i\n")
+          ("n" "NOTE"     entry (file+headline "" "Tasks") "* NOTE %?\n %i\n %a")
+          ("l" "Links"    entry (file+headline "" "Links") "* TODO %? :link:\nSCHEDULED: <%<%Y-%m-%d %a>>\n %i\n %a")
+          ("j" "Journal"  entry (file+datetree "" "Journal") "* %?\nEntered on %U\n  %i\n  %a")
+          ))
+#+END_SRC
+
 *** Deft for Note-taking
 
 #+BEGIN_SRC emacs-lisp
@@ -3154,25 +3188,6 @@ An abbreviated link looks like
       (let ((deft-directory "~/Workspace/practice")
             (deft-extensions '("md" "org"))))
       (deft)))
-#+END_SRC
-
-*** Capture and Agenda
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  ;; make agenda show on current window
-  (setq org-agenda-window-setup 'current-window)
-  ;; highlight current in agenda
-  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
-  ;; Setup files for agenda
-  (setq org-agenda-files (list "~/Org/task/Office.org" "~/Org/task/Personal.org"))
-  ;;
-  (setq org-directory "~/Org")
-  (setq org-default-notes-file (f-join org-directory "task" "Office.org"))
-
-  ;; Always use `C-g' to exit agenda
-  (add-hook 'org-agenda-mode-hook
-            '(lambda ()
-               (local-set-key (kbd "C-g") 'org-agenda-exit)))
 #+END_SRC
 
 *** Make spell-checking tool ignore some org-mode section
@@ -3289,6 +3304,8 @@ GitHub: https://github.com/masayuko/ox-rst
              ("C-c n" . org-metadown)
              ("C-c i" . org-insert-link)
              ("C-c I" . org-toggle-inline-images)
+             ("C-c %" . org-mark-ring-push)
+             ("C-c &" . org-mark-ring-goto)
              ("C-c C-." . org-babel-remove-result-one-or-many))
 #+END_SRC
 
