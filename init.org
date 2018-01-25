@@ -3752,6 +3752,20 @@ Use my C++ coding style.
                ))
 #+END_SRC
 
+** Extra commands for c/c++ development
+
+*** kill the function in one command
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/c-kill-defun ()
+    "Move backward to the beging of top level declaration and save
+  this declaration to the kill-ring."
+    (interactive)
+    (save-excursion
+      (kill-region
+       (progn (c-beginning-of-defun) (point))
+       (progn (c-end-of-defun)       (point)))))
+#+END_SRC
 
 ** Setup C/C++ Keybinding
 
