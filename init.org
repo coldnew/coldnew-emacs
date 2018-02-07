@@ -5605,16 +5605,6 @@ like is it fully integrated with emacs.
         '(("git" "log" "diff" "show")))
 #+END_SRC
 
-*** Support for multi-eshell instance
-
-#+BEGIN_SRC emacs-lisp
-  (use-package multi-eshell
-    :ensure t
-    :config
-    (setq multi-eshell-shell-function '(eshell))
-    (setq multi-eshell-name "*eshell*"))
-#+END_SRC
-
 *** Add autojump command
 
 [[https://github.com/coldnew/eshell-autojump][Eshell Autojump]] is an [[https://github.com/joelthelion/autojump][autojump]] like command written in pure elisp,
