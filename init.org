@@ -2041,6 +2041,72 @@ them at styles dir.
 #+END_SRC
 
 
+* TODO Fonts
+
+#+BEGIN_SRC emacs-lisp
+  (defvar my/emacs-english-font "Monaco"
+    "The font name of English.")
+
+  (defvar my/emacs-cjk-font "Hiragino Sans GB"
+    "The font name for CJK.")
+
+  (defvar my/emacs-font-size-pair '(13 . 16)
+    "Default font size pair for (english . chinese)")
+
+  (defun my/font-exist-p (fontname)
+    "Test if this font is exist or not.
+  This function only work on GUI mode, on terminal it just
+  return nil since you can't set font for emacs on it."
+    (if (or (not fontname) (string= fontname "") (not (display-graphic-p)))
+        nil
+      (if (not (x-list-fonts fontname))
+          nil t)))
+
+  (defun my/set-font (english chinese size-pair)
+    "Setup emacs English and Chinese font on x window-system."
+
+    (if (my/font-exist-p english)
+        (set-frame-font (format "%s:pixelsize=%d" english (car size-pair)) t))
+
+    (if (my/font-exist-p chinese)
+        (dolist (charset '(kana han cjk-misc bopomofo))
+          (set-fontset-font (frame-parameter nil 'font) charset
+                            (font-spec :family chinese :size (cdr size-pair))))))
+
+  ;; Setup font size based on my/emacs-font-size-pair
+  (my/set-font my/emacs-english-font my/emacs-cjk-font my/emacs-font-size-pair)
+
+  (defvar my/emacs-font-size-pair-list
+    '(( 5 .  6) (10 . 12)
+      (13 . 16) (15 . 18) (17 . 20)
+      (19 . 22) (20 . 24) (21 . 26)
+      (24 . 28) (26 . 32) (28 . 34)
+      (30 . 36) (34 . 40) (36 . 44))
+    "This list is used to store matching (english . chinese) font-size.")
+
+  (defun my/emacs-step-font-size (step)
+    "Increase/Decrease emacs's font size."
+    (let ((scale-steps my/emacs-font-size-pair-list))
+      (if (< step 0) (setq scale-steps (reverse scale-steps)))
+      (setq my/emacs-font-size-pair
+            (or (cadr (member my/emacs-font-size-pair scale-steps))
+                my/emacs-font-size-pair))
+      (when my/emacs-font-size-pair
+        (message "emacs font size set to %.1f" (car my/emacs-font-size-pair))
+        (my/set-font my/emacs-english-font my/emacs-cjk-font my/emacs-font-size-pair))))
+
+  (defun my/increase-emacs-font-size ()
+    "Decrease emacs's font-size acording emacs-font-size-pair-list."
+    (interactive) (my/emacs-step-font-size 1))
+
+  (defun my/decrease-emacs-font-size ()
+    "Increase emacs's font-size acording emacs-font-size-pair-list."
+    (interactive) (my/emacs-step-font-size -1))
+
+  (global-set-key (kbd "C-=") 'my/increase-emacs-font-size)
+  (global-set-key (kbd "C--") 'my/decrease-emacs-font-size)
+#+END_SRC
+
 
 * Minibuffer                                                :minibuffer:
 
