@@ -4353,7 +4353,7 @@ I always add =sign-off= to the commit and make magit verbose.
 
 If you use git in command line, you can turn on diff-highlight by following command
 
-#+BEGIN_SRC sh :tangls no
+#+BEGIN_SRC sh :tangle no
   git config --global core.pager "diff-highlight | less --tabs=4 -RFX"
 #+END_SRC
 
