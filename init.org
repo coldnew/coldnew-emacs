@@ -2405,12 +2405,13 @@ If you use Gentoo Linux, you can use following command to install this package
 ** En/Decrypt files by EasyPG
 
 #+BEGIN_SRC emacs-lisp
-  (when (require 'epa-file)
-    (epa-file-enable)
-    ;; Control whether or not to pop up the key selection dialog.
-    (setq epa-file-select-keys 0)
-    ;; Cache passphrase for symmetric encryption.
-    (setq epa-file-cache-passphrase-for-symmetric-encryption t))
+  (require 'epa-file)			; part of emacs
+  ;; Enable epa, so I can use gnupg in emacs to en/decrypt file
+  (epa-file-enable)
+  ;; Control whether or not to pop up the key selection dialog.
+  (setq epa-file-select-keys 0)
+  ;; Cache passphrase for symmetric encryption.
+  (setq epa-file-cache-passphrase-for-symmetric-encryption t)
 #+END_SRC
 
 *** Install gnupg to system
@@ -2425,6 +2426,38 @@ Most Linux already shipped with gnupg, if you use Gentoo Linux, you can use foll
 
 #+BEGIN_SRC sh :tangle no :noweb-ref install-in-gentoo
   emerge app-crypt/gnupg
+#+END_SRC
+
+In my system, I always use =gpg2= instead of =gpg1=.
+
+*** Make pinentry show on mini-buffer
+
+For me, when enter password on gpg encrypt file, I always want the password input prompt show on minibuffer, so I need to add more setup on the gnupg.
+
+First, put this in =~/.gnupg/gpg-agent.conf=
+
+#+BEGIN_SRC sh :tangle no
+  allow-emacs-pinentry
+  allow-loopback-pinentry
+
+  # (optional) setup timeout
+  pinentry-timeout 3
+#+END_SRC
+
+Then tell gpg-agent to load this configuration with =gpgconf= in a shell:
+
+: gpgconf --reload gpg-agent
+
+In your emacs, put this epa setup:
+
+#+BEGIN_SRC emacs-lisp
+  (setq epa-pinentry-mode 'loopback)
+#+END_SRC
+
+All things done, let's start the =pinentry server=:
+
+#+BEGIN_SRC emacs-lisp
+  (pinentry-start)
 #+END_SRC
 
 ** Remote file editing
