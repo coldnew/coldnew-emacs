@@ -2102,9 +2102,14 @@ them at styles dir.
   (defun my/decrease-emacs-font-size ()
     "Increase emacs's font-size acording emacs-font-size-pair-list."
     (interactive) (my/emacs-step-font-size -1))
+#+END_SRC
 
-  (global-set-key (kbd "C-=") 'my/increase-emacs-font-size)
-  (global-set-key (kbd "C--") 'my/decrease-emacs-font-size)
+** Setup Keybinds                                               :keybinding:
+
+#+BEGIN_SRC emacs-lisp
+  (bind-keys :map global-map
+             ("C-=" . my/increase-emacs-font-size)
+             ("C--" . my/decrease-emacs-font-size))
 #+END_SRC
 
 
@@ -6145,12 +6150,6 @@ I always use =ERC= as my irc client, which is bundle with emacs.
   (bind-keys :map global-map
              ("C-x C-s" . my/save-buffer-always)
              ("M-g" . avy-goto-char-2))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (bind-keys :map global-map
-             ("C-=" . text-scale-increase)
-             ("C--" . text-scale-decrease))
 #+END_SRC
 
 Window Selection
