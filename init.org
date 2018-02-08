@@ -140,6 +140,14 @@ Some of my function may need the Common Lisp Extension, let's import libraries f
   (require 'cl-lib)                       ; built-in
 #+END_SRC
 
+** Load extra builtin library
+
+Add some extry buildin library I will use in my config file.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'find-lisp)
+#+END_SRC
+
 ** Prevent load outdated .elc files
 
 Since emacs 24.4, new option =load-prefer-newer= has been introduce, which make me never accidentally using outdated compiled files.
