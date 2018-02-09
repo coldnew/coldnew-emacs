@@ -6216,7 +6216,7 @@ Window Selection
       (kbd "C-x C-f") 'helm-find-files
       (kbd "C-x C-q") 'read-only-mode
       (kbd "C-x M-1") 'deft-or-close
-      (kbd "C-x M-2") 'multi-eshell
+      (kbd "C-x M-2") 'eshell
       (kbd "C-x M-3") 'mu4e
       (kbd "C-x M-4") 'erc-start-or-switch
       (kbd "C-x vl") 'magit-log
@@ -6250,7 +6250,7 @@ Window Selection
     (kbd "C-x C-o") 'other-frame
     (kbd "C-x C-q") 'read-only-mode
     (kbd "C-x M-1") 'deft-or-close
-    (kbd "C-x M-2") 'multi-eshell
+    (kbd "C-x M-2") 'eshell
     (kbd "C-x M-3") 'mu4e
     (kbd "C-x M-4") 'erc-start-or-switch
     (kbd "C-x T") 'sane-term
