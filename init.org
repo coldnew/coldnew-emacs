@@ -4340,6 +4340,11 @@ However, I use my fork of [[https://github.com/coldnew/hexo.el][hexo.el]] since 
       "My blog with hexo."
       (interactive)
       (hexo "~/Workspace/blog/"))
+
+    (defun hexo-my-draft ()
+      "My blog with hexo."
+      (interactive)
+      (hexo "~/Workspace/draft/"))
     )
 #+END_SRC
 
