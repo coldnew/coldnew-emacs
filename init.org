@@ -460,6 +460,15 @@ Use =C= as locale for display time info (Actually it will display English).
 
 Some buildin packages need to add extra setups for my emacs setting.
 
+** abbrev
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'bookmark
+    '(progn
+       (setq abbrev-file-name
+             (concat user-cache-directory "abbrev_defs"))))
+#+END_SRC
+
 ** bookmark
 
 #+BEGIN_SRC emacs-lisp
