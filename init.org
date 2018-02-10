@@ -460,6 +460,8 @@ Use =C= as locale for display time info (Actually it will display English).
 
 Some buildin packages need to add extra setups for my emacs setting.
 
+Most of them are the cache file, I'll move them to =~/.emacs.d/.cache= directory.
+
 ** abbrev
 
 #+BEGIN_SRC emacs-lisp
