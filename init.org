@@ -469,6 +469,22 @@ Some buildin packages need to add extra setups for my emacs setting.
              (concat user-cache-directory "abbrev_defs"))))
 #+END_SRC
 
+** eshell
+
+Move eshell cache dir to =~/.emacs.d/.cache/eshell=
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load 'eshell
+      '(progn
+         (setq eshell-directory-name
+               (concat user-cache-directory "eshell"))))
+
+  (eval-after-load 'em-hist
+    '(progn
+       (setq eshell-history-file-name
+             (expand-file-name "history" eshell-directory-name))))
+#+END_SRC
+
 ** bookmark
 
 #+BEGIN_SRC emacs-lisp
@@ -5612,13 +5628,6 @@ like is it fully integrated with emacs.
     :config
     ;; extra eshell configs
     <<eshell-config>>)
-#+END_SRC
-
-*** Setup eshell file to cache directory
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref eshell-config
-  ;; move eshell cache dir to ~/.emacs.d/.cache
-  (setq eshell-directory-name (concat user-cache-directory "eshell"))
 #+END_SRC
 
 *** Use bash like prompt with color
