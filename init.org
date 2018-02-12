@@ -2486,13 +2486,17 @@ Then tell gpg-agent to load this configuration with =gpgconf= in a shell:
 In your emacs, put this epa setup:
 
 #+BEGIN_SRC emacs-lisp
+  (require 'epa)				; built-in
   (setq epa-pinentry-mode 'loopback)
 #+END_SRC
 
 All things done, let's start the =pinentry server=:
 
 #+BEGIN_SRC emacs-lisp
-  (pinentry-start)
+  (use-package pinentry
+    :config
+    ;; Start the Pinentry service
+    (pinentry-start))
 #+END_SRC
 
 ** Remote file editing
