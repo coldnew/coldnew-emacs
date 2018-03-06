@@ -3556,14 +3556,6 @@ GitHub: https://github.com/masayuko/ox-rst
 
 Since emacs not built-in all configration files syntax highlight support, we need to install manually.
 
-** Crontab
-
-#+BEGIN_SRC emacs-lisp
-  (use-package crontab-mode
-    :ensure t
-    :mode "\\.?cron\\(tab\\)?\\'")
-#+END_SRC
-
 ** Docker
 
 #+BEGIN_SRC emacs-lisp
