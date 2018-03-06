@@ -5059,12 +5059,6 @@ GitHub: https://github.com/trotzig/import-js
     ;; We never want to edit Rubinius bytecode
     (add-to-list 'completion-ignored-extensions ".rbc"))
 #+END_SRC
-** llvm
-
-#+BEGIN_SRC emacs-lisp
-  (use-package llvm-mode :ensure t)
-#+END_SRC
-
 ** go
 
 #+BEGIN_SRC emacs-lisp  :noweb no-export
