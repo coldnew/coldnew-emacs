@@ -4842,6 +4842,19 @@ For c-mode, just do the same but change the relative
     :mode ("\\.dts\\'" "\\.dtsi\\'"))
 #+END_SRC
 
+** dart
+
+#+BEGIN_SRC emacs-lisp
+  (use-package dart-mode
+    :ensure t
+    :mode ("\\.dart\\'")
+    :config
+    ;; enable analyzer support
+    (setq dart-enable-analysis-server t)
+    ;; add flycheck support
+    (add-hook 'dart-mode-hook 'flycheck-mode))
+#+END_SRC
+
 ** elixir
 
 #+BEGIN_SRC emacs-lisp
