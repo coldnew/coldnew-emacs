@@ -16,6 +16,3 @@
 [submodule "modules/ProofGeneral"]
 	path = modules/ProofGeneral
 	url = https://github.com/ProofGeneral/PG.git
-[submodule "modules/cquery"]
-	path = modules/cquery
-	url = https://github.com/jacobdufault/cquery
