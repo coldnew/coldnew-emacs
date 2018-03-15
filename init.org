@@ -2314,6 +2314,20 @@ GitHub: https://github.com/timcharper/evil-surround
     (global-evil-surround-mode 1))
 #+END_SRC
 
+** evil-quickscope
+
+This package emulates [[https://github.com/unblevable/quick-scope][quick_scope.vim by Brian Le]]. It highlights targets for evil-mode’s f,F,t,T keys, allowing for quick navigation within a line with no additional mappings.
+
+GitHub: https://github.com/blorbx/evil-quickscope
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-quickscope
+    :ensure t
+    :after evil
+    :config
+    (add-hook 'prog-mode-hook 'turn-on-evil-quickscope-always-mode))
+#+END_SRC
+
 ** Displays tildes in the fringe on empty lines a la Vi
 
 GitHub: https://github.com/syohex/vi-tilde-fringe
