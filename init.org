@@ -3018,6 +3018,13 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
              ("M-c" . my/minibuffer-switch-to-cluster)
              ("C-z" . helm-select-action))
 #+END_SRC
+* Language Server                                                       :lsp:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-mode
+    :ensure t)
+#+END_SRC
+
 * Programming Languages
 
 ** Prolog
