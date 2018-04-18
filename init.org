@@ -323,6 +323,39 @@ Also setup some backup settings.
   (setq backup-by-copying t)
 #+END_SRC
 
+** Disable some default stuff
+
+Some emacs feature is not really useful
+
+*** Turn-off Alarm Bell
+
+#+BEGIN_SRC emacs-lisp
+  (setq ring-bell-function #'ignore)
+#+END_SRC
+
+*** Clean scratch buffer messages
+
+Leave me a clean **scratch** buffer and I'll be more happy :)
+
+#+BEGIN_SRC emacs-lisp
+  (setq initial-scratch-message "")
+#+END_SRC
+
+*** Use visible bell instead of buzzer
+
+#+BEGIN_SRC emacs-lisp
+  (setq visible-bell t)
+#+END_SRC
+
+*** Ask for y or n, not yes or no
+
+Emacs starts out asking for you to type yes or no with most important questions.
+Just let me use =y= or =n= with no =RET= required an I'm quite happy.
+
+#+BEGIN_SRC emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
 ** Method to load secret file                                     :function:
 
 Some of my password stored in a secret file with gnupg encrypt, I add this function here so I can inject some emacs-command which hass password/account setting.
