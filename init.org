@@ -3394,7 +3394,10 @@ GitHub: https://github.com/abo-abo/org-download
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-download
-    :ensure t)
+    :ensure t
+    :config
+    ;; add support to dired
+    (add-hook 'dired-mode-hook 'org-download-enable))
 #+END_SRC
 
 *** Integrate with redmine
