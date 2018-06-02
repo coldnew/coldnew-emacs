@@ -14,8 +14,8 @@ This function only work on GUI mode, on terminal it just
 return nil since you can't set font for emacs on it."
   (if (or (not fontname) (string= fontname "") (not (display-graphic-p)))
       nil
-    (if (not (x-list-fonts fontname))
-	nil t)))
+      (if (not (x-list-fonts fontname))
+          nil t)))
 
 (defun set-font (english chinese size-pair)
   "Setup emacs English and Chinese font on x window-system."
@@ -25,8 +25,8 @@ return nil since you can't set font for emacs on it."
 
   (if (font-exist-p chinese)
       (dolist (charset '(kana han cjk-misc bopomofo))
-	(set-fontset-font (frame-parameter nil 'font) charset
-			  (font-spec :family chinese :size (cdr size-pair))))))
+        (set-fontset-font (frame-parameter nil 'font) charset
+                          (font-spec :family chinese :size (cdr size-pair))))))
 
 ;; Setup font size based on emacs-font-size-pair
 (set-font emacs-english-font emacs-cjk-font emacs-font-size-pair)
@@ -44,8 +44,8 @@ return nil since you can't set font for emacs on it."
   (let ((scale-steps emacs-font-size-pair-list))
     (if (< step 0) (setq scale-steps (reverse scale-steps)))
     (setq emacs-font-size-pair
-	  (or (cadr (member emacs-font-size-pair scale-steps))
-	      emacs-font-size-pair))
+          (or (cadr (member emacs-font-size-pair scale-steps))
+              emacs-font-size-pair))
     (when emacs-font-size-pair
       (message "emacs font size set to %.1f" (car emacs-font-size-pair))
       (set-font emacs-english-font emacs-cjk-font emacs-font-size-pair))))
