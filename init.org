@@ -2729,6 +2729,21 @@ GitHub: https://github.com/glasserc/ethan-wspace
     (setq-default ethan-wspace-errors (remove 'no-nl-eof ethan-wspace-errors)))
 #+END_SRC
 
+** Make Firefox can call Emacs to edit textarea
+
+Want to edit Firefox's textarea in emacs ?
+
+First, you need to install [[https://addons.mozilla.org/zh-TW/firefox/addon/edit-with-emacs1][Edit with Emacs]] on Firefox.
+
+Then, in emacs, add following code to install
+
+#+BEGIN_SRC emacs-lisp
+  (use-package edit-server
+    :ensure t
+    :config
+    (edit-server-start))
+#+END_SRC
+
 ** Setup TABS
 
 #+BEGIN_SRC emacs-lisp
