@@ -1927,7 +1927,7 @@ them at styles dir.
 #+BEGIN_SRC emacs-lisp
   (require 'day-coldnew-theme)
   (require 'night-coldnew-theme)
-  (load-theme 'night-coldnew t 'noerror)  ; default use `night-coldnew-theme'
+  (load-theme 'night-coldnew t nil)  ; default use `night-coldnew-theme'
 #+END_SRC
 
 ** mode-line
