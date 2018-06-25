@@ -3094,6 +3094,336 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
     :ensure t)
 #+END_SRC
 
+* Org-mode                                                              :org:
+
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
+  (use-package org
+    :ensure t
+    :pin gnu                              ; fetch fron `gnu'
+    :mode (("\\.org\\'" . org-mode)
+           ("\\.org_archive\\'" . org-mode))
+    :config
+(setq org-url-hexify-p nil)
+    <<org-config>>)
+#+END_SRC
+
+** Basic setup
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  ;; fontify source code
+  (setq org-src-fontify-natively t)
+  ;; Use current window when switch to source block
+  (setq org-src-window-setup 'current-window)
+  ;; Disable prompting to evaluate babel blocks
+  (setq org-confirm-babel-evaluate nil)
+  ;; Disable add validation link when export to HTML
+  (setq org-html-validation-link nil)
+#+END_SRC
+
+*** Indention setup
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
+  ;; Always enable auto indent mode
+  (use-package org-indent
+    :ensure nil
+    :config
+    (setq org-indent-mode t))
+#+END_SRC
+
+*** Pretty Bullets
+
+Show org-mode bullets as UTF-8 characters.
+
+GitHub: https://github.com/sabof/org-bullets
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+END_SRC
+
+*** Setup TODO keywords
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
+  (setq org-todo-keywords '((sequence "TODO(t)" "|" "DONE(d)")
+                            (sequence "WAITING(w)" "|")
+                            (sequence "|" "CANCELED(c)")))
+#+END_SRC
+
+*** Enable word-wrap
+
+Call =visual-line-mode= to have soft-wrap.
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
+  (add-hook 'org-mode-hook #'visual-line-mode)
+#+END_SRC
+
+** Extend org-mode's easy templates
+
+org-mode make it easy to insert blocks by typing =<s[TAB]= ...etc. I
+defined some extra easy-templates I need to use here.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (add-to-list 'org-structure-template-alist
+               '("E" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+  (add-to-list 'org-structure-template-alist
+               '("S" "#+BEGIN_SRC sh\n?\n#+END_SRC"))
+  (add-to-list 'org-structure-template-alist
+               '("p" "#+BEGIN_SRC plantuml :file uml.png \n?\n#+END_SRC"))
+#+END_SRC
+
+** Extend babel support languages
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (C . t)
+     (ditaa . t)
+     (dot . t)
+     (js . t)
+     (latex . t)
+     (perl . t)
+     (python . t)
+     (ruby . t)
+     ;; (sh . t)
+     (shell . t)
+     (plantuml . t)
+     (R . t)
+     (clojure . t)))
+  ;; make dot work as graphviz-dot
+  (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
+#+END_SRC
+
+** Setup link abbreviations
+
+[[https://www.gnu.org/software/emacs/manual/html_node/org/Link-abbreviations.html][Link abbreviations]]
+
+An abbreviated link looks like
+
+: [[linkword:tag][description]]
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (setq org-link-abbrev-alist
+        '(("google" . "http://www.google.com/search?q=")      ; ex: [[google:hi emacs]]
+          ("google-map" . "http://maps.google.com/maps?q=%s") ; ex: [[google-map:taiwan]]
+          ("wiki" . "https://en.wikipedia.org/wiki/%s")       ; ex: [[wiki:emacs]]
+          ))
+#+END_SRC
+
+** Capture and Agenda
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  ;; make agenda show on current window
+  (setq org-agenda-window-setup 'current-window)
+  ;; highlight current in agenda
+  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
+
+  ;; Setup files for agenda
+  (setq org-directory "~/Org/tasks")
+  ;; U all .org files in `org-directory'
+  (setq org-agenda-files
+        (find-lisp-find-files org-directory "\.org$"))
+  ;;
+  (setq org-default-notes-file (f-join org-directory "tasks" "TODO.org"))
+
+  ;; Always use `C-g' to exit agenda
+  (add-hook 'org-agenda-mode-hook
+            '(lambda ()
+               (local-set-key (kbd "C-g") 'org-agenda-exit)))
+
+  ;; Enable `org-indent-mode' by default
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  ;; Use speed command to quick navigating
+  (setq org-use-speed-commands t)
+
+  (setq org-capture-templates
+        '(("t" "TODO"     entry (file+headline "" "Tasks") "* TODO %?\n %i\n")
+          ("n" "NOTE"     entry (file+headline "" "Tasks") "* NOTE %?\n %i\n %a")
+          ("l" "Links"    entry (file+headline "" "Links") "* TODO %? :link:\nSCHEDULED: <%<%Y-%m-%d %a>>\n %i\n %a")
+          ("j" "Journal"  entry (file+datetree "" "Journal") "* %?\nEntered on %U\n  %i\n  %a")
+          ))
+#+END_SRC
+
+** Deft for Note-taking
+
+#+BEGIN_SRC emacs-lisp
+  (use-package deft
+    :ensure t
+    :config
+    ;; default use org-mode
+    (setq deft-default-extension "org")
+    ;; default directory set to ~/Org
+    (setq deft-directory "~/Org")
+    ;; Do not make deft automatically save file
+    (setq deft-auto-save-interval 0)
+    ;; Recursive search
+    (setq deft-recursive t)
+
+    ;; setup an minor-mode to quickly kill all deft buffers
+    (define-minor-mode deft-note-mode "Deft notes" nil " Deft-Notes" nil)
+    (setq deft-text-mode 'deft-note-mode)
+
+    ;; Quickly kill deft buffers
+    (defun my/kill-all-deft-notes ()
+      (interactive)
+      (save-excursion
+        (let ((count 0))
+          (dolist (buffer (buffer-list))
+            (set-buffer buffer)
+            (when (not (eq nil deft-note-mode))
+              (setq count (1+ count))
+              (kill-buffer buffer))))))
+
+    ;; Enable/Disable defts
+    (defun deft-or-close ()
+      (interactive)
+      (if (or (eq major-mode 'deft-mode) (not (eq nil deft-note-mode)))
+          (progn (my/kill-all-deft-notes) (kill-buffer "*Deft*"))
+          (deft)))
+
+    (defun my/deft-practice ()
+      "Use deft to quickly see my blog drafts."
+      (interactive)
+      (let ((deft-directory "~/Workspace/practice")
+            (deft-extensions '("md" "org"))))
+      (deft)))
+#+END_SRC
+
+** Make spell-checking tool ignore some org-mode section
+
+see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-org-mode
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (eval-after-load 'ispell
+    '(progn
+       (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+       (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+       ))
+#+END_SRC
+
+** Crypt contents in org-mode
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
+  (use-package org-crypt
+    :ensure nil
+    :config
+    ;; Disable `auto-save-mode' for org-mode buffer prior to decrypting an entry.
+    (setq org-crypt-disable-auto-save t)
+    ;; Auto encrypt when save file
+    (org-crypt-use-before-save-magic)
+    ;; Encrypt with tagname: `secret'
+    (setq org-crypt-tag-matcher "secret")
+    ;; Prevent the `secret' tag inherit by child
+    ;; (The child item still will be encrypt)
+    (setq org-tags-exclude-from-inheritance (quote ("secret")))
+    ;; Use my own password to encrypt
+    (setq org-crypt-key nil))
+#+END_SRC
+
+** Drag-and-drop image to your org-mode file
+
+[[https://github.com/abo-abo/org-download][org-download]] will let you drag-and-drop image to your org-mode file easily.
+
+GitHub: https://github.com/abo-abo/org-download
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-download
+    :ensure t
+    :config
+    ;; add support to dired
+    (add-hook 'dired-mode-hook 'org-download-enable))
+#+END_SRC
+
+** Integrate with redmine
+
+GitHub: https://github.com/gongo/org-redmine
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (use-package org-redmine
+    :ensure t
+    :config
+    ;; NOTE: in personal private setting
+    (setq org-redmine-uri nil)
+    (setq org-redmine-auth-api-key nil)
+    (setq org-redmine-auth-password nil)
+                                          ;
+    ;; Advice org-remine function so it will load my private config
+    (defadvice org-redmine-get-issue (before load-password activate)
+      (my/load-secret))
+    (defadvice org-redmine-anything-show-issue-all (before load-password activate)
+      (my/load-secret)))
+#+END_SRC
+
+** Exporter Setup
+*** Latex
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (use-package ox-latex
+    :ensure nil
+    :config
+    (setq org-format-latex-options
+          '(:forground "black" :background "white"
+                       :scale 1.5
+                       :html-foreground "Black" :html-background "Transparent"
+                       :html-scale 1.0
+                       :matchers ("begin" "$1" "$" "$$" "\\(" "\\["))))
+#+END_SRC
+
+*** Textile
+
+An Org Mode Exporter Backend For Textile.
+
+GitHub: https://github.com/yashi/org-textile
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (use-package ox-textile
+    :ensure t)
+#+END_SRC
+
+*** reStructuredText (RST)
+
+reStructuredText Back-End for Org Export Engine.
+
+GitHub: https://github.com/masayuko/ox-rst
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (use-package ox-rst
+    :ensure t)
+#+END_SRC
+
+** Setup Org-mode Keybindings                                   :keybinding:
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (bind-keys :map org-mode-map
+             ("M-p"   . org-previous-visible-heading)
+             ("M-n"   . org-next-visible-heading)
+             ("C-c a" . org-agenda)
+             ("C-c c" . org-capture)
+             ("C-c l" . org-store-link)
+             ("C-c b" . org-metaleft)
+             ("C-c f" . org-metaright)
+             ("C-c p" . org-metaup)
+             ("C-c n" . org-metadown)
+             ("C-c i" . org-insert-link)
+             ("C-c I" . org-toggle-inline-images)
+             ("C-c %" . org-mark-ring-push)
+             ("C-c &" . org-mark-ring-goto)
+             ("C-c C-." . org-babel-remove-result-one-or-many))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (bind-keys :map org-src-mode-map
+             ("C-c C-c" . org-edit-src-exit))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
+  (bind-keys :map org-mode-map
+             :prefix-map my-org-mode-map
+             :prefix "M-m"
+             ("n" . my/narrow-or-widen-dwim))
+#+END_SRC
+
 * Programming Languages
 
 ** Prolog
@@ -3193,336 +3523,6 @@ Here I use [[http://jblevins.org/projects/markdown-mode/][markdown-mode]] to hel
 
 #+BEGIN_SRC emacs-lisp
   (use-package nasm-mode :ensure t)
-#+END_SRC
-
-** Org-mode                                                            :org:
-
-#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
-  (use-package org
-    :ensure t
-    :pin gnu                              ; fetch fron `gnu'
-    :mode (("\\.org\\'" . org-mode)
-           ("\\.org_archive\\'" . org-mode))
-    :config
-(setq org-url-hexify-p nil)
-    <<org-config>>)
-#+END_SRC
-
-*** Basic setup
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  ;; fontify source code
-  (setq org-src-fontify-natively t)
-  ;; Use current window when switch to source block
-  (setq org-src-window-setup 'current-window)
-  ;; Disable prompting to evaluate babel blocks
-  (setq org-confirm-babel-evaluate nil)
-  ;; Disable add validation link when export to HTML
-  (setq org-html-validation-link nil)
-#+END_SRC
-
-**** Indention setup
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
-  ;; Always enable auto indent mode
-  (use-package org-indent
-    :ensure nil
-    :config
-    (setq org-indent-mode t))
-#+END_SRC
-
-**** Pretty Bullets
-
-Show org-mode bullets as UTF-8 characters.
-
-GitHub: https://github.com/sabof/org-bullets
-
-#+BEGIN_SRC emacs-lisp
-  (use-package org-bullets
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-#+END_SRC
-
-**** Setup TODO keywords
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
-  (setq org-todo-keywords '((sequence "TODO(t)" "|" "DONE(d)")
-                            (sequence "WAITING(w)" "|")
-                            (sequence "|" "CANCELED(c)")))
-#+END_SRC
-
-**** Enable word-wrap
-
-Call =visual-line-mode= to have soft-wrap.
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
-  (add-hook 'org-mode-hook #'visual-line-mode)
-#+END_SRC
-
-*** Extend org-mode's easy templates
-
-org-mode make it easy to insert blocks by typing =<s[TAB]= ...etc. I
-defined some extra easy-templates I need to use here.
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (add-to-list 'org-structure-template-alist
-               '("E" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
-  (add-to-list 'org-structure-template-alist
-               '("S" "#+BEGIN_SRC sh\n?\n#+END_SRC"))
-  (add-to-list 'org-structure-template-alist
-               '("p" "#+BEGIN_SRC plantuml :file uml.png \n?\n#+END_SRC"))
-#+END_SRC
-
-*** Extend babel support languages
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (C . t)
-     (ditaa . t)
-     (dot . t)
-     (js . t)
-     (latex . t)
-     (perl . t)
-     (python . t)
-     (ruby . t)
-     ;; (sh . t)
-     (shell . t)
-     (plantuml . t)
-     (R . t)
-     (clojure . t)))
-  ;; make dot work as graphviz-dot
-  (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
-#+END_SRC
-
-*** Setup link abbreviations
-
-[[https://www.gnu.org/software/emacs/manual/html_node/org/Link-abbreviations.html][Link abbreviations]]
-
-An abbreviated link looks like
-
-: [[linkword:tag][description]]
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (setq org-link-abbrev-alist
-        '(("google" . "http://www.google.com/search?q=")      ; ex: [[google:hi emacs]]
-          ("google-map" . "http://maps.google.com/maps?q=%s") ; ex: [[google-map:taiwan]]
-          ("wiki" . "https://en.wikipedia.org/wiki/%s")       ; ex: [[wiki:emacs]]
-          ))
-#+END_SRC
-
-*** Capture and Agenda
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  ;; make agenda show on current window
-  (setq org-agenda-window-setup 'current-window)
-  ;; highlight current in agenda
-  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
-
-  ;; Setup files for agenda
-  (setq org-directory "~/Org/tasks")
-  ;; U all .org files in `org-directory'
-  (setq org-agenda-files
-        (find-lisp-find-files org-directory "\.org$"))
-  ;;
-  (setq org-default-notes-file (f-join org-directory "tasks" "TODO.org"))
-
-  ;; Always use `C-g' to exit agenda
-  (add-hook 'org-agenda-mode-hook
-            '(lambda ()
-               (local-set-key (kbd "C-g") 'org-agenda-exit)))
-
-  ;; Enable `org-indent-mode' by default
-  (add-hook 'org-mode-hook 'org-indent-mode)
-  ;; Use speed command to quick navigating
-  (setq org-use-speed-commands t)
-
-  (setq org-capture-templates
-        '(("t" "TODO"     entry (file+headline "" "Tasks") "* TODO %?\n %i\n")
-          ("n" "NOTE"     entry (file+headline "" "Tasks") "* NOTE %?\n %i\n %a")
-          ("l" "Links"    entry (file+headline "" "Links") "* TODO %? :link:\nSCHEDULED: <%<%Y-%m-%d %a>>\n %i\n %a")
-          ("j" "Journal"  entry (file+datetree "" "Journal") "* %?\nEntered on %U\n  %i\n  %a")
-          ))
-#+END_SRC
-
-*** Deft for Note-taking
-
-#+BEGIN_SRC emacs-lisp
-  (use-package deft
-    :ensure t
-    :config
-    ;; default use org-mode
-    (setq deft-default-extension "org")
-    ;; default directory set to ~/Org
-    (setq deft-directory "~/Org")
-    ;; Do not make deft automatically save file
-    (setq deft-auto-save-interval 0)
-    ;; Recursive search
-    (setq deft-recursive t)
-
-    ;; setup an minor-mode to quickly kill all deft buffers
-    (define-minor-mode deft-note-mode "Deft notes" nil " Deft-Notes" nil)
-    (setq deft-text-mode 'deft-note-mode)
-
-    ;; Quickly kill deft buffers
-    (defun my/kill-all-deft-notes ()
-      (interactive)
-      (save-excursion
-        (let ((count 0))
-          (dolist (buffer (buffer-list))
-            (set-buffer buffer)
-            (when (not (eq nil deft-note-mode))
-              (setq count (1+ count))
-              (kill-buffer buffer))))))
-
-    ;; Enable/Disable defts
-    (defun deft-or-close ()
-      (interactive)
-      (if (or (eq major-mode 'deft-mode) (not (eq nil deft-note-mode)))
-          (progn (my/kill-all-deft-notes) (kill-buffer "*Deft*"))
-          (deft)))
-
-    (defun my/deft-practice ()
-      "Use deft to quickly see my blog drafts."
-      (interactive)
-      (let ((deft-directory "~/Workspace/practice")
-            (deft-extensions '("md" "org"))))
-      (deft)))
-#+END_SRC
-
-*** Make spell-checking tool ignore some org-mode section
-
-see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-org-mode
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (eval-after-load 'ispell
-    '(progn
-       (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
-       (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
-       ))
-#+END_SRC
-
-*** Crypt contents in org-mode
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
-  (use-package org-crypt
-    :ensure nil
-    :config
-    ;; Disable `auto-save-mode' for org-mode buffer prior to decrypting an entry.
-    (setq org-crypt-disable-auto-save t)
-    ;; Auto encrypt when save file
-    (org-crypt-use-before-save-magic)
-    ;; Encrypt with tagname: `secret'
-    (setq org-crypt-tag-matcher "secret")
-    ;; Prevent the `secret' tag inherit by child
-    ;; (The child item still will be encrypt)
-    (setq org-tags-exclude-from-inheritance (quote ("secret")))
-    ;; Use my own password to encrypt
-    (setq org-crypt-key nil))
-#+END_SRC
-
-*** Drag-and-drop image to your org-mode file
-
-[[https://github.com/abo-abo/org-download][org-download]] will let you drag-and-drop image to your org-mode file easily.
-
-GitHub: https://github.com/abo-abo/org-download
-
-#+BEGIN_SRC emacs-lisp
-  (use-package org-download
-    :ensure t
-    :config
-    ;; add support to dired
-    (add-hook 'dired-mode-hook 'org-download-enable))
-#+END_SRC
-
-*** Integrate with redmine
-
-GitHub: https://github.com/gongo/org-redmine
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (use-package org-redmine
-    :ensure t
-    :config
-    ;; NOTE: in personal private setting
-    (setq org-redmine-uri nil)
-    (setq org-redmine-auth-api-key nil)
-    (setq org-redmine-auth-password nil)
-                                          ;
-    ;; Advice org-remine function so it will load my private config
-    (defadvice org-redmine-get-issue (before load-password activate)
-      (my/load-secret))
-    (defadvice org-redmine-anything-show-issue-all (before load-password activate)
-      (my/load-secret)))
-#+END_SRC
-
-*** Exporter Setup
-**** Latex
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (use-package ox-latex
-    :ensure nil
-    :config
-    (setq org-format-latex-options
-          '(:forground "black" :background "white"
-                       :scale 1.5
-                       :html-foreground "Black" :html-background "Transparent"
-                       :html-scale 1.0
-                       :matchers ("begin" "$1" "$" "$$" "\\(" "\\["))))
-#+END_SRC
-
-**** Textile
-
-An Org Mode Exporter Backend For Textile.
-
-GitHub: https://github.com/yashi/org-textile
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (use-package ox-textile
-    :ensure t)
-#+END_SRC
-
-**** reStructuredText (RST)
-
-reStructuredText Back-End for Org Export Engine.
-
-GitHub: https://github.com/masayuko/ox-rst
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (use-package ox-rst
-    :ensure t)
-#+END_SRC
-
-*** Setup Org-mode Keybindings                                   :keybinding:
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (bind-keys :map org-mode-map
-             ("M-p"   . org-previous-visible-heading)
-             ("M-n"   . org-next-visible-heading)
-             ("C-c a" . org-agenda)
-             ("C-c c" . org-capture)
-             ("C-c l" . org-store-link)
-             ("C-c b" . org-metaleft)
-             ("C-c f" . org-metaright)
-             ("C-c p" . org-metaup)
-             ("C-c n" . org-metadown)
-             ("C-c i" . org-insert-link)
-             ("C-c I" . org-toggle-inline-images)
-             ("C-c %" . org-mark-ring-push)
-             ("C-c &" . org-mark-ring-goto)
-             ("C-c C-." . org-babel-remove-result-one-or-many))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (bind-keys :map org-src-mode-map
-             ("C-c C-c" . org-edit-src-exit))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
-  (bind-keys :map org-mode-map
-             :prefix-map my-org-mode-map
-             :prefix "M-m"
-             ("n" . my/narrow-or-widen-dwim))
 #+END_SRC
 
 ** TOML
