@@ -2894,17 +2894,19 @@ For more info, you can refer to: [[https://www.emacswiki.org/emacs/Registers][Em
       (r `(
            ;; emacs's config.org
            (?e (file . "~/.emacs.d/init.org"))
+           ;; tasks: todo
+           (?t (file . "~/Org/tasks/todo.org"))
+           ;; tasks: personal
+           (?p (file . "~/Org/tasks/personal.org"))
+           ;; tasks: work
+           (?w (file . "~/Org/tasks/work.org"))
            ;; Offilce docs
-           (?w (file . "~/Org/Weintek/Weintek.org"))
+           (?W (file . "~/Org/Weintek/Weintek.org"))
            ;; My personal note
            (?n (file . "~/Org/Note.org"))
            ;; blogging ideas
            (?b (file . "~/Org/blog.org"))
-           ;; google-interview-university
-           (?g (file . "~/Workspace/google-interview-university/index.org"))
-           ;; embedded-summer-2017
-           (?s (file . "~/Workspace/embedded-2017/README.org"))
-         ))
+           ))
     (set-register (car r) (cadr r)))
 #+END_SRC
 
