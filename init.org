@@ -3367,7 +3367,66 @@ GitHub: https://github.com/gongo/org-redmine
                        :scale 1.5
                        :html-foreground "Black" :html-background "Transparent"
                        :html-scale 1.0
-                       :matchers ("begin" "$1" "$" "$$" "\\(" "\\["))))
+                       :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+<<org-latex-config>>)
+#+END_SRC
+**** Use xelatex for pdf generated
+
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-latex-config
+  (setq org-latex-pdf-process
+        (if (executable-find "latexmk")
+            '("latexmk -pdflatex=xelatex -pdf -silent --shell-escape -f %f")
+            '("xelatex -interaction nonstopmode --shell-escape %f"
+              "xelatex -interaction nonstopmode --shell-escape %f")))
+#+END_SRC
+
+**** Add minted support
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-latex-config
+  (add-to-list 'org-latex-packages-alist '("" "minted"))
+  (setq org-latex-listings 'minted)
+  (setq org-latex-minted-options
+        '(("frame" "lines")
+          ("fontsize" "\\scriptsize")
+          ("linenos" "true")))
+#+END_SRC
+**** Article class
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-latex-config
+  ;; To use this, add following to your org-mode file
+  ;;
+  ;;    #+LaTeX_CLASS: article
+  ;;
+  (add-to-list 'org-latex-classes
+               '("article"
+                 "\\documentclass[12pt,a4paper]{article}
+                  \\usepackage[T1]{fontenc}
+                  \\usepackage{fontspec}
+                  \\usepackage{xeCJK}
+                  \\setCJKmainfont{Hiragino Sans GB W3}
+                  \\XeTeXlinebreaklocale \"zh\"
+                  \\XeTeXlinebreakskip = 0pt plus 1pt
+                  \\usepackage{graphicx}
+                  \\usepackage{tikz}
+                  \\usepackage[bookmarks=true,colorlinks,urlcolor=blue]{hyperref}
+                  \\defaultfontfeatures{Mapping=tex-text}
+                  \\setmonofont[Scale=0.8]{Monaco}
+                  \\usepackage{geometry}
+                  \\usepackage{minted}
+                  \\usemintedstyle{emacs}
+                  \\geometry{a4paper, textwidth=6.5in, textheight=8in,
+                              marginparsep=10pt, marginparwidth=.6in}
+                  \\pagestyle{plain}
+                  \\linespread{1.5}
+                  \\title{}
+                        [NO-DEFAULT-PACKAGES]
+                        [NO-PACKAGES]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")
+                 ))
 #+END_SRC
 
 *** Textile
