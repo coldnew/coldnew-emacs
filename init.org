@@ -3236,7 +3236,8 @@ An abbreviated link looks like
   (add-hook 'org-mode-hook 'org-indent-mode)
   ;; Use speed command to quick navigating
   (setq org-use-speed-commands t)
-
+  ;; Log timestamp when done
+  (setq org-log-done 'time)
   (setq org-capture-templates
         '(("t" "TODO"     entry (file+headline "" "Tasks") "* TODO %?\n %i\n")
           ("n" "NOTE"     entry (file+headline "" "Tasks") "* NOTE %?\n %i\n %a")
