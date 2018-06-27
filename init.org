@@ -3373,11 +3373,11 @@ GitHub: https://github.com/gongo/org-redmine
 *** Use xelatex for pdf generated
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-latex-config
-  (setq org-latex-pdf-process
-        (if (executable-find "latexmk")
-            '("latexmk -pdflatex=xelatex -pdf -silent --shell-escape -f %f")
-            '("xelatex -interaction nonstopmode --shell-escape %f"
-              "xelatex -interaction nonstopmode --shell-escape %f")))
+(setq org-latex-pdf-process
+      (if (executable-find "latexmk")
+          '("latexmk -pdflatex=xelatex -pdf -8bit -silent --shell-escape -f %f")
+          '("xelatex -8bit -interaction nonstopmode --shell-escape %f"
+            "xelatex -8bit -interaction nonstopmode --shell-escape %f")))
 #+END_SRC
 
 *** Add minted support
