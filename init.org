@@ -3355,12 +3355,12 @@ GitHub: https://github.com/gongo/org-redmine
       (my/load-secret)))
 #+END_SRC
 
-** Exporter Setup
-*** Latex
+** Latex exporter
 
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config :noweb no-export :exports code
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package ox-latex
-    :ensure nil
+    :ensure nil				; part of `org' package
+    :after (org)
     :config
     (setq org-format-latex-options
           '(:forground "black" :background "white"
@@ -3368,9 +3368,9 @@ GitHub: https://github.com/gongo/org-redmine
                        :html-foreground "Black" :html-background "Transparent"
                        :html-scale 1.0
                        :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
-<<org-latex-config>>)
+    <<org-latex-config>>)
 #+END_SRC
-**** Use xelatex for pdf generated
+*** Use xelatex for pdf generated
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-latex-config
   (setq org-latex-pdf-process
@@ -3380,7 +3380,7 @@ GitHub: https://github.com/gongo/org-redmine
               "xelatex -interaction nonstopmode --shell-escape %f")))
 #+END_SRC
 
-**** Add minted support
+*** Add minted support
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-latex-config
   (add-to-list 'org-latex-packages-alist '("" "minted"))
@@ -3390,7 +3390,7 @@ GitHub: https://github.com/gongo/org-redmine
           ("fontsize" "\\scriptsize")
           ("linenos" "true")))
 #+END_SRC
-**** Article class
+*** Article class
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-latex-config
   ;; To use this, add following to your org-mode file
@@ -3429,26 +3429,28 @@ GitHub: https://github.com/gongo/org-redmine
                  ))
 #+END_SRC
 
-*** Textile
+** Textile exporter
 
 An Org Mode Exporter Backend For Textile.
 
 GitHub: https://github.com/yashi/org-textile
 
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package ox-textile
-    :ensure t)
+    :ensure t
+    :after (org))
 #+END_SRC
 
-*** reStructuredText (RST)
+** reStructuredText (RST) exporter
 
 reStructuredText Back-End for Org Export Engine.
 
 GitHub: https://github.com/masayuko/ox-rst
 
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package ox-rst
-    :ensure t)
+    :ensure t
+    :after (org))
 #+END_SRC
 
 ** Setup Org-mode Keybindings                                   :keybinding:
