@@ -3103,7 +3103,7 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
     :mode (("\\.org\\'" . org-mode)
            ("\\.org_archive\\'" . org-mode))
     :config
-(setq org-url-hexify-p nil)
+    (setq org-url-hexify-p nil)
     <<org-config>>)
 #+END_SRC
 
@@ -3358,7 +3358,7 @@ GitHub: https://github.com/gongo/org-redmine
 ** Exporter Setup
 *** Latex
 
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config :noweb no-export :exports code
   (use-package ox-latex
     :ensure nil
     :config
