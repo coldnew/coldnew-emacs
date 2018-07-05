@@ -2750,6 +2750,20 @@ Then, in emacs, add following code to install
   (setq tab-always-indent 'complete)
 #+END_SRC
 
+** Highlight symbols with overlay
+
+#+BEGIN_SRC emacs-lisp
+  (use-package symbol-overlay
+    :ensure t
+    :config
+    (add-hook 'prog-mode-hook #'symbol-overlay-mode)
+    ;; (global-set-key (kbd "M-i") 'symbol-overlay-put)
+    (define-key symbol-overlay-map (kbd "p") 'symbol-overlay-jump-prev) ;; 次のシンボルへ
+    (define-key symbol-overlay-map (kbd "n") 'symbol-overlay-jump-next) ;; 前のシンボルへ
+    (define-key symbol-overlay-map (kbd "C-g") 'symbol-overlay-remove-all) ;; ハイライトキャンセル
+    )
+#+END_SRC
+
 ** TODO Scrolling
 
 ref:
