@@ -4069,6 +4069,15 @@ Use my C++ coding style.
        (progn (c-end-of-defun)       (point)))))
 #+END_SRC
 
+*** Use clang-format to format buffer
+
+#+BEGIN_SRC emacs-lisp
+  ;; clang-format: format C/C++ buffers using clang-format
+  ;; https://github.com/emacsorphanage/clang-format
+  (use-package clang-format
+    :ensure t)
+#+END_SRC
+
 ** Setup C/C++ Keybinding
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
