@@ -3930,6 +3930,16 @@ Extra hightlight for =stdint.h=
      '(("\\<\\(int8_t\\|int16_t\\|int32_t\\|int64_t\\|uint8_t\\|uint16_t\\|uint32_t\\|uint64_t\\)\\>" . font-lock-keyword-face))))
 #+END_SRC
 
+*** Modern C++ ~ C++17 font-lock highlighting
+
+#+BEGIN_SRC emacs-lisp
+  ;; adds font-lock highlighting for modern C++ upto C++17
+  ;; https://github.com/ludwigpacifici/modern-cpp-font-lock
+  (use-package modern-cpp-font-lock
+    :ensure t
+    :hook (c++-mode . modern-c++-font-lock-mode))
+#+END_SRC
+
 ** Coding Styles
 
 Since C/C++ has too many coding styles, I need to set it up.
