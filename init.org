@@ -3766,6 +3766,19 @@ Since emacs not built-in all configration files syntax highlight support, we nee
     :mode (("CMakeLists\\.txt\\'" . cmake-mode) ("\\.cmake\\'" . cmake-mode)))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  ;; cmake-font-lock: emacs font lock rules for CMake
+  ;; https://github.com/Lindydancer/cmake-font-lock
+  (use-package cmake-font-lock
+    :ensure t
+    :config
+    (autoload 'cmake-font-lock-activate "cmake-font-lock" nil t)
+  (add-hook 'cmake-mode-hook 'cmake-font-lock-activate))
+#+END_SRC
+
+#+RESULTS:
+: t
+
 * C/C++ Development
 
 #+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
