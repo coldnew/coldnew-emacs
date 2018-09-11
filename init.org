@@ -2551,7 +2551,13 @@ All things done, let's start the =pinentry server=:
 In most case, I'll make line numers display globally by =linum=.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package linum :ensure t :init (global-linum-mode 1))
+  (if (version<= "26.1" emacs-version)
+      ;; emacs 26.1 has display-line-number-mode, which is written in C
+      (progn
+        (require 'display-line-numbers)
+        (global-display-line-numbers-mode))
+      ;; for emacs version less than 26, use linum instead
+      (use-package linum :ensure t :init (global-linum-mode 1)))
 #+END_SRC
 
 Disable line number in some mode, for example, since =org-mode= can
@@ -2560,12 +2566,25 @@ has many lines, it's not recommand to enable linum-mode.
 I use =linum-off= to disable some mode.
 
 #+BEGIN_SRC emacs-lisp
+  ;; disble some mode with linum
   (use-package linum-off
     :ensure t
     :config
-      (setq linum-disabled-mode-list
-            '(eshell-mode shell-mode term-mode erc-mode compilation-mode
-                          woman-mode w3m-mode calendar-mode org-mode)))
+    (setq linum-disabled-mode-list
+          '(eshell-mode shell-mode term-mode erc-mode compilation-mode
+                        woman-mode w3m-mode calendar-mode org-mode)))
+
+  ;; for emacs 26.1 or above, we use `display-line-number-mode' instead
+  (when (version<= "26.1" emacs-version)
+    ;; NOTE: overwrite display-line-numbers--turn-on
+    (defun display-line-numbers--turn-on ()
+      "Turn on `display-line-numbers-mode'."
+      (unless (or (minibufferp)
+                  ;; taken from linum.el
+                  (and (daemonp) (null (frame-parameter nil 'client)))
+                  ;; take code from `linum-off'
+                  (member major-mode linum-disabled-modes-list))
+        (display-line-numbers-mode))))
 #+END_SRC
 
 ** Colorfy delimters
