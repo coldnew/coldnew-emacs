@@ -17,14 +17,14 @@ do_autogen () {
 }
 
 do_configure_cli () {
-    ./configure --prefix=${INSDIR} --with-modules \
+    ./configure --prefix=${INSDIR} --with-modules --with-libgmp \
                 --without-x \
                 --without-ns \
 
 }
 
 do_configure_osx () {
-    ./configure --prefix=${INSDIR} --with-modules \
+    ./configure --prefix=${INSDIR} --with-modules --with-libgmp \
                 --with-ns --disable-ns-self-contained \
                 --with-gnutls \
                 --with-rsvg \
@@ -33,7 +33,7 @@ do_configure_osx () {
 }
 
 do_configure_linux () {
-    ./configure --prefix=${INSDIR} --with-modules \
+    ./configure --prefix=${INSDIR} --with-modules --with-libgmp \
                 --without-ns --disable-ns-self-contained \
                 --with-gnutls \
                 --with-rsvg \
