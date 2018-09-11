@@ -2555,7 +2555,8 @@ In most case, I'll make line numers display globally by =linum=.
       ;; emacs 26.1 has display-line-number-mode, which is written in C
       (progn
         (require 'display-line-numbers)
-        (global-display-line-numbers-mode))
+        ;; Only use line number in `prog-mode-hook'
+        (add-hook 'prog-mode-hook #'display-line-numbers-mode))
       ;; for emacs version less than 26, use linum instead
       (use-package linum :ensure t :init (global-linum-mode 1)))
 #+END_SRC
@@ -5538,8 +5539,6 @@ GitHub: https://github.com/youngker/elogcat.el
                   (set (make-local-variable 'company-backends) (cons 'company-racer company-backends)))))
   #+END_SRC
 
-**
-
 ** Syntax Checker
 
   [[https://github.com/flycheck/flycheck-rust][flycheck-rust]] is [[https://github.com/flycheck/flycheck][flycheck]] backend for Rust, which can let use setup Rust more easily.
@@ -5557,7 +5556,6 @@ GitHub: https://github.com/youngker/elogcat.el
   Note:
   You must run cargo build initially to install all dependencies. If you add new dependencies to Cargo.toml you need to run cargo build again. Otherwise you will see spurious errors about missing crates.
   #+END_QUOTE
-
 
 ** Setup Rust Keybinding
 
