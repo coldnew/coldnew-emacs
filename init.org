@@ -3278,6 +3278,17 @@ An abbreviated link looks like
           ))
 #+END_SRC
 
+** Switch to Agenda when buffer idle
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  (use-package idle-org-agenda
+    :after org-agenda
+    :ensure t
+    :config (idle-org-agenda-mode)
+    ;; switch to agenda after 5min idle
+    (setq idle-org-agenda-interval 300))
+#+END_SRC
+
 ** Deft for Note-taking
 
 #+BEGIN_SRC emacs-lisp
