@@ -16,3 +16,6 @@
 [submodule "modules/ProofGeneral"]
 	path = modules/ProofGeneral
 	url = https://github.com/ProofGeneral/PG.git
+[submodule "modules/libvterm"]
+	path = modules/libvterm
+	url = https://github.com/akermu/emacs-libvterm.git
