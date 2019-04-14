@@ -3123,7 +3123,82 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
 
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
-    :ensure t)
+    :ensure t
+    :init (setq lsp-inhibit-message nil ; you may set this to t to hide messages from message area
+                lsp-eldoc-render-all nil
+                lsp-highlight-symbol-at-point nil)
+    )
+
+  (use-package company-lsp
+    :after  company
+    :ensure t
+    :config
+    (add-hook 'java-mode-hook (lambda () (push 'company-lsp company-backends)))
+    (setq company-lsp-enable-snippet t
+          company-lsp-cache-candidates t)
+    ;; (push 'java-mode company-global-modes)
+    )
+
+  (use-package lsp-ui
+    :ensure t
+    :config
+    (setq lsp-ui-sideline-enable t
+          lsp-ui-sideline-show-symbol t
+          lsp-ui-sideline-show-hover t
+          lsp-ui-sideline-show-code-actions t
+          lsp-ui-sideline-update-mode 'point))
+
+  (use-package company-lsp
+    :after  company
+    :ensure t
+    :config
+    (add-hook 'java-mode-hook (lambda () (push 'company-lsp company-backends)))
+    (setq company-lsp-enable-snippet t
+          company-lsp-cache-candidates t)
+    ;; (push 'java-mode company-global-modes)
+    )
+
+  (use-package lsp-java
+    :ensure t
+    :requires (lsp-ui-flycheck lsp-ui-sideline)
+    :init (setq lsp-java-server-install-dir (concat user-cache-directory "eclipse.jdt.ls/server/"))
+    :config
+    (add-hook 'java-mode-hook  'lsp-java-enable)
+    (add-hook 'java-mode-hook  'flycheck-mode)
+    (add-hook 'java-mode-hook  'company-mode)
+    (add-hook 'java-mode-hook  (lambda () (lsp-ui-flycheck-enable t)))
+    (add-hook 'java-mode-hook  'lsp-ui-sideline-mode)
+    (setq lsp-java--workspace-folders (list
+                                       "/home/coldnew/Projects/brokerBSreport"
+                                       "/home/coldnew/Projects/twse-captcha-solverdl"
+                                       "/home/coldnew/Projects/twse-captcha-solverdl2"
+                                       ))
+
+                                          ;(add-hook 'java-mode-hook (lambda () (add-to-list 'lsp-java--workspace-folders (lsp-java--get-root))))
+    )
+
+
+  (use-package meghanada
+    :ensure t
+    :init (setq meghanada-server-install-dir (concat user-cache-directory "meghanada"))
+    :config
+    (add-hook 'java-mode-hook
+              (lambda ()
+                ;; meghanada-mode on
+                (meghanada-mode t)
+                (flycheck-mode +1)
+                (setq c-basic-offset 2)
+                ;; use code format
+                (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
+    (cond
+     ((eq system-type 'windows-nt)
+      (setq meghanada-java-path (expand-file-name "bin/java.exe" (getenv "JAVA_HOME")))
+      (setq meghanada-maven-path "mvn.cmd"))
+     (t
+      (setq meghanada-java-path "java")
+      (setq meghanada-maven-path "mvn")))
+
+    )
 #+END_SRC
 
 * Org                                                                   :org:
@@ -4042,77 +4117,6 @@ Use my C++ coding style.
   (bind-keys :map c-mode-base-map
              ("M-." . helm-gtags-dwim)
              ("M-," . helm-gtags-pop-stack))
-#+END_SRC
-
-* Java Development
-
-#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
-  (use-package meghanada
-    :ensure nil
-    :mode (("\\.java\\'" . java-mode))
-    :config
-    <<java-config>>)
-#+END_SRC
-
-** Setup meghanada
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref java-config
-  (use-package meghanada
-    :ensure t
-    :commands meghanada-mode
-    :config
-    (setq meghanada-server-install-dir (concat user-cache-directory "meghanada/")))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (use-package meghanada
-    :ensure t
-    :init
-    ;; Don't auto-start
-    (setq meghanada-auto-start nil)
-    (require 'company-meghanada)
-    (add-hook 'meghanada-mode-hook
-              '(lambda ()
-
-                 (setq-local company-backends '((company-meghanada
-                                                 company-yasnippet
-                                                 :with
-                                                 company-keywords
-                                                 company-abbrev
-                                                 company-dabbrev-code
-                                                 company-dabbrev
-                                                 company-dict
-                                                 company-files)))))
-    ;; (add-hook 'java-mode-hook #'meghanada-mode)
-    ;; (add-hook 'java-mode-hook 'flycheck-mode)
-    )
-#+END_SRC
-** Setup JDEE
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref java-config
-  (use-package jdee
-    :ensure t
-    :commands jdee-mode
-    :config
-    ;; I put jdee-server source as submodule in `~/.emacs.d/modules/jdee-server`, to prevent the result file not found
-    ;; I add following function to build the jdee-server
-    (defun my/build-jdee-server ()
-      "Build jdee-server file."
-      (interactive)
-      (require 'f)
-      (let ((jdee-server-dir (f-join user-emacs-directory "modules" "jdee-server")))
-        (shell-command (concat "cd " jdee-server-dir "; mvn -DskipTests=true assembly:assembly")  "*build-jdee-server*")))
-
-    (setq jdee-server-dir (f-join user-emacs-directory "modules" "jdee-server" "target")))
-#+END_SRC
-
-** Setup Java Keybinding                                      :keybinding:
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (bind-keys :map java-mode-map
-             ("C-c i" . jdee-import-find-and-import)
-             ("C-c g" . jdee-gen-get-set)
-             )
 #+END_SRC
 
 * Lisp Development
