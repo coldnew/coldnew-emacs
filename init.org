@@ -3765,7 +3765,7 @@ For more info about vala, please see: [[https://wiki.gnome.org/Projects/Vala/Tut
 #+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
   (use-package vala-mode
     :ensure t
-    :mode ("\\.vala\\'" "\\.vapi\\'"))
+    :mode ("\\.vala\\'" "\\.vapi\\'")
     :config
     <<vala-config>>)
 #+END_SRC
