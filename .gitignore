@@ -45,3 +45,4 @@ elpa/
 /.DS_Store
 /abbrev_defs
 /persp-confs/persp-auto-save
+/transient/
