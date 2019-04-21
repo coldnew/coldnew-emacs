@@ -3754,6 +3754,22 @@ Here I use [[http://jblevins.org/projects/markdown-mode/][markdown-mode]] to hel
     (add-hook 'qml-mode-hook #'indent-guide-mode))
 #+END_SRC
 
+** Vala                                                               :vala:
+
+Vala is a new programming language that allows modern programming
+techniques to be used to write applications that run on the GNOME
+runtime libraries, particularly GLib and GObject.
+
+For more info about vala, please see: [[https://wiki.gnome.org/Projects/Vala/Tutorial][Vala Tutorial]]
+
+#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
+  (use-package vala-mode
+    :ensure t
+    :mode "\\.vala$"
+    :config
+    <<vala-config>>)
+#+END_SRC
+
 * Configration Files
 
 Since emacs not built-in all configration files syntax highlight support, we need to install manually.
