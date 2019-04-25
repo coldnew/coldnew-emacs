@@ -40,11 +40,11 @@
 
   ;; faces
   ;; (setq spaceline-all-the-icons-sunrise-face
-  ;; 	'((t (:foreground "#06c175" :inherit powerline-active2)))
+  ;; 	'((t (:foreground "#06c175" :inherit 'powerline-active2)))
   ;; 	)
 
   ;; (setq spaceline-all-the-icons-sunset-face
-  ;; 	'((t (:foreground "#cd7714" :inherit powerline-active2))))
+  ;; 	'((t (:foreground "#cd7714" :inherit 'powerline-active2))))
 
   (defvar org-clock-current-task)
 
@@ -102,7 +102,7 @@ Add ADDITIONAL-SEGMENTS to the end of the theme."
     (spaceline-compile
       "coldnew"
       '((all-the-icons-anzu
-         :face mode-line
+         :face 'mode-line
          :skip-alternate t)
 
         ((all-the-icons-modified
@@ -154,24 +154,24 @@ Add ADDITIONAL-SEGMENTS to the end of the theme."
          :when spaceline-all-the-icons-minor-modes-p)
 
         ((all-the-icons-which-function)
-         :face powerline-active2
+         :face 'powerline-active2
          :separator ""))
 
-      `(((,@additional-segments) :when active :face powerline-active2)
-        ((,@additional-segments) :when (not active) :face powerline-inactive2)
+      `(((,@additional-segments) :when active :face 'powerline-active2)
+        ((,@additional-segments) :when (not active) :face 'powerline-inactive2)
 
         ((all-the-icons-weather
           all-the-icons-temperature
           all-the-icons-sunrise
           all-the-icons-sunset)
-         :face powerline-active2
+         :face 'powerline-active2
          :separator (spaceline-all-the-icons--separator spaceline-all-the-icons-secondary-separator " "))
 
         ((all-the-icons-player-volume
           all-the-icons-player-controls
           all-the-icons-track
           all-the-icons-player-controls-shuffle)
-         :face powerline-active2)
+         :face 'powerline-active2)
 
 
         all-the-icons-separator-right-active-1
