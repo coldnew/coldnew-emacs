@@ -3770,6 +3770,8 @@ For more info about vala, please see: [[https://wiki.gnome.org/Projects/Vala/Tut
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref verilog-config
   (setq verilog-linter "verilator --lint-only")
+  ;; https://github.com/flycheck/flycheck/issues/1250
+  (setq flycheck-verilog-verilator-executable "/usr/bin/verilator_bin")
 #+END_SRC
 
 * Configration Files
