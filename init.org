@@ -3759,6 +3759,19 @@ For more info about vala, please see: [[https://wiki.gnome.org/Projects/Vala/Tut
     <<vala-config>>)
 #+END_SRC
 
+** Verilog                                                         :verilog:
+
+#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
+  (use-package verilog-mode
+    :mode ("\\.v\\'")
+    :config
+    <<verilog-config>>)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref verilog-config
+  (setq verilog-linter "verilator --lint-only")
+#+END_SRC
+
 * Configration Files
 
 Since emacs not built-in all configration files syntax highlight support, we need to install manually.
