@@ -538,8 +538,10 @@ Move eshell cache dir to =~/.emacs.d/.cache/eshell=
 
 ** idlwave
 
+Major mode for editing IDL source files.
+
 #+BEGIN_SRC emacs-lisp
-  (eval-after-load 'dilwave
+  (eval-after-load 'idlwave
     '(progn
        (setq idlwave-config-directory
              (concat user-cache-directory "idlwave"))))
