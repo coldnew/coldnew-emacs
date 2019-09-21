@@ -2214,16 +2214,6 @@ them at styles dir.
     "Insert /ssh:."
     (interactive)
     (my/minibuffer-insert "/ssh:"))
-
-  (defun my/minibuffer-switch-to-vm ()
-    "Insert /ssh:vm:."
-    (interactive)
-    (my/minibuffer-insert "/ssh:vm:"))
-
-  (defun my/minibuffer-switch-to-cluster ()
-    "Insert /ssh:cluster:."
-    (interactive)
-    (my/minibuffer-insert "/ssh:cluster:"))
 #+END_SRC
 
 ** Save history of minibuffer :tangle no :noweb-ref minibuffer-config
@@ -2270,9 +2260,7 @@ ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-thresho
              ("M-t" . my/minibuffer-switch-to-ramdisk)
              ("M-h" . my/minibuffer-switch-to-home)
              ("M-/" . my/minibuffer-switch-to-rootdir)
-             ("M-s" . my/minibuffer-switch-to-tramp)
-             ("M-v" . my/minibuffer-switch-to-vm)
-             ("M-c" . my/minibuffer-switch-to-cluster))
+             ("M-s" . my/minibuffer-switch-to-tramp))
 #+END_SRC
 * Vim Emulation                                                        :evil:
 
