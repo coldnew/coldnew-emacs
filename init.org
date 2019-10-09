@@ -3819,6 +3819,14 @@ Since emacs not built-in all configration files syntax highlight support, we nee
 #+RESULTS:
 : t
 
+** Meson
+
+#+BEGIN_SRC emacs-lisp
+  (use-package meson-mode
+    :ensure t
+    :mode (("meson\\.build\\'" . meson-mode)))
+#+END_SRC
+
 * C/C++ Development
 
 #+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
