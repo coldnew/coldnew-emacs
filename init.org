@@ -3200,7 +3200,6 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package org
     :ensure t
-    :pin gnu                              ; fetch fron `gnu'
     :mode (("\\.org\\'" . org-mode)
            ("\\.org_archive\\'" . org-mode))
     :config
@@ -3239,6 +3238,7 @@ GitHub: https://github.com/sabof/org-bullets
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-bullets
+    :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
