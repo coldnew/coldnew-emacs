@@ -3265,12 +3265,18 @@ org-mode make it easy to insert blocks by typing =<s[TAB]= ...etc. I
 defined some extra easy-templates I need to use here.
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
+  ;; NOTE:
+  ;; After org-mode 9.2, we need to require `org-tempo' module
+  ;; to make easy-template work
+  (when (not (version< (org-version) "9.2"))
+    (require 'org-tempo))
+
   (add-to-list 'org-structure-template-alist
-               '("E" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+	       '("el" . "src emacs-lisp"))
   (add-to-list 'org-structure-template-alist
-               '("S" "#+BEGIN_SRC sh\n?\n#+END_SRC"))
+	       '("S" . "src sh"))
   (add-to-list 'org-structure-template-alist
-               '("p" "#+BEGIN_SRC plantuml :file uml.png \n?\n#+END_SRC"))
+	       '("p" . "src plantuml :file uml.png"))
 #+END_SRC
 
 ** Extend babel support languages
