@@ -3290,7 +3290,7 @@ defined some extra easy-templates I need to use here.
 	       '("p" . "src plantuml :file uml.png"))
 #+END_SRC
 
-** Extend babel support languages
+** Extend babel support languages                                     :babel:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
   (org-babel-do-load-languages
@@ -3308,6 +3308,7 @@ defined some extra easy-templates I need to use here.
      (shell . t)
      (plantuml . t)
      (R . t)
+     (ledger . t)
      (clojure . t)))
   ;; make dot work as graphviz-dot
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
