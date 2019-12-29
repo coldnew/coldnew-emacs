@@ -6459,6 +6459,27 @@ I always use =ERC= as my irc client, which is bundle with emacs.
           (erc-tls :server "irc.mozilla.org" :port 6697 :nick erc-nick)))))
 #+END_SRC
 
+* Personal Finance                                           :ledger:finance:
+
+  I'm trying to use ledger as my personal finance system, here's a good reference:
+
+  [[https://www.youtube.com/watch?v=cjoCNRpLanY&t=1736s][Conquering Your Finances with Emacs and Ledger]]
+
+  #+BEGIN_SRC emacs-lisp :noweb no-export
+    (use-package ledger-mode
+      :ensure t
+
+      :mode "\\.dat\\'"
+
+      :init
+      (setq ledger-clear-whole-transactions 1)
+
+      :config
+      (add-to-list 'evil-emacs-state-modes 'ledger-report-mode)
+
+      <<ledger-config>>)
+  #+END_SRC
+
 * Keybindings                                                    :keybinding:
 
 ** Global Keybinding
