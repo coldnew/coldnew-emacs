@@ -2929,21 +2929,23 @@ For more info, you can refer to: [[https://www.emacswiki.org/emacs/Registers][Em
 #+BEGIN_SRC emacs-lisp
   (dolist
       (r `(
-           ;; emacs's config.org
-           (?e (file . "~/.emacs.d/init.org"))
-           ;; tasks: todo
-           (?t (file . "~/Org/tasks/todo.org"))
-           ;; tasks: personal
-           (?p (file . "~/Org/tasks/personal.org"))
-           ;; tasks: work
-           (?w (file . "~/Org/tasks/work.org"))
-           ;; Offilce docs
-           (?W (file . "~/Org/Weintek/Weintek.org"))
-           ;; My personal note
-           (?n (file . "~/Org/Note.org"))
-           ;; blogging ideas
-           (?b (file . "~/Org/blog.org"))
-           ))
+	   ;; emacs's config.org
+	   (?e (file . "~/.emacs.d/init.org"))
+	   ;; tasks: todo
+	   (?t (file . "~/Org/tasks/todo.org"))
+	   ;; tasks: personal
+	   (?p (file . "~/Org/tasks/personal.org"))
+	   ;; tasks: work
+	   (?w (file . "~/Org/tasks/work.org"))
+	   ;; Offilce docs
+	   (?W (file . "~/Org/Weintek/Weintek.org"))
+	   ;; My personal note
+	   (?n (file . "~/Org/Note.org"))
+	   ;; blogging ideas
+	   (?b (file . "~/Org/blog.org"))
+	   ;; Finance
+	   (?f (file . "~/Org/finance/personal.org"))
+	   ))
     (set-register (car r) (cadr r)))
 #+END_SRC
 
