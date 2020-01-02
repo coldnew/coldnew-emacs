@@ -4865,7 +4865,7 @@ GitHub: https://github.com/rocky/emacs-dbgr
     (global-flycheck-mode))
 #+END_SRC
 
-* Completion
+* Completion                                             :company:completion:
 
 [[http://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for "complete
 anything". It uses pluggable back-ends and front-ends to retrieve and display
@@ -4934,6 +4934,19 @@ GitHub: https://github.com/company-mode/company-statistics
   (use-package company-quickhelp
     :ensure t
     :init (company-quickhelp-mode 1))
+#+END_SRC
+
+** Add icons support
+
+Make company-mode more fancy with icons.
+
+GitHub: https://github.com/sebastiencs/company-box
+
+#+BEGIN_SRC emacs-lisp :tangle :no :noweb-ref company-config
+  ;; NOTE: This package required emacs 26
+  (when (version<= "26.0" emacs-version)
+    (use-package company-box
+      :hook (company-mode . company-box-mode)))
 #+END_SRC
 
 ** Setup keybindings                                            :keybinding:
