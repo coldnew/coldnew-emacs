@@ -4966,7 +4966,7 @@ GitHub: https://github.com/sebastiencs/company-box
              ("C-p" . company-select-previous))
 #+END_SRC
 
-* YouCompleteMe
+* COMMENT YouCompleteMe                                                :ycmd:
 
 [[https://github.com/Valloric/ycmd][ycmd]] is a server that provides APIs for code-completion and other code-comprehension use-cases like semantic GoTo commands (and others). For certain filetypes, ycmd can also provide diagnostic errors and warnings.
 
