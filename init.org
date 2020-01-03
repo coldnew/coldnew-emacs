@@ -4946,6 +4946,7 @@ GitHub: https://github.com/sebastiencs/company-box
   ;; NOTE: This package required emacs 26
   (when (version<= "26.0" emacs-version)
     (use-package company-box
+      :ensure t
       :hook (company-mode . company-box-mode)))
 #+END_SRC
 
