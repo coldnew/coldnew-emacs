@@ -6684,3 +6684,5 @@ Following link is refrence for my emacs config.
 ~[21]~ [[https://writequit.org/eos/eos.html][The Emacs Operating System (EOS)]]
 
 ~[22]~ [[https://github.com/manuel-uberti/.emacs.d][manuel-uberti/.emacs.d: My GNU Emacs configuration]]
+
+~[23]~ [[https://www.reddit.com/r/emacs/comments/ehjcu2/screenshot_polishing_my_emacs_who_said_an_old/][[Screenshot] Polishing my Emacs -- who said an old tool can't look modern?]]
