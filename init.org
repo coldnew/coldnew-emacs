@@ -5062,8 +5062,15 @@ My [[https://github.com/Valloric/ycmd][ycmd]] is cloned to =~/.emacs.d/modules/y
 
 ** Setup yasnippet snippet dirs
 
+I put my snippets in =~/.emacs.d/snippets=, add it to =yas/snippet-dirs= to make yasnippet can find the snippets.
+
+You can use =yas-new-snippet= to create your new snippet file.
+
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref yasnippet-config
-  (setq yas/snippet-dirs (concat user-emacs-directory "snippets"))
+  (let ((my-snippet-dir (concat user-emacs-directory "snippets")))
+    (if (and (file-exists-p my-snippet-dir)
+	     (not (member my-snippet-dir yas/snippet-dirs)))
+	(add-to-list 'yas/snippet-dirs my-snippet-dir)))
 #+END_SRC
 
 ** Prevent yasnippet conflict with term-mode
