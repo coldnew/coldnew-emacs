@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: int main(string[] args) { ... }
+# key: main
+# --
+int main( string[] args)
+{
+    $0
+    return 0;
+}
