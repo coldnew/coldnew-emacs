@@ -3200,7 +3200,7 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
   (use-package org
-    :ensure t
+    :ensure nil				; built-in
     :mode (("\\.org\\'" . org-mode)
            ("\\.org_archive\\'" . org-mode))
     :config
