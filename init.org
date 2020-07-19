@@ -366,13 +366,6 @@ Some of my password stored in a secret file with gnupg encrypt, I add this funct
       (when (file-exists-p secret) (load-file secret))))
 #+END_SRC
 
-** Setup my personal info
-
-#+BEGIN_SRC emacs-lisp
-  (setq user-full-name "Yen-Chin, Lee")
-  (setq user-mail-address "coldnew.tw@gmail.com")
-#+END_SRC
-
 * Package Management
 
 The main package manager I use is emacs's =package.el=, it's really nice and easy to use.
