@@ -434,6 +434,13 @@ Report details about loading and configuration.
   (setq use-package-verbose t)
 #+END_SRC
 
+The =:ensure-system-package= keyword allows you to ensure system binaries exist alongside your package declarations. We need to install =use-package-ensure-system-package= first.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package use-package-ensure-system-package
+    :ensure t)
+#+END_SRC
+
 ** Install paradox
 
 Project for modernizing Emacs' Package Menu. With improved appearance, mode-line information. Github integration, customizability, asynchronous upgrading, and more.
@@ -602,7 +609,7 @@ GitHub: https://github.com/Wilfred/ag.el
   (use-package ag
     :ensure t
     ;; only use this package when `the_silver_seacher' install in system.
-    :if (executable-find "ag"))
+    :ensure-system-package ag)
 #+END_SRC
 
 *** Install System packages
