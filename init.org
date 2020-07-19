@@ -66,8 +66,7 @@ Note that if your are building under =Mac OSX=, don't forget to install xcode to
 - Then use git submodule to download the spacemacs
 
   #+BEGIN_EXAMPLE
-    git submodule init
-    git submodule update
+    git submodule update --init --recursive
   #+END_EXAMPLE
 
 - To generate the =init.el=, jut type
