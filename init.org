@@ -405,13 +405,6 @@ Before we start to use =package.el=, we need to initialize it first.
     (package-initialize))
 #+END_SRC
 
-Auto refresh packages info when no archive available.
-
-#+BEGIN_SRC emacs-lisp
-  (when (not package-archive-contents)
-    (package-refresh-contents))
-#+END_SRC
-
 ** Install use-package
 
 The =use-package= macro allows you to isolate package configuration in your =.emacs= file in a way that is both performance-oriented and, well, tidy. I created it
@@ -420,7 +413,9 @@ because I have over 80 packages that I use in Emacs, and things were getting dif
 GitHub: https://github.com/jwiegley/use-package
 
 #+BEGIN_SRC emacs-lisp
-  (package-install 'use-package)              ; Installed by packages.el
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))              ; Installed by packages.el
   (require 'use-package)
 #+END_SRC
 
