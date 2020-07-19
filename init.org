@@ -3241,7 +3241,8 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
   (use-package org-indent
     :ensure nil
     :config
-    (setq org-indent-mode t))
+    ;; Enable `org-indent-mode' by default
+    (add-hook 'org-mode-hook '(lambda () (org-indent-mode t))))
 #+END_SRC
 
 *** Pretty Bullets
@@ -3354,8 +3355,6 @@ An abbreviated link looks like
             '(lambda ()
                (local-set-key (kbd "C-g") 'org-agenda-exit)))
 
-  ;; Enable `org-indent-mode' by default
-  (add-hook 'org-mode-hook 'org-indent-mode)
   ;; Use speed command to quick navigating
   (setq org-use-speed-commands t)
   ;; Log timestamp when done
