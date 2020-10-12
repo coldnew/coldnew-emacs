@@ -2372,6 +2372,7 @@ GitHub: https://github.com/7696122/evil-terminal-cursor-changer
 
 #+BEGIN_SRC emacs-lisp
   (use-package evil-terminal-cursor-changer
+    :ensure t
     :if (not (display-graphic-p))		; Only use this package when in terminal
     :config
     ;; cursor shape setting
