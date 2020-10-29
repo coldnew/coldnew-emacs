@@ -727,6 +727,14 @@ GitHub: https://github.com/bbatsov/crux
   (use-package crux :ensure t)
 #+END_SRC
 
+** carbon-now-sh.el
+
+[[https://carbon.now.sh/][carbon-now-sh]] is a service that creates beautiful images of your code:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package carbon-now-sh :ensure t)
+#+END_SRC
+
 ** darkroom
 
 Remove visual distractions and focus on writing.
