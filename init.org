@@ -3,7 +3,7 @@
 #+email: coldnew.tw at gmail.com
 #+DESCRIPTION: A literate programming style exposition of my Emacs configuration
 #+LANGUAGE: en
-#+STARTUP: overview align
+#+STARTUP: overview indent align
 #+BABEL: :cache yes
 #+OPTIONS: ^:nil num:nil tags:nil
 #+SETUPFILE: assets/readtheorg.setup
@@ -2904,7 +2904,7 @@ For more info, you can refer to: [[https://www.emacswiki.org/emacs/Registers][Em
 	   ;; tasks: work
 	   (?w (file . "~/Org/tasks/work.org"))
 	   ;; Offilce docs
-	   (?W (file . "~/Org/Weintek/Weintek.org"))
+	   (?W (file . "~/Org/Weintek/index.org"))
 	   ;; My personal note
 	   (?n (file . "~/Org/Note.org"))
 	   ;; blogging ideas
