@@ -238,7 +238,7 @@ If you don't have any local elisp and all packages is maintain by cask or elpa o
                load-path)))))
 #+END_SRC
 
-** Personal Information
+** Personal Information                                              :personal:
 
 Some information about myself.
 
