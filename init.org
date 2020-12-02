@@ -6626,52 +6626,5 @@ which contains something like password or account settings.
     (when (file-exists-p secret) (load-file secret)))
 #+END_SRC
 
-* Reference
 
-Following link is refrence for my emacs config.
 
-~[01]~ https://github.com/r0man/.emacs.d/blob/master/init.el.org
-
-~[02]~ https://github.com/bodil/emacs.d
-
-~[03]~ https://github.com/mgalgs/.emacs.d
-
-~[04]~ https://raw.githubusercontent.com/sbisaacson/literate-emacs/master/README.org
-
-~[05]~ https://github.com/jhenahan/emacs.d/blob/master/emacs-init.org
-
-~[06]~ https://ryuslash.org/dotfiles/emacs/init.html
-
-~[07]~ http://www.wisdomandwonder.com/wordpress/wp-content/uploads/2014/03/C3F.org_.txt
-
-~[08]~ https://github.com/howardabrams/dot-files
-
-~[09]~ https://github.com/larstvei/dot-emacs/blob/master/init.org
-
-~[10]~ https://gitlab.com/romo/emacs.d/raw/master/emacs.org
-
-~[11]~ https://github.com/bixuanzju/emacs.d/blob/master/emacs-init.org
-
-~[12]~ [[https://github.com/cheunghy/emacs-easy-ide]]
-
-~[13]~ https://github.com/tsu-nera/dotfiles/tree/master/.emacs.d/inits
-
-~[14]~ https://github.com/aaronbieber/dotfiles/tree/master/configs/emacs.d/lisp
-
-~[15]~ https://github.com/howardabrams/dot-files
-
-~[16]~ [[https://github.com/xiaohanyu/oh-my-emacs/]]
-
-~[17]~ https://github.com/jouyouyun/emacs.d/tree/master
-
-~[18]~ https://emacsgifs.github.io
-
-~[19]~ https://github.com/jonnay/emagicians-starter-kit
-
-~[20]~ https://github.com/jonnay/emagicians-starter-kit/blob/master/Eshell-Magick.org
-
-~[21]~ [[https://writequit.org/eos/eos.html][The Emacs Operating System (EOS)]]
-
-~[22]~ [[https://github.com/manuel-uberti/.emacs.d][manuel-uberti/.emacs.d: My GNU Emacs configuration]]
-
-~[23]~ [[https://www.reddit.com/r/emacs/comments/ehjcu2/screenshot_polishing_my_emacs_who_said_an_old/][[Screenshot] Polishing my Emacs -- who said an old tool can't look modern?]]
