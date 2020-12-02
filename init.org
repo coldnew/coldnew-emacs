@@ -3,7 +3,7 @@
 #+email: coldnew.tw at gmail.com
 #+DESCRIPTION: A literate programming style exposition of my Emacs configuration
 #+LANGUAGE: en
-#+STARTUP: overview indent align
+#+STARTUP: overview align
 #+BABEL: :cache yes
 #+OPTIONS: ^:nil num:nil tags:nil
 #+SETUPFILE: assets/readtheorg.setup
@@ -3201,10 +3201,12 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
 
 *** Indention setup
 
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
-  ;; Always enable auto indent mode
+Always enable auto indent for org-mode.
+
+#+BEGIN_SRC emacs-lisp
   (use-package org-indent
-    :ensure nil
+    :ensure nil				; build-in
+    :after (org)
     :config
     ;; Enable `org-indent-mode' by default
     (add-hook 'org-mode-hook '(lambda () (org-indent-mode t))))
@@ -3219,6 +3221,7 @@ GitHub: https://github.com/sabof/org-bullets
 #+BEGIN_SRC emacs-lisp
   (use-package org-bullets
     :ensure t
+    :after (org)
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
