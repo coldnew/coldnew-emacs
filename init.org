@@ -2984,8 +2984,8 @@ If you use Gentoo Linux, you can use portage to install it.
 
 GitHub: https://github.com/yasuyk/helm-bm
 
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
-  (use-package helm-bm :ensure t)
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-bm :ensure t :after (helm))
 #+END_SRC
 
 ** helm-cscope
@@ -2996,9 +2996,10 @@ Helm-cscope shares most functions with xcscope.el. It just provide =M-x helm-csc
 
 GitHub: https://github.com/alpha22jp/helm-cscope.el
 
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+#+BEGIN_SRC emacs-lisp
   (use-package helm-cscope
     :ensure t
+    :after (helm)
     :config
     (add-hook 'c-mode-common-hook 'helm-cscope-mode))
 #+END_SRC
@@ -3011,8 +3012,8 @@ It doesn't require Dash app.
 
 GitHub: https://github.com/areina/helm-dash
 
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
-  (use-package helm-dash :ensure t)
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-dash :ensure t :after (helm))
 #+END_SRC
 
 ** helm-gtags
@@ -3021,9 +3022,10 @@ GitHub: https://github.com/areina/helm-dash
 
 GitHub: https://github.com/syohex/emacs-helm-gtags
 
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
+#+BEGIN_SRC emacs-lisp
   (use-package helm-gtags
     :ensure t
+    :after (helm)
     :config
     (setq helm-gtags-ignore-case t)
     (setq helm-gtags-auto-update t)
@@ -3041,6 +3043,7 @@ GitHub: https://github.com/bbatsov/helm-projectile
 #+BEGIN_SRC emacs-lisp
   (use-package helm-projectile
     :ensure t
+    :after (helm projectile)
     :config
     ;; make projectile use helm as completion system
     (setq projectile-completion-system 'helm)
@@ -3056,8 +3059,8 @@ List match lines to another buffer, which is able to squeeze by any words you in
 
 GitHub: https://github.com/ShingoFukuyama/helm-swoop
 
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
-  (use-package helm-swoop :ensure t)
+#+BEGIN_SRC emacs-lisp
+  (use-package helm-swoop :ensure t :after (helm))
 #+END_SRC
 
 ** helm-c-yasnippet
@@ -3067,6 +3070,7 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
 #+BEGIN_SRC emacs-lisp
   (use-package helm-c-yasnippet
     :ensure t
+    :after (helm yasnippet)
     :config
     (setq helm-yas-space-match-any-greedy t))
 #+END_SRC
@@ -3074,7 +3078,7 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
 ** helm-smex
 
 #+BEGIN_SRC emacs-lisp
-  (use-package helm-smex :ensure t)
+  (use-package helm-smex :ensure t :after (helm))
 #+END_SRC
 
 ** Setup Helm Keybindings                                       :keybinding:
