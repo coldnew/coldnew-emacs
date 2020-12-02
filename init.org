@@ -2727,37 +2727,6 @@ GitHub: https://github.com/purcell/whitespace-cleanup-mode
     (add-hook 'prog-mode-hook 'whitespace-cleanup-mode))
 #+END_SRC
 
-** Takes care of trailing whitespaces (removal, highlighting)
-
-The definitive emacs customizations for people who are OCD about whitespace .
-
-GitHub: https://github.com/glasserc/ethan-wspace
-
-#+BEGIN_SRC emacs-lisp
-  (use-package ethan-wspace
-    :ensure t
-    :config
-    ;; Turn off `mode-require-final-newline' since ethan-wspace
-    ;; supersedes `require-final-newline'.
-    (setq mode-require-final-newline nil)
-
-    ;; Enable ethan-wspace globally
-    (global-ethan-wspace-mode 1)
-
-    ;; Prevent etha-wspace touch my TAB on makefile mode
-    (add-hook 'makefile-mode-hook
-              '(lambda()
-                 (setq ethan-wspace-errors (remove 'tabs ethan-wspace-errors))))
-
-    ;; Not use in diff-mode since it breaking my syntax-highlight
-    (add-hook 'diff-mode-hook
-              '(lambda()
-                 (ethan-wspace-mode -1)))
-
-    ;; Ignore no trailing newline error
-    (setq-default ethan-wspace-errors (remove 'no-nl-eof ethan-wspace-errors)))
-#+END_SRC
-
 ** Make Firefox can call Emacs to edit textarea
 
 Want to edit Firefox's textarea in emacs ?
