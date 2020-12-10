@@ -4531,15 +4531,6 @@ GitHub: https://github.com/joshuamiller/clojars.el
     :ensure t)
 #+END_SRC
 
-*** Search Clojure Cheatsheet
-
-GitHub: https://github.com/clojure-emacs/clojure-cheatsheet
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
-  (use-package clojure-cheatsheet
-    :ensure t)
-#+END_SRC
-
 *** Pretty Symbols
 
 Pretty symbols for anonymous functions, set literals and partial, like =(λ [a] (+ a 5))=, =ƒ(+ % 5)=, =∈{2 4 6}= and =Ƥ=.
