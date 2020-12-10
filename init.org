@@ -683,27 +683,22 @@ GitHub: https://github.com/ilya-babanov/emacs-bpr
 
 This file is for lazy people wanting to swap buffers without typing C-x b on each window. This is useful when you have :
 
-.--------------+-------------.
-|              |             |
-|    #emacs    |    #gnus    |
-|              |             |
-.--------------+-------------.
-|                            |
-|           .emacs           |
-|                            |
-.----------------------------.
+#+begin_quote :tangle no
 
-and you want to have :
+      you  have this
 
-.--------------+-------------.
-|              |             |
-|    #gnus     |   .emacs    |
-|              |             |
-.--------------+-------------.
-|                            |
-|           #emacs           |
-|                            |
-.----------------------------.
++--------------+-------------+              +--------------+-------------+
+|              |             |              |              |             |
+|    #emacs    |    #gnus    |              |    #gnus     |   .emacs    |
+|              |             |              |              |             |
++--------------+-------------+              +--------------+-------------+
+|                            |              |                            |
+|           .emacs           |              |           #emacs           |
+|                            |              |                            |
++----------------------------+              +----------------------------+
+
+                                               and you want to have this
+#+end_quote
 
 With buffer-move, just go in #gnus, do =buf-move-left=, go to #emacs (which now should be on top right) and do =buf-move-down=.
 
