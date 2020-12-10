@@ -380,19 +380,20 @@ The main package manager I use is emacs's =package.el=, it's really nice and eas
 I also add [[http://orgmode.org/elpa.html][org-mode elpa]] so I can use latest org-mode.
 
 #+BEGIN_SRC emacs-lisp
-  (require 'package)                      ; built-in
+  (eval-and-compile
+    (require 'package)                      ; built-in
 
-  ;; melpa
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/") t)
+    ;; melpa
+    (add-to-list 'package-archives
+                 '("melpa" . "https://melpa.org/packages/") t)
 
-  ;; org
-  (add-to-list 'package-archives
-               '("org" . "http://orgmode.org/elpa/") t)
+    ;; org
+    (add-to-list 'package-archives
+                 '("org" . "http://orgmode.org/elpa/") t)
 
-  ;; For important compatibility libraries like cl-lib
-  (when (< emacs-major-version 24)
-    (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
+    ;; For important compatibility libraries like cl-lib
+    (when (< emacs-major-version 24)
+      (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))))
 #+END_SRC
 
 ** Initialize package.el
@@ -404,8 +405,9 @@ Before we start to use =package.el=, we need to initialize it first.
   ;; Don't delete this line. If you don't want it, just comment it out by adding a
   ;; semicolon to the start of the line. You may delete these explanatory
   ;; comments.
-  (when (< emacs-major-version 27)
-    (package-initialize))
+  (eval-and-compile
+    (when (< emacs-major-version 27)
+      (package-initialize)))
 #+END_SRC
 
 ** Install use-package
@@ -416,9 +418,10 @@ because I have over 80 packages that I use in Emacs, and things were getting dif
 GitHub: https://github.com/jwiegley/use-package
 
 #+BEGIN_SRC emacs-lisp
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))              ; Installed by packages.el
+  (eval-and-compile
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package))) ; Installed by packages.el
 #+END_SRC
 
 use-package now can only need once, just add it to compile time
@@ -433,7 +436,7 @@ However, since we need to initialize =spacemacs= first, we need to setup this va
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref spacemacs-later-init
   ;; make `use-package' auto install non-installed packages.
-  (when  (require 'use-package-ensure)
+  (when (require 'use-package-ensure)
     (setq use-package-always-ensure t))
 #+END_SRC
 
@@ -457,8 +460,7 @@ Project for modernizing Emacs' Package Menu. With improved appearance, mode-line
 GitHub: https://github.com/Malabarba/paradox
 
 #+BEGIN_SRC emacs-lisp
-  (package-install 'paradox)              ; Installed by packages.el
-  (require 'paradox)
+  (use-package paradox :ensure t)
 #+END_SRC
 
 ** Install some common libraries
@@ -683,27 +685,22 @@ GitHub: https://github.com/ilya-babanov/emacs-bpr
 
 This file is for lazy people wanting to swap buffers without typing C-x b on each window. This is useful when you have :
 
-.--------------+-------------.
-|              |             |
-|    #emacs    |    #gnus    |
-|              |             |
-.--------------+-------------.
-|                            |
-|           .emacs           |
-|                            |
-.----------------------------.
+#+begin_quote :tangle no
 
-and you want to have :
+      you  have this
 
-.--------------+-------------.
-|              |             |
-|    #gnus     |   .emacs    |
-|              |             |
-.--------------+-------------.
-|                            |
-|           #emacs           |
-|                            |
-.----------------------------.
++--------------+-------------+              +--------------+-------------+
+|              |             |              |              |             |
+|    #emacs    |    #gnus    |              |    #gnus     |   .emacs    |
+|              |             |              |              |             |
++--------------+-------------+              +--------------+-------------+
+|                            |              |                            |
+|           .emacs           |              |           #emacs           |
+|                            |              |                            |
++----------------------------+              +----------------------------+
+
+                                               and you want to have this
+#+end_quote
 
 With buffer-move, just go in #gnus, do =buf-move-left=, go to #emacs (which now should be on top right) and do =buf-move-down=.
 
@@ -1286,22 +1283,6 @@ GitHub: https://github.com/kuanyui/tldr.el
     :config
     (setq tldr-directory-path (concat user-cache-directory "tldr/"))
     (setq tldr-saved-zip-path (concat user-cache-directory "tldr-source.zip")))
-#+END_SRC
-
-** travis
-
-An Emacs client for TravisCI.
-
-GitHub: https://github.com/nlamirault/emacs-travis
-
-#+BEGIN_SRC emacs-lisp
-  (use-package travis :ensure t)
-#+END_SRC
-
-Befor execute =M-x travis-show-projects= you must setup your github token
-
-#+BEGIN_SRC sh :tangle no
-  export TRAVIS_TOKEN=XXXXXXX
 #+END_SRC
 
 ** undo-tree
@@ -4507,15 +4488,6 @@ GitHub: https://github.com/joshuamiller/clojars.el
     :ensure t)
 #+END_SRC
 
-*** Search Clojure Cheatsheet
-
-GitHub: https://github.com/clojure-emacs/clojure-cheatsheet
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref clojure-config
-  (use-package clojure-cheatsheet
-    :ensure t)
-#+END_SRC
-
 *** Pretty Symbols
 
 Pretty symbols for anonymous functions, set literals and partial, like =(λ [a] (+ a 5))=, =ƒ(+ % 5)=, =∈{2 4 6}= and =Ƥ=.
@@ -5226,12 +5198,6 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
 #+BEGIN_SRC emacs-lisp
   (use-package js2-refactor
     :ensure t)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (use-package jsx-mode
-    :ensure t
-    :mode "\\.jsx\\'")
 #+END_SRC
 
 *** Manage Node versions within Emacs
