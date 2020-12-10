@@ -380,19 +380,20 @@ The main package manager I use is emacs's =package.el=, it's really nice and eas
 I also add [[http://orgmode.org/elpa.html][org-mode elpa]] so I can use latest org-mode.
 
 #+BEGIN_SRC emacs-lisp
-  (require 'package)                      ; built-in
+  (eval-and-compile
+    (require 'package)                      ; built-in
 
-  ;; melpa
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/") t)
+    ;; melpa
+    (add-to-list 'package-archives
+                 '("melpa" . "https://melpa.org/packages/") t)
 
-  ;; org
-  (add-to-list 'package-archives
-               '("org" . "http://orgmode.org/elpa/") t)
+    ;; org
+    (add-to-list 'package-archives
+                 '("org" . "http://orgmode.org/elpa/") t)
 
-  ;; For important compatibility libraries like cl-lib
-  (when (< emacs-major-version 24)
-    (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
+    ;; For important compatibility libraries like cl-lib
+    (when (< emacs-major-version 24)
+      (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))))
 #+END_SRC
 
 ** Initialize package.el
@@ -404,8 +405,9 @@ Before we start to use =package.el=, we need to initialize it first.
   ;; Don't delete this line. If you don't want it, just comment it out by adding a
   ;; semicolon to the start of the line. You may delete these explanatory
   ;; comments.
-  (when (< emacs-major-version 27)
-    (package-initialize))
+  (eval-and-compile
+    (when (< emacs-major-version 27)
+      (package-initialize)))
 #+END_SRC
 
 ** Install use-package
@@ -416,9 +418,10 @@ because I have over 80 packages that I use in Emacs, and things were getting dif
 GitHub: https://github.com/jwiegley/use-package
 
 #+BEGIN_SRC emacs-lisp
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))              ; Installed by packages.el
+  (eval-and-compile
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package))) ; Installed by packages.el
 #+END_SRC
 
 use-package now can only need once, just add it to compile time
@@ -433,7 +436,7 @@ However, since we need to initialize =spacemacs= first, we need to setup this va
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref spacemacs-later-init
   ;; make `use-package' auto install non-installed packages.
-  (when  (require 'use-package-ensure)
+  (when (require 'use-package-ensure)
     (setq use-package-always-ensure t))
 #+END_SRC
 
@@ -457,8 +460,7 @@ Project for modernizing Emacs' Package Menu. With improved appearance, mode-line
 GitHub: https://github.com/Malabarba/paradox
 
 #+BEGIN_SRC emacs-lisp
-  (package-install 'paradox)              ; Installed by packages.el
-  (require 'paradox)
+  (use-package paradox :ensure t)
 #+END_SRC
 
 ** Install some common libraries
