@@ -5224,12 +5224,6 @@ GitHub: https://github.com/bruceravel/gnuplot-mode
     :ensure t)
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  (use-package jsx-mode
-    :ensure t
-    :mode "\\.jsx\\'")
-#+END_SRC
-
 *** Manage Node versions within Emacs
 
 #+BEGIN_SRC emacs-lisp
