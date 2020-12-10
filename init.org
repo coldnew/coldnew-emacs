@@ -1285,22 +1285,6 @@ GitHub: https://github.com/kuanyui/tldr.el
     (setq tldr-saved-zip-path (concat user-cache-directory "tldr-source.zip")))
 #+END_SRC
 
-** travis
-
-An Emacs client for TravisCI.
-
-GitHub: https://github.com/nlamirault/emacs-travis
-
-#+BEGIN_SRC emacs-lisp
-  (use-package travis :ensure t)
-#+END_SRC
-
-Befor execute =M-x travis-show-projects= you must setup your github token
-
-#+BEGIN_SRC sh :tangle no
-  export TRAVIS_TOKEN=XXXXXXX
-#+END_SRC
-
 ** undo-tree
 
 Standard Emacs undo is kind of confusing. [[http://www.dr-qubit.org/emacs.php#undo-tree][undo-tree]] replaces this with a simpler tree structure. It also allows us to visualize the tree directly.
