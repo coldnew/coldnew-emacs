@@ -19,7 +19,7 @@ init.el:
 	${EMACS} -Q --script "scripts/makefile-script.el" -f make-init-el
 
 compile: init.el
-	${EMACS} -Q --script "scripts/makefile-script.el" -f byte-compile-configs
+	${EMACS} -Q --script "scripts/makefile-script.el" -f byte-compile-init-el
 
 doc: init.el
 	${EMACS} -Q -l init.el \
