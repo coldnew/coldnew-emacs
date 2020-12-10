@@ -154,11 +154,10 @@
     (dolist (config configs)
       (update-config config))))
 
-(defun byte-compile-configs ()
-  "`byte-compile' all .el files in `~/.emacs.d/configs'."
+(defun byte-compile-init-el ()
+  "`byte-compile' init.el file."
   (setq byte-compile-error-on-warn nil)
-  ;; (byte-recompile-directory (dirjoin (expand-file-name (getenv "PWD")) "configs") 0)
-  )
+  (byte-compile-file (dirjoin (expand-file-name (getenv "PWD")) "init.el")))
 
 
 ;;; makefile-script.el ends here

@@ -216,26 +216,29 @@ Following are my method to add directories to load-path ~recursively~, this func
 If you don't have any local elisp and all packages is maintain by cask or elpa or spacemacs, you can skip following code.
 
 #+BEGIN_SRC emacs-lisp
-  ;; Add directories to emacs's `load-path' recursively.
-  ;; if path does not exist, try to create directory.
-  (let* ((my-lisp-dir (list (concat user-emacs-directory "local-lisp/")
-                            (concat user-emacs-directory "styles/")))
-         (sys-lisp-dir (cl-ecase system-type ; add some system site-lisp to load-path
-                         ((darwin)    '("/usr/local/share/emacs/site-lisp/"))
-                         ((gnu/linux) '("/usr/share/emacs/site-lisp/"))
-                         (t nil))) ; FIXME: Add more platform support
-         (lisp-dir (append my-lisp-dir sys-lisp-dir)))
-    (dolist (lisp-path lisp-dir)
-      (when (not (file-exists-p lisp-path))
-        (make-directory lisp-path t))
-      (let* ((default-directory lisp-path))
-        (setq load-path
-              (append
-               (let ((load-path (copy-sequence load-path)))
-                 (append
-                  (copy-sequence (normal-top-level-add-to-load-path '(".")))
-                  (normal-top-level-add-subdirs-to-load-path)))
-               load-path)))))
+  (eval-and-compile
+    ;; Add directories to emacs's `load-path' recursively.
+    ;; if path does not exist, try to create directory.
+    (let* ((my-lisp-dir
+            (list (concat user-emacs-directory "elpa/") ; package installed by package.el
+                  (concat user-emacs-directory "local-lisp/") ; local lisp I used
+                  (concat user-emacs-directory "styles/"))) ; themes I used
+           (sys-lisp-dir (cl-ecase system-type ; add some system site-lisp to load-path
+                           ((darwin)    '("/usr/local/share/emacs/site-lisp/"))
+                           ((gnu/linux) '("/usr/share/emacs/site-lisp/"))
+                           (t nil)))  ; FIXME: Add more platform support
+           (lisp-dir (append my-lisp-dir sys-lisp-dir)))
+      (dolist (lisp-path lisp-dir)
+        (when (not (file-exists-p lisp-path))
+          (make-directory lisp-path t))
+        (let* ((default-directory lisp-path))
+          (setq load-path
+                (append
+                 (let ((load-path (copy-sequence load-path)))
+                   (append
+                    (copy-sequence (normal-top-level-add-to-load-path '(".")))
+                    (normal-top-level-add-subdirs-to-load-path)))
+                 load-path))))))
 #+END_SRC
 
 ** Personal Information                                              :personal:
@@ -416,7 +419,12 @@ GitHub: https://github.com/jwiegley/use-package
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))              ; Installed by packages.el
-  (require 'use-package)
+#+END_SRC
+
+use-package now can only need once, just add it to compile time
+
+#+BEGIN_SRC emacs-lisp
+  (eval-when-compile (require 'use-package))
 #+END_SRC
 
 You can setup =use-package-always-ensure= variable to =t= if you want to make =use-package= auto install packages.
@@ -425,13 +433,21 @@ However, since we need to initialize =spacemacs= first, we need to setup this va
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref spacemacs-later-init
   ;; make `use-package' auto install non-installed packages.
-  (setq use-package-always-ensure t)
+  (when  (require 'use-package-ensure)
+    (setq use-package-always-ensure t))
 #+END_SRC
 
 Report details about loading and configuration.
 
 #+BEGIN_SRC emacs-lisp
   (setq use-package-verbose t)
+#+END_SRC
+
+The =:ensure-system-package= keyword allows you to ensure system binaries exist alongside your package declarations. We need to install =use-package-ensure-system-package= first.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package use-package-ensure-system-package
+    :ensure t)
 #+END_SRC
 
 ** Install paradox
@@ -602,7 +618,7 @@ GitHub: https://github.com/Wilfred/ag.el
   (use-package ag
     :ensure t
     ;; only use this package when `the_silver_seacher' install in system.
-    :if (executable-find "ag"))
+    :ensure-system-package ag)
 #+END_SRC
 
 *** Install System packages
@@ -667,27 +683,27 @@ GitHub: https://github.com/ilya-babanov/emacs-bpr
 
 This file is for lazy people wanting to swap buffers without typing C-x b on each window. This is useful when you have :
 
-+--------------+-------------+
+.--------------+-------------.
 |              |             |
 |    #emacs    |    #gnus    |
 |              |             |
-+--------------+-------------+
+.--------------+-------------.
 |                            |
 |           .emacs           |
 |                            |
-+----------------------------+
+.----------------------------.
 
 and you want to have :
 
-+--------------+-------------+
+.--------------+-------------.
 |              |             |
 |    #gnus     |   .emacs    |
 |              |             |
-+--------------+-------------+
+.--------------+-------------.
 |                            |
 |           #emacs           |
 |                            |
-+----------------------------+
+.----------------------------.
 
 With buffer-move, just go in #gnus, do =buf-move-left=, go to #emacs (which now should be on top right) and do =buf-move-down=.
 
