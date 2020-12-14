@@ -28,6 +28,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install build emacs deps
         run:  |
+          sudo apt-get update -y
           sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
           sudo apt-get build-dep emacs-nox --yes
 
