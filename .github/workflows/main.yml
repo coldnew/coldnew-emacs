@@ -34,6 +34,7 @@ jobs:
           sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
           sudo apt-get update -y
           sudo apt-get build-dep emacs-nox --yes
+          sudo apt-get install gnutls-dev -y
 
       # Runs a set of commands using the runners shell
       - name: Run build-emacs.sh
