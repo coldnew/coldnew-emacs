@@ -21,7 +21,7 @@ do_configure_cli () {
                 --without-x \
                 --without-ns \
 		--with-nativecomp \
-		--with-gnutls=ifavailable \
+		--with-gnutls=ifavailable
 }
 
 do_configure_osx () {
