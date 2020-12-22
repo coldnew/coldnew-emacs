@@ -453,6 +453,27 @@ The =:ensure-system-package= keyword allows you to ensure system binaries exist 
     :ensure t)
 #+END_SRC
 
+** Install straight
+
+straight.el is next-generation, purely functional package manager for the Emacs hacker.
+It can integrated with [[https://github.com/jwiegley/use-package][use-package]] and install some packages from fork.
+
+GitHub: https://github.com/raxod502/straight.el
+
+#+BEGIN_SRC emacs-lisp
+  (let ((bootstrap-file
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+#+END_SRC
+
 ** Install paradox
 
 Project for modernizing Emacs' Package Menu. With improved appearance, mode-line information. Github integration, customizability, asynchronous upgrading, and more.
