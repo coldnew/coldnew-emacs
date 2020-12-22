@@ -1,9 +1,9 @@
 [submodule "modules/ycmd"]
 	path = modules/ycmd
-	url = git@github.com:Valloric/ycmd.git
+	url = https://github.com/Valloric/ycmd.git
 [submodule "modules/YCM-Generator"]
 	path = modules/YCM-Generator
-	url = git@github.com:rdnetto/YCM-Generator.git
+	url = https://github.com/rdnetto/YCM-Generator.git
 [submodule "modules/emacs"]
 	path = modules/emacs
 	url = https://github.com/emacs-mirror/emacs.git
