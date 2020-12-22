@@ -26,11 +26,10 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Install build emacs deps
+      - name: Install deoendencies for build emacs
         run:  |
-          sudo apt-get update -y
-          sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
-          sudo apt-get build-dep emacs-nox --yes
+          sudo apt-get install dpkg-dev  -y
+          sudo apt-get build-dep emacs-nox -y
 
       # Runs a set of commands using the runners shell
       - name: Run build-emacs.sh
