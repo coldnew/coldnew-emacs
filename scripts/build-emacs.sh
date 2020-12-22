@@ -20,7 +20,8 @@ do_configure_cli () {
     ./configure --prefix=${INSDIR} --with-modules --with-libgmp \
                 --without-x \
                 --without-ns \
-
+		--with-nativecomp \
+		--with-gnutls=ifavailable \
 }
 
 do_configure_osx () {
