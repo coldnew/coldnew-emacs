@@ -33,7 +33,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install deoendencies for build emacs
         run:  |
-          sudo apt-get install dpkg-dev  -y
+          sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
+          sudo cat /etc/apt/sources.list
+          sudo apt-get update -y
           sudo apt-get build-dep emacs-nox --yes
 
       # Runs a set of commands using the runners shell
