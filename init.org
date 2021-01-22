@@ -3656,8 +3656,7 @@ The language's name is a reference to the slang term "brain fuck", which refers 
 #+BEGIN_SRC emacs-lisp
   (use-package gn-mode
     :ensure t
-    :mode (("BUILD\\.gn\\'" . gn-mode)
-           ("DEPS" . gn-mode)))
+    :mode (("BUILD\\.gn\\'" . gn-mode)))
 #+END_SRC
 
 ** Markdown
@@ -5363,7 +5362,8 @@ GitHub: https://github.com/trotzig/import-js
 
 #+BEGIN_SRC emacs-lisp
   (use-package python
-    :mode (("SCons\\(truct\\|cript\\)\\'" . python-mode)))
+    :mode (("SCons\\(truct\\|cript\\)\\'" . python-mode)
+           ("DEPS" . python-mode)))
 #+END_SRC
 
 ** ruby
