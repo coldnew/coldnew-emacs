@@ -3656,8 +3656,8 @@ The language's name is a reference to the slang term "brain fuck", which refers 
 #+BEGIN_SRC emacs-lisp
   (use-package gn-mode
     :ensure t
-    :mode (("BUILD\\.gn\\'" . gn-mode)
-           ("\\.gni\\" . gn-mode)))
+    :mode (("BUILD.gn" . gn-mode)
+           ("\\.gni?\\'" . gn-mode)))
 #+END_SRC
 
 ** Markdown
