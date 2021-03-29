@@ -3264,6 +3264,23 @@ Call =visual-line-mode= to have soft-wrap.
   (add-hook 'org-mode-hook #'visual-line-mode)
 #+END_SRC
 
+** Setup electric-pair for org-mode                          :electric:pair:
+
+Prevent electric-pair auto insert > when I want to use easy-template.
+
+#+begin_src emacs-lisp  :tangle no :noweb-ref org-config
+  (with-eval-after-load 'elec-pair
+    (add-hook 'org-mode
+              (lambda ()
+                (let ((my-electric-pair-inhibit-predicate-list '(?\<)))
+                  (setq-local electric-pair-inhibit-predicate
+                              (lambda (c)
+                                (if (member c my-electric-pair-inhibit-predicate-list)
+                                    t
+                                    (electric-pair-default-inhibit c))))
+                  ))))
+#+end_src
+
 ** Extend org-mode's easy templates
 
 org-mode make it easy to insert blocks by typing =<s[TAB]= ...etc. I
