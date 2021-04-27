@@ -20,7 +20,7 @@ do_configure_cli () {
     ./configure --prefix=${INSDIR} --with-modules --with-libgmp \
                 --without-x \
                 --without-ns \
-		--with-nativecomp \
+		--with-native-compilation \
 		--with-gnutls=ifavailable
 }
 
@@ -41,7 +41,7 @@ do_configure_linux () {
                 --with-imagemagick \
 		--with-cairo \
                 --with-dbus --with-x --with-x-toolkit=gtk3 --with-xwidgets \
-		--with-nativecomp
+		--with-native-compilation 
 }
 
 do_make () {
