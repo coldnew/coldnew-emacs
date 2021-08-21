@@ -1,6 +1,6 @@
 EMACS ?= emacs
 
-all: init.el compile
+all: init.el byte-compile native-compile
 
 test: clean
 	${MAKE} all
@@ -18,8 +18,11 @@ clean:
 init.el:
 	${EMACS} -Q --script "scripts/makefile-script.el" -f make-init-el
 
-compile: init.el
+byte-compile: init.el
 	${EMACS} -Q --script "scripts/makefile-script.el" -f byte-compile-init-el
+
+native-compile: init.el
+	${EMACS} -Q --script "scripts/makefile-script.el" -f native-compile-init-el
 
 doc: init.el
 	${EMACS} -Q -l init.el \

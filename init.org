@@ -139,7 +139,7 @@ Make native-compile parallel with up to 9 threads.
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref early-init
   (when (and (version<= "28.0.50" emacs-version)
-             (featurep 'comp))
+             (require 'comp))
     (setq native-comp-async-jobs-number 9))
 #+END_SRC
 
