@@ -110,7 +110,40 @@ Some package like =npm= use the same rule to install in any platform, here list 
   <<install-in-all>>
 #+END_SRC
 
-* Initialize Emacs
+* Early Initialize                                               :init:early:
+
+Since Emacs 27, we can add some setup in =~/.emacs.d/early-init.el= , these setup will be loadded beforce emacs startup.
+
+#+begin_src emacs-lisp :noweb no-export :exports code :padline no :tangle early-init.el
+  ;; early-init.el -*- lexical-binding: t; -*-
+  <<early-init>>
+#+end_src
+
+** Defer garbage collection further back in the startup process
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref early-init
+  (setq gc-cons-threshold most-positive-fixnum)
+#+END_SRC
+
+** Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref early-init
+  (push '(menu-bar-lines . 0) default-frame-alist)
+  (push '(tool-bar-lines . 0) default-frame-alist)
+  (push '(vertical-scroll-bars) default-frame-alist)
+#+END_SRC
+
+** Increase default parallel compilations
+
+Make native-compile parallel with up to 9 threads.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref early-init
+  (when (and (version<= "28.0.50" emacs-version)
+             (featurep 'comp))
+    (setq native-comp-async-jobs-number 9))
+#+END_SRC
+
+* Initialize Emacs                                                     :init:
 
 There are some configurations I need to put at the beginning of the emacs config. These configurations are derived from my original init.el file.
 
