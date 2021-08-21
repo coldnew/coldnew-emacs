@@ -174,4 +174,18 @@
           (sleep-for 1)))
       (message "This emacs doesn't support native-compile feature. \n emacs-version: %s\n native-compile: %s" (emacs-version) (require 'comp))))
 
+(defun native-compile-packages ()
+  "native compile packages in specified directories."
+  (if (and (version<= "28.0.50" emacs-version)
+           (require 'comp))
+      (progn
+        (setq native-comp-async-jobs-number 9)
+	(cl-loop for dir in '("elpa" "local-lisp" "straight")
+		 do (native-compile-async (dirjoin (expand-file-name (getenv "PWD")) dir) 'recursively)) 
+        ;; wait for async compilation done
+        (while (> (+ (length comp-files-queue)
+                     (comp-async-runnings)) 0)
+          (sleep-for 1)))
+      (message "This emacs doesn't support native-compile feature. \n emacs-version: %s\n native-compile: %s" (emacs-version) (require 'comp))))
+
 ;;; makefile-script.el ends here
