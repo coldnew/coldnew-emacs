@@ -157,7 +157,8 @@
 (defun byte-compile-init-el ()
   "`byte-compile' init.el file."
   (setq byte-compile-error-on-warn nil)
-  (byte-compile-file (dirjoin (expand-file-name (getenv "PWD")) "init.el")))
+  (cl-loop for file in (directory-files (expand-file-name (getenv "PWD")) t "^.*\\.el$")
+           do (byte-compile-file file)))
 
 
 ;;; makefile-script.el ends here
