@@ -5368,45 +5368,6 @@ GitHub: https://github.com/trotzig/import-js
    (setq graphql-url "http://localhost:7000/graphql"))
 #+END_SRC
 
-* iOS / Mac OSX Development
-
-** Swift
-
-#+BEGIN_SRC emacs-lisp
-  (use-package swift-mode :ensure t)
-#+END_SRC
-
-* JVM / Android Development
-
-Note that =Clojure= is setting in =LISP Development= section.
-
-** Android
-
-#+BEGIN_SRC emacs-lisp
-  (use-package android-mode
-    :ensure t
-    :config
-    (setq android-mode-sdk-dir (getenv "ANDROID_HOME")))
-#+END_SRC
-
-*** Integrate logcat with emacs
-
-logcat interface for emacs based on android-mode.
-
-GitHub: https://github.com/youngker/elogcat.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package elogcat :ensure t)
-#+END_SRC
-
-** Scala
-
-
-#+BEGIN_SRC emacs-lisp
-  (use-package sbt-mode :ensure t
-    :mode "\\.sbt$")
-#+END_SRC
-
 * Rust Development
 
 [[https://www.rust-lang.org/][Rust]] is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety.
