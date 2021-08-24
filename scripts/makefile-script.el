@@ -1,11 +1,11 @@
 ;;; makefile-script.el --- Building script for coldnew's emacs
 
-;; Copyright (c) 2013 - 2016 Yen-Chin, Lee.
+;; Copyright (c) 2013 - 2021 Yen-Chin, Lee.
 ;;
 ;; Author: coldnew <coldnew.tw@gmail.com>
 ;; Keywords: converience
 ;; X-URL: http://github.com/coldnew/coldnew-emacs
-;; Version: 0.2
+;; Version: 0.3
 
 ;; This file is not part of GNU Emacs.
 
