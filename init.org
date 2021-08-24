@@ -9,7 +9,6 @@
 #+SETUPFILE: assets/readtheorg.setup
 
 #+LINK: emacs     https://www.gnu.org/s/emacs
-#+LINK: spaceemacs https://github.com/syl20bnr/spacemacs
 
 # Badge
 [[http://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg?dummy]]
@@ -17,9 +16,7 @@
 
 * Introduction
 
-This is my emacs configuration, which is based on top of [[spacemacs][Spacemacs]].
-
-You may find I already have another emacs configuration in [[https://github.com/coldnew/coldnew-emacs][here]], the main difference between this configuration and [[https://github.com/coldnew/coldnew-emacs][coldnew-emacs]] is that this config is fully depends on [[spacemacs][Spacemacs]], which means I'll reuse most settings provided by [[spacemacs][spacemacs]].
+This is my emacs configuration, I use ONE single org-mode file to write my emacs config.
 
 ** Install emacs
 
@@ -112,7 +109,7 @@ Some package like =npm= use the same rule to install in any platform, here list 
 
 * Early Initialize                                               :init:early:
 
-Since Emacs 27, we can add some setup in =~/.emacs.d/early-init.el= , these setup will be loadded beforce emacs startup.
+Since Emacs 27, we can add some setup in =~/.emacs.d/early-init.el= , these setup will be loadded before emacs startup.
 
 #+begin_src emacs-lisp :noweb no-export :exports code :padline no :tangle early-init.el
   ;; early-init.el -*- lexical-binding: t; -*-
