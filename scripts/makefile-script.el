@@ -182,6 +182,13 @@
         (native-compile-wait-for-async))
       (message "This emacs doesn't support native-compile feature. \n emacs-version: %s\n native-compile: %s" (emacs-version) (require 'comp))))
 
+(defun compile-init-el ()
+  "Select `byte-compile' or `native-compile' for building the
+init.el. Use `native-compile' if available."
+  (if has-native-compile-p
+      (native-compile-init-el)
+      (byte-compile-init-el)))
+
 (defun native-compile-packages ()
   "native compile packages in specified directories."
   (if has-native-compile-p

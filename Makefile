@@ -1,6 +1,6 @@
 EMACS ?= emacs
 
-all: init.el byte-compile native-compile
+all: compile
 
 test: clean
 	${MAKE} all
@@ -17,6 +17,9 @@ clean:
 # Use function defiled in scripts/makefile-script.el to build the init file.
 init.el:
 	${EMACS} -Q --script "scripts/makefile-script.el" -f make-init-el
+
+compile: init.el
+	${EMACS} -Q --script "scripts/makefile-script.el" -f compile-init-el
 
 byte-compile: init.el
 	${EMACS} -Q --script "scripts/makefile-script.el" -f byte-compile-init-el
