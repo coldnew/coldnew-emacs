@@ -63,9 +63,21 @@
 (defconst *configs-dir* "configs"
   "Other `org-mode' configs path.")
 
+(defconst has-native-compile-p
+  (and (version<= "28.0.50" emacs-version)
+       (require 'comp))
+  "This Emacs support `native-compile' feature.")
+
 ;;;; Functions
 
-(defun mkdir-1 (dirname)
+(defun native-compile-wait-for-async ()
+  "Wait for `native-compile-async' done."
+  (when has-native-compile-p
+    (while (> (+ (length comp-files-queue)
+                 (comp-async-runnings)) 0)
+      (sleep-for 1))))
+
+(defun mkdir-p (dirname)
   "Create directory DIRNAME and it's parents."
   (when (not (file-exists-p dirname))
     (make-directory dirname :parents)))
@@ -89,13 +101,13 @@
   (let* ((dir (dirjoin *workdir* (or (file-name-directory forg) "")))
          (base (file-name-base forg))
          (fel (dirjoin dir (concat base ".el" "." *pid*))))
-    (mkdir-1 dir)
+    (mkdir-p dir)
     (message (format "Building %s to %s ..." forg fel))
     (org-babel-tangle-file forg fel)))
 
 (defun write-lockfile (pid)
   "Create lockfile with PID as it's contents."
-  (mkdir-1 (file-name-directory *lockfile*))
+  (mkdir-p (file-name-directory *lockfile*))
   (with-temp-buffer
     (insert pid)
     (write-file *lockfile*)))
@@ -162,30 +174,22 @@
 
 (defun native-compile-init-el ()
   "`native-compile' init.el file."
-  (if (and (version<= "28.0.50" emacs-version)
-           (require 'comp))
+  (if has-native-compile-p
       (progn
-        (setq native-comp-async-jobs-number 9)
         (cl-loop for file in (directory-files (expand-file-name (getenv "PWD")) t "^.*\\.el$")
                  do (native-compile-async file))
         ;; wait for async compilation done
-        (while (> (+ (length comp-files-queue)
-                     (comp-async-runnings)) 0)
-          (sleep-for 1)))
+        (native-compile-wait-for-async))
       (message "This emacs doesn't support native-compile feature. \n emacs-version: %s\n native-compile: %s" (emacs-version) (require 'comp))))
 
 (defun native-compile-packages ()
   "native compile packages in specified directories."
-  (if (and (version<= "28.0.50" emacs-version)
-           (require 'comp))
+  (if has-native-compile-p
       (progn
-        (setq native-comp-async-jobs-number 9)
 	(cl-loop for dir in '("elpa" "local-lisp" "straight")
 		 do (native-compile-async (dirjoin (expand-file-name (getenv "PWD")) dir) 'recursively)) 
         ;; wait for async compilation done
-        (while (> (+ (length comp-files-queue)
-                     (comp-async-runnings)) 0)
-          (sleep-for 1)))
+        (native-compile-wait-for-async))
       (message "This emacs doesn't support native-compile feature. \n emacs-version: %s\n native-compile: %s" (emacs-version) (require 'comp))))
 
 ;;; makefile-script.el ends here
