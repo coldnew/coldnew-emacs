@@ -694,13 +694,6 @@ If you use Gentoo Linux, you can use portage to install it.
   emerge sys-apps/the_silver_searcher
 #+END_SRC
 
-** ascii-art-to-unicode
-
-Convert simple ASCII art drawings (and org-tables) to beautiful Unicode.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package ascii-art-to-unicode :ensure t)
-#+END_SRC
 ** avy
 
 =avy= is a GNU Emacs package for jumping to visible text using a char-based decision tree. See also [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] and [[https://github.com/Lokaltog/vim-easymotion][vim-easymotion]] - =avy= uses the same idea.
@@ -732,45 +725,6 @@ GitHub: https://github.com/ilya-babanov/emacs-bpr
   (use-package bpr :ensure t)
 #+END_SRC
 
-** buffer-move
-
-This file is for lazy people wanting to swap buffers without typing C-x b on each window. This is useful when you have :
-
-#+begin_quote :tangle no
-
-      you  have this
-
-+--------------+-------------+              +--------------+-------------+
-|              |             |              |              |             |
-|    #emacs    |    #gnus    |              |    #gnus     |   .emacs    |
-|              |             |              |              |             |
-+--------------+-------------+              +--------------+-------------+
-|                            |              |                            |
-|           .emacs           |              |           #emacs           |
-|                            |              |                            |
-+----------------------------+              +----------------------------+
-
-                                               and you want to have this
-#+end_quote
-
-With buffer-move, just go in #gnus, do =buf-move-left=, go to #emacs (which now should be on top right) and do =buf-move-down=.
-
-
-GitHub: https://github.com/lukhas/buffer-move
-
-#+BEGIN_SRC emacs-lisp
-  (use-package buffer-move :ensure t)
-#+END_SRC
-
-** calfw
-
-Calfw - A calendar framework for Emacs.
-
-GitHub: https://github.com/kiwanami/emacs-calfw
-
-#+BEGIN_SRC emacs-lisp
-  (use-package calfw :ensure t)
-#+END_SRC
 ** cbm
 
 Cycle by major - Cycle through buffers with the same major-mode.
@@ -779,34 +733,6 @@ GitHub: https://github.com/akermu/cbm.el
 
 #+BEGIN_SRC emacs-lisp
   (use-package cbm :ensure t)
-#+END_SRC
-
-** crux
-
-A Collection of Ridiculously Useful eXtensions for Emacs. crux bundles a few useful interactive commands to enhance your overall Emacs experience.
-
-GitHub: https://github.com/bbatsov/crux
-
-#+BEGIN_SRC emacs-lisp
-  (use-package crux :ensure t)
-#+END_SRC
-
-** carbon-now-sh.el
-
-[[https://carbon.now.sh/][carbon-now-sh]] is a service that creates beautiful images of your code:
-
-#+BEGIN_SRC emacs-lisp
-  (use-package carbon-now-sh :ensure t)
-#+END_SRC
-
-** darkroom
-
-Remove visual distractions and focus on writing.
-
-GitHub: https://github.com/capitaomorte/darkroom
-
-#+BEGIN_SRC emacs-lisp
-  (use-package darkroom :ensure t)
 #+END_SRC
 
 ** discover-my-major
@@ -991,12 +917,6 @@ GitHub: https://github.com/atykhonov/emacs-howdoi
   (use-package howdoi :ensure t)
 #+END_SRC
 
-** htmlize
-
-#+BEGIN_SRC emacs-lisp
-  (use-package htmlize :ensure t)
-#+END_SRC
-
 ** hungry-delete
 
 [[https://github.com/nflath/hungry-delete][hungry-delete]] borrows hungry deletion from =cc-mode=, which will causes deletion
@@ -1112,30 +1032,6 @@ GitHub: https://github.com/victorhge/iedit
     :bind (("C-;" . iedit-mode)))
 #+END_SRC
 
-** know-your-http-well
-
-HTTP encodings, headers, media types, methods, relations and status
-codes, all summarized and linking to their specification.
-
-GitHub: https://github.com/for-GET/know-your-http-well
-
-#+BEGIN_SRC emacs-lisp
-  (use-package know-your-http-well :ensure t)
-#+END_SRC
-
-** kurecolor
-
-A collection of color tools aimed at those working with (normal 6
-digit) hex color codes, useful for CSS, Emacs themes, etc. etc.
-
-View the presentation at https://github.com/emacsfodder/kurecolor
-
-GitHub: https://github.com/emacsfodder/kurecolor
-
-#+BEGIN_SRC emacs-lisp
-  (use-package kurecolor :ensure t)
-#+END_SRC
-
 ** link-hint
 
 =link-hint.el= is inspired by the link hinting functionality in vim-like
@@ -1155,16 +1051,6 @@ buffer.
 
 #+BEGIN_SRC emacs-lisp
   (use-package manage-minor-mode :ensure t)
-#+END_SRC
-
-** mustache
-
-A mustache templating library in Emacs Lisp.
-
-GitHub: https://github.com/Wilfred/mustache.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package mustache :ensure t)
 #+END_SRC
 
 ** mwim                                                        :keybinding:
@@ -1261,14 +1147,6 @@ GitHub: https://github.com/kaz-yos/reveal-in-osx-finder
     :when (eq system-type 'darwin))
 #+END_SRC
 
-** sicp
-
-Reading sicp in emacs.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package sicp :ensure t)
-#+END_SRC
-
 ** smartparens
 
 Smartparens is a minor mode for dealing with pairs in Emacs.
@@ -1281,27 +1159,6 @@ GitHub: https://github.com/Fuco1/smartparens
     :config
     (smartparens-mode 1))
 #+END_SRC
-** spray
-
-A speed reading mode for Emacs.
-
-GitHub: https://github.com/ian-kelling/spray
-
-#+BEGIN_SRC emacs-lisp
-  (use-package spray :ensure t)
-#+END_SRC
-
-** sprunge
-
-Upload pastes to http://sprunge.us/
-
-GitHub: https://github.com/tomjakubowski/sprunge.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package sprunge
-    :ensure t)
-#+END_SRC
-
 ** string-inflection
 
 underscore -> UPCASE -> CamelCase conversion of names.
