@@ -3001,78 +3001,6 @@ GitHub: https://github.com/emacs-jp/helm-c-yasnippet
              ("M-c" . my/minibuffer-switch-to-cluster)
              ("C-z" . helm-select-action))
 #+END_SRC
-* Language Server                                                       :lsp:
-
-#+BEGIN_SRC emacs-lisp
-  (use-package lsp-mode
-    :ensure t
-    :init (setq lsp-inhibit-message nil ; you may set this to t to hide messages from message area
-                lsp-eldoc-render-all nil
-                lsp-highlight-symbol-at-point nil)
-    )
-
-  (use-package lsp-ui
-    :ensure t
-    :config
-    (setq lsp-ui-sideline-enable t
-          lsp-ui-sideline-show-symbol t
-          lsp-ui-sideline-show-hover t
-          lsp-ui-sideline-show-code-actions t
-          lsp-ui-sideline-update-mode 'point))
-
-  (use-package company-lsp
-    :after  company
-    :ensure t
-    :config
-    (add-hook 'java-mode-hook (lambda () (push 'company-lsp company-backends)))
-    (setq company-lsp-enable-snippet t
-          company-lsp-cache-candidates t)
-    ;; (push 'java-mode company-global-modes)
-    )
-
-  (use-package lsp-java
-    :ensure t
-    :requires (lsp-ui-flycheck lsp-ui-sideline)
-    :init (setq lsp-java-server-install-dir (concat user-cache-directory "eclipse.jdt.ls/server/"))
-    :config
-    (add-hook 'java-mode-hook  'lsp-java-enable)
-    (add-hook 'java-mode-hook  'flycheck-mode)
-    (add-hook 'java-mode-hook  'company-mode)
-    (add-hook 'java-mode-hook  (lambda () (lsp-ui-flycheck-enable t)))
-    (add-hook 'java-mode-hook  'lsp-ui-sideline-mode)
-    (setq lsp-java--workspace-folders (list
-                                       "/home/coldnew/Projects/brokerBSreport"
-                                       "/home/coldnew/Projects/twse-captcha-solverdl"
-                                       "/home/coldnew/Projects/twse-captcha-solverdl2"
-                                       ))
-
-                                          ;(add-hook 'java-mode-hook (lambda () (add-to-list 'lsp-java--workspace-folders (lsp-java--get-root))))
-    )
-
-
-  (use-package meghanada
-    :ensure t
-    :init (setq meghanada-server-install-dir (concat user-cache-directory "meghanada"))
-    :config
-    (add-hook 'java-mode-hook
-              (lambda ()
-                ;; meghanada-mode on
-                (meghanada-mode t)
-                (flycheck-mode +1)
-                (setq c-basic-offset 2)
-                ;; use code format
-                (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
-    (cond
-     ((eq system-type 'windows-nt)
-      (setq meghanada-java-path (expand-file-name "bin/java.exe" (getenv "JAVA_HOME")))
-      (setq meghanada-maven-path "mvn.cmd"))
-     (t
-      (setq meghanada-java-path "java")
-      (setq meghanada-maven-path "mvn")))
-
-    )
-#+END_SRC
-
 * Org                                                                   :org:
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
@@ -4703,31 +4631,6 @@ GitHub: https://github.com/bbatsov/projectile
     (global-semantic-idle-scheduler-mode 1)
 
     (semantic-mode 1))
-#+END_SRC
-
-** GDB
-
-#+BEGIN_SRC emacs-lisp
-  (when (require 'gdb-mi)
-    ;; Use many window in gdb
-    (setq gdb-many-windows t)
-    ;; Display source file containing the main routine at startup.
-    ;; Also display the main routine in the disassembly buffer if present.
-    (setq gdb-show-main t))
-#+END_SRC
-
-** realgud
-
-A modular GNU Emacs front-end for interacting with external debuggers.
-
-See https://github.com/rocky/emacs-dbgr/wiki/Debuggers-Supported for a list of debuggers supported.
-
-A debugger can be run out of a comint process buffer, or you can use a =M-x realgud-track-mode= inside an existing shell, or eshell buffer.
-
-GitHub: https://github.com/rocky/emacs-dbgr
-
-#+BEGIN_SRC emacs-lisp
-  (use-package realgud :ensure t)
 #+END_SRC
 
 ** cscope
