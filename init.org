@@ -116,6 +116,17 @@ Since Emacs 27, we can add some setup in =~/.emacs.d/early-init.el= , these setu
   <<early-init>>
 #+end_src
 
+** Disable native-compilation for some packages
+
+Adding regexes to `comp-deferred-compilation-deny-list' to make some packages not build by native-compilation when enabled.
+
+Here I just disable native-compile auto loads.  There's something wrong with them.
+
+#+begin_src emacs-lisp :tangle no :noweb-ref early-init
+  (with-eval-after-load 'comp
+    (setq comp-deferred-compilation-deny-list '("\\(?:[^z-a]*-autoloads\\.el$\\)")))
+#+end_src
+
 ** Defer garbage collection further back in the startup process
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref early-init
