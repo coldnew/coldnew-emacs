@@ -3658,10 +3658,11 @@ Since emacs not built-in all configration files syntax highlight support, we nee
 #+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
   (use-package cc-mode
     :mode
-    (("\\.h\\'" . c-mode)
+    (("\\.h\\'" . c++-mode)
      ("\\.c\\'" . c-mode)
      ("\\.hpp\\'" . c++-mode)
-     ("\\.cpp\\'" . c++-mode))
+     ("\\.cpp\\'" . c++-mode)
+     ("\\.cc\\'" . c++-mode))
     :config
     <<cc-mode-config>>)
 #+END_SRC
