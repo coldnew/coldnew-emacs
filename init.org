@@ -3667,43 +3667,6 @@ Since emacs not built-in all configration files syntax highlight support, we nee
     <<cc-mode-config>>)
 #+END_SRC
 
-** C/C++ headers detect
-
-*** Use regexp to find header is C++ header or not
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
-  (add-to-list 'magic-mode-alist
-               `(,(lambda ()
-                    (and (string= (file-name-extension (or (buffer-file-name) "")) "h")
-                         (or (re-search-forward "#include <\\w+>"
-                                                magic-mode-regexp-match-limit t)
-                             (re-search-forward "\\W\\(class\\|template\\namespace\\)\\W"
-                                                magic-mode-regexp-match-limit t)
-                             (re-search-forward "std::"
-                                                magic-mode-regexp-match-limit t))))
-                 . c++-mode))
-#+END_SRC
-
-*** Use dummy-h-mode to help detect header's major mode
-
- [[https://github.com/yascentur/dummy-h-mode-el][dummy-h-mode]] is an major-mode to help switch major mode to c/c++/objc-mode on .h
- file.
-
- GitHub: https://github.com/yascentur/dummy-h-mode-el
-
- #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
-;;   (use-package dummy-h-mode
-;;     :ensure t
-;;     :mode "\\.h$"
-;;     :config
-;;     (add-hook 'dummy-h-mode-hook
-;;               (lambda ()
-;;                 ;; use c-mode by default
-;;                 (setq dummy-h-mode-default-major-mode 'c-mode)
-;;                 ;; setup search limit
-;;                 (setq dummy-h-mode-search-limit 60000))))
- #+END_SRC
-
 ** ElDoc supports                                                    :eldoc:
 
 #+BEGIN_SRC emacs-lisp
