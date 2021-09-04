@@ -2134,25 +2134,6 @@ minibuffer history from ‘savehist-file’.
     (savehist-mode 1))
 #+END_SRC
 
-** Increase Garbage Collector Value in minibuffer
-
-By binding this temporarily to a large number, you can effectively prevent garbage collection during a part of the program. I increase the value when enter minibuffer, this will help to improve minibuffer speed with large package like helm, flx.
-
-ref: http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
-  (eval-after-load 'minibuffer
-    '(progn
-       (lexical-let ((default-threshold gc-cons-threshold))
-         (defun my/minibuffer-gc-setup-hook ()
-           (setq gc-cons-threshold most-positive-fixnum))
-         (add-hook 'minibuffer-setup-hook #'my/minibuffer-gc-setup-hook)
-         ;; When exit, set back to default threshold
-         (defun my/minibuffer-gc-exit-hook ()
-           (setq gc-cons-threshold default-threshold))
-         (add-hook 'minibuffer-exit-hook #'my/minibuffer-gc-exit-hook))))
-#+END_SRC
-
 ** Setup Keybindings                                            :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
