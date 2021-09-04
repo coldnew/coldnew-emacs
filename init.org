@@ -141,16 +141,6 @@ Here I just disable native-compile auto loads.  There's something wrong with the
   (push '(vertical-scroll-bars) default-frame-alist)
 #+END_SRC
 
-** Increase default parallel compilations
-
-Make native-compile parallel with up to 9 threads.
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref early-init
-  (when (and (version<= "28.0.50" emacs-version)
-             (require 'comp))
-    (setq native-comp-async-jobs-number 9))
-#+END_SRC
-
 * Initialize Emacs                                                     :init:
 
 There are some configurations I need to put at the beginning of the emacs config. These configurations are derived from my original init.el file.
