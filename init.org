@@ -3715,13 +3715,13 @@ By default it highlights:
   (add-hook 'after-save-hook #'my/cc-mode/highlight-if-0-hook)
 #+END_SRC
 
-** Use subword-mode for C/C++ project
+** Treat helloWorld as two words                                   :subword:
 
-In most C/C++ project, we naming variable in camelCase, subword-mode can help us treat =helloWorld= as two words.
+In most C/C++ project, we naming variable in camelCase, =subword-mode= can help us treat =helloWorld= as two words.
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
   ;; subword-mode, e.g., someThing is treated as two words
-  (add-hook 'c-mode-common-hook '(lambda () (subword-mode 1)))
+  (add-hook 'c-mode-common-hook (lambda () (subword-mode 1)))
 #+END_SRC
 
 ** Auto pair parentheses with electric-pair
