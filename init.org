@@ -3653,7 +3653,7 @@ Since emacs not built-in all configration files syntax highlight support, we nee
     :mode (("meson\\.build\\'" . meson-mode)))
 #+END_SRC
 
-* C/C++ Development
+* C/C++ Development                                                     :cpp:
 
 #+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
   (use-package cc-mode
