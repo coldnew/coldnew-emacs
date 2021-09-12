@@ -4017,25 +4017,6 @@ GitHub: https://github.com/Fuco1/litable
     (litable-mode))
 #+END_SRC
 
-*** Syntax highlighting for Emacs' cl-lib
-
-This library adds all of the familiar highlighting to =cl-lib= macros
-=(cl-defun, cl-loop, etc.)= that were originally provided for =cl=.
-
-It's not simply throwing in all the symbols as keywords. They're being
-added using the same regular expressions that =cl= gets, so function
-names get highlighted with =cl-defun=, type names get highlighted with
-=cl-defstruct=, etc.
-
-GitHub: https://github.com/skeeto/cl-lib-highlight
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref emacs-lisp-mode-config
-  (use-package cl-lib-highlight
-    :ensure t
-    :config
-    (cl-lib-highlight-initialize))
-#+END_SRC
-
 *** Display ^L glyphs as horizontal lines
 
 This Emacs library provides a global mode which displays ugly form feed characters as tidy horizontal rules.
