@@ -5010,7 +5010,8 @@ GitHub: https://github.com/trotzig/import-js
 ** ruby
 
 #+BEGIN_SRC emacs-lisp
-  (use-package ruby-mode :ensure t
+  (use-package ruby-mode
+    :ensure nil				; built-in
     :mode (("Gemfile\\'"  . ruby-mode)
            ("Kirkfile\\'" . ruby-mode)
            ("Rakefile\\'" . ruby-mode)
@@ -5287,7 +5288,7 @@ Show lambda as λ.
 
 #+BEGIN_SRC emacs-lisp
   (use-package css-mode
-    :ensure t
+    :ensure nill				; built-in
     :mode "\\.css\\'")
 #+END_SRC
 
