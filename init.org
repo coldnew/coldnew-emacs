@@ -3430,11 +3430,14 @@ The language's name is a reference to the slang term "brain fuck", which refers 
 
 ** GN
 
+[[https://chromium.googlesource.com/chromium/src/tools/gn/+/48062805e19b4697c5fbd926dc649c78b6aaa138/README.md][GN]] is a meta-build system that generates [[https://chromium.googlesource.com/chromium/src/tools/gn/+/48062805e19b4697c5fbd926dc649c78b6aaa138/NinjaBuild.md][NinjaBuild]] files. This system is widely used on Google's chromium related framework.
+
+Take a look on [[https://gn.googlesource.com/gn/+/refs/heads/main/docs/reference.md][GN reference]]  or [[https://chromium.googlesource.com/chromium/src/tools/gn/+/48062805e19b4697c5fbd926dc649c78b6aaa138/docs/quick_start.md][GN Quick Start Guide]] for more info.
+
 #+BEGIN_SRC emacs-lisp
   (use-package gn-mode
     :ensure t
-    :mode (("BUILD.gn" . gn-mode)
-           ("\\.gni?\\'" . gn-mode)))
+    :mode ("BUILD.gn" "\\.gni?\\'"))
 #+END_SRC
 
 ** Markdown
