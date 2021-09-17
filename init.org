@@ -3388,18 +3388,6 @@ GitHub: https://github.com/masayuko/ox-rst
 
 * Programming Languages
 
-** Prolog
-
-#+BEGIN_SRC emacs-lisp
-  (use-package prolog
-    :ensure nil                           ; built-in
-    :mode ("\\.pl\\'")
-    :config
-    ;; Use gnu-prolog
-    (setq prolog-system 'gnu)
-)
-#+END_SRC
-
 ** PlantUML                                                       :plantuml:
 
 GitHub: https://github.com/skuro/plantuml-mode
