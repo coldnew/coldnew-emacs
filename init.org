@@ -523,7 +523,6 @@ Some common libraries I'll use in my personal's command or anything else.
   (use-package f :ensure t)
   (use-package s :ensure t)
   (use-package dash :ensure t)
-  (use-package noflet :ensure t)
   (use-package htmlize :ensure t)
   (use-package async :ensure t)
 #+END_SRC
@@ -1066,22 +1065,6 @@ GitHub: https://github.com/alezost/mwim.el
     :bind
     (("C-a" . mwim-beginning-of-code-or-line)
      ("C-e" . mwim-end-of-code-or-line)))
-#+END_SRC
-
-** noflet
-
-=noflet= is dynamic, local, advice for Emacs-Lisp code.
-
-=noflet= also has an Emacs indentation function for =flet= like macros.
-
-It's great for test code when you need to mock another function.
-
-This is useful for definining functions that overide a base definition in some way. You get access to the original (before you re-defined it) function through a different name.
-
-GitHub: https://github.com/nicferrier/emacs-noflet
-
-#+BEGIN_SRC emacs-lisp
-  (use-package noflet :ensure t)
 #+END_SRC
 
 ** pangu-spacing
