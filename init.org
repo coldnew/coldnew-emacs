@@ -2486,16 +2486,16 @@ depth.
   (use-package rainbow-delimiters
     :ensure t
     :config
-    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 #+END_SRC
 
-** Save recent file info
+** Save recent file info                                           :recentf:
 
 #+BEGIN_SRC emacs-lisp
   (use-package recentf
-    :ensure t
-    :init
-    (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
+    :straight (:type built-in)
+    :after-call find-file-hook danger
+    :init (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
     :config
     (recentf-mode 1))
 #+END_SRC
