@@ -141,6 +141,20 @@ Here I just disable native-compile auto loads.  There's something wrong with the
   (push '(vertical-scroll-bars) default-frame-alist)
 #+END_SRC
 
+** Prevent package.el to load packages prior to init.el loading
+
+We plain to handle our package initialization in our configs, we must prevent Emacs from doing it at early stage.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref early-init
+  (setq package-enable-at-startup nil)
+#+END_SRC
+
+** Do not resize the frame at this early stage.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref early-init
+  (setq frame-inhibit-implied-resize t)
+#+END_SRC
+
 * Initialize Emacs                                                     :init:
 
 There are some configurations I need to put at the beginning of the emacs config. These configurations are derived from my original init.el file.
