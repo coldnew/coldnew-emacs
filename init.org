@@ -5589,22 +5589,6 @@ GitHub: https://github.com/nschum/window-numbering.el
              ("M-g" . avy-goto-char-2))
 #+END_SRC
 
-Window Selection
-
-#+BEGIN_SRC emacs-lisp
-  (bind-keys :map global-map
-             ("M-1" . select-window-1)
-             ("M-2" . select-window-2)
-             ("M-3" . select-window-3)
-             ("M-4" . select-window-4)
-             ("M-5" . select-window-5)
-             ("M-6" . select-window-6)
-             ("M-7" . select-window-7)
-             ("M-8" . select-window-8)
-             ("M-9" . select-window-9)
-             ("M-0" . select-window-0))
-#+END_SRC
-
 ** Normal State
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref evil-keybindings
