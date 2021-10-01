@@ -422,19 +422,13 @@ The main package manager I use is emacs's =package.el=, it's really nice and eas
 
 [[http://melpa.org][melpa]] contains many community packages that not contribute to emacs's elpa, we add it here.
 
-I also add [[http://orgmode.org/elpa.html][org-mode elpa]] so I can use latest org-mode.
-
 #+BEGIN_SRC emacs-lisp
   (eval-and-compile
-    (require 'package)                      ; built-in
+    (require 'package)			; built-in
 
     ;; melpa
     (add-to-list 'package-archives
                  '("melpa" . "https://melpa.org/packages/") t)
-
-    ;; org
-    (add-to-list 'package-archives
-                 '("org" . "http://orgmode.org/elpa/") t)
 
     ;; For important compatibility libraries like cl-lib
     (when (< emacs-major-version 24)
