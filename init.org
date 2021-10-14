@@ -3594,6 +3594,15 @@ For more info about vala, please see: [[https://wiki.gnome.org/Projects/Vala/Tut
   (setq flycheck-verilog-verilator-executable "/usr/bin/verilator_bin")
 #+END_SRC
 
+** Groovy
+
+#+begin_src emacs-lisp :noweb no-export :exports code
+  (use-package groovy-mode
+    :mode (("\\.groovy" . groovy-mode)
+           ("/Jenkinsfile" . groovy-mode))
+    :ensure t)
+#+end_src
+
 * Configration Files
 
 Since emacs not built-in all configration files syntax highlight support, we need to install manually.
