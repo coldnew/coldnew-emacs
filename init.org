@@ -141,6 +141,20 @@ Here I just disable native-compile auto loads.  There's something wrong with the
   (push '(vertical-scroll-bars) default-frame-alist)
 #+END_SRC
 
+** Prevent package.el to load packages prior to init.el loading
+
+We plain to handle our package initialization in our configs, we must prevent Emacs from doing it at early stage.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref early-init
+  (setq package-enable-at-startup nil)
+#+END_SRC
+
+** Do not resize the frame at this early stage.
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref early-init
+  (setq frame-inhibit-implied-resize t)
+#+END_SRC
+
 * Initialize Emacs                                                     :init:
 
 There are some configurations I need to put at the beginning of the emacs config. These configurations are derived from my original init.el file.
@@ -408,19 +422,13 @@ The main package manager I use is emacs's =package.el=, it's really nice and eas
 
 [[http://melpa.org][melpa]] contains many community packages that not contribute to emacs's elpa, we add it here.
 
-I also add [[http://orgmode.org/elpa.html][org-mode elpa]] so I can use latest org-mode.
-
 #+BEGIN_SRC emacs-lisp
   (eval-and-compile
-    (require 'package)                      ; built-in
+    (require 'package)			; built-in
 
     ;; melpa
     (add-to-list 'package-archives
                  '("melpa" . "https://melpa.org/packages/") t)
-
-    ;; org
-    (add-to-list 'package-archives
-                 '("org" . "http://orgmode.org/elpa/") t)
 
     ;; For important compatibility libraries like cl-lib
     (when (< emacs-major-version 24)
@@ -523,7 +531,6 @@ Some common libraries I'll use in my personal's command or anything else.
   (use-package f :ensure t)
   (use-package s :ensure t)
   (use-package dash :ensure t)
-  (use-package noflet :ensure t)
   (use-package htmlize :ensure t)
   (use-package async :ensure t)
 #+END_SRC
@@ -838,9 +845,8 @@ GitHub: https://github.com/purcell/exec-path-from-shell
 #+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell
     :ensure t
-    :config
-    (when (memq window-system '(mac ns x))
-      (exec-path-from-shell-initialize)))
+    :if (memq window-system '(mac ns x))
+    :init (exec-path-from-shell-initialize))
 #+END_SRC
 
 ** expand-region                                                :keybinding:
@@ -1066,22 +1072,6 @@ GitHub: https://github.com/alezost/mwim.el
     :bind
     (("C-a" . mwim-beginning-of-code-or-line)
      ("C-e" . mwim-end-of-code-or-line)))
-#+END_SRC
-
-** noflet
-
-=noflet= is dynamic, local, advice for Emacs-Lisp code.
-
-=noflet= also has an Emacs indentation function for =flet= like macros.
-
-It's great for test code when you need to mock another function.
-
-This is useful for definining functions that overide a base definition in some way. You get access to the original (before you re-defined it) function through a different name.
-
-GitHub: https://github.com/nicferrier/emacs-noflet
-
-#+BEGIN_SRC emacs-lisp
-  (use-package noflet :ensure t)
 #+END_SRC
 
 ** pangu-spacing
@@ -2490,16 +2480,16 @@ depth.
   (use-package rainbow-delimiters
     :ensure t
     :config
-    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 #+END_SRC
 
-** Save recent file info
+** Save recent file info                                           :recentf:
 
 #+BEGIN_SRC emacs-lisp
   (use-package recentf
-    :ensure t
-    :init
-    (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
+    :straight (:type built-in)
+    :after-call find-file-hook danger
+    :init (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
     :config
     (recentf-mode 1))
 #+END_SRC
@@ -3392,18 +3382,6 @@ GitHub: https://github.com/masayuko/ox-rst
 
 * Programming Languages
 
-** Prolog
-
-#+BEGIN_SRC emacs-lisp
-  (use-package prolog
-    :ensure nil                           ; built-in
-    :mode ("\\.pl\\'")
-    :config
-    ;; Use gnu-prolog
-    (setq prolog-system 'gnu)
-)
-#+END_SRC
-
 ** PlantUML                                                       :plantuml:
 
 GitHub: https://github.com/skuro/plantuml-mode
@@ -3446,11 +3424,14 @@ The language's name is a reference to the slang term "brain fuck", which refers 
 
 ** GN
 
+[[https://chromium.googlesource.com/chromium/src/tools/gn/+/48062805e19b4697c5fbd926dc649c78b6aaa138/README.md][GN]] is a meta-build system that generates [[https://chromium.googlesource.com/chromium/src/tools/gn/+/48062805e19b4697c5fbd926dc649c78b6aaa138/NinjaBuild.md][NinjaBuild]] files. This system is widely used on Google's chromium related framework.
+
+Take a look on [[https://gn.googlesource.com/gn/+/refs/heads/main/docs/reference.md][GN reference]]  or [[https://chromium.googlesource.com/chromium/src/tools/gn/+/48062805e19b4697c5fbd926dc649c78b6aaa138/docs/quick_start.md][GN Quick Start Guide]] for more info.
+
 #+BEGIN_SRC emacs-lisp
   (use-package gn-mode
     :ensure t
-    :mode (("BUILD.gn" . gn-mode)
-           ("\\.gni?\\'" . gn-mode)))
+    :mode ("BUILD.gn" "\\.gni?\\'"))
 #+END_SRC
 
 ** Markdown
@@ -5614,22 +5595,6 @@ GitHub: https://github.com/nschum/window-numbering.el
   (bind-keys :map global-map
              ("C-x C-s" . my/save-buffer-always)
              ("M-g" . avy-goto-char-2))
-#+END_SRC
-
-Window Selection
-
-#+BEGIN_SRC emacs-lisp
-  (bind-keys :map global-map
-             ("M-1" . select-window-1)
-             ("M-2" . select-window-2)
-             ("M-3" . select-window-3)
-             ("M-4" . select-window-4)
-             ("M-5" . select-window-5)
-             ("M-6" . select-window-6)
-             ("M-7" . select-window-7)
-             ("M-8" . select-window-8)
-             ("M-9" . select-window-9)
-             ("M-0" . select-window-0))
 #+END_SRC
 
 ** Normal State
