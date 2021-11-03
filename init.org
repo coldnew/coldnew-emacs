@@ -127,6 +127,15 @@ Here I just disable native-compile auto loads.  There's something wrong with the
     (setq comp-deferred-compilation-deny-list '("\\(?:[^z-a]*-autoloads\\.el$\\)")))
 #+end_src
 
+** Prevent native-compilation warning window popup
+
+native-compilation will asyn report warning or error info, it's so annoying, set it to silent mode so these warning will just logging but not pop up the window.
+
+#+begin_src emacs-lisp :tangle no :noweb-ref early-init
+    (with-eval-after-load 'comp
+      (setq native-comp-async-report-warnings-errors 'silent))
+#+end_src
+
 ** Defer garbage collection further back in the startup process
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref early-init
