@@ -3735,9 +3735,10 @@ Semantic Refactor is a C/C++ refactoring tool based on Semantic parser framework
 
 GitHub: https://github.com/tuhdo/semantic-refactor
 
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
+#+BEGIN_SRC emacs-lisp
   (use-package srefactor
-    :ensure t)
+    :ensure t
+    :after (cc-mode))
 #+END_SRC
 
 ** Quick switch between header and source file in C/C++
@@ -3748,8 +3749,10 @@ to =ff-find-other-file=.
 
 GitHub: https://github.com/fourier/cff
 
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
-  (use-package cff :ensure t)
+#+BEGIN_SRC emacs-lisp
+  (use-package cff
+    :ensure t
+    :after (cc-mode))
 #+END_SRC
 
 ** Extra Syntax Highlight
@@ -3760,7 +3763,7 @@ Some syntax highlight may not support in default emacs, set it here.
 
 Extra hightlight for =stdint.h=
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
   (dolist (m '(c-mode c++-mode))
     (font-lock-add-keywords
      m
@@ -3774,7 +3777,8 @@ Extra hightlight for =stdint.h=
   ;; https://github.com/ludwigpacifici/modern-cpp-font-lock
   (use-package modern-cpp-font-lock
     :ensure t
-    :hook (c++-mode . modern-c++-font-lock-mode))
+    :hook (c++-mode . modern-c++-font-lock-mode)
+    :after (cc-mode))
 #+END_SRC
 
 ** Coding Styles
