@@ -30,9 +30,11 @@ do_configure_osx () {
                 --with-gnutls \
                 --with-rsvg \
                 --with-imagemagick \
+		--with-pgtk \
                 --without-dbus --without-x --without-makeinfo
 }
 
+# FIXME: --with-xwidgets will make --with-pgtk build failed
 do_configure_linux () {
     ./configure --prefix=${INSDIR} --with-modules --with-libgmp \
                 --without-ns --disable-ns-self-contained \
@@ -40,7 +42,9 @@ do_configure_linux () {
                 --with-rsvg \
                 --with-imagemagick \
 		--with-cairo \
-                --with-dbus --with-x --with-x-toolkit=gtk3 --with-xwidgets \
+		--with-pgtk \
+		--with-xinput2 \
+                --with-dbus --with-x --with-x-toolkit=gtk3 \
 		--with-native-compilation 
 }
 
