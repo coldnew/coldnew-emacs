@@ -34,7 +34,6 @@ do_configure_osx () {
                 --without-dbus --without-x --without-makeinfo
 }
 
-# FIXME: --with-xwidgets will make --with-pgtk build failed
 do_configure_linux () {
     ./configure --prefix=${INSDIR} --with-modules --with-libgmp \
                 --without-ns --disable-ns-self-contained \
@@ -44,6 +43,7 @@ do_configure_linux () {
 		--with-cairo \
 		--with-pgtk \
 		--with-xinput2 \
+		--with-xwidgets \
                 --with-dbus --with-x --with-x-toolkit=gtk3 \
 		--with-native-compilation 
 }
