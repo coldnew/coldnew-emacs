@@ -3208,9 +3208,10 @@ see: http://emacs.stackexchange.com/questions/450/intelligent-spell-checking-in-
 
 ** Crypt contents in org-mode
 
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
+#+BEGIN_SRC emacs-lisp
   (use-package org-crypt
     :ensure nil
+    :after (org)
     :config
     ;; Disable `auto-save-mode' for org-mode buffer prior to decrypting an entry.
     (setq org-crypt-disable-auto-save t)
