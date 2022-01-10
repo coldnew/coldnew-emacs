@@ -1351,41 +1351,6 @@ not modified.
      (if selective-display nil 1)))
 #+END_SRC
 
-*** Narrowing to code more wisely
-
-ref: http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
-
-#+BEGIN_SRC emacs-lisp
-  (defun my/narrow-or-widen-dwim (p)
-    "Widen if buffer is narrowed, narrow-dwim otherwise.
-  Dwim means: region, org-src-block, org-subtree, or defun,
-  whichever applies first. Narrowing to org-src-block actually
-  calls `org-edit-src-code'.
-
-  With prefix P, don't widen, just narrow even if buffer is
-  already narrowed."
-    (interactive "P")
-    (declare (interactive-only))
-    (cond ((and (buffer-narrowed-p) (not p)) (widen))
-          ((region-active-p)
-           (narrow-to-region (region-beginning) (region-end)))
-          ;; org-mode
-          ((and (boundp 'org-src-mode) org-src-mode (not p))
-           (org-edit-src-exit))
-          ((derived-mode-p 'org-mode)
-           ;; `org-edit-src-code' is not a real narrowing
-           ;; command. Remove this first conditional if you
-           ;; don't want it.
-           (cond ((ignore-errors (org-edit-src-code))
-                  (delete-other-windows))
-                 ((ignore-errors (org-narrow-to-block) t))
-                 (t (org-narrow-to-subtree))))
-          ;; latex-mode
-          ((derived-mode-p 'latex-mode)
-           (LaTeX-narrow-to-environment))
-          (t (narrow-to-defun))))
-#+END_SRC
-
 *** Convert file format between DOS and UNIX
 
 Some of my partner's file are in DOS format, so I need command to convert buffer between dos format and unix format.
@@ -3307,13 +3272,6 @@ GitHub: https://github.com/masayuko/ox-rst
              ("C-c C-c" . org-edit-src-exit))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref org-config
-  (bind-keys :map org-mode-map
-             :prefix-map my-org-mode-map
-             :prefix "M-m"
-             ("n" . my/narrow-or-widen-dwim))
-#+END_SRC
-
 * Programming Languages
 
 ** PlantUML                                                       :plantuml:
@@ -4243,7 +4201,7 @@ Some interactive commands for clojure-mode.
              ("C-c C-f" . projectile-find-file)
              ("C-c M-c" . cider-connect)
              ("C-c M-j" . cider-jack-in)
-             ("C-c '"   . my/narrow-or-widen-dwim)
+             ;;("C-c '"   . my/narrow-or-widen-dwim)
              ("C-c h"   . clojure-cheatsheet)
              ("C-c C-k" . cider-load-buffer)
              ("C-x C-e" . cider-eval-last-sexp)
@@ -5192,7 +5150,8 @@ Show lambda as λ.
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref common-lisp-config
   (bind-keys :map lisp-mode-map
-             ("C-c '" . my/narrow-or-widen-dwim))
+  ;;               ("C-c '" . my/narrow-or-widen-dwim)
+             )
 #+END_SRC
 
 
