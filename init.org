@@ -499,7 +499,8 @@ The =:ensure-system-package= keyword allows you to ensure system binaries exist 
 
 #+BEGIN_SRC emacs-lisp
   (use-package use-package-ensure-system-package
-    :ensure t)
+    :ensure t
+    :define (use-package-ensure-system-package-exists?))
 #+END_SRC
 
 ** Install straight
