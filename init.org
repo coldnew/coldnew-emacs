@@ -4683,7 +4683,7 @@ GitHub: https://github.com/sebastiencs/company-box
 ** Setup yasnippet prompt method
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref yasnippet-config
-  (setq yas/prompt-functions '(yas-dropdown-prompt
+  (setq yas-prompt-functions '(yas-dropdown-prompt
                                yas-completing-prompt
                                yas-ido-prompt))
 #+END_SRC
