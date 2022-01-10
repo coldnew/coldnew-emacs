@@ -913,7 +913,7 @@ GitHub: https://github.com/camdez/goto-last-change.el
     :ensure t)
 #+END_SRC
 
-** howdoi
+** howdoi                                                          :command:
 
 [[https://github.com/atykhonov/emacs-howdoi][howdoi]] is a way to query Stack Overflow directly from the Emacs and get back the
 most upvoted answer to the first question that comes up for that query.
@@ -921,7 +921,9 @@ most upvoted answer to the first question that comes up for that query.
 GitHub: https://github.com/atykhonov/emacs-howdoi
 
 #+BEGIN_SRC emacs-lisp
-  (use-package howdoi :ensure t)
+  (use-package howdoi
+    :defer 2
+    :command (howdoi-query howdoi-query-line-at-point))
 #+END_SRC
 
 ** hungry-delete
