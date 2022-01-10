@@ -626,8 +626,8 @@ Major mode for editing IDL source files.
   ;; change srecode cache file path
   (eval-after-load 'srecode
     '(progn
-       (setq srecode-map-save-file
-             (concat user-cache-directory "srecode-map.el"))))
+       (setq-default srecode-map-save-file
+                     (concat user-cache-directory "srecode-map.el"))))
 #+END_SRC
 
 ** request
