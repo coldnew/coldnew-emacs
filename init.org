@@ -348,7 +348,8 @@ Only start server mode if I'm not root
 #+BEGIN_SRC emacs-lisp
   (unless (string-equal "root" (getenv "USER"))
     (require 'server)
-    (unless (server-running-p) (server-start)))
+    (when (fboundp 'server-running-p)
+      (unless (server-running-p) (server-start))))
 #+END_SRC
 
 ** Setup backup files
