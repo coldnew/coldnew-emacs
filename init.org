@@ -616,7 +616,7 @@ Major mode for editing IDL source files.
 #+BEGIN_SRC emacs-lisp
   (eval-after-load 'idlwave
     '(progn
-       (setq idlwave-config-directory
+       (setq-default idlwave-config-directory
              (concat user-cache-directory "idlwave"))))
 #+END_SRC
 
