@@ -1086,13 +1086,14 @@ GitHub: https://github.com/coldnew/pangu-spacing
 #+BEGIN_SRC emacs-lisp
   (use-package pangu-spacing
     :ensure t
+    :command (global-pangu-spacing-mode)
     :config
     ;; start pangu-spacing globally
     (global-pangu-spacing-mode 1)
     ;; Always insert `real' space in org-mode.
     (add-hook 'org-mode-hook
-              '(lambda ()
-                 (set (make-local-variable 'pangu-spacing-real-insert-separtor) t))))
+              (lambda ()
+                (set (make-local-variable 'pangu-spacing-real-insert-separtor) t))))
 #+END_SRC
 
 ** password-generator
