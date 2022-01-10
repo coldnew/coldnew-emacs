@@ -4090,19 +4090,6 @@ GitHub: https://github.com/syohex/emacs-git-gutter-fringe
     (git-gutter-mode))
 #+END_SRC
 
-* TODO abbrev
-
-#+BEGIN_SRC emacs-lisp
-  (use-package abbrev
-    :defer 1
-    :ensure nil
-    :custom
-    (abbrev-file-name (concat user-cache-directory "abbrev_defs"))
-    (abbrev-mode 1)
-    :config
-    (when (file-exists-p abbrev-file-name) (quietly-read-abbrev-file)))
-#+END_SRC
-
 * IDE Features
 
 emacs has some IDE feature, add here.
