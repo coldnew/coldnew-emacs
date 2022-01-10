@@ -644,8 +644,8 @@ Major mode for editing IDL source files.
 #+BEGIN_SRC emacs-lisp
   (eval-after-load 'nsm
     '(progn
-       (setq nsm-settings-file
-             (concat user-cache-directory "network-security.data"))))
+       (setq-default nsm-settings-file
+                     (concat user-cache-directory "network-security.data"))))
 #+END_SRC
 
 ** url
