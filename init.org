@@ -635,8 +635,8 @@ Major mode for editing IDL source files.
 #+BEGIN_SRC emacs-lisp
   (eval-after-load 'request
     '(progn
-       (setq request-storage-directory
-             (concat user-cache-directory "request"))))
+       (setq-default request-storage-directory
+                     (concat user-cache-directory "request"))))
 #+END_SRC
 
 ** nsm
