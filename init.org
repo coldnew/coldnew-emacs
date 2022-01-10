@@ -1125,22 +1125,6 @@ GitHub: https://github.com/pashky/restclient.el
     :ensure t)
 #+END_SRC
 
-** reveal-in-osx-finder
-
-- If =M-x reveal-in-osx-finder= is invoked in a file-associated buffer, it will open the folder enclosing the file in the OS X Finder. It will also highlight the file the buffer is associated with within the folder.
-
-- If =M-x reveal-in-osx-finder= is invoked in a dired buffer, it will open the current folder in the OS X Finder. It will also highlight the file at point if available.
-
-- If =M-x reveal-in-osx-finder= is invoked in a buffer not associated with a file, it will open the folder defined in the default-directory variable.
-
-GitHub: https://github.com/kaz-yos/reveal-in-osx-finder
-
-#+BEGIN_SRC emacs-lisp
-  (use-package reveal-in-osx-finder
-    :ensure t
-    :when (eq system-type 'darwin))
-#+END_SRC
-
 ** smartparens
 
 Smartparens is a minor mode for dealing with pairs in Emacs.
