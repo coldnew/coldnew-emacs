@@ -4698,7 +4698,7 @@ You can use =yas-new-snippet= to create your new snippet file.
   (let ((my-snippet-dir (concat user-emacs-directory "snippets")))
     (if (and (file-exists-p my-snippet-dir)
 	     (not (member my-snippet-dir yas/snippet-dirs)))
-	(add-to-list 'yas/snippet-dirs my-snippet-dir)))
+	(add-to-list 'yas-snippet-dirs my-snippet-dir)))
 #+END_SRC
 
 ** Prevent yasnippet conflict with term-mode
