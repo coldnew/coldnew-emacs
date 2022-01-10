@@ -590,15 +590,15 @@ Most of them are the cache file, I'll move them to =~/.emacs.d/.cache= directory
 Move eshell cache dir to =~/.emacs.d/.cache/eshell=
 
 #+BEGIN_SRC emacs-lisp
-  (eval-after-load 'eshell
-      '(progn
-         (setq eshell-directory-name
-               (concat user-cache-directory "eshell"))))
+  (eval-when-compile (defvar eshell-directory-name)) ; defined in esh-mode.el
 
-  (eval-after-load 'em-hist
-    '(progn
-       (setq eshell-history-file-name
-             (expand-file-name "history" eshell-directory-name))))
+  (with-eval-after-load 'esh-mode
+    (setq-default eshell-directory-name
+                  (concat user-cache-directory "eshell")))
+
+  (with-eval-after-load 'em-hist
+    (setq-default eshell-history-file-name
+                  (expand-file-name "history" eshell-directory-name)))
 #+END_SRC
 
 ** bookmark
