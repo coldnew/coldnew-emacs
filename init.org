@@ -3239,26 +3239,6 @@ GitHub: https://github.com/abo-abo/org-download
     (add-hook 'dired-mode-hook 'org-download-enable))
 #+END_SRC
 
-** Integrate with redmine
-
-GitHub: https://github.com/gongo/org-redmine
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
-  (use-package org-redmine
-    :ensure t
-    :config
-    ;; NOTE: in personal private setting
-    (setq org-redmine-uri nil)
-    (setq org-redmine-auth-api-key nil)
-    (setq org-redmine-auth-password nil)
-                                          ;
-    ;; Advice org-remine function so it will load my private config
-    (defadvice org-redmine-get-issue (before load-password activate)
-      (my/load-secret))
-    (defadvice org-redmine-anything-show-issue-all (before load-password activate)
-      (my/load-secret)))
-#+END_SRC
-
 ** Latex exporter
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
