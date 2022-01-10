@@ -1162,27 +1162,6 @@ GitHub: https://github.com/kuanyui/tldr.el
     (setq tldr-saved-zip-path (concat user-cache-directory "tldr-source.zip")))
 #+END_SRC
 
-** undo-tree
-
-Standard Emacs undo is kind of confusing. [[http://www.dr-qubit.org/emacs.php#undo-tree][undo-tree]] replaces this with a simpler tree structure. It also allows us to visualize the tree directly.
-
-GitHub: https://github.com/emacsmirror/undo-tree
-
-#+BEGIN_SRC emacs-lisp
-  (use-package undo-tree
-    :ensure t
-    :commands (global-undo-tree-mode)
-    :config
-    ;; Persistent undo-tree history across emacs sessions
-    (let ((dir
-           (file-name-as-directory (concat user-cache-directory "undo-tree"))))
-      (setq undo-tree-history-directory-alist `(("." . ,dir))))
-    ;; Make undo-tree save history
-    (setq undo-tree-auto-save-history t)
-    ;; global enable undo-tree
-    (global-undo-tree-mode))
-#+END_SRC
-
 ** url-shortener
 
 This package can convert long url to tiny url and expand tiny url to long url ,support:
@@ -2630,6 +2609,27 @@ https://www.reddit.com/r/emacs/comments/8sw3r0/finally_scrolling_over_large_imag
 #+BEGIN_SRC emacs-lisp
   (setq mouse-wheel-scroll-amount '(1)) ; Distance in pixel-resolution to scroll each mouse wheel event.
   (setq mouse-wheel-progressive-speed nil) ; Progressive speed is too fast for me.
+#+END_SRC
+
+** Undo with undo-tree                                                :undo:
+
+Standard Emacs undo is kind of confusing. [[http://www.dr-qubit.org/emacs.php#undo-tree][undo-tree]] replaces this with a simpler tree structure. It also allows us to visualize the tree directly.
+
+GitHub: https://github.com/emacsmirror/undo-tree
+
+#+BEGIN_SRC emacs-lisp
+  (use-package undo-tree
+    :ensure t
+    :commands (global-undo-tree-mode)
+    :config
+    ;; Persistent undo-tree history across emacs sessions
+    (let ((dir
+           (file-name-as-directory (concat user-cache-directory "undo-tree"))))
+      (setq undo-tree-history-directory-alist `(("." . ,dir))))
+    ;; Make undo-tree save history
+    (setq undo-tree-auto-save-history t)
+    ;; global enable undo-tree
+    (global-undo-tree-mode))
 #+END_SRC
 
 ** Use god-mode for entering commands withoud modifier keys     :keybinding:
