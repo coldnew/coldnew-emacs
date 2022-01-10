@@ -741,16 +741,6 @@ GitHub: https://github.com/ilya-babanov/emacs-bpr
   (use-package bpr :ensure t)
 #+END_SRC
 
-** cbm
-
-Cycle by major - Cycle through buffers with the same major-mode.
-
-GitHub: https://github.com/akermu/cbm.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package cbm :ensure t)
-#+END_SRC
-
 ** discover-my-major                                               :command:
 
 [[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
