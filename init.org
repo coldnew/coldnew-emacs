@@ -314,8 +314,8 @@ I also disable some keys like =⌘-h= bypass to system in emacs-mac port.
 
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'darwin)
-    (setq mac-option-modifier 'super)
-    (setq mac-command-modifier 'meta))
+    (setq-default mac-option-modifier 'super)
+    (setq-default mac-command-modifier 'meta))
 #+END_SRC
 
 ** Save custom-file as cache
