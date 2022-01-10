@@ -124,7 +124,7 @@ Here I just disable native-compile auto loads.  There's something wrong with the
 
 #+begin_src emacs-lisp :tangle no :noweb-ref early-init
   (with-eval-after-load 'comp
-    (setq comp-deferred-compilation-deny-list '("\\(?:[^z-a]*-autoloads\\.el$\\)")))
+    (setq-default comp-deferred-compilation-deny-list '("\\(?:[^z-a]*-autoloads\\.el$\\)")))
 #+end_src
 
 ** Prevent native-compilation warning window popup
