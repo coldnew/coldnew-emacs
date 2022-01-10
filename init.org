@@ -751,7 +751,7 @@ GitHub: https://github.com/akermu/cbm.el
   (use-package cbm :ensure t)
 #+END_SRC
 
-** discover-my-major
+** discover-my-major                                               :command:
 
 [[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
 current Emacs major mode.
@@ -759,7 +759,9 @@ current Emacs major mode.
 GitHub: https://github.com/steckerhalter/discover-my-major
 
 #+BEGIN_SRC emacs-lisp
-  (use-package discover-my-major :ensure t)
+  (use-package discover-my-major
+    :defer 2	      ; Install pkg if not exist after 2 sec idle time
+    :commands (discover-my-major))
 #+END_SRC
 
 ** doxymacs
