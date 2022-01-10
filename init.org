@@ -1508,7 +1508,7 @@ For more info, please see: [[https://lists.gnu.org/archive/html/emacs-orgmode/20
     (interactive)
     (move-end-of-line nil)
     (open-line 1)
-    (next-line 1))
+    (forward-line 1))
 #+END_SRC
 
 *** Insert lorem ipsum
