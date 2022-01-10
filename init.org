@@ -605,8 +605,8 @@ Move eshell cache dir to =~/.emacs.d/.cache/eshell=
 #+BEGIN_SRC emacs-lisp
   (eval-after-load 'bookmark
     '(progn
-       (setq bookmark-default-file
-             (concat user-cache-directory "bookmarks"))))
+       (setq-default bookmark-default-file
+                     (concat user-cache-directory "bookmarks"))))
 #+END_SRC
 
 ** idlwave
