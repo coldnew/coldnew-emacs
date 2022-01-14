@@ -722,27 +722,6 @@ GitHub: https://github.com/abo-abo/avy
   (use-package avy :ensure t)
 #+END_SRC
 
-** bpr
-
-This package provides logic for async process execution.
-
-It's similar to =async-shell-command=, but:
-
-- =bpr= spawns processes asynchronously without displaying output buffers.
-- =bpr= shows progress messages for running processes in echo area.
-- =bpr= can display buffer with process output in case of errors.
-- =bpr= can use projectile for assigning process directory.
-- =bpr= can format process output (understands ansi escape codes).
-- it's possible to set different options for different processes.
-
-=bpr= is very handy for running tests/builds, but you can run any processes with it.
-
-GitHub: https://github.com/ilya-babanov/emacs-bpr
-
-#+BEGIN_SRC emacs-lisp
-  (use-package bpr :ensure t)
-#+END_SRC
-
 ** discover-my-major                                               :command:
 
 [[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
