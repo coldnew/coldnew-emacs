@@ -1073,16 +1073,6 @@ GitHub: https://github.com/Fuco1/smartparens
     :config
     (smartparens-mode 1))
 #+END_SRC
-** string-inflection
-
-underscore -> UPCASE -> CamelCase conversion of names.
-
-GitHub: https://github.com/akicho8/string-inflection
-
-#+BEGIN_SRC emacs-lisp
-  (use-package string-inflection :ensure t)
-#+END_SRC
-
 ** sx
 
 [[https://github.com/vermiculus/sx.el/][SX]] is a full featured Stack Exchange mode for GNU Emacs 24+. Using the official
