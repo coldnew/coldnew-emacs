@@ -1133,7 +1133,9 @@ After executed command, you can use =verify-url/next-invalid-url= to goto next i
 GitHub: https://github.com/lujun9972/verify-url
 
 #+BEGIN_SRC emacs-lisp
-  (use-package verify-url :ensure t)
+  (use-package verify-url
+    :defer 2
+    :command (verify-url))
 #+END_SRC
 
 ** visual-regexp
