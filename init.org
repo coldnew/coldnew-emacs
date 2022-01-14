@@ -1083,7 +1083,7 @@ Emacs itself.
   (use-package sx :ensure t)
 #+END_SRC
 
-** tldr
+** tldr                                                           :command:
 
 tldr is a collection of simplified and community-driven man pages.
 
@@ -1091,7 +1091,8 @@ GitHub: https://github.com/kuanyui/tldr.el
 
 #+BEGIN_SRC emacs-lisp
   (use-package tldr
-    :ensure t
+    :defer 2
+    :command (tldr)
     :config
     (setq tldr-directory-path (concat user-cache-directory "tldr/"))
     (setq tldr-saved-zip-path (concat user-cache-directory "tldr-source.zip")))
