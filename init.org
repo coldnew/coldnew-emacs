@@ -2831,23 +2831,6 @@ GitHub: https://github.com/syohex/emacs-helm-gtags
     (add-hook 'c++-mode-hook #'helm-gtags-mode))
 #+END_SRC
 
-** helm-projectile
-
-GitHub: https://github.com/bbatsov/helm-projectile
-
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-projectile
-    :ensure t
-    :after (helm projectile)
-    :config
-    ;; make projectile use helm as completion system
-    (setq projectile-completion-system 'helm)
-    ;; start helm-projectile
-    (helm-projectile-on)
-    ;; helm-projectile-find-file is really slow, use cache here
-    (setq projectile-enable-caching t))
-#+END_SRC
-
 ** helm-swoop
 
 List match lines to another buffer, which is able to squeeze by any words you input. At the same time, the original buffer's cursor is jumping line to line according to moving up and down the line list.
@@ -4094,45 +4077,6 @@ GitHub: https://github.com/syohex/emacs-git-gutter-fringe
 
 emacs has some IDE feature, add here.
 
-** projectile
-
-=Projectile= is a project interaction library for Emacs. Its goal is to
-provide a nice set of features operating on a project level without
-introducing external dependencies(when feasible). For instance -
-finding project files has a portable implementation written in pure
-Emacs Lisp without the use of GNU find (but for performance sake an
-indexing mechanism backed by external commands exists as well).
-
-GitHub: https://github.com/bbatsov/projectile
-
-#+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :ensure t
-    :config
-    ;; FIX hange issue with tramp
-    ;; see: https://github.com/bbatsov/prelude/issues/594
-    ;; (projectile-global-mode)
-    (add-hook 'text-mode-hook 'projectile-mode)
-    (add-hook 'prog-mode-hook 'projectile-mode)
-    ;; save projectile-known-projects-file in cache folder
-    (setq projectile-known-projects-file
-          (concat user-cache-directory "projectile-bookmarks.eld"))
-    (setq projectile-cache-file
-          (concat user-cache-directory "projectile.cache"))
-    ;; Enable projectile globally
-    (projectile-global-mode))
-#+END_SRC
-
-*** Setup Keybindings                                         :keinbinding:
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-keybindings
-  (evil-define-key 'insert my-editor-map
-    (kbd "M-p f") 'projectile-find-file
-    (kbd "M-p a") 'projectile-ag
-    (kbd "M-p g") 'projectile-grep
-    (kbd "M-p s") 'projectile-run-eshell)
-#+END_SRC
-
 ** semantic
 
 #+BEGIN_SRC emacs-lisp
@@ -4773,9 +4717,6 @@ For more info to control lispy, please refer: http://oremacs.com/lispy/
       (define-key lispy-mode-map (kbd "C-M-f") 'my/down-list)
       (define-key lispy-mode-map (kbd "C-M-b") 'my/up-list))
 
-    ;; Use projectile to find file
-    (setq lispy-visit-method 'projectile)
-
     (add-hook 'emacs-lisp-mode-hook #'my/lispy-mode)
     (add-hook 'lisp-interaction-mode-hook #'my/lispy-mode)
     (add-hook 'clojure-mode-hook #'my/lispy-mode)
@@ -5290,7 +5231,6 @@ For =space= state, I use evil-leader to achive this goal.
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref evil-ex-commands
   (evil-ex-define-cmd "ag" 'helm-ag)
-  (evil-ex-define-cmd "agp[roject]" 'helm-projectile-ag)
   (evil-ex-define-cmd "agi[nteractive]" 'helm-do-ag)
   (evil-ex-define-cmd "google" 'helm-google)
   (evil-ex-define-cmd "google-suggest" 'helm-google-suggest)
