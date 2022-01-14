@@ -4630,7 +4630,7 @@ GitHub: https://github.com/trotzig/import-js
    (setq graphql-url "http://localhost:7000/graphql"))
 #+END_SRC
 
-* LISP Development                                                     :lisp:
+* TODO LISP Development                                                :lisp:
 
 Though =LISP= has many dialet, it still is the best programming
 language I ever met.
@@ -4714,67 +4714,6 @@ Show lambda as λ.
 
 #+BEGIN_SRC emacs-lisp
   (global-prettify-symbols-mode 1)
-#+END_SRC
-
-** Scheme
-
-#+BEGIN_SRC emacs-lisp :noweb no-export
-  (use-package scheme
-    :mode ("\\.scm\\'" . scheme-mode)
-    :config
-    <<scheme-config>>)
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (use-package racket-mode
-    :ensure t
-    :mode "\\.rkt[dl]?\\'")
-#+END_SRC
-
-*** Use geiser to interaction wich scheme
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref scheme-config
-  (use-package geiser
-    :ensure t
-    :init
-    ;; On opening a scheme file, Geiser will try to guess its Scheme,
-    ;; defaulting to the first in the list. Use `C-c C-s' to select the
-    ;; implementation by hand (on a per file basis).
-    (setq geiser-active-implementations '(guile chicken)))
-#+END_SRC
-
-*** Setup Scheme Keybinding                                    :keybinding:
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref scheme-config
-  (bind-keys :map scheme-mode-map
-;;             ("C-c '" . my/narrow-or-widen-dwim)
-)
-#+END_SRC
-
-** Common Lisp
-
-#+BEGIN_SRC emacs-lisp :noweb no-export
-  (use-package lisp-mode
-    :ensure nil                           ; built-in
-    :mode "\\.lisp\\'"
-    :config
-    <<common-lisp-config>>)
-#+END_SRC
-
-*** Setup Common Lisp Keybinding                               :keybinding:
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref common-lisp-config
-  (bind-keys :map lisp-mode-map
-  ;;               ("C-c '" . my/narrow-or-widen-dwim)
-             )
-#+END_SRC
-
-
-** newlisp
-
-#+BEGIN_SRC emacs-lisp
-  (use-package newlisp-mode
-    :ensure t)
 #+END_SRC
 
 * Web Development                                                       :web:
