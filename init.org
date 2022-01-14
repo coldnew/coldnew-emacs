@@ -424,6 +424,12 @@ Some of my password stored in a secret file with gnupg encrypt, I add this funct
       (when (file-exists-p secret) (load-file secret))))
 #+END_SRC
 
+** Maximized window after emacs start
+
+#+BEGIN_SRC emacs-lisp
+  (modify-all-frames-parameters '((fullscreen . maximized)))
+#+END_SRC
+
 * Package Management
 
 The main package manager I use is emacs's =package.el=, it's really nice and easy to use.
@@ -3942,14 +3948,6 @@ However, I use my fork of [[https://github.com/coldnew/hexo.el][hexo.el]] since 
       (interactive)
       (hexo "~/Workspace/draft/"))
     )
-#+END_SRC
-
-* Window Management                                                  :window:
-
-** Maximized window after emacs start
-
-#+BEGIN_SRC emacs-lisp
-  (modify-all-frames-parameters '((fullscreen . maximized)))
 #+END_SRC
 
 * File Management                                              :dired:
