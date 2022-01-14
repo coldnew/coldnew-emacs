@@ -869,7 +869,7 @@ GitHub: https://github.com/atykhonov/emacs-howdoi
 #+BEGIN_SRC emacs-lisp
   (use-package howdoi
     :defer 2
-    :command (howdoi-query howdoi-query-line-at-point))
+    :commands (howdoi-query howdoi-query-line-at-point))
 #+END_SRC
 
 ** hungry-delete
@@ -1031,7 +1031,7 @@ GitHub: https://github.com/coldnew/pangu-spacing
 #+BEGIN_SRC emacs-lisp
   (use-package pangu-spacing
     :ensure t
-    :command (global-pangu-spacing-mode)
+    :commands (global-pangu-spacing-mode)
     :config
     ;; start pangu-spacing globally
     (global-pangu-spacing-mode 1)
@@ -1069,7 +1069,7 @@ GitHub: https://github.com/Fuco1/smartparens
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens
     :ensure t
-    :command (smartparens-mode)
+    :commands (smartparens-mode)
     :config
     (smartparens-mode 1))
 #+END_SRC
@@ -1092,7 +1092,7 @@ GitHub: https://github.com/kuanyui/tldr.el
 #+BEGIN_SRC emacs-lisp
   (use-package tldr
     :defer 2
-    :command (tldr)
+    :commands (tldr)
     :config
     (setq tldr-directory-path (concat user-cache-directory "tldr/"))
     (setq tldr-saved-zip-path (concat user-cache-directory "tldr-source.zip")))
@@ -1126,7 +1126,7 @@ GitHub: https://github.com/lujun9972/verify-url
 #+BEGIN_SRC emacs-lisp
   (use-package verify-url
     :defer 2
-    :command (verify-url))
+    :commands (verify-url))
 #+END_SRC
 
 ** visual-regexp
@@ -5052,6 +5052,7 @@ GitHub: https://github.com/coldnew/eshell-autojump
 
 #+BEGIN_SRC emacs-lisp
   (use-package winner                     ; builtin
+    :commands (winner-undo winner-redo)
     :config
     ;; I use my own keymap for winner-mode
     (setq winner-dont-bind-my-keys t)
