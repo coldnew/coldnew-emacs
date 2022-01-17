@@ -4351,13 +4351,6 @@ GitHub: https://github.com/trotzig/import-js
     )
 #+END_SRC
 
-** php
-
-#+BEGIN_SRC emacs-lisp
-  (use-package php-mode :ensure t
-    :mode "\\.php\\'")
-#+END_SRC
-
 ** python
 
 #+BEGIN_SRC emacs-lisp
