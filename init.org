@@ -4138,13 +4138,6 @@ For c-mode, just do the same but change the relative
 
 * Programming Languages
 
-** arduino
-
-#+BEGIN_SRC emacs-lisp
-    (use-package arduino-mode :ensure t
-      :mode ("\\.pde\\'" "\\.ino\\'"))
-#+END_SRC
-
 ** bash
 
 #+BEGIN_SRC emacs-lisp
