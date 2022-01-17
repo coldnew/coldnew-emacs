@@ -889,98 +889,6 @@ to delete all whitespace in the direction you are deleting.
     :config
     (global-hungry-delete-mode))
 #+END_SRC
-** hydra                                                        :keybinding:
-
-This is a package for GNU Emacs that can be used to tie related commands into a family of short bindings with a common prefix - a Hydra.
-
-GitHub: https://github.com/abo-abo/hydra
-
-#+BEGIN_SRC emacs-lisp  :noweb no-export
-  (use-package hydra
-    :ensure t
-    :config
-    <<hydra-config>>)
-#+END_SRC
-
-*** Window Management
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref hydra-config
-  (defhydra hydra-window ()
-     "
-  Movement^^        ^Split^         ^Switch^      ^Resize^
-  ----------------------------------------------------------------
-  _h_ ←         _v_ertical      _b_uffer        _q_ X←
-  _j_ ↓         _x_ horizontal  _f_ind files    _w_ X↓
-  _k_ ↑         _z_ undo        _a_ce 1     _e_ X↑
-  _l_ →         _Z_ reset       _s_wap      _r_ X→
-  _F_ollow        _D_lt Other     _S_ave      max_i_mize
-  _SPC_ cancel    _o_nly this     _d_elete
-  "
-     ("h" windmove-left )
-     ("j" windmove-down )
-     ("k" windmove-up )
-     ("l" windmove-right )
-     ("q" hydra-move-splitter-left)
-     ("w" hydra-move-splitter-down)
-     ("e" hydra-move-splitter-up)
-     ("r" hydra-move-splitter-right)
-     ("b" helm-mini)
-     ("f" helm-find-files)
-     ("F" follow-mode)
-     ("a" (lambda ()
-            (interactive)
-            (ace-window 1)
-            (add-hook 'ace-window-end-once-hook
-                      'hydra-window/body)))
-     ("v" (lambda ()
-            (interactive)
-            (split-window-right)
-            (windmove-right)))
-     ("x" (lambda ()
-            (interactive)
-            (split-window-below)
-            (windmove-down)))
-     ("s" (lambda ()
-            (interactive)
-            (ace-window 4)
-            (add-hook 'ace-window-end-once-hook
-                      'hydra-window/body)))
-     ("S" save-buffer)
-     ("d" delete-window)
-     ("D" (lambda ()
-            (interactive)
-            (ace-window 16)
-            (add-hook 'ace-window-end-once-hook
-                      'hydra-window/body)))
-     ("o" delete-other-windows)
-     ("i" ace-maximize-window)
-     ("z" (progn
-            (winner-undo)
-            (setq this-command 'winner-undo)))
-     ("Z" winner-redo)
-     ("SPC" nil))
-
-;;(global-set-key (kbd "C-x w") 'hydra-window/body)
-#+END_SRC
-
-*** Buffer Movement
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref hydra-config
-  (defhydra hydra-movement ()
-    "
-       ^Forward^          ^Backward^      ^Up^     ^Down^   ^Char^
-      ^^^^^^^^---------------------------------------------------
-                         _c_: char
-      ^^^^^^^^
-       _n_: scroll down  _p_: scroll up
-      "
-    ("c" avy-goto-char)
-    ;; others
-    ("n" evil-scroll-page-down)
-    ("p" evil-scroll-page-up)
-    )
-#+END_SRC
-
 ** iedit                                                        :keybinding:
 
 [[https://github.com/victorhge/iedit][iedit]] let you edit multiple regions in the same way simultaneously.
@@ -2276,7 +2184,7 @@ In your emacs, put this epa setup:
 
 #+BEGIN_SRC emacs-lisp
   (require 'epa)				; built-in
-  (setq epa-pinentry-mode 'loopback)
+  (setq epg-pinentry-mode 'loopback)
 #+END_SRC
 
 All things done, let's start the =pinentry server=:
