@@ -4336,13 +4336,6 @@ GitHub: https://github.com/trotzig/import-js
     (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
 #+END_SRC
 
-** lua
-
-#+BEGIN_SRC emacs-lisp
-  (use-package lua-mode :ensure t
-    :mode "\\.lua$")
-#+END_SRC
-
 ** po
 
 #+BEGIN_SRC emacs-lisp
@@ -4433,13 +4426,6 @@ GitHub: https://github.com/trotzig/import-js
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref go-mode-config
   (bind-keys :map go-mode-map
              ("M-." . godef-jump))
-#+END_SRC
-
-** lua
-
-#+BEGIN_SRC emacs-lisp
-  (use-package lua-mode :ensure t
-    :mode "\\.lua$")
 #+END_SRC
 
 ** Haskell
