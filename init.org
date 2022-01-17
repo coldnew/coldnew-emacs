@@ -4954,7 +4954,7 @@ GitHub: https://github.com/coldnew/eshell-autojump
 
 #+BEGIN_SRC emacs-lisp
   (defun eshell/unpack (file)
-    (let ((command (some (lambda (x)
+    (let ((command (cl-some (lambda (x)
                            (if (string-match-p (car x) file)
                                (cadr x)))
                          '((".*\.tar.bz2" "tar xjf")
