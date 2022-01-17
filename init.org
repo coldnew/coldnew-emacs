@@ -4428,23 +4428,6 @@ GitHub: https://github.com/trotzig/import-js
              ("M-." . godef-jump))
 #+END_SRC
 
-** Haskell
-
-#+BEGIN_SRC emacs-lisp :noweb no-export
-  (use-package haskell-mode :ensure t
-    :mode "\\.hs\\'"
-    :config
-    <<haskell-config>>)
-#+END_SRC
-
-*** Setup Haskell Keybinding                                   :keybinding:
-
-#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref haskell-config
-  (bind-keys :map haskell-mode-map
-             ;;("C-c '" . my/narrow-or-widen-dwim)
-)
-#+END_SRC
-
 ** nxml
 
 #+BEGIN_SRC emacs-lisp
