@@ -3892,17 +3892,6 @@ GitHub: https://github.com/purcell/page-break-lines
   (add-hook 'emacs-lisp-mode-hook 'my/remove-elc-on-save)
 #+END_SRC
 
-*** Shows keyboard macros or latest interactive commands as emacs lisp.
-
-GitHub: https://github.com/Silex/elmacro
-
-#+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref emacs-lisp-mode-config
-  (use-package elmacro
-    :ensure t
-    :config
-    (elmacro-mode))
-#+END_SRC
-
 *** Setup Emacs-Lisp Keybindings                               :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref emacs-lisp-mode-config
