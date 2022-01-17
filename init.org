@@ -4863,7 +4863,7 @@ like is it fully integrated with emacs.
   ;; Add color for eshell prompt like Gentoo does
   (defun colorfy-eshell-prompt ()
     (let* ((mpoint)
-           (user-string-regexp (concat "^" user-login-name "@" system-name)))
+           (user-string-regexp (concat "^" user-login-name "@" (system-name))))
       (save-excursion
         (goto-char (point-min))
         (while (re-search-forward (concat user-string-regexp ".*[$#]") (point-max) t)
