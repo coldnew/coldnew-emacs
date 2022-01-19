@@ -779,7 +779,15 @@ Benchmark Emacs Startup time without ever leaving your Emacs.
 GitHub: https://github.com/jschaf/esup
 
 #+BEGIN_SRC emacs-lisp
-  (use-package esup :ensure t)
+  (use-package esup
+    :ensure t
+    :commands (esup)
+    :init
+    ;; Work around a bug where esup tries to step into the byte-compiled
+    ;; version of `cl-lib', and fails horribly.
+    ;; see:
+    ;; https://github.com/jschaf/esup/issues/54#issuecomment-651247749
+    (setq esup-depth 0))
 #+END_SRC
 
 ** exec-path-from-shell
