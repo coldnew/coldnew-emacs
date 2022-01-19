@@ -536,7 +536,15 @@ Project for modernizing Emacs' Package Menu. With improved appearance, mode-line
 GitHub: https://github.com/Malabarba/paradox
 
 #+BEGIN_SRC emacs-lisp
-  (use-package paradox :ensure t)
+  (use-package paradox
+    :ensure t
+    :commands (paradox-enable)
+    :hook (after-init . paradox-enable)
+    :init
+    (setq paradox-execute-asynchronously t
+          paradox-spinner-type 'progress-bar
+          paradox-github-token t
+          paradox-display-star-count nil))
 #+END_SRC
 
 ** Install some common libraries
