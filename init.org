@@ -2985,18 +2985,6 @@ GitHub: https://github.com/abo-abo/org-download
     (add-hook 'dired-mode-hook 'org-download-enable))
 #+END_SRC
 
-** Textile exporter
-
-An Org Mode Exporter Backend For Textile.
-
-GitHub: https://github.com/yashi/org-textile
-
-#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
-  (use-package ox-textile
-    :ensure t
-    :after (org))
-#+END_SRC
-
 ** reStructuredText (RST) exporter
 
 reStructuredText Back-End for Org Export Engine.
