@@ -3375,6 +3375,7 @@ GitHub: https://github.com/tuhdo/semantic-refactor
 #+BEGIN_SRC emacs-lisp
   (use-package srefactor
     :ensure t
+    :defer t
     :after (cc-mode))
 #+END_SRC
 
