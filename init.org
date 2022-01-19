@@ -2985,18 +2985,6 @@ GitHub: https://github.com/abo-abo/org-download
     (add-hook 'dired-mode-hook 'org-download-enable))
 #+END_SRC
 
-** reStructuredText (RST) exporter
-
-reStructuredText Back-End for Org Export Engine.
-
-GitHub: https://github.com/masayuko/ox-rst
-
-#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
-  (use-package ox-rst
-    :ensure t
-    :after (org))
-#+END_SRC
-
 ** Setup Org-mode Keybindings                                   :keybinding:
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref org-config
