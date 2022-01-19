@@ -3776,24 +3776,12 @@ With magit, we can use =M-x magit-toggle-diff-refine-hunk= or make it enable by 
 
 *** Add support for git configuration files
 
-#+BEGIN_SRC emacs-lisp
-  (use-package gitconfig-mode
-    :ensure t
-    :mode (("/\\.?git/?config\\'" . gitconfig-mode)
-           ("/\\.gitmodules\\'" . gitconfig-mode)
-           ("/_gitconfig\\'" . gitconfig-mode))
-    :config
-    (add-hook 'gitconfig-mode-hook 'flyspell-mode))
-#+END_SRC
+git-modes contains gitignore, gitconfig, gitattributes related config files support, we don't need to load it separately.
 
-*** Add support for gitignore files
+GitHub: https://github.com/magit/git-modes
 
 #+BEGIN_SRC emacs-lisp
-  (use-package gitignore-mode
-    :ensure t
-    :mode (("/\\.gitignore\\'" . gitignore-mode)
-           ("/\\.git/info/exclude\\'" . gitignore-mode)
-           ("/git/ignore\\'" . gitignore-mode)))
+  (use-package git-modes :ensure t)
 #+END_SRC
 
 *** Add GitGutter on fringe
