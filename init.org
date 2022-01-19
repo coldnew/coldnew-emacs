@@ -4324,7 +4324,7 @@ Show lambda as λ.
 
 #+BEGIN_SRC emacs-lisp
   (use-package css-mode
-    :ensure nill				; built-in
+    :ensure nil				; built-in
     :mode "\\.css\\'")
 #+END_SRC
 
