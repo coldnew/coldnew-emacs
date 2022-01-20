@@ -112,8 +112,10 @@ Some package like =npm= use the same rule to install in any platform, here list 
 Since Emacs 27, we can add some setup in =~/.emacs.d/early-init.el= , these setup will be loadded before emacs startup.
 
 #+begin_src emacs-lisp :noweb no-export :exports code :padline no :tangle early-init.el
-  ;; early-init.el -*- lexical-binding: t; -*-
+  ;; early-init.el --- -*- lexical-binding: t; -*-
   <<early-init>>
+  (provide 'early-init)
+  ;;; early-init.el ends here
 #+end_src
 
 ** Disable native-compilation for some packages
