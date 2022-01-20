@@ -158,6 +158,13 @@ We plain to handle our package initialization in our configs, we must prevent Em
   (setq package-enable-at-startup nil)
 #+END_SRC
 
+** Allow loading from the package cache
+
+#+BEGIN_SRC emacs-lisp :tangle no :noweb-ref early-init
+  (when (>= emacs-major-version 27)
+    (setq package-quickstart t))
+#+END_SRC
+
 ** Do not resize the frame at this early stage.
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref early-init
