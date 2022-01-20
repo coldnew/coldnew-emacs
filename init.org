@@ -3742,15 +3742,6 @@ However, I use my fork of [[https://github.com/coldnew/hexo.el][hexo.el]] since 
     )
 #+END_SRC
 
-* File Management                                              :dired:
-
-** Setup Keybindings                                           :keybinding:
-
-#+BEGIN_SRC emacs-lisp
-  (bind-keys :map dired-mode-map
-             ("r"   . widred-change-to-wdired-mode))
-#+END_SRC
-
 * Version Control
 
 ** Disable all vc-mode feature
