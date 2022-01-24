@@ -684,16 +684,18 @@ Major mode for editing IDL source files.
 ** startup
 
 #+BEGIN_SRC emacs-lisp
-  (eval-after-load 'startup
-    '(progn
-       (setq auto-save-list-file-prefix
-             (cond ((eq system-type 'ms-dos)
-                    ;; MS-DOS cannot have initial dot, and allows only 8.3 names
-                    (file-name-as-directory
-                     (concat user-cache-directory "auto-save.list/_s")))
-                   (t
-                    (file-name-as-directory
-                     (concat user-cache-directory "auto-save-list/.saves-")))))))
+  ;; NOTE:
+  ;; `auto-save-list-file-prefix' defined in startup.el, but
+  ;; startup.el doesn't have provide pacage name (provide 'startup)
+  ;;
+  (setq-default auto-save-list-file-prefix
+                (cond ((eq system-type 'ms-dos)
+                       ;; MS-DOS cannot have initial dot, and allows only 8.3 names
+                       (file-name-as-directory
+                        (concat user-cache-directory "auto-save.list/_saves-")))
+                      (t
+                       (file-name-as-directory
+                        (concat user-cache-directory "auto-save-list/.saves-")))))
 #+END_SRC
 
 * External Packages                                                :packages:
