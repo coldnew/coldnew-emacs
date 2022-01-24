@@ -304,15 +304,6 @@ If you don't have any local elisp and all packages is maintain by cask or elpa o
                  load-path))))))
 #+END_SRC
 
-** Personal Information                                              :personal:
-
-Some information about myself.
-
-#+BEGIN_SRC emacs-lisp
-  (setq user-full-name "Yen-Chin, Lee")
-  (setq user-mail-address "coldnew.tw@gmail.com")
-#+END_SRC
-
 ** Under Mac OSX use Command key as ALT
 
 Under Mac OSX, I always bind =Caps lock= as Control key, and make the =Command= key as =ALT= key like I done in Linux.
@@ -422,21 +413,28 @@ Just let me use =y= or =n= with no =RET= required an I'm quite happy.
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
-** Method to load secret file                                     :function:
-
-Some of my password stored in a secret file with gnupg encrypt, I add this function here so I can inject some emacs-command which hass password/account setting.
-
-#+BEGIN_SRC emacs-lisp
-  (defun my/load-secret ()
-    "Load my secret setting include password... etc."
-    (let ((secret "~/.secret.el.gpg"))
-      (when (file-exists-p secret) (load-file secret))))
-#+END_SRC
-
 ** Maximized window after emacs start
 
 #+BEGIN_SRC emacs-lisp
   (modify-all-frames-parameters '((fullscreen . maximized)))
+#+END_SRC
+
+* Personal Information                                              :personal:
+
+It's useful to have some basic personal information.
+
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "Yen-Chin, Lee")
+  (setq user-mail-address "coldnew.tw@gmail.com")
+#+END_SRC
+
+Some of my password stored in a secret file with gnupg encrypt, I add this function here so I can inject some emacs-command which hass password/account setting.
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-load-secret ()
+    "Load my secret setting include password... etc."
+    (let ((secret "~/.secret.el.gpg"))
+      (when (file-exists-p secret) (load-file secret))))
 #+END_SRC
 
 * Package Management
