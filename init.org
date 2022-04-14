@@ -3239,6 +3239,14 @@ For more info about vala, please see: [[https://wiki.gnome.org/Projects/Vala/Tut
     :ensure t)
 #+end_src
 
+** Svelete
+
+#+BEGIN_SRC emacs-lisp
+  (use-package svelte-mode
+    :ensure t
+    :mode ("\\.svelte\\'" . svelte-mode))
+#+END_SRC
+
 * Configration Files
 
 Since emacs not built-in all configration files syntax highlight support, we need to install manually.
