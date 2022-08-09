@@ -29,7 +29,7 @@ do_configure_osx () {
                 --with-ns --disable-ns-self-contained \
                 --with-gnutls \
                 --with-rsvg \
-                --with-imagemagick \
+                --without-imagemagick \
 		--with-pgtk \
                 --without-dbus --without-x --without-makeinfo
 }
@@ -39,7 +39,7 @@ do_configure_linux () {
                 --without-ns --disable-ns-self-contained \
                 --with-gnutls \
                 --with-rsvg \
-                --with-imagemagick \
+                --without-imagemagick \
 		--with-cairo \
 		--with-pgtk \
 		--with-xinput2 \
