@@ -3063,20 +3063,6 @@ Bison is upward compatible with Yacc: all properly-written Yacc grammars ought t
     :mode ("\\.y\\'" "\\.l\\'" "\\.jison\\'"))
 #+END_SRC
 
-** Brainfuck
-
-[[https://en.wikipedia.org/wiki/Brainfuck][Brainfuck]] is an [[https://en.wikipedia.org/wiki/Esoteric_programming_language][esoteric programming language]] created in 1993 by Urban Müller, and notable for its extreme minimalism.
-
-The language consists of only eight simple commands and an [[https://en.wikipedia.org/wiki/Instruction_pointer][instruction pointer]]. While it is fully [[https://en.wikipedia.org/wiki/Turing-complete][Turing-complete]], it is not intended for practical use, but to challenge and amuse [[https://en.wikipedia.org/wiki/Programmers][programmers]].
-
-The language's name is a reference to the slang term "brain fuck", which refers to things so complicated or unusual that they exceed the limits of one's understanding.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package brainfuck-mode
-    :ensure t
-    :mode "\\.bf\\'")
-#+END_SRC
-
 ** GN
 
 [[https://chromium.googlesource.com/chromium/src/tools/gn/+/48062805e19b4697c5fbd926dc649c78b6aaa138/README.md][GN]] is a meta-build system that generates [[https://chromium.googlesource.com/chromium/src/tools/gn/+/48062805e19b4697c5fbd926dc649c78b6aaa138/NinjaBuild.md][NinjaBuild]] files. This system is widely used on Google's chromium related framework.
