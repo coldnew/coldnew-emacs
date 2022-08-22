@@ -2445,25 +2445,6 @@ GitHub: https://github.com/emacsmirror/undo-tree
     (global-undo-tree-mode))
 #+END_SRC
 
-** Use god-mode for entering commands withoud modifier keys     :keybinding:
-
-This is a global minor mode for entering Emacs commands without
-modifier keys. It's similar to Vim's separation of commands and
-insertion mode.
-
-GitHub: https://github.com/chrisdone/god-mode
-
-#+BEGIN_SRC emacs-lisp
-  (use-package god-mode
-    :ensure t
-    :bind
-    ("M-o" . god-local-mode)
-    :config
-    (bind-keys :map god-local-mode-map
-               ("z" . repeat)
-               ("i" . god-local-mode)))
-#+END_SRC
-
 * Buffer                                                             :buffer:
 ** Create *scratch* automatically
 
