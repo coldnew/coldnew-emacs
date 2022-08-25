@@ -508,14 +508,6 @@ Report details about loading and configuration.
   (setq use-package-verbose t)
 #+END_SRC
 
-The =:ensure-system-package= keyword allows you to ensure system binaries exist alongside your package declarations. We need to install =use-package-ensure-system-package= first.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package use-package-ensure-system-package
-    :ensure t
-    :define (use-package-ensure-system-package-exists?))
-#+END_SRC
-
 ** Install straight
 
 straight.el is next-generation, purely functional package manager for the Emacs hacker.
