@@ -694,16 +694,6 @@ Major mode for editing IDL source files.
 
 Most of emacs packages do not need many configs or just provide commands/functions to use, I put them here.
 
-** avy
-
-=avy= is a GNU Emacs package for jumping to visible text using a char-based decision tree. See also [[https://github.com/winterTTr/ace-jump-mode][ace-jump-mode]] and [[https://github.com/Lokaltog/vim-easymotion][vim-easymotion]] - =avy= uses the same idea.
-
-GitHub: https://github.com/abo-abo/avy
-
-#+BEGIN_SRC emacs-lisp
-  (use-package avy :ensure t)
-#+END_SRC
-
 ** discover-my-major                                               :command:
 
 [[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
@@ -883,18 +873,6 @@ GitHub: https://github.com/victorhge/iedit
   (use-package iedit
     :ensure t
     :bind (("C-;" . iedit-mode)))
-#+END_SRC
-
-** link-hint
-
-=link-hint.el= is inspired by the link hinting functionality in vim-like
-browsers and browser plugins such as pentadactyl. It provides commands
-for using avy to open or copy "links."
-
-GitHub: https://github.com/noctuid/link-hint.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package link-hint :ensure t)
 #+END_SRC
 
 ** manage-minor-mode
@@ -1094,27 +1072,6 @@ GitHub: https://github.com/justbur/emacs-which-key
         ;; ensure the target matches the whole string
         (push (cons (cons nil (concat "\\`" (car nd) "\\'")) (cons nil (cdr nd)))
               which-key-replacement-alist))))
-#+END_SRC
-
-** zzz-to-char                                                  :keybinding:
-
-This package provides two new commands: =zzz-to-char= and =zzz-up-to-char= which
-work like built-ins zap-to-char and zap-up-to-char, but allow you quickly select
-exact character you want to “zzz” to.
-
-The commands are minimalistic and often work like built-in ones when there is
-only one occurrence of target character (except they automatically work in
-backward direction too). You can also specify how many characters to scan from
-each side of point, see =zzz-to-char-reach=.
-
-This package uses avy as backend.
-
-GitHub: https://github.com/mrkkrp/zzz-to-char
-
-#+BEGIN_SRC emacs-lisp
-  (use-package zzz-to-char
-    :ensure t
-    :bind (("M-z" . zzz-to-char)))
 #+END_SRC
 
 * Interactive Commands                                              :command:
@@ -4487,8 +4444,7 @@ GitHub: https://github.com/nschum/window-numbering.el
 
 #+BEGIN_SRC emacs-lisp
   (bind-keys :map global-map
-             ("C-x C-s" . my/save-buffer-always)
-             ("M-g" . avy-goto-char-2))
+             ("C-x C-s" . my/save-buffer-always))
 #+END_SRC
 
 ** Normal State
@@ -4551,7 +4507,6 @@ GitHub: https://github.com/nschum/window-numbering.el
     (kbd "M-z")   'zzz-to-char
     (kbd "s-<RET>") 'insert-empty-line
     (kbd "s-<SPC>") 'insert-U200B-char
-    (kbd "C-M-;") 'avy-goto-char
     (kbd "C-x C-d") 'dired
     ;; (kbd "M-o") 'other-window
     ;; (kbd "TAB") 'yas/expand
