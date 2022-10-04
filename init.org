@@ -2061,8 +2061,9 @@ GitHub: https://github.com/editorconfig/editorconfig-emacs
     :ensure t
     :if (executable-find "editorconfig")
     :mode ("\\.editorconfig\\'" . conf-unix-mode)
+    :commands editorconfig-mode
     :init
-    (add-hook 'prog-mode-hook (editorconfig-mode 1)))
+    (add-hook 'prog-mode-hook #'editorconfig-mode))
 #+END_SRC
 
 *** Install System Packages
@@ -2222,7 +2223,6 @@ depth.
 #+BEGIN_SRC emacs-lisp
   (use-package recentf
     :straight (:type built-in)
-    :after-call find-file-hook danger
     :init (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
     :config
     (recentf-mode 1))
@@ -2744,7 +2744,6 @@ defined some extra easy-templates I need to use here.
      (shell . t)
      (plantuml . t)
      (R . t)
-     (ledger . t)
      (clojure . t)))
   ;; make dot work as graphviz-dot
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
