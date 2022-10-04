@@ -52,3 +52,5 @@ elpa/
 /TODO
 /TODO.md
 /TODO.org
+/package-quickstart.el*
+
