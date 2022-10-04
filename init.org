@@ -289,7 +289,7 @@ If you don't have any local elisp and all packages is maintain by cask or elpa o
            (sys-lisp-dir (cl-ecase system-type ; add some system site-lisp to load-path
                            ((darwin)    '("/usr/local/share/emacs/site-lisp/"))
                            ((gnu/linux) '("/usr/share/emacs/site-lisp/"))
-                           (t nil)))  ; FIXME: Add more platform support
+                           ((t) nil)))  ; FIXME: Add more platform support
            (lisp-dir (append my-lisp-dir sys-lisp-dir)))
       (dolist (lisp-path lisp-dir)
         (when (not (file-exists-p lisp-path))
