@@ -3691,21 +3691,6 @@ GitHub: https://github.com/syohex/emacs-git-gutter-fringe
 
 emacs has some IDE feature, add here.
 
-** semantic
-
-#+BEGIN_SRC emacs-lisp
-  (use-package semantic
-    :ensure t
-    :config
-    (setq semanticdb-default-save-directory
-          (concat user-cache-directory "semanticdb/"))
-
-    (global-semanticdb-minor-mode 1)
-    (global-semantic-idle-scheduler-mode 1)
-
-    (semantic-mode 1))
-#+END_SRC
-
 ** cscope
 
 #+BEGIN_SRC emacs-lisp
