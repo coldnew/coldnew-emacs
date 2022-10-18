@@ -3727,7 +3727,7 @@ function in any major-mode.
   in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
 
    (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
-    (let* ((l (buffer-substring (point-at-bol) (point)))
+    (let* ((l (buffer-substring (pos-bol) (point)))
            (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
            (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
            a)
@@ -4269,11 +4269,11 @@ like is it fully integrated with emacs.
         (goto-char (point-min))
         (while (re-search-forward (concat user-string-regexp ".*[$#]") (point-max) t)
           (setq mpoint (point))
-          (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "dodger blue")))
+          (overlay-put (make-overlay (pos-bol) mpoint) 'face '(:foreground "dodger blue")))
         (goto-char (point-min))
         (while (re-search-forward user-string-regexp (point-max) t)
           (setq mpoint (point))
-          (overlay-put (make-overlay (point-at-bol) mpoint) 'face '(:foreground "green3"))))))
+          (overlay-put (make-overlay (pos-bol) mpoint) 'face '(:foreground "green3"))))))
   ;; Make eshell prompt more colorful
   (add-hook 'eshell-output-filter-functions 'colorfy-eshell-prompt)
 #+END_SRC
