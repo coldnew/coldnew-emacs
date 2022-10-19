@@ -771,8 +771,9 @@ GitHub: https://github.com/purcell/exec-path-from-shell
 #+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell
     :ensure t
-    :if (memq window-system '(mac ns x))
-    :init (exec-path-from-shell-initialize))
+    :config
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
 #+END_SRC
 
 ** expand-region                                                :keybinding:
@@ -2498,22 +2499,6 @@ GitHub: https://github.com/yasuyk/helm-bm
   (use-package helm-bm :ensure t :after (helm))
 #+END_SRC
 
-** helm-cscope
-
-=helm-cscope.el= is a helm interface for xcscope.el. You can search cscope database and narrow selection using helm interface.
-
-Helm-cscope shares most functions with xcscope.el. It just provide =M-x helm-cscope-find-*= commands as helm version alternatives for =M-x cscope-find-*=
-
-GitHub: https://github.com/alpha22jp/helm-cscope.el
-
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-cscope
-    :ensure t
-    :after (helm)
-    :config
-    (add-hook 'c-mode-common-hook 'helm-cscope-mode))
-#+END_SRC
-
 ** helm-dash
 
 This package uses [[http://www.kapeli.com/dash][Dash]] docsets inside emacs to browse documentation. Here's an article explaining the basic usage of it.
@@ -3647,18 +3632,6 @@ GitHub: https://github.com/syohex/emacs-git-gutter-fringe
 * IDE Features
 
 emacs has some IDE feature, add here.
-
-** cscope
-
-#+BEGIN_SRC emacs-lisp
-  (use-package xcscope
-    :ensure t
-    :config
-    ;; Use gtas's cscope command
-    (setq cscope-program "gtags-cscope")
-    ;; basic setup
-    (cscope-setup))
-#+END_SRC
 
 ** flycheck
 
