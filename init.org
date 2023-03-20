@@ -2468,8 +2468,6 @@ If you use Gentoo Linux, you can use portage to install it.
 ** Basic setup
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref helm-config
-  ;; load default helm setup
-  (require 'helm-config)
   ;; enable helm globally
   (helm-mode 1)
 #+END_SRC
