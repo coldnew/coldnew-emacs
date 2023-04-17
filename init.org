@@ -2372,7 +2372,7 @@ to let emacs re-create it automatically.
 #+BEGIN_SRC emacs-lisp
   ;; Create *scratch* automatically
   (run-with-idle-timer 1 t
-                       '(lambda ()
+                       #'(lambda ()
                           (unless (get-buffer "*scratch*")
                             (with-current-buffer (get-buffer-create "*scratch*")
                               (lisp-interaction-mode)))))
@@ -2608,7 +2608,7 @@ Always enable auto indent for org-mode.
     :after (org)
     :config
     ;; Enable `org-indent-mode' by default
-    (add-hook 'org-mode-hook '(lambda () (org-indent-mode t))))
+    (add-hook 'org-mode-hook #'(lambda () (org-indent-mode t))))
 #+END_SRC
 
 *** Pretty Bullets
@@ -2622,7 +2622,7 @@ GitHub: https://github.com/sabof/org-bullets
     :ensure t
     :after (org)
     :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+    (add-hook 'org-mode-hook #'(lambda () (org-bullets-mode 1))))
 #+END_SRC
 
 *** Setup TODO keywords
@@ -2644,7 +2644,7 @@ Call =visual-line-mode= to have soft-wrap.
 ** Disable electric-pair for org-mode                        :electric:pair:
 
 #+begin_src emacs-lisp  :tangle no :noweb-ref org-config
-  (add-hook 'org-mode-hook (lambda () (electric-pair-local-mode -1)))
+  (add-hook 'org-mode-hook #'(lambda () (electric-pair-local-mode -1)))
 #+end_src
 
 ** Extend org-mode's easy templates
@@ -3133,7 +3133,7 @@ Since emacs not built-in all configration files syntax highlight support, we nee
     :ensure t
     :config
     (add-hook 'c-mode-common-hook
-              '(lambda ()
+              #'(lambda ()
                  (setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
                  (c-turn-on-eldoc-mode))))
 #+END_SRC
@@ -3151,7 +3151,7 @@ By default it highlights:
 #+BEGIN_SRC emacs-lisp
   (use-package cwarn
     :config
-    (add-hook 'c-mode-common-hook '(lambda () (cwarn-mode 1))))
+    (add-hook 'c-mode-common-hook #'(lambda () (cwarn-mode 1))))
 #+END_SRC
 
 ** Comment #if 0 #endif region
@@ -3180,7 +3180,7 @@ In most C/C++ project, we naming variable in camelCase, =subword-mode= can help 
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref cc-mode-config
   ;; subword-mode, e.g., someThing is treated as two words
-  (add-hook 'c-mode-common-hook (lambda () (subword-mode 1)))
+  (add-hook 'c-mode-common-hook #'(lambda () (subword-mode 1)))
 #+END_SRC
 
 ** Auto pair parentheses with electric-pair
