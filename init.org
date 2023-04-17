@@ -719,7 +719,7 @@ Doxygen is a system for extracting documentation from source code. It supports a
 
 #+BEGIN_SRC emacs-lisp
   (when (require 'doxymacs nil 'noerror)
-    (add-hook 'prog-mode-hook '(lambda () (doxymacs-mode))))
+    (add-hook 'prog-mode-hook #'(lambda () (doxymacs-mode))))
 #+END_SRC
 
 *** Install System Packages
@@ -1771,7 +1771,7 @@ them at styles dir.
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref minibuffer-config
   ;; only use `bar' type of cursor shape
-  (add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 'bar)))
+  (add-hook 'minibuffer-setup-hook #'(lambda () (setq cursor-type 'bar)))
 #+END_SRC
 
 ** Some helper function to let me insert quick in minibuffer
@@ -2202,7 +2202,7 @@ GitHub: https://github.com/Fanael/highlight-numbers
     :ensure t
     :config
     ;; json-mode has it's own highlight numbers method
-    (add-hook 'prog-mode-hook '(lambda()
+    (add-hook 'prog-mode-hook #'(lambda()
                                  (if (not (derived-mode-p 'json-mode))
                                      (highlight-numbers-mode)))))
 #+END_SRC
@@ -2727,7 +2727,7 @@ An abbreviated link looks like
 
   ;; Always use `C-g' to exit agenda
   (add-hook 'org-agenda-mode-hook
-            '(lambda ()
+            #'(lambda ()
                (local-set-key (kbd "C-g") 'org-agenda-exit)))
 
   ;; Use speed command to quick navigating
@@ -3256,7 +3256,7 @@ I always use =linux coding style= for c language by default.
 
 #+BEGIN_SRC emacs-lisp  :tangle no :noweb-ref cc-mode-config
   (add-hook 'c-mode-hook
-            '(lambda ()
+            #'(lambda ()
                (c-set-style "linux")
                (setq c-basic-offset 8)
                ;; Make TAB equivilent to 8 spaces
