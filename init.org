@@ -127,7 +127,10 @@ Here I just disable native-compile auto loads.  There's something wrong with the
 #+begin_src emacs-lisp :tangle no :noweb-ref early-init
   (with-eval-after-load 'comp
     (setq-default comp-deferred-compilation-deny-list '("\\(?:[^z-a]*-autoloads\\.el$\\)"))
-    (setq-default native-comp-deferred-compilation-deny-list '("\\(?:[^z-a]*-autoloads\\.el$\\)")))
+    ;; This variable is obsolete since 29.1
+    (setq-default native-comp-deferred-compilation-deny-list '("\\(?:[^z-a]*-autoloads\\.el$\\)"))
+    ;; introduce in emacs  28.1
+    (setq-default native-comp-jit-compilation-deny-list '("\\(?:[^z-a]*-autoloads\\.el$\\)")))
 #+end_src
 
 ** Prevent native-compilation warning window popup
