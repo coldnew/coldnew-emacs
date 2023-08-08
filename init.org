@@ -483,6 +483,10 @@ because I have over 80 packages that I use in Emacs, and things were getting dif
 
 GitHub: https://github.com/jwiegley/use-package
 
+NOTE:
+
+=use-package= is integrated in emacs directly since emacs 29.1, it's no need to install it manually anymore.
+
 #+BEGIN_SRC emacs-lisp
   (eval-and-compile
     (unless (package-installed-p 'use-package)
