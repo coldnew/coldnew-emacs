@@ -3803,7 +3803,7 @@ function in any major-mode.
       (when (and (looking-at "[ \t]*$")
                  (string-match "^[ \t]*<\\([a-zA-Z]+\\)$" l)
                  (setq a (assoc (match-string 1 l) expand-alist)))
-        (backward-delete-char (1+ (length (car-safe a))))
+        (delete-char (1+ (length (car-safe a))))
         (if (symbolp (cdr-safe a))
             (funcall (cdr-safe a))
           (insert (cdr-safe a)))
