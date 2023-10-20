@@ -3569,11 +3569,6 @@ However, I use my fork of [[https://github.com/coldnew/hexo.el][hexo.el]] since 
     :ensure t
     :config
 
-    (defun hexo-weintek-note ()
-      "Office note taking with hexo."
-      (interactive)
-      (hexo "~/Workspace/weintek-note/"))
-
     (defun hexo-my-blog ()
       "My blog with hexo."
       (interactive)
