@@ -3204,7 +3204,8 @@ By default it highlights:
 
   ;; Add to c/c++ mode
   (defun my/cc-mode/highlight-if-0-hook ()
-    (when (or (eq major-mode 'c++-mode) (eq major-mode 'c-mode))
+    (when (or (eq major-mode 'c++-mode) (eq major-mode 'c-mode)
+              (eq major-mode 'c++-ts-mode) (eq major-mode 'c-ts-mode))
       (my/cc-mode/highlight-if-0)))
   (add-hook 'after-save-hook #'my/cc-mode/highlight-if-0-hook)
 #+END_SRC
