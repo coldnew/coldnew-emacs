@@ -177,6 +177,17 @@ We plain to handle our package initialization in our configs, we must prevent Em
   (setq frame-inhibit-implied-resize t)
 #+END_SRC
 
+** Drop 'org-element-at-point' cannot be used in non-Org buffer warning
+
+Not sure why always shows ='org-element-at-point' cannot be used in non-Org buffer= in *Warning* buffer,
+follow below link to fix problem
+
+https://github.com/syl20bnr/spacemacs/issues/16575
+
+#+begin_src emacs-lisp  :tangle no :noweb-ref early-init
+  (add-to-list 'warning-suppress-types '(org-element org-element-parser))
+#+end_src
+
 * Initialize Emacs                                                     :init:
 
 There are some configurations I need to put at the beginning of the emacs config. These configurations are derived from my original init.el file.
