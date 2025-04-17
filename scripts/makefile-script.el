@@ -70,11 +70,16 @@
 
 ;;;; Functions
 
+(defun my-comp-async-runnings ()
+  (if (fboundp 'comp--async-runnings)
+      (comp--async-runnings)
+    (comp-async-runnings)))
+
 (defun native-compile-wait-for-async ()
   "Wait for `native-compile-async' done."
   (when has-native-compile-p
     (while (> (+ (length comp-files-queue)
-                 (comp-async-runnings)) 0)
+                 (my-comp-async-runnings)) 0)
       (sleep-for 1))))
 
 (defun mkdir-p (dirname)
