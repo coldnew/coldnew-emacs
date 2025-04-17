@@ -1,4 +1,4 @@
-;;; night-coldnew-theme.el --- coldnew's emacs color-theme night version.
+;;; night-coldnew-theme.el --- coldnew's emacs color-theme night version.  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2016 Yen-Chin, Lee.
 

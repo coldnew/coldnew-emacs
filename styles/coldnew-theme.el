@@ -1,4 +1,4 @@
-;;; coldnew-theme.el --- coldnew's emacs color-theme.
+;;; coldnew-theme.el --- coldnew's emacs color-theme.  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2011-2016 Yen-Chin, Lee
 ;; Author: coldnew <coldnew.tw@gmail.com>
