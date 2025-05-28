@@ -4156,12 +4156,13 @@ like is it fully integrated with emacs.
 
 #+BEGIN_SRC emacs-lisp :tangle no :noweb-ref eshell-config
   ;; Make eshell prompt look likes default bash prompt
+  (require 'cl-lib)
   (setq eshell-prompt-function
         '(lambda ()
            (concat
             user-login-name "@" system-name " "
-            (if (search (directory-file-name (expand-file-name (getenv "HOME"))) (eshell/pwd))
-                (replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
+            (if (cl-search (directory-file-name (expand-file-name (getenv "HOME"))) (eshell/pwd))
+  	      (replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
               (eshell/pwd))
             (if (= (user-uid) 0) " # " " $ "))))
 #+END_SRC
