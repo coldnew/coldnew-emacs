@@ -55,4 +55,5 @@ elpa/
 /TODO.md
 /TODO.org
 /package-quickstart.el*
-
+/helm-adaptive-history
+/tree-sitter/
