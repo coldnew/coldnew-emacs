@@ -2413,16 +2413,6 @@ GitHub: https://github.com/syohex/emacs-helm-gtags
     (add-hook 'c++-mode-hook #'helm-gtags-mode))
 #+END_SRC
 
-** helm-swoop
-
-List match lines to another buffer, which is able to squeeze by any words you input. At the same time, the original buffer's cursor is jumping line to line according to moving up and down the line list.
-
-GitHub: https://github.com/ShingoFukuyama/helm-swoop
-
-#+BEGIN_SRC emacs-lisp
-  (use-package helm-swoop :ensure t :after (helm))
-#+END_SRC
-
 ** helm-c-yasnippet
 
 GitHub: https://github.com/emacs-jp/helm-c-yasnippet
