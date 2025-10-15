@@ -3391,6 +3391,18 @@ GitHub: https://github.com/purcell/page-break-lines
 )
 #+END_SRC
 
+** Clojure
+
+#+BEGIN_SRC emacs-lisp :noweb no-export
+  (use-package inf-clojure
+    :ensure t
+    :init
+    (add-hook 'clojure-mode-hook #'inf-clojure-minor-mode)
+    ;; eldoc
+    (add-hook 'clojure-mode-hook #'eldoc-mode)
+    (add-hook 'inf-clojure-mode-hook #'eldoc-mode))
+#+END_SRC
+
 * Version Control
 
 ** Disable all vc-mode feature
