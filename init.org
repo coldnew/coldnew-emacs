@@ -3394,13 +3394,13 @@ GitHub: https://github.com/purcell/page-break-lines
 ** Clojure
 
 #+BEGIN_SRC emacs-lisp :noweb no-export
-  (use-package inf-clojure
-    :ensure t
-    :init
-    (add-hook 'clojure-mode-hook #'inf-clojure-minor-mode)
-    ;; eldoc
-    (add-hook 'clojure-mode-hook #'eldoc-mode)
-    (add-hook 'inf-clojure-mode-hook #'eldoc-mode))
+  (use-package cider
+    :ensure t :defer t
+    :config
+    (setq
+      cider-repl-history-file ".cider-repl-history"  ;; not squiggly-related, but I like it
+  	nrepl-log-messages t)                          ;; not necessary, but useful for trouble-shooting
+    (flycheck-clojure-setup))                        ;; run setup *after* cider load
 #+END_SRC
 
 * Version Control
