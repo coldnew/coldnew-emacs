@@ -3401,6 +3401,19 @@ GitHub: https://github.com/purcell/page-break-lines
       cider-repl-history-file ".cider-repl-history"  ;; not squiggly-related, but I like it
   	nrepl-log-messages t)                          ;; not necessary, but useful for trouble-shooting
     (flycheck-clojure-setup))                        ;; run setup *after* cider load
+
+
+  (use-package flycheck-clojure
+    :defer t
+    :commands (flycheck-clojure-setup)               ;; autoload
+    :config
+    (eval-after-load 'flycheck
+      '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
+    (add-hook 'after-init-hook #'global-flycheck-mode))
+
+  (use-package flycheck :ensure t)
+  (use-package flycheck-pos-tip :ensure t
+    :after flycheck)
 #+END_SRC
 
 * Version Control
