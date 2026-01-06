@@ -3499,7 +3499,7 @@ GitHub: https://github.com/syohex/emacs-git-gutter-fringe
     :ensure t :defer t)
 
   (use-package magit-gptcommit
-    :demand t
+    :ensure t :demand t
     :after magit llm llm-ollama
     :hook (after-init . magit-gptcommit-status-buffer-setup)
     :config
