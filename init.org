@@ -3509,9 +3509,6 @@ GitHub: https://github.com/syohex/emacs-git-gutter-fringe
   	 :chat-model "gpt-oss:20b"
   	 :host "127.0.0.1"
   	 :port 11434))
-
-    ;; global enable gptcommit mode
-    (magit-gptcommit-mode 1)
     ;; add to magit's transit buffer
     (magit-gptcommit-status-buffer-setup)
     :bind (:map git-commit-mode-map
