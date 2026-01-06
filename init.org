@@ -2315,7 +2315,7 @@ For more info, you can refer to: [[https://www.emacswiki.org/emacs/Registers][Em
 
 #+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
   (use-package helm
-    :straight t
+    :ensure t
     :init
     <<helm-init>>
     :config
