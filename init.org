@@ -3591,23 +3591,6 @@ Some backend for emacs we need to install HERE.
   ;;(add-to-list 'major-mode-remap-alist '(qml-mode       . qmljs-ts-mode))
 #+end_src
 
-** Vibe Coding
-
-Aidermacs brings AI-powered development to Emacs by integrating [[https://github.com/paul-gauthier/aider][Aider]], one of the most powerful open-source AI pair programming tools. If you're missing [[https://cursor.sh][Cursor]] but prefer living in Emacs, Aidermacs provides similar AI capabilities while staying true to Emacs workflows.
-
-GitHub: https://github.com/MatthewZMD/aidermacs
-
-#+BEGIN_SRC emacs-lisp
-  (use-package aidermacs
-    :bind (("C-c a" . aidermacs-transient-menu))
-    :config
-    (setenv "LM_STUDIO_API_KEY" "dummy-api-key")
-    (setenv "LM_STUDIO_API_BASE" "http://localhost:1234/v1") 
-    :custom
-    (aidermacs-default-chat-mode 'architect)
-    (aidermacs-default-model "lm_studio/openai/gpt-oss-20b"))
-#+END_SRC
-
 * Snippets                                                        :yasnippet:
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
