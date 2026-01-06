@@ -3488,6 +3488,37 @@ GitHub: https://github.com/syohex/emacs-git-gutter-fringe
     (git-gutter-mode))
 #+END_SRC
 
+*** Use LLM for auto commit
+
+#+BEGIN_SRC emacs-lisp  :noweb no-export :exports code
+  ;; FIXME:
+  (use-package llm
+    :ensure t :defer t)
+  ;; FIXME:
+  (use-package llm-ollama
+    :ensure t :defer t)
+
+  (use-package magit-gptcommit
+    :demand t
+    :after magit llm llm-ollama
+    :hook (after-init . magit-gptcommit-status-buffer-setup)
+    :config
+
+    (setq magit-gptcommit-llm-provider
+  	(make-llm-ollama
+  	 :chat-model "gpt-oss:20b"
+  	 :host "127.0.0.1"
+  	 :port 11434))
+
+    ;; global enable gptcommit mode
+    (magit-gptcommit-mode 1)
+    ;; add to magit's transit buffer
+    (magit-gptcommit-status-buffer-setup)
+    :bind (:map git-commit-mode-map
+                ("C-c C-g" . magit-gptcommit-commit-accept)))
+#+END_SRC
+
+
 * IDE Features
 
 emacs has some IDE feature, add here.
