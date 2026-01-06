@@ -3591,6 +3591,19 @@ Some backend for emacs we need to install HERE.
   ;;(add-to-list 'major-mode-remap-alist '(qml-mode       . qmljs-ts-mode))
 #+end_src
 
+** ECA
+
+ECA (Editor Code Assistant) Emacs is an AI-powered pair-programming client for Emacs. Inspired by lsp-mode’s JSONRPC handling, it connects to an external =eca=  server process to provide interactive chat, code suggestions, context management and more. It's everything automatic and smooth as UX and re-usability across editors is the main goal of ECA.
+
+For more details about ECA, check [[https://github.com/editor-code-assistant/eca][ECA server]].
+
+GitHub: https://github.com/editor-code-assistant/eca-emacs
+
+#+BEGIN_SRC emacs-lisp :noweb no-export :exports code
+  (use-package eca
+    :ensure t)
+#+END_SRC
+
 * Snippets                                                        :yasnippet:
 
 #+BEGIN_SRC emacs-lisp :noweb no-export :exports code
