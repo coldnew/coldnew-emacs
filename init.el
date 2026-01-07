@@ -51,13 +51,6 @@
 ;; create the `user-cache-directory' if not exists
 (make-directory user-cache-directory t)
 
-;;   Setup the modules directory to store some submodules and extra
-;;   packages.
-
-(defconst user-modules-directory
-  (file-name-as-directory (concat user-emacs-directory "modules"))
-  "My emacs storage area for modules.")
-
 ;;
 ;;   I specify a ramdisk path to make my emacs can save some temporary
 ;;   file to it. The ramdisk path should be =~/ramdisk=, if the
@@ -166,19 +159,7 @@
 (setq delete-old-versions t)
 (setq backup-by-copying t)
 
-;; * Module Loading and Server
-;;
-;; ** Loading Modules
-;;
-;;   I think I'll write some dynamic module extension, which will save
-;;   to =~/.emacs.d/modules=, use a helper script to help me load them.
-
-;; load the `load-modules.el' file which help me load external modulept
-(let ((script (concat user-modules-directory "load-modules.el")))
-  (when (file-exists-p script)
-    (load script)))
-
-;; ** Startup emacs server
+;; * Startup emacs server
 ;;
 ;;   Only start server mode if I'm not root
 
@@ -2400,9 +2381,9 @@ this declaration to the kill-ring."
 ;; ** magit-gptcommit (AI-assisted commits)
 
 (use-package magit-gptcommit
+  :ensure t
   :demand t
   :after magit llm llm-ollama
-  :hook (after-init . magit-gptcommit-status-buffer-setup)
   :config
 
   (setq magit-gptcommit-llm-provider
