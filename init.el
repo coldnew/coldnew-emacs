@@ -1180,60 +1180,60 @@ return nil since you can't set font for emacs on it."
   (define-key evil-insert-state-map [escape] 'evil-normal-state)
   (dolist (m evil-emacs-state-modes)
     (add-to-list 'evil-insert-state-modes m))
-   ;; extra keybindings defined in `Keybinding' section
-   (evil-define-key 'normal my-editor-map
-       (kbd "C-x C-f") 'find-file
-       (kbd "C-x C-q") 'read-only-mode
-       (kbd "C-x M-1") 'deft-or-close
-       (kbd "C-x M-2") 'eshell
-       (kbd "C-x M-3") 'mu4e
-       (kbd "C-x M-4") 'erc-start-or-switch
-       (kbd "C-x vl") 'magit-log
-       (kbd "C-x vp") 'magit-push
-       (kbd "C-x vs") 'magit-status
-       (kbd "C-x b") 'switch-to-buffer
-       (kbd "M-[") 'winner-undo
-       (kbd "M-]") 'winner-redo
-        (kbd "M-x") 'execute-extended-command
-       (kbd "M-s") 'consult-line
-       (kbd "C-x C-o") 'other-frame
-       (kbd "M-o") 'other-window)
-   (evil-define-key 'insert my-editor-map
-     (kbd "<delete>") 'hungry-delete-backward
-     (kbd "C-;") 'iedit-mode
-     (kbd "C-d") 'hungry-delete-forward
-     (kbd "C-l") 'hungry-delete-backward
-     (kbd "C-n") 'evil-next-line
-     (kbd "C-o") 'evil-execute-in-normal-state
-     (kbd "C-p") 'evil-previous-line
-     (kbd "C-v") 'set-mark-mode/rectangle-mark-mode
-     (kbd "C-w") 'backward-kill-word
-     (kbd "C-x C-f") 'find-file
-     (kbd "C-x C-n") 'company-complete
-     (kbd "C-x C-o") 'other-frame
-     (kbd "C-x C-q") 'read-only-mode
-     (kbd "C-x M-1") 'deft-or-close
-     (kbd "C-x M-2") 'eshell
-     (kbd "C-x M-3") 'mu4e
-     (kbd "C-x M-4") 'erc-start-or-switch
-     (kbd "C-x T") 'sane-term
-     (kbd "C-x b") 'switch-to-buffer
-     (kbd "C-x t") 'sane-term
-     (kbd "C-x vl") 'magit-log
-     (kbd "C-x vp") 'magit-push
-     (kbd "C-x vs") 'magit-status
-     (kbd "M-<SPC>") 'insert-U200B-char
-     (kbd "M-[") 'winner-undo
-     (kbd "M-]") 'winner-redo
-     (kbd "M-s") 'consult-line
-     (kbd "M-v") 'er/expand-region
-     (kbd "M-x") 'execute-extended-command
-     (kbd "M-y") 'consult-yank-pop
-     (kbd "M-z")   'zzz-to-char
-      (kbd "s-<RET>") 'insert-empty-line
-      (kbd "s-<SPC>") 'insert-U200B-char
-      (kbd "C-x C-d") 'dired
-      )
+    ;; extra keybindings defined in `Keybinding' section
+    (evil-define-key 'normal 'global
+        (kbd "C-x C-f") 'find-file
+        (kbd "C-x C-q") 'read-only-mode
+        (kbd "C-x M-1") 'deft-or-close
+        (kbd "C-x M-2") 'eshell
+        (kbd "C-x M-3") 'mu4e
+        (kbd "C-x M-4") 'erc-start-or-switch
+        (kbd "C-x vl") 'magit-log
+        (kbd "C-x vp") 'magit-push
+        (kbd "C-x vs") 'magit-status
+        (kbd "C-x b") 'switch-to-buffer
+        (kbd "M-[") 'winner-undo
+        (kbd "M-]") 'winner-redo
+         (kbd "M-x") 'execute-extended-command
+        (kbd "M-s") 'consult-line
+        (kbd "C-x C-o") 'other-frame
+        (kbd "M-o") 'other-window)
+   (evil-define-key 'insert 'global
+      (kbd "<delete>") 'hungry-delete-backward
+      (kbd "C-;") 'iedit-mode
+      (kbd "C-d") 'hungry-delete-forward
+      (kbd "C-l") 'hungry-delete-backward
+      (kbd "C-n") 'evil-next-line
+      (kbd "C-o") 'evil-execute-in-normal-state
+      (kbd "C-p") 'evil-previous-line
+      (kbd "C-v") 'set-mark-mode/rectangle-mark-mode
+      (kbd "C-w") 'backward-kill-word
+      (kbd "C-x C-f") 'find-file
+      (kbd "C-x C-n") 'company-complete
+      (kbd "C-x C-o") 'other-frame
+      (kbd "C-x C-q") 'read-only-mode
+      (kbd "C-x M-1") 'deft-or-close
+      (kbd "C-x M-2") 'eshell
+      (kbd "C-x M-3") 'mu4e
+      (kbd "C-x M-4") 'erc-start-or-switch
+      (kbd "C-x T") 'sane-term
+      (kbd "C-x b") 'switch-to-buffer
+      (kbd "C-x t") 'sane-term
+      (kbd "C-x vl") 'magit-log
+      (kbd "C-x vp") 'magit-push
+      (kbd "C-x vs") 'magit-status
+      (kbd "M-<SPC>") 'insert-U200B-char
+      (kbd "M-[") 'winner-undo
+      (kbd "M-]") 'winner-redo
+      (kbd "M-s") 'consult-line
+      (kbd "M-v") 'er/expand-region
+      (kbd "M-x") 'execute-extended-command
+      (kbd "M-y") 'consult-yank-pop
+      (kbd "M-z")   'zzz-to-char
+       (kbd "s-<RET>") 'insert-empty-line
+       (kbd "s-<SPC>") 'insert-U200B-char
+       (kbd "C-x C-d") 'dired
+       )
    (evil-ex-define-cmd "ag" 'consult-ag)
    (evil-ex-define-cmd "agi[nteractive]" 'consult-ag)
    (evil-ex-define-cmd "google" 'consult-google)
@@ -1348,25 +1348,8 @@ return nil since you can't set font for emacs on it."
 ;;   an editor? Yes, Emacs is an OS :)
 ;;
 ;;   I put some editor/IDE relative functions and packages here.
-;;
-;; ** Create minor-mode to controll all keybindings
-
-(defvar my-editor-map (make-keymap))
-
-(define-minor-mode my-editor-mode
-  "My editor minor mode."
-  :init-value t
-  :keymap my-editor-map)
-
-(define-globalized-minor-mode global-my-editor-mode
-  my-editor-mode (lambda ()
-                        (if (not (minibufferp (current-buffer)))
-                            (my-editor-mode 1))))
-
-;; Gloabal enable
-(global-my-editor-mode t)
-
-;; ** Keeping files in sync
+ ;;
+ ;; ** Keeping files in sync
 ;;
 ;;   By default, Emacs will not update the contents of open buffers
 ;;   when a file changes on disk. This is inconvenient when switching
@@ -1621,15 +1604,9 @@ This functions should be added to the hooks of major modes for programming."
          ;; Finance
          (?f (file . "~/Org/finance/personal.org"))
          ))
-  (set-register (car r) (cadr r)))
-
-(bind-keys :map my-editor-map
-           ;("C-x n" . bm-next)
-           ;("C-x p" . bm-previous)
-           ;("C-x ." . bm-toggle)
-           )
-
-;; * Completion
+   (set-register (car r) (cadr r)))
+ 
+ ;; * Completion
 ;;
 ;;   Modern completion framework with Vertico, Consult, Marginalia, and Orderless.
 ;;   Much faster and more modular than helm.
