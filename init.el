@@ -1654,6 +1654,70 @@ This functions should be added to the hooks of major modes for programming."
   :config
   (setq completion-styles '(orderless basic)))
 
+;; ** company
+;;
+;;   Company is a text completion framework for Emacs. The name stands for
+;;   "complete anything". It provides an auto-complete popup menu that
+;;   shows candidates while typing.
+;;
+;;   Company complements the Vertico stack:
+;;   - Vertico/Consult: minibuffer completion (M-x, find-file, etc.)
+;;   - Company: in-buffer completion (code completion, symbols, etc.)
+
+(use-package company
+  :ensure t
+  :demand t
+  :commands (company-mode global-company-mode)
+  :config
+  ;; Enable company globally in all buffers
+  (global-company-mode 1)
+  ;; Lower idle delay for faster completion (default is 0.5s)
+  (setq company-idle-delay 0.2)
+  ;; Show candidates after 2 characters
+  (setq company-minimum-prefix-length 2)
+  ;; Number of candidates to show
+  (setq company-tooltip-limit 15)
+  ;; Show quick-access numbers
+  (setq company-show-quick-access 'numbers)
+  ;; Highlight selection immediately
+  (setq company-selection-wrap-around t)
+  ;; Don't use company for minibuffer (vertico handles that)
+  (setq company-global-modes '(not minibuffer-mode))
+   ;; Use keymap that respects Evil states
+  (setq company-mode-map nil)  ; Disable default keymap, use evil bindings instead
+   ;; Configure backends for common programming modes
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
+  (add-hook 'lisp-mode-hook
+            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
+  (add-hook 'python-mode-hook
+            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet company-files))))
+  (add-hook 'ruby-mode-hook
+            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
+  (add-hook 'c-mode-hook
+            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
+  (add-hook 'c++-mode-hook
+            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
+  (add-hook 'js-mode-hook
+            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
+  (add-hook 'js2-mode-hook
+            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
+  (add-hook 'go-mode-hook
+            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
+  (add-hook 'rust-mode-hook
+            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
+  (add-hook 'java-mode-hook
+            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
+  ;; Keybindings for company with Evil
+  (with-eval-after-load 'company
+    (define-key company-active-map (kbd "C-n") 'company-select-next)
+    (define-key company-active-map (kbd "C-p") 'company-select-previous)
+    (define-key company-active-map (kbd "TAB") 'company-complete-selection)
+    (define-key company-active-map [tab] 'company-complete-selection)
+    (define-key company-active-map (kbd "RET") 'company-complete-selection)
+    (define-key company-active-map [return] 'company-complete-selection)
+    (define-key company-active-map (kbd "ESC") 'company-abort)))
+
 ;; * Org Mode
 ;;
 ;;   Org-mode is for keeping notes, maintaining TODO lists, and
@@ -1709,31 +1773,31 @@ This functions should be added to the hooks of major modes for programming."
   ;; make dot work as graphviz-dot
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
   (setq org-link-abbrev-alist
-        '(("google" . "http://www.google.com/search?q=")      ; ex: [[google:hi emacs]]
+        '(("google" . "http://www.google.com/search?q=") ; ex: [[google:hi emacs]]
           ("google-map" . "http://maps.google.com/maps?q=%s") ; ex: [[google-map:taiwan]]
-          ("wiki" . "https://en.wikipedia.org/wiki/%s")       ; ex: [[wiki:emacs]]
+          ("wiki" . "https://en.wikipedia.org/wiki/%s")	; ex: [[wiki:emacs]]
           ))
   ;; make agenda show on current window
   (setq org-agenda-window-setup 'current-window)
-   ;; highlight current in agenda
-   (add-hook 'org-agenda-mode-hook 'hl-line-mode)
+  ;; highlight current in agenda
+  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
 
-   ;; Setup files for agenda - defer calculation for faster startup
-   (setq org-directory "~/Org/tasks")
-   (setq org-agenda-files nil)  ; Lazy loaded in my/org-setup-agenda-files
-   (defun my/org-setup-agenda-files ()
-     "Setup org-agenda-files lazily."
-     (unless org-agenda-files
-       (setq org-agenda-files
-             (find-lisp-find-files org-directory "\.org$"))))
-   (add-hook 'org-mode-hook #'my/org-setup-agenda-files)
-   ;;
-   (setq org-default-notes-file (f-join org-directory "tasks" "TODO.org"))
+  ;; Setup files for agenda - defer calculation for faster startup
+  (setq org-directory "~/Org/tasks")
+  (setq org-agenda-files nil) ; Lazy loaded in my/org-setup-agenda-files
+  (defun my/org-setup-agenda-files ()
+    "Setup org-agenda-files lazily."
+    (unless org-agenda-files
+      (setq org-agenda-files
+            (find-lisp-find-files org-directory "\.org$"))))
+  (add-hook 'org-mode-hook #'my/org-setup-agenda-files)
+  ;;
+  (setq org-default-notes-file (f-join org-directory "tasks" "TODO.org"))
 
   ;; Always use `C-g' to exit agenda
   (add-hook 'org-agenda-mode-hook
             #'(lambda ()
-               (local-set-key (kbd "C-g") 'org-agenda-exit)))
+		(local-set-key (kbd "C-g") 'org-agenda-exit)))
 
   ;; Use speed command to quick navigating
   (setq org-use-speed-commands t)
