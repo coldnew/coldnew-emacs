@@ -758,6 +758,50 @@
       (push (cons (cons nil (concat "\\`" (car nd) "\\'")) (cons nil (cdr nd)))
             which-key-replacement-alist))))
 
+;; * Artifical Intellengence
+
+(use-package llm
+  :ensure t :defer t
+  :autoload make-llm-ollama
+  :config
+  ;; Should not throw any warning message on non-free LLM
+  (setq llm-warn-on-nonfree nil)
+
+  ;; OpenCode
+  (when (boundp 'opencode-api-key)
+    (let ((opencode-api-url "https://opencode.ai/zen/v1"))
+
+      ;; Big Pickle
+      (defvar llm-provider--opencode-bigpickle
+        (make-llm-openai-compatible
+         :key opencode-api-key
+         :chat-model "big-pickle"
+         :url opencode-api-url))
+
+      ;; Grok
+      (defvar llm-provider--opencode-grok
+        (make-llm-openai-compatible
+         :key opencode-api-key
+         :chat-model "grok-code"
+         :url opencode-api-url))
+
+      ;; GLM 4.7
+      (defvar llm-provider--opencode-glm4.7
+        (make-llm-openai-compatible
+         :key opencode-api-key
+         :chat-model "glm-4.7-free"
+         :url opencode-api-url))
+
+      ;; MiniMax M2.1
+      (defvar llm-provider--opencode-minimax-m2.1
+        (make-llm-openai-compatible
+         :key opencode-api-key
+         :chat-model "minimax-m2.1-free"
+         :url opencode-api-url)
+        )
+      ))
+  )
+
 ;; * Interactive Commands
 ;;
 ;;   In emacs, we can use =M-x= to execute interactive commands, I
@@ -2413,19 +2457,6 @@ this declaration to the kill-ring."
   :config
   ;; enable globally
   (git-gutter-mode))
-
-;; ** llm (for AI features)
-
-;; FIXME:
-(use-package llm
-  :ensure t :defer t
-  :config
-   ;; Should not throw any warning message on non-free LLM
-  (setq llm-warn-on-nonfree nil))
-
-;; FIXME:
-(use-package llm-ollama
-  :ensure t :defer t)
 
 ;; ** magit-gptcommit (AI-assisted commits)
 
