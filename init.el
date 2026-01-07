@@ -612,16 +612,6 @@
   :config
   (smartparens-mode 1))
 
-;; ** sx
-;;
-;;   SX is a full featured Stack Exchange mode for GNU Emacs 24+. Using
-;;   the official API, it provides a versatile experience for the Stack
-;;   Exchange network within Emacs itself.
-;;
-;;   GitHub: https://github.com/vermiculus/sx.el/
-
-(use-package sx :ensure t)
-
 ;; ** url-shortener
 ;;
 ;;   This package can convert long url to tiny url and expand tiny url
