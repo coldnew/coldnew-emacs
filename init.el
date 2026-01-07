@@ -284,10 +284,14 @@
 
 (eval-and-compile
   (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))) ; Installed by packages.el
+    (package-install 'use-package))) ; Only install if missing, don't refresh
 
 (eval-when-compile (require 'use-package))
+
+;; *** Global use-package settings
+;;    Defer all packages by default for faster startup.
+;;    Use :demand t for packages needed immediately.
+(setq use-package-always-defer t)
 
 ;; ** Install straight
 ;;
@@ -739,6 +743,7 @@
 
 (use-package which-key
   :ensure t
+  :demand t  ; Needed for keybinding display at startup
   :commands (which-key-mode)
   :config
   (which-key-mode)
@@ -1240,6 +1245,7 @@ return nil since you can't set font for emacs on it."
 
 ;; *** Save history of minibutter
   (use-package savehist
+    :demand t  ; Needed for minibuffer history at startup
     :config
     (setq savehist-file (concat user-cache-directory "savehist.dat"))
     (savehist-mode 1))
@@ -1261,6 +1267,7 @@ return nil since you can't set font for emacs on it."
 
 (use-package evil
   :ensure t
+  :demand t  ; Needed for vim keybindings at startup
   :config
   ;; enable evil-mode globally
   (evil-mode t)
@@ -1729,6 +1736,7 @@ This functions should be added to the hooks of major modes for programming."
 
 (use-package helm
   :straight t
+  :demand t  ; Needed for completion at startup
   :init
   (add-hook 'after-init-hook #'helm-mode)
   (add-hook 'after-init-hook #'helm-autoresize-mode)
@@ -1842,16 +1850,20 @@ This functions should be added to the hooks of major modes for programming."
           ))
   ;; make agenda show on current window
   (setq org-agenda-window-setup 'current-window)
-  ;; highlight current in agenda
-  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
+   ;; highlight current in agenda
+   (add-hook 'org-agenda-mode-hook 'hl-line-mode)
 
-  ;; Setup files for agenda
-  (setq org-directory "~/Org/tasks")
-  ;; Use all .org files in `org-directory'
-  (setq org-agenda-files
-        (find-lisp-find-files org-directory "\.org$"))
-  ;;
-  (setq org-default-notes-file (f-join org-directory "tasks" "TODO.org"))
+   ;; Setup files for agenda - defer calculation for faster startup
+   (setq org-directory "~/Org/tasks")
+   (setq org-agenda-files nil)  ; Lazy loaded in my/org-setup-agenda-files
+   (defun my/org-setup-agenda-files ()
+     "Setup org-agenda-files lazily."
+     (unless org-agenda-files
+       (setq org-agenda-files
+             (find-lisp-find-files org-directory "\.org$"))))
+   (add-hook 'org-mode-hook #'my/org-setup-agenda-files)
+   ;;
+   (setq org-default-notes-file (f-join org-directory "tasks" "TODO.org"))
 
   ;; Always use `C-g' to exit agenda
   (add-hook 'org-agenda-mode-hook
@@ -3021,6 +3033,7 @@ this declaration to the kill-ring."
 ;; ** winner-mode
 
 (use-package winner                     ; builtin
+  :demand t  ; Needed for window navigation at startup
   :commands (winner-undo winner-redo)
   :config
   ;; I use my own keymap for winner-mode
@@ -3032,6 +3045,7 @@ this declaration to the kill-ring."
 
 (use-package eyebrowse
   :ensure t
+  :demand t  ; Needed for workspace management at startup
   :config
   ;; enable eyebrowse globally
   (eyebrowse-mode t))
