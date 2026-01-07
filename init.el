@@ -1374,6 +1374,7 @@ return nil since you can't set font for emacs on it."
 (use-package vi-tilde-fringe
   :ensure t
   :if window-system
+  :commands (global-vi-tilde-fringe-mode)
   :config
   (global-vi-tilde-fringe-mode))
 
@@ -1713,8 +1714,6 @@ This functions should be added to the hooks of major modes for programming."
              ("M-h" . my/minibuffer-switch-to-home)
              ("M-/" . my/minibuffer-switch-to-rootdir)
              ("M-s" . my/minibuffer-switch-to-tramp)
-             ("M-v" . my/minibuffer-switch-to-vm)
-             ("M-c" . my/minibuffer-switch-to-cluster)
              ("C-z" . helm-select-action)))
 
 (use-package helm-bm :ensure t :after (helm))
@@ -1963,7 +1962,12 @@ This functions should be added to the hooks of major modes for programming."
 
 (use-package gn-mode
   :ensure t
-  :mode ("BUILD.gn" "\\.gni?\\'"))
+   :mode ("BUILD.gn" "\\.gni?\\'"))
+
+;; Declare functions from mmm-mode to suppress compiler warnings
+(declare-function mmm-add-classes "mmm-mode")
+(declare-function mmm-add-mode-ext-class "mmm-mode")
+(declare-function markdown-insert-link "markdown-mode")
 
 ;; ** markdown-mode
 
@@ -2324,8 +2328,8 @@ this declaration to the kill-ring."
     "Run `check-parens' when the current buffer is saved."
     (add-hook 'after-save-hook #'check-parens nil 'make-it-local))
 
-  (add-hook 'emacs-lisp-mode
-            (lambda () (my/emacs-lisp/enable-check-parens-on-save)))
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda () (my/elisp/check-parens-on-save)))
   (use-package litable
     :ensure t
     :config
@@ -2399,6 +2403,7 @@ this declaration to the kill-ring."
 (use-package git-gutter-fringe
   :ensure t
   :if window-system                     ; git-gutter-fringe only work on GUI
+  :commands (git-gutter-mode)
   :config
   ;; enable globally
   (git-gutter-mode))
@@ -2921,6 +2926,8 @@ this declaration to the kill-ring."
   :ensure t)
 
 ;; ** Eshell commands
+
+(require 'eshell)
 
 (defun eshell/.. (&optional level)
   "Go up LEVEL directories"
