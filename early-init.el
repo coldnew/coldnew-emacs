@@ -76,5 +76,14 @@
 
 (add-to-list 'warning-suppress-types '(org-element org-element-parser))
 
+;; * Prevent load outdated .elc files
+;;
+;;   Since emacs 24.4, new option =load-prefer-newer= has been
+;;   introduce, which make me never accidentally using outdated
+;;   compiled files.
+
+(setq load-prefer-newer t)
+
+
 (provide 'early-init)
 ;;; early-init.el ends here
