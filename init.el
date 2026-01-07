@@ -2206,8 +2206,8 @@ This functions should be added to the hooks of major modes for programming."
         (message "Setting up indentation for the linux kernel"))))
 
   (add-hook 'c-mode-hook 'linux-kernel-development-setup)
-  (add-hook 'c++-mode-hook
-            '(lambda ()
+   (add-hook 'c++-mode-hook
+             #'(lambda ()
 
                ;; Use stroustrup style
                (c-set-style "stroustrup")
@@ -2281,6 +2281,11 @@ This functions should be added to the hooks of major modes for programming."
 
 (defun my/cc-mode/highlight-if-0 ()
   "highlight c/c++ #if 0 #endif macros"
+  (defvar cpp-known-face)
+  (defvar cpp-unknown-face)
+  (defvar cpp-known-writable)
+  (defvar cpp-unknown-writable)
+  (defvar cpp-edit-list)
   (setq cpp-known-face 'default)
   (setq cpp-unknown-face 'default)
   (setq cpp-known-writable 't)
@@ -2353,7 +2358,7 @@ this declaration to the kill-ring."
     :ensure t
     :config
     (add-hook 'emacs-lisp-mode-hook
-              '(lambda ()
+              #'(lambda ()
                  ;; enable eldoc
                  (turn-on-eldoc-mode)
                  ;; fix for paredit if exist
