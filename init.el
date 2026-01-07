@@ -75,8 +75,6 @@
 
 ;; * Load Path Setup
 ;;
-;; ** Setup Load path
-;;
 ;;   The variable =load-path= lists all the directories where Emacs
 ;;   should look for emacs-lisp files.
 ;;
@@ -114,9 +112,7 @@
                     (normal-top-level-add-subdirs-to-load-path)))
                  load-path)))))))
 
-;; * Platform-Specific Settings
-;;
-;; ** Under Mac OSX use Command key as ALT
+;; * Under Mac OSX use Command key as ALT
 ;;
 ;;   Under Mac OSX, I always bind =Caps lock= as Control key, and make
 ;;   the =Command= key as =ALT= key like I done in Linux.
