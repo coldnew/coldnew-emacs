@@ -575,18 +575,6 @@
 (use-package goto-last-change
   :ensure t)
 
-;; ** howdoi
-;;
-;;   howdoi is a way to query Stack Overflow directly from the Emacs
-;;   and get back the upvoted answer to the first question that comes
-;;   up for that query.
-;;
-;;   GitHub: https://github.com/atykhonov/emacs-howdoi
-
-(use-package howdoi
-  :defer 2
-  :commands (howdoi-query howdoi-query-line-at-point))
-
 ;; ** hungry-delete
 ;;
 ;;   hungry-delete borrows hungry deletion from =cc-mode=, which will
