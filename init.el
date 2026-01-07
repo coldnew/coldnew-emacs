@@ -1071,28 +1071,6 @@ With argument, do this that many times."
 ;;
 ;;   My own emacs, my own style :)
 ;;
-;; ** General Setups
-;;
-;; *** Turn-off menu bar
-
-(when (featurep 'menu-bar) (menu-bar-mode -1))
-
-;; *** Turn-off tool bar
-
-(when (featurep 'tool-bar) (tool-bar-mode -1))
-
-;; *** Turn-off blinking cursor
-
-(blink-cursor-mode -1)
-
-;; *** Turn-off scroll bar
-
-(when (featurep 'scroll-bar) (scroll-bar-mode -1))
-
-;; *** Turn-off startup screen
-
-(setq inhibit-startup-screen t)
-
 ;; ** Theme
 ;;
 ;;   Before use emacs's =load-theme= function, I advise it to make it
