@@ -293,27 +293,6 @@
 ;;    Use :demand t for packages needed immediately.
 (setq use-package-always-defer t)
 
-;; ** Install straight
-;;
-;;   straight.el is next-generation, purely functional package manager
-;;   for the Emacs hacker. It can integrated with use-package and
-;;   install some packages from fork.
-;;
-;;   GitHub: https://github.com/raxod502/straight.el
-
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
 ;; ** Install paradox
 ;;
 ;;   Project for modernizing Emacs' Package Menu. With improved
@@ -1572,7 +1551,7 @@ return nil since you can't set font for emacs on it."
 ;; ** recentf
 
 (use-package recentf
-  :straight (:type built-in)
+  :ensure t                             ; built-in
   :init (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
   :config
   (recentf-mode 1))
@@ -1735,7 +1714,7 @@ This functions should be added to the hooks of major modes for programming."
 ;;   framework.
 
 (use-package helm
-  :straight t
+  :ensure t
   :demand t  ; Needed for completion at startup
   :init
   (add-hook 'after-init-hook #'helm-mode)
