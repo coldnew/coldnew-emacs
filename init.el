@@ -1,20 +1,59 @@
-;; -*- lexical-binding: t -*-
+;; init.el --- Emacs Configuration
+;; -*- lexical-binding: t; -*-
+;;
+;; My Emacs configuration migrated from org-mode to outshine format.
+;; Use C-c @ to toggle outline-minor-mode for navigation.
+;; All org-mode outline navigation keys work (C-c n/p/f/b).
+;;
+;; * Emacs Compatibility and Core Setup
+;;
+;; ** Make Emacs-26 compatible with Emacs-25
+;;
+;;   Emacs 26 introduce new =switch= bytecode which not contains in
+;;   emacs-25, disable it so I can test both emacs-26 and emacs-27.
 
 (setq byte-compile-cond-use-jump-table nil)
 
+;; ** Use Common Lisp Extension
+;;
+;;   Some of my function may need the Common Lisp Extension, let's
+;;   import libraries first.
+
 (require 'cl-lib)                       ; built-in
+
+;; ** Load extra builtin library
+;;
+;;   Add some extra buildin library I will use in my config file.
 
 (require 'find-lisp)
 
+;; ** Prevent load outdated .elc files
+;;
+;;   Since emacs 24.4, new option =load-prefer-newer= has been
+;;   introduce, which make me never accidentally using outdated
+;;   compiled files.
+
 (setq load-prefer-newer t)
 
-;; We set `user-emacs-directory' here so we can use command-line
-;; switch different emacs configuration like following:
+;; * Directory Variables Setup
 ;;
-;;    emacs -q -l ~/coldnew-spacemacs/init.el
+;; ** Setup user-emacs-directory variable
+;;
+;;   In this configuration, =user-emacs-directory= always refer to the
+;;   emacs configuration's init.el parent directory.
+;;
+;;   We set `user-emacs-directory' here so we can use command-line
+;;   switch different emacs configuration like following:
+;;
+;;      emacs -q -l ~/coldnew-spacemacs/init.el
+
 (defconst user-emacs-directory
   (file-name-directory (or load-file-name (buffer-file-name)))
   "My emacs config directory.")
+
+;; ** Setup user-cache-directory variable
+;;
+;;   Setup the cache directory to store some cache content.
 
 (defconst user-cache-directory
   (file-name-as-directory (concat user-emacs-directory ".cache"))
@@ -22,9 +61,20 @@
 ;; create the `user-cache-directory' if not exists
 (make-directory user-cache-directory t)
 
+;; ** Setup user-modules-directory variable
+;;
+;;   Setup the modules directory to store some submodules and extra
+;;   packages.
+
 (defconst user-modules-directory
   (file-name-as-directory (concat user-emacs-directory "modules"))
   "My emacs storage area for modules.")
+
+;; ** Setup user-ramdisk-directory variable
+;;
+;;   I specify a ramdisk path to make my emacs can save some temporary
+;;   file to it. The ramdisk path should be =~/ramdisk=, if the
+;;   directory not found, use =/tmp= as fallback.
 
 (defconst user-ramdisk-directory
   (let ( (user-ramdisk                   ; ~/ramdisk/
@@ -32,9 +82,23 @@
     ;; if ~/ramdisk/ exist, use it
     (if (file-exists-p user-ramdisk)
         user-ramdisk
-        ;; fallcack to system default ramdisk dir
+        ;; fallback to system default ramdisk dir
         temporary-file-directory))
   "My ramdisk path in system.")
+
+;; * Load Path Setup
+;;
+;; ** Setup Load path
+;;
+;;   The variable =load-path= lists all the directories where Emacs
+;;   should look for emacs-lisp files.
+;;
+;;   Following are my method to add directories to load-path
+;;   ~recursively~, this function also create directory to prevent
+;;   directory not exist.
+;;
+;;   If you don't have any local elisp and all packages is maintain by
+;;   cask or elpa or spacemacs, you can skip following code.
 
 (eval-and-compile
   ;; Add directories to emacs's `load-path' recursively.
@@ -63,29 +127,52 @@
                     (normal-top-level-add-subdirs-to-load-path)))
                  load-path)))))))
 
+;; * Platform-Specific Settings
+;;
+;; ** Under Mac OSX use Command key as ALT
+;;
+;;   Under Mac OSX, I always bind =Caps lock= as Control key, and make
+;;   the =Command= key as =ALT= key like I done in Linux.
+;;
+;;   The =Option= key will be setup as =Super=.
+;;
+;;   I also disable some keys like =⌘-h= bypass to system in emacs-mac
+;;   port.
+
 (when (eq system-type 'darwin)
   (setq-default mac-option-modifier 'super)
   (setq-default mac-command-modifier 'meta))
+
+;; * Customization and Backup
+;;
+;; ** Save custom-file as cache
+;;
+;;   Most of my config is written in this file, it's no need to
+;;   tracking the emacs's custom-setting.
+;;
+;;   I move the file to cache-dir and make git ignore it.
 
 (setq-default custom-file (concat user-cache-directory "custom.el"))
 ;; load custom-file only when file exist
 (when (file-exists-p custom-file)
   (load-file custom-file))
 
-;; load the `load-modules.el' file which help me load external modulept
-(let ((script (concat user-modules-directory "load-modules.el")))
-  (when (file-exists-p script)
-    (load script)))
-
-(unless (string-equal "root" (getenv "USER"))
-  (require 'server)
-  (when (fboundp 'server-running-p)
-    (unless (server-running-p) (server-start))))
+;; ** Setup backup files
+;;
+;;   By default Emacs saves =BackupFiles= under the original name with
+;;   a tilde =~= appended. Example: Editing README will result in
+;;   README and README~ in the same directory.
+;;
+;;   This is primitive and boring.
+;;
+;;   I save my backup files to =~/.emacs.d/.cache/backup= and since is
+;;   always ignore by version control system, it's a nice place to
+;;   store backup files.
 
 (let ((backup-dir (concat user-cache-directory "backup")))
   ;; Move backup file to `~/.emacs.d/.cache/backup'
   (setq backup-directory-alist `(("." . ,backup-dir)))
-  ;; Makesure backup directory exist
+  ;; Make sure backup directory exist
   (when (not (file-exists-p backup-dir))
     (make-directory backup-dir t)))
 
@@ -96,15 +183,56 @@
 (setq delete-old-versions t)
 (setq backup-by-copying t)
 
+;; * Module Loading and Server
+;;
+;; ** Loading Modules
+;;
+;;   I think I'll write some dynamic module extension, which will save
+;;   to =~/.emacs.d/modules=, use a helper script to help me load them.
+
+;; load the `load-modules.el' file which help me load external modulept
+(let ((script (concat user-modules-directory "load-modules.el")))
+  (when (file-exists-p script)
+    (load script)))
+
+;; ** Startup emacs server
+;;
+;;   Only start server mode if I'm not root
+
+(unless (string-equal "root" (getenv "USER"))
+  (require 'server)
+  (when (fboundp 'server-running-p)
+    (unless (server-running-p) (server-start))))
+
+;; * Disable Default Stuff
+;;
+;; ** Turn-off Alarm Bell
+
 (setq ring-bell-function #'ignore)
+
+;; ** Clean scratch buffer messages
+;;
+;;   Leave me a clean **scratch** buffer and I'll be more happy :)
 
 (setq initial-scratch-message "")
 
+;; ** Use visible bell instead of buzzer
+
 (setq visible-bell t)
+
+;; ** Ask for y or n, not yes or no
+;;
+;;   Emacs starts out asking for you to type yes or no with most
+;;   important questions. Just let me use =y= or =n= with no =RET=
+;;   required and I'm quite happy.
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; ** Maximized window after emacs start
+
 (modify-all-frames-parameters '((fullscreen . maximized)))
+
+;; * Personal Information
 
 (setq user-full-name "Yen-Chin, Lee")
 (setq user-mail-address "coldnew.tw@gmail.com")
@@ -113,6 +241,13 @@
   "Load my secret setting include password... etc."
   (let ((secret "~/.secret.el.gpg"))
     (when (file-exists-p secret) (load-file secret))))
+
+;; * Package Management
+;;
+;; ** Add my extra package list
+;;
+;;   melpa contains many community packages that not contribute to
+;;   emacs's elpa, we add here.
 
 (eval-and-compile
   (require 'package)			; built-in
@@ -125,13 +260,33 @@
   (when (< emacs-major-version 24)
     (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))))
 
-;; This must come before configurations of installed packages.
-;; Don't delete this line. If you don't want it, just comment it out by adding a
-;; semicolon to the start of the line. You may delete these explanatory
-;; comments.
+;; ** Initialize package.el
+;;
+;;   Before we start to use =package.el=, we need to initialize it
+;;   first.
+;;
+;;   This must come before configurations of installed packages.
+;;   Don't delete this line. If you don't want it, just comment it out
+;;   by adding a semicolon to the start of the line. You may delete
+;;   these explanatory comments.
+
 (eval-and-compile
   (when (< emacs-major-version 27)
     (package-initialize)))
+
+;; ** Install use-package
+;;
+;;   The =use-package= macro allows you to isolate package configuration
+;;   in your =.emacs= file in a way that is both performance-oriented
+;;   and, well, tidy. I created it because I have over 80 packages that
+;;   I use in Emacs, and things were getting difficult to manage. Yet
+;;   with this utility my total load time is around 2 seconds, with no
+;;   loss of functionality!
+;;
+;;   GitHub: https://github.com/jwiegley/use-package
+;;
+;;   NOTE: use-package is integrated in emacs directly since emacs
+;;   29.1, it's no need to install it manually anymore.
 
 (eval-and-compile
   (unless (package-installed-p 'use-package)
@@ -140,7 +295,13 @@
 
 (eval-when-compile (require 'use-package))
 
-(setq use-package-verbose t)
+;; ** Install straight
+;;
+;;   straight.el is next-generation, purely functional package manager
+;;   for the Emacs hacker. It can integrated with use-package and
+;;   install some packages from fork.
+;;
+;;   GitHub: https://github.com/raxod502/straight.el
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -155,6 +316,14 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+;; ** Install paradox
+;;
+;;   Project for modernizing Emacs' Package Menu. With improved
+;;   appearance, mode-line information. Github integration,
+;;   customizability, asynchronous upgrading, and more.
+;;
+;;   GitHub: https://github.com/Malabarba/paradox
+
 (use-package paradox
   :ensure t
   :commands (paradox-enable)
@@ -165,24 +334,55 @@
         paradox-github-token t
         paradox-display-star-count nil))
 
+;; ** Install some common libraries
+;;
+;;   Some common libraries I'll use in my personal's command or anything else.
+
 (use-package f :ensure t)
 (use-package s :ensure t)
 (use-package dash :ensure t)
 (use-package htmlize :ensure t)
 (use-package async :ensure t)
 
+;; ** Package reporting settings
+
+(setq use-package-verbose t)
+
+;; * Languages and Encodings
+;;
+;;   Add UTF8 at the front of the priority list for automatic detection.
+
 (prefer-coding-system 'utf-8)
+
+;;   Set up multilingual environment to use UTF-8.
 
 (set-language-environment "UTF-8")
 
+;;   Set default value of various coding systems to UTF-8.
+
 (set-default-coding-systems 'utf-8)
 
+;;   Use =C= as locale for display time info (Actually it will display
+;;   English).
+
 (setq system-time-locale "C")
+
+;; * Built-in Packages Cache Redirection
+;;
+;;   Some buildin packages need to add extra setups for my emacs
+;;   setting. Most of them are the cache file, I'll move them to
+;;   =~/.emacs.d/.cache= directory.
+;;
+;; ** abbrev
 
 (eval-after-load 'bookmark
   '(progn
      (setq abbrev-file-name
            (concat user-cache-directory "abbrev_defs"))))
+
+;; ** eshell
+;;
+;;   Move eshell cache dir to =~/.emacs.d/.cache/eshell=
 
 (eval-when-compile (defvar eshell-directory-name)) ; defined in esh-mode.el
 
@@ -194,15 +394,23 @@
   (setq-default eshell-history-file-name
                 (expand-file-name "history" eshell-directory-name)))
 
+;; ** bookmark
+
 (eval-after-load 'bookmark
   '(progn
      (setq-default bookmark-default-file
                    (concat user-cache-directory "bookmarks"))))
 
+;; ** idlwave
+;;
+;;   Major mode for editing IDL source files.
+
 (eval-after-load 'idlwave
   '(progn
      (setq-default idlwave-config-directory
            (concat user-cache-directory "idlwave"))))
+
+;; ** srecode
 
 ;; change srecode cache file path
 (eval-after-load 'srecode
@@ -210,15 +418,21 @@
      (setq-default srecode-map-save-file
                    (concat user-cache-directory "srecode-map.el"))))
 
+;; ** request
+
 (eval-after-load 'request
   '(progn
      (setq-default request-storage-directory
                    (concat user-cache-directory "request"))))
 
+;; ** nsm
+
 (eval-after-load 'nsm
   '(progn
      (setq-default nsm-settings-file
                    (concat user-cache-directory "network-security.data"))))
+
+;; ** url
 
 (eval-after-load 'url
   '(progn
@@ -226,10 +440,11 @@
            (file-name-as-directory
             (concat user-cache-directory "url")))))
 
-;; NOTE:
-;; `auto-save-list-file-prefix' defined in startup.el, but
-;; startup.el doesn't have provide pacage name (provide 'startup)
+;; ** startup
 ;;
+;;   NOTE: `auto-save-list-file-prefix' defined in startup.el, but
+;;   startup.el doesn't have provide pacage name (provide 'startup)
+
 (setq-default auto-save-list-file-prefix
               (cond ((eq system-type 'ms-dos)
                      ;; MS-DOS cannot have initial dot, and allows only 8.3 names
@@ -239,12 +454,38 @@
                      (file-name-as-directory
                       (concat user-cache-directory "auto-save-list/.saves-")))))
 
+;; * External Packages
+;;
+;;   Most of emacs packages do not need many configs or just provide
+;;   commands/functions to use, I put them here.
+;;
+;; ** discover-my-major
+;;
+;;   discover-my-major make you discover key bindings and their meaning
+;;   for the current Emacs major mode.
+;;
+;;   GitHub: https://github.com/steckerhalter/discover-my-major
+
 (use-package discover-my-major
   :defer 2	      ; Install pkg if not exist after 2 sec idle time
   :commands (discover-my-major))
 
+;; ** doxymacs
+;;
+;;   Doxygen is a system for extracting documentation from source code.
+;;   It supports a variety of programming languages, human languages
+;;   and output formats. You can find it at http://www.doxygen.org.
+;;
+;;   doxymacs is emacs's wrapper for Doxygen.
+
 (when (require 'doxymacs nil 'noerror)
   (add-hook 'prog-mode-hook #'(lambda () (doxymacs-mode))))
+
+;; ** esup
+;;
+;;   Benchmark Emacs Startup time without ever leaving your Emacs.
+;;
+;;   GitHub: https://github.com/jschaf/esup
 
 (use-package esup
   :ensure t
@@ -256,47 +497,145 @@
   ;; https://github.com/jschaf/esup/issues/54#issuecomment-651247749
   (setq esup-depth 0))
 
+;; ** exec-path-from-shell
+;;
+;;   exec-path-from-shell is A GNU Emacs library to ensure environment
+;;   variables inside Emacs look the same as in the user's shell.
+;;
+;;   Ever find that a command works in your shell, but not in Emacs?
+;;
+;;   This happens a lot on OS X, where an Emacs instance started from
+;;   the GUI inherits a default set of environment variables.
+;;
+;;   This library works solves this problem by copying important
+;;   environment variables from the user's shell: it works by asking
+;;   your shell to print out the variables of interest, then copying
+;;   them into the Emacs environment.
+;;
+;;   GitHub: https://github.com/purcell/exec-path-from-shell
+
 (use-package exec-path-from-shell
   :ensure t
   :config
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
+;; ** expand-region
+;;
+;;   Expand region increases the selected region by semantic units.
+;;   Just keep pressing the key until it selects what you want.
+;;
+;;   GitHub: https://github.com/magnars/expand-region.el
+
 (use-package expand-region
   :ensure t
   :bind (("M-v" . er/expand-region)))
 
+;; ** fancy-narrow
+;;
+;;   Emacs package to immitate narrow-to-region with more eye-candy.
+;;
+;;   GitHub: https://github.com/Malabarba/fancy-narrow
+
 (use-package fancy-narrow :ensure t)
+
+;; ** focus
+;;
+;;   Focus provides =focus-mode= that dims the text of surrounding
+;;   sections, similar to iA Writer's Focus Mode.
+;;
+;;   GitHub: https://github.com/larstvei/Focus
 
 (use-package focus :ensure t)
 
+;; ** fontawesome
+;;
+;;   Emacs fontawesome utility.
+;;
+;;   GitHub: https://github.com/syohex/emacs-fontawesome
+
 (use-package fontawesome :ensure t)
 
+;; ** google-translate
+;;
+;;   This package allows to translate the strings using Google Translate
+;;   service directly from GNU Emacs.
+;;
+;;   GitHub: https://github.com/atykhonov/google-translate
+
 (use-package google-translate :ensure t)
+
+;; ** goto-last-change
+;;
+;;   Move point through buffer-undo-list positions.
+;;
+;;   GitHub: https://github.com/camdez/goto-last-change.el
 
 (use-package goto-last-change
   :ensure t)
 
+;; ** howdoi
+;;
+;;   howdoi is a way to query Stack Overflow directly from the Emacs
+;;   and get back the upvoted answer to the first question that comes
+;;   up for that query.
+;;
+;;   GitHub: https://github.com/atykhonov/emacs-howdoi
+
 (use-package howdoi
   :defer 2
   :commands (howdoi-query howdoi-query-line-at-point))
+
+;; ** hungry-delete
+;;
+;;   hungry-delete borrows hungry deletion from =cc-mode=, which will
+;;   causes deletion to delete all whitespace in the direction you are
+;;   deleting.
 
 (use-package hungry-delete
   :ensure t
   :config
   (global-hungry-delete-mode))
 
+;; ** iedit
+;;
+;;   iedit let you edit multiple regions in the same way simultaneously.
+;;
+;;   GitHub: https://github.com/victorhge/iedit
+
 (use-package iedit
   :ensure t
   :bind (("C-;" . iedit-mode)))
 
+;; ** manage-minor-mode
+;;
+;;   manage-minor-mode let you manage your minor-mode on the dedicated
+;;   interface buffer.
+;;
+;;   GitHub: https://github.com/ShingoFukuyama/manage-minor-mode
+
 (use-package manage-minor-mode :ensure t)
+
+;; ** mwim
+;;
+;;   This Emacs package provides commands for moving to the
+;;   beginning/end of code or line.
+;;
+;;   GitHub: https://github.com/alezost/mwim.el
 
 (use-package mwim
   :ensure t
   :bind
   (("C-a" . mwim-beginning-of-code-or-line)
    ("C-e" . mwim-end-of-code-or-line)))
+
+;; ** pangu-spacing
+;;
+;;   pangu-spacing is an minor-mode to auto add =space= between Chinese
+;;   and English characters. Note that these white-space characters are
+;;   not really added to the contents, it just like to do so.
+;;
+;;   GitHub: https://github.com/coldnew/pangu-spacing
 
 (use-package pangu-spacing
   :ensure t
@@ -309,9 +648,27 @@
             (lambda ()
               (set (make-local-variable 'pangu-spacing-real-insert-separtor) t))))
 
+;; ** password-generator
+;;
+;;   password-generator provides simple functions to create passwords
+;;   and insert them inside buffer immediately.
+;;
+;;   GitHub: https://github.com/zargener/emacs-password-genarator
+
 (use-package password-generator :ensure t)
 
+;; ** rainbow-mode
+;;
+;;   rainbow-mode is a minor mode for Emacs which displays strings
+;;   representing colors with the color they represent as background.
+
 (use-package rainbow-mode :ensure t)
+
+;; ** smartparens
+;;
+;;   Smartparens is a minor mode for dealing with pairs in Emacs.
+;;
+;;   GitHub: https://github.com/Fuco1/smartparens
 
 (use-package smartparens
   :ensure t
@@ -319,7 +676,21 @@
   :config
   (smartparens-mode 1))
 
+;; ** sx
+;;
+;;   SX is a full featured Stack Exchange mode for GNU Emacs 24+. Using
+;;   the official API, it provides a versatile experience for the Stack
+;;   Exchange network within Emacs itself.
+;;
+;;   GitHub: https://github.com/vermiculus/sx.el/
+
 (use-package sx :ensure t)
+
+;; ** tldr
+;;
+;;   tldr is a collection of simplified and community-driven man pages.
+;;
+;;   GitHub: https://github.com/kuanyui/tldr.el
 
 (use-package tldr
   :defer 2
@@ -328,16 +699,61 @@
   (setq tldr-directory-path (concat user-cache-directory "tldr/"))
   (setq tldr-saved-zip-path (concat user-cache-directory "tldr-source.zip")))
 
+;; ** url-shortener
+;;
+;;   This package can convert long url to tiny url and expand tiny url
+;;   to long url, support: bit.ly, goo.gl, dwz.cn, 126.am
+;;
+;;   GitHub: https://github.com/yuyang0/url-shortener
+
 (use-package url-shortener :ensure t)
+
+;; ** verify-url
+;;
+;;   verify-url is a little tool that used to find out invalid urls in
+;;   the buffer or region.
+;;
+;;   Use =M-x verify-url= to find invalid urls in current buffer.
+;;
+;;   After executed command, you can use =verify-url/next-invalid-url=
+;;   to goto next invalid-url or =verify-url/previous-invalid-url= to
+;;   goto previous one.
+;;
+;;   GitHub: https://github.com/lujun9972/verify-url
 
 (use-package verify-url
   :defer 2
   :commands (verify-url))
 
+;; ** visual-regexp
+;;
+;;   visual-regexp for Emacs is like replace-regexp, but with live
+;;   visual feedback directly in the buffer.
+;;
+;;   GitHub: https://github.com/benma/visual-regexp.el
+
 (use-package visual-regexp :ensure t)
+
+;; ** webpaste
+;;
+;;   webpaste.el allows to paste whole buffers or parts of buffers to
+;;   pastebin-like services. It supports more than one service and
+;;   will failover if one service fails.
+;;
+;;   Supported platform: ix.io, dpaste.com, sprunge.us, dpaste.de
+;;
+;;   GitHub: https://github.com/etu/webpaste.el
 
 (use-package webpaste
   :ensure t)
+
+;; ** which-key
+;;
+;;   which-key is a minor mode for Emacs that displays the key bindings
+;;   following your currently entered incomplete command (a prefix) in
+;;   a popup.
+;;
+;;   GitHub: https://github.com/justbur/emacs-which-key
 
 (use-package which-key
   :ensure t
@@ -360,17 +776,32 @@
       (push (cons (cons nil (concat "\\`" (car nd) "\\'")) (cons nil (cdr nd)))
             which-key-replacement-alist))))
 
+;; * Interactive Commands
+;;
+;;   In emacs, we can use =M-x= to execute interactive commands, I
+;;   implement some of them to make my emacs more easy to use.
+;;
+;;   All my =commands= starts with =my/= prefix.
+;;
+;; ** Buffers
+;;
+;; *** Kill all buffers except *scratch* buffer
+
 (defun my/nuke-all-buffers ()
   "Kill all buffers, leaving *scratch* only."
   (interactive)
   (mapcar (lambda (x) (kill-buffer x)) (buffer-list))
   (delete-other-windows))
 
+;; *** Make emacs can always save buffers (even if file is not modified)
+
 (defun my/save-buffer-always ()
   "Save the buffer even if it is not modified."
   (interactive)
   (set-buffer-modified-p t)
   (save-buffer))
+
+;; *** Abort minibuffer recursive edit
 
 (defun my/minibuffer-keyboard-quit ()
   "Abort recursive edit.
@@ -382,16 +813,22 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
     (abort-recursive-edit)))
 
+;; *** Make buffer untabify
+
 (defun my/untabify-buffer ()
   (interactive)
   (save-excursion
     (untabify (point-min) (point-max))))
+
+;; *** Indent whole buffer
 
 (defun my/indent-whole-buffer ()
   "Indent whole buffer."
   (interactive)
   (save-excursion
     (indent-region (point-min) (point-max))))
+
+;; *** Remove buffers trailing whitespace and untabify
 
 (defun my/cleanup-buffer ()
   "Perform a bunch of operations on the whitespace content of a buffer."
@@ -400,6 +837,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (delete-trailing-whitespace)
     (indent-region (point-min) (point-max))
     (untabify (point-min) (point-max))))
+
+;; *** Replace the preceding sexp with its value
 
 (defun my/eval-and-replace ()
   "Replace the preceding sexp with its value."
@@ -411,11 +850,15 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (error (message "Invalid expression")
            (insert (current-kill 0)))))
 
+;; *** Quick folding source block
+
 (defun my/quick-folding-source ()
   "Use emacs buildin easy to folding code."
   (interactive)
   (set-selective-display
    (if selective-display nil 1)))
+
+;; *** Convert file format between DOS and UNIX
 
 (defun my/dos2unix ()
   "Convert buffer file from dos file to unix file."
@@ -427,10 +870,19 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (interactive)
   (set-buffer-file-coding-system 'undecided-dos 't))
 
+;; ** Edit (Insert/Remove)
+;;
+;; *** Insert U200B char
+;;
+;;   =<U200B>= character is a =zero width space character= which is
+;;   nice to use under org-mode.
+
 (defun my/insert-U200B-char ()
   "Insert <U200B> char, this character is nice use in org-mode."
   (interactive)
   (insert "\ufeff"))
+
+;; *** Insert empty line after current line
 
 (defun my/insert-empty-line ()
   "Insert an empty line after current line and position cursor on newline."
@@ -438,6 +890,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (move-end-of-line nil)
   (open-line 1)
   (forward-line 1))
+
+;; *** Insert lorem ipsum
 
 (defun my/insert-lorem ()
   "Insert a lorem ipsum."
@@ -450,11 +904,15 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
           "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in "
           "culpa qui officia deserunt mollit anim id est laborum."))
 
+;; *** Delete word
+
 (defun my/delete-word (arg)
   "Delete characters forward until encountering the end of a word.
 With argument, do this that many times."
   (interactive "p")
   (delete-region (point) (progn (forward-word arg) (point))))
+
+;; *** Set mark or expand region
 
 (defun my/set-mark-mode/rectangle-mark-mode ()
   "toggle between set-mark-command or rectangle-mark-mode"
@@ -463,11 +921,17 @@ With argument, do this that many times."
      (call-interactively 'set-mark-command)
     (call-interactively 'rectangle-mark-mode)))
 
+;; *** Copy and comments
+
 (defun my/copy-and-comment ()
   "Copy region and comment it."
   (interactive)
   (kill-ring-save (region-beginning) (region-end))
   (comment-dwim nil))
+
+;; ** File Handle
+;;
+;; *** Reopen file as root
 
 (defun my/file-reopen-as-root ()
   (interactive)
@@ -475,6 +939,8 @@ With argument, do this that many times."
     (find-alternate-file
      (concat "/sudo:root@localhost:"
              buffer-file-name))))
+
+;; *** Delete current buffer file
 
 (defun my/delete-current-buffer-file ()
   "Remove file connected to current buffer and kill buffer."
@@ -487,6 +953,8 @@ With argument, do this that many times."
         (delete-file filename)
         (kill-buffer buffer)
         (message "File '%s' successfully removed" filename)))))
+
+;; *** Rename current Buffer and file
 
 (defun my/rename-current-buffer-file ()
   "Renames current buffer and file it is visiting."
@@ -505,6 +973,8 @@ With argument, do this that many times."
           (message "File '%s' successfully renamed to '%s'"
                    name (file-name-nondirectory new-name)))))))
 
+;; *** Add executable attribute to file
+
 (defun my/set-file-executable()
   "Add executable permissions on current file."
   (interactive)
@@ -513,6 +983,8 @@ With argument, do this that many times."
                     (logior (file-modes buffer-file-name) #o100))
     (message (concat "Made " buffer-file-name " executable"))))
 
+;; *** Clone current file to new one
+
 (defun my/clone-file-and-open (filename)
   "Clone the current buffer writing it into FILENAME and open it"
   (interactive "FClone to file: ")
@@ -520,6 +992,8 @@ With argument, do this that many times."
     (widen)
     (write-region (point-min) (point-max) filename nil nil nil 'confirm))
   (find-file filename))
+
+;; *** Show current buffer-file information
 
 (defun my/file-info ()
   "Show current buffer information."
@@ -537,11 +1011,17 @@ With argument, do this that many times."
           (message "%s" mess)))
     nil))
 
+;; ** Debug
+;;
+;; *** Eval emacs buffer until error
+
 (defun my/eval-buffer-until-error ()
   "Evaluate emacs buffer until error occured."
   (interactive)
   (goto-char (point-min))
   (while t (eval (read (current-buffer)))))
+
+;; *** Display face found at the current point
 
 (defun my/what-face (pos)
   "Display face found at the current point."
@@ -550,10 +1030,16 @@ With argument, do this that many times."
                   (get-char-property (point) 'face))))
     (if face (message "Face: %s" face) (message "No face at %d" pos))))
 
+;; *** Reload emacs init config
+
 (defun my/reload-init ()
   "Reload init.el file"
   (interactive)
   (load-file user-init-file))
+
+;; ** Window
+;;
+;; *** Switch to other window or split it
 
 (defun my/other-window-or-split ()
   "Switch to other window or split it."
@@ -561,6 +1047,8 @@ With argument, do this that many times."
   (when (one-window-p)
     (split-window-horizontally))
   (other-window 1))
+
+;; *** Swap left/right windows
 
 (defun my/swap-window-positions ()
   "*Swap the positions of this window and the next one."
@@ -580,15 +1068,36 @@ With argument, do this that many times."
       (set-window-start (selected-window) other-window-start))
     (select-window other-window)))
 
+;; * Styles
+;;
+;;   My own emacs, my own style :)
+;;
+;; ** General Setups
+;;
+;; *** Turn-off menu bar
+
 (when (featurep 'menu-bar) (menu-bar-mode -1))
+
+;; *** Turn-off tool bar
 
 (when (featurep 'tool-bar) (tool-bar-mode -1))
 
+;; *** Turn-off blinking cursor
+
 (blink-cursor-mode -1)
+
+;; *** Turn-off scroll bar
 
 (when (featurep 'scroll-bar) (scroll-bar-mode -1))
 
+;; *** Turn-off startup screen
+
 (setq inhibit-startup-screen t)
+
+;; ** Theme
+;;
+;;   Before use emacs's =load-theme= function, I advise it to make it
+;;   fully unload previous theme before loading a new one.
 
 ;; Make `load-theme' fully unload previous theme before loading a new one.
 (defadvice load-theme
@@ -598,6 +1107,10 @@ With argument, do this that many times."
 (require 'day-coldnew-theme)
 (require 'night-coldnew-theme)
 (load-theme 'night-coldnew t nil)  ; default use `night-coldnew-theme'
+
+;; * Fonts
+;;
+;;   Font configuration for English and CJK characters.
 
 (defvar my/emacs-english-font "Monaco"
   "The font name of English.")
@@ -651,47 +1164,61 @@ return nil since you can't set font for emacs on it."
       (my/set-font my/emacs-english-font my/emacs-cjk-font my/emacs-font-size-pair))))
 
 (defun my/increase-emacs-font-size ()
-  "Decrease emacs's font-size acording emacs-font-size-pair-list."
+  "Decrease emacs's font-size according emacs-font-size-pair-list."
   (interactive) (my/emacs-step-font-size 1))
 
 (defun my/decrease-emacs-font-size ()
-  "Increase emacs's font-size acording emacs-font-size-pair-list."
+  "Increase emacs's font-size according emacs-font-size-pair-list."
   (interactive) (my/emacs-step-font-size -1))
+
+;; ** Setup Keybinds
 
 (bind-keys :map global-map
            ("C-=" . my/increase-emacs-font-size)
            ("C--" . my/decrease-emacs-font-size))
 
+;; * Minibutter
+;;
+;; ** Configuration
+;;
+;; *** Make cursor in minibuffer use bar shape
+
 (when (require 'minibuffer)                  ; buildin
   ;; only use `bar' type of cursor shape
   (add-hook 'minibuffer-setup-hook #'(lambda () (setq cursor-type 'bar)))
+
+;; *** Some helper function to let me insert quick in minibuffer
   ;; define some helper function to insert to minibuffer quickly
   (defun my/minibuffer-insert (p)
     (kill-line 0) (insert p))
-  
+
   (defun my/minibuffer-switch-to-ramdisk ()
     "Insert ramdisk path according to system type"
     (interactive)
     (my/minibuffer-insert user-ramdisk-directory))
-  
+
   (defun my/minibuffer-switch-to-home ()
     "Insert $HOME path."
     (interactive)
     (my/minibuffer-insert (file-name-as-directory (getenv "HOME"))))
-  
+
   (defun my/minibuffer-switch-to-rootdir ()
     "Insert / path."
     (interactive)
     (my/minibuffer-insert "/"))
-  
+
   (defun my/minibuffer-switch-to-tramp ()
     "Insert /ssh:."
     (interactive)
     (my/minibuffer-insert "/ssh:"))
+
+;; *** Save history of minibutter
   (use-package savehist
     :config
     (setq savehist-file (concat user-cache-directory "savehist.dat"))
     (savehist-mode 1))
+
+;; *** Setup Keybindings
   (bind-keys :map minibuffer-local-map
              ("C-w" . backward-kill-word)
              ("M-p" . previous-history-element)
@@ -701,6 +1228,10 @@ return nil since you can't set font for emacs on it."
              ("M-h" . my/minibuffer-switch-to-home)
              ("M-/" . my/minibuffer-switch-to-rootdir)
              ("M-s" . my/minibuffer-switch-to-tramp)))
+
+;; * Vim Emulation
+;;
+;;   Though I am really familiar with emacs, I still like some vim command.
 
 (use-package evil
   :ensure t
@@ -765,13 +1296,10 @@ return nil since you can't set font for emacs on it."
     (kbd "M-v") 'er/expand-region
     (kbd "M-x") 'helm-M-x
     (kbd "M-y") 'helm-show-kill-ring
-    (kbd "M-y") 'helm-show-kill-ring
     (kbd "M-z")   'zzz-to-char
     (kbd "s-<RET>") 'insert-empty-line
     (kbd "s-<SPC>") 'insert-U200B-char
     (kbd "C-x C-d") 'dired
-    ;; (kbd "M-o") 'other-window
-    ;; (kbd "TAB") 'yas/expand
     )
   (evil-ex-define-cmd "ag" 'helm-ag)
   (evil-ex-define-cmd "agi[nteractive]" 'helm-do-ag)
@@ -779,6 +1307,13 @@ return nil since you can't set font for emacs on it."
   (evil-ex-define-cmd "google-suggest" 'helm-google-suggest)
   (evil-ex-define-cmd "gtag" 'ggtags-create-tags)
   (evil-ex-define-cmd "howdoi" 'howdoi-query))
+
+;; ** evil-leader
+;;
+;;   Evil Leader provides the =<leader>= feature from Vim that provides
+;;   an easy way to bind keys under a variable prefix key.
+;;
+;;   GitHub: https://github.com/cofi/evil-leader
 
 (use-package evil-leader
   :ensure t
@@ -800,11 +1335,26 @@ return nil since you can't set font for emacs on it."
     "9" 'select-window-9
     "0" 'select-window-0) )
 
+;; ** evil-surround
+;;
+;;   This package emulates surround.vim by Tim Pope. The functionality
+;;   is wrapped into a minor mode.
+;;
+;;   GitHub: https://github.com/timcharper/evil-surround
+
 (use-package evil-surround
   :ensure t
   :after evil
   :config
   (global-evil-surround-mode 1))
+
+;; ** evil-quickscope
+;;
+;;   This package emulates quick_scope.vim by Brian Le. It highlights
+;;   targets for evil-mode's f,F,t,T keys, allowing for quick
+;;   navigation within a line with no additional mappings.
+;;
+;;   GitHub: https://github.com/blorbx/evil-quickscope
 
 (use-package evil-quickscope
   :ensure t
@@ -812,17 +1362,38 @@ return nil since you can't set font for emacs on it."
   :config
   (add-hook 'prog-mode-hook 'turn-on-evil-quickscope-always-mode))
 
+;; ** evil-terminal-cursor-changer
+;;
+;;   evil-terminal-cursor-changer is changing cursor shape and color
+;;   by evil state for evil-mode. When running in terminal, It's
+;;   especially helpful to recognize evil's state.
+;;
+;;   GitHub: https://github.com/7696122/evil-terminal-cursor-changer
+
 (use-package evil-terminal-cursor-changer
   :ensure t
   :after evil
   :commands (evil-terminal-cursor-changer-activate)
   :config (evil-terminal-cursor-changer-activate))
 
+;; ** vi-tilde-fringe
+;;
+;;   Displays tildes in the fringe on empty lines a la Vi
+;;
+;;   GitHub: https://github.com/syohex/vi-tilde-fringe
+
 (use-package vi-tilde-fringe
   :ensure t
   :if window-system
   :config
   (global-vi-tilde-fringe-mode))
+
+;; ** evil-terminal-cursor-changer (terminal)
+;;
+;;   Make terminal support evil's cursor shape change. This package
+;;   changing cursor shape and color by evil state for evil-mode.
+;;
+;;   Supported terminal: xterm, gnome-terminal, iTerm, konsole.
 
 (use-package evil-terminal-cursor-changer
   :ensure t
@@ -836,6 +1407,15 @@ return nil since you can't set font for emacs on it."
   (setq evil-emacs-state-cursor  'hbar) ; _
   ;; enable this package
   (evil-terminal-cursor-changer-activate))
+
+;; * Editor
+;;
+;;   Why emacs config has an editor section, doesn't means emacs is not
+;;   an editor? Yes, Emacs is an OS :)
+;;
+;;   I put some editor/IDE relative functions and packages here.
+;;
+;; ** Create minor-mode to controll all keybindings
 
 (defvar my-editor-map (make-keymap))
 
@@ -852,14 +1432,32 @@ return nil since you can't set font for emacs on it."
 ;; Gloabal enable
 (global-my-editor-mode t)
 
+;; ** Keeping files in sync
+;;
+;;   By default, Emacs will not update the contents of open buffers
+;;   when a file changes on disk. This is inconvenient when switching
+;;   branches in Git - as you'd risk editing stale buffers.
+
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 (setq revert-without-query '(".*")) ;; disable revert query
 
+;; ** Disable lock file
+;;
+;;   I don't want emacs create some temporary file like =.#-emacs-a08196=,
+;;   disable it.
+
 ;; https://www.emacswiki.org/emacs/LockFiles
 (when (version<= "24.3" emacs-version)
   (setq create-lockfiles nil))
+
+;; ** Add support for editorconfig
+;;
+;;   EditorConfig helps developers define and maintain consistent
+;;   coding styles between different editors and IDEs.
+;;
+;;   GitHub: https://github.com/editorconfig/editorconfig-emacs
 
 (use-package editorconfig
   :ensure t
@@ -868,6 +1466,8 @@ return nil since you can't set font for emacs on it."
   :commands editorconfig-mode
   :init
   (add-hook 'prog-mode-hook #'editorconfig-mode))
+
+;; ** En/Decrypt files by EasyPG
 
 (require 'epa-file)			; part of emacs
 ;; Enable epa, so I can use gnupg in emacs to en/decrypt file
@@ -886,12 +1486,16 @@ return nil since you can't set font for emacs on it."
   ;; Start the Pinentry service
   (pinentry-start))
 
+;; ** Remote file editing
+
 (use-package tramp
   :ensure t
   :init
   (setq tramp-persistency-file-name (concat user-cache-directory "tramp"))
   :config
   (setq tramp-default-method "rsync"))
+
+;; * Line Numbers
 
 (if (version<= "26.1" emacs-version)
     ;; emacs 26.1 has display-line-number-mode, which is written in C
@@ -902,7 +1506,7 @@ return nil since you can't set font for emacs on it."
     ;; for emacs version less than 26, use linum instead
     (use-package linum :ensure t :init (global-linum-mode 1)))
 
-;; disble some mode with linum
+;; disable some mode with linum
 (use-package linum-off
   :ensure t
   :config
@@ -922,16 +1526,24 @@ return nil since you can't set font for emacs on it."
                 (member major-mode linum-disabled-modes-list))
       (display-line-numbers-mode))))
 
+;; * Programming Mode Enhancements
+;;
+;; ** rainbow-delimiters
+
 (use-package rainbow-delimiters
   :ensure t
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+
+;; ** recentf
 
 (use-package recentf
   :straight (:type built-in)
   :init (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
   :config
   (recentf-mode 1))
+
+;; ** highlight-numbers
 
 (use-package highlight-numbers
   :ensure t
@@ -941,6 +1553,8 @@ return nil since you can't set font for emacs on it."
                                (if (not (derived-mode-p 'json-mode))
                                    (highlight-numbers-mode)))))
 
+;; ** highlight-escape-sequences
+
 (use-package highlight-escape-sequences
   :ensure t
   :config
@@ -948,6 +1562,8 @@ return nil since you can't set font for emacs on it."
   (put 'font-lock-regexp-grouping-backslash 'face-alias 'font-lock-builtin-face)
   ;; Enable globally
   (hes-mode 1))
+
+;; ** font-lock-comment-annotations
 
 (defun font-lock-comment-annotations ()
   "Highlight a bunch of well known comment annotations.
@@ -962,6 +1578,8 @@ This functions should be added to the hooks of major modes for programming."
 
 (add-hook 'prog-mode-hook 'font-lock-comment-annotations)
 
+;; ** indent-guide
+
 (use-package indent-guide
   :ensure t
   :config
@@ -971,36 +1589,49 @@ This functions should be added to the hooks of major modes for programming."
 (show-paren-mode 1)
 (setq show-paren-delay 0)               ; no delay
 
+;; ** dtrt-indent
+
 (use-package dtrt-indent
   :ensure t
   :config
   ;; enable dtrt-indent-mode globally
   (dtrt-indent-mode 1))
 
+;; ** whitespace-cleanup-mode
+
 (use-package whitespace-cleanup-mode
   :ensure t
   :config
   (add-hook 'prog-mode-hook 'whitespace-cleanup-mode))
+
+;; ** edit-server
 
 (use-package edit-server
   :ensure t
   :config
   (edit-server-start))
 
+;; ** Tab and completion
+
 (setq tab-always-indent 'complete)
+
+;; ** symbol-overlay
 
 (use-package symbol-overlay
   :ensure t
   :config
   (add-hook 'prog-mode-hook #'symbol-overlay-mode)
-  ;; (global-set-key (kbd "M-i") 'symbol-overlay-put)
   (define-key symbol-overlay-map (kbd "p") 'symbol-overlay-jump-prev) ;; 次のシンボルへ
   (define-key symbol-overlay-map (kbd "n") 'symbol-overlay-jump-next) ;; 前のシンボルへ
   (define-key symbol-overlay-map (kbd "C-g") 'symbol-overlay-remove-all) ;; ハイライトキャンセル
   )
 
+;; ** Mouse wheel
+
 (setq mouse-wheel-scroll-amount '(1)) ; Distance in pixel-resolution to scroll each mouse wheel event.
 (setq mouse-wheel-progressive-speed nil) ; Progressive speed is too fast for me.
+
+;; ** undo-tree
 
 (use-package undo-tree
   :ensure t
@@ -1015,42 +1646,47 @@ This functions should be added to the hooks of major modes for programming."
   ;; global enable undo-tree
   (global-undo-tree-mode))
 
-;; Create *scratch* automatically
+;; ** Create *scratch* automatically
+
 (run-with-idle-timer 1 t
                      #'(lambda ()
                         (unless (get-buffer "*scratch*")
                           (with-current-buffer (get-buffer-create "*scratch*")
                             (lisp-interaction-mode)))))
 
+;; ** uniquify
+
 (use-package uniquify
   :ensure nil                           ; built-in
   :config
   ;; starting separator for buffer name components
   (setq uniquify-separator " • ")
-  ;; rerationalize buffer names after a buffer has been killed.
+  ;; rationalize buffer names after a buffer has been killed.
   (setq uniquify-after-kill-buffer-p t)
   ;; ignore non file buffers
   (setq uniquify-ignore-buffers-re "^\\*"))
 
+;; ** Register configurations
+
 (dolist
     (r `(
-	   ;; emacs's config.org
-	   (?e (file . "~/.emacs.d/init.org"))
-	   ;; tasks: todo
-	   (?t (file . "~/Org/tasks/todo.org"))
-	   ;; tasks: personal
-	   (?p (file . "~/Org/tasks/personal.org"))
-	   ;; tasks: work
-	   (?w (file . "~/Org/tasks/work.org"))
-	   ;; Offilce docs
-	   (?W (file . "~/Org/Weintek/index.org"))
-	   ;; My personal note
-	   (?n (file . "~/Org/Note.org"))
-	   ;; blogging ideas
-	   (?b (file . "~/Org/blog.org"))
-	   ;; Finance
-	   (?f (file . "~/Org/finance/personal.org"))
-	   ))
+         ;; emacs's config.el
+         (?e (file . "~/.emacs.d/init.el"))
+         ;; tasks: todo
+         (?t (file . "~/Org/tasks/todo.org"))
+         ;; tasks: personal
+         (?p (file . "~/Org/tasks/personal.org"))
+         ;; tasks: work
+         (?w (file . "~/Org/tasks/work.org"))
+         ;; Office docs
+         (?W (file . "~/Org/Weintek/index.org"))
+         ;; My personal note
+         (?n (file . "~/Org/Note.org"))
+         ;; blogging ideas
+         (?b (file . "~/Org/blog.org"))
+         ;; Finance
+         (?f (file . "~/Org/finance/personal.org"))
+         ))
   (set-register (car r) (cadr r)))
 
 (bind-keys :map my-editor-map
@@ -1058,6 +1694,11 @@ This functions should be added to the hooks of major modes for programming."
            ;("C-x p" . bm-previous)
            ;("C-x ." . bm-toggle)
            )
+
+;; * Helm
+;;
+;;   Helm is an Emacs incremental completion and selection narrowing
+;;   framework.
 
 (use-package helm
   :straight t
@@ -1091,6 +1732,8 @@ This functions should be added to the hooks of major modes for programming."
 
 (use-package helm-dash :ensure t :after (helm))
 
+;; ** helm-gtags
+
 (use-package helm-gtags
   :ensure t
   :after (helm)
@@ -1103,6 +1746,8 @@ This functions should be added to the hooks of major modes for programming."
   (add-hook 'c-mode-hook #'helm-gtags-mode)
   (add-hook 'c++-mode-hook #'helm-gtags-mode))
 
+;; ** helm-c-yasnippet
+
 (use-package helm-c-yasnippet
   :ensure t
   :after (helm yasnippet)
@@ -1110,6 +1755,11 @@ This functions should be added to the hooks of major modes for programming."
   (setq helm-yas-space-match-any-greedy t))
 
 (use-package helm-smex :ensure t :after (helm))
+
+;; * Org Mode
+;;
+;;   Org-mode is for keeping notes, maintaining TODO lists, and
+;;   project planning with a fast and effective plain-markup system.
 
 (use-package org
   :ensure nil				; built-in
@@ -1135,7 +1785,7 @@ This functions should be added to the hooks of major modes for programming."
   ;; to make easy-template work
   (when (not (version< (org-version) "9.2"))
     (require 'org-tempo))
-  
+
   (add-to-list 'org-structure-template-alist
   	       '("el" . "src emacs-lisp"))
   (add-to-list 'org-structure-template-alist
@@ -1169,20 +1819,20 @@ This functions should be added to the hooks of major modes for programming."
   (setq org-agenda-window-setup 'current-window)
   ;; highlight current in agenda
   (add-hook 'org-agenda-mode-hook 'hl-line-mode)
-  
+
   ;; Setup files for agenda
   (setq org-directory "~/Org/tasks")
-  ;; U all .org files in `org-directory'
+  ;; Use all .org files in `org-directory'
   (setq org-agenda-files
         (find-lisp-find-files org-directory "\.org$"))
   ;;
   (setq org-default-notes-file (f-join org-directory "tasks" "TODO.org"))
-  
+
   ;; Always use `C-g' to exit agenda
   (add-hook 'org-agenda-mode-hook
             #'(lambda ()
                (local-set-key (kbd "C-g") 'org-agenda-exit)))
-  
+
   ;; Use speed command to quick navigating
   (setq org-use-speed-commands t)
   ;; Log timestamp when done
@@ -1216,6 +1866,8 @@ This functions should be added to the hooks of major modes for programming."
   (bind-keys :map org-src-mode-map
              ("C-c C-c" . org-edit-src-exit)))
 
+;; ** org-indent
+
 (use-package org-indent
   :ensure nil				; build-in
   :after (org)
@@ -1223,11 +1875,15 @@ This functions should be added to the hooks of major modes for programming."
   ;; Enable `org-indent-mode' by default
   (add-hook 'org-mode-hook #'(lambda () (org-indent-mode t))))
 
+;; ** org-bullets
+
 (use-package org-bullets
   :ensure t
   :after (org)
   :config
   (add-hook 'org-mode-hook #'(lambda () (org-bullets-mode 1))))
+
+;; ** deft
 
 (use-package deft
   :ensure t
@@ -1270,6 +1926,8 @@ This functions should be added to the hooks of major modes for programming."
           (deft-extensions '("md" "org"))))
     (deft)))
 
+;; ** org-crypt
+
 (use-package org-crypt
   :ensure nil
   :after (org)
@@ -1286,11 +1944,17 @@ This functions should be added to the hooks of major modes for programming."
   ;; Use my own password to encrypt
   (setq org-crypt-key nil))
 
+;; ** org-download
+
 (use-package org-download
   :ensure t
   :config
   ;; add support to dired
   (add-hook 'dired-mode-hook 'org-download-enable))
+
+;; * Documentation and Markup Modes
+;;
+;; ** plantuml-mode
 
 (use-package plantuml-mode
   :ensure t
@@ -1300,13 +1964,19 @@ This functions should be added to the hooks of major modes for programming."
   ;; FIXME: add org-mode support
   )
 
+;; ** bison-mode
+
 (use-package bison-mode
   :ensure t
   :mode ("\\.y\\'" "\\.l\\'" "\\.jison\\'"))
 
+;; ** gn-mode
+
 (use-package gn-mode
   :ensure t
   :mode ("BUILD.gn" "\\.gni?\\'"))
+
+;; ** markdown-mode
 
 (use-package markdown-mode
   :ensure t
@@ -1331,32 +2001,42 @@ This functions should be added to the hooks of major modes for programming."
             (back "^```"))
         (mmm-add-classes (list (list class :submode submode :front front :back back)))
         (mmm-add-mode-ext-class 'markdown-mode nil class)))
-  
+
     ;; Mode names that derive directly from the language name
     (mapc 'my/mmm-markdown-auto-class
           '("awk" "bibtex" "c" "cpp" "css" "html" "latex" "lisp" "makefile"
             "markdown" "python" "r" "ruby" "sql" "stata" "xml" "js")))
   (bind-keys :map markdown-mode-map
              ("C-c i" . markdown-insert-link))
-  
+
   (bind-keys :map gfm-mode-map
              ("C-c i" . markdown-insert-link)))
 
+;; ** nasm-mode
+
 (use-package nasm-mode :ensure t)
+
+;; ** toml-mode
 
 (use-package toml-mode
   :ensure t
   :mode "\\.toml$")
 
+;; ** yaml-mode
+
 (use-package yaml-mode
   :ensure t
   :mode "\\.yml$")
+
+;; ** ess (R mode)
 
 (use-package ess
   :ensure t
   :mode ("\\.[rR]\\'" . R-mode)
   :config
   )
+
+;; ** qml-mode
 
 (use-package qml-mode
   :ensure t
@@ -1367,11 +2047,15 @@ This functions should be added to the hooks of major modes for programming."
     :config
     (add-hook 'qml-mode-hook #'indent-guide-mode)))
 
+;; ** vala-mode
+
 (use-package vala-mode
   :ensure t
   :mode ("\\.vala\\'" "\\.vapi\\'")
   :config
   )
+
+;; ** verilog-mode
 
 (use-package verilog-mode
   :mode ("\\.v\\'")
@@ -1380,18 +2064,26 @@ This functions should be added to the hooks of major modes for programming."
   ;; https://github.com/flycheck/flycheck/issues/1250
   (setq flycheck-verilog-verilator-executable "/usr/bin/verilator_bin"))
 
+;; ** groovy-mode
+
 (use-package groovy-mode
   :mode (("\\.groovy" . groovy-mode)
          ("/Jenkinsfile" . groovy-mode))
   :ensure t)
 
+;; ** svelte-mode
+
 (use-package svelte-mode
   :ensure t
   :mode ("\\.svelte\\'" . svelte-mode))
 
+;; ** dockerfile-mode
+
 (use-package dockerfile-mode
   :ensure t
   :mode "Dockerfile\\'")
+
+;; ** ssh-config-mode
 
 (use-package ssh-config-mode
   :ensure t
@@ -1400,12 +2092,18 @@ This functions should be added to the hooks of major modes for programming."
          ("known_hosts\\'"       . ssh-known-hosts-mode)
          ("authorized_keys\\'"   . ssh-authorized-keys-mode)))
 
+;; ** systemd
+
 (use-package systemd
   :ensure t)
+
+;; ** cmake-mode
 
 (use-package cmake-mode
   :ensure t
   :mode (("CMakeLists\\.txt\\'" . cmake-mode) ("\\.cmake\\'" . cmake-mode)))
+
+;; ** cmake-font-lock
 
 ;; cmake-font-lock: emacs font lock rules for CMake
 ;; https://github.com/Lindydancer/cmake-font-lock
@@ -1413,11 +2111,17 @@ This functions should be added to the hooks of major modes for programming."
   :ensure t
   :config
   (autoload 'cmake-font-lock-activate "cmake-font-lock" nil t)
-(add-hook 'cmake-mode-hook 'cmake-font-lock-activate))
+  (add-hook 'cmake-mode-hook 'cmake-font-lock-activate))
+
+;; ** meson-mode
 
 (use-package meson-mode
   :ensure t
   :mode (("meson\\.build\\'" . meson-mode)))
+
+;; * C/C++ Programming
+;;
+;; ** cc-mode configuration
 
 (use-package cc-mode
   :mode
@@ -1437,7 +2141,7 @@ This functions should be added to the hooks of major modes for programming."
             #'(lambda ()
                (c-set-style "linux")
                (setq c-basic-offset 8)
-               ;; Make TAB equivilent to 8 spaces
+               ;; Make TAB equivalent to 8 spaces
                (setq tab-width 8)))
   (defun c-lineup-arglist-tabs-only (ignored)
     "Line up argument lists by tabs, not spaces"
@@ -1447,7 +2151,7 @@ This functions should be added to the hooks of major modes for programming."
            (steps (floor offset c-basic-offset)))
       (* (max steps 1)
          c-basic-offset)))
-  
+
   ;; Add Linux kernel style
   (add-hook 'c-mode-common-hook
             (lambda ()
@@ -1456,7 +2160,7 @@ This functions should be added to the hooks of major modes for programming."
                                       (arglist-cont-nonempty
                                        c-lineup-gcc-asm-reg
                                        c-lineup-arglist-tabs-only))))))
-  
+
   (defun linux-kernel-development-setup ()
     (let ((filename (buffer-file-name)))
       ;; Enable kernel mode for the appropriate files
@@ -1470,26 +2174,26 @@ This functions should be added to the hooks of major modes for programming."
         (setq c-basic-offset 8)
         (c-set-style "linux-kernel")
         (message "Setting up indentation for the linux kernel"))))
-  
+
   (add-hook 'c-mode-hook 'linux-kernel-development-setup)
   (add-hook 'c++-mode-hook
             '(lambda ()
-  
+
                ;; Use stroustrup style
                (c-set-style "stroustrup")
-  
-               ;; Setting indentation lvel
+
+               ;; Setting indentation level
                (setq c-basic-offset 4)
-  
-               ;; Make TAB equivilent to 4 spaces
+
+               ;; Make TAB equivalent to 4 spaces
                (setq tab-width 4)
-  
+
                ;; Use spaces to indent instead of tabs.
                (setq indent-tabs-mode nil)
-  
+
                ;; Indent the continuation by 2
                (setq c-continued-statement-offset 2)
-  
+
                ;; Brackets should be at same indentation level as the statements they open
                ;; for example:
                ;;                 if (0)        becomes        if (0)
@@ -1497,10 +2201,10 @@ This functions should be added to the hooks of major modes for programming."
                ;;                        ;                         ;
                ;;                     }                        }
                (c-set-offset 'substatement-open 0)
-  
+
                ;; make open-braces after a case
                (c-set-offset 'case-label '+)
-  
+
                ;; Not indent code inside a namespace
                ;; for example:
                ;;                namespace A {
@@ -1521,11 +2225,13 @@ This functions should be added to the hooks of major modes for programming."
              ("C-c C-c" . compile)
              ("C-c C-g" . gdb)
              ("C-c C-o" . cff-find-other-file))
-  
+
   ;; Some keys may override global map add here
   (bind-keys :map c-mode-base-map
              ("M-." . helm-gtags-dwim)
              ("M-," . helm-gtags-pop-stack)))
+
+;; ** c-eldoc
 
 (use-package c-eldoc
   :ensure t
@@ -1535,9 +2241,13 @@ This functions should be added to the hooks of major modes for programming."
                (setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
                (c-turn-on-eldoc-mode))))
 
+;; ** cwarn
+
 (use-package cwarn
   :config
   (add-hook 'c-mode-common-hook #'(lambda () (cwarn-mode 1))))
+
+;; ** cc-mode utilities
 
 (defun my/cc-mode/highlight-if-0 ()
   "highlight c/c++ #if 0 #endif macros"
@@ -1558,14 +2268,20 @@ This functions should be added to the hooks of major modes for programming."
 
 (add-hook 'c-mode-common-hook 'electric-pair-mode)
 
+;; ** srefactor
+
 (use-package srefactor
   :ensure t
   :defer t
   :after (cc-mode))
 
+;; ** cff
+
 (use-package cff
   :ensure t
   :after (cc-mode))
+
+;; ** modern-cpp-font-lock
 
 ;; adds font-lock highlighting for modern C++ upto C++17
 ;; https://github.com/ludwigpacifici/modern-cpp-font-lock
@@ -1574,8 +2290,10 @@ This functions should be added to the hooks of major modes for programming."
   :hook (c++-mode . modern-c++-font-lock-mode)
   :after (cc-mode))
 
+;; ** C utilities
+
 (defun my/c-kill-defun ()
-  "Move backward to the beging of top level declaration and save
+  "Move backward to the beginning of top level declaration and save
 this declaration to the kill-ring."
   (interactive)
   (save-excursion
@@ -1583,10 +2301,16 @@ this declaration to the kill-ring."
      (progn (c-beginning-of-defun) (point))
      (progn (c-end-of-defun)       (point)))))
 
+;; ** clang-format
+
 ;; clang-format: format C/C++ buffers using clang-format
 ;; https://github.com/emacsorphanage/clang-format
 (use-package clang-format
   :ensure t)
+
+;; * Emacs Lisp Development
+;;
+;; ** elisp-mode configuration
 
 (use-package elisp-mode
   :ensure nil            ; built-in
@@ -1610,13 +2334,13 @@ this declaration to the kill-ring."
   (defun my/elisp/check-parens-on-save ()
     "Run `check-parens' when the current buffer is saved."
     (add-hook 'after-save-hook #'check-parens nil 'make-it-local))
-  
-  (add-hook 'emacs-lis-mode
+
+  (add-hook 'emacs-lisp-mode
             (lambda () (my/emacs-lisp/enable-check-parens-on-save)))
   (use-package litable
     :ensure t
     :config
-    ;; Save cache file to `user-cache-direcotry'
+    ;; Save cache file to `user-cache-directory'
     (setq litable-list-file (concat user-cache-directory ".litable-lists.el"))
     ;; Enable litable-mode globally
     (litable-mode))
@@ -1632,20 +2356,25 @@ this declaration to the kill-ring."
               (lambda ()
                 (if (file-exists-p (concat buffer-file-name "c"))
                     (delete-file (concat buffer-file-name "c"))))))
-  
+
   (add-hook 'emacs-lisp-mode-hook 'my/remove-elc-on-save)
       (bind-keys :map emacs-lisp-mode-map
-  ;;               ("C-c '" . my/narrow-or-widen-dwim)
-  ))
+                 ;; ("C-c '" . my/narrow-or-widen-dwim)
+                 ))
+
+;; * Clojure Development
+;;
+;; ** cider
 
 (use-package cider
   :ensure t :defer t
   :config
   (setq
-    cider-repl-history-file ".cider-repl-history"  ;; not squiggly-related, but I like it
-	nrepl-log-messages t)                          ;; not necessary, but useful for trouble-shooting
+    cider-repl-history-file ".cider-repl-history"  ;; not squeggly-related, but I like it
+    nrepl-log-messages t)                          ;; not necessary, but useful for troubleshooting
   (flycheck-clojure-setup))                        ;; run setup *after* cider load
 
+;; ** flycheck-clojure
 
 (use-package flycheck-clojure
   :defer t
@@ -1655,11 +2384,19 @@ this declaration to the kill-ring."
     '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
+;; * Syntax Checking and Linting
+;;
+;; ** flycheck
+
 (use-package flycheck :ensure t)
 (use-package flycheck-pos-tip :ensure t
   :after flycheck)
 
+;; ** magit-gptcommit
+
 (setq vc-handled-backends nil)
+
+;; ** magit
 
 (use-package magit
   :ensure t
@@ -1677,12 +2414,16 @@ this declaration to the kill-ring."
   ;; enable globally
   (git-gutter-mode))
 
+;; ** llm (for AI features)
+
 ;; FIXME:
 (use-package llm
   :ensure t :defer t)
 ;; FIXME:
 (use-package llm-ollama
   :ensure t :defer t)
+
+;; ** magit-gptcommit (AI-assisted commits)
 
 (use-package magit-gptcommit
   :demand t
@@ -1691,20 +2432,27 @@ this declaration to the kill-ring."
   :config
 
   (setq magit-gptcommit-llm-provider
-	(make-llm-ollama
-	 :chat-model "gpt-oss:20b"
-	 :host "127.0.0.1"
-	 :port 11434))
+  	(make-llm-ollama
+  	 :chat-model "gpt-oss:20b"
+  	 :host "127.0.0.1"
+  	 :port 11434))
   ;; add to magit's transit buffer
   (magit-gptcommit-status-buffer-setup)
   :bind (:map git-commit-mode-map
               ("C-c C-g" . magit-gptcommit-commit-accept)))
+
+;; ** flycheck global mode
 
 (use-package flycheck
   :ensure t
   :config
   ;; enable globally
   (global-flycheck-mode))
+
+;; * Tree-sitter Support
+;;
+;;   Tree-sitter is an incremental parsing library. It provides a
+;;   faster and more powerful alternative to built-in Emacs parsing.
 
 (use-package treesit
   :ensure nil 				; build-in since emacs-29.1
@@ -1740,14 +2488,14 @@ this declaration to the kill-ring."
           (ruby       . ("https://github.com/tree-sitter/tree-sitter-ruby"))
           (rust       . ("https://github.com/tree-sitter/tree-sitter-rust"))
           (sql        . ("https://github.com/m-novikov/tree-sitter-sql"))
-          (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
+          (toml       . ("https://github.com/BurntSushi/tree-sitter-toml"))
           (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
           (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
           (vue        . ("https://github.com/merico-dev/tree-sitter-vue"))
           (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml"))
           (zig        . ("https://github.com/GrayJack/tree-sitter-zig")))
         )
-  ;; treesit mode will create lang-ts-mode, take pyton for example, we
+  ;; treesit mode will create lang-ts-mode, take python for example, we
   ;; will have python-mode (native) and python-ts-mode (tree-sitter)
   ;; setup the major-modes we want to override here
   (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
@@ -1771,8 +2519,9 @@ this declaration to the kill-ring."
   ;;(add-to-list 'major-mode-remap-alist '(qml-mode       . qmljs-ts-mode))
   )
 
-(use-package eca
-  :ensure t)
+;; * Snippets and Templates
+;;
+;; ** yasnippet
 
 (use-package yasnippet
   :ensure t
@@ -1786,19 +2535,19 @@ this declaration to the kill-ring."
                                yas-ido-prompt))
   (let ((my-snippet-dir (concat user-emacs-directory "snippets")))
     (if (and (file-exists-p my-snippet-dir)
-  	     (not (member my-snippet-dir yas/snippet-dirs)))
-  	(add-to-list 'yas-snippet-dirs my-snippet-dir)))
+    	     (not (member my-snippet-dir yas/snippet-dirs)))
+      	(add-to-list 'yas-snippet-dirs my-snippet-dir)))
   (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1)))
   (defadvice yas-expand (around major-mode-expand activate)
     "Try to complete a structure template before point like org-mode does.
   This looks for strings like \"<e\" on an otherwise empty line and
   expands them.
   Before use this function, you must setup `major-mode-name'-expand-alist variable.
-  
-  Take emacs-lisp-mode as example, if you wand to use <r to expand your snippet `require'
-  in yasnippet, you muse setup the emacs-lisp-mode-expand-alist variable.
-  
-   (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
+
+   Take emacs-lisp-mode as example, if you want to use <r to expand your snippet `require'
+   in yasnippet, you must setup the emacs-lisp-mode-expand-alist variable.
+
+    (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
     (let* ((l (buffer-substring (pos-bol) (point)))
            (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
            (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
@@ -1813,16 +2562,30 @@ this declaration to the kill-ring."
         t)
       ad-do-it)))
 
+;; * Shell Scripting Support
+;;
+;; ** flymake-shell
+
 (use-package flymake-shell
   :ensure t
   :config (add-hook 'sh-set-shell-hook 'flymake-shell-load))
+
+;; * Embedded Systems Development
+;;
+;; ** bitbake
 
 (use-package bitbake
   :ensure t
   :mode ("\\.bb\\'" "\\.bbappend\\'"))
 
+;; ** dts-mode
+
 (use-package dts-mode :ensure t
   :mode ("\\.dts\\'" "\\.dtsi\\'"))
+
+;; * Dart/Flutter Development
+;;
+;; ** dart-mode
 
 (use-package dart-mode
   :ensure t
@@ -1833,15 +2596,25 @@ this declaration to the kill-ring."
   ;; add flycheck support
   (add-hook 'dart-mode-hook 'flycheck-mode))
 
+;; * Plotting and Diagram Modes
+;;
+;; ** gnuplot
+
 (use-package gnuplot :ensure t
   :commands gnuplot-mode
   :mode "\\.gp$")
+
+;; ** graphviz-dot-mode
 
 (use-package graphviz-dot-mode :ensure t
   :mode "\\.dot\\'"
   :config
   ;; alias `dot-mode' to graphviz-dot-mode
   (defalias 'dot-mode 'graphviz-dot-mode))
+
+;; * Shader Programming
+;;
+;; ** glsl-mode
 
 (use-package glsl-mode :ensure t
   :mode (("\\.vs\\'" . glsl-mode)
@@ -1850,25 +2623,45 @@ this declaration to the kill-ring."
   :config
   (setq glsl-other-file-alist '(("\\.fs$" (".vs")) ("\\.vs$" (".fs")))))
 
+;; * JavaScript/TypeScript Development
+;;
+;; ** js2-mode
+
 (use-package js2-mode
   :ensure t
   :mode "\\.js\\'")
 
+;; ** js2-refactor
+
 (use-package js2-refactor
   :ensure t)
 
+;; ** nvm
+
 (use-package nvm :ensure t)
 
+;; ** import-js
+
 (use-package import-js :ensure t)
+
+;; ** json-mode
 
 (use-package json-mode :ensure t
   :mode "\\.json\\'")
 
+;; ** json-reformat
+
 (use-package json-reformat :ensure t :commands json-reformat-region)
+
+;; ** flymake-json
 
 (use-package flymake-json :ensure t
   :config
   (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
+
+;; * Internationalization
+;;
+;; ** po-mode
 
 (use-package po-mode :ensure t
   :mode "\\.po\\'\\|\\.po\\."
@@ -1881,9 +2674,17 @@ this declaration to the kill-ring."
                                 'po-find-file-coding-system))
   )
 
+;; * Python Development
+;;
+;; ** python-mode
+
 (use-package python
   :mode (("SCons\\(truct\\|cript\\)\\'" . python-mode)
          ("DEPS" . python-mode)))
+
+;; * Ruby Development
+;;
+;; ** ruby-mode
 
 (use-package ruby-mode
   :ensure nil				; built-in
@@ -1892,7 +2693,7 @@ this declaration to the kill-ring."
          ("Rakefile\\'" . ruby-mode)
          ("Vagrantfile\\'" . ruby-mode)
          ("\\.builder\\'"  . ruby-mode)
-         ("\\.gemspec\\'"  . ruby-mode)
+         ("\\.gemspec\\'" . ruby-mode)
          ("\\.irbrc\\'" . ruby-mode)
          ("\\.pryrc\\'" . ruby-mode)
          ("\\.rake\\'"  . ruby-mode)
@@ -1902,6 +2703,10 @@ this declaration to the kill-ring."
   :config
   ;; We never want to edit Rubinius bytecode
   (add-to-list 'completion-ignored-extensions ".rbc"))
+
+;; * Go Development
+;;
+;; ** go-mode
 
 (use-package go-mode
   :ensure t
@@ -1913,8 +2718,8 @@ this declaration to the kill-ring."
       "Hook for running on company-go"
       ;; we only want to use company-go - it's so accurate we won't need
       ;; any other completion engines
-      (set (make-local-variable 'company-backends) '(company-go)))
-    (add-hook 'go-mode-hook 'my/setup-go-mode-company-go))
+      (set (make-local-variable 'company-backends) '(company-go))
+      (add-hook 'go-mode-hook 'my/setup-go-mode-company-go)))
   (defun my/setup-go-mode-gofmt-hook ()
     ;; Use goimports instead of go-fmt
     (setq gofmt-command "goimports")
@@ -1933,6 +2738,10 @@ this declaration to the kill-ring."
     ;; any other completion engines
     (set (make-local-variable 'company-backends) '(company-go)))
   (add-hook 'go-mode-hook 'my/setup-go-mode-company-go))
+
+;; * XML/Configuration Files
+;;
+;; ** nxml-mode
 
 (use-package nxml-mode
   :ensure nil                  ; emacs built-in
@@ -1954,12 +2763,16 @@ this declaration to the kill-ring."
          (setcdr pair 'nxml-mode)))
    auto-mode-alist))
 
+;; * Lisp Development
+;;
+;; ** lispy
+
 (use-package lispy
   :ensure t
   :config
 
   (defun my/up-list (&optional arg)
-    "My special lisp moving stragedy."
+    "My special lisp moving strategy."
     (interactive)
     (or arg (setq arg -1))
     (condition-case ex
@@ -1970,7 +2783,7 @@ this declaration to the kill-ring."
                 (up-list arg)))))
 
   (defun my/down-list (&optional arg)
-    "My special lisp moving stragedy."
+    "My special lisp moving strategy."
     (interactive)
     (or arg (setq arg 1))
     (condition-case ex
@@ -2012,14 +2825,22 @@ this declaration to the kill-ring."
 
 (global-prettify-symbols-mode 1)
 
+;; * Web Development
+;;
+;; ** web-mode
+
 (use-package web-mode
   :ensure t
   :mode (("\\.html?\\'" . web-mode)
          ("\\.ejs?\\'" . web-mode)))
 
+;; ** css-mode
+
 (use-package css-mode
   :ensure nil				; built-in
   :mode "\\.css\\'")
+
+;; ** css-eldoc
 
 (use-package css-eldoc
   :ensure t
@@ -2028,9 +2849,13 @@ this declaration to the kill-ring."
   (add-hook 'scss-mode-hook 'turn-on-css-eldoc)
   (add-hook 'less-css-mode-hook 'turn-on-css-eldoc))
 
+;; ** less-css-mode
+
 (use-package less-css-mode
   :ensure t
   :mode ("\\.less$" . less-css-mode))
+
+;; ** scss-mode
 
 (use-package scss-mode
   :ensure t
@@ -2041,9 +2866,17 @@ this declaration to the kill-ring."
 
 (use-package mustache-mode :mode "\\.mustache$" :ensure t)
 
+;; * Terminal Support
+;;
+;; ** term handling
+
 (defadvice term-handle-exit (after kill-buffer-after-exit activate)
   "Kill the term buffer if the process finished."
   (kill-buffer (current-buffer)))
+
+;; * Eshell Configuration
+;;
+;;   Eshell is a command shell written in Emacs Lisp.
 
 (use-package eshell
   :config
@@ -2055,7 +2888,7 @@ this declaration to the kill-ring."
            (concat
             user-login-name "@" system-name " "
             (if (cl-search (directory-file-name (expand-file-name (getenv "HOME"))) (eshell/pwd))
-  	      (replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
+            	      (replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
               (eshell/pwd))
             (if (= (user-uid) 0) " # " " $ "))))
   ;; Add color for eshell prompt like Gentoo does
@@ -2077,13 +2910,13 @@ this declaration to the kill-ring."
         '("less" "tmux" "htop" "top" "bash" "zsh" "fish" "ssh" "tail"
           "vi" "vim" "screen" "less" "more" "lynx" "ncftp" "pine" "tin"
           "nmtui" "alsamixer"))
-  
+
   (setq eshell-visual-subcommands
         '(("git" "log" "diff" "show")))
   ;; FIXME: why this will still global-map ?
   ;; (bind-keys :map eshell-mode-map
   ;;            ("C-u" . eshell-kill-input))
-  
+
   (add-hook 'eshell-mode-hook
             (lambda ()
               (define-key eshell-mode-map (kbd "C-u") 'eshell-kill-input))))
@@ -2093,6 +2926,8 @@ this declaration to the kill-ring."
 (use-package esh-autosuggest
   :hook (eshell-mode . esh-autosuggest-mode)
   :ensure t)
+
+;; ** Eshell commands
 
 (defun eshell/.. (&optional level)
   "Go up LEVEL directories"
@@ -2115,7 +2950,7 @@ this declaration to the kill-ring."
       ;; Emacs, which is rather silly since I'm already in Emacs.
       ;; So just pretend to do what I ask.
       (bury-buffer)
-    ;; We have to expand the file names or else naming a directory in an
+    ;; We have to expand the file names or else naming a directory in a
     ;; argument causes later arguments to be looked for in that directory,
     ;; not the starting directory
     (mapc #'find-file (mapcar #'expand-file-name (flatten-tree (reverse args))))))
@@ -2124,20 +2959,24 @@ this declaration to the kill-ring."
 
 (defun eshell/unpack (file)
   (let ((command (cl-some (lambda (x)
-                         (if (string-match-p (car x) file)
-                             (cadr x)))
-                       '((".*\.tar.bz2" "tar xjf")
-                         (".*\.tar.gz" "tar xzf")
-                         (".*\.bz2" "bunzip2")
-                         (".*\.rar" "unrar x")
-                         (".*\.gz" "gunzip")
-                         (".*\.tar" "tar xf")
-                         (".*\.tbz2" "tar xjf")
-                         (".*\.tgz" "tar xzf")
-                         (".*\.zip" "unzip")
-                         (".*\.Z" "uncompress")
-                         (".*" "echo 'Could not unpack the file:'")))))
+                          (if (string-match-p (car x) file)
+                              (cadr x)))
+                        '((".*\.tar.bz2" "tar xjf")
+                          (".*\.tar.gz" "tar xzf")
+                          (".*\.bz2" "bunzip2")
+                          (".*\.rar" "unrar x")
+                          (".*\.gz" "gunzip")
+                          (".*\.tar" "tar xf")
+                          (".*\.tbz2" "tar xjf")
+                          (".*\.tgz" "tar xzf")
+                          (".*\.zip" "unzip")
+                          (".*\.Z" "uncompress")
+                          (".*" "echo 'Could not unpack the file:'")))))
     (eshell-command-result (concat command " " file))))
+
+;; * Window Management
+;;
+;; ** winner-mode
 
 (use-package winner                     ; builtin
   :commands (winner-undo winner-redo)
@@ -2147,17 +2986,32 @@ this declaration to the kill-ring."
   ;; Start winner-mode globally
   (winner-mode t))
 
+;; ** eyebrowse
+
 (use-package eyebrowse
   :ensure t
   :config
   ;; enable eyebrowse globally
   (eyebrowse-mode t))
 
+;; ** window-numbering
+
 (use-package window-numbering
   :ensure t)
+
+;; ** Keybindings
 
 (bind-keys :map global-map
            ("C-x C-s" . my/save-buffer-always))
 
+;; * Local Personal Configuration
+;;
+;;   Load personal settings if available.
+
 (let ((secret "~/.personal.el"))
   (when (file-exists-p secret) (load-file secret)))
+
+;; * Final sections
+
+(provide 'init.el)
+;;; init.el ends here
