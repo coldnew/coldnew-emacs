@@ -16,13 +16,6 @@
 ;;
 ;; * Emacs Compatibility and Core Setup
 ;;
-;; ** Make Emacs-26 compatible with Emacs-25
-;;
-;;   Emacs 26 introduce new =switch= bytecode which not contains in
-;;   emacs-25, disable it so I can test both emacs-26 and emacs-27.
-
-(setq byte-compile-cond-use-jump-table nil)
-
 ;; ** Use Common Lisp Extension
 ;;
 ;;   Some of my function may need the Common Lisp Extension, let's
@@ -2350,11 +2343,24 @@ this declaration to the kill-ring."
                 (if (file-exists-p (concat buffer-file-name "c"))
                     (delete-file (concat buffer-file-name "c"))))))
 
-  (add-hook 'emacs-lisp-mode-hook 'my/remove-elc-on-save)
-      (bind-keys :map emacs-lisp-mode-map
-                 ;; ("C-c '" . my/narrow-or-widen-dwim)
-                 ))
+    (add-hook 'emacs-lisp-mode-hook 'my/remove-elc-on-save)
+   (bind-keys :map emacs-lisp-mode-map
+              ;; ("C-c '" . my/narrow-or-widen-dwim)
+              )
 
+  ;; *** outshine-mode
+  ;;    Enable outshine-mode for org-mode-like navigation in elisp files.
+  ;;    Use C-c @ to toggle visibility, C-c n/p/f/b to navigate headings.
+  (use-package outshine
+    :ensure t
+    :diminish outshine-mode
+    :config
+    ;; Enable outshine-mode for emacs-lisp-mode
+    (add-hook 'emacs-lisp-mode-hook 'outshine-mode)
+    ;; Set outline-minor-mode prefix to C-c @ (same as outshine default)
+    (setq outline-minor-mode-prefix (kbd "C-c @"))
+    ;; Start with bodies hidden (show only headings)
+    (setq outshine-start-level 1)))
 ;; * Clojure Development
 ;;
 ;; ** cider
