@@ -2,13 +2,13 @@
 
 ## Build Commands
 
-- `make` or `make all` - Generate init.el from init.org and compile
-- `make init.el` - Generate init.el from org-mode files only
+- `make` or `make all` - Compile all .el files (uses native-compile if available, Emacs 28+)
 - `make compile` - Compile all .el files (byte-compile or native-compile)
 - `make byte-compile` - Force byte-compilation
 - `make native-compile` - Force native compilation (Emacs 28+)
-- `make clean` - Remove generated files (*.elc, init.el)
+- `make clean` - Remove generated files (*.elc, *.eln-cache)
 - `make test` - Clean and rebuild configuration
+- `make verify-outshine` - Show outshine heading statistics
 
 ## Test Commands
 
@@ -28,7 +28,7 @@
 ### Imports/Requires
 - Group requires at top of file: built-ins first, then third-party packages
 - Use `require` with feature symbols, not file paths
-- Use `use-package` for complex package configurations in init.org
+- Use `use-package` for package configurations
 
 ### Formatting
 - 2-space indentation for Emacs Lisp
@@ -47,8 +47,43 @@
 - Include Commentary section explaining file purpose
 - Use proper function signatures with argument types in docstrings
 
-### Org-mode Configuration
-- Use `:tangle yes` for code blocks that should generate .el files
-- Organize with proper heading structure (* ** ***)
-- Use `:noweb yes` for code reuse between blocks
-- Include `:results silent` for side-effect code blocks
+### Outshine Format (init.el)
+- Use outshine headings instead of org-mode tangling: `;; * Section`, `;; ** Subsection`
+- Navigation: `C-c @` to toggle outline-minor-mode, `C-c n/p/f/b` to navigate
+- All configuration is in init.el directly (no org-mode tangling)
+
+## Architecture
+
+### Package Management
+- Uses built-in `package.el` with MELPA/GNU ELPA
+- Use `:ensure t` in use-package for package installation
+- No straight.el - removed for simplicity
+- Global setting: `(setq use-package-always-defer t)` - packages load lazily by default
+- Use `:demand t` for packages needed at startup (evil, helm→vertico, which-key, etc.)
+
+### Completion Framework (Vertico Stack)
+- **vertico** - Vertical completion UI
+- **consult** - Useful commands (consult-find, consult-buffer, consult-line, etc.)
+- **marginalia** - Rich annotations for completions
+- **orderless** - Flexible completion style (space-separated components)
+
+### Keybindings
+- All keybindings are **centralized** in the "Centralized Keybindings" section at end of init.el
+- Organized by category:
+  - Global Keybindings (non-evil)
+  - Minibuffer Keybindings
+  - Evil Normal State Keybindings
+  - Evil Insert State Keybindings
+  - Evil Ex Commands
+  - Major Mode Specific Keybindings (org-mode, markdown, c-mode, etc.)
+- Do NOT scatter keybindings throughout package configurations - put them in the centralized section
+
+### Configuration Structure
+- `early-init.el` - Early startup settings (before package initialization)
+- `init.el` - Main configuration with outshine headings
+- `modules/load-modules.el` - Load additional modules
+- `.personal.el` - Local personal settings (loaded at end)
+
+### Language Server Support
+- Various language modes configured (go-mode, rust-mode, python, etc.)
+- Check existing patterns in init.el before adding new language configurations
