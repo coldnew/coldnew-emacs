@@ -16,22 +16,20 @@
 ;;
 ;; * Emacs Compatibility and Core Setup
 ;;
-;; ** Use Common Lisp Extension
+;; Use Common Lisp Extension
 ;;
 ;;   Some of my function may need the Common Lisp Extension, let's
 ;;   import libraries first.
 
 (require 'cl-lib)                       ; built-in
 
-;; ** Load extra builtin library
+;; Load extra builtin library
 ;;
 ;;   Add some extra buildin library I will use in my config file.
 
 (require 'find-lisp)
 
 ;; * Directory Variables Setup
-;;
-;; ** Setup user-emacs-directory variable
 ;;
 ;;   In this configuration, =user-emacs-directory= always refer to the
 ;;   emacs configuration's init.el parent directory.
@@ -45,8 +43,6 @@
   (file-name-directory (or load-file-name (buffer-file-name)))
   "My emacs config directory.")
 
-;; ** Setup user-cache-directory variable
-;;
 ;;   Setup the cache directory to store some cache content.
 
 (defconst user-cache-directory
@@ -55,8 +51,6 @@
 ;; create the `user-cache-directory' if not exists
 (make-directory user-cache-directory t)
 
-;; ** Setup user-modules-directory variable
-;;
 ;;   Setup the modules directory to store some submodules and extra
 ;;   packages.
 
@@ -64,7 +58,6 @@
   (file-name-as-directory (concat user-emacs-directory "modules"))
   "My emacs storage area for modules.")
 
-;; ** Setup user-ramdisk-directory variable
 ;;
 ;;   I specify a ramdisk path to make my emacs can save some temporary
 ;;   file to it. The ramdisk path should be =~/ramdisk=, if the
