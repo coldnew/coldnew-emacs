@@ -640,19 +640,6 @@
 
 (use-package sx :ensure t)
 
-;; ** tldr
-;;
-;;   tldr is a collection of simplified and community-driven man pages.
-;;
-;;   GitHub: https://github.com/kuanyui/tldr.el
-
-(use-package tldr
-  :defer 2
-  :commands (tldr)
-  :config
-  (setq tldr-directory-path (concat user-cache-directory "tldr/"))
-  (setq tldr-saved-zip-path (concat user-cache-directory "tldr-source.zip")))
-
 ;; ** url-shortener
 ;;
 ;;   This package can convert long url to tiny url and expand tiny url
