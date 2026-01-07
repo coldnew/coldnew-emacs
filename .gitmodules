@@ -1,6 +1,3 @@
 [submodule "modules/emacs"]
 	path = modules/emacs
 	url = https://github.com/emacs-mirror/emacs.git
-[submodule "modules/libvterm"]
-	path = modules/libvterm
-	url = https://github.com/akermu/emacs-libvterm.git
