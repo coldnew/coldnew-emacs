@@ -1,9 +1,18 @@
-;; init.el --- Emacs Configuration
-;; -*- lexical-binding: t; -*-
+;; init.el --- coldnew's Emacs Configuration  -*- lexical-binding: t -*-
+
+;; Copyright (C) 2010-2026 Yen-Chin, Lee <coldnew.tw@gmail.com>
+
+;;; Commentary:
+
 ;;
 ;; My Emacs configuration migrated from org-mode to outshine format.
 ;; Use C-c @ to toggle outline-minor-mode for navigation.
 ;; All org-mode outline navigation keys work (C-c n/p/f/b).
+
+;; This file is NOT part of GNU Emacs.
+
+;;; Code:
+
 ;;
 ;; * Emacs Compatibility and Core Setup
 ;;
@@ -2418,7 +2427,11 @@ this declaration to the kill-ring."
 
 ;; FIXME:
 (use-package llm
-  :ensure t :defer t)
+  :ensure t :defer t
+  :config
+   ;; Should not throw any warning message on non-free LLM
+  (setq llm-warn-on-nonfree nil))
+
 ;; FIXME:
 (use-package llm-ollama
   :ensure t :defer t)
