@@ -548,6 +548,7 @@
 
 (use-package hungry-delete
   :ensure t
+  :defer t
   :config
   (global-hungry-delete-mode))
 
@@ -1188,7 +1189,7 @@ return nil since you can't set font for emacs on it."
              ("C-w" . backward-kill-word)
              ("M-p" . previous-history-element)
              ("M-n" . next-history-element)
-             ("C-g" . minibuffer-keyboard-quit)
+             ("C-g" . my/minibuffer-keyboard-quit)
              ("M-t" . my/minibuffer-switch-to-ramdisk)
              ("M-h" . my/minibuffer-switch-to-home)
              ("M-/" . my/minibuffer-switch-to-rootdir)
@@ -1213,66 +1214,66 @@ return nil since you can't set font for emacs on it."
   (define-key evil-insert-state-map [escape] 'evil-normal-state)
   (dolist (m evil-emacs-state-modes)
     (add-to-list 'evil-insert-state-modes m))
-  ;; extra keybindings defined in `Keybinding' section
-  (evil-define-key 'normal my-editor-map
-      (kbd "C-x C-f") 'helm-find-files
-      (kbd "C-x C-q") 'read-only-mode
-      (kbd "C-x M-1") 'deft-or-close
-      (kbd "C-x M-2") 'eshell
-      (kbd "C-x M-3") 'mu4e
-      (kbd "C-x M-4") 'erc-start-or-switch
-      (kbd "C-x vl") 'magit-log
-      (kbd "C-x vp") 'magit-push
-      (kbd "C-x vs") 'magit-status
-      (kbd "C-x b") 'helm-buffers-list
-      (kbd "M-[") 'winner-undo
-      (kbd "M-]") 'winner-redo
-      (kbd "M-x") 'helm-M-x
-      (kbd "M-s") 'helm-occur
-      (kbd "C-x C-o") 'other-frame
-      (kbd "M-o") 'other-window)
-  (evil-define-key 'insert my-editor-map
-    (kbd "<delete>") 'hungry-delete-backward
-    (kbd "C-;") 'iedit-mode
-    (kbd "C-d") 'hungry-delete-forward
-    (kbd "C-l") 'hungry-delete-backward
-    (kbd "C-n") 'evil-next-line
-    (kbd "C-o") 'evil-execute-in-normal-state
-    (kbd "C-p") 'evil-previous-line
-    (kbd "C-v") 'set-mark-mode/rectangle-mark-mode
-    (kbd "C-w") 'backward-kill-word
-    (kbd "C-x C-f") 'helm-find-files
-    (kbd "C-x C-n") 'company-complete
-    (kbd "C-x C-o") 'other-frame
-    (kbd "C-x C-q") 'read-only-mode
-    (kbd "C-x M-1") 'deft-or-close
-    (kbd "C-x M-2") 'eshell
-    (kbd "C-x M-3") 'mu4e
-    (kbd "C-x M-4") 'erc-start-or-switch
-    (kbd "C-x T") 'sane-term
-    (kbd "C-x b") 'helm-buffers-list
-    (kbd "C-x t") 'sane-term
-    (kbd "C-x vl") 'magit-log
-    (kbd "C-x vp") 'magit-push
-    (kbd "C-x vs") 'magit-status
-    (kbd "M-<SPC>") 'insert-U200B-char
-    (kbd "M-[") 'winner-undo
-    (kbd "M-]") 'winner-redo
-    (kbd "M-s") 'helm-occur
-    (kbd "M-v") 'er/expand-region
-    (kbd "M-x") 'helm-M-x
-    (kbd "M-y") 'helm-show-kill-ring
-    (kbd "M-z")   'zzz-to-char
-    (kbd "s-<RET>") 'insert-empty-line
-    (kbd "s-<SPC>") 'insert-U200B-char
-    (kbd "C-x C-d") 'dired
-    )
-  (evil-ex-define-cmd "ag" 'helm-ag)
-  (evil-ex-define-cmd "agi[nteractive]" 'helm-do-ag)
-  (evil-ex-define-cmd "google" 'helm-google)
-  (evil-ex-define-cmd "google-suggest" 'helm-google-suggest)
-  (evil-ex-define-cmd "gtag" 'ggtags-create-tags)
-  (evil-ex-define-cmd "howdoi" 'howdoi-query))
+   ;; extra keybindings defined in `Keybinding' section
+   (evil-define-key 'normal my-editor-map
+       (kbd "C-x C-f") 'find-file
+       (kbd "C-x C-q") 'read-only-mode
+       (kbd "C-x M-1") 'deft-or-close
+       (kbd "C-x M-2") 'eshell
+       (kbd "C-x M-3") 'mu4e
+       (kbd "C-x M-4") 'erc-start-or-switch
+       (kbd "C-x vl") 'magit-log
+       (kbd "C-x vp") 'magit-push
+       (kbd "C-x vs") 'magit-status
+       (kbd "C-x b") 'switch-to-buffer
+       (kbd "M-[") 'winner-undo
+       (kbd "M-]") 'winner-redo
+        (kbd "M-x") 'execute-extended-command
+       (kbd "M-s") 'consult-line
+       (kbd "C-x C-o") 'other-frame
+       (kbd "M-o") 'other-window)
+   (evil-define-key 'insert my-editor-map
+     (kbd "<delete>") 'hungry-delete-backward
+     (kbd "C-;") 'iedit-mode
+     (kbd "C-d") 'hungry-delete-forward
+     (kbd "C-l") 'hungry-delete-backward
+     (kbd "C-n") 'evil-next-line
+     (kbd "C-o") 'evil-execute-in-normal-state
+     (kbd "C-p") 'evil-previous-line
+     (kbd "C-v") 'set-mark-mode/rectangle-mark-mode
+     (kbd "C-w") 'backward-kill-word
+     (kbd "C-x C-f") 'find-file
+     (kbd "C-x C-n") 'company-complete
+     (kbd "C-x C-o") 'other-frame
+     (kbd "C-x C-q") 'read-only-mode
+     (kbd "C-x M-1") 'deft-or-close
+     (kbd "C-x M-2") 'eshell
+     (kbd "C-x M-3") 'mu4e
+     (kbd "C-x M-4") 'erc-start-or-switch
+     (kbd "C-x T") 'sane-term
+     (kbd "C-x b") 'switch-to-buffer
+     (kbd "C-x t") 'sane-term
+     (kbd "C-x vl") 'magit-log
+     (kbd "C-x vp") 'magit-push
+     (kbd "C-x vs") 'magit-status
+     (kbd "M-<SPC>") 'insert-U200B-char
+     (kbd "M-[") 'winner-undo
+     (kbd "M-]") 'winner-redo
+     (kbd "M-s") 'consult-line
+     (kbd "M-v") 'er/expand-region
+     (kbd "M-x") 'execute-extended-command
+     (kbd "M-y") 'consult-yank-pop
+     (kbd "M-z")   'zzz-to-char
+      (kbd "s-<RET>") 'insert-empty-line
+      (kbd "s-<SPC>") 'insert-U200B-char
+      (kbd "C-x C-d") 'dired
+      )
+   (evil-ex-define-cmd "ag" 'consult-ag)
+   (evil-ex-define-cmd "agi[nteractive]" 'consult-ag)
+   (evil-ex-define-cmd "google" 'consult-google)
+   (evil-ex-define-cmd "google-suggest" 'consult-google-suggest)
+   (evil-ex-define-cmd "gtag" 'ggtags-create-tags)
+   (evil-ex-define-cmd "howdoi" 'howdoi-query))
 
 ;; ** evil-leader
 ;;
@@ -1662,65 +1663,53 @@ This functions should be added to the hooks of major modes for programming."
            ;("C-x ." . bm-toggle)
            )
 
-;; * Helm
+;; * Completion
 ;;
-;;   Helm is an Emacs incremental completion and selection narrowing
-;;   framework.
+;;   Modern completion framework with Vertico, Consult, Marginalia, and Orderless.
+;;   Much faster and more modular than helm.
 
-(use-package helm
+(use-package vertico
   :ensure t
-  :demand t  ; Needed for completion at startup
-  :init
-  (add-hook 'after-init-hook #'helm-mode)
-  (add-hook 'after-init-hook #'helm-autoresize-mode)
-  (add-hook 'after-init-hook #'helm-adaptive-mode)
-  (add-hook 'after-init-hook #'helm-popup-tip-mode)
+  :demand t
   :config
-  ;; Use fuzzy match in helm
-  (setq helm-M-x-fuzzy-match t)
-  (setq helm-buffers-fuzzy-matching t)
-  (setq helm-recentf-fuzzy-match t)
-  ;; make helm can select anything even not match
-  (setq helm-move-to-line-cycle-in-source nil)
-  (setq helm-ff-search-library-in-sexp t)
-  (setq helm-ff-file-name-history-use-recentf t)
-  (bind-keys :map helm-map
-             ("TAB"   . helm-execute-persistent-action)
-             ("<tab>" . helm-execute-persistent-action)
-             ("C-w"   . backward-kill-word)
-             ("M-t" . my/minibuffer-switch-to-ramdisk)
-             ("M-h" . my/minibuffer-switch-to-home)
-             ("M-/" . my/minibuffer-switch-to-rootdir)
-             ("M-s" . my/minibuffer-switch-to-tramp)
-             ("C-z" . helm-select-action)))
+  (vertico-mode 1)
+  ;; Show more candidates (default is 10)
+  (setq vertico-count 15)
+  ;; Resize vertico window to fit content
+  (setq vertico-resize t))
 
-(use-package helm-bm :ensure t :after (helm))
-
-(use-package helm-dash :ensure t :after (helm))
-
-;; ** helm-gtags
-
-(use-package helm-gtags
+(use-package consult
   :ensure t
-  :after (helm)
-  :config
-  (setq helm-gtags-ignore-case t)
-  (setq helm-gtags-auto-update t)
-  (setq helm-gtags-use-input-at-cursor t)
-  (setq helm-gtags-pulse-at-cursor t)
-  ;; add to following modes
-  (add-hook 'c-mode-hook #'helm-gtags-mode)
-  (add-hook 'c++-mode-hook #'helm-gtags-mode))
+  :demand t
+  :bind (("C-x C-f" . find-file)
+         ("C-x b" . switch-to-buffer)
+         ("M-s" . consult-line)
+         ("M-y" . consult-yank-pop)
+         ("C-x C-r" . consult-recent-file)
+         ("C-c g" . consult-gnus)
+         ("C-c h" . consult-history))
+   :config
+   (setq consult-preview-key '(:debounce 0.2 any))
+   ;; Use consult for grep/ag search
+   (setq consult-async-refresh-debounce 0.2)
+   (setq consult-async-input-throttle 0.1)
+   ;; Customize consult-line for better display
+   (consult-customize consult-line
+     :preview-key '(:debounce 0.3 any)
+     ;; Show more context in preview (lines before/after match)
+     (setq consult-line-numbers-widen t)))
 
-;; ** helm-c-yasnippet
-
-(use-package helm-c-yasnippet
+(use-package marginalia
   :ensure t
-  :after (helm yasnippet)
+  :demand t
   :config
-  (setq helm-yas-space-match-any-greedy t))
+  (marginalia-mode 1))
 
-(use-package helm-smex :ensure t :after (helm))
+(use-package orderless
+  :ensure t
+  :demand t
+  :config
+  (setq completion-styles '(orderless basic)))
 
 ;; * Org Mode
 ;;
@@ -2201,10 +2190,10 @@ This functions should be added to the hooks of major modes for programming."
              ("C-c C-g" . gdb)
              ("C-c C-o" . cff-find-other-file))
 
-  ;; Some keys may override global map add here
-  (bind-keys :map c-mode-base-map
-             ("M-." . helm-gtags-dwim)
-             ("M-," . helm-gtags-pop-stack)))
+   ;; Some keys may override global map add here
+   (bind-keys :map c-mode-base-map
+              ("M-." . ggtags-find-tag-dwim)
+              ("M-," . ggtags-find-tag-return)))
 
 ;; ** c-eldoc
 
