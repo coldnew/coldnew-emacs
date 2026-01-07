@@ -1209,7 +1209,7 @@ return nil since you can't set font for emacs on it."
       (kbd "C-v") 'set-mark-mode/rectangle-mark-mode
       (kbd "C-w") 'backward-kill-word
       (kbd "C-x C-f") 'find-file
-      (kbd "C-x C-n") 'company-complete
+      (kbd "C-x C-n") 'corfu-complete
       (kbd "C-x C-o") 'other-frame
       (kbd "C-x C-q") 'read-only-mode
       (kbd "C-x M-1") 'deft-or-close
@@ -1654,69 +1654,56 @@ This functions should be added to the hooks of major modes for programming."
   :config
   (setq completion-styles '(orderless basic)))
 
-;; ** company
+;; ** corfu
 ;;
-;;   Company is a text completion framework for Emacs. The name stands for
-;;   "complete anything". It provides an auto-complete popup menu that
-;;   shows candidates while typing.
+;;   Corfu is a minimalistic completion UI for in-buffer completion.
+;;   It works as the in-buffer completion counterpart to Vertico's minibuffer UI.
 ;;
-;;   Company complements the Vertico stack:
+;;   Corfu complements the Vertico stack:
 ;;   - Vertico/Consult: minibuffer completion (M-x, find-file, etc.)
-;;   - Company: in-buffer completion (code completion, symbols, etc.)
+;;   - Corfu: in-buffer completion (code completion, symbols, etc.)
 
-(use-package company
+(use-package corfu
   :ensure t
   :demand t
-  :commands (company-mode global-company-mode)
-  :config
-  ;; Enable company globally in all buffers
-  (global-company-mode 1)
+  :custom
   ;; Lower idle delay for faster completion (default is 0.5s)
-  (setq company-idle-delay 0.2)
+  (corfu-auto-delay 0.2)
   ;; Show candidates after 2 characters
-  (setq company-minimum-prefix-length 2)
+  (corfu-minimum-prefix-length 2)
   ;; Number of candidates to show
-  (setq company-tooltip-limit 15)
+  (corfu-count 15)
   ;; Show quick-access numbers
-  (setq company-show-quick-access 'numbers)
-  ;; Highlight selection immediately
-  (setq company-selection-wrap-around t)
-  ;; Don't use company for minibuffer (vertico handles that)
-  (setq company-global-modes '(not minibuffer-mode))
-   ;; Use keymap that respects Evil states
-  (setq company-mode-map nil)  ; Disable default keymap, use evil bindings instead
-   ;; Configure backends for common programming modes
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
-  (add-hook 'lisp-mode-hook
-            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
-  (add-hook 'python-mode-hook
-            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet company-files))))
-  (add-hook 'ruby-mode-hook
-            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
-  (add-hook 'c-mode-hook
-            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
-  (add-hook 'c++-mode-hook
-            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
-  (add-hook 'js-mode-hook
-            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
-  (add-hook 'js2-mode-hook
-            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
-  (add-hook 'go-mode-hook
-            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
-  (add-hook 'rust-mode-hook
-            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
-  (add-hook 'java-mode-hook
-            (lambda () (setq-local company-backends '(company-capf company-dabbrev-code company-yasnippet))))
-  ;; Keybindings for company with Evil
-  (with-eval-after-load 'company
-    (define-key company-active-map (kbd "C-n") 'company-select-next)
-    (define-key company-active-map (kbd "C-p") 'company-select-previous)
-    (define-key company-active-map (kbd "TAB") 'company-complete-selection)
-    (define-key company-active-map [tab] 'company-complete-selection)
-    (define-key company-active-map (kbd "RET") 'company-complete-selection)
-    (define-key company-active-map [return] 'company-complete-selection)
-    (define-key company-active-map (kbd "ESC") 'company-abort)))
+  (corfu-quick nil)
+  ;; Don't use corfu for minibuffer (vertico handles that)
+  (corfu-global-modes '(not minibuffer-mode))
+  ;; Enable auto completion with manual TAB trigger
+  (corfu-auto t)
+  ;; Preselect first candidate
+  (corfu-preselect 'first)
+  ;; Cycle through candidates
+  (corfu-cycle t)
+  ;; Sort by history position
+  (corfu-history t)
+  ;; Quit at completion boundary
+  (corfu-quit-at-boundary 'separator)
+  :config
+  ;; Enable Corfu globally
+  (global-corfu-mode)
+  ;; Keybindings for corfu with Evil
+  (define-key corfu-map (kbd "C-n") 'corfu-next)
+  (define-key corfu-map (kbd "C-p") 'corfu-previous)
+  (define-key corfu-map (kbd "TAB") 'corfu-insert)
+  (define-key corfu-map [tab] 'corfu-insert)
+  (define-key corfu-map (kbd "RET") 'corfu-insert)
+  (define-key corfu-map [return] 'corfu-insert)
+  (define-key corfu-map (kbd "ESC") 'corfu-reset))
+;; Enable corfu extensions after package loads
+(with-eval-after-load 'corfu
+  (require 'corfu-history)
+  (require 'corfu-popupinfo)
+  (corfu-history-mode 1)
+  (corfu-popupinfo-mode 1))
 
 ;; * Org Mode
 ;;
@@ -2689,18 +2676,9 @@ this declaration to the kill-ring."
 ;;
 ;; ** go-mode
 
-(use-package go-mode
-  :ensure t
-  :config
-  (use-package company-go
-    :ensure t
-    :config
-    (defun my/setup-go-mode-company-go ()
-      "Hook for running on company-go"
-      ;; we only want to use company-go - it's so accurate we won't need
-      ;; any other completion engines
-      (set (make-local-variable 'company-backends) '(company-go))
-      (add-hook 'go-mode-hook 'my/setup-go-mode-company-go)))
+ (use-package go-mode
+   :ensure t
+   :config
   (defun my/setup-go-mode-gofmt-hook ()
     ;; Use goimports instead of go-fmt
     (setq gofmt-command "goimports")
@@ -2709,16 +2687,6 @@ this declaration to the kill-ring."
   (add-hook 'go-mode-hook 'my/setup-go-mode-gofmt-hook)
   (bind-keys :map go-mode-map
              ("M-." . godef-jump)))
-
-(use-package company-go
-  :ensure t
-  :config
-  (defun my/setup-go-mode-company-go ()
-    "Hook for running on company-go"
-    ;; we only want to use company-go - it's so accurate we won't need
-    ;; any other completion engines
-    (set (make-local-variable 'company-backends) '(company-go)))
-  (add-hook 'go-mode-hook 'my/setup-go-mode-company-go))
 
 ;; * XML/Configuration Files
 ;;
