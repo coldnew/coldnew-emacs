@@ -1114,57 +1114,52 @@ return nil since you can't set font for emacs on it."
            ("C--" . my/decrease-emacs-font-size))
 
 ;; * Minibutter
-;;
-;; ** Configuration
-;;
-;; *** Make cursor in minibuffer use bar shape
 
-(when (require 'minibuffer)                  ; buildin
-  ;; only use `bar' type of cursor shape
-  (add-hook 'minibuffer-setup-hook #'(lambda () (setq cursor-type 'bar)))
+(when (require 'minibuffer nil t)  ; built-in, so optional require
+  ;; Use bar cursor in minibuffer
+  (add-hook 'minibuffer-setup-hook (lambda () (setq cursor-type 'bar))))
 
-;; *** Some helper function to let me insert quick in minibuffer
-  ;; define some helper function to insert to minibuffer quickly
-  (defun my/minibuffer-insert (p)
-    (kill-line 0) (insert p))
+;; Helper to insert and replace current input from point onward
+(defun my/minibuffer-insert (str)
+  "Replace minibuffer content from point to end with STR."
+  (when (minibufferp)
+    (end-of-line)
+    (delete-region (point) (point-max))
+    (insert str)))
 
-  (defun my/minibuffer-switch-to-ramdisk ()
-    "Insert ramdisk path according to system type"
-    (interactive)
-    (my/minibuffer-insert user-ramdisk-directory))
+(defun my/minibuffer-switch-to-ramdisk ()
+  (interactive)
+  (my/minibuffer-insert user-ramdisk-directory))
 
-  (defun my/minibuffer-switch-to-home ()
-    "Insert $HOME path."
-    (interactive)
-    (my/minibuffer-insert (file-name-as-directory (getenv "HOME"))))
+(defun my/minibuffer-switch-to-home ()
+  (interactive)
+  (my/minibuffer-insert (expand-file-name "~/")))
 
-  (defun my/minibuffer-switch-to-rootdir ()
-    "Insert / path."
-    (interactive)
-    (my/minibuffer-insert "/"))
+(defun my/minibuffer-switch-to-rootdir ()
+  (interactive)
+  (my/minibuffer-insert "/"))
 
-  (defun my/minibuffer-switch-to-tramp ()
-    "Insert /ssh:."
-    (interactive)
-    (my/minibuffer-insert "/ssh:"))
+(defun my/minibuffer-switch-to-tramp ()
+  (interactive)
+  (my/minibuffer-insert "/ssh:"))
 
-;; *** Save history of minibutter
-  (use-package savehist
-    :demand t  ; Needed for minibuffer history at startup
-    :config
-    (setq savehist-file (concat user-cache-directory "savehist.dat"))
-    (savehist-mode 1))
+;; Save minibuffer history
+(use-package savehist
+  :demand t
+  :config
+  (setq savehist-file (expand-file-name "savehist.dat" user-cache-directory))
+  (savehist-mode 1))
 
-;; *** Setup Keybindings
-  (bind-keys :map minibuffer-local-map
-             ("C-w" . backward-kill-word)
-             ("M-p" . previous-history-element)
-             ("M-n" . next-history-element)
-             ("C-g" . my/minibuffer-keyboard-quit)
-             ("M-t" . my/minibuffer-switch-to-ramdisk)
-             ("M-h" . my/minibuffer-switch-to-home)
-             ("M-/" . my/minibuffer-switch-to-rootdir)
-             ("M-s" . my/minibuffer-switch-to-tramp)))
+;; Keybindings
+(bind-keys :map minibuffer-local-map
+           ("C-w" . backward-kill-word)
+           ("M-p" . previous-history-element)
+           ("M-n" . next-history-element)
+           ("C-g" . my/minibuffer-keyboard-quit)  ; built-in, better than abort-recursive-edit alone
+           ("M-t" . my/minibuffer-switch-to-ramdisk)
+           ("M-h" . my/minibuffer-switch-to-home)
+           ("M-/" . my/minibuffer-switch-to-rootdir)
+           ("M-s" . my/minibuffer-switch-to-tramp))
 
 ;; * Vim Emulation
 ;;
