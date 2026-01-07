@@ -32,8 +32,6 @@ eshell/
 flycheck_*
 log/
 .cache/
-/init.el
-/early-init.el
 /Cask
 /init.html
 /init.el.html
