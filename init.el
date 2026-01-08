@@ -698,6 +698,7 @@
 
 (use-package llm
   :ensure t :defer t
+  :commands (make-llm-ollama make-llm-openai-compatible)
   :config
   ;; Should not throw any warning message on non-free LLM
   (setq llm-warn-on-nonfree nil)
