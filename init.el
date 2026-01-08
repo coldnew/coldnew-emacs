@@ -2364,26 +2364,6 @@ this declaration to the kill-ring."
     (setq outline-minor-mode-prefix (kbd "C-c @"))
     ;; Start with bodies hidden (show only headings)
     (setq outshine-start-level 1)))
-;; * Clojure Development
-;;
-;; ** cider
-
-(use-package cider
-  :ensure t :defer t
-  :config
-  (setq
-    cider-repl-history-file ".cider-repl-history"  ;; not squeggly-related, but I like it
-    nrepl-log-messages t)                          ;; not necessary, but useful for troubleshooting
-  (flycheck-clojure-setup))                        ;; run setup *after* cider load
-
-;; ** flycheck-clojure
-
-(use-package flycheck-clojure
-  :defer t
-  :commands (flycheck-clojure-setup)               ;; autoload
-  :config
-  (flycheck-clojure-setup))
-
 ;; * Syntax Checking and Linting
 ;;
 ;; ** flycheck
