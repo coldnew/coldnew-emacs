@@ -1088,12 +1088,11 @@ return nil since you can't set font for emacs on it."
   ;; Use bar cursor in minibuffer
   (add-hook 'minibuffer-setup-hook (lambda () (setq cursor-type 'bar))))
 
-;; Helper to insert and replace current input from point onward
+;; Helper to clean minibuffer and insert new content
 (defun my/minibuffer-insert (str)
-  "Replace minibuffer content from point to end with STR."
+  "Clean minibuffer and insert STR as new content."
   (when (minibufferp)
-    (end-of-line)
-    (delete-region (point) (point-max))
+    (delete-minibuffer-contents)
     (insert str)))
 
 (defun my/minibuffer-switch-to-ramdisk ()
@@ -1694,9 +1693,32 @@ This functions should be added to the hooks of major modes for programming."
 
    ;; Evil Collection corfu bindings - load main package first
    (with-eval-after-load 'evil-collection
-     (require 'evil-collection-corfu)))
+      (require 'evil-collection-corfu)))
 
-;; * Org Mode
+  ;; ** kind-icon
+  ;;
+  ;;   kind-icon adds icons to completion candidates in Corfu.
+  ;;   It displays colorful icons for different completion kinds
+  ;;   (functions, variables, methods, files, etc.).
+
+  ;; Install kind-icon if not present
+  (unless (package-installed-p 'kind-icon)
+    (package-install 'kind-icon))
+
+  ;; Load and configure kind-icon
+  (require 'kind-icon)
+
+  ;; Use icons instead of text labels
+  (setq kind-icon-use-icons t)
+
+  ;; Match corfu background face
+  (setq kind-icon-default-face 'corfu-default)
+
+  ;; Add kind-icon to Corfu margin formatters
+  (with-eval-after-load 'corfu
+    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+ ;; * Org Mode
 ;;
 ;;   Org-mode is for keeping notes, maintaining TODO lists, and
 ;;   project planning with a fast and effective plain-markup system.
