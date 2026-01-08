@@ -38,11 +38,11 @@
 
 (with-eval-after-load 'comp
   (when (boundp 'native-comp-async-report-warnings-errors)
-    (setq native-comp-async-report-warnings-errors 'silent)))
+    (setq-default native-comp-async-report-warnings-errors 'silent)))
 
 ;; * Defer garbage collection further back in the startup process
 
-(setq gc-cons-threshold most-positive-fixnum)
+(setq-default gc-cons-threshold most-positive-fixnum)
 
 ;; * Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 
@@ -55,7 +55,13 @@
 ;;   We plan to handle our package initialization in our configs, we
 ;;   must prevent Emacs from doing it at early stage.
 
-(setq package-enable-at-startup nil)
+(setq-default package-enable-at-startup nil)
+
+;; * Make sure all packages are newest
+
+;; Upgrade built-in packages to latest version, this will help to fix
+;; transit related issue such as magit
+(setq-default package-install-upgrade-built-in t)
 
 ;; * Allow loading from the package cache
 
@@ -64,7 +70,7 @@
 
 ;; * Do not resize the frame at this early stage.
 
-(setq frame-inhibit-implied-resize t)
+(setq-default frame-inhibit-implied-resize t)
 
 ;; * Drop 'org-element-at-point' cannot be used in non-Org buffer warning
 ;;
@@ -82,7 +88,7 @@
 ;;   introduce, which make me never accidentally using outdated
 ;;   compiled files.
 
-(setq load-prefer-newer t)
+(setq-default load-prefer-newer t)
 
 ;; * Turn off some emacs default UI setting
 
@@ -104,8 +110,7 @@
 
 ;; Turn-off startup screen
 
-(setq inhibit-startup-screen t)
-
+(setq-default inhibit-startup-screen t)
 
 
 ;; * Final section

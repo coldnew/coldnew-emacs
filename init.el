@@ -238,6 +238,9 @@
   (when (< emacs-major-version 27)
     (package-initialize)))
 
+;; Upgrade built-in packages to latest version
+(setq package-install-upgrade-built-in t)
+
 ;; ** Install use-package
 ;;
 ;;   The =use-package= macro allows you to isolate package configuration
@@ -463,6 +466,7 @@
 
 (use-package exec-path-from-shell
   :ensure t
+  :commands (exec-path-from-shell-initialize)
   :config
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
@@ -694,7 +698,6 @@
 
 (use-package llm
   :ensure t :defer t
-  :autoload make-llm-ollama make-llm-openai-compatible
   :config
   ;; Should not throw any warning message on non-free LLM
   (setq llm-warn-on-nonfree nil)
@@ -1264,6 +1267,7 @@ return nil since you can't set font for emacs on it."
 (use-package evil-leader
   :ensure t
   :after evil
+  :commands (global-evil-leader-mode evil-leader/set-leader evil-leader/set-key)
   :config
   ;; enable evil-leader globally
   (global-evil-leader-mode)
@@ -1291,6 +1295,7 @@ return nil since you can't set font for emacs on it."
 (use-package evil-surround
   :ensure t
   :after evil
+  :commands (global-evil-surround-mode)
   :config
   (global-evil-surround-mode 1))
 
@@ -1412,6 +1417,7 @@ return nil since you can't set font for emacs on it."
 
 (use-package pinentry
   :ensure t
+  :commands (pinentry-start)
   :config
   ;; Start the Pinentry service
   (pinentry-start))
@@ -1491,7 +1497,7 @@ return nil since you can't set font for emacs on it."
   ;; Make face the same as builtin face
   (put 'font-lock-regexp-grouping-backslash 'face-alias 'font-lock-builtin-face)
   ;; Enable globally
-  (hes-mode 1))
+  (hes-mode))
 
 ;; ** font-lock-comment-annotations
 
@@ -1523,6 +1529,7 @@ This functions should be added to the hooks of major modes for programming."
 
 (use-package dtrt-indent
   :ensure t
+  :commands (dtrt-indent-mode)
   :config
   ;; enable dtrt-indent-mode globally
   (dtrt-indent-mode 1))
@@ -1538,6 +1545,7 @@ This functions should be added to the hooks of major modes for programming."
 
 (use-package edit-server
   :ensure t
+  :commands (edit-server-start)
   :config
   (edit-server-start))
 
@@ -1549,6 +1557,7 @@ This functions should be added to the hooks of major modes for programming."
 
 (use-package symbol-overlay
   :ensure t
+  :commands (symbol-overlay-mode)
   :config
   (add-hook 'prog-mode-hook #'symbol-overlay-mode)
   (define-key symbol-overlay-map (kbd "p") 'symbol-overlay-jump-prev) ;; 次のシンボルへ
@@ -1812,28 +1821,29 @@ This functions should be added to the hooks of major modes for programming."
           ("l" "Links"    entry (file+headline "" "Links") "* TODO %? :link:\nSCHEDULED: <%<%Y-%m-%d %a>>\n %i\n %a")
           ("j" "Journal"  entry (file+datetree "" "Journal") "* %?\nEntered on %U\n  %i\n  %a")
           ))
-  (eval-after-load 'ispell
-    '(progn
-       (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
-       (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
-       ))
-  (bind-keys :map org-mode-map
-             ("M-p"   . org-previous-visible-heading)
-             ("M-n"   . org-next-visible-heading)
-             ("C-c a" . org-agenda)
-             ("C-c c" . org-capture)
-             ("C-c l" . org-store-link)
-             ("C-c b" . org-metaleft)
-             ("C-c f" . org-metaright)
-             ("C-c p" . org-metaup)
-             ("C-c n" . org-metadown)
-             ("C-c i" . org-insert-link)
-             ("C-c I" . org-toggle-inline-images)
-             ("C-c %" . org-mark-ring-push)
-             ("C-c &" . org-mark-ring-goto)
-             ("C-c C-." . org-babel-remove-result-one-or-many))
-  (bind-keys :map org-src-mode-map
-             ("C-c C-c" . org-edit-src-exit)))
+   (eval-after-load 'ispell
+     '(progn
+        (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+        (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+        ))
+  (with-eval-after-load 'org
+    (bind-keys :map org-mode-map
+              ("M-p"   . org-previous-visible-heading)
+              ("M-n"   . org-next-visible-heading)
+              ("C-c a" . org-agenda)
+              ("C-c c" . org-capture)
+              ("C-c l" . org-store-link)
+              ("C-c b" . org-metaleft)
+              ("C-c f" . org-metaright)
+              ("C-c p" . org-metaup)
+              ("C-c n" . org-metadown)
+              ("C-c i" . org-insert-link)
+              ("C-c I" . org-toggle-inline-images)
+              ("C-c %" . org-mark-ring-push)
+              ("C-c &" . org-mark-ring-goto)
+              ("C-c C-." . org-babel-remove-result-one-or-many))
+    (bind-keys :map org-src-mode-map
+              ("C-c C-c" . org-edit-src-exit))))
 
 ;; ** org-indent
 
@@ -1842,7 +1852,8 @@ This functions should be added to the hooks of major modes for programming."
   :after (org)
   :config
   ;; Enable `org-indent-mode' by default
-  (add-hook 'org-mode-hook #'(lambda () (org-indent-mode t))))
+  (with-eval-after-load 'org-indent
+    (add-hook 'org-mode-hook #'(lambda () (org-indent-mode t)))))
 
 ;; ** org-bullets
 
@@ -1850,7 +1861,8 @@ This functions should be added to the hooks of major modes for programming."
   :ensure t
   :after (org)
   :config
-  (add-hook 'org-mode-hook #'(lambda () (org-bullets-mode 1))))
+  (with-eval-after-load 'org-bullets
+    (add-hook 'org-mode-hook #'(lambda () (org-bullets-mode 1)))))
 
 ;; ** deft
 
@@ -1884,9 +1896,10 @@ This functions should be added to the hooks of major modes for programming."
   ;; Enable/Disable defts
   (defun deft-or-close ()
     (interactive)
-    (if (or (eq major-mode 'deft-mode) (not (eq nil deft-note-mode)))
-        (progn (my/kill-all-deft-notes) (kill-buffer "*Deft*"))
-        (deft)))
+    (with-eval-after-load 'deft
+      (if (or (eq major-mode 'deft-mode) (not (eq nil deft-note-mode)))
+          (progn (my/kill-all-deft-notes) (kill-buffer "*Deft*"))
+          (deft))))
 
   (defun my/deft-practice ()
     "Use deft to quickly see my blog drafts."
@@ -2018,6 +2031,7 @@ This functions should be added to the hooks of major modes for programming."
   :config
   (use-package indent-guide
     :ensure t
+    :commands (indent-guide-mode)
     :config
     (add-hook 'qml-mode-hook #'indent-guide-mode)))
 
@@ -2316,15 +2330,17 @@ this declaration to the kill-ring."
 
   (add-hook 'emacs-lisp-mode-hook
             (lambda () (my/elisp/check-parens-on-save)))
-  (use-package litable
-    :ensure t
-    :config
-    ;; Save cache file to `user-cache-directory'
-    (setq litable-list-file (concat user-cache-directory ".litable-lists.el"))
-    ;; Enable litable-mode globally
-    (litable-mode))
+    (use-package litable
+     :ensure t
+     :commands (litable-mode)
+     :config
+     ;; Save cache file to `user-cache-directory'
+     (setq litable-list-file (concat user-cache-directory ".litable-lists.el"))
+     ;; Enable litable-mode globally
+     (litable-mode))
   (use-package page-break-lines
     :ensure t
+    :commands (global-page-break-lines-mode)
     :config
     ;; enable globally
     (global-page-break-lines-mode 1))
@@ -2372,17 +2388,22 @@ this declaration to the kill-ring."
   :defer t
   :commands (flycheck-clojure-setup)               ;; autoload
   :config
-  (eval-after-load 'flycheck
-    '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
-  (add-hook 'after-init-hook #'global-flycheck-mode))
+  (flycheck-clojure-setup))
 
 ;; * Syntax Checking and Linting
 ;;
 ;; ** flycheck
 
-(use-package flycheck :ensure t)
-(use-package flycheck-pos-tip :ensure t
-  :after flycheck)
+(use-package flycheck
+  :ensure t
+  :config
+  (global-flycheck-mode 1))
+
+(use-package flycheck-pos-tip
+  :ensure t
+  :after flycheck
+  :config
+  (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
 
 ;; ** magit-gptcommit
 
@@ -2412,14 +2433,15 @@ this declaration to the kill-ring."
 (use-package magit-gptcommit
   :ensure t
   :demand t
+  :commands (magit-gptcommit-status-buffer-setup)
   :after magit llm llm-ollama
   :config
 
   (setq magit-gptcommit-llm-provider
-  	(make-llm-ollama
-  	 :chat-model "gpt-oss:20b"
-  	 :host "127.0.0.1"
-  	 :port 11434))
+   	(make-llm-ollama
+   	 :chat-model "gpt-oss:20b"
+   	 :host "127.0.0.1"
+   	 :port 11434))
   ;; add to magit's transit buffer
   (magit-gptcommit-status-buffer-setup)
   :bind (:map git-commit-mode-map
@@ -2510,18 +2532,19 @@ this declaration to the kill-ring."
 (use-package yasnippet
   :ensure t
   :mode ("emacs.+/snippets/" . snippet-mode)
+  :commands (yas-global-mode yas-minor-mode)
   :config
-  ;; enable yasnippet globally
-  (yas-global-mode 1)
-  ;; extra yasnipet configs
-  (setq yas-prompt-functions '(yas-dropdown-prompt
-                               yas-completing-prompt
-                               yas-ido-prompt))
-  (let ((my-snippet-dir (concat user-emacs-directory "snippets")))
-    (if (and (file-exists-p my-snippet-dir)
+   ;; enable yasnippet globally
+   (yas-global-mode 1)
+   ;; extra yasnipet configs
+   (setq yas-prompt-functions '(yas-dropdown-prompt
+                                yas-completing-prompt
+                                yas-ido-prompt))
+   (let ((my-snippet-dir (concat user-emacs-directory "snippets")))
+     (if (and (file-exists-p my-snippet-dir)
     	     (not (member my-snippet-dir yas/snippet-dirs)))
-      	(add-to-list 'yas-snippet-dirs my-snippet-dir)))
-  (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1)))
+       	(add-to-list 'yas-snippet-dirs my-snippet-dir)))
+   (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1)))
   (defadvice yas-expand (around major-mode-expand activate)
     "Try to complete a structure template before point like org-mode does.
   This looks for strings like \"<e\" on an otherwise empty line and
@@ -2639,7 +2662,9 @@ this declaration to the kill-ring."
 
 ;; ** flymake-json
 
-(use-package flymake-json :ensure t
+(use-package flymake-json
+  :ensure t
+  :commands (flymake-json-load)
   :config
   (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
 
@@ -2693,16 +2718,17 @@ this declaration to the kill-ring."
 ;; ** go-mode
 
  (use-package go-mode
-   :ensure t
-   :config
-  (defun my/setup-go-mode-gofmt-hook ()
-    ;; Use goimports instead of go-fmt
-    (setq gofmt-command "goimports")
-    ;; Call Gofmt before saving
-    (add-hook 'before-save-hook 'gofmt-before-save))
-  (add-hook 'go-mode-hook 'my/setup-go-mode-gofmt-hook)
-  (bind-keys :map go-mode-map
-             ("M-." . godef-jump)))
+    :ensure t
+    :config
+   (defun my/setup-go-mode-gofmt-hook ()
+     ;; Use goimports instead of go-fmt
+     (setq gofmt-command "goimports")
+     ;; Call Gofmt before saving
+     (add-hook 'before-save-hook 'gofmt-before-save))
+   (add-hook 'go-mode-hook 'my/setup-go-mode-gofmt-hook)
+   (with-eval-after-load 'godef
+     (bind-keys :map go-mode-map
+                ("M-." . godef-jump))))
 
 ;; * XML/Configuration Files
 ;;
@@ -2751,19 +2777,20 @@ this declaration to the kill-ring."
   :hook ((emacs-lisp-mode clojure-mode lisp-mode scheme-mode) . lispy-mode))
 
 (use-package lispyville
-  :ensure t
-  :after (lispy evil)
-  :hook (lispy-mode . lispyville-mode)
-  :config
-  ;; Configure key theme with safe operators
-  (lispyville-set-key-theme
-   '(operators
-     c-w
-     (prettify)
-     (additional-movement
-      normal
-      visual
-      motion))))
+   :ensure t
+   :after (lispy evil)
+   :commands (lispyville-set-key-theme)
+   :hook (lispy-mode . lispyville-mode)
+   :config
+   ;; Configure key theme with safe operators
+   (lispyville-set-key-theme
+    '(operators
+      c-w
+      (prettify)
+      (additional-movement
+       normal
+       visual
+       motion))))
 
 (use-package indent-guide
   :ensure t
@@ -2880,14 +2907,13 @@ this declaration to the kill-ring."
 
 ;; ** Eshell commands
 
-(require 'eshell)
-
-(defun eshell/.. (&optional level)
-  "Go up LEVEL directories"
-  (interactive)
-  (let ((level (or level 1)))
-    (eshell/cd (make-string (1+ level) ?.))
-    (eshell/ls)))
+(with-eval-after-load 'eshell
+  (defun eshell/.. (&optional level)
+    "Go up LEVEL directories"
+    (interactive)
+    (let ((level (or level 1)))
+      (eshell/cd (make-string (1+ level) ?.))
+      (eshell/ls))))
 
 (defun eshell/clear ()
   "Clears the shell buffer ala Unix's clear or DOS' cls"
