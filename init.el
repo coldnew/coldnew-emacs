@@ -1779,7 +1779,7 @@ This functions should be added to the hooks of major modes for programming."
             (find-lisp-find-files org-directory "\.org$"))))
   (add-hook 'org-mode-hook #'my/org-setup-agenda-files)
   ;;
-  (setq org-default-notes-file (f-join org-directory "tasks" "TODO.org"))
+   (setq org-default-notes-file (file-name-concat org-directory "tasks" "TODO.org"))
 
   ;; Always use `C-g' to exit agenda
   (add-hook 'org-agenda-mode-hook
@@ -2714,54 +2714,40 @@ this declaration to the kill-ring."
 
 ;; * Lisp Development
 ;;
-;; ** lispy
+;; ** lispy with lispyville integration
+;;
+;;   Lispy provides structural editing for lisp-like languages.
+;;   lispyville provides comprehensive evil integration with safe operations.
+;;
+;;   Key features:
+;;   - Navigate S-expressions with arrow keys
+;;   - Jump between delimiters with `(` and `)`
+;;   - Safe delete/copy/kill operations that preserve structure
+;;   - Additional movement and prettify commands
+;;   - Works seamlessly with evil-mode
 
 (use-package lispy
   :ensure t
   :config
+  ;; Compatibility with other modes
+  (setq lispy-compat '(god-mode edebug cider))
+  ;; Enable lispy for lisp modes
+  :hook ((emacs-lisp-mode clojure-mode lisp-mode scheme-mode) . lispy-mode))
 
-  (defun my/up-list (&optional arg)
-    "My special lisp moving strategy."
-    (interactive)
-    (or arg (setq arg -1))
-    (condition-case ex
-        (up-list arg)
-      ('error (progn
-                (lispy-backward arg)
-                (beginning-of-line)
-                (up-list arg)))))
-
-  (defun my/down-list (&optional arg)
-    "My special lisp moving strategy."
-    (interactive)
-    (or arg (setq arg 1))
-    (condition-case ex
-        (down-list arg)
-      ('error (progn
-                (lispy-forward arg)
-                (end-of-line)
-                (down-list arg)))))
-
-  ;; My special hack for lispy-mode
-  (defun my/lispy-mode ()
-    (lispy-mode 1)
-    ;; `M-m' is preserved for mode setting
-    (define-key lispy-mode-map (kbd "M-m") nil)
-    ;; `M-s' is for my search command, rebind to `C-c s'
-    (define-key lispy-mode-map (kbd "M-s") nil)
-    (define-key lispy-mode-map (kbd "C-c s") 'lispy-splice)
-    ;; `[' and `]' just insert them
-    (define-key lispy-mode-map (kbd "[") 'lispy-open-square)
-    (define-key lispy-mode-map (kbd "]") 'lispy-close-square)
-    ;; My special lisp moving cmd
-    (define-key lispy-mode-map (kbd "C-M-f") 'my/down-list)
-    (define-key lispy-mode-map (kbd "C-M-b") 'my/up-list))
-
-  (add-hook 'emacs-lisp-mode-hook #'my/lispy-mode)
-  (add-hook 'lisp-interaction-mode-hook #'my/lispy-mode)
-  (add-hook 'clojure-mode-hook #'my/lispy-mode)
-  (add-hook 'scheme-mode-hook #'my/lispy-mode)
-  (add-hook 'lisp-mode-hook #'my/lispy-mode))
+(use-package lispyville
+  :ensure t
+  :after (lispy evil)
+  :hook (lispy-mode . lispyville-mode)
+  :config
+  ;; Configure key theme with safe operators
+  (lispyville-set-key-theme
+   '(operators
+     c-w
+     (prettify)
+     (additional-movement
+      normal
+      visual
+      motion))))
 
 (use-package indent-guide
   :ensure t
