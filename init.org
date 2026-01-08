@@ -717,18 +717,7 @@ Major mode for editing IDL source files.
 
 Most of emacs packages do not need many configs or just provide commands/functions to use, I put them here.
 
-** discover-my-major                                               :command:
 
-[[https://github.com/steckerhalter/discover-my-major][discover-my-major]] make you discover key bindings and their meaning for the
-current Emacs major mode.
-
-GitHub: https://github.com/steckerhalter/discover-my-major
-
-#+BEGIN_SRC emacs-lisp
-  (use-package discover-my-major
-    :defer 2	      ; Install pkg if not exist after 2 sec idle time
-    :commands (discover-my-major))
-#+END_SRC
 
 ** doxymacs
 
