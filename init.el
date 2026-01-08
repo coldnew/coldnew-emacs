@@ -2665,23 +2665,6 @@ this declaration to the kill-ring."
   :mode (("SCons\\(truct\\|cript\\)\\'" . python-mode)
          ("DEPS" . python-mode)))
 
-;; * Go Development
-;;
-;; ** go-mode
-
- (use-package go-mode
-    :ensure t
-    :config
-   (defun my/setup-go-mode-gofmt-hook ()
-     ;; Use goimports instead of go-fmt
-     (setq gofmt-command "goimports")
-     ;; Call Gofmt before saving
-     (add-hook 'before-save-hook 'gofmt-before-save))
-   (add-hook 'go-mode-hook 'my/setup-go-mode-gofmt-hook)
-   (with-eval-after-load 'godef
-     (bind-keys :map go-mode-map
-                ("M-." . godef-jump))))
-
 ;; * XML/Configuration Files
 ;;
 ;; ** nxml-mode
