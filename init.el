@@ -2665,28 +2665,6 @@ this declaration to the kill-ring."
   :mode (("SCons\\(truct\\|cript\\)\\'" . python-mode)
          ("DEPS" . python-mode)))
 
-;; * Ruby Development
-;;
-;; ** ruby-mode
-
-(use-package ruby-mode
-  :ensure nil				; built-in
-  :mode (("Gemfile\\'"  . ruby-mode)
-         ("Kirkfile\\'" . ruby-mode)
-         ("Rakefile\\'" . ruby-mode)
-         ("Vagrantfile\\'" . ruby-mode)
-         ("\\.builder\\'"  . ruby-mode)
-         ("\\.gemspec\\'" . ruby-mode)
-         ("\\.irbrc\\'" . ruby-mode)
-         ("\\.pryrc\\'" . ruby-mode)
-         ("\\.rake\\'"  . ruby-mode)
-         ("\\.rjs\\'"   . ruby-mode)
-         ("\\.ru\\'"    . ruby-mode)
-         ("\\.rxml\\'"  . ruby-mode))
-  :config
-  ;; We never want to edit Rubinius bytecode
-  (add-to-list 'completion-ignored-extensions ".rbc"))
-
 ;; * Go Development
 ;;
 ;; ** go-mode
