@@ -529,7 +529,7 @@
 
 (use-package hungry-delete
   :ensure t
-  :defer t
+  :demand t
   :config
   (global-hungry-delete-mode))
 
@@ -1148,6 +1148,7 @@ return nil since you can't set font for emacs on it."
   :demand t
   :config
   (setq savehist-file (expand-file-name "savehist.dat" user-cache-directory))
+  (add-to-list 'savehist-additional-variables 'corfu-history)
   (savehist-mode 1))
 
 ;; Keybindings
@@ -1165,81 +1166,93 @@ return nil since you can't set font for emacs on it."
 ;;
 ;;   Though I am really familiar with emacs, I still like some vim command.
 
+
 (use-package evil
   :ensure t
-  :demand t  ; Needed for vim keybindings at startup
+   :demand t		       ; Needed for vim keybindings at startup
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)	; for `evil-collection'
   :config
   ;; enable evil-mode globally
   (evil-mode t)
   ;; some configs setup later
   ;; default state set to insert-state
   (setq evil-default-state 'insert)
+
   (setcdr evil-insert-state-map nil)
   (define-key evil-insert-state-map
-    (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+	      (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
   (define-key evil-insert-state-map [escape] 'evil-normal-state)
   (dolist (m evil-emacs-state-modes)
     (add-to-list 'evil-insert-state-modes m))
-    ;; extra keybindings defined in `Keybinding' section
-    (evil-define-key 'normal 'global
-        (kbd "C-x C-f") 'find-file
-        (kbd "C-x C-q") 'read-only-mode
-        (kbd "C-x M-1") 'deft-or-close
-        (kbd "C-x M-2") 'eshell
-        (kbd "C-x M-3") 'mu4e
-        (kbd "C-x M-4") 'erc-start-or-switch
-        (kbd "C-x vl") 'magit-log
-        (kbd "C-x vp") 'magit-push
-        (kbd "C-x vs") 'magit-status
-        (kbd "C-x b") 'switch-to-buffer
-        (kbd "M-[") 'winner-undo
-        (kbd "M-]") 'winner-redo
-         (kbd "M-x") 'execute-extended-command
-        (kbd "M-s") 'consult-line
-        (kbd "C-x C-o") 'other-frame
-        (kbd "M-o") 'other-window)
-   (evil-define-key 'insert 'global
-      (kbd "<delete>") 'hungry-delete-backward
-      (kbd "C-;") 'iedit-mode
-      (kbd "C-d") 'hungry-delete-forward
-      (kbd "C-l") 'hungry-delete-backward
-      (kbd "C-n") 'evil-next-line
-      (kbd "C-o") 'evil-execute-in-normal-state
-      (kbd "C-p") 'evil-previous-line
-      (kbd "C-v") 'set-mark-mode/rectangle-mark-mode
-      (kbd "C-w") 'backward-kill-word
-      (kbd "C-x C-f") 'find-file
-      (kbd "C-x C-n") 'corfu-complete
-      (kbd "C-x C-o") 'other-frame
-      (kbd "C-x C-q") 'read-only-mode
-      (kbd "C-x M-1") 'deft-or-close
-      (kbd "C-x M-2") 'eshell
-      (kbd "C-x M-3") 'mu4e
-      (kbd "C-x M-4") 'erc-start-or-switch
-      (kbd "C-x T") 'sane-term
-      (kbd "C-x b") 'switch-to-buffer
-      (kbd "C-x t") 'sane-term
-      (kbd "C-x vl") 'magit-log
-      (kbd "C-x vp") 'magit-push
-      (kbd "C-x vs") 'magit-status
-      (kbd "M-<SPC>") 'insert-U200B-char
-      (kbd "M-[") 'winner-undo
-      (kbd "M-]") 'winner-redo
-      (kbd "M-s") 'consult-line
-      (kbd "M-v") 'er/expand-region
-      (kbd "M-x") 'execute-extended-command
-      (kbd "M-y") 'consult-yank-pop
-      (kbd "M-z")   'zzz-to-char
-       (kbd "s-<RET>") 'insert-empty-line
-       (kbd "s-<SPC>") 'insert-U200B-char
-       (kbd "C-x C-d") 'dired
-       )
-   (evil-ex-define-cmd "ag" 'consult-ag)
-   (evil-ex-define-cmd "agi[nteractive]" 'consult-ag)
-   (evil-ex-define-cmd "google" 'consult-google)
-   (evil-ex-define-cmd "google-suggest" 'consult-google-suggest)
-   (evil-ex-define-cmd "gtag" 'ggtags-create-tags)
-   (evil-ex-define-cmd "howdoi" 'howdoi-query))
+
+  ;; extra keybindings defined in `Keybinding' section
+  (evil-define-key 'normal 'global
+    (kbd "C-x C-f") 'find-file
+    (kbd "C-x C-q") 'read-only-mode
+    (kbd "C-x M-1") 'deft-or-close
+    (kbd "C-x M-2") 'eshell
+    (kbd "C-x M-3") 'mu4e
+    (kbd "C-x M-4") 'erc-start-or-switch
+    (kbd "C-x vl") 'magit-log
+    (kbd "C-x vp") 'magit-push
+    (kbd "C-x vs") 'magit-status
+    (kbd "C-x b") 'switch-to-buffer
+    (kbd "M-[") 'winner-undo
+    (kbd "M-]") 'winner-redo
+    (kbd "M-x") 'execute-extended-command
+    (kbd "M-s") 'consult-line
+    (kbd "C-x C-o") 'other-frame
+    (kbd "M-o") 'other-window)
+  (evil-define-key 'insert 'global
+    (kbd "<delete>") 'hungry-delete-backward
+    (kbd "C-;") 'iedit-mode
+    (kbd "C-d") 'hungry-delete-forward
+    (kbd "C-l") 'hungry-delete-backward
+    (kbd "C-o") 'evil-execute-in-normal-state
+    (kbd "C-n") 'evil-next-line
+    (kbd "C-p") 'evil-previous-line
+    (kbd "C-v") 'set-mark-mode/rectangle-mark-mode
+    (kbd "C-w") 'backward-kill-word
+    (kbd "C-x C-f") 'find-file
+    (kbd "C-x C-n") 'corfu-complete
+    (kbd "C-x C-o") 'other-frame
+    (kbd "C-x C-q") 'read-only-mode
+    (kbd "C-x M-1") 'deft-or-close
+    (kbd "C-x M-2") 'eshell
+    (kbd "C-x M-3") 'mu4e
+    (kbd "C-x M-4") 'erc-start-or-switch
+    (kbd "C-x T") 'sane-term
+    (kbd "C-x b") 'switch-to-buffer
+    (kbd "C-x t") 'sane-term
+    (kbd "C-x vl") 'magit-log
+    (kbd "C-x vp") 'magit-push
+    (kbd "C-x vs") 'magit-status
+    (kbd "M-<SPC>") 'insert-U200B-char
+    (kbd "M-[") 'winner-undo
+    (kbd "M-]") 'winner-redo
+    (kbd "M-s") 'consult-line
+    (kbd "M-v") 'er/expand-region
+    (kbd "M-x") 'execute-extended-command
+    (kbd "M-y") 'consult-yank-pop
+    (kbd "M-z")   'zzz-to-char
+    (kbd "s-<RET>") 'insert-empty-line
+    (kbd "s-<SPC>") 'insert-U200B-char
+    (kbd "C-x C-d") 'dired)
+  (evil-ex-define-cmd "ag" 'consult-ag)
+  (evil-ex-define-cmd "agi[nteractive]" 'consult-ag)
+  (evil-ex-define-cmd "google" 'consult-google)
+  (evil-ex-define-cmd "google-suggest" 'consult-google-suggest)
+  (evil-ex-define-cmd "gtag" 'ggtags-create-tags))
+
+;; Evil Collection - Evil keybindings for various packages
+(use-package evil-collection
+  :ensure t
+  :demand t
+  :after evil
+  :config
+  (evil-collection-init '(corfu dashboard diff-hl dired eldoc elpaca lsp-ui-imenu which-key)))
 
 ;; ** evil-leader
 ;;
@@ -1257,16 +1270,16 @@ return nil since you can't set font for emacs on it."
   ;; extra keybindings defined in `Keybinding' section
   (evil-leader/set-leader "<SPC>")
   (evil-leader/set-key
-    "1" 'select-window-1
-    "2" 'select-window-2
-    "3" 'select-window-3
-    "4" 'select-window-4
-    "5" 'select-window-5
-    "6" 'select-window-6
-    "7" 'select-window-7
-    "8" 'select-window-8
-    "9" 'select-window-9
-    "0" 'select-window-0) )
+   "1" 'select-window-1
+   "2" 'select-window-2
+   "3" 'select-window-3
+   "4" 'select-window-4
+   "5" 'select-window-5
+   "6" 'select-window-6
+   "7" 'select-window-7
+   "8" 'select-window-8
+   "9" 'select-window-9
+   "0" 'select-window-0) )
 
 ;; ** evil-surround
 ;;
@@ -1681,29 +1694,32 @@ This functions should be added to the hooks of major modes for programming."
   (corfu-auto t)
   ;; Preselect first candidate
   (corfu-preselect 'first)
-  ;; Cycle through candidates
-  (corfu-cycle t)
-  ;; Sort by history position
-  (corfu-history t)
-  ;; Quit at completion boundary
-  (corfu-quit-at-boundary 'separator)
+   ;; Cycle through candidates
+   (corfu-cycle t)
+   ;; Quit at completion boundary
+   (corfu-quit-at-boundary 'separator)
   :config
   ;; Enable Corfu globally
   (global-corfu-mode)
-  ;; Keybindings for corfu with Evil
-  (define-key corfu-map (kbd "C-n") 'corfu-next)
-  (define-key corfu-map (kbd "C-p") 'corfu-previous)
+
+  ;; Corfu keybindings (work in all states)
   (define-key corfu-map (kbd "TAB") 'corfu-insert)
   (define-key corfu-map [tab] 'corfu-insert)
   (define-key corfu-map (kbd "RET") 'corfu-insert)
   (define-key corfu-map [return] 'corfu-insert)
-  (define-key corfu-map (kbd "ESC") 'corfu-reset))
-;; Enable corfu extensions after package loads
+  (define-key corfu-map (kbd "ESC") 'corfu-reset))  ;; End of use-package corfu
+
+ ;; Enable corfu extensions and Evil keybindings after package loads
 (with-eval-after-load 'corfu
-  (require 'corfu-history)
-  (require 'corfu-popupinfo)
-  (corfu-history-mode 1)
-  (corfu-popupinfo-mode 1))
+   ;; Load extensions
+   (require 'corfu-history)
+   (require 'corfu-popupinfo)
+   (corfu-history-mode 1)
+   (corfu-popupinfo-mode 1)
+
+   ;; Evil Collection corfu bindings - load main package first
+   (with-eval-after-load 'evil-collection
+     (require 'evil-collection-corfu)))
 
 ;; * Org Mode
 ;;
