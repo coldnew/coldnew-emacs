@@ -698,10 +698,12 @@
 
 (use-package llm
   :ensure t :defer t
-  :commands (make-llm-ollama make-llm-openai-compatible)
   :config
   ;; Should not throw any warning message on non-free LLM
   (setq llm-warn-on-nonfree nil)
+  ;; Require specific provider modules for their constructors
+  (require 'llm-openai)
+  (require 'llm-ollama)
 
   ;; OpenCode
   (when (boundp 'opencode-api-key)
@@ -2434,7 +2436,7 @@ this declaration to the kill-ring."
 (use-package magit-gptcommit
   :ensure t
   :demand t
-  :after magit llm llm-ollama
+  :after magit llm
   :config
 
   (setq magit-gptcommit-llm-provider
