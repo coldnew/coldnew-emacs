@@ -2434,7 +2434,6 @@ this declaration to the kill-ring."
 (use-package magit-gptcommit
   :ensure t
   :demand t
-  :commands (magit-gptcommit-status-buffer-setup)
   :after magit llm llm-ollama
   :config
 
@@ -2443,8 +2442,9 @@ this declaration to the kill-ring."
    	 :chat-model "gpt-oss:20b"
    	 :host "127.0.0.1"
    	 :port 11434))
-  ;; add to magit's transit buffer
-  (magit-gptcommit-status-buffer-setup)
+  ;; add to magit's transit buffer - defer to avoid conflicts
+  (with-eval-after-load 'magit
+    (magit-gptcommit-status-buffer-setup))
   :bind (:map git-commit-mode-map
               ("C-c C-g" . magit-gptcommit-commit-accept)))
 
