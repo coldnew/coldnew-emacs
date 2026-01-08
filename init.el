@@ -71,39 +71,12 @@
 ;;   The variable =load-path= lists all the directories where Emacs
 ;;   should look for emacs-lisp files.
 ;;
-;;   Following are my method to add directories to load-path
-;;   ~recursively~, this function also create directory to prevent
-;;   directory not exist.
-;;
-;;   If you don't have any local elisp and all packages is maintain by
-;;   cask or elpa or spacemacs, you can skip following code.
 
 (eval-and-compile
-  ;; Add directories to emacs's `load-path' recursively.
-  ;; if path does not exist, try to create directory.
-  (let* ((my-lisp-dir
-          (list (concat user-emacs-directory "elpa/") ; package installed by package.el
-                (concat user-emacs-directory "local-lisp/") ; local lisp I used
-                (concat user-emacs-directory "styles/"))) ; themes I used
-         (sys-lisp-dir (cl-ecase system-type ; add some system site-lisp to load-path
-                         ((darwin)    '("/usr/local/share/emacs/site-lisp/"))
-                         ((gnu/linux) '("/usr/share/emacs/site-lisp/"))
-                         ((t) nil)))  ; FIXME: Add more platform support
-         (lisp-dir (append my-lisp-dir sys-lisp-dir)))
-    ;; my-lisp-dir should always exist, but sys-lisp-dir may not exist
-    (dolist (lisp-path my-lisp-dir)
-      (when (not (file-exists-p lisp-path))
-        (make-directory lisp-path t)))
-    (dolist (lisp-path lisp-dir)
-      (when (file-exists-p lisp-path)
-        (let* ((default-directory lisp-path))
-          (setq load-path
-                (append
-                 (let ((load-path (copy-sequence load-path)))
-                   (append
-                    (copy-sequence (normal-top-level-add-to-load-path '(".")))
-                    (normal-top-level-add-subdirs-to-load-path)))
-                 load-path)))))))
+  (dolist (dir '("local-lisp" "styles"))
+    (let ((full-dir (expand-file-name dir user-emacs-directory)))
+      (when (and full-dir (file-exists-p full-dir))
+        (add-to-list 'load-path full-dir)))))
 
 ;; * Under Mac OSX use Command key as ALT
 ;;
@@ -224,19 +197,18 @@
   (when (< emacs-major-version 24)
     (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))))
 
-;; ** Initialize package.el
-;;
-;;   Before we start to use =package.el=, we need to initialize it
-;;   first.
-;;
-;;   This must come before configurations of installed packages.
-;;   Don't delete this line. If you don't want it, just comment it out
-;;   by adding a semicolon to the start of the line. You may delete
-;;   these explanatory comments.
+ ;; ** Initialize package.el
+ ;;
+ ;;   Before we start to use =package.el=, we need to initialize it
+ ;;   first.
+ ;;
+ ;;   This must come before configurations of installed packages.
+ ;;   Don't delete this line. If you don't want it, just comment it out
+ ;;   by adding a semicolon to the start of the line. You may delete
+ ;;   these explanatory comments.
 
-(eval-and-compile
-  (when (< emacs-major-version 27)
-    (package-initialize)))
+ (eval-and-compile
+   (package-initialize))
 
 ;; Upgrade built-in packages to latest version
 (setq package-install-upgrade-built-in t)
