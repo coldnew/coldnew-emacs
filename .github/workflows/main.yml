@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Emacs 30
-        uses: purcell/setup-emacs@v0.3
+        uses: purcell/setup-emacs@master
         with:
           emacs-version: snapshot
           install-just-the-emacs: true
