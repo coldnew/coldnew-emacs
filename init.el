@@ -785,8 +785,86 @@
   (aidermacs-global-read-only-files '("~/.aider/AI_RULES.md"))
   (aidermacs-project-read-only-files '("README.md" "CONVENTIONS.md"))
 
-  ;; Extra arguments passed to aider CLI
-  (aidermacs-extra-args '("--chat-language" "en")))
+   ;; Extra arguments passed to aider CLI
+   (aidermacs-extra-args '("--chat-language" "en")))
+
+;; ** ellama
+;;
+;;   Ellama is a tool for interacting with large language models from Emacs.
+;;   Unlike aidermacs (which focuses on pair programming), ellama is a general
+;;   LLM assistant for chat, translation, summarization, Q&A, and more.
+;;
+;;   GitHub: https://github.com/s-kostyaev/ellama
+;;
+;;   Use cases:
+;;   - Chat conversations with LLMs
+;;   - Translation and proofreading
+;;   - Code review and explanation
+;;   - Summarization of code/text
+;;   - Context-aware Q&A about your codebase
+
+(use-package ellama
+  :ensure t
+  :demand t
+  :bind (("C-c e" . ellama-transient-menu))
+  :init
+  ;; Auto-scroll during streaming output
+  (setopt ellama-auto-scroll t)
+  ;; User and assistant nicks for chat display
+  (setopt ellama-user-nick "You")
+  (setopt ellama-assistant-nick "Ellama")
+  :config
+  ;; Set up provider using existing llm providers
+  (setopt ellama-provider
+          (cond
+           ;; Prefer OpenCode if available (already configured above)
+           ((and (boundp 'llm-provider--opencode-bigpickle)
+                 (symbol-value 'llm-provider--opencode-bigpickle))
+            (symbol-value 'llm-provider--opencode-bigpickle))
+           ;; Fall back to OpenAI if API key available
+           ((and (boundp 'llm-provider--openai)
+                 (symbol-value 'llm-provider--openai))
+            (symbol-value 'llm-provider--openai))
+           ;; Fall back to Ollama
+           ((boundp 'llm-provider--ollama-gpt-oss-2ob)
+            (symbol-value 'llm-provider--ollama-gpt-oss-2ob))
+           ;; Default to ollama localhost
+           (t
+            (make-llm-ollama
+             :chat-model "llama3.2"
+             :host "127.0.0.1"
+             :port 11434))))
+
+  ;; Enable global header line for context visibility
+  (ellama-context-header-line-global-mode 1)
+  (ellama-session-header-line-global-mode 1)
+
+  ;; Configure buffer display
+  (setopt ellama-chat-display-action-function #'display-buffer-pop-up-window)
+  (setopt ellama-instant-display-action-function #'display-buffer-at-bottom)
+
+  ;; Disable reasoning model cleanup for transparency
+  (setopt ellama-session-remove-reasoning nil)
+
+  ;; Register our configured providers for interactive switching
+  (when (boundp 'llm-provider--opencode-bigpickle)
+    (setopt ellama-providers
+            (append
+             (when (symbol-value 'llm-provider--opencode-bigpickle)
+               '(("bigpickle" . ,(symbol-value 'llm-provider--opencode-bigpickle))))
+             (when (boundp 'llm-provider--opencode-grok)
+               '(("grok" . ,(symbol-value 'llm-provider--opencode-grok))))
+             (when (boundp 'llm-provider--opencode-glm4.7)
+               '(("glm4.7" . ,(symbol-value 'llm-provider--opencode-glm4.7))))
+             (when (boundp 'llm-provider--openai)
+               '(("openai" . ,(symbol-value 'llm-provider--openai))))
+             (when (boundp 'llm-provider--ollama-gpt-oss-2ob)
+               '(("ollama" . ,(symbol-value 'llm-provider--ollama-gpt-oss-2ob))))
+             ellama-providers)))
+
+  ;; Enable keymap with prefix
+  (setopt ellama-enable-keymap t)
+  (setopt ellama-keymap-prefix "C-c e"))
 
 ;; * Interactive Commands
 ;;
