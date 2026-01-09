@@ -1002,6 +1002,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; *** Make buffer untabify
 
 (defun my/untabify-buffer ()
+  "Untabify all tabs in the current buffer."
   (interactive)
   (save-excursion
     (untabify (point-min) (point-max))))
@@ -1328,11 +1329,11 @@ return nil since you can't set font for emacs on it."
       (my/set-font my/emacs-english-font my/emacs-cjk-font my/emacs-font-size-pair))))
 
 (defun my/increase-emacs-font-size ()
-  "Decrease emacs's font-size according emacs-font-size-pair-list."
+  "Increase emacs's font-size according emacs-font-size-pair-list."
   (interactive) (my/emacs-step-font-size 1))
 
 (defun my/decrease-emacs-font-size ()
-  "Increase emacs's font-size according emacs-font-size-pair-list."
+  "Decrease emacs's font-size according emacs-font-size-pair-list."
   (interactive) (my/emacs-step-font-size -1))
 
 ;; ** Setup Keybinds
@@ -1725,7 +1726,7 @@ return nil since you can't set font for emacs on it."
 
 ;; ** font-lock-comment-annotations
 
-(defun font-lock-comment-annotations ()
+(defun my/font-lock-comment-annotations ()
   "Highlight a bunch of well known comment annotations.
 This functions should be added to the hooks of major modes for programming."
   (font-lock-add-keywords
@@ -1736,7 +1737,7 @@ This functions should be added to the hooks of major modes for programming."
      ("\\<\\(DONE\\):" 1 'org-done t))
    ))
 
-(add-hook 'prog-mode-hook 'font-lock-comment-annotations)
+(add-hook 'prog-mode-hook 'my/font-lock-comment-annotations)
 
 ;; ** indent-guide
 
@@ -2997,6 +2998,61 @@ this declaration to the kill-ring."
   (add-hook 'lisp-mode-hook #'indent-guide-mode))
 
 (global-prettify-symbols-mode 1)
+
+;; * Testing with ERT
+;;
+;;   ERT (Emacs Lisp Regression Testing) is Emacs's built-in testing framework.
+;;   Use `M-x ert' to run tests interactively.
+;;
+;;   Key commands:
+;;   - M-x ert - Run tests interactively
+;;   - M-x ert-run-tests-interactively - Run with UI
+;;   - M-x ert-run-tests-batch-and-exit - Run all tests and exit
+;;   - M-x ert-delete-testcover-data - Clear coverage data
+;;
+;;   Test files should be named *-test.el or end with test.el
+
+(use-package ert
+  :ensure nil  ; built-in since Emacs 24
+  :commands (ert-run-tests-interactively ert-run-tests-batch-and-exit)
+  :config
+  ;; Enable colors in batch mode
+  (setq ert-font-lock-syntactic-face-function
+        (lambda (char) (ert--face-for-mode char 'font-lock-comment-face)))
+
+  ;; Use backtrace line limit for cleaner output
+  (setq ert-backtrace-max-indent 40)
+
+  ;; Show test duration
+  (setq ert-show-duration t)
+
+  ;; Load test files on demand
+  (autoload 'my/load-test-file "ert-helper" "Load test file for current buffer." t)
+  :bind
+  ("C-c t" . my/ert-run-tests-for-current-file))
+
+(defun my/ert-run-tests-for-current-file ()
+  "Run ERT tests for the current buffer's corresponding test file."
+  (interactive)
+  (let* ((file-name (buffer-file-name))
+         (test-file (if file-name
+                        (replace-regexp-in-string "\\.el\\'" "-test.el" file-name)
+                      nil)))
+    (if (and test-file (file-exists-p test-file))
+        (progn
+          (load-file test-file)
+          (ert-run-tests-interactively (file-name-base test-file)))
+      (user-error "No test file found for %s" (buffer-name)))))
+
+(defun my/ert-run-all-tests ()
+  "Run all tests matching *-test.el pattern in the project."
+  (interactive)
+  (let ((test-files (directory-files-recursively
+                     default-directory
+                     "-test\\.el\\'")))
+    (dolist (file test-files)
+      (load-file file))
+    (ert-run-tests-batch-and-exit)))
 
 ;; * Web Development
 ;;

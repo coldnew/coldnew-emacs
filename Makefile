@@ -29,8 +29,15 @@ all: $(COMPILE_TARGET)
 # Direct elisp workflow - early-init.el and init.el are now the source of truth
 # No org-mode generation needed anymore
 
-test: clean
-	${MAKE} all
+# Run tests
+test: clean all
+	@echo "=== Running ERT Tests ==="
+	${EMACS} -batch \
+		-eval "(setq load-path (append '(\"test\") load-path))" \
+		-l init.el \
+		-eval "(require 'my-helpers nil t)" \
+		-eval "(require 'my-config-test nil t)" \
+		-f ert-run-tests-batch-and-exit
 
 # Byte-compile elisp files
 byte-compile:

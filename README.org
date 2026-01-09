@@ -47,8 +47,47 @@ Use the Makefile to compile configuration files:
 
 ** Running Tests
 
+ERT (Emacs Lisp Regression Testing) is built into Emacs.
+
 - =make test= - Clean and rebuild configuration
 - =emacs -batch -l ert -f ert-run-tests-batch-and-exit= - Run all ERT tests
+- =M-x ert= - Run tests interactively in Emacs
+- =C-c t= - Run tests for current buffer's test file (if exists)
+
+*** Test Directory Structure
+
+#+BEGIN_EXAMPLE
+test/
+├── my-helpers.el       # Helper utilities for tests
+└── *-test.el          # Test files (pattern: *-test.el)
+#+END_EXAMPLE
+
+*** Writing Tests
+
+#+BEGIN_SRC elisp
+(ert-deftest my-test-example ()
+  "A simple example test."
+  (should (= (+ 2 2) 4))
+  (should (string-match-p "hello" "hello world")))
+
+;; Test with expected failure
+(ert-deftest my-test-failure ()
+  :expected-result :failed
+  (should nil))
+#+END_SRC
+
+*** my/ Prefix Convention
+
+All custom functions use the =my/= prefix for easy identification:
+
+- =my/= - Personal utility functions (=my/cleanup-buffer=, =my/font-exist-p=)
+- =my/font-lock-comment-annotations= - Font-lock integration
+- =my/llm-get-provider= - LLM provider helpers
+
+Benefits:
+- Easy to find all custom functions with =C-h f my/=
+- Prevents namespace conflicts with built-in functions
+- Consistent naming across configuration
 
 ** Navigation with Outshine
 
