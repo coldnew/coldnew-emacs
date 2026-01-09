@@ -1658,33 +1658,20 @@ return nil since you can't set font for emacs on it."
 
 ;; * Line Numbers
 
-(if (version<= "26.1" emacs-version)
-    ;; emacs 26.1 has display-line-number-mode, which is written in C
-    (progn
-      (require 'display-line-numbers)
-      ;; Only use line number in `prog-mode-hook'
-      (add-hook 'prog-mode-hook #'display-line-numbers-mode))
-    ;; for emacs version less than 26, use linum instead
-    (use-package linum :ensure t :init (global-linum-mode 1)))
-
-;; disable some mode with linum
-(use-package linum-off
-  :ensure t
-  :config
-  (setq linum-disabled-mode-list
-        '(eshell-mode shell-mode term-mode erc-mode compilation-mode
-                      woman-mode w3m-mode calendar-mode org-mode)))
-
-;; for emacs 26.1 or above, we use `display-line-number-mode' instead
+;; display-line-numbers-mode was introduced in Emacs 26.1
+;; Enable it for Emacs 26.1 and later versions
 (when (version<= "26.1" emacs-version)
-  ;; NOTE: overwrite display-line-numbers--turn-on
+  (require 'display-line-numbers)
+  ;; Only use line number in `prog-mode-hook'
+  (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+  ;; Customize display-line-numbers--turn-on to skip certain modes
   (defun display-line-numbers--turn-on ()
     "Turn on `display-line-numbers-mode'."
     (unless (or (minibufferp)
-                ;; taken from linum.el
-                (and (daemonp) (null (frame-parameter nil 'client)))
-                ;; take code from `linum-off'
-                (member major-mode linum-disabled-modes-list))
+                ;; Skip line numbers in these modes
+                (memq major-mode '(eshell-mode shell-mode term-mode erc-mode
+                                              compilation-mode woman-mode w3m-mode
+                                              calendar-mode org-mode)))
       (display-line-numbers-mode))))
 
 ;; * Programming Mode Enhancements
