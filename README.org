@@ -10,18 +10,17 @@
 
 [[https://img.shields.io/badge/license-WTFPL-yellow.svg?dummy]]
 
-This is my Emacs configuration using direct Emacs Lisp files (~early-init.el~ and ~init.el~) with [[https://github.comalphapapa/outshine][outshine]] headings for navigation.
+This is my Emacs configuration using direct Emacs Lisp files (~early-init.el~ and ~init.el~) with [[https://github.com/alphapapa/outshine][outshine]] headings for navigation.
 
-** File Structure
+** File Structure**
 
 - =early-init.el= - Early startup settings (before package initialization)
 - =init.el= - Main configuration with outshine headings
-- =modules/load-modules.el= - Load additional modules
 - =~/.personal.el= - Local personal settings (loaded at end)
 
-** Install or Testing This Config
+** Install or Testing This Config**
 
-1. Clone the repository:
+1. Clone repository:
 
    : git clone https://github.com/coldnew/coldnew-emacs.git
 
@@ -35,7 +34,7 @@ This is my Emacs configuration using direct Emacs Lisp files (~early-init.el~ an
 
    : emacs -q -l ~/coldnew-emacs/init.el
 
-** Building / Compiling
+** Building / Compiling**
 
 Use the Makefile to compile configuration files:
 
@@ -45,7 +44,7 @@ Use the Makefile to compile configuration files:
 - =make native-compile= - Force native compilation (Emacs 28+)
 - =make clean= - Remove compiled files
 
-** Running Tests
+** Running Tests**
 
 ERT (Emacs Lisp Regression Testing) is built into Emacs.
 
@@ -58,8 +57,8 @@ ERT (Emacs Lisp Regression Testing) is built into Emacs.
 
 #+BEGIN_EXAMPLE
 test/
-├── my-helpers.el       # Helper utilities for tests
-└── *-test.el          # Test files (pattern: *-test.el)
+ ├── my-helpers.el       # Helper utilities for tests
+ └── *-test.el          # Test files (pattern: *-test.el)
 #+END_EXAMPLE
 
 *** Writing Tests
@@ -89,7 +88,7 @@ Benefits:
 - Prevents namespace conflicts with built-in functions
 - Consistent naming across configuration
 
-** Navigation with Outshine
+** Navigation with Outshine**
 
 This configuration uses outshine headings instead of org-mode tangling. Navigation:
 
@@ -97,69 +96,105 @@ This configuration uses outshine headings instead of org-mode tangling. Navigati
 - =C-c @= - Toggle outline-minor-mode
 - =C-c n/p/f/b= - Navigate next/previous/first/last heading
 
-** Install Emacs
+** System Package Requirements**
 
-My emacs runs under =Mac OSX= and =Gentoo Linux=.
+One-linear install commands for all platforms. Choose your platform and copy-paste.
 
-*** Mac OSX
+*** macOS (Homebrew)
 
-Using [[http://brew.sh/][homebrew]] with [[https://github.com/daviderestivo/homebrew-emacs-head][homebrew-emacs-head]]:
-
-#+BEGIN_SRC sh :tangle no
-  brew tap daviderestivo/emacs-head
-  brew install emacs-head@31 --with-cocoa --with-gnutls --with-mailutils --with-xwidgets --with-native-comp --with-native-full-aot --with-tree-sitter --with-libgccjit
-  ln -s /opt/homebrew/opt/emacs-head@30/Emacs.app /Applications
+#+BEGIN_SRC sh
+# One-linear install - all required packages
+brew install cmake editorconfig doxygen clang-format pkgconf git rsync make gdb gnuplot plantuml graphviz pandoc ripgrep fd tree-sitter-cli htop tmux less openssh zsh fish pinentry-mac && \
+# Emacs options (choose one):
+# Option 1: Default Emacs
+brew install emacs || \
+# Option 2: Emacs Plus (recommended, more features)
+brew tap d12frosted/emacs-plus && brew install emacs-plus || \
+# Option 3: Emacs Mac (macOS-native)
+brew tap railwaycat/homebrew-emacsmacport && brew install emacs-mac || \
+# Option 4: Emacs Cask (GUI app)
+brew install --cask emacs
 #+END_SRC
 
-*** Gentoo Linux
+*Notes*:
+- After installing GDB: =codesign -fs $(brew --prefix gdb)= (macOS security)
+- For =make=: =echo 'export PATH="$(brew --prefix)/opt/make/libexec/gnubin:$PATH"' >> ~/.zshrc=
 
-[[https://www.gentoo.org/][Gentoo Linux]] makes it easy to install latest apps:
+*** Gentoo Linux (Portage)
 
-#+BEGIN_SRC sh :tangle no
-  USE="X gtk3 inotify xft imagemagick" emerge app-editors/emacs
+#+BEGIN_SRC sh
+# One-linear install - all required packages
+emerge dev-build/cmake dev-python/editorconfig app-text/doxygen llvm-core/clang virtual/pkgconfig dev-vcs/git net-misc/rsync dev-build/make dev-debug/gdb sci-visualization/gnuplot media-gfx/plantuml media-gfx/graphviz app-text/pandoc sys-apps/ripgrep sys-apps/fd app-crypt/gnupg app-crypt/pinentry dev-libs/tree-sitter sys-process/htop app-misc/tmux sys-apps/less net-misc/openssh app-shells/zsh app-shells/fish && \
+# Emacs with vterm support
+echo "app-editors/emacs dynamic-loading gui xwidgets tree-sitter" >> /etc/portage/package.use && emerge app-editors/emacs && emerge app-emacs/vterm
 #+END_SRC
 
-*** Building with Script
+*Important USE Flags*:
+- =dynamic-loading= - Enables vterm support (required)
+- =gui= - Build with GUI
+- =xwidgets= - Enable WebKit widgets
+- =tree-sitter= - Enable native parsing
 
-A build script is included for building Emacs from source:
+*** Debian / Ubuntu (APT)
 
-#+BEGIN_EXAMPLE
-  ./scripts/build-emacs.sh
-#+END_EXAMPLE
+#+BEGIN_SRC sh
+# One-linear install - all required packages
+sudo apt install cmake editorconfig doxygen clang-format pkg-config git rsync build-essential gdb gnuplot plantuml graphviz pandoc libtext-multimarkdown-perl ripgrep fd-find tree-sitter-cli htop tmux less openssh-client zsh fish gnupg pinentry-curses && \
+# Emacs options (choose one):
+# Option 1: Standard Emacs
+sudo apt install -y emacs-gtk || \
+# Option 2: Lucid GUI
+sudo apt install -y emacs-lucid || \
+# Option 3: Pure GTK for Wayland
+sudo apt install -y emacs-pgtk || \
+# Option 4: Terminal only
+sudo apt install -y emacs-nox
 
-On Mac OSX, install xcode tools first:
-
-#+BEGIN_SRC sh :tangle no
-  xcode-select --install
+# vterm compilation support
+sudo apt install -y cmake libvterm-dev && \
+# Fix fd command name (Ubuntu calls it 'fdfind')
+echo 'alias fd=fdfind' >> ~/.bashrc
 #+END_SRC
 
-** Packages to Install (Optional)
+*** Alpine Linux (APK)
 
-*** Mac OSX
-
-Using [[http://brew.sh/][homebrew]]:
-
-#+BEGIN_SRC sh :tangle no
-  brew install cmake libtool
-  brew install autojump bash-completion
+#+BEGIN_SRC sh
+# One-linear install - all required packages
+apk add cmake editorconfig doxygen clang-extra-tools pkgconf git rsync make gdb gnuplot plantuml graphviz pandoc ripgrep fd tree-sitter-cli htop tmux less openssh zsh fish pinentry && \
+# Emacs
+apk add emacs
 #+END_SRC
 
-*** Gentoo Linux
+** Language Servers (LSP)**
 
-Enable ~USE=emacs~ for auto-install of emacs packages:
+Install language servers for advanced IDE features. Choose what you need.
 
-#+BEGIN_SRC sh :tangle no
-  emerge app-shells/fasd
-  emerge app-editors/aspell
+#+BEGIN_SRC sh
+# Python (choose one)
+pip install ty || \
+pip install 'python-lsp-server[all]' || \
+pip install basedpyright || \
+npm install -g pyright
+
+# JavaScript / TypeScript
+npm install -g typescript-language-server
+
+# Rust
+rustup component add rust-analyzer
+
+# Go
+go install golang.org/x/tools/gopls@latest
+
+# C/C++
+# Debian/Ubuntu
+sudo apt install -y clangd
+# macOS
+brew install llvm
+# Gentoo
+emerge llvm-core/clang
 #+END_SRC
 
-*** All Platforms
-
-#+BEGIN_SRC sh :tangle no
-  npm install -g typescript-language-server pyright
-#+END_SRC
-
-** Key Features
+** Key Features**
 
 - *Completion Framework*: Vertico + Consult + Marginalia + Orderless
 - *Version Control*: Magit with AI-assisted commits (magit-gptcommit)
@@ -170,7 +205,11 @@ Enable ~USE=emacs~ for auto-install of emacs packages:
 - *Tree-sitter*: Native tree-sitter support (Emacs 29+)
 - *Notes*: Deft for quick note-taking
 - *Org Mode*: Full org setup with agenda and capture templates
+- *Vim Emulation*: Evil mode with evil-collection
+- *Terminal*: vterm for fast terminal emulation
+- *Editorconfig*: Automatic code style configuration
+- *Git Integration*: Git-gutter-fringe for visual diff indicators
 
-** License
+** License**
 
 WTFPL (Do What The Fuck You Want To Public License) - See [[http://www.wtfpl.net/][http://www.wtfpl.net/]]
