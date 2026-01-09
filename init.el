@@ -2453,7 +2453,12 @@ this declaration to the kill-ring."
 ;; clang-format: format C/C++ buffers using clang-format
 ;; https://github.com/emacsorphanage/clang-format
 (use-package clang-format
-  :ensure t)
+  :ensure t
+  :commands (clang-format clang-format-buffer clang-format-region)
+  :config
+  ;; Style to use when calling `clang-format-buffer' unless the project has a
+  ;; .clang-format file.
+  (setq clang-format-fallback-style "Chromium"))
 
 ;; * Emacs Lisp Development
 ;;
