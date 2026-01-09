@@ -174,11 +174,6 @@
 (setq user-full-name "Yen-Chin, Lee")
 (setq user-mail-address "coldnew.tw@gmail.com")
 
-(defun my-load-secret ()
-  "Load my secret setting include password... etc."
-  (let ((secret "~/.secret.el.gpg"))
-    (when (file-exists-p secret) (load-file secret))))
-
 ;; * Package Management
 ;;
 ;; ** Add my extra package list
@@ -701,6 +696,18 @@
          :url opencode-api-url)
         )
       ))
+
+  ;; ollama
+  (defvar llm-provider--ollama-gpt-oss-2ob
+    (make-llm-ollama
+     :chat-model "gpt-oss:20b"
+     :host "127.0.0.1"
+     :port 11434))
+
+  ;; openai
+  (when-let (openai-api-key (getenv "OPENAI_API_KEY"))
+    (defvar llm-provider--openai
+      (make-llm-openai :key openai-api-key)))
   )
 
 ;; * Interactive Commands
@@ -2405,10 +2412,10 @@ this declaration to the kill-ring."
   :config
 
   (setq magit-gptcommit-llm-provider
-   	(make-llm-ollama
-   	 :chat-model "gpt-oss:20b"
-   	 :host "127.0.0.1"
-   	 :port 11434))
+	(if (boundp 'llm-provider--openai)
+	    llm-provider--openai
+	  llm-provider--ollama-gpt-oss-2ob))
+
   ;; add to magit's transit buffer - defer to avoid conflicts
   (with-eval-after-load 'magit
     (magit-gptcommit-status-buffer-setup))
