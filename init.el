@@ -519,9 +519,7 @@
 
 (use-package hungry-delete
   :ensure t
-  :demand t
-  :config
-  (global-hungry-delete-mode))
+  :hook (after-init . global-hungry-delete-mode))
 
 ;; ** iedit
 ;;
@@ -904,63 +902,63 @@ opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
   :bind (("C-c e" . ellama-transient-menu))
   :init
   ;; Auto-scroll during streaming output
-  (setopt ellama-auto-scroll t)
+  (setq-default ellama-auto-scroll t)
   ;; User and assistant nicks for chat display
-   (setopt ellama-user-nick "You")
-   (setopt ellama-assistant-nick "Ellama")
-   :config
-   ;; Set up provider using custom default or fallback to available providers
-   (setopt ellama-provider
-           (or (my/llm-get-provider my/llm-default-provider)
-               ;; Fall back to OpenAI if available
-               (when (boundp 'my/llm-provider-openai)
-                 (symbol-value 'my/llm-provider-openai))
-               ;; Fall back to OpenCode bigpickle
-               (when (boundp 'my/llm-provider-opencode-bigpickle)
-                 (symbol-value 'my/llm-provider-opencode-bigpickle))
-               ;; Fall back to Ollama
-               (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
-                 (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))
-               ;; Default to ollama localhost
-               (make-llm-ollama
-                :chat-model "llama3.2"
-                :host "127.0.0.1"
-                :port 11434)))
+  (setq-default ellama-user-nick "You")
+  (setq-default ellama-assistant-nick "Ellama")
+  :config
+  ;; Set up provider using custom default or fallback to available providers
+  (setq-default ellama-provider
+		(or (my/llm-get-provider my/llm-default-provider)
+		    ;; Fall back to OpenAI if available
+		    (when (boundp 'my/llm-provider-openai)
+                      (symbol-value 'my/llm-provider-openai))
+		    ;; Fall back to OpenCode bigpickle
+		    (when (boundp 'my/llm-provider-opencode-bigpickle)
+                      (symbol-value 'my/llm-provider-opencode-bigpickle))
+		    ;; Fall back to Ollama
+		    (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
+                      (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))
+		    ;; Default to ollama localhost
+		    (make-llm-ollama
+		     :chat-model "llama3.2"
+		     :host "127.0.0.1"
+		     :port 11434)))
 
   ;; Enable global header line for context visibility
   (ellama-context-header-line-global-mode 1)
   (ellama-session-header-line-global-mode 1)
 
   ;; Configure buffer display
-  (setopt ellama-chat-display-action-function #'display-buffer-pop-up-window)
-  (setopt ellama-instant-display-action-function #'display-buffer-at-bottom)
+  (setq-default ellama-chat-display-action-function #'display-buffer-pop-up-window)
+  (setq-default ellama-instant-display-action-function #'display-buffer-at-bottom)
 
   ;; Disable reasoning model cleanup for transparency
-  (setopt ellama-session-remove-reasoning nil)
+  (setq-default ellama-session-remove-reasoning nil)
 
-   ;; Register our configured providers for interactive switching
-   (when (boundp 'my/llm-provider-opencode-bigpickle)
-     (setopt ellama-providers
-             (append
-              (when (boundp 'my/llm-provider-anthropic)
-                '(("anthropic" . ,(symbol-value 'my/llm-provider-anthropic))))
-              (when (boundp 'my/llm-provider-openrouter)
-                '(("openrouter" . ,(symbol-value 'my/llm-provider-openrouter))))
-              (when (symbol-value 'my/llm-provider-opencode-bigpickle)
-                '(("bigpickle" . ,(symbol-value 'my/llm-provider-opencode-bigpickle))))
-              (when (boundp 'my/llm-provider-opencode-grok)
-                '(("grok" . ,(symbol-value 'my/llm-provider-opencode-grok))))
-              (when (boundp 'my/llm-provider-opencode-glm4.7)
-                '(("glm4.7" . ,(symbol-value 'my/llm-provider-opencode-glm4.7))))
-              (when (boundp 'my/llm-provider-openai)
-                '(("openai" . ,(symbol-value 'my/llm-provider-openai))))
-              (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
-                '(("ollama" . ,(symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))))
-              ellama-providers)))
+  ;; Register our configured providers for interactive switching
+  (when (boundp 'my/llm-provider-opencode-bigpickle)
+    (setq-default ellama-providers
+		  (append
+		   (when (boundp 'my/llm-provider-anthropic)
+                     '(("anthropic" . ,(symbol-value 'my/llm-provider-anthropic))))
+		   (when (boundp 'my/llm-provider-openrouter)
+                     '(("openrouter" . ,(symbol-value 'my/llm-provider-openrouter))))
+		   (when (symbol-value 'my/llm-provider-opencode-bigpickle)
+                     '(("bigpickle" . ,(symbol-value 'my/llm-provider-opencode-bigpickle))))
+		   (when (boundp 'my/llm-provider-opencode-grok)
+                     '(("grok" . ,(symbol-value 'my/llm-provider-opencode-grok))))
+		   (when (boundp 'my/llm-provider-opencode-glm4.7)
+                     '(("glm4.7" . ,(symbol-value 'my/llm-provider-opencode-glm4.7))))
+		   (when (boundp 'my/llm-provider-openai)
+                     '(("openai" . ,(symbol-value 'my/llm-provider-openai))))
+		   (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
+                     '(("ollama" . ,(symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))))
+		   ellama-providers)))
 
   ;; Enable keymap with prefix
-  (setopt ellama-enable-keymap t)
-  (setopt ellama-keymap-prefix "C-c e"))
+  (setq-default ellama-enable-keymap t)
+  (setq-default ellama-keymap-prefix "C-c e"))
 
 ;; * Interactive Commands
 ;;
@@ -1373,11 +1371,10 @@ return nil since you can't set font for emacs on it."
 
 ;; Save minibuffer history
 (use-package savehist
-  :demand t
+  :hook (after-init . savehist-mode)
   :config
   (setq savehist-file (expand-file-name "savehist.dat" user-cache-directory))
-  (add-to-list 'savehist-additional-variables 'corfu-history)
-  (savehist-mode 1))
+  (add-to-list 'savehist-additional-variables 'corfu-history))
 
 ;; Keybindings
 (bind-keys :map minibuffer-local-map
@@ -1680,10 +1677,7 @@ return nil since you can't set font for emacs on it."
 
 (use-package rainbow-delimiters
   :ensure t
-  :demand t
-  :config
-  ;; Enable for all programming modes
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; ** recentf
 
