@@ -8,7 +8,6 @@
 
 #+LINK: emacs     https://www.gnu.org/s/emacs
 
-#+Badge
 [[http://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg?dummy]]
 
 This is my Emacs configuration using direct Emacs Lisp files (~early-init.el~ and ~init.el~) with [[https://github.comalphapapa/outshine][outshine]] headings for navigation.
