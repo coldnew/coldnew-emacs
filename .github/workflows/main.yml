@@ -32,8 +32,13 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Install dependencies for build emacs
-        run:  |
-          sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
+        run: |
+          # Enable deb-src repositories in all sources.list files
+          for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.list; do
+            if [ -f "$f" ]; then
+              sudo sed -Ei 's/^# deb-src/deb-src/' "$f"
+            fi
+          done
           sudo apt-get update -y
           sudo apt-get build-dep emacs-nox --yes
           sudo apt-get install libgnutls28-dev -y
