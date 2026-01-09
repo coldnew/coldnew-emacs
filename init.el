@@ -684,28 +684,28 @@
     (let ((opencode-api-url "https://opencode.ai/zen/v1"))
 
       ;; Big Pickle
-      (defvar llm-provider--opencode-bigpickle
+      (defvar my/llm-provider-opencode-bigpickle
         (make-llm-openai-compatible
          :key opencode-api-key
          :chat-model "big-pickle"
          :url opencode-api-url))
 
       ;; Grok
-      (defvar llm-provider--opencode-grok
+      (defvar my/llm-provider-opencode-grok
         (make-llm-openai-compatible
          :key opencode-api-key
          :chat-model "grok-code"
          :url opencode-api-url))
 
       ;; GLM 4.7
-      (defvar llm-provider--opencode-glm4.7
+      (defvar my/llm-provider-opencode-glm4.7
         (make-llm-openai-compatible
          :key opencode-api-key
          :chat-model "glm-4.7-free"
          :url opencode-api-url))
 
       ;; MiniMax M2.1
-      (defvar llm-provider--opencode-minimax-m2.1
+      (defvar my/llm-provider-opencode-minimax-m2.1
         (make-llm-openai-compatible
          :key opencode-api-key
          :chat-model "minimax-m2.1-free"
@@ -714,7 +714,7 @@
       ))
 
   ;; ollama
-  (defvar llm-provider--ollama-gpt-oss-2ob
+  (defvar my/llm-provider-ollama-gpt-oss-2ob
     (make-llm-ollama
      :chat-model "gpt-oss:20b"
      :host "127.0.0.1"
@@ -722,7 +722,7 @@
 
   ;; openai
   (when-let (openai-api-key (getenv "OPENAI_API_KEY"))
-    (defvar llm-provider--openai
+    (defvar my/llm-provider-openai
       (make-llm-openai :key openai-api-key)))
   )
 
@@ -818,16 +818,16 @@
    (setopt ellama-provider
            (cond
             ;; Prefer OpenAI if API key available
-            ((and (boundp 'llm-provider--openai)
-                  (symbol-value 'llm-provider--openai))
-             (symbol-value 'llm-provider--openai))
+            ((and (boundp 'my/llm-provider-openai)
+                  (symbol-value 'my/llm-provider-openai))
+             (symbol-value 'my/llm-provider-openai))
             ;; Fall back to OpenCode bigpickle
-            ((and (boundp 'llm-provider--opencode-bigpickle)
-                  (symbol-value 'llm-provider--opencode-bigpickle))
-             (symbol-value 'llm-provider--opencode-bigpickle))
+            ((and (boundp 'my/llm-provider-opencode-bigpickle)
+                  (symbol-value 'my/llm-provider-opencode-bigpickle))
+             (symbol-value 'my/llm-provider-opencode-bigpickle))
             ;; Fall back to Ollama
-            ((boundp 'llm-provider--ollama-gpt-oss-2ob)
-             (symbol-value 'llm-provider--ollama-gpt-oss-2ob))
+            ((boundp 'my/llm-provider-ollama-gpt-oss-2ob)
+             (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))
             ;; Default to ollama localhost
             (t
              (make-llm-ollama
@@ -847,19 +847,19 @@
   (setopt ellama-session-remove-reasoning nil)
 
   ;; Register our configured providers for interactive switching
-  (when (boundp 'llm-provider--opencode-bigpickle)
+  (when (boundp 'my/llm-provider-opencode-bigpickle)
     (setopt ellama-providers
             (append
-             (when (symbol-value 'llm-provider--opencode-bigpickle)
-               '(("bigpickle" . ,(symbol-value 'llm-provider--opencode-bigpickle))))
-             (when (boundp 'llm-provider--opencode-grok)
-               '(("grok" . ,(symbol-value 'llm-provider--opencode-grok))))
-             (when (boundp 'llm-provider--opencode-glm4.7)
-               '(("glm4.7" . ,(symbol-value 'llm-provider--opencode-glm4.7))))
-             (when (boundp 'llm-provider--openai)
-               '(("openai" . ,(symbol-value 'llm-provider--openai))))
-             (when (boundp 'llm-provider--ollama-gpt-oss-2ob)
-               '(("ollama" . ,(symbol-value 'llm-provider--ollama-gpt-oss-2ob))))
+             (when (symbol-value 'my/llm-provider-opencode-bigpickle)
+               '(("bigpickle" . ,(symbol-value 'my/llm-provider-opencode-bigpickle))))
+             (when (boundp 'my/llm-provider-opencode-grok)
+               '(("grok" . ,(symbol-value 'my/llm-provider-opencode-grok))))
+             (when (boundp 'my/llm-provider-opencode-glm4.7)
+               '(("glm4.7" . ,(symbol-value 'my/llm-provider-opencode-glm4.7))))
+             (when (boundp 'my/llm-provider-openai)
+               '(("openai" . ,(symbol-value 'my/llm-provider-openai))))
+             (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
+               '(("ollama" . ,(symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))))
              ellama-providers)))
 
   ;; Enable keymap with prefix
@@ -2568,9 +2568,9 @@ this declaration to the kill-ring."
   :config
 
   (setq magit-gptcommit-llm-provider
-	(if (boundp 'llm-provider--openai)
-	    llm-provider--openai
-	  llm-provider--ollama-gpt-oss-2ob))
+	(if (boundp 'my/llm-provider-openai)
+	    my/llm-provider-openai
+	  my/llm-provider-ollama-gpt-oss-2ob))
 
   ;; add to magit's transit buffer - defer to avoid conflicts
   (with-eval-after-load 'magit
