@@ -1,1 +1,138 @@
-init.org
+#+TITLE: coldnew's emacs
+#+AUTHOR: Yen-Chin, Lee <coldnew>
+#+email: coldnew.tw at gmail.com
+#+DESCRIPTION: Emacs configuration using early-init.el and init.el with outshine headings
+#+LANGUAGE: en
+#+STARTUP: overview indent align
+#+OPTIONS: ^:nil num:nil tags:nil
+
+#+LINK: emacs     https://www.gnu.org/s/emacs
+
+#+Badge
+[[http://www.gnu.org/licenses/gpl-3.0.txt][https://img.shields.io/badge/license-GPL_3-green.svg?dummy]]
+
+This is my Emacs configuration using direct Emacs Lisp files (~early-init.el~ and ~init.el~) with [[https://github.comalphapapa/outshine][outshine]] headings for navigation.
+
+** File Structure
+
+- =early-init.el= - Early startup settings (before package initialization)
+- =init.el= - Main configuration with outshine headings
+- =modules/load-modules.el= - Load additional modules
+- =~/.personal.el= - Local personal settings (loaded at end)
+
+** Install or Testing This Config
+
+1. Clone the repository:
+
+   : git clone https://github.com/coldnew/coldnew-emacs.git
+
+2. Initialize submodules (if any):
+
+   #+BEGIN_EXAMPLE
+   git submodule update --init --recursive
+   #+END_EXAMPLE
+
+3. Start Emacs. If not using =~/.emacs.d=, run:
+
+   : emacs -q -l ~/coldnew-emacs/init.el
+
+** Building / Compiling
+
+Use the Makefile to compile configuration files:
+
+- =make= or =make all= - Compile all .el files
+- =make compile= - Compile .el files
+- =make byte-compile= - Force byte-compilation
+- =make native-compile= - Force native compilation (Emacs 28+)
+- =make clean= - Remove compiled files
+
+** Running Tests
+
+- =make test= - Clean and rebuild configuration
+- =emacs -batch -l ert -f ert-run-tests-batch-and-exit= - Run all ERT tests
+
+** Navigation with Outshine
+
+This configuration uses outshine headings instead of org-mode tangling. Navigation:
+
+- =M-x outline-minor-mode= or =M-x outshine-mode= - Enable outline navigation
+- =C-c @= - Toggle outline-minor-mode
+- =C-c n/p/f/b= - Navigate next/previous/first/last heading
+
+** Install Emacs
+
+My emacs runs under =Mac OSX= and =Gentoo Linux=.
+
+*** Mac OSX
+
+Using [[http://brew.sh/][homebrew]] with [[https://github.com/daviderestivo/homebrew-emacs-head][homebrew-emacs-head]]:
+
+#+BEGIN_SRC sh :tangle no
+  brew tap daviderestivo/emacs-head
+  brew install emacs-head@31 --with-cocoa --with-gnutls --with-mailutils --with-xwidgets --with-native-comp --with-native-full-aot --with-tree-sitter --with-libgccjit
+  ln -s /opt/homebrew/opt/emacs-head@30/Emacs.app /Applications
+#+END_SRC
+
+*** Gentoo Linux
+
+[[https://www.gentoo.org/][Gentoo Linux]] makes it easy to install latest apps:
+
+#+BEGIN_SRC sh :tangle no
+  USE="X gtk3 inotify xft imagemagick" emerge app-editors/emacs
+#+END_SRC
+
+*** Building with Script
+
+A build script is included for building Emacs from source:
+
+#+BEGIN_EXAMPLE
+  ./scripts/build-emacs.sh
+#+END_EXAMPLE
+
+On Mac OSX, install xcode tools first:
+
+#+BEGIN_SRC sh :tangle no
+  xcode-select --install
+#+END_SRC
+
+** Packages to Install (Optional)
+
+*** Mac OSX
+
+Using [[http://brew.sh/][homebrew]]:
+
+#+BEGIN_SRC sh :tangle no
+  brew install cmake libtool
+  brew install autojump bash-completion
+#+END_SRC
+
+*** Gentoo Linux
+
+Enable ~USE=emacs~ for auto-install of emacs packages:
+
+#+BEGIN_SRC sh :tangle no
+  emerge app-shells/fasd
+  emerge app-editors/aspell
+#+END_SRC
+
+*** All Platforms
+
+#+BEGIN_SRC sh :tangle no
+  npm install -g typescript-language-server pyright
+#+END_SRC
+
+** Key Features
+
+- *Completion Framework*: Vertico + Consult + Marginalia + Orderless
+- *Version Control*: Magit with AI-assisted commits (magit-gptcommit)
+- *AI Assistants*: Aidermacs (pair programming) + Ellama (general chat)
+- *LLM Support*: OpenAI, Anthropic Claude, OpenRouter, OpenCode, Ollama
+- *Project Management*: Projectile + projectile-ripgrep
+- *Syntax Checking*: Flycheck + Flymake with LSP
+- *Tree-sitter*: Native tree-sitter support (Emacs 29+)
+- *Notes*: Deft for quick note-taking
+- *Org Mode*: Full org setup with agenda and capture templates
+
+** License
+
+[[http://www.gnu.org/licenses/gpl-3.0.txt][GPL-3.0]]
