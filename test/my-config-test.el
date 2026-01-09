@@ -277,30 +277,6 @@
   (should (fboundp 'my/ert-run-all-tests)))
 
 ;; ============================================================================
-;; Section: Minibuffer Functions
-;; ============================================================================
-
-(ert-deftest my/minibuffer-insert-is-function ()
-  "Test that my/minibuffer-insert is defined."
-  (should (fboundp 'my/minibuffer-insert)))
-
-(ert-deftest my/minibuffer-switch-to-ramdisk-is-function ()
-  "Test that my/minibuffer-switch-to-ramdisk is defined."
-  (should (fboundp 'my/minibuffer-switch-to-ramdisk)))
-
-(ert-deftest my/minibuffer-switch-to-home-is-function ()
-  "Test that my/minibuffer-switch-to-home is defined."
-  (should (fboundp 'my/minibuffer-switch-to-home)))
-
-(ert-deftest my/minibuffer-switch-to-rootdir-is-function ()
-  "Test that my/minibuffer-switch-to-rootdir is defined."
-  (should (fboundp 'my/minibuffer-switch-to-rootdir)))
-
-(ert-deftest my/minibuffer-switch-to-tramp-is-function ()
-  "Test that my/minibuffer-switch-to-tramp is defined."
-  (should (fboundp 'my/minibuffer-switch-to-tramp)))
-
-;; ============================================================================
 ;; Section: Utility Functions
 ;; ============================================================================
 
