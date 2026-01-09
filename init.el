@@ -74,8 +74,8 @@
     ;; if ~/ramdisk/ exist, use it
     (if (file-exists-p user-ramdisk)
         user-ramdisk
-        ;; fallback to system default ramdisk dir
-        temporary-file-directory))
+      ;; fallback to system default ramdisk dir
+      temporary-file-directory))
   "My ramdisk path in system.")
 
 ;; * Load Path Setup
@@ -204,18 +204,18 @@
   (when (< emacs-major-version 24)
     (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))))
 
- ;; ** Initialize package.el
- ;;
- ;;   Before we start to use =package.el=, we need to initialize it
- ;;   first.
- ;;
- ;;   This must come before configurations of installed packages.
- ;;   Don't delete this line. If you don't want it, just comment it out
- ;;   by adding a semicolon to the start of the line. You may delete
- ;;   these explanatory comments.
+;; ** Initialize package.el
+;;
+;;   Before we start to use =package.el=, we need to initialize it
+;;   first.
+;;
+;;   This must come before configurations of installed packages.
+;;   Don't delete this line. If you don't want it, just comment it out
+;;   by adding a semicolon to the start of the line. You may delete
+;;   these explanatory comments.
 
- (eval-and-compile
-   (package-initialize))
+(eval-and-compile
+  (package-initialize))
 
 ;; Upgrade built-in packages to latest version
 (setq package-install-upgrade-built-in t)
@@ -337,7 +337,7 @@
 (eval-after-load 'idlwave
   '(progn
      (setq-default idlwave-config-directory
-           (concat user-cache-directory "idlwave"))))
+		   (concat user-cache-directory "idlwave"))))
 
 ;; ** srecode
 
@@ -730,26 +730,26 @@
      :host "127.0.0.1"
      :port 11434))
 
-    ;; openai
-    (when-let (openai-api-key (getenv "OPENAI_API_KEY"))
-      (defvar my/llm-provider-openai
-        (make-llm-openai :key openai-api-key)))
+  ;; openai
+  (when-let (openai-api-key (getenv "OPENAI_API_KEY"))
+    (defvar my/llm-provider-openai
+      (make-llm-openai :key openai-api-key)))
 
-    ;; anthropic
-    (when-let (anthropic-api-key (getenv "ANTHROPIC_API_KEY"))
-      (require 'llm-anthropic)
-      (defvar my/llm-provider-anthropic
-        (make-llm-anthropic :key anthropic-api-key)))
+  ;; anthropic
+  (when-let (anthropic-api-key (getenv "ANTHROPIC_API_KEY"))
+    (require 'llm-anthropic)
+    (defvar my/llm-provider-anthropic
+      (make-llm-anthropic :key anthropic-api-key)))
 
-    ;; openrouter
-    (when-let (openrouter-api-key (getenv "OPENROUTER_API_KEY"))
-      (let ((openrouter-url "https://openrouter.ai/api/v1"))
-        (defvar my/llm-provider-openrouter
-          (make-llm-openai-compatible
-           :key openrouter-api-key
-           :chat-model "openrouter/auto"
-           :url openrouter-url))))
-    )
+  ;; openrouter
+  (when-let (openrouter-api-key (getenv "OPENROUTER_API_KEY"))
+    (let ((openrouter-url "https://openrouter.ai/api/v1"))
+      (defvar my/llm-provider-openrouter
+        (make-llm-openai-compatible
+         :key openrouter-api-key
+         :chat-model "openrouter/auto"
+         :url openrouter-url))))
+  )
 
 ;; ** Default LLM Provider Selection
 ;;
@@ -826,48 +826,48 @@ opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
   :demand t
   :bind (("C-c a" . aidermacs-transient-menu))
   :config
-   ;; API keys should be set in shell environment or via pre-run hook
-   (add-hook 'aidermacs-before-run-backend-hook
-             (lambda ()
-               ;; API keys from environment (set in .bashrc/.zshrc)
-               ;; or use password-store for secure management
-               (when-let (openai-key (getenv "OPENAI_API_KEY"))
-                 (setenv "OPENAI_API_KEY" openai-key))
-               (when-let (anthropic-key (getenv "ANTHROPIC_API_KEY"))
-                 (setenv "ANTHROPIC_API_KEY" anthropic-key))
-               (when-let (openrouter-key (getenv "OPENROUTER_API_KEY"))
-                 (setenv "OPENROUTER_API_KEY" openrouter-key))))
+  ;; API keys should be set in shell environment or via pre-run hook
+  (add-hook 'aidermacs-before-run-backend-hook
+            (lambda ()
+              ;; API keys from environment (set in .bashrc/.zshrc)
+              ;; or use password-store for secure management
+              (when-let (openai-key (getenv "OPENAI_API_KEY"))
+                (setenv "OPENAI_API_KEY" openai-key))
+              (when-let (anthropic-key (getenv "ANTHROPIC_API_KEY"))
+                (setenv "ANTHROPIC_API_KEY" anthropic-key))
+              (when-let (openrouter-key (getenv "OPENROUTER_API_KEY"))
+                (setenv "OPENROUTER_API_KEY" openrouter-key))))
 
-   ;; Buffer display settings
-   (add-to-list 'display-buffer-alist
-                `("\\*aidermacs.*\\*"
-                  (display-buffer-pop-up-window)
-                  (inhibit-same-window . t)))
-   :custom
-   ;; Use vterm backend for better terminal compatibility
-   (aidermacs-backend 'vterm)
+  ;; Buffer display settings
+  (add-to-list 'display-buffer-alist
+               `("\\*aidermacs.*\\*"
+                 (display-buffer-pop-up-window)
+                 (inhibit-same-window . t)))
+  :custom
+  ;; Use vterm backend for better terminal compatibility
+  (aidermacs-backend 'vterm)
 
-   ;; Default chat mode (code, ask, architect, help)
-   (aidermacs-default-chat-mode 'architect)
+  ;; Default chat mode (code, ask, architect, help)
+  (aidermacs-default-chat-mode 'architect)
 
-   ;; Default model based on provider selection
-   (aidermacs-default-model
-    (pcase my/llm-default-provider
-      ('anthropic "claude-sonnet-4-20250514")
-      ('openrouter "openrouter/auto")
-      (_ "gpt-4o")))
+  ;; Default model based on provider selection
+  (aidermacs-default-model
+   (pcase my/llm-default-provider
+     ('anthropic "claude-sonnet-4-20250514")
+     ('openrouter "openrouter/auto")
+     (_ "gpt-4o")))
 
-   ;; Architect mode: separate reasoning and editing models
-   (aidermacs-architect-model
-    (pcase my/llm-default-provider
-      ('anthropic "claude-opus-4-20250514")
-      ('openrouter "openrouter/o1")
-      (_ "o1")))
-   (aidermacs-editor-model
-    (pcase my/llm-default-provider
-      ('anthropic "claude-sonnet-4-20250514")
-      ('openrouter "openrouter/gpt-4o")
-      (_ "gpt-4o")))
+  ;; Architect mode: separate reasoning and editing models
+  (aidermacs-architect-model
+   (pcase my/llm-default-provider
+     ('anthropic "claude-opus-4-20250514")
+     ('openrouter "openrouter/o1")
+     (_ "o1")))
+  (aidermacs-editor-model
+   (pcase my/llm-default-provider
+     ('anthropic "claude-sonnet-4-20250514")
+     ('openrouter "openrouter/gpt-4o")
+     (_ "gpt-4o")))
 
   ;; Behavior settings
   (aidermacs-auto-commits nil)           ; Let user control Git workflow
@@ -878,8 +878,8 @@ opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
   (aidermacs-global-read-only-files '("~/.aider/AI_RULES.md"))
   (aidermacs-project-read-only-files '("README.md" "CONVENTIONS.md"))
 
-   ;; Extra arguments passed to aider CLI
-   (aidermacs-extra-args '("--chat-language" "en")))
+  ;; Extra arguments passed to aider CLI
+  (aidermacs-extra-args '("--chat-language" "en")))
 
 ;; ** ellama
 ;;
@@ -1090,7 +1090,7 @@ With argument, do this that many times."
   "toggle between set-mark-command or rectangle-mark-mode"
   (interactive)
   (if (not mark-active)
-     (call-interactively 'set-mark-command)
+      (call-interactively 'set-mark-command)
     (call-interactively 'rectangle-mark-mode)))
 
 ;; *** Copy and comments
@@ -1366,7 +1366,7 @@ return nil since you can't set font for emacs on it."
 
 (use-package evil
   :ensure t
-   :demand t		       ; Needed for vim keybindings at startup
+  :demand t		       ; Needed for vim keybindings at startup
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)	; for `evil-collection'
@@ -1560,8 +1560,8 @@ return nil since you can't set font for emacs on it."
 ;;   an editor? Yes, Emacs is an OS :)
 ;;
 ;;   I put some editor/IDE relative functions and packages here.
- ;;
- ;; ** Keeping files in sync
+;;
+;; ** Keeping files in sync
 ;;
 ;;   By default, Emacs will not update the contents of open buffers
 ;;   when a file changes on disk. This is inconvenient when switching
@@ -1639,8 +1639,8 @@ return nil since you can't set font for emacs on it."
     (unless (or (minibufferp)
                 ;; Skip line numbers in these modes
                 (memq major-mode '(eshell-mode shell-mode term-mode erc-mode
-                                              compilation-mode woman-mode w3m-mode
-                                              calendar-mode org-mode)))
+                                               compilation-mode woman-mode w3m-mode
+                                               calendar-mode org-mode)))
       (display-line-numbers-mode))))
 
 ;; * Programming Mode Enhancements
@@ -1666,8 +1666,8 @@ return nil since you can't set font for emacs on it."
   :config
   ;; json-mode has it's own highlight numbers method
   (add-hook 'prog-mode-hook #'(lambda()
-                               (if (not (derived-mode-p 'json-mode))
-                                   (highlight-numbers-mode)))))
+				(if (not (derived-mode-p 'json-mode))
+                                    (highlight-numbers-mode)))))
 
 ;; ** highlight-escape-sequences
 
@@ -1769,9 +1769,9 @@ This functions should be added to the hooks of major modes for programming."
 
 (run-with-idle-timer 1 t
                      #'(lambda ()
-                        (unless (get-buffer "*scratch*")
-                          (with-current-buffer (get-buffer-create "*scratch*")
-                            (lisp-interaction-mode)))))
+                         (unless (get-buffer "*scratch*")
+                           (with-current-buffer (get-buffer-create "*scratch*")
+                             (lisp-interaction-mode)))))
 
 ;; ** uniquify
 
@@ -1809,8 +1809,8 @@ This functions should be added to the hooks of major modes for programming."
            (?f (file . "~/Org/finance/personal.org"))
            ))
     (set-register (car r) (cadr r))))
- 
- ;; * Completion
+
+;; * Completion
 ;;
 ;;   Modern completion framework with Vertico, Consult, Marginalia, and Orderless.
 ;;   Much faster and more modular than helm.
@@ -1835,16 +1835,16 @@ This functions should be added to the hooks of major modes for programming."
          ("C-x C-r" . consult-recent-file)
          ("C-c g" . consult-gnus)
          ("C-c h" . consult-history))
-   :config
-   (setq consult-preview-key '(:debounce 0.2 any))
-   ;; Use consult for grep/ag search
-   (setq consult-async-refresh-debounce 0.2)
-   (setq consult-async-input-throttle 0.1)
-   ;; Customize consult-line for better display
-   (consult-customize consult-line
-     :preview-key '(:debounce 0.3 any)
-     ;; Show more context in preview (lines before/after match)
-     (setq consult-line-numbers-widen t)))
+  :config
+  (setq consult-preview-key '(:debounce 0.2 any))
+  ;; Use consult for grep/ag search
+  (setq consult-async-refresh-debounce 0.2)
+  (setq consult-async-input-throttle 0.1)
+  ;; Customize consult-line for better display
+  (consult-customize consult-line
+		     :preview-key '(:debounce 0.3 any)
+		     ;; Show more context in preview (lines before/after match)
+		     (setq consult-line-numbers-widen t)))
 
 (use-package marginalia
   :ensure t
@@ -1888,42 +1888,42 @@ This functions should be added to the hooks of major modes for programming."
   ;; Cycle through candidates
   (corfu-cycle t)
   :config
-   ;; Enable Corfu globally
-   (global-corfu-mode)
+  ;; Enable Corfu globally
+  (global-corfu-mode)
 
-   ;; Corfu keybindings (work in all states)
-   (define-key corfu-map (kbd "TAB") 'corfu-insert)
-   (define-key corfu-map [tab] 'corfu-insert)
-   (define-key corfu-map (kbd "RET") 'corfu-insert)
-   (define-key corfu-map (kbd "ESC") 'corfu-reset))  ;; End of use-package corfu
+  ;; Corfu keybindings (work in all states)
+  (define-key corfu-map (kbd "TAB") 'corfu-insert)
+  (define-key corfu-map [tab] 'corfu-insert)
+  (define-key corfu-map (kbd "RET") 'corfu-insert)
+  (define-key corfu-map (kbd "ESC") 'corfu-reset))  ;; End of use-package corfu
 
-   ;; Corfu + Eglot integration for LSP completion (C/C++, Python, etc.)
-   ;; Eglot provides completion-at-point, corfu enhances it with UI
-   (with-eval-after-load 'eglot
-     (setq-local completion-in-region-function #'corfu-complete-in-region))
-  ;;
-  ;;   kind-icon adds icons to completion candidates in Corfu.
-  ;;   It displays colorful icons for different completion kinds
-  ;;   (functions, variables, methods, files, etc.).
+;; Corfu + Eglot integration for LSP completion (C/C++, Python, etc.)
+;; Eglot provides completion-at-point, corfu enhances it with UI
+(with-eval-after-load 'eglot
+  (setq-local completion-in-region-function #'corfu-complete-in-region))
+;;
+;;   kind-icon adds icons to completion candidates in Corfu.
+;;   It displays colorful icons for different completion kinds
+;;   (functions, variables, methods, files, etc.).
 
-  ;; Install kind-icon if not present
-  (unless (package-installed-p 'kind-icon)
-    (package-install 'kind-icon))
+;; Install kind-icon if not present
+(unless (package-installed-p 'kind-icon)
+  (package-install 'kind-icon))
 
-  ;; Load and configure kind-icon
-  (require 'kind-icon)
+;; Load and configure kind-icon
+(require 'kind-icon)
 
-  ;; Use icons instead of text labels
-  (setq kind-icon-use-icons t)
+;; Use icons instead of text labels
+(setq kind-icon-use-icons t)
 
-  ;; Match corfu background face
-  (setq kind-icon-default-face 'corfu-default)
+;; Match corfu background face
+(setq kind-icon-default-face 'corfu-default)
 
-  ;; Add kind-icon to Corfu margin formatters
-  (with-eval-after-load 'corfu
-    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+;; Add kind-icon to Corfu margin formatters
+(with-eval-after-load 'corfu
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
- ;; * Org Mode
+;; * Org Mode
 ;;
 ;;   Org-mode is for keeping notes, maintaining TODO lists, and
 ;;   project planning with a fast and effective plain-markup system.
@@ -1987,19 +1987,19 @@ This functions should be added to the hooks of major modes for programming."
   ;; highlight current in agenda
   (add-hook 'org-agenda-mode-hook 'hl-line-mode)
 
-   ;; Setup files for agenda - only configure if directory exists
-   (let ((org-task-dir (expand-file-name "~/Org/tasks")))
-     (when (file-directory-p org-task-dir)
-       (setq org-directory org-task-dir)
-       (setq org-agenda-files nil) ; Lazy loaded in my/org-setup-agenda-files
-       (defun my/org-setup-agenda-files ()
-         "Setup org-agenda-files lazily."
-         (unless org-agenda-files
-           (setq org-agenda-files
-                 (find-lisp-find-files org-directory "\.org$"))))
-       (add-hook 'org-mode-hook #'my/org-setup-agenda-files)
-       ;;
-       (setq org-default-notes-file (file-name-concat org-directory "tasks" "TODO.org"))))
+  ;; Setup files for agenda - only configure if directory exists
+  (let ((org-task-dir (expand-file-name "~/Org/tasks")))
+    (when (file-directory-p org-task-dir)
+      (setq org-directory org-task-dir)
+      (setq org-agenda-files nil) ; Lazy loaded in my/org-setup-agenda-files
+      (defun my/org-setup-agenda-files ()
+        "Setup org-agenda-files lazily."
+        (unless org-agenda-files
+          (setq org-agenda-files
+                (find-lisp-find-files org-directory "\.org$"))))
+      (add-hook 'org-mode-hook #'my/org-setup-agenda-files)
+      ;;
+      (setq org-default-notes-file (file-name-concat org-directory "tasks" "TODO.org"))))
 
   ;; Always use `C-g' to exit agenda
   (add-hook 'org-agenda-mode-hook
@@ -2016,29 +2016,29 @@ This functions should be added to the hooks of major modes for programming."
           ("l" "Links"    entry (file+headline "" "Links") "* TODO %? :link:\nSCHEDULED: <%<%Y-%m-%d %a>>\n %i\n %a")
           ("j" "Journal"  entry (file+datetree "" "Journal") "* %?\nEntered on %U\n  %i\n  %a")
           ))
-   (eval-after-load 'ispell
-     '(progn
-        (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
-        (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
-        ))
+  (eval-after-load 'ispell
+    '(progn
+       (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+       (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+       ))
   (with-eval-after-load 'org
     (bind-keys :map org-mode-map
-              ("M-p"   . org-previous-visible-heading)
-              ("M-n"   . org-next-visible-heading)
-              ("C-c a" . org-agenda)
-              ("C-c c" . org-capture)
-              ("C-c l" . org-store-link)
-              ("C-c b" . org-metaleft)
-              ("C-c f" . org-metaright)
-              ("C-c p" . org-metaup)
-              ("C-c n" . org-metadown)
-              ("C-c i" . org-insert-link)
-              ("C-c I" . org-toggle-inline-images)
-              ("C-c %" . org-mark-ring-push)
-              ("C-c &" . org-mark-ring-goto)
-              ("C-c C-." . org-babel-remove-result-one-or-many))
+               ("M-p"   . org-previous-visible-heading)
+               ("M-n"   . org-next-visible-heading)
+               ("C-c a" . org-agenda)
+               ("C-c c" . org-capture)
+               ("C-c l" . org-store-link)
+               ("C-c b" . org-metaleft)
+               ("C-c f" . org-metaright)
+               ("C-c p" . org-metaup)
+               ("C-c n" . org-metadown)
+               ("C-c i" . org-insert-link)
+               ("C-c I" . org-toggle-inline-images)
+               ("C-c %" . org-mark-ring-push)
+               ("C-c &" . org-mark-ring-goto)
+               ("C-c C-." . org-babel-remove-result-one-or-many))
     (bind-keys :map org-src-mode-map
-              ("C-c C-c" . org-edit-src-exit))))
+               ("C-c C-c" . org-edit-src-exit))))
 
 ;; ** org-indent
 
@@ -2107,7 +2107,7 @@ This functions should be added to the hooks of major modes for programming."
 
 (use-package gn-mode
   :ensure t
-   :mode ("BUILD.gn" "\\.gni?\\'"))
+  :mode ("BUILD.gn" "\\.gni?\\'"))
 
 ;; Declare functions from mmm-mode to suppress compiler warnings
 (declare-function mmm-add-classes "mmm-mode")
@@ -2281,10 +2281,10 @@ If SUBMODE is not provided, use `LANG-mode' by default."
      '(("\\<\\(int8_t\\|int16_t\\|int32_t\\|int64_t\\|uint8_t\\|uint16_t\\|uint32_t\\|uint64_t\\)\\>" . font-lock-keyword-face))))
   (add-hook 'c-mode-hook
             #'(lambda ()
-               (c-set-style "linux")
-               (setq c-basic-offset 8)
-               ;; Make TAB equivalent to 8 spaces
-               (setq tab-width 8)))
+		(c-set-style "linux")
+		(setq c-basic-offset 8)
+		;; Make TAB equivalent to 8 spaces
+		(setq tab-width 8)))
   (defun c-lineup-arglist-tabs-only (ignored)
     "Line up argument lists by tabs, not spaces"
     (let* ((anchor (c-langelem-pos c-syntactic-element))
@@ -2318,60 +2318,60 @@ If SUBMODE is not provided, use `LANG-mode' by default."
         (message "Setting up indentation for the linux kernel"))))
 
   (add-hook 'c-mode-hook 'linux-kernel-development-setup)
-   (add-hook 'c++-mode-hook
-             #'(lambda ()
+  (add-hook 'c++-mode-hook
+            #'(lambda ()
 
-               ;; Use stroustrup style
-               (c-set-style "stroustrup")
+		;; Use stroustrup style
+		(c-set-style "stroustrup")
 
-               ;; Setting indentation level
-               (setq c-basic-offset 4)
+		;; Setting indentation level
+		(setq c-basic-offset 4)
 
-               ;; Make TAB equivalent to 4 spaces
-               (setq tab-width 4)
+		;; Make TAB equivalent to 4 spaces
+		(setq tab-width 4)
 
-               ;; Use spaces to indent instead of tabs.
-               (setq indent-tabs-mode nil)
+		;; Use spaces to indent instead of tabs.
+		(setq indent-tabs-mode nil)
 
-               ;; Indent the continuation by 2
-               (setq c-continued-statement-offset 2)
+		;; Indent the continuation by 2
+		(setq c-continued-statement-offset 2)
 
-               ;; Brackets should be at same indentation level as the statements they open
-               ;; for example:
-               ;;                 if (0)        becomes        if (0)
-               ;;                     {                        {
-               ;;                        ;                         ;
-               ;;                     }                        }
-               (c-set-offset 'substatement-open 0)
+		;; Brackets should be at same indentation level as the statements they open
+		;; for example:
+		;;                 if (0)        becomes        if (0)
+		;;                     {                        {
+		;;                        ;                         ;
+		;;                     }                        }
+		(c-set-offset 'substatement-open 0)
 
-               ;; make open-braces after a case
-               (c-set-offset 'case-label '+)
+		;; make open-braces after a case
+		(c-set-offset 'case-label '+)
 
-               ;; Not indent code inside a namespace
-               ;; for example:
-               ;;                namespace A {
-               ;;
-               ;;                int namespace_global_variable;
-               ;;
-               ;;                class Class {
-               ;;
-               ;;                Class();
-               ;;                //...
-               ;;                };
-               ;;
-               ;;                }
-               (c-set-offset 'innamespace 0)
-               ))
+		;; Not indent code inside a namespace
+		;; for example:
+		;;                namespace A {
+		;;
+		;;                int namespace_global_variable;
+		;;
+		;;                class Class {
+		;;
+		;;                Class();
+		;;                //...
+		;;                };
+		;;
+		;;                }
+		(c-set-offset 'innamespace 0)
+		))
   (bind-keys :map c-mode-base-map
              ;;("C-c '" . my/narrow-or-widen-dwim)
              ("C-c C-c" . compile)
              ("C-c C-g" . gdb)
              ("C-c C-o" . cff-find-other-file))
 
-   ;; Some keys may override global map add here
-   (bind-keys :map c-mode-base-map
-              ("M-." . ggtags-find-tag-dwim)
-              ("M-," . ggtags-find-tag-return)))
+  ;; Some keys may override global map add here
+  (bind-keys :map c-mode-base-map
+             ("M-." . ggtags-find-tag-dwim)
+             ("M-," . ggtags-find-tag-return)))
 
 ;; ** c-eldoc
 
@@ -2380,8 +2380,8 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   :config
   (add-hook 'c-mode-common-hook
             #'(lambda ()
-               (setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
-               (c-turn-on-eldoc-mode))))
+		(setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
+		(c-turn-on-eldoc-mode))))
 
 ;; ** cwarn
 
@@ -2597,21 +2597,21 @@ this declaration to the kill-ring."
 (use-package magit-gptcommit
   :ensure t
   :demand t
-   :after magit llm
-   :config
+  :after magit llm
+  :config
 
-   (setq magit-gptcommit-llm-provider
-         (or (my/llm-get-provider my/llm-default-provider)
-             (when (boundp 'my/llm-provider-openai)
-               (symbol-value 'my/llm-provider-openai))
-             (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
-               (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))))
+  (setq magit-gptcommit-llm-provider
+        (or (my/llm-get-provider my/llm-default-provider)
+            (when (boundp 'my/llm-provider-openai)
+              (symbol-value 'my/llm-provider-openai))
+            (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
+              (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))))
 
-   ;; add to magit's transit buffer - defer to avoid conflicts
-   (with-eval-after-load 'magit
-     (magit-gptcommit-status-buffer-setup))
-   :bind (:map git-commit-mode-map
-               ("C-c C-g" . magit-gptcommit-commit-accept)))
+  ;; add to magit's transit buffer - defer to avoid conflicts
+  (with-eval-after-load 'magit
+    (magit-gptcommit-status-buffer-setup))
+  :bind (:map git-commit-mode-map
+              ("C-c C-g" . magit-gptcommit-commit-accept)))
 
 ;; * Tree-sitter Support
 ;;
@@ -2780,7 +2780,7 @@ this declaration to the kill-ring."
     (define-key eglot-mode-map (kbd "C-c l q") 'eglot-shutdown-all)
     (define-key eglot-mode-map (kbd "C-c l s") 'eglot-reconnect)))
 
- ;; * Snippets and Templates
+;; * Snippets and Templates
 ;;
 ;; ** yasnippet
 
@@ -2789,17 +2789,17 @@ this declaration to the kill-ring."
   :mode ("emacs.+/snippets/" . snippet-mode)
   :commands (yas-global-mode yas-minor-mode)
   :config
-   ;; enable yasnippet globally
-   (yas-global-mode 1)
-   ;; extra yasnipet configs
-   (setq yas-prompt-functions '(yas-dropdown-prompt
-                                yas-completing-prompt
-                                yas-ido-prompt))
-   (let ((my-snippet-dir (concat user-emacs-directory "snippets")))
-     (if (and (file-exists-p my-snippet-dir)
+  ;; enable yasnippet globally
+  (yas-global-mode 1)
+  ;; extra yasnipet configs
+  (setq yas-prompt-functions '(yas-dropdown-prompt
+                               yas-completing-prompt
+                               yas-ido-prompt))
+  (let ((my-snippet-dir (concat user-emacs-directory "snippets")))
+    (if (and (file-exists-p my-snippet-dir)
     	     (not (member my-snippet-dir yas/snippet-dirs)))
        	(add-to-list 'yas-snippet-dirs my-snippet-dir)))
-   (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1)))
+  (add-hook 'term-mode-hook (lambda() (yas-minor-mode -1)))
   (defadvice yas-expand (around major-mode-expand activate)
     "Try to complete a structure template before point like org-mode does.
   This looks for strings like \"<e\" on an otherwise empty line and
@@ -2991,20 +2991,20 @@ this declaration to the kill-ring."
   :hook ((emacs-lisp-mode clojure-mode lisp-mode scheme-mode) . lispy-mode))
 
 (use-package lispyville
-   :ensure t
-   :after (lispy evil)
-   :commands (lispyville-set-key-theme)
-   :hook (lispy-mode . lispyville-mode)
-   :config
-   ;; Configure key theme with safe operators
-   (lispyville-set-key-theme
-    '(operators
-      c-w
-      (prettify)
-      (additional-movement
-       normal
-       visual
-       motion))))
+  :ensure t
+  :after (lispy evil)
+  :commands (lispyville-set-key-theme)
+  :hook (lispy-mode . lispyville-mode)
+  :config
+  ;; Configure key theme with safe operators
+  (lispyville-set-key-theme
+   '(operators
+     c-w
+     (prettify)
+     (additional-movement
+      normal
+      visual
+      motion))))
 
 (use-package indent-guide
   :ensure t
@@ -3135,7 +3135,7 @@ this declaration to the kill-ring."
            (concat
             user-login-name "@" system-name " "
             (if (cl-search (directory-file-name (expand-file-name (getenv "HOME"))) (eshell/pwd))
-            	      (replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
+            	(replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
               (eshell/pwd))
             (if (= (user-uid) 0) " # " " $ "))))
   ;; Add color for eshell prompt like Gentoo does
@@ -3207,19 +3207,19 @@ this declaration to the kill-ring."
 
 (defun eshell/unpack (file)
   (let ((command (cl-some (lambda (x)
-                          (if (string-match-p (car x) file)
-                              (cadr x)))
-                        '((".*\.tar.bz2" "tar xjf")
-                          (".*\.tar.gz" "tar xzf")
-                          (".*\.bz2" "bunzip2")
-                          (".*\.rar" "unrar x")
-                          (".*\.gz" "gunzip")
-                          (".*\.tar" "tar xf")
-                          (".*\.tbz2" "tar xjf")
-                          (".*\.tgz" "tar xzf")
-                          (".*\.zip" "unzip")
-                          (".*\.Z" "uncompress")
-                          (".*" "echo 'Could not unpack the file:'")))))
+                            (if (string-match-p (car x) file)
+				(cadr x)))
+                          '((".*\.tar.bz2" "tar xjf")
+                            (".*\.tar.gz" "tar xzf")
+                            (".*\.bz2" "bunzip2")
+                            (".*\.rar" "unrar x")
+                            (".*\.gz" "gunzip")
+                            (".*\.tar" "tar xf")
+                            (".*\.tbz2" "tar xjf")
+                            (".*\.tgz" "tar xzf")
+                            (".*\.zip" "unzip")
+                            (".*\.Z" "uncompress")
+                            (".*" "echo 'Could not unpack the file:'")))))
     (eshell-command-result (concat command " " file))))
 
 ;; * Window Management
