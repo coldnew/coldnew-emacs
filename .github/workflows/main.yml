@@ -1,81 +1,42 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches: [master]
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  test:
     runs-on: ubuntu-latest
 
-    env:
-      CI: true
-    
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
         with:
-          submodules: recursive
+          fetch-depth: 0
 
-      # Runs a single command using the runners shell
-      - name: Install dependencies for build emacs
-        run: |
-          # Enable deb-src repositories in all sources.list files
-          for f in /etc/apt/sources.list /etc/apt/sources.list.d/*.list; do
-            if [ -f "$f" ]; then
-              sudo sed -Ei 's/^# deb-src/deb-src/' "$f"
-            fi
-          done
-          sudo apt-get update -y
-          sudo apt-get build-dep emacs-nox --yes
-          sudo apt-get install libgnutls28-dev -y
+      - name: Setup Emacs 30
+        uses: purcell/setup-emacs@v0.3
+        with:
+          emacs-version: snapshot
+          install-just-the-emacs: true
 
-      # Runs a set of commands using the runners shell
-      - name: Run build-emacs.sh
-        env:
-          EMACS: .build/bin/emacs
-        run: ./scripts/build-emacs.sh
-
-      - name: Build init.el
-        env:
-          EMACS: .build/bin/emacs
-        run: make
-
-      - name: Run ERT Tests
-        env:
-          EMACS: .build/bin/emacs
-        run: make test
-
-  # Quick test job - runs tests without building Emacs from source
-  quick-test:
-    runs-on: ubuntu-latest
-
-    env:
-      CI: true
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Emacs and dependencies
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y emacs27-nox make
-
-      - name: Run ERT Tests (Quick)
+      - name: Show Emacs version
         run: |
           emacs --version
-          make test 
-        
+
+      - name: Run tests with Emacs 30
+        run: |
+          emacs --batch -l ert \
+            -eval "(setq load-path (append '(\"test\") load-path))" \
+            -l init.el \
+            -eval "(require 'my-helpers nil t)" \
+            -eval "(require 'my-config-test nil t)" \
+            -f ert-run-tests-batch-and-exit
+
+      - name: Compile init.el
+        run: |
+          emacs --batch \
+            -l early-init.el -l init.el \
+            --eval "(byte-compile-file \"init.el\")"
