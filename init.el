@@ -2175,6 +2175,30 @@ This functions should be added to the hooks of major modes for programming."
 
 ;; ** markdown-mode
 
+;; mmm-mode - Multi-major-mode support for markdown code blocks
+(use-package mmm-mode
+  :ensure t
+  :commands (mmm-mode mmm-global-mode)
+  :config
+  (setq mmm-global-mode 'maybe)
+  (setq mmm-parse-when-idle 't))
+
+(defun my/mmm-markdown-auto-class (lang &optional submode)
+  "Define a mmm-mode class for LANG in `markdown-mode' using SUBMODE.
+If SUBMODE is not provided, use `LANG-mode' by default."
+  (let ((class (intern (concat "markdown-" lang)))
+        (submode (or submode (intern (concat lang "-mode"))))
+        (front (concat "^```" lang "[\n\r]+"))
+        (back "^```"))
+    (mmm-add-classes (list (list class :submode submode :front front :back back)))
+    (mmm-add-mode-ext-class 'markdown-mode nil class)))
+
+;; Mode names that derive directly from the language name
+(mapc 'my/mmm-markdown-auto-class
+      '("awk" "bibtex" "c" "cpp" "css" "html" "latex" "lisp" "makefile"
+        "markdown" "python" "r" "ruby" "sql" "stata" "xml" "js"))
+
+;; markdown-mode - Markdown editing
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
@@ -2182,32 +2206,11 @@ This functions should be added to the hooks of major modes for programming."
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown")
-  :config
-  ;; http://jblevins.org/log/mmm
-  (use-package mmm-mode
-    :ensure t
-    :config
-    (setq mmm-global-mode 'maybe)
-    (setq mmm-parse-when-idle 't)
-    (defun my/mmm-markdown-auto-class (lang &optional submode)
-      "Define a mmm-mode class for LANG in `markdown-mode' using SUBMODE.
-  If SUBMODE is not provided, use `LANG-mode' by default."
-      (let ((class (intern (concat "markdown-" lang)))
-            (submode (or submode (intern (concat lang "-mode"))))
-            (front (concat "^```" lang "[\n\r]+"))
-            (back "^```"))
-        (mmm-add-classes (list (list class :submode submode :front front :back back)))
-        (mmm-add-mode-ext-class 'markdown-mode nil class)))
-
-    ;; Mode names that derive directly from the language name
-    (mapc 'my/mmm-markdown-auto-class
-          '("awk" "bibtex" "c" "cpp" "css" "html" "latex" "lisp" "makefile"
-            "markdown" "python" "r" "ruby" "sql" "stata" "xml" "js")))
-  (bind-keys :map markdown-mode-map
-             ("C-c i" . markdown-insert-link))
-
-  (bind-keys :map gfm-mode-map
-             ("C-c i" . markdown-insert-link)))
+  :bind
+  (:map markdown-mode-map
+        ("C-c i" . markdown-insert-link))
+  (:map gfm-mode-map
+        ("C-c i" . markdown-insert-link)))
 
 ;; ** nasm-mode
 
@@ -2235,15 +2238,15 @@ This functions should be added to the hooks of major modes for programming."
 
 ;; ** qml-mode
 
+;; indent-guide - Show vertical line at indentation levels
+(use-package indent-guide
+  :ensure t
+  :commands (indent-guide-mode))
+
 (use-package qml-mode
   :ensure t
   :mode "\\.qml$"
-  :config
-  (use-package indent-guide
-    :ensure t
-    :commands (indent-guide-mode)
-    :config
-    (add-hook 'qml-mode-hook #'indent-guide-mode)))
+  :hook (qml-mode . indent-guide-mode))
 
 ;; ** vala-mode
 
