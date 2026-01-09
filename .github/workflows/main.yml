@@ -2,30 +2,28 @@ name: CI
 
 on:
   push:
-    branches: [master]
   pull_request:
-    branches: [master]
   workflow_dispatch:
 
 jobs:
-  test:
+  run-tests:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        emacs_version:
+          - 27.2
+          - 28.2
+          - 29.1
+          - snapshot
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+      - uses: purcell/setup-emacs@master
         with:
-          fetch-depth: 0
-
-      - name: Setup Emacs
-        uses: purcell/setup-emacs@v6
-        with:
-          version: "28.2"
-
+          version: ${{ matrix.emacs_version }}
       - name: Show Emacs version
         run: |
           emacs --version
-
-      - name: Run tests with Emacs
+      - name: Run tests
         run: |
           emacs --batch -l ert \
             -eval "(setq load-path (append '(\"test\") load-path))" \
@@ -33,9 +31,24 @@ jobs:
             -eval "(require 'my-helpers nil t)" \
             -eval "(require 'my-config-test nil t)" \
             -f ert-run-tests-batch-and-exit
-
       - name: Compile init.el
         run: |
           emacs --batch \
             -l early-init.el -l init.el \
             --eval "(byte-compile-file \"init.el\")"
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: purcell/setup-emacs@master
+        with:
+          version: 28.1
+      - name: Show Emacs version
+        run: |
+          emacs --version
+      - name: Generate documentation
+        run: |
+          make verify-outshine
