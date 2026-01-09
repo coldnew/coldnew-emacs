@@ -2693,6 +2693,35 @@ this declaration to the kill-ring."
           (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml"))
           (zig        . ("https://github.com/GrayJack/tree-sitter-zig")))
         )
+
+  ;; Auto-install tree-sitter grammars when needed
+  ;; Generate mode-to-language mapping from treesit-language-source-alist
+  (setq my/treesit-mode-to-language-alist
+        (mapcar (lambda (lang-entry)
+                  (cons (intern (format "%s-ts-mode" (car lang-entry)))
+                        (car lang-entry)))
+                treesit-language-source-alist))
+
+  ;; Handle special case: c++-ts-mode uses "cpp" grammar
+  (push '(c++-ts-mode . cpp) my/treesit-mode-to-language-alist)
+
+  ;; Auto-install tree-sitter grammar when entering a tree-sitter mode
+  (defun my/treesit-maybe-install-grammar ()
+    "Auto-install tree-sitter grammar for current mode if not available."
+    (when (and (boundp 'major-mode) major-mode)
+      (let* ((lang (cdr (assoc major-mode my/treesit-mode-to-language-alist)))
+             (parser-path (when lang (treesit-parser-create-path lang))))
+        ;; Install if grammar doesn't exist
+        (when (and lang (not (file-directory-p parser-path)))
+          (message "[treesit] Auto-installing grammar for %s..." lang)
+          (condition-case err
+              (treesit-install-language-grammar lang)
+            (error
+             (message "[treesit] Failed to install %s: %s" lang err)))))))
+
+  ;; Run auto-install hook for all tree-sitter modes
+  (add-hook 'treesit-after-major-mode-change-hook #'my/treesit-maybe-install-grammar)
+
   ;; treesit mode will create lang-ts-mode, take python for example, we
   ;; will have python-mode (native) and python-ts-mode (tree-sitter)
   ;; setup the major-modes we want to override here
