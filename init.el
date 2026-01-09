@@ -2118,51 +2118,6 @@ This functions should be added to the hooks of major modes for programming."
   (with-eval-after-load 'org-bullets
     (add-hook 'org-mode-hook #'(lambda () (org-bullets-mode 1)))))
 
-;; ** deft
-
-(use-package deft
-   :ensure t
-   :config
-   ;; default use org-mode
-   (setq deft-default-extension "org")
-   ;; default directory set to ~/Org (only if exists)
-   (when (file-directory-p "~/Org")
-     (setq deft-directory "~/Org"))
-   ;; Do not make deft automatically save file
-   (setq deft-auto-save-interval 0)
-  ;; Recursive search
-  (setq deft-recursive t)
-
-  ;; setup an minor-mode to quickly kill all deft buffers
-  (define-minor-mode deft-note-mode "Deft notes" nil " Deft-Notes" nil)
-  (setq deft-text-mode 'deft-note-mode)
-
-  ;; Quickly kill deft buffers
-  (defun my/kill-all-deft-notes ()
-    (interactive)
-    (save-excursion
-      (let ((count 0))
-        (dolist (buffer (buffer-list))
-          (set-buffer buffer)
-          (when (not (eq nil deft-note-mode))
-            (setq count (1+ count))
-            (kill-buffer buffer))))))
-
-  ;; Enable/Disable defts
-  (defun deft-or-close ()
-    (interactive)
-    (with-eval-after-load 'deft
-      (if (or (eq major-mode 'deft-mode) (not (eq nil deft-note-mode)))
-          (progn (my/kill-all-deft-notes) (kill-buffer "*Deft*"))
-          (deft))))
-
-  (defun my/deft-practice ()
-    "Use deft to quickly see my blog drafts."
-    (interactive)
-    (let ((deft-directory "~/Workspace/practice")
-          (deft-extensions '("md" "org"))))
-    (deft)))
-
 ;; ** org-crypt
 
 (use-package org-crypt
