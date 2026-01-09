@@ -429,6 +429,22 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
+;; ** vterm
+;;
+;;   vterm is a terminal emulator based on libvterm, which provides
+;;   a fast and feature-rich alternative to term-mode.
+;;
+;;   GitHub: https://github.com/akermu/emacs-libvterm
+
+(use-package vterm
+  :ensure t
+  :if (executable-find "cmake")
+  :commands vterm
+  :config
+  (setq vterm-always-prompt-on-exit t
+        vterm-shell (or (getenv "SHELL") "/bin/zsh")
+        vterm-max-scrollback 10000))
+
 ;; ** expand-region
 ;;
 ;;   Expand region increases the selected region by semantic units.
@@ -709,6 +725,68 @@
     (defvar llm-provider--openai
       (make-llm-openai :key openai-api-key)))
   )
+
+;; ** aidermacs
+;;
+;;   Aidermacs is an Emacs package that integrates Aider, an AI pair
+;;   programming tool. It provides Cursor-like AI coding capabilities while
+;;   staying in Emacs.
+;;
+;;   GitHub: https://github.com/MatthewZMD/aidermacs
+;;
+;;   Features:
+;;   - AI pair programming with Claude, GPT-4o, DeepSeek, Gemini, etc.
+;;   - Built-in Ediff integration for change review
+;;   - Intelligent model selection
+;;   - Architect mode (separate reasoning/editing models)
+;;   - Multiple terminal backends (comint/vterm)
+
+(use-package aidermacs
+  :ensure t
+  :after vterm
+  :demand t
+  :bind (("C-c a" . aidermacs-transient-menu))
+  :config
+  ;; API keys should be set in shell environment or via pre-run hook
+  (add-hook 'aidermacs-before-run-backend-hook
+            (lambda ()
+              ;; API keys from environment (set in .bashrc/.zshrc)
+              ;; or use password-store for secure management
+              (when-let (anthropic-key (getenv "ANTHROPIC_API_KEY"))
+                (setenv "ANTHROPIC_API_KEY" anthropic-key))
+              (when-let (openrouter-key (getenv "OPENROUTER_API_KEY"))
+                (setenv "OPENROUTER_API_KEY" openrouter-key))))
+
+  ;; Buffer display settings
+  (add-to-list 'display-buffer-alist
+               `("\\*aidermacs.*\\*"
+                 (display-buffer-pop-up-window)
+                 (inhibit-same-window . t)))
+  :custom
+  ;; Use vterm backend for better terminal compatibility
+  (aidermacs-backend 'vterm)
+
+  ;; Default chat mode (code, ask, architect, help)
+  (aidermacs-default-chat-mode 'architect)
+
+  ;; Default model (or use AIDER_MODEL environment variable)
+  (aidermacs-default-model "sonnet")
+
+  ;; Architect mode: separate reasoning and editing models (SOTA results)
+  (aidermacs-architect-model "deepseek/deepseek-reasoner")
+  (aidermacs-editor-model "deepseek/deepseek-chat")
+
+  ;; Behavior settings
+  (aidermacs-auto-commits nil)           ; Let user control Git workflow
+  (aidermacs-show-diff-after-change t)  ; Show diffs for review
+  (aidermacs-exit-kills-buffer nil)     ; Keep buffer after exit
+
+  ;; Read-only files (context only, won't be modified)
+  (aidermacs-global-read-only-files '("~/.aider/AI_RULES.md"))
+  (aidermacs-project-read-only-files '("README.md" "CONVENTIONS.md"))
+
+  ;; Extra arguments passed to aider CLI
+  (aidermacs-extra-args '("--chat-language" "en")))
 
 ;; * Interactive Commands
 ;;
