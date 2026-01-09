@@ -720,11 +720,53 @@
      :host "127.0.0.1"
      :port 11434))
 
-  ;; openai
-  (when-let (openai-api-key (getenv "OPENAI_API_KEY"))
-    (defvar my/llm-provider-openai
-      (make-llm-openai :key openai-api-key)))
-  )
+   ;; openai
+   (when-let (openai-api-key (getenv "OPENAI_API_KEY"))
+     (defvar my/llm-provider-openai
+       (make-llm-openai :key openai-api-key)))
+   )
+
+;; ** Default LLM Provider Selection
+;;
+;;   Customize your preferred LLM provider. API keys should be set via
+;;   environment variables (OPENAI_API_KEY, OPENCODE_API_KEY).
+;;   Ollama runs locally and doesn't require an API key.
+
+(defcustom my/llm-default-provider 'openai
+  "Default LLM provider to use when only one is needed."
+  :type '(choice
+          (const :tag "OpenAI (uses OPENAI_API_KEY env var)" openai)
+          (const :tag "OpenCode Big Pickle (uses OPENCODE_API_KEY env var)" opencode-bigpickle)
+          (const :tag "OpenCode Grok" opencode-grok)
+          (const :tag "OpenCode GLM 4.7" opencode-glm4.7)
+          (const :tag "OpenCode MiniMax" opencode-minimax)
+          (const :tag "Ollama (local)" ollama))
+  :group 'my-llm)
+
+(defun my/llm-get-provider (provider)
+  "Return the provider instance for PROVIDER symbol.
+PROVIDER should be one of: openai, opencode-bigpickle, opencode-grok,
+opencode-glm4.7, opencode-minimax, ollama."
+  (pcase provider
+    ('openai
+     (when (boundp 'my/llm-provider-openai)
+       (symbol-value 'my/llm-provider-openai)))
+    ('opencode-bigpickle
+     (when (boundp 'my/llm-provider-opencode-bigpickle)
+       (symbol-value 'my/llm-provider-opencode-bigpickle)))
+    ('opencode-grok
+     (when (boundp 'my/llm-provider-opencode-grok)
+       (symbol-value 'my/llm-provider-opencode-grok)))
+    ('opencode-glm4.7
+     (when (boundp 'my/llm-provider-opencode-glm4.7)
+       (symbol-value 'my/llm-provider-opencode-glm4.7)))
+    ('opencode-minimax
+     (when (boundp 'my/llm-provider-opencode-minimax-m2.1)
+       (symbol-value 'my/llm-provider-opencode-minimax-m2.1)))
+    ('ollama
+     (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
+       (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob)))
+    (_ nil)))
 
 ;; ** aidermacs
 ;;
@@ -811,29 +853,26 @@
   ;; Auto-scroll during streaming output
   (setopt ellama-auto-scroll t)
   ;; User and assistant nicks for chat display
-  (setopt ellama-user-nick "You")
-  (setopt ellama-assistant-nick "Ellama")
+   (setopt ellama-user-nick "You")
+   (setopt ellama-assistant-nick "Ellama")
    :config
-   ;; Set up provider using existing llm providers
+   ;; Set up provider using custom default or fallback to available providers
    (setopt ellama-provider
-           (cond
-            ;; Prefer OpenAI if API key available
-            ((and (boundp 'my/llm-provider-openai)
-                  (symbol-value 'my/llm-provider-openai))
-             (symbol-value 'my/llm-provider-openai))
-            ;; Fall back to OpenCode bigpickle
-            ((and (boundp 'my/llm-provider-opencode-bigpickle)
-                  (symbol-value 'my/llm-provider-opencode-bigpickle))
-             (symbol-value 'my/llm-provider-opencode-bigpickle))
-            ;; Fall back to Ollama
-            ((boundp 'my/llm-provider-ollama-gpt-oss-2ob)
-             (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))
-            ;; Default to ollama localhost
-            (t
-             (make-llm-ollama
-              :chat-model "llama3.2"
-              :host "127.0.0.1"
-              :port 11434))))
+           (or (my/llm-get-provider my/llm-default-provider)
+               ;; Fall back to OpenAI if available
+               (when (boundp 'my/llm-provider-openai)
+                 (symbol-value 'my/llm-provider-openai))
+               ;; Fall back to OpenCode bigpickle
+               (when (boundp 'my/llm-provider-opencode-bigpickle)
+                 (symbol-value 'my/llm-provider-opencode-bigpickle))
+               ;; Fall back to Ollama
+               (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
+                 (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))
+               ;; Default to ollama localhost
+               (make-llm-ollama
+                :chat-model "llama3.2"
+                :host "127.0.0.1"
+                :port 11434)))
 
   ;; Enable global header line for context visibility
   (ellama-context-header-line-global-mode 1)
@@ -2564,19 +2603,21 @@ this declaration to the kill-ring."
 (use-package magit-gptcommit
   :ensure t
   :demand t
-  :after magit llm
-  :config
+   :after magit llm
+   :config
 
-  (setq magit-gptcommit-llm-provider
-	(if (boundp 'my/llm-provider-openai)
-	    my/llm-provider-openai
-	  my/llm-provider-ollama-gpt-oss-2ob))
+   (setq magit-gptcommit-llm-provider
+         (or (my/llm-get-provider my/llm-default-provider)
+             (when (boundp 'my/llm-provider-openai)
+               (symbol-value 'my/llm-provider-openai))
+             (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
+               (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))))
 
-  ;; add to magit's transit buffer - defer to avoid conflicts
-  (with-eval-after-load 'magit
-    (magit-gptcommit-status-buffer-setup))
-  :bind (:map git-commit-mode-map
-              ("C-c C-g" . magit-gptcommit-commit-accept)))
+   ;; add to magit's transit buffer - defer to avoid conflicts
+   (with-eval-after-load 'magit
+     (magit-gptcommit-status-buffer-setup))
+   :bind (:map git-commit-mode-map
+               ("C-c C-g" . magit-gptcommit-commit-accept)))
 
 ;; ** flycheck global mode
 
