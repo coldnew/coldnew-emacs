@@ -1818,27 +1818,29 @@ This functions should be added to the hooks of major modes for programming."
   (setq uniquify-ignore-buffers-re "^\\*"))
 
 ;; ** Register configurations
-
-(dolist
-    (r `(
-         ;; emacs's config.el
-         (?e (file . "~/.emacs.d/init.el"))
-         ;; tasks: todo
-         (?t (file . "~/Org/tasks/todo.org"))
-         ;; tasks: personal
-         (?p (file . "~/Org/tasks/personal.org"))
-         ;; tasks: work
-         (?w (file . "~/Org/tasks/work.org"))
-         ;; Office docs
-         (?W (file . "~/Org/Weintek/index.org"))
-         ;; My personal note
-         (?n (file . "~/Org/Note.org"))
-         ;; blogging ideas
-         (?b (file . "~/Org/blog.org"))
-         ;; Finance
-         (?f (file . "~/Org/finance/personal.org"))
-         ))
-   (set-register (car r) (cadr r)))
+;; Only set org-related registers if ~/Org/tasks exists
+(let ((org-tasks-exists (file-directory-p "~/Org/tasks")))
+  (dolist
+      (r `(
+           ;; emacs's config.el
+           (?e (file . "~/.emacs.d/init.el"))
+           ;; tasks: todo (only if directory exists)
+           ,@(when org-tasks-exists
+               '((?t (file . "~/Org/tasks/todo.org"))
+                 ;; tasks: personal
+                 (?p (file . "~/Org/tasks/personal.org"))
+                 ;; tasks: work
+                 (?w (file . "~/Org/tasks/work.org"))))
+           ;; Office docs
+           (?W (file . "~/Org/Weintek/index.org"))
+           ;; My personal note
+           (?n (file . "~/Org/Note.org"))
+           ;; blogging ideas
+           (?b (file . "~/Org/blog.org"))
+           ;; Finance
+           (?f (file . "~/Org/finance/personal.org"))
+           ))
+    (set-register (car r) (cadr r))))
  
  ;; * Completion
 ;;
@@ -2029,17 +2031,19 @@ This functions should be added to the hooks of major modes for programming."
   ;; highlight current in agenda
   (add-hook 'org-agenda-mode-hook 'hl-line-mode)
 
-  ;; Setup files for agenda - defer calculation for faster startup
-  (setq org-directory "~/Org/tasks")
-  (setq org-agenda-files nil) ; Lazy loaded in my/org-setup-agenda-files
-  (defun my/org-setup-agenda-files ()
-    "Setup org-agenda-files lazily."
-    (unless org-agenda-files
-      (setq org-agenda-files
-            (find-lisp-find-files org-directory "\.org$"))))
-  (add-hook 'org-mode-hook #'my/org-setup-agenda-files)
-  ;;
-   (setq org-default-notes-file (file-name-concat org-directory "tasks" "TODO.org"))
+   ;; Setup files for agenda - only configure if directory exists
+   (let ((org-task-dir (expand-file-name "~/Org/tasks")))
+     (when (file-directory-p org-task-dir)
+       (setq org-directory org-task-dir)
+       (setq org-agenda-files nil) ; Lazy loaded in my/org-setup-agenda-files
+       (defun my/org-setup-agenda-files ()
+         "Setup org-agenda-files lazily."
+         (unless org-agenda-files
+           (setq org-agenda-files
+                 (find-lisp-find-files org-directory "\.org$"))))
+       (add-hook 'org-mode-hook #'my/org-setup-agenda-files)
+       ;;
+       (setq org-default-notes-file (file-name-concat org-directory "tasks" "TODO.org"))))
 
   ;; Always use `C-g' to exit agenda
   (add-hook 'org-agenda-mode-hook
@@ -2102,14 +2106,15 @@ This functions should be added to the hooks of major modes for programming."
 ;; ** deft
 
 (use-package deft
-  :ensure t
-  :config
-  ;; default use org-mode
-  (setq deft-default-extension "org")
-  ;; default directory set to ~/Org
-  (setq deft-directory "~/Org")
-  ;; Do not make deft automatically save file
-  (setq deft-auto-save-interval 0)
+   :ensure t
+   :config
+   ;; default use org-mode
+   (setq deft-default-extension "org")
+   ;; default directory set to ~/Org (only if exists)
+   (when (file-directory-p "~/Org")
+     (setq deft-directory "~/Org"))
+   ;; Do not make deft automatically save file
+   (setq deft-auto-save-interval 0)
   ;; Recursive search
   (setq deft-recursive t)
 
