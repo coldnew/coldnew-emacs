@@ -2735,17 +2735,18 @@ this declaration to the kill-ring."
 		       ("pyright-langserver" "--stdio")))))
   ;; JavaScript/TypeScript: tsserver
   (add-to-list 'eglot-server-programs
-	       '((js-mode js-ts-mode tsx-ts-mode typescript-mode typescript-ts-mode)
-		  ("typescript-language-server" "--stdio")))
+	       '((js-mode js-ts-mode tsx-ts-mode typescript-mode typescript-ts-mode) . ("typescript-language-server" "--stdio")))
   ;; Rust: rust-analyzer
-  (add-to-list 'eglot-server-programs
-	       '((rust-mode rust-ts-mode) "rust-analyzer"))
+  ;; See https://rust-analyzer.github.io/manual.html#emacs
+  (add-to-list 'eglot-server-programs '((rust-mode rust-ts-mode) . ("rust-analyzer" :initializationOptions (:check (:command "clippy")))))
   ;; Go: gopls
   (add-to-list 'eglot-server-programs
-	       '((go-mode go-ts-mode) "gopls"))
-   ;; C/C++: clangd
-   (add-to-list 'eglot-server-programs
-     '((c-mode c++-mode c-ts-mode c++-ts-mode) "clangd"))
+	       '((go-mode go-ts-mode) . ("gopls")))
+  ;; C/C++: clangd
+  (add-to-list 'eglot-server-programs
+	       '((c-mode c++-mode c-ts-mode c++-ts-mode) . ("clangd")))
+  ;; CMake
+  (add-to-list 'eglot-server-programs '((cmake-mode) . ("cmake-language-server")))
   ;; Add hooks for all languages
   (dolist (hook '(python-mode-hook python-ts-mode-hook
 				   rust-mode-hook rust-ts-mode-hook
@@ -2759,6 +2760,11 @@ this declaration to the kill-ring."
 				   ;; Add corfu for better completions with flycheck
 				   c-mode-hook c++-mode-hook c-or-c++-ts-mode-hook))
     (add-hook hook 'eglot-ensure))
+
+  ;; If `xref-find-definitions' lands in a file outside the project, momentarily
+  ;; consider that file managed by the same language server. This avoids
+  ;; starting a new language server for such external files (startup cost).
+  (setq eglot-extend-to-xref t)
 
   ;; Add keybindings for eglot (after eglot is loaded)
   (with-eval-after-load 'eglot
