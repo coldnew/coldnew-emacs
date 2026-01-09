@@ -2760,7 +2760,68 @@ this declaration to the kill-ring."
   ;;(add-to-list 'major-mode-remap-alist '(qml-mode       . qmljs-ts-mode))
   )
 
-;; * Snippets and Templates
+;; * LSP Support
+;;
+;;   Eglot provides LSP (Language Server Protocol) support for Emacs.
+;;   It enables IDE features like auto-completion, go-to-definition,
+;;   find-references, and code actions across many languages.
+
+(use-package eglot
+  :ensure nil  ; Built-in since Emacs 29
+  :defer t  ; Load only when editing code, not at startup
+  :config
+  ;; Reduce event buffer size for performance
+  (setq-default eglot-events-buffer-size 0)
+
+  ;; Configure language servers
+  ;; Configure language servers (direct configuration, no with-eval-after-load needed)
+  ;; Python: prefer ty-mode server, fall back to pylsp
+  (add-to-list 'eglot-server-programs
+    '((python-mode python-ts-mode)
+      . ,(eglot-alternatives
+          '("ty" "server" "pylsp" ("basedpyright-langserver" "--stdio")
+            ("pyright-langserver" "--stdio")))))
+  ;; JavaScript/TypeScript: tsserver
+  (add-to-list 'eglot-server-programs
+    '((js-mode js-ts-mode tsx-ts-mode typescript-mode typescript-ts-mode)
+      . ("typescript-language-server" "--stdio")))
+  ;; Rust: rust-analyzer
+  (add-to-list 'eglot-server-programs
+    '((rust-mode rust-ts-mode) . "rust-analyzer"))
+  ;; Go: gopls
+  (add-to-list 'eglot-server-programs
+    '((go-mode go-ts-mode) . "gopls"))
+  ;; C/C++: clangd
+  (add-to-list 'eglot-server-programs
+    '((c-mode c++-mode c-ts-mode c++-ts-mode) . "clangd"))
+  ;; Shell: bash-language-server
+  (add-to-list 'eglot-server-programs
+    '((sh-mode bash-ts-mode) . ("bash-language-server" "start")))
+
+  ;; Add hooks for all languages
+  (dolist (hook '(python-mode-hook python-ts-mode-hook
+                  rust-mode-hook rust-ts-mode-hook
+                  go-mode-hook go-ts-mode-hook
+                  typescript-mode-hook js-mode-hook tsx-mode-hook
+                  sh-mode-hook bash-ts-mode-hook
+                  c-mode-hook c++-mode-hook c-ts-mode-hook c++-ts-mode-hook))
+    (add-hook hook 'eglot-ensure))
+
+  ;; Add keybindings for eglot (after eglot is loaded)
+  (with-eval-after-load 'eglot
+    (define-key eglot-mode-map (kbd "M-.") 'xref-find-definitions)
+    (define-key eglot-mode-map (kbd "M-?") 'xref-find-references)
+    (define-key eglot-mode-map (kbd "K") 'eldoc)
+    (define-key eglot-mode-map (kbd "C-c l r") 'eglot-rename)
+    (define-key eglot-mode-map (kbd "C-c l f") 'eglot-format)
+    (define-key eglot-mode-map (kbd "C-c l a") 'eglot-code-actions)
+    (define-key eglot-mode-map (kbd "C-c l d") 'xref-find-declarations)
+    (define-key eglot-mode-map (kbd "C-c l t") 'xref-find-type-definitions)
+    (define-key eglot-mode-map (kbd "C-c l i") 'xref-find-implementation)
+    (define-key eglot-mode-map (kbd "C-c l q") 'eglot-shutdown-all)
+    (define-key eglot-mode-map (kbd "C-c l s") 'eglot-reconnect)))
+
+ ;; * Snippets and Templates
 ;;
 ;; ** yasnippet
 
