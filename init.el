@@ -813,27 +813,27 @@
   ;; User and assistant nicks for chat display
   (setopt ellama-user-nick "You")
   (setopt ellama-assistant-nick "Ellama")
-  :config
-  ;; Set up provider using existing llm providers
-  (setopt ellama-provider
-          (cond
-           ;; Prefer OpenCode if available (already configured above)
-           ((and (boundp 'llm-provider--opencode-bigpickle)
-                 (symbol-value 'llm-provider--opencode-bigpickle))
-            (symbol-value 'llm-provider--opencode-bigpickle))
-           ;; Fall back to OpenAI if API key available
-           ((and (boundp 'llm-provider--openai)
-                 (symbol-value 'llm-provider--openai))
-            (symbol-value 'llm-provider--openai))
-           ;; Fall back to Ollama
-           ((boundp 'llm-provider--ollama-gpt-oss-2ob)
-            (symbol-value 'llm-provider--ollama-gpt-oss-2ob))
-           ;; Default to ollama localhost
-           (t
-            (make-llm-ollama
-             :chat-model "llama3.2"
-             :host "127.0.0.1"
-             :port 11434))))
+   :config
+   ;; Set up provider using existing llm providers
+   (setopt ellama-provider
+           (cond
+            ;; Prefer OpenAI if API key available
+            ((and (boundp 'llm-provider--openai)
+                  (symbol-value 'llm-provider--openai))
+             (symbol-value 'llm-provider--openai))
+            ;; Fall back to OpenCode bigpickle
+            ((and (boundp 'llm-provider--opencode-bigpickle)
+                  (symbol-value 'llm-provider--opencode-bigpickle))
+             (symbol-value 'llm-provider--opencode-bigpickle))
+            ;; Fall back to Ollama
+            ((boundp 'llm-provider--ollama-gpt-oss-2ob)
+             (symbol-value 'llm-provider--ollama-gpt-oss-2ob))
+            ;; Default to ollama localhost
+            (t
+             (make-llm-ollama
+              :chat-model "llama3.2"
+              :host "127.0.0.1"
+              :port 11434))))
 
   ;; Enable global header line for context visibility
   (ellama-context-header-line-global-mode 1)
