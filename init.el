@@ -2561,12 +2561,28 @@ this declaration to the kill-ring."
 ;; * Syntax Checking and Linting
 ;;
 ;; ** flycheck
+;;
+;;   Flycheck provides on-the-fly syntax checking for many languages.
+;;   Supports emacs-lisp, c/c++ (via clang), python, javascript, and more.
+;;
+;;   Key features:
+;;   - Real-time syntax checking
+;;   - Error navigation with `flycheck-next-error` / `flycheck-previous-error`
+;;   - Error display via flycheck-pos-tip (popup tooltip)
 
 (use-package flycheck
   :ensure t
+  :hook
+  ;; Enable flycheck for these modes
+  ((emacs-lisp-mode . flycheck-mode)
+   (c-mode . flycheck-mode)
+   (c++-mode . flycheck-mode)
+   (dart-mode . flycheck-mode))
   :config
+  ;; Enable flycheck globally (for modes with built-in checkers)
   (global-flycheck-mode 1))
 
+;; Show flycheck errors in tooltip
 (use-package flycheck-pos-tip
   :ensure t
   :after flycheck
@@ -2616,14 +2632,6 @@ this declaration to the kill-ring."
      (magit-gptcommit-status-buffer-setup))
    :bind (:map git-commit-mode-map
                ("C-c C-g" . magit-gptcommit-commit-accept)))
-
-;; ** flycheck global mode
-
-(use-package flycheck
-  :ensure t
-  :config
-  ;; enable globally
-  (global-flycheck-mode))
 
 ;; * Tree-sitter Support
 ;;
@@ -2859,9 +2867,7 @@ this declaration to the kill-ring."
   :mode ("\\.dart\\'")
   :config
   ;; enable analyzer support
-  (setq dart-enable-analysis-server t)
-  ;; add flycheck support
-  (add-hook 'dart-mode-hook 'flycheck-mode))
+  (setq dart-enable-analysis-server t))
 
 ;; * Plotting and Diagram Modes
 ;;
