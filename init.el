@@ -1693,7 +1693,9 @@ return nil since you can't set font for emacs on it."
 
 (use-package rainbow-delimiters
   :ensure t
+  :demand t
   :config
+  ;; Enable for all programming modes
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 ;; ** recentf
