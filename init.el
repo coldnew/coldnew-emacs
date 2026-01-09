@@ -1885,34 +1885,22 @@ This functions should be added to the hooks of major modes for programming."
   (corfu-auto t)
   ;; Preselect first candidate
   (corfu-preselect 'first)
-   ;; Cycle through candidates
-   (corfu-cycle t)
-   ;; Quit at completion boundary
-   (corfu-quit-at-boundary 'separator)
+  ;; Cycle through candidates
+  (corfu-cycle t)
   :config
-  ;; Enable Corfu globally
-  (global-corfu-mode)
+   ;; Enable Corfu globally
+   (global-corfu-mode)
 
-  ;; Corfu keybindings (work in all states)
-  (define-key corfu-map (kbd "TAB") 'corfu-insert)
-  (define-key corfu-map [tab] 'corfu-insert)
-  (define-key corfu-map (kbd "RET") 'corfu-insert)
-  (define-key corfu-map [return] 'corfu-insert)
-  (define-key corfu-map (kbd "ESC") 'corfu-reset))  ;; End of use-package corfu
+   ;; Corfu keybindings (work in all states)
+   (define-key corfu-map (kbd "TAB") 'corfu-insert)
+   (define-key corfu-map [tab] 'corfu-insert)
+   (define-key corfu-map (kbd "RET") 'corfu-insert)
+   (define-key corfu-map (kbd "ESC") 'corfu-reset))  ;; End of use-package corfu
 
- ;; Enable corfu extensions and Evil keybindings after package loads
-(with-eval-after-load 'corfu
-   ;; Load extensions
-   (require 'corfu-history)
-   (require 'corfu-popupinfo)
-   (corfu-history-mode 1)
-   (corfu-popupinfo-mode 1)
-
-   ;; Evil Collection corfu bindings - load main package first
-   (with-eval-after-load 'evil-collection
-      (require 'evil-collection-corfu)))
-
-  ;; ** kind-icon
+   ;; Corfu + Eglot integration for LSP completion (C/C++, Python, etc.)
+   ;; Eglot provides completion-at-point, corfu enhances it with UI
+   (with-eval-after-load 'eglot
+     (setq-local completion-in-region-function #'corfu-complete-in-region))
   ;;
   ;;   kind-icon adds icons to completion candidates in Corfu.
   ;;   It displays colorful icons for different completion kinds
@@ -2726,8 +2714,8 @@ this declaration to the kill-ring."
 ;;   find-references, and code actions across many languages.
 
 (use-package eglot
-  :ensure nil  ; Built-in since Emacs 29
-  :defer t  ; Load only when editing code, not at startup
+  :ensure nil		 ; Built-in since Emacs 29
+  :defer t		 ; Load only when editing code, not at startup
   :config
   ;; Reduce event buffer size for performance
   (setq-default eglot-events-buffer-size 0)
@@ -2736,34 +2724,35 @@ this declaration to the kill-ring."
   ;; Configure language servers (direct configuration, no with-eval-after-load needed)
   ;; Python: prefer ty-mode server, fall back to pylsp
   (add-to-list 'eglot-server-programs
-    '((python-mode python-ts-mode)
-      . ,(eglot-alternatives
-          '("ty" "server" "pylsp" ("basedpyright-langserver" "--stdio")
-            ("pyright-langserver" "--stdio")))))
+	       '((python-mode python-ts-mode)
+		 . ,(eglot-alternatives
+		     '("ty" "server" "pylsp" ("basedpyright-langserver" "--stdio")
+		       ("pyright-langserver" "--stdio")))))
   ;; JavaScript/TypeScript: tsserver
   (add-to-list 'eglot-server-programs
-    '((js-mode js-ts-mode tsx-ts-mode typescript-mode typescript-ts-mode)
-      . ("typescript-language-server" "--stdio")))
+	       '((js-mode js-ts-mode tsx-ts-mode typescript-mode typescript-ts-mode)
+		  ("typescript-language-server" "--stdio")))
   ;; Rust: rust-analyzer
   (add-to-list 'eglot-server-programs
-    '((rust-mode rust-ts-mode) . "rust-analyzer"))
+	       '((rust-mode rust-ts-mode) "rust-analyzer"))
   ;; Go: gopls
   (add-to-list 'eglot-server-programs
-    '((go-mode go-ts-mode) . "gopls"))
-  ;; C/C++: clangd
-  (add-to-list 'eglot-server-programs
-    '((c-mode c++-mode c-ts-mode c++-ts-mode) . "clangd"))
-  ;; Shell: bash-language-server
-  (add-to-list 'eglot-server-programs
-    '((sh-mode bash-ts-mode) . ("bash-language-server" "start")))
-
+	       '((go-mode go-ts-mode) "gopls"))
+   ;; C/C++: clangd
+   (add-to-list 'eglot-server-programs
+     '((c-mode c++-mode c-ts-mode c++-ts-mode) "clangd"))
   ;; Add hooks for all languages
   (dolist (hook '(python-mode-hook python-ts-mode-hook
-                  rust-mode-hook rust-ts-mode-hook
-                  go-mode-hook go-ts-mode-hook
-                  typescript-mode-hook js-mode-hook tsx-mode-hook
-                  sh-mode-hook bash-ts-mode-hook
-                  c-mode-hook c++-mode-hook c-ts-mode-hook c++-ts-mode-hook))
+				   rust-mode-hook rust-ts-mode-hook
+				   go-mode-hook go-ts-mode-hook
+				   typescript-mode-hook js-mode-hook tsx-mode-hook
+				   sh-mode-hook bash-ts-mode-hook
+				   c-mode-hook c++-mode-hook c-ts-mode-hook c++-ts-mode-hook
+				   c-or-c++-mode-hook c-or-c++-ts-mode-hook
+				   ;; Add Emacs Lisp for completion
+				   emacs-lisp-mode-hook
+				   ;; Add corfu for better completions with flycheck
+				   c-mode-hook c++-mode-hook c-or-c++-ts-mode-hook))
     (add-hook hook 'eglot-ensure))
 
   ;; Add keybindings for eglot (after eglot is loaded)
