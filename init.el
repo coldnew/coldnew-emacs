@@ -1344,30 +1344,25 @@ return nil since you can't set font for emacs on it."
 
 (when (require 'minibuffer nil t)  ; built-in, so optional require
   ;; Use bar cursor in minibuffer
-  (add-hook 'minibuffer-setup-hook (lambda () (setq cursor-type 'bar))))
+  (add-hook 'minibuffer-setup-hook (lambda () (setq cursor-type 'bar)))
 
-;; Helper to clean minibuffer and insert new content
-(defun my/minibuffer-insert (str)
-  "Clean minibuffer and insert STR as new content."
-  (when (minibufferp)
-    (delete-minibuffer-contents)
-    (insert str)))
+  ;; Helper to clean minibuffer and insert new content
+  (defun my/minibuffer-insert (str)
+    "Clean minibuffer and insert STR as new content."
+    (when (minibufferp)
+      (delete-minibuffer-contents)
+      (insert str)))
 
-(defun my/minibuffer-switch-to-ramdisk ()
-  (interactive)
-  (my/minibuffer-insert user-ramdisk-directory))
-
-(defun my/minibuffer-switch-to-home ()
-  (interactive)
-  (my/minibuffer-insert (expand-file-name "~/")))
-
-(defun my/minibuffer-switch-to-rootdir ()
-  (interactive)
-  (my/minibuffer-insert "/"))
-
-(defun my/minibuffer-switch-to-tramp ()
-  (interactive)
-  (my/minibuffer-insert "/ssh:"))
+  ;; Keybindings with inline lambdas (no separate interactive functions needed)
+  (bind-keys :map minibuffer-local-map
+             ("C-w" . backward-kill-word)
+             ("M-p" . previous-history-element)
+             ("M-n" . next-history-element)
+             ("C-g" . my/minibuffer-keyboard-quit)
+             ("M-t" . (lambda () (interactive) (my/minibuffer-insert user-ramdisk-directory)))
+             ("M-h" . (lambda () (interactive) (my/minibuffer-insert (expand-file-name "~/"))))
+             ("M-/" . (lambda () (interactive) (my/minibuffer-insert "/")))
+             ("M-s" . (lambda () (interactive) (my/minibuffer-insert "/ssh:")))))
 
 ;; Save minibuffer history
 (use-package savehist
@@ -1376,16 +1371,6 @@ return nil since you can't set font for emacs on it."
   (setq savehist-file (expand-file-name "savehist.dat" user-cache-directory))
   (add-to-list 'savehist-additional-variables 'corfu-history))
 
-;; Keybindings
-(bind-keys :map minibuffer-local-map
-           ("C-w" . backward-kill-word)
-           ("M-p" . previous-history-element)
-           ("M-n" . next-history-element)
-           ("C-g" . my/minibuffer-keyboard-quit)  ; built-in, better than abort-recursive-edit alone
-           ("M-t" . my/minibuffer-switch-to-ramdisk)
-           ("M-h" . my/minibuffer-switch-to-home)
-           ("M-/" . my/minibuffer-switch-to-rootdir)
-           ("M-s" . my/minibuffer-switch-to-tramp))
 
 ;; * Vim Emulation
 ;;
