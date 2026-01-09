@@ -16,17 +16,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Emacs 30
-        uses: purcell/setup-emacs@master
+      - name: Setup Emacs
+        uses: purcell/setup-emacs@v6
         with:
-          emacs-version: snapshot
-          install-just-the-emacs: true
+          version: "28.2"
 
       - name: Show Emacs version
         run: |
           emacs --version
 
-      - name: Run tests with Emacs 30
+      - name: Run tests with Emacs
         run: |
           emacs --batch -l ert \
             -eval "(setq load-path (append '(\"test\") load-path))" \
