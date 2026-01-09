@@ -52,5 +52,30 @@ jobs:
       - name: Build init.el
         env:
           EMACS: .build/bin/emacs
-        run: make 
+        run: make
+
+      - name: Run ERT Tests
+        env:
+          EMACS: .build/bin/emacs
+        run: make test
+
+  # Quick test job - runs tests without building Emacs from source
+  quick-test:
+    runs-on: ubuntu-latest
+
+    env:
+      CI: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Emacs and dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y emacs27-nox make
+
+      - name: Run ERT Tests (Quick)
+        run: |
+          emacs --version
+          make test 
         
