@@ -720,23 +720,44 @@
      :host "127.0.0.1"
      :port 11434))
 
-   ;; openai
-   (when-let (openai-api-key (getenv "OPENAI_API_KEY"))
-     (defvar my/llm-provider-openai
-       (make-llm-openai :key openai-api-key)))
-   )
+    ;; openai
+    (when-let (openai-api-key (getenv "OPENAI_API_KEY"))
+      (defvar my/llm-provider-openai
+        (make-llm-openai :key openai-api-key)))
+
+    ;; anthropic
+    (when-let (anthropic-api-key (getenv "ANTHROPIC_API_KEY"))
+      (require 'llm-anthropic)
+      (defvar my/llm-provider-anthropic
+        (make-llm-anthropic :key anthropic-api-key)))
+
+    ;; openrouter
+    (when-let (openrouter-api-key (getenv "OPENROUTER_API_KEY"))
+      (let ((openrouter-url "https://openrouter.ai/api/v1"))
+        (defvar my/llm-provider-openrouter
+          (make-llm-openai-compatible
+           :key openrouter-api-key
+           :chat-model "openrouter/auto"
+           :url openrouter-url))))
+    )
 
 ;; ** Default LLM Provider Selection
 ;;
 ;;   Customize your preferred LLM provider. API keys should be set via
-;;   environment variables (OPENAI_API_KEY, OPENCODE_API_KEY).
+;;   environment variables:
+;;   - OPENAI_API_KEY for OpenAI
+;;   - ANTHROPIC_API_KEY for Anthropic (Claude)
+;;   - OPENROUTER_API_KEY for OpenRouter
+;;   - OPENCODE_API_KEY for OpenCode
 ;;   Ollama runs locally and doesn't require an API key.
 
 (defcustom my/llm-default-provider 'openai
   "Default LLM provider to use when only one is needed."
   :type '(choice
-          (const :tag "OpenAI (uses OPENAI_API_KEY env var)" openai)
-          (const :tag "OpenCode Big Pickle (uses OPENCODE_API_KEY env var)" opencode-bigpickle)
+          (const :tag "OpenAI (uses OPENAI_API_KEY)" openai)
+          (const :tag "Anthropic Claude (uses ANTHROPIC_API_KEY)" anthropic)
+          (const :tag "OpenRouter (uses OPENROUTER_API_KEY)" openrouter)
+          (const :tag "OpenCode Big Pickle (uses OPENCODE_API_KEY)" opencode-bigpickle)
           (const :tag "OpenCode Grok" opencode-grok)
           (const :tag "OpenCode GLM 4.7" opencode-glm4.7)
           (const :tag "OpenCode MiniMax" opencode-minimax)
@@ -745,12 +766,18 @@
 
 (defun my/llm-get-provider (provider)
   "Return the provider instance for PROVIDER symbol.
-PROVIDER should be one of: openai, opencode-bigpickle, opencode-grok,
-opencode-glm4.7, opencode-minimax, ollama."
+PROVIDER should be one of: openai, anthropic, openrouter, opencode-bigpickle,
+opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
   (pcase provider
     ('openai
      (when (boundp 'my/llm-provider-openai)
        (symbol-value 'my/llm-provider-openai)))
+    ('anthropic
+     (when (boundp 'my/llm-provider-anthropic)
+       (symbol-value 'my/llm-provider-anthropic)))
+    ('openrouter
+     (when (boundp 'my/llm-provider-openrouter)
+       (symbol-value 'my/llm-provider-openrouter)))
     ('opencode-bigpickle
      (when (boundp 'my/llm-provider-opencode-bigpickle)
        (symbol-value 'my/llm-provider-opencode-bigpickle)))
@@ -789,34 +816,48 @@ opencode-glm4.7, opencode-minimax, ollama."
   :demand t
   :bind (("C-c a" . aidermacs-transient-menu))
   :config
-  ;; API keys should be set in shell environment or via pre-run hook
-  (add-hook 'aidermacs-before-run-backend-hook
-            (lambda ()
-              ;; API keys from environment (set in .bashrc/.zshrc)
-              ;; or use password-store for secure management
-              (when-let (anthropic-key (getenv "ANTHROPIC_API_KEY"))
-                (setenv "ANTHROPIC_API_KEY" anthropic-key))
-              (when-let (openrouter-key (getenv "OPENROUTER_API_KEY"))
-                (setenv "OPENROUTER_API_KEY" openrouter-key))))
+   ;; API keys should be set in shell environment or via pre-run hook
+   (add-hook 'aidermacs-before-run-backend-hook
+             (lambda ()
+               ;; API keys from environment (set in .bashrc/.zshrc)
+               ;; or use password-store for secure management
+               (when-let (openai-key (getenv "OPENAI_API_KEY"))
+                 (setenv "OPENAI_API_KEY" openai-key))
+               (when-let (anthropic-key (getenv "ANTHROPIC_API_KEY"))
+                 (setenv "ANTHROPIC_API_KEY" anthropic-key))
+               (when-let (openrouter-key (getenv "OPENROUTER_API_KEY"))
+                 (setenv "OPENROUTER_API_KEY" openrouter-key))))
 
-  ;; Buffer display settings
-  (add-to-list 'display-buffer-alist
-               `("\\*aidermacs.*\\*"
-                 (display-buffer-pop-up-window)
-                 (inhibit-same-window . t)))
-  :custom
-  ;; Use vterm backend for better terminal compatibility
-  (aidermacs-backend 'vterm)
+   ;; Buffer display settings
+   (add-to-list 'display-buffer-alist
+                `("\\*aidermacs.*\\*"
+                  (display-buffer-pop-up-window)
+                  (inhibit-same-window . t)))
+   :custom
+   ;; Use vterm backend for better terminal compatibility
+   (aidermacs-backend 'vterm)
 
-  ;; Default chat mode (code, ask, architect, help)
-  (aidermacs-default-chat-mode 'architect)
+   ;; Default chat mode (code, ask, architect, help)
+   (aidermacs-default-chat-mode 'architect)
 
-  ;; Default model (or use AIDER_MODEL environment variable)
-  (aidermacs-default-model "sonnet")
+   ;; Default model based on provider selection
+   (aidermacs-default-model
+    (pcase my/llm-default-provider
+      ('anthropic "claude-sonnet-4-20250514")
+      ('openrouter "openrouter/auto")
+      (_ "gpt-4o")))
 
-  ;; Architect mode: separate reasoning and editing models (SOTA results)
-  (aidermacs-architect-model "deepseek/deepseek-reasoner")
-  (aidermacs-editor-model "deepseek/deepseek-chat")
+   ;; Architect mode: separate reasoning and editing models
+   (aidermacs-architect-model
+    (pcase my/llm-default-provider
+      ('anthropic "claude-opus-4-20250514")
+      ('openrouter "openrouter/o1")
+      (_ "o1")))
+   (aidermacs-editor-model
+    (pcase my/llm-default-provider
+      ('anthropic "claude-sonnet-4-20250514")
+      ('openrouter "openrouter/gpt-4o")
+      (_ "gpt-4o")))
 
   ;; Behavior settings
   (aidermacs-auto-commits nil)           ; Let user control Git workflow
@@ -885,21 +926,25 @@ opencode-glm4.7, opencode-minimax, ollama."
   ;; Disable reasoning model cleanup for transparency
   (setopt ellama-session-remove-reasoning nil)
 
-  ;; Register our configured providers for interactive switching
-  (when (boundp 'my/llm-provider-opencode-bigpickle)
-    (setopt ellama-providers
-            (append
-             (when (symbol-value 'my/llm-provider-opencode-bigpickle)
-               '(("bigpickle" . ,(symbol-value 'my/llm-provider-opencode-bigpickle))))
-             (when (boundp 'my/llm-provider-opencode-grok)
-               '(("grok" . ,(symbol-value 'my/llm-provider-opencode-grok))))
-             (when (boundp 'my/llm-provider-opencode-glm4.7)
-               '(("glm4.7" . ,(symbol-value 'my/llm-provider-opencode-glm4.7))))
-             (when (boundp 'my/llm-provider-openai)
-               '(("openai" . ,(symbol-value 'my/llm-provider-openai))))
-             (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
-               '(("ollama" . ,(symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))))
-             ellama-providers)))
+   ;; Register our configured providers for interactive switching
+   (when (boundp 'my/llm-provider-opencode-bigpickle)
+     (setopt ellama-providers
+             (append
+              (when (boundp 'my/llm-provider-anthropic)
+                '(("anthropic" . ,(symbol-value 'my/llm-provider-anthropic))))
+              (when (boundp 'my/llm-provider-openrouter)
+                '(("openrouter" . ,(symbol-value 'my/llm-provider-openrouter))))
+              (when (symbol-value 'my/llm-provider-opencode-bigpickle)
+                '(("bigpickle" . ,(symbol-value 'my/llm-provider-opencode-bigpickle))))
+              (when (boundp 'my/llm-provider-opencode-grok)
+                '(("grok" . ,(symbol-value 'my/llm-provider-opencode-grok))))
+              (when (boundp 'my/llm-provider-opencode-glm4.7)
+                '(("glm4.7" . ,(symbol-value 'my/llm-provider-opencode-glm4.7))))
+              (when (boundp 'my/llm-provider-openai)
+                '(("openai" . ,(symbol-value 'my/llm-provider-openai))))
+              (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
+                '(("ollama" . ,(symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))))
+              ellama-providers)))
 
   ;; Enable keymap with prefix
   (setopt ellama-enable-keymap t)
