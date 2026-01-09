@@ -2515,71 +2515,80 @@ this declaration to the kill-ring."
 ;;
 ;; ** elisp-mode configuration
 
+;; Helper functions for elisp-mode
+(defun my/elisp/check-parens-on-save ()
+  "Run `check-parens' when the current buffer is saved."
+  (add-hook 'after-save-hook #'check-parens nil 'make-it-local))
+
+(defun my/remove-elc-on-save ()
+  "If you're saving an elisp file, likely the .elc is no longer valid."
+  (make-local-variable 'after-save-hook)
+  (add-hook 'after-save-hook
+            (lambda ()
+              (if (file-exists-p (concat buffer-file-name "c"))
+                  (delete-file (concat buffer-file-name "c"))))))
+
+;; eldoc - built-in, configure for elisp-mode
+(use-package eldoc
+  :ensure nil            ; built-in
+  :hook (emacs-lisp-mode . turn-on-eldoc-mode)
+  :config
+  ;; Fix for paredit if it exists
+  (eval-after-load 'paredit
+    '(progn
+       (eldoc-add-command 'paredit-backward-delete
+                          'paredit-close-round))))
+
+;; macrostep - expand Emacs Lisp macros
+(use-package macrostep
+  :ensure t
+  :commands (macrostep-expand))
+
+;; el-spice - interactive elisp evaluation
+(use-package el-spice
+  :ensure t
+  :commands (el-spice-eval-buffer el-spice-eval-last-sexp))
+
+;; litable - display lists in tables
+(use-package litable
+  :ensure t
+  :commands (litable-mode)
+  :config
+  ;; Save cache file to `user-cache-directory'
+  (setq litable-list-file (concat user-cache-directory ".litable-lists.el")))
+
+;; page-break-lines - display lines as decorative breaks
+(use-package page-break-lines
+  :ensure t
+  :commands (global-page-break-lines-mode))
+
+;; outshine-mode - org-mode-like navigation in elisp files
+;; Use C-c @ to toggle visibility, C-c n/p/f/b to navigate headings
+(use-package outshine
+  :ensure t
+  :diminish outshine-mode
+  :hook (emacs-lisp-mode . outshine-mode)
+  :config
+  ;; Set outline-minor-mode prefix to C-c @ (same as outshine default)
+  (setq outline-minor-mode-prefix (kbd "C-c @"))
+  ;; Start with bodies hidden (show only headings)
+  (setq outshine-start-level 1))
+
+;; elisp-mode - built-in, configure hooks and keybindings
 (use-package elisp-mode
   :ensure nil            ; built-in
+  :hook
+  ((emacs-lisp-mode . my/elisp/check-parens-on-save)
+   (emacs-lisp-mode . my/remove-elc-on-save))
   :config
-  (use-package macrostep
-    :ensure t)
-  (use-package el-spice
-    :ensure t)
-  (use-package eldoc
-    :ensure t
-    :config
-    (add-hook 'emacs-lisp-mode-hook
-              #'(lambda ()
-                 ;; enable eldoc
-                 (turn-on-eldoc-mode)
-                 ;; fix for paredit if exist
-                 (eval-after-load 'paredit
-                   '(progn
-                      (eldoc-add-command 'paredit-backward-delete
-                                         'paredit-close-round))))))
-  (defun my/elisp/check-parens-on-save ()
-    "Run `check-parens' when the current buffer is saved."
-    (add-hook 'after-save-hook #'check-parens nil 'make-it-local))
-
-  (add-hook 'emacs-lisp-mode-hook
-            (lambda () (my/elisp/check-parens-on-save)))
-    (use-package litable
-     :ensure t
-     :commands (litable-mode)
-     :config
-     ;; Save cache file to `user-cache-directory'
-     (setq litable-list-file (concat user-cache-directory ".litable-lists.el"))
-     ;; Enable litable-mode globally
-     (litable-mode))
-  (use-package page-break-lines
-    :ensure t
-    :commands (global-page-break-lines-mode)
-    :config
-    ;; enable globally
-    (global-page-break-lines-mode 1))
-  (defun my/remove-elc-on-save ()
-    "If you're saving an elisp file, likely the .elc is no longer valid."
-    (make-local-variable 'after-save-hook)
-    (add-hook 'after-save-hook
-              (lambda ()
-                (if (file-exists-p (concat buffer-file-name "c"))
-                    (delete-file (concat buffer-file-name "c"))))))
-
-    (add-hook 'emacs-lisp-mode-hook 'my/remove-elc-on-save)
-   (bind-keys :map emacs-lisp-mode-map
-              ;; ("C-c '" . my/narrow-or-widen-dwim)
-              )
-
-  ;; *** outshine-mode
-  ;;    Enable outshine-mode for org-mode-like navigation in elisp files.
-  ;;    Use C-c @ to toggle visibility, C-c n/p/f/b to navigate headings.
-  (use-package outshine
-    :ensure t
-    :diminish outshine-mode
-    :config
-    ;; Enable outshine-mode for emacs-lisp-mode
-    (add-hook 'emacs-lisp-mode-hook 'outshine-mode)
-    ;; Set outline-minor-mode prefix to C-c @ (same as outshine default)
-    (setq outline-minor-mode-prefix (kbd "C-c @"))
-    ;; Start with bodies hidden (show only headings)
-    (setq outshine-start-level 1)))
+  ;; Enable litable-mode globally (not just for elisp)
+  (litable-mode)
+  ;; Enable page-break-lines globally
+  (global-page-break-lines-mode 1)
+  :bind
+  (:map emacs-lisp-mode-map
+        ;; ("C-c '" . my/narrow-or-widen-dwim)
+        ))
 ;; * Syntax Checking and Linting
 ;;
 ;; ** flycheck
