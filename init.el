@@ -2844,6 +2844,42 @@ this declaration to the kill-ring."
     (define-key citre-mode-map (kbd "C-c c s") 'citre-peek)
     (define-key citre-mode-map (kbd "C-c c f") 'citre-find-file)))
 
+;; ** mason
+;;
+;;   Mason.el provides integration with mason, a tool for managing LSP servers,
+;;   DAP servers, linters, and formatters. It allows easy installation and
+;;   management of language tools without manual setup.
+;;
+;;   GitHub: https://github.com/hlissner/emacs-mason
+
+(use-package mason
+  :ensure t
+  :defer t
+  :commands (mason-install mason-uninstall mason-list mason-info)
+  :config
+  ;; Set mason directory to cache
+  (when (boundp 'user-cache-directory)
+    (setq mason-cache-directory (expand-file-name "mason" user-cache-directory)))
+
+  ;; Install commonly used servers automatically
+  ;; LSP servers
+  (dolist (pkg '("typescript-language-server"
+                 "pyright"
+                 "rust-analyzer"
+                 "gopls"
+                 "clangd"
+                 "cmake-language-server"
+                 "bash-language-server"
+                 "lua-language-server"
+                 "json-lsp"
+                 "yaml-language-server"))
+    (when (not (mason-installed-p pkg))
+      (message "Mason: Installing LSP server %s..." pkg)
+      (mason-install pkg))))
+
+;; DAP servers for debugging (will be installed on-demand by dape-maybe-install-adapter)
+;; These are installed when first needed to avoid startup delays
+
 ;; ** dape
 ;;
 ;;   DAPE (Debug Adapter Protocol for Emacs) provides debugging support
@@ -2864,7 +2900,7 @@ this declaration to the kill-ring."
   (with-eval-after-load 'dape
     ;; Add dape keymap to prog-mode
     (add-hook 'prog-mode-hook
-              (lambda ()
+	      (lambda ()
                 (define-key prog-mode-map (kbd "C-c d") dape-global-map)))
 
     ;; Evil keybindings
@@ -2876,12 +2912,21 @@ this declaration to the kill-ring."
       (evil-define-key 'normal dape-info-mode-map
         (kbd "S-TAB") #'dape-info-collapse))
 
-    ;; Configure adapters for various languages
+    ;; Helper function to ensure mason adapter is installed
+    (defun dape-maybe-install-adapter (config)
+      "Ensure the mason adapter specified in CONFIG is installed."
+      (when-let ((adapter-id (plist-get config 'adapter-id)))
+        (unless (mason-installed-p adapter-id)
+          (message "Installing DAP adapter %s via mason..." adapter-id)
+          (mason-install adapter-id))))
+
+    ;; Configure adapters for various languages using mason-managed servers
     ;; Python
     (add-to-list 'dape-configs
                  `(debugpy
                    modes (python-mode python-ts-mode)
-                   ensure dape-ensure-command
+                   ensure dape-maybe-install-adapter
+                   adapter-id "debugpy"
                    fn dape-config-autoport
                    command "python"
                    command-args ("-m" "debugpy.adapter")
@@ -2894,10 +2939,13 @@ this declaration to the kill-ring."
     (add-to-list 'dape-configs
                  `(js-debug
                    modes (js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-ts-mode)
-                   ensure dape-ensure-command
+                   ensure dape-maybe-install-adapter
+                   adapter-id "js-debug-adapter"
                    fn dape-config-autoport
                    command "node"
-                   command-args ("--loader" "tsx" "node_modules/.bin/js-debug")
+                   command-args ,(lambda ()
+                                   (let ((adapter-path (mason-get-path "js-debug-adapter")))
+                                     (list "--loader" "tsx" (expand-file-name "js-debug/src/dapDebugServer.js" adapter-path))))
                    :type "pwa-node"
                    :request "launch"
                    :cwd dape-cwd-fn
@@ -2907,9 +2955,10 @@ this declaration to the kill-ring."
     (add-to-list 'dape-configs
                  `(delve
                    modes (go-mode go-ts-mode)
-                   ensure dape-ensure-command
+                   ensure dape-maybe-install-adapter
+                   adapter-id "delve"
                    fn dape-config-autoport
-                   command "dlv"
+                   command ,(lambda () (mason-get-path "delve"))
                    command-args ("dap")
                    :type "go"
                    :request "launch"
@@ -2920,10 +2969,13 @@ this declaration to the kill-ring."
     (add-to-list 'dape-configs
                  `(cpptools
                    modes (c-mode c++-mode c-ts-mode c++-ts-mode)
-                   ensure dape-ensure-command
+                   ensure dape-maybe-install-adapter
+                   adapter-id "cpptools"
                    fn dape-config-autoport
                    command-cwd dape-command-cwd
-                   command "OpenDebugAD7"
+                   command ,(lambda ()
+			      (let ((adapter-path (mason-get-path "cpptools")))
+                                (expand-file-name "extension/debugAdapters/bin/OpenDebugAD7" adapter-path)))
                    :type "cppdbg"
                    :request "launch"
                    :cwd dape-cwd-fn
@@ -2932,11 +2984,14 @@ this declaration to the kill-ring."
 
     ;; Rust
     (add-to-list 'dape-configs
-                 `(rust-debug
+                 `(codelldb
                    modes (rust-mode rust-ts-mode)
-                   ensure dape-ensure-command
+                   ensure dape-maybe-install-adapter
+                   adapter-id "codelldb"
                    fn dape-config-autoport
-                   command "rust-debugger"
+                   command ,(lambda ()
+			      (let ((adapter-path (mason-get-path "codelldb")))
+                                (expand-file-name "extension/adapter/codelldb" adapter-path)))
                    :type "lldb"
                    :request "launch"
                    :cwd dape-cwd-fn
