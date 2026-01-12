@@ -488,6 +488,38 @@
 ;;
 ;;   GitHub: https://github.com/akermu/emacs-libvterm
 
+;; ** dirvish
+;;
+;;   A modern file manager based on dired mode with enhanced features.
+;;   Provides visual file management, preview capabilities, and extensions.
+;;
+;;   Integrates well with ggtags for code navigation.
+;;
+
+(use-package dirvish
+  :ensure t
+  :config
+  ;; Enable dirvish globally
+  (dirvish-override-dired-mode)
+
+  ;; Integration with ggtags for code navigation
+  (add-hook 'dirvish-mode-hook
+            (lambda ()
+              (when (and (featurep 'ggtags)
+                         (ggtags-root-directory))
+                (local-set-key (kbd "M-.") 'ggtags-find-tag-dwim)
+                (local-set-key (kbd "M-*") 'ggtags-find-reference)
+                (local-set-key (kbd "M-,") 'ggtags-pop-stack))))
+
+  ;; Additional dirvish keybindings
+  (local-set-key (kbd "C-c C-o") 'dirvish-omit-details-toggle)
+  (local-set-key (kbd "C-c C-d") 'dirvish-details-toggle)
+  (local-set-key (kbd "C-c C-l") 'dirvish-go-up-directory)
+  (local-set-key (kbd "C-c C-r") 'dirvish-go-down-directory)
+  (local-set-key (kbd "C-c C-f") 'dirvish-find-file)
+  (local-set-key (kbd "C-c C-n") 'dirvish-narrow)
+  (local-set-key (kbd "C-c C-w") 'dirvish-widen))
+
 (use-package vterm
   :ensure t
   :if (executable-find "cmake")
