@@ -2844,6 +2844,104 @@ this declaration to the kill-ring."
     (define-key citre-mode-map (kbd "C-c c s") 'citre-peek)
     (define-key citre-mode-map (kbd "C-c c f") 'citre-find-file)))
 
+;; ** dape
+;;
+;;   DAPE (Debug Adapter Protocol for Emacs) provides debugging support
+;;   for multiple languages using the Debug Adapter Protocol (DAP).
+;;   It supports breakpoints, stepping, variable inspection, and more.
+;;
+;;   GitHub: https://github.com/svaante/dape
+
+(use-package dape
+  :ensure t
+  :defer t
+  :config
+  ;; Save breakpoints between sessions
+  (add-hook 'kill-emacs-hook #'dape-breakpoint-save)
+  (add-hook 'after-init-hook #'dape-breakpoint-load)
+
+  ;; Add keybindings for dape
+  (with-eval-after-load 'dape
+    ;; Add dape keymap to prog-mode
+    (add-hook 'prog-mode-hook
+              (lambda ()
+                (define-key prog-mode-map (kbd "C-c d") dape-global-map)))
+
+    ;; Evil keybindings
+    (with-eval-after-load 'evil
+      (evil-define-key 'normal dape-info-mode-map
+        (kbd "RET") #'dape-info-select)
+      (evil-define-key 'normal dape-info-mode-map
+        (kbd "TAB") #'dape-info-expand)
+      (evil-define-key 'normal dape-info-mode-map
+        (kbd "S-TAB") #'dape-info-collapse))
+
+    ;; Configure adapters for various languages
+    ;; Python
+    (add-to-list 'dape-configs
+                 `(debugpy
+                   modes (python-mode python-ts-mode)
+                   ensure dape-ensure-command
+                   fn dape-config-autoport
+                   command "python"
+                   command-args ("-m" "debugpy.adapter")
+                   :type "python"
+                   :request "launch"
+                   :cwd dape-cwd-fn
+                   :program dape-find-file-buffer-default))
+
+    ;; JavaScript/Node.js
+    (add-to-list 'dape-configs
+                 `(js-debug
+                   modes (js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-ts-mode)
+                   ensure dape-ensure-command
+                   fn dape-config-autoport
+                   command "node"
+                   command-args ("--loader" "tsx" "node_modules/.bin/js-debug")
+                   :type "pwa-node"
+                   :request "launch"
+                   :cwd dape-cwd-fn
+                   :program dape-find-file-buffer-default))
+
+    ;; Go
+    (add-to-list 'dape-configs
+                 `(delve
+                   modes (go-mode go-ts-mode)
+                   ensure dape-ensure-command
+                   fn dape-config-autoport
+                   command "dlv"
+                   command-args ("dap")
+                   :type "go"
+                   :request "launch"
+                   :cwd dape-cwd-fn
+                   :program dape-find-file-buffer-default))
+
+    ;; C/C++
+    (add-to-list 'dape-configs
+                 `(cpptools
+                   modes (c-mode c++-mode c-ts-mode c++-ts-mode)
+                   ensure dape-ensure-command
+                   fn dape-config-autoport
+                   command-cwd dape-command-cwd
+                   command "OpenDebugAD7"
+                   :type "cppdbg"
+                   :request "launch"
+                   :cwd dape-cwd-fn
+                   :program dape-find-file-buffer-default
+                   :MIMode "gdb"))
+
+    ;; Rust
+    (add-to-list 'dape-configs
+                 `(rust-debug
+                   modes (rust-mode rust-ts-mode)
+                   ensure dape-ensure-command
+                   fn dape-config-autoport
+                   command "rust-debugger"
+                   :type "lldb"
+                   :request "launch"
+                   :cwd dape-cwd-fn
+                   :program dape-find-file-buffer-default))))
+
 ;; * Snippets and Templates
 ;;
 ;; ** yasnippet
