@@ -2214,11 +2214,82 @@ This functions should be added to the hooks of major modes for programming."
 ;; ** verilog-mode
 
 (use-package verilog-mode
-  :mode ("\\.v\\'")
+  :ensure t
+  :mode (("\\.v\\'" . verilog-mode)
+         ("\\.vh\\'" . verilog-mode)
+         ("\\.sv\\'" . verilog-mode)
+         ("\\.svh\\'" . verilog-mode))
   :config
-  (setq verilog-linter "verilator --lint-only")
+  ;; Linting and compilation
+  (setq verilog-linter "verilator --lint-only --Wall")
+  (setq verilog-compiler "verilator --cc --exe --build")
+  (setq verilog-simulator "verilator --cc --exe --build --run")
+
+  ;; Flycheck integration
   ;; https://github.com/flycheck/flycheck/issues/1250
-  (setq flycheck-verilog-verilator-executable "/usr/bin/verilator_bin"))
+  (setq flycheck-verilog-verilator-executable "/usr/bin/verilator_bin")
+
+  ;; Indentation and style
+  (setq verilog-indent-level 3)
+  (setq verilog-indent-level-module 3)
+  (setq verilog-indent-level-declaration 3)
+  (setq verilog-case-indent 2)
+  (setq verilog-auto-newline t)
+  (setq verilog-auto-indent-on-newline t)
+
+  ;; AUTO features (powerful code generation)
+  (setq verilog-auto-lineup 'declarations)
+  (setq verilog-auto-endcomments t)
+  (setq verilog-auto-wire-comment t)
+
+  ;; Project settings
+  (setq verilog-library-directories '("."))
+  (setq verilog-library-extensions '(".v" ".vh" ".sv" ".svh"))
+
+  ;; Hooks
+  (add-hook 'verilog-mode-hook #'flycheck-mode)
+  (add-hook 'verilog-mode-hook #'hs-minor-mode)  ; Code folding
+  (add-hook 'verilog-mode-hook #'electric-pair-mode)
+  (add-hook 'verilog-mode-hook #'verilog-set-compile-command)
+
+  ;; Keybindings
+  (define-key verilog-mode-map (kbd "C-c C-l") #'verilog-lint)
+  (define-key verilog-mode-map (kbd "C-c C-c") #'verilog-compile)
+  (define-key verilog-mode-map (kbd "C-c C-s") #'verilog-simulate)
+  (define-key verilog-mode-map (kbd "C-c C-a") #'verilog-auto)
+  (define-key verilog-mode-map (kbd "C-c C-d") #'verilog-delete-auto)
+  (define-key verilog-mode-map (kbd "C-c C-p") #'verilog-preprocess)
+  (define-key verilog-mode-map (kbd "C-c C-t") #'my/verilog-run-testbench)
+  (define-key verilog-mode-map (kbd "C-c C-w") #'my/verilog-wave-view))
+
+;; ** Custom Verilog functions
+
+(defun my/verilog-run-testbench ()
+  "Run the current Verilog testbench with Verilator."
+  (interactive)
+  (let ((file (buffer-file-name)))
+    (compile (format "verilator --cc --exe --build --run %s" file))))
+
+(defun my/verilog-wave-view ()
+  "Generate and view waveforms (requires gtkwave)."
+  (interactive)
+  (compile "make sim && gtkwave dump.vcd"))
+
+;; ** Verilog LSP completion with Eglot + Corfu
+
+;; Configure Eglot for Verilog using svlangserver (SystemVerilog/Verilog language server)
+;; Install svlangserver: npm install -g svlangserver
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(verilog-mode . ("svlangserver"))))
+
+;; Enable Eglot in verilog-mode for LSP-powered completion
+(add-hook 'verilog-mode-hook #'eglot-ensure)
+
+;; Alternative: Use hdl_checker if svlangserver is not available
+;; (with-eval-after-load 'eglot
+;;   (add-to-list 'eglot-server-programs
+;;                '(verilog-mode . ("hdl_checker" "--lsp"))))
 
 ;; ** groovy-mode
 
