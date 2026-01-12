@@ -474,6 +474,28 @@
   (local-set-key (kbd "C-c C-f") 'ggtags-find-file)
   (local-set-key (kbd "C-c C-g") 'ggtags-update-tags))
 
+;; ** rmsbolt
+;;
+;;   RMSbolt is a supercharged implementation of the Godbolt compiler-explorer for Emacs.
+;;   It shows you the assembly or bytecode output of your source code files with
+;;   bidirectional highlighting between source and compiled output.
+;;
+;;   GitHub: https://gitlab.com/jgkamat/rmsbolt
+
+(use-package rmsbolt
+  :ensure t
+  :commands (rmsbolt rmsbolt-compile)
+  :custom
+  ;; Use tool defaults for assembly format instead of imposing one
+  (rmsbolt-asm-format nil)
+  ;; Use temporary directory for compilation
+  (rmsbolt-default-directory temporary-file-directory)
+  ;; Enable demangling for C++ symbols
+  (rmsbolt-demangle t)
+  ;; Filter assembly directives and unused labels
+  (rmsbolt-filter-directives t)
+  (rmsbolt-filter-labels t))
+
 (use-package exec-path-from-shell
   :ensure t
   :commands (exec-path-from-shell-initialize)
