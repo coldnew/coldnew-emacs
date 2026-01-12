@@ -1995,6 +1995,27 @@ This functions should be added to the hooks of major modes for programming."
 (with-eval-after-load 'corfu
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
+;; ** xref
+;;
+;;   xref provides a generic framework for cross-referencing commands.
+;;   It provides a way to find definitions, references, and declarations
+;;   across different programming languages and tools.
+
+(use-package xref
+  :ensure nil
+  :hook ((xref-after-return xref-after-jump) . recenter)
+  :custom
+  ;; Emacs 28+
+  ;;
+  ;; `project-find-regexp' can be faster when setting `xref-search-program' to
+  ;;  `ripgrep'.
+  (xref-search-program (cond ((executable-find "rg") 'ripgrep)
+                             ((executable-find "ugrep") 'ugrep)
+                             (t 'grep)))
+  (xref-history-storage 'xref-window-local-history)
+  (xref-show-xrefs-function #'xref-show-definitions-completing-read)
+  (xref-show-definitions-function #'xref-show-definitions-completing-read))
+
 ;; * Org Mode
 ;;
 ;;   Org-mode is for keeping notes, maintaining TODO lists, and
