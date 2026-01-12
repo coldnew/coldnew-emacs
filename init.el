@@ -213,24 +213,6 @@
 ;;    Use :demand t for packages needed immediately.
 (setq use-package-always-defer t)
 
-;; ** Install paradox
-;;
-;;   Project for modernizing Emacs' Package Menu. With improved
-;;   appearance, mode-line information. Github integration,
-;;   customizability, asynchronous upgrading, and more.
-;;
-;;   GitHub: https://github.com/Malabarba/paradox
-
-(use-package paradox
-  :ensure t
-  :commands (paradox-enable)
-  :hook (after-init . paradox-enable)
-  :init
-  (setq paradox-execute-asynchronously t
-        paradox-spinner-type 'progress-bar
-        paradox-github-token t
-        paradox-display-star-count nil))
-
 ;; ** Install some common libraries
 ;;
 ;;   Some common libraries I'll use in my personal's command or anything else.
