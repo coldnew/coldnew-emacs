@@ -402,6 +402,13 @@
 ;;
 ;;   GitHub: https://github.com/purcell/exec-path-from-shell
 
+(use-package exec-path-from-shell
+  :ensure t
+  :commands (exec-path-from-shell-initialize)
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+
 ;; ** ggtags
 ;;
 ;;   Emacs frontend to GNU Global source code tagging system.
@@ -451,13 +458,6 @@
   ;; Filter assembly directives and unused labels
   (rmsbolt-filter-directives t)
   (rmsbolt-filter-labels t))
-
-(use-package exec-path-from-shell
-  :ensure t
-  :commands (exec-path-from-shell-initialize)
-  :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
 
 ;; ** vterm
 ;;
