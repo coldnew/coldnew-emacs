@@ -2979,6 +2979,43 @@ this declaration to the kill-ring."
                    :cwd dape-cwd-fn
                    :program dape-find-file-buffer-default))))
 
+;; ** realgud
+;;
+;;   RealGUD is a modular, extensible GNU Emacs front-end for interacting
+;;   with external debuggers. It provides a consistent interface for
+;;   debugging across multiple languages and debugger backends.
+;;
+;;   GitHub: https://github.com/realgud/realgud
+
+(use-package realgud
+  :ensure t
+  :defer t
+  :commands (realgud:gdb realgud:pdb realgud:jdb realgud:trepan)
+  :config
+  ;; Configure realgud for various languages
+  ;; C/C++ with gdb
+  (add-hook 'c-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c d g") 'realgud:gdb)))
+  (add-hook 'c++-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c d g") 'realgud:gdb)))
+
+  ;; Python with pdb
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c d p") 'realgud:pdb)))
+
+  ;; Java with jdb
+  (add-hook 'java-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c d j") 'realgud:jdb)))
+
+  ;; Ruby with trepan
+  (add-hook 'ruby-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c d t") 'realgud:trepan))))
+
 ;; * Snippets and Templates
 ;;
 ;; ** yasnippet
