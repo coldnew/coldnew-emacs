@@ -1888,9 +1888,14 @@ This functions should be added to the hooks of major modes for programming."
   (setq consult-async-input-throttle 0.1)
   ;; Customize consult-line for better display
   (consult-customize consult-line
-		     :preview-key '(:debounce 0.3 any)
-		     ;; Show more context in preview (lines before/after match)
-		     (setq consult-line-numbers-widen t)))
+ 		     :preview-key '(:debounce 0.3 any)
+ 		     ;; Show more context in preview (lines before/after match)
+ 		     (setq consult-line-numbers-widen t)))
+
+(use-package rg
+  :ensure t
+  :if (executable-find "rg")
+  :commands (rg rg-project rg-literal))
 
 (use-package marginalia
   :ensure t
