@@ -1,4 +1,4 @@
-;;; day-coldnew-theme.el --- coldnew's emacs color-theme day version.
+;;; day-coldnew-theme.el --- coldnew's emacs color-theme day version.   -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2016 Yen-Chin, Lee.
 
