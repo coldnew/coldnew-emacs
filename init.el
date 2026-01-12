@@ -503,6 +503,18 @@
   :ensure t
   :bind (("M-v" . er/expand-region)))
 
+;; ** ace-jump-mode
+;;
+;;   Ace-jump allows you to jump to any visible character on screen quickly.
+;;   Type the key sequence and then the character you want to jump to.
+;;
+;;   GitHub: https://github.com/winterTTr/ace-jump-mode
+
+(use-package ace-jump-mode
+  :ensure t
+  :commands ace-jump-mode
+  :bind (("C-c SPC" . ace-jump-mode)))
+
 ;; ** fancy-narrow
 ;;
 ;;   Emacs package to immitate narrow-to-region with more eye-candy.
