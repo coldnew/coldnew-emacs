@@ -2840,10 +2840,15 @@ this declaration to the kill-ring."
   :ensure t
   :mode ("\\.bb\\'" "\\.bbappend\\'"))
 
-;; ** dts-mode
+;; ** devicetree-ts-mode
 
-(use-package dts-mode :ensure t
-  :mode ("\\.dts\\'" "\\.dtsi\\'"))
+(use-package devicetree-ts-mode
+  :ensure t
+  :mode ("\\.dts\\'" "\\.dtsi\\'")
+  :init
+  (with-eval-after-load 'treesit
+    (add-to-list 'treesit-language-source-alist
+                 '(devicetree "https://github.com/joelspadin/tree-sitter-devicetree"))))
 
 ;; * Dart/Flutter Development
 ;;
