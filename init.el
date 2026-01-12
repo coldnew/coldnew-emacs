@@ -188,55 +188,23 @@
 
 ;; * Package Management
 ;;
-;; ** Add my extra package list
+;; ** Elpaca setup
 ;;
-;;   melpa contains many community packages that not contribute to
-;;   emacs's elpa, we add here.
-
-(eval-and-compile
-  (require 'package)			; built-in
-
-  ;; melpa
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/") t)
-
-  ;; For important compatibility libraries like cl-lib
-  (when (< emacs-major-version 24)
-    (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))))
-
-;; ** Initialize package.el
+;;   Elpaca is an elisp package manager. It clones and manages packages
+;;   from their repositories. We integrate it with use-package for
+;;   seamless package configuration.
 ;;
-;;   Before we start to use =package.el=, we need to initialize it
-;;   first.
-;;
-;;   This must come before configurations of installed packages.
-;;   Don't delete this line. If you don't want it, just comment it out
-;;   by adding a semicolon to the start of the line. You may delete
-;;   these explanatory comments.
+;;   GitHub: https://github.com/progfolio/elpaca
 
-(eval-and-compile
-  (package-initialize))
+;; Install use-package via elpaca
+(elpaca use-package)
 
-;; Upgrade built-in packages to latest version
-(setq package-install-upgrade-built-in t)
+;; Setup elpaca-use-package-mode for use-package integration
+(elpaca elpaca-use-package
+  (elpaca-use-package-mode))
 
-;; ** Install use-package
-;;
-;;   The =use-package= macro allows you to isolate package configuration
-;;   in your =.emacs= file in a way that is both performance-oriented
-;;   and, well, tidy. I created it because I have over 80 packages that
-;;   I use in Emacs, and things were getting difficult to manage. Yet
-;;   with this utility my total load time is around 2 seconds, with no
-;;   loss of functionality!
-;;
-;;   GitHub: https://github.com/jwiegley/use-package
-;;
-;;   NOTE: use-package is integrated in emacs directly since emacs
-;;   29.1, it's no need to install it manually anymore.
-
-(eval-and-compile
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))) ; Only install if missing, don't refresh
+;; Set use-package to always ensure packages are installed
+(setq use-package-always-ensure t)
 
 (eval-when-compile (require 'use-package))
 
@@ -529,6 +497,8 @@
   (local-set-key (kbd "C-c C-f") 'dirvish-find-file)
   (local-set-key (kbd "C-c C-n") 'dirvish-narrow)
   (local-set-key (kbd "C-c C-w") 'dirvish-widen))
+
+(use-package transient :ensure t)
 
 (use-package vterm
   :ensure t
@@ -1435,6 +1405,7 @@ return nil since you can't set font for emacs on it."
 
 ;; Save minibuffer history
 (use-package savehist
+  :ensure nil                           ; built-in
   :hook (after-init . savehist-mode)
   :config
   (setq savehist-file (expand-file-name "savehist.dat" user-cache-directory))
@@ -1589,20 +1560,6 @@ return nil since you can't set font for emacs on it."
   :config
   (add-hook 'prog-mode-hook 'turn-on-evil-quickscope-always-mode))
 
-;; ** evil-terminal-cursor-changer
-;;
-;;   evil-terminal-cursor-changer is changing cursor shape and color
-;;   by evil state for evil-mode. When running in terminal, It's
-;;   especially helpful to recognize evil's state.
-;;
-;;   GitHub: https://github.com/7696122/evil-terminal-cursor-changer
-
-(use-package evil-terminal-cursor-changer
-  :ensure t
-  :after evil
-  :commands (evil-terminal-cursor-changer-activate)
-  :config (evil-terminal-cursor-changer-activate))
-
 ;; ** vi-tilde-fringe
 ;;
 ;;   Displays tildes in the fringe on empty lines a la Vi
@@ -1736,7 +1693,7 @@ return nil since you can't set font for emacs on it."
 ;; ** recentf
 
 (use-package recentf
-  :ensure t                             ; built-in
+  :ensure nil                             ; built-in
   :init (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
   :config
   (recentf-mode 1))
@@ -1780,9 +1737,15 @@ This functions should be added to the hooks of major modes for programming."
 
 (use-package indent-guide
   :ensure t
+  :commands (indent-guide-mode)
   :config
   ;; Only show indent-guide in idle-time.
-  (setq indent-guide-delay 0.1))
+  (setq indent-guide-delay 0.1)
+  (add-hook 'emacs-lisp-mode-hook #'indent-guide-mode)
+  (add-hook 'lisp-interaction-mode-hook #'indent-guide-mode)
+  (add-hook 'clojure-mode-hook #'indent-guide-mode)
+  (add-hook 'scheme-mode-hook #'indent-guide-mode)
+  (add-hook 'lisp-mode-hook #'indent-guide-mode))
 
 (show-paren-mode 1)
 (setq show-paren-delay 0)               ; no delay
@@ -1983,26 +1946,23 @@ This functions should be added to the hooks of major modes for programming."
 ;; Eglot provides completion-at-point, corfu enhances it with UI
 (with-eval-after-load 'eglot
   (setq-local completion-in-region-function #'corfu-complete-in-region))
+
+;; ** kind-icon
 ;;
 ;;   kind-icon adds icons to completion candidates in Corfu.
 ;;   It displays colorful icons for different completion kinds
 ;;   (functions, variables, methods, files, etc.).
 
-;; Install kind-icon if not present
-(unless (package-installed-p 'kind-icon)
-  (package-install 'kind-icon))
-
-;; Load and configure kind-icon
-(require 'kind-icon)
-
-;; Use icons instead of text labels
-(setq kind-icon-use-icons t)
-
-;; Match corfu background face
-(setq kind-icon-default-face 'corfu-default)
-
-;; Add kind-icon to Corfu margin formatters
-(with-eval-after-load 'corfu
+(use-package kind-icon
+  :ensure t
+  :after corfu
+  :custom
+  ;; Use icons instead of text labels
+  (kind-icon-use-icons t)
+  ;; Match corfu background face
+  (kind-icon-default-face 'corfu-default)
+  :config
+  ;; Add kind-icon to Corfu margin formatters
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 ;; ** xref
@@ -2212,50 +2172,6 @@ This functions should be added to the hooks of major modes for programming."
   :ensure t
   :mode ("BUILD.gn" "\\.gni?\\'"))
 
-;; Declare functions from mmm-mode to suppress compiler warnings
-(declare-function mmm-add-classes "mmm-mode")
-(declare-function mmm-add-mode-ext-class "mmm-mode")
-(declare-function markdown-insert-link "markdown-mode")
-
-;; ** markdown-mode
-
-;; mmm-mode - Multi-major-mode support for markdown code blocks
-(use-package mmm-mode
-  :ensure t
-  :commands (mmm-mode mmm-global-mode)
-  :config
-  (setq mmm-global-mode 'maybe)
-  (setq mmm-parse-when-idle 't))
-
-(defun my/mmm-markdown-auto-class (lang &optional submode)
-  "Define a mmm-mode class for LANG in `markdown-mode' using SUBMODE.
-If SUBMODE is not provided, use `LANG-mode' by default."
-  (let ((class (intern (concat "markdown-" lang)))
-        (submode (or submode (intern (concat lang "-mode"))))
-        (front (concat "^```" lang "[\n\r]+"))
-        (back "^```"))
-    (mmm-add-classes (list (list class :submode submode :front front :back back)))
-    (mmm-add-mode-ext-class 'markdown-mode nil class)))
-
-;; Mode names that derive directly from the language name
-(mapc 'my/mmm-markdown-auto-class
-      '("awk" "bibtex" "c" "cpp" "css" "html" "latex" "lisp" "makefile"
-        "markdown" "python" "r" "ruby" "sql" "stata" "xml" "js"))
-
-;; markdown-mode - Markdown editing
-(use-package markdown-mode
-  :ensure t
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown")
-  :bind
-  (:map markdown-mode-map
-        ("C-c i" . markdown-insert-link))
-  (:map gfm-mode-map
-        ("C-c i" . markdown-insert-link)))
-
 ;; ** nasm-mode
 
 (use-package nasm-mode :ensure t)
@@ -2281,11 +2197,6 @@ If SUBMODE is not provided, use `LANG-mode' by default."
   )
 
 ;; ** qml-mode
-
-;; indent-guide - Show vertical line at indentation levels
-(use-package indent-guide
-  :ensure t
-  :commands (indent-guide-mode))
 
 (use-package qml-mode
   :ensure t
@@ -2369,6 +2280,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;; ** cc-mode configuration
 
 (use-package cc-mode
+  :ensure nil				; built-in
   :mode
   (("\\.h\\'" . c++-mode)
    ("\\.c\\'" . c-mode)
@@ -2489,6 +2401,7 @@ If SUBMODE is not provided, use `LANG-mode' by default."
 ;; ** cwarn
 
 (use-package cwarn
+  :ensure nil				; built-in
   :config
   (add-hook 'c-mode-common-hook #'(lambda () (cwarn-mode 1))))
 
@@ -2628,15 +2541,17 @@ this declaration to the kill-ring."
 
 ;; elisp-mode - built-in, configure hooks and keybindings
 (use-package elisp-mode
-  :ensure nil            ; built-in
+  :ensure nil				; built-in
   :hook
   ((emacs-lisp-mode . my/elisp/check-parens-on-save)
    (emacs-lisp-mode . my/remove-elc-on-save))
   :config
-  ;; Enable litable-mode globally (not just for elisp)
-  (litable-mode)
+  ;; Enable litable-mode globally after litable loads
+  (with-eval-after-load 'litable
+    (litable-mode))
   ;; Enable page-break-lines globally
-  (global-page-break-lines-mode 1)
+  (with-eval-after-load 'page-break-lines
+    (global-page-break-lines-mode 1))
   :bind
   (:map emacs-lisp-mode-map
         ;; ("C-c '" . my/narrow-or-widen-dwim)
@@ -3114,15 +3029,6 @@ this declaration to the kill-ring."
       visual
       motion))))
 
-(use-package indent-guide
-  :ensure t
-  :config
-  (add-hook 'emacs-lisp-mode-hook #'indent-guide-mode)
-  (add-hook 'lisp-interaction-mode-hook #'indent-guide-mode)
-  (add-hook 'clojure-mode-hook #'indent-guide-mode)
-  (add-hook 'scheme-mode-hook #'indent-guide-mode)
-  (add-hook 'lisp-mode-hook #'indent-guide-mode))
-
 (global-prettify-symbols-mode 1)
 
 ;; * Testing with ERT
@@ -3234,6 +3140,7 @@ this declaration to the kill-ring."
 ;;   Eshell is a command shell written in Emacs Lisp.
 
 (use-package eshell
+  :ensure nil				; built-in
   :config
   ;; extra eshell configs
   ;; Make eshell prompt look likes default bash prompt
@@ -3335,6 +3242,7 @@ this declaration to the kill-ring."
 ;; ** winner-mode
 
 (use-package winner                     ; builtin
+  :ensure nil				; built-in
   :demand t  ; Needed for window navigation at startup
   :commands (winner-undo winner-redo)
   :config
