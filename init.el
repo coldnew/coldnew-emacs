@@ -507,7 +507,8 @@
   :config
   (setq vterm-always-prompt-on-exit t
         vterm-shell (or (getenv "SHELL") "/bin/zsh")
-        vterm-max-scrollback 10000))
+        vterm-max-scrollback 10000
+        vterm-always-compile-module t))
 
 ;; ** expand-region
 ;;
