@@ -389,6 +389,18 @@
 ;;   commands/functions to use, I put them here.
 ;;
 
+;; ** package-git (Git-based Package Management)
+
+(use-package package-git
+  :vc (:url "https://github.com/kn66/package-git.el"
+            :rev :newest)
+  :config
+  ;; Enable Git management for ELPA packages
+  (package-git-enable)
+
+  ;; Configure auto-commit behavior
+  (setq package-git-auto-commit t))
+
 
 ;; ** doxymacs
 ;;
