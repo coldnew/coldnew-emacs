@@ -60,3 +60,5 @@ elpa/
 .aider*
 /dirvish/
 /elpaca/
+/.agent-shell/
+/ellama-sessions/
