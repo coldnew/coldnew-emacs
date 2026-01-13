@@ -78,6 +78,11 @@
       temporary-file-directory))
   "My ramdisk path in system.")
 
+;; * Personal Information
+
+(setq user-full-name "Yen-Chin, Lee")
+(setq user-mail-address "coldnew.tw@gmail.com")
+
 ;; * Load Path Setup
 ;;
 ;;   The variable =load-path= lists all the directories where Emacs
@@ -180,11 +185,6 @@
 ;; ** Maximized window after emacs start
 
 (modify-all-frames-parameters '((fullscreen . maximized)))
-
-;; * Personal Information
-
-(setq user-full-name "Yen-Chin, Lee")
-(setq user-mail-address "coldnew.tw@gmail.com")
 
 ;; * Package Management
 ;;
@@ -438,13 +438,6 @@
   (rmsbolt-filter-directives t)
   (rmsbolt-filter-labels t))
 
-;; ** vterm
-;;
-;;   vterm is a terminal emulator based on libvterm, which provides
-;;   a fast and feature-rich alternative to term-mode.
-;;
-;;   GitHub: https://github.com/akermu/emacs-libvterm
-
 ;; ** dirvish
 ;;
 ;;   A modern file manager based on dired mode with enhanced features.
@@ -452,7 +445,6 @@
 ;;
 ;;   Integrates well with ggtags for code navigation.
 ;;
-
 (use-package dirvish
   :ensure t
   :config
@@ -476,18 +468,6 @@
   (local-set-key (kbd "C-c C-f") 'dirvish-find-file)
   (local-set-key (kbd "C-c C-n") 'dirvish-narrow)
   (local-set-key (kbd "C-c C-w") 'dirvish-widen))
-
-(use-package transient :ensure t)
-
-(use-package vterm
-  :ensure t
-  :if (executable-find "cmake")
-  :commands vterm
-  :config
-  (setq vterm-always-prompt-on-exit t
-        vterm-shell (or (getenv "SHELL") "/bin/bash")
-        vterm-max-scrollback 10000
-        vterm-always-compile-module t))
 
 ;; ** expand-region
 ;;
@@ -1847,6 +1827,173 @@ This functions should be added to the hooks of major modes for programming."
            ))
     (set-register (car r) (cadr r))))
 
+;; * Version Control
+;;
+;; ** magit
+
+(use-package magit
+  :ensure t
+  :config
+  (setq magit-commit-arguments '("--verbose" "--signoff")))
+
+(setq magit-diff-refine-hunk 'all)
+
+(use-package git-modes :ensure t)
+
+(use-package git-gutter-fringe
+  :ensure t
+  :if window-system                     ; git-gutter-fringe only work on GUI
+  :commands (git-gutter-mode)
+  :config
+  ;; enable globally
+  (git-gutter-mode))
+
+;; ** magit-gptcommit (AI-assisted commits)
+
+(use-package magit-gptcommit
+  :ensure t
+  :demand t
+  :after magit llm
+  :config
+
+  (setq magit-gptcommit-llm-provider
+        (or (my/llm-get-provider my/llm-default-provider)
+            (when (boundp 'my/llm-provider-openai)
+              (symbol-value 'my/llm-provider-openai))
+            (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
+              (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))))
+
+  ;; add to magit's transit buffer - defer to avoid conflicts
+  (with-eval-after-load 'magit
+    (magit-gptcommit-status-buffer-setup))
+  :bind (:map git-commit-mode-map
+              ("C-c C-g" . magit-gptcommit-commit-accept)))
+
+;; * Terminal and Shell
+;;
+;; ** vterm
+;;
+;;   vterm is a terminal emulator based on libvterm, which provides
+;;   a fast and feature-rich alternative to term-mode.
+;;
+;;   GitHub: https://github.com/akermu/emacs-libvterm
+
+(use-package transient :ensure t)
+
+(use-package vterm
+  :ensure t
+  :if (executable-find "cmake")
+  :commands vterm
+  :config
+  (setq vterm-always-prompt-on-exit t
+        vterm-shell (or (getenv "SHELL") "/bin/bash")
+        vterm-max-scrollback 10000
+        vterm-always-compile-module t))
+
+;; ** term handling
+
+(defadvice term-handle-exit (after kill-buffer-after-exit activate)
+  "Kill term buffer if process finished."
+  (kill-buffer (current-buffer)))
+
+;; ** Eshell Configuration
+;;
+;;   Eshell is a command shell written in Emacs Lisp.
+
+(use-package eshell
+  :ensure nil				; built-in
+  :config
+  ;; extra eshell configs
+  ;; Make eshell prompt look likes default bash prompt
+  (require 'cl-lib)
+  (setq eshell-prompt-function
+        '(lambda ()
+           (concat
+            user-login-name "@" system-name " "
+            (if (cl-search (directory-file-name (expand-file-name (getenv "HOME"))) (eshell/pwd))
+            	(replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
+              (eshell/pwd))
+            (if (= (user-uid) 0) " # " " $ "))))
+  ;; Add color for eshell prompt like Gentoo does
+  (defun colorfy-eshell-prompt ()
+    (let* ((mpoint)
+           (user-string-regexp (concat "^" user-login-name "@" (system-name))))
+      (save-excursion
+        (goto-char (point-min))
+        (while (re-search-forward (concat user-string-regexp ".*[$#]") (point-max) t)
+          (setq mpoint (point))
+          (overlay-put (make-overlay (pos-bol) mpoint) 'face '(:foreground "dodger blue")))
+        (goto-char (point-min))
+        (while (re-search-forward user-string-regexp (point-max) t)
+          (setq mpoint (point))
+          (overlay-put (make-overlay (pos-bol) mpoint) 'face '(:foreground "green3"))))))
+  ;; Make eshell prompt more colorful
+  (add-hook 'eshell-output-filter-functions 'colorfy-eshell-prompt)
+  (setq eshell-visual-commands
+        '("less" "tmux" "htop" "top" "bash" "zsh" "fish" "ssh" "tail"
+          "vi" "vim" "screen" "less" "more" "lynx" "ncftp" "pine" "tin"
+          "nmtui" "alsamixer"))
+
+  (setq eshell-visual-subcommands
+        '(("git" "log" "diff" "show")))
+  (add-hook 'eshell-mode-hook
+            (lambda ()
+              (define-key eshell-mode-map (kbd "C-u") 'eshell-kill-input))))
+
+(use-package eshell-autojump :ensure t)
+
+(use-package esh-autosuggest
+  :hook (eshell-mode . esh-autosuggest-mode)
+  :ensure t)
+
+;; ** Eshell commands
+
+(with-eval-after-load 'eshell
+  (defun eshell/.. (&optional level)
+    "Go up LEVEL directories"
+    (interactive)
+    (let ((level (or level 1)))
+      (eshell/cd (make-string (1+ level) ?.))
+      (eshell/ls))))
+
+(defun eshell/clear ()
+  "Clears shell buffer ala Unix's clear or DOS' cls"
+  ;; shell prompts are read-only, so clear that for the duration
+  (let ((inhibit-read-only t))
+    ;; simply delete the region
+    (delete-region (point-min) (point-max))))
+
+(defun eshell/emacs (&rest args)
+  "Open a file in emacs. Some habits die hard."
+  (if (null args)
+      ;; If I just ran "emacs", I probably expect to be launching
+      ;; Emacs, which is rather silly since I'm already in Emacs.
+      ;; So just pretend to do what I ask.
+      (bury-buffer)
+    ;; We have to expand the file names or else naming a directory in a
+    ;; argument causes later arguments to be looked for in that directory,
+    ;; not the starting directory
+    (mapc #'find-file (mapcar #'expand-file-name (flatten-tree (reverse args))))))
+
+(defalias 'eshell/e 'eshell/emacs)
+
+(defun eshell/unpack (file)
+  (let ((command (cl-some (lambda (x)
+                            (if (string-match-p (car x) file)
+				(cadr x)))
+                          '((".*\.tar.bz2" "tar xjf")
+                            (".*\.tar.gz" "tar xzf")
+                            (".*\.bz2" "bunzip2")
+                            (".*\.rar" "unrar x")
+                            (".*\.gz" "gunzip")
+                            (".*\.tar" "tar xf")
+                            (".*\.tbz2" "tar xjf")
+                            (".*\.tgz" "tar xzf")
+                            (".*\.zip" "unzip")
+                            (".*\.Z" "uncompress")
+                            (".*" "echo 'Could not unpack file:'")))))
+    (eshell-command-result (concat command " " file))))
+
 ;; * Completion
 ;;
 ;;   Modern completion framework with Vertico, Consult, Marginalia, and Orderless.
@@ -2656,46 +2803,6 @@ this declaration to the kill-ring."
   (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
 (setq vc-handled-backends nil)
 
-;; ** magit
-
-(use-package magit
-  :ensure t
-  :config
-  (setq magit-commit-arguments '("--verbose" "--signoff")))
-
-(setq magit-diff-refine-hunk 'all)
-
-(use-package git-modes :ensure t)
-
-(use-package git-gutter-fringe
-  :ensure t
-  :if window-system                     ; git-gutter-fringe only work on GUI
-  :commands (git-gutter-mode)
-  :config
-  ;; enable globally
-  (git-gutter-mode))
-
-;; ** magit-gptcommit (AI-assisted commits)
-
-(use-package magit-gptcommit
-  :ensure t
-  :demand t
-  :after magit llm
-  :config
-
-  (setq magit-gptcommit-llm-provider
-        (or (my/llm-get-provider my/llm-default-provider)
-            (when (boundp 'my/llm-provider-openai)
-              (symbol-value 'my/llm-provider-openai))
-            (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
-              (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))))
-
-  ;; add to magit's transit buffer - defer to avoid conflicts
-  (with-eval-after-load 'magit
-    (magit-gptcommit-status-buffer-setup))
-  :bind (:map git-commit-mode-map
-              ("C-c C-g" . magit-gptcommit-commit-accept)))
-
 ;; * Tree-sitter Support
 ;;
 ;;   Tree-sitter is an incremental parsing library. It provides a
@@ -3421,116 +3528,6 @@ this declaration to the kill-ring."
   (setq scss-compile-at-save nil))
 
 (use-package mustache-mode :mode "\\.mustache$" :ensure t)
-
-;; * Terminal Support
-;;
-;; ** term handling
-
-(defadvice term-handle-exit (after kill-buffer-after-exit activate)
-  "Kill the term buffer if the process finished."
-  (kill-buffer (current-buffer)))
-
-;; * Eshell Configuration
-;;
-;;   Eshell is a command shell written in Emacs Lisp.
-
-(use-package eshell
-  :ensure nil				; built-in
-  :config
-  ;; extra eshell configs
-  ;; Make eshell prompt look likes default bash prompt
-  (require 'cl-lib)
-  (setq eshell-prompt-function
-        '(lambda ()
-           (concat
-            user-login-name "@" system-name " "
-            (if (cl-search (directory-file-name (expand-file-name (getenv "HOME"))) (eshell/pwd))
-            	(replace-regexp-in-string (expand-file-name (getenv "HOME")) "~" (eshell/pwd))
-              (eshell/pwd))
-            (if (= (user-uid) 0) " # " " $ "))))
-  ;; Add color for eshell prompt like Gentoo does
-  (defun colorfy-eshell-prompt ()
-    (let* ((mpoint)
-           (user-string-regexp (concat "^" user-login-name "@" (system-name))))
-      (save-excursion
-        (goto-char (point-min))
-        (while (re-search-forward (concat user-string-regexp ".*[$#]") (point-max) t)
-          (setq mpoint (point))
-          (overlay-put (make-overlay (pos-bol) mpoint) 'face '(:foreground "dodger blue")))
-        (goto-char (point-min))
-        (while (re-search-forward user-string-regexp (point-max) t)
-          (setq mpoint (point))
-          (overlay-put (make-overlay (pos-bol) mpoint) 'face '(:foreground "green3"))))))
-  ;; Make eshell prompt more colorful
-  (add-hook 'eshell-output-filter-functions 'colorfy-eshell-prompt)
-  (setq eshell-visual-commands
-        '("less" "tmux" "htop" "top" "bash" "zsh" "fish" "ssh" "tail"
-          "vi" "vim" "screen" "less" "more" "lynx" "ncftp" "pine" "tin"
-          "nmtui" "alsamixer"))
-
-  (setq eshell-visual-subcommands
-        '(("git" "log" "diff" "show")))
-  ;; FIXME: why this will still global-map ?
-  ;; (bind-keys :map eshell-mode-map
-  ;;            ("C-u" . eshell-kill-input))
-
-  (add-hook 'eshell-mode-hook
-            (lambda ()
-              (define-key eshell-mode-map (kbd "C-u") 'eshell-kill-input))))
-
-(use-package eshell-autojump :ensure t)
-
-(use-package esh-autosuggest
-  :hook (eshell-mode . esh-autosuggest-mode)
-  :ensure t)
-
-;; ** Eshell commands
-
-(with-eval-after-load 'eshell
-  (defun eshell/.. (&optional level)
-    "Go up LEVEL directories"
-    (interactive)
-    (let ((level (or level 1)))
-      (eshell/cd (make-string (1+ level) ?.))
-      (eshell/ls))))
-
-(defun eshell/clear ()
-  "Clears the shell buffer ala Unix's clear or DOS' cls"
-  ;; the shell prompts are read-only, so clear that for the duration
-  (let ((inhibit-read-only t))
-    ;; simply delete the region
-    (delete-region (point-min) (point-max))))
-
-(defun eshell/emacs (&rest args)
-  "Open a file in emacs. Some habits die hard."
-  (if (null args)
-      ;; If I just ran "emacs", I probably expect to be launching
-      ;; Emacs, which is rather silly since I'm already in Emacs.
-      ;; So just pretend to do what I ask.
-      (bury-buffer)
-    ;; We have to expand the file names or else naming a directory in a
-    ;; argument causes later arguments to be looked for in that directory,
-    ;; not the starting directory
-    (mapc #'find-file (mapcar #'expand-file-name (flatten-tree (reverse args))))))
-
-(defalias 'eshell/e 'eshell/emacs)
-
-(defun eshell/unpack (file)
-  (let ((command (cl-some (lambda (x)
-                            (if (string-match-p (car x) file)
-				(cadr x)))
-                          '((".*\.tar.bz2" "tar xjf")
-                            (".*\.tar.gz" "tar xzf")
-                            (".*\.bz2" "bunzip2")
-                            (".*\.rar" "unrar x")
-                            (".*\.gz" "gunzip")
-                            (".*\.tar" "tar xf")
-                            (".*\.tbz2" "tar xjf")
-                            (".*\.tgz" "tar xzf")
-                            (".*\.zip" "unzip")
-                            (".*\.Z" "uncompress")
-                            (".*" "echo 'Could not unpack the file:'")))))
-    (eshell-command-result (concat command " " file))))
 
 ;; * Window Management
 ;;
