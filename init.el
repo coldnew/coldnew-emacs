@@ -196,9 +196,6 @@
 ;;
 ;;   GitHub: https://github.com/progfolio/elpaca
 
-;; Install use-package via elpaca
-(elpaca use-package)
-
 ;; Setup elpaca-use-package-mode for use-package integration
 (elpaca elpaca-use-package
   (elpaca-use-package-mode))
@@ -1374,7 +1371,7 @@ return nil since you can't set font for emacs on it."
            ("C-=" . my/increase-emacs-font-size)
            ("C--" . my/decrease-emacs-font-size))
 
-;; * Minibutter
+;; * Minibuffer
 
 (when (require 'minibuffer nil t)  ; built-in, so optional require
   ;; Use bar cursor in minibuffer
@@ -2657,9 +2654,6 @@ this declaration to the kill-ring."
   :after flycheck
   :config
   (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
-
-;; ** magit-gptcommit
-
 (setq vc-handled-backends nil)
 
 ;; ** magit
