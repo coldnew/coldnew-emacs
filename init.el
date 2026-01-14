@@ -3998,42 +3998,56 @@ this declaration to the kill-ring."
                    :cwd dape-cwd-fn
                    :program dape-find-file-buffer-default))))
 
-;; ** realgud
-;;
-;;   RealGUD is a modular, extensible GNU Emacs front-end for interacting
-;;   with external debuggers. It provides a consistent interface for
-;;   debugging across multiple languages and debugger backends.
-;;
-;;   GitHub: https://github.com/realgud/realgud
+ ;; ** realgud
+ ;;
+ ;;   RealGUD is a modular, extensible GNU Emacs front-end for interacting
+ ;;   with external debuggers. It provides a consistent interface for
+ ;;   debugging across multiple languages and debugger backends.
+ ;;
+ ;;   Key features:
+ ;;   - Modular backend support (GDB, PDB, JDB, and more)
+ ;;   - Consistent interface across debuggers
+ ;;   - Works with GUD (Grand Unified Debugger)
+ ;;   - Extensible for new backends
+ ;;   - Better error handling and output
+ ;;
+ ;;   Why I use it:
+ ;;   Unified debugging experience. Same commands work across different
+ ;;   languages (C/C++, Python, Java, Ruby).
+ ;;
+ ;;   GitHub: https://github.com/realgud/realgud
+ ;;
+ ;;   Configuration notes:
+ ;;   Keybindings: C-c d g (GDB), C-c d p (PDB), C-c d j (JDB), C-c d t (trepan).
 
-(use-package realgud
-  :ensure t
-  :defer t
-  :commands (realgud:gdb realgud:pdb realgud:jdb realgud:trepan)
-  :config
-  ;; Configure realgud for various languages
-  ;; C/C++ with gdb
-  (add-hook 'c-mode-hook
-            (lambda ()
-              (local-set-key (kbd "C-c d g") 'realgud:gdb)))
-  (add-hook 'c++-mode-hook
-            (lambda ()
-              (local-set-key (kbd "C-c d g") 'realgud:gdb)))
+ (use-package realgud
+   :ensure t
+   :defer t
+   :commands (realgud:gdb realgud:pdb realgud:jdb realgud:trepan)
+   :config
+   ;; Configure realgud for various languages
+   ;; C/C++ with gdb
+   (add-hook 'c-mode-hook
+             (lambda ()
+               (local-set-key (kbd "C-c d g") 'realgud:gdb)))
+   (add-hook 'c++-mode-hook
+             (lambda ()
+               (local-set-key (kbd "C-c d g") 'realgud:gdb)))
 
-  ;; Python with pdb
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (local-set-key (kbd "C-c d p") 'realgud:pdb)))
+   ;; Python with pdb
+   (add-hook 'python-mode-hook
+             (lambda ()
+               (local-set-key (kbd "C-c d p") 'realgud:pdb)))
 
-  ;; Java with jdb
-  (add-hook 'java-mode-hook
-            (lambda ()
-              (local-set-key (kbd "C-c d j") 'realgud:jdb)))
+   ;; Java with jdb
+   (add-hook 'java-mode-hook
+             (lambda ()
+               (local-set-key (kbd "C-c d j") 'realgud:jdb)))
 
-  ;; Ruby with trepan
-  (add-hook 'ruby-mode-hook
-            (lambda ()
-              (local-set-key (kbd "C-c d t") 'realgud:trepan))))
+   ;; Ruby with trepan
+   (add-hook 'ruby-mode-hook
+             (lambda ()
+               (local-set-key (kbd "C-c d t") 'realgud:trepan))))
 
 ;; * Snippets and Templates
 ;;
