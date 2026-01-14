@@ -4517,36 +4517,6 @@ this declaration to the kill-ring."
   ;; Enable formatting on save
   (add-hook 'python-mode-hook 'python-black-on-save-mode))
 
-;; ** ruff-mode
-;;
-;;   Ruff linter and formatter integration for Python.
-;;
-;;   Key features:
-;;   - Fast Python linter written in Rust
-;;   - Import sorting (isort replacement)
-;;   - Code formatting (black compatible)
-;;   - Fix common issues automatically
-;;   - Integration with flycheck
-;;
-;;   Why I use it:
-;;   Extremely fast linting and formatting. Replaces multiple tools
-;;   (flake8, isort, black) with a single, fast executable.
-;;
-;;   GitHub: https://github.com/charliermarsh/ruff
-;;
-;;   Configuration notes:
-;;   Requires ruff to be installed (pip install ruff).
-;;   Integrates with flycheck for error display.
-
-(use-package ruff-mode
-  :ensure t
-  :commands ruff-mode
-  :config
-  ;; Enable ruff-mode for Python files
-  (add-hook 'python-mode-hook 'ruff-mode)
-  ;; Format on save
-  (add-hook 'python-mode-hook 'ruff-format-on-save-mode))
-
 ;; ** python-isort
 ;;
 ;;   Import sorting with isort for Python.
