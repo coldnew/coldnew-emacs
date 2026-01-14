@@ -3235,27 +3235,86 @@ This functions should be added to the hooks of major modes for programming."
 
 (add-hook 'c-mode-common-hook 'electric-pair-mode)
 
-;; ** srefactor
+ ;; ** srefactor
+ ;;
+ ;;   srefactor is a C/C++ source code refactoring tool for Emacs.
+ ;;   Provides semantic-aware refactoring operations on code.
+ ;;
+ ;;   Key features:
+ ;;   - Extract function/method
+ ;;   - Inline function/method
+ ;;   - Rename variables and functions
+ ;;   - Convert between local/global variables
+ ;;   - Generate getter/setter methods
+ ;;   - Intelligent code transformation
+ ;;
+ ;;   Why I use it:
+ ;;   Semantic refactoring without regex or manual edits.
+ ;;   Saves time on common C/C++ refactoring tasks.
+ ;;
+ ;;   GitHub: https://github.com/tuhdo/srefactor
+ ;;
+ ;;   Configuration notes:
+ ;;   Loaded after cc-mode. Use M-x srefactor-* for commands.
 
-(use-package srefactor
-  :ensure t
-  :defer t
-  :after (cc-mode))
+ (use-package srefactor
+   :ensure t
+   :defer t
+   :commands (srefactor-menu srefactor-extract-function srefactor-inline-function)
+   :after (cc-mode))
 
-;; ** cff
+ ;; ** cff
+ ;;
+ ;;   cff (C/C++ Find File) helps navigate between header
+ ;;   and source files in C/C++ projects.
+ ;;
+ ;;   Key features:
+ ;;   - Jump between .h and .c/.cpp files
+ ;;   - Smart file detection and matching
+ ;;   - Multiple projects support
+ ;;   - Works with cc-mode
+ ;;   - Toggle between header/implementation
+ ;;
+ ;;   Why I use it:
+ ;;   Quick navigation between C/C++ header and source files.
+ ;;   Essential for large projects with many files.
+ ;;
+ ;;   GitHub: https://github.com/larstvei/cff
+ ;;
+ ;;   Configuration notes:
+ ;;   Keybinding: C-c C-o to find corresponding file.
 
-(use-package cff
-  :ensure t
-  :after (cc-mode))
+ (use-package cff
+   :ensure t
+   :commands (cff-find-other-file)
+   :after (cc-mode))
 
-;; ** modern-cpp-font-lock
+ ;; ** modern-cpp-font-lock
+ ;;
+ ;;   modern-cpp-font-lock adds syntax highlighting for modern C/C++ features.
+ ;;   Supports C++11 through C++20 keywords and concepts.
+ ;;
+ ;;   Key features:
+ ;;   - Modern C++ keywords (auto, constexpr, noexcept, etc.)
+ ;;   - C++11/14/17/20 support
+ ;;   - Standard library highlighting
+ ;;   - Improved type recognition
+ ;;   - Template syntax highlighting
+ ;;
+ ;;   Why I use it:
+ ;;   Better syntax highlighting for modern C++ code. Default Emacs
+ ;;   highlighting lacks support for recent C++ features.
+ ;;
+ ;;   GitHub: https://github.com/ludwigpacifici/modern-cpp-font-lock
+ ;;
+ ;;   Configuration notes:
+ ;;   Enabled for all c++-mode and c++-ts-mode buffers.
 
-;; adds font-lock highlighting for modern C++ upto C++17
-;; https://github.com/ludwigpacifici/modern-cpp-font-lock
-(use-package modern-cpp-font-lock
-  :ensure t
-  :hook (c++-mode . modern-c++-font-lock-mode)
-  :after (cc-mode))
+ (use-package modern-cpp-font-lock
+   :ensure t
+   :commands (modern-c++-font-lock-mode)
+   :hook (c++-mode . modern-c++-font-lock-mode)
+   :after (cc-mode))
 
 ;; ** C utilities
 
