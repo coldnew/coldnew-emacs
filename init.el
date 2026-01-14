@@ -4074,9 +4074,10 @@ this declaration to the kill-ring."
               (local-set-key (kbd "C-c d j") 'realgud:jdb)))
 
   ;; Ruby with trepan
-   (add-hook 'ruby-mode-hook
-             (lambda ()
-               (local-set-key (kbd "C-c d t") 'realgud:trepan))))
+  (add-hook 'ruby-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c d t") 'realgud:trepan))))
+
 
 ;; * Debugging & Testing
 ;;
@@ -4097,7 +4098,7 @@ this declaration to the kill-ring."
 ;;   Test files should be named *-test.el or end with test.el
 
 (use-package ert
-  :ensure nil  ; built-in since Emacs 24
+  :ensure nil				; built-in since Emacs 24
   :commands (ert-run-tests-interactively ert-run-tests-batch-and-exit)
   :config
   ;; Enable colors in batch mode
