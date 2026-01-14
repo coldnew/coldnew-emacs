@@ -3178,8 +3178,8 @@ This functions should be added to the hooks of major modes for programming."
    :config
    (add-hook 'c-mode-common-hook
              #'(lambda ()
- 		(setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
- 		(c-turn-on-eldoc-mode))))
+		 (setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
+		 (c-turn-on-eldoc-mode))))
 
  ;; ** cwarn
  ;;
