@@ -1044,21 +1044,6 @@ return nil since you can't set font for emacs on it."
 (when (version<= "24.3" emacs-version)
   (setq create-lockfiles nil))
 
-;; *** Add support for editorconfig
-;;
-;;   EditorConfig helps developers define and maintain consistent
-;;   coding styles between different editors and IDEs.
-;;
-;;   GitHub: https://github.com/editorconfig/editorconfig-emacs
-
-(use-package editorconfig
-  :ensure t
-  :if (executable-find "editorconfig")
-  :mode ("\\.editorconfig\\'" . conf-unix-mode)
-  :commands editorconfig-mode
-  :init
-  (add-hook 'prog-mode-hook #'editorconfig-mode))
-
 ;; *** En/Decrypt files by EasyPG
 
 (require 'epa-file)			; part of emacs
@@ -1078,15 +1063,6 @@ return nil since you can't set font for emacs on it."
   :config
   ;; Start the Pinentry service
   (pinentry-start))
-
-;; *** Remote file editing
-
-(use-package tramp
-  :ensure t
-  :init
-  (setq tramp-persistency-file-name (concat user-cache-directory "tramp"))
-  :config
-  (setq tramp-default-method "rsync"))
 
 ;;
 ;; * Completion Framework
@@ -2155,7 +2131,7 @@ opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
   (setq-default ellama-enable-keymap t)
   (setq-default ellama-keymap-prefix "C-c e"))
 
-;; * Productivity and Utilities
+;; * Interactive Commands
 ;;
 ;;   Custom interactive commands and utility functions that enhance
 ;;   productivity. Includes buffer management, text manipulation,
@@ -2663,7 +2639,7 @@ This functions should be added to the hooks of major modes for programming."
   :bind (:map git-commit-mode-map
               ("C-c C-g" . magit-gptcommit-commit-accept)))
 
-;; * Terminal and Shell
+;; * Terminal & Shell
 ;;
 ;; ** vterm
 ;;
@@ -2787,6 +2763,65 @@ This functions should be added to the hooks of major modes for programming."
                             (".*\.Z" "uncompress")
                             (".*" "echo 'Could not unpack file:'")))))
     (eshell-command-result (concat command " " file))))
+
+;; * File Management
+;;
+;;   Tools for managing files, remote access, and project-wide settings.
+;;
+;; ** editorconfig
+;;
+;;   EditorConfig helps developers define and maintain consistent
+;;   coding styles between different editors and IDEs.
+;;
+;;   Key features:
+;;   - Project-specific coding style configuration
+;;   - Automatic indentation and formatting settings
+;;   - Cross-editor compatibility
+;;   - .editorconfig file support
+;;
+;;   Why I use it:
+;;   Ensures consistent coding styles across different editors and team members.
+;;   Eliminates style debates by defining standards per project.
+;;
+;;   GitHub: https://github.com/editorconfig/editorconfig-emacs
+;;
+;;   Configuration notes:
+;;   Requires EditorConfig core to be installed.
+
+(use-package editorconfig
+  :ensure t
+  :if (executable-find "editorconfig")
+  :mode ("\\.editorconfig\\'" . conf-unix-mode)
+  :commands editorconfig-mode
+  :init
+  (add-hook 'prog-mode-hook #'editorconfig-mode))
+
+;; ** tramp
+;;
+;;   Transparent Remote (file) Access, Multiple Protocol.
+;;
+;;   Key features:
+;;   - Edit remote files transparently
+;;   - Support for multiple protocols (ssh, rsync, ftp, etc.)
+;;   - Connection caching and persistence
+;;   - Remote shell execution
+;;   - File transfer capabilities
+;;
+;;   Why I use it:
+;;   Enables seamless editing of remote files as if they were local.
+;;   Essential for working with remote servers and cloud environments.
+;;
+;;   Built-in Emacs feature.
+;;
+;;   Configuration notes:
+;;   Uses rsync for faster file transfers. Cache files in user-cache-directory.
+
+(use-package tramp
+  :ensure nil  ; built-in
+  :init
+  (setq tramp-persistency-file-name (concat user-cache-directory "tramp"))
+  :config
+  (setq tramp-default-method "rsync"))
 
 ;; * Org Mode
 ;;
@@ -2950,7 +2985,7 @@ This functions should be added to the hooks of major modes for programming."
   ;; add support to dired
   (add-hook 'dired-mode-hook 'org-download-enable))
 
-;; * Documentation and Markup Modes
+;; * Language Support - Documentation & Markup
 ;;
 ;; ** plantuml-mode
 
@@ -3130,7 +3165,7 @@ This functions should be added to the hooks of major modes for programming."
   :ensure t
   :mode (("meson\\.build\\'" . meson-mode)))
 
-;; * C/C++ Programming
+;; * Language Support - C/C++
 ;;
 ;; ** cc-mode configuration
 
@@ -3698,105 +3733,6 @@ this declaration to the kill-ring."
   (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
 (setq vc-handled-backends nil)
 
-;; * Tree-sitter Support
-;;
-;;   Tree-sitter is an incremental parsing library. It provides a
-;;   faster and more powerful alternative to built-in Emacs parsing.
-
-(use-package treesit
-  :ensure nil 				; build-in since emacs-29.1
-  :when (and (fboundp 'treesit-available-p)
-             (treesit-available-p))
-  :config (setq treesit-font-lock-level 4)
-  :init
-  ;; install source parser for tree-sitter
-  (setq treesit-language-source-alist
-        '(
-          (bash       . ("https://github.com/tree-sitter/tree-sitter-bash"))
-          (c          . ("https://github.com/tree-sitter/tree-sitter-c"))
-          (cmake      . ("https://github.com/uyha/tree-sitter-cmake"))
-          (cpp        . ("https://github.com/tree-sitter/tree-sitter-cpp"))
-          (csharp     . ("https://github.com/tree-sitter/tree-sitter-c-sharp.git"))
-          (css        . ("https://github.com/tree-sitter/tree-sitter-css"))
-          (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile"))
-          (elisp      . ("https://github.com/Wilfred/tree-sitter-elisp"))
-          (go         . ("https://github.com/tree-sitter/tree-sitter-go"))
-          (gomod      . ("https://github.com/camdencheek/tree-sitter-go-mod.git"))
-          (html       . ("https://github.com/tree-sitter/tree-sitter-html"))
-          (java       . ("https://github.com/tree-sitter/tree-sitter-java.git"))
-          (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
-          (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
-          (lua        . ("https://github.com/Azganoth/tree-sitter-lua"))
-          (make       . ("https://github.com/alemuller/tree-sitter-make"))
-          (markdown   . ("https://github.com/MDeiml/tree-sitter-markdown" nil "tree-sitter-markdown/src"))
-          (ocaml      . ("https://github.com/tree-sitter/tree-sitter-ocaml" nil "ocaml/src"))
-          (org        . ("https://github.com/milisims/tree-sitter-org"))
-          (php        . ("https://github.com/tree-sitter/tree-sitter-php"))
-          (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
-          (qmljs      . ("https://github.com/yuja/tree-sitter-qmljs"))
-          (ruby       . ("https://github.com/tree-sitter/tree-sitter-ruby"))
-          (rust       . ("https://github.com/tree-sitter/tree-sitter-rust"))
-          (sql        . ("https://github.com/m-novikov/tree-sitter-sql"))
-          (toml       . ("https://github.com/BurntSushi/tree-sitter-toml"))
-          (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
-          (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
-          (vue        . ("https://github.com/merico-dev/tree-sitter-vue"))
-          (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml"))
-          (zig        . ("https://github.com/GrayJack/tree-sitter-zig")))
-        )
-
-  ;; Auto-install tree-sitter grammars when needed
-  ;; Generate mode-to-language mapping from treesit-language-source-alist
-  (setq my/treesit-mode-to-language-alist
-        (mapcar (lambda (lang-entry)
-                  (cons (intern (format "%s-ts-mode" (car lang-entry)))
-                        (car lang-entry)))
-                treesit-language-source-alist))
-
-  ;; Handle special case: c++-ts-mode uses "cpp" grammar
-  (push '(c++-ts-mode . cpp) my/treesit-mode-to-language-alist)
-
-  ;; Auto-install tree-sitter grammar when entering a tree-sitter mode
-  (defun my/treesit-maybe-install-grammar ()
-    "Auto-install tree-sitter grammar for current mode if not available."
-    (when (and (boundp 'major-mode) major-mode)
-      (let* ((lang (cdr (assoc major-mode my/treesit-mode-to-language-alist)))
-             (parser-path (when lang (treesit-parser-create-path lang))))
-        ;; Install if grammar doesn't exist
-        (when (and lang (not (file-directory-p parser-path)))
-          (message "[treesit] Auto-installing grammar for %s..." lang)
-          (condition-case err
-              (treesit-install-language-grammar lang)
-            (error
-             (message "[treesit] Failed to install %s: %s" lang err)))))))
-
-  ;; Run auto-install hook for all tree-sitter modes
-  (add-hook 'treesit-after-major-mode-change-hook #'my/treesit-maybe-install-grammar)
-
-  ;; treesit mode will create lang-ts-mode, take python for example, we
-  ;; will have python-mode (native) and python-ts-mode (tree-sitter)
-  ;; setup the major-modes we want to override here
-  (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'" . dockerfile-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(c++-mode        . c++-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(c-mode          . c-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(c-or-c++-mode   . c-or-c++-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(conf-toml-mode  . toml-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(css-mode        . css-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(java-mode       . java-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(js-json-mode    . json-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(js-mode         . js-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(makefile-mode   . cmake-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(python-mode     . python-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(ruby-mode       . ruby-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(sh-mode         . bash-ts-mode))
-  ;;(add-to-list 'major-mode-remap-alist '(qml-mode       . qmljs-ts-mode))
-  )
-
 ;; * LSP & Code Intelligence
 ;;
 ;;   Language Server Protocol and code intelligence tools providing
@@ -4138,9 +4074,170 @@ this declaration to the kill-ring."
               (local-set-key (kbd "C-c d j") 'realgud:jdb)))
 
   ;; Ruby with trepan
-  (add-hook 'ruby-mode-hook
-            (lambda ()
-              (local-set-key (kbd "C-c d t") 'realgud:trepan))))
+   (add-hook 'ruby-mode-hook
+             (lambda ()
+               (local-set-key (kbd "C-c d t") 'realgud:trepan))))
+
+;; * Debugging & Testing
+;;
+;;   Testing frameworks and debugging tools for various programming languages
+;;   and Emacs Lisp development.
+;;
+;; ** ert
+;;
+;;   ERT (Emacs Lisp Regression Testing) is Emacs's built-in testing framework.
+;;   Use `M-x ert' to run tests interactively.
+;;
+;;   Key commands:
+;;   - M-x ert - Run tests interactively
+;;   - M-x ert-run-tests-interactively - Run with UI
+;;   - M-x ert-run-tests-batch-and-exit - Run all tests and exit
+;;   - M-x ert-delete-testcover-data - Clear coverage data
+;;
+;;   Test files should be named *-test.el or end with test.el
+
+(use-package ert
+  :ensure nil  ; built-in since Emacs 24
+  :commands (ert-run-tests-interactively ert-run-tests-batch-and-exit)
+  :config
+  ;; Enable colors in batch mode
+  (setq ert-font-lock-syntactic-face-function
+        (lambda (char) (ert--face-for-mode char 'font-lock-comment-face)))
+
+  ;; Use backtrace line limit for cleaner output
+  (setq ert-backtrace-max-indent 40)
+
+  ;; Show test duration
+  (setq ert-show-duration t)
+
+  ;; Load test files on demand
+  (autoload 'my/load-test-file "ert-helper" "Load test file for current buffer." t)
+  :bind
+  ("C-c t" . my/ert-run-tests-for-current-file))
+
+(defun my/ert-run-tests-for-current-file ()
+  "Run ERT tests for the current buffer's corresponding test file."
+  (interactive)
+  (let* ((file-name (buffer-file-name))
+         (test-file (if file-name
+                        (replace-regexp-in-string "\\.el\\'" "-test.el" file-name)
+                      nil)))
+    (if (and test-file (file-exists-p test-file))
+        (progn
+          (load-file test-file)
+          (ert-run-tests-interactively (file-name-base test-file)))
+      (user-error "No test file found for %s" (buffer-name)))))
+
+(defun my/ert-run-all-tests ()
+  "Run all tests matching *-test.el pattern in the project."
+  (interactive)
+  (let ((test-files (directory-files-recursively
+                     default-directory
+                     "-test\\.el\\'")))
+    (dolist (file test-files)
+      (load-file file))
+    (ert-run-tests-batch-and-exit)))
+
+;; * Tree-sitter Support
+;;
+;;   Tree-sitter is an incremental parsing library. It provides a
+;;   faster and more powerful alternative to built-in Emacs parsing.
+
+(use-package treesit
+  :ensure nil 				; build-in since emacs-29.1
+  :when (and (fboundp 'treesit-available-p)
+             (treesit-available-p))
+  :config (setq treesit-font-lock-level 4)
+  :init
+  ;; install source parser for tree-sitter
+  (setq treesit-language-source-alist
+        '(
+          (bash       . ("https://github.com/tree-sitter/tree-sitter-bash"))
+          (c          . ("https://github.com/tree-sitter/tree-sitter-c"))
+          (cmake      . ("https://github.com/uyha/tree-sitter-cmake"))
+          (cpp        . ("https://github.com/tree-sitter/tree-sitter-cpp"))
+          (csharp     . ("https://github.com/tree-sitter/tree-sitter-c-sharp.git"))
+          (css        . ("https://github.com/tree-sitter/tree-sitter-css"))
+          (devicetree . ("https://github.com/joelspadin/tree-sitter-devicetree"))
+          (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile"))
+          (elisp      . ("https://github.com/Wilfred/tree-sitter-elisp"))
+          (go         . ("https://github.com/tree-sitter/tree-sitter-go"))
+          (gomod      . ("https://github.com/camdencheek/tree-sitter-go-mod.git"))
+          (html       . ("https://github.com/tree-sitter/tree-sitter-html"))
+          (java       . ("https://github.com/tree-sitter/tree-sitter-java.git"))
+          (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
+          (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
+          (lua        . ("https://github.com/Azganoth/tree-sitter-lua"))
+          (make       . ("https://github.com/alemuller/tree-sitter-make"))
+          (markdown   . ("https://github.com/MDeiml/tree-sitter-markdown" nil "tree-sitter-markdown/src"))
+          (ocaml      . ("https://github.com/tree-sitter/tree-sitter-ocaml" nil "ocaml/src"))
+          (org        . ("https://github.com/milisims/tree-sitter-org"))
+          (php        . ("https://github.com/tree-sitter/tree-sitter-php"))
+          (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
+          (qmljs      . ("https://github.com/yuja/tree-sitter-qmljs"))
+          (ruby       . ("https://github.com/tree-sitter/tree-sitter-ruby"))
+          (rust       . ("https://github.com/tree-sitter/tree-sitter-rust"))
+          (sql        . ("https://github.com/m-novikov/tree-sitter-sql"))
+          (toml       . ("https://github.com/BurntSushi/tree-sitter-toml"))
+          (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
+          (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
+          (vue        . ("https://github.com/merico-dev/tree-sitter-vue"))
+          (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml"))
+          (zig        . ("https://github.com/GrayJack/tree-sitter-zig")))
+        )
+
+  ;; Auto-install tree-sitter grammars when needed
+  ;; Generate mode-to-language mapping from treesit-language-source-alist
+  (setq my/treesit-mode-to-language-alist
+        (mapcar (lambda (lang-entry)
+                  (cons (intern (format "%s-ts-mode" (car lang-entry)))
+                        (car lang-entry)))
+                treesit-language-source-alist))
+
+  ;; Handle special case: c++-ts-mode uses "cpp" grammar
+  (push '(c++-ts-mode . cpp) my/treesit-mode-to-language-alist)
+
+  ;; Auto-install tree-sitter grammar when entering a tree-sitter mode
+  (defun my/treesit-maybe-install-grammar ()
+    "Auto-install tree-sitter grammar for current mode if not available."
+    (when (and (boundp 'major-mode) major-mode)
+      (let* ((lang (cdr (assoc major-mode my/treesit-mode-to-language-alist)))
+             (parser-path (when lang (treesit-parser-create-path lang))))
+        ;; Install if grammar doesn't exist
+        (when (and lang (not (file-directory-p parser-path)))
+          (message "[treesit] Auto-installing grammar for %s..." lang)
+          (condition-case err
+              (treesit-install-language-grammar lang)
+            (error
+             (message "[treesit] Failed to install %s: %s" lang err)))))))
+
+  ;; Run auto-install hook for all tree-sitter modes
+  (dolist (mode (mapcar #'car my/treesit-mode-to-language-alist))
+    (add-hook (intern (format "%s-hook" mode)) #'my/treesit-maybe-install-grammar))
+
+  ;; treesit mode will create lang-ts-mode, take python for example, we
+  ;; will have python-mode (native) and python-ts-mode (tree-sitter)
+  ;; setup the major-modes we want to override here
+  (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'" . dockerfile-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(c++-mode        . c++-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(c-mode          . c-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(c-or-c++-mode   . c-or-c++-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(conf-toml-mode  . toml-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(css-mode        . css-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(java-mode       . java-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(js-json-mode    . json-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(js-mode         . js-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(makefile-mode   . cmake-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(python-mode     . python-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(ruby-mode       . ruby-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(sh-mode         . bash-ts-mode))
+  ;;(add-to-list 'major-mode-remap-alist '(qml-mode       . qmljs-ts-mode))
+  )
 
 ;; * Snippets and Templates
 ;;
@@ -4214,7 +4311,7 @@ this declaration to the kill-ring."
   :commands (flymake-shell-load)
   :config (add-hook 'sh-set-shell-hook 'flymake-shell-load))
 
-;; * Embedded Systems Development
+;; * Language Support - Hardware/Embedded
 ;;
 ;; ** bitbake
 
@@ -4232,8 +4329,6 @@ this declaration to the kill-ring."
     (add-to-list 'treesit-language-source-alist
                  '(devicetree "https://github.com/joelspadin/tree-sitter-devicetree"))))
 
-;; * Dart/Flutter Development
-;;
 ;; ** dart-mode
 
 (use-package dart-mode
@@ -4243,7 +4338,7 @@ this declaration to the kill-ring."
   ;; enable analyzer support
   (setq dart-enable-analysis-server t))
 
-;; * Plotting and Diagram Modes
+;; * Language Support - Graphics & Visualization
 ;;
 ;; ** gnuplot
 
@@ -4259,8 +4354,6 @@ this declaration to the kill-ring."
   ;; alias `dot-mode' to graphviz-dot-mode
   (defalias 'dot-mode 'graphviz-dot-mode))
 
-;; * Shader Programming
-;;
 ;; ** glsl-mode
 
 (use-package glsl-mode :ensure t
@@ -4270,7 +4363,7 @@ this declaration to the kill-ring."
   :config
   (setq glsl-other-file-alist '(("\\.fs$" (".vs")) ("\\.vs$" (".fs")))))
 
-;; * JavaScript/TypeScript Development
+;; * Language Support - JavaScript/TypeScript
 ;;
 ;; ** js2-mode
 
@@ -4370,7 +4463,7 @@ this declaration to the kill-ring."
                                 'po-find-file-coding-system))
   )
 
-;; * Python Development
+;; * Language Support - Python
 ;;
 ;;   Comprehensive Python development environment with virtual environment
 ;;   management, code formatting, linting, import sorting, and testing support.
@@ -4520,7 +4613,7 @@ this declaration to the kill-ring."
   :bind (:map python-mode-map
               ("C-c C-t" . python-pytest-popup)))
 
-;; * XML/Configuration Files
+;; * Language Support - Other Languages
 ;;
 ;;   Support for XML and various configuration file formats used in
 ;;   development, deployment, and system administration.
@@ -4748,14 +4841,14 @@ this declaration to the kill-ring."
   :ensure t
   :mode ("docker-compose\\.yml\\'" "docker-compose\\..*\\.yml\\'"))
 
-;; * JSON
+;; ** JSON Support
 ;;
 ;;   JSON (JavaScript Object Notation) is a lightweight data interchange format
 ;;   widely used for configuration files, API communication, and data storage.
-;;   This section provides comprehensive tools for editing, formatting, and
+;;   This subsection provides comprehensive tools for editing, formatting, and
 ;;   validating JSON files in Emacs.
 ;;
-;; ** json-mode
+;; *** json-mode
 ;;
 ;;   Major mode for editing JSON files.
 ;;
@@ -4826,7 +4919,7 @@ this declaration to the kill-ring."
   :config
   (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
 
-;; * Lisp Development
+;; * Language Support - Lisp Development
 ;;
 ;;   Comprehensive Lisp development environment supporting multiple Lisp dialects
 ;;   with structural editing, debugging, and interactive development tools.
@@ -5024,62 +5117,9 @@ this declaration to the kill-ring."
   ;; Enable cider-mode in clojure buffers
   (add-hook 'clojure-mode-hook 'cider-mode))
 
-;; * Debugging & Testing
-;;
-;;   ERT (Emacs Lisp Regression Testing) is Emacs's built-in testing framework.
-;;   Use `M-x ert' to run tests interactively.
-;;
-;;   Key commands:
-;;   - M-x ert - Run tests interactively
-;;   - M-x ert-run-tests-interactively - Run with UI
-;;   - M-x ert-run-tests-batch-and-exit - Run all tests and exit
-;;   - M-x ert-delete-testcover-data - Clear coverage data
-;;
-;;   Test files should be named *-test.el or end with test.el
 
-(use-package ert
-  :ensure nil  ; built-in since Emacs 24
-  :commands (ert-run-tests-interactively ert-run-tests-batch-and-exit)
-  :config
-  ;; Enable colors in batch mode
-  (setq ert-font-lock-syntactic-face-function
-        (lambda (char) (ert--face-for-mode char 'font-lock-comment-face)))
 
-  ;; Use backtrace line limit for cleaner output
-  (setq ert-backtrace-max-indent 40)
-
-  ;; Show test duration
-  (setq ert-show-duration t)
-
-  ;; Load test files on demand
-  (autoload 'my/load-test-file "ert-helper" "Load test file for current buffer." t)
-  :bind
-  ("C-c t" . my/ert-run-tests-for-current-file))
-
-(defun my/ert-run-tests-for-current-file ()
-  "Run ERT tests for the current buffer's corresponding test file."
-  (interactive)
-  (let* ((file-name (buffer-file-name))
-         (test-file (if file-name
-                        (replace-regexp-in-string "\\.el\\'" "-test.el" file-name)
-                      nil)))
-    (if (and test-file (file-exists-p test-file))
-        (progn
-          (load-file test-file)
-          (ert-run-tests-interactively (file-name-base test-file)))
-      (user-error "No test file found for %s" (buffer-name)))))
-
-(defun my/ert-run-all-tests ()
-  "Run all tests matching *-test.el pattern in the project."
-  (interactive)
-  (let ((test-files (directory-files-recursively
-                     default-directory
-                     "-test\\.el\\'")))
-    (dolist (file test-files)
-      (load-file file))
-    (ert-run-tests-batch-and-exit)))
-
-;; * Web Development
+;; * Language Support - Web Development
 ;;
 ;; ** web-mode
 
@@ -5153,7 +5193,7 @@ this declaration to the kill-ring."
 (bind-keys :map global-map
            ("C-x C-s" . my/save-buffer-always))
 
-;; * Local Personal Configuration
+;; * Personal Configuration
 ;;
 ;;   Load personal settings if available.
 
