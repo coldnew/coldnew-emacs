@@ -3320,34 +3320,69 @@ this declaration to the kill-ring."
         ))
 ;; * Syntax Checking and Linting
 ;;
-;; ** flycheck
-;;
-;;   Flycheck provides on-the-fly syntax checking for many languages.
-;;   Supports emacs-lisp, c/c++ (via clang), python, javascript, and more.
-;;
-;;   Key features:
-;;   - Real-time syntax checking
-;;   - Error navigation with `flycheck-next-error` / `flycheck-previous-error`
-;;   - Error display via flycheck-pos-tip (popup tooltip)
+ ;; ** flycheck
+ ;;
+ ;;   Flycheck provides on-the-fly syntax checking for many languages.
+ ;;   Supports emacs-lisp, c/c++ (via clang), python, javascript and more.
+ ;;
+ ;;   Key features:
+ ;;   - Real-time syntax checking as you type
+ ;;   - Supports 50+ languages and checkers
+ ;;   - Error navigation with flycheck-next-error/flycheck-previous-error
+ ;;   - Multiple error display modes (list, fringe, tooltips)
+ ;;   - Automatic syntax checker detection
+ ;;
+ ;;   Why I use it:
+ ;;   Immediate feedback on code errors saves debugging time. Works
+ ;;   seamlessly with flycheck-pos-tip for visual error display.
+ ;;
+ ;;   GitHub: https://github.com/flycheck/flycheck
+ ;;
+ ;;   Configuration notes:
+ ;;   Enabled for emacs-lisp, c/c++, dart modes. Uses
+ ;;   flycheck-pos-tip for error tooltips.
 
-(use-package flycheck
-  :ensure t
-  :hook
-  ;; Enable flycheck for these modes
-  ((emacs-lisp-mode . flycheck-mode)
-   (c-mode . flycheck-mode)
-   (c++-mode . flycheck-mode)
-   (dart-mode . flycheck-mode))
-  :config
-  ;; Enable flycheck globally (for modes with built-in checkers)
-  (global-flycheck-mode 1))
+ (use-package flycheck
+   :ensure t
+   :commands (flycheck-mode global-flycheck-mode)
+   :hook
+   ;; Enable flycheck for these modes
+   ((emacs-lisp-mode . flycheck-mode)
+    (c-mode . flycheck-mode)
+    (c++-mode . flycheck-mode)
+    (dart-mode . flycheck-mode))
+   :config
+   ;; Enable flycheck globally (for modes with built-in checkers)
+   (global-flycheck-mode 1))
 
-;; Show flycheck errors in tooltip
-(use-package flycheck-pos-tip
-  :ensure t
-  :after flycheck
-  :config
-  (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
+ ;; Show flycheck errors in tooltip
+ ;;
+ ;; *** flycheck-pos-tip
+ ;;
+ ;;   Flycheck-pos-tip displays Flycheck errors in popup tooltips.
+ ;;   Provides a cleaner, more discoverable error display interface.
+ ;;
+ ;;   Key features:
+ ;;   - Popup tooltips for error messages
+ ;;   - Show full error/warning text on hover
+ ;;   - Multiple tooltip position options
+ ;;   - Works with all Flycheck checkers
+ ;;   - Integrates with company/other completion
+ ;;
+ ;;   Why I use it:
+ ;;   Makes Flycheck errors easier to read without leaving context.
+ ;;   Hover over error to see full message.
+ ;;
+ ;;   GitHub: https://github.com/flycheck/flycheck-pos-tip
+ ;;
+ ;;   Configuration notes:
+ ;;   Used as flycheck-display-errors-function for tooltips.
+
+ (use-package flycheck-pos-tip
+   :ensure t
+   :after flycheck
+   :config
+   (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
 (setq vc-handled-backends nil)
 
 ;; * Tree-sitter Support
