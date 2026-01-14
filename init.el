@@ -26,7 +26,7 @@
 ;;; Code:
 
 ;;
-;; * Core Emacs Configuration
+;; * Core Setup and Initialization
 ;;
 ;;   Foundation settings for Emacs behavior including environment setup,
 ;;   paths, personal information, and customization handling.
@@ -352,8 +352,151 @@
 (use-package htmlize :ensure t)
 (use-package async :ensure t)
 
+;; * UI and Theme Configuration
 ;;
-;; * Global Editor Features
+;;   User interface customization including themes, fonts, colors,
+;;   and visual appearance settings.
+;;
+;;
+;; ** Theme
+;;
+;;   Before use emacs's =load-theme= function, I advise it to make it
+;;   fully unload previous theme before loading a new one.
+
+;; Make `load-theme' fully unload previous theme before loading a new one.
+(defadvice load-theme
+    (before theme-dont-propagate activate)
+  (mapc #'disable-theme custom-enabled-themes))
+
+(require 'day-coldnew-theme)
+(require 'night-coldnew-theme)
+(load-theme 'night-coldnew t nil)  ; default use `night-coldnew-theme'
+
+;; * Fonts
+;;
+;;   Font configuration for English and CJK characters.
+
+(defvar my/emacs-english-font "Monaco"
+  "The font name of English.")
+
+(defvar my/emacs-cjk-font "Hiragino Sans GB"
+  "The font name for CJK.")
+
+(defvar my/emacs-font-size-pair '(13 . 16)
+  "Default font size pair for (english . chinese)")
+
+(defun my/font-exist-p (fontname)
+  "Test if this font is exist or not.
+This function only work on GUI mode, on terminal it just
+return nil since you can't set font for emacs on it."
+  (if (or (not fontname) (string= fontname "") (not (display-graphic-p)))
+      nil
+    (if (not (x-list-fonts fontname))
+        nil t)))
+
+(defun my/set-font (english chinese size-pair)
+  "Setup emacs English and Chinese font on x window-system."
+
+  (if (my/font-exist-p english)
+      (set-frame-font (format "%s:pixelsize=%d" english (car size-pair)) t))
+
+  (if (my/font-exist-p chinese)
+      (dolist (charset '(kana han cjk-misc bopomofo))
+        (set-fontset-font (frame-parameter nil 'font) charset
+                          (font-spec :family chinese :size (cdr size-pair))))))
+
+;; Setup font size based on my/emacs-font-size-pair
+(my/set-font my/emacs-english-font my/emacs-cjk-font my/emacs-font-size-pair)
+
+(defvar my/emacs-font-size-pair-list
+  '(( 5 .  6) (10 . 12)
+    (13 . 16) (15 . 18) (17 . 20)
+    (19 . 22) (20 . 24) (21 . 26)
+    (24 . 28) (26 . 32) (28 . 34)
+    (30 . 36) (34 . 40) (36 . 44))
+  "This list is used to store matching (english . chinese) font-size.")
+
+(defun my/emacs-step-font-size (step)
+  "Increase/Decrease emacs's font size."
+  (let ((scale-steps my/emacs-font-size-pair-list))
+    (if (< step 0) (setq scale-steps (reverse scale-steps)))
+    (setq my/emacs-font-size-pair
+          (or (cadr (member my/emacs-font-size-pair scale-steps))
+              my/emacs-font-size-pair))
+    (when my/emacs-font-size-pair
+      (message "emacs font size set to %.1f" (car my/emacs-font-size-pair))
+      (my/set-font my/emacs-english-font my/emacs-cjk-font my/emacs-font-size-pair))))
+
+(defun my/increase-emacs-font-size ()
+  "Increase emacs's font-size according emacs-font-size-pair-list."
+  (interactive) (my/emacs-step-font-size 1))
+
+(defun my/decrease-emacs-font-size ()
+  "Decrease emacs's font-size according emacs-font-size-pair-list."
+  (interactive) (my/emacs-step-font-size -1))
+
+;; ** Setup Keybinds
+
+(bind-keys :map global-map
+           ("C-=" . my/increase-emacs-font-size)
+           ("C--" . my/decrease-emacs-font-size))
+
+;; ** Minibuffer
+
+(when (require 'minibuffer nil t)  ; built-in, so optional require
+  ;; Use bar cursor in minibuffer
+  (add-hook 'minibuffer-setup-hook (lambda () (setq cursor-type 'bar)))
+
+  ;; Helper to clean minibuffer and insert new content
+  (defun my/minibuffer-insert (str)
+    "Clean minibuffer and insert STR as new content."
+    (when (minibufferp)
+      (delete-minibuffer-contents)
+      (insert str)))
+
+  ;; Keybindings with inline lambdas (no separate interactive functions needed)
+  (bind-keys :map minibuffer-local-map
+             ("C-w" . backward-kill-word)
+             ("M-p" . previous-history-element)
+             ("M-n" . next-history-element)
+             ("C-g" . my/minibuffer-keyboard-quit)
+             ("M-t" . (lambda () (interactive) (my/minibuffer-insert user-ramdisk-directory)))
+             ("M-h" . (lambda () (interactive) (my/minibuffer-insert (expand-file-name "~/"))))
+             ("M-/" . (lambda () (interactive) (my/minibuffer-insert "/")))
+             ("M-s" . (lambda () (interactive) (my/minibuffer-insert "/ssh:")))))
+
+;; *** savehist
+;;
+;;   Save minibuffer history across Emacs sessions. Automatically saves
+;;   your command history, search history, and other variables.
+;;
+;;   Key features:
+;;   - Save minibuffer history across sessions
+;;   - Configurable save interval
+;;   - Save additional variables beyond minibuffer
+;;   - Merge history from multiple sessions
+;;   - Built-in Emacs feature
+;;
+;;   Why I use it:
+;;   Maintains context between Emacs sessions. Don't lose your
+;;   frequently-used commands, search terms, and completion history.
+;;
+;;   Built-in since Emacs 21.
+;;
+;;   Configuration notes:
+;;   History saved to ~/.emacs.d/.cache/savehist.dat.
+;;   Also saves corfu completion history.
+
+(use-package savehist
+  :ensure nil                           ; built-in
+  :commands (savehist-mode)
+  :hook (after-init . savehist-mode)
+  :config
+  (setq savehist-file (expand-file-name "savehist.dat" user-cache-directory))
+  (add-to-list 'savehist-additional-variables 'corfu-history))
+
+;;
+;; * Editing and Development Tools
 ;;
 ;;   Editor enhancements that work across all modes: text editing utilities,
 ;;   navigation helpers, visual aids, undo management, and general
@@ -1360,10 +1503,11 @@
 
 
 
-;; * External Packages
+;; * Language and Documentation Modes
 ;;
-;;   Most of emacs packages do not need many configs or just provide
-;;   commands/functions to use, I put them here.
+;;   Language-specific modes and documentation tools. Packages that provide
+;;   syntax highlighting, formatting, and specialized editing features for
+;;   specific programming languages and markup formats.
 ;;
 
 ;; ** doxymacs
@@ -1559,7 +1703,7 @@
   :ensure t)
 
 
-;; * Artifical Intellengence
+;; * AI and LLM Integration
 
 (use-package llm
   :ensure t :defer t
@@ -1841,12 +1985,13 @@ opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
   (setq-default ellama-enable-keymap t)
   (setq-default ellama-keymap-prefix "C-c e"))
 
-;; * Interactive Commands
+;; * Productivity and Utilities
 ;;
-;;   In emacs, we can use =M-x= to execute interactive commands, I
-;;   implement some of them to make my emacs more easy to use.
+;;   Custom interactive commands and utility functions that enhance
+;;   productivity. Includes buffer management, text manipulation,
+;;   file operations, and debugging helpers.
 ;;
-;;   All my =commands= starts with =my/= prefix.
+;;   All custom commands start with =my/= prefix.
 ;;
 ;; ** Buffers
 ;;
@@ -2121,154 +2266,16 @@ With argument, do this that many times."
       (set-window-start (selected-window) other-window-start))
     (select-window other-window)))
 
-;; * Styles
+
+
+
+
+
+;; * General Editor Settings
 ;;
-;;   My own emacs, my own style :)
-;;
-;; ** Theme
-;;
-;;   Before use emacs's =load-theme= function, I advise it to make it
-;;   fully unload previous theme before loading a new one.
-
-;; Make `load-theme' fully unload previous theme before loading a new one.
-(defadvice load-theme
-    (before theme-dont-propagate activate)
-  (mapc #'disable-theme custom-enabled-themes))
-
-(require 'day-coldnew-theme)
-(require 'night-coldnew-theme)
-(load-theme 'night-coldnew t nil)  ; default use `night-coldnew-theme'
-
-;; * Fonts
-;;
-;;   Font configuration for English and CJK characters.
-
-(defvar my/emacs-english-font "Monaco"
-  "The font name of English.")
-
-(defvar my/emacs-cjk-font "Hiragino Sans GB"
-  "The font name for CJK.")
-
-(defvar my/emacs-font-size-pair '(13 . 16)
-  "Default font size pair for (english . chinese)")
-
-(defun my/font-exist-p (fontname)
-  "Test if this font is exist or not.
-This function only work on GUI mode, on terminal it just
-return nil since you can't set font for emacs on it."
-  (if (or (not fontname) (string= fontname "") (not (display-graphic-p)))
-      nil
-    (if (not (x-list-fonts fontname))
-        nil t)))
-
-(defun my/set-font (english chinese size-pair)
-  "Setup emacs English and Chinese font on x window-system."
-
-  (if (my/font-exist-p english)
-      (set-frame-font (format "%s:pixelsize=%d" english (car size-pair)) t))
-
-  (if (my/font-exist-p chinese)
-      (dolist (charset '(kana han cjk-misc bopomofo))
-        (set-fontset-font (frame-parameter nil 'font) charset
-                          (font-spec :family chinese :size (cdr size-pair))))))
-
-;; Setup font size based on my/emacs-font-size-pair
-(my/set-font my/emacs-english-font my/emacs-cjk-font my/emacs-font-size-pair)
-
-(defvar my/emacs-font-size-pair-list
-  '(( 5 .  6) (10 . 12)
-    (13 . 16) (15 . 18) (17 . 20)
-    (19 . 22) (20 . 24) (21 . 26)
-    (24 . 28) (26 . 32) (28 . 34)
-    (30 . 36) (34 . 40) (36 . 44))
-  "This list is used to store matching (english . chinese) font-size.")
-
-(defun my/emacs-step-font-size (step)
-  "Increase/Decrease emacs's font size."
-  (let ((scale-steps my/emacs-font-size-pair-list))
-    (if (< step 0) (setq scale-steps (reverse scale-steps)))
-    (setq my/emacs-font-size-pair
-          (or (cadr (member my/emacs-font-size-pair scale-steps))
-              my/emacs-font-size-pair))
-    (when my/emacs-font-size-pair
-      (message "emacs font size set to %.1f" (car my/emacs-font-size-pair))
-      (my/set-font my/emacs-english-font my/emacs-cjk-font my/emacs-font-size-pair))))
-
-(defun my/increase-emacs-font-size ()
-  "Increase emacs's font-size according emacs-font-size-pair-list."
-  (interactive) (my/emacs-step-font-size 1))
-
-(defun my/decrease-emacs-font-size ()
-  "Decrease emacs's font-size according emacs-font-size-pair-list."
-  (interactive) (my/emacs-step-font-size -1))
-
-;; ** Setup Keybinds
-
-(bind-keys :map global-map
-           ("C-=" . my/increase-emacs-font-size)
-           ("C--" . my/decrease-emacs-font-size))
-
-;; * Minibuffer
-
-(when (require 'minibuffer nil t)  ; built-in, so optional require
-  ;; Use bar cursor in minibuffer
-  (add-hook 'minibuffer-setup-hook (lambda () (setq cursor-type 'bar)))
-
-  ;; Helper to clean minibuffer and insert new content
-  (defun my/minibuffer-insert (str)
-    "Clean minibuffer and insert STR as new content."
-    (when (minibufferp)
-      (delete-minibuffer-contents)
-      (insert str)))
-
-  ;; Keybindings with inline lambdas (no separate interactive functions needed)
-  (bind-keys :map minibuffer-local-map
-             ("C-w" . backward-kill-word)
-             ("M-p" . previous-history-element)
-             ("M-n" . next-history-element)
-             ("C-g" . my/minibuffer-keyboard-quit)
-             ("M-t" . (lambda () (interactive) (my/minibuffer-insert user-ramdisk-directory)))
-             ("M-h" . (lambda () (interactive) (my/minibuffer-insert (expand-file-name "~/"))))
-             ("M-/" . (lambda () (interactive) (my/minibuffer-insert "/")))
-             ("M-s" . (lambda () (interactive) (my/minibuffer-insert "/ssh:")))))
-
-;; *** savehist
-;;
-;;   Save minibuffer history across Emacs sessions. Automatically saves
-;;   your command history, search history, and other variables.
-;;
-;;   Key features:
-;;   - Save minibuffer history across sessions
-;;   - Configurable save interval
-;;   - Save additional variables beyond minibuffer
-;;   - Merge history from multiple sessions
-;;   - Built-in Emacs feature
-;;
-;;   Why I use it:
-;;   Maintains context between Emacs sessions. Don't lose your
-;;   frequently-used commands, search terms, and completion history.
-;;
-;;   Built-in since Emacs 21.
-;;
-;;   Configuration notes:
-;;   History saved to ~/.emacs.d/.cache/savehist.dat.
-;;   Also saves corfu completion history.
-
-(use-package savehist
-  :ensure nil                           ; built-in
-  :commands (savehist-mode)
-  :hook (after-init . savehist-mode)
-  :config
-  (setq savehist-file (expand-file-name "savehist.dat" user-cache-directory))
-  (add-to-list 'savehist-additional-variables 'corfu-history))
-
-
-;; * Editor
-;;
-;;   Why emacs config has an editor section, doesn't means emacs is not
-;;   an editor? Yes, Emacs is an OS :)
-;;
-;;   I put some editor/IDE relative functions and packages here.
+;;   General editor configuration that applies across all modes:
+;;   file synchronization, locking, encryption, remote editing, and
+;;   editor-wide behavior settings.
 ;;
 ;; ** Keeping files in sync
 ;;
@@ -2334,7 +2341,11 @@ return nil since you can't set font for emacs on it."
   :config
   (setq tramp-default-method "rsync"))
 
-;; * Line Numbers
+
+
+;; * Programming Mode Enhancements
+;;
+;; ** Line Numbers
 
 ;; display-line-numbers-mode was introduced in Emacs 26.1
 ;; Enable it for Emacs 26.1 and later versions
@@ -2352,8 +2363,6 @@ return nil since you can't set font for emacs on it."
                                                calendar-mode org-mode)))
       (display-line-numbers-mode))))
 
-;; * Programming Mode Enhancements
-;;
 ;; ** rainbow-delimiters
 
 (use-package rainbow-delimiters
