@@ -352,12 +352,217 @@
 (use-package htmlize :ensure t)
 (use-package async :ensure t)
 
+;;
+;; * Global Editor Features
+;;
+;;   Editor enhancements that work across all modes: text editing utilities,
+;;   navigation helpers, visual aids, undo management, and general
+;;   editor behaviors that improve the editing experience regardless of language.
+;;
+
+;; ** Editor Behaviors
+
+;; *** exec-path-from-shell
+;;
+;;   exec-path-from-shell is A GNU Emacs library to ensure environment
+;;   variables inside Emacs look the same as in the user's shell.
+;;
+;;   Ever find that a command works in your shell, but not in Emacs?
+;;
+;;   This happens a lot on OS X, where an Emacs instance started from
+;;   the GUI inherits a default set of environment variables.
+;;
+;;   This library works solves this problem by copying important
+;;   environment variables from the user's shell: it works by asking
+;;   your shell to print out the variables of interest, then copying
+;;   them into the Emacs environment.
+;;
+;;   GitHub: https://github.com/purcell/exec-path-from-shell
+
+(use-package exec-path-from-shell
+  :ensure t
+  :commands (exec-path-from-shell-initialize)
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+
+;; *** which-key
+;;
+;;   which-key is a minor mode for Emacs that displays the key bindings
+;;   following your currently entered incomplete command (a prefix) in
+;;   a popup.
+;;
+;;   GitHub: https://github.com/justbur/emacs-which-key
+
+(use-package which-key
+  :ensure t
+  :demand t  ; Needed for keybinding display at startup
+  :commands (which-key-mode)
+  :config
+  (which-key-mode)
+  ;; Reset to the default or customized value before adding our values in order
+  ;; to make this initialization code idempotent.
+  (custom-reevaluate-setting 'which-key-replacement-alist)
+  ;; Use my own rules for better naming of functions
+  (let ((desc
+         ;; being higher in this list means the replacement is applied later
+         '(("er/expand-region" . "expand region")
+           ("evil-lisp-state-\\(.+\\)" . "\\1")
+           ;; my own commands prefix with `my/'
+           ("my/\\(.+\\)" . "\\1")
+           )))
+    (dolist (nd desc)
+      ;; ensure the target matches the whole string
+      (push (cons (cons nil (concat "\\`" (car nd) "\\'")) (cons nil (cdr nd)))
+            which-key-replacement-alist))))
+
+;; *** manage-minor-mode
+;;
+;;   manage-minor-mode let you manage your minor-mode on the dedicated
+;;   interface buffer.
+;;
+;;   GitHub: https://github.com/ShingoFukuyama/manage-minor-mode
+
+(use-package manage-minor-mode :ensure t)
+
+;; ** Text Editing and Manipulation
+
+;; *** expand-region
+;;
+;;   Expand region increases the selected region by semantic units.
+;;   Just keep pressing the key until it selects what you want.
+;;
+;;   GitHub: https://github.com/magnars/expand-region.el
+
+(use-package expand-region
+  :ensure t
+  :bind (("M-v" . er/expand-region)))
+
+;; *** iedit
+;;
+;;   iedit let you edit multiple regions in the same way simultaneously.
+;;
+;;   GitHub: https://github.com/victorhge/iedit
+
+(use-package iedit
+  :ensure t
+  :bind (("C-;" . iedit-mode)))
+
+;; *** smartparens
+;;
+;;   Smartparens is a minor mode for dealing with pairs in Emacs.
+;;
+;;   GitHub: https://github.com/Fuco1/smartparens
+
+(use-package smartparens
+  :ensure t
+  :commands (smartparens-mode)
+  :config
+  (smartparens-mode 1))
+
+;; *** hungry-delete
+;;
+;;   hungry-delete borrows hungry deletion from =cc-mode=, which will
+;;   causes deletion to delete all whitespace in the direction you are
+;;   deleting.
+
+(use-package hungry-delete
+  :ensure t
+  :hook (after-init . global-hungry-delete-mode))
+
+;; *** mwim
+;;
+;;   This Emacs package provides commands for moving to the
+;;   beginning/end of code or line.
+;;
+;;   GitHub: https://github.com/alezost/mwim.el
+
+(use-package mwim
+  :ensure t
+  :bind
+  (("C-a" . mwim-beginning-of-code-or-line)
+   ("C-e" . mwim-end-of-code-or-line)))
+
+;; *** visual-regexp
+;;
+;;   visual-regexp for Emacs is like replace-regexp, but with live
+;;   visual feedback directly in the buffer.
+;;
+;;   GitHub: https://github.com/benma/visual-regexp.el
+
+(use-package visual-regexp :ensure t)
+
+;; *** fancy-narrow
+;;
+;;   Emacs package to immitate narrow-to-region with more eye-candy.
+;;
+;;   GitHub: https://github.com/Malabarba/fancy-narrow
+
+(use-package fancy-narrow :ensure t)
+
+;; ** Navigation and Movement
+
+;; *** ace-jump-mode
+;;
+;;   Ace-jump allows you to jump to any visible character on screen quickly.
+;;   Type the key sequence and then the character you want to jump to.
+;;
+;;   GitHub: https://github.com/winterTTr/ace-jump-mode
+
+(use-package ace-jump-mode
+  :ensure t
+  :commands ace-jump-mode
+  :bind (("C-c SPC" . ace-jump-mode)))
+
+;; *** goto-last-change
+;;
+;;   Move point through buffer-undo-list positions.
+;;
+;;   GitHub: https://github.com/camdez/goto-last-change.el
+
+(use-package goto-last-change
+  :ensure t)
+
+;; ** Visual Enhancements
+
+;; *** rainbow-mode
+;;
+;;   rainbow-mode is a minor mode for Emacs which displays strings
+;;   representing colors with the color they represent as background.
+
+(use-package rainbow-mode :ensure t)
+
+;; *** focus
+;;
+;;   Focus provides =focus-mode= that dims the text of surrounding
+;;   sections, similar to iA Writer's Focus Mode.
+;;
+;;   GitHub: https://github.com/larstvei/Focus
+
+(use-package focus :ensure t)
+
+;; ** Undo and History Management
+
+;; *** undo-tree
+
+(use-package undo-tree
+  :ensure t
+  :commands (global-undo-tree-mode)
+  :config
+  ;; Persistent undo-tree history across emacs sessions
+  (let ((dir
+         (file-name-as-directory (concat user-cache-directory "undo-tree"))))
+    (setq undo-tree-history-directory-alist `(("." . ,dir))))
+  ;; Make undo-tree save history
+  (setq undo-tree-auto-save-history t)
+  ;; global enable undo-tree
+  (global-undo-tree-mode))
+
 ;; * External Packages
 ;;
 ;;   Most of emacs packages do not need many configs or just provide
 ;;   commands/functions to use, I put them here.
 ;;
-
 
 ;; ** doxymacs
 ;;
@@ -385,30 +590,6 @@
   ;; see:
   ;; https://github.com/jschaf/esup/issues/54#issuecomment-651247749
   (setq esup-depth 0))
-
-;; ** exec-path-from-shell
-;;
-;;   exec-path-from-shell is A GNU Emacs library to ensure environment
-;;   variables inside Emacs look the same as in the user's shell.
-;;
-;;   Ever find that a command works in your shell, but not in Emacs?
-;;
-;;   This happens a lot on OS X, where an Emacs instance started from
-;;   the GUI inherits a default set of environment variables.
-;;
-;;   This library works solves this problem by copying important
-;;   environment variables from the user's shell: it works by asking
-;;   your shell to print out the variables of interest, then copying
-;;   them into the Emacs environment.
-;;
-;;   GitHub: https://github.com/purcell/exec-path-from-shell
-
-(use-package exec-path-from-shell
-  :ensure t
-  :commands (exec-path-from-shell-initialize)
-  :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
 
 ;; ** ggtags
 ;;
@@ -491,46 +672,6 @@
   (local-set-key (kbd "C-c C-n") 'dirvish-narrow)
   (local-set-key (kbd "C-c C-w") 'dirvish-widen))
 
-;; ** expand-region
-;;
-;;   Expand region increases the selected region by semantic units.
-;;   Just keep pressing the key until it selects what you want.
-;;
-;;   GitHub: https://github.com/magnars/expand-region.el
-
-(use-package expand-region
-  :ensure t
-  :bind (("M-v" . er/expand-region)))
-
-;; ** ace-jump-mode
-;;
-;;   Ace-jump allows you to jump to any visible character on screen quickly.
-;;   Type the key sequence and then the character you want to jump to.
-;;
-;;   GitHub: https://github.com/winterTTr/ace-jump-mode
-
-(use-package ace-jump-mode
-  :ensure t
-  :commands ace-jump-mode
-  :bind (("C-c SPC" . ace-jump-mode)))
-
-;; ** fancy-narrow
-;;
-;;   Emacs package to immitate narrow-to-region with more eye-candy.
-;;
-;;   GitHub: https://github.com/Malabarba/fancy-narrow
-
-(use-package fancy-narrow :ensure t)
-
-;; ** focus
-;;
-;;   Focus provides =focus-mode= that dims the text of surrounding
-;;   sections, similar to iA Writer's Focus Mode.
-;;
-;;   GitHub: https://github.com/larstvei/Focus
-
-(use-package focus :ensure t)
-
 ;; ** fontawesome
 ;;
 ;;   Emacs fontawesome utility.
@@ -547,57 +688,6 @@
 ;;   GitHub: https://github.com/atykhonov/google-translate
 
 (use-package google-translate :ensure t)
-
-;; ** goto-last-change
-;;
-;;   Move point through buffer-undo-list positions.
-;;
-;;   GitHub: https://github.com/camdez/goto-last-change.el
-
-(use-package goto-last-change
-  :ensure t)
-
-;; ** hungry-delete
-;;
-;;   hungry-delete borrows hungry deletion from =cc-mode=, which will
-;;   causes deletion to delete all whitespace in the direction you are
-;;   deleting.
-
-(use-package hungry-delete
-  :ensure t
-  :hook (after-init . global-hungry-delete-mode))
-
-;; ** iedit
-;;
-;;   iedit let you edit multiple regions in the same way simultaneously.
-;;
-;;   GitHub: https://github.com/victorhge/iedit
-
-(use-package iedit
-  :ensure t
-  :bind (("C-;" . iedit-mode)))
-
-;; ** manage-minor-mode
-;;
-;;   manage-minor-mode let you manage your minor-mode on the dedicated
-;;   interface buffer.
-;;
-;;   GitHub: https://github.com/ShingoFukuyama/manage-minor-mode
-
-(use-package manage-minor-mode :ensure t)
-
-;; ** mwim
-;;
-;;   This Emacs package provides commands for moving to the
-;;   beginning/end of code or line.
-;;
-;;   GitHub: https://github.com/alezost/mwim.el
-
-(use-package mwim
-  :ensure t
-  :bind
-  (("C-a" . mwim-beginning-of-code-or-line)
-   ("C-e" . mwim-end-of-code-or-line)))
 
 ;; ** pangu-spacing
 ;;
@@ -627,25 +717,6 @@
 
 (use-package password-generator :ensure t)
 
-;; ** rainbow-mode
-;;
-;;   rainbow-mode is a minor mode for Emacs which displays strings
-;;   representing colors with the color they represent as background.
-
-(use-package rainbow-mode :ensure t)
-
-;; ** smartparens
-;;
-;;   Smartparens is a minor mode for dealing with pairs in Emacs.
-;;
-;;   GitHub: https://github.com/Fuco1/smartparens
-
-(use-package smartparens
-  :ensure t
-  :commands (smartparens-mode)
-  :config
-  (smartparens-mode 1))
-
 ;; ** url-shortener
 ;;
 ;;   This package can convert long url to tiny url and expand tiny url
@@ -672,15 +743,6 @@
   :defer 2
   :commands (verify-url))
 
-;; ** visual-regexp
-;;
-;;   visual-regexp for Emacs is like replace-regexp, but with live
-;;   visual feedback directly in the buffer.
-;;
-;;   GitHub: https://github.com/benma/visual-regexp.el
-
-(use-package visual-regexp :ensure t)
-
 ;; ** webpaste
 ;;
 ;;   webpaste.el allows to paste whole buffers or parts of buffers to
@@ -694,35 +756,6 @@
 (use-package webpaste
   :ensure t)
 
-;; ** which-key
-;;
-;;   which-key is a minor mode for Emacs that displays the key bindings
-;;   following your currently entered incomplete command (a prefix) in
-;;   a popup.
-;;
-;;   GitHub: https://github.com/justbur/emacs-which-key
-
-(use-package which-key
-  :ensure t
-  :demand t  ; Needed for keybinding display at startup
-  :commands (which-key-mode)
-  :config
-  (which-key-mode)
-  ;; Reset to the default or customized value before adding our values in order
-  ;; to make this initialization code idempotent.
-  (custom-reevaluate-setting 'which-key-replacement-alist)
-  ;; Use my own rules for better naming of functions
-  (let ((desc
-         ;; being higher in this list means the replacement is applied later
-         '(("er/expand-region" . "expand region")
-           ("evil-lisp-state-\\(.+\\)" . "\\1")
-           ;; my own commands prefix with `my/'
-           ("my/\\(.+\\)" . "\\1")
-           )))
-    (dolist (nd desc)
-      ;; ensure the target matches the whole string
-      (push (cons (cons nil (concat "\\`" (car nd) "\\'")) (cons nil (cdr nd)))
-            which-key-replacement-alist))))
 
 ;; * Artifical Intellengence
 
@@ -1788,21 +1821,6 @@ This functions should be added to the hooks of major modes for programming."
 
 (setq mouse-wheel-scroll-amount '(1)) ; Distance in pixel-resolution to scroll each mouse wheel event.
 (setq mouse-wheel-progressive-speed nil) ; Progressive speed is too fast for me.
-
-;; ** undo-tree
-
-(use-package undo-tree
-  :ensure t
-  :commands (global-undo-tree-mode)
-  :config
-  ;; Persistent undo-tree history across emacs sessions
-  (let ((dir
-         (file-name-as-directory (concat user-cache-directory "undo-tree"))))
-    (setq undo-tree-history-directory-alist `(("." . ,dir))))
-  ;; Make undo-tree save history
-  (setq undo-tree-auto-save-history t)
-  ;; global enable undo-tree
-  (global-undo-tree-mode))
 
 ;; ** Create *scratch* automatically
 
