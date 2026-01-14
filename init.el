@@ -188,6 +188,11 @@
 
 ;; * Package Management
 ;;
+;;   Sets up the package ecosystem using Elpaca (modern package manager)
+;;   integrated with use-package for declarative package configuration.
+;;   This section establishes the foundation for all external packages.
+;;
+
 ;; ** Elpaca setup
 ;;
 ;;   Elpaca is an elisp package manager. It clones and manages packages
@@ -205,10 +210,20 @@
 
 (eval-when-compile (require 'use-package))
 
-;; *** Global use-package settings
+;; ** Global use-package settings
 ;;    Defer all packages by default for faster startup.
 ;;    Use :demand t for packages needed immediately.
+
 (setq use-package-always-defer t)
+
+;; ** Package reporting settings
+
+(setq use-package-verbose t)
+
+
+;; ** Common Utility Libraries
+;;
+;;   Some common libraries I'll use in my personal's command or anything else.
 
 ;; ** Install some common libraries
 ;;
@@ -219,10 +234,6 @@
 (use-package dash :ensure t)
 (use-package htmlize :ensure t)
 (use-package async :ensure t)
-
-;; ** Package reporting settings
-
-(setq use-package-verbose t)
 
 ;; * Languages and Encodings
 ;;
