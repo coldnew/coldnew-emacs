@@ -4630,7 +4630,12 @@ this declaration to the kill-ring."
 
 ;; * Lisp Development
 ;;
-;; ** lispy with lispyville integration
+;;   Comprehensive Lisp development environment supporting multiple Lisp dialects
+;;   with structural editing, debugging, and interactive development tools.
+;;
+;; ** Structural Editing and Visualization
+;;
+;; *** lispy with lispyville integration
 ;;
 ;;   Lispy provides structural editing for lisp-like languages.
 ;;   lispyville provides comprehensive evil integration with safe operations.
@@ -4641,6 +4646,15 @@ this declaration to the kill-ring."
 ;;   - Safe delete/copy/kill operations that preserve structure
 ;;   - Additional movement and prettify commands
 ;;   - Works seamlessly with evil-mode
+;;
+;;   Why I use it:
+;;   Advanced structural editing that understands Lisp syntax.
+;;   Makes editing complex nested expressions much easier.
+;;
+;;   GitHub: https://github.com/abo-abo/lispy
+;;
+;;   Configuration notes:
+;;   Enabled for all Lisp modes. Evil integration via lispyville.
 
 (use-package lispy
   :ensure t
@@ -4666,7 +4680,151 @@ this declaration to the kill-ring."
       visual
       motion))))
 
+;; *** rainbow-delimiters
+;;
+;;   Color-code parentheses and other delimiters by nesting level.
+;;
+;;   Key features:
+;;   - Color-code delimiters by depth
+;;   - Customizable color schemes
+;;   - Works with all programming modes
+;;   - Improves readability of nested expressions
+;;
+;;   Why I use it:
+;;   Essential for reading and editing deeply nested Lisp code.
+;;   Makes it easy to spot mismatched parentheses and understand structure.
+;;
+;;   GitHub: https://github.com/Fanael/rainbow-delimiters
+;;
+;;   Configuration notes:
+;;   Enabled globally for all Lisp modes.
+
+(use-package rainbow-delimiters
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+;; *** eros
+;;
+;;   Evaluation Result Overlays for Emacs Lisp.
+;;
+;;   Key features:
+;;   - Show evaluation results inline as overlays
+;;   - Display results near the evaluated expression
+;;   - Customizable display format
+;;   - Works with eval-last-sexp and other eval commands
+;;
+;;   Why I use it:
+;;   Makes interactive Lisp development much more convenient.
+;;   See results immediately without checking the minibuffer.
+;;
+;;   GitHub: https://github.com/xiongtx/eros
+;;
+;;   Configuration notes:
+;;   Enabled for Emacs Lisp mode. Integrates with eval commands.
+
+(use-package eros
+  :ensure t
+  :hook (emacs-lisp-mode . eros-mode))
+
+;; *** prettify-symbols-mode
+;;
+;;   Display lambda as λ, function as ƒ, etc.
+;;
+;;   Key features:
+;;   - Replace text with Unicode symbols
+;;   - Customizable symbol mappings
+;;   - Improves code readability
+;;
+;;   Why I use it:
+;;   Makes Lisp code more readable by using mathematical symbols
+;;   for common functions and operators.
+;;
+;;   Built-in Emacs feature.
+;;
+;;   Configuration notes:
+;;   Enabled globally.
+
 (global-prettify-symbols-mode 1)
+
+;; ** Emacs Lisp Development
+;;
+;; *** Enhanced Emacs Lisp mode
+;;
+;;   Built-in Emacs Lisp major mode with additional enhancements.
+;;
+;;   Key features:
+;;   - Syntax highlighting for Elisp
+;;   - Integration with eval commands
+;;   - Documentation lookup
+;;   - Symbol completion
+;;
+;;   Why I use it:
+;;   Essential for Emacs configuration and package development.
+;;   Provides all necessary tools for Elisp programming.
+;;
+;;   Built-in since Emacs 24.
+;;
+;;   Configuration notes:
+;;   Enhanced with eros, lispy, and other tools above.
+
+;; ** Clojure Development
+;;
+;; *** clojure-mode
+;;
+;;   Major mode for editing Clojure code.
+;;
+;;   Key features:
+;;   - Syntax highlighting for Clojure
+;;   - Indentation rules for Clojure
+;;   - Font-locking for special forms
+;;   - Integration with CIDER
+;;
+;;   Why I use it:
+;;   Essential foundation for Clojure development in Emacs.
+;;   Provides basic editing capabilities for Clojure code.
+;;
+;;   GitHub: https://github.com/clojure-emacs/clojure-mode
+;;
+;;   Configuration notes:
+;;   Works with lispy for structural editing.
+
+(use-package clojure-mode
+  :ensure t
+  :mode (("\\.clj\\'" . clojure-mode)
+         ("\\.cljs\\'" . clojure-mode)
+         ("\\.cljc\\'" . clojure-mode)
+         ("\\.edn\\'" . clojure-mode))
+  :hook (clojure-mode . lispy-mode))
+
+;; *** cider
+;;
+;;   Clojure Interactive Development Environment that Rocks.
+;;
+;;   Key features:
+;;   - Interactive REPL with completion
+;;   - Code evaluation and debugging
+;;   - Test runner integration
+;;   - Namespace management
+;;   - Documentation lookup
+;;   - Refactoring tools
+;;
+;;   Why I use it:
+;;   The premier Clojure development environment for Emacs.
+;;   Provides rich interactive development experience.
+;;
+;;   GitHub: https://github.com/clojure-emacs/cider
+;;
+;;   Configuration notes:
+;;   Requires Leiningen or Boot for project management.
+
+(use-package cider
+  :ensure t
+  :commands (cider-jack-in cider-connect)
+  :config
+  ;; Enhanced REPL experience
+  (setq cider-repl-display-help-banner nil)
+  ;; Enable cider-mode in clojure buffers
+  (add-hook 'clojure-mode-hook 'cider-mode))
 
 ;; * Testing with ERT
 ;;
