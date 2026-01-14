@@ -36,14 +36,14 @@
 ;; ** Emacs Compatibility and Core Libraries
 
 ;;
-;; Use Common Lisp Extension
+;; *** Use Common Lisp Extension
 ;;
 ;;   Some of my function may need the Common Lisp Extension, let's
 ;;   import libraries first.
 
 (require 'cl-lib)                       ; built-in
 
-;; Load extra builtin library
+;; *** Load extra builtin library
 ;;
 ;;   Add some extra buildin library I will use in my config file.
 
