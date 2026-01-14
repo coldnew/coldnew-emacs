@@ -418,12 +418,28 @@
 
 ;; *** manage-minor-mode
 ;;
-;;   manage-minor-mode let you manage your minor-mode on the dedicated
-;;   interface buffer.
+;;   manage-minor-mode provides an interactive interface to manage all
+;;   your minor modes from a dedicated buffer.
+;;
+;;   Key features:
+;;   - List all active and inactive minor modes
+;;   - Toggle minor modes on/off with keybindings
+;;   - Organized by buffer or globally
+;;   - Visual indicators for mode status
+;;
+;;   Why I use it:
+;;   Emacs accumulates many minor modes; this makes it easy to
+;;   understand and control what's active without digging through
+;;   mode-line.
 ;;
 ;;   GitHub: https://github.com/ShingoFukuyama/manage-minor-mode
+;;
+;;   Configuration notes:
+;;   Use `M-x manage-minor-mode` to open the management interface.
 
-(use-package manage-minor-mode :ensure t)
+(use-package manage-minor-mode
+  :ensure t
+  :commands (manage-minor-mode))
 
 ;; ** Text Editing and Manipulation
 
@@ -432,50 +448,126 @@
 ;;   Expand region increases the selected region by semantic units.
 ;;   Just keep pressing the key until it selects what you want.
 ;;
+;;   Key features:
+;;   - Expands selection by semantic units (word, sentence, paragraph, etc.)
+;;   - Supports programming structures (functions, blocks, statements)
+;;   - Smart expansion based on context
+;;   - Works with all major modes
+;;
+;;   Why I use it:
+;;   Much faster than manual selection, especially for code blocks or
+;;   complex text structures. One keypress repeatedly expands to
+;;   desired scope.
+;;
 ;;   GitHub: https://github.com/magnars/expand-region.el
+;;
+;;   Configuration notes:
+;;   Bound to M-v in my config. Press repeatedly to expand.
 
 (use-package expand-region
   :ensure t
+  :commands (er/expand-region er/contract-region)
   :bind (("M-v" . er/expand-region)))
 
 ;; *** iedit
 ;;
-;;   iedit let you edit multiple regions in the same way simultaneously.
+;;   iedit lets you edit multiple regions in the same way simultaneously.
+;;   Like multiple-cursors but uses Emacs overlays.
+;;
+;;   Key features:
+;;   - Edit all occurrences of a symbol/word at once
+;;   - Live editing with immediate feedback
+;;   - Toggle between occurrences
+;;   - Case-sensitive matching option
+;;
+;;   Why I use it:
+;;   Powerful for renaming variables or refactoring code. Much
+;;   lighter than multiple-cursors package.
 ;;
 ;;   GitHub: https://github.com/victorhge/iedit
+;;
+;;   Configuration notes:
+;;   Bound to C-;. Activate by selecting a word/region.
 
 (use-package iedit
   :ensure t
+  :commands (iedit-mode)
   :bind (("C-;" . iedit-mode)))
 
 ;; *** smartparens
 ;;
 ;;   Smartparens is a minor mode for dealing with pairs in Emacs.
+;;   Provides automatic insertion, wrapping, and navigation of brackets.
+;;
+;;   Key features:
+;;   - Auto-close brackets, quotes, and pairs
+;;   - Wrap regions with pairs
+;;   - Navigate between pairs (C-M-f, C-M-b)
+;;   - Delete balanced pairs
+;;   - Lisp-aware (works with S-expressions)
+;;   - Extensive configuration options
+;;
+;;   Why I use it:
+;;   Eliminates need to manually type closing brackets. Makes
+;;   Lisp coding much faster with proper pair handling.
 ;;
 ;;   GitHub: https://github.com/Fuco1/smartparens
+;;
+;;   Configuration notes:
+;;   Enabled globally. See smartparens docs for keybindings.
 
 (use-package smartparens
   :ensure t
-  :commands (smartparens-mode)
+  :commands (smartparens-mode show-smartparens-global-mode)
+  :hook (prog-mode . smartparens-mode)
   :config
-  (smartparens-mode 1))
+  (require 'smartparens-config))
 
 ;; *** hungry-delete
 ;;
-;;   hungry-delete borrows hungry deletion from =cc-mode=, which will
-;;   causes deletion to delete all whitespace in the direction you are
-;;   deleting.
+;;   hungry-delete borrows hungry deletion from =cc-mode=, which causes
+;;   deletion to delete all whitespace in the direction you are deleting.
+;;   Similar to Vim's "hungry delete" behavior.
+;;
+;;   Key features:
+;;   - Delete all whitespace to next non-whitespace character
+;;   - Works in both directions
+;;   - Configurable characters to treat as whitespace
+;;   - Can be toggled per-buffer
+;;
+;;   Why I use it:
+;;   Saves time by deleting multiple spaces/tabs with one keystroke.
+;;   Essential for cleaning up indented code.
+;;
+;;   GitHub: https://github.com/pcolby/hungry-delete
+;;
+;;   Configuration notes:
+;;   Enabled globally. Bound to C-d and C-l in evil insert state.
 
 (use-package hungry-delete
   :ensure t
+  :commands (global-hungry-delete-mode hungry-delete-mode)
   :hook (after-init . global-hungry-delete-mode))
 
 ;; *** mwim
 ;;
-;;   This Emacs package provides commands for moving to the
-;;   beginning/end of code or line.
+;;   mwim (Move Where I Mean) provides smart commands for moving to
+;;   beginning/end of code or line. Toggles between two positions.
+;;
+;;   Key features:
+;;   - First press: move to code beginning/end
+;;   - Second press: move to line beginning/end
+;;   - Respects indentation and whitespace
+;;   - Works in all modes
+;;
+;;   Why I use it:
+;;   Solves the frustration of C-a/C-e not going where you want.
+;;   Toggle between code and line position with same key.
 ;;
 ;;   GitHub: https://github.com/alezost/mwim.el
+;;
+;;   Configuration notes:
+;;   Bound to C-a (beginning) and C-e (end). Press twice for line.
 
 (use-package mwim
   :ensure t
@@ -486,19 +578,54 @@
 ;; *** visual-regexp
 ;;
 ;;   visual-regexp for Emacs is like replace-regexp, but with live
-;;   visual feedback directly in the buffer.
+;;   visual feedback directly in the buffer. Shows matches as you type.
+;;
+;;   Key features:
+;;   - Real-time highlighting of regex matches
+;;   - Visual feedback for replacement strings
+;;   - Supports both replace-regexp and replace-string
+;;   - Can use python-mode regex syntax
+;;   - Preview replacements before applying
+;;
+;;   Why I use it:
+;;   Eliminates regex anxiety by showing matches immediately. No more
+;;   guessing if your regex is correct.
 ;;
 ;;   GitHub: https://github.com/benma/visual-regexp.el
+;;
+;;   Configuration notes:
+;;   Use `M-x vr/replace` for visual replacement. Install
+;;   visual-regexp-steroids for additional features.
 
-(use-package visual-regexp :ensure t)
+(use-package visual-regexp
+  :ensure t
+  :commands (vr/replace vr/query-replace))
 
 ;; *** fancy-narrow
 ;;
-;;   Emacs package to immitate narrow-to-region with more eye-candy.
+;;   Fancy narrow enhances Emacs' built-in narrow-to-region with
+;;   visual feedback and improved UX. Shows what's narrowed.
+;;
+;;   Key features:
+;;   - Visual indicator of narrowed region
+;;   - Highlighting of active content
+;;   - Easier to widen/narrow
+;;   - Maintains undo history
+;;   - Better than built-in narrow commands
+;;
+;;   Why I use it:
+;;   Makes narrow-to-region more discoverable. Visual feedback
+;;   prevents confusion about what's currently focused.
 ;;
 ;;   GitHub: https://github.com/Malabarba/fancy-narrow
+;;
+;;   Configuration notes:
+;;   Use `M-x fancy-narrow-to-region` to narrow. Use `C-x n w` to widen.
 
-(use-package fancy-narrow :ensure t)
+(use-package fancy-narrow
+  :ensure t
+  :commands (fancy-narrow-to-region fancy-widen)
+  :hook (prog-mode . fancy-narrow-mode))
 
 ;; ** Navigation and Movement
 
@@ -506,22 +633,53 @@
 ;;
 ;;   Ace-jump allows you to jump to any visible character on screen quickly.
 ;;   Type the key sequence and then the character you want to jump to.
+;;   Like Vim's easymotion but for Emacs.
+;;
+;;   Key features:
+;;   - Jump to any character in 2-3 keystrokes
+;;   - Shows hints on all jump targets
+;;   - Works across all windows
+;;   - Supports word-line-char modes
+;;   - No mouse needed
+;;
+;;   Why I use it:
+;;   Faster than searching or scrolling. Essential for navigating
+;;   within visible area quickly.
 ;;
 ;;   GitHub: https://github.com/winterTTr/ace-jump-mode
+;;
+;;   Configuration notes:
+;;   Bound to C-c SPC. Type prefix, then hint key to jump.
 
 (use-package ace-jump-mode
   :ensure t
-  :commands ace-jump-mode
+  :commands (ace-jump-mode ace-jump-char-mode ace-jump-line-mode)
   :bind (("C-c SPC" . ace-jump-mode)))
 
 ;; *** goto-last-change
 ;;
-;;   Move point through buffer-undo-list positions.
+;;   Move point through buffer-undo-list positions. Allows you to
+;;   jump to previous edit locations in the buffer.
+;;
+;;   Key features:
+;;   - Jump to last edit position
+;;   - Cycle through edit history
+;;   - Works across undo operations
+;;   - Shows where you were editing
+;;   - Similar to Vim's `` mark
+;;
+;;   Why I use it:
+;;   After undo or context switch, quickly return to where you
+;;   were editing. Essential for refactoring workflows.
 ;;
 ;;   GitHub: https://github.com/camdez/goto-last-change.el
+;;
+;;   Configuration notes:
+;;   No default binding. Consider binding to C-o or similar.
 
 (use-package goto-last-change
-  :ensure t)
+  :ensure t
+  :commands (goto-last-change goto-last-change-reverse))
 
 ;; ** Visual Enhancements
 
@@ -529,25 +687,83 @@
 ;;
 ;;   rainbow-mode is a minor mode for Emacs which displays strings
 ;;   representing colors with the color they represent as background.
+;;   Great for CSS, HTML, and color-coded configurations.
+;;
+;;   Key features:
+;;   - Color strings show as their actual color
+;;   - Supports hex (#fff), rgb, hsl, and more
+;;   - Works in CSS, HTML, Lisp, and other modes
+;;   - Toggle on/off per buffer
+;;   - Live updates as you edit
+;;
+;;   Why I use it:
+;;   Makes color selection intuitive. No need to remember hex codes
+;;   or preview externally.
+;;
+;;   GitHub: https://github.com/emacsmirror/rainbow-mode
+;;
+;;   Configuration notes:
+;;   Enable with `M-x rainbow-mode`. Auto-enable for CSS/HTML recommended.
 
-(use-package rainbow-mode :ensure t)
+(use-package rainbow-mode
+  :ensure t
+  :commands (rainbow-mode)
+  :hook (css-mode html-mode web-mode sass-mode less-css-mode scss-mode))
 
 ;; *** focus
 ;;
-;;   Focus provides =focus-mode= that dims the text of surrounding
-;;   sections, similar to iA Writer's Focus Mode.
+;;   Focus provides `focus-mode` that dims the text of surrounding
+;;   sections, similar to iA Writer's Focus Mode. Highlights
+;;   only the paragraph or section you're working on.
+;;
+;;   Key features:
+;;   - Dim inactive text for distraction-free writing
+;;   - Auto-expand current section
+;;   - Configurable focus depth
+;;   - Works in all text modes
+;;   - Great for long documents
+;;
+;;   Why I use it:
+;;   Helps maintain focus by visually isolating current section.
+;;   Excellent for writing and documentation tasks.
 ;;
 ;;   GitHub: https://github.com/larstvei/Focus
+;;
+;;   Configuration notes:
+;;   Use `M-x focus-mode` to toggle. Use `M-x focus-pin` to
+;;   pin current region permanently.
 
-(use-package focus :ensure t)
+(use-package focus
+  :ensure t
+  :commands (focus-mode focus-pin))
 
 ;; ** Undo and History Management
 
 ;; *** undo-tree
+;;
+;;   undo-tree provides a tree-like visualization of Emacs undo history.
+;;   Unlike linear undo, you can branch off and explore alternate edits.
+;;
+;;   Key features:
+;;   - Tree visualization of undo history
+;;   - Branch to previous states after multiple undos
+;;   - Timestamp and diff visualization
+;;   - Persistent history across Emacs sessions
+;;   - Navigate with undo/redo without losing states
+;;
+;;   Why I use it:
+;;   Solves the "undo too far, lost work" problem. Can explore
+;;   alternate edit paths and recover any previous state.
+;;
+;;   GitHub: https://github.com/emacsmirror/undo-tree
+;;
+;;   Configuration notes:
+;;   History saved to ~/.emacs.d/.cache/undo-tree/.
+;;   Use `C-x u` to visualize tree, `q` to exit.
 
 (use-package undo-tree
   :ensure t
-  :commands (global-undo-tree-mode)
+  :commands (global-undo-tree-mode undo-tree-visualize)
   :config
   ;; Persistent undo-tree history across emacs sessions
   (let ((dir
@@ -1914,9 +2130,31 @@ return nil since you can't set font for emacs on it."
              ("M-/" . (lambda () (interactive) (my/minibuffer-insert "/")))
              ("M-s" . (lambda () (interactive) (my/minibuffer-insert "/ssh:")))))
 
-;; Save minibuffer history
+;; *** savehist
+;;
+;;   Save minibuffer history across Emacs sessions. Automatically saves
+;;   your command history, search history, and other variables.
+;;
+;;   Key features:
+;;   - Save minibuffer history across sessions
+;;   - Configurable save interval
+;;   - Save additional variables beyond minibuffer
+;;   - Merge history from multiple sessions
+;;   - Built-in Emacs feature
+;;
+;;   Why I use it:
+;;   Maintains context between Emacs sessions. Don't lose your
+;;   frequently-used commands, search terms, and completion history.
+;;
+;;   Built-in since Emacs 21.
+;;
+;;   Configuration notes:
+;;   History saved to ~/.emacs.d/.cache/savehist.dat.
+;;   Also saves corfu completion history.
+
 (use-package savehist
   :ensure nil                           ; built-in
+  :commands (savehist-mode)
   :hook (after-init . savehist-mode)
   :config
   (setq savehist-file (expand-file-name "savehist.dat" user-cache-directory))
