@@ -300,7 +300,7 @@
                      (file-name-as-directory
                       (concat user-cache-directory "auto-save.list/_saves-")))
                     (t
-                      (file-name-as-directory
+                     (file-name-as-directory
                       (concat user-cache-directory "auto-save-list/.saves-")))))
 
 ;; * Package Management
@@ -885,12 +885,12 @@
   :ensure t
   :demand t
   :bind (("C-x C-f" . find-file)
-          ("C-x b" . switch-to-buffer)
-          ("M-s" . consult-line)
-          ("M-y" . consult-yank-pop)
-          ("C-x C-r" . consult-recent-file)
-          ("C-c g" . consult-gnus)
-          ("C-c h" . consult-history))
+         ("C-x b" . switch-to-buffer)
+         ("M-s" . consult-line)
+         ("M-y" . consult-yank-pop)
+         ("C-x C-r" . consult-recent-file)
+         ("C-c g" . consult-gnus)
+         ("C-c h" . consult-history))
   :config
   (setq consult-preview-key '(:debounce 0.2 any))
   ;; Use consult for grep/ag search
@@ -898,9 +898,9 @@
   (setq consult-async-input-throttle 0.1)
   ;; Customize consult-line for better display
   (consult-customize consult-line
-                       :preview-key '(:debounce 0.3 any)
-                       ;; Show more context in preview (lines before/after match)
-                       (setq consult-line-numbers-widen t)))
+                     :preview-key '(:debounce 0.3 any)
+                     ;; Show more context in preview (lines before/after match)
+                     (setq consult-line-numbers-widen t)))
 
 ;; *** rg
 ;;
@@ -3150,64 +3150,64 @@ This functions should be added to the hooks of major modes for programming."
              ("M-." . ggtags-find-tag-dwim)
              ("M-," . ggtags-find-tag-return)))
 
- ;; ** c-eldoc
- ;;
- ;;   c-eldoc provides eldoc support for C/C++ code. Shows
- ;;   function signatures, macro expansions, and include paths in
- ;;   echo area or tooltip as you type.
- ;;
- ;;   Key features:
- ;;   - Display function signatures at point
- ;;   - Show macro expansions
- ;;   - Display include file paths
- ;;   - Works with standard eldoc
- ;;   - Customizable include paths
- ;;
- ;;   Why I use it:
- ;;   Quick reference to function signatures while coding in C/C++.
- ;;   Reduces need to look up API documentation.
- ;;
- ;;   GitHub: https://github.com/lewisjr/c-eldoc
- ;;
- ;;   Configuration notes:
- ;;   Enabled for all c/c++ modes. Includes pkg-config paths.
+;; ** c-eldoc
+;;
+;;   c-eldoc provides eldoc support for C/C++ code. Shows
+;;   function signatures, macro expansions, and include paths in
+;;   echo area or tooltip as you type.
+;;
+;;   Key features:
+;;   - Display function signatures at point
+;;   - Show macro expansions
+;;   - Display include file paths
+;;   - Works with standard eldoc
+;;   - Customizable include paths
+;;
+;;   Why I use it:
+;;   Quick reference to function signatures while coding in C/C++.
+;;   Reduces need to look up API documentation.
+;;
+;;   GitHub: https://github.com/lewisjr/c-eldoc
+;;
+;;   Configuration notes:
+;;   Enabled for all c/c++ modes. Includes pkg-config paths.
 
- (use-package c-eldoc
-   :ensure t
-   :commands (c-turn-on-eldoc-mode)
-   :config
-   (add-hook 'c-mode-common-hook
-             #'(lambda ()
-		 (setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
-		 (c-turn-on-eldoc-mode))))
+(use-package c-eldoc
+  :ensure t
+  :commands (c-turn-on-eldoc-mode)
+  :config
+  (add-hook 'c-mode-common-hook
+            #'(lambda ()
+		(setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
+		(c-turn-on-eldoc-mode))))
 
- ;; ** cwarn
- ;;
- ;;   cwarn highlights suspicious and error-prone C/C++ constructs.
- ;;   Detects common mistakes that compilers sometimes miss.
- ;;
- ;;   Key features:
- ;;   - Suspicious semicolon warnings
- ;;   - Assignment in condition warnings
- ;;   - Wrong type for printf warnings
- ;;   - Missing header guards warnings
- ;;   - Customizable warning levels
- ;;   - Highlights potential errors
- ;;
- ;;   Why I use it:
- ;;   Early detection of C/C++ bugs and suspicious code patterns.
- ;;   Catches issues before compile time.
- ;;
- ;;   Built-in Emacs feature (no package needed).
- ;;
- ;;   Configuration notes:
- ;;   Enabled globally for all c-mode-family modes.
+;; ** cwarn
+;;
+;;   cwarn highlights suspicious and error-prone C/C++ constructs.
+;;   Detects common mistakes that compilers sometimes miss.
+;;
+;;   Key features:
+;;   - Suspicious semicolon warnings
+;;   - Assignment in condition warnings
+;;   - Wrong type for printf warnings
+;;   - Missing header guards warnings
+;;   - Customizable warning levels
+;;   - Highlights potential errors
+;;
+;;   Why I use it:
+;;   Early detection of C/C++ bugs and suspicious code patterns.
+;;   Catches issues before compile time.
+;;
+;;   Built-in Emacs feature (no package needed).
+;;
+;;   Configuration notes:
+;;   Enabled globally for all c-mode-family modes.
 
- (use-package cwarn
-   :ensure nil				; built-in
-   :commands (cwarn-mode global-cwarn-mode)
-   :config
-   (add-hook 'c-mode-common-hook #'(lambda () (cwarn-mode 1))))
+(use-package cwarn
+  :ensure nil				; built-in
+  :commands (cwarn-mode global-cwarn-mode)
+  :config
+  (add-hook 'c-mode-common-hook #'(lambda () (cwarn-mode 1))))
 
 ;; ** cc-mode utilities
 
@@ -3235,86 +3235,86 @@ This functions should be added to the hooks of major modes for programming."
 
 (add-hook 'c-mode-common-hook 'electric-pair-mode)
 
- ;; ** srefactor
- ;;
- ;;   srefactor is a C/C++ source code refactoring tool for Emacs.
- ;;   Provides semantic-aware refactoring operations on code.
- ;;
- ;;   Key features:
- ;;   - Extract function/method
- ;;   - Inline function/method
- ;;   - Rename variables and functions
- ;;   - Convert between local/global variables
- ;;   - Generate getter/setter methods
- ;;   - Intelligent code transformation
- ;;
- ;;   Why I use it:
- ;;   Semantic refactoring without regex or manual edits.
- ;;   Saves time on common C/C++ refactoring tasks.
- ;;
- ;;   GitHub: https://github.com/tuhdo/srefactor
- ;;
- ;;   Configuration notes:
- ;;   Loaded after cc-mode. Use M-x srefactor-* for commands.
+;; ** srefactor
+;;
+;;   srefactor is a C/C++ source code refactoring tool for Emacs.
+;;   Provides semantic-aware refactoring operations on code.
+;;
+;;   Key features:
+;;   - Extract function/method
+;;   - Inline function/method
+;;   - Rename variables and functions
+;;   - Convert between local/global variables
+;;   - Generate getter/setter methods
+;;   - Intelligent code transformation
+;;
+;;   Why I use it:
+;;   Semantic refactoring without regex or manual edits.
+;;   Saves time on common C/C++ refactoring tasks.
+;;
+;;   GitHub: https://github.com/tuhdo/srefactor
+;;
+;;   Configuration notes:
+;;   Loaded after cc-mode. Use M-x srefactor-* for commands.
 
- (use-package srefactor
-   :ensure t
-   :defer t
-   :commands (srefactor-menu srefactor-extract-function srefactor-inline-function)
-   :after (cc-mode))
+(use-package srefactor
+  :ensure t
+  :defer t
+  :commands (srefactor-menu srefactor-extract-function srefactor-inline-function)
+  :after (cc-mode))
 
- ;; ** cff
- ;;
- ;;   cff (C/C++ Find File) helps navigate between header
- ;;   and source files in C/C++ projects.
- ;;
- ;;   Key features:
- ;;   - Jump between .h and .c/.cpp files
- ;;   - Smart file detection and matching
- ;;   - Multiple projects support
- ;;   - Works with cc-mode
- ;;   - Toggle between header/implementation
- ;;
- ;;   Why I use it:
- ;;   Quick navigation between C/C++ header and source files.
- ;;   Essential for large projects with many files.
- ;;
- ;;   GitHub: https://github.com/larstvei/cff
- ;;
- ;;   Configuration notes:
- ;;   Keybinding: C-c C-o to find corresponding file.
+;; ** cff
+;;
+;;   cff (C/C++ Find File) helps navigate between header
+;;   and source files in C/C++ projects.
+;;
+;;   Key features:
+;;   - Jump between .h and .c/.cpp files
+;;   - Smart file detection and matching
+;;   - Multiple projects support
+;;   - Works with cc-mode
+;;   - Toggle between header/implementation
+;;
+;;   Why I use it:
+;;   Quick navigation between C/C++ header and source files.
+;;   Essential for large projects with many files.
+;;
+;;   GitHub: https://github.com/larstvei/cff
+;;
+;;   Configuration notes:
+;;   Keybinding: C-c C-o to find corresponding file.
 
- (use-package cff
-   :ensure t
-   :commands (cff-find-other-file)
-   :after (cc-mode))
+(use-package cff
+  :ensure t
+  :commands (cff-find-other-file)
+  :after (cc-mode))
 
- ;; ** modern-cpp-font-lock
- ;;
- ;;   modern-cpp-font-lock adds syntax highlighting for modern C/C++ features.
- ;;   Supports C++11 through C++20 keywords and concepts.
- ;;
- ;;   Key features:
- ;;   - Modern C++ keywords (auto, constexpr, noexcept, etc.)
- ;;   - C++11/14/17/20 support
- ;;   - Standard library highlighting
- ;;   - Improved type recognition
- ;;   - Template syntax highlighting
- ;;
- ;;   Why I use it:
- ;;   Better syntax highlighting for modern C++ code. Default Emacs
- ;;   highlighting lacks support for recent C++ features.
- ;;
- ;;   GitHub: https://github.com/ludwigpacifici/modern-cpp-font-lock
- ;;
- ;;   Configuration notes:
- ;;   Enabled for all c++-mode and c++-ts-mode buffers.
+;; ** modern-cpp-font-lock
+;;
+;;   modern-cpp-font-lock adds syntax highlighting for modern C/C++ features.
+;;   Supports C++11 through C++20 keywords and concepts.
+;;
+;;   Key features:
+;;   - Modern C++ keywords (auto, constexpr, noexcept, etc.)
+;;   - C++11/14/17/20 support
+;;   - Standard library highlighting
+;;   - Improved type recognition
+;;   - Template syntax highlighting
+;;
+;;   Why I use it:
+;;   Better syntax highlighting for modern C++ code. Default Emacs
+;;   highlighting lacks support for recent C++ features.
+;;
+;;   GitHub: https://github.com/ludwigpacifici/modern-cpp-font-lock
+;;
+;;   Configuration notes:
+;;   Enabled for all c++-mode and c++-ts-mode buffers.
 
- (use-package modern-cpp-font-lock
-   :ensure t
-   :commands (modern-c++-font-lock-mode)
-   :hook (c++-mode . modern-c++-font-lock-mode)
-   :after (cc-mode))
+(use-package modern-cpp-font-lock
+  :ensure t
+  :commands (modern-c++-font-lock-mode)
+  :hook (c++-mode . modern-c++-font-lock-mode)
+  :after (cc-mode))
 
 ;; ** C utilities
 
@@ -3327,46 +3327,46 @@ this declaration to the kill-ring."
      (progn (c-beginning-of-defun) (point))
      (progn (c-end-of-defun)       (point)))))
 
- ;; ** clang-format
- ;;
- ;;   clang-format formats C/C++/Objective-C buffers using clang-format.
- ;;   Provides automatic code formatting with LLVM standards.
- ;;
- ;;   Key features:
- ;;   - Format entire buffer or region
- ;;   - Read .clang-format config from project
- ;;   - Fallback style support (Chromium, Google, etc.)
- ;;   - Fast formatting with clang
- ;;   - Preserves cursor position
- ;;   - Supports multiple languages
- ;;
- ;;   Why I use it:
- ;;   Consistent code formatting across projects. Integrates with
- ;;   LLVM toolchain which many projects already use.
- ;;
- ;;   GitHub: https://github.com/emacsorphanage/clang-format
- ;;
- ;;   Configuration notes:
- ;;   Commands: clang-format-buffer, clang-format-region.
- ;;   Fallback style: Chromium. Respects project .clang-format.
+;; ** clang-format
+;;
+;;   clang-format formats C/C++/Objective-C buffers using clang-format.
+;;   Provides automatic code formatting with LLVM standards.
+;;
+;;   Key features:
+;;   - Format entire buffer or region
+;;   - Read .clang-format config from project
+;;   - Fallback style support (Chromium, Google, etc.)
+;;   - Fast formatting with clang
+;;   - Preserves cursor position
+;;   - Supports multiple languages
+;;
+;;   Why I use it:
+;;   Consistent code formatting across projects. Integrates with
+;;   LLVM toolchain which many projects already use.
+;;
+;;   GitHub: https://github.com/emacsorphanage/clang-format
+;;
+;;   Configuration notes:
+;;   Commands: clang-format-buffer, clang-format-region.
+;;   Fallback style: Chromium. Respects project .clang-format.
 
- (use-package clang-format
-   :ensure t
-   :commands (clang-format clang-format-buffer clang-format-region)
-   :config
-   ;; Style to use when calling `clang-format-buffer' unless   project has a
-   ;; .clang-format file.
-   (setq clang-format-fallback-style "Chromium"))
+(use-package clang-format
+  :ensure t
+  :commands (clang-format clang-format-buffer clang-format-region)
+  :config
+  ;; Style to use when calling `clang-format-buffer' unless   project has a
+  ;; .clang-format file.
+  (setq clang-format-fallback-style "Chromium"))
 
 ;; * Emacs Lisp Development
 
 ;;
 ;; ** elisp-mode configuration
 
-   ;; Helper functions for elisp-mode
-   (defun my/elisp/check-parens-on-save ()
-     "Run `check-parens' when the current buffer is saved."
-     (add-hook 'after-save-hook #'check-parens nil 'make-it-local))
+;; Helper functions for elisp-mode
+(defun my/elisp/check-parens-on-save ()
+  "Run `check-parens' when the current buffer is saved."
+  (add-hook 'after-save-hook #'check-parens nil 'make-it-local))
 
 (defun my/remove-elc-on-save ()
   "If you're saving an elisp file, likely the .elc is no longer valid."
@@ -3387,139 +3387,139 @@ this declaration to the kill-ring."
        (eldoc-add-command 'paredit-backward-delete
                           'paredit-close-round))))
 
- ;; ** macrostep - expand Emacs Lisp macros
- ;;
- ;;   macrostep allows stepping through and expanding Emacs Lisp
- ;;   macros with visual highlighting of each expansion step.
- ;;
- ;;   Key features:
- ;;   - Visual macro expansion (M-x macrostep-expand)
- ;;   - Step through macro expansions
- ;;   - Highlight current step
- ;;   - Expand nested macros
- ;;   - Works with elisp-mode and lispy
- ;;
- ;;   Why I use it:
- ;;   Understand complex macro expansions in Emacs Lisp code.
- ;;   Essential for debugging macros and learning elisp.
- ;;
- ;;   GitHub: https://github.com/joddie/macrostep
- ;;
- ;;   Configuration notes:
- ;;   Use M-x macrostep-expand to expand macro at point.
+;; ** macrostep - expand Emacs Lisp macros
+;;
+;;   macrostep allows stepping through and expanding Emacs Lisp
+;;   macros with visual highlighting of each expansion step.
+;;
+;;   Key features:
+;;   - Visual macro expansion (M-x macrostep-expand)
+;;   - Step through macro expansions
+;;   - Highlight current step
+;;   - Expand nested macros
+;;   - Works with elisp-mode and lispy
+;;
+;;   Why I use it:
+;;   Understand complex macro expansions in Emacs Lisp code.
+;;   Essential for debugging macros and learning elisp.
+;;
+;;   GitHub: https://github.com/joddie/macrostep
+;;
+;;   Configuration notes:
+;;   Use M-x macrostep-expand to expand macro at point.
 
- (use-package macrostep
-   :ensure t
-   :commands (macrostep-expand))
+(use-package macrostep
+  :ensure t
+  :commands (macrostep-expand))
 
- ;; ** el-spice - interactive elisp evaluation
- ;;
- ;;   el-spice provides interactive Emacs Lisp evaluation with
- ;;   colored output and improved error reporting.
- ;;
- ;;   Key features:
- ;;   - Evaluate last s-expression with keybinding
- ;;   - Evaluate current region
- ;;   - Colored output for better readability
- ;;   - Enhanced error messages
- ;;   - Preserve point position after eval
- ;;
- ;;   Why I use it:
- ;;   Quick interactive elisp evaluation during development.
- ;;   Easier than C-x C-e for common eval operations.
- ;;
- ;;   GitHub: https://github.com/emacsorphanage/el-spice
- ;;
- ;;   Configuration notes:
- ;;   Commands: el-spice-eval-buffer, el-spice-eval-last-sexp.
+;; ** el-spice - interactive elisp evaluation
+;;
+;;   el-spice provides interactive Emacs Lisp evaluation with
+;;   colored output and improved error reporting.
+;;
+;;   Key features:
+;;   - Evaluate last s-expression with keybinding
+;;   - Evaluate current region
+;;   - Colored output for better readability
+;;   - Enhanced error messages
+;;   - Preserve point position after eval
+;;
+;;   Why I use it:
+;;   Quick interactive elisp evaluation during development.
+;;   Easier than C-x C-e for common eval operations.
+;;
+;;   GitHub: https://github.com/emacsorphanage/el-spice
+;;
+;;   Configuration notes:
+;;   Commands: el-spice-eval-buffer, el-spice-eval-last-sexp.
 
- (use-package el-spice
-   :ensure t
-   :commands (el-spice-eval-buffer el-spice-eval-last-sexp))
+(use-package el-spice
+  :ensure t
+  :commands (el-spice-eval-buffer el-spice-eval-last-sexp))
 
- ;; ** litable - display lists in tables
- ;;
- ;;   litable displays Emacs Lisp lists (association lists, property lists)
- ;;   in tabular form for better readability.
- ;;
- ;;   Key features:
- ;;   - Tabular list display (M-x litable-mode)
- ;;   - Read/write lists as tables
- ;;   - Edit list elements in table
- ;;   - Sortable columns
- ;;   - Works with association and property lists
- ;;
- ;;   Why I use it:
- ;;   Better visualization of list data structures in elisp.
- ;;   Makes editing complex lists more intuitive.
- ;;
- ;;   GitHub: https://github.com/Fuco1/litable
- ;;
- ;;   Configuration notes:
- ;;   Lists saved to ~/.emacs.d/.cache/litable-lists.el.
+;; ** litable - display lists in tables
+;;
+;;   litable displays Emacs Lisp lists (association lists, property lists)
+;;   in tabular form for better readability.
+;;
+;;   Key features:
+;;   - Tabular list display (M-x litable-mode)
+;;   - Read/write lists as tables
+;;   - Edit list elements in table
+;;   - Sortable columns
+;;   - Works with association and property lists
+;;
+;;   Why I use it:
+;;   Better visualization of list data structures in elisp.
+;;   Makes editing complex lists more intuitive.
+;;
+;;   GitHub: https://github.com/Fuco1/litable
+;;
+;;   Configuration notes:
+;;   Lists saved to ~/.emacs.d/.cache/litable-lists.el.
 
- (use-package litable
-   :ensure t
-   :commands (litable-mode)
-   :config
-   ;; Save cache file to `user-cache-directory'
-   (setq litable-list-file (concat user-cache-directory ".litable-lists.el")))
+(use-package litable
+  :ensure t
+  :commands (litable-mode)
+  :config
+  ;; Save cache file to `user-cache-directory'
+  (setq litable-list-file (concat user-cache-directory ".litable-lists.el")))
 
- ;; ** page-break-lines - display lines as decorative breaks
- ;;
- ;;   page-break-lines displays form feed characters (^L) as
- ;;   decorative lines, similar to page breaks in word processors.
- ;;
- ;;   Key features:
- ;;   - Decorative horizontal lines for page breaks
- ;;   - Configurable line character and width
- ;;   - Global or buffer-specific mode
- ;;   - Customizable faces (colors, etc.)
- ;;   - Works with any mode that uses ^L
- ;;
- ;;   Why I use it:
- ;;   Visual separation of logical sections in files.
- ;;   Makes long files with manual page breaks easier to read.
- ;;
- ;;   GitHub: https://github.com/purcell/page-break-lines
- ;;
- ;;   Configuration notes:
- ;;   Use M-x global-page-break-lines-mode to enable globally.
+;; ** page-break-lines - display lines as decorative breaks
+;;
+;;   page-break-lines displays form feed characters (^L) as
+;;   decorative lines, similar to page breaks in word processors.
+;;
+;;   Key features:
+;;   - Decorative horizontal lines for page breaks
+;;   - Configurable line character and width
+;;   - Global or buffer-specific mode
+;;   - Customizable faces (colors, etc.)
+;;   - Works with any mode that uses ^L
+;;
+;;   Why I use it:
+;;   Visual separation of logical sections in files.
+;;   Makes long files with manual page breaks easier to read.
+;;
+;;   GitHub: https://github.com/purcell/page-break-lines
+;;
+;;   Configuration notes:
+;;   Use M-x global-page-break-lines-mode to enable globally.
 
- (use-package page-break-lines
-   :ensure t
-   :commands (global-page-break-lines-mode))
+(use-package page-break-lines
+  :ensure t
+  :commands (global-page-break-lines-mode))
 
- ;; ** outshine-mode - org-mode-like navigation in elisp files
- ;;
- ;;   outshine provides org-mode-like navigation and folding for
- ;;   Emacs Lisp source files using outline headings.
- ;;
- ;;   Key features:
- ;;   - Outline navigation (C-c n/p/f/b keys)
- ;;   - Fold/unfold sections (TAB/S-TAB)
- ;;   - Org-mode heading style (;; *, ;; ***)
- ;;   - Works with elisp-mode
- ;;   - Compatible with other outline modes
- ;;
- ;;   Why I use it:
- ;;   Makes Emacs Lisp files easier to navigate.
- ;;   Provides familiar org-mode workflow for elisp development.
- ;;
- ;;   GitHub: https://github.com/alphapapa/outshine
- ;;
- ;;   Configuration notes:
- ;;   Outline prefix: C-c @. Start with headings hidden (level 1).
+;; ** outshine-mode - org-mode-like navigation in elisp files
+;;
+;;   outshine provides org-mode-like navigation and folding for
+;;   Emacs Lisp source files using outline headings.
+;;
+;;   Key features:
+;;   - Outline navigation (C-c n/p/f/b keys)
+;;   - Fold/unfold sections (TAB/S-TAB)
+;;   - Org-mode heading style (;; *, ;; ***)
+;;   - Works with elisp-mode
+;;   - Compatible with other outline modes
+;;
+;;   Why I use it:
+;;   Makes Emacs Lisp files easier to navigate.
+;;   Provides familiar org-mode workflow for elisp development.
+;;
+;;   GitHub: https://github.com/alphapapa/outshine
+;;
+;;   Configuration notes:
+;;   Outline prefix: C-c @. Start with headings hidden (level 1).
 
- (use-package outshine
-   :ensure t
-   :diminish outshine-mode
-   :hook (emacs-lisp-mode . outshine-mode)
-   :config
-   ;; Set outline-minor-mode prefix to C-c @ (same as outshine default)
-   (setq outline-minor-mode-prefix (kbd "C-c @"))
-   ;; Start with bodies hidden (show only headings)
-   (setq outshine-start-level 1))
+(use-package outshine
+  :ensure t
+  :diminish outshine-mode
+  :hook (emacs-lisp-mode . outshine-mode)
+  :config
+  ;; Set outline-minor-mode prefix to C-c @ (same as outshine default)
+  (setq outline-minor-mode-prefix (kbd "C-c @"))
+  ;; Start with bodies hidden (show only headings)
+  (setq outshine-start-level 1))
 
 ;; elisp-mode - built-in, configure hooks and keybindings
 (use-package elisp-mode
@@ -3540,69 +3540,69 @@ this declaration to the kill-ring."
         ))
 ;; * Syntax Checking and Linting
 ;;
- ;; ** flycheck
- ;;
- ;;   Flycheck provides on-the-fly syntax checking for many languages.
- ;;   Supports emacs-lisp, c/c++ (via clang), python, javascript and more.
- ;;
- ;;   Key features:
- ;;   - Real-time syntax checking as you type
- ;;   - Supports 50+ languages and checkers
- ;;   - Error navigation with flycheck-next-error/flycheck-previous-error
- ;;   - Multiple error display modes (list, fringe, tooltips)
- ;;   - Automatic syntax checker detection
- ;;
- ;;   Why I use it:
- ;;   Immediate feedback on code errors saves debugging time. Works
- ;;   seamlessly with flycheck-pos-tip for visual error display.
- ;;
- ;;   GitHub: https://github.com/flycheck/flycheck
- ;;
- ;;   Configuration notes:
- ;;   Enabled for emacs-lisp, c/c++, dart modes. Uses
- ;;   flycheck-pos-tip for error tooltips.
+;; ** flycheck
+;;
+;;   Flycheck provides on-the-fly syntax checking for many languages.
+;;   Supports emacs-lisp, c/c++ (via clang), python, javascript and more.
+;;
+;;   Key features:
+;;   - Real-time syntax checking as you type
+;;   - Supports 50+ languages and checkers
+;;   - Error navigation with flycheck-next-error/flycheck-previous-error
+;;   - Multiple error display modes (list, fringe, tooltips)
+;;   - Automatic syntax checker detection
+;;
+;;   Why I use it:
+;;   Immediate feedback on code errors saves debugging time. Works
+;;   seamlessly with flycheck-pos-tip for visual error display.
+;;
+;;   GitHub: https://github.com/flycheck/flycheck
+;;
+;;   Configuration notes:
+;;   Enabled for emacs-lisp, c/c++, dart modes. Uses
+;;   flycheck-pos-tip for error tooltips.
 
- (use-package flycheck
-   :ensure t
-   :commands (flycheck-mode global-flycheck-mode)
-   :hook
-   ;; Enable flycheck for these modes
-   ((emacs-lisp-mode . flycheck-mode)
-    (c-mode . flycheck-mode)
-    (c++-mode . flycheck-mode)
-    (dart-mode . flycheck-mode))
-   :config
-   ;; Enable flycheck globally (for modes with built-in checkers)
-   (global-flycheck-mode 1))
+(use-package flycheck
+  :ensure t
+  :commands (flycheck-mode global-flycheck-mode)
+  :hook
+  ;; Enable flycheck for these modes
+  ((emacs-lisp-mode . flycheck-mode)
+   (c-mode . flycheck-mode)
+   (c++-mode . flycheck-mode)
+   (dart-mode . flycheck-mode))
+  :config
+  ;; Enable flycheck globally (for modes with built-in checkers)
+  (global-flycheck-mode 1))
 
- ;; Show flycheck errors in tooltip
- ;;
- ;; *** flycheck-pos-tip
- ;;
- ;;   Flycheck-pos-tip displays Flycheck errors in popup tooltips.
- ;;   Provides a cleaner, more discoverable error display interface.
- ;;
- ;;   Key features:
- ;;   - Popup tooltips for error messages
- ;;   - Show full error/warning text on hover
- ;;   - Multiple tooltip position options
- ;;   - Works with all Flycheck checkers
- ;;   - Integrates with company/other completion
- ;;
- ;;   Why I use it:
- ;;   Makes Flycheck errors easier to read without leaving context.
- ;;   Hover over error to see full message.
- ;;
- ;;   GitHub: https://github.com/flycheck/flycheck-pos-tip
- ;;
- ;;   Configuration notes:
- ;;   Used as flycheck-display-errors-function for tooltips.
+;; Show flycheck errors in tooltip
+;;
+;; *** flycheck-pos-tip
+;;
+;;   Flycheck-pos-tip displays Flycheck errors in popup tooltips.
+;;   Provides a cleaner, more discoverable error display interface.
+;;
+;;   Key features:
+;;   - Popup tooltips for error messages
+;;   - Show full error/warning text on hover
+;;   - Multiple tooltip position options
+;;   - Works with all Flycheck checkers
+;;   - Integrates with company/other completion
+;;
+;;   Why I use it:
+;;   Makes Flycheck errors easier to read without leaving context.
+;;   Hover over error to see full message.
+;;
+;;   GitHub: https://github.com/flycheck/flycheck-pos-tip
+;;
+;;   Configuration notes:
+;;   Used as flycheck-display-errors-function for tooltips.
 
- (use-package flycheck-pos-tip
-   :ensure t
-   :after flycheck
-   :config
-   (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
+(use-package flycheck-pos-tip
+  :ensure t
+  :after flycheck
+  :config
+  (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
 (setq vc-handled-backends nil)
 
 ;; * Tree-sitter Support
@@ -3772,114 +3772,114 @@ this declaration to the kill-ring."
     (define-key eglot-mode-map (kbd "C-c l q") 'eglot-shutdown-all)
     (define-key eglot-mode-map (kbd "C-c l s") 'eglot-reconnect)))
 
- ;; ** citre
- ;;
- ;;   Citre is a code completion and navigation framework for Emacs.
- ;;   It works with various backends like ctags, gtags, and other tag systems.
- ;;   Provides fast completion, jump-to-definition, and find-references.
- ;;
- ;;   Key features:
- ;;   - Fast code completion from tags
- ;;   - Jump-to-definition (M-.)
- ;;   - Find references and usages
- ;;   - Multiple tag backends (ctags, gtags, global)
- ;;   - Integrated with completion frameworks (corfu)
- ;;   - Auto-generate tags when missing
- ;;
- ;;   Why I use it:
- ;;   Fast, offline code navigation without needing full LSP setup.
- ;;   Works well with legacy projects that use ctags.
- ;;
- ;;   GitHub: https://github.com/universal-ctags/citre
- ;;
- ;;   Configuration notes:
- ;;   Keybindings: M-. (jump), M-, (back), C-c c t (update tags).
- ;;   Integrates with corfu for completion UI.
+;; ** citre
+;;
+;;   Citre is a code completion and navigation framework for Emacs.
+;;   It works with various backends like ctags, gtags, and other tag systems.
+;;   Provides fast completion, jump-to-definition, and find-references.
+;;
+;;   Key features:
+;;   - Fast code completion from tags
+;;   - Jump-to-definition (M-.)
+;;   - Find references and usages
+;;   - Multiple tag backends (ctags, gtags, global)
+;;   - Integrated with completion frameworks (corfu)
+;;   - Auto-generate tags when missing
+;;
+;;   Why I use it:
+;;   Fast, offline code navigation without needing full LSP setup.
+;;   Works well with legacy projects that use ctags.
+;;
+;;   GitHub: https://github.com/universal-ctags/citre
+;;
+;;   Configuration notes:
+;;   Keybindings: M-. (jump), M-, (back), C-c c t (update tags).
+;;   Integrates with corfu for completion UI.
 
- (use-package citre
-   :ensure t
-   :commands (citre-jump citre-jump-back citre-ace-jump citre-update-tags citre-peek citre-find-file)
-   :defer t
-   :config
-   ;; Enable citre-mode globally
-   (global-citre-mode 1)
-   ;; Set default backend to use ctags
-   (setq citre-default-project 'ctags)
-   ;; Enable completion at point
-   (setq citre-completion-enable t)
-   ;; Enable jump-to-definition
-   (setq citre-jump-enable t)
-   ;; Set cache directory for tags
-   (setq citre-tags-file-name "TAGS")
-   ;; Auto-create tags when none found
-   (setq citre-auto-update-tags t)
-   ;; Use corfu for completion UI integration
-   (with-eval-after-load 'corfu
-     (setq-local completion-at-point-functions
-                 (list (cape-capf-super
-                        #'citre-completion-at-point
-                        #'cape-file))))
+(use-package citre
+  :ensure t
+  :commands (citre-jump citre-jump-back citre-ace-jump citre-update-tags citre-peek citre-find-file)
+  :defer t
+  :config
+  ;; Enable citre-mode globally
+  (global-citre-mode 1)
+  ;; Set default backend to use ctags
+  (setq citre-default-project 'ctags)
+  ;; Enable completion at point
+  (setq citre-completion-enable t)
+  ;; Enable jump-to-definition
+  (setq citre-jump-enable t)
+  ;; Set cache directory for tags
+  (setq citre-tags-file-name "TAGS")
+  ;; Auto-create tags when none found
+  (setq citre-auto-update-tags t)
+  ;; Use corfu for completion UI integration
+  (with-eval-after-load 'corfu
+    (setq-local completion-at-point-functions
+                (list (cape-capf-super
+                       #'citre-completion-at-point
+                       #'cape-file))))
 
-   ;; Keybindings for citre (following eglot pattern)
-   (with-eval-after-load 'citre
-     (define-key citre-mode-map (kbd "M-.") 'citre-jump)
-     (define-key citre-mode-map (kbd "M-,") 'citre-jump-back)
-     (define-key citre-mode-map (kbd "M-*") 'citre-ace-jump)
-     (define-key citre-mode-map (kbd "C-c c t") 'citre-update-tags)
-     (define-key citre-mode-map (kbd "C-c c s") 'citre-peek)
-     (define-key citre-mode-map (kbd "C-c c f") 'citre-find-file)))
+  ;; Keybindings for citre (following eglot pattern)
+  (with-eval-after-load 'citre
+    (define-key citre-mode-map (kbd "M-.") 'citre-jump)
+    (define-key citre-mode-map (kbd "M-,") 'citre-jump-back)
+    (define-key citre-mode-map (kbd "M-*") 'citre-ace-jump)
+    (define-key citre-mode-map (kbd "C-c c t") 'citre-update-tags)
+    (define-key citre-mode-map (kbd "C-c c s") 'citre-peek)
+    (define-key citre-mode-map (kbd "C-c c f") 'citre-find-file)))
 
- ;; ** mason
- ;;
- ;;   Mason.el provides integration with mason, a tool for managing LSP servers,
- ;;   DAP servers, linters, and formatters. It allows easy installation and
- ;;   management of language tools without manual setup.
- ;;
- ;;   Key features:
- ;;   - Easy package installation from registry
- ;;   - List available/manage installed packages
- ;;   - Automatic LSP server setup
- ;;   - DAP adapter support for debugging
- ;;   - Per-project package management
- ;;   - No manual PATH configuration needed
- ;;
- ;;   Why I use it:
- ;;   One-command installation of language servers and tools.
- ;;   Eliminates manual setup and PATH management for LSP/DAP.
- ;;
- ;;   GitHub: https://github.com/hlissner/emacs-mason
- ;;
- ;;   Configuration notes:
- ;;   Auto-installs: typescript, python (pyright), rust (rust-analyzer),
- ;;   go (gopls), c (clangd), cmake, bash, lua, json, yaml servers.
+;; ** mason
+;;
+;;   Mason.el provides integration with mason, a tool for managing LSP servers,
+;;   DAP servers, linters, and formatters. It allows easy installation and
+;;   management of language tools without manual setup.
+;;
+;;   Key features:
+;;   - Easy package installation from registry
+;;   - List available/manage installed packages
+;;   - Automatic LSP server setup
+;;   - DAP adapter support for debugging
+;;   - Per-project package management
+;;   - No manual PATH configuration needed
+;;
+;;   Why I use it:
+;;   One-command installation of language servers and tools.
+;;   Eliminates manual setup and PATH management for LSP/DAP.
+;;
+;;   GitHub: https://github.com/hlissner/emacs-mason
+;;
+;;   Configuration notes:
+;;   Auto-installs: typescript, python (pyright), rust (rust-analyzer),
+;;   go (gopls), c (clangd), cmake, bash, lua, json, yaml servers.
 
- (use-package mason
-   :ensure t
-   :defer t
-   :commands (mason-install mason-uninstall mason-list mason-info)
-   :config
-   ;; Set mason directory to cache
-   (when (boundp 'user-cache-directory)
-     (setq mason-cache-directory (expand-file-name "mason" user-cache-directory)))
+(use-package mason
+  :ensure t
+  :defer t
+  :commands (mason-install mason-uninstall mason-list mason-info)
+  :config
+  ;; Set mason directory to cache
+  (when (boundp 'user-cache-directory)
+    (setq mason-cache-directory (expand-file-name "mason" user-cache-directory)))
 
-   ;; Install commonly used servers automatically
-   ;; LSP servers
-   (dolist (pkg '("typescript-language-server"
-                  "pyright"
-                  "rust-analyzer"
-                  "gopls"
-                  "clangd"
-                  "cmake-language-server"
-                  "bash-language-server"
-                  "lua-language-server"
-                  "json-lsp"
-                  "yaml-language-server"))
-     (when (not (mason-installed-p pkg))
-       (message "Mason: Installing LSP server %s..." pkg)
-       (mason-install pkg)))
+  ;; Install commonly used servers automatically
+  ;; LSP servers
+  (dolist (pkg '("typescript-language-server"
+                 "pyright"
+                 "rust-analyzer"
+                 "gopls"
+                 "clangd"
+                 "cmake-language-server"
+                 "bash-language-server"
+                 "lua-language-server"
+                 "json-lsp"
+                 "yaml-language-server"))
+    (when (not (mason-installed-p pkg))
+      (message "Mason: Installing LSP server %s..." pkg)
+      (mason-install pkg))))
 
- ;; DAP servers for debugging (will be installed on-demand by dape-maybe-install-adapter)
- ;; These are installed when first needed to avoid startup delays
+;; DAP servers for debugging (will be installed on-demand by dape-maybe-install-adapter)
+;; These are installed when first needed to avoid startup delays
 
 ;; ** dape
 ;;
@@ -3998,56 +3998,56 @@ this declaration to the kill-ring."
                    :cwd dape-cwd-fn
                    :program dape-find-file-buffer-default))))
 
- ;; ** realgud
- ;;
- ;;   RealGUD is a modular, extensible GNU Emacs front-end for interacting
- ;;   with external debuggers. It provides a consistent interface for
- ;;   debugging across multiple languages and debugger backends.
- ;;
- ;;   Key features:
- ;;   - Modular backend support (GDB, PDB, JDB, and more)
- ;;   - Consistent interface across debuggers
- ;;   - Works with GUD (Grand Unified Debugger)
- ;;   - Extensible for new backends
- ;;   - Better error handling and output
- ;;
- ;;   Why I use it:
- ;;   Unified debugging experience. Same commands work across different
- ;;   languages (C/C++, Python, Java, Ruby).
- ;;
- ;;   GitHub: https://github.com/realgud/realgud
- ;;
- ;;   Configuration notes:
- ;;   Keybindings: C-c d g (GDB), C-c d p (PDB), C-c d j (JDB), C-c d t (trepan).
+;; ** realgud
+;;
+;;   RealGUD is a modular, extensible GNU Emacs front-end for interacting
+;;   with external debuggers. It provides a consistent interface for
+;;   debugging across multiple languages and debugger backends.
+;;
+;;   Key features:
+;;   - Modular backend support (GDB, PDB, JDB, and more)
+;;   - Consistent interface across debuggers
+;;   - Works with GUD (Grand Unified Debugger)
+;;   - Extensible for new backends
+;;   - Better error handling and output
+;;
+;;   Why I use it:
+;;   Unified debugging experience. Same commands work across different
+;;   languages (C/C++, Python, Java, Ruby).
+;;
+;;   GitHub: https://github.com/realgud/realgud
+;;
+;;   Configuration notes:
+;;   Keybindings: C-c d g (GDB), C-c d p (PDB), C-c d j (JDB), C-c d t (trepan).
 
- (use-package realgud
-   :ensure t
-   :defer t
-   :commands (realgud:gdb realgud:pdb realgud:jdb realgud:trepan)
-   :config
-   ;; Configure realgud for various languages
-   ;; C/C++ with gdb
-   (add-hook 'c-mode-hook
-             (lambda ()
-               (local-set-key (kbd "C-c d g") 'realgud:gdb)))
-   (add-hook 'c++-mode-hook
-             (lambda ()
-               (local-set-key (kbd "C-c d g") 'realgud:gdb)))
+(use-package realgud
+  :ensure t
+  :defer t
+  :commands (realgud:gdb realgud:pdb realgud:jdb realgud:trepan)
+  :config
+  ;; Configure realgud for various languages
+  ;; C/C++ with gdb
+  (add-hook 'c-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c d g") 'realgud:gdb)))
+  (add-hook 'c++-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c d g") 'realgud:gdb)))
 
-   ;; Python with pdb
-   (add-hook 'python-mode-hook
-             (lambda ()
-               (local-set-key (kbd "C-c d p") 'realgud:pdb)))
+  ;; Python with pdb
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c d p") 'realgud:pdb)))
 
-   ;; Java with jdb
-   (add-hook 'java-mode-hook
-             (lambda ()
-               (local-set-key (kbd "C-c d j") 'realgud:jdb)))
+  ;; Java with jdb
+  (add-hook 'java-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c d j") 'realgud:jdb)))
 
-   ;; Ruby with trepan
-   (add-hook 'ruby-mode-hook
-             (lambda ()
-               (local-set-key (kbd "C-c d t") 'realgud:trepan))))
+  ;; Ruby with trepan
+  (add-hook 'ruby-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c d t") 'realgud:trepan))))
 
 ;; * Snippets and Templates
 ;;
@@ -4093,33 +4093,33 @@ this declaration to the kill-ring."
         t)
       ad-do-it)))
 
- ;; * Shell Scripting Support
- ;;
- ;; ** flymake-shell
- ;;
- ;;   flymake-shell provides on-the-fly syntax checking for shell scripts.
- ;;   Uses shellcheck or bash -n to validate shell syntax.
- ;;
- ;;   Key features:
- ;;   - Real-time shell syntax checking
- ;;   - Supports multiple shells (bash, sh, zsh)
- ;;   - Integration with flymake framework
- ;;   - Detects common shell script errors
- ;;   - Shows errors in flymake UI
- ;;
- ;;   Why I use it:
- ;;   Immediate feedback on shell script syntax errors before
- ;;   running. Prevents bugs from reaching production.
- ;;
- ;;   GitHub: https://github.com/purcell/flymake-shell
- ;;
- ;;   Configuration notes:
- ;;   Enabled for all shell modes via sh-set-shell-hook.
+;; * Shell Scripting Support
+;;
+;; ** flymake-shell
+;;
+;;   flymake-shell provides on-the-fly syntax checking for shell scripts.
+;;   Uses shellcheck or bash -n to validate shell syntax.
+;;
+;;   Key features:
+;;   - Real-time shell syntax checking
+;;   - Supports multiple shells (bash, sh, zsh)
+;;   - Integration with flymake framework
+;;   - Detects common shell script errors
+;;   - Shows errors in flymake UI
+;;
+;;   Why I use it:
+;;   Immediate feedback on shell script syntax errors before
+;;   running. Prevents bugs from reaching production.
+;;
+;;   GitHub: https://github.com/purcell/flymake-shell
+;;
+;;   Configuration notes:
+;;   Enabled for all shell modes via sh-set-shell-hook.
 
- (use-package flymake-shell
-   :ensure t
-   :commands (flymake-shell-load)
-   :config (add-hook 'sh-set-shell-hook 'flymake-shell-load))
+(use-package flymake-shell
+  :ensure t
+  :commands (flymake-shell-load)
+  :config (add-hook 'sh-set-shell-hook 'flymake-shell-load))
 
 ;; * Embedded Systems Development
 ;;
@@ -4185,82 +4185,82 @@ this declaration to the kill-ring."
   :ensure t
   :mode "\\.js\\'")
 
- ;; ** js2-refactor
- ;;
- ;;   js2-refactor provides semantic refactoring operations for JavaScript.
- ;;   Works on JavaScript/TypeScript code with js2-mode parsing.
- ;;
- ;;   Key features:
- ;;   - Extract function/method (M-x js2r-extract-function)
- ;;   - Wrap in try/catch (M-x js2r-wrap-in-try-catch)
- ;;   - Convert var/let/const (M-x js2r-var-to-let)
- ;;   - Inline function (M-x js2r-inline-function)
- ;;   - Toggle between arrow functions and regular functions
- ;;   - Rename variables intelligently
- ;;
- ;;   Why I use it:
- ;;   Semantic-aware refactoring for JavaScript/TypeScript code.
- ;;   Reduces manual edits for common refactoring patterns.
- ;;
- ;;   GitHub: https://github.com/mooz/js2-refactor.el
- ;;
- ;;   Configuration notes:
- ;;   Works with js2-mode. Requires js2-mode for parsing.
+;; ** js2-refactor
+;;
+;;   js2-refactor provides semantic refactoring operations for JavaScript.
+;;   Works on JavaScript/TypeScript code with js2-mode parsing.
+;;
+;;   Key features:
+;;   - Extract function/method (M-x js2r-extract-function)
+;;   - Wrap in try/catch (M-x js2r-wrap-in-try-catch)
+;;   - Convert var/let/const (M-x js2r-var-to-let)
+;;   - Inline function (M-x js2r-inline-function)
+;;   - Toggle between arrow functions and regular functions
+;;   - Rename variables intelligently
+;;
+;;   Why I use it:
+;;   Semantic-aware refactoring for JavaScript/TypeScript code.
+;;   Reduces manual edits for common refactoring patterns.
+;;
+;;   GitHub: https://github.com/mooz/js2-refactor.el
+;;
+;;   Configuration notes:
+;;   Works with js2-mode. Requires js2-mode for parsing.
 
- (use-package js2-refactor
-   :ensure t
-   :defer t
-   :after js2-mode)
+(use-package js2-refactor
+  :ensure t
+  :defer t
+  :after js2-mode)
 
- ;; ** nvm
- ;;
- ;;   nvm.el integrates Node Version Manager (nvm) with Emacs.
- ;;   Allows switching Node.js versions per project or globally.
- ;;
- ;;   Key features:
- ;;   - Auto-detect project .nvmrc files
- ;;   - Switch Node.js versions
- ;;   - Display current Node version in mode-line
- ;;   - Project-specific Node versions
- ;;   - Works with Node, npm, yarn commands
- ;;
- ;;   Why I use it:
- ;;   Project-specific Node.js versions. Different projects use
- ;;   different Node versions without manual switching.
- ;;
- ;;   GitHub: https://github.com/emacsorphanage/nvm.el
- ;;
- ;;   Configuration notes:
- ;;   Use .nvmrc files in project directories for version control.
+;; ** nvm
+;;
+;;   nvm.el integrates Node Version Manager (nvm) with Emacs.
+;;   Allows switching Node.js versions per project or globally.
+;;
+;;   Key features:
+;;   - Auto-detect project .nvmrc files
+;;   - Switch Node.js versions
+;;   - Display current Node version in mode-line
+;;   - Project-specific Node versions
+;;   - Works with Node, npm, yarn commands
+;;
+;;   Why I use it:
+;;   Project-specific Node.js versions. Different projects use
+;;   different Node versions without manual switching.
+;;
+;;   GitHub: https://github.com/emacsorphanage/nvm.el
+;;
+;;   Configuration notes:
+;;   Use .nvmrc files in project directories for version control.
 
- (use-package nvm
-   :ensure t
-   :commands (nvm-use nvm-switch-version nvm-which))
+(use-package nvm
+  :ensure t
+  :commands (nvm-use nvm-switch-version nvm-which))
 
- ;; ** import-js
- ;;
- ;;   import-js automatically adds import statements for JavaScript modules.
- ;;   Scans buffer for require() calls and adds ES6 import statements.
- ;;
- ;;   Key features:
- ;;   - Auto-generate import statements
- ;;   - Sort imports by module
- ;;   - Remove duplicate imports
- ;;   - Convert to ES6 import syntax
- ;;   - Works with CommonJS modules
- ;;
- ;;   Why I use it:
- ;;   Automates import management in legacy JavaScript code.
- ;;   Reduces manual import editing when refactoring modules.
- ;;
- ;;   GitHub: https://github.com/GregCoke/js-import-import
- ;;
- ;;   Configuration notes:
- ;;   Use M-x import-js-add-import to add imports manually.
+;; ** import-js
+;;
+;;   import-js automatically adds import statements for JavaScript modules.
+;;   Scans buffer for require() calls and adds ES6 import statements.
+;;
+;;   Key features:
+;;   - Auto-generate import statements
+;;   - Sort imports by module
+;;   - Remove duplicate imports
+;;   - Convert to ES6 import syntax
+;;   - Works with CommonJS modules
+;;
+;;   Why I use it:
+;;   Automates import management in legacy JavaScript code.
+;;   Reduces manual import editing when refactoring modules.
+;;
+;;   GitHub: https://github.com/GregCoke/js-import-import
+;;
+;;   Configuration notes:
+;;   Use M-x import-js-add-import to add imports manually.
 
- (use-package import-js
-   :ensure t
-   :commands (import-js-add-import import-js-switch-to-es6))
+(use-package import-js
+  :ensure t
+  :commands (import-js-add-import import-js-switch-to-es6))
 
 ;; ** json-mode
 
@@ -4271,32 +4271,32 @@ this declaration to the kill-ring."
 
 (use-package json-reformat :ensure t :commands json-reformat-region)
 
- ;; ** flymake-json
- ;;
- ;;   flymake-json provides on-the-fly syntax checking for JSON files.
- ;;   Validates JSON structure and reports errors as you type.
- ;;
- ;;   Key features:
- ;;   - Real-time JSON validation
- ;;   - Parses JSON to detect syntax errors
- ;;   - Shows line and column numbers
- ;;   - Integrates with flymake UI
- ;;   - Works with json-mode and other JSON modes
- ;;
- ;;   Why I use it:
- ;;   Early detection of JSON syntax errors. Essential for config
- ;;   files and API responses.
- ;;
- ;;   GitHub: https://github.com/oantolin/flymake-json
- ;;
- ;;   Configuration notes:
- ;;   Enabled for all json-mode buffers.
+;; ** flymake-json
+;;
+;;   flymake-json provides on-the-fly syntax checking for JSON files.
+;;   Validates JSON structure and reports errors as you type.
+;;
+;;   Key features:
+;;   - Real-time JSON validation
+;;   - Parses JSON to detect syntax errors
+;;   - Shows line and column numbers
+;;   - Integrates with flymake UI
+;;   - Works with json-mode and other JSON modes
+;;
+;;   Why I use it:
+;;   Early detection of JSON syntax errors. Essential for config
+;;   files and API responses.
+;;
+;;   GitHub: https://github.com/oantolin/flymake-json
+;;
+;;   Configuration notes:
+;;   Enabled for all json-mode buffers.
 
- (use-package flymake-json
-   :ensure t
-   :commands (flymake-json-load)
-   :config
-   (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
+(use-package flymake-json
+  :ensure t
+  :commands (flymake-json-load)
+  :config
+  (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
 
 ;; * Internationalization
 ;;
