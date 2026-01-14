@@ -3150,22 +3150,64 @@ This functions should be added to the hooks of major modes for programming."
              ("M-." . ggtags-find-tag-dwim)
              ("M-," . ggtags-find-tag-return)))
 
-;; ** c-eldoc
+ ;; ** c-eldoc
+ ;;
+ ;;   c-eldoc provides eldoc support for C/C++ code. Shows
+ ;;   function signatures, macro expansions, and include paths in
+ ;;   echo area or tooltip as you type.
+ ;;
+ ;;   Key features:
+ ;;   - Display function signatures at point
+ ;;   - Show macro expansions
+ ;;   - Display include file paths
+ ;;   - Works with standard eldoc
+ ;;   - Customizable include paths
+ ;;
+ ;;   Why I use it:
+ ;;   Quick reference to function signatures while coding in C/C++.
+ ;;   Reduces need to look up API documentation.
+ ;;
+ ;;   GitHub: https://github.com/lewisjr/c-eldoc
+ ;;
+ ;;   Configuration notes:
+ ;;   Enabled for all c/c++ modes. Includes pkg-config paths.
 
-(use-package c-eldoc
-  :ensure t
-  :config
-  (add-hook 'c-mode-common-hook
-            #'(lambda ()
-		(setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
-		(c-turn-on-eldoc-mode))))
+ (use-package c-eldoc
+   :ensure t
+   :commands (c-turn-on-eldoc-mode)
+   :config
+   (add-hook 'c-mode-common-hook
+             #'(lambda ()
+ 		(setq c-eldoc-includes "`pkg-config --cflags --libs` -I./ -I../")
+ 		(c-turn-on-eldoc-mode))))
 
-;; ** cwarn
+ ;; ** cwarn
+ ;;
+ ;;   cwarn highlights suspicious and error-prone C/C++ constructs.
+ ;;   Detects common mistakes that compilers sometimes miss.
+ ;;
+ ;;   Key features:
+ ;;   - Suspicious semicolon warnings
+ ;;   - Assignment in condition warnings
+ ;;   - Wrong type for printf warnings
+ ;;   - Missing header guards warnings
+ ;;   - Customizable warning levels
+ ;;   - Highlights potential errors
+ ;;
+ ;;   Why I use it:
+ ;;   Early detection of C/C++ bugs and suspicious code patterns.
+ ;;   Catches issues before compile time.
+ ;;
+ ;;   Built-in Emacs feature (no package needed).
+ ;;
+ ;;   Configuration notes:
+ ;;   Enabled globally for all c-mode-family modes.
 
-(use-package cwarn
-  :ensure nil				; built-in
-  :config
-  (add-hook 'c-mode-common-hook #'(lambda () (cwarn-mode 1))))
+ (use-package cwarn
+   :ensure nil				; built-in
+   :commands (cwarn-mode global-cwarn-mode)
+   :config
+   (add-hook 'c-mode-common-hook #'(lambda () (cwarn-mode 1))))
 
 ;; ** cc-mode utilities
 
