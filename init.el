@@ -26,7 +26,7 @@
 ;;; Code:
 
 ;;
-;; * Core Setup and Initialization
+;; * Core Configuration
 ;;
 ;;   Foundation settings for Emacs behavior including environment setup,
 ;;   paths, personal information, and customization handling.
@@ -452,7 +452,7 @@
 
 (use-package async :ensure t)
 
-;; * UI and Theme Configuration
+;; * Theme & Fonts
 ;;
 ;;   User interface customization including themes, fonts, colors,
 ;;   and visual appearance settings.
@@ -1089,7 +1089,7 @@ return nil since you can't set font for emacs on it."
   (setq tramp-default-method "rsync"))
 
 ;;
-;; * Completion and Search Framework
+;; * Completion Framework
 ;;
 ;;   Modern completion stack: Vertico (minibuffer), Corfu (in-buffer),
 ;;   Consult (search), Marginalia (annotations), and Orderless (flexible
@@ -1873,7 +1873,7 @@ return nil since you can't set font for emacs on it."
   :ensure t)
 
 
-;; * AI and LLM Integration
+;; * AI Integration
 
 (use-package llm
   :ensure t :defer t
@@ -3797,11 +3797,11 @@ this declaration to the kill-ring."
   ;;(add-to-list 'major-mode-remap-alist '(qml-mode       . qmljs-ts-mode))
   )
 
-;; * LSP Support
+;; * LSP & Code Intelligence
 ;;
-;;   Eglot provides LSP (Language Server Protocol) support for Emacs.
-;;   It enables IDE features like auto-completion, go-to-definition,
-;;   find-references, and code actions across many languages.
+;;   Language Server Protocol and code intelligence tools providing
+;;   IDE-like features: auto-completion, go-to-definition, find-references,
+;;   refactoring, and diagnostics across multiple programming languages.
 
 (use-package eglot
   :ensure nil		 ; Built-in since Emacs 29
@@ -5024,7 +5024,7 @@ this declaration to the kill-ring."
   ;; Enable cider-mode in clojure buffers
   (add-hook 'clojure-mode-hook 'cider-mode))
 
-;; * Testing with ERT
+;; * Debugging & Testing
 ;;
 ;;   ERT (Emacs Lisp Regression Testing) is Emacs's built-in testing framework.
 ;;   Use `M-x ert' to run tests interactively.
