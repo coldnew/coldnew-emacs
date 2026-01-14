@@ -472,7 +472,7 @@
 (require 'night-coldnew-theme)
 (load-theme 'night-coldnew t nil)  ; default use `night-coldnew-theme'
 
-;; * Fonts
+;; ** Fonts
 ;;
 ;;   Font configuration for English and CJK characters.
 
