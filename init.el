@@ -558,6 +558,278 @@
   ;; global enable undo-tree
   (global-undo-tree-mode))
 
+
+;;
+;; * Completion and Search Framework
+;;
+;;   Modern completion stack: Vertico (minibuffer), Corfu (in-buffer),
+;;   Consult (search), Marginalia (annotations), and Orderless (flexible
+;;   matching). Provides fast, intuitive completion throughout Emacs.
+;;
+
+;; ** Vertico Stack (Minibuffer Completion)
+
+;; *** vertico
+;;
+;;   Vertico provides a vertical completion UI for the minibuffer.
+;;   It's minimalistic, fast, and highly composable with other
+;;   completion packages in the ecosystem.
+;;
+;;   Key features:
+;;   - Vertical display of candidates (like helm, but simpler)
+;;   - Fuzzy matching with orderless
+;;   - Candidate preview with consult
+;;   - Compatible with savehist and corfu
+;;
+;;   Why I use it:
+;;   Replaces helm with a more modular, faster alternative that
+;;   integrates seamlessly with consult and corfu.
+;;
+;;   GitHub: https://github.com/minad/vertico
+
+(use-package vertico
+  :ensure t
+  :demand t
+  :config
+  (vertico-mode 1)
+  ;; Show more candidates (default is 10)
+  (setq vertico-count 15)
+  ;; Resize vertico window to fit content
+  (setq vertico-resize t))
+
+;; *** marginalia
+;;
+;;   Marginalia enriches the minibuffer completion by adding helpful
+;;   annotations to the side of completion candidates (like descriptions,
+;;   file sizes, function signatures, etc.).
+;;
+;;   Key features:
+;;   - Annotates file completions with size, mode
+;;   - Shows function signatures for completions
+;;   - Displays command descriptions
+;;   - Works with vertico and consult
+;;
+;;   Why I use it:
+;;   Provides context that makes completion decisions faster without
+;;   opening documentation.
+;;
+;;   GitHub: https://github.com/minad/marginalia
+
+(use-package marginalia
+  :ensure t
+  :demand t
+  :config
+  (marginalia-mode 1))
+
+;; *** orderless
+;;
+;;   Orderless provides a powerful completion style that matches
+;;   components in any order (space-separated), making fuzzy search
+;;   much more intuitive.
+;;
+;;   Key features:
+;;   - Space-separated matching (e.g., "ff p" matches "preffile")
+;;   - Literal strings with quotes
+;;   - Multiple styles can be chained
+;;   - Fast regex-based implementation
+;;
+;;   Why I use it:
+;;   Makes completion much more flexible without needing complex
+;;   configuration.
+;;
+;;   GitHub: https://github.com/oantolin/orderless
+
+(use-package orderless
+  :ensure t
+  :demand t
+  :config
+  (setq completion-styles '(orderless basic)))
+
+;; *** consult
+;;
+;;   Consult provides a suite of useful search and navigation commands
+;;   built on top of Emacs' completion infrastructure. It's the
+;;   modern successor to swiper/ivy.
+;;
+;;   Key features:
+;;   - `consult-line`: Jump to line in buffer (like swiper)
+;;   - `consult-find`: Find files async
+;;   - `consult-ripgrep`: Search with ripgrep
+;;   - `consult-yank-pop`: Browse kill ring
+;;   - `consult-grep`: Grep through files
+;;   - Integration with vertico for completion UI
+;;
+;;   Why I use it:
+;;   Replaces ivy/swiper with faster, composable alternatives that
+;;   leverage native Emacs completion.
+;;
+;;   GitHub: https://github.com/minad/consult
+
+(use-package consult
+  :ensure t
+  :demand t
+  :bind (("C-x C-f" . find-file)
+          ("C-x b" . switch-to-buffer)
+          ("M-s" . consult-line)
+          ("M-y" . consult-yank-pop)
+          ("C-x C-r" . consult-recent-file)
+          ("C-c g" . consult-gnus)
+          ("C-c h" . consult-history))
+  :config
+  (setq consult-preview-key '(:debounce 0.2 any))
+  ;; Use consult for grep/ag search
+  (setq consult-async-refresh-debounce 0.2)
+  (setq consult-async-input-throttle 0.1)
+  ;; Customize consult-line for better display
+  (consult-customize consult-line
+                       :preview-key '(:debounce 0.3 any)
+                       ;; Show more context in preview (lines before/after match)
+                       (setq consult-line-numbers-widen t)))
+
+;; *** rg
+;;
+;;   rg is the ripgrep search tool integration for Emacs. Ripgrep
+;;   is an extremely fast text search tool that respects .gitignore.
+;;
+;;   Key features:
+;;   - Async search with ripgrep
+;;   - Live filtering of results
+;;   - Jump to results easily
+;;   - Works with consult
+;;
+;;   Why I use it:
+;;   Faster than grep, respects gitignore, and integrates perfectly
+;;   with consult for async search.
+;;
+;;   GitHub: https://github.com/dajva/rg.el
+;;   Requires: ripgrep (install from package manager)
+
+(use-package rg
+  :ensure t
+  :if (executable-find "rg")
+  :commands (rg rg-project rg-literal))
+
+;; ** Corfu (In-Buffer Completion)
+
+;; corfu
+;;
+;;   Corfu is a minimalistic completion UI for in-buffer completion.
+;;   It provides completion-at-point with a popup interface similar to
+;;   company, but with less overhead and better integration with
+;;   standard Emacs completion.
+;;
+;;   Key features:
+;;   - Auto popup after delay
+;;   - TAB/S-TAB for navigation
+;;   - Works with standard completion-at-point
+;;   - Integration with orderless for fuzzy matching
+;;   - Lightweight and fast
+;;
+;;   Why I use it:
+;;   Provides modern in-buffer completion with minimal configuration,
+;;   works seamlessly with LSP and built-in completion.
+;;
+;;   GitHub: https://github.com/minad/corfu
+
+(use-package corfu
+  :ensure t
+  :demand t
+  :custom
+  ;; Lower idle delay for faster completion (default is 0.5s)
+  (corfu-auto-delay 0.2)
+  ;; Show candidates after 2 characters
+  (corfu-minimum-prefix-length 2)
+  ;; Number of candidates to show
+  (corfu-count 15)
+  ;; Show quick-access numbers
+  (corfu-quick nil)
+  ;; Don't use corfu for minibuffer (vertico handles that)
+  (corfu-global-modes '(not minibuffer-mode))
+  ;; Enable auto completion with manual TAB trigger
+  (corfu-auto t)
+  ;; Preselect first candidate
+  (corfu-preselect 'first)
+  ;; Cycle through candidates
+  (corfu-cycle t)
+  :config
+  ;; Enable Corfu globally
+  (global-corfu-mode)
+
+  ;; Corfu keybindings (work in all states)
+  (define-key corfu-map (kbd "TAB") 'corfu-insert)
+  (define-key corfu-map [tab] 'corfu-insert)
+  (define-key corfu-map (kbd "RET") 'corfu-insert)
+  (define-key corfu-map (kbd "ESC") 'corfu-reset))  ;; End of use-package corfu
+
+;; Corfu + Eglot integration for LSP completion (C/C++, Python, etc.)
+;; Eglot provides completion-at-point, corfu enhances it with UI
+(with-eval-after-load 'eglot
+  (setq-local completion-in-region-function #'corfu-complete-in-region))
+
+;; kind-icon
+;;
+;;   kind-icon adds icons to completion candidates in Corfu.
+;;   It displays colorful icons for different completion kinds
+;;   (functions, variables, methods, files, etc.).
+;;
+;;   Key features:
+;;   - LSP completion icons (function, variable, class, etc.)
+;;   - File completion icons
+;;   - Configurable colors
+;;   - Works with corfu, vertico, etc.
+;;
+;;   Why I use it:
+;;   Makes completion visually richer and faster to scan by type.
+;;
+;;   GitHub: https://github.com/jdtsmith/kind-icon
+
+(use-package kind-icon
+  :ensure t
+  :after corfu
+  :custom
+  ;; Use icons instead of text labels
+  (kind-icon-use-icons t)
+  ;; Match corfu background face
+  (kind-icon-default-face 'corfu-default)
+  :config
+  ;; Add kind-icon to Corfu margin formatters
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+;; ** Xref (Cross-Referencing)
+
+;; xref
+;;
+;;   xref provides a generic framework for cross-referencing commands.
+;;   It provides a way to find definitions, references, and declarations
+;;   across different programming languages and tools.
+;;
+;;   Key features:
+;;   - `xref-find-definitions`: Jump to definition
+;;   - `xref-find-references`: Find all usages
+;;   - `xref-apropos`: Search symbol across project
+;;   - Backend-agnostic (works with etags, gtags, LSP, etc.)
+;;
+;;   Why I use it:
+;;   Unified interface for all symbol search operations, works with LSP
+;;   and traditional tag systems.
+;;
+;;   Built-in since Emacs 25, enhanced in Emacs 28+.
+
+(use-package xref
+  :ensure nil
+  :hook ((xref-after-return xref-after-jump) . recenter)
+  :custom
+  ;; Emacs 28+
+  ;;
+  ;; `project-find-regexp' can be faster when setting `xref-search-program' to
+  ;;  `ripgrep'.
+  (xref-search-program (cond ((executable-find "rg") 'ripgrep)
+                             ((executable-find "ugrep") 'ugrep)
+                             (t 'grep)))
+  (xref-history-storage 'xref-window-local-history)
+  (xref-show-xrefs-function #'xref-show-definitions-completing-read)
+  (xref-show-definitions-function #'xref-show-definitions-completing-read))
+
 ;; * External Packages
 ;;
 ;;   Most of emacs packages do not need many configs or just provide
@@ -2033,142 +2305,6 @@ This functions should be added to the hooks of major modes for programming."
                             (".*\.Z" "uncompress")
                             (".*" "echo 'Could not unpack file:'")))))
     (eshell-command-result (concat command " " file))))
-
-;; * Completion
-;;
-;;   Modern completion framework with Vertico, Consult, Marginalia, and Orderless.
-;;   Much faster and more modular than helm.
-
-(use-package vertico
-  :ensure t
-  :demand t
-  :config
-  (vertico-mode 1)
-  ;; Show more candidates (default is 10)
-  (setq vertico-count 15)
-  ;; Resize vertico window to fit content
-  (setq vertico-resize t))
-
-(use-package consult
-  :ensure t
-  :demand t
-  :bind (("C-x C-f" . find-file)
-         ("C-x b" . switch-to-buffer)
-         ("M-s" . consult-line)
-         ("M-y" . consult-yank-pop)
-         ("C-x C-r" . consult-recent-file)
-         ("C-c g" . consult-gnus)
-         ("C-c h" . consult-history))
-  :config
-  (setq consult-preview-key '(:debounce 0.2 any))
-  ;; Use consult for grep/ag search
-  (setq consult-async-refresh-debounce 0.2)
-  (setq consult-async-input-throttle 0.1)
-  ;; Customize consult-line for better display
-  (consult-customize consult-line
- 		     :preview-key '(:debounce 0.3 any)
- 		     ;; Show more context in preview (lines before/after match)
- 		     (setq consult-line-numbers-widen t)))
-
-(use-package rg
-  :ensure t
-  :if (executable-find "rg")
-  :commands (rg rg-project rg-literal))
-
-(use-package marginalia
-  :ensure t
-  :demand t
-  :config
-  (marginalia-mode 1))
-
-(use-package orderless
-  :ensure t
-  :demand t
-  :config
-  (setq completion-styles '(orderless basic)))
-
-;; ** corfu
-;;
-;;   Corfu is a minimalistic completion UI for in-buffer completion.
-;;   It works as the in-buffer completion counterpart to Vertico's minibuffer UI.
-;;
-;;   Corfu complements the Vertico stack:
-;;   - Vertico/Consult: minibuffer completion (M-x, find-file, etc.)
-;;   - Corfu: in-buffer completion (code completion, symbols, etc.)
-
-(use-package corfu
-  :ensure t
-  :demand t
-  :custom
-  ;; Lower idle delay for faster completion (default is 0.5s)
-  (corfu-auto-delay 0.2)
-  ;; Show candidates after 2 characters
-  (corfu-minimum-prefix-length 2)
-  ;; Number of candidates to show
-  (corfu-count 15)
-  ;; Show quick-access numbers
-  (corfu-quick nil)
-  ;; Don't use corfu for minibuffer (vertico handles that)
-  (corfu-global-modes '(not minibuffer-mode))
-  ;; Enable auto completion with manual TAB trigger
-  (corfu-auto t)
-  ;; Preselect first candidate
-  (corfu-preselect 'first)
-  ;; Cycle through candidates
-  (corfu-cycle t)
-  :config
-  ;; Enable Corfu globally
-  (global-corfu-mode)
-
-  ;; Corfu keybindings (work in all states)
-  (define-key corfu-map (kbd "TAB") 'corfu-insert)
-  (define-key corfu-map [tab] 'corfu-insert)
-  (define-key corfu-map (kbd "RET") 'corfu-insert)
-  (define-key corfu-map (kbd "ESC") 'corfu-reset))  ;; End of use-package corfu
-
-;; Corfu + Eglot integration for LSP completion (C/C++, Python, etc.)
-;; Eglot provides completion-at-point, corfu enhances it with UI
-(with-eval-after-load 'eglot
-  (setq-local completion-in-region-function #'corfu-complete-in-region))
-
-;; ** kind-icon
-;;
-;;   kind-icon adds icons to completion candidates in Corfu.
-;;   It displays colorful icons for different completion kinds
-;;   (functions, variables, methods, files, etc.).
-
-(use-package kind-icon
-  :ensure t
-  :after corfu
-  :custom
-  ;; Use icons instead of text labels
-  (kind-icon-use-icons t)
-  ;; Match corfu background face
-  (kind-icon-default-face 'corfu-default)
-  :config
-  ;; Add kind-icon to Corfu margin formatters
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
-
-;; ** xref
-;;
-;;   xref provides a generic framework for cross-referencing commands.
-;;   It provides a way to find definitions, references, and declarations
-;;   across different programming languages and tools.
-
-(use-package xref
-  :ensure nil
-  :hook ((xref-after-return xref-after-jump) . recenter)
-  :custom
-  ;; Emacs 28+
-  ;;
-  ;; `project-find-regexp' can be faster when setting `xref-search-program' to
-  ;;  `ripgrep'.
-  (xref-search-program (cond ((executable-find "rg") 'ripgrep)
-                             ((executable-find "ugrep") 'ugrep)
-                             (t 'grep)))
-  (xref-history-storage 'xref-window-local-history)
-  (xref-show-xrefs-function #'xref-show-definitions-completing-read)
-  (xref-show-definitions-function #'xref-show-definitions-completing-read))
 
 ;; * Org Mode
 ;;
