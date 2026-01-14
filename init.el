@@ -1155,7 +1155,28 @@
   (evil-ex-define-cmd "google-suggest" 'consult-google-suggest)
   (evil-ex-define-cmd "gtag" 'ggtags-create-tags))
 
-;; *** Evil Collection - Evil keybindings for various packages
+;; *** evil-collection
+;;
+;;   Evil collection provides Evil keybindings for various packages that
+;;   don't have them by default. Unifies keybindings across Emacs.
+;;
+;;   Key features:
+;;   - Evil keybindings for many packages (100+)
+;;   - Consistent Vim-like experience
+;;   - Easy to enable per-package or all
+;;   - Customizable keymap overrides
+;;   - Active development and maintenance
+;;
+;;   Why I use it:
+;;   Makes all packages feel native to Vim workflow. Don't need
+;;   to learn different keybindings for dired, dashboard, etc.
+;;
+;;   GitHub: https://github.com/emacs-evil/evil-collection
+;;
+;;   Configuration notes:
+;;   Enabled for: corfu, dashboard, diff-hl, dired, eldoc,
+;;   elpaca, lsp-ui-imenu, which-key.
+
 (use-package evil-collection
   :ensure t
   :demand t
@@ -1167,10 +1188,25 @@
 
 ;; *** evil-leader
 ;;
-;;   Evil Leader provides of =<leader>= feature from Vim that provides
+;;   Evil Leader provides `<leader>` feature from Vim that provides
 ;;   an easy way to bind keys under a variable prefix key.
+;;   Leader keys reduce conflict with existing bindings.
+;;
+;;   Key features:
+;;   - Prefix key for custom bindings
+;;   - Global and buffer-local keybindings
+;;   - Works in all evil states
+;;   - Easy to define custom commands
+;;   - Compatible with evil-mode
+;;
+;;   Why I use it:
+;;   Allows organizing personal keybindings under SPC prefix,
+;;   similar to Vim's leader key approach.
 ;;
 ;;   GitHub: https://github.com/cofi/evil-leader
+;;
+;;   Configuration notes:
+;;   Leader key set to <SPC>. Window selection: SPC 1-9.
 
 (use-package evil-leader
   :ensure t
@@ -1191,14 +1227,28 @@
    "7" 'select-window-7
    "8" 'select-window-8
    "9" 'select-window-9
-   "0" 'select-window-0) )
+   "0" 'select-window-0))
 
 ;; *** evil-surround
 ;;
-;;   This package emulates surround.vim by Tim Pope. The functionality
-;;   is wrapped into a minor mode.
+;;   Evil surround emulates surround.vim by Tim Pope. The functionality
+;;   is wrapped into a minor mode. Edit surrounding pairs easily.
+;;
+;;   Key features:
+;;   - Add surrounding characters (cs"' -> changes " to ')
+;;   - Delete surrounding characters (ds")
+;;   - Change surrounding characters (cs"[)
+;;   - Works with tags, quotes, brackets, etc.
+;;   - Supports visual mode selections
+;;
+;;   Why I use it:
+;;   Essential for quickly changing or removing surrounding quotes,
+;;   brackets, or tags. Saves many keystrokes.
 ;;
 ;;   GitHub: https://github.com/timcharper/evil-surround
+;;
+;;   Configuration notes:
+;;   Enabled globally. Keybindings: cs (change), ds (delete), ys (add).
 
 (use-package evil-surround
   :ensure t
@@ -1209,11 +1259,33 @@
 
 ;; *** evil-quickscope
 ;;
-;;   This package emulates quick_scope.vim by Brian Le. It highlights
+;;   Evil quickscope emulates quick_scope.vim by Brian Le. It highlights
 ;;   targets for evil-mode's f,F,t,T keys, allowing for quick
 ;;   navigation within a line with no additional mappings.
+;;   Highlighted characters show their jump direction.
+;;
+;;   Key features:
+;;   - Visual highlighting of f/t targets
+;;   - Color-coded by distance/position
+;;   - Reduces need to remember positions
+;;   - Faster character-based navigation
+;;   - Configurable highlights
+;;
+;;   Why I use it:
+;;   Makes f/F/t/T operations more intuitive. Visual cues
+;;   show exact character positions on the line.
 ;;
 ;;   GitHub: https://github.com/blorbx/evil-quickscope
+;;
+;;   Configuration notes:
+;;   Enabled for all programming modes.
+
+(use-package evil-quickscope
+  :ensure t
+  :after evil
+  :commands (turn-on-evil-quickscope-always-mode)
+  :config
+  (add-hook 'prog-mode-hook 'turn-on-evil-quickscope-always-mode))
 
 (use-package evil-quickscope
   :ensure t
@@ -1223,9 +1295,24 @@
 
 ;; *** vi-tilde-fringe
 ;;
-;;   Displays tildes in fringe on empty lines a la Vi
+;;   Displays tildes in fringe on empty lines a la Vi.
+;;   Visual indicator of where file content ends, like Vi/Vim.
+;;
+;;   Key features:
+;;   - Shows ~ in fringe for empty lines
+;;   - Visual distinction between content and blank space
+;;   - Consistent with Vi/Vim display
+;;   - Works in all modes
+;;   - Lightweight
+;;
+;;   Why I use it:
+;;   Visual clarity: see where actual content ends. Familiar
+;;   Vi-style indicator for file boundaries.
 ;;
 ;;   GitHub: https://github.com/syohex/vi-tilde-fringe
+;;
+;;   Configuration notes:
+;;   Only enabled in graphical Emacs (window-system).
 
 (use-package vi-tilde-fringe
   :ensure t
@@ -1235,13 +1322,28 @@
   (global-vi-tilde-fringe-mode))
 
 
-
 ;; *** evil-terminal-cursor-changer
 ;;
 ;;   Make terminal support evil's cursor shape change. This package
 ;;   changing cursor shape and color by evil state for evil-mode.
+;;   Works in terminal Emacs where cursor shaping isn't native.
 ;;
-;;   Supported terminal: xterm, gnome-terminal, iTerm, konsole.
+;;   Key features:
+;;   - Different cursor per evil state
+;;   - Visual feedback for state changes
+;;   - Terminal-only (GUI has native support)
+;;   - Supports xterm, gnome-terminal, iTerm, konsole
+;;   - Configurable shapes: box, bar, hbar
+;;
+;;   Why I use it:
+;;   In terminal, shows current evil mode via cursor shape.
+;;   Essential for avoiding mode confusion.
+;;
+;;   GitHub: https://github.com/4DA/evil-terminal-cursor-changer
+;;
+;;   Configuration notes:
+;;   Terminal-only (not GUI). Shapes: normal/motion/visual=box,
+;;   insert=bar, emacs=hbar.
 
 (use-package evil-terminal-cursor-changer
   :ensure t
