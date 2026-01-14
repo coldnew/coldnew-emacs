@@ -4185,18 +4185,82 @@ this declaration to the kill-ring."
   :ensure t
   :mode "\\.js\\'")
 
-;; ** js2-refactor
+ ;; ** js2-refactor
+ ;;
+ ;;   js2-refactor provides semantic refactoring operations for JavaScript.
+ ;;   Works on JavaScript/TypeScript code with js2-mode parsing.
+ ;;
+ ;;   Key features:
+ ;;   - Extract function/method (M-x js2r-extract-function)
+ ;;   - Wrap in try/catch (M-x js2r-wrap-in-try-catch)
+ ;;   - Convert var/let/const (M-x js2r-var-to-let)
+ ;;   - Inline function (M-x js2r-inline-function)
+ ;;   - Toggle between arrow functions and regular functions
+ ;;   - Rename variables intelligently
+ ;;
+ ;;   Why I use it:
+ ;;   Semantic-aware refactoring for JavaScript/TypeScript code.
+ ;;   Reduces manual edits for common refactoring patterns.
+ ;;
+ ;;   GitHub: https://github.com/mooz/js2-refactor.el
+ ;;
+ ;;   Configuration notes:
+ ;;   Works with js2-mode. Requires js2-mode for parsing.
 
-(use-package js2-refactor
-  :ensure t)
+ (use-package js2-refactor
+   :ensure t
+   :defer t
+   :after js2-mode)
 
-;; ** nvm
+ ;; ** nvm
+ ;;
+ ;;   nvm.el integrates Node Version Manager (nvm) with Emacs.
+ ;;   Allows switching Node.js versions per project or globally.
+ ;;
+ ;;   Key features:
+ ;;   - Auto-detect project .nvmrc files
+ ;;   - Switch Node.js versions
+ ;;   - Display current Node version in mode-line
+ ;;   - Project-specific Node versions
+ ;;   - Works with Node, npm, yarn commands
+ ;;
+ ;;   Why I use it:
+ ;;   Project-specific Node.js versions. Different projects use
+ ;;   different Node versions without manual switching.
+ ;;
+ ;;   GitHub: https://github.com/emacsorphanage/nvm.el
+ ;;
+ ;;   Configuration notes:
+ ;;   Use .nvmrc files in project directories for version control.
 
-(use-package nvm :ensure t)
+ (use-package nvm
+   :ensure t
+   :commands (nvm-use nvm-switch-version nvm-which))
 
-;; ** import-js
+ ;; ** import-js
+ ;;
+ ;;   import-js automatically adds import statements for JavaScript modules.
+ ;;   Scans buffer for require() calls and adds ES6 import statements.
+ ;;
+ ;;   Key features:
+ ;;   - Auto-generate import statements
+ ;;   - Sort imports by module
+ ;;   - Remove duplicate imports
+ ;;   - Convert to ES6 import syntax
+ ;;   - Works with CommonJS modules
+ ;;
+ ;;   Why I use it:
+ ;;   Automates import management in legacy JavaScript code.
+ ;;   Reduces manual import editing when refactoring modules.
+ ;;
+ ;;   GitHub: https://github.com/GregCoke/js-import-import
+ ;;
+ ;;   Configuration notes:
+ ;;   Use M-x import-js-add-import to add imports manually.
 
-(use-package import-js :ensure t)
+ (use-package import-js
+   :ensure t
+   :commands (import-js-add-import import-js-switch-to-es6))
 
 ;; ** json-mode
 
