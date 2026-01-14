@@ -3609,41 +3609,57 @@ this declaration to the kill-ring."
      (define-key citre-mode-map (kbd "C-c c s") 'citre-peek)
      (define-key citre-mode-map (kbd "C-c c f") 'citre-find-file)))
 
-;; ** mason
-;;
-;;   Mason.el provides integration with mason, a tool for managing LSP servers,
-;;   DAP servers, linters, and formatters. It allows easy installation and
-;;   management of language tools without manual setup.
-;;
-;;   GitHub: https://github.com/hlissner/emacs-mason
+ ;; ** mason
+ ;;
+ ;;   Mason.el provides integration with mason, a tool for managing LSP servers,
+ ;;   DAP servers, linters, and formatters. It allows easy installation and
+ ;;   management of language tools without manual setup.
+ ;;
+ ;;   Key features:
+ ;;   - Easy package installation from registry
+ ;;   - List available/manage installed packages
+ ;;   - Automatic LSP server setup
+ ;;   - DAP adapter support for debugging
+ ;;   - Per-project package management
+ ;;   - No manual PATH configuration needed
+ ;;
+ ;;   Why I use it:
+ ;;   One-command installation of language servers and tools.
+ ;;   Eliminates manual setup and PATH management for LSP/DAP.
+ ;;
+ ;;   GitHub: https://github.com/hlissner/emacs-mason
+ ;;
+ ;;   Configuration notes:
+ ;;   Auto-installs: typescript, python (pyright), rust (rust-analyzer),
+ ;;   go (gopls), c (clangd), cmake, bash, lua, json, yaml servers.
 
-(use-package mason
-  :ensure t
-  :defer t
-  :commands (mason-install mason-uninstall mason-list mason-info)
-  :config
-  ;; Set mason directory to cache
-  (when (boundp 'user-cache-directory)
-    (setq mason-cache-directory (expand-file-name "mason" user-cache-directory)))
+ (use-package mason
+   :ensure t
+   :defer t
+   :commands (mason-install mason-uninstall mason-list mason-info)
+   :config
+   ;; Set mason directory to cache
+   (when (boundp 'user-cache-directory)
+     (setq mason-cache-directory (expand-file-name "mason" user-cache-directory)))
 
-  ;; Install commonly used servers automatically
-  ;; LSP servers
-  (dolist (pkg '("typescript-language-server"
-                 "pyright"
-                 "rust-analyzer"
-                 "gopls"
-                 "clangd"
-                 "cmake-language-server"
-                 "bash-language-server"
-                 "lua-language-server"
-                 "json-lsp"
-                 "yaml-language-server"))
-    (when (not (mason-installed-p pkg))
-      (message "Mason: Installing LSP server %s..." pkg)
-      (mason-install pkg))))
+   ;; Install commonly used servers automatically
+   ;; LSP servers
+   (dolist (pkg '("typescript-language-server"
+                  "pyright"
+                  "rust-analyzer"
+                  "gopls"
+                  "clangd"
+                  "cmake-language-server"
+                  "bash-language-server"
+                  "lua-language-server"
+                  "json-lsp"
+                  "yaml-language-server"))
+     (when (not (mason-installed-p pkg))
+       (message "Mason: Installing LSP server %s..." pkg)
+       (mason-install pkg)))
 
-;; DAP servers for debugging (will be installed on-demand by dape-maybe-install-adapter)
-;; These are installed when first needed to avoid startup delays
+ ;; DAP servers for debugging (will be installed on-demand by dape-maybe-install-adapter)
+ ;; These are installed when first needed to avoid startup delays
 
 ;; ** dape
 ;;
