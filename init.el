@@ -830,6 +830,218 @@
   (xref-show-xrefs-function #'xref-show-definitions-completing-read)
   (xref-show-definitions-function #'xref-show-definitions-completing-read))
 
+
+;;
+;; * Vim Emulation
+;;
+;;   Vim keybindings via Evil mode with extensions for surround, leader key,
+;;   quickscope navigation, and terminal cursor changes. Provides Vim
+;;   editing experience in Emacs.
+;;
+
+;; ** Evil Mode
+
+;; *** evil
+;;
+;;   Evil is an extensible Vim layer for Emacs. It provides Vim
+;;   modal editing with states (normal, insert, visual, etc.) and
+;;   comprehensive Vim emulation.
+;;
+;;   Key features:
+;;   - Modal editing with states
+;;   - Vim keybindings
+;;   - Text objects
+;;   - Extensible with packages
+;;   - Works with Emacs features
+;;
+;;   Why I use it:
+;;   Familiar Vim keybindings with Emacs extensibility, best of both
+;;   worlds.
+;;
+;;   GitHub: https://github.com/emacs-evil/evil
+
+(use-package evil
+  :ensure t
+  :demand t		       ; Needed for vim keybindings at startup
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)	; for `evil-collection'
+  :config
+  ;; enable evil-mode globally
+  (evil-mode t)
+  ;; some configs setup later
+  ;; default state set to insert-state
+  (setq evil-default-state 'insert)
+
+  (setcdr evil-insert-state-map nil)
+  (define-key evil-insert-state-map
+	      (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
+  (define-key evil-insert-state-map [escape] 'evil-normal-state)
+  (dolist (m evil-emacs-state-modes)
+    (add-to-list 'evil-insert-state-modes m))
+
+  ;; extra keybindings defined in `Keybinding' section
+  (evil-define-key 'normal 'global
+    (kbd "C-x C-f") 'find-file
+    (kbd "C-x C-q") 'read-only-mode
+    (kbd "C-x M-1") 'deft-or-close
+    (kbd "C-x M-2") 'eshell
+    (kbd "C-x M-3") 'mu4e
+    (kbd "C-x M-4") 'erc-start-or-switch
+    (kbd "C-x vl") 'magit-log
+    (kbd "C-x vp") 'magit-push
+    (kbd "C-x vs") 'magit-status
+    (kbd "C-x b") 'switch-to-buffer
+    (kbd "M-[") 'winner-undo
+    (kbd "M-]") 'winner-redo
+    (kbd "M-x") 'execute-extended-command
+    (kbd "M-s") 'consult-line
+    (kbd "C-x C-o") 'other-frame
+    (kbd "M-o") 'other-window)
+  (evil-define-key 'insert 'global
+    (kbd "<delete>") 'hungry-delete-backward
+    (kbd "C-;") 'iedit-mode
+    (kbd "C-d") 'hungry-delete-forward
+    (kbd "C-l") 'hungry-delete-backward
+    (kbd "C-o") 'evil-execute-in-normal-state
+    (kbd "C-n") 'evil-next-line
+    (kbd "C-p") 'evil-previous-line
+    (kbd "C-v") 'set-mark-mode/rectangle-mark-mode
+    (kbd "C-w") 'backward-kill-word
+    (kbd "C-x C-f") 'find-file
+    (kbd "C-x C-n") 'corfu-complete
+    (kbd "C-x C-o") 'other-frame
+    (kbd "C-x C-q") 'read-only-mode
+    (kbd "C-x M-1") 'deft-or-close
+    (kbd "C-x M-2") 'eshell
+    (kbd "C-x M-3") 'mu4e
+    (kbd "C-x M-4") 'erc-start-or-switch
+    (kbd "C-x T") 'sane-term
+    (kbd "C-x b") 'switch-to-buffer
+    (kbd "C-x t") 'sane-term
+    (kbd "C-x vl") 'magit-log
+    (kbd "C-x vp") 'magit-push
+    (kbd "C-x vs") 'magit-status
+    (kbd "M-<SPC>") 'insert-U200B-char
+    (kbd "M-[") 'winner-undo
+    (kbd "M-]") 'winner-redo
+    (kbd "M-s") 'consult-line
+    (kbd "M-v") 'er/expand-region
+    (kbd "M-x") 'execute-extended-command
+    (kbd "M-y") 'consult-yank-pop
+    (kbd "M-z")   'zzz-to-char
+    (kbd "s-<RET>") 'insert-empty-line
+    (kbd "s-<SPC>") 'insert-U200B-char
+    (kbd "C-x C-d") 'dired)
+  (evil-ex-define-cmd "ag" 'consult-ag)
+  (evil-ex-define-cmd "agi[nteractive]" 'consult-ag)
+  (evil-ex-define-cmd "google" 'consult-google)
+  (evil-ex-define-cmd "google-suggest" 'consult-google-suggest)
+  (evil-ex-define-cmd "gtag" 'ggtags-create-tags))
+
+;; *** Evil Collection - Evil keybindings for various packages
+(use-package evil-collection
+  :ensure t
+  :demand t
+  :after evil
+  :config
+  (evil-collection-init '(corfu dashboard diff-hl dired eldoc elpaca lsp-ui-imenu which-key)))
+
+;; ** Evil Extensions
+
+;; *** evil-leader
+;;
+;;   Evil Leader provides of =<leader>= feature from Vim that provides
+;;   an easy way to bind keys under a variable prefix key.
+;;
+;;   GitHub: https://github.com/cofi/evil-leader
+
+(use-package evil-leader
+  :ensure t
+  :after evil
+  :commands (global-evil-leader-mode evil-leader/set-leader evil-leader/set-key)
+  :config
+  ;; enable evil-leader globally
+  (global-evil-leader-mode)
+  ;; extra keybindings defined in `Keybinding' section
+  (evil-leader/set-leader "<SPC>")
+  (evil-leader/set-key
+   "1" 'select-window-1
+   "2" 'select-window-2
+   "3" 'select-window-3
+   "4" 'select-window-4
+   "5" 'select-window-5
+   "6" 'select-window-6
+   "7" 'select-window-7
+   "8" 'select-window-8
+   "9" 'select-window-9
+   "0" 'select-window-0) )
+
+;; *** evil-surround
+;;
+;;   This package emulates surround.vim by Tim Pope. The functionality
+;;   is wrapped into a minor mode.
+;;
+;;   GitHub: https://github.com/timcharper/evil-surround
+
+(use-package evil-surround
+  :ensure t
+  :after evil
+  :commands (global-evil-surround-mode)
+  :config
+  (global-evil-surround-mode 1))
+
+;; *** evil-quickscope
+;;
+;;   This package emulates quick_scope.vim by Brian Le. It highlights
+;;   targets for evil-mode's f,F,t,T keys, allowing for quick
+;;   navigation within a line with no additional mappings.
+;;
+;;   GitHub: https://github.com/blorbx/evil-quickscope
+
+(use-package evil-quickscope
+  :ensure t
+  :after evil
+  :config
+  (add-hook 'prog-mode-hook 'turn-on-evil-quickscope-always-mode))
+
+;; *** vi-tilde-fringe
+;;
+;;   Displays tildes in fringe on empty lines a la Vi
+;;
+;;   GitHub: https://github.com/syohex/vi-tilde-fringe
+
+(use-package vi-tilde-fringe
+  :ensure t
+  :if window-system
+  :commands (global-vi-tilde-fringe-mode)
+  :config
+  (global-vi-tilde-fringe-mode))
+
+
+
+;; *** evil-terminal-cursor-changer
+;;
+;;   Make terminal support evil's cursor shape change. This package
+;;   changing cursor shape and color by evil state for evil-mode.
+;;
+;;   Supported terminal: xterm, gnome-terminal, iTerm, konsole.
+
+(use-package evil-terminal-cursor-changer
+  :ensure t
+  :if (not (display-graphic-p))		; Only use this package when in terminal
+  :config
+  ;; cursor shape setting
+  (setq evil-motion-state-cursor 'box)  ; █
+  (setq evil-visual-state-cursor 'box)  ; █
+  (setq evil-normal-state-cursor 'box)  ; █
+  (setq evil-insert-state-cursor 'bar)  ; ⎸
+  (setq evil-emacs-state-cursor  'hbar) ; _
+  ;; enable this package
+  (evil-terminal-cursor-changer-activate))
+
+
+
 ;; * External Packages
 ;;
 ;;   Most of emacs packages do not need many configs or just provide
@@ -1710,187 +1922,6 @@ return nil since you can't set font for emacs on it."
   (setq savehist-file (expand-file-name "savehist.dat" user-cache-directory))
   (add-to-list 'savehist-additional-variables 'corfu-history))
 
-
-;; * Vim Emulation
-;;
-;;   Though I am really familiar with emacs, I still like some vim command.
-
-
-(use-package evil
-  :ensure t
-  :demand t		       ; Needed for vim keybindings at startup
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)	; for `evil-collection'
-  :config
-  ;; enable evil-mode globally
-  (evil-mode t)
-  ;; some configs setup later
-  ;; default state set to insert-state
-  (setq evil-default-state 'insert)
-
-  (setcdr evil-insert-state-map nil)
-  (define-key evil-insert-state-map
-	      (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
-  (define-key evil-insert-state-map [escape] 'evil-normal-state)
-  (dolist (m evil-emacs-state-modes)
-    (add-to-list 'evil-insert-state-modes m))
-
-  ;; extra keybindings defined in `Keybinding' section
-  (evil-define-key 'normal 'global
-    (kbd "C-x C-f") 'find-file
-    (kbd "C-x C-q") 'read-only-mode
-    (kbd "C-x M-1") 'deft-or-close
-    (kbd "C-x M-2") 'eshell
-    (kbd "C-x M-3") 'mu4e
-    (kbd "C-x M-4") 'erc-start-or-switch
-    (kbd "C-x vl") 'magit-log
-    (kbd "C-x vp") 'magit-push
-    (kbd "C-x vs") 'magit-status
-    (kbd "C-x b") 'switch-to-buffer
-    (kbd "M-[") 'winner-undo
-    (kbd "M-]") 'winner-redo
-    (kbd "M-x") 'execute-extended-command
-    (kbd "M-s") 'consult-line
-    (kbd "C-x C-o") 'other-frame
-    (kbd "M-o") 'other-window)
-  (evil-define-key 'insert 'global
-    (kbd "<delete>") 'hungry-delete-backward
-    (kbd "C-;") 'iedit-mode
-    (kbd "C-d") 'hungry-delete-forward
-    (kbd "C-l") 'hungry-delete-backward
-    (kbd "C-o") 'evil-execute-in-normal-state
-    (kbd "C-n") 'evil-next-line
-    (kbd "C-p") 'evil-previous-line
-    (kbd "C-v") 'set-mark-mode/rectangle-mark-mode
-    (kbd "C-w") 'backward-kill-word
-    (kbd "C-x C-f") 'find-file
-    (kbd "C-x C-n") 'corfu-complete
-    (kbd "C-x C-o") 'other-frame
-    (kbd "C-x C-q") 'read-only-mode
-    (kbd "C-x M-1") 'deft-or-close
-    (kbd "C-x M-2") 'eshell
-    (kbd "C-x M-3") 'mu4e
-    (kbd "C-x M-4") 'erc-start-or-switch
-    (kbd "C-x T") 'sane-term
-    (kbd "C-x b") 'switch-to-buffer
-    (kbd "C-x t") 'sane-term
-    (kbd "C-x vl") 'magit-log
-    (kbd "C-x vp") 'magit-push
-    (kbd "C-x vs") 'magit-status
-    (kbd "M-<SPC>") 'insert-U200B-char
-    (kbd "M-[") 'winner-undo
-    (kbd "M-]") 'winner-redo
-    (kbd "M-s") 'consult-line
-    (kbd "M-v") 'er/expand-region
-    (kbd "M-x") 'execute-extended-command
-    (kbd "M-y") 'consult-yank-pop
-    (kbd "M-z")   'zzz-to-char
-    (kbd "s-<RET>") 'insert-empty-line
-    (kbd "s-<SPC>") 'insert-U200B-char
-    (kbd "C-x C-d") 'dired)
-  (evil-ex-define-cmd "ag" 'consult-ag)
-  (evil-ex-define-cmd "agi[nteractive]" 'consult-ag)
-  (evil-ex-define-cmd "google" 'consult-google)
-  (evil-ex-define-cmd "google-suggest" 'consult-google-suggest)
-  (evil-ex-define-cmd "gtag" 'ggtags-create-tags))
-
-;; Evil Collection - Evil keybindings for various packages
-(use-package evil-collection
-  :ensure t
-  :demand t
-  :after evil
-  :config
-  (evil-collection-init '(corfu dashboard diff-hl dired eldoc elpaca lsp-ui-imenu which-key)))
-
-;; ** evil-leader
-;;
-;;   Evil Leader provides the =<leader>= feature from Vim that provides
-;;   an easy way to bind keys under a variable prefix key.
-;;
-;;   GitHub: https://github.com/cofi/evil-leader
-
-(use-package evil-leader
-  :ensure t
-  :after evil
-  :commands (global-evil-leader-mode evil-leader/set-leader evil-leader/set-key)
-  :config
-  ;; enable evil-leader globally
-  (global-evil-leader-mode)
-  ;; extra keybindings defined in `Keybinding' section
-  (evil-leader/set-leader "<SPC>")
-  (evil-leader/set-key
-   "1" 'select-window-1
-   "2" 'select-window-2
-   "3" 'select-window-3
-   "4" 'select-window-4
-   "5" 'select-window-5
-   "6" 'select-window-6
-   "7" 'select-window-7
-   "8" 'select-window-8
-   "9" 'select-window-9
-   "0" 'select-window-0) )
-
-;; ** evil-surround
-;;
-;;   This package emulates surround.vim by Tim Pope. The functionality
-;;   is wrapped into a minor mode.
-;;
-;;   GitHub: https://github.com/timcharper/evil-surround
-
-(use-package evil-surround
-  :ensure t
-  :after evil
-  :commands (global-evil-surround-mode)
-  :config
-  (global-evil-surround-mode 1))
-
-;; ** evil-quickscope
-;;
-;;   This package emulates quick_scope.vim by Brian Le. It highlights
-;;   targets for evil-mode's f,F,t,T keys, allowing for quick
-;;   navigation within a line with no additional mappings.
-;;
-;;   GitHub: https://github.com/blorbx/evil-quickscope
-
-(use-package evil-quickscope
-  :ensure t
-  :after evil
-  :config
-  (add-hook 'prog-mode-hook 'turn-on-evil-quickscope-always-mode))
-
-;; ** vi-tilde-fringe
-;;
-;;   Displays tildes in the fringe on empty lines a la Vi
-;;
-;;   GitHub: https://github.com/syohex/vi-tilde-fringe
-
-(use-package vi-tilde-fringe
-  :ensure t
-  :if window-system
-  :commands (global-vi-tilde-fringe-mode)
-  :config
-  (global-vi-tilde-fringe-mode))
-
-;; ** evil-terminal-cursor-changer (terminal)
-;;
-;;   Make terminal support evil's cursor shape change. This package
-;;   changing cursor shape and color by evil state for evil-mode.
-;;
-;;   Supported terminal: xterm, gnome-terminal, iTerm, konsole.
-
-(use-package evil-terminal-cursor-changer
-  :ensure t
-  :if (not (display-graphic-p))		; Only use this package when in terminal
-  :config
-  ;; cursor shape setting
-  (setq evil-motion-state-cursor 'box)  ; █
-  (setq evil-visual-state-cursor 'box)  ; █
-  (setq evil-normal-state-cursor 'box)  ; █
-  (setq evil-insert-state-cursor 'bar)  ; ⎸
-  (setq evil-emacs-state-cursor  'hbar) ; _
-  ;; enable this package
-  (evil-terminal-cursor-changer-activate))
 
 ;; * Editor
 ;;
