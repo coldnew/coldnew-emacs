@@ -3485,187 +3485,6 @@ this declaration to the kill-ring."
   ;; Style to use when calling `clang-format-buffer' unless   project has a
   ;; .clang-format file.
   (setq clang-format-fallback-style "Chromium"))
-
-;; * Emacs Lisp Development
-
-;;
-;; ** elisp-mode configuration
-
-;; Helper functions for elisp-mode
-(defun my/elisp/check-parens-on-save ()
-  "Run `check-parens' when the current buffer is saved."
-  (add-hook 'after-save-hook #'check-parens nil 'make-it-local))
-
-(defun my/remove-elc-on-save ()
-  "If you're saving an elisp file, likely the .elc is no longer valid."
-  (make-local-variable 'after-save-hook)
-  (add-hook 'after-save-hook
-            (lambda ()
-              (if (file-exists-p (concat buffer-file-name "c"))
-                  (delete-file (concat buffer-file-name "c"))))))
-
-;; eldoc - built-in, configure for elisp-mode
-(use-package eldoc
-  :ensure nil            ; built-in
-  :hook (emacs-lisp-mode . turn-on-eldoc-mode)
-  :config
-  ;; Fix for paredit if it exists
-  (eval-after-load 'paredit
-    '(progn
-       (eldoc-add-command 'paredit-backward-delete
-                          'paredit-close-round))))
-
-;; ** macrostep - expand Emacs Lisp macros
-;;
-;;   macrostep allows stepping through and expanding Emacs Lisp
-;;   macros with visual highlighting of each expansion step.
-;;
-;;   Key features:
-;;   - Visual macro expansion (M-x macrostep-expand)
-;;   - Step through macro expansions
-;;   - Highlight current step
-;;   - Expand nested macros
-;;   - Works with elisp-mode and lispy
-;;
-;;   Why I use it:
-;;   Understand complex macro expansions in Emacs Lisp code.
-;;   Essential for debugging macros and learning elisp.
-;;
-;;   GitHub: https://github.com/joddie/macrostep
-;;
-;;   Configuration notes:
-;;   Use M-x macrostep-expand to expand macro at point.
-
-(use-package macrostep
-  :ensure t
-  :commands (macrostep-expand))
-
-;; ** el-spice - interactive elisp evaluation
-;;
-;;   el-spice provides interactive Emacs Lisp evaluation with
-;;   colored output and improved error reporting.
-;;
-;;   Key features:
-;;   - Evaluate last s-expression with keybinding
-;;   - Evaluate current region
-;;   - Colored output for better readability
-;;   - Enhanced error messages
-;;   - Preserve point position after eval
-;;
-;;   Why I use it:
-;;   Quick interactive elisp evaluation during development.
-;;   Easier than C-x C-e for common eval operations.
-;;
-;;   GitHub: https://github.com/emacsorphanage/el-spice
-;;
-;;   Configuration notes:
-;;   Commands: el-spice-eval-buffer, el-spice-eval-last-sexp.
-
-(use-package el-spice
-  :ensure t
-  :commands (el-spice-eval-buffer el-spice-eval-last-sexp))
-
-;; ** litable - display lists in tables
-;;
-;;   litable displays Emacs Lisp lists (association lists, property lists)
-;;   in tabular form for better readability.
-;;
-;;   Key features:
-;;   - Tabular list display (M-x litable-mode)
-;;   - Read/write lists as tables
-;;   - Edit list elements in table
-;;   - Sortable columns
-;;   - Works with association and property lists
-;;
-;;   Why I use it:
-;;   Better visualization of list data structures in elisp.
-;;   Makes editing complex lists more intuitive.
-;;
-;;   GitHub: https://github.com/Fuco1/litable
-;;
-;;   Configuration notes:
-;;   Lists saved to ~/.emacs.d/.cache/litable-lists.el.
-
-(use-package litable
-  :ensure t
-  :commands (litable-mode)
-  :config
-  ;; Save cache file to `user-cache-directory'
-  (setq litable-list-file (concat user-cache-directory ".litable-lists.el")))
-
-;; ** page-break-lines - display lines as decorative breaks
-;;
-;;   page-break-lines displays form feed characters (^L) as
-;;   decorative lines, similar to page breaks in word processors.
-;;
-;;   Key features:
-;;   - Decorative horizontal lines for page breaks
-;;   - Configurable line character and width
-;;   - Global or buffer-specific mode
-;;   - Customizable faces (colors, etc.)
-;;   - Works with any mode that uses ^L
-;;
-;;   Why I use it:
-;;   Visual separation of logical sections in files.
-;;   Makes long files with manual page breaks easier to read.
-;;
-;;   GitHub: https://github.com/purcell/page-break-lines
-;;
-;;   Configuration notes:
-;;   Use M-x global-page-break-lines-mode to enable globally.
-
-(use-package page-break-lines
-  :ensure t
-  :commands (global-page-break-lines-mode))
-
-;; ** outshine-mode - org-mode-like navigation in elisp files
-;;
-;;   outshine provides org-mode-like navigation and folding for
-;;   Emacs Lisp source files using outline headings.
-;;
-;;   Key features:
-;;   - Outline navigation (C-c n/p/f/b keys)
-;;   - Fold/unfold sections (TAB/S-TAB)
-;;   - Org-mode heading style (;; *, ;; ***)
-;;   - Works with elisp-mode
-;;   - Compatible with other outline modes
-;;
-;;   Why I use it:
-;;   Makes Emacs Lisp files easier to navigate.
-;;   Provides familiar org-mode workflow for elisp development.
-;;
-;;   GitHub: https://github.com/alphapapa/outshine
-;;
-;;   Configuration notes:
-;;   Outline prefix: C-c @. Start with headings hidden (level 1).
-
-(use-package outshine
-  :ensure t
-  :diminish outshine-mode
-  :hook (emacs-lisp-mode . outshine-mode)
-  :config
-  ;; Set outline-minor-mode prefix to C-c @ (same as outshine default)
-  (setq outline-minor-mode-prefix (kbd "C-c @"))
-  ;; Start with bodies hidden (show only headings)
-  (setq outshine-start-level 1))
-
-;; elisp-mode - built-in, configure hooks and keybindings
-(use-package elisp-mode
-  :ensure nil				; built-in
-  :hook
-  ((emacs-lisp-mode . my/elisp/check-parens-on-save)
-   (emacs-lisp-mode . my/remove-elc-on-save))
-  :config
-  ;; Enable litable-mode globally after litable loads
-  (with-eval-after-load 'litable
-    (litable-mode))
-  ;; Enable page-break-lines globally
-  (with-eval-after-load 'page-break-lines
-    (global-page-break-lines-mode 1))
-  :bind
-  (:map emacs-lisp-mode-map
-        ;; ("C-c '" . my/narrow-or-widen-dwim)
-        ))
 ;; * Syntax Checking and Linting
 ;;
 ;; ** flycheck
@@ -5040,6 +4859,166 @@ this declaration to the kill-ring."
 
 ;; ** Emacs Lisp Development
 ;;
+;; *** elisp-mode configuration
+
+;; Helper functions for elisp-mode
+(defun my/elisp/check-parens-on-save ()
+  "Run `check-parens' when the current buffer is saved."
+  (add-hook 'after-save-hook #'check-parens nil 'make-it-local))
+
+(defun my/remove-elc-on-save ()
+  "If you're saving an elisp file, likely the .elc is no longer valid."
+  (make-local-variable 'after-save-hook)
+  (add-hook 'after-save-hook
+            (lambda ()
+              (if (file-exists-p (concat buffer-file-name "c"))
+                  (delete-file (concat buffer-file-name "c"))))))
+
+;; eldoc - built-in, configure for elisp-mode
+(use-package eldoc
+  :ensure nil            ; built-in
+  :hook (emacs-lisp-mode . turn-on-eldoc-mode)
+  :config
+  ;; Fix for paredit if it exists
+  (eval-after-load 'paredit
+    '(progn
+       (eldoc-add-command 'paredit-backward-delete
+                          'paredit-close-round))))
+
+;; *** macrostep - expand Emacs Lisp macros
+;;
+;;   macrostep allows stepping through and expanding Emacs Lisp
+;;   macros with visual highlighting of each expansion step.
+;;
+;;   Key features:
+;;   - Visual macro expansion (M-x macrostep-expand)
+;;   - Step through macro expansions
+;;   - Highlight current step
+;;   - Expand nested macros
+;;   - Works with elisp-mode and lispy
+;;
+;;   Why I use it:
+;;   Understand complex macro expansions in Emacs Lisp code.
+;;   Essential for debugging macros and learning elisp.
+;;
+;;   GitHub: https://github.com/joddie/macrostep
+;;
+;;   Configuration notes:
+;;   Use M-x macrostep-expand to expand macro at point.
+
+(use-package macrostep
+  :ensure t
+  :commands (macrostep-expand))
+
+;; *** el-spice - interactive elisp evaluation
+;;
+;;   el-spice provides interactive Emacs Lisp evaluation with
+;;   colored output and improved error reporting.
+;;
+;;   Key features:
+;;   - Evaluate last s-expression with keybinding
+;;   - Evaluate current region
+;;   - Colored output for better readability
+;;   - Enhanced error messages
+;;   - Preserve point position after eval
+;;
+;;   Why I use it:
+;;   Quick interactive elisp evaluation during development.
+;;   Easier than C-x C-e for common eval operations.
+;;
+;;   GitHub: https://github.com/emacsorphanage/el-spice
+;;
+;;   Configuration notes:
+;;   Commands: el-spice-eval-buffer, el-spice-eval-last-sexp.
+
+(use-package el-spice
+  :ensure t
+  :commands (el-spice-eval-buffer el-spice-eval-last-sexp))
+
+;; *** litable - display lists in tables
+;;
+;;   litable displays Emacs Lisp lists (association lists, property lists)
+;;   in tabular form for better readability.
+;;
+;;   Key features:
+;;   - Tabular list display (M-x litable-mode)
+;;   - Read/write lists as tables
+;;   - Edit list elements in table
+;;   - Sortable columns
+;;   - Works with association and property lists
+;;
+;;   Why I use it:
+;;   Better visualization of list data structures in elisp.
+;;   Makes editing complex lists more intuitive.
+;;
+;;   GitHub: https://github.com/Fuco1/litable
+;;
+;;   Configuration notes:
+;;   Lists saved to ~/.emacs.d/.cache/litable-lists.el.
+
+(use-package litable
+  :ensure t
+  :commands (litable-mode)
+  :config
+  ;; Save cache file to `user-cache-directory'
+  (setq litable-list-file (concat user-cache-directory ".litable-lists.el")))
+
+;; *** page-break-lines - display lines as decorative breaks
+;;
+;;   page-break-lines displays form feed characters (^L) as
+;;   decorative lines, similar to page breaks in word processors.
+;;
+;;   Key features:
+;;   - Decorative horizontal lines for page breaks
+;;   - Configurable line character and width
+;;   - Global or buffer-specific mode
+;;   - Customizable faces (colors, etc.)
+;;   - Works with any mode that uses ^L
+;;
+;;   Why I use it:
+;;   Visual separation of logical sections in files.
+;;   Makes long files with manual page breaks easier to read.
+;;
+;;   GitHub: https://github.com/purcell/page-break-lines
+;;
+;;   Configuration notes:
+;;   Use M-x global-page-break-lines-mode to enable globally.
+
+(use-package page-break-lines
+  :ensure t
+  :commands (global-page-break-lines-mode))
+
+;; *** outshine-mode - org-mode-like navigation in elisp files
+;;
+;;   outshine provides org-mode-like navigation and folding for
+;;   Emacs Lisp source files using outline headings.
+;;
+;;   Key features:
+;;   - Outline navigation (C-c n/p/f/b keys)
+;;   - Fold/unfold sections (TAB/S-TAB)
+;;   - Org-mode heading style (;; *, ;; ***)
+;;   - Works with elisp-mode
+;;   - Compatible with other outline modes
+;;
+;;   Why I use it:
+;;   Makes Emacs Lisp files easier to navigate.
+;;   Provides familiar org-mode workflow for elisp development.
+;;
+;;   GitHub: https://github.com/alphapapa/outshine
+;;
+;;   Configuration notes:
+;;   Outline prefix: C-c @. Start with headings hidden (level 1).
+
+(use-package outshine
+  :ensure t
+  :diminish outshine-mode
+  :hook (emacs-lisp-mode . outshine-mode)
+  :config
+  ;; Set outline-minor-mode prefix to C-c @ (same as outshine default)
+  (setq outline-minor-mode-prefix (kbd "C-c @"))
+  ;; Start with bodies hidden (show only headings)
+  (setq outshine-start-level 1))
+
 ;; *** Enhanced Emacs Lisp mode
 ;;
 ;;   Built-in Emacs Lisp major mode with additional enhancements.
@@ -5058,6 +5037,24 @@ this declaration to the kill-ring."
 ;;
 ;;   Configuration notes:
 ;;   Enhanced with eros, lispy, and other tools above.
+
+;; elisp-mode - built-in, configure hooks and keybindings
+(use-package elisp-mode
+  :ensure nil				; built-in
+  :hook
+  ((emacs-lisp-mode . my/elisp/check-parens-on-save)
+   (emacs-lisp-mode . my/remove-elc-on-save))
+  :config
+  ;; Enable litable-mode globally after litable loads
+  (with-eval-after-load 'litable
+    (litable-mode))
+  ;; Enable page-break-lines globally
+  (with-eval-after-load 'page-break-lines
+    (global-page-break-lines-mode 1))
+  :bind
+  (:map emacs-lisp-mode-map
+        ;; ("C-c '" . my/narrow-or-widen-dwim)
+        ))
 
 ;; ** Clojure Development
 ;;
