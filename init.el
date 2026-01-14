@@ -918,6 +918,76 @@ return nil since you can't set font for emacs on it."
   (global-undo-tree-mode))
 
 
+;; ** General Editor Configuration
+;;
+;;   General editor configuration that applies across all modes:
+;;   file synchronization, locking, encryption, remote editing, and
+;;   editor-wide behavior settings.
+;;
+;; *** Keeping files in sync
+;;
+;;   By default, Emacs will not update the contents of open buffers
+;;   when a file changes on disk. This is inconvenient when switching
+;;   branches in Git - as you'd risk editing stale buffers.
+
+(global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers t)
+(setq auto-revert-verbose nil)
+(setq revert-without-query '(".*")) ;; disable revert query
+
+;; *** Disable lock file
+;;
+;;   I don't want emacs create some temporary file like =.#-emacs-a08196=,
+;;   disable it.
+
+;; https://www.emacswiki.org/emacs/LockFiles
+(when (version<= "24.3" emacs-version)
+  (setq create-lockfiles nil))
+
+;; *** Add support for editorconfig
+;;
+;;   EditorConfig helps developers define and maintain consistent
+;;   coding styles between different editors and IDEs.
+;;
+;;   GitHub: https://github.com/editorconfig/editorconfig-emacs
+
+(use-package editorconfig
+  :ensure t
+  :if (executable-find "editorconfig")
+  :mode ("\\.editorconfig\\'" . conf-unix-mode)
+  :commands editorconfig-mode
+  :init
+  (add-hook 'prog-mode-hook #'editorconfig-mode))
+
+;; *** En/Decrypt files by EasyPG
+
+(require 'epa-file)			; part of emacs
+;; Enable epa, so I can use gnupg in emacs to en/decrypt file
+(epa-file-enable)
+;; Control whether or not to pop up the key selection dialog.
+(setq epa-file-select-keys 0)
+;; Cache passphrase for symmetric encryption.
+(setq epa-file-cache-passphrase-for-symmetric-encryption t)
+
+(require 'epa)				; built-in
+(setq epg-pinentry-mode 'loopback)
+
+(use-package pinentry
+  :ensure t
+  :commands (pinentry-start)
+  :config
+  ;; Start the Pinentry service
+  (pinentry-start))
+
+;; *** Remote file editing
+
+(use-package tramp
+  :ensure t
+  :init
+  (setq tramp-persistency-file-name (concat user-cache-directory "tramp"))
+  :config
+  (setq tramp-default-method "rsync"))
+
 ;;
 ;; * Completion and Search Framework
 ;;
@@ -2271,75 +2341,7 @@ With argument, do this that many times."
 
 
 
-;; * General Editor Settings
-;;
-;;   General editor configuration that applies across all modes:
-;;   file synchronization, locking, encryption, remote editing, and
-;;   editor-wide behavior settings.
-;;
-;; ** Keeping files in sync
-;;
-;;   By default, Emacs will not update the contents of open buffers
-;;   when a file changes on disk. This is inconvenient when switching
-;;   branches in Git - as you'd risk editing stale buffers.
 
-(global-auto-revert-mode 1)
-(setq global-auto-revert-non-file-buffers t)
-(setq auto-revert-verbose nil)
-(setq revert-without-query '(".*")) ;; disable revert query
-
-;; ** Disable lock file
-;;
-;;   I don't want emacs create some temporary file like =.#-emacs-a08196=,
-;;   disable it.
-
-;; https://www.emacswiki.org/emacs/LockFiles
-(when (version<= "24.3" emacs-version)
-  (setq create-lockfiles nil))
-
-;; ** Add support for editorconfig
-;;
-;;   EditorConfig helps developers define and maintain consistent
-;;   coding styles between different editors and IDEs.
-;;
-;;   GitHub: https://github.com/editorconfig/editorconfig-emacs
-
-(use-package editorconfig
-  :ensure t
-  :if (executable-find "editorconfig")
-  :mode ("\\.editorconfig\\'" . conf-unix-mode)
-  :commands editorconfig-mode
-  :init
-  (add-hook 'prog-mode-hook #'editorconfig-mode))
-
-;; ** En/Decrypt files by EasyPG
-
-(require 'epa-file)			; part of emacs
-;; Enable epa, so I can use gnupg in emacs to en/decrypt file
-(epa-file-enable)
-;; Control whether or not to pop up the key selection dialog.
-(setq epa-file-select-keys 0)
-;; Cache passphrase for symmetric encryption.
-(setq epa-file-cache-passphrase-for-symmetric-encryption t)
-
-(require 'epa)				; built-in
-(setq epg-pinentry-mode 'loopback)
-
-(use-package pinentry
-  :ensure t
-  :commands (pinentry-start)
-  :config
-  ;; Start the Pinentry service
-  (pinentry-start))
-
-;; ** Remote file editing
-
-(use-package tramp
-  :ensure t
-  :init
-  (setq tramp-persistency-file-name (concat user-cache-directory "tramp"))
-  :config
-  (setq tramp-default-method "rsync"))
 
 
 
