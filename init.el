@@ -4093,13 +4093,33 @@ this declaration to the kill-ring."
         t)
       ad-do-it)))
 
-;; * Shell Scripting Support
-;;
-;; ** flymake-shell
+ ;; * Shell Scripting Support
+ ;;
+ ;; ** flymake-shell
+ ;;
+ ;;   flymake-shell provides on-the-fly syntax checking for shell scripts.
+ ;;   Uses shellcheck or bash -n to validate shell syntax.
+ ;;
+ ;;   Key features:
+ ;;   - Real-time shell syntax checking
+ ;;   - Supports multiple shells (bash, sh, zsh)
+ ;;   - Integration with flymake framework
+ ;;   - Detects common shell script errors
+ ;;   - Shows errors in flymake UI
+ ;;
+ ;;   Why I use it:
+ ;;   Immediate feedback on shell script syntax errors before
+ ;;   running. Prevents bugs from reaching production.
+ ;;
+ ;;   GitHub: https://github.com/purcell/flymake-shell
+ ;;
+ ;;   Configuration notes:
+ ;;   Enabled for all shell modes via sh-set-shell-hook.
 
-(use-package flymake-shell
-  :ensure t
-  :config (add-hook 'sh-set-shell-hook 'flymake-shell-load))
+ (use-package flymake-shell
+   :ensure t
+   :commands (flymake-shell-load)
+   :config (add-hook 'sh-set-shell-hook 'flymake-shell-load))
 
 ;; * Embedded Systems Development
 ;;
