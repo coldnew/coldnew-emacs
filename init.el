@@ -4271,13 +4271,32 @@ this declaration to the kill-ring."
 
 (use-package json-reformat :ensure t :commands json-reformat-region)
 
-;; ** flymake-json
+ ;; ** flymake-json
+ ;;
+ ;;   flymake-json provides on-the-fly syntax checking for JSON files.
+ ;;   Validates JSON structure and reports errors as you type.
+ ;;
+ ;;   Key features:
+ ;;   - Real-time JSON validation
+ ;;   - Parses JSON to detect syntax errors
+ ;;   - Shows line and column numbers
+ ;;   - Integrates with flymake UI
+ ;;   - Works with json-mode and other JSON modes
+ ;;
+ ;;   Why I use it:
+ ;;   Early detection of JSON syntax errors. Essential for config
+ ;;   files and API responses.
+ ;;
+ ;;   GitHub: https://github.com/oantolin/flymake-json
+ ;;
+ ;;   Configuration notes:
+ ;;   Enabled for all json-mode buffers.
 
-(use-package flymake-json
-  :ensure t
-  :commands (flymake-json-load)
-  :config
-  (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
+ (use-package flymake-json
+   :ensure t
+   :commands (flymake-json-load)
+   :config
+   (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
 
 ;; * Internationalization
 ;;
