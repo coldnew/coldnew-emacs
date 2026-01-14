@@ -4611,77 +4611,6 @@ this declaration to the kill-ring."
   :ensure t
   :mode "\\.toml$")
 
-;; ** json-mode
-;;
-;;   Major mode for editing JSON files.
-;;
-;;   Key features:
-;;   - Syntax highlighting for JSON
-;;   - Automatic indentation
-;;   - Validation
-;;   - Pretty printing
-;;
-;;   Why I use it:
-;;   Essential for editing JSON configuration files, API responses,
-;;   and data interchange formats.
-;;
-;;   GitHub: https://github.com/joshwnj/json-mode
-;;
-;;   Configuration notes:
-;;   Integrates with json-reformat for pretty printing.
-
-(use-package json-mode
-  :ensure t
-  :mode "\\.json$")
-
-;; ** json-reformat
-;;
-;;   Reformat JSON with proper indentation and formatting.
-;;
-;;   Key features:
-;;   - Pretty-print JSON with consistent formatting
-;;   - Command-line tool integration
-;;   - Region or buffer formatting
-;;
-;;   Why I use it:
-;;   Makes JSON files readable and consistently formatted.
-;;   Essential for working with minified or poorly formatted JSON.
-;;
-;;   GitHub: https://github.com/gongo/json-reformat
-;;
-;;   Configuration notes:
-;;   Use M-x json-reformat-region on selected JSON text.
-
-(use-package json-reformat
-  :ensure t
-  :commands json-reformat-region)
-
-;; ** flymake-json
-;;
-;;   Flymake backend for JSON syntax checking.
-;;
-;;   Key features:
-;;   - Real-time JSON validation
-;;   - Parses JSON to detect syntax errors
-;;   - Shows line and column numbers
-;;   - Integrates with flymake UI
-;;   - Works with json-mode and other JSON modes
-;;
-;;   Why I use it:
-;;   Early detection of JSON syntax errors. Essential for config
-;;   files and API responses.
-;;
-;;   GitHub: https://github.com/oantolin/flymake-json
-;;
-;;   Configuration notes:
-;;   Enabled for all json-mode buffers.
-
-(use-package flymake-json
-  :ensure t
-  :commands (flymake-json-load)
-  :config
-  (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
-
 ;; ** ini-mode
 ;;
 ;;   Major mode for editing INI-style configuration files.
@@ -4818,6 +4747,84 @@ this declaration to the kill-ring."
 (use-package docker-compose-mode
   :ensure t
   :mode ("docker-compose\\.yml\\'" "docker-compose\\..*\\.yml\\'"))
+
+;; * JSON
+;;
+;;   JSON (JavaScript Object Notation) is a lightweight data interchange format
+;;   widely used for configuration files, API communication, and data storage.
+;;   This section provides comprehensive tools for editing, formatting, and
+;;   validating JSON files in Emacs.
+;;
+;; ** json-mode
+;;
+;;   Major mode for editing JSON files.
+;;
+;;   Key features:
+;;   - Syntax highlighting for JSON
+;;   - Automatic indentation
+;;   - Validation
+;;   - Pretty printing
+;;
+;;   Why I use it:
+;;   Essential for editing JSON configuration files, API responses,
+;;   and data interchange formats.
+;;
+;;   GitHub: https://github.com/joshwnj/json-mode
+;;
+;;   Configuration notes:
+;;   Integrates with json-reformat for pretty printing.
+
+(use-package json-mode
+  :ensure t
+  :mode "\\.json$")
+
+;; ** json-reformat
+;;
+;;   Reformat JSON with proper indentation and formatting.
+;;
+;;   Key features:
+;;   - Pretty-print JSON with consistent formatting
+;;   - Command-line tool integration
+;;   - Region or buffer formatting
+;;
+;;   Why I use it:
+;;   Makes JSON files readable and consistently formatted.
+;;   Essential for working with minified or poorly formatted JSON.
+;;
+;;   GitHub: https://github.com/gongo/json-reformat
+;;
+;;   Configuration notes:
+;;   Use M-x json-reformat-region on selected JSON text.
+
+(use-package json-reformat
+  :ensure t
+  :commands json-reformat-region)
+
+;; ** flymake-json
+;;
+;;   Flymake backend for JSON syntax checking.
+;;
+;;   Key features:
+;;   - Real-time JSON validation
+;;   - Parses JSON to detect syntax errors
+;;   - Shows line and column numbers
+;;   - Integrates with flymake UI
+;;   - Works with json-mode and other JSON modes
+;;
+;;   Why I use it:
+;;   Early detection of JSON syntax errors. Essential for config
+;;   files and API responses.
+;;
+;;   GitHub: https://github.com/oantolin/flymake-json
+;;
+;;   Configuration notes:
+;;   Enabled for all json-mode buffers.
+
+(use-package flymake-json
+  :ensure t
+  :commands (flymake-json-load)
+  :config
+  (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
 
 ;; * Lisp Development
 ;;
