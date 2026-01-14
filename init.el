@@ -4426,11 +4426,183 @@ this declaration to the kill-ring."
 
 ;; * Python Development
 ;;
+;;   Comprehensive Python development environment with virtual environment
+;;   management, code formatting, linting, import sorting, and testing support.
+;;
 ;; ** python-mode
+;;
+;;   Built-in Python major mode for Emacs.
+;;
+;;   Key features:
+;;   - Syntax highlighting for Python code
+;;   - Indentation support
+;;   - Integration with inferior Python process
+;;   - Support for different Python versions
+;;
+;;   Why I use it:
+;;   Foundation for Python development in Emacs. Provides basic
+;;   editing capabilities and REPL integration.
+;;
+;;   Built-in since Emacs 24.
+;;
+;;   Configuration notes:
+;;   Extended mode associations for SCons and DEPS files.
 
 (use-package python
+  :ensure nil                          ; built-in
   :mode (("SCons\\(truct\\|cript\\)\\'" . python-mode)
-         ("DEPS" . python-mode)))
+         ("DEPS" . python-mode))
+  :config
+  ;; Use python3 by default
+  (setq python-shell-interpreter "python3")
+  ;; Enable eldoc for Python
+  (add-hook 'python-mode-hook 'eldoc-mode)
+  ;; Enable electric-pair-mode for automatic bracket pairing
+  (add-hook 'python-mode-hook 'electric-pair-mode))
+
+;; ** pyvenv
+;;
+;;   Virtual environment management for Python projects.
+;;
+;;   Key features:
+;;   - Activate/deactivate virtual environments
+;;   - Auto-activate based on .venv directory or pyvenv.cfg
+;;   - Support for conda environments
+;;   - Environment switching
+;;   - Integration with projectile
+;;
+;;   Why I use it:
+;;   Essential for managing project-specific Python environments.
+;;   Prevents dependency conflicts between projects.
+;;
+;;   GitHub: https://github.com/jorgenschaefer/pyvenv
+;;
+;;   Configuration notes:
+;;   Automatically activates virtual environments when entering Python projects.
+
+(use-package pyvenv
+  :ensure t
+  :commands (pyvenv-activate pyvenv-deactivate)
+  :config
+  ;; Auto-activate virtual environments
+  (pyvenv-mode t)
+  ;; Set default virtual environment location
+  (setq pyvenv-default-virtual-env-name "venv"))
+
+;; ** python-black
+;;
+;;   Black code formatter integration for Emacs.
+;;
+;;   Key features:
+;;   - Format Python code with Black
+;;   - Asynchronous formatting
+;;   - Format buffer or region
+;;   - Configurable Black executable path
+;;   - Error highlighting
+;;
+;;   Why I use it:
+;;   Consistent code formatting following Python community standards.
+;;   Reduces time spent on style arguments and manual formatting.
+;;
+;;   GitHub: https://github.com/psf/black
+;;
+;;   Configuration notes:
+;;   Requires Black to be installed (pip install black).
+;;   Formats on save if enabled.
+
+(use-package python-black
+  :ensure t
+  :commands (python-black-buffer python-black-region)
+  :config
+  ;; Enable formatting on save
+  (add-hook 'python-mode-hook 'python-black-on-save-mode))
+
+;; ** ruff-mode
+;;
+;;   Ruff linter and formatter integration for Python.
+;;
+;;   Key features:
+;;   - Fast Python linter written in Rust
+;;   - Import sorting (isort replacement)
+;;   - Code formatting (black compatible)
+;;   - Fix common issues automatically
+;;   - Integration with flycheck
+;;
+;;   Why I use it:
+;;   Extremely fast linting and formatting. Replaces multiple tools
+;;   (flake8, isort, black) with a single, fast executable.
+;;
+;;   GitHub: https://github.com/charliermarsh/ruff
+;;
+;;   Configuration notes:
+;;   Requires ruff to be installed (pip install ruff).
+;;   Integrates with flycheck for error display.
+
+(use-package ruff-mode
+  :ensure t
+  :commands ruff-mode
+  :config
+  ;; Enable ruff-mode for Python files
+  (add-hook 'python-mode-hook 'ruff-mode)
+  ;; Format on save
+  (add-hook 'python-mode-hook 'ruff-format-on-save-mode))
+
+;; ** python-isort
+;;
+;;   Import sorting with isort for Python.
+;;
+;;   Key features:
+;;   - Sort Python imports automatically
+;;   - Group imports by type (stdlib, third-party, local)
+;;   - Configurable import sections
+;;   - Integration with python-mode
+;;
+;;   Why I use it:
+;;   Keeps imports organized and consistent across the codebase.
+;;   Follows PEP8 import ordering standards.
+;;
+;;   GitHub: https://github.com/pycqa/isort
+;;
+;;   Configuration notes:
+;;   Requires isort to be installed (pip install isort).
+;;   Can be configured via .isort.cfg or pyproject.toml.
+
+(use-package python-isort
+  :ensure t
+  :commands (python-isort-buffer python-isort-region)
+  :config
+  ;; Sort imports on save
+  (add-hook 'python-mode-hook 'python-isort-on-save-mode))
+
+;; ** pytest
+;;
+;;   Pytest integration for running Python tests in Emacs.
+;;
+;;   Key features:
+;;   - Run pytest on current buffer or function
+;;   - Test discovery and execution
+;;   - Result display in compilation buffer
+;;   - Support for pytest fixtures and parametrization
+;;   - Integration with projectile
+;;
+;;   Why I use it:
+;;   Essential for test-driven development. Allows running tests
+;;   directly from Emacs without switching to terminal.
+;;
+;;   GitHub: https://github.com/wbolster/emacs-python-pytest
+;;
+;;   Configuration notes:
+;;   Requires pytest to be installed (pip install pytest).
+;;   Keybindings: C-c C-t (run tests for current buffer).
+
+(use-package python-pytest
+  :ensure t
+  :commands (python-pytest-run-def
+             python-pytest-run-file
+             python-pytest-run-directory
+             python-pytest-popup)
+  :bind (:map python-mode-map
+              ("C-c C-t" . python-pytest-popup)))
 
 ;; * XML/Configuration Files
 ;;
