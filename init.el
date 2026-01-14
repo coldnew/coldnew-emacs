@@ -2978,18 +2978,6 @@ This functions should be added to the hooks of major modes for programming."
 
 (use-package nasm-mode :ensure t)
 
-;; ** toml-mode
-
-(use-package toml-mode
-  :ensure t
-  :mode "\\.toml$")
-
-;; ** yaml-mode
-
-(use-package yaml-mode
-  :ensure t
-  :mode "\\.yml$")
-
 ;; ** ess (R mode)
 
 (use-package ess
@@ -3105,12 +3093,6 @@ This functions should be added to the hooks of major modes for programming."
 (use-package svelte-mode
   :ensure t
   :mode ("\\.svelte\\'" . svelte-mode))
-
-;; ** dockerfile-mode
-
-(use-package dockerfile-mode
-  :ensure t
-  :mode "Dockerfile\\'")
 
 ;; ** ssh-config-mode
 
@@ -4373,42 +4355,6 @@ this declaration to the kill-ring."
   :ensure t
   :commands (import-js-add-import import-js-switch-to-es6))
 
-;; ** json-mode
-
-(use-package json-mode :ensure t
-  :mode "\\.json\\'")
-
-;; ** json-reformat
-
-(use-package json-reformat :ensure t :commands json-reformat-region)
-
-;; ** flymake-json
-;;
-;;   flymake-json provides on-the-fly syntax checking for JSON files.
-;;   Validates JSON structure and reports errors as you type.
-;;
-;;   Key features:
-;;   - Real-time JSON validation
-;;   - Parses JSON to detect syntax errors
-;;   - Shows line and column numbers
-;;   - Integrates with flymake UI
-;;   - Works with json-mode and other JSON modes
-;;
-;;   Why I use it:
-;;   Early detection of JSON syntax errors. Essential for config
-;;   files and API responses.
-;;
-;;   GitHub: https://github.com/oantolin/flymake-json
-;;
-;;   Configuration notes:
-;;   Enabled for all json-mode buffers.
-
-(use-package flymake-json
-  :ensure t
-  :commands (flymake-json-load)
-  :config
-  (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
-
 ;; * Internationalization
 ;;
 ;; ** po-mode
@@ -4576,7 +4522,28 @@ this declaration to the kill-ring."
 
 ;; * XML/Configuration Files
 ;;
+;;   Support for XML and various configuration file formats used in
+;;   development, deployment, and system administration.
+;;
 ;; ** nxml-mode
+;;
+;;   Built-in XML editing mode for Emacs.
+;;
+;;   Key features:
+;;   - Syntax highlighting for XML
+;;   - Automatic indentation
+;;   - Tag completion and validation
+;;   - Support for XSLT, XSD, and other XML formats
+;;   - Folding support
+;;
+;;   Why I use it:
+;;   Comprehensive XML editing with built-in validation and formatting.
+;;   Handles complex XML documents better than generic modes.
+;;
+;;   Built-in since Emacs 23.
+;;
+;;   Configuration notes:
+;;   Auto-detects XML files by content. Replaces older xml-mode and sgml-mode.
 
 (use-package nxml-mode
   :ensure nil                  ; emacs built-in
@@ -4597,6 +4564,260 @@ this declaration to the kill-ring."
              (eq (cdr pair) 'sgml-mode))
          (setcdr pair 'nxml-mode)))
    auto-mode-alist))
+
+;; ** yaml-mode
+;;
+;;   Major mode for editing YAML files.
+;;
+;;   Key features:
+;;   - Syntax highlighting for YAML
+;;   - Indentation support
+;;   - Comment/uncomment support
+;;   - Outline mode integration
+;;
+;;   Why I use it:
+;;   Essential for editing configuration files in YAML format,
+;;   commonly used in Kubernetes, Docker Compose, and CI/CD pipelines.
+;;
+;;   GitHub: https://github.com/yoshiki/yaml-mode
+;;
+;;   Configuration notes:
+;;   Used for Kubernetes manifests, Docker Compose, and configuration files.
+
+(use-package yaml-mode
+  :ensure t
+  :mode ("\\.yml$"
+         "\\.yaml$"))
+
+;; ** toml-mode
+;;
+;;   Major mode for editing TOML files.
+;;
+;;   Key features:
+;;   - Syntax highlighting for TOML
+;;   - Indentation and formatting
+;;   - Comment support
+;;
+;;   Why I use it:
+;;   TOML is widely used for configuration in Rust projects (Cargo.toml),
+;;   Python projects (pyproject.toml), and various tools.
+;;
+;;   GitHub: https://github.com/dryman/toml-mode.el
+;;
+;;   Configuration notes:
+;;   Supports TOML v1.0 specification.
+
+(use-package toml-mode
+  :ensure t
+  :mode "\\.toml$")
+
+;; ** json-mode
+;;
+;;   Major mode for editing JSON files.
+;;
+;;   Key features:
+;;   - Syntax highlighting for JSON
+;;   - Automatic indentation
+;;   - Validation
+;;   - Pretty printing
+;;
+;;   Why I use it:
+;;   Essential for editing JSON configuration files, API responses,
+;;   and data interchange formats.
+;;
+;;   GitHub: https://github.com/joshwnj/json-mode
+;;
+;;   Configuration notes:
+;;   Integrates with json-reformat for pretty printing.
+
+(use-package json-mode
+  :ensure t
+  :mode "\\.json$")
+
+;; ** json-reformat
+;;
+;;   Reformat JSON with proper indentation and formatting.
+;;
+;;   Key features:
+;;   - Pretty-print JSON with consistent formatting
+;;   - Command-line tool integration
+;;   - Region or buffer formatting
+;;
+;;   Why I use it:
+;;   Makes JSON files readable and consistently formatted.
+;;   Essential for working with minified or poorly formatted JSON.
+;;
+;;   GitHub: https://github.com/gongo/json-reformat
+;;
+;;   Configuration notes:
+;;   Use M-x json-reformat-region on selected JSON text.
+
+(use-package json-reformat
+  :ensure t
+  :commands json-reformat-region)
+
+;; ** flymake-json
+;;
+;;   Flymake backend for JSON syntax checking.
+;;
+;;   Key features:
+;;   - Real-time JSON validation
+;;   - Parses JSON to detect syntax errors
+;;   - Shows line and column numbers
+;;   - Integrates with flymake UI
+;;   - Works with json-mode and other JSON modes
+;;
+;;   Why I use it:
+;;   Early detection of JSON syntax errors. Essential for config
+;;   files and API responses.
+;;
+;;   GitHub: https://github.com/oantolin/flymake-json
+;;
+;;   Configuration notes:
+;;   Enabled for all json-mode buffers.
+
+(use-package flymake-json
+  :ensure t
+  :commands (flymake-json-load)
+  :config
+  (add-hook 'json-mode-hook (lambda () (flymake-json-load))))
+
+;; ** ini-mode
+;;
+;;   Major mode for editing INI-style configuration files.
+;;
+;;   Key features:
+;;   - Syntax highlighting for INI files
+;;   - Section and key highlighting
+;;   - Comment support
+;;
+;;   Why I use it:
+;;   INI files are used in many applications for configuration,
+;;   especially on Windows and in legacy systems.
+;;
+;;   GitHub: https://github.com/Lindydancer/ini-mode
+;;
+;;   Configuration notes:
+;;   Supports standard INI format with sections and key-value pairs.
+
+(use-package ini-mode
+  :ensure t
+  :mode ("\\.ini\\'" "\\.cfg\\'" "\\.conf\\'"))
+
+;; ** conf-mode
+;;
+;;   Generic mode for configuration files.
+;;
+;;   Key features:
+;;   - Basic syntax highlighting for config files
+;;   - Comment support (# and ;)
+;;   - Key-value pair recognition
+;;
+;;   Why I use it:
+;;   Fallback mode for configuration files that don't have specific modes.
+;;   Provides basic editing support for various config formats.
+;;
+;;   Built-in Emacs feature.
+;;
+;;   Configuration notes:
+;;   Used for generic configuration files like .gitconfig, .npmrc, etc.
+
+(use-package conf-mode
+  :ensure nil  ; built-in
+  :mode (("\\.gitconfig\\'" . conf-mode)
+         ("\\.npmrc\\'" . conf-mode)
+         ("\\.env\\'" . conf-mode)
+         ("\\.envrc\\'" . conf-mode)))
+
+;; ** nginx-mode
+;;
+;;   Major mode for editing nginx configuration files.
+;;
+;;   Key features:
+;;   - Syntax highlighting for nginx directives
+;;   - Context-aware indentation
+;;   - Block structure recognition
+;;
+;;   Why I use it:
+;;   Essential for editing nginx web server configurations.
+;;   Provides proper syntax highlighting and structure understanding.
+;;
+;;   GitHub: https://github.com/ajc/nginx-mode
+;;
+;;   Configuration notes:
+;;   Recognizes nginx.conf and sites-enabled files.
+
+(use-package nginx-mode
+  :ensure t
+  :mode ("nginx\\.conf\\'" "/nginx/.+\\.conf\\'"))
+
+;; ** apache-mode
+;;
+;;   Major mode for editing Apache configuration files.
+;;
+;;   Key features:
+;;   - Syntax highlighting for Apache directives
+;;   - Comment support
+;;   - Section recognition
+;;
+;;   Why I use it:
+;;   Useful for editing Apache web server configurations.
+;;   Supports .htaccess and httpd.conf files.
+;;
+;;   GitHub: https://github.com/emacs-php/apache-mode
+;;
+;;   Configuration notes:
+;;   Recognizes Apache configuration files and .htaccess.
+
+(use-package apache-mode
+  :ensure t
+  :mode (("\\.htaccess\\'" . apache-mode)
+         ("httpd\\.conf\\'" . apache-mode)
+         ("apache2\\.conf\\'" . apache-mode)))
+
+;; ** dockerfile-mode
+;;
+;;   Major mode for editing Dockerfiles.
+;;
+;;   Key features:
+;;   - Syntax highlighting for Docker instructions
+;;   - Indentation support
+;;   - Build command integration
+;;
+;;   Why I use it:
+;;   Essential for creating and editing Docker container definitions.
+;;   Provides proper syntax highlighting for Docker commands.
+;;
+;;   GitHub: https://github.com/spotify/dockerfile-mode
+;;
+;;   Configuration notes:
+;;   Recognizes Dockerfile and .dockerfile extensions.
+
+(use-package dockerfile-mode
+  :ensure t
+  :mode ("Dockerfile\\'" "\\.dockerfile\\'"))
+
+;; ** docker-compose-mode
+;;
+;;   Major mode for editing Docker Compose files.
+;;
+;;   Key features:
+;;   - Syntax highlighting for docker-compose.yml
+;;   - YAML-based structure recognition
+;;   - Service and network highlighting
+;;
+;;   Why I use it:
+;;   Specialized support for Docker Compose configuration files.
+;;   Builds on yaml-mode with Docker-specific highlighting.
+;;
+;;   GitHub: https://github.com/meqif/docker-compose-mode
+;;
+;;   Configuration notes:
+;;   Works with docker-compose.yml and docker-compose.*.yml files.
+
+(use-package docker-compose-mode
+  :ensure t
+  :mode ("docker-compose\\.yml\\'" "docker-compose\\..*\\.yml\\'"))
 
 ;; * Lisp Development
 ;;
