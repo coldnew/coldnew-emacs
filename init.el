@@ -3327,19 +3327,37 @@ this declaration to the kill-ring."
      (progn (c-beginning-of-defun) (point))
      (progn (c-end-of-defun)       (point)))))
 
-;; ** clang-format
+ ;; ** clang-format
+ ;;
+ ;;   clang-format formats C/C++/Objective-C buffers using clang-format.
+ ;;   Provides automatic code formatting with LLVM standards.
+ ;;
+ ;;   Key features:
+ ;;   - Format entire buffer or region
+ ;;   - Read .clang-format config from project
+ ;;   - Fallback style support (Chromium, Google, etc.)
+ ;;   - Fast formatting with clang
+ ;;   - Preserves cursor position
+ ;;   - Supports multiple languages
+ ;;
+ ;;   Why I use it:
+ ;;   Consistent code formatting across projects. Integrates with
+ ;;   LLVM toolchain which many projects already use.
+ ;;
+ ;;   GitHub: https://github.com/emacsorphanage/clang-format
+ ;;
+ ;;   Configuration notes:
+ ;;   Commands: clang-format-buffer, clang-format-region.
+ ;;   Fallback style: Chromium. Respects project .clang-format.
 
-;; clang-format: format C/C++ buffers using clang-format
-;; https://github.com/emacsorphanage/clang-format
-(use-package clang-format
-  :ensure t
-  :commands (clang-format clang-format-buffer clang-format-region)
-  :config
-  ;; Style to use when calling `clang-format-buffer' unless the project has a
-  ;; .clang-format file.
-  (setq clang-format-fallback-style "Chromium"))
+ (use-package clang-format
+   :ensure t
+   :commands (clang-format clang-format-buffer clang-format-region)
+   :config
+   ;; Style to use when calling `clang-format-buffer' unless   project has a
+   ;; .clang-format file.
+   (setq clang-format-fallback-style "Chromium")
 
-;; * Emacs Lisp Development
 ;;
 ;; ** elisp-mode configuration
 
