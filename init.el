@@ -26,7 +26,15 @@
 ;;; Code:
 
 ;;
-;; * Emacs Compatibility and Core Setup
+;; * Core Emacs Configuration
+;;
+;;   Foundation settings for Emacs behavior including environment setup,
+;;   paths, personal information, and customization handling.
+;;   All other sections depend on this configuration.
+;;
+
+;; ** Emacs Compatibility and Core Libraries
+
 ;;
 ;; Use Common Lisp Extension
 ;;
@@ -41,7 +49,7 @@
 
 (require 'find-lisp)
 
-;; * Directory Variables Setup
+;; ** Directory Variables Setup
 ;;
 ;;   In this configuration, =user-emacs-directory= always refer to the
 ;;   emacs configuration's init.el parent directory.
@@ -78,12 +86,12 @@
       temporary-file-directory))
   "My ramdisk path in system.")
 
-;; * Personal Information
+;; ** Personal Information
 
 (setq user-full-name "Yen-Chin, Lee")
 (setq user-mail-address "coldnew.tw@gmail.com")
 
-;; * Load Path Setup
+;; ** Load Path Setup
 ;;
 ;;   The variable =load-path= lists all the directories where Emacs
 ;;   should look for emacs-lisp files.
@@ -95,7 +103,10 @@
       (when (and full-dir (file-exists-p full-dir))
         (add-to-list 'load-path full-dir)))))
 
-;; * Under Mac OSX use Command key as ALT
+
+;; ** Environment Setup (macOS)
+
+;; Under Mac OSX use Command key as ALT
 ;;
 ;;   Under Mac OSX, I always bind =Caps lock= as Control key, and make
 ;;   the =Command= key as =ALT= key like I done in Linux.
@@ -109,9 +120,9 @@
   (setq-default mac-option-modifier 'super)
   (setq-default mac-command-modifier 'meta))
 
-;; * Customization and Backup
+;; ** Customization and Backup
 ;;
-;; ** Save custom-file as cache
+;; Save custom-file as cache
 ;;
 ;;   Most of my config is written in this file, it's no need to
 ;;   tracking the emacs's custom-setting.
@@ -123,7 +134,7 @@
 (when (file-exists-p custom-file)
   (load-file custom-file))
 
-;; ** Setup backup files
+;; Setup backup files
 ;;
 ;;   By default Emacs saves =BackupFiles= under the original name with
 ;;   a tilde =~= appended. Example: Editing README will result in
@@ -149,7 +160,9 @@
 (setq delete-old-versions t)
 (setq backup-by-copying t)
 
-;; * Startup emacs server
+;; ** Startup Configuration
+
+;; Startup emacs server
 ;;
 ;;   Only start server mode if I'm not root
 
@@ -158,23 +171,23 @@
   (when (fboundp 'server-running-p)
     (unless (server-running-p) (server-start))))
 
-;; * Disable Default Stuff
-;;
-;; ** Turn-off Alarm Bell
+;; ** Disable Default Stuff
+
+;; Turn-off Alarm Bell
 
 (setq ring-bell-function #'ignore)
 
-;; ** Clean scratch buffer messages
+;; Clean scratch buffer messages
 ;;
 ;;   Leave me a clean **scratch** buffer and I'll be more happy :)
 
 (setq initial-scratch-message "")
 
-;; ** Use visible bell instead of buzzer
+;; Use visible bell instead of buzzer
 
 (setq visible-bell t)
 
-;; ** Ask for y or n, not yes or no
+;; Ask for y or n, not yes or no
 ;;
 ;;   Emacs starts out asking for you to type yes or no with most
 ;;   important questions. Just let me use =y= or =n= with no =RET=
@@ -182,9 +195,113 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; ** Maximized window after emacs start
+;; Maximized window after emacs start
 
 (modify-all-frames-parameters '((fullscreen . maximized)))
+
+;; ** Built-in Package Configuration
+
+;; Languages and Encodings
+;;
+;;   Add UTF8 at the front of the priority list for automatic detection.
+
+(prefer-coding-system 'utf-8)
+
+;; Set up multilingual environment to use UTF-8.
+
+(set-language-environment "UTF-8")
+
+;; Set default value of various coding systems to UTF-8.
+
+(set-default-coding-systems 'utf-8)
+
+;; Use =C= as locale for display time info (Actually it will display
+;; English).
+
+(setq system-time-locale "C")
+
+;; ** Built-in Packages Cache Redirection
+
+;; abbrev
+
+(eval-after-load 'bookmark
+  '(progn
+     (setq abbrev-file-name
+           (concat user-cache-directory "abbrev_defs"))))
+
+;; eshell
+;;
+;;   Move eshell cache dir to =~/.emacs.d/.cache/eshell=
+
+(eval-when-compile (defvar eshell-directory-name)) ; defined in esh-mode.el
+
+(with-eval-after-load 'esh-mode
+  (setq-default eshell-directory-name
+                (concat user-cache-directory "eshell")))
+
+(with-eval-after-load 'em-hist
+  (setq-default eshell-history-file-name
+                (expand-file-name "history" eshell-directory-name)))
+
+;; bookmark
+
+(eval-after-load 'bookmark
+  '(progn
+     (setq-default bookmark-default-file
+                   (concat user-cache-directory "bookmarks"))))
+
+;; idlwave
+;;
+;;   Major mode for editing IDL source files.
+
+(eval-after-load 'idlwave
+  '(progn
+     (setq-default idlwave-config-directory
+		   (concat user-cache-directory "idlwave"))))
+
+;; srecode
+
+;; change srecode cache file path
+(eval-after-load 'srecode
+  '(progn
+     (setq-default srecode-map-save-file
+                   (concat user-cache-directory "srecode-map.el"))))
+
+;; request
+
+(eval-after-load 'request
+  '(progn
+     (setq-default request-storage-directory
+                   (concat user-cache-directory "request"))))
+
+;; nsm
+
+(eval-after-load 'nsm
+  '(progn
+     (setq-default nsm-settings-file
+                   (concat user-cache-directory "network-security.data"))))
+
+;; url
+
+(eval-after-load 'url
+  '(progn
+     (setq url-configuration-directory
+           (file-name-as-directory
+            (concat user-cache-directory "url")))))
+
+;; startup
+;;
+;;   NOTE: `auto-save-list-file-prefix' defined in startup.el, but
+;;   startup.el doesn't have provide pacage name (provide 'startup)
+
+(setq-default auto-save-list-file-prefix
+              (cond ((eq system-type 'ms-dos)
+                     ;; MS-DOS cannot have initial dot, and allows only 8.3 names
+                     (file-name-as-directory
+                      (concat user-cache-directory "auto-save.list/_saves-")))
+                    (t
+                      (file-name-as-directory
+                      (concat user-cache-directory "auto-save-list/.saves-")))))
 
 ;; * Package Management
 ;;
@@ -234,112 +351,6 @@
 (use-package dash :ensure t)
 (use-package htmlize :ensure t)
 (use-package async :ensure t)
-
-;; * Languages and Encodings
-;;
-;;   Add UTF8 at the front of the priority list for automatic detection.
-
-(prefer-coding-system 'utf-8)
-
-;;   Set up multilingual environment to use UTF-8.
-
-(set-language-environment "UTF-8")
-
-;;   Set default value of various coding systems to UTF-8.
-
-(set-default-coding-systems 'utf-8)
-
-;;   Use =C= as locale for display time info (Actually it will display
-;;   English).
-
-(setq system-time-locale "C")
-
-;; * Built-in Packages Cache Redirection
-;;
-;;   Some buildin packages need to add extra setups for my emacs
-;;   setting. Most of them are the cache file, I'll move them to
-;;   =~/.emacs.d/.cache= directory.
-;;
-;; ** abbrev
-
-(eval-after-load 'bookmark
-  '(progn
-     (setq abbrev-file-name
-           (concat user-cache-directory "abbrev_defs"))))
-
-;; ** eshell
-;;
-;;   Move eshell cache dir to =~/.emacs.d/.cache/eshell=
-
-(eval-when-compile (defvar eshell-directory-name)) ; defined in esh-mode.el
-
-(with-eval-after-load 'esh-mode
-  (setq-default eshell-directory-name
-                (concat user-cache-directory "eshell")))
-
-(with-eval-after-load 'em-hist
-  (setq-default eshell-history-file-name
-                (expand-file-name "history" eshell-directory-name)))
-
-;; ** bookmark
-
-(eval-after-load 'bookmark
-  '(progn
-     (setq-default bookmark-default-file
-                   (concat user-cache-directory "bookmarks"))))
-
-;; ** idlwave
-;;
-;;   Major mode for editing IDL source files.
-
-(eval-after-load 'idlwave
-  '(progn
-     (setq-default idlwave-config-directory
-		   (concat user-cache-directory "idlwave"))))
-
-;; ** srecode
-
-;; change srecode cache file path
-(eval-after-load 'srecode
-  '(progn
-     (setq-default srecode-map-save-file
-                   (concat user-cache-directory "srecode-map.el"))))
-
-;; ** request
-
-(eval-after-load 'request
-  '(progn
-     (setq-default request-storage-directory
-                   (concat user-cache-directory "request"))))
-
-;; ** nsm
-
-(eval-after-load 'nsm
-  '(progn
-     (setq-default nsm-settings-file
-                   (concat user-cache-directory "network-security.data"))))
-
-;; ** url
-
-(eval-after-load 'url
-  '(progn
-     (setq url-configuration-directory
-           (file-name-as-directory
-            (concat user-cache-directory "url")))))
-
-;; ** startup
-;;
-;;   NOTE: `auto-save-list-file-prefix' defined in startup.el, but
-;;   startup.el doesn't have provide pacage name (provide 'startup)
-
-(setq-default auto-save-list-file-prefix
-              (cond ((eq system-type 'ms-dos)
-                     ;; MS-DOS cannot have initial dot, and allows only 8.3 names
-                     (file-name-as-directory
-                      (concat user-cache-directory "auto-save.list/_saves-")))
-                    (t
-                     (file-name-as-directory
-                      (concat user-cache-directory "auto-save-list/.saves-")))))
 
 ;; * External Packages
 ;;
