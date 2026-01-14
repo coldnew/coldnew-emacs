@@ -3356,7 +3356,7 @@ this declaration to the kill-ring."
    :config
    ;; Style to use when calling `clang-format-buffer' unless   project has a
    ;; .clang-format file.
-   (setq clang-format-fallback-style "Chromium")
+   (setq clang-format-fallback-style "Chromium"))
 
 ;; * Emacs Lisp Development
 
