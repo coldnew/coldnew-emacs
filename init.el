@@ -3552,45 +3552,62 @@ this declaration to the kill-ring."
     (define-key eglot-mode-map (kbd "C-c l q") 'eglot-shutdown-all)
     (define-key eglot-mode-map (kbd "C-c l s") 'eglot-reconnect)))
 
-;; ** citre
-;;
-;;   Citre is a code completion and navigation framework for Emacs.
-;;   It works with various backends like ctags, gtags, and other tag systems.
-;;   Provides fast completion, jump-to-definition, and find-references.
-;;
-;;   GitHub: https://github.com/universal-ctags/citre
+ ;; ** citre
+ ;;
+ ;;   Citre is a code completion and navigation framework for Emacs.
+ ;;   It works with various backends like ctags, gtags, and other tag systems.
+ ;;   Provides fast completion, jump-to-definition, and find-references.
+ ;;
+ ;;   Key features:
+ ;;   - Fast code completion from tags
+ ;;   - Jump-to-definition (M-.)
+ ;;   - Find references and usages
+ ;;   - Multiple tag backends (ctags, gtags, global)
+ ;;   - Integrated with completion frameworks (corfu)
+ ;;   - Auto-generate tags when missing
+ ;;
+ ;;   Why I use it:
+ ;;   Fast, offline code navigation without needing full LSP setup.
+ ;;   Works well with legacy projects that use ctags.
+ ;;
+ ;;   GitHub: https://github.com/universal-ctags/citre
+ ;;
+ ;;   Configuration notes:
+ ;;   Keybindings: M-. (jump), M-, (back), C-c c t (update tags).
+ ;;   Integrates with corfu for completion UI.
 
-(use-package citre
-  :ensure t
-  :defer t
-  :config
-  ;; Enable citre-mode globally
-  (global-citre-mode 1)
-  ;; Set default backend to use ctags
-  (setq citre-default-project 'ctags)
-  ;; Enable completion at point
-  (setq citre-completion-enable t)
-  ;; Enable jump-to-definition
-  (setq citre-jump-enable t)
-  ;; Set cache directory for tags
-  (setq citre-tags-file-name "TAGS")
-  ;; Auto-create tags when none found
-  (setq citre-auto-update-tags t)
-  ;; Use corfu for completion UI integration
-  (with-eval-after-load 'corfu
-    (setq-local completion-at-point-functions
-                (list (cape-capf-super
-                       #'citre-completion-at-point
-                       #'cape-file))))
+ (use-package citre
+   :ensure t
+   :commands (citre-jump citre-jump-back citre-ace-jump citre-update-tags citre-peek citre-find-file)
+   :defer t
+   :config
+   ;; Enable citre-mode globally
+   (global-citre-mode 1)
+   ;; Set default backend to use ctags
+   (setq citre-default-project 'ctags)
+   ;; Enable completion at point
+   (setq citre-completion-enable t)
+   ;; Enable jump-to-definition
+   (setq citre-jump-enable t)
+   ;; Set cache directory for tags
+   (setq citre-tags-file-name "TAGS")
+   ;; Auto-create tags when none found
+   (setq citre-auto-update-tags t)
+   ;; Use corfu for completion UI integration
+   (with-eval-after-load 'corfu
+     (setq-local completion-at-point-functions
+                 (list (cape-capf-super
+                        #'citre-completion-at-point
+                        #'cape-file))))
 
-  ;; Keybindings for citre (following eglot pattern)
-  (with-eval-after-load 'citre
-    (define-key citre-mode-map (kbd "M-.") 'citre-jump)
-    (define-key citre-mode-map (kbd "M-,") 'citre-jump-back)
-    (define-key citre-mode-map (kbd "M-*") 'citre-ace-jump)
-    (define-key citre-mode-map (kbd "C-c c t") 'citre-update-tags)
-    (define-key citre-mode-map (kbd "C-c c s") 'citre-peek)
-    (define-key citre-mode-map (kbd "C-c c f") 'citre-find-file)))
+   ;; Keybindings for citre (following eglot pattern)
+   (with-eval-after-load 'citre
+     (define-key citre-mode-map (kbd "M-.") 'citre-jump)
+     (define-key citre-mode-map (kbd "M-,") 'citre-jump-back)
+     (define-key citre-mode-map (kbd "M-*") 'citre-ace-jump)
+     (define-key citre-mode-map (kbd "C-c c t") 'citre-update-tags)
+     (define-key citre-mode-map (kbd "C-c c s") 'citre-peek)
+     (define-key citre-mode-map (kbd "C-c c f") 'citre-find-file)))
 
 ;; ** mason
 ;;
