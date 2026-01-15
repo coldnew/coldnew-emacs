@@ -870,6 +870,69 @@ return nil since you can't set font for emacs on it."
   :commands (fancy-narrow-to-region fancy-widen)
   :hook (prog-mode . fancy-narrow-mode))
 
+;; *** kirigami
+;;
+;;   Kirigami provides a unified interface for text folding across
+;;   multiple major and minor modes. It abstracts away different
+;;   folding mechanisms and provides consistent commands.
+;;
+;;   Supported backends:
+;;   - outline-mode, outline-minor-mode
+;;   - outline-indent-mode (indentation-based)
+;;   - org-mode
+;;   - markdown-mode, gfm-mode
+;;   - hs-minor-mode (hideshow)
+;;   - treesit-fold-mode (Emacs 29+)
+;;   - vdiff-mode, vdiff-3way-mode
+;;   - hide-ifdef-mode
+;;   - origami-mode, yafolding-mode, folding-mode
+;;
+;;   Key features:
+;;   - One set of keybindings works across all modes
+;;   - Smart open/close with recursive operations
+;;   - Toggle folds at point
+;;   - Open/close all folds in buffer
+;;   - Enhances outline-mode to fix deep folding bugs
+;;
+;;   Why I use it:
+;;   Consistent folding behavior across all file types.
+;;   No need to remember different keys for different modes.
+;;   Works with built-in modes and third-party packages.
+;;
+;;   GitHub: https://github.com/jamescherti/kirigami.el
+;;
+;;   Configuration notes:
+;;   - Evil keybindings: zo (open), zc (close), za (toggle)
+;;   - zr/zm for open/close all folds
+;;   - Integrates with hs-minor-mode, treesit-fold-mode
+
+(use-package kirigami
+  :ensure t
+  :defer t
+  :custom
+  ;; Enhance outline-mode behavior (fixes deep folding bugs)
+  (kirigami-enhance-outline t)
+  :init
+  ;; Evil-mode keybindings (Vim-style fold commands)
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal 'global
+      "zo" 'kirigami-open-fold
+      "zO" 'kirigami-open-fold-rec
+      "zc" 'kirigami-close-fold
+      "za" 'kirigami-toggle-fold
+      "zr" 'kirigami-open-folds
+      "zm" 'kirigami-close-folds))
+  :config
+  ;; Enable hs-minor-mode for programming languages
+  (add-hook 'prog-mode-hook #'hs-minor-mode)
+
+  ;; Enable outline-minor-mode for text modes
+  (add-hook 'text-mode-hook #'outline-minor-mode)
+
+  ;; Enable treesit-fold-mode for tree-sitter languages (Emacs 29+)
+  (when (fboundp 'treesit-fold-mode)
+    (add-hook 'treesit-mode-hook #'treesit-fold-mode)))
+
 ;; ** Navigation and Movement
 
 ;; *** ace-jump-mode
@@ -1664,87 +1727,87 @@ return nil since you can't set font for emacs on it."
 ;;
 ;;   doxymacs is emacs's wrapper for Doxygen.
 
- (when (require 'doxymacs nil 'noerror)
-   (add-hook 'prog-mode-hook #'(lambda () (doxymacs-mode))))
+(when (require 'doxymacs nil 'noerror)
+  (add-hook 'prog-mode-hook #'(lambda () (doxymacs-mode))))
 
- ;; ** devdocs
- ;;
- ;;   DevDocs is an Emacs interface to devdocs.io, providing offline
- ;;   documentation for hundreds of programming languages and libraries.
- ;;
- ;;   Key features:
- ;;   - Browse documentation offline after installation
- ;;   - Fast search across installed documents
- ;;   - Integration with major modes (python, javascript, etc.)
- ;;   - Syntax highlighting with code blocks
- ;;   - Works seamlessly with Vertico/Consult
- ;;
- ;;   Why I use it:
- ;;   Quick access to official documentation without leaving Emacs.
- ;;   Offline access means it works even without internet connection.
- ;;   Perfect companion to LSP/eglot for comprehensive documentation.
- ;;
- ;;   GitHub: https://github.com/astoff/devdocs.el
- ;;
- ;;   Configuration notes:
- ;;   - Use `M-x devdocs-install` to download documentation (e.g., "python")
- ;;   - Use `C-h D` to look up documentation for symbol at point
- ;;   - Mode-specific docs are configured automatically
- ;;   - Data stored in ~/.emacs.d/.cache/devdocs/
+;; ** devdocs
+;;
+;;   DevDocs is an Emacs interface to devdocs.io, providing offline
+;;   documentation for hundreds of programming languages and libraries.
+;;
+;;   Key features:
+;;   - Browse documentation offline after installation
+;;   - Fast search across installed documents
+;;   - Integration with major modes (python, javascript, etc.)
+;;   - Syntax highlighting with code blocks
+;;   - Works seamlessly with Vertico/Consult
+;;
+;;   Why I use it:
+;;   Quick access to official documentation without leaving Emacs.
+;;   Offline access means it works even without internet connection.
+;;   Perfect companion to LSP/eglot for comprehensive documentation.
+;;
+;;   GitHub: https://github.com/astoff/devdocs.el
+;;
+;;   Configuration notes:
+;;   - Use `M-x devdocs-install` to download documentation (e.g., "python")
+;;   - Use `C-h D` to look up documentation for symbol at point
+;;   - Mode-specific docs are configured automatically
+;;   - Data stored in ~/.emacs.d/.cache/devdocs/
 
- (use-package devdocs
-   :ensure t
-   :defer t
-   :commands (devdocs-install devdocs-lookup devdocs-peruse)
-   :bind (("C-h D" . devdocs-lookup)
-          ("C-h S" . devdocs-peruse))
-   :custom
-   ;; Store devdocs data in cache directory
-   (devdocs-data-dir (expand-file-name "devdocs" user-cache-directory))
-   ;; Syntax highlight code blocks in documentation
-   (devdocs-fontify-code-blocks t)
-   ;; Don't auto-select devdocs window (keep focus in code)
-   (devdocs-window-select nil)
-   :init
-   ;; Set default docs per major mode
-   (add-hook 'python-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
-   (add-hook 'python-ts-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
-   (add-hook 'js-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("javascript"))))
-   (add-hook 'js-ts-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("javascript"))))
-   (add-hook 'typescript-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("typescript"))))
-   (add-hook 'typescript-ts-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("typescript"))))
-   (add-hook 'rust-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("rust"))))
-   (add-hook 'rust-ts-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("rust"))))
-   (add-hook 'go-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("go"))))
-   (add-hook 'go-ts-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("go"))))
-   (add-hook 'ruby-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("ruby"))))
-   (add-hook 'ruby-ts-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("ruby"))))
-   (add-hook 'c-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("c"))))
-   (add-hook 'c-ts-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("c"))))
-   (add-hook 'c++-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("cpp"))))
-   (add-hook 'c++-ts-mode-hook
-             (lambda () (setq-local devdocs-current-docs '("cpp"))))
-   :config
-   ;; Use flex completion style for devdocs specifically
-   ;; This provides fuzzy matching within devdocs category
-   (add-to-list 'completion-category-overrides '(devdocs (styles . (flex)))))
+(use-package devdocs
+  :ensure t
+  :defer t
+  :commands (devdocs-install devdocs-lookup devdocs-peruse)
+  :bind (("C-h D" . devdocs-lookup)
+         ("C-h S" . devdocs-peruse))
+  :custom
+  ;; Store devdocs data in cache directory
+  (devdocs-data-dir (expand-file-name "devdocs" user-cache-directory))
+  ;; Syntax highlight code blocks in documentation
+  (devdocs-fontify-code-blocks t)
+  ;; Don't auto-select devdocs window (keep focus in code)
+  (devdocs-window-select nil)
+  :init
+  ;; Set default docs per major mode
+  (add-hook 'python-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
+  (add-hook 'python-ts-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
+  (add-hook 'js-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("javascript"))))
+  (add-hook 'js-ts-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("javascript"))))
+  (add-hook 'typescript-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("typescript"))))
+  (add-hook 'typescript-ts-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("typescript"))))
+  (add-hook 'rust-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("rust"))))
+  (add-hook 'rust-ts-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("rust"))))
+  (add-hook 'go-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("go"))))
+  (add-hook 'go-ts-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("go"))))
+  (add-hook 'ruby-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("ruby"))))
+  (add-hook 'ruby-ts-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("ruby"))))
+  (add-hook 'c-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("c"))))
+  (add-hook 'c-ts-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("c"))))
+  (add-hook 'c++-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("cpp"))))
+  (add-hook 'c++-ts-mode-hook
+            (lambda () (setq-local devdocs-current-docs '("cpp"))))
+  :config
+  ;; Use flex completion style for devdocs specifically
+  ;; This provides fuzzy matching within devdocs category
+  (add-to-list 'completion-category-overrides '(devdocs (styles . (flex)))))
 
- ;; ** esup
+;; ** esup
 ;;
 ;;   Benchmark Emacs Startup time without ever leaving your Emacs.
 ;;
@@ -4153,16 +4216,16 @@ this declaration to the kill-ring."
 	       major-mode
 	       (string-suffix-p "-ts-mode" (symbol-name major-mode)))
       (let ((lang (cdr (assoc major-mode my/treesit-mode-to-language-alist))))
-      (when (and lang
-                 (not (treesit-language-available-p lang)))
-        (message "Auto-installing tree-sitter grammar for %s ..." lang)
-        (condition-case err
-            (progn
-              (treesit-install-language-grammar lang)
-              (message "Successfully installed grammar for %s" lang))
-          (error
-           (message "Failed to install grammar for %s: %s"
-                    lang (error-message-string err))))))))
+	(when (and lang
+                   (not (treesit-language-available-p lang)))
+          (message "Auto-installing tree-sitter grammar for %s ..." lang)
+          (condition-case err
+              (progn
+		(treesit-install-language-grammar lang)
+		(message "Successfully installed grammar for %s" lang))
+            (error
+             (message "Failed to install grammar for %s: %s"
+                      lang (error-message-string err))))))))
 
   ;; Run auto-install hook for all tree-sitter modes
   (dolist (mode (mapcar #'car my/treesit-mode-to-language-alist))
