@@ -2985,6 +2985,58 @@ This functions should be added to the hooks of major modes for programming."
   ;; add support to dired
   (add-hook 'dired-mode-hook 'org-download-enable))
 
+;; * Communication Tools
+;;
+;;   Communication and messaging tools for collaboration and social interaction.
+;;
+
+;; ** telega
+;;
+;;   Full featured unofficial client for Telegram platform for GNU Emacs.
+;;   Provides chat management, messaging, file sharing, and more.
+;;
+;;   Key features:
+;;   - Complete Telegram client functionality
+;;   - Chat history and message management
+;;   - File/media download and upload
+;;   - Voice/video calls
+;;   - Stickers and animations
+;;   - Notifications and status updates
+;;
+;;   Why I use it:
+;;   Integrated messaging within Emacs for seamless workflow.
+;;   Avoid context switching between applications.
+;;
+;;   GitHub: https://github.com/zevlg/telega.el
+;;   Manual: https://zevlg.github.io/telega.el/
+;;   Requires: TDLib (Telegram Database Library)
+;;
+;;   Configuration notes:
+;;   Set TDLib library path based on operating system.
+;;   Enable mode-line indicator and notifications by default.
+;;   Customize further based on personal preferences.
+
+(use-package telega
+  :ensure t
+  :commands (telega)
+  :config
+  ;; Set TDLib library path based on OS
+  (setq telega-server-libs-prefix
+        (cond ((eq system-type 'darwin) "/opt/homebrew")
+              ((eq system-type 'gnu/linux) "/usr")
+              (t "/usr")))  ; Default fallback
+  ;; Enable mode-line indicator
+  (telega-mode-line-mode 1)
+  ;; Enable notifications for incoming messages
+  (telega-notifications-mode 1)
+  ;; Use ivy for completions if available (fallback to built-in)
+  (when (featurep 'ivy)
+    (setq telega-completing-read-function #'ivy-completing-read))
+  ;; Use vertico if ivy not available
+  (unless (featurep 'ivy)
+    (when (featurep 'vertico)
+      (setq telega-completing-read-function #'completing-read))))
+
 ;; * Language Support - Documentation & Markup
 ;;
 ;; ** plantuml-mode
