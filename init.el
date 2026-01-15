@@ -4072,19 +4072,20 @@ this declaration to the kill-ring."
   ;; Auto-install tree-sitter grammar when entering a tree-sitter mode
   (defun my/treesit-maybe-install-grammar ()
     "Auto-install tree-sitter grammar for current mode if not available."
-    (when (and (boundp 'major-mode) major-mode)
-      (let* ((lang (cdr (assoc major-mode my/treesit-mode-to-language-alist)))
-             (parser-path (when lang
-                            (concat (file-name-as-directory
-                                     (expand-file-name "tree-sitter" user-emacs-directory))
-                                    (symbol-name lang)))))
-        ;; Install if grammar doesn't exist
-        (when (and lang (not (file-directory-p parser-path)))
-          (message "[treesit] Auto-installing grammar for %s..." lang)
-          (condition-case err
+    (when (and (boundp 'major-mode)
+	       major-mode
+	       (string-suffix-p "-ts-mode" (symbol-name major-mode)))
+      (let ((lang (cdr (assoc major-mode my/treesit-mode-to-language-alist))))
+      (when (and lang
+                 (not (treesit-language-available-p lang)))
+        (message "Auto-installing tree-sitter grammar for %s ..." lang)
+        (condition-case err
+            (progn
               (treesit-install-language-grammar lang)
-            (error
-             (message "[treesit] Failed to install %s: %s" lang err)))))))
+              (message "Successfully installed grammar for %s" lang))
+          (error
+           (message "Failed to install grammar for %s: %s"
+                    lang (error-message-string err))))))))
 
   ;; Run auto-install hook for all tree-sitter modes
   (dolist (mode (mapcar #'car my/treesit-mode-to-language-alist))
