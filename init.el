@@ -4074,7 +4074,10 @@ this declaration to the kill-ring."
     "Auto-install tree-sitter grammar for current mode if not available."
     (when (and (boundp 'major-mode) major-mode)
       (let* ((lang (cdr (assoc major-mode my/treesit-mode-to-language-alist)))
-             (parser-path (when lang (treesit-parser-create-path lang))))
+             (parser-path (when lang
+                            (concat (file-name-as-directory
+                                     (expand-file-name "tree-sitter" user-emacs-directory))
+                                    (symbol-name lang)))))
         ;; Install if grammar doesn't exist
         (when (and lang (not (file-directory-p parser-path)))
           (message "[treesit] Auto-installing grammar for %s..." lang)
