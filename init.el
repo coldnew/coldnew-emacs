@@ -1664,10 +1664,87 @@ return nil since you can't set font for emacs on it."
 ;;
 ;;   doxymacs is emacs's wrapper for Doxygen.
 
-(when (require 'doxymacs nil 'noerror)
-  (add-hook 'prog-mode-hook #'(lambda () (doxymacs-mode))))
+ (when (require 'doxymacs nil 'noerror)
+   (add-hook 'prog-mode-hook #'(lambda () (doxymacs-mode))))
 
-;; ** esup
+ ;; ** devdocs
+ ;;
+ ;;   DevDocs is an Emacs interface to devdocs.io, providing offline
+ ;;   documentation for hundreds of programming languages and libraries.
+ ;;
+ ;;   Key features:
+ ;;   - Browse documentation offline after installation
+ ;;   - Fast search across installed documents
+ ;;   - Integration with major modes (python, javascript, etc.)
+ ;;   - Syntax highlighting with code blocks
+ ;;   - Works seamlessly with Vertico/Consult
+ ;;
+ ;;   Why I use it:
+ ;;   Quick access to official documentation without leaving Emacs.
+ ;;   Offline access means it works even without internet connection.
+ ;;   Perfect companion to LSP/eglot for comprehensive documentation.
+ ;;
+ ;;   GitHub: https://github.com/astoff/devdocs.el
+ ;;
+ ;;   Configuration notes:
+ ;;   - Use `M-x devdocs-install` to download documentation (e.g., "python")
+ ;;   - Use `C-h D` to look up documentation for symbol at point
+ ;;   - Mode-specific docs are configured automatically
+ ;;   - Data stored in ~/.emacs.d/.cache/devdocs/
+
+ (use-package devdocs
+   :ensure t
+   :defer t
+   :commands (devdocs-install devdocs-lookup devdocs-peruse)
+   :bind (("C-h D" . devdocs-lookup)
+          ("C-h S" . devdocs-peruse))
+   :custom
+   ;; Store devdocs data in cache directory
+   (devdocs-data-dir (expand-file-name "devdocs" user-cache-directory))
+   ;; Syntax highlight code blocks in documentation
+   (devdocs-fontify-code-blocks t)
+   ;; Don't auto-select devdocs window (keep focus in code)
+   (devdocs-window-select nil)
+   :init
+   ;; Set default docs per major mode
+   (add-hook 'python-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
+   (add-hook 'python-ts-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
+   (add-hook 'js-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("javascript"))))
+   (add-hook 'js-ts-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("javascript"))))
+   (add-hook 'typescript-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("typescript"))))
+   (add-hook 'typescript-ts-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("typescript"))))
+   (add-hook 'rust-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("rust"))))
+   (add-hook 'rust-ts-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("rust"))))
+   (add-hook 'go-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("go"))))
+   (add-hook 'go-ts-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("go"))))
+   (add-hook 'ruby-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("ruby"))))
+   (add-hook 'ruby-ts-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("ruby"))))
+   (add-hook 'c-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("c"))))
+   (add-hook 'c-ts-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("c"))))
+   (add-hook 'c++-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("cpp"))))
+   (add-hook 'c++-ts-mode-hook
+             (lambda () (setq-local devdocs-current-docs '("cpp"))))
+   :config
+   ;; Use flex completion style for devdocs specifically
+   ;; This provides fuzzy matching within devdocs category
+   (add-to-list 'completion-category-overrides '(devdocs (styles . (flex)))))
+
+ ;; ** esup
 ;;
 ;;   Benchmark Emacs Startup time without ever leaving your Emacs.
 ;;
