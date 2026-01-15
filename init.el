@@ -933,6 +933,44 @@ return nil since you can't set font for emacs on it."
   (when (fboundp 'treesit-fold-mode)
     (add-hook 'treesit-mode-hook #'treesit-fold-mode)))
 
+;; *** edit-indirect
+;;
+;;   Edit regions of text in separate buffers, similar to org-edit-src-code
+;;   but works for arbitrary regions in any buffer.
+;;
+;;   Key features:
+;;   - Edit regions with different major mode than parent buffer
+;;   - Text properties not shared (prevents font-lock conflicts)
+;;   - Similar to org-edit-special but works for any selection
+;;   - Great for embedded code in Markdown/Org files
+;;   - Clean commit/abort workflow
+;;
+;;   Why I use it:
+;;   Edit code blocks within Markdown or Org files with proper
+;;   syntax highlighting. SQL strings in Python, CSS in HTML, etc.
+;;   Can use different major modes for embedded content.
+;;
+;;   GitHub: https://github.com/Fanael/edit-indirect
+;;
+;;   Configuration notes:
+;;   - Use C-c ' to edit region
+;;   - Use C-c C-c or ZZ to commit and close
+;;   - Use C-c C-k or ZQ to abort
+;;   - Works seamlessly with Evil mode
+
+(use-package edit-indirect
+  :ensure t
+  :defer t
+  :bind ("C-c '" . edit-indirect-region)
+  :config
+  ;; Evil-mode keybindings for edit-indirect buffers
+  (with-eval-after-load 'evil
+    (evil-define-key* 'normal edit-indirect-mode-map
+      "ZZ" 'edit-indirect-commit    ; Vim-style save and quit
+      "ZQ" 'edit-indirect-abort     ; Vim-style abort
+      ",c" 'edit-indirect-commit    ; Alternative: comma + c
+      ",k" 'edit-indirect-abort)))  ; Alternative: comma + k
+
 ;; ** Navigation and Movement
 
 ;; *** ace-jump-mode
