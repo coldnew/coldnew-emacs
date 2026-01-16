@@ -3290,13 +3290,41 @@ This functions should be added to the hooks of major modes for programming."
   (telega-mode-line-mode 1)
   ;; Enable notifications for incoming messages
   (telega-notifications-mode 1)
-  ;; Use ivy for completions if available (fallback to built-in)
-  (when (featurep 'ivy)
+
+  ;; Better completing-read integration
+  (cond
+   ((featurep 'ivy)
     (setq telega-completing-read-function #'ivy-completing-read))
-  ;; Use vertico if ivy not available
-  (unless (featurep 'ivy)
-    (when (featurep 'vertico)
-      (setq telega-completing-read-function #'completing-read))))
+   ((featurep 'vertico)
+    (setq telega-completing-read-function #'completing-read))
+   ;; fallback to default completing-read is already built-in
+   )
+
+  (defun my/telega-clean-urls-before-send
+      (orig-fun chat imc &optional reply-to-msg options &rest _args)
+    "Around advice for `telega--sendMessage': clean URLs in text messages."
+    (when (and (eq (telega--tl-type imc) 'inputMessageText)
+               (telega--tl-get imc :text :text))
+      (let* ((text-obj  (telega--tl-get imc :text))
+             (original  (telega--tl-get text-obj :text))
+             (cleaned
+              (with-temp-buffer
+                (insert original)
+                (goto-char (point-min))
+                (while (re-search-forward (rx bow (group (+? anything)) eow) nil t)
+                  (let* ((url (match-string 0))
+                         (clean (my--clean-url url)))
+                    (when (and clean (not (string= url clean)))
+                      (replace-match clean t t))))
+                (buffer-string))))
+        (when (and cleaned (not (string= original cleaned)))
+          (plist-put text-obj :text cleaned))))
+
+    ;; Proceed with sending
+    (apply orig-fun chat imc reply-to-msg options _args))
+
+  ;; Apply the advice to the correct internal send function
+  (advice-add 'telega--sendMessage :around #'my/telega-clean-urls-before-send))
 
 ;; * Language Support - Documentation & Markup
 ;;
