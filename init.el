@@ -952,34 +952,34 @@ return nil since you can't set font for emacs on it."
 ;;
 ;;   GitHub: https://github.com/Fanael/edit-indirect
 ;;
- ;;   Configuration notes:
- ;;   - Use C-c ' to edit region
- ;;   - Uses parent buffer's major mode as fallback if fundamental-mode
- ;;   - Use C-c C-c or ZZ to commit and close
- ;;   - Use C-c C-k or ZQ to abort
- ;;   - Works seamlessly with Evil mode
+;;   Configuration notes:
+;;   - Use C-c ' to edit region
+;;   - Uses parent buffer's major mode as fallback if fundamental-mode
+;;   - Use C-c C-c or ZZ to commit and close
+;;   - Use C-c C-k or ZQ to abort
+;;   - Works seamlessly with Evil mode
 
- (use-package edit-indirect
-   :ensure t
-   :defer t
-   :bind ("C-c '" . edit-indirect-region)
-   :config
-    ;; Fallback to parent buffer's major mode if detection fails
-    (defun my/edit-indirect-fallback-to-parent-mode ()
-      "If edit-indirect buffer is in fundamental-mode, use parent's mode."
-      (when (eq major-mode 'fundamental-mode)
-        (let ((parent-buffer (overlay-buffer edit-indirect--overlay)))
-          (funcall (buffer-local-value 'major-mode parent-buffer)))))
-    (add-hook 'edit-indirect-after-creation-hook
-              #'my/edit-indirect-fallback-to-parent-mode)
+(use-package edit-indirect
+  :ensure t
+  :defer t
+  :bind ("C-c '" . edit-indirect-region)
+  :config
+  ;; Fallback to parent buffer's major mode if detection fails
+  (defun my/edit-indirect-fallback-to-parent-mode ()
+    "If edit-indirect buffer is in fundamental-mode, use parent's mode."
+    (when (eq major-mode 'fundamental-mode)
+      (let ((parent-buffer (overlay-buffer edit-indirect--overlay)))
+        (funcall (buffer-local-value 'major-mode parent-buffer)))))
+  (add-hook 'edit-indirect-after-creation-hook
+            #'my/edit-indirect-fallback-to-parent-mode)
 
-   ;; Evil-mode keybindings for edit-indirect buffers
-   (with-eval-after-load 'evil
-     (evil-define-key* 'normal edit-indirect-mode-map
-       "ZZ" 'edit-indirect-commit    ; Vim-style save and quit
-       "ZQ" 'edit-indirect-abort     ; Vim-style abort
-       ",c" 'edit-indirect-commit    ; Alternative: comma + c
-       ",k" 'edit-indirect-abort)))  ; Alternative: comma + k
+  ;; Evil-mode keybindings for edit-indirect buffers
+  (with-eval-after-load 'evil
+    (evil-define-key* 'normal edit-indirect-mode-map
+      "ZZ" 'edit-indirect-commit    ; Vim-style save and quit
+      "ZQ" 'edit-indirect-abort     ; Vim-style abort
+      ",c" 'edit-indirect-commit    ; Alternative: comma + c
+      ",k" 'edit-indirect-abort)))  ; Alternative: comma + k
 
 ;; ** Navigation and Movement
 
