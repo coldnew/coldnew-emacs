@@ -62,3 +62,4 @@ elpa/
 /elpaca/
 /.agent-shell/
 /ellama-sessions/
+.user-lisp-autoloads.el
