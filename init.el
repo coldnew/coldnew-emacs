@@ -2466,73 +2466,14 @@ With argument, do this that many times."
 ;;   Remove common tracking parameters from URLs before sharing.
 ;;   Strips: utm_*, fbclid, gclid, ref, mc_eid, _hsenc, _hsmi, etc.
 ;;
-;;   Why I use it:
-;;   Clean URLs before sharing on Telegram/social media to avoid
-;;   tracking and create cleaner links.
+;;   Loaded from: user-lisp/url-clean.el
 ;;
 ;;   Usage:
-;;   - M-x my/clean-url-at-point - Clean URL at cursor
-;;   - Select region and M-x my/clean-url-region - Clean all URLs in region
-;;   - M-x my/clean-url-from-kill-ring - Clean URL from kill ring
+;;   - M-x url-clean-at-point - Clean URL at cursor
+;;   - M-x url-clean-region - Clean all URLs in region
+;;   - M-x url-clean-from-kill-ring - Clean URL from kill ring
 
-(defvar my/url-tracking-parameters
-  '("utm_source" "utm_medium" "utm_campaign" "utm_term" "utm_content"
-    "fbclid" "gclid" "gclsrc" "dclid" "msclkid"
-    "ref" "ref_" "ref_src" "ref_url"
-    "mc_eid" "mc_cid"
-    "_hsenc" "_hsmi" "hsCtaTracking"
-    "yclid" "_openstat"
-    "wickedid" "ttclid" "irclickid")
-  "URL parameters to remove for tracking cleanup.")
-
-(defun my--clean-url (url)
-  "Remove tracking parameters from URL."
-  (let ((parsed (url-generic-parse-url url)))
-    (when parsed
-      (let* ((query (url-query parsed))
-             (new-query (delq nil
-                              (mapcar (lambda (pair)
-                                        (unless (member (car pair) my/url-tracking-parameters)
-                                          pair))
-                                      query))))
-        (setf (url-query parsed) new-query)
-        (url-recreate-url parsed)))))
-
-(defun my/clean-url-at-point ()
-  "Clean URL at point from tracking parameters."
-  (interactive)
-  (let ((url (thing-at-point 'url)))
-    (when url
-      (let ((cleaned (my--clean-url url)))
-        (when cleaned
-          (kill-new cleaned)
-          (message "Cleaned URL: %s" cleaned))))))
-
-(defun my/clean-url-region (beg end)
-  "Clean all URLs in region from tracking parameters."
-  (interactive "r")
-  (let ((text (buffer-substring beg end))
-        (count 0))
-    (with-temp-buffer
-      (insert text)
-      (goto-char (point-min))
-      (while (re-search-forward url-nonrelative-link nil t)
-        (let ((url (match-string 0)))
-          (let ((cleaned (my--clean-url url)))
-            (when cleaned
-              (replace-match cleaned)
-              (setq count (1+ count))))))
-      (message "Cleaned %d URL(s)" count))))
-
-(defun my/clean-url-from-kill-ring ()
-  "Clean URL from kill ring and save cleaned version."
-  (interactive)
-  (let ((url (current-kill 0)))
-    (when (string-match-p "\\`https?://" url)
-      (let ((cleaned (my--clean-url url)))
-        (when cleaned
-          (kill-new cleaned)
-          (message "Cleaned and saved: %s" cleaned))))))
+(require 'url-clean)
 
 ;; ** File Handle
 ;;
@@ -3311,9 +3252,9 @@ This functions should be added to the hooks of major modes for programming."
               (with-temp-buffer
                 (insert original)
                 (goto-char (point-min))
-                (while (re-search-forward (rx bow (group (+? anything)) eow) nil t)
+                (while (re-search-forward url-nonrelative-link nil t)
                   (let* ((url (match-string 0))
-                         (clean (my--clean-url url)))
+                         (clean (url-clean url)))
                     (when (and clean (not (string= url clean)))
                       (replace-match clean t t))))
                 (buffer-string))))
@@ -5535,8 +5476,8 @@ this declaration to the kill-ring."
 
 (bind-keys :map global-map
            ("C-x C-s" . my/save-buffer-always)
-           ("C-c u" . my/clean-url-at-point)
-           ("C-c U" . my/clean-url-from-kill-ring))
+           ("C-c u" . url-clean-at-point)
+           ("C-c U" . url-clean-from-kill-ring))
 
 ;; * Personal Configuration
 ;;
