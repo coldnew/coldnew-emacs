@@ -98,7 +98,7 @@
 ;;
 
 (eval-and-compile
-  (dolist (dir '("local-lisp" "styles"))
+  (dolist (dir '("styles"))
     (let ((full-dir (expand-file-name dir user-emacs-directory)))
       (when (and full-dir (file-exists-p full-dir))
         (add-to-list 'load-path full-dir)))))
