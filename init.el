@@ -452,6 +452,30 @@
 
 (use-package async :ensure t)
 
+;; *** url-clean
+;;
+;;   Remove tracking parameters from URLs before sharing.
+;;
+;;   Key features:
+;;   - Strips utm_* parameters (utm_source, utm_medium, etc.)
+;;   - Removes fbclid, gclid, ref, mc_eid, _hsenc, _hsmi, etc.
+;;   - Interactive commands: url-clean-at-point, url-clean-region
+;;   - Can process URLs in text buffers programmatically
+;;
+;;   Why I use it:
+;;   Clean URLs are essential for privacy and professional sharing.
+;;   Removes clutter and tracking when sharing links with others.
+;;
+;;   GitHub: https://github.com/coldnew/url-clean.el
+;;
+;;   Configuration notes:
+;;   Loaded from GitHub repository, includes interactive commands.
+
+(use-package url-clean
+  :ensure (:host github :repo "coldnew/url-clean.el")
+  :defer t
+  :autoload url-clean)
+
 ;; * Theme & Fonts
 ;;
 ;;   User interface customization including themes, fonts, colors,
@@ -2461,19 +2485,7 @@ With argument, do this that many times."
   (kill-ring-save (region-beginning) (region-end))
   (comment-dwim nil))
 
-;; *** Clean URL from tracking parameters
-;;
-;;   Remove common tracking parameters from URLs before sharing.
-;;   Strips: utm_*, fbclid, gclid, ref, mc_eid, _hsenc, _hsmi, etc.
-;;
-;;   Loaded from: user-lisp/url-clean.el
-;;
-;;   Usage:
-;;   - M-x url-clean-at-point - Clean URL at cursor
-;;   - M-x url-clean-region - Clean all URLs in region
-;;   - M-x url-clean-from-kill-ring - Clean URL from kill ring
 
-(require 'url-clean)
 
 ;; ** File Handle
 ;;
@@ -5475,9 +5487,7 @@ this declaration to the kill-ring."
 ;; ** Keybindings
 
 (bind-keys :map global-map
-           ("C-x C-s" . my/save-buffer-always)
-           ("C-c u" . url-clean-at-point)
-           ("C-c U" . url-clean-from-kill-ring))
+           ("C-x C-s" . my/save-buffer-always))
 
 ;; * Personal Configuration
 ;;
