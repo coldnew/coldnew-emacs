@@ -2697,7 +2697,25 @@ With argument, do this that many times."
                                                calendar-mode org-mode)))
       (display-line-numbers-mode))))
 
-;; ** rainbow-delimiters
+
+;; *** rainbow-delimiters
+;;
+;;   Color-code parentheses and other delimiters by nesting level.
+;;
+;;   Key features:
+;;   - Color-code delimiters by depth
+;;   - Customizable color schemes
+;;   - Works with all programming modes
+;;   - Improves readability of nested expressions
+;;
+;;   Why I use it:
+;;   Essential for reading and editing deeply nested Lisp code.
+;;   Makes it easy to spot mismatched parentheses and understand structure.
+;;
+;;   GitHub: https://github.com/Fanael/rainbow-delimiters
+;;
+;;   Configuration notes:
+;;   Enabled globally for all Lisp modes.
 
 (use-package rainbow-delimiters
   :ensure t
@@ -2706,7 +2724,7 @@ With argument, do this that many times."
 ;; ** recentf
 
 (use-package recentf
-  :ensure nil                             ; built-in
+  :ensure nil				; built-in
   :init (setq recentf-save-file (expand-file-name "recentf" user-cache-directory))
   :config
   (recentf-mode 1))
@@ -5170,29 +5188,6 @@ this declaration to the kill-ring."
       normal
       visual
       motion))))
-
-;; *** rainbow-delimiters
-;;
-;;   Color-code parentheses and other delimiters by nesting level.
-;;
-;;   Key features:
-;;   - Color-code delimiters by depth
-;;   - Customizable color schemes
-;;   - Works with all programming modes
-;;   - Improves readability of nested expressions
-;;
-;;   Why I use it:
-;;   Essential for reading and editing deeply nested Lisp code.
-;;   Makes it easy to spot mismatched parentheses and understand structure.
-;;
-;;   GitHub: https://github.com/Fanael/rainbow-delimiters
-;;
-;;   Configuration notes:
-;;   Enabled globally for all Lisp modes.
-
-(use-package rainbow-delimiters
-  :ensure t
-  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; *** eros
 ;;
