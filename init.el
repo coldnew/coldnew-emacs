@@ -1753,12 +1753,6 @@ return nil since you can't set font for emacs on it."
   :config
   (add-hook 'prog-mode-hook 'turn-on-evil-quickscope-always-mode))
 
-(use-package evil-quickscope
-  :ensure t
-  :after evil
-  :config
-  (add-hook 'prog-mode-hook 'turn-on-evil-quickscope-always-mode))
-
 ;; *** vi-tilde-fringe
 ;;
 ;;   Displays tildes in fringe on empty lines a la Vi.
