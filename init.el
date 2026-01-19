@@ -1005,6 +1005,41 @@ return nil since you can't set font for emacs on it."
       ",c" 'edit-indirect-commit    ; Alternative: comma + c
       ",k" 'edit-indirect-abort)))  ; Alternative: comma + k
 
+;; *** line-reminder
+;;
+;;   line-reminder provides line annotation for changed and saved lines.
+;;   Similar to Visual Studio's feature that marks modified lines.
+;;
+;;   Key features:
+;;   - Visual markers for modified and saved lines
+;;   - Two display modes: linum (text) or indicators (fringe)
+;;   - Customizable symbols and faces
+;;   - Thumbnail display option in fringe
+;;   - Global or per-buffer mode
+;;
+;;   Why I use it:
+;;   Provides visual feedback about which lines have been modified
+;;   or saved. Helps track changes while editing, especially useful
+;;   when reviewing or debugging code changes.
+;;
+;;   GitHub: https://github.com/emacs-vs/line-reminder
+;;
+;;   Configuration notes:
+;;   - Use `global-line-reminder-mode` for all buffers
+;;   - Set `line-reminder-show-option` to 'linum or 'indicators
+;;   - Customize faces: `line-reminder-modified-sign-face`
+
+(use-package line-reminder
+  :ensure t
+  :commands (global-line-reminder-mode line-reminder-mode)
+  :config
+  ;; Use indicators in fringe instead of line numbers
+  (setq line-reminder-show-option 'indicators)
+  ;; Show modified lines in fringe on left side
+  (setq line-reminder-fringe-placed 'left-fringe)
+  ;; Enable globally
+  (global-line-reminder-mode t))
+
 ;; ** Navigation and Movement
 
 ;; *** ace-jump-mode
