@@ -1037,7 +1037,14 @@ return nil since you can't set font for emacs on it."
   (setq line-reminder-show-option 'indicators)
   ;; Show modified lines in fringe on left side
   (setq line-reminder-fringe-placed 'left-fringe)
-  ;; Enable globally
+  ;; Disable on remote files for better performance with tramp-rpc
+  (defun my/line-reminder-remote-disable ()
+    "Disable line-reminder for remote files (tramp/tramp-rpc)."
+    (when (and (buffer-file-name)
+               (file-remote-p (buffer-file-name)))
+      (line-reminder-mode -1)))
+  (add-hook 'find-file-hook #'my/line-reminder-remote-disable)
+  ;; Enable globally for local files
   (global-line-reminder-mode t))
 
 ;; ** Navigation and Movement
@@ -3064,6 +3071,7 @@ This functions should be added to the hooks of major modes for programming."
 ;;
 ;;   Configuration notes:
 ;;   Uses rsync for faster file transfers. Cache files in user-cache-directory.
+;;
 
 (use-package tramp
   :ensure nil  ; built-in
@@ -3071,6 +3079,45 @@ This functions should be added to the hooks of major modes for programming."
   (setq tramp-persistency-file-name (concat user-cache-directory "tramp"))
   :config
   (setq tramp-default-method "rsync"))
+
+;; *** tramp-rpc
+;;
+;;   High-performance TRAMP backend using JSON-RPC instead of shell parsing.
+;;   Uses a Rust RPC server on remote host for 2-57x faster operations.
+;;
+;;   Key features:
+;;   - Binary RPC protocol instead of shell parsing
+;;   - Batching support for reduced round-trips
+;;   - Async process support
+;;   - Full VC mode integration
+;;   - Automatic binary deployment (download or build from source)
+;;
+;;   Why I use it:
+;;   Dramatically faster remote file operations compared to traditional TRAMP.
+;;   Essential for intensive remote development work.
+;;
+;;   GitHub: https://github.com/ArthurHeymans/emacs-tramp-rpc
+;;
+;;   Configuration notes:
+;;   - Use /rpc:user@host:/path to connect
+;;   - Binary auto-deployed to ~/.cache/tramp-rpc on remote
+;;   - Requires Emacs 30.1+ and SSH access
+;;   - Compatible with line-reminder (disabled on remote files)
+
+(use-package tramp-rpc
+  :ensure (:host github :repo "ArthurHeymans/emacs-tramp-rpc")
+  :if (>= emacs-major-version 30)
+  :commands (tramp-rpc-mode tramp-rpc-deploy-status)
+  :config
+  ;; Prefer building from source if Rust is available
+  (setq tramp-rpc-deploy-prefer-build t)
+  ;; Local cache directory for binaries
+  (setq tramp-rpc-deploy-local-cache-directory
+        (concat user-cache-directory "tramp-rpc-binaries"))
+  ;; Remote installation directory
+  (setq tramp-rpc-deploy-remote-directory "~/.local/bin/tramp-rpc")
+  ;; Enable tramp-rpc mode
+  (tramp-rpc-mode t))
 
 ;; * Org Mode
 ;;
