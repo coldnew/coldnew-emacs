@@ -93,15 +93,14 @@
 
 ;; ** Load Path Setup
 ;;
-;;   The variable =load-path= lists all the directories where Emacs
-;;   should look for emacs-lisp files.
+;;   Add user-lisp directory to load-path if user-lisp-directory is not defined.
 ;;
 
 (eval-and-compile
-  (dolist (dir '("styles"))
-    (let ((full-dir (expand-file-name dir user-emacs-directory)))
-      (when (and full-dir (file-exists-p full-dir))
-        (add-to-list 'load-path full-dir)))))
+  (unless (boundp 'user-lisp-directory)
+    (let ((user-lisp-dir (expand-file-name "user-lisp" user-emacs-directory)))
+      (when (and user-lisp-dir (file-exists-p user-lisp-dir))
+        (add-to-list 'load-path user-lisp-dir)))))
 
 
 ;; ** Environment Setup (macOS)
