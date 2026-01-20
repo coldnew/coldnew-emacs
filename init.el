@@ -410,6 +410,7 @@
 ;;   Pure library, no configuration needed.
 
 (use-package dash :ensure t)
+
 ;; *** htmlize
 ;;
 ;;   Convert buffer text and faces to HTML.
@@ -430,6 +431,7 @@
 ;;   Used by org-mode and other export tools.
 
 (use-package htmlize :ensure t)
+
 ;; *** async
 ;;
 ;;   Asynchronous processing in Emacs Lisp.
