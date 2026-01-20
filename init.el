@@ -33,21 +33,14 @@
 ;;   All other sections depend on this configuration.
 ;;
 
-;; ** Emacs Compatibility and Core Libraries
-
+;; ** Core Libraries
 ;;
-;; *** Use Common Lisp Extension
-;;
-;;   Some of my function may need the Common Lisp Extension, let's
-;;   import libraries first.
+;;   Essential libraries used throughout the configuration:
+;;   - cl-lib: Common Lisp extensions for enhanced programming capabilities
+;;   - find-lisp: File finding utilities for path and directory operations
 
-(require 'cl-lib)                       ; built-in
-
-;; *** Load extra builtin library
-;;
-;;   Add some extra buildin library I will use in my config file.
-
-(require 'find-lisp)
+(require 'cl-lib)     ; Common Lisp extensions
+(require 'find-lisp)  ; File finding utilities
 
 ;; ** Directory Variables Setup
 ;;
