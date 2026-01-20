@@ -1830,14 +1830,23 @@ return nil since you can't set font for emacs on it."
 
 ;; ** doxymacs
 ;;
-;;   Doxygen is a system for extracting documentation from source code.
-;;   It supports a variety of programming languages, human languages
-;;   and output formats. You can find it at http://www.doxygen.org.
+;;   Doxymacs is Doxygen + Emacs. It allows you to:
+;;   - easily insert Doxygen-style comments
+;;   - highlight Doxygen keywords
+;;   - look up Doxygen documentation
 ;;
-;;   doxymacs is emacs's wrapper for Doxygen.
+;;   GitHub: https://github.com/pniedzielski/doxymacs
+;;
+;;   Configuration notes:
+;;   - Lisp files are in lisp/ directory
+;;   - Hooks into c-mode-common-hook
 
-(when (require 'doxymacs nil 'noerror)
-  (add-hook 'prog-mode-hook #'(lambda () (doxymacs-mode))))
+(use-package doxymacs
+  :ensure (:host github :repo "pniedzielski/doxymacs" :files ("lisp/*.el"))
+  :hook (c-mode-common . doxymacs-mode)
+  :config
+  ;; Use standard doxymacs font lock
+  (doxymacs-font-lock))
 
 ;; ** devdocs
 ;;
