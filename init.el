@@ -2379,6 +2379,54 @@ opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
   (setq-default ellama-enable-keymap t)
   (setq-default ellama-keymap-prefix "C-c e"))
 
+;; ** ai-code
+;;
+;;   Unified Emacs interface supporting Claude Code, Gemini CLI, OpenAI Codex,
+;;   Opencode, GitHub Copilot CLI, Cursor, and more.
+;;
+;;   Key features:
+;;   - Transient-driven hub (C-c i) for all AI operations
+;;   - AI CLI session management (start, resume, switch backends)
+;;   - Context-aware code actions (change, implement TODOs, ask questions)
+;;   - Agile development workflows (refactoring, TDD, diff review)
+;;   - Prompt management and snippet support
+;;   - Seamless integration with Magit, project, and projectile
+;;
+;;   Supported backends:
+;;   - Claude Code, Claude Code IDE
+;;   - Gemini CLI
+;;   - OpenAI Codex CLI
+;;   - GitHub Copilot CLI
+;;   - Opencode
+;;   - Grok CLI
+;;   - Cursor CLI
+;;
+;;   GitHub: https://github.com/tninja/ai-code-interface.el
+;;
+;;   Configuration notes:
+;;   - Requires vterm (or eat) for CLI backends
+;;   - Keybinding set to C-c i (aidermacs uses C-c a)
+;;   - Set backend with ai-code-set-backend
+
+(use-package ai-code
+  :ensure t
+  :bind (("C-c i" . ai-code-menu))
+  :config
+  ;; Set default backend (change as needed)
+  ;; Options: 'codex, 'gemini, 'github-copilot-cli, 'opencode, 'grok, 'claude-code-ide, 'claude-code, 'cursor
+  (ai-code-set-backend 'opencode)
+
+  ;; Faster buffer auto-revert for AI changes
+  (global-auto-revert-mode 1)
+  (setq auto-revert-interval 1)
+
+  ;; Optional: Use eat instead of vterm
+  ;; (setq ai-code-backends-infra-terminal-backend 'eat)
+
+  ;; Magit integration
+  (with-eval-after-load 'magit
+    (ai-code-magit-setup-transients)))
+
 ;; * Interactive Commands
 ;;
 ;;   Custom interactive commands and utility functions that enhance
