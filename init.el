@@ -86,10 +86,8 @@
       temporary-file-directory))
   "My ramdisk path in system.")
 
-;; ** Personal Information
 
-(setq user-full-name "Yen-Chin, Lee")
-(setq user-mail-address "coldnew.tw@gmail.com")
+
 
 ;; ** Load Path Setup
 ;;
@@ -5640,6 +5638,12 @@ this declaration to the kill-ring."
            ("C-x C-s" . my/save-buffer-always))
 
 ;; * Personal Configuration
+
+;; Personal information
+
+(setq user-full-name "Yen-Chin, Lee")
+(setq user-mail-address "coldnew.tw@gmail.com")
+
 ;;
 ;;   Load personal settings if available.
 
