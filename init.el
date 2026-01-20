@@ -185,6 +185,9 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; Command aliases for convenience
+(defalias 'telegram 'telega)               ; Alias 'telegram' to call 'telega'
+
 ;; Maximized window after emacs start
 
 (modify-all-frames-parameters '((fullscreen . maximized)))
