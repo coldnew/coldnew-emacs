@@ -3131,6 +3131,52 @@ This functions should be added to the hooks of major modes for programming."
   ;; Enable tramp-rpc mode
   (tramp-rpc-mode t))
 
+;; ** dired-sidebar
+;;
+;;   Tree-based file browser sidebar built on top of Dired.
+;;
+;;   Key features:
+;;   - Dired-based: inherits Dired's polished features and standard keybindings
+;;   - Fast: designed for performance, especially in large directories
+;;   - Multiple Frames: each frame can have its own sidebar state
+;;   - File Following: refreshes to reflect the currently selected file
+;;   - Mouse Support: close/expand folders and open files with left click
+;;   - Session Persistence: uses desktop-save-mode for persistence
+;;   - Projectile Integration: opens with Projectile's root as sidebar's root
+;;   - Dired Subtree Integration: expand/collapse folders with dired-subtree
+;;   - Multiple Icon Themes: all-the-icons, nerd-icons, vscode, ascii, none
+;;   - Evil Integration: Evil keybindings are bound
+;;   - Magit Integration: sets sidebar root at Magit's directory
+;;   - IBuffer Integration: opens sidebar pointing at buffer's file
+;;
+;;   Why I use it:
+;;   Provides a tree-based file browser using native Dired functionality.
+;;   Fast and familiar alternative to neotree or treemacs.
+;;
+;;   GitHub: https://github.com/jojojames/dired-sidebar
+;;
+;;   Configuration notes:
+;;   - Requires dired-subtree (auto-detected)
+;;   - Theme set to 'vscode (requires vscode-icon package)
+;;   - Keybinding: C-x C-n to toggle sidebar
+
+(use-package dired-sidebar
+  :ensure t
+  :commands (dired-sidebar-toggle-sidebar)
+  :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
+  :init
+  (add-hook 'dired-sidebar-mode-hook
+            (lambda ()
+              (unless (file-remote-p default-directory)
+                (auto-revert-mode))))
+  :config
+  (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
+  (push 'rotate-windows dired-sidebar-toggle-hidden-commands)
+  (setq dired-sidebar-subtree-line-prefix "__")
+  (setq dired-sidebar-theme 'vscode)
+  (setq dired-sidebar-use-term-integration t)
+  (setq dired-sidebar-use-custom-font t))
+
 ;; * Org Mode
 ;;
 ;;   Org-mode is for keeping notes, maintaining TODO lists, and
