@@ -3145,6 +3145,7 @@ This functions should be added to the hooks of major modes for programming."
 
 (use-package tramp
   :ensure nil  ; built-in
+  :demand t    ; Load immediately to define functions needed by tramp-rpc autoloads
   :init
   (setq tramp-persistency-file-name (concat user-cache-directory "tramp"))
   :config
