@@ -26,64 +26,64 @@
 ;;; Code:
 (require 'coldnew-theme)
 
-;; Add color definition
-(add-to-list
- 'coldnew-theme-colors
- '(night
-   . (;; name              sRGB       256
-      (background        "#202020" "#202020")
-      (far-background    "#1c1f26" "#121212")
-      (foreground        "#c6cccc" "#c6cccc")
-      (cursor            "#00c8c8" "#00c8c8")
-      (current-line      "#2a2a2a" "#2a2a2a")
-      (selection         "#3b3f41" "#3b3f41")
-      (highlight         "#CAE682" "#CAE682")
+(eval-and-compile
+  (add-to-list
+   'coldnew-theme-colors
+   '(night
+     . (;; name              sRGB       256
+        (background        "#202020" "#202020")
+        (far-background    "#1c1f26" "#121212")
+        (foreground        "#c6cccc" "#c6cccc")
+        (cursor            "#00c8c8" "#00c8c8")
+        (current-line      "#2a2a2a" "#2a2a2a")
+        (selection         "#3b3f41" "#3b3f41")
+        (highlight         "#CAE682" "#CAE682")
 
-      ;; font-lock
-      (buildin           "#ccaaff" "#ccaaff")
-      (constant          "#ccaaff" "#ccaaff")
-      (comment           "#9ac"    "#9ac")
-      (comment-delimiter "#5f5f5f" "#5f5f5f")
-      (doc               "#97abc6" "#97abc6")
-      (function-name     "#aaccff" "#aaccff")
-      (keyword           "#aaffaa" "#aaffaa")
-      (type              "#fff59d" "#fff59d")
-      (variable-name     "#aaccff" "#aaccff")
-      (string            "#aadddd" "#aadddd")
+        ;; font-lock
+        (buildin           "#ccaaff" "#ccaaff")
+        (constant          "#ccaaff" "#ccaaff")
+        (comment           "#9ac"    "#9ac")
+        (comment-delimiter "#5f5f5f" "#5f5f5f")
+        (doc               "#97abc6" "#97abc6")
+        (function-name     "#aaccff" "#aaccff")
+        (keyword           "#aaffaa" "#aaffaa")
+        (type              "#fff59d" "#fff59d")
+        (variable-name     "#aaccff" "#aaccff")
+        (string            "#aadddd" "#aadddd")
 
-      ;; extra color
-      (base00         "#202020"  "#202020")
-      (base01         "#292929"  "#292929")
-      (base02         "#5f5f5f"  "#5f5f5f")
-      (base03         "#999999"  "#999999")
-      (base04         "#cccccc"  "#cccccc")
-      (base05         "#aaaaaa"  "#aaaaaa")
-      (base06         "#e9e2cb"  "#e9e2cb")
-      (base07         "#fcf4dc"  "#fcf4dc")
+        ;; extra color
+        (base00         "#202020"  "#202020")
+        (base01         "#292929"  "#292929")
+        (base02         "#5f5f5f"  "#5f5f5f")
+        (base03         "#999999"  "#999999")
+        (base04         "#cccccc"  "#cccccc")
+        (base05         "#aaaaaa"  "#aaaaaa")
+        (base06         "#e9e2cb"  "#e9e2cb")
+        (base07         "#fcf4dc"  "#fcf4dc")
 
-      ;; terminal color
-      (red            "#ff3333" "#ff3333")
-      (yellow         "#fff59d" "#fff59d")
-      (orange         "#ff8888" "#ff8888")
-      (green          "#aaffaa" "#aaffaa")
-      (blue           "#aaccff" "#aaccff")
-      (magenta        "#ccaaff" "#ccaaff")
-      (cyan           "#aadddd" "#aadddd")
-      (white          "#ffffff" "#ffffff")
-      (black          "#2a2a2a" "#2a2a2a")
-      (aqua           "#81d4fa" "#81d4fa")
+        ;; terminal color
+        (red            "#ff3333" "#ff3333")
+        (yellow         "#fff59d" "#fff59d")
+        (orange         "#ff8888" "#ff8888")
+        (green          "#aaffaa" "#aaffaa")
+        (blue           "#aaccff" "#aaccff")
+        (magenta        "#ccaaff" "#ccaaff")
+        (cyan           "#aadddd" "#aadddd")
+        (white          "#ffffff" "#ffffff")
+        (black          "#2a2a2a" "#2a2a2a")
+        (aqua           "#81d4fa" "#81d4fa")
 
-      ;; rainbow delimiters
-      (rainbow-1      "#aadddd" "#aadddd")
-      (rainbow-2      "#81d4fa" "#81d4fa")
-      (rainbow-3      "#aaccff" "#aaccff")
-      (rainbow-4      "#aaeecc" "#aaeecc")
-      (rainbow-5      "#ccaaff" "#ccaaff")
-      (rainbow-6      "#fff59d" "#fff59d")
-      (rainbow-7      "#ff8888" "#ff8888")
-      (rainbow-8      "#795548" "#795548")
-      (rainbow-9      "#827717" "#827717")
-      )))
+        ;; rainbow delimiters
+        (rainbow-1      "#aadddd" "#aadddd")
+        (rainbow-2      "#81d4fa" "#81d4fa")
+        (rainbow-3      "#aaccff" "#aaccff")
+        (rainbow-4      "#aaeecc" "#aaeecc")
+        (rainbow-5      "#ccaaff" "#ccaaff")
+        (rainbow-6      "#fff59d" "#fff59d")
+        (rainbow-7      "#ff8888" "#ff8888")
+        (rainbow-8      "#795548" "#795548")
+        (rainbow-9      "#827717" "#827717")
+        ))))
 
 
 ;; Create color theme
