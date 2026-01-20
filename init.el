@@ -4737,21 +4737,6 @@ this declaration to the kill-ring."
   :ensure t
   :commands (import-js-add-import import-js-switch-to-es6))
 
-;; * Internationalization
-;;
-;; ** po-mode
-
-(use-package po-mode :ensure t
-  :mode "\\.po\\'\\|\\.po\\."
-  :config
-
-  ;; To use the right coding system automatically under Emacs 20 or newer,
-  ;; also add:
-  (when (require 'po nil 'noerror)
-    (modify-coding-system-alist 'file "\\.po\\'\\|\\.po\\."
-                                'po-find-file-coding-system))
-  )
-
 ;; * Language Support - Python
 ;;
 ;;   Comprehensive Python development environment with virtual environment
