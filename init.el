@@ -2916,45 +2916,98 @@ This functions should be added to the hooks of major modes for programming."
 
 ;; * Version Control
 ;;
-;; ** magit
+;;   Comprehensive Git integration suite for seamless version control workflow.
+;;   Provides powerful Git operations, visual diff indicators, and AI-assisted
+;;   commit message generation directly within Emacs.
 
+;; ** Magit - Complete Git interface
+;;
+;;   Magit is a Git porcelain inside Emacs. It provides a streamlined interface
+;;   for Git operations, making version control tasks more efficient than
+;;   command-line Git.
+;;
+;;   Key features:
+;;   - Interactive staging/unstaging of changes
+;;   - Branch management and merging
+;;   - Commit, push, pull operations with visual feedback
+;;   - Blame, log, and history browsing
+;;   - Integration with diff and merge tools
 (use-package magit
   :ensure t
   :config
-  (setq magit-commit-arguments '("--verbose" "--signoff")))
+  ;; Add verbose output and automatic signoff to all commits
+  ;;   --verbose: Shows full diff when committing
+  ;;   --signoff: Adds Signed-off-by line (useful for contributed projects)
+  (setq magit-commit-arguments '("--verbose" "--signoff"))
+  ;; Refine hunks to show word-level changes instead of just line-level
+  ;; This provides more precise diff visualization for better code review
+  (setq magit-diff-refine-hunk 'all))
 
-(setq magit-diff-refine-hunk 'all)
+;; ** Git file modes - Enhanced syntax highlighting
+;;
+;;   Provides major modes for Git-specific files with proper syntax highlighting:
+;;   - .gitconfig files (gitconfig-mode)
+;;   - .gitignore files (gitignore-mode)
+;;   - Git commit messages (git-commit-mode) - already included with magit
+;;   - Git attributes and other Git configuration files
+(use-package git-modes
+  :ensure t)
 
-(use-package git-modes :ensure t)
-
+;; ** Git Gutter Fringe - Visual diff indicators
+;;
+;;   Shows which lines have been added, modified, or deleted directly in the
+;;   fringe area of each buffer. Provides immediate visual feedback about the
+;;   current state of the file compared to the last commit.
+;;
+;;   Visual indicators:
+;;   - Green: Added lines
+;;   - Yellow: Modified lines  
+;;   - Red: Deleted lines
 (use-package git-gutter-fringe
   :ensure t
-  :if window-system                     ; git-gutter-fringe only work on GUI
+  :if window-system                     ; Fringe indicators only work in GUI mode
   :commands (git-gutter-mode)
   :config
-  ;; enable globally
-  (git-gutter-mode))
+  (git-gutter-mode))                     ; Enable globally for all Git repositories
 
-;; ** magit-gptcommit (AI-assisted commits)
-
+;; ** Magit GPT Commit - AI-powered commit message generation
+;;
+;;   Integrates Large Language Models (LLMs) with Magit to automatically
+;;   generate descriptive commit messages based on staged changes. Supports
+;;   multiple LLM providers for flexibility in AI choice.
+;;
+;;   Workflow:
+;;   1. Stage changes in Magit
+;;   2. Trigger AI commit generation
+;;   3. Review and edit generated message
+;;   4. Accept or regenerate as needed
+;;
+;;   LLM Provider Configuration:
+;;   - Attempts to use user's default LLM provider first
+;;   - Falls back to OpenAI if available
+;;   - Finally tries Ollama with GPT-OSS-2ob model
 (use-package magit-gptcommit
   :ensure t
-  :demand t
-  :after magit llm
+  :demand t                              ; Load immediately when requested
+  :after magit llm                       ; Ensure magit and llm are loaded first
   :config
-
+  ;; Configure LLM provider with intelligent fallback hierarchy
+  ;; This allows flexible AI provider selection without manual changes
   (setq magit-gptcommit-llm-provider
-        (or (my/llm-get-provider my/llm-default-provider)
+        (or (my/llm-get-provider my/llm-default-provider) ; User's preferred provider
             (when (boundp 'my/llm-provider-openai)
-              (symbol-value 'my/llm-provider-openai))
+              (symbol-value 'my/llm-provider-openai))       ; OpenAI fallback
             (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
-              (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))))
-
-  ;; add to magit's transit buffer - defer to avoid conflicts
+              (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob)))) ; Ollama fallback
+  
+  ;; Add GPT commit functionality to Magit status buffer
+  ;; Deferred with-eval-after-load prevents load order conflicts
   (with-eval-after-load 'magit
     (magit-gptcommit-status-buffer-setup))
+  
+  ;; Keybinding to accept AI-generated commit messages in commit mode
   :bind (:map git-commit-mode-map
-              ("C-c C-g" . magit-gptcommit-commit-accept)))
+              ("C-c C-g" . magit-gptcommit-commit-accept))) ; Accept generated commit
 
 ;; * Terminal & Shell
 ;;
