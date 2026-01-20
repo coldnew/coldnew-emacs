@@ -189,6 +189,33 @@
 
 (modify-all-frames-parameters '((fullscreen . maximized)))
 
+;; ** Tab Bar Configuration
+;;
+;;   Enable and configure tab-bar-mode for workspace management.
+;;   Provides visual tabs for different frame configurations and buffers.
+;;   Integrates with existing window management and workspace tools.
+
+(use-package tab-bar
+  :ensure nil			 ; built-in
+  :demand t			 ; Load immediately for early UI setup
+  :config
+  ;; Enable tab-bar-mode globally
+  (tab-bar-mode 1)
+
+  ;; Tab bar appearance and behavior
+  (setq tab-bar-show 1		    ; Show tab bar
+        tab-bar-new-button-show nil ; Hide new tab button (use keybinding instead)
+        tab-bar-close-button-show nil	; Hide close button on tabs
+        tab-bar-new-tab-choice t ; Show tab selector when creating new tab
+        tab-bar-tab-hints t	 ; Show buffer names as tab hints
+        tab-bar-format '(tab-bar-format-tabs tab-bar-format-align-right tab-bar-format-global))
+
+  ;; Custom tab keybindings
+  (keymap-set tab-bar-mode-map "C-t" #'tab-new)	; Create new tab
+  (keymap-set tab-bar-mode-map "C-<prior>" #'tab-previous) ; Switch to previous tab
+  (keymap-set tab-bar-mode-map "C-<next>" #'tab-next) ; Switch to next tab
+  (keymap-set tab-bar-mode-map "C-w" #'tab-close))        ; Close current tab
+
 ;; ** Built-in Package Configuration
 
 ;; Languages and Encodings
