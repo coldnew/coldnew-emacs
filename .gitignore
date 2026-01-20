@@ -63,3 +63,4 @@ elpa/
 /.agent-shell/
 /ellama-sessions/
 .user-lisp-autoloads.el
+/.ai.code.prompt.org
