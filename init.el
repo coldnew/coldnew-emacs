@@ -4126,6 +4126,9 @@ this declaration to the kill-ring."
   ;; C/C++: clangd
   (add-to-list 'eglot-server-programs
 	       '((c-mode c++-mode c-ts-mode c++-ts-mode) . ("clangd")))
+  ;; Arduino: arduino-language-server (if available)
+  (add-to-list 'eglot-server-programs
+	       '((arduino-mode) . ("arduino-language-server" "--stdio")))
   ;; CMake
   (add-to-list 'eglot-server-programs '((cmake-mode) . ("cmake-language-server")))
   ;; Add hooks for all languages
@@ -4136,6 +4139,7 @@ this declaration to the kill-ring."
 				   sh-mode-hook bash-ts-mode-hook
 				   c-mode-hook c++-mode-hook c-ts-mode-hook c++-ts-mode-hook
 				   c-or-c++-mode-hook c-or-c++-ts-mode-hook
+				   arduino-mode-hook
 				   ;; Add Emacs Lisp for completion
 				   emacs-lisp-mode-hook
 				   ;; Add corfu for better completions with flycheck
@@ -4702,6 +4706,39 @@ this declaration to the kill-ring."
   :config
   ;; enable analyzer support
   (setq dart-enable-analysis-server t))
+
+;; ** arduino-mode
+;;
+;;   Major mode for editing Arduino sketches.
+;;
+;;   Key features:
+;;   - Arduino-specific syntax highlighting for .ino and .pde files
+;;   - Integration with Arduino CLI tools
+;;   - Board management and compilation support
+;;   - Serial monitor integration
+;;   - Proper Arduino C++ dialect support
+;;
+;;   Why I use it:
+;;   Provides complete Arduino development environment within Emacs.
+;;   Handles Arduino sketches with proper syntax highlighting and tooling.
+;;
+;;   GitHub: https://github.com/stardiviner/arduino-mode
+;;
+;;   Configuration notes:
+;;   File extensions: .ino, .pde
+;;   Leverages existing C++ configuration where possible
+
+(use-package arduino-mode
+  :ensure t
+  :mode (("\\.ino\\'" . arduino-mode)
+         ("\\.pde\\'" . arduino-mode))
+  :config
+  ;; Enable electric-pair-mode for automatic bracket pairing
+  (add-hook 'arduino-mode-hook 'electric-pair-mode)
+  ;; Use C++ indentation style for Arduino code
+  (add-hook 'arduino-mode-hook (lambda () (c-set-style "gnu")))
+  ;; Enable line numbers for Arduino sketches
+  (add-hook 'arduino-mode-hook 'display-line-numbers-mode))
 
 ;; * Language Support - Graphics & Visualization
 ;;
