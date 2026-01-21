@@ -3805,6 +3805,157 @@ This functions should be added to the hooks of major modes for programming."
              ("M-." . ggtags-find-tag-dwim)
              ("M-," . ggtags-find-tag-return)))
 
+;; ** GNU Global (gtags)
+;;
+;;   GNU Global source code tag system with create/update helpers.
+;;   Provides fast code navigation and cross-reference for C/C++ projects.
+;;
+;;   Requirements:
+;;   - Install GNU Global: `sudo apt install global` (Ubuntu/Debian)
+;;   - For better parsing: `sudo apt install exuberant-ctags`
+;;
+;;   Key helpers:
+;;   - `gtags-create-or-update`: Create or update GTAGS in project root
+;;   - `gtags-update-current-buffer`: Update tags for current buffer only
+;;   - `gtags-find-file`: Find file in project
+;;   - `gtags-grep`: Grep through tags with pattern
+;;   - `gtags-find-with-grep`: Interactive find with grep pattern
+
+(use-package ggtags
+  :ensure t
+  :commands (ggtags-mode ggtags-find-tag-dwim ggtags-find-tag-return)
+  :diminish ggtags-mode
+  :config
+  ;; Enable ggtags-mode in C/C++ buffers
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (when (and (executable-find "global")
+                         (locate-dominating-file default-directory "GTAGS"))
+                (ggtags-mode 1))))
+
+  ;; Custom keybindings for gtags operations
+  (bind-keys :map ggtags-mode-map
+             ("C-c g c" . gtags-create-or-update)        ; Create/update GTAGS
+             ("C-c g u" . gtags-update-current-buffer)   ; Update current buffer
+             ("C-c g f" . gtags-find-file)               ; Find file
+             ("C-c g r" . gtags-find-rtag)               ; Find references
+             ("C-c g s" . gtags-find-symbol)             ; Find symbol
+             ("C-c g g" . gtags-grep)                    ; Grep through tags
+             ("C-c g p" . ggtags-find-tag-return)        ; Pop back to previous
+             ("C-c g d" . ggtags-show-definition)        ; Show definition
+             ("C-c g h" . ggtags-view-tag-history)       ; Tag history
+             ("C-c g n" . ggtags-next-tag)               ; Next tag
+             ("C-c g b" . ggtags-prev-tag)               ; Previous tag
+             ("C-c g ." . ggtags-find-tag-dwim)          ; Do what I mean
+             ("C-c g ?" . ggtags-display-help))          ; Show help
+
+  ;; Helper functions for GTAGS management
+  (defun gtags-create-or-update (&optional force)
+    "Create or update GTAGS in project root.
+With prefix argument FORCE, force recreate all tag files."
+    (interactive "P")
+    (let* ((root-dir (or (locate-dominating-file default-directory "GTAGS")
+                         (locate-dominating-file default-directory ".git")
+                         (locate-dominating-file default-directory "Makefile")
+                         (read-directory-name "Project root: ")))
+           (default-directory root-dir))
+      (unless (executable-find "global")
+        (user-error "GNU Global not found. Install with: sudo apt install global"))
+      
+      (if (file-exists-p "GTAGS")
+          (message "Updating GTAGS in %s..." root-dir)
+        (message "Creating GTAGS in %s..." root-dir))
+      
+      (let ((args (if force '("--rebuild" "--accept-dotfiles") '("--accept-dotfiles"))))
+        (apply #'call-process "gtags" nil "*gtags*" nil args))
+      
+      (if (file-exists-p "GTAGS")
+          (progn
+            (message "GTAGS %s successfully in %s" 
+                     (if (file-exists-p "GTAGS") "updated" "created") root-dir)
+            (when (derived-mode-p 'c-mode 'c++-mode)
+              (ggtags-mode 1)))
+        (error "Failed to create GTAGS"))))
+
+  (defun gtags-update-current-buffer ()
+    "Update GTAGS for current buffer only."
+    (interactive)
+    (let ((root-dir (locate-dominating-file default-directory "GTAGS")))
+      (unless root-dir
+        (user-error "No GTAGS found in project"))
+      (let ((default-directory root-dir)
+            (file (buffer-file-name)))
+        (when file
+          (call-process "global" nil "*gtags*" nil "--single-update" file)
+          (message "Updated GTAGS for %s" (file-name-nondirectory file))))))
+
+  (defun gtags-find-file (pattern)
+    "Find file matching PATTERN in project using GTAGS."
+    (interactive "sFile pattern: ")
+    (let ((root-dir (locate-dominating-file default-directory "GTAGS")))
+      (unless root-dir
+        (user-error "No GTAGS found in project"))
+      (let ((default-directory root-dir))
+        (with-temp-buffer
+          (call-process "global" nil t nil "-P" pattern)
+          (goto-char (point-min))
+          (if (re-search-forward "^\\([^\n]+\\)" nil t)
+              (find-file (expand-file-name (match-string 1) root-dir))
+            (user-error "No file matching pattern: %s" pattern))))))
+
+  (defun gtags-grep (pattern)
+    "Grep through GTAGS for PATTERN."
+    (interactive "sGrep pattern: ")
+    (let ((root-dir (locate-dominating-file default-directory "GTAGS")))
+      (unless root-dir
+        (user-error "No GTAGS found in project"))
+      (let ((default-directory root-dir))
+        (compilation-start 
+         (format "global --result=grep --color=always '%s'" pattern)
+         nil 
+         (lambda (mode-name) "*gtags-grep*")))))
+
+  (defun ggtags-display-help ()
+    "Display ggtags help information."
+    (interactive)
+    (describe-function 'ggtags-mode))
+
+  ;; Auto-update GTAGS when saving files (optional)
+  (defun gtags-auto-update-maybe ()
+    "Auto-update GTAGS if enabled and tags exist."
+    (when (and ggtags-mode
+               (locate-dominating-file default-directory "GTAGS")
+               (executable-find "global"))
+      (gtags-update-current-buffer)))
+  
+  ;; Uncomment to enable auto-update on save
+  ;; (add-hook 'after-save-hook #'gtags-auto-update-maybe)
+
+  ;; Customize ggtags behavior
+  (setq ggtags-auto-jump-to-first-match nil  ; Don't auto-jump, show list instead
+        ggtags-sort-by-nearby-point t          ; Sort results by proximity
+        ggtags-use-idutils nil                 ; Don't use idutils
+        ggtags-oversize-limit (* 10 1024 1024)) ; 10MB limit for tag files
+
+  ;; Integration with other tools
+  (with-eval-after-load 'projectile
+    (defun projectile-gtags-create-or-update ()
+      "Create or update GTAGS for current projectile project."
+      (interactive)
+      (let ((default-directory (projectile-project-root)))
+        (gtags-create-or-update)))
+    
+    (define-key projectile-command-map "g" #'projectile-gtags-create-or-update))
+
+  ;; Modeline indicator
+  (defun gtags-mode-line-indicator ()
+    "Show gtags status in mode line."
+    (when ggtags-mode
+      (let ((root-dir (locate-dominating-file default-directory "GTAGS")))
+        (if root-dir
+            (propertize " GTAGS" 'face 'success)
+          (propertize " GTAGS!" 'face 'error))))))
+
 ;; ** c-eldoc
 ;;
 ;;   c-eldoc provides eldoc support for C/C++ code. Shows
