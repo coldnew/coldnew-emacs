@@ -218,6 +218,7 @@
   (keymap-set tab-bar-mode-map "C-c t [" #'tab-previous) ; Switch to previous tab
   (keymap-set tab-bar-mode-map "C-c t ]" #'tab-next) ; Switch to next tab
   (keymap-set tab-bar-mode-map "C-c t c" #'tab-close) ; Close current tab
+  )
 
   ;; ** Built-in Package Configuration
 
