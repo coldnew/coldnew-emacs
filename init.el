@@ -1962,34 +1962,6 @@ return nil since you can't set font for emacs on it."
   ;; https://github.com/jschaf/esup/issues/54#issuecomment-651247749
   (setq esup-depth 0))
 
-;; ** ggtags
-;;
-;;   Emacs frontend to GNU Global source code tagging system.
-;;   Provides fast code navigation, definition lookup, and reference finding.
-;;
-;;   Requires GNU Global to be installed on your system.
-;;
-
-(use-package ggtags
-  :ensure t
-  :config
-  ;; Enable ggtags mode for supported languages
-  (add-hook 'c-mode-common-hook 'ggtags-mode)
-  (add-hook 'c++-mode-common-hook 'ggtags-mode)
-  (add-hook 'java-mode-hook 'ggtags-mode)
-  (add-hook 'python-mode-hook 'ggtags-mode)
-
-  ;; Keybindings for ggtags navigation
-  (local-set-key (kbd "M-.") 'ggtags-find-tag-dwim)
-  (local-set-key (kbd "M-*") 'ggtags-find-reference)
-  (local-set-key (kbd "M-,") 'ggtags-pop-stack)
-  (local-set-key (kbd "C-c <") 'ggtags-prev-file)
-  (local-set-key (kbd "C-c >") 'ggtags-next-file)
-  (local-set-key (kbd "C-c C-s") 'ggtags-find-with-grep)
-  (local-set-key (kbd "C-c C-r") 'ggtags-find-with-rgrep)
-  (local-set-key (kbd "C-c C-f") 'ggtags-find-file)
-  (local-set-key (kbd "C-c C-g") 'ggtags-update-tags))
-
 ;; ** rmsbolt
 ;;
 ;;   RMSbolt is a supercharged implementation of the Godbolt compiler-explorer for Emacs.
