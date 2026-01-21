@@ -64,3 +64,4 @@ elpa/
 /ellama-sessions/
 .user-lisp-autoloads.el
 /.ai.code.prompt.org
+/site-lisp/
