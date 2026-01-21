@@ -2809,19 +2809,23 @@ This functions should be added to the hooks of major modes for programming."
 
 (add-hook 'prog-mode-hook 'my/font-lock-comment-annotations)
 
-;; ** indent-guide
+;; ** indent-bars
+;;
+;; indent-bars provides vertical indentation guides using treesitter when available.
+;; It shows visual indicators for code block structure and indentation levels.
+;; Unlike indent-guide, it uses modern rendering techniques and supports
+;; treesitter-aware highlighting for better accuracy in complex syntax.
 
-(use-package indent-guide
+(use-package indent-bars
   :ensure t
-  :commands (indent-guide-mode)
+  :commands (indent-bars-mode)
   :config
-  ;; Only show indent-guide in idle-time.
-  (setq indent-guide-delay 0.1)
-  (add-hook 'emacs-lisp-mode-hook #'indent-guide-mode)
-  (add-hook 'lisp-interaction-mode-hook #'indent-guide-mode)
-  (add-hook 'clojure-mode-hook #'indent-guide-mode)
-  (add-hook 'scheme-mode-hook #'indent-guide-mode)
-  (add-hook 'lisp-mode-hook #'indent-guide-mode))
+  ;; Configure indent-bars appearance with minimal settings
+  (setq indent-bars-treesit-support t
+        indent-bars-treesit-ignore-blank-lines t
+        indent-bars-no-descend-char ?│)
+  ;; Enable for all programming modes
+  (add-hook 'prog-mode-hook #'indent-bars-mode))
 
 (show-paren-mode 1)
 (setq show-paren-delay 0)               ; no delay
@@ -2963,7 +2967,7 @@ This functions should be added to the hooks of major modes for programming."
 ;;
 ;;   Visual indicators:
 ;;   - Green: Added lines
-;;   - Yellow: Modified lines  
+;;   - Yellow: Modified lines
 ;;   - Red: Deleted lines
 (use-package git-gutter-fringe
   :ensure t
@@ -3026,12 +3030,12 @@ This functions should be added to the hooks of major modes for programming."
               (symbol-value 'my/llm-provider-openai))       ; OpenAI fallback
             (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
               (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob)))) ; Ollama fallback
-  
+
   ;; Add GPT commit functionality to Magit status buffer
   ;; Deferred with-eval-after-load prevents load order conflicts
   (with-eval-after-load 'magit
     (magit-gptcommit-status-buffer-setup))
-  
+
   ;; Keybinding to accept AI-generated commit messages in commit mode
   :bind (:map git-commit-mode-map
               ("C-c C-g" . magit-gptcommit-commit-accept))) ; Accept generated commit
@@ -3524,8 +3528,7 @@ This functions should be added to the hooks of major modes for programming."
 
 (use-package qml-mode
   :ensure t
-  :mode "\\.qml$"
-  :hook (qml-mode . indent-guide-mode))
+  :mode "\\.qml$")
 
 ;; ** vala-mode
 
@@ -3833,17 +3836,17 @@ With prefix argument FORCE, force recreate all tag files."
            (default-directory root-dir))
       (unless (executable-find "global")
         (user-error "GNU Global not found. Install with: sudo apt install global"))
-      
+
       (if (file-exists-p "GTAGS")
           (message "Updating GTAGS in %s..." root-dir)
         (message "Creating GTAGS in %s..." root-dir))
-      
+
       (let ((args (if force '("--rebuild" "--accept-dotfiles") '("--accept-dotfiles"))))
         (apply #'call-process "gtags" nil "*gtags*" nil args))
-      
+
       (if (file-exists-p "GTAGS")
           (progn
-            (message "GTAGS %s successfully in %s" 
+            (message "GTAGS %s successfully in %s"
                      (if (file-exists-p "GTAGS") "updated" "created") root-dir)
             (when (derived-mode-p 'c-mode 'c++-mode)
               (ggtags-mode 1)))
@@ -3882,9 +3885,9 @@ With prefix argument FORCE, force recreate all tag files."
       (unless root-dir
         (user-error "No GTAGS found in project"))
       (let ((default-directory root-dir))
-        (compilation-start 
+        (compilation-start
          (format "global --result=grep --color=always '%s'" pattern)
-         nil 
+         nil
          (lambda (mode-name) "*gtags-grep*")))))
 
   (defun ggtags-display-help ()
@@ -3899,7 +3902,7 @@ With prefix argument FORCE, force recreate all tag files."
                (locate-dominating-file default-directory "GTAGS")
                (executable-find "global"))
       (gtags-update-current-buffer)))
-  
+
   ;; Uncomment to enable auto-update on save
   ;; (add-hook 'after-save-hook #'gtags-auto-update-maybe)
 
@@ -3916,7 +3919,7 @@ With prefix argument FORCE, force recreate all tag files."
       (interactive)
       (let ((default-directory (projectile-project-root)))
         (gtags-create-or-update)))
-    
+
     (define-key projectile-command-map "g" #'projectile-gtags-create-or-update))
 
   ;; Modeline indicator
