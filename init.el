@@ -3000,6 +3000,31 @@ This functions should be added to the hooks of major modes for programming."
   :config
   (git-gutter-mode))                     ; Enable globally for all Git repositories
 
+;; ** Git Timemachine - File history navigation
+;;
+;;   Step through git revisions of a file with time-based navigation.
+;;   Browse historic versions and revert to previous commits easily.
+;;
+;;   Key features:
+;;   - Navigate file history with previous/next commands
+;;   - View commit messages and diffs for each revision
+;;   - Revert to specific git versions of file
+;;   - Works with Magit and git-gutter integration
+;;
+;;   Why I use it:
+;;   Essential for understanding file evolution and recovering lost changes.
+;;   Provides time-machine-like navigation through git history.
+;;
+;;   GitHub: https://github.com/emacsmirror/git-timemachine
+;;
+;;   Configuration notes:
+;;   Use `M-x git-timemachine` to start, `p`/`n` for previous/next, `q` to exit.
+
+(use-package git-timemachine
+  :ensure t
+  :commands (git-timemachine)
+  :bind ("C-x vt" . git-timemachine))   ; Consistent with magit C-x v* bindings
+
 ;; ** Magit GPT Commit - AI-powered commit message generation
 ;;
 ;;   Integrates Large Language Models (LLMs) with Magit to automatically
@@ -3219,50 +3244,11 @@ This functions should be added to the hooks of major modes for programming."
 
 (use-package tramp
   :ensure nil  ; built-in
-  :demand t    ; Load immediately to define functions needed by tramp-rpc autoloads
+  :demand t    ; Load TRAMP for remote file access
   :init
   (setq tramp-persistency-file-name (concat user-cache-directory "tramp"))
   :config
   (setq tramp-default-method "rsync"))
-
-;; *** tramp-rpc
-;;
-;;   High-performance TRAMP backend using JSON-RPC instead of shell parsing.
-;;   Uses a Rust RPC server on remote host for 2-57x faster operations.
-;;
-;;   Key features:
-;;   - Binary RPC protocol instead of shell parsing
-;;   - Batching support for reduced round-trips
-;;   - Async process support
-;;   - Full VC mode integration
-;;   - Automatic binary deployment (download or build from source)
-;;
-;;   Why I use it:
-;;   Dramatically faster remote file operations compared to traditional TRAMP.
-;;   Essential for intensive remote development work.
-;;
-;;   GitHub: https://github.com/ArthurHeymans/emacs-tramp-rpc
-;;
-;;   Configuration notes:
-;;   - Use /rpc:user@host:/path to connect
-;;   - Binary auto-deployed to ~/.cache/tramp-rpc on remote
-;;   - Requires Emacs 30.1+ and SSH access
-;;   - Compatible with line-reminder (disabled on remote files)
-
-(use-package tramp-rpc
-  :ensure (:host github :repo "ArthurHeymans/emacs-tramp-rpc")
-  :if (>= emacs-major-version 30)
-  :commands (tramp-rpc-mode tramp-rpc-deploy-status)
-  :config
-  ;; Prefer building from source if Rust is available
-  (setq tramp-rpc-deploy-prefer-build t)
-  ;; Local cache directory for binaries
-  (setq tramp-rpc-deploy-local-cache-directory
-        (concat user-cache-directory "tramp-rpc-binaries"))
-  ;; Remote installation directory
-  (setq tramp-rpc-deploy-remote-directory "~/.local/bin/tramp-rpc")
-  ;; Enable tramp-rpc mode
-  (tramp-rpc-mode t))
 
 ;; ** dired-sidebar
 ;;
