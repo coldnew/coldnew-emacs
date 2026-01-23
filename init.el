@@ -1244,18 +1244,44 @@ return nil since you can't set font for emacs on it."
 (when (version<= "24.3" emacs-version)
   (setq create-lockfiles nil))
 
-;; *** En/Decrypt files by EasyPG
+;; *** EasyPG (GnuPG Integration)
+;;
+;;   EasyPG provides transparent encryption and decryption of files using
+;;   GnuPG. It seamlessly integrates GPG functionality into Emacs, allowing
+;;   you to edit encrypted files as if they were regular text files.
+;;
+;;   Key features:
+;;   - Automatic encryption/decryption of .gpg/.pgp files
+;;   - Transparent editing experience
+;;   - Key selection and passphrase caching
+;;   - Integration with pinentry for secure passphrase input
+;;
+;;   Why I use it:
+;;   Essential for securely storing sensitive configuration files, passwords,
+;;   and private data. Files with .gpg extension are automatically encrypted
+;;   when saved and decrypted when opened.
+;;
+;;   Built-in since Emacs 23, enhanced in later versions.
 
-(require 'epa-file)			; part of emacs
-;; Enable epa, so I can use gnupg in emacs to en/decrypt file
-(epa-file-enable)
-;; Control whether or not to pop up the key selection dialog.
-(setq epa-file-select-keys 0)
-;; Cache passphrase for symmetric encryption.
-(setq epa-file-cache-passphrase-for-symmetric-encryption t)
+(use-package epa-file
+  :ensure nil                           ; built-in
+  :demand t
+  :config
+  ;; Enable automatic encryption/decryption of .gpg/.pgp files
+  (epa-file-enable)
+  ;; Disable key selection dialog (use first available key)
+  (setq epa-file-select-keys 0)
+  ;; Cache passphrase for symmetric encryption to avoid repeated prompts
+  (setq epa-file-cache-passphrase-for-symmetric-encryption t))
 
-(require 'epa)				; built-in
-(setq epg-pinentry-mode 'loopback)
+(use-package epa
+  :ensure nil                           ; built-in
+  :demand t
+  :custom
+  ;; Use loopback mode for pinentry (secure passphrase input)
+  (epg-pinentry-mode 'loopback))
+
+;; *** pinentry
 
 (use-package pinentry
   :ensure t
