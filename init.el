@@ -1579,39 +1579,35 @@ return nil since you can't set font for emacs on it."
 (use-package minuet
   :ensure t
   :demand t
-  :custom
+  :config
+  ;; Custom settings
   ;; Provider configuration - change to your preferred provider
   ;; Options: 'openai, 'claude, 'gemini, 'codestral, 'ollama, 'llamacpp, etc.
-  (minuet-provider 'openai)
+  (setq minuet-provider 'openai-compatible)
   ;; Context window settings
-  (minuet-context-window 512)  ; Context size for completion
-  (minuet-context-ratio 0.8)   ; Ratio of context to use
+  (setq minuet-context-window 512)  ; Context size for completion
+  (setq minuet-context-ratio 0.8)   ; Ratio of context to use
   ;; Request timeout
-  (minuet-request-timeout 10)  ; Timeout in seconds
+  (setq minuet-request-timeout 10)  ; Timeout in seconds
   ;; Error handling
-  (minuet-show-error-message-on-minibuffer t)
+  (setq minuet-show-error-message-on-minibuffer t)
   ;; Completion behavior
-  (minuet-add-single-line-entry nil)  ; Don't add single-line completions to menu
-  (minuet-n-completions 1)            ; Number of completions to show
+  (setq minuet-add-single-line-entry nil)  ; Don't add single-line completions to menu
+  (setq minuet-n-completions 1)            ; Number of completions to show
   ;; Auto-suggestion settings
-  (minuet-auto-suggestion-debounce-delay 0.3)  ; Delay before showing suggestions
-  (minuet-auto-suggestion-throttle-delay 0.1)  ; Throttle delay
-  ;; Block suggestions in certain contexts
-  (minuet-auto-suggestion-block-predicates
-   '(minuet--block-if-in-string
-     minuet--block-if-in-comment
-     minuet--block-if-in-docstring))
-  :config
+  (setq minuet-auto-suggestion-debounce-delay 0.3)  ; Delay before showing suggestions
+  (setq minuet-auto-suggestion-throttle-delay 0.1)  ; Throttle delay
+
   ;; Enable minuet globally for programming modes
   (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
   ;; Optional: Enable for text modes as well
   ;; (add-hook 'text-mode-hook #'minuet-auto-suggestion-mode)
 
   ;; Keybindings for manual completion
-  (define-key minuet-auto-suggestion-mode-map (kbd "M-i") #'minuet-show-suggestions)
-  (define-key minuet-auto-suggestion-mode-map (kbd "M-n") #'minuet-accept-suggestion)
-  (define-key minuet-auto-suggestion-mode-map (kbd "M-p") #'minuet-show-prev-suggestion)
-  (define-key minuet-auto-suggestion-mode-map (kbd "M-.") #'minuet-dismiss-suggestion)
+  (define-key minuet-auto-active-mode-map (kbd "M-i") #'minuet-show-suggestions)
+  (define-key minuet-auto-active-mode-map (kbd "M-n") #'minuet-accept-suggestion)
+  (define-key minuet-auto-active-mode-map (kbd "M-p") #'minuet-show-prev-suggestion)
+  (define-key minuet-auto-active-mode-map (kbd "M-.") #'minuet-dismiss-suggestion)
 
   ;; Provider-specific configuration
   ;; For OpenAI:
@@ -2961,26 +2957,26 @@ This functions should be added to the hooks of major modes for programming."
 ;; Only set org-related registers if ~/Org/tasks exists
 (let ((org-tasks-exists (file-directory-p "~/Org/tasks")))
   (dolist
-      (r `(
-           ;; emacs's config.el
-           (?e (file . "~/.emacs.d/init.el"))
-           ;; tasks: todo (only if directory exists)
-           ,@(when org-tasks-exists
-	       '((?t (file . "~/Org/tasks/todo.org"))
-                 ;; tasks: personal
-                 (?p (file . "~/Org/tasks/personal.org"))
-                 ;; tasks: work
-                 (?w (file . "~/Org/tasks/work.org"))))
-           ;; Office docs
-           (?W (file . "~/Org/Weintek/index.org"))
-           ;; My personal note
-           (?n (file . "~/Org/Note.org"))
-           ;; blogging ideas
-           (?b (file . "~/Org/blog.org"))
-           ;; Finance
-           (?f (file . "~/Org/finance/personal.org"))
-           ))
-    (set-register (car r) (cadr r))))
+      (re `(
+            ;; emacs's config.el
+            (?e (file . "~/.emacs.d/init.el"))
+            ;; tasks: todo (only if directory exists)
+            ,@(when org-tasks-exists
+		'((?t (file . "~/Org/tasks/todo.org"))
+                  ;; tasks: personal
+                  (?p (file . "~/Org/tasks/personal.org"))
+                  ;; tasks: work
+                  (?w (file . "~/Org/tasks/work.org"))))
+            ;; Office docs
+            (?W (file . "~/Org/Weintek/index.org"))
+            ;; My personal note
+            (?n (file . "~/Org/Note.org"))
+            ;; blogging ideas
+            (?b (file . "~/Org/blog.org"))
+            ;; Finance
+            (?f (file . "~/Org/finance/personal.org"))
+            ))
+    (set-register (car re) (cadr re))))
 
 ;; * Version Control
 ;;
@@ -3875,7 +3871,7 @@ This functions should be added to the hooks of major modes for programming."
              ("C-c g c" . gtags-create-or-update)        ; Create/update GTAGS
              ("C-c g u" . gtags-update-current-buffer)   ; Update current buffer
              ("C-c g f" . gtags-find-file)               ; Find file
-             ("C-c g r" . gtags-find-rtag)               ; Find references
+             ("C-c g re" . gtags-find-rtag)               ; Find references
              ("C-c g s" . gtags-find-symbol)             ; Find symbol
              ("C-c g g" . gtags-grep)                    ; Grep through tags
              ("C-c g p" . ggtags-find-tag-return)        ; Pop back to previous
@@ -4330,7 +4326,7 @@ this declaration to the kill-ring."
     (define-key eglot-mode-map (kbd "M-.") 'xref-find-definitions)
     (define-key eglot-mode-map (kbd "M-?") 'xref-find-references)
     (define-key eglot-mode-map (kbd "K") 'eldoc)
-    (define-key eglot-mode-map (kbd "C-c l r") 'eglot-rename)
+    (define-key eglot-mode-map (kbd "C-c l re") 'eglot-rename)
     (define-key eglot-mode-map (kbd "C-c l f") 'eglot-format)
     (define-key eglot-mode-map (kbd "C-c l a") 'eglot-code-actions)
     (define-key eglot-mode-map (kbd "C-c l d") 'xref-find-declarations)
@@ -4811,7 +4807,7 @@ this declaration to the kill-ring."
    Take emacs-lisp-mode as example, if you want to use <r to expand your snippet `require'
    in yasnippet, you must setup the emacs-lisp-mode-expand-alist variable.
 
-    (setq emacs-lisp-expand-alist '((\"r\" . \"require\")))"
+    (setq emacs-lisp-expand-alist '((\"re\" . \"require\")))"
     (let* ((l (buffer-substring (pos-bol) (point)))
            (expand-symbol (intern (concat (symbol-name major-mode) "-expand-alist")))
            (expand-alist (if (boundp expand-symbol) (symbol-value expand-symbol) nil))
