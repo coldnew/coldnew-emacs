@@ -1264,6 +1264,21 @@ return nil since you can't set font for emacs on it."
   ;; Start the Pinentry service
   (pinentry-start))
 
+;; *** Auto-format init.el before save
+;;
+;;   Automatically run indentation and whitespace cleanup when saving init.el
+;;   to maintain consistent formatting.
+
+(defun my/init-el-before-save-hook ()
+  "Run formatting functions before saving init.el or early-init.el."
+  (when (and buffer-file-name
+             (member (file-name-nondirectory buffer-file-name)
+                     '("init.el" "early-init.el")))
+    (my/indent-whole-buffer)
+    (delete-trailing-whitespace)))
+
+(add-hook 'before-save-hook #'my/init-el-before-save-hook)
+
 ;;
 ;; * Completion Framework
 ;;
