@@ -1282,12 +1282,27 @@ return nil since you can't set font for emacs on it."
   (epg-pinentry-mode 'loopback))
 
 ;; *** pinentry
+;;
+;;   Pinentry provides a secure interface for entering passphrases and PINs
+;;   for GPG operations. It ensures that sensitive information is handled
+;;   securely without exposing it to other applications.
+;;
+;;   Key features:
+;;   - Secure passphrase entry for GPG operations
+;;   - Prevents passphrase leakage to other processes
+;;   - Supports various pinentry programs (GTK, Qt, curses, etc.)
+;;
+;;   Why I use it:
+;;   Critical for secure GPG operations. Without pinentry, GPG operations
+;;   might fail or expose sensitive information.
+;;
+;;   GitHub: https://github.com/ueno/pinentry
 
 (use-package pinentry
   :ensure t
   :commands (pinentry-start)
   :config
-  ;; Start the Pinentry service
+  ;; Start the Pinentry service for secure passphrase handling
   (pinentry-start))
 
 ;; *** Auto-format init.el before save
