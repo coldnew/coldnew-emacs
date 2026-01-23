@@ -1621,7 +1621,7 @@ return nil since you can't set font for emacs on it."
 
   ;; For Ollama (local models):
   (setq minuet-ollama-url "http://localhost:11434")
-  (setq minuet-ollama-model "codellama:7b")
+  (setq minuet-ollama-model "hf.co/sweepai/sweep-next-edit-1.5B")
 
   ;; For Claude:
   ;; (setq minuet-claude-api-key "your-api-key-here")
