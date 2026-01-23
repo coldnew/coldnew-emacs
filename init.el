@@ -1593,7 +1593,7 @@ return nil since you can't set font for emacs on it."
   (setq minuet-show-error-message-on-minibuffer t)
   ;; Completion behavior
   (setq minuet-add-single-line-entry nil)  ; Don't add single-line completions to menu
-  (setq minuet-n-completions 1)            ; Number of completions to show
+  (setq minuet-n-completions 2)            ; Number of completions to show
   ;; Auto-suggestion settings
   (setq minuet-auto-suggestion-debounce-delay 0.3)  ; Delay before showing suggestions
   (setq minuet-auto-suggestion-throttle-delay 0.1)  ; Throttle delay
