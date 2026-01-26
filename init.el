@@ -3454,8 +3454,7 @@ This functions should be added to the hooks of major modes for programming."
   :after (org)
   :config
   ;; Enable `org-indent-mode' by default
-  (with-eval-after-load 'org-indent
-    (add-hook 'org-mode-hook #'(lambda () (org-indent-mode t)))))
+  (add-hook 'org-mode-hook #'org-indent-mode))
 
 ;; ** org-bullets
 
