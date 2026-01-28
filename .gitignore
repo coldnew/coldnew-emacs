@@ -65,3 +65,4 @@ elpa/
 .user-lisp-autoloads.el
 /.ai.code.prompt.org
 /site-lisp/
+/.ai.code.files/
