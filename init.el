@@ -2668,7 +2668,10 @@ With argument, do this that many times."
   (add-hook 'emacs-everywhere-init-hooks #'emacs-everywhere-insert-selection)
   ;; Custom paste command (optional, customize for your system)
   (when (eq system-type 'gnu/linux)
-    (setq emacs-everywhere-paste-command "xdotool key ctrl+v"))
+    (setq emacs-everywhere-paste-command
+          (if (executable-find "ydotool")
+              "ydotool key ctrl+v"
+            "xdotool key ctrl+v")))
 
   ;; Frame appearance settings
   (setq emacs-everywhere-frame-parameters
