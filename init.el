@@ -2631,6 +2631,57 @@ With argument, do this that many times."
   (comment-dwim nil))
 
 
+;; ** emacs-everywhere
+;;
+;;   emacs-everywhere allows you to use Emacs as your text input
+;;   method for any application. Launch Emacs from anywhere and
+;;   use its powerful editing capabilities, then paste back to the
+;;   original application.
+;;
+;;   Key features:
+;;   - System-wide Emacs text editing
+;;   - Remembers original window focus
+;;   - Inserts current selection by default
+;;   - Customizable paste commands
+;;   - Frame management (C-c C-c to finish)
+;;
+;;   Why I use it:
+;;   Enables Emacs editing power in any application. Perfect for
+;;   web forms, chat apps, or any text input where Emacs
+;;   editing would be superior.
+;;
+;;   GitHub: https://github.com/tecosaur/emacs-everywhere
+;;
+;;   Configuration notes:
+;;   - Requires Emacs daemon: `emacs --daemon`
+;;   - Dependencies on Linux: xclip, xdotool, xprop, xwininfo
+;;   - Bind global shortcut to: emacsclient --eval "(emacs-everywhere)"
+;;   - Use C-c C-c to finish and paste, C-c C-k to copy only
+
+(use-package emacs-everywhere
+  :ensure t
+  :commands (emacs-everywhere)
+  :config
+  ;; Clear initial selection if DEL or C-SPC pressed first
+  (setq emacs-everywhere-clear-initial-selection t)
+  ;; Insert last text selection by default
+  (add-hook 'emacs-everywhere-init-hooks #'emacs-everywhere-insert-selection)
+  ;; Custom paste command (optional, customize for your system)
+  (when (eq system-type 'gnu/linux)
+    (setq emacs-everywhere-paste-command "xdotool key ctrl+v"))
+
+  ;; Frame appearance settings
+  (setq emacs-everywhere-frame-parameters
+        '((name . "emacs-everywhere")
+          (width . 80)
+          (height . 12)
+          (border-width . 0)
+          (internal-border-width . 2)
+          (left-fringe . 0)
+          (right-fringe . 0)
+          (menu-bar-lines . 0)
+          (tool-bar-lines . 0)
+          (line-spacing . 0.1))))
 
 ;; ** File Handle
 ;;
@@ -5902,7 +5953,11 @@ this declaration to the kill-ring."
 ;; ** Keybindings
 
 (bind-keys :map global-map
-           ("C-x C-s" . my/save-buffer-always))
+           ("C-x C-s" . my/save-buffer-always)
+           ;; Emacs Everywhere - for testing within Emacs
+           ;; Note: Primary usage is via system-wide shortcut:
+           ;; emacsclient --eval "(emacs-everywhere)"
+           ("C-c e e" . emacs-everywhere))
 
 ;; * Personal Configuration
 
