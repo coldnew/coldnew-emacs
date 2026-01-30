@@ -1070,6 +1070,40 @@ return nil since you can't set font for emacs on it."
   ;; Enable globally for local files
   (global-line-reminder-mode t))
 
+;; *** tab-indent-dwim
+;;
+;;   Smart TAB key behavior that tries different actions in sequence.
+;;   First tries Yasnippet expansion, then completion, then indentation.
+;;
+;;   Why I use it:
+;;   Provides intelligent TAB behavior similar to modern editors. Works
+;;   seamlessly with completion frameworks and snippet expansion.
+;;
+;;   Configuration notes:
+;;   - Bound to TAB in Evil insert state
+;;   - Works with Corfu and Yasnippet
+
+(defun my/tab-indent-dwim ()
+  "Smart TAB behavior: try snippet → completion → indent."
+  (interactive)
+  (cond
+   ;; In minibuffer, just complete
+   ((minibufferp)
+    (minibuffer-complete))
+
+   ;; Try yasnippet expansion first
+   ((and (fboundp 'yas-expand)
+         (yas-expand))
+    nil)
+
+   ;; Try completion at point
+   ((completion-at-point)
+    nil)
+
+   ;; Fall back to indentation
+   (t
+    (indent-for-tab-command))))
+
 ;; ** Navigation and Movement
 
 ;; *** ace-jump-mode
@@ -1730,6 +1764,7 @@ return nil since you can't set font for emacs on it."
     (kbd "M-s") 'consult-line
     (kbd "C-x C-o") 'other-frame
     (kbd "M-o") 'other-window)
+
   (evil-define-key 'insert 'global
     (kbd "<delete>") 'hungry-delete-backward
     (kbd "C-;") 'iedit-mode
@@ -1770,7 +1805,8 @@ return nil since you can't set font for emacs on it."
     (kbd "M-z")   'zzz-to-char
     (kbd "s-<RET>") 'insert-empty-line
     (kbd "s-<SPC>") 'insert-U200B-char
-    (kbd "C-x C-d") 'dired)
+    (kbd "C-x C-d") 'dired
+    (kbd "M-o") 'other-window)
   (evil-ex-define-cmd "ag" 'consult-ag)
   (evil-ex-define-cmd "agi[nteractive]" 'consult-ag)
   (evil-ex-define-cmd "google" 'consult-google)
@@ -4838,7 +4874,7 @@ this declaration to the kill-ring."
 (use-package yasnippet
   :ensure t
   :mode ("emacs.+/snippets/" . snippet-mode)
-  :commands (yas-global-mode yas-minor-mode)
+  :commands (yas-global-mode yas-minor-mode yas-expand)
   :config
   ;; enable yasnippet globally
   (yas-global-mode 1)
@@ -5961,6 +5997,11 @@ this declaration to the kill-ring."
            ;; Note: Primary usage is via system-wide shortcut:
            ;; emacsclient --eval "(emacs-everywhere)"
            ("C-c e e" . emacs-everywhere))
+
+;; *** Evil Insert State Keybindings
+
+(evil-define-key 'insert 'global
+  (kbd "TAB") 'my/tab-indent-dwim)
 
 ;; * Personal Configuration
 
