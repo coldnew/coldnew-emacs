@@ -1661,6 +1661,110 @@ return nil since you can't set font for emacs on it."
   ;; for security. Do not hardcode them in this configuration.
   )
 
+;; ** GitHub Copilot Integration
+
+;; *** copilot
+;;
+;;   copilot.el is the unofficial GitHub Copilot integration for Emacs.
+;;   It provides AI-powered code completion using GitHub's Copilot service.
+;;   Works directly with the official Copilot API for intelligent suggestions.
+;;
+;;   Key features:
+;;   - Real-time code completion as you type
+;;   - Context-aware suggestions based on surrounding code
+;;   - Multi-language support
+;;   - Integration with Emacs completion system
+;;   - Ghost text overlay for inline suggestions
+;;
+;;   Why I use it:
+;;   Official-style Copilot integration with excellent Emacs integration.
+;;   Provides intelligent code completion that understands context and
+;;   coding patterns across all supported languages.
+;;
+;;   GitHub: https://github.com/copilot-emacs/copilot.el
+;;   Requires: GitHub Copilot subscription
+
+(use-package copilot
+  :ensure (:host github :repo "copilot-emacs/copilot.el")
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("C-g" . copilot-clear-overlay)
+              ("M-n" . copilot-next-completion)
+              ("M-p" . copilot-previous-completion)
+              ("<tab>" . copilot-accept-completion)
+              ("M-T" . copilot-accept-completion-by-line)
+              ("M-t" . copilot-accept-completion-by-word))
+  :config
+  ;; Installation directory for copilot server
+  (setq copilot-install-dir (expand-file-name "copilot" user-cache-directory))
+
+  ;; Enable copilot in all programming modes
+  (defun my/copilot-enable-predicate ()
+    "Enable copilot when not in special modes."
+    (not (or (minibufferp)
+             (string-match-p "^[*]" (buffer-name))
+             (eq major-mode 'term-mode)
+             (eq major-mode 'eshell-mode))))
+
+  (add-hook 'copilot-enable-predicates #'my/copilot-enable-predicate)
+
+  ;; Reduce completion delay for faster response
+  (setq copilot-idle-delay 0.1)
+
+  ;; Accept completion with TAB but only when copilot is active
+  (defun my/copilot-accept-or-tab ()
+    "Accept copilot suggestion if available, otherwise insert TAB."
+    (interactive)
+    (if (copilot--overlay-visible)
+        (copilot-accept-completion)
+      (indent-for-tab-command)))
+
+  ;; Override TAB in programming modes when copilot is active
+  (add-hook 'prog-mode-hook
+            (lambda ()
+              (when copilot-mode
+                (local-set-key (kbd "TAB") #'my/copilot-accept-or-tab)))))
+
+;; *** copilot-chat
+;;
+;;   copilot-chat.el provides chat interface for GitHub Copilot in Emacs.
+;;   Allows you to have conversations with Copilot about your code,
+;;   ask questions, request explanations, and get help with programming.
+;;
+;;   Key features:
+;;   - Interactive chat interface with Copilot
+;;   - Code explanation and documentation generation
+;;   - Debugging help and code review
+;;   - Refactoring suggestions
+;;   - Integration with copilot.el for context
+;;
+;;   Why I use it:
+;;   Extends Copilot beyond completion to full AI assistant capabilities.
+;;   Great for learning, debugging, and code improvement suggestions.
+;;
+;;   GitHub: https://github.com/chep/copilot-chat.el
+;;   Requires: copilot.el and GitHub Copilot subscription
+
+(use-package copilot-chat
+  :vc (:fetcher github :repo "chep/copilot-chat.el")
+  :after copilot
+  :bind (("C-c c" . copilot-chat-open)
+         ("C-c C" . copilot-chat-explain))
+  :config
+  ;; Use markdown mode for chat buffers
+  (setq copilot-chat-markdown-mode 'markdown-mode)
+
+  ;; Enable line numbers in chat buffers
+  (add-hook 'copilot-chat-mode-hook #'display-line-numbers-mode)
+
+  ;; Custom prompts
+  (setq copilot-chat-prompt-library
+        '(("Explain" . "Explain the following code in detail:")
+          ("Refactor" . "Refactor the following code to improve readability and performance:")
+          ("Debug" . "Help me debug the following code:")
+          ("Test" . "Write unit tests for the following code:")
+          ("Document" . "Add comprehensive documentation to the following code:"))))
+
 ;; ** Xref (Cross-Referencing)
 
 ;; xref
@@ -6012,7 +6116,13 @@ this declaration to the kill-ring."
            ;; Emacs Everywhere - for testing within Emacs
            ;; Note: Primary usage is via system-wide shortcut:
            ;; emacsclient --eval "(emacs-everywhere)"
-           ("C-c e e" . emacs-everywhere))
+           ("C-c e e" . emacs-everywhere)
+           ;; GitHub Copilot keybindings
+           ("C-c c" . copilot-chat-open)
+           ("C-c C" . copilot-chat-explain)
+           ("C-c i" . copilot-install-server)
+           ("C-c l" . copilot-login)
+           ("C-c o" . copilot-logout))
 
 ;; *** Evil Insert State Keybindings
 
