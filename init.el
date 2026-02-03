@@ -2341,6 +2341,15 @@ return nil since you can't set font for emacs on it."
          :key openrouter-api-key
          :chat-model "openrouter/auto"
          :url openrouter-url))))
+
+  ;; cerebras
+  (when-let (cerebras-api-key (getenv "CEREBRAS_API_KEY"))
+    (let ((cerebras-url "https://api.cerebras.ai/v1"))
+      (defvar my/llm-provider-cerebras
+        (make-llm-openai-compatible
+         :key cerebras-api-key
+         :chat-model "gpt-oss-120b"
+         :url cerebras-url))))
   )
 
 ;; ** Default LLM Provider Selection
@@ -2350,6 +2359,7 @@ return nil since you can't set font for emacs on it."
 ;;   - OPENAI_API_KEY for OpenAI
 ;;   - ANTHROPIC_API_KEY for Anthropic (Claude)
 ;;   - OPENROUTER_API_KEY for OpenRouter
+;;   - CEREBRAS_API_KEY for Cerebras
 ;;   - OPENCODE_API_KEY for OpenCode
 ;;   Ollama runs locally and doesn't require an API key.
 
@@ -2359,6 +2369,7 @@ return nil since you can't set font for emacs on it."
           (const :tag "OpenAI (uses OPENAI_API_KEY)" openai)
           (const :tag "Anthropic Claude (uses ANTHROPIC_API_KEY)" anthropic)
           (const :tag "OpenRouter (uses OPENROUTER_API_KEY)" openrouter)
+          (const :tag "Cerebras (uses CEREBRAS_API_KEY)" cerebras)
           (const :tag "OpenCode Big Pickle (uses OPENCODE_API_KEY)" opencode-bigpickle)
           (const :tag "OpenCode Grok" opencode-grok)
           (const :tag "OpenCode GLM 4.7" opencode-glm4.7)
@@ -2368,7 +2379,7 @@ return nil since you can't set font for emacs on it."
 
 (defun my/llm-get-provider (provider)
   "Return the provider instance for PROVIDER symbol.
-PROVIDER should be one of: openai, anthropic, openrouter, opencode-bigpickle,
+PROVIDER should be one of: openai, anthropic, openrouter, cerebras, opencode-bigpickle,
 opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
   (pcase provider
     ('openai
@@ -2380,6 +2391,9 @@ opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
     ('openrouter
      (when (boundp 'my/llm-provider-openrouter)
        (symbol-value 'my/llm-provider-openrouter)))
+    ('cerebras
+     (when (boundp 'my/llm-provider-cerebras)
+       (symbol-value 'my/llm-provider-cerebras)))
     ('opencode-bigpickle
      (when (boundp 'my/llm-provider-opencode-bigpickle)
        (symbol-value 'my/llm-provider-opencode-bigpickle)))
@@ -2460,6 +2474,8 @@ opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
                      '(("anthropic" . ,(symbol-value 'my/llm-provider-anthropic))))
 		   (when (boundp 'my/llm-provider-openrouter)
                      '(("openrouter" . ,(symbol-value 'my/llm-provider-openrouter))))
+		   (when (boundp 'my/llm-provider-cerebras)
+                     '(("cerebras" . ,(symbol-value 'my/llm-provider-cerebras))))
 		   (when (symbol-value 'my/llm-provider-opencode-bigpickle)
                      '(("bigpickle" . ,(symbol-value 'my/llm-provider-opencode-bigpickle))))
 		   (when (boundp 'my/llm-provider-opencode-grok)
