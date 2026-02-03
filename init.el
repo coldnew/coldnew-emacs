@@ -6016,8 +6016,9 @@ this declaration to the kill-ring."
 
 ;; *** Evil Insert State Keybindings
 
-(evil-define-key 'insert 'global
-  (kbd "TAB") 'my/tab-indent-dwim)
+(with-eval-after-load 'evil
+  (evil-define-key 'insert 'global
+    (kbd "TAB") 'my/tab-indent-dwim))
 
 ;; * Personal Configuration
 
