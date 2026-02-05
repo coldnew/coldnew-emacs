@@ -204,7 +204,6 @@
 
   ;; Tab bar appearance and behavior
   (setq tab-bar-show 1		    ; Show tab bar
-        tab-bar-new-button-show nil ; Hide new tab button (use keybinding instead)
         tab-bar-close-button-show nil	; Hide close button on tabs
         tab-bar-new-tab-choice t ; Show tab selector when creating new tab
         tab-bar-tab-hints t	 ; Show buffer names as tab hints
