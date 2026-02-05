@@ -1616,21 +1616,26 @@ return nil since you can't set font for emacs on it."
   :config
   ;; Custom settings
   ;; Provider configuration - change to your preferred provider
-  ;; Options: 'openai, 'claude, 'gemini, 'codestral, 'ollama, 'llamacpp, etc.
-  (setq minuet-provider 'openai-compatible)
+  (setq minuet-provider 'openai-fim-compatible)
+  (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
+  (plist-put minuet-openai-fim-compatible-options :name "Ollama")
+  (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
+  (plist-put minuet-openai-fim-compatible-options :model "hf.co/sweepai/sweep-next-edit-1.5B")
+  (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 56)
+
   ;; Context window settings
-  (setq minuet-context-window 512)  ; Context size for completion
-  (setq minuet-context-ratio 0.8)   ; Ratio of context to use
+  (setq minuet-context-window 512)	; Context size for completion
+  (setq minuet-context-ratio 0.8)	; Ratio of context to use
   ;; Request timeout
-  (setq minuet-request-timeout 10)  ; Timeout in seconds
+  (setq minuet-request-timeout 10)	; Timeout in seconds
   ;; Error handling
   (setq minuet-show-error-message-on-minibuffer t)
   ;; Completion behavior
-  (setq minuet-add-single-line-entry nil)  ; Don't add single-line completions to menu
-  (setq minuet-n-completions 2)            ; Number of completions to show
+  (setq minuet-add-single-line-entry nil) ; Don't add single-line completions to menu
+  (setq minuet-n-completions 1)	       ; Number of completions to show
   ;; Auto-suggestion settings
-  (setq minuet-auto-suggestion-debounce-delay 0.3)  ; Delay before showing suggestions
-  (setq minuet-auto-suggestion-throttle-delay 0.1)  ; Throttle delay
+  (setq minuet-auto-suggestion-debounce-delay 0.3) ; Delay before showing suggestions
+  (setq minuet-auto-suggestion-throttle-delay 0.1) ; Throttle delay
 
   ;; Enable minuet globally for programming modes
   (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
@@ -1638,28 +1643,13 @@ return nil since you can't set font for emacs on it."
   ;; (add-hook 'text-mode-hook #'minuet-auto-suggestion-mode)
 
   ;; Keybindings for manual completion
-  (with-eval-after-load 'minuet
-    (define-key minuet-auto-active-mode-map (kbd "M-i") #'minuet-show-suggestions)
-    (define-key minuet-auto-active-mode-map (kbd "M-n") #'minuet-accept-suggestion)
-    (define-key minuet-auto-active-mode-map (kbd "M-p") #'minuet-show-prev-suggestion)
-    (define-key minuet-auto-active-mode-map (kbd "M-.") #'minuet-dismiss-suggestion))
+  ;; (with-eval-after-load 'minuet
+  ;;   (bind-keys :map minuet-auto-active-mode-map
+  ;;              ("M-i" . minuet-show-suggestions)
+  ;;              ("M-n" . minuet-accept-suggestion)
+  ;;              ("M-p" . minuet-show-prev-suggestion)
+  ;;              ("M-." . minuet-dismiss-suggestion)))
 
-  ;; Provider-specific configuration
-  ;; For OpenAI:
-  ;; (setq minuet-openai-api-key (getenv "OPENAI_API_KEY"))
-  ;; (setq minuet-openai-base-url "https://api.openai.com/v1")
-  ;; (setq minuet-openai-model "gpt-4")
-
-  ;; For Ollama (local models):
-  (setq minuet-ollama-url "http://localhost:11434")
-  (setq minuet-ollama-model "hf.co/sweepai/sweep-next-edit-1.5B")
-
-  ;; For Claude:
-  ;; (setq minuet-claude-api-key "your-api-key-here")
-  ;; (setq minuet-claude-model "claude-3-sonnet-20240229")
-
-  ;; Note: Set your API keys in a separate file or environment variables
-  ;; for security. Do not hardcode them in this configuration.
   )
 
 ;; ** GitHub Copilot Integration
