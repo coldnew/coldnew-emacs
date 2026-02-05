@@ -2417,6 +2417,18 @@ return nil since you can't set font for emacs on it."
      :host "127.0.0.1"
      :port 11434))
 
+  (defvar my/llm-provider-lmstudio-gpt-oss-20b
+    (make-llm-openai-compatible
+     :key "lm-studio"
+     :url "http://10.147.20.143:1234/v1"
+     :chat-model "openai/gpt-oss-20b"))
+
+  (defvar my/llm-provider-lmstudio-glm-4.6v-flash
+    (make-llm-openai-compatible
+     :key "lm-studio"
+     :url "http://10.147.20.143:1234/v1"
+     :chat-model "zai-org/glm-4.6v-flash"))
+
   ;; openai
   (when-let (openai-api-key (getenv "OPENAI_API_KEY"))
     (defvar my/llm-provider-openai
