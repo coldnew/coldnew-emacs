@@ -3774,12 +3774,6 @@ This functions should be added to the hooks of major modes for programming."
   :ensure t
   :mode ("\\.y\\'" "\\.l\\'" "\\.jison\\'"))
 
-;; ** gn-mode
-
-(use-package gn-mode
-  :ensure t
-  :mode ("BUILD.gn" "\\.gni?\\'"))
-
 ;; ** nasm-mode
 
 (use-package nasm-mode :ensure t)
