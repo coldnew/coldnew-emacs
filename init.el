@@ -1638,10 +1638,11 @@ return nil since you can't set font for emacs on it."
   ;; (add-hook 'text-mode-hook #'minuet-auto-suggestion-mode)
 
   ;; Keybindings for manual completion
-  (define-key minuet-auto-active-mode-map (kbd "M-i") #'minuet-show-suggestions)
-  (define-key minuet-auto-active-mode-map (kbd "M-n") #'minuet-accept-suggestion)
-  (define-key minuet-auto-active-mode-map (kbd "M-p") #'minuet-show-prev-suggestion)
-  (define-key minuet-auto-active-mode-map (kbd "M-.") #'minuet-dismiss-suggestion)
+  (with-eval-after-load 'minuet
+    (define-key minuet-auto-active-mode-map (kbd "M-i") #'minuet-show-suggestions)
+    (define-key minuet-auto-active-mode-map (kbd "M-n") #'minuet-accept-suggestion)
+    (define-key minuet-auto-active-mode-map (kbd "M-p") #'minuet-show-prev-suggestion)
+    (define-key minuet-auto-active-mode-map (kbd "M-.") #'minuet-dismiss-suggestion))
 
   ;; Provider-specific configuration
   ;; For OpenAI:
@@ -1746,7 +1747,7 @@ return nil since you can't set font for emacs on it."
 ;;   Requires: copilot.el and GitHub Copilot subscription
 
 (use-package copilot-chat
-  :vc (:fetcher github :repo "chep/copilot-chat.el")
+  :ensure (:host github :repo "https://github.com/chep/copilot-chat.el")
   :after copilot
   :bind (("C-c c" . copilot-chat-open)
          ("C-c C" . copilot-chat-explain))
@@ -2420,7 +2421,7 @@ return nil since you can't set font for emacs on it."
       ))
 
   ;; ollama
-  (defvar my/llm-provider-ollama-gpt-oss-2ob
+  (defvar my/llm-provider-ollama-gpt-oss-20b
     (make-llm-ollama
      :chat-model "gpt-oss:20b"
      :host "127.0.0.1"
@@ -2511,8 +2512,8 @@ opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
      (when (boundp 'my/llm-provider-opencode-minimax-m2.1)
        (symbol-value 'my/llm-provider-opencode-minimax-m2.1)))
     ('ollama
-     (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
-       (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob)))
+     (when (boundp 'my/llm-provider-ollama-gpt-oss-20b)
+       (symbol-value 'my/llm-provider-ollama-gpt-oss-20b)))
     (_ nil)))
 
 ;; ** ellama
@@ -2551,8 +2552,8 @@ opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
 		    (when (boundp 'my/llm-provider-opencode-bigpickle)
 		      (symbol-value 'my/llm-provider-opencode-bigpickle))
 		    ;; Fall back to Ollama
-		    (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
-		      (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))
+		    (when (boundp 'my/llm-provider-ollama-gpt-oss-20b)
+		      (symbol-value 'my/llm-provider-ollama-gpt-oss-20b))
 		    ;; Default to ollama localhost
 		    (make-llm-ollama
 		     :chat-model "llama3.2"
@@ -2588,8 +2589,8 @@ opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
                      '(("glm4.7" . ,(symbol-value 'my/llm-provider-opencode-glm4.7))))
 		   (when (boundp 'my/llm-provider-openai)
                      '(("openai" . ,(symbol-value 'my/llm-provider-openai))))
-		   (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
-                     '(("ollama" . ,(symbol-value 'my/llm-provider-ollama-gpt-oss-2ob))))
+		   (when (boundp 'my/llm-provider-ollama-gpt-oss-20b)
+                     '(("ollama" . ,(symbol-value 'my/llm-provider-ollama-gpt-oss-20b))))
 		   ellama-providers)))
 
   ;; Enable keymap with prefix
@@ -3296,8 +3297,8 @@ This functions should be added to the hooks of major modes for programming."
         (or (my/llm-get-provider my/llm-default-provider) ; User's preferred provider
             (when (boundp 'my/llm-provider-openai)
 	      (symbol-value 'my/llm-provider-openai))       ; OpenAI fallback
-            (when (boundp 'my/llm-provider-ollama-gpt-oss-2ob)
-	      (symbol-value 'my/llm-provider-ollama-gpt-oss-2ob)))) ; Ollama fallback
+            (when (boundp 'my/llm-provider-ollama-gpt-oss-20b)
+	      (symbol-value 'my/llm-provider-ollama-gpt-oss-20b)))) ; Ollama fallback
 
   ;; Add GPT commit functionality to Magit status buffer
   ;; Deferred with-eval-after-load prevents load order conflicts
