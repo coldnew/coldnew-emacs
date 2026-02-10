@@ -2376,6 +2376,7 @@ return nil since you can't set font for emacs on it."
   (when (boundp 'opencode-api-key)
     (let ((opencode-api-url "https://opencode.ai/zen/v1"))
 
+
       ;; Big Pickle
       (defvar my/llm-provider-opencode-bigpickle
         (make-llm-openai-compatible
@@ -2424,6 +2425,12 @@ return nil since you can't set font for emacs on it."
      :key "lm-studio"
      :url "http://10.147.20.143:1234/v1"
      :chat-model "zai-org/glm-4.6v-flash"))
+
+  (defvar my/llm-provider-lmstudio-glm-4.7-flash
+    (make-llm-openai-compatible
+     :key "lm-studio"
+     :url "http://10.147.20.143:1234/v1"
+     :chat-model "hf.co/TeichAI/GLM-4.7-Flash-Claude-Opus-4.5-High-Reasoning-Distill-GGUF:IQ2_M"))
 
   ;; openai
   (when-let (openai-api-key (getenv "OPENAI_API_KEY"))
@@ -5022,7 +5029,14 @@ this declaration to the kill-ring."
             (funcall (cdr-safe a))
           (insert (cdr-safe a)))
         t)
-      ad-do-it)))
+      ad-do-it))
+  ;; fix yasnippet with tree-sitter
+  ;;https://github.com/joaotavora/yasnippet/issues/1169
+  (advice-add 'yas--modes-to-activate :around
+	      (defun yas--get-snippet-tables@tree-sitter (orig-fn &optional mode)
+		(funcall orig-fn
+			 (or (car (rassq (or mode major-mode) major-mode-remap-alist))
+			     mode)))))
 
 ;; * Shell Scripting Support
 ;;
