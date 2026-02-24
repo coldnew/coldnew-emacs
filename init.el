@@ -6054,7 +6054,10 @@ this declaration to the kill-ring."
 (use-package web-mode
   :ensure t
   :mode (("\\.html?\\'" . web-mode)
-         ("\\.ejs?\\'" . web-mode)))
+         ("\\.ejs?\\'" . web-mode)
+         ("\\.astro\\'" . web-mode))
+  :config
+  (add-to-list 'web-mode-engines-alist '("astro" . "\\.astro\\'")))
 
 ;; ** css-mode
 
