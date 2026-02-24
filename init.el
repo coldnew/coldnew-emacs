@@ -2473,7 +2473,7 @@ return nil since you can't set font for emacs on it."
 ;;   - OPENCODE_API_KEY for OpenCode
 ;;   Ollama runs locally and doesn't require an API key.
 
-(defcustom my/llm-default-provider 'openai
+(defcustom my/llm-default-provider 'lmstudio-gpt-oss20b
   "Default LLM provider to use when only one is needed."
   :type '(choice
           (const :tag "OpenAI (uses OPENAI_API_KEY)" openai)
@@ -2484,13 +2484,14 @@ return nil since you can't set font for emacs on it."
           (const :tag "OpenCode Grok" opencode-grok)
           (const :tag "OpenCode GLM 4.7" opencode-glm4.7)
           (const :tag "OpenCode MiniMax" opencode-minimax)
+          (const :tag "LM Studio GPT-OSS20B" lmstudio-gpt-oss20b)
           (const :tag "Ollama (local)" ollama))
   :group 'my-llm)
 
 (defun my/llm-get-provider (provider)
   "Return the provider instance for PROVIDER symbol.
 PROVIDER should be one of: openai, anthropic, openrouter, cerebras, opencode-bigpickle,
-opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
+opencode-grok, opencode-glm4.7, opencode-minimax, lmstudio-gpt-oss20b, ollama."
   (pcase provider
     ('openai
      (when (boundp 'my/llm-provider-openai)
@@ -2516,6 +2517,9 @@ opencode-grok, opencode-glm4.7, opencode-minimax, ollama."
     ('opencode-minimax
      (when (boundp 'my/llm-provider-opencode-minimax-m2.1)
        (symbol-value 'my/llm-provider-opencode-minimax-m2.1)))
+    ('lmstudio-gpt-oss20b
+     (when (boundp 'my/llm-provider-lmstudio-gpt-oss-20b)
+       (symbol-value 'my/llm-provider-lmstudio-gpt-oss-20b)))
     ('ollama
      (when (boundp 'my/llm-provider-ollama-gpt-oss-20b)
        (symbol-value 'my/llm-provider-ollama-gpt-oss-20b)))
