@@ -2524,6 +2524,49 @@ opencode-grok, opencode-glm4.7, opencode-minimax, lmstudio-gpt-oss20b, ollama."
        (symbol-value 'my/llm-provider-ollama-gpt-oss-20b)))
     (_ nil)))
 
+(defun my/switch-llm-provider (provider)
+  "Switch default LLM provider to PROVIDER.
+This updates `my/llm-default-provider', `magit-gptcommit-llm-provider',
+and `ellama-provider' to use the selected PROVIDER.
+PROVIDER should be one of: openai, anthropic, openrouter, cerebras,
+opencode-bigpickle, opencode-grok, opencode-glm4.7, opencode-minimax,
+lmstudio-gpt-oss20b, ollama."
+  (interactive)
+  (let ((providers '(("OpenAI" . openai)
+                     ("Anthropic Claude" . anthropic)
+                     ("OpenRouter" . openrouter)
+                     ("Cerebras" . cerebras)
+                     ("OpenCode Big Pickle" . opencode-bigpickle)
+                     ("OpenCode Grok" . opencode-grok)
+                     ("OpenCode GLM 4.7" . opencode-glm4.7)
+                     ("OpenCode MiniMax" . opencode-minimax)
+                     ("LM Studio GPT-OSS20B" . lmstudio-gpt-oss20b)
+                     ("Ollama (local)" . ollama))))
+    (list (completing-read
+           "Select LLM provider: "
+           (seq-filter
+            (lambda (p)
+              (my/llm-get-provider (cdr p)))
+            providers)
+           nil t)))
+  (let ((provider-sym (cdr (assoc provider
+                                  '(("OpenAI" . openai)
+                                    ("Anthropic Claude" . anthropic)
+                                    ("OpenRouter" . openrouter)
+                                    ("Cerebras" . cerebras)
+                                    ("OpenCode Big Pickle" . opencode-bigpickle)
+                                    ("OpenCode Grok" . opencode-grok)
+                                    ("OpenCode GLM 4.7" . opencode-glm4.7)
+                                    ("OpenCode MiniMax" . opencode-minimax)
+                                    ("LM Studio GPT-OSS20B" . lmstudio-gpt-oss20b)
+                                    ("Ollama (local)" . ollama))))))
+    (setq my/llm-default-provider provider-sym)
+    (let ((provider-instance (my/llm-get-provider provider-sym)))
+      (when provider-instance
+        (setq ellama-provider provider-instance)
+        (setq magit-gptcommit-llm-provider provider-instance)
+        (message "Switched LLM provider to %s" provider)))))
+
 ;; ** ellama
 ;;
 ;;   Ellama is a tool for interacting with large language models from Emacs.
@@ -6135,7 +6178,9 @@ this declaration to the kill-ring."
            ("C-c C" . copilot-chat-explain)
            ("C-c i" . copilot-install-server)
            ("C-c l" . copilot-login)
-           ("C-c o" . copilot-logout))
+           ("C-c o" . copilot-logout)
+           ;; LLM provider switching
+           ("C-c L" . my/switch-llm-provider))
 
 ;; *** Evil Insert State Keybindings
 
