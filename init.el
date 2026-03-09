@@ -2473,14 +2473,13 @@ return nil since you can't set font for emacs on it."
 ;;   - OPENCODE_API_KEY for OpenCode
 ;;   Ollama runs locally and doesn't require an API key.
 
-(defcustom my/llm-default-provider 'lmstudio-gpt-oss20b
+(defcustom my/llm-default-provider 'my/llm-provider-cerebras
   "Default LLM provider to use when only one is needed."
   :type '(choice
           (const :tag "OpenAI (uses OPENAI_API_KEY)" openai)
           (const :tag "Anthropic Claude (uses ANTHROPIC_API_KEY)" anthropic)
           (const :tag "OpenRouter (uses OPENROUTER_API_KEY)" openrouter)
           (const :tag "Cerebras (uses CEREBRAS_API_KEY)" cerebras)
-          (const :tag "OpenCode Big Pickle (uses OPENCODE_API_KEY)" opencode-bigpickle)
           (const :tag "OpenCode Grok" opencode-grok)
           (const :tag "OpenCode GLM 4.7" opencode-glm4.7)
           (const :tag "OpenCode MiniMax" opencode-minimax)
