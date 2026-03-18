@@ -2458,7 +2458,7 @@ return nil since you can't set font for emacs on it."
       (defvar my/llm-provider-cerebras
         (make-llm-openai-compatible
          :key cerebras-api-key
-         :chat-model "gpt-oss-120b"
+         :chat-model "qwen-3-235b-a22b-instruct-2507"
          :url cerebras-url))))
   )
 
