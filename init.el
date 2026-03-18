@@ -2384,13 +2384,6 @@ return nil since you can't set font for emacs on it."
          :chat-model "big-pickle"
          :url opencode-api-url))
 
-      ;; Grok
-      (defvar my/llm-provider-opencode-grok
-        (make-llm-openai-compatible
-         :key opencode-api-key
-         :chat-model "grok-code"
-         :url opencode-api-url))
-
       ;; GLM 4.7
       (defvar my/llm-provider-opencode-glm4.7
         (make-llm-openai-compatible
@@ -2479,9 +2472,8 @@ return nil since you can't set font for emacs on it."
           (const :tag "OpenAI (uses OPENAI_API_KEY)" openai)
           (const :tag "Anthropic Claude (uses ANTHROPIC_API_KEY)" anthropic)
           (const :tag "OpenRouter (uses OPENROUTER_API_KEY)" openrouter)
-          (const :tag "Cerebras (uses CEREBRAS_API_KEY)" cerebras)
-          (const :tag "OpenCode Grok" opencode-grok)
-          (const :tag "OpenCode GLM 4.7" opencode-glm4.7)
+           (const :tag "Cerebras (uses CEREBRAS_API_KEY)" cerebras)
+           (const :tag "OpenCode GLM 4.7" opencode-glm4.7)
           (const :tag "OpenCode MiniMax" opencode-minimax)
           (const :tag "LM Studio GPT-OSS20B" lmstudio-gpt-oss20b)
           (const :tag "Ollama (local)" ollama))
@@ -2490,7 +2482,7 @@ return nil since you can't set font for emacs on it."
 (defun my/llm-get-provider (provider)
   "Return the provider instance for PROVIDER symbol.
 PROVIDER should be one of: openai, anthropic, openrouter, cerebras, opencode-bigpickle,
-opencode-grok, opencode-glm4.7, opencode-minimax, lmstudio-gpt-oss20b, ollama."
+opencode-glm4.7, opencode-minimax, lmstudio-gpt-oss20b, ollama."
   (pcase provider
     ('openai
      (when (boundp 'my/llm-provider-openai)
@@ -2507,9 +2499,6 @@ opencode-grok, opencode-glm4.7, opencode-minimax, lmstudio-gpt-oss20b, ollama."
     ('opencode-bigpickle
      (when (boundp 'my/llm-provider-opencode-bigpickle)
        (symbol-value 'my/llm-provider-opencode-bigpickle)))
-    ('opencode-grok
-     (when (boundp 'my/llm-provider-opencode-grok)
-       (symbol-value 'my/llm-provider-opencode-grok)))
     ('opencode-glm4.7
      (when (boundp 'my/llm-provider-opencode-glm4.7)
        (symbol-value 'my/llm-provider-opencode-glm4.7)))
@@ -2529,7 +2518,7 @@ opencode-grok, opencode-glm4.7, opencode-minimax, lmstudio-gpt-oss20b, ollama."
 This updates `my/llm-default-provider', `magit-gptcommit-llm-provider',
 and `ellama-provider' to use the selected PROVIDER.
 PROVIDER should be one of: openai, anthropic, openrouter, cerebras,
-opencode-bigpickle, opencode-grok, opencode-glm4.7, opencode-minimax,
+opencode-bigpickle, opencode-glm4.7, opencode-minimax,
 lmstudio-gpt-oss20b, ollama."
   (interactive)
   (let ((providers '(("OpenAI" . openai)
@@ -2537,7 +2526,6 @@ lmstudio-gpt-oss20b, ollama."
                      ("OpenRouter" . openrouter)
                      ("Cerebras" . cerebras)
                      ("OpenCode Big Pickle" . opencode-bigpickle)
-                     ("OpenCode Grok" . opencode-grok)
                      ("OpenCode GLM 4.7" . opencode-glm4.7)
                      ("OpenCode MiniMax" . opencode-minimax)
                      ("LM Studio GPT-OSS20B" . lmstudio-gpt-oss20b)
@@ -2555,7 +2543,6 @@ lmstudio-gpt-oss20b, ollama."
                                     ("OpenRouter" . openrouter)
                                     ("Cerebras" . cerebras)
                                     ("OpenCode Big Pickle" . opencode-bigpickle)
-                                    ("OpenCode Grok" . opencode-grok)
                                     ("OpenCode GLM 4.7" . opencode-glm4.7)
                                     ("OpenCode MiniMax" . opencode-minimax)
                                     ("LM Studio GPT-OSS20B" . lmstudio-gpt-oss20b)
@@ -2633,9 +2620,7 @@ lmstudio-gpt-oss20b, ollama."
 		   (when (boundp 'my/llm-provider-cerebras)
                      '(("cerebras" . ,(symbol-value 'my/llm-provider-cerebras))))
 		   (when (symbol-value 'my/llm-provider-opencode-bigpickle)
-                     '(("bigpickle" . ,(symbol-value 'my/llm-provider-opencode-bigpickle))))
-		   (when (boundp 'my/llm-provider-opencode-grok)
-                     '(("grok" . ,(symbol-value 'my/llm-provider-opencode-grok))))
+                      '(("bigpickle" . ,(symbol-value 'my/llm-provider-opencode-bigpickle))))
 		   (when (boundp 'my/llm-provider-opencode-glm4.7)
                      '(("glm4.7" . ,(symbol-value 'my/llm-provider-opencode-glm4.7))))
 		   (when (boundp 'my/llm-provider-openai)
