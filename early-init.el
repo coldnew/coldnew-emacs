@@ -54,7 +54,14 @@
 
 ;; * Defer garbage collection further back in the startup process
 
-(setq-default gc-cons-threshold most-positive-fixnum)
+;; Keep GC very relaxed during startup, then restore sensible runtime values.
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6)
+
+(add-hook 'after-init-hook
+          (lambda ()
+            (setq gc-cons-threshold (* 100 1024 1024)
+                  gc-cons-percentage 0.1)))
 
 ;; * Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 
