@@ -185,10 +185,6 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Maximized window after emacs start
-
-(modify-all-frames-parameters '((fullscreen . maximized)))
-
 ;; ** Tab Bar Configuration
 ;;
 ;;   Enable and configure tab-bar-mode for workspace management.
