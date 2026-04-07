@@ -93,6 +93,8 @@
       (when (and user-lisp-dir (file-exists-p user-lisp-dir))
         (add-to-list 'load-path user-lisp-dir)))))
 
+(require 'coldnew-refactor)
+
 
 ;; ** Environment Setup (macOS)
 
@@ -359,70 +361,12 @@
 ;;
 ;;   Some common libraries I'll use in my personal's command or anything else.
 
-;; *** f
+;; *** Built-in replacements for f/s/dash
 ;;
-;;   Modern API for working with files and paths in Emacs Lisp.
-;;
-;;   Key features:
-;;   - Path manipulation functions (join, expand, dirname, basename)
-;;   - File operations (read, write, copy, delete)
-;;   - Directory operations (mkdir, rmdir, ls)
-;;   - Path predicates (file?, dir?, absolute?, relative?)
-;;   - Cross-platform path handling
-;;
-;;   Why I use it:
-;;   Provides a clean, consistent API for file operations that works
-;;   across different Emacs versions and platforms. Much better than
-;;   built-in functions for complex path manipulations.
-;;
-;;   GitHub: https://github.com/rejeep/f.el
-;;
-;;   Configuration notes:
-;;   Pure library, no configuration needed.
-
-(use-package f :ensure t)
-;; *** s
-;;
-;;   String manipulation library inspired by Clojure's string functions.
-;;
-;;   Key features:
-;;   - String transformations (upcase, downcase, capitalize)
-;;   - String predicates (blank?, empty?, present?)
-;;   - String splitting and joining
-;;   - String trimming and cleaning
-;;   - Regex operations
-;;
-;;   Why I use it:
-;;   Consistent and readable string operations. Avoids verbose
-;;   built-in string functions and regexps for common tasks.
-;;
-;;   GitHub: https://github.com/magnars/s.el
-;;
-;;   Configuration notes:
-;;   Pure library, no configuration needed.
-
-(use-package s :ensure t)
-;; *** dash
-;;
-;;   List manipulation library providing functional programming utilities.
-;;
-;;   Key features:
-;;   - List operations (--map, --filter, --reduce)
-;;   - List transformations (--flatten, --distinct, --sort)
-;;   - List queries (--first, --last, --find)
-;;   - Threading macros (->, ->>)
-;;   - Destructuring
-;;
-;;   Why I use it:
-;;   Makes list processing more readable and functional. Essential
-;;   for complex data transformations in Emacs Lisp.
-;;
-;;   GitHub: https://github.com/magnars/dash.el
-;;
-;;   Configuration notes:
-;;   Pure library, no configuration needed.
-
-(use-package dash :ensure t)
+;;   Emacs 31 has enough built-in file, string, and list APIs for this
+;;   config, and these packages are no longer referenced elsewhere.
+;;   We intentionally keep this section as a marker for the refactor plan:
+;;   reduce utility dependencies first, then continue package-by-package.
 
 ;; *** htmlize
 ;;
