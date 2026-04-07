@@ -35,12 +35,19 @@
 ;;   Here I just disable native-compile auto loads.  There's something
 ;;   wrong with them.
 
+
 (with-eval-after-load 'comp
-  (setq-default comp-deferred-compilation-deny-list '("\\(?:[^z-a]*-autoloads\\.el$\\)"))
-  ;; This variable is obsolete since 29.1
-  (setq-default native-comp-deferred-compilation-deny-list '("\\(?:[^z-a]*-autoloads\\.el$\\)"))
-  ;; introduce in emacs  28.1
-  (setq-default native-comp-jit-compilation-deny-list '("\\(?:[^z-a]*-autoloads\\.el$\\)")))
+  (let ((autoloads-deny-list '(".*-autoloads\\.el\\'")))
+    (when (boundp 'comp-deferred-compilation-deny-list)
+      (setq comp-deferred-compilation-deny-list autoloads-deny-list))
+    ;; Obsolete since Emacs 29.1, keep guard for compatibility.
+    (when (boundp 'native-comp-deferred-compilation-deny-list)
+      (setq native-comp-deferred-compilation-deny-list autoloads-deny-list))
+    ;; Introduced in Emacs 28.1.
+    (when (boundp 'native-comp-jit-compilation-deny-list)
+      (setq native-comp-jit-compilation-deny-list autoloads-deny-list))
+    (when (boundp 'native-comp-async-report-warnings-errors)
+      (setq native-comp-async-report-warnings-errors 'silent))))
 
 ;; * Prevent native-compilation warning window popup
 ;;
@@ -48,9 +55,7 @@
 ;;   so annoying, set it to silent mode so these warning will just
 ;;   logging but not pop up the window.
 
-(with-eval-after-load 'comp
-  (when (boundp 'native-comp-async-report-warnings-errors)
-    (setq-default native-comp-async-report-warnings-errors 'silent)))
+
 
 ;; * Defer garbage collection further back in the startup process
 
