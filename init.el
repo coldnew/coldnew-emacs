@@ -4442,7 +4442,7 @@ this declaration to the kill-ring."
   :after flycheck
   :config
   (setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
-(setq vc-handled-backends nil)
+(setq vc-handled-backends '(Git))
 
 ;; * LSP & Code Intelligence
 ;;
