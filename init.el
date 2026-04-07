@@ -411,30 +411,6 @@
 
 (use-package async :ensure t)
 
-;; *** url-clean
-;;
-;;   Remove tracking parameters from URLs before sharing.
-;;
-;;   Key features:
-;;   - Strips utm_* parameters (utm_source, utm_medium, etc.)
-;;   - Removes fbclid, gclid, ref, mc_eid, _hsenc, _hsmi, etc.
-;;   - Interactive commands: url-clean-at-point, url-clean-region
-;;   - Can process URLs in text buffers programmatically
-;;
-;;   Why I use it:
-;;   Clean URLs are essential for privacy and professional sharing.
-;;   Removes clutter and tracking when sharing links with others.
-;;
-;;   GitHub: https://github.com/coldnew/url-clean.el
-;;
-;;   Configuration notes:
-;;   Loaded from GitHub repository, includes interactive commands.
-
-(use-package url-clean
-  :ensure (:host github :repo "coldnew/url-clean.el")
-  :defer t
-  :autoload url-clean)
-
 ;; * Theme & Fonts
 ;;
 ;;   User interface customization including themes, fonts, colors,
