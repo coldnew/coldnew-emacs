@@ -3474,6 +3474,8 @@ This functions should be added to the hooks of major modes for programming."
   	       '("S" . "src sh"))
   (add-to-list 'org-structure-template-alist
   	       '("p" . "src plantuml :file uml.png"))
+  (add-to-list 'org-structure-template-alist
+  	       '("m" . "src mermaid :file uml.png"))
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
@@ -3487,8 +3489,9 @@ This functions should be added to the hooks of major modes for programming."
      (ruby . t)
      ;; (sh . t)
      (shell . t)
-     (plantuml . t)
-     (R . t)
+(plantuml . t)
+      (mermaid . t)
+      (R . t)
      (clojure . t)))
   ;; make dot work as graphviz-dot
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
@@ -3662,8 +3665,12 @@ This functions should be added to the hooks of major modes for programming."
   :mode ("\\.plantuml\\'")
   :init
   ;; FIXME: setup plantuml jar path
-  ;; FIXME: add org-mode support
   )
+
+;; ** ob-mermaid
+
+(use-package ob-mermaid
+  :ensure t)
 
 ;; ** bison-mode
 
