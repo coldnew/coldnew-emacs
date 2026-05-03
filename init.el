@@ -1502,68 +1502,6 @@ return nil since you can't set font for emacs on it."
   ;; Add kind-icon to Corfu margin formatters
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
-;; *** minuet
-;;
-;;   Minuet provides AI-powered code completion using Large Language Models.
-;;   It offers as-you-type completion from popular LLMs including OpenAI,
-;;   Gemini, Claude, Ollama, Llama.cpp, Codestral, and more.
-;;
-;;   Key features:
-;;   - Dual completion modes: Chat-based and Fill-in-the-Middle (FIM)
-;;   - Support for multiple LLM providers
-;;   - Streaming completion responses
-;;   - Context-aware suggestions
-;;   - Customizable prompts and configuration
-;;
-;;   Why I use it:
-;;   Enhances code completion with AI assistance, providing intelligent
-;;   suggestions based on code context and patterns.
-;;
-;;   GitHub: https://github.com/milanglacier/minuet-ai.el
-;;   GNU ELPA: http://elpa.gnu.org/packages/minuet.html
-
-(use-package minuet
-  :ensure t
-  :demand t
-  :config
-  ;; Custom settings
-  ;; Provider configuration - change to your preferred provider
-  (setq minuet-provider 'openai-fim-compatible)
-  (plist-put minuet-openai-fim-compatible-options :end-point "http://localhost:11434/v1/completions")
-  (plist-put minuet-openai-fim-compatible-options :name "Ollama")
-  (plist-put minuet-openai-fim-compatible-options :api-key "TERM")
-  (plist-put minuet-openai-fim-compatible-options :model "hf.co/sweepai/sweep-next-edit-1.5B")
-  (minuet-set-optional-options minuet-openai-fim-compatible-options :max_tokens 56)
-
-  ;; Context window settings
-  (setq minuet-context-window 512)	; Context size for completion
-  (setq minuet-context-ratio 0.8)	; Ratio of context to use
-  ;; Request timeout
-  (setq minuet-request-timeout 10)	; Timeout in seconds
-  ;; Error handling
-  (setq minuet-show-error-message-on-minibuffer t)
-  ;; Completion behavior
-  (setq minuet-add-single-line-entry nil) ; Don't add single-line completions to menu
-  (setq minuet-n-completions 1)	       ; Number of completions to show
-  ;; Auto-suggestion settings
-  (setq minuet-auto-suggestion-debounce-delay 0.3) ; Delay before showing suggestions
-  (setq minuet-auto-suggestion-throttle-delay 0.1) ; Throttle delay
-
-  ;; Enable minuet globally for programming modes
-  (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
-  ;; Optional: Enable for text modes as well
-  ;; (add-hook 'text-mode-hook #'minuet-auto-suggestion-mode)
-
-  ;; Keybindings for manual completion
-  ;; (with-eval-after-load 'minuet
-  ;;   (bind-keys :map minuet-auto-active-mode-map
-  ;;              ("M-i" . minuet-show-suggestions)
-  ;;              ("M-n" . minuet-accept-suggestion)
-  ;;              ("M-p" . minuet-show-prev-suggestion)
-  ;;              ("M-." . minuet-dismiss-suggestion)))
-
-  )
-
 ;; ** GitHub Copilot Integration
 
 ;; *** copilot
