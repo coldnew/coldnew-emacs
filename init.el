@@ -2222,191 +2222,45 @@ return nil since you can't set font for emacs on it."
   :config
   ;; Should not throw any warning message on non-free LLM
   (setq llm-warn-on-nonfree nil)
+  ;; Trust a custom CA for self-signed/internal HTTPS endpoints.
+  ;; Put the CA/server PEM at this path to enable verification.
+  (defvar my/omniroute-ca-cert-file
+
+    (expand-file-name "~/.certs/omniroute-ca.pem"))
+  (when (file-readable-p my/omniroute-ca-cert-file)
+    (when (boundp 'gnutls-trustfiles)
+      (add-to-list 'gnutls-trustfiles my/omniroute-ca-cert-file))
+    ;; llm uses plz/curl; teach curl to trust the same CA for HTTPS.
+    (require 'plz)
+    (setq plz-curl-default-args
+          (append plz-curl-default-args
+                  (list "--cacert" my/omniroute-ca-cert-file))))
   ;; Require specific provider modules for their constructors
   (require 'llm-openai)
   (require 'llm-ollama)
 
-  ;; OpenCode
-  (when (boundp 'opencode-api-key)
-    (let ((opencode-api-url "https://opencode.ai/zen/v1"))
+  ;; OmniRoute (Personal LLM Router)
+  (let ((omni-route-url "https://10.147.20.143:21028/v1")
+	(omni-route-api-key (getenv "OMNIROUTE_API_KEY")))
 
+    (defvar my/llm-provider-omniroute-free
+      (make-llm-openai-compatible
+       :key omni-route-api-key
+       :chat-model "free"
+       :url omni-route-url))
 
-      ;; Big Pickle
-      (defvar my/llm-provider-opencode-bigpickle
-        (make-llm-openai-compatible
-         :key opencode-api-key
-         :chat-model "big-pickle"
-         :url opencode-api-url))
-
-      ;; GLM 4.7
-      (defvar my/llm-provider-opencode-glm4.7
-        (make-llm-openai-compatible
-         :key opencode-api-key
-         :chat-model "glm-4.7-free"
-         :url opencode-api-url))
-
-      ;; MiniMax M2.1
-      (defvar my/llm-provider-opencode-minimax-m2.1
-        (make-llm-openai-compatible
-         :key opencode-api-key
-         :chat-model "minimax-m2.1-free"
-         :url opencode-api-url)
-        )
-      ))
-
-  ;; ollama
-  (defvar my/llm-provider-ollama-gpt-oss-20b
-    (make-llm-ollama
-     :chat-model "gpt-oss:20b"
-     :host "127.0.0.1"
-     :port 11434))
-
-  (defvar my/llm-provider-lmstudio-gpt-oss-20b
-    (make-llm-openai-compatible
-     :key "lm-studio"
-     :url "http://10.147.20.143:1234/v1"
-     :chat-model "openai/gpt-oss-20b"))
-
-  (defvar my/llm-provider-lmstudio-glm-4.6v-flash
-    (make-llm-openai-compatible
-     :key "lm-studio"
-     :url "http://10.147.20.143:1234/v1"
-     :chat-model "zai-org/glm-4.6v-flash"))
-
-  (defvar my/llm-provider-lmstudio-glm-4.7-flash
-    (make-llm-openai-compatible
-     :key "lm-studio"
-     :url "http://10.147.20.143:1234/v1"
-     :chat-model "hf.co/TeichAI/GLM-4.7-Flash-Claude-Opus-4.5-High-Reasoning-Distill-GGUF:IQ2_M"))
+    (defvar my/llm-provider-omniroute-privacy
+      (make-llm-openai-compatible
+       :key omni-route-api-key
+       :chat-model "privacy"
+       :url omni-route-url)))
 
   ;; openai
   (when-let (openai-api-key (getenv "OPENAI_API_KEY"))
     (defvar my/llm-provider-openai
       (make-llm-openai :key openai-api-key)))
 
-  ;; anthropic
-  (when-let (anthropic-api-key (getenv "ANTHROPIC_API_KEY"))
-    (require 'llm-anthropic)
-    (defvar my/llm-provider-anthropic
-      (make-llm-anthropic :key anthropic-api-key)))
-
-  ;; openrouter
-  (when-let (openrouter-api-key (getenv "OPENROUTER_API_KEY"))
-    (let ((openrouter-url "https://openrouter.ai/api/v1"))
-      (defvar my/llm-provider-openrouter
-        (make-llm-openai-compatible
-         :key openrouter-api-key
-         :chat-model "openrouter/auto"
-         :url openrouter-url))))
-
-  ;; cerebras
-  (when-let (cerebras-api-key (getenv "CEREBRAS_API_KEY"))
-    (let ((cerebras-url "https://api.cerebras.ai/v1"))
-      (defvar my/llm-provider-cerebras
-        (make-llm-openai-compatible
-         :key cerebras-api-key
-         :chat-model "qwen-3-235b-a22b-instruct-2507"
-         :url cerebras-url))))
   )
-
-;; ** Default LLM Provider Selection
-;;
-;;   Customize your preferred LLM provider. API keys should be set via
-;;   environment variables:
-;;   - OPENAI_API_KEY for OpenAI
-;;   - ANTHROPIC_API_KEY for Anthropic (Claude)
-;;   - OPENROUTER_API_KEY for OpenRouter
-;;   - CEREBRAS_API_KEY for Cerebras
-;;   - OPENCODE_API_KEY for OpenCode
-;;   Ollama runs locally and doesn't require an API key.
-
-(defcustom my/llm-default-provider 'my/llm-provider-cerebras
-  "Default LLM provider to use when only one is needed."
-  :type '(choice
-          (const :tag "OpenAI (uses OPENAI_API_KEY)" openai)
-          (const :tag "Anthropic Claude (uses ANTHROPIC_API_KEY)" anthropic)
-          (const :tag "OpenRouter (uses OPENROUTER_API_KEY)" openrouter)
-          (const :tag "Cerebras (uses CEREBRAS_API_KEY)" cerebras)
-          (const :tag "OpenCode GLM 4.7" opencode-glm4.7)
-          (const :tag "OpenCode MiniMax" opencode-minimax)
-          (const :tag "LM Studio GPT-OSS20B" lmstudio-gpt-oss20b)
-          (const :tag "Ollama (local)" ollama))
-  :group 'my-llm)
-
-(defun my/llm-get-provider (provider)
-  "Return the provider instance for PROVIDER symbol.
-PROVIDER should be one of: openai, anthropic, openrouter, cerebras, opencode-bigpickle,
-opencode-glm4.7, opencode-minimax, lmstudio-gpt-oss20b, ollama."
-  (pcase provider
-    ('openai
-     (when (boundp 'my/llm-provider-openai)
-       (symbol-value 'my/llm-provider-openai)))
-    ('anthropic
-     (when (boundp 'my/llm-provider-anthropic)
-       (symbol-value 'my/llm-provider-anthropic)))
-    ('openrouter
-     (when (boundp 'my/llm-provider-openrouter)
-       (symbol-value 'my/llm-provider-openrouter)))
-    ('cerebras
-     (when (boundp 'my/llm-provider-cerebras)
-       (symbol-value 'my/llm-provider-cerebras)))
-    ('opencode-bigpickle
-     (when (boundp 'my/llm-provider-opencode-bigpickle)
-       (symbol-value 'my/llm-provider-opencode-bigpickle)))
-    ('opencode-glm4.7
-     (when (boundp 'my/llm-provider-opencode-glm4.7)
-       (symbol-value 'my/llm-provider-opencode-glm4.7)))
-    ('opencode-minimax
-     (when (boundp 'my/llm-provider-opencode-minimax-m2.1)
-       (symbol-value 'my/llm-provider-opencode-minimax-m2.1)))
-    ('lmstudio-gpt-oss20b
-     (when (boundp 'my/llm-provider-lmstudio-gpt-oss-20b)
-       (symbol-value 'my/llm-provider-lmstudio-gpt-oss-20b)))
-    ('ollama
-     (when (boundp 'my/llm-provider-ollama-gpt-oss-20b)
-       (symbol-value 'my/llm-provider-ollama-gpt-oss-20b)))
-    (_ nil)))
-
-(defun my/switch-llm-provider (provider)
-  "Switch default LLM provider to PROVIDER.
-This updates `my/llm-default-provider', `magit-gptcommit-llm-provider',
-and `ellama-provider' to use the selected PROVIDER.
-PROVIDER should be one of: openai, anthropic, openrouter, cerebras,
-opencode-bigpickle, opencode-glm4.7, opencode-minimax,
-lmstudio-gpt-oss20b, ollama."
-  (interactive)
-  (let ((providers '(("OpenAI" . openai)
-                     ("Anthropic Claude" . anthropic)
-                     ("OpenRouter" . openrouter)
-                     ("Cerebras" . cerebras)
-                     ("OpenCode Big Pickle" . opencode-bigpickle)
-                     ("OpenCode GLM 4.7" . opencode-glm4.7)
-                     ("OpenCode MiniMax" . opencode-minimax)
-                     ("LM Studio GPT-OSS20B" . lmstudio-gpt-oss20b)
-                     ("Ollama (local)" . ollama))))
-    (list (completing-read
-           "Select LLM provider: "
-           (seq-filter
-            (lambda (p)
-              (my/llm-get-provider (cdr p)))
-            providers)
-           nil t)))
-  (let ((provider-sym (cdr (assoc provider
-                                  '(("OpenAI" . openai)
-                                    ("Anthropic Claude" . anthropic)
-                                    ("OpenRouter" . openrouter)
-                                    ("Cerebras" . cerebras)
-                                    ("OpenCode Big Pickle" . opencode-bigpickle)
-                                    ("OpenCode GLM 4.7" . opencode-glm4.7)
-                                    ("OpenCode MiniMax" . opencode-minimax)
-                                    ("LM Studio GPT-OSS20B" . lmstudio-gpt-oss20b)
-                                    ("Ollama (local)" . ollama))))))
-    (setq my/llm-default-provider provider-sym)
-    (let ((provider-instance (my/llm-get-provider provider-sym)))
-      (when provider-instance
-        (setq ellama-provider provider-instance)
-        (setq magit-gptcommit-llm-provider provider-instance)
-        (message "Switched LLM provider to %s" provider)))))
 
 ;; ** ellama
 ;;
@@ -2435,22 +2289,7 @@ lmstudio-gpt-oss20b, ollama."
   (setq-default ellama-assistant-nick "Ellama")
   :config
   ;; Set up provider using custom default or fallback to available providers
-  (setq-default ellama-provider
-		(or (my/llm-get-provider my/llm-default-provider)
-		    ;; Fall back to OpenAI if available
-		    (when (boundp 'my/llm-provider-openai)
-		      (symbol-value 'my/llm-provider-openai))
-		    ;; Fall back to OpenCode bigpickle
-		    (when (boundp 'my/llm-provider-opencode-bigpickle)
-		      (symbol-value 'my/llm-provider-opencode-bigpickle))
-		    ;; Fall back to Ollama
-		    (when (boundp 'my/llm-provider-ollama-gpt-oss-20b)
-		      (symbol-value 'my/llm-provider-ollama-gpt-oss-20b))
-		    ;; Default to ollama localhost
-		    (make-llm-ollama
-		     :chat-model "llama3.2"
-		     :host "127.0.0.1"
-		     :port 11434)))
+  (setq-default ellama-provider my/llm-provider-omniroute-privacy)
 
   ;; Enable global header line for context visibility
   (ellama-context-header-line-global-mode 1)
@@ -2462,26 +2301,6 @@ lmstudio-gpt-oss20b, ollama."
 
   ;; Disable reasoning model cleanup for transparency
   (setq-default ellama-session-remove-reasoning nil)
-
-  ;; Register our configured providers for interactive switching
-  (when (boundp 'my/llm-provider-opencode-bigpickle)
-    (setq-default ellama-providers
-		  (append
-		   (when (boundp 'my/llm-provider-anthropic)
-                     '(("anthropic" . ,(symbol-value 'my/llm-provider-anthropic))))
-		   (when (boundp 'my/llm-provider-openrouter)
-                     '(("openrouter" . ,(symbol-value 'my/llm-provider-openrouter))))
-		   (when (boundp 'my/llm-provider-cerebras)
-                     '(("cerebras" . ,(symbol-value 'my/llm-provider-cerebras))))
-		   (when (symbol-value 'my/llm-provider-opencode-bigpickle)
-                     '(("bigpickle" . ,(symbol-value 'my/llm-provider-opencode-bigpickle))))
-		   (when (boundp 'my/llm-provider-opencode-glm4.7)
-                     '(("glm4.7" . ,(symbol-value 'my/llm-provider-opencode-glm4.7))))
-		   (when (boundp 'my/llm-provider-openai)
-                     '(("openai" . ,(symbol-value 'my/llm-provider-openai))))
-		   (when (boundp 'my/llm-provider-ollama-gpt-oss-20b)
-                     '(("ollama" . ,(symbol-value 'my/llm-provider-ollama-gpt-oss-20b))))
-		   ellama-providers)))
 
   ;; Enable keymap with prefix
   (setq-default ellama-enable-keymap t)
@@ -3123,17 +2942,14 @@ This functions should be added to the hooks of major modes for programming."
 ;;   - Finally tries Ollama with GPT-OSS-2ob model
 (use-package magit-gptcommit
   :ensure t
-  :demand t                              ; Load immediately when requested
-  :after magit llm                       ; Ensure magit and llm are loaded first
+  :demand t		       ; Load immediately when requested
+  :after magit llm	       ; Ensure magit and llm are loaded first
   :config
   ;; Configure LLM provider with intelligent fallback hierarchy
-  ;; This allows flexible AI provider selection without manual changes
   (setq magit-gptcommit-llm-provider
-        (or (my/llm-get-provider my/llm-default-provider) ; User's preferred provider
-            (when (boundp 'my/llm-provider-openai)
-	      (symbol-value 'my/llm-provider-openai))       ; OpenAI fallback
-            (when (boundp 'my/llm-provider-ollama-gpt-oss-20b)
-	      (symbol-value 'my/llm-provider-ollama-gpt-oss-20b)))) ; Ollama fallback
+        (or my/llm-provider-omniroute-privacy
+            (and (boundp 'my/llm-provider-openai) my/llm-provider-openai)
+            (and (boundp 'my/llm-provider-omniroute-free) my/llm-provider-omniroute-free)))
 
   ;; Add GPT commit functionality to Magit status buffer
   ;; Deferred with-eval-after-load prevents load order conflicts
@@ -3427,9 +3243,9 @@ This functions should be added to the hooks of major modes for programming."
      (ruby . t)
      ;; (sh . t)
      (shell . t)
-(plantuml . t)
-      (mermaid . t)
-      (R . t)
+     (plantuml . t)
+     (mermaid . t)
+     (R . t)
      (clojure . t)))
   ;; make dot work as graphviz-dot
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot))
