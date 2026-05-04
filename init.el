@@ -2225,7 +2225,6 @@ return nil since you can't set font for emacs on it."
   ;; Trust a custom CA for self-signed/internal HTTPS endpoints.
   ;; Put the CA/server PEM at this path to enable verification.
   (defvar my/omniroute-ca-cert-file
-
     (expand-file-name "~/.certs/omniroute-ca.pem"))
   (when (file-readable-p my/omniroute-ca-cert-file)
     (when (boundp 'gnutls-trustfiles)
