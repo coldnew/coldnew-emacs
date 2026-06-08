@@ -2239,7 +2239,7 @@ return nil since you can't set font for emacs on it."
   (require 'llm-ollama)
 
   ;; OmniRoute (Personal LLM Router)
-  (let ((omni-route-url "https://10.147.20.143:21028/v1")
+  (let ((omni-route-url "http://10.147.20.143:20128/v1")
 	(omni-route-api-key (getenv "OMNIROUTE_API_KEY")))
 
     (defvar my/llm-provider-omniroute-free
