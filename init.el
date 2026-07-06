@@ -1566,46 +1566,6 @@ return nil since you can't set font for emacs on it."
               (when copilot-mode
                 (local-set-key (kbd "TAB") #'my/copilot-accept-or-tab)))))
 
-;; *** copilot-chat
-;;
-;;   copilot-chat.el provides chat interface for GitHub Copilot in Emacs.
-;;   Allows you to have conversations with Copilot about your code,
-;;   ask questions, request explanations, and get help with programming.
-;;
-;;   Key features:
-;;   - Interactive chat interface with Copilot
-;;   - Code explanation and documentation generation
-;;   - Debugging help and code review
-;;   - Refactoring suggestions
-;;   - Integration with copilot.el for context
-;;
-;;   Why I use it:
-;;   Extends Copilot beyond completion to full AI assistant capabilities.
-;;   Great for learning, debugging, and code improvement suggestions.
-;;
-;;   GitHub: https://github.com/chep/copilot-chat.el
-;;   Requires: copilot.el and GitHub Copilot subscription
-
-(use-package copilot-chat
-  :ensure (:host github :repo "https://github.com/chep/copilot-chat.el")
-  :after copilot
-  :bind (("C-c c" . copilot-chat-open)
-         ("C-c C" . copilot-chat-explain))
-  :config
-  ;; Use markdown mode for chat buffers
-  (setq copilot-chat-markdown-mode 'markdown-mode)
-
-  ;; Enable line numbers in chat buffers
-  (add-hook 'copilot-chat-mode-hook #'display-line-numbers-mode)
-
-  ;; Custom prompts
-  (setq copilot-chat-prompt-library
-        '(("Explain" . "Explain the following code in detail:")
-          ("Refactor" . "Refactor the following code to improve readability and performance:")
-          ("Debug" . "Help me debug the following code:")
-          ("Test" . "Write unit tests for the following code:")
-          ("Document" . "Add comprehensive documentation to the following code:"))))
-
 ;; ** Xref (Cross-Referencing)
 
 ;; xref
@@ -5729,8 +5689,6 @@ this declaration to the kill-ring."
            ;; emacsclient --eval "(emacs-everywhere)"
            ("C-c e e" . emacs-everywhere)
            ;; GitHub Copilot keybindings
-           ("C-c c" . copilot-chat-open)
-           ("C-c C" . copilot-chat-explain)
            ("C-c i" . copilot-install-server)
            ("C-c l" . copilot-login)
            ("C-c o" . copilot-logout)
