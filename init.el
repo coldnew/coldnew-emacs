@@ -1502,70 +1502,6 @@ return nil since you can't set font for emacs on it."
   ;; Add kind-icon to Corfu margin formatters
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
-;; ** GitHub Copilot Integration
-
-;; *** copilot
-;;
-;;   copilot.el is the unofficial GitHub Copilot integration for Emacs.
-;;   It provides AI-powered code completion using GitHub's Copilot service.
-;;   Works directly with the official Copilot API for intelligent suggestions.
-;;
-;;   Key features:
-;;   - Real-time code completion as you type
-;;   - Context-aware suggestions based on surrounding code
-;;   - Multi-language support
-;;   - Integration with Emacs completion system
-;;   - Ghost text overlay for inline suggestions
-;;
-;;   Why I use it:
-;;   Official-style Copilot integration with excellent Emacs integration.
-;;   Provides intelligent code completion that understands context and
-;;   coding patterns across all supported languages.
-;;
-;;   GitHub: https://github.com/copilot-emacs/copilot.el
-;;   Requires: GitHub Copilot subscription
-
-(use-package copilot
-  :ensure (:host github :repo "copilot-emacs/copilot.el")
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("C-g" . copilot-clear-overlay)
-              ("M-n" . copilot-next-completion)
-              ("M-p" . copilot-previous-completion)
-              ("<tab>" . copilot-accept-completion)
-              ("M-T" . copilot-accept-completion-by-line)
-              ("M-t" . copilot-accept-completion-by-word))
-  :config
-  ;; Installation directory for copilot server
-  (setq copilot-install-dir (expand-file-name "copilot" user-cache-directory))
-
-  ;; Enable copilot in all programming modes
-  (defun my/copilot-enable-predicate ()
-    "Enable copilot when not in special modes."
-    (not (or (minibufferp)
-             (string-match-p "^[*]" (buffer-name))
-             (eq major-mode 'term-mode)
-             (eq major-mode 'eshell-mode))))
-
-  (add-hook 'copilot-enable-predicates #'my/copilot-enable-predicate)
-
-  ;; Reduce completion delay for faster response
-  (setq copilot-idle-delay 0.1)
-
-  ;; Accept completion with TAB but only when copilot is active
-  (defun my/copilot-accept-or-tab ()
-    "Accept copilot suggestion if available, otherwise insert TAB."
-    (interactive)
-    (if (copilot--overlay-visible)
-        (copilot-accept-completion)
-      (indent-for-tab-command)))
-
-  ;; Override TAB in programming modes when copilot is active
-  (add-hook 'prog-mode-hook
-            (lambda ()
-              (when copilot-mode
-                (local-set-key (kbd "TAB") #'my/copilot-accept-or-tab)))))
-
 ;; ** Xref (Cross-Referencing)
 
 ;; xref
@@ -2264,54 +2200,6 @@ return nil since you can't set font for emacs on it."
   ;; Enable keymap with prefix
   (setq-default ellama-enable-keymap t)
   (setq-default ellama-keymap-prefix "C-c e"))
-
-;; ** ai-code
-;;
-;;   Unified Emacs interface supporting Claude Code, Gemini CLI, OpenAI Codex,
-;;   Opencode, GitHub Copilot CLI, Cursor, and more.
-;;
-;;   Key features:
-;;   - Transient-driven hub (C-c i) for all AI operations
-;;   - AI CLI session management (start, resume, switch backends)
-;;   - Context-aware code actions (change, implement TODOs, ask questions)
-;;   - Agile development workflows (refactoring, TDD, diff review)
-;;   - Prompt management and snippet support
-;;   - Seamless integration with Magit, project, and projectile
-;;
-;;   Supported backends:
-;;   - Claude Code, Claude Code IDE
-;;   - Gemini CLI
-;;   - OpenAI Codex CLI
-;;   - GitHub Copilot CLI
-;;   - Opencode
-;;   - Grok CLI
-;;   - Cursor CLI
-;;
-;;   GitHub: https://github.com/tninja/ai-code-interface.el
-;;
-;;   Configuration notes:
-;;   - Requires vterm (or eat) for CLI backends
-;;   - Keybinding set to C-c i (aidermacs uses C-c a)
-;;   - Set backend with ai-code-set-backend
-
-(use-package ai-code
-  :ensure t
-  :bind (("C-c i" . ai-code-menu))
-  :config
-  ;; Set default backend (change as needed)
-  ;; Options: 'codex, 'gemini, 'github-copilot-cli, 'opencode, 'grok, 'claude-code-ide, 'claude-code, 'cursor
-  (ai-code-set-backend 'opencode)
-
-  ;; Faster buffer auto-revert for AI changes
-  (global-auto-revert-mode 1)
-  (setq auto-revert-interval 1)
-
-  ;; Optional: Use eat instead of vterm
-  ;; (setq ai-code-backends-infra-terminal-backend 'eat)
-
-  ;; Magit integration
-  (with-eval-after-load 'magit
-    (ai-code-magit-setup-transients)))
 
 ;; * Interactive Commands
 ;;
