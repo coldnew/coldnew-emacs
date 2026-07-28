@@ -2111,6 +2111,52 @@ return nil since you can't set font for emacs on it."
   :ensure t)
 
 
+;; * Input Methods
+
+;; ** mczy
+;;
+;;   mczy is an Emacs input method for McBopomofo-style Zhuyin input.
+;;   It uses a C++ engine compiled from the package checkout, so engine
+;;   and data paths must point at Elpaca's source repo instead of the
+;;   symlinked build directory.
+;;
+;;   GitHub: https://github.com/staryes/mczy
+
+(defvar mczy-title "麥"
+  "Base title used by mczy when its autoload registers the input method.")
+
+(defvar my/mczy-repo-directory
+  (expand-file-name
+   "mczy/"
+   (file-name-as-directory
+    (if (boundp 'elpaca-sources-directory)
+        (symbol-value 'elpaca-sources-directory)
+      elpaca-repos-directory)))
+  "Directory where Elpaca checks out mczy.")
+
+(setq default-input-method "chinese-mczy"
+      mczy-engine-path
+      (expand-file-name "engine/build/mczy-engine" my/mczy-repo-directory)
+      mczy-data-path
+      (expand-file-name
+       "engine/vendor/fcitx5-mcbopomofo/data/data.txt"
+       my/mczy-repo-directory)
+      mczy-user-phrases-path
+      (locate-user-emacs-file "mczy-user-phrases.txt")
+      mczy-candidate-keys "asdfghjkl")
+
+(use-package mczy
+  :ensure (:host github :repo "staryes/mczy")
+  :commands (mczy-compile-engine
+             mczy-set-candidate-keys
+             mczy-set-chinese
+             mczy-set-english
+             mczy-toggle-candidate-layout
+             mczy-toggle-english))
+
+(declare-function mczy-toggle-english "mczy")
+
+
 ;; * AI Integration
 
 (use-package llm
@@ -5581,7 +5627,9 @@ this declaration to the kill-ring."
            ("C-c l" . copilot-login)
            ("C-c o" . copilot-logout)
            ;; LLM provider switching
-           ("C-c L" . my/switch-llm-provider))
+           ("C-c L" . my/switch-llm-provider)
+           ;; mczy input method Chinese/English toggle
+           ("<f9>" . mczy-toggle-english))
 
 ;; *** Evil Insert State Keybindings
 
