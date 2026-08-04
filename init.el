@@ -1297,12 +1297,29 @@ return nil since you can't set font for emacs on it."
 (use-package vertico
   :ensure t
   :demand t
+  :custom
+  ;; Allow C-n/C-p to wrap at the ends of the candidate list.
+  (vertico-cycle t)
   :config
   (vertico-mode 1)
   ;; Show more candidates (default is 10)
   (setq vertico-count 15)
   ;; Resize vertico window to fit content
   (setq vertico-resize t))
+
+;; *** vertico-directory
+;;
+;;   Make file prompts behave like a directory browser: RET descends into a
+;;   directory and DEL edits the path naturally.
+
+(use-package vertico-directory
+  :ensure nil
+  :after vertico
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 ;; *** marginalia
 ;;
@@ -1350,7 +1367,13 @@ return nil since you can't set font for emacs on it."
   :ensure t
   :demand t
   :config
-  (setq completion-styles '(orderless basic)))
+  ;; Keep exact and path completion responsive while accepting flexible,
+  ;; space-separated matching everywhere else.
+  (setq completion-ignore-case t
+        read-file-name-completion-ignore-case t
+        completion-styles '(basic substring initials orderless)
+        completion-category-overrides
+        '((file (styles basic partial-completion)))))
 
 ;; *** consult
 ;;
@@ -1376,7 +1399,9 @@ return nil since you can't set font for emacs on it."
   :ensure t
   :demand t
   :bind (("C-x C-f" . find-file)
-         ("C-x b" . switch-to-buffer)
+         ("C-x b" . consult-buffer)
+         ("C-x 4 b" . consult-buffer-other-window)
+         ("C-x 5 b" . consult-buffer-other-frame)
          ("M-s" . consult-line)
          ("M-y" . consult-yank-pop)
          ("C-x C-r" . consult-recent-file)
@@ -1389,9 +1414,9 @@ return nil since you can't set font for emacs on it."
   (setq consult-async-input-throttle 0.1)
   ;; Customize consult-line for better display
   (consult-customize consult-line
-                     :preview-key '(:debounce 0.3 any)
-                     ;; Show more context in preview (lines before/after match)
-                     (setq consult-line-numbers-widen t)))
+                     :preview-key '(:debounce 0.3 any))
+  ;; Show more context in line-search previews.
+  (setq consult-line-numbers-widen t))
 
 ;; *** rg
 ;;
@@ -1455,12 +1480,24 @@ return nil since you can't set font for emacs on it."
   ;; Enable auto completion with manual TAB trigger
   (corfu-auto t)
   ;; Preselect first candidate
-  (corfu-preselect 'first)
+  (corfu-preview-current nil)
   ;; Cycle through candidates
   (corfu-cycle t)
+  ;; Insert an unambiguous candidate, and otherwise dismiss stale menus.
+  (corfu-on-exact-match 'insert)
+  (corfu-quit-no-match t)
+  (corfu-quit-at-boundary t)
+  (corfu-min-width 20)
   :config
   ;; Enable Corfu globally
   (global-corfu-mode)
+
+  ;; Display documentation for a candidate after a short pause.
+  (setq corfu-popupinfo-delay '(1.25 . 0.5))
+  (corfu-popupinfo-mode 1)
+  ;; Persist the candidates selected most often, once savehist is available.
+  (with-eval-after-load 'savehist
+    (corfu-history-mode 1))
 
   ;; Corfu keybindings (work in all states)
   (define-key corfu-map (kbd "TAB") 'corfu-insert)
@@ -1472,6 +1509,19 @@ return nil since you can't set font for emacs on it."
 ;; Eglot provides completion-at-point, corfu enhances it with UI
 (with-eval-after-load 'eglot
   (setq-local completion-in-region-function #'corfu-complete-in-region))
+
+;; *** cape
+;;
+;;   Supply useful fallback completion-at-point functions throughout Emacs.
+;;   Language-server CAPFs retain priority; these fill in buffer words and
+;;   file paths when a mode does not provide suitable candidates.
+
+(use-package cape
+  :ensure t
+  :demand t
+  :config
+  (add-hook 'completion-at-point-functions #'cape-dabbrev 90)
+  (add-hook 'completion-at-point-functions #'cape-file 90))
 
 ;; kind-icon
 ;;
@@ -1598,7 +1648,7 @@ return nil since you can't set font for emacs on it."
     (kbd "C-x vl") 'magit-log
     (kbd "C-x vp") 'magit-push
     (kbd "C-x vs") 'magit-status
-    (kbd "C-x b") 'switch-to-buffer
+    (kbd "C-x b") 'consult-buffer
     (kbd "M-[") 'winner-undo
     (kbd "M-]") 'winner-redo
     (kbd "M-x") 'execute-extended-command
@@ -1631,7 +1681,7 @@ return nil since you can't set font for emacs on it."
     (kbd "C-x M-3") 'mu4e
     (kbd "C-x M-4") 'erc-start-or-switch
     (kbd "C-x T") 'sane-term
-    (kbd "C-x b") 'switch-to-buffer
+    (kbd "C-x b") 'consult-buffer
     (kbd "C-x t") 'sane-term
     (kbd "C-x vl") 'magit-log
     (kbd "C-x vp") 'magit-push
@@ -4131,12 +4181,8 @@ this declaration to the kill-ring."
   (setq citre-tags-file-name "TAGS")
   ;; Auto-create tags when none found
   (setq citre-auto-update-tags t)
-  ;; Use corfu for completion UI integration
-  (with-eval-after-load 'corfu
-    (setq-local completion-at-point-functions
-                (list (cape-capf-super
-		       #'citre-completion-at-point
-		       #'cape-file))))
+  ;; Citre registers its own CAPF; Corfu renders it together with the global
+  ;; Cape fallbacks configured in the completion framework.
 
   ;; Keybindings for citre (following eglot pattern)
   (with-eval-after-load 'citre
