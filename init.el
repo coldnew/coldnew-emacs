@@ -2297,6 +2297,51 @@ return nil since you can't set font for emacs on it."
   (setq-default ellama-enable-keymap t)
   (setq-default ellama-keymap-prefix "C-c e"))
 
+;; ** agent-shell
+;;
+;;   Agent Shell provides native Emacs buffers for ACP-compatible coding
+;;   agents.  This setup exposes Claude Agent and Codex only; `agent-shell'
+;;   prompts for either one and reuses an existing session for the project.
+;;
+;;   The external ACP adapter for the selected agent must be installed
+;;   separately.  Agent Shell's process environment inherits Emacs's PATH and
+;;   authentication environment, so existing CLI logins remain available.
+
+(use-package agent-shell
+  :ensure t
+  :commands (agent-shell
+             agent-shell-toggle
+             agent-shell-send-dwim
+             agent-shell-openai-start-codex
+             agent-shell-anthropic-start-claude-code)
+  :custom
+  (agent-shell-file-completion-enabled t)
+  (agent-shell-prefer-viewport-interaction t)
+  (agent-shell-highlight-blocks t)
+  ;; Keep the selector focused on the locally supported agents.
+  (agent-shell-agent-configs
+   '(agent-shell-anthropic-make-claude-code-config
+     agent-shell-openai-make-codex-config))
+  :config
+  ;; Both agents use their existing CLI login by default.  Their ACP adapters
+  ;; are installed in ~/.local/bin, which is inherited below.
+  (setq agent-shell-anthropic-authentication
+        (agent-shell-anthropic-make-authentication :login t)
+        agent-shell-openai-authentication
+        (agent-shell-openai-make-authentication :login t)
+        agent-shell-anthropic-claude-environment
+        (agent-shell-make-environment-variables :inherit-env t)
+        agent-shell-openai-codex-environment
+        (agent-shell-make-environment-variables :inherit-env t))
+  ;; Keep prompt editing natural in Evil: insert mode inserts a newline and
+  ;; normal mode submits the prompt.  Agent Shell's normal item navigation is
+  ;; still available through its viewport.
+  (with-eval-after-load 'evil
+    (evil-define-key 'insert agent-shell-mode-map
+      (kbd "RET") #'agent-shell-newline)
+    (evil-define-key 'normal agent-shell-mode-map
+      (kbd "RET") #'agent-shell-submit)))
+
 ;; * Interactive Commands
 ;;
 ;;   Custom interactive commands and utility functions that enhance
@@ -5672,6 +5717,8 @@ this declaration to the kill-ring."
            ("C-c i" . copilot-install-server)
            ("C-c l" . copilot-login)
            ("C-c o" . copilot-logout)
+           ;; ACP-powered coding agent sessions
+           ("C-c A" . agent-shell)
            ;; LLM provider switching
            ("C-c L" . my/switch-llm-provider)
            ;; mczy input method Chinese/English toggle
